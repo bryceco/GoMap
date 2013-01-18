@@ -1,0 +1,4 @@
+
+* oauth
+* dirty nodes are saved on exit, but not marked as dirty on load
+* use 16x16 icons for drawing
