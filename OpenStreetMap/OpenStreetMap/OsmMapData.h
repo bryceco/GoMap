@@ -2,8 +2,8 @@
 //  XmlParserDelegate.h
 //  OpenStreetMap
 //
-//  Created by Bryce on 9/1/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 9/1/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import <CoreLocation/CoreLocation.h>

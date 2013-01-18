@@ -2,7 +2,7 @@
 //  VectorMath.h
 //  Rocket
 //
-//  Created by Bryce on 5/31/12.
+//  Created by Bryce Cogswell on 5/31/12.
 //
 //
 

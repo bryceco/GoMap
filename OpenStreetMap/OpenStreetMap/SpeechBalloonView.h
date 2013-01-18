@@ -2,8 +2,8 @@
 //  SpeechBalloonView.h
 //  OpenStreetMap
 //
-//  Created by Bryce on 12/11/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 12/11/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #if TARGET_OS_IPHONE

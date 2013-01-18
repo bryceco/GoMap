@@ -2,8 +2,8 @@
 //  OsmObjects.m
 //  OpenStreetMap
 //
-//  Created by Bryce on 10/27/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 10/27/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>

@@ -2,8 +2,8 @@
 //  LoginViewController.m
 //  OSMiOS
 //
-//  Created by Bryce on 12/19/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 12/19/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -46,8 +46,8 @@
 		appDelegate.userName		= _username.text;
 		appDelegate.userPassword	= _password.text;
 
-		[[NSUserDefaults standardUserDefaults] setObject:appDelegate.userName		forKey:@"userName"];
-		[[NSUserDefaults standardUserDefaults] setObject:appDelegate.userPassword	forKey:@"userPassword"];
+		[[NSUserDefaults standardUserDefaults] setObject:appDelegate.userName		forKey:@"username"];
+		[[NSUserDefaults standardUserDefaults] setObject:appDelegate.userPassword	forKey:@"password"];
 	}
 }
 

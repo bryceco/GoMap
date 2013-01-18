@@ -2,8 +2,8 @@
 //  NominatumViewController.m
 //  OSMiOS
 //
-//  Created by Bryce on 1/3/13.
-//  Copyright (c) 2013 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 1/3/13.
+//  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
 

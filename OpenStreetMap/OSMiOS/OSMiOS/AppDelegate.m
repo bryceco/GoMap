@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  OSMiOS
 //
-//  Created by Bryce on 12/6/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 12/6/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -19,6 +19,11 @@
 	self.userPassword	= [defaults objectForKey:@"password"];
 
 	[DownloadThreadPool setUserAgent:[NSString stringWithFormat:@"%@/%@", self.appName, self.appVersion]];
+
+#if DEBUG
+	static void volatile * big;
+	big = malloc( 400*1000*1000 );
+#endif
 
 	return YES;
 }

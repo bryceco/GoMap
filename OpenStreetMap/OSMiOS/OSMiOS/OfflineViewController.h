@@ -2,8 +2,8 @@
 //  OfflineViewController.h
 //  OSMiOS
 //
-//  Created by Bryce on 12/27/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 12/27/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

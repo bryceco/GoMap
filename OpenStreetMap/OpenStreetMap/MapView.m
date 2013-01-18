@@ -2,8 +2,8 @@
 //  MapView.m
 //  OpenStreetMap
 //
-//  Created by Bryce on 9/25/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 9/25/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
@@ -301,11 +301,7 @@ CGSize SizeForImage( NSImage * image )
 
 -(void)applicationWillTerminate :(NSNotification *)notification
 {
-	NSDate * start = [NSDate date];
-	DLog(@"saving state");
-
-	[_editorLayer save];
-
+	// save defaults first
 	OSMTransform transform = self.mapTransform;
 	[[NSUserDefaults standardUserDefaults] setDouble:transform.a forKey:@"zoom"];
 	[[NSUserDefaults standardUserDefaults] setDouble:transform.tx forKey:@"translateX"];
@@ -314,7 +310,11 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setBool:!_aerialLayer.hidden forKey:@"aerialVisible"];
 	[[NSUserDefaults standardUserDefaults] setBool:!_mapnikLayer.hidden forKey:@"mapnikVisible"];
 	[[NSUserDefaults standardUserDefaults] setBool:!_editorLayer.hidden forKey:@"editorVisible"];
-	DLog(@"state saved (%f seconds)", [[NSDate date] timeIntervalSinceDate:start]);
+
+	[[NSUserDefaults standardUserDefaults] synchronize];
+
+	// then save data
+	[_editorLayer save];
 }
 
 -(void)setFrame:(CGRect)frameRect

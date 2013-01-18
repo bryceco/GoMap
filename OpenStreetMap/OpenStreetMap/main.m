@@ -2,8 +2,8 @@
 //  main.m
 //  OpenStreetMap
 //
-//  Created by Bryce on 8/31/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 8/31/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

@@ -2,8 +2,8 @@
 //  UploadTableViewController.m
 //  OSMiOS
 //
-//  Created by Bryce on 1/7/13.
-//  Copyright (c) 2013 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 1/7/13.
+//  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
 #import <MessageUI/MessageUI.h>

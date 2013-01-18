@@ -2,8 +2,8 @@
 //  TagInfoEditorWindowController.h
 //  OpenStreetMap
 //
-//  Created by Bryce on 11/3/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 11/3/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

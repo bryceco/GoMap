@@ -2,8 +2,8 @@
 //  OsmMapLayer.m
 //  OpenStreetMap
 //
-//  Created by Bryce on 10/5/12.
-//  Copyright (c) 2012 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 10/5/12.
+//  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
 #import <CoreText/CoreText.h>
@@ -1552,28 +1552,33 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 }
 
 
+static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
+{
+	NSInteger tagCount = tags.count;
+	if ( tagCount == 0 )
+		return NO;
+	if ( [tags objectForKey:@"source"] )
+		--tagCount;
+	return tagCount > 0;
+}
+
 -(NSMutableArray *)getVisibleObjects
 {
 	OSMRect box = [_mapView viewportLongitudeLatitude];
 	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_mapData.wayCount+_mapData.nodeCount];
-	__block NSInteger nodeCount = 0;
-	__block NSInteger wayCount = 0;
 	[_mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
 		if ( obj.isWay ) {
-			if ( obj.visible && !obj.deleted ) {
+			if ( !obj.deleted ) {
 				[a addObject:obj];
-				++wayCount;
 				for ( OsmNode * node in ((OsmWay *)obj).nodes ) {
-					if ( node.tags.count ) {
+					if ( ShouldDisplayNodeInWay( node.tags ) ) {
 						[a addObject:node];
-						++nodeCount;
 					}
 				}
 			}
 		} else if ( obj.isNode ) {
-			if ( obj.visible && ((OsmNode *)obj).wayCount == 0 && !obj.deleted ) {
+			if ( ((OsmNode *)obj).wayCount == 0 && !obj.deleted ) {
 				[a addObject:obj];
-				++nodeCount;
 			}
 		}
 	}];
@@ -1725,7 +1730,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	DLog(@" ");
 	DLog(@"%d total objects", _mapData.nodeCount + _mapData.wayCount + _mapData.relationCount);
-	DLog(@"%d visible objects",_shownObjects.count);
+	DLog(@"%d visible objects", (int)_shownObjects.count);
 	DLog(@"get visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
 	start = [NSDate date];
 
