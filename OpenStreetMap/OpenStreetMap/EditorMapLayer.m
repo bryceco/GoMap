@@ -1728,10 +1728,10 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	// get objects in visible rect
 	_shownObjects = [self getVisibleObjects];
 
-	DLog(@" ");
-	DLog(@"%d total objects", _mapData.nodeCount + _mapData.wayCount + _mapData.relationCount);
-	DLog(@"%d visible objects", (int)_shownObjects.count);
-	DLog(@"get visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
+//	DLog(@" ");
+//	DLog(@"%d total objects", _mapData.nodeCount + _mapData.wayCount + _mapData.relationCount);
+//	DLog(@"%d visible objects", (int)_shownObjects.count);
+//	DLog(@"get visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
 	start = [NSDate date];
 
 	// get taginfo for objects
@@ -1741,7 +1741,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		}
 	}
 
-	DLog(@"get taginfo = %f",[[NSDate date] timeIntervalSinceDate:start]);
+//	DLog(@"get taginfo = %f",[[NSDate date] timeIntervalSinceDate:start]);
 	start = [NSDate date];
 
 	// sort from big to small objects
@@ -1753,7 +1753,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}];
 #endif
 
-	DLog(@"sort visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
+//	DLog(@"sort visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
 	start = [NSDate date];
 
 	if ( _shownObjects.count > limit ) {
@@ -1798,7 +1798,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	// draw highlights
 	[self drawHighlighedObjects:ctx];
 
-	DLog(@"draw visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
+//	DLog(@"draw visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
 	start = [NSDate date];
 
 }

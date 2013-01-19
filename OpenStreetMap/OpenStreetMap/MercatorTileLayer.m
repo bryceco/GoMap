@@ -50,6 +50,7 @@ extern CGSize SizeForImage(NSImage * image);
 		_memoryTileCache.delegate = self;
 #if TARGET_OS_IPHONE
 		_memoryTileCache.totalCostLimit = 20*1000*1000; // 20 MB
+		_memoryTileCache.countLimit = _memoryTileCache.totalCostLimit / 4000;
 #else
 		_memoryTileCache.totalCostLimit = 100*1000*1000; // 100 MB
 #endif

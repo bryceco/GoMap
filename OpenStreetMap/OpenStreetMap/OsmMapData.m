@@ -614,8 +614,6 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	DLog(@"%@\n",text);
 #endif
 
-	NSDate * start = [NSDate date];
-
 	NSInputStream * stream = [NSInputStream inputStreamWithData:data];
 	NSXMLParser * parser = [[NSXMLParser alloc] initWithStream:stream];
 	parser.delegate = self;
@@ -629,8 +627,6 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 		}
 		DLog(@"osm xml = %@",string);
 	}
-
-	DLog(@"Parse time = %f",[[NSDate date] timeIntervalSinceDate:start]);
 
 	return ok;
 }
