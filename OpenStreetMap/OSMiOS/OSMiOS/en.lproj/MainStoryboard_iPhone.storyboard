@@ -20,19 +20,6 @@
                                             <outletCollection property="gestureRecognizers" destination="OlO-FJ-kfn" appends="YES" id="ifT-1Y-WB4"/>
                                         </connections>
                                     </activityIndicatorView>
-                                    <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fm5-PB-9wn">
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Button">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="I1q-tQ-ynY"/>
-                                        </connections>
-                                    </button>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="GTv-eT-l7q">
                                         <items>
                                             <barButtonItem image="location3.png" style="plain" id="e2S-h3-y7k">
@@ -77,19 +64,6 @@
                                             </barButtonItem>
                                         </items>
                                     </toolbar>
-                                    <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYc-Sq-1iU">
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Button">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="siu-I6-IEp" kind="modal" identifier="searchSegue" id="vsH-WD-fFI"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-IT-DQC">
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" type="user" id="6Pf-if-VPI"/>
@@ -142,20 +116,15 @@
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="0BL-mM-7or"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="bottom" secondItem="fss-Ag-fKJ" secondAttribute="bottom" type="default" id="1kc-bF-5VT"/>
                                     <constraint firstAttribute="bottom" secondItem="I03-YM-uHY" secondAttribute="bottom" constant="63" id="34D-Bs-Oir"/>
-                                    <constraint firstItem="fm5-PB-9wn" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="183" id="4EN-45-72s"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" type="default" id="JSh-r1-sIJ"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="centerX" secondItem="Zh9-uC-62t" secondAttribute="centerX" type="default" id="Oun-QH-4xK"/>
                                     <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="26" id="PTj-zH-igC"/>
-                                    <constraint firstAttribute="trailing" secondItem="fm5-PB-9wn" secondAttribute="trailing" constant="79" id="bke-XC-jT5"/>
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="6" id="blu-IX-YQW"/>
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="6" type="user" id="dw1-GK-ve6"/>
-                                    <constraint firstItem="2Ka-IT-DQC" firstAttribute="baseline" secondItem="bYc-Sq-1iU" secondAttribute="baseline" priority="1" type="user" id="ffh-FH-7nW"/>
                                     <constraint firstAttribute="trailing" secondItem="TnL-YC-BCg" secondAttribute="trailing" constant="12" id="hAx-Am-c4P"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="trailing" secondItem="fss-Ag-fKJ" secondAttribute="trailing" type="default" id="lPN-o8-UjX"/>
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" type="user" id="o0n-ED-1vg"/>
-                                    <constraint firstItem="bYc-Sq-1iU" firstAttribute="leading" secondItem="Zh9-uC-62t" secondAttribute="leading" priority="1" type="user" id="pBv-jG-cNt"/>
                                     <constraint firstAttribute="trailing" secondItem="I03-YM-uHY" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="rel-sj-ohw"/>
-                                    <constraint firstItem="bYc-Sq-1iU" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="109" id="tv5-83-lMx"/>
                                     <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="8" id="yVK-0X-myy"/>
                                 </constraints>
                                 <connections>
@@ -190,6 +159,8 @@
                         <outlet property="_uploadButton" destination="ma4-oI-tBL" id="wVI-LB-h9R"/>
                         <outlet property="locationButton" destination="e2S-h3-y7k" id="BWd-6m-zga"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
+                        <segue destination="siu-I6-IEp" kind="modal" identifier="searchSegue" id="iXU-B0-fRW"/>
+                        <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -3545,7 +3516,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="445" y="-1162"/>
+            <point key="canvasLocation" x="425" y="-1182"/>
         </scene>
         <!--Navigation Controller - Common Tags-->
         <scene sceneID="tzU-uW-JLs">
@@ -3695,6 +3666,12 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NSResponder" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSResponder.h"/>
+        </class>
+        <class className="NSView" superclassName="NSResponder">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSView.h"/>
         </class>
         <class className="NearbyMappersViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NearbyMappersViewController.h"/>

@@ -10,8 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #include <dirent.h>
 
+
 #import "iosapi.h"
+
 #import "BingMapsGeometry.h"
+#import "DLog.h"
 #import "DownloadThreadPool.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
@@ -46,7 +49,7 @@ extern CGSize SizeForImage(NSImage * image);
 		_memoryTileCache = [[NSCache alloc] init];
 		_memoryTileCache.delegate = self;
 #if TARGET_OS_IPHONE
-		_memoryTileCache.totalCostLimit = 20*1000*1000; // 10 MB
+		_memoryTileCache.totalCostLimit = 20*1000*1000; // 20 MB
 #else
 		_memoryTileCache.totalCostLimit = 100*1000*1000; // 100 MB
 #endif
@@ -124,6 +127,9 @@ extern CGSize SizeForImage(NSImage * image);
 	}
 }
 
+- (void)cache:(NSCache *)cache willEvictObject:(id)obj
+{
+}
 
 -(void)purgeTileCache
 {
@@ -189,6 +195,7 @@ extern CGSize SizeForImage(NSImage * image);
 		if ( key ) {
 			[_layerDict removeObjectForKey:key];
 			[layer removeFromSuperlayer];
+			layer.contents = nil;
 		}
 	}
 
@@ -236,6 +243,7 @@ extern CGSize SizeForImage(NSImage * image);
 		if ( key ) {
 			[_layerDict removeObjectForKey:key];
 			[layer removeFromSuperlayer];
+			layer.contents = nil;
 		}
 	}
 }
@@ -323,8 +331,8 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		
 		// check disk cache
 		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
-		NSData * data = [NSData dataWithContentsOfFile:cachePath];
-		NSImage * image = [[NSImage alloc] initWithData:data];
+		NSData * data = [[NSData alloc] initWithContentsOfFile:cachePath];
+		NSImage * image = data ? [[NSImage alloc] initWithData:data] : nil;	// force read of data from disk prior to adding image to layer
 		if ( image ) {
 
 			// image is in disk cache
@@ -358,7 +366,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 
 					dispatch_sync(dispatch_get_main_queue(), ^(void){
 #if TARGET_OS_IPHONE
-						layer.contents = (__bridge id)image.CGImage;
+						layer.contents = (__bridge id) image.CGImage;
 #else
 						layer.contents = image;
 #endif
@@ -370,14 +378,15 @@ static inline int32_t modulus( int32_t a, int32_t n)
 						[data writeToFile:cachePath atomically:YES];
 					});
 
-				} else {
+				} else if ( zoomLevel > 1 ) {
 
-#if 1
 					// try to show tile at one zoom level higher
 					dispatch_async(dispatch_get_main_queue(), ^(void){
 						[self fetchTileForTileX:tileX>>1 tileY:tileY>>1 zoomLevel:zoomLevel-1 completion:completion];
 					});
-#else
+
+				} else {
+					
 					// report error
 					if ( error == nil ) {
 						NSString * text = nil;
@@ -398,8 +407,8 @@ static inline int32_t modulus( int32_t a, int32_t n)
 					dispatch_async(dispatch_get_main_queue(), ^(void){
 						completion(error);
 					});
-#endif
 				}
+			
 			}];
 		}
 	});
@@ -483,7 +492,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 				[data writeToFile:cachePath atomically:YES];
 			}
 		}
-		dispatch_sync(dispatch_get_main_queue(), ^(void){
+		dispatch_async(dispatch_get_main_queue(), ^(void){
 			completion();
 		});
 	}];

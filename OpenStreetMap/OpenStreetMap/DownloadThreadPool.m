@@ -23,6 +23,7 @@
 }
 @end
 @implementation Download
+
 -(id)initWithRequest:(NSURLRequest *)request
 {
 	self = [super init];
@@ -57,12 +58,17 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
 	_completion( _response, _data, error );
+	_completion = nil;
+	_connection = nil;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	_completion( _response, _data, nil );
+	_completion = nil;
+	_connection = nil;
 }
+
 @end
 
 
@@ -141,7 +147,8 @@ static NSString * g_UserAgent = nil;
 			dispatch_semaphore_signal( _connectionSemaphore );
 
 			@synchronized( _downloadSet ) {
-				[_downloadSet removeObject:download];
+				NSObject * temp = download;
+				[_downloadSet removeObject:temp];
 			}
 
 			NSHTTPURLResponse * httpResponse = (id)response;

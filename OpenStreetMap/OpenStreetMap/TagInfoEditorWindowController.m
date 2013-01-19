@@ -420,7 +420,7 @@ static NSColor * ColorFromString( const char * text )
 		return YES;
 	}
 	// end
-	if MyData * zData = [self.nsMutaryOfMyData objectAtIndex:dragRow];
+	if NSData * zData = [self.nsMutaryOfMyData objectAtIndex:dragRow];
 	[self.nsMutaryOfMyData removeObjectAtIndex:dragRow];
 	[self.nsMutaryOfMyData insertObject:zData atIndex:row];
 	[self.nsTableViewObj noteNumberOfRowsChanged];

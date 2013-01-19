@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "DLog.h"
 #import "EditorMapLayer.h"
 #import "MapViewController.h"
 #import "MapView.h"
@@ -46,8 +47,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-//	DLog(@"will = %@",NSStringFromCGRect(self.view.frame));
 	self.navigationController.navigationBarHidden = YES;
+
+#if DEBUG
+	{
+		static dispatch_source_t timer;
+		timer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+		dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, NSEC_PER_SEC, NSEC_PER_SEC/2);
+		dispatch_source_set_event_handler(timer, ^{
+			DLog(@"memory used: %f MB used", MemoryUsedMB() );
+		});
+		dispatch_resume(timer);
+	}
+#endif
 }
 
 -(void)search:(UILongPressGestureRecognizer *)recognizer
@@ -74,13 +86,15 @@
 
 - (void)didReceiveMemoryWarning
 {
+	DLog(@"memory warning: %f MB used", MemoryUsedMB() );
+
 	[self.mapView flashMessage:@"Low memory: clearing cache"];
+
 	[_mapView.editorLayer didReceiveMemoryWarning];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-//	DLog(@"did = %@",NSStringFromCGRect(self.view.frame));
 	[super viewDidAppear:animated];
 	self.mapView.frame = self.view.bounds;
 	[self installLongPressGestureRecognizer:YES];

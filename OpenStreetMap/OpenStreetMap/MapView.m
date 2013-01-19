@@ -353,10 +353,6 @@ CGSize SizeForImage( NSImage * image )
 
 #pragma mark Utility
 
-- (void)cache:(NSCache *)cache willEvictObject:(id)obj
-{
-}
-
 -(BOOL)isFlipped
 {
 	return YES;
