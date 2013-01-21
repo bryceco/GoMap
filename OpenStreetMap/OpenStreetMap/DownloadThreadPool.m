@@ -244,7 +244,7 @@ typedef void (^dequeueBlock)(void);
 	static DownloadThreadPool * pool = nil;
 
 	dispatch_once( &onceToken, ^{
-		pool = [[DownloadThreadPool alloc] initWithMaxConnections:1];	// FIXME
+		pool = [[DownloadThreadPool alloc] initWithMaxConnections:2];
 	});
 	return pool;
 }
