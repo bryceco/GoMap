@@ -49,7 +49,7 @@
 	[super viewWillAppear:animated];
 	self.navigationController.navigationBarHidden = YES;
 
-#if DEBUG
+#if 0 && DEBUG
 	{
 		static dispatch_source_t timer;
 		timer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));

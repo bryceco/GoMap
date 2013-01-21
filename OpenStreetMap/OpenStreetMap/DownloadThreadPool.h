@@ -10,14 +10,18 @@
 
 @class ConnectionState;
 
+@interface DownloadAgent : NSObject <NSURLConnectionDataDelegate, NSStreamDelegate>
+-(NSInputStream *)stream;
+-(NSURLResponse *)response;
+-(NSData *)dataHeader;
+@end
+
 @interface DownloadThreadPool : NSObject
 {
 	NSInteger				_maxConnections;
 	dispatch_queue_t		_queue;
 	dispatch_semaphore_t	_connectionSemaphore;
-	int32_t					_pendingCount;
 }
-@property (strong,nonatomic)	NSMutableSet	*	downloadSet;
 
 
 +(DownloadThreadPool *)osmPool;
@@ -27,5 +31,7 @@
 
 -(void)dataForUrl:(NSString *)url completion:(void(^)(NSData * data,NSError * error))completion;
 -(void)dataForUrl:(NSString *)url completeOnMain:(BOOL)completeOnMain completion:(void(^)(NSData * data,NSError * error))completion;
+-(void)dataForUrl:(NSString *)url partialCallback:(void(^)(NSData *))partialCallback completion:(void(^)(NSURLResponse * response, NSError * error))completion;
+-(void)streamForUrl:(NSString *)url callback:(void(^)(DownloadAgent *))callback;
 
 @end

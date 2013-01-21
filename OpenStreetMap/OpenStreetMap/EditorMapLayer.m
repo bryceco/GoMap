@@ -11,6 +11,7 @@
 #import "NSMutableArray+PartialSort.h"
 
 #import "iosapi.h"
+#import "BingMapsGeometry.h"
 #import "CurvedTextLayer.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
@@ -488,7 +489,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 				}
 
 				if ( index == 1 && isInside && !isEntry ) {
-					DLog(@"first node is not outside");
+					// DLog(@"first node is not outside");
 					return;
 				}
 
@@ -1390,6 +1391,15 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 	// don't draw the same name twice
 	if ( [_nameDrawSet containsObject:name] )
 		return NO;
+
+	// don't draw names on very small objects
+	OSMRect bbox = [way boundingBox];
+	double degrees = bbox.size.width > bbox.size.height ? bbox.size.width : bbox.size.height;
+	double meters = degrees * MetersPerDegree( bbox.origin.y );
+	double pixels = meters / _mapView.metersPerPixel;
+	if ( name.length * 8 > pixels )
+		return NO;
+
 	[_nameDrawSet addObject:name];
 
 	TagInfo * tagInfo = way.tagInfo;
@@ -1399,6 +1409,7 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 
 	BOOL area = way.nodes.count >= 3 && way.nodes[0] == way.nodes.lastObject;
 	if ( !area ) {
+
 		CGPathRef path = [self pathForWay:way];
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);

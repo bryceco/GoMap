@@ -10,6 +10,9 @@
 
 #include <objc/objc-runtime.h>
 
+#import "DLog.h"
+
+
 void DumpUndoManager( NSUndoManager * undoManager )
 {
 	@try

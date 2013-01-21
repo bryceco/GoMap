@@ -59,6 +59,11 @@ static double GroundResolution(double latitude, NSInteger levelOfDetail)
 	return cos(latitude * M_PI / 180) * 2 * M_PI * EarthRadius / MapSize(levelOfDetail);
 }
 
+static double MetersPerDegree( double latitude )
+{
+	return cos(latitude * M_PI / 180) * 2 * M_PI * EarthRadius / 360;
+}
+
 static int MinimumLevelOfDetail(double latitude, double metersPerPixel)
 {
 	double res = GroundResolution(latitude, 0);

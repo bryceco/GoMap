@@ -50,7 +50,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 {
 	NSString			*	_parserCurrentElementText;
 	NSMutableArray		*	_parserStack;
-	BOOL					_parseError;
+	NSError				*	_parseError;
 	NSMutableDictionary	*	_nodes;
 	NSMutableDictionary	*	_ways;
 	NSMutableDictionary	*	_relations;

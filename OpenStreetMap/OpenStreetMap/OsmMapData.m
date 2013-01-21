@@ -413,25 +413,44 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 }
 
 // http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
-- (void)osmDataForBox:(ServerQuery *)query completion:(void(^)(ServerQuery * query,OsmMapData * data,NSError * error))completion
++ (void)osmDataForBox:(ServerQuery *)query completion:(void(^)(ServerQuery * query,OsmMapData * data,NSError * error))completion
 {
 	OSMRect box = query.rect;
 	NSMutableString * url = [NSMutableString stringWithString:OSM_API_URL];
 	[url appendFormat:@"api/0.6/map?bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
 
-	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData * data,NSError * error) {
-		OsmMapData * mapData = nil;
-		if ( data && !error ) {
-			DLog(@"osm %ld bytes, for %f,%f (%f,%f)", (long)data.length, box.origin.x, box.origin.y, box.size.width, box.size.height);
-			mapData = [[OsmMapData alloc] init];
-			BOOL ok = [mapData parseXmlMapData:data error:&error];
+	[[DownloadThreadPool osmPool] streamForUrl:url callback:^(DownloadAgent * agent){
+
+		if ( agent.stream.streamError ) {
+
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completion( query, nil, agent.stream.streamError );
+			});
+
+		} else {
+			OsmMapData * mapData = [[OsmMapData alloc] init];
+			NSError * error = nil;
+			BOOL ok = [mapData parseXmlStream:agent.stream error:&error];
 			if ( !ok ) {
+				if ( agent.dataHeader.length ) {
+					// probably some html-encoded error message from the server
+					NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
+					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
+				} else if ( agent.stream.streamError ) {
+					error = agent.stream.streamError;
+				} else if ( error ) {
+					// use the parser's reported error
+				} else {
+					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"Parse error" }];
+				}
+			}
+			if ( error ) {
 				mapData = nil;
 			}
+			dispatch_async(dispatch_get_main_queue(), ^{
+				completion( query, mapData, error );
+			});
 		}
-		dispatch_async(dispatch_get_main_queue(), ^{
-			completion(query,mapData,error);
-		});
 	}];
 }
 
@@ -470,7 +489,7 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 		for ( ServerQuery * query in queryList ) {
 			++activeRequests;
 			[mapView progressIncrement:NO];
-			[self osmDataForBox:query completion:mergePartialResults];
+			[OsmMapData osmDataForBox:query completion:mergePartialResults];
 		}
 	}
 
@@ -566,9 +585,8 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	} else {
 
 		DLog(@"OSM parser: Unknown tag '%@'", elementName);
-		_parseError = YES;
+		_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"OSM parser: Unknown tag '%@'", elementName]}];
 		[parser abortParsing];
-
 	}
 }
 
@@ -588,7 +606,8 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
-	DLog(@"Error: %@, line %ld, column %ld", parseError.localizedDescription, (long)parser.lineNumber, (long)parser.columnNumber );
+	DLog(@"Parse error: %@, line %ld, column %ld", parseError.localizedDescription, (long)parser.lineNumber, (long)parser.columnNumber );
+	_parseError = parseError;
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
@@ -599,33 +618,16 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 }
 
 
-
--(BOOL)parseXmlMapData:(NSData *)data error:(NSError **)error
+-(BOOL)parseXmlStream:(NSInputStream *)stream error:(NSError **)error
 {
-	if ( data == nil ) {
-		if ( error ) {
-			*error = [NSError errorWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"Missing XML data" }];
-		}
-		return NO;
-	}
-
-#if 0
-	NSString * text = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
-	DLog(@"%@\n",text);
-#endif
-
-	NSInputStream * stream = [NSInputStream inputStreamWithData:data];
 	NSXMLParser * parser = [[NSXMLParser alloc] initWithStream:stream];
 	parser.delegate = self;
-	_parseError = NO;
-	BOOL ok = [parser parse] && !_parseError;
+	_parseError = nil;
+
+	BOOL ok = [parser parse] && _parseError == nil;
 
 	if ( !ok ) {
-		NSString * string = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
-		if ( error ) {
-			*error = [NSError errorWithDomain:@"parser" code:101 userInfo:@{ NSLocalizedDescriptionKey : string }];
-		}
-		DLog(@"osm xml = %@",string);
+		*error = _parseError;
 	}
 
 	return ok;
