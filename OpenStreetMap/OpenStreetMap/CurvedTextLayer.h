@@ -17,6 +17,6 @@
 {
 }
 
-+(void)drawString:(NSString *)string font:(NSFont *)font color:(NSColor *)color shadowColor:(NSColor *)shadowColor path:(CGPathRef)path context:(CGContextRef)ctx;
++(void)drawString:(NSString *)string color:(NSColor *)color shadowColor:(NSColor *)shadowColor path:(CGPathRef)path context:(CGContextRef)ctx;
 
 @end

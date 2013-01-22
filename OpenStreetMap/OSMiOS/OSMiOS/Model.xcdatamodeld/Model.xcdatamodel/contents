@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Node" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="member" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationMember" inverseName="node_ref" inverseEntity="RelationMember" syncable="YES"/>
+        <relationship name="tags" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="NodeTag" inverseName="node" inverseEntity="NodeTag" syncable="YES"/>
+        <relationship name="way" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Way" inverseName="nodes" inverseEntity="Way" syncable="YES"/>
+    </entity>
+    <entity name="NodeTag" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="k" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="v" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="node" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="tags" inverseEntity="Node" syncable="YES"/>
+    </entity>
+    <entity name="Relation" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="member" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationMember" inverseName="relation_ref" inverseEntity="RelationMember" syncable="YES"/>
+        <relationship name="tags" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationTag" inverseName="relation" inverseEntity="RelationTag" syncable="YES"/>
+    </entity>
+    <entity name="RelationMember" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="ref_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="node_ref" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="member" inverseEntity="Node" syncable="YES"/>
+        <relationship name="relation_ref" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Relation" inverseName="member" inverseEntity="Relation" syncable="YES"/>
+        <relationship name="way_ref" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Way" inverseName="member" inverseEntity="Way" syncable="YES"/>
+    </entity>
+    <entity name="RelationTag" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="k" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="v" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="relation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Relation" inverseName="tags" inverseEntity="Relation" syncable="YES"/>
+    </entity>
+    <entity name="Way" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="member" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationMember" inverseName="way_ref" inverseEntity="RelationMember" syncable="YES"/>
+        <relationship name="nodes" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="way" inverseEntity="Node" syncable="YES"/>
+        <relationship name="tags" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="WayTag" inverseName="way" inverseEntity="WayTag" syncable="YES"/>
+    </entity>
+    <entity name="WayTag" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="k" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="v" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="way" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Way" inverseName="tags" inverseEntity="Way" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Node" positionX="-153" positionY="126" width="128" height="163"/>
+        <element name="Way" positionX="52" positionY="126" width="128" height="105"/>
+        <element name="NodeTag" positionX="-126" positionY="351" width="128" height="103"/>
+        <element name="WayTag" positionX="54" positionY="345" width="128" height="105"/>
+        <element name="Relation" positionX="214" positionY="129" width="128" height="105"/>
+        <element name="RelationTag" positionX="223" positionY="345" width="128" height="105"/>
+        <element name="RelationMember" positionX="196" positionY="-81" width="128" height="165"/>
+    </elements>
+</model>

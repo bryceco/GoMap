@@ -28,6 +28,7 @@
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
 		0242331316750C81008A3B6A /* ArrowBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0242331216750C81008A3B6A /* ArrowBlue.png */; };
+		024ADF3616AE44CB00875658 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3416AE44CB00875658 /* Model.xcdatamodeld */; };
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
 		0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0277E29016A66C1800456BED /* EditorLayerGL.m */; };
@@ -444,6 +445,7 @@
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../../OpenStreetMap/VectorMath.m; sourceTree = "<group>"; };
 		0242331216750C81008A3B6A /* ArrowBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlue.png; sourceTree = "<group>"; };
+		024ADF3516AE44CB00875658 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		025A1CFA1690B96E002B60CB /* OSM-Logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo57.png"; sourceTree = "<group>"; };
 		025A1CFB1690B96E002B60CB /* OSM-Logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo114.png"; sourceTree = "<group>"; };
 		0277E28F16A66C1800456BED /* EditorLayerGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorLayerGL.h; sourceTree = "<group>"; };
@@ -937,7 +939,6 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
-				0277E29316A673CC00456BED /* OpenGLES.framework */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
 				02ACBA3216713CCB00BB4414 /* Frameworks */,
 				02ACBA3016713CCB00BB4414 /* Products */,
@@ -962,6 +963,7 @@
 				02ACBA3516713CCB00BB4414 /* Foundation.framework */,
 				02ACBD181671737300BB4414 /* libxml2.dylib */,
 				021C6AB2168768C800FB17B0 /* MessageUI.framework */,
+				0277E29316A673CC00456BED /* OpenGLES.framework */,
 				02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */,
 				02ACBA3316713CCB00BB4414 /* UIKit.framework */,
 			);
@@ -1029,6 +1031,7 @@
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
+				024ADF3416AE44CB00875658 /* Model.xcdatamodeld */,
 			);
 			name = "Go Map!";
 			path = OSMiOS;
@@ -1908,6 +1911,7 @@
 				02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */,
 				0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
+				024ADF3616AE44CB00875658 /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2042,6 +2046,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		024ADF3416AE44CB00875658 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				024ADF3516AE44CB00875658 /* Model.xcdatamodel */,
+			);
+			currentVersion = 024ADF3516AE44CB00875658 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 02ACBA2616713CCB00BB4414 /* Project object */;
 }

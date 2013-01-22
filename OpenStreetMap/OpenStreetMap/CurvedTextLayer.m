@@ -10,6 +10,7 @@
 #import "CurvedTextLayer.h"
 
 
+
 @implementation CurvedTextLayer
 
 static void GetPathElement(void *info, const CGPathElement *element)
@@ -59,11 +60,19 @@ static void GetPathPosition(void *info, const CGPathElement *element)
 				CGPoint pt = element->points[0];
 				double dx = pt.x - pos->previous.x;
 				double dy = pt.y - pos->previous.y;
-				double len = sqrt( dx*dx + dy*dy );
-				double frac = pos->offset / len;
-				pos->position.x = pos->previous.x + frac * dx;
-				pos->position.y = pos->previous.y + frac * dy;
+				double len = hypot(dx,dy);
+				dx /= len;
+				dy /= len;
+
+				// always set position/angle because if we fall off the end we need it set
+				pos->position.x = pos->previous.x + pos->offset * dx;
+				pos->position.y = pos->previous.y + pos->offset * dy;
 				pos->angle = atan2(dy,dx);
+
+				// shift text off baseline
+				pos->position.x +=  dy * 3;
+				pos->position.y += -dx * 3;
+
 				if ( pos->offset < len ) {
 					// found it
 					pos->done = YES;
@@ -90,42 +99,44 @@ static void GetPositionAndAngleForOffset( CGPathRef path, double offset, CGPoint
 	*angle = position.angle;
 }
 
-+(void)drawString:(NSString *)string font:(NSFont *)font color:(NSColor *)color shadowColor:(NSColor *)shadowColor path:(CGPathRef)path context:(CGContextRef)ctx
++(void)drawString:(NSString *)string color:(NSColor *)color shadowColor:(NSColor *)shadowColor path:(CGPathRef)path context:(CGContextRef)ctx
 {
-	CGFloat red, green, blue, alpha;
-	[color getRed:&red green:&green blue:&blue alpha:&alpha];
-	CGContextSetTextDrawingMode(ctx, kCGTextFill);
-	CGContextSetRGBFillColor(ctx, red, green, blue, alpha);
+	const double StartingOffset = 5.0;	// start off slightly offset from end of way
+
+	CGContextSetFillColorWithColor(ctx, color.CGColor);
+	CGContextSetStrokeColorWithColor(ctx, NULL);
 	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 5.0, shadowColor.CGColor );
+	CGContextSetTextDrawingMode(ctx, kCGTextFill);
 
-	CGContextSelectFont( ctx, "Helvetica", 12.0, kCGEncodingMacRoman );
-
-	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:nil];
+	CTFontRef ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
 
 	CGContextSaveGState(ctx);
-
 	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
 	CGContextSetTextPosition(ctx, 0, 0);
 
 	// get array of glyph widths
-	CTLineRef	line	= CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
-	CFArrayRef	runArray = CTLineGetGlyphRuns(line);
-	CFIndex		runCount = CFArrayGetCount(runArray);
+	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ (NSString *)kCTFontAttributeName : (__bridge id)ctFont }];
+	CTLineRef	line		= CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
+	CFArrayRef	runArray	= CTLineGetGlyphRuns(line);
+	CFIndex		runCount	= CFArrayGetCount(runArray);
 
-	double glyphOffset = 0.0;
-
-	CFIndex glyphIndex = 0;
-	for (CFIndex runIndex = 0; runIndex < runCount; runIndex++) {
-		CTRunRef run			= (CTRunRef)CFArrayGetValueAtIndex(runArray, runIndex);
-		CFIndex	 runGlyphCount	= CTRunGetGlyphCount(run);
+	for ( CFIndex runIndex = 0; runIndex < runCount; runIndex++) {
+		CTRunRef	run				= (CTRunRef)CFArrayGetValueAtIndex( runArray, runIndex );
+		CFIndex		runGlyphCount	= CTRunGetGlyphCount( run );
+		CTFontRef	runFont			= CFDictionaryGetValue( CTRunGetAttributes(run), kCTFontAttributeName );
 
 		for ( CFIndex runGlyphIndex = 0; runGlyphIndex < runGlyphCount; runGlyphIndex++ ) {
 
 			CGContextSaveGState(ctx);
 
+			CFRange range = CFRangeMake(runGlyphIndex, 1);
+
+			CGPoint glyphPosition;
+			CTRunGetPositions( run, range, &glyphPosition );
+
 			CGPoint pos;
 			CGFloat angle;
-			GetPositionAndAngleForOffset( path, glyphOffset, &pos, &angle );
+			GetPositionAndAngleForOffset( path, StartingOffset+glyphPosition.x, &pos, &angle );
 
 			// We use a different affine transform for each glyph, to position and rotate it
 			// based on its calculated position along the path.
@@ -134,16 +145,29 @@ static void GetPositionAndAngleForOffset( CGPathRef path, double offset, CGPoint
 			CGContextScaleCTM( ctx, 1.0, -1.0 );
 
 			CGGlyph glyph;
-			CFRange range = CFRangeMake(runGlyphIndex, 1);
 			CTRunGetGlyphs(run, range, &glyph);
 			CGPoint position = { 0, 0 };
-			CGContextShowGlyphsAtPositions(ctx, &glyph, &position, 1);
 
+#if 0
+			// plain text
+			CTFontDrawGlyphs( runFont, &glyph, &position, 1, ctx );	// must use runFont here to get font substitution
+#else
+			// outlined text
+			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
+			CGContextSetLineWidth( ctx, 2.0);
+			CGContextSetLineJoin( ctx, kCGLineJoinRound );
+
+			CGContextSetTextDrawingMode( ctx, kCGTextFillStroke );
+			CGContextSetFillColorWithColor(ctx, shadowColor.CGColor);
+			CGContextSetStrokeColorWithColor(ctx, shadowColor.CGColor);
+			CTFontDrawGlyphs( runFont, &glyph, &position, 1, ctx );
+
+			CGContextSetTextDrawingMode( ctx, kCGTextFill );
+			CGContextSetFillColorWithColor(ctx, color.CGColor);
+			CTFontDrawGlyphs( runFont, &glyph, &position, 1, ctx );
+#endif
+			
 			CGContextRestoreGState(ctx);
-
-			double glyphWidth = CTRunGetTypographicBounds( run, range, NULL, NULL, NULL);
-			glyphOffset += glyphWidth;
-			++glyphIndex;
 		}
 	}
 	CFRelease(line);

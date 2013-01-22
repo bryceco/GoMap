@@ -1094,7 +1094,7 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 
 static inline NSColor * ShadowColorForColor( CGFloat r, CGFloat g, CGFloat b )
 {
-	return r+g+b > 1.5 ? NSColor.blackColor : NSColor.whiteColor;
+	return r+g+b > 1.5 ? UIColor.blackColor : UIColor.whiteColor;
 }
 static inline NSColor * ShadowColorForColor2( NSColor * color )
 {
@@ -1355,7 +1355,7 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 		CGPathRef path = [self pathForWay:way];
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);
-		[CurvedTextLayer drawString:name font:nil color:color shadowColor:shadowColor path:path context:ctx];
+		[CurvedTextLayer drawString:name color:color shadowColor:shadowColor path:path context:ctx];
 		CGPathRelease(path);
 	} else {
 		// it is a node or area
@@ -1413,7 +1413,7 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 		CGPathRef path = [self pathForWay:way];
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);
-		[CurvedTextLayer drawString:name font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) path:path context:ctx];
+		[CurvedTextLayer drawString:name color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) path:path context:ctx];
 		CGPathRelease(path);
 	} else {
 		OSMPoint point = [way centerPoint];
