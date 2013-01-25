@@ -19,6 +19,7 @@
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmObjects.h"
+#import "PathUtil.h"
 #import "QuadMap.h"
 #import "SpeechBalloonLayer.h"
 #import "TagInfo.h"
@@ -303,58 +304,65 @@ static BOOL RotateLoop( NSMutableArray * loop, OSMRect viewRect )
 	return index >= 0;
 }
 
-static inline void Sort4( CGFloat p[] )
+static inline void Sort4( double p[] )
 {
-	if ( p[0] > p[1] ) { CGFloat t = p[1]; p[1] = p[0]; p[0] = t; }
-	if ( p[2] > p[3] ) { CGFloat t = p[3]; p[3] = p[2]; p[2] = t; }
-	if ( p[0] > p[2] ) { CGFloat t = p[2]; p[2] = p[0]; p[0] = t; }
-	if ( p[1] > p[3] ) { CGFloat t = p[3]; p[3] = p[1]; p[1] = t; }
-	if ( p[1] > p[2] ) { CGFloat t = p[2]; p[2] = p[1]; p[1] = t; }
+	if ( p[0] > p[1] ) { double t = p[1]; p[1] = p[0]; p[0] = t; }
+	if ( p[2] > p[3] ) { double t = p[3]; p[3] = p[2]; p[2] = t; }
+	if ( p[0] > p[2] ) { double t = p[2]; p[2] = p[0]; p[0] = t; }
+	if ( p[1] > p[3] ) { double t = p[3]; p[3] = p[1]; p[1] = t; }
+	if ( p[1] > p[2] ) { double t = p[2]; p[2] = p[1]; p[1] = t; }
 }
-static inline void Sort3( CGFloat p[] )
+static inline void Sort3( double p[] )
 {
-	if ( p[0] > p[1] ) { CGFloat t = p[1]; p[1] = p[0]; p[0] = t; }
-	if ( p[0] > p[2] ) { CGFloat t = p[2]; p[2] = p[0]; p[0] = t; }
-	if ( p[1] > p[2] ) { CGFloat t = p[2]; p[2] = p[1]; p[1] = t; }
+	if ( p[0] > p[1] ) { double t = p[1]; p[1] = p[0]; p[0] = t; }
+	if ( p[0] > p[2] ) { double t = p[2]; p[2] = p[0]; p[0] = t; }
+	if ( p[1] > p[2] ) { double t = p[2]; p[2] = p[1]; p[1] = t; }
 }
-static inline void Sort2( CGFloat p[] )
+static inline void Sort2( double p[] )
 {
-	if ( p[0] > p[1] ) { CGFloat t = p[1]; p[1] = p[0]; p[0] = t; }
+	if ( p[0] > p[1] ) { double t = p[1]; p[1] = p[0]; p[0] = t; }
 }
 
 static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoint * pts )
 {
-	CGFloat top = rect.origin.y;
-	CGFloat bottom = rect.origin.y + rect.size.height;
-	CGFloat left = rect.origin.x;
-	CGFloat right = rect.origin.x + rect.size.width;
+	double top		= rect.origin.y;
+	double bottom	= rect.origin.y + rect.size.height;
+	double left		= rect.origin.x;
+	double right	= rect.origin.x + rect.size.width;
 
-	CGFloat dx = p2.x - p1.x;
-	CGFloat dy = p2.y - p1.y;
+	double dx = p2.x - p1.x;
+	double dy = p2.y - p1.y;
 
 	// get distances in terms of 0..1
-	CGFloat	vLeft	= (left   - p1.x) / dx;
-	CGFloat vRight	= (right  - p1.x) / dx;
-	CGFloat vTop	= (top    - p1.y) / dy;
-	CGFloat vBottom	= (bottom - p1.y) / dy;
+	// we compute crossings for not only the rectangles walls but also the projections of the walls outside the rectangle,
+	// so 4 possible interesection points
+	double		cross[ 4 ]	= { 0 };
+	NSInteger	crossSrc	= 0;
+	if ( dx ) {
+		CGFloat	vLeft	= (left   - p1.x) / dx;
+		CGFloat vRight	= (right  - p1.x) / dx;
+		if ( vLeft >= 0 && vLeft <= 1 )
+			cross[ crossSrc++ ] = vLeft;
+		if ( vRight >= 0 && vRight <= 1 )
+			cross[ crossSrc++ ] = vRight;
+	}
+	if ( dy ) {
+		CGFloat vTop	= (top    - p1.y) / dy;
+		CGFloat vBottom	= (bottom - p1.y) / dy;
+		if ( vTop >= 0 && vTop <= 1 )
+			cross[ crossSrc++ ] = vTop;
+		if ( vBottom >= 0 && vBottom <= 1 )
+			cross[ crossSrc++ ] = vBottom;
+	}
 
-	CGFloat cross[ 4 ] = { 0 };
-	NSInteger crossSrc = 0;
-	if ( vLeft >= 0 && vLeft <= 1 )
-		cross[ crossSrc++ ] = vLeft;
-	if ( vRight >= 0 && vRight <= 1 )
-		cross[ crossSrc++ ] = vRight;
-	if ( vTop >= 0 && vTop <= 1 )
-		cross[ crossSrc++ ] = vTop;
-	if ( vBottom >= 0 && vBottom <= 1 )
-		cross[ crossSrc++ ] = vBottom;
-
+	// sort crossings according to distance from p1
 	switch ( crossSrc ) {
 		case 2: Sort2( cross );	break;
 		case 3:	Sort3( cross ); break;
 		case 4:	Sort4( cross );	break;
 	}
 
+	// get the points that are actually inside the rect (max 2)
 	NSInteger crossCnt = 0;
 	for ( NSInteger i = 0; i < crossSrc; ++i ) {
 		OSMPoint pt = { p1.x + cross[i]*dx, p1.y + cross[i]*dy };
@@ -1196,56 +1204,6 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	CGContextSetLineDash(ctx, 0.0f, NULL, 0);
 }
 
-
-static void InvokeBlockAlongPathCallback( void * info, const CGPathElement * element )
-{
-	void (^block)(const CGPathElement * element) = (__bridge void(^)(const CGPathElement * element))info;
-	block( element );
-}
-static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(OSMPoint pt, OSMPoint direction) )
-{
-	__block CGFloat offset = initialOffset;
-	__block CGPoint previous;
-
-	void(^block)(const CGPathElement * element) = ^(const CGPathElement * element){
-
-		switch ( element->type ) {
-
-			case kCGPathElementMoveToPoint:
-				previous = element->points[0];
-				break;
-				
-			case kCGPathElementAddLineToPoint:
-				{
-					CGPoint nextPt = element->points[0];
-					double dx = nextPt.x - previous.x;
-					double dy = nextPt.y - previous.y;
-					double len = sqrt( dx*dx + dy*dy );
-					dx /= len;
-					dy /= len;
-
-					while ( offset < len ) {
-						// found it
-						OSMPoint pos = { previous.x + offset * dx, previous.y + offset * dy };
-						OSMPoint dir = { dx, dy };
-						callback( pos, dir );
-						offset += interval;
-					}
-					offset -= len;
-					previous = nextPt;
-				}
-				break;
-				
-			case kCGPathElementAddQuadCurveToPoint:
-			case kCGPathElementAddCurveToPoint:
-			case kCGPathElementCloseSubpath:
-				assert(NO);
-				break;
-		}
-	};
-	CGPathApply(path, (__bridge void *)block, InvokeBlockAlongPathCallback);
-}
-
 -(void)drawArrowsForPath:(CGPathRef)path context:(CGContextRef)ctx
 {
 	BOOL solid = YES;
@@ -1355,7 +1313,7 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 		CGPathRef path = [self pathForWay:way];
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);
-		[CurvedTextLayer drawString:name color:color shadowColor:shadowColor path:path context:ctx];
+		[CurvedTextLayer drawString:name offset:5.0 color:color shadowColor:shadowColor path:path context:ctx];
 		CGPathRelease(path);
 	} else {
 		// it is a node or area
@@ -1381,8 +1339,86 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 	}
 }
 
+-(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength
+{
+	CGMutablePathRef	path = NULL;
+	double				length = 0.0;
+	OSMRect				viewRect = OSMRectFromCGRect( self.bounds );
+	BOOL				prevInside;
+	OSMPoint			prev = { 0 };
+	BOOL				first = YES;
+	OSMPoint			firstPoint = { 0 };
+	OSMPoint			lastPoint = { 0 };
+
+	for ( OsmNode * node in way.nodes ) {
+
+		OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+		BOOL inside = OSMRectContainsPoint( viewRect, pt );
+
+		if ( first ) {
+			first = NO;
+			goto next;
+		}
+		OSMPoint cross[ 2 ];
+		NSInteger crossCnt = 0;
+		if ( !(prevInside && inside) ) {
+			crossCnt = ClipLineToRect( prev, pt, viewRect, cross );
+			if ( crossCnt == 0 ) {
+				// both are outside and didn't cross
+				goto next;
+			}
+		}
+
+		OSMPoint p1 = prevInside ? prev : cross[0];
+		OSMPoint p2 = inside	 ? pt   : cross[ crossCnt-1 ];
+		if ( path == NULL ) {
+			path = CGPathCreateMutable();
+			CGPathMoveToPoint( path, NULL, p1.x, p1.y );
+			firstPoint = prev;
+		}
+		CGPathAddLineToPoint( path, NULL, p2.x, p2.y );
+		lastPoint = pt;
+		length += hypot( p1.x - p2.x, p1.y - p2.y );
+		if ( !inside )
+			break;
+
+	next:
+		prev = pt;
+		prevInside = inside;
+	}
+	if ( path ) {
+		// orient path so text draws right-side up
+		double dx = lastPoint.x - firstPoint.x;
+		if ( dx < 0 ) {
+			// reverse path
+			NSMutableArray * a = [NSMutableArray arrayWithCapacity:way.nodes.count];
+			CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint * points){
+				if ( type == kCGPathElementMoveToPoint || type == kCGPathElementAddLineToPoint ) {
+					OSMPoint pt = { points->x, points->y };
+					OSMPointBoxed * boxed = [OSMPointBoxed pointWithPoint:pt];
+					[a addObject:boxed];
+				}
+			});
+			path = CGPathCreateMutable();
+			__block BOOL first = YES;
+			[a enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSMPointBoxed * pt, NSUInteger idx, BOOL *stop) {
+				if ( first ) {
+					first = NO;
+					CGPathMoveToPoint( path, NULL, pt.point.x, pt.point.y );
+				} else {
+					CGPathAddLineToPoint( path, NULL, pt.point.x, pt.point.y );
+				}
+			}];
+		}
+	}
+	*pLength = length;
+	return path;
+}
+
 -(BOOL)drawWayName:(OsmWay *)way context:(CGContextRef)ctx
 {
+	const CGFloat Pixels_Per_Character = 8.0;
+
 	// add street names
 	NSString * name = [way.tags valueForKey:@"name"];
 	if ( name == nil )
@@ -1392,30 +1428,30 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 	if ( [_nameDrawSet containsObject:name] )
 		return NO;
 
-	// don't draw names on very small objects
-	OSMRect bbox = [way boundingBox];
-	double degrees = bbox.size.width > bbox.size.height ? bbox.size.width : bbox.size.height;
-	double meters = degrees * MetersPerDegree( bbox.origin.y );
-	double pixels = meters / _mapView.metersPerPixel;
-	if ( name.length * 8 > pixels )
-		return NO;
-
-	[_nameDrawSet addObject:name];
-
-	TagInfo * tagInfo = way.tagInfo;
-	assert( tagInfo );
-
 	//	DLog(@"draw way: %ld nodes", way.nodes.count);
 
 	BOOL area = way.nodes.count >= 3 && way.nodes[0] == way.nodes.lastObject;
 	if ( !area ) {
 
-		CGPathRef path = [self pathForWay:way];
+		double length = 0.0;
+		CGPathRef path = [self pathClippedToViewRect:way length:&length];
+		double offset = (length - name.length * Pixels_Per_Character) / 2;
+		if ( offset < 0 )
+			return NO;
+
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);
-		[CurvedTextLayer drawString:name color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) path:path context:ctx];
+		[CurvedTextLayer drawString:name offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) path:path context:ctx];
 		CGPathRelease(path);
+
 	} else {
+
+		// don't draw names on objects too narrow for the label
+		OSMRect bbox = [way boundingBox];
+		double pixelWidth = bbox.size.width * MetersPerDegree( bbox.origin.y ) / _mapView.metersPerPixel;
+		if ( name.length * Pixels_Per_Character > pixelWidth * 1.5 )
+			return NO;
+		
 		OSMPoint point = [way centerPoint];
 		point = [self pointForLat:point.y lon:point.x];
 		point.x -= 3 * name.length;
@@ -1435,6 +1471,7 @@ static void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double i
 		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
 		CFRelease(ct1);
 	}
+	[_nameDrawSet addObject:name];
 	return YES;
 }
 
@@ -1576,20 +1613,20 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 -(NSMutableArray *)getVisibleObjects
 {
 	OSMRect box = [_mapView viewportLongitudeLatitude];
-	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_mapData.wayCount+_mapData.nodeCount];
+	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_mapData.wayCount];
 	[_mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
-		if ( obj.isWay ) {
-			if ( !obj.deleted ) {
+		if ( !obj.deleted ) {
+			if ( obj.isWay ) {
 				[a addObject:obj];
 				for ( OsmNode * node in ((OsmWay *)obj).nodes ) {
 					if ( ShouldDisplayNodeInWay( node.tags ) ) {
 						[a addObject:node];
 					}
 				}
-			}
-		} else if ( obj.isNode ) {
-			if ( ((OsmNode *)obj).wayCount == 0 && !obj.deleted ) {
-				[a addObject:obj];
+			} else if ( obj.isNode ) {
+				if ( ((OsmNode *)obj).wayCount == 0 ) {
+					[a addObject:obj];
+				}
 			}
 		}
 	}];
@@ -1720,13 +1757,15 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
 	_nameDrawSet = [NSMutableSet new];
 
+//	DLog(@"z = %f, fix way labels", log2( _mapView.mapTransform.a ) );
+
 	if ( _mapCss ) {
 		[self drawMapCssInContext:ctx];
 		return;
 	}
 
 #if TARGET_OS_IPHONE
-	NSInteger nameLimit = 10;
+	NSInteger nameLimit = 5;
 	NSInteger limit = 100;
 #else
 	// need a way to prevent selecting/modifying objects that are not displayed
@@ -1752,19 +1791,11 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		}
 	}
 
-//	DLog(@"get taginfo = %f",[[NSDate date] timeIntervalSinceDate:start]);
 	start = [NSDate date];
 
 	// sort from big to small objects
-#if 1
 	[_shownObjects partialSortK:limit compare:VisibleSizeLess];
-#else
-	[_shownObjects sortWithOptions:NSSortConcurrent usingComparator:^NSComparisonResult(OsmBaseObject * obj1, OsmBaseObject * obj2) {
-		return VisibleSizeCompare( obj1, obj2 );
-	}];
-#endif
 
-//	DLog(@"sort visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
 	start = [NSDate date];
 
 	if ( _shownObjects.count > limit ) {

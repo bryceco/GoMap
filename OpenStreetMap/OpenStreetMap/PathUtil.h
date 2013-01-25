@@ -1,0 +1,21 @@
+//
+//  PathUtil.h
+//  OpenStreetMap
+//
+//  Created by Bryce on 1/24/13.
+//  Copyright (c) 2013 Bryce. All rights reserved.
+//
+
+#ifndef OpenStreetMap_PathUtil_h
+#define OpenStreetMap_PathUtil_h
+
+#import "VectorMath.h"
+
+typedef void (^ApplyPathCallback)(CGPathElementType type, CGPoint * points);
+
+void CGPathApplyBlock( CGPathRef path, ApplyPathCallback block );
+void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(OSMPoint pt, OSMPoint direction) );
+CGPathRef ReversePath( CGPathRef path );
+void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, CGPoint * pPos, CGFloat * pAngle );
+
+#endif

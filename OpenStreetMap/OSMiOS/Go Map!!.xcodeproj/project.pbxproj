@@ -29,6 +29,7 @@
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
 		0242331316750C81008A3B6A /* ArrowBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0242331216750C81008A3B6A /* ArrowBlue.png */; };
 		024ADF3616AE44CB00875658 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3416AE44CB00875658 /* Model.xcdatamodeld */; };
+		024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3B16B1B38B00875658 /* PathUtil.m */; };
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
 		0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0277E29016A66C1800456BED /* EditorLayerGL.m */; };
@@ -446,6 +447,8 @@
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../../OpenStreetMap/VectorMath.m; sourceTree = "<group>"; };
 		0242331216750C81008A3B6A /* ArrowBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlue.png; sourceTree = "<group>"; };
 		024ADF3516AE44CB00875658 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		024ADF3A16B1B38A00875658 /* PathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathUtil.h; path = ../../OpenStreetMap/PathUtil.h; sourceTree = "<group>"; };
+		024ADF3B16B1B38B00875658 /* PathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PathUtil.m; path = ../../OpenStreetMap/PathUtil.m; sourceTree = "<group>"; };
 		025A1CFA1690B96E002B60CB /* OSM-Logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo57.png"; sourceTree = "<group>"; };
 		025A1CFB1690B96E002B60CB /* OSM-Logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo114.png"; sourceTree = "<group>"; };
 		0277E28F16A66C1800456BED /* EditorLayerGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorLayerGL.h; sourceTree = "<group>"; };
@@ -1363,6 +1366,8 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				024ADF3A16B1B38A00875658 /* PathUtil.h */,
+				024ADF3B16B1B38B00875658 /* PathUtil.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
 				02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */,
 				02ACBA6F16713F2A00BB4414 /* BlueBall.png */,
@@ -1912,6 +1917,7 @@
 				0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
 				024ADF3616AE44CB00875658 /* Model.xcdatamodeld in Sources */,
+				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

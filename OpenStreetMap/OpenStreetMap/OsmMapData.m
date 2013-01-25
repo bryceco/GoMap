@@ -172,6 +172,26 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 #pragma mark Editing
 
+static NSString * StringTruncatedTo255( NSString * s )
+{
+	if ( s.length > 255 )
+		s = [s substringToIndex:256];
+	while ( [s lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > 255 ) {
+		s = [s substringToIndex:s.length-1];
+	}
+	return s;
+}
+static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
+{
+	NSMutableDictionary * newDict = [[NSMutableDictionary alloc] initWithCapacity:tags.count];
+	[tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+		key		= StringTruncatedTo255( key );
+		value	= StringTruncatedTo255( value );
+		[newDict setObject:value forKey:key];
+	}];
+	return newDict;
+}
+
 -(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
 {
 	[_undoManager registerUndoWithTarget:target selector:selector objects:objects];
@@ -179,6 +199,8 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 -(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object
 {
+	dict = DictWithTagsTruncatedTo255( dict );
+
 	[_undoManager registerUndoComment:@"set tags"];
 	[object setTags:dict undo:_undoManager];
 }
@@ -1229,33 +1251,30 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
+#if 0
 	DLog(@"%ld nodes", (long)_nodes.count);
 	DLog(@"%ld ways", (long)_ways.count);
 	DLog(@"%ld relations", (long)_relations.count);
 	DLog(@"%ld regions", (long)_region.count);
 	DLog(@"%ld spatial quads", (long)_spatial.quadCount);
 	DLog(@"%ld spatial members", (long)_spatial.memberCount);
-
-	NSDate * s1 = [NSDate date];
+#endif
+	
 	[coder encodeObject:_nodes			forKey:@"nodes"];
-	NSDate * s2 = [NSDate date];
 	[coder encodeObject:_ways			forKey:@"ways"];
-	NSDate * s3 = [NSDate date];
 	[coder encodeObject:_relations		forKey:@"relations"];
-	NSDate * s4 = [NSDate date];
 	[coder encodeObject:_region			forKey:@"region"];
-	NSDate * s5 = [NSDate date];
 	[coder encodeObject:_spatial		forKey:@"spatial"];
-	NSDate * s6 = [NSDate date];
 	[coder encodeObject:_undoManager	forKey:@"undoManager"];
-	NSDate * s7 = [NSDate date];
 
+#if 0
 	DLog(@"nodes     = %f", [s2 timeIntervalSinceDate:s1]);
 	DLog(@"ways      = %f", [s3 timeIntervalSinceDate:s2]);
 	DLog(@"relations = %f", [s4 timeIntervalSinceDate:s3]);
 	DLog(@"regions   = %f", [s5 timeIntervalSinceDate:s4]);
 	DLog(@"spatial   = %f", [s6 timeIntervalSinceDate:s5]);
 	DLog(@"undo      = %f", [s7 timeIntervalSinceDate:s6]);
+#endif
 }
 
 - (id)initWithCoder:(NSCoder *)coder

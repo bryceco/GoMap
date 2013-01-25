@@ -45,7 +45,7 @@ typedef void (^dequeueBlock)(void);
 }
 -(NSData *)dataHeader
 {
-	return nil;
+	return _dataHeader;
 }
 
 

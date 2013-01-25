@@ -26,6 +26,7 @@
 		0249289A161A96A500589FD2 /* CurvedTextLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02492899161A96A500589FD2 /* CurvedTextLayer.m */; };
 		024928A1161D56BE00589FD2 /* TagInfo.menu.xml in Resources */ = {isa = PBXBuildFile; fileRef = 024928A0161D56BE00589FD2 /* TagInfo.menu.xml */; };
 		024928A4161DDE1300589FD2 /* TagInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 024928A3161DDE1300589FD2 /* TagInfo.m */; };
+		024ADF3916B1B2EF00875658 /* PathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3816B1B2EF00875658 /* PathUtil.m */; };
 		026318621664CC1C00816CCD /* TagInfo.xml in Resources */ = {isa = PBXBuildFile; fileRef = 026318611664CC1C00816CCD /* TagInfo.xml */; };
 		026E8CB21612B7CA0098345C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026E8CB11612B7CA0098345C /* CoreLocation.framework */; };
 		026E8CBD1612DC880098345C /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 026E8CBC1612DC880098345C /* MapView.m */; };
@@ -411,6 +412,8 @@
 		024928A0161D56BE00589FD2 /* TagInfo.menu.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TagInfo.menu.xml; sourceTree = "<group>"; };
 		024928A2161DDE1300589FD2 /* TagInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagInfo.h; sourceTree = "<group>"; };
 		024928A3161DDE1300589FD2 /* TagInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagInfo.m; sourceTree = "<group>"; };
+		024ADF3716B1B29D00875658 /* PathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathUtil.h; sourceTree = "<group>"; };
+		024ADF3816B1B2EF00875658 /* PathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathUtil.m; sourceTree = "<group>"; };
 		026318611664CC1C00816CCD /* TagInfo.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TagInfo.xml; sourceTree = "<group>"; };
 		026E8CB11612B7CA0098345C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		026E8CBB1612DC880098345C /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
@@ -1253,6 +1256,8 @@
 				0249288D161A0B7000589FD2 /* UsersWindowController.xib */,
 				020345AD16272EAA00FAF3FD /* VectorMath.h */,
 				0242330D1674F975008A3B6A /* VectorMath.m */,
+				024ADF3716B1B29D00875658 /* PathUtil.h */,
+				024ADF3816B1B2EF00875658 /* PathUtil.m */,
 			);
 			path = OpenStreetMap;
 			sourceTree = "<group>";
@@ -1703,6 +1708,7 @@
 				021C6AA51686143D00FB17B0 /* UndoManager.m in Sources */,
 				02BED999168CACFD00357B94 /* LocationBallLayer.m in Sources */,
 				02FFCE0816A73593001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
+				024ADF3916B1B2EF00875658 /* PathUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
