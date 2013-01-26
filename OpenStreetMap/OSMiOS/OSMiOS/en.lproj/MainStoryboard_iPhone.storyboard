@@ -543,7 +543,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="FZl-s6-oka"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="4uU-6t-iGl"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="4R4-Tp-4jM"/>
@@ -555,7 +555,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="PbM-Vo-DJ0"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="p6i-gz-yky"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="Uew-M3-3cI"/>
@@ -688,7 +688,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="wSY-yd-hvU"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="fYO-fX-mPL"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="OgZ-bg-yOp"/>
@@ -3466,7 +3466,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="33" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

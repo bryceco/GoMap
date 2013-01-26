@@ -124,6 +124,7 @@ extern CGSize SizeForImage(NSImage * image);
 		if ( zoomLevel > 21 )
 			zoomLevel = 21;
 		NSString * url = [NSString stringWithFormat:self.metadataUrl, rc.origin.y+rc.size.height/2, rc.origin.x+rc.size.width/2, zoomLevel];
+
 		[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:YES completion:callback];
 	}
 }

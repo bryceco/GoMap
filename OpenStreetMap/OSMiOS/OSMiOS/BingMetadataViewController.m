@@ -41,24 +41,31 @@
 			for ( id resourceSet in resourceSets ) {
 				id resources = [resourceSet objectForKey:@"resources"];
 				for ( id resource in resources ) {
+					NSString * vintageStart = [resource objectForKey:@"vintageStart"];
+					NSString * vintageEnd   = [resource objectForKey:@"vintageEnd"];
 					id providers = [resource objectForKey:@"imageryProviders"];
-					for ( id provider in providers ) {
-						NSString * attribution = [provider objectForKey:@"attribution"];
-						NSArray * areas = [provider objectForKey:@"coverageAreas"];
-						for ( NSDictionary * area in areas ) {
-							NSInteger zoomMin = [[area objectForKey:@"zoomMin"] integerValue];
-							NSInteger zoomMax = [[area objectForKey:@"zoomMax"] integerValue];
-							NSArray * bbox = [area objectForKey:@"bbox"];
-							OSMRect rect = {
-								[bbox[1] doubleValue],
-								[bbox[0] doubleValue],
-								[bbox[3] doubleValue],
-								[bbox[2] doubleValue]
-							};
-							rect.size.width  -= rect.origin.x;
-							rect.size.height -= rect.origin.y;
-							if ( zoomLevel >= zoomMin && zoomLevel <= zoomMax && OSMRectIntersectsRect(viewRect, rect) ) {
-								[attrList addObject:attribution];
+					if ( providers != [NSNull null] ) {
+						for ( id provider in providers ) {
+							NSString * attribution = [provider objectForKey:@"attribution"];
+							NSArray * areas = [provider objectForKey:@"coverageAreas"];
+							for ( NSDictionary * area in areas ) {
+								NSInteger zoomMin = [[area objectForKey:@"zoomMin"] integerValue];
+								NSInteger zoomMax = [[area objectForKey:@"zoomMax"] integerValue];
+								NSArray * bbox = [area objectForKey:@"bbox"];
+								OSMRect rect = {
+									[bbox[1] doubleValue],
+									[bbox[0] doubleValue],
+									[bbox[3] doubleValue],
+									[bbox[2] doubleValue]
+								};
+								rect.size.width  -= rect.origin.x;
+								rect.size.height -= rect.origin.y;
+								if ( zoomLevel >= zoomMin && zoomLevel <= zoomMax && OSMRectIntersectsRect(viewRect, rect) ) {
+									if ( vintageStart && vintageEnd && vintageStart != (id)[NSNull null] && vintageEnd != (id)[NSNull null] ) {
+										attribution = [NSString stringWithFormat:@"%@\n   %@ - %@",attribution, vintageStart, vintageEnd];
+									}
+									[attrList addObject:attribution];
+								}
 							}
 						}
 					}

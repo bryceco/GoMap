@@ -19,6 +19,7 @@ typedef void (^	PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat
 	CAShapeLayer		*	_shapeLayer;	// shape for balloon
 	CATextLayer			*	_textLayer;		// text in balloon
 	CALayer				*	_placeholderLayer;
+	CGRect					_hittestRect;
 
 	CALayer				*	_moveButton;
 

@@ -98,7 +98,12 @@ CGSize SizeForImage( NSImage * image )
 		_aerialLayer.tileServerUrl = @"http://ecn.{t}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=1049&key=" BING_MAPS_KEY;
 		_aerialLayer.tileServerSubdomains = @[ @"t0", @"t1", @"t2", @"t3" ];
 //		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?mapArea=%f,%f,%f,%f&zoomLevel=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
-		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/v1/Imagery/BasicMetadata/Aerial?centerPoint=%f,%f&zoomLevel=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
+//		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/v1/Imagery/BasicMetadata/Aerial?centerPoint=%f,%f&zoomLevel=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
+//		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/40.714550167322159,-74.007124900817871?zl=15&output=xml&key=" BING_MAPS_KEY;
+		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&key=" BING_MAPS_KEY;
+		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
+
+
 		_aerialLayer.placeholderImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BingPlaceholderImage" ofType:@"png"]];
 		_aerialLayer.zPosition = Z_AERIAL;
 		_aerialLayer.opacity = 0.75;

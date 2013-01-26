@@ -107,10 +107,8 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-	if ( [super hitTest:point withEvent:event] == nil )
-		return nil;
-    if ( CGPathContainsPoint( _path, nil, point, NO ) )
-        return self;
+	if ( CGRectContainsPoint( _hittestRect, point ) )
+		return self;
 	for ( UIButton * button in _buttonList ) {
 		CGPoint point2 = [button convertPoint:point fromView:self];
 		UIView * hit = [button hitTest:point2 withEvent:event];
@@ -122,24 +120,25 @@
 
 -(void)layoutSubviews
 {
-	const CGFloat moveButtonGap = 3.0;
-	const CGFloat buttonVerticalSpacing = 55;
-	const CGSize textSize = _textLayer.preferredFrameSize;
-	const CGFloat textAlleyWidth = 5;
-	const CGSize boxSize = { textSize.width + 2*textAlleyWidth + moveButtonGap + _moveButton.frame.size.width,
-							textSize.height + 2*textAlleyWidth };
-	const CGFloat arrowHeight = 20 + (_buttonList.count * buttonVerticalSpacing)/2;
-	const CGFloat arrowWidth = 20;
-	const CGFloat buttonHorzOffset = 44;
-	const CGFloat buttonHeight = 31.0;
+	const CGFloat	moveButtonGap = 3.0;
+	const CGFloat	buttonVerticalSpacing = 55;
+	const CGSize	textSize = _textLayer.preferredFrameSize;
+	const CGFloat	textAlleyWidth = 5;
+	const CGSize	boxSize = { textSize.width + 2*textAlleyWidth + moveButtonGap + _moveButton.frame.size.width,
+								textSize.height + 2*textAlleyWidth };
+	const CGFloat	arrowHeight = 20 + (_buttonList.count * buttonVerticalSpacing)/2;
+	const CGFloat	arrowWidth = 20;
+	const CGFloat	buttonHorzOffset = 44;
+	const CGFloat	buttonHeight = 31.0;
 
-	CGFloat topGap		= buttonHeight/2 + (_buttonList.count-1)*buttonVerticalSpacing/2;
+	CGFloat topGap	= buttonHeight/2 + (_buttonList.count-1)*buttonVerticalSpacing/2;
 
 	// creat path with arrow
 	const CGFloat cornerRadius = 4;
 	CGPathRelease(_path);
 	_path = CGPathCreateMutable();
 	if ( _labelOnBottom ) {
+		_hittestRect = CGRectMake( 0, topGap+arrowHeight, boxSize.width, boxSize.height );
 		CGAffineTransform trans = CGAffineTransformMakeTranslation(0, topGap);
 		CGPathMoveToPoint(_path, &trans, boxSize.width/2, 0);	// arrow top
 		CGPathAddLineToPoint(_path, &trans, boxSize.width/2-arrowWidth/2, arrowHeight);	// arrow top-left
@@ -158,8 +157,12 @@
 		CGPathAddLineToPoint(_path, NULL, boxSize.width/2+arrowWidth/2, boxSize.height );	// arrow top-right
 	}
 	CGPathCloseSubpath(_path);
+
+	// make hit target a little larger
+	_hittestRect = CGRectInset( _hittestRect, -7, -7 );
+
 	CGRect viewRect = CGPathGetPathBoundingBox( _path );
-	_shapeLayer.frame = CGRectMake( 0, 0, 20, 20 );
+	_shapeLayer.frame = CGRectMake( 0, 0, 20, 20 );	// arbitrary since it is a shape
 	_shapeLayer.path = _path;
 
 	if ( _labelOnBottom ) {
