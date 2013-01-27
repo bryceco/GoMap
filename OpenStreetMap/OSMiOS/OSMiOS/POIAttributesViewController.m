@@ -53,6 +53,13 @@
 		_changesetLabel.text	= nil;
 	}
 
+	// don't show disclosures for newly created objects
+	_identCell.accessoryType	= object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+	_userCell.accessoryType		= object.user.length > 0		? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+	_versionCell.accessoryType	= object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+	_changesetCell.accessoryType = object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+
+
 	if ( object.isNode ) {
 		OsmNode * node = (id)object;
 		_extraCell1.title.text = @"Latitude";
@@ -85,6 +92,15 @@
 {
 	[cell fixConstraints];
 }
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+	if ( cell.accessoryType == UITableViewCellAccessoryNone )
+		return nil;
+	return indexPath;
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

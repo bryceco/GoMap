@@ -1325,7 +1325,7 @@
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
-                                                <action selector="textFieldDidEndEditing:" destination="G5R-oP-lp3" eventType="editingDidEnd" id="5Kx-h4-yz8"/>
+                                                <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="BEW-to-vAi"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="cCo-45-mej"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="tcL-nf-pp1"/>
                                             </connections>
@@ -1334,7 +1334,7 @@
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
-                                                <action selector="textFieldDidEndEditing:" destination="G5R-oP-lp3" eventType="editingDidEnd" id="i7w-v7-Ele"/>
+                                                <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="Bi5-qH-vtX"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="5Sn-6a-G7m"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="BZ4-dA-evd"/>
                                             </connections>
@@ -1373,7 +1373,7 @@
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
-                                                <action selector="textFieldDidEndEditing:" destination="G5R-oP-lp3" eventType="editingDidEnd" id="MRO-vF-h1y"/>
+                                                <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="ZB2-P2-lYD"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="gjR-WX-AId"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="gc7-5Z-YFM"/>
                                             </connections>
@@ -1382,7 +1382,7 @@
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
-                                                <action selector="textFieldDidEndEditing:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="ON5-GW-hrF"/>
+                                                <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="enw-Un-WMB"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="caF-Gi-LNg"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="V7P-RP-s2w"/>
                                             </connections>
@@ -3466,7 +3466,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="33" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

@@ -176,7 +176,7 @@
 	[sender resignFirstResponder];
 }
 
-- (IBAction)textFieldDidEndEditing:(UITextField *)textField
+- (IBAction)textFieldChanged:(UITextField *)textField
 {
 	NSInteger tag = textField.tag;
 	assert( tag >= 0 );
@@ -185,21 +185,25 @@
 
 	if ( tag < RELATION_TAGS ) {
 		// edited tags
-		NSMutableArray * pair = _tags[ tag/2 ];
+		POITabBarController * tabController = (id)self.tabBarController;
+		NSMutableArray * kv = _tags[ tag/2 ];
 		if ( tag & 1 ) {
-			// value
-			pair[1] = text;
+			// new value
+			kv[1] = text;
+			if ( [kv[0] length] && [kv[1] length] ) {
+				[tabController.keyValueDict setObject:kv[1] forKey:kv[0]];
+			} else {
+				[tabController.keyValueDict removeObjectForKey:kv[0]];
+			}
 		} else {
-			// tag
-			pair[0] = text;
+			// new key name
+			[tabController.keyValueDict removeObjectForKey:kv[0]];
+			kv[0] = text;
+			if ( [kv[0] length] && [kv[1] length] ) {
+				[tabController.keyValueDict setObject:kv[1] forKey:kv[0]];
+			}
 		}
 
-		POITabBarController * tabController = (id)self.tabBarController;
-		if ( [pair[0] length] && [pair[1] length] ) {
-			[tabController.keyValueDict setObject:pair[1] forKey:pair[0]];
-		} else {
-			[tabController.keyValueDict removeObjectForKey:pair[0]];
-		}
 		_saveButton.enabled = [tabController isTagDictChanged];
 	}
 }
