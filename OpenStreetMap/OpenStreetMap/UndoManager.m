@@ -323,8 +323,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 }
 -(void)endUndoGrouping
 {
-	NSNumber * group = [_groupingStack lastObject];
-	DLog(@"end undo group %@",group);
+	DLog(@"end undo group %@",[_groupingStack lastObject]);
 	[_groupingStack removeLastObject];
 }
 
