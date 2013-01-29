@@ -106,9 +106,11 @@
 -(IBAction)sendMail:(id)sender
 {
 	if ( [MFMailComposeViewController canSendMail] ) {
+		AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
+
 		MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 		mail.mailComposeDelegate = self;
-		[mail setSubject:@"OSMiOS changeset"];
+		[mail setSubject:[NSString stringWithFormat:@"%@ changeset", appDelegate.appName]];
 		NSString * xml = [_mapData changesetAsXml];
 		[mail addAttachmentData:[xml dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"application/xml" fileName:@"osmChange.osc"];
 		[self presentViewController:mail animated:YES completion:nil];

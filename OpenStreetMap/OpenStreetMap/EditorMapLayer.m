@@ -1391,24 +1391,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		double dx = lastPoint.x - firstPoint.x;
 		if ( dx < 0 ) {
 			// reverse path
-			NSMutableArray * a = [NSMutableArray arrayWithCapacity:way.nodes.count];
-			CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint * points){
-				if ( type == kCGPathElementMoveToPoint || type == kCGPathElementAddLineToPoint ) {
-					OSMPoint pt = { points->x, points->y };
-					OSMPointBoxed * boxed = [OSMPointBoxed pointWithPoint:pt];
-					[a addObject:boxed];
-				}
-			});
-			path = CGPathCreateMutable();
-			__block BOOL first = YES;
-			[a enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSMPointBoxed * pt, NSUInteger idx, BOOL *stop) {
-				if ( first ) {
-					first = NO;
-					CGPathMoveToPoint( path, NULL, pt.point.x, pt.point.y );
-				} else {
-					CGPathAddLineToPoint( path, NULL, pt.point.x, pt.point.y );
-				}
-			}];
+			path = PathReversed( path );
 		}
 	}
 	*pLength = length;
@@ -1421,6 +1404,8 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 
 	// add street names
 	NSString * name = [way.tags valueForKey:@"name"];
+	if ( name == nil )
+		name = [way.tags objectForKey:@"addr:housenumber"];
 	if ( name == nil )
 		return NO;
 
@@ -1473,6 +1458,13 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	}
 	[_nameDrawSet addObject:name];
 	return YES;
+}
+
+
+static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
+{
+	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
+	return houseNumber;
 }
 
 -(void)drawNode:(OsmNode *)node context:(CGContextRef)ctx
@@ -1548,11 +1540,35 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 			green = blue = red = 0.5;
 		}
 		CGContextSetRGBStrokeColor(ctx, red, green, blue, 1.0);
-		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, ShadowColorForColor(red, green, blue).CGColor );
-		CGRect rect = CGRectMake(pt.x + - _iconSize.width/4, pt.y - _iconSize.height/4, _iconSize.width/2, _iconSize.height/2);
-		CGContextBeginPath(ctx);
-		CGContextAddRect(ctx, rect);
-		CGContextStrokePath(ctx);
+
+		NSString * houseNumber = DrawNodeAsHouseNumber( node.tags );
+		if ( houseNumber ) {
+
+#if TARGET_OS_IPHONE
+			UIFont * font = [UIFont fontWithName:@"Helvetica" size:10];
+			NSAttributedString * s = [[NSAttributedString alloc] initWithString:houseNumber attributes:@{	NSForegroundColorAttributeName : (id)self.textColor.CGColor,
+																											NSFontAttributeName : font }];
+#else
+			NSAttributedString * s = [[NSAttributedString alloc] initWithString:houseNumber attributes:@{NSForegroundColorAttributeName : self.textColor}];
+#endif
+			CTLineRef ctl = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s );
+			CGRect textRect = CTLineGetBoundsWithOptions( ctl, 0 );
+			CGContextSetTextDrawingMode(ctx, kCGTextFill);
+			// CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 5.0, ShadowColorForColor2(self.textColor).CGColor );
+			CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
+			CGContextSetTextPosition(ctx, pt.x - (textRect.origin.x+textRect.size.width)/2, pt.y + (textRect.origin.y+textRect.size.height)/2);	// this applies a transform, so do it after flipping
+			CTLineDraw(ctl, ctx);
+			CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
+			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
+			CFRelease(ctl);
+
+		} else {
+			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, ShadowColorForColor(red, green, blue).CGColor );
+			CGRect rect = CGRectMake(pt.x + - _iconSize.width/4, pt.y - _iconSize.height/4, _iconSize.width/2, _iconSize.height/2);
+			CGContextBeginPath(ctx);
+			CGContextAddRect(ctx, rect);
+			CGContextStrokePath(ctx);
+		}
 	}
 }
 

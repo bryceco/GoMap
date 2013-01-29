@@ -10,6 +10,7 @@
 #import "OsmObjects.h"
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
+#import "TagInfo.h"
 #import "UITableViewCell+FixConstraints.h"
 
 
@@ -176,18 +177,69 @@
 	[sender resignFirstResponder];
 }
 
+
+static BOOL g_doAutocomplete = YES;
+
+- (void)autocompleteTextField:(UITextField *)textField completions:(NSArray *)completions
+{
+	if ( !g_doAutocomplete ) {
+		g_doAutocomplete = YES;
+		return;
+	}
+
+	NSString * text = textField.text;
+
+	for ( NSString * s in completions ) {
+		if ( [s hasPrefix:text] ) {
+			NSInteger pos = text.length;
+			textField.text = s;
+
+			UITextPosition * start = [textField positionFromPosition:textField.beginningOfDocument offset:pos];
+			UITextPosition * end = textField.endOfDocument;
+			UITextRange * range = [textField textRangeFromPosition:start toPosition:end];
+			[textField setSelectedTextRange:range];
+			return;
+		}
+	}
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	if ( string.length == 0 && range.location+range.length == textField.text.length ) {
+		// deleting from tail, so disable autocomplete until next change
+		g_doAutocomplete = NO;
+	}
+	return YES;
+}
+
 - (IBAction)textFieldChanged:(UITextField *)textField
 {
 	NSInteger tag = textField.tag;
 	assert( tag >= 0 );
-	NSString * text = textField.text;
-	text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	BOOL isValue = (tag & 1) != 0;
 
 	if ( tag < RELATION_TAGS ) {
+
+		NSMutableArray * kv = _tags[ tag/2 ];
+
+		if ( isValue ) {
+			NSString * key = kv[0];
+			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
+			NSArray * list = [set allObjects];
+			[self autocompleteTextField:textField completions:list];
+		} else {
+			// get list of keys
+			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagKeys];
+			NSArray * list = [set allObjects];
+			[self autocompleteTextField:textField completions:list];
+		}
+
+		NSString * text = textField.text;
+		text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		
 		// edited tags
 		POITabBarController * tabController = (id)self.tabBarController;
-		NSMutableArray * kv = _tags[ tag/2 ];
-		if ( tag & 1 ) {
+		if ( isValue ) {
 			// new value
 			kv[1] = text;
 			if ( [kv[0] length] && [kv[1] length] ) {

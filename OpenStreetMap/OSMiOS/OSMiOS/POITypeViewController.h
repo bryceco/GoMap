@@ -18,7 +18,7 @@
 	IBOutlet UISearchBar    *	_searchBar;
 	BOOL						_isTopLevel;
 }
-@property (copy,nonatomic) NSString *	rootType;
+@property (copy,nonatomic) NSString *	parentName;
 
 -(IBAction)back:(id)sender;
 -(IBAction)configure:(id)sender;

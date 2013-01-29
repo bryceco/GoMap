@@ -27,6 +27,7 @@
 @property (strong,nonatomic)	NSString	*	key;
 @property (strong,nonatomic)	NSString	*	value;
 @property (strong,nonatomic)	NSString	*	friendlyName;
+@property (strong,nonatomic)	NSString	*	type;
 @property (strong,nonatomic)	NSString	*	belongsTo;
 @property (strong,nonatomic)	NSString	*	iconName;
 @property (strong,nonatomic)	NSString	*	description;
@@ -58,11 +59,14 @@
 +(TagInfoDatabase *)sharedTagInfoDatabase;
 +(NSMutableArray *)readXml;
 
+-(NSSet *)allTagKeys;
+-(NSSet *)allTagValuesForKey:(NSString *)key;
+
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
 
 #if TARGET_OS_IPHONE
-- (NSArray *)subitemsForTag:(NSString *)key;
+- (NSArray *)subitemsOfType:(NSString *)type belongTo:(NSString *)belongTo;
 - (NSArray *)itemsForTag:(NSString *)type matching:(NSString *)searchText;
 #else
 -(NSMenu *)tagNodeMenuWithTarget:(id)target action:(SEL)action;

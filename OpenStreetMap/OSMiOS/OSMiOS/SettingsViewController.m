@@ -127,7 +127,7 @@ static const NSInteger RowMap[] = {
 			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 			mail.mailComposeDelegate = self;
-			[mail setSubject:[appDelegate.appName stringByAppendingString:@" feedback"]];
+			[mail setSubject:[NSString stringWithFormat:@"%@ %@ feedback", appDelegate.appName, appDelegate.appVersion]];
 			[mail setToRecipients:@[@"bryceco@yahoo.com"]];
 			[self.navigationController presentViewController:mail animated:YES completion:nil];
 		} else {

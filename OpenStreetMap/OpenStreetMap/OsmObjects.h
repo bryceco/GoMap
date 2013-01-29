@@ -43,6 +43,8 @@
 @property (readonly,nonatomic)	int32_t				uid;
 @property (readonly,nonatomic)	BOOL				visible;
 
++(NSArray *)typeKeys;
+
 -(void)constructTag:(NSString *)tag value:(NSString *)value;
 -(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict;
 -(void)constructAsUserCreated;

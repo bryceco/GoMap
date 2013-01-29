@@ -224,16 +224,21 @@ static NSInteger _nextUnusedIdentifier = 0;
 	return NO;
 }
 
-
--(NSString *)friendlyDescription
++(NSArray *)typeKeys
 {
-	static NSArray * typeList = nil;
-	if ( typeList == nil ) {
-		typeList = @[	@"shop", @"amenity", @"leisure", @"tourism", @"craft",
+	static NSArray * typeKeys = nil;
+	if ( typeKeys == nil ) {
+		typeKeys = @[	@"shop", @"amenity", @"leisure", @"tourism", @"craft",
 						@"highway", @"office", @"landmark", @"building", @"emergency",
 						@"man_made", @"military", @"natural", @"power", @"railway",
 						@"sport", @"waterway", @"aeroway", @"landuse", @"barrier", @"boundary" ];
 	}
+	return typeKeys;
+}
+
+-(NSString *)friendlyDescription
+{
+	NSArray * typeList = [OsmBaseObject typeKeys];
 
 	NSString * name = [_tags valueForKey:@"name"];
 	if ( name.length )

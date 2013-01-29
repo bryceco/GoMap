@@ -66,7 +66,7 @@
 		field.text = value;
 	}
 
-	for ( NSString * tag in tabController.typeList ) {
+	for ( NSString * tag in [OsmBaseObject typeKeys] ) {
 		NSString * value = [tabController.keyValueDict valueForKey:tag];
 		if ( value.length ) {
 			NSString * text = [NSString stringWithFormat:@"%@ (%@)", value, tag];

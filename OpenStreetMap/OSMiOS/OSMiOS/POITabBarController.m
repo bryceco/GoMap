@@ -21,12 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	if ( _typeList == nil ) {
-		_typeList = @[	@"amenity", @"leisure", @"aeroway", @"building", @"craft",
-						@"emergency", @"landmark", @"man_made", @"military", @"natural",
-						@"office", @"power", @"railway", @"shop", @"sport", @"tourism" ];
-	}
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -55,7 +49,7 @@
 {
 	if ( byUser ) {
 		// remove conflicting tags
-		for ( NSString * tag in _typeList ) {
+		for ( NSString * tag in [OsmBaseObject typeKeys] ) {
 			[_keyValueDict removeObjectForKey:tag];
 		}
 	}

@@ -277,6 +277,7 @@ static TagInfo * g_DefaultRender = nil;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
 		tagType.friendlyName	= [tag attributeForName:@"name"].stringValue;
 		tagType.description		= [tag attributeForName:@"description"].stringValue;
+		tagType.type			= [tag attributeForName:@"type"].stringValue;
 		tagType.belongsTo		= [tag attributeForName:@"belongsTo"].stringValue;
 		tagType.iconName		= [tag attributeForName:@"iconName"].stringValue;
 		tagType.wikiPage		= [tag attributeForName:@"wikiPage"].stringValue;
@@ -315,42 +316,43 @@ static TagInfo * g_DefaultRender = nil;
 }
 
 #if TARGET_OS_IPHONE
--(NSArray *)subitemsForTag:(NSString *)key
+// belongTo means that the text appears either as the key or the belongTo field
+-(NSArray *)subitemsOfType:(NSString *)type belongTo:(NSString *)belongTo
 {
-	// if other tags belong to this tag then add them as submenus
-	NSArray * childTags = [self tagsBelongTo:key];
-	
-	if ( childTags.count ) {
-
-		// get set of key values for children
-		NSMutableSet * set = [NSMutableSet new];
-		for ( TagInfo * child in childTags ) {
-			[set addObject:child.key];
-		}
-
-		NSArray * keyArray = [set allObjects];
-		keyArray = [keyArray sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
-			return [obj1 caseInsensitiveCompare:obj2];
-		}];
-
-		return keyArray;
-		
-	} else {
-
-		// get values for key
-		NSDictionary * valueDict = [_keyDict valueForKey:key];
-		NSArray * valueArray = [valueDict allValues];
-		valueArray = [valueArray sortedArrayUsingComparator:^NSComparisonResult(TagInfo * obj1, TagInfo * obj2) {
-			return [obj1.friendlyName caseInsensitiveCompare:obj2.friendlyName];
-		}];
-		return valueArray;
+	// get set of key values for children (creates an array of strings)
+	NSArray * childTags = [self tagsBelongTo:belongTo type:type];
+	NSMutableSet * set = [NSMutableSet new];
+	for ( TagInfo * child in childTags ) {
+		[set addObject:child.key];
 	}
+	NSArray * tags = [set allObjects];
+	tags = [tags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * key, NSDictionary *bindings) {
+		return [[OsmBaseObject typeKeys] containsObject:key];
+	}]];
+
+	// get values for key (creates an array of TagInfo)
+	NSDictionary * valueDict = [_keyDict valueForKey:belongTo];
+	NSArray * valueArray = [valueDict allValues];
+	valueArray = [valueArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(TagInfo * tagInfo, NSDictionary *bindings) {
+		return [tagInfo.type rangeOfString:type].length > 0;
+	}]];
+
+	tags = [tags arrayByAddingObjectsFromArray:valueArray];
+
+	tags = [tags sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
+		NSString * s1 = [obj1 isKindOfClass:[NSString class]] ? obj1 : ((TagInfo *)obj1).friendlyName;
+		NSString * s2 = [obj2 isKindOfClass:[NSString class]] ? obj2 : ((TagInfo *)obj2).friendlyName;
+		return [s1 caseInsensitiveCompare:s2];
+	}];
+	return tags;
 }
 
 - (NSArray *)itemsForTag:(NSString *)type matching:(NSString *)searchText
 {
 	return [_allTags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(TagInfo * tag, NSDictionary *bindings) {
 		if ( [tag.value rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
+			return YES;
+		if ( [tag.key rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
 			return YES;
 		if ( tag.description && [tag.description rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
 			return YES;
@@ -420,26 +422,47 @@ static TagInfo * g_DefaultRender = nil;
 #endif
 
 
--(NSArray *)tagsBelongTo:(NSString *)belongTo
+-(NSArray *)tagsBelongTo:(NSString *)parentItem type:(NSString *)type
 {
 	__block NSMutableArray * list = [NSMutableArray new];
 	[_keyDict enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSDictionary * valDict, BOOL *stop) {
 		[valDict enumerateKeysAndObjectsUsingBlock:^(NSString * value, TagInfo * tagInfo, BOOL *stop) {
-			NSArray * a = [tagInfo.belongsTo componentsSeparatedByString:@";"];
-			[a enumerateObjectsUsingBlock:^(NSString * belongs, NSUInteger idx, BOOL *stop) {
-				if ( [belongs isEqualToString:belongTo] ) {
+			if ( [tagInfo.type rangeOfString:type].length > 0 ) {
+				if ( parentItem ? [tagInfo.belongsTo rangeOfString:parentItem].length > 0 : tagInfo.belongsTo.length == 0 ) {
 					[list addObject:tagInfo];
 					*stop = YES;
 				}
-			}];
+			}
 		}];
 	}];
 	return list;
 }
+
 -(NSArray *)tagsForNodes
 {
-	return [self tagsBelongTo:@"node"];
+	return [self tagsBelongTo:nil type:@"node"];
 }
+
+-(NSSet *)allTagKeys
+{
+	NSMutableSet * set = [NSMutableSet set];
+	for ( TagInfo * tag in _allTags ) {
+		[set addObject:tag.key];
+	}
+	return set;
+}
+
+-(NSSet *)allTagValuesForKey:(NSString *)key
+{
+	NSMutableSet * set = [NSMutableSet set];
+	for ( TagInfo * tag in _allTags ) {
+		if ( [tag.key isEqualToString:key] ) {
+			[set addObject:tag.value];
+		}
+	}
+	return set;
+}
+
 
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {

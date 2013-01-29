@@ -114,7 +114,7 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, CGPoint 
 
 
 // reverse path
-CGPathRef ReversePath( CGPathRef path )
+CGMutablePathRef PathReversed( CGPathRef path )
 {
 	NSMutableArray * a = [NSMutableArray new];
 	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint * points){

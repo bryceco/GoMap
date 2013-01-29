@@ -14,7 +14,6 @@
 	NSString		*	_typeValue;
 }
 @property (strong,nonatomic)	NSMutableDictionary *	keyValueDict;
-@property (readonly,nonatomic)	NSArray				*	typeList;
 @property (strong,nonatomic)	NSMutableArray		*	relationList;
 @property (assign,nonatomic)	id						selection;
 

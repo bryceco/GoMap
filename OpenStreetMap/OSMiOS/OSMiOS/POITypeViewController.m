@@ -7,6 +7,7 @@
 //
 
 #import "iosapi.h"
+#import "OsmObjects.h"
 #import "POITabBarController.h"
 #import "POITypeViewController.h"
 #import "TagInfo.h"
@@ -20,12 +21,15 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	if ( _rootType == nil ) {
-		_isTopLevel = YES;
-		_rootType = @"node";
-	}
-	_typeArray = [[TagInfoDatabase sharedTagInfoDatabase] subitemsForTag:_rootType];
 
+	POITabBarController * tabController = (id)self.tabBarController;
+
+	NSString * type = [tabController.selection isWay] ? @"way" : @"node";
+	if ( _parentName == nil ) {
+		_isTopLevel = YES;
+		_parentName = nil;
+	}
+	_typeArray = [[TagInfoDatabase sharedTagInfoDatabase] subitemsOfType:type belongTo:_parentName];
 
 	NSNumber * max = [[NSUserDefaults standardUserDefaults] objectForKey:@"mostRecentTypesMaximum"];
 	_mostRecentMaximum = max ? max.integerValue : MOST_RECENT_DEFAULT_COUNT;
@@ -149,7 +153,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		id type = _typeArray[ indexPath.row ];
 		if ( [type isKindOfClass:[NSString class]] ) {
 			POITypeViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiTypeViewController"];
-			sub.rootType = type;
+			sub.parentName = type;
 			[_searchBar resignFirstResponder];
 			[self.navigationController pushViewController:sub animated:YES];
 		} else {
@@ -172,7 +176,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		[_searchBar performSelector:@selector(resignFirstResponder) withObject:nil afterDelay:0.1];
 	} else {
 		// searching
-		_searchArrayAll = [[TagInfoDatabase sharedTagInfoDatabase] itemsForTag:_rootType matching:searchText];
+		_searchArrayAll = [[TagInfoDatabase sharedTagInfoDatabase] itemsForTag:_parentName matching:searchText];
 		_searchArrayAll = [_searchArrayAll sortedArrayUsingComparator:^NSComparisonResult(TagInfo * t1, TagInfo * t2) {
 			BOOL p1 = [t1.value hasPrefix:searchText];
 			BOOL p2 = [t2.value hasPrefix:searchText];
