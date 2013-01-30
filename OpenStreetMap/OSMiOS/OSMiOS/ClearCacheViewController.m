@@ -84,6 +84,7 @@
 				return;
 			}
 			[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
+			[appDelegate.mapView removePin];
 			break;
 		case 1:	// Bing
 			[appDelegate.mapView.aerialLayer purgeTileCache];

@@ -124,6 +124,7 @@
 -(IBAction)locateMe:(id)sender;
 -(IBAction)duplicateSelectedObject:(id)sender;
 -(IBAction)dropPin:(id)sender;
+-(void)removePin;
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
 

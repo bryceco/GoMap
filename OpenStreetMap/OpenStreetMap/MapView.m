@@ -1027,6 +1027,12 @@ CGSize SizeForImage( NSImage * image )
 	return hit;
 }
 
+-(void)removePin
+{
+	[_pushpinView removeFromSuperview];
+	_pushpinView = nil;
+}
+
 -(void)placePushpinAtPoint:(CGPoint)point object:(OsmBaseObject *)object
 {
 	// drop in center of screen
@@ -1040,16 +1046,16 @@ CGSize SizeForImage( NSImage * image )
 
 	_pushpinView.arrowPoint = point;
 
+	__weak MapView * weakSelf = self;
 	if ( object ) {
-		__weak MapView * weakSelf = self;
 		_pushpinView.dragCallback = ^(UIGestureRecognizerState state, CGFloat dx, CGFloat dy) {
 			switch ( state ) {
 				case UIGestureRecognizerStateBegan:
-					[_editorLayer.mapData beginUndoGrouping];
+					[weakSelf.editorLayer.mapData beginUndoGrouping];
 					break;
 					
 				case UIGestureRecognizerStateEnded:
-					[_editorLayer.mapData endUndoGrouping];
+					[weakSelf.editorLayer.mapData endUndoGrouping];
 					
 					[weakSelf unblinkObject];
 					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
@@ -1085,9 +1091,9 @@ CGSize SizeForImage( NSImage * image )
 						}
 						return;
 					}
-					if ( _editorLayer.selectedWay && _editorLayer.selectedWay.tags.count == 0 && [_editorLayer.mapData relationsForObject:_editorLayer.selectedWay].count == 0 )
+					if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedWay.tags.count == 0 && [weakSelf.editorLayer.mapData relationsForObject:weakSelf.editorLayer.selectedWay].count == 0 )
 						break;
-					if ( _editorLayer.selectedWay && _editorLayer.selectedNode )
+					if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedNode )
 						break;
 					{
 						MapView * mySelf = weakSelf;
@@ -1099,7 +1105,7 @@ CGSize SizeForImage( NSImage * image )
 				case UIGestureRecognizerStateChanged:
 					for ( OsmNode * node in object.nodeSet ) {
 						CGPoint delta = { dx, -dy };
-						[self.editorLayer adjustNode:node byDistance:delta];
+						[weakSelf.editorLayer adjustNode:node byDistance:delta];
 					}
 					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
 						NSInteger segment;
@@ -1119,11 +1125,11 @@ CGSize SizeForImage( NSImage * image )
 
 	UIButton * button1 = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	[_pushpinView addButton:button1 callback:^{
-		if ( _editorLayer.selectedWay && _editorLayer.selectedNode && _editorLayer.selectedWay.tags.count == 0 ) {
+		if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedNode && weakSelf.editorLayer.selectedWay.tags.count == 0 ) {
 			// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-			_editorLayer.selectedNode = nil;
+			weakSelf.editorLayer.selectedNode = nil;
 		}
-		[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
+		[weakSelf.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
 	}];
 
 #if 0

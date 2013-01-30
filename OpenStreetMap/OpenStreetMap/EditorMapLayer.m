@@ -161,8 +161,8 @@ const CGFloat WayHighlightRadius = 6.0;
 
 - (void)purgeCachedDataHard:(BOOL)hard
 {
-	_selectedNode		= nil;
-	_selectedWay		= nil;
+	self.selectedNode	= nil;
+	self.selectedWay	= nil;
 	_highlightObject	= nil;
 	if ( hard ) {
 		[_mapData purgeHard];
