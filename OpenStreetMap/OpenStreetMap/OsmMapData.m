@@ -1259,14 +1259,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	DLog(@"%ld spatial quads", (long)_spatial.quadCount);
 	DLog(@"%ld spatial members", (long)_spatial.memberCount);
 #endif
-	
-	[coder encodeObject:_nodes			forKey:@"nodes"];
-	[coder encodeObject:_ways			forKey:@"ways"];
-	[coder encodeObject:_relations		forKey:@"relations"];
-	[coder encodeObject:_region			forKey:@"region"];
-	[coder encodeObject:_spatial		forKey:@"spatial"];
-	[coder encodeObject:_undoManager	forKey:@"undoManager"];
 
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_nodes			forKey:@"nodes"];
+		[coder encodeObject:_ways			forKey:@"ways"];
+		[coder encodeObject:_relations		forKey:@"relations"];
+		[coder encodeObject:_region			forKey:@"region"];
+		[coder encodeObject:_spatial		forKey:@"spatial"];
+		[coder encodeObject:_undoManager	forKey:@"undoManager"];
+	} else {
+		[coder encodeObject:_nodes];
+		[coder encodeObject:_ways];
+		[coder encodeObject:_relations];
+		[coder encodeObject:_region];
+		[coder encodeObject:_spatial];
+		[coder encodeObject:_undoManager];
+	}
 #if 0
 	DLog(@"nodes     = %f", [s2 timeIntervalSinceDate:s1]);
 	DLog(@"ways      = %f", [s3 timeIntervalSinceDate:s2]);
@@ -1283,12 +1291,21 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( self ) {
 
 		@try {
-			_nodes			= [coder decodeObjectForKey:@"nodes"];
-			_ways			= [coder decodeObjectForKey:@"ways"];
-			_relations		= [coder decodeObjectForKey:@"relations"];
-			_region			= [coder decodeObjectForKey:@"region"];
-			_spatial		= [coder decodeObjectForKey:@"spatial"];
-			_undoManager	= [coder decodeObjectForKey:@"undoManager"];
+			if ( [coder allowsKeyedCoding] ) {
+				_nodes			= [coder decodeObjectForKey:@"nodes"];
+				_ways			= [coder decodeObjectForKey:@"ways"];
+				_relations		= [coder decodeObjectForKey:@"relations"];
+				_region			= [coder decodeObjectForKey:@"region"];
+				_spatial		= [coder decodeObjectForKey:@"spatial"];
+				_undoManager	= [coder decodeObjectForKey:@"undoManager"];
+			} else {
+				_nodes			= [coder decodeObject];
+				_ways			= [coder decodeObject];
+				_relations		= [coder decodeObject];
+				_region			= [coder decodeObject];
+				_spatial		= [coder decodeObject];
+				_undoManager	= [coder decodeObject];
+			}
 			if ( (_nodes.count == 0 && _ways.count == 0 && _relations.count == 0) || _undoManager == nil ) {
 				self = nil;
 			} else {

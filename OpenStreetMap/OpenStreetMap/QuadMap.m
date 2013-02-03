@@ -246,29 +246,53 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-	[coder encodeObject:_children[0]					forKey:@"child0"];
-	[coder encodeObject:_children[1]					forKey:@"child1"];
-	[coder encodeObject:_children[2]					forKey:@"child2"];
-	[coder encodeObject:_children[3]					forKey:@"child3"];
-	[coder encodeObject:_parent							forKey:@"parent"];
-	[coder encodeBool:_whole							forKey:@"whole"];
-	[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
-	[coder encodeObject:_members						forKey:@"members"];
-	[coder encodeBool:_isSplit							forKey:@"split"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_children[0]					forKey:@"child0"];
+		[coder encodeObject:_children[1]					forKey:@"child1"];
+		[coder encodeObject:_children[2]					forKey:@"child2"];
+		[coder encodeObject:_children[3]					forKey:@"child3"];
+		[coder encodeObject:_parent							forKey:@"parent"];
+		[coder encodeBool:_whole							forKey:@"whole"];
+		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
+		[coder encodeObject:_members						forKey:@"members"];
+		[coder encodeBool:_isSplit							forKey:@"split"];
+	} else {
+		[coder encodeObject:_children[0]];
+		[coder encodeObject:_children[1]];
+		[coder encodeObject:_children[2]];
+		[coder encodeObject:_children[3]];
+		[coder encodeObject:_parent];
+		[coder encodeBytes:&_whole length:sizeof _whole];
+		[coder encodeBytes:&_rect length:sizeof _rect];
+		[coder encodeObject:_members];
+		[coder encodeBytes:&_isSplit length:sizeof _isSplit];
+	}
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if ( self ) {
-		_children[0]	= [coder decodeObjectForKey:@"child0"];
-		_children[1]	= [coder decodeObjectForKey:@"child1"];
-		_children[2]	= [coder decodeObjectForKey:@"child2"];
-		_children[3]	= [coder decodeObjectForKey:@"child3"];
-		_parent			= [coder decodeObjectForKey:@"parent"];
-		_whole			= [coder decodeBoolForKey:@"whole"];
-		_isSplit		= [coder decodeBoolForKey:@"split"];
-		_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
-		_members		= [coder decodeObjectForKey:@"members"];
+		if ( [coder allowsKeyedCoding] ) {
+			_children[0]	= [coder decodeObjectForKey:@"child0"];
+			_children[1]	= [coder decodeObjectForKey:@"child1"];
+			_children[2]	= [coder decodeObjectForKey:@"child2"];
+			_children[3]	= [coder decodeObjectForKey:@"child3"];
+			_parent			= [coder decodeObjectForKey:@"parent"];
+			_whole			= [coder decodeBoolForKey:@"whole"];
+			_isSplit		= [coder decodeBoolForKey:@"split"];
+			_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
+			_members		= [coder decodeObjectForKey:@"members"];
+		} else {
+			_children[0]	= [coder decodeObject];
+			_children[1]	= [coder decodeObject];
+			_children[2]	= [coder decodeObject];
+			_children[3]	= [coder decodeObject];
+			_parent			= [coder decodeObject];
+			_whole			= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
+			_isSplit		= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
+			_rect			= *(OSMRect		*)[coder decodeBytesWithReturnedLength:NULL];
+			_members		= [coder decodeObject];
+		}
 	}
 	return self;
 }
@@ -353,13 +377,21 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-	[coder encodeObject:_rootQuad	forKey:@"rootQuad"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_rootQuad forKey:@"rootQuad"];
+	} else {
+		[coder encodeObject:_rootQuad];
+	}
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if ( self ) {
-		_rootQuad	= [coder decodeObjectForKey:@"rootQuad"];
+		if ( [coder allowsKeyedCoding] ) {
+			_rootQuad	= [coder decodeObjectForKey:@"rootQuad"];
+		} else {
+			_rootQuad	= [coder decodeObject];
+		}
 	}
 	return self;
 }

@@ -295,31 +295,57 @@ static NSInteger _nextUnusedIdentifier = 0;
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-	[coder encodeObject:_ident		forKey:@"ident"];
-	[coder encodeObject:_user		forKey:@"user"];
-	[coder encodeObject:_timestamp	forKey:@"timestamp"];
-	[coder encodeInteger:_version	forKey:@"version"];
-	[coder encodeInteger:_changeset	forKey:@"changeset"];
-	[coder encodeInteger:_uid		forKey:@"uid"];
-	[coder encodeBool:_visible		forKey:@"visible"];
-	[coder encodeObject:_tags		forKey:@"tags"];
-	[coder encodeBool:_deleted		forKey:@"deleted"];
-	[coder encodeInt32:_modifyCount	forKey:@"modified"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_ident		forKey:@"ident"];
+		[coder encodeObject:_user		forKey:@"user"];
+		[coder encodeObject:_timestamp	forKey:@"timestamp"];
+		[coder encodeInteger:_version	forKey:@"version"];
+		[coder encodeInteger:_changeset	forKey:@"changeset"];
+		[coder encodeInteger:_uid		forKey:@"uid"];
+		[coder encodeBool:_visible		forKey:@"visible"];
+		[coder encodeObject:_tags		forKey:@"tags"];
+		[coder encodeBool:_deleted		forKey:@"deleted"];
+		[coder encodeInt32:_modifyCount	forKey:@"modified"];
+	} else {
+		[coder encodeObject:_ident];
+		[coder encodeObject:_user];
+		[coder encodeObject:_timestamp];
+		[coder encodeBytes:&_version	length:sizeof _version];
+		[coder encodeBytes:&_changeset	length:sizeof _changeset];
+		[coder encodeBytes:&_uid		length:sizeof _uid];
+		[coder encodeBytes:&_visible	length:sizeof _visible];
+		[coder encodeObject:_tags];
+		[coder encodeBytes:&_deleted	length:sizeof _deleted];
+		[coder encodeBytes:&_modifyCount length:sizeof _modifyCount];
+	}
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if ( self ) {
-		_ident			= [coder decodeObjectForKey:@"ident"];
-		_user			= [coder decodeObjectForKey:@"user"];
-		_timestamp		= [coder decodeObjectForKey:@"timestamp"];
-		_version		= [coder decodeInt32ForKey:@"version"];
-		_changeset		= [coder decodeIntegerForKey:@"changeset"];
-		_uid			= [coder decodeInt32ForKey:@"uid"];
-		_visible		= [coder decodeBoolForKey:@"visible"];
-		_tags			= [coder decodeObjectForKey:@"tags"];
-		_deleted		= [coder decodeBoolForKey:@"deleted"];
-		_modifyCount	= [coder decodeInt32ForKey:@"modified"];
+		if ( [coder allowsKeyedCoding] ) {
+			_ident			= [coder decodeObjectForKey:@"ident"];
+			_user			= [coder decodeObjectForKey:@"user"];
+			_timestamp		= [coder decodeObjectForKey:@"timestamp"];
+			_version		= [coder decodeInt32ForKey:@"version"];
+			_changeset		= [coder decodeIntegerForKey:@"changeset"];
+			_uid			= [coder decodeInt32ForKey:@"uid"];
+			_visible		= [coder decodeBoolForKey:@"visible"];
+			_tags			= [coder decodeObjectForKey:@"tags"];
+			_deleted		= [coder decodeBoolForKey:@"deleted"];
+			_modifyCount	= [coder decodeInt32ForKey:@"modified"];
+		} else {
+			_ident			= [coder decodeObject];
+			_user			= [coder decodeObject];
+			_timestamp		= [coder decodeObject];
+			_version		= *(int32_t		*)[coder decodeBytesWithReturnedLength:NULL];
+			_changeset		= *(NSInteger	*)[coder decodeBytesWithReturnedLength:NULL];
+			_uid			= *(int32_t		*)[coder decodeBytesWithReturnedLength:NULL];
+			_visible		= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
+			_tags			= [coder decodeObject];
+			_deleted		= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
+			_modifyCount	= *(int32_t		*)[coder decodeBytesWithReturnedLength:NULL];
+		}
 	}
 	return self;
 }
@@ -406,9 +432,15 @@ static NSInteger _nextUnusedIdentifier = 0;
 {
 	self = [super initWithCoder:coder];
 	if ( self ) {
-		_lat		= [coder decodeDoubleForKey:@"lat"];
-		_lon		= [coder decodeDoubleForKey:@"lon"];
-		_wayCount	= [coder decodeIntegerForKey:@"wayCount"];
+		if ( [coder allowsKeyedCoding] ) {
+			_lat		= [coder decodeDoubleForKey:@"lat"];
+			_lon		= [coder decodeDoubleForKey:@"lon"];
+			_wayCount	= [coder decodeIntegerForKey:@"wayCount"];
+		} else {
+			_lat		= *(double		*)[coder decodeBytesWithReturnedLength:NULL];
+			_lon		= *(double		*)[coder decodeBytesWithReturnedLength:NULL];
+			_wayCount	= *(NSInteger	*)[coder decodeBytesWithReturnedLength:NULL];
+		}
 		_constructed = YES;
 	}
 	return self;
@@ -417,9 +449,15 @@ static NSInteger _nextUnusedIdentifier = 0;
 -(void)encodeWithCoder:(NSCoder *)coder
 {
 	[super encodeWithCoder:coder];
-	[coder encodeDouble:_lat forKey:@"lat"];
-	[coder encodeDouble:_lon forKey:@"lon"];
-	[coder encodeInteger:_wayCount	forKey:@"wayCount"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeDouble:_lat forKey:@"lat"];
+		[coder encodeDouble:_lon forKey:@"lon"];
+		[coder encodeInteger:_wayCount	forKey:@"wayCount"];
+	} else {
+		[coder encodeBytes:&_lat length:sizeof _lat];
+		[coder encodeBytes:&_lon length:sizeof _lon];
+		[coder encodeBytes:&_wayCount length:sizeof _wayCount];
+	}
 }
 
 -(NSInteger)wayCount
@@ -665,7 +703,11 @@ static NSInteger _nextUnusedIdentifier = 0;
 {
 	self = [super initWithCoder:coder];
 	if ( self ) {
-		_nodes	= [coder decodeObjectForKey:@"nodes"];
+		if ( [coder allowsKeyedCoding] ) {
+			_nodes	= [coder decodeObjectForKey:@"nodes"];
+		} else {
+			_nodes	= [coder decodeObject];
+		}
 		_constructed = YES;
 	}
 	return self;
@@ -674,7 +716,11 @@ static NSInteger _nextUnusedIdentifier = 0;
 -(void)encodeWithCoder:(NSCoder *)coder
 {
 	[super encodeWithCoder:coder];
-	[coder encodeObject:_nodes forKey:@"nodes"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_nodes forKey:@"nodes"];
+	} else {
+		[coder encodeObject:_nodes];
+	}
 }
 
 @end
@@ -804,13 +850,21 @@ static NSInteger _nextUnusedIdentifier = 0;
 -(void)encodeWithCoder:(NSCoder *)coder
 {
 	[super encodeWithCoder:coder];
-	[coder encodeObject:_members forKey:@"members"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_members forKey:@"members"];
+	} else {
+		[coder encodeObject:_members];
+	}
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super initWithCoder:coder];
 	if ( self ) {
-		_members	= [coder decodeObjectForKey:@"members"];
+		if ( [coder allowsKeyedCoding] ) {
+			_members	= [coder decodeObjectForKey:@"members"];
+		} else {
+			_members	= [coder decodeObject];
+		}
 		_constructed = YES;
 	}
 	return self;
@@ -855,17 +909,29 @@ static NSInteger _nextUnusedIdentifier = 0;
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-	[coder encodeObject:_type forKey:@"type"];
-	[coder encodeObject:_ref forKey:@"ref"];
-	[coder encodeObject:_role forKey:@"role"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_type forKey:@"type"];
+		[coder encodeObject:_ref forKey:@"ref"];
+		[coder encodeObject:_role forKey:@"role"];
+	} else {
+		[coder encodeObject:_type];
+		[coder encodeObject:_ref];
+		[coder encodeObject:_role];
+	}
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if ( self ) {
-		_type	= [coder decodeObjectForKey:@"type"];
-		_ref	= [coder decodeObjectForKey:@"ref"];
-		_role	= [coder decodeObjectForKey:@"role"];
+		if ( [coder allowsKeyedCoding] ) {
+			_type	= [coder decodeObjectForKey:@"type"];
+			_ref	= [coder decodeObjectForKey:@"ref"];
+			_role	= [coder decodeObjectForKey:@"role"];
+		} else {
+			_type	= [coder decodeObject];
+			_ref	= [coder decodeObject];
+			_role	= [coder decodeObject];
+		}
 	}
 	return self;
 }

@@ -24,19 +24,33 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-	[coder encodeObject:_target		forKey:@"target"];
-	[coder encodeObject:_selector	forKey:@"selector"];
-	[coder encodeObject:_objects	forKey:@"objects"];
-	[coder encodeInteger:_group		forKey:@"group"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_target		forKey:@"target"];
+		[coder encodeObject:_selector	forKey:@"selector"];
+		[coder encodeObject:_objects	forKey:@"objects"];
+		[coder encodeInteger:_group		forKey:@"group"];
+	} else {
+		[coder encodeObject:_target];
+		[coder encodeObject:_selector];
+		[coder encodeObject:_objects];
+		[coder encodeBytes:&_group length:sizeof _group];
+	}
 }
 
 - (id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
-	_target		= [coder decodeObjectForKey:@"target"];
-	_selector	= [coder decodeObjectForKey:@"selector"];
-	_objects	= [coder decodeObjectForKey:@"objects"];
-	_group		= [coder decodeIntegerForKey:@"group"];
+	if ( [coder allowsKeyedCoding] ) {
+		_target		= [coder decodeObjectForKey:@"target"];
+		_selector	= [coder decodeObjectForKey:@"selector"];
+		_objects	= [coder decodeObjectForKey:@"objects"];
+		_group		= [coder decodeIntegerForKey:@"group"];
+	} else {
+		_target		= [coder decodeObject];
+		_selector	= [coder decodeObject];
+		_objects	= [coder decodeObject];
+		_group		= *(NSInteger *)[coder decodeBytesWithReturnedLength:NULL];
+	}
     return self;
 }
 
@@ -354,16 +368,28 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-	[coder encodeObject:_undoStack forKey:@"undoStack"];
-	[coder encodeObject:_redoStack forKey:@"redoStack"];
-	[coder encodeInteger:_runLoopCounter forKey:@"runLoopCounter"];
+	if ( [coder allowsKeyedCoding] ) {
+		[coder encodeObject:_undoStack forKey:@"undoStack"];
+		[coder encodeObject:_redoStack forKey:@"redoStack"];
+		[coder encodeInteger:_runLoopCounter forKey:@"runLoopCounter"];
+	} else {
+		[coder encodeObject:_undoStack];
+		[coder encodeObject:_redoStack];
+		[coder encodeBytes:&_runLoopCounter length:sizeof _runLoopCounter];
+	}
 }
 - (id)initWithCoder:(NSCoder *)coder
 {
 	self = [self init];
-    _undoStack = [coder decodeObjectForKey:@"undoStack"];
-    _redoStack = [coder decodeObjectForKey:@"redoStack"];
-	_runLoopCounter = [coder decodeIntegerForKey:@"runLoopCounter"];
+	if ( [coder allowsKeyedCoding] ) {
+		_undoStack = [coder decodeObjectForKey:@"undoStack"];
+		_redoStack = [coder decodeObjectForKey:@"redoStack"];
+		_runLoopCounter = [coder decodeIntegerForKey:@"runLoopCounter"];
+	} else {
+		_undoStack = [coder decodeObject];
+		_redoStack = [coder decodeObject];
+		_runLoopCounter = *(NSInteger *)[coder decodeBytesWithReturnedLength:NULL];
+	}
     return self;
 }
 
