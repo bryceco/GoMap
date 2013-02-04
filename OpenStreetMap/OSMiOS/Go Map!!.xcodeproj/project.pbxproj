@@ -32,6 +32,27 @@
 		024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3B16B1B38B00875658 /* PathUtil.m */; };
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
+		0266D3A516C02D9200AD9A83 /* seamark_anchor_berth.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */; };
+		0266D3A616C02D9200AD9A83 /* seamark_anchorage.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */; };
+		0266D3A716C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */; };
+		0266D3A816C02D9200AD9A83 /* seamark_beacon_isolated.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39416C02D9200AD9A83 /* seamark_beacon_isolated.p.64.png */; };
+		0266D3A916C02D9200AD9A83 /* seamark_beacon_lateral.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39516C02D9200AD9A83 /* seamark_beacon_lateral.p.64.png */; };
+		0266D3AA16C02D9200AD9A83 /* seamark_beacon_safe_water.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39616C02D9200AD9A83 /* seamark_beacon_safe_water.p.64.png */; };
+		0266D3AB16C02D9200AD9A83 /* seamark_beacon_special_purpose.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39716C02D9200AD9A83 /* seamark_beacon_special_purpose.p.64.png */; };
+		0266D3AC16C02D9200AD9A83 /* seamark_buoy_cardinal.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39816C02D9200AD9A83 /* seamark_buoy_cardinal.p.64.png */; };
+		0266D3AD16C02D9200AD9A83 /* seamark_buoy_isolated_danger.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39916C02D9200AD9A83 /* seamark_buoy_isolated_danger.png */; };
+		0266D3AE16C02D9200AD9A83 /* seamark_buoy_lateral.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39A16C02D9200AD9A83 /* seamark_buoy_lateral.p.64.png */; };
+		0266D3AF16C02D9200AD9A83 /* seamark_buoy_safe_water.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39B16C02D9200AD9A83 /* seamark_buoy_safe_water.p.64.png */; };
+		0266D3B016C02D9200AD9A83 /* seamark_buoy_special_purpose.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39C16C02D9200AD9A83 /* seamark_buoy_special_purpose.p.64.png */; };
+		0266D3B116C02D9200AD9A83 /* seamark_fog_signal.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39D16C02D9200AD9A83 /* seamark_fog_signal.p.64.png */; };
+		0266D3B216C02D9200AD9A83 /* seamark_light_float.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39E16C02D9200AD9A83 /* seamark_light_float.p.64.png */; };
+		0266D3B316C02D9200AD9A83 /* seamark_light_major.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39F16C02D9200AD9A83 /* seamark_light_major.p.64.png */; };
+		0266D3B416C02D9200AD9A83 /* seamark_light_minor.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D3A016C02D9200AD9A83 /* seamark_light_minor.p.64.png */; };
+		0266D3B516C02D9200AD9A83 /* seamark_light_vessel.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D3A116C02D9200AD9A83 /* seamark_light_vessel.p.64.png */; };
+		0266D3B616C02D9200AD9A83 /* seamark_radar_station.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D3A216C02D9200AD9A83 /* seamark_radar_station.p.64.png */; };
+		0266D3B716C02D9200AD9A83 /* seamark_signal_station.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D3A316C02D9200AD9A83 /* seamark_signal_station.p.64.png */; };
+		0266D3B816C02D9200AD9A83 /* seamark_wreck.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D3A416C02D9200AD9A83 /* seamark_wreck.png */; };
+		0266D3BA16C03D7400AD9A83 /* seamark_notice.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D3B916C03D7400AD9A83 /* seamark_notice.p.64.png */; };
 		0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */ = {isa = PBXBuildFile; fileRef = 0277E29016A66C1800456BED /* EditorLayerGL.m */; };
 		0277E29416A673CC00456BED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0277E29316A673CC00456BED /* OpenGLES.framework */; };
 		027A469B1673B251000BE55C /* OSM-Logo72.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469A1673B251000BE55C /* OSM-Logo72.png */; };
@@ -452,6 +473,27 @@
 		024ADF3B16B1B38B00875658 /* PathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PathUtil.m; path = ../../OpenStreetMap/PathUtil.m; sourceTree = "<group>"; };
 		025A1CFA1690B96E002B60CB /* OSM-Logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo57.png"; sourceTree = "<group>"; };
 		025A1CFB1690B96E002B60CB /* OSM-Logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo114.png"; sourceTree = "<group>"; };
+		0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchor_berth.p.64.png; sourceTree = "<group>"; };
+		0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchorage.p.64.png; sourceTree = "<group>"; };
+		0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_cardinal.p.64.png; sourceTree = "<group>"; };
+		0266D39416C02D9200AD9A83 /* seamark_beacon_isolated.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_isolated.p.64.png; sourceTree = "<group>"; };
+		0266D39516C02D9200AD9A83 /* seamark_beacon_lateral.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_lateral.p.64.png; sourceTree = "<group>"; };
+		0266D39616C02D9200AD9A83 /* seamark_beacon_safe_water.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_safe_water.p.64.png; sourceTree = "<group>"; };
+		0266D39716C02D9200AD9A83 /* seamark_beacon_special_purpose.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_special_purpose.p.64.png; sourceTree = "<group>"; };
+		0266D39816C02D9200AD9A83 /* seamark_buoy_cardinal.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_buoy_cardinal.p.64.png; sourceTree = "<group>"; };
+		0266D39916C02D9200AD9A83 /* seamark_buoy_isolated_danger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_buoy_isolated_danger.png; sourceTree = "<group>"; };
+		0266D39A16C02D9200AD9A83 /* seamark_buoy_lateral.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_buoy_lateral.p.64.png; sourceTree = "<group>"; };
+		0266D39B16C02D9200AD9A83 /* seamark_buoy_safe_water.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_buoy_safe_water.p.64.png; sourceTree = "<group>"; };
+		0266D39C16C02D9200AD9A83 /* seamark_buoy_special_purpose.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_buoy_special_purpose.p.64.png; sourceTree = "<group>"; };
+		0266D39D16C02D9200AD9A83 /* seamark_fog_signal.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_fog_signal.p.64.png; sourceTree = "<group>"; };
+		0266D39E16C02D9200AD9A83 /* seamark_light_float.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_light_float.p.64.png; sourceTree = "<group>"; };
+		0266D39F16C02D9200AD9A83 /* seamark_light_major.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_light_major.p.64.png; sourceTree = "<group>"; };
+		0266D3A016C02D9200AD9A83 /* seamark_light_minor.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_light_minor.p.64.png; sourceTree = "<group>"; };
+		0266D3A116C02D9200AD9A83 /* seamark_light_vessel.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_light_vessel.p.64.png; sourceTree = "<group>"; };
+		0266D3A216C02D9200AD9A83 /* seamark_radar_station.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_radar_station.p.64.png; sourceTree = "<group>"; };
+		0266D3A316C02D9200AD9A83 /* seamark_signal_station.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_signal_station.p.64.png; sourceTree = "<group>"; };
+		0266D3A416C02D9200AD9A83 /* seamark_wreck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_wreck.png; sourceTree = "<group>"; };
+		0266D3B916C03D7400AD9A83 /* seamark_notice.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_notice.p.64.png; sourceTree = "<group>"; };
 		0277E28F16A66C1800456BED /* EditorLayerGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorLayerGL.h; sourceTree = "<group>"; };
 		0277E29016A66C1800456BED /* EditorLayerGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorLayerGL.m; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -928,6 +970,34 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		0266D39016C02D9200AD9A83 /* seamark */ = {
+			isa = PBXGroup;
+			children = (
+				0266D3B916C03D7400AD9A83 /* seamark_notice.p.64.png */,
+				0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */,
+				0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */,
+				0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */,
+				0266D39416C02D9200AD9A83 /* seamark_beacon_isolated.p.64.png */,
+				0266D39516C02D9200AD9A83 /* seamark_beacon_lateral.p.64.png */,
+				0266D39616C02D9200AD9A83 /* seamark_beacon_safe_water.p.64.png */,
+				0266D39716C02D9200AD9A83 /* seamark_beacon_special_purpose.p.64.png */,
+				0266D39816C02D9200AD9A83 /* seamark_buoy_cardinal.p.64.png */,
+				0266D39916C02D9200AD9A83 /* seamark_buoy_isolated_danger.png */,
+				0266D39A16C02D9200AD9A83 /* seamark_buoy_lateral.p.64.png */,
+				0266D39B16C02D9200AD9A83 /* seamark_buoy_safe_water.p.64.png */,
+				0266D39C16C02D9200AD9A83 /* seamark_buoy_special_purpose.p.64.png */,
+				0266D39D16C02D9200AD9A83 /* seamark_fog_signal.p.64.png */,
+				0266D39E16C02D9200AD9A83 /* seamark_light_float.p.64.png */,
+				0266D39F16C02D9200AD9A83 /* seamark_light_major.p.64.png */,
+				0266D3A016C02D9200AD9A83 /* seamark_light_minor.p.64.png */,
+				0266D3A116C02D9200AD9A83 /* seamark_light_vessel.p.64.png */,
+				0266D3A216C02D9200AD9A83 /* seamark_radar_station.p.64.png */,
+				0266D3A316C02D9200AD9A83 /* seamark_signal_station.p.64.png */,
+				0266D3A416C02D9200AD9A83 /* seamark_wreck.png */,
+			);
+			path = seamark;
+			sourceTree = "<group>";
+		};
 		0284FDB016A08AB6002C46A9 /* Launch */ = {
 			isa = PBXGroup;
 			children = (
@@ -1063,6 +1133,7 @@
 		02ACBA8716713F2A00BB4414 /* png */ = {
 			isa = PBXGroup;
 			children = (
+				0266D39016C02D9200AD9A83 /* seamark */,
 				02ACBA8816713F2A00BB4414 /* accommodation_alpinehut.p.64.png */,
 				02ACBA8916713F2A00BB4414 /* accommodation_bed_and_breakfast.p.64.png */,
 				02ACBA8A16713F2A00BB4414 /* accommodation_bed_and_breakfast2.p.64.png */,
@@ -1860,6 +1931,27 @@
 				020CD97B169D4BC900BF3AAF /* Default-Landscape~ipad.png in Resources */,
 				0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */,
 				0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */,
+				0266D3A516C02D9200AD9A83 /* seamark_anchor_berth.p.64.png in Resources */,
+				0266D3A616C02D9200AD9A83 /* seamark_anchorage.p.64.png in Resources */,
+				0266D3A716C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png in Resources */,
+				0266D3A816C02D9200AD9A83 /* seamark_beacon_isolated.p.64.png in Resources */,
+				0266D3A916C02D9200AD9A83 /* seamark_beacon_lateral.p.64.png in Resources */,
+				0266D3AA16C02D9200AD9A83 /* seamark_beacon_safe_water.p.64.png in Resources */,
+				0266D3AB16C02D9200AD9A83 /* seamark_beacon_special_purpose.p.64.png in Resources */,
+				0266D3AC16C02D9200AD9A83 /* seamark_buoy_cardinal.p.64.png in Resources */,
+				0266D3AD16C02D9200AD9A83 /* seamark_buoy_isolated_danger.png in Resources */,
+				0266D3AE16C02D9200AD9A83 /* seamark_buoy_lateral.p.64.png in Resources */,
+				0266D3AF16C02D9200AD9A83 /* seamark_buoy_safe_water.p.64.png in Resources */,
+				0266D3B016C02D9200AD9A83 /* seamark_buoy_special_purpose.p.64.png in Resources */,
+				0266D3B116C02D9200AD9A83 /* seamark_fog_signal.p.64.png in Resources */,
+				0266D3B216C02D9200AD9A83 /* seamark_light_float.p.64.png in Resources */,
+				0266D3B316C02D9200AD9A83 /* seamark_light_major.p.64.png in Resources */,
+				0266D3B416C02D9200AD9A83 /* seamark_light_minor.p.64.png in Resources */,
+				0266D3B516C02D9200AD9A83 /* seamark_light_vessel.p.64.png in Resources */,
+				0266D3B616C02D9200AD9A83 /* seamark_radar_station.p.64.png in Resources */,
+				0266D3B716C02D9200AD9A83 /* seamark_signal_station.p.64.png in Resources */,
+				0266D3B816C02D9200AD9A83 /* seamark_wreck.png in Resources */,
+				0266D3BA16C03D7400AD9A83 /* seamark_notice.p.64.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -231,7 +231,8 @@ static NSInteger _nextUnusedIdentifier = 0;
 		typeKeys = @[	@"shop", @"amenity", @"leisure", @"tourism", @"craft",
 						@"highway", @"office", @"landmark", @"building", @"emergency",
 						@"man_made", @"military", @"natural", @"power", @"railway",
-						@"sport", @"waterway", @"aeroway", @"landuse", @"barrier", @"boundary" ];
+						@"sport", @"waterway", @"aeroway", @"landuse", @"barrier", @"boundary",
+						@"seamark:type", ];
 	}
 	return typeKeys;
 }

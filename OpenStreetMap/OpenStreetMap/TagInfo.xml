@@ -1033,7 +1033,7 @@
     <tag key="school" value="blind" name="Blind"></tag>
     <tag key="sea_mark" value="day_beacon" name="Day Beacon"></tag>
     <tag key="seamark" value="ACHBRT" name="Achbrt"></tag>
-    <tag key="seamark" value="anchorage" name="Anchorage"></tag>
+    <tag key="seamark" value="anchorage" name="Anchorage" ></tag>
     <tag key="seamark" value="beacon" name="Beacon" description="Base tag for beacons used for marine navigation"></tag>
     <tag key="seamark" value="buoy" name="Buoy" description="Base tag for navigational buoys"></tag>
     <tag key="seamark" value="landmark" name="Landmark"></tag>
@@ -1260,19 +1260,19 @@
     <tag key="seamark:topmark:shape" value="upright-cross" name="Upright-Cross"></tag>
     <tag key="seamark:topmark:shape" value="upright_cross" name="Upright Cross"></tag>
     <tag key="seamark:topmark:shape" value="x-shape" name="X-Shape"></tag>
-    <tag key="seamark:type" value="anchorage" name="Anchorage"></tag>
-    <tag key="seamark:type" value="beacon_cardinal" name="Beacon Cardinal"></tag>
-    <tag key="seamark:type" value="beacon_isolated_danger" name="Beacon Isolated Danger"></tag>
-    <tag key="seamark:type" value="beacon_lateral" name="Beacon Lateral"></tag>
-    <tag key="seamark:type" value="beacon_safe_water" name="Beacon Safe Water"></tag>
-    <tag key="seamark:type" value="beacon_special_purpose" name="Beacon Special Purpose"></tag>
+    <tag key="seamark:type" value="anchorage" name="Anchorage" iconName="seamark_anchorage"></tag>
+    <tag key="seamark:type" value="beacon_cardinal" name="Beacon Cardinal" iconName="seamark_beacon_cardinal"></tag>
+    <tag key="seamark:type" value="beacon_isolated_danger" name="Beacon Isolated Danger" iconName="seamark_beacon_isolated"></tag>
+    <tag key="seamark:type" value="beacon_lateral" name="Beacon Lateral" iconName="seamark_beacon_lateral"></tag>
+    <tag key="seamark:type" value="beacon_safe_water" name="Beacon Safe Water" iconName="seamark_beacon_safe_water"></tag>
+    <tag key="seamark:type" value="beacon_special_purpose" name="Beacon Special Purpose" iconName="seamark_beacon_special_purpose"></tag>
     <tag key="seamark:type" value="berth" name="Berth"></tag>
     <tag key="seamark:type" value="bridge" name="Bridge"></tag>
-    <tag key="seamark:type" value="buoy_cardinal" name="Buoy Cardinal"></tag>
-    <tag key="seamark:type" value="buoy_isolated_danger" name="Buoy Isolated Danger"></tag>
-    <tag key="seamark:type" value="buoy_lateral" name="Buoy Lateral"></tag>
-    <tag key="seamark:type" value="buoy_safe_water" name="Buoy Safe Water"></tag>
-    <tag key="seamark:type" value="buoy_special_purpose" name="Buoy Special Purpose"></tag>
+    <tag key="seamark:type" value="buoy_cardinal" name="Buoy Cardinal" iconName="seamark_buoy_cardinal"></tag>
+    <tag key="seamark:type" value="buoy_isolated_danger" name="Buoy Isolated Danger" iconName="seamark_buoy_isolated_danger"></tag>
+    <tag key="seamark:type" value="buoy_lateral" name="Buoy Lateral" iconName="seamark_buoy_lateral"></tag>
+    <tag key="seamark:type" value="buoy_safe_water" name="Buoy Safe Water" iconName="seamark_buoy_safe_water"></tag>
+    <tag key="seamark:type" value="buoy_special_purpose" name="Buoy Special Purpose" iconName="seamark_buoy_special_purpose"></tag>
     <tag key="seamark:type" value="cable_overhead" name="Cable Overhead"></tag>
     <tag key="seamark:type" value="cable_submarine" name="Cable Submarine"></tag>
     <tag key="seamark:type" value="calling-in_point" name="Calling-In Point"></tag>
@@ -1283,12 +1283,13 @@
     <tag key="seamark:type" value="exclusive_economic_zone" name="Exclusive Economic Zone"></tag>
     <tag key="seamark:type" value="fairway" name="Fairway"></tag>
     <tag key="seamark:type" value="landmark" name="Landmark"></tag>
-    <tag key="seamark:type" value="light_float" name="Light Float"></tag>
-    <tag key="seamark:type" value="light_major" name="Light Major"></tag>
-    <tag key="seamark:type" value="light_minor" name="Light Minor"></tag>
-    <tag key="seamark:type" value="light_vessel" name="Light Vessel"></tag>
+    <tag key="seamark:type" value="light_float" name="Light Float" iconName="seamark_light_float"></tag>
+    <tag key="seamark:type" value="light_major" name="Light Major" iconName="seamark_light_major"></tag>
+    <tag key="seamark:type" value="light_minor" name="Light Minor" iconName="seamark_light_minor"></tag>
+    <tag key="seamark:type" value="light_vessel" name="Light Vessel" iconName="seamark_light_vessel"></tag>
     <tag key="seamark:type" value="mooring" name="Mooring"></tag>
     <tag key="seamark:type" value="navigation_line" name="Navigation Line"></tag>
+    <tag key="seamark:type" value="notice" iconName="seamark_notice"></tag>
     <tag key="seamark:type" value="pilot_boarding" name="Pilot Boarding"></tag>
     <tag key="seamark:type" value="pipeline_submarine" name="Pipeline Submarine"></tag>
     <tag key="seamark:type" value="platform" name="Platform"></tag>
@@ -1307,10 +1308,10 @@
     <tag key="seamark:type" value="separation_zone" name="Separation Zone"></tag>
     <tag key="seamark:type" value="shoreline_construction" name="Shoreline Construction"></tag>
     <tag key="seamark:type" value="signal_station_traffic" name="Signal Station Traffic"></tag>
-    <tag key="seamark:type" value="signal_station_warning" name="Signal Station Warning"></tag>
+    <tag key="seamark:type" value="signal_station_warning" name="Signal Station Warning" iconName="seamark_fog_signal"></tag>
     <tag key="seamark:type" value="small_craft_facility" name="Small Craft Facility"></tag>
     <tag key="seamark:type" value="waterway_gauge" name="Waterway Gauge"></tag>
-    <tag key="seamark:type" value="wreck" name="Wreck"></tag>
+    <tag key="seamark:type" value="wreck" name="Wreck" iconName="seamark_wreck"></tag>
     <tag key="service" value="alley" name="Alley" belongsTo="highway=service" description="An alley is a service road usually located between properties for access to utilities."></tag>
     <tag key="service" value="dealer" name="Dealer" belongsTo="highway=service"></tag>
     <tag key="service" value="drive_through" name="Drive Through" belongsTo="highway=service"></tag>

@@ -77,7 +77,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	if ( _searchArrayAll ) {
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		TagInfo * tagInfo = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
-		NSString * text = tagInfo.friendlyName ?: tagInfo.friendlyName2;
+		NSString * text = tagInfo.friendlyName2;
 		cell.textLabel.text = text;
 		cell.imageView.image = tagInfo.icon;
 		cell.detailTextLabel.text = tagInfo.description;
@@ -88,7 +88,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		// mose recents
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		TagInfo * tagInfo = _mostRecentArray[ indexPath.row ];
-		cell.textLabel.text = tagInfo.friendlyName ?: tagInfo.friendlyName2;
+		cell.textLabel.text = tagInfo.friendlyName2;
 		cell.imageView.image = tagInfo.icon;
 		cell.detailTextLabel.text = tagInfo.description;
 		cell.accessoryType = UITableViewCellAccessoryNone;
