@@ -75,6 +75,7 @@
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
 	if ( appDelegate.userName.length == 0 || appDelegate.userPassword.length == 0 ) {
 		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Missing login information" message:@"Before uploading changes you must provide your OpenStreetMap username and password in the Credentials option under Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		// alertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
 		[alertView show];
 		return;
 	}
@@ -99,6 +100,12 @@
 			[alert show];
 		} else {
 			[self dismissViewControllerAnimated:YES completion:nil];
+
+			// flash success message
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC));
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				[appDelegate.mapView flashMessage:@"Upload complete!" duration:1.5];
+			});
 		}
 	}];
 }

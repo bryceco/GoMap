@@ -363,7 +363,7 @@ CGSize SizeForImage( NSImage * image )
 	return YES;
 }
 
--(void)flashMessage:(NSString *)message
+-(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration
 {
 #if TARGET_OS_IPHONE
 	UILabel * view = [UILabel new];
@@ -397,6 +397,11 @@ CGSize SizeForImage( NSImage * image )
 	});
 #endif
 };
+
+-(void)flashMessage:(NSString *)message
+{
+	[self flashMessage:message duration:0.7];
+}
 
 
 -(void)presentError:(NSError *)error
@@ -774,6 +779,10 @@ CGSize SizeForImage( NSImage * image )
 - (IBAction)undo:(id)sender
 {
 #if TARGET_OS_IPHONE
+	if ( _editorLayer.hidden ) {
+		[self flashMessage:@"Editing layer not visible"];
+		return;
+	}
 	// if just dropped a pin then undo removes the pin
 	if ( _pushpinView && _editorLayer.selectedPrimary == nil ) {
 		[_pushpinView removeFromSuperview];
@@ -794,6 +803,10 @@ CGSize SizeForImage( NSImage * image )
 - (IBAction)redo:(id)sender
 {
 #if TARGET_OS_IPHONE
+	if ( _editorLayer.hidden ) {
+		[self flashMessage:@"Editing layer not visible"];
+		return;
+	}
 	[_pushpinView removeFromSuperview];
 	_pushpinView = nil;
 #endif

@@ -110,6 +110,8 @@
 -(void)progressAnimate;
 
 -(void)flashMessage:(NSString *)message;
+-(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration;
+
 
 -(BOOL)isLocationSpecified;
 

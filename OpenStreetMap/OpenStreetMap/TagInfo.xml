@@ -1615,14 +1615,14 @@
     <tag key="tracktype" value="grade3" name="Grade3" lineColor="006600" lineWidth="1.000000"></tag>
     <tag key="tracktype" value="grade4" name="Grade4" lineColor="006600" lineWidth="1.000000"></tag>
     <tag key="tracktype" value="grade5" name="Grade5" lineColor="006600" lineWidth="1.000000"></tag>
-    <tag key="traffic_calming" value="bump" name="Bump" belongsTo="highway=traffic_calming"></tag>
+    <tag key="traffic_calming" value="bump" name="Bump" belongsTo="highway=traffic_calming" iconName="transport_speedbump"></tag>
     <tag key="traffic_calming" value="chicane" name="Chicane" belongsTo="highway=traffic_calming"></tag>
     <tag key="traffic_calming" value="chikane" name="Chikane" belongsTo="highway=traffic_calming"></tag>
     <tag key="traffic_calming" value="choker" name="Choker" belongsTo="highway=traffic_calming"></tag>
     <tag key="traffic_calming" value="cushion" name="Cushion" belongsTo="highway=traffic_calming"></tag>
-    <tag key="traffic_calming" value="hump" name="Hump" belongsTo="highway=traffic_calming"></tag>
+    <tag key="traffic_calming" value="hump" name="Hump" belongsTo="highway=traffic_calming" iconName="transport_speedbump"></tag>
     <tag key="traffic_calming" value="island" name="Island" belongsTo="highway=traffic_calming" description="An island is a small area that temporarily separates two different directions of traffic."></tag>
-    <tag key="traffic_calming" value="rumble_strip" name="Rumble Strip" belongsTo="highway=traffic_calming"></tag>
+    <tag key="traffic_calming" value="rumble_strip" name="Rumble Strip" belongsTo="highway=traffic_calming" iconName="transport_speedbump"></tag>
     <tag key="traffic_calming" value="table" name="Table" belongsTo="highway=traffic_calming"></tag>
     <tag key="traffic_calming" value="yes" name="Yes" belongsTo="highway=traffic_calming" iconName="transport_speedbump"></tag>
     <tag key="traffic_sign" value="city_limit" name="City Limit"></tag>

@@ -80,7 +80,9 @@
 			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Unable to upload changes" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
 		} else {
-			[self dismissViewControllerAnimated:YES completion:nil];
+			[self dismissViewControllerAnimated:YES completion:^{
+				[appDelegate.mapView flashMessage:@"Upload complete!"];
+			}];
 		}
 	}];
 }

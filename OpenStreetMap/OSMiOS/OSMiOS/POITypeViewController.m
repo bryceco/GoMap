@@ -76,10 +76,11 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 {
 	if ( _searchArrayAll ) {
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-		TagInfo * info = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
-		NSString * text = info.friendlyName2;
+		TagInfo * tagInfo = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+		NSString * text = tagInfo.friendlyName ?: tagInfo.friendlyName2;
 		cell.textLabel.text = text;
-		cell.detailTextLabel.text = info.description;
+		cell.imageView.image = tagInfo.icon;
+		cell.detailTextLabel.text = tagInfo.description;
 		return cell;
 	}
 
@@ -88,6 +89,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		TagInfo * tagInfo = _mostRecentArray[ indexPath.row ];
 		cell.textLabel.text = tagInfo.friendlyName ?: tagInfo.friendlyName2;
+		cell.imageView.image = tagInfo.icon;
 		cell.detailTextLabel.text = tagInfo.description;
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		return cell;
@@ -105,6 +107,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 			TagInfo * tagInfo = _typeArray[ indexPath.row ];
 			cell.textLabel.text = tagInfo.friendlyName ?: tagInfo.friendlyName2;
+			cell.imageView.image = tagInfo.icon;
 			cell.detailTextLabel.text = tagInfo.description;
 			POITabBarController * tabController = (id)self.tabBarController;
 			BOOL selected = [[tabController.keyValueDict valueForKey:tagInfo.key] isEqualToString:tagInfo.value];
