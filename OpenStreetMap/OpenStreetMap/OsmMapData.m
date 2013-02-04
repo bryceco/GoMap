@@ -170,6 +170,31 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 }
 
 
+-(NSMutableSet *)tagValuesForKey:(NSString *)key
+{
+	NSMutableSet * set = [NSMutableSet set];
+	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+		NSString * value = [object.tags objectForKey:key];
+		if ( value ) {
+			[set addObject:value];
+		}
+	}];
+	[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+		NSString * value = [object.tags objectForKey:key];
+		if ( value ) {
+			[set addObject:value];
+		}
+	}];
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+		NSString * value = [object.tags objectForKey:key];
+		if ( value ) {
+			[set addObject:value];
+		}
+	}];
+	return set;
+}
+
+
 #pragma mark Editing
 
 static NSString * StringTruncatedTo255( NSString * s )

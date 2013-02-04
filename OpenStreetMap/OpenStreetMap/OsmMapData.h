@@ -98,6 +98,8 @@ extern NSString * OsmValueForBoolean( BOOL b );
 - (void)enumerateObjectsUsingBlock:(void (^)(OsmBaseObject * obj))block;
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 
+-(NSMutableSet *)tagValuesForKey:(NSString *)key;
+
 // editing
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
 -(OsmWay *)createWay;

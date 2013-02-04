@@ -244,7 +244,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="McDonald's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Bfp-L7-BLs">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="McDonald's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Bfp-L7-BLs" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="SL6-YN-AMK"/>
                                                     </constraints>
@@ -284,7 +284,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mickey D's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mickey D's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="aI3-W4-aeV"/>
                                                     </constraints>
@@ -328,7 +328,7 @@
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="burger" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oqb-Ju-oWr">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="burger" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oqb-Ju-oWr" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="0ES-qr-hW9"/>
                                                     </constraints>
@@ -371,7 +371,7 @@
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="free" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Afv-iP-c2g">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="free" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Afv-iP-c2g" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="cME-Dz-iaj"/>
                                                     </constraints>
@@ -414,7 +414,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="McDonald's Corporation" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VHt-lN-E0y">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="McDonald's Corporation" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="VHt-lN-E0y" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="DeO-ZM-cqo"/>
                                                     </constraints>
@@ -454,7 +454,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="reference" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="TVg-M8-T9k">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="reference" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="TVg-M8-T9k" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="r0V-0e-poK"/>
                                                     </constraints>
@@ -498,7 +498,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Empire State Building" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Es8-x9-E4V">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Empire State Building" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Es8-x9-E4V" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="W7l-PD-Q2O"/>
                                                     </constraints>
@@ -603,7 +603,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="5th Avenue" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="imX-cR-j1N">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="5th Avenue" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="imX-cR-j1N" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Uz4-fP-AvA"/>
                                                     </constraints>
@@ -643,7 +643,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New York" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Oa3-md-Nok">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New York" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Oa3-md-Nok" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="EkX-eH-Hku"/>
                                                     </constraints>
@@ -683,7 +683,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="10118‎" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4vm-Lz-Dbe">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="10118‎" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4vm-Lz-Dbe" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="wSY-yd-hvU"/>
                                                     </constraints>
@@ -807,7 +807,7 @@
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="local_knowledge" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2jC-nd-iQh">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="local_knowledge" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="2jC-nd-iQh" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="20e-mj-ebY"/>
                                                     </constraints>
@@ -850,7 +850,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="designation" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Oem-fb-M47">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="designation" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Oem-fb-M47" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Nx9-3g-9IQ"/>
                                                     </constraints>
@@ -894,7 +894,7 @@
                                             <rect key="frame" x="10" y="1" width="280" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="needs survey" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yXH-UO-x9E">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="needs survey" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yXH-UO-x9E" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="qUf-NM-bvy"/>
                                                     </constraints>
@@ -937,7 +937,7 @@
                                             <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="done from memory" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uCb-X5-sm9">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="done from memory" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uCb-X5-sm9" customClass="AutocompleteTextField">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="lNA-BQ-G1d"/>
                                                     </constraints>
@@ -1024,7 +1024,7 @@
             <objects>
                 <viewController id="eNH-pi-UM5" customClass="WebPageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P90-3W-ivA">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJf-xH-lf8">
@@ -1318,7 +1318,7 @@
                                     <rect key="frame" x="10" y="1" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="tag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="tag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" customClass="AutocompleteTextField">
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="200" constant="121" type="user" id="usV-OU-r22"/>
                                             </constraints>
@@ -1330,7 +1330,7 @@
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="tcL-nf-pp1"/>
                                             </connections>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cP3-lR-lzM">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cP3-lR-lzM" customClass="AutocompleteTextField">
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
@@ -1366,7 +1366,7 @@
                                     <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="relation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Urd-9O-Mte">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="relation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Urd-9O-Mte" customClass="AutocompleteTextField">
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="200" constant="121" type="user" id="TNy-3c-Toh"/>
                                             </constraints>
@@ -1378,7 +1378,7 @@
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="gc7-5Z-YFM"/>
                                             </connections>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="role" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0zS-QM-zwQ">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="role" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0zS-QM-zwQ" customClass="AutocompleteTextField">
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
@@ -3473,7 +3473,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="33" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -3594,12 +3594,248 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
         <image name="redo32.png" width="32" height="32"/>
         <image name="undo32.png" width="32" height="32"/>
     </resources>
+    <classes>
+        <class className="AddNewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddNewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="AttributeCustomCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AttributeCustomCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="value" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="AutocompleteTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutocompleteTextField.h"/>
+        </class>
+        <class className="BingMetadataViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BingMetadataViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="ClearCacheViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClearCacheViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_aerialDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_mapnikDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_osmDetail" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CreditsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreditsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="HelpViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HelpViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="_textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="LoginViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="registerAccount:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="_password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_username" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="MapView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapView.h"/>
+            <relationships>
+                <relationship kind="action" name="dropPin:"/>
+                <relationship kind="action" name="duplicateSelectedObject:"/>
+                <relationship kind="action" name="handlePanGesture:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="handlePinchGesture:" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="action" name="handleTapGesture:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="redo:"/>
+                <relationship kind="action" name="undo:"/>
+            </relationships>
+        </class>
+        <class className="MapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleLocation:"/>
+                <relationship kind="outlet" name="_redoButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_toolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="_trashcanButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_undoButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_uploadButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="locationButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MapView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NearbyMappersViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NearbyMappersViewController.h"/>
+        </class>
+        <class className="NominatumViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NominatumViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="_tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="OfflineTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OfflineTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="detailLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="OfflineViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OfflineViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleDownload:"/>
+                <relationship kind="outlet" name="_aerialCell" candidateClass="OfflineTableViewCell"/>
+                <relationship kind="outlet" name="_mapnikCell" candidateClass="OfflineTableViewCell"/>
+            </relationships>
+        </class>
+        <class className="POIAllTagsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIAllTagsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleEditing:"/>
+                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="POIAttributesViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIAttributesViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_changesetCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_changesetLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_extraCell1" candidateClass="AttributeCustomCell"/>
+                <relationship kind="outlet" name="_extraCell2" candidateClass="AttributeCustomCell"/>
+                <relationship kind="outlet" name="_identCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_identLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_uidLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_userCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_userLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_versionCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_versionLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="POICommonTagsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POICommonTagsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="_altNameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_buildingTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_cityTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_cuisineTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_designationTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_fixmeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_houseNumberTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_nameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_noteTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_operatorTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_phoneTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_postalCodeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_refTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_sourceTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_streetTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_typeTextField" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_unitTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_websiteTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_wifiTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="POICuisineViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POICuisineViewController.h"/>
+        </class>
+        <class className="POIFixMeViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIFixMeViewController.h"/>
+        </class>
+        <class className="POISourceViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POISourceViewController.h"/>
+        </class>
+        <class className="POITabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POITabBarController.h"/>
+        </class>
+        <class className="POITypeViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POITypeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="configure:"/>
+                <relationship kind="outlet" name="_searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="POIWiFiViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIWiFiViewController.h"/>
+        </class>
+        <class className="SettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_sendMailCell" candidateClass="UITableViewCell"/>
+            </relationships>
+        </class>
+        <class className="TextPair" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextPair.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_fixConstraint" candidateClass="NSLayoutConstraint"/>
+                <relationship kind="outlet" name="_fixContstraintView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="text1" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="text2" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="UploadTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UploadTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendMail:"/>
+                <relationship kind="outlet" name="_cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_commentTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="_commitButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_progressView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_sendMailButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="UploadViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UploadViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendMail:"/>
+                <relationship kind="outlet" name="_cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_commentTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="_commitButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_progressView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_sendMailButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="_xmlTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="WebPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doAction:"/>
+                <relationship kind="outlet" name="_actionButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="hnZ-Fq-F0U"/>
+        <segue reference="mrH-5v-JIV"/>
     </inferredMetricsTieBreakers>
 </document>

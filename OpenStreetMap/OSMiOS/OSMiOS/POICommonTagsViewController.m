@@ -6,10 +6,16 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import "AppDelegate.h"
+#import "AutocompleteTextField.h"
+#import "MapView.h"
+#import "OsmMapData.h"
+#import "EditorMapLayer.h"
 #import "POICommonTagsViewController.h"
 #import "POITabBarController.h"
 #import "OsmObjects.h"
 #import "POITabBarController.h"
+#import "TagInfo.h"
 #import "UITableViewCell+FixConstraints.h"
 
 @implementation POICommonTagsViewController
@@ -126,22 +132,38 @@
 #endif
 }
 
+-(NSString *)tagKeyForTextField:(UITextField *)textField
+{
+	NSString * key = nil;
+	for ( NSArray * a in _tagMap ) {
+		if ( a[0] == textField ) {
+			key = a[1];
+			break;
+		}
+	}
+	assert(key);
+	return key;
+}
 
 - (IBAction)textFieldChanged:(UITextField *)textField
 {
 	_saveButton.enabled = YES;
+
+	if ( [textField isKindOfClass:[AutocompleteTextField class]] ) {
+		// get list of values for current key
+		NSString * key = [self tagKeyForTextField:textField];
+		NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
+		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+		[values addObjectsFromArray:[set allObjects]];
+		NSArray * list = [values allObjects];
+		[(AutocompleteTextField *)textField setCompletions:list];
+	}
 }
 
 - (IBAction)textFieldDidEndEditing:(UITextField *)textField
 {
-	NSString * tag = nil;
-	for ( NSArray * a in _tagMap ) {
-		if ( a[0] == textField ) {
-			tag = a[1];
-			break;
-		}
-	}
-	assert(tag);
+	NSString * key = [self tagKeyForTextField:textField];
 	NSString * value = textField.text;
 	value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	textField.text = value;
@@ -149,9 +171,9 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 
 	if ( value.length ) {
-		[tabController.keyValueDict setObject:value forKey:tag];
+		[tabController.keyValueDict setObject:value forKey:key];
 	} else {
-		[tabController.keyValueDict removeObjectForKey:tag];
+		[tabController.keyValueDict removeObjectForKey:key];
 	}
 
 	_saveButton.enabled = [tabController isTagDictChanged];

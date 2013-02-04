@@ -6,6 +6,10 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import "AppDelegate.h"
+#import "AutocompleteTextField.h"
+#import "EditorMapLayer.h"
+#import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmObjects.h"
 #import "POIAllTagsViewController.h"
@@ -178,40 +182,6 @@
 }
 
 
-static BOOL g_doAutocomplete = YES;
-
-- (void)autocompleteTextField:(UITextField *)textField completions:(NSArray *)completions
-{
-	if ( !g_doAutocomplete ) {
-		g_doAutocomplete = YES;
-		return;
-	}
-
-	NSString * text = textField.text;
-
-	for ( NSString * s in completions ) {
-		if ( [s hasPrefix:text] ) {
-			NSInteger pos = text.length;
-			textField.text = s;
-
-			UITextPosition * start = [textField positionFromPosition:textField.beginningOfDocument offset:pos];
-			UITextPosition * end = textField.endOfDocument;
-			UITextRange * range = [textField textRangeFromPosition:start toPosition:end];
-			[textField setSelectedTextRange:range];
-			return;
-		}
-	}
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-	if ( string.length == 0 && range.location+range.length == textField.text.length ) {
-		// deleting from tail, so disable autocomplete until next change
-		g_doAutocomplete = NO;
-	}
-	return YES;
-}
-
 - (IBAction)textFieldChanged:(UITextField *)textField
 {
 	NSInteger tag = textField.tag;
@@ -223,15 +193,21 @@ static BOOL g_doAutocomplete = YES;
 		NSMutableArray * kv = _tags[ tag/2 ];
 
 		if ( isValue ) {
+
+			// get list of values for current key
 			NSString * key = kv[0];
 			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
-			NSArray * list = [set allObjects];
-			[self autocompleteTextField:textField completions:list];
+			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+			NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData  tagValuesForKey:key];
+			[values addObjectsFromArray:[set allObjects]];
+			NSArray * list = [values allObjects];
+			[(AutocompleteTextField *)textField setCompletions:list];
+			
 		} else {
 			// get list of keys
 			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagKeys];
 			NSArray * list = [set allObjects];
-			[self autocompleteTextField:textField completions:list];
+			[(AutocompleteTextField *)textField setCompletions:list];
 		}
 
 		NSString * text = textField.text;
