@@ -11,14 +11,14 @@
     <tag key="aerialway" value="station" name="Station" type="way" description="A station where passengers can enter and/or leave the aerialway" areaColor="663300"></tag>
     <tag key="aeroway" value="aerodrome" name="Aerodrome" type="node;area" description="An Aerodrome (UK), Airport (US)" iconName="transport_aerodrome2" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:aeroway%3Daerodrome" lineColor="660000" areaColor="660000" lineWidth="2.000000"></tag>
     <tag key="aeroway" value="airport" name="Airport" iconName="transport_airport"></tag>
-    <tag key="aeroway" value="apron" name="Apron" description="An '''apron''' is the surfaced part of an airport where planes park." iconName="aeroway__apron" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="990000"></tag>
+    <tag key="aeroway" value="apron" name="Apron" description="An '''apron''' is the surfaced part of an airport where planes park." wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="990000"></tag>
     <tag key="aeroway" value="gate" name="Gate" description="Used to mark the gate numbers at the airports." iconName="transport_airport_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway"></tag>
     <tag key="aeroway" value="hangar" name="Hangar" areaColor="990000"></tag>
     <tag key="aeroway" value="helipad" name="Helipad" description="A place where helicopters can land." iconName="transport_helicopter_pad" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="330000"></tag>
     <tag key="aeroway" value="navigationaid" name="Navigation Aid" description="Used to mark air navigation aid land stations (NDB, VOR, VOR/DME, WAAS, etc.)."></tag>
-    <tag key="aeroway" value="runway" name="Runway" description="A strip of land kept clear and set aside for airplanes to take off from and land on." iconName="aeroway__runway" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" lineColor="330000" lineWidth="3.000000"></tag>
-    <tag key="aeroway" value="taxiway" name="Taxiway" description="Where airplanes manouevre between runways and parking areas." iconName="aeroway__taxiway" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" lineColor="660000" lineWidth="2.000000"></tag>
-    <tag key="aeroway" value="terminal" name="Terminal" description="Airport passenger building" iconName="aeroway__terminal" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="BB0000"></tag>
+    <tag key="aeroway" value="runway" name="Runway" description="A strip of land kept clear and set aside for airplanes to take off from and land on." wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" lineColor="330000" lineWidth="3.000000"></tag>
+    <tag key="aeroway" value="taxiway" name="Taxiway" description="Where airplanes manouevre between runways and parking areas." wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" lineColor="660000" lineWidth="2.000000"></tag>
+    <tag key="aeroway" value="terminal" name="Terminal" description="Airport passenger building" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="BB0000"></tag>
     <tag key="aeroway" value="windsock" name="Windsock" description="Shows pilots wind direction and speed."></tag>
     <tag key="airmark" value="beacon" name="Beacon" description="Base tag for beacons used in aerial navigation"></tag>
     <tag key="amenity" value="Kneippbecken" name="Kneippbecken" type="node;area"></tag>
@@ -398,7 +398,7 @@
     <tag key="emergency" value="water_tank" name="Water Tank" type="node;area"></tag>
     <tag key="emergency" value="yes" name="Yes"></tag>
     <tag key="highway" value="Bus_guideway" name="Bus Guideway" type="way"></tag>
-    <tag key="highway" value="bridleway" name="Bridleway" type="way" description="A way intended for use by equestrians." iconName="paths__bridleway" lineColor="C08000" lineWidth="1.000000"></tag>
+    <tag key="highway" value="bridleway" name="Bridleway" type="way" description="A way intended for use by equestrians." lineColor="C08000" lineWidth="1.000000"></tag>
     <tag key="highway" value="bus_guideway" name="Bus Guideway" type="way" description="A busway that is side guided &quot;rails like&quot;, not suitable for other traffic." lineColor="404040" lineWidth="1.000000"></tag>
     <tag key="highway" value="bus_stop" name="Bus Stop" type="way" description="A bus stop is a place where public buses stop." iconName="transport_bus_stop2"></tag>
     <tag key="highway" value="byway" name="Byway" type="way" description="an UK-only minor road"></tag>
@@ -406,58 +406,58 @@
     <tag key="highway" value="construction" name="Construction" type="way" lineColor="FFFF00" lineWidth="2.000000"></tag>
     <tag key="highway" value="conveyor" name="Conveyor" type="way"></tag>
     <tag key="highway" value="crossing" name="Crossing" type="node" description="Pedestrians can cross a street here - e.g. zebra crossing" iconName="transport_zebra_crossing"></tag>
-    <tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." iconName="paths__bike" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway" lineColor="B100FF" lineWidth="1.000000"></tag>
+    <tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway" lineColor="B100FF" lineWidth="1.000000"></tag>
     <tag key="highway" value="elevator" name="Elevator" type="node" description="A elevator (or lift) is used to travel vertically, providing passenger and freight access between pathways at different floor levels."></tag>
     <tag key="highway" value="emergency_access_point" name="Emergency Access Point" type="node" description="Sign number which can be used to define you current position in case of an emergency" areaColor="C0C0C0"></tag>
-    <tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." iconName="paths__footway" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="00FF00" lineWidth="1.000000"></tag>
+    <tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="00FF00" lineWidth="1.000000"></tag>
     <tag key="highway" value="ford" name="Ford" type="way" description="A point where a path or road crosses a river or stream which is at times covered by shallow water." iconName="transport_ford" lineColor="FF0000" lineWidth="2.000000"></tag>
     <tag key="highway" value="gate" name="Gate" type="node"></tag>
     <tag key="highway" value="give_way" name="Give Way" type="node" description="Used to mark give way signs"></tag>
     <tag key="highway" value="incline" name="Incline" type="way"></tag>
     <tag key="highway" value="incline_steep" name="Incline Steep" type="way"></tag>
     <tag key="highway" value="lane" name="Lane" type="way"></tag>
-    <tag key="highway" value="living_street" name="Living Street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, ..." iconName="highway__living_street" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street" lineColor="C0C0C0" lineWidth="2.000000"></tag>
+    <tag key="highway" value="living_street" name="Living Street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street" lineColor="C0C0C0" lineWidth="2.000000"></tag>
     <tag key="highway" value="milestone" name="Milestone" type="node"></tag>
     <tag key="highway" value="mini_roundabout" name="Mini Roundabout" type="node" description="A road junction where the traffic goes around a painted circle or traversable island and has right of way." iconName="transport_miniroundabout_anticlockwise" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"></tag>
     <tag key="highway" value="minor" name="Minor" type="way"></tag>
-    <tag key="highway" value="motorway" name="Motorway" type="way" description="High capacity highways designed to safely carry fast motor traffic." iconName="highway__motorway" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmotorway" lineColor="809BC0" lineWidth="3.000000"></tag>
+    <tag key="highway" value="motorway" name="Motorway" type="way" description="High capacity highways designed to safely carry fast motor traffic." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmotorway" lineColor="809BC0" lineWidth="3.000000"></tag>
     <tag key="highway" value="motorway_junction" name="Motorway Junction" type="way" description="Indicates a junction/exit."></tag>
-    <tag key="highway" value="motorway_link" name="Motorway Link" type="way" description="The link roads (sliproads / ramps) leading to and from a motorway." iconName="highway__motorway_link" lineColor="809BC0" lineWidth="3.000000"></tag>
+    <tag key="highway" value="motorway_link" name="Motorway Link" type="way" description="The link roads (sliproads / ramps) leading to and from a motorway." lineColor="809BC0" lineWidth="3.000000"></tag>
     <tag key="highway" value="moving_walkway" name="Moving Walkway" type="way"></tag>
     <tag key="highway" value="passing_place" name="Passing Place" type="way" description="A passing place on a single track road."></tag>
-    <tag key="highway" value="path" name="Path" type="way" description="A generic path" iconName="paths__unofficial" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dpath" lineColor="00FF00" lineWidth="1.000000"></tag>
-    <tag key="highway" value="pedestrian" name="Pedestrian" type="way" description="For Roads , i.e. mainly / exclusively for pedestrians (often Shopping Areas)." iconName="paths__pedestrian" lineColor="00FF00" lineWidth="3.000000"></tag>
+    <tag key="highway" value="path" name="Path" type="way" description="A generic path" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dpath" lineColor="00FF00" lineWidth="1.000000"></tag>
+    <tag key="highway" value="pedestrian" name="Pedestrian" type="way" description="For Roads , i.e. mainly / exclusively for pedestrians (often Shopping Areas)." lineColor="00FF00" lineWidth="3.000000"></tag>
     <tag key="highway" value="piste" name="Piste" type="way"></tag>
     <tag key="highway" value="platform" name="Platform" type="node;area" description="A platform of a bus station." lineColor="C0C0C0" areaColor="C0C0C0" lineWidth="2.000000"></tag>
-    <tag key="highway" value="primary" name="Primary" type="way" description="A highway linking large towns." iconName="highway__primary" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary" lineColor="FB805F" lineWidth="3.000000"></tag>
-    <tag key="highway" value="primary_link" name="Primary Link" type="way" iconName="highway__primary_link" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary_link" lineColor="FB805F" lineWidth="3.000000"></tag>
+    <tag key="highway" value="primary" name="Primary" type="way" description="A highway linking large towns." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary" lineColor="FB805F" lineWidth="3.000000"></tag>
+    <tag key="highway" value="primary_link" name="Primary Link" type="way" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary_link" lineColor="FB805F" lineWidth="3.000000"></tag>
     <tag key="highway" value="proposed" name="Proposed" type="way"></tag>
     <tag key="highway" value="raceway" name="Raceway" type="way"></tag>
-    <tag key="highway" value="residential" name="Residential" type="way" description="Road in a residential area" iconName="highway__residential" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dresidential" lineColor="C0C0C0" lineWidth="2.000000"></tag>
-    <tag key="highway" value="rest_area" name="Rest Area" belongsTo="way;node_in_way" description="Place where drivers can leave the road to rest, but not refuel." areaColor="C0C0C0"></tag>
-    <tag key="highway" value="road" name="Road" type="way" description="Road with unknown classification." iconName="highway__unknown" lineColor="FF0000" lineWidth="2.000000"></tag>
-    <tag key="highway" value="secondary" name="Secondary" type="way" description="A highway linking large towns." iconName="highway__secondary" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsecondary" lineColor="FDBF6F" lineWidth="3.000000"></tag>
-    <tag key="highway" value="secondary_link" name="Secondary Link" type="way" iconName="highway__secondary_link" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsecondary_link" lineColor="FDBF6F" lineWidth="3.000000"></tag>
-    <tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." iconName="highway__service" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dservice" lineColor="809BC0" lineWidth="1.000000"></tag>
+    <tag key="highway" value="residential" name="Residential" type="way" description="Road in a residential area" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dresidential" lineColor="C0C0C0" lineWidth="2.000000"></tag>
+    <tag key="highway" value="rest_area" name="Rest Area" type="way;node_in_way" description="Place where drivers can leave the road to rest, but not refuel." areaColor="C0C0C0"></tag>
+    <tag key="highway" value="road" name="Road" type="way" description="Road with unknown classification." lineColor="FF0000" lineWidth="2.000000"></tag>
+    <tag key="highway" value="secondary" name="Secondary" type="way" description="A highway linking large towns." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsecondary" lineColor="FDBF6F" lineWidth="3.000000"></tag>
+    <tag key="highway" value="secondary_link" name="Secondary Link" type="way" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsecondary_link" lineColor="FDBF6F" lineWidth="3.000000"></tag>
+    <tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dservice" lineColor="809BC0" lineWidth="1.000000"></tag>
     <tag key="highway" value="services" name="Services" type="way" description="Place where drivers can leave a road to refuel, rest, or take refreshments." areaColor="C0C0C0"></tag>
     <tag key="highway" value="speed_camera" name="Speed Camera" type="node_in_way" description="A fixed road-side or overhead speed camera"></tag>
     <tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps on footways." iconName="barrier_steps" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps" lineColor="00FF00" lineWidth="1.000000"></tag>
     <tag key="highway" value="stile" name="Stile" type="way"></tag>
-    <tag key="highway" value="stop" name="Stop" type="way" description="Used to mark stop signs"></tag>
+    <tag key="highway" value="stop" name="Stop" type="way" description="Used to mark stop signs" iconName="transport_stop"></tag>
     <tag key="highway" value="street_lamp" name="Street Lamp" type="node" description="A single pole with one or more lights to illuminate the street."></tag>
-    <tag key="highway" value="tertiary" name="Tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." iconName="highway__tertiary" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary" lineColor="F7F496" lineWidth="2.000000"></tag>
-    <tag key="highway" value="tertiary_link" name="Tertiary Link" type="way" iconName="highway__tertiary_link" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary_link" lineColor="F7F496" lineWidth="2.000000"></tag>
+    <tag key="highway" value="tertiary" name="Tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary" lineColor="F7F496" lineWidth="2.000000"></tag>
+    <tag key="highway" value="tertiary_link" name="Tertiary Link" type="way" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary_link" lineColor="F7F496" lineWidth="2.000000"></tag>
     <tag key="highway" value="toll_booth" name="Toll Booth" type="node"></tag>
-    <tag key="highway" value="track" name="Track" type="way" description="Roads '''for agricultural use''': farm roads, forest tracks, etc." iconName="highway__track" lineColor="006600" lineWidth="1.000000"></tag>
+    <tag key="highway" value="track" name="Track" type="way" description="Roads '''for agricultural use''': farm roads, forest tracks, etc." lineColor="006600" lineWidth="1.000000"></tag>
     <tag key="highway" value="traffic_calming" name="Traffic Calming" type="node_in_way" iconName="transport_speedbump"></tag>
     <tag key="highway" value="traffic_mirror" name="Traffic Mirror" type="way"></tag>
     <tag key="highway" value="traffic_signals" name="Traffic Signals" type="node_in_way" description="A traffic signal for regulating circulation." iconName="transport_traffic_lights"></tag>
     <tag key="highway" value="trail" name="Trail" type="way" description="For hiking trails etc"></tag>
-    <tag key="highway" value="trunk" name="Trunk" type="way" description="Important roads that aren’t motorways." iconName="highway__trunk" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtrunk" lineColor="7FC97F" lineWidth="3.000000"></tag>
-    <tag key="highway" value="trunk_link" name="Trunk Link" type="way" iconName="highway__trunk_link" lineColor="7FC97F" lineWidth="3.000000"></tag>
-    <tag key="highway" value="turning_circle" name="Turning Circle" belongsTo="way;node_in_way" description="A widened area of road that allows vehicles to turn more easily." iconName="transport_turning_circle" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"></tag>
-    <tag key="highway" value="turning_loop" name="Turning Loop" belongsTo="way;node_in_way" description="A widened area of a highway with a non-traversable island for turning around, often circular and at the end of a road." iconName="transport_turning_circle"></tag>
-    <tag key="highway" value="unclassified" name="Unclassified" type="way" description="Public access road, non-residential." iconName="highway__unclassified" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dunclassified" lineColor="C0C0C0" lineWidth="2.000000"></tag>
+    <tag key="highway" value="trunk" name="Trunk" type="way" description="Important roads that aren’t motorways." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtrunk" lineColor="7FC97F" lineWidth="3.000000"></tag>
+    <tag key="highway" value="trunk_link" name="Trunk Link" type="way" lineColor="7FC97F" lineWidth="3.000000"></tag>
+    <tag key="highway" value="turning_circle" name="Turning Circle" type="way;node_in_way" description="A widened area of road that allows vehicles to turn more easily." iconName="transport_turning_circle" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"></tag>
+    <tag key="highway" value="turning_loop" name="Turning Loop" type="way;node_in_way" description="A widened area of a highway with a non-traversable island for turning around, often circular and at the end of a road." iconName="transport_turning_circle"></tag>
+    <tag key="highway" value="unclassified" name="Unclassified" type="way" description="Public access road, non-residential." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dunclassified" lineColor="C0C0C0" lineWidth="2.000000"></tag>
     <tag key="highway" value="unsurfaced" name="Unsurfaced" type="way" lineColor="C0C0C0" lineWidth="1.000000"></tag>
     <tag key="highway" value="yield" name="Yield" type="way"></tag>
     <tag key="historic" value="*" name="*"></tag>
@@ -535,12 +535,12 @@
     <tag key="landuse" value="allotments" name="Allotments" type="area" description="An allotment site." areaColor="B1E0C2"></tag>
     <tag key="landuse" value="animal_keeping" name="Animal Keeping" type="area"></tag>
     <tag key="landuse" value="aquaculture" name="Aquaculture" type="area" description="Area on land or sea, where fish, shellfish, or shells are breed"></tag>
-    <tag key="landuse" value="basin" name="Basin" type="area" description="An area of land artificially graded to hold water." iconName="waterway__basin" areaColor="0000BF"></tag>
+    <tag key="landuse" value="basin" name="Basin" type="area" description="An area of land artificially graded to hold water." areaColor="0000BF"></tag>
     <tag key="landuse" value="brownfield" name="Brownfield" type="area" description="Land scheduled for new development" areaColor="ECBA32"></tag>
     <tag key="landuse" value="building_site" name="Building Site" type="area"></tag>
     <tag key="landuse" value="cemetery" name="Cemetery" type="area" description="Used to mark a cemetery area" iconName="place_of_worship_unknown3" areaColor="B1EFC8"></tag>
     <tag key="landuse" value="commercial" name="Commercial" type="area" description="Predominantly offices, business parks, etc." iconName="building_generic" areaColor="DBDBDB"></tag>
-    <tag key="landuse" value="conservation" name="Conservation" type="area" iconName="natural_blank"></tag>
+    <tag key="landuse" value="conservation" name="Conservation" type="area"></tag>
     <tag key="landuse" value="construction" name="Construction" type="area" description="An area being built on." iconName="building_generic" lineColor="FFFF00" areaColor="FFFF00" lineWidth="1.000000"></tag>
     <tag key="landuse" value="depot" name="Depot" type="area" description="An area used as a depot for trains, buses or trams."></tag>
     <tag key="landuse" value="farm" name="Farm" type="area" description="Area of farmland used for tillage and pasture (animals, vegetables, flowers, fruit growing)." iconName="landuse_grass" areaColor="B1E0C2"></tag>
@@ -559,7 +559,7 @@
     <tag key="landuse" value="highway" name="Highway" type="area"></tag>
     <tag key="landuse" value="industrial" name="Industrial" type="area" description="Predominantly workshops, factories or warehouses" iconName="building_generic" areaColor="ECD8FF"></tag>
     <tag key="landuse" value="landfill" name="Landfill" type="area" description="Where waste is collected, sorted or covered over" areaColor="663300"></tag>
-    <tag key="landuse" value="meadow" name="Meadow" type="area" description="Wildflower Grassland where plants set seed" iconName="natural_blank" areaColor="B1E0C2"></tag>
+    <tag key="landuse" value="meadow" name="Meadow" type="area" description="Wildflower Grassland where plants set seed" areaColor="B1E0C2"></tag>
     <tag key="landuse" value="military" name="Military" type="area" description="Area used for military purposes" iconName="poi_military_bunker" areaColor="B62C2C"></tag>
     <tag key="landuse" value="observatory" name="Observatory" type="area"></tag>
     <tag key="landuse" value="orchard" name="Orchard" type="area" description="Used to mark intentional planting of trees or shrubs maintained for food production" iconName="landuse_grass" areaColor="B1E0C2"></tag>
@@ -570,7 +570,7 @@
     <tag key="landuse" value="quarry" name="Quarry" type="area" description="Surface mineral extraction" iconName="poi_mine" areaColor="888888"></tag>
     <tag key="landuse" value="railway" name="Railway" type="area" description="for marshalling yards and sidings, railway sheds, bits of grass with old rails and hardware strewn around, train washes, etc..." areaColor="888888"></tag>
     <tag key="landuse" value="recreation_ground" name="Recreation Ground" type="area" description="An open green space for general recreation, which often include formal or informal pitches, nets and so on. Often municipally owned, but sometimes also part of colleges or companies." areaColor="B1E0C2"></tag>
-    <tag key="landuse" value="reservoir" name="Reservoir" type="area" description="Man made body of stored water. May be covered or uncovered." iconName="waterway__reservoir" areaColor="0000BF"></tag>
+    <tag key="landuse" value="reservoir" name="Reservoir" type="area" description="Man made body of stored water. May be covered or uncovered." areaColor="0000BF"></tag>
     <tag key="landuse" value="residential" name="Residential" type="area" description="Predominantly houses or apartment buildings." iconName="building_generic" areaColor="F0F0F0"></tag>
     <tag key="landuse" value="retail" name="Retail" type="area" description="Predominantly shops" iconName="building_generic" areaColor="DBDBDB"></tag>
     <tag key="landuse" value="salt_pond" name="Salt Pond" type="area" description="A place where sea water is evaporated to extract its salt"></tag>
@@ -612,7 +612,7 @@
     <tag key="leisure" value="miniature_golf" name="Miniature Golf" type="node;area" description="A place or area that you can play miniature golf." areaColor="C7F1A3"></tag>
     <tag key="leisure" value="nature_reserve" name="Nature Reserve" type="node;area" areaColor="C7F1A3"></tag>
     <tag key="leisure" value="paddling_pool" name="Paddling Pool" type="node;area" description="A paddling pool"></tag>
-    <tag key="leisure" value="park" name="Park" type="node;area" description="A park. Open, green area for recreation, usually municipal" iconName="natural_blank" areaColor="C7F1A3"></tag>
+    <tag key="leisure" value="park" name="Park" type="node;area" description="A park. Open, green area for recreation, usually municipal" areaColor="C7F1A3"></tag>
     <tag key="leisure" value="picnic" name="Picnic" type="node;area"></tag>
     <tag key="leisure" value="picnic_site" name="Picnic Site" type="node;area"></tag>
     <tag key="leisure" value="picnic_table" name="Picnic Table" type="node;area"></tag>
@@ -757,13 +757,13 @@
     <tag key="natural" value="avalanche_dam" name="Avalanche Dam" type="node;area" description="dam used for protection from avalanches"></tag>
     <tag key="natural" value="bare_rock" name="Bare Rock" type="node;area" description="For areas of solid visible rock."></tag>
     <tag key="natural" value="bay" name="Bay" type="node;area" description="Area of water mostly surrounded by land." areaColor="002F00"></tag>
-    <tag key="natural" value="beach" name="Beach" type="node;area" description="Area of shore which is fairly open, slopes smoothly to the water, and is free of trees" iconName="natural__beach" areaColor="F8DBA2"></tag>
+    <tag key="natural" value="beach" name="Beach" type="node;area" description="Area of shore which is fairly open, slopes smoothly to the water, and is free of trees" areaColor="F8DBA2"></tag>
     <tag key="natural" value="bedrock" name="Bedrock" type="node;area" description="Native consolidated rock."></tag>
     <tag key="natural" value="breaker" name="Breaker" type="node;area"></tag>
     <tag key="natural" value="cape" name="Cape" type="node;area" description="A piece of elevated land sticking out into the sea or large lake."></tag>
     <tag key="natural" value="cave_entrance" name="Cave Entrance" type="node;area" description="The entrance to a cave." iconName="poi_cave" areaColor="002F00"></tag>
     <tag key="natural" value="cliff" name="Cliff" type="node;area" description="Used to tag a natural cliff." lineColor="002F00" areaColor="002F00" lineWidth="2.000000"></tag>
-    <tag key="natural" value="coastline" name="Coastline" type="node;area" description="Used to mark a coastline." iconName="waterway__coastline" lineColor="0000FF" lineWidth="1.000000"></tag>
+    <tag key="natural" value="coastline" name="Coastline" type="node;area" description="Used to mark a coastline." lineColor="0000FF" lineWidth="1.000000"></tag>
     <tag key="natural" value="coastline_deprecation" name="Coastline Deprecation" type="node;area"></tag>
     <tag key="natural" value="continental_shelf" name="Continental Shelf" type="node;area"></tag>
     <tag key="natural" value="desert" name="Desert" type="node;area"></tag>
@@ -801,7 +801,7 @@
     <tag key="natural" value="tree_row" name="Tree Row" type="node;area" description="a line of trees"></tag>
     <tag key="natural" value="tundra" name="Tundra" type="node;area"></tag>
     <tag key="natural" value="volcano" name="Volcano" type="node;area" areaColor="5F0000"></tag>
-    <tag key="natural" value="water" name="Water" type="node;area" description="Used to mark body of standing water, such as a lake or pond." iconName="waterway__lake" areaColor="0000FF"></tag>
+    <tag key="natural" value="water" name="Water" type="node;area" description="Used to mark body of standing water, such as a lake or pond." areaColor="0000FF"></tag>
     <tag key="natural" value="wetland" name="Wetland" type="node;area" description="The wetland tag is used for natural areas subject to inundation or with waterlogged ground" areaColor="4F4FF3"></tag>
     <tag key="natural" value="wood" name="Wood" type="node;area" description="Woodland with no forestry. See also landuse=forest" areaColor="008000"></tag>
     <tag key="network" value="VélôToulouse" name="Vélôtoulouse"></tag>
@@ -952,33 +952,33 @@
     <tag key="radio_transponder:category" value="directional" name="Directional"></tag>
     <tag key="radio_transponder:category" value="rotating_pattern" name="Rotating Pattern"></tag>
     <tag key="railway" value="PRT" name="Prt" type="way" description="Used to describe sections of ''personal rapid transport'' track."></tag>
-    <tag key="railway" value="abandoned" name="Abandoned" type="way" description="abandoned rails; track has been removed and the line may have been reused or left to decay" iconName="railway__abandoned" lineColor="404040" lineWidth="1.000000"></tag>
+    <tag key="railway" value="abandoned" name="Abandoned" type="way" description="abandoned rails; track has been removed and the line may have been reused or left to decay" lineColor="404040" lineWidth="1.000000"></tag>
     <tag key="railway" value="buffer_stop" name="Buffer Stop" type="node" areaColor="404040"></tag>
     <tag key="railway" value="construction" name="Construction" type="way"></tag>
     <tag key="railway" value="crossing" name="Crossing" type="node" description="Pedestrians can cross a railway here" areaColor="F7EFB7"></tag>
     <tag key="railway" value="derail" name="Derail" description="Derails uncontrolled vehicles to protect the main track"></tag>
-    <tag key="railway" value="disused" name="Disused" type="way" description="railway which present but no longer used" iconName="railway__disused" lineColor="404040" lineWidth="1.000000"></tag>
+    <tag key="railway" value="disused" name="Disused" type="way" description="railway which present but no longer used" lineColor="404040" lineWidth="1.000000"></tag>
     <tag key="railway" value="funicular" name="Funicular" type="way" description="Cable driven inclined railway." lineColor="404040" lineWidth="1.000000"></tag>
     <tag key="railway" value="halt" name="Halt" description="A small station, may not have a platform, trains may only stop on request."></tag>
     <tag key="railway" value="level_crossing" name="Level Crossing" type="node" description="A crossing between a railway and a road." areaColor="F7EFB7"></tag>
-    <tag key="railway" value="light_rail" name="Light Rail" type="way" iconName="railway__light" lineColor="808080" lineWidth="2.000000"></tag>
+    <tag key="railway" value="light_rail" name="Light Rail" type="way" lineColor="808080" lineWidth="2.000000"></tag>
     <tag key="railway" value="milestone" name="Milestone" type="node"></tag>
     <tag key="railway" value="miniature" name="Miniature" type="way"></tag>
     <tag key="railway" value="monorail" name="Monorail" type="way" description="A railway with only a single rail." lineColor="404040" lineWidth="1.000000"></tag>
     <tag key="railway" value="narrow_gauge" name="Narrow Gauge" type="way" description="Passenger or freight trains on narrower tracks than the standard gauge for the country or state." lineColor="404040" lineWidth="1.000000"></tag>
     <tag key="railway" value="obliterated" name="Obliterated"></tag>
-    <tag key="railway" value="platform" name="Platform" type="node;area" description="A railway or bus platform." iconName="railway__platform" lineColor="404040" areaColor="404040" lineWidth="2.000000"></tag>
-    <tag key="railway" value="preserved" name="Preserved" iconName="railway__preserved" lineColor="404040" lineWidth="1.000000"></tag>
+    <tag key="railway" value="platform" name="Platform" type="node;area" description="A railway or bus platform." lineColor="404040" areaColor="404040" lineWidth="2.000000"></tag>
+    <tag key="railway" value="preserved" name="Preserved" lineColor="404040" lineWidth="1.000000"></tag>
     <tag key="railway" value="proposed" name="Proposed"></tag>
-    <tag key="railway" value="rail" name="Rail" type="way" description="Full sized passenger or freight trains in the standard gauge for the country or state." iconName="railway__rail" lineColor="404040" lineWidth="2.000000"></tag>
+    <tag key="railway" value="rail" name="Rail" type="way" description="Full sized passenger or freight trains in the standard gauge for the country or state." lineColor="404040" lineWidth="2.000000"></tag>
     <tag key="railway" value="razed" name="Razed"></tag>
     <tag key="railway" value="roundhouse" name="Roundhouse" type="node;area" description="A characteristic semi-circular building used by railroads to service engines"></tag>
     <tag key="railway" value="station" name="Station" type="node;area" description="A railway station" iconName="transport_train_station" areaColor="F7EFB7"></tag>
     <tag key="railway" value="stop" name="Stop" type="node" description="The spot on a railway track where a train stops at a station"></tag>
-    <tag key="railway" value="subway" name="Subway" type="way" description="city passenger rail service" iconName="railway__subway" lineColor="606060" lineWidth="1.000000"></tag>
+    <tag key="railway" value="subway" name="Subway" type="way" description="city passenger rail service" lineColor="606060" lineWidth="1.000000"></tag>
     <tag key="railway" value="subway_entrance" name="Subway Entrance" type="node" description="The entrance point of a subway" areaColor="F7EFB7"></tag>
     <tag key="railway" value="switch" name="Switch" type="node" description="Connections between railways"></tag>
-    <tag key="railway" value="tram" name="Tram" type="way" description="Tram rails or tracks" iconName="railway__tram" lineColor="808080" lineWidth="1.000000"></tag>
+    <tag key="railway" value="tram" name="Tram" type="way" description="Tram rails or tracks" lineColor="808080" lineWidth="1.000000"></tag>
     <tag key="railway" value="tram_stop" name="Tram Stop" type="node" description="A tram stop is a place where a passenger can embark / disembark a tram." iconName="transport_tram_stop"></tag>
     <tag key="railway" value="turntable" name="Turntable" type="node;area" description="These are used for changing the direction, that part of a train is pointing in." areaColor="404040"></tag>
     <tag key="ramp" value="no" name="No" belongsTo="highway"></tag>
@@ -1007,17 +1007,17 @@
     <tag key="resource" value="sand" name="Sand"></tag>
     <tag key="route" value="aqueduct" name="Aqueduct" type="way"></tag>
     <tag key="route" value="bicycle" name="Bicycle" type="way"></tag>
-    <tag key="route" value="bus" name="Bus" type="way" description="The route of a bus service (eg 'No. 38')." iconName="route__bus" lineColor="809BC0" lineWidth="1.000000"></tag>
+    <tag key="route" value="bus" name="Bus" type="way" description="The route of a bus service (eg 'No. 38')." lineColor="809BC0" lineWidth="1.000000"></tag>
     <tag key="route" value="canal" name="Canal" type="way" description="many ways of a canal"></tag>
     <tag key="route" value="detour" name="Detour" type="way" description="named, permanent detour"></tag>
     <tag key="route" value="ferry" name="Ferry" type="way" description="ferry routes" lineColor="809BC0" lineWidth="1.000000"></tag>
     <tag key="route" value="fitness_trail" name="Fitness Trail" type="way" description="route relations for fitness trails"></tag>
     <tag key="route" value="foot" name="Foot" type="way"></tag>
-    <tag key="route" value="hiking" name="Hiking" type="way" iconName="route__nwn"></tag>
+    <tag key="route" value="hiking" name="Hiking" type="way" ></tag>
     <tag key="route" value="historic" name="Historic" type="way"></tag>
     <tag key="route" value="horse" name="Horse" type="way"></tag>
     <tag key="route" value="monorail" name="Monorail" type="way"></tag>
-    <tag key="route" value="mtb" name="Mtb" type="way" iconName="route__mtb"></tag>
+    <tag key="route" value="mtb" name="Mtb" type="way" ></tag>
     <tag key="route" value="pipeline" name="Pipeline" type="way"></tag>
     <tag key="route" value="piste" name="Piste" type="way"></tag>
     <tag key="route" value="power" name="Power" type="way"></tag>
@@ -1026,8 +1026,8 @@
     <tag key="route" value="share_taxi" name="Share Taxi" type="way" description="The route of a share taxi service (eg 'No. 777')."></tag>
     <tag key="route" value="ski" name="Ski" type="way" description="ski route" lineColor="809BC0" lineWidth="1.000000"></tag>
     <tag key="route" value="subway" name="Subway" type="way"></tag>
-    <tag key="route" value="train" name="Train" type="way" description="The route of a train service (eg London-Paris Eurostar). Not to be confused with a named stretch of railroad track (see route=railway )." iconName="transport__railway"></tag>
-    <tag key="route" value="tram" name="Tram" type="way" description="The route of a tram service" iconName="transport__tram"></tag>
+    <tag key="route" value="train" name="Train" type="way" description="The route of a train service (eg London-Paris Eurostar). Not to be confused with a named stretch of railroad track (see route=railway )." ></tag>
+    <tag key="route" value="tram" name="Tram" type="way" description="The route of a tram service" ></tag>
     <tag key="route" value="trolleybus" name="Trolleybus" type="way" description="The route of a trolleybus service (eg 'No. 12')."></tag>
     <tag key="ruins" value="yes" name="Yes"></tag>
     <tag key="school" value="blind" name="Blind"></tag>
@@ -1320,8 +1320,8 @@
     <tag key="service" value="parking_aisle" name="Parking Aisle" belongsTo="highway=service" description="A parking aisle is an area in a parking lot between rows of parking spaces that vehicles use to drive into and out of the spaces."></tag>
     <tag key="service" value="parts" name="Parts"></tag>
     <tag key="service" value="repair" name="Repair" belongsTo="highway=service"></tag>
-    <tag key="service" value="siding" name="Siding" belongsTo="highway=service" description="Relatively short lengths of track, running parallel to (and connected to) a main route" iconName="railway__siding" lineColor="404040" lineWidth="1.000000"></tag>
-    <tag key="service" value="spur" name="Spur" belongsTo="highway=service" description="Relatively short lengths of track, built to give one company or entity access to the main line, normally for freight-only use." iconName="railway__spur" lineColor="552200" lineWidth="1.000000"></tag>
+    <tag key="service" value="siding" name="Siding" belongsTo="highway=service" description="Relatively short lengths of track, running parallel to (and connected to) a main route" lineColor="404040" lineWidth="1.000000"></tag>
+    <tag key="service" value="spur" name="Spur" belongsTo="highway=service" description="Relatively short lengths of track, built to give one company or entity access to the main line, normally for freight-only use." lineColor="552200" lineWidth="1.000000"></tag>
     <tag key="service" value="tyres" name="Tyres"></tag>
     <tag key="service" value="yard" name="Yard" description="Tracks within railway company operated marshaling yards" lineColor="552200" lineWidth="1.000000"></tag>
     <tag key="shelter" value="no" name="No"></tag>
@@ -1669,13 +1669,13 @@
     <tag key="waterway" value="boat_lift" name="Boat Lift"></tag>
     <tag key="waterway" value="boatyard" name="Boatyard" description="Boatyard - a place for constructing, repairing and storing vessels out of the water." areaColor="D8D8D8"></tag>
     <tag key="waterway" value="brook" name="Brook" description="Tiny waterway, often, but not always, dry part of the year."></tag>
-    <tag key="waterway" value="canal" name="Canal" description="An artificial open waterway used for transportation, waterpower, or irrigation." iconName="waterway__canal" lineColor="0000FF" lineWidth="2.000000"></tag>
+    <tag key="waterway" value="canal" name="Canal" description="An artificial open waterway used for transportation, waterpower, or irrigation." lineColor="0000FF" lineWidth="2.000000"></tag>
     <tag key="waterway" value="dam" name="Dam" description="A wall built across a river or stream to impound the water. A dam normally does not have water flowing over the top of it." iconName="water_dam" lineColor="D8D8D8" areaColor="D8D8D8" lineWidth="2.000000"></tag>
     <tag key="waterway" value="deep_well" name="Deep Well"></tag>
     <tag key="waterway" value="derelict_canal" name="Derelict Canal" description="A derelict artificial open waterway used for transportation, waterpower, or irrigation."></tag>
     <tag key="waterway" value="ditch" name="Ditch" description="Small man-made draining waterway, often found along roads." lineColor="0000FF" lineWidth="1.000000"></tag>
-    <tag key="waterway" value="dock" name="Dock" description="A dock is an enclosed area of water for ships and other craft within which the height of the water can be managed." iconName="waterway__dock" areaColor="0000CF"></tag>
-    <tag key="waterway" value="drain" name="Drain" description="Artificial waterway used for carrying storm water or industrial discharge." iconName="waterway__drain" lineColor="0000FF" lineWidth="1.000000"></tag>
+    <tag key="waterway" value="dock" name="Dock" description="A dock is an enclosed area of water for ships and other craft within which the height of the water can be managed." areaColor="0000CF"></tag>
+    <tag key="waterway" value="drain" name="Drain" description="Artificial waterway used for carrying storm water or industrial discharge." lineColor="0000FF" lineWidth="1.000000"></tag>
     <tag key="waterway" value="dredged_area" name="Dredged Area"></tag>
     <tag key="waterway" value="estuary" name="Estuary"></tag>
     <tag key="waterway" value="fish_pass" name="Fish Pass"></tag>
@@ -1684,15 +1684,15 @@
     <tag key="waterway" value="milestone" name="Milestone"></tag>
     <tag key="waterway" value="offshore_field" name="Offshore Field"></tag>
     <tag key="waterway" value="rapids" name="Rapids" lineColor="8080FF" lineWidth="2.000000"></tag>
-    <tag key="waterway" value="river" name="River" description="For narrow rivers which will be rendered as a line." iconName="waterway__river" lineColor="0000FF" lineWidth="2.000000"></tag>
-    <tag key="waterway" value="riverbank" name="Riverbank" description="For tagging wide rivers which need to be defined by an area rather than just shown as a linear way." iconName="waterway__riverbank" lineColor="0000CF" areaColor="0000CF" lineWidth="1.000000"></tag>
+    <tag key="waterway" value="river" name="River" description="For narrow rivers which will be rendered as a line." lineColor="0000FF" lineWidth="2.000000"></tag>
+    <tag key="waterway" value="riverbank" name="Riverbank" description="For tagging wide rivers which need to be defined by an area rather than just shown as a linear way." lineColor="0000CF" areaColor="0000CF" lineWidth="1.000000"></tag>
     <tag key="waterway" value="seaway" name="Seaway"></tag>
-    <tag key="waterway" value="stream" name="Stream" description="a naturally-forming waterway that is too thin to be classed as a river. Maybe you can just jump over it." iconName="waterway__stream" lineColor="6600CC" lineWidth="1.000000"></tag>
+    <tag key="waterway" value="stream" name="Stream" description="a naturally-forming waterway that is too thin to be classed as a river. Maybe you can just jump over it." lineColor="6600CC" lineWidth="1.000000"></tag>
     <tag key="waterway" value="swept_area" name="Swept Area"></tag>
     <tag key="waterway" value="turning_point" name="Turning Point" description="A place to turn the driving direction for vessels, where the boats are longer than the river/canal is wide."></tag>
     <tag key="waterway" value="water_point" name="Water Point" description="A place to get fresh water e.g. for caravans."></tag>
     <tag key="waterway" value="waterfall" name="Waterfall" lineColor="D8D8D8" lineWidth="2.000000"></tag>
-    <tag key="waterway" value="weir" name="Weir" description="A barrier built across a river, sometimes to divert water for industrial purposes. Water can still flow over the top." iconName="waterway__weir" lineColor="D8D8D8" lineWidth="2.000000"></tag>
+    <tag key="waterway" value="weir" name="Weir" description="A barrier built across a river, sometimes to divert water for industrial purposes. Water can still flow over the top." iconName="water_weir" lineColor="D8D8D8" lineWidth="2.000000"></tag>
     <tag key="wetland" value="bog" name="Bog" belongsTo="natural=wetland"></tag>
     <tag key="wetland" value="mangrove" name="Mangrove" belongsTo="natural=wetland"></tag>
     <tag key="wetland" value="marsh" name="Marsh" belongsTo="natural=wetland"></tag>
@@ -1729,9 +1729,9 @@
     <tag key="boundary" value="town" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=town"></tag>
     <tag key="boundary" value="census" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=census"></tag>
     <tag key="leisure" value="recreation_ground" name="Recreation Ground" iconName="sport_leisure_centre"></tag>
-    <tag key="network" value="ncn" iconName="route__ncn"></tag>
-    <tag key="network" value="rcn" iconName="route__rcn"></tag>
-    <tag key="network" value="lcn" iconName="route__lcn"></tag>
+    <tag key="network" value="ncn" ></tag>
+    <tag key="network" value="rcn" ></tag>
+    <tag key="network" value="lcn" ></tag>
     <tag key="shop" value="fishmonger" name="Fish Monger shop" iconName="shopping_fish"></tag>
     <tag key="tourism" value="bed_and_breakfast" name="Bed and Breakfast" iconName="accommodation_bed_and_breakfast"></tag>
 </tags>

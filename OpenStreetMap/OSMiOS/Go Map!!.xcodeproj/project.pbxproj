@@ -19,6 +19,7 @@
 		020CD97B169D4BC900BF3AAF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD97A169D4BC900BF3AAF /* Default-Landscape~ipad.png */; };
 		021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C6AA71686145C00FB17B0 /* UndoManager.m */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
+		021E5D6B16C0507B00B7A02A /* transport_stop.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 021E5D6A16C0507A00B7A02A /* transport_stop.p.64.png */; };
 		02205F3B1674550D00D57D23 /* ArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 02205F3A1674550D00D57D23 /* ArrowBlack.png */; };
 		0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0223DB521675D53200D6F825 /* POITypeViewController.m */; };
 		0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0223DB5616765C9000D6F825 /* POICommonTagsViewController.m */; };
@@ -453,6 +454,7 @@
 		021C6AA61686145C00FB17B0 /* UndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndoManager.h; path = ../../OpenStreetMap/UndoManager.h; sourceTree = "<group>"; };
 		021C6AA71686145C00FB17B0 /* UndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UndoManager.m; path = ../../OpenStreetMap/UndoManager.m; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		021E5D6A16C0507A00B7A02A /* transport_stop.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transport_stop.p.64.png; sourceTree = "<group>"; };
 		02205F3A1674550D00D57D23 /* ArrowBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlack.png; sourceTree = "<group>"; };
 		0223DB511675D53200D6F825 /* POITypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POITypeViewController.h; sourceTree = "<group>"; };
 		0223DB521675D53200D6F825 /* POITypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POITypeViewController.m; sourceTree = "<group>"; };
@@ -1422,6 +1424,7 @@
 				02ACBBA316713F2A00BB4414 /* transport_roundabout_clockwise.p.64.png */,
 				02ACBBA416713F2A00BB4414 /* transport_slipway.p.64.png */,
 				02ACBBA516713F2A00BB4414 /* transport_speedbump.p.64.png */,
+				021E5D6A16C0507A00B7A02A /* transport_stop.p.64.png */,
 				02ACBBA616713F2A00BB4414 /* transport_subway.p.64.png */,
 				02ACBBA716713F2A00BB4414 /* transport_taxi_rank.p.64.png */,
 				02ACBBA816713F2A00BB4414 /* transport_traffic_lights.p.64.png */,
@@ -1952,6 +1955,7 @@
 				0266D3B716C02D9200AD9A83 /* seamark_signal_station.p.64.png in Resources */,
 				0266D3B816C02D9200AD9A83 /* seamark_wreck.png in Resources */,
 				0266D3BA16C03D7400AD9A83 /* seamark_notice.p.64.png in Resources */,
+				021E5D6B16C0507B00B7A02A /* transport_stop.p.64.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
