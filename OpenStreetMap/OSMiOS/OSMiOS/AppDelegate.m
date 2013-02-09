@@ -11,7 +11,20 @@
 #import "DownloadThreadPool.h"
 
 
+
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+	NSURL * url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+	if ( url ) {
+		if ( ![url isFileURL] )
+			return NO;
+		if ( ![[url pathExtension] isEqualToString:@"gpx"] )
+			return NO;
+	}
+	return YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -28,6 +41,35 @@
 	memset( (void *)big, 'x', size );
 #endif
 
+	NSURL * url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+	if ( url ) {
+		// somebody handed us a URL to open
+		return [self application:application openURL:url sourceApplication:@"" annotation:nil];
+	}
+
+	return YES;
+}
+
+
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+	if ( ![url isFileURL] )
+		return NO;
+	if ( ![[url pathExtension] isEqualToString:@"gpx"] )
+		return NO;
+
+	// Tell our OfflineReaderViewController to process the URL
+	NSData * data = [NSData dataWithContentsOfURL:url];
+
+	double delayInSeconds = 0.1;
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Open URL" message:@"Sorry, this feature isn't implemented yet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alertView show];
+	});
+
+	// Indicate that we have successfully opened the URL
 	return YES;
 }
 

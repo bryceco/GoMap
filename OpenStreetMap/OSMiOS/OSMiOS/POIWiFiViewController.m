@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import "iosapi.h"
+#import "TagInfo.h"
 #import "POITabBarController.h"
 #import "POIWiFiViewController.h"
 
@@ -16,12 +18,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	_wifiArray = @[
-		@"free",
-		@"yes",
-		@"no",
-	];
+	_wifiArray = [[TagInfoDatabase sharedTagInfoDatabase] wifiValues];
 }
 
 #pragma mark - Table view data source

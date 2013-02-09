@@ -1544,6 +1544,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	NSString * path = [self pathToArchiveFile];
 	NSData * data = [NSData dataWithContentsOfFile:path];
+	if ( data == nil ) {
+		return nil;
+	}
 	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 	self = [unarchiver decodeObjectForKey:@"OsmMapData"];
 	return self;

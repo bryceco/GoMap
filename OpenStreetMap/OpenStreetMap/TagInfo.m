@@ -452,6 +452,8 @@ static TagInfo * g_DefaultRender = nil;
 			[set addObject:tag.key];
 		}
 		[set addObjectsFromArray:@[
+			@"access",
+			@"admin_level",
 			@"addr:housenumber",
 			@"addr:street",
 			@"addr:city",
@@ -460,21 +462,26 @@ static TagInfo * g_DefaultRender = nil;
 			@"addr:state",
 			@"addr:housename",
 			@"addr:interpolation",
-			@"maxspeed",
-			@"access",
-			@"lanes",
-			@"layer",
-			@"foot",
-			@"ele",
+			@"alt_name",
+			@"area",
 			@"bicycle",
 			@"bridge",
-			@"fixme",
-			@"height",
-			@"area",
-			@"admin_level",
-			@"width",
 			@"crossing",
-			@"alt_name",
+			@"cuisine",
+			@"designation",
+			@"ele",
+			@"fixme",
+			@"foot",
+			@"height",
+			@"lanes",
+			@"layer",
+			@"maxspeed",
+			@"note",
+			@"operator",
+			@"ref",
+			@"source",
+			@"website",
+			@"width",
 		 ]];
 	}
 	return set;
@@ -488,6 +495,18 @@ static TagInfo * g_DefaultRender = nil;
 			[set addObject:tag.value];
 		}
 	}
+	if ( [key isEqualToString:@"wifi"] ) {
+		[set addObjectsFromArray:[self wifiValues]];
+	} else if ( [key isEqualToString:@"cuisine"] ) {
+		[set addObjectsFromArray:[self cuisineEthnicValues]];
+		[set addObjectsFromArray:[self cuisineStyleValues]];
+	} else if ( [key isEqualToString:@"fixme"] ) {
+		[set addObjectsFromArray:[self fixmeValues]];
+	} else if ( [key isEqualToString:@"source"] ) {
+		[set addObjectsFromArray:[self sourceValues]];
+	}
+
+
 	return set;
 }
 
@@ -537,6 +556,111 @@ static TagInfo * g_DefaultRender = nil;
 		g_DefaultRender.lineWidth = 1.0;
 	}
 	return g_DefaultRender;
+}
+
+-(NSArray *)cuisineStyleValues
+{
+	NSArray * _cuisineStyleArray = nil;
+	if ( _cuisineStyleArray == nil ) {
+		_cuisineStyleArray = @[
+			@"bagel",
+			@"barbecue",
+			@"bougatsa",
+			@"burger",
+			@"cake",
+			@"chicken",
+			@"coffee_shop",
+			@"crepe",
+			@"couscous",
+			@"curry",
+			@"doughnut",
+			@"fish_and_chips",
+			@"fried_food",
+			@"friture",
+			@"ice_cream",
+			@"kebab",
+			@"mediterranean",
+			@"noodle",
+			@"pasta",
+			@"pie",
+			@"pizza",
+			@"regional",
+			@"sandwich",
+			@"sausage",
+			//		@"savory_pancakes",
+			@"seafood",
+			@"steak_house",
+			@"sushi",
+			];
+	}
+	return _cuisineStyleArray;
+}
+
+-(NSArray *)cuisineEthnicValues
+{
+	static NSArray * _ethnicArray = nil;
+	if ( _ethnicArray == nil ) {
+		_ethnicArray = @[
+			@"african",
+			@"american",
+			@"arab",
+			@"argentinian",
+			@"asian",
+			@"balkan",
+			@"basque",
+			@"brazilian",
+			@"chinese",
+			@"croatian",
+			@"czech",
+			@"french",
+			@"german",
+			@"greek",
+			@"hawaiian",
+			@"indian",
+			@"iranian",
+			@"italian",
+			@"japanese",
+			@"korean",
+			@"latin_american",
+			@"lebanese",
+			@"mexican",
+			@"peruvian",
+			@"portuguese",
+			@"spanish",
+			@"thai",
+			@"turkish",
+			@"vietnamese"
+		];
+	}
+	return _ethnicArray;
+}
+
+-(NSArray *)wifiValues
+{
+	return @[
+			@"free",
+			@"yes",
+			@"no",
+	  ];
+}
+
+-(NSArray *)fixmeValues
+{
+	return @[
+			@"resurvey",
+			@"name",
+			@"continue",
+	];
+}
+
+-(NSArray *)sourceValues
+{
+	return @[
+			@"survey",
+			@"local_knowledge",
+			@"Bing",
+			@"Yahoo",
+	 ];
 }
 
 @end

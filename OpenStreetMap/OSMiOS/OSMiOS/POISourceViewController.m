@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import "iosapi.h"
+#import "TagInfo.h"
 #import "POISourceViewController.h"
 #import "POITabBarController.h"
 
@@ -15,12 +17,7 @@
 {
     [super viewDidLoad];
 
-	_sourceArray = @[
-		@"survey",
-		@"local_knowledge",
-		@"Bing",
-		@"Yahoo",
-	];
+	_sourceArray = [[TagInfoDatabase sharedTagInfoDatabase] sourceValues];
 }
 
 #pragma mark - Table view data source
@@ -32,7 +29,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _sourceArray.count;
+	return _sourceArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -181,8 +181,7 @@
 	[sender resignFirstResponder];
 }
 
-
-- (IBAction)textFieldChanged:(UITextField *)textField
+- (IBAction)textFieldEditingDidBegin:(UITextField *)textField
 {
 	NSInteger tag = textField.tag;
 	assert( tag >= 0 );
@@ -193,22 +192,32 @@
 		NSMutableArray * kv = _tags[ tag/2 ];
 
 		if ( isValue ) {
-
 			// get list of values for current key
 			NSString * key = kv[0];
 			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
 			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-			NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData  tagValuesForKey:key];
+			NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
 			NSArray * list = [values allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
-			
 		} else {
 			// get list of keys
 			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagKeys];
 			NSArray * list = [set allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
 		}
+	}
+}
+
+- (IBAction)textFieldChanged:(UITextField *)textField
+{
+	NSInteger tag = textField.tag;
+	assert( tag >= 0 );
+	BOOL isValue = (tag & 1) != 0;
+
+	if ( tag < RELATION_TAGS ) {
+
+		NSMutableArray * kv = _tags[ tag/2 ];
 
 		NSString * text = textField.text;
 		text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

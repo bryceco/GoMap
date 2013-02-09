@@ -10,6 +10,6 @@
 
 @interface POIFixMeViewController : UITableViewController
 {
-	NSArray *	_fixmeArray;
+	NSArray * _fixmeArray;
 }
 @end

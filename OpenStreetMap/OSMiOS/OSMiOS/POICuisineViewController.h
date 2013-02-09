@@ -10,7 +10,7 @@
 
 @interface POICuisineViewController : UITableViewController
 {
-	NSArray *	_styleArray;
-	NSArray *	_ethnicArray;
+	NSArray * _styleArray;
+	NSArray * _ethnicArray;
 }
 @end

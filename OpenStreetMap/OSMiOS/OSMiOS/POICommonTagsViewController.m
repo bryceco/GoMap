@@ -145,10 +145,8 @@
 	return key;
 }
 
-- (IBAction)textFieldChanged:(UITextField *)textField
+- (IBAction)textFieldEditingDidBegin:(UITextField *)textField
 {
-	_saveButton.enabled = YES;
-
 	if ( [textField isKindOfClass:[AutocompleteTextField class]] ) {
 		// get list of values for current key
 		NSString * key = [self tagKeyForTextField:textField];
@@ -159,6 +157,11 @@
 		NSArray * list = [values allObjects];
 		[(AutocompleteTextField *)textField setCompletions:list];
 	}
+}
+
+- (IBAction)textFieldChanged:(UITextField *)textField
+{
+	_saveButton.enabled = YES;
 }
 
 - (IBAction)textFieldDidEndEditing:(UITextField *)textField

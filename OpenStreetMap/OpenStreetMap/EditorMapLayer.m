@@ -113,9 +113,17 @@ const CGFloat WayHighlightRadius = 6.0;
 {
 	// First save just modified objects, which we can do very fast, in case we get killed during full save
 	OsmMapData * modified = [_mapData modifiedObjects];
+#if 1
+	// save unconditionally, since if we don't save and our full save fails we could roll back to a state containing
+	// dirty objects that were later uploaded.
+	[modified saveSubstitutingSpatial:YES];
+#else
 	if ( modified.nodeCount || modified.wayCount || modified.relationCount ) {
+		// save only modified stuff
 		[modified saveSubstitutingSpatial:YES];
 	}
+#endif
+
 	// Next try to save everything. Since we save atomically this won't overwrite the fast save unless it succeeeds.
 	[_mapData saveSubstitutingSpatial:NO];
 }
@@ -1313,33 +1321,19 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		CGPathRef path = [self pathForWay:way];
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);
-		[CurvedTextLayer drawString:name offset:5.0 color:color shadowColor:shadowColor path:path context:ctx];
+		[CurvedTextLayer drawString:name alongPath:path offset:5.0 color:color shadowColor:shadowColor context:ctx];
 		CGPathRelease(path);
 	} else {
 		// it is a node or area
 		OSMPoint point = [way centerPoint];
 		point = [self pointForLat:point.y lon:point.x];
-		point.x -= 3 * name.length;
+		CGPoint cgPoint = CGPointFromOSMPoint(point);
 
-		CGContextSetTextDrawingMode(ctx, kCGTextFill);
-		CGContextSetRGBFillColor(ctx, textColor.red, textColor.green, textColor.blue, textColor.alpha);
-#if TARGET_OS_IPHONE
-		NSAttributedString * s = [[NSAttributedString alloc] initWithString:name attributes:@{NSForegroundColorAttributeName : (id)color.CGColor}];
-#else
-		NSAttributedString * s = [[NSAttributedString alloc] initWithString:name attributes:@{NSForegroundColorAttributeName : color}];
-#endif
-		CTLineRef ct1 = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s );
-		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 5.0, shadowColor.CGColor );
-		CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
-		CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
-		CTLineDraw(ct1, ctx);
-		CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
-		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
-		CFRelease(ct1);
+		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
 	}
 }
 
--(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength
+-(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength CF_RETURNS_RETAINED
 {
 	CGMutablePathRef	path = NULL;
 	double				length = 0.0;
@@ -1391,12 +1385,24 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		double dx = lastPoint.x - firstPoint.x;
 		if ( dx < 0 ) {
 			// reverse path
-			path = PathReversed( path );
+#if 1
+			CGMutablePathRef path2 = PathReversed( path );
+			CGPathRelease(path);
+			path = path2;
+#endif
 		}
 	}
 	*pLength = length;
 	return path;
 }
+
+
+static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
+{
+	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
+	return houseNumber;
+}
+
 
 -(BOOL)drawWayName:(OsmWay *)way context:(CGContextRef)ctx
 {
@@ -1405,7 +1411,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	// add street names
 	NSString * name = [way.tags valueForKey:@"name"];
 	if ( name == nil )
-		name = [way.tags objectForKey:@"addr:housenumber"];
+		name = DrawNodeAsHouseNumber( way.tags );
 	if ( name == nil )
 		return NO;
 
@@ -1421,12 +1427,14 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		double length = 0.0;
 		CGPathRef path = [self pathClippedToViewRect:way length:&length];
 		double offset = (length - name.length * Pixels_Per_Character) / 2;
-		if ( offset < 0 )
+		if ( offset < 0 ) {
+			CGPathRelease( path );
 			return NO;
+		}
 
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);
-		[CurvedTextLayer drawString:name offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) path:path context:ctx];
+		[CurvedTextLayer drawString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
 		CGPathRelease(path);
 
 	} else {
@@ -1439,33 +1447,15 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		
 		OSMPoint point = [way centerPoint];
 		point = [self pointForLat:point.y lon:point.x];
-		point.x -= 3 * name.length;
-
-		CGContextSetTextDrawingMode(ctx, kCGTextFill);
-#if TARGET_OS_IPHONE
-		NSAttributedString * s = [[NSAttributedString alloc] initWithString:name attributes:@{NSForegroundColorAttributeName : (id)self.textColor.CGColor}];
-#else
-		NSAttributedString * s = [[NSAttributedString alloc] initWithString:name attributes:@{NSForegroundColorAttributeName : self.textColor}];
-#endif
-		CTLineRef ct1 = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s );
-		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 5.0, ShadowColorForColor2(self.textColor).CGColor );
-		CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
-		CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
-		CTLineDraw(ct1, ctx);
-		CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
-		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
-		CFRelease(ct1);
+		CGPoint cgPoint = CGPointFromOSMPoint(point);
+		UIFont * font = [UIFont systemFontOfSize:11];
+		UIColor * shadowColor = ShadowColorForColor2(self.textColor);
+		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint font:font color:self.textColor shadowColor:shadowColor context:ctx];
 	}
 	[_nameDrawSet addObject:name];
 	return YES;
 }
 
-
-static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
-{
-	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
-	return houseNumber;
-}
 
 -(void)drawNode:(OsmNode *)node context:(CGContextRef)ctx
 {
@@ -1493,13 +1483,13 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		assert(NO);
 		return;
 	}
-	pt.x = round(pt.x);	// performance optimization when drawing images
-	pt.y = round(pt.y);
 
 	TagInfo * tagInfo = node.tagInfo;
 	if ( tagInfo.icon ) {
 
 		// draw with icon
+		pt.x = round(pt.x);	// performance optimization when drawing images
+		pt.y = round(pt.y);
 		CGContextSaveGState(ctx);
 		CGContextTranslateCTM(ctx, 0, pt.y+_iconSize.height);
 		CGContextScaleCTM(ctx, 1.0, -1.0);
@@ -1544,25 +1534,14 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		NSString * houseNumber = DrawNodeAsHouseNumber( node.tags );
 		if ( houseNumber ) {
 
-#if TARGET_OS_IPHONE
-			UIFont * font = [UIFont fontWithName:@"Helvetica" size:10];
-			NSAttributedString * s = [[NSAttributedString alloc] initWithString:houseNumber attributes:@{	NSForegroundColorAttributeName : (id)self.textColor.CGColor,
-																											NSFontAttributeName : font }];
-#else
-			NSAttributedString * s = [[NSAttributedString alloc] initWithString:houseNumber attributes:@{NSForegroundColorAttributeName : self.textColor}];
-#endif
-			CTLineRef ctl = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s );
-			CGRect textRect = CTLineGetBoundsWithOptions( ctl, 0 );
-			CGContextSetTextDrawingMode(ctx, kCGTextFill);
-			// CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 5.0, ShadowColorForColor2(self.textColor).CGColor );
-			CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
-			CGContextSetTextPosition(ctx, pt.x - (textRect.origin.x+textRect.size.width)/2, pt.y + (textRect.origin.y+textRect.size.height)/2);	// this applies a transform, so do it after flipping
-			CTLineDraw(ctl, ctx);
-			CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
-			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
-			CFRelease(ctl);
+			UIColor * shadowColor = ShadowColorForColor2(self.textColor);
+			CGPoint point = CGPointFromOSMPoint(pt);
+			[CurvedTextLayer drawString:houseNumber	centeredOnPoint:point font:nil color:self.textColor shadowColor:shadowColor context:ctx];
 
 		} else {
+
+			pt.x = round(pt.x);	// performance optimization when drawing images
+			pt.y = round(pt.y);
 			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, ShadowColorForColor(red, green, blue).CGColor );
 			CGRect rect = CGRectMake(pt.x + - _iconSize.width/4, pt.y - _iconSize.height/4, _iconSize.width/2, _iconSize.height/2);
 			CGContextBeginPath(ctx);

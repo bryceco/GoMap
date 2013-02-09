@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AutocompleteTextField : UITextField <UITextFieldDelegate>
+@class CAGradientLayer;
+
+@interface AutocompleteTextField : UITextField <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-	BOOL						_pauseAutocomplete;
 	id<UITextFieldDelegate>		_realDelegate;
+
+	CGSize						_keyboardSize;
+	UITableView				*	_completionTableView;
+	CGFloat						_origCellOffset;
+	NSArray					*	_filteredCompletions;
+
+	CAGradientLayer			*	_gradientLayer;
 }
 
 @property (strong,nonatomic)	NSArray * completions;

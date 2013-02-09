@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import "iosapi.h"
 #import "POIFixMeViewController.h"
 #import "POITabBarController.h"
-
+#import "TagInfo.h"
 
 @implementation POIFixMeViewController
 
@@ -16,12 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	_fixmeArray = @[
-		@"resurvey",
-		@"name",
-		@"continue",
-	];
+	_fixmeArray = [[TagInfoDatabase sharedTagInfoDatabase] fixmeValues];
 }
 
 

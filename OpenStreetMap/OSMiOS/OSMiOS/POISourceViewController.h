@@ -10,6 +10,6 @@
 
 @interface POISourceViewController : UITableViewController
 {
-	NSArray *	_sourceArray;
+	NSArray * _sourceArray;
 }
 @end

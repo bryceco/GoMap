@@ -6,85 +6,20 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import "iosapi.h"
 #import "POICuisineViewController.h"
 #import "POITabBarController.h"
+#import "TagInfo.h"
 
 
 @implementation POICuisineViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-	_styleArray = @[
-		@"bagel",
-		@"barbecue",
-		@"bougatsa",
-		@"burger",
-		@"cake",
-		@"chicken",
-		@"coffee_shop",
-		@"crepe",
-		@"couscous",
-		@"curry",
-		@"doughnut",
-		@"fish_and_chips",
-		@"fried_food",
-		@"friture",
-		@"ice_cream",
-		@"kebab",
-		@"mediterranean",
-		@"noodle",
-		@"pasta",
-		@"pie",
-		@"pizza",
-		@"regional",
-		@"sandwich",
-		@"sausage",
-//		@"savory_pancakes",
-		@"seafood",
-		@"steak_house",
-		@"sushi",
-	];
-	_ethnicArray = @[
-		@"african",
-		@"american",
-		@"arab",
-		@"argentinian",
-		@"asian",
-		@"balkan",
-		@"basque",
-		@"brazilian",
-		@"chinese",
-		@"croatian",
-		@"czech",
-		@"french",
-		@"german",
-		@"greek",
-		@"indian",
-		@"iranian",
-		@"italian",
-		@"japanese",
-		@"korean",
-		@"latin_american",
-		@"lebanese",
-		@"mexican",
-		@"peruvian",
-		@"portuguese",
-		@"spanish",
-		@"thai",
-		@"turkish",
-		@"vietnamese"
-	];
+	_styleArray = [[TagInfoDatabase sharedTagInfoDatabase] cuisineStyleValues];
+	_ethnicArray= [[TagInfoDatabase sharedTagInfoDatabase] cuisineEthnicValues];
 }
 
 #pragma mark - Table view data source

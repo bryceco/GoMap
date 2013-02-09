@@ -252,6 +252,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="CbD-pK-Wmf"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="fIH-D2-NM3"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="YAM-dU-Eek"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="vri-4Z-mGo"/>
                                                     </connections>
@@ -292,6 +293,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="Bff-OT-oz2"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="ctl-bF-SEP"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="Kaj-MT-OD1"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="N1N-jv-Qlp"/>
                                                     </connections>
@@ -336,6 +338,7 @@
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="gK4-c6-rhu"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="mWL-vg-sjo"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="1ks-7v-Dtf"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="fKI-Qd-aJa"/>
                                                     </connections>
@@ -379,6 +382,7 @@
                                                     <textInputTraits key="textInputTraits" autocorrectionType="yes" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="SJB-zI-nyf"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="Omv-pE-s6K"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="7ii-aX-8Rd"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="pc1-XU-4A3"/>
                                                     </connections>
@@ -422,6 +426,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="Uer-Yw-rjV"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="NCa-p2-1M0"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="v0d-Qv-zHd"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="RFj-nn-gZE"/>
                                                     </connections>
@@ -462,6 +467,7 @@
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="40i-zk-tNP"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="TBr-Eh-6TS"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="0Bm-oM-cZR"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="Zpr-Tn-xcX"/>
                                                     </connections>
@@ -506,6 +512,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="hw8-Zd-PLS"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="U1A-Nu-yfe"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="wm4-oj-57M"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="Eqx-xQ-iM0"/>
                                                     </connections>
@@ -546,6 +553,7 @@
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="4uU-6t-iGl"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="fKD-vY-FSd"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="4R4-Tp-4jM"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="3SW-ZE-xSV"/>
                                                     </connections>
@@ -558,6 +566,7 @@
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="p6i-gz-yky"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="l0V-gd-ToR"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="Uew-M3-3cI"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="Yiq-3v-MYS"/>
                                                     </connections>
@@ -611,6 +620,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="KhI-qa-4hN"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="MjH-Jv-7Zt"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="H6P-OF-MkQ"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="XA4-IJ-qJe"/>
                                                     </connections>
@@ -651,6 +661,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="EDX-rM-A6t"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="RUb-zT-S79"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="gRm-zX-i78"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="e2T-pt-ugU"/>
                                                     </connections>
@@ -691,6 +702,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="fYO-fX-mPL"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="d2k-7c-sZ8"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="OgZ-bg-yOp"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="qa1-ly-QyL"/>
                                                     </connections>
@@ -731,6 +743,7 @@
                                                     <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="l0W-YF-Wbz"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="YGB-Zj-MCN"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="64N-PS-y7K"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="BL2-VY-zXS"/>
                                                     </connections>
@@ -771,6 +784,7 @@
                                                     <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="rSu-P4-2cd"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="fVj-HQ-RMe"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="17x-dX-Sfk"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="rND-Pw-gpt"/>
                                                     </connections>
@@ -815,6 +829,7 @@
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="SBS-PB-KFF"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="IWa-hA-VxC"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="tJb-SX-cyn"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="Oq3-0o-sVI"/>
                                                     </connections>
@@ -858,6 +873,7 @@
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="O0v-S7-we1"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="JaK-x3-iMi"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="VER-dM-UG0"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="wD1-fr-LwB"/>
                                                     </connections>
@@ -902,6 +918,7 @@
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="DSa-hN-GPL"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="UyS-fK-fHL"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="Bob-Kw-PZd"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="gMd-sT-yQr"/>
                                                     </connections>
@@ -945,6 +962,7 @@
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldChanged:" destination="6VA-gm-L0S" eventType="editingChanged" id="1Qp-tk-tAP"/>
+                                                        <action selector="textFieldEditingDidBegin:" destination="6VA-gm-L0S" eventType="editingDidBegin" id="2YG-oY-8Qc"/>
                                                         <action selector="textFieldReturn:" destination="6VA-gm-L0S" eventType="editingDidEndOnExit" id="kCd-8v-nT7"/>
                                                         <outlet property="delegate" destination="6VA-gm-L0S" id="Tnv-as-6wo"/>
                                                     </connections>
@@ -1326,6 +1344,7 @@
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="BEW-to-vAi"/>
+                                                <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="HWR-Ud-Kgc"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="cCo-45-mej"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="tcL-nf-pp1"/>
                                             </connections>
@@ -1335,6 +1354,7 @@
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="Bi5-qH-vtX"/>
+                                                <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="flk-oA-v6f"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="5Sn-6a-G7m"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="BZ4-dA-evd"/>
                                             </connections>
@@ -1374,6 +1394,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="ZB2-P2-lYD"/>
+                                                <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="RR5-Po-rum"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="gjR-WX-AId"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="gc7-5Z-YFM"/>
                                             </connections>
@@ -1383,6 +1404,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="enw-Un-WMB"/>
+                                                <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="xd6-gT-IO9"/>
                                                 <action selector="textFieldReturn:" destination="G5R-oP-lp3" eventType="editingDidEndOnExit" id="caF-Gi-LNg"/>
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="V7P-RP-s2w"/>
                                             </connections>
@@ -3473,7 +3495,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="33" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -3594,6 +3616,249 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
         <image name="redo32.png" width="32" height="32"/>
         <image name="undo32.png" width="32" height="32"/>
     </resources>
+    <classes>
+        <class className="AddNewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddNewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="AttributeCustomCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AttributeCustomCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="value" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="AutocompleteTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutocompleteTextField.h"/>
+        </class>
+        <class className="BingMetadataViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BingMetadataViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="ClearCacheViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClearCacheViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_aerialDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_mapnikDetail" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_osmDetail" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="CreditsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreditsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="HelpViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HelpViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="_textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="LoginViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="registerAccount:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="_password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_username" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="MapView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapView.h"/>
+            <relationships>
+                <relationship kind="action" name="dropPin:"/>
+                <relationship kind="action" name="duplicateSelectedObject:"/>
+                <relationship kind="action" name="handlePanGesture:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="handlePinchGesture:" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="action" name="handleTapGesture:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="action" name="locateMe:"/>
+                <relationship kind="action" name="redo:"/>
+                <relationship kind="action" name="undo:"/>
+            </relationships>
+        </class>
+        <class className="MapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleLocation:"/>
+                <relationship kind="outlet" name="_redoButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_toolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="_trashcanButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_undoButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_uploadButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="locationButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MapView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="NearbyMappersViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NearbyMappersViewController.h"/>
+        </class>
+        <class className="NominatumViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NominatumViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="_tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="OfflineTableViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OfflineTableViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="detailLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="OfflineViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OfflineViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="toggleDownload:"/>
+                <relationship kind="outlet" name="_aerialCell" candidateClass="OfflineTableViewCell"/>
+                <relationship kind="outlet" name="_mapnikCell" candidateClass="OfflineTableViewCell"/>
+            </relationships>
+        </class>
+        <class className="POIAllTagsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIAllTagsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="textFieldChanged:" candidateClass="UITextField"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="action" name="toggleEditing:"/>
+                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="POIAttributesViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIAttributesViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_changesetCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_changesetLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_dateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_extraCell1" candidateClass="AttributeCustomCell"/>
+                <relationship kind="outlet" name="_extraCell2" candidateClass="AttributeCustomCell"/>
+                <relationship kind="outlet" name="_identCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_identLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_uidLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_userCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_userLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_versionCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="_versionLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="POICommonTagsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POICommonTagsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="done:"/>
+                <relationship kind="action" name="textFieldChanged:" candidateClass="UITextField"/>
+                <relationship kind="action" name="textFieldDidEndEditing:" candidateClass="UITextField"/>
+                <relationship kind="action" name="textFieldEditingDidBegin:" candidateClass="UITextField"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="_altNameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_buildingTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_cityTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_cuisineTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_designationTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_fixmeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_houseNumberTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_nameTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_noteTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_operatorTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_phoneTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_postalCodeTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_refTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_sourceTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_streetTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_typeTextField" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_unitTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_websiteTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_wifiTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="POICuisineViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POICuisineViewController.h"/>
+        </class>
+        <class className="POIFixMeViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIFixMeViewController.h"/>
+        </class>
+        <class className="POISourceViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POISourceViewController.h"/>
+        </class>
+        <class className="POITabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POITabBarController.h"/>
+        </class>
+        <class className="POITypeViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POITypeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="configure:"/>
+                <relationship kind="outlet" name="_searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="POIWiFiViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIWiFiViewController.h"/>
+        </class>
+        <class className="SettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_sendMailCell" candidateClass="UITableViewCell"/>
+            </relationships>
+        </class>
+        <class className="TextPair" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextPair.h"/>
+            <relationships>
+                <relationship kind="outlet" name="_fixConstraint" candidateClass="NSLayoutConstraint"/>
+                <relationship kind="outlet" name="_fixContstraintView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="text1" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="text2" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="UploadTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UploadTableViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendMail:"/>
+                <relationship kind="outlet" name="_cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_commentTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="_commitButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_progressView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_sendMailButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="UploadViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UploadViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendMail:"/>
+                <relationship kind="outlet" name="_cancelButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_commentTextView" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="_commitButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_progressView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_sendMailButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="_xmlTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="WebPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doAction:"/>
+                <relationship kind="outlet" name="_actionButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="_webView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

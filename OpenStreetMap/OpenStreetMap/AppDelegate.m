@@ -23,6 +23,19 @@
 	return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
+- (NSArray *)tagCompletionsForKey:(NSString *)key
+{
+	NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
+	NSMutableSet * values = [self.mapView.editorLayer.mapData tagValuesForKey:key];
+	[values addObjectsFromArray:[set allObjects]];
+	if ( [key isEqualToString:@"wifi"] ) {
+		values addObjectsFromArray:
+	}
+	xxx
+	NSArray * list = [values allObjects];
+	return list;
+}
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {

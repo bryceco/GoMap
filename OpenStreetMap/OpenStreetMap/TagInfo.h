@@ -73,4 +73,11 @@
 -(NSMenu *)tagWayMenuWithTarget:(id)target action:(SEL)action;
 #endif
 -(NSArray *)tagsForNodes;
+
+-(NSArray *)cuisineStyleValues;
+-(NSArray *)cuisineEthnicValues;
+-(NSArray *)wifiValues;
+-(NSArray *)fixmeValues;
+-(NSArray *)sourceValues;
+
 @end
