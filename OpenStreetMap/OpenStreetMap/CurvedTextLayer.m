@@ -14,7 +14,7 @@
 
 @implementation CurvedTextLayer
 
-static const CGFloat TEXT_SHADOW_WIDTH = 3.0;
+static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 
 +(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset stroke:(BOOL)stroke color:(NSColor *)color context:(CGContextRef)ctx
@@ -23,7 +23,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 3.0;
 
 	if ( stroke ) {
 
-		CGContextSetLineWidth( ctx, 4.0);
+		CGContextSetLineWidth( ctx, TEXT_SHADOW_WIDTH);
 		CGContextSetLineJoin( ctx, kCGLineJoinRound );
 		CGContextSetTextDrawingMode( ctx, kCGTextFillStroke );
 		CGContextSetFillColorWithColor(ctx, color.CGColor);
@@ -135,42 +135,5 @@ static const CGFloat TEXT_SHADOW_WIDTH = 3.0;
 	CFRelease(ct2);
 	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
 }
-
-#if 0
-if ( houseNumber ) {
-
-#if TARGET_OS_IPHONE
-	UIFont * font = [UIFont fontWithName:@"Helvetica" size:11];
-	UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:houseNumber attributes:@{	NSForegroundColorAttributeName : (id)self.textColor.CGColor, NSFontAttributeName : font }];
-	NSAttributedString * s2 = [[NSAttributedString alloc] initWithString:houseNumber attributes:@{	NSForegroundColorAttributeName : (id)shadowColor.CGColor, NSFontAttributeName : font }];
-#else
-	NSAttributedString * s = [[NSAttributedString alloc] initWithString:houseNumber attributes:@{NSForegroundColorAttributeName : self.textColor}];
-#endif
-	CTLineRef ctl1 = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s1 );
-	CTLineRef ctl2 = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s2 );
-	CGRect textRect = CTLineGetBoundsWithOptions( ctl1, 0 );
-	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
-	CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
-	CGPoint pos = { round( pt.x - (textRect.origin.x+textRect.size.width)/2 ), round( pt.y + (textRect.origin.y+textRect.size.height)/2 ) };
-
-	CGContextSetLineWidth(ctx, TEXT_SHADOW_WIDTH);
-	CGContextSetLineCap(ctx, kCGLineCapRound);
-	CGContextSetStrokeColorWithColor(ctx, shadowColor.CGColor);
-	CGContextSetTextDrawingMode(ctx, kCGTextFillStroke);
-	CGContextSetTextPosition(ctx, pos.x, pos.y);	// this applies a transform, so do it after flipping
-	CTLineDraw(ctl2, ctx);
-
-	CGContextSetTextDrawingMode(ctx, kCGTextFill);
-	CGContextSetTextPosition(ctx, pos.x, pos.y);	// this applies a transform, so do it after flipping
-	CTLineDraw(ctl1, ctx);
-
-	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
-	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
-	CFRelease(ctl1);
-	CFRelease(ctl2);
-
-} else {
-#endif
 
 @end

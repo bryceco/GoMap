@@ -424,7 +424,7 @@
 		0275409E161E92F3000B7A5C /* TabbingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabbingTableView.m; sourceTree = "<group>"; };
 		0275B3B61615819500124A14 /* OpenStreetMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OpenStreetMap.entitlements; sourceTree = "<group>"; };
 		027A469F1673BA2B000BE55C /* OSM-Logo256.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = "OSM-Logo256.ico"; path = "../OSM-Logo256.ico"; sourceTree = "<group>"; };
-		0289D0DC16A88B7B00F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLog.h; path = OpenStreetMap/DLog.h; sourceTree = "<group>"; };
+		0289D0DC16A88B7B00F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLog.h; sourceTree = "<group>"; };
 		029221F21645952200370AA3 /* TagInfoEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagInfoEditorWindowController.h; sourceTree = "<group>"; };
 		029221F31645952200370AA3 /* TagInfoEditorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagInfoEditorWindowController.m; sourceTree = "<group>"; };
 		029221F41645952200370AA3 /* TagInfoEditorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagInfoEditorWindowController.xib; sourceTree = "<group>"; };
@@ -1142,7 +1142,6 @@
 		02FE3F4A15F113CA00A6CFAE = {
 			isa = PBXGroup;
 			children = (
-				0289D0DC16A88B7B00F86151 /* DLog.h */,
 				02ACBA6416713CCB00BB4414 /* Go Map!!.xcodeproj */,
 				02FE3F5F15F113CA00A6CFAE /* OpenStreetMap */,
 				02FE3F5815F113CA00A6CFAE /* Frameworks */,
@@ -1194,6 +1193,7 @@
 				029AD6F01642E9160045B20D /* ChangesWindowController.xib */,
 				02492898161A96A500589FD2 /* CurvedTextLayer.h */,
 				02492899161A96A500589FD2 /* CurvedTextLayer.m */,
+				0289D0DC16A88B7B00F86151 /* DLog.h */,
 				02AD31CF164AE54E00EDCA71 /* DownloadThreadPool.h */,
 				02AD31D0164AE54E00EDCA71 /* DownloadThreadPool.m */,
 				02FE7796161F8E6A004D00D3 /* EditorMapLayer.h */,

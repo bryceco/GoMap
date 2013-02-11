@@ -460,7 +460,6 @@
     <tag key="highway" value="unclassified" name="Unclassified" type="way" description="Public access road, non-residential." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dunclassified" lineColor="C0C0C0" lineWidth="2.000000"></tag>
     <tag key="highway" value="unsurfaced" name="Unsurfaced" type="way" lineColor="C0C0C0" lineWidth="1.000000"></tag>
     <tag key="highway" value="yield" name="Yield" type="way"></tag>
-    <tag key="historic" value="*" name="*"></tag>
     <tag key="historic" value="aqueduct" name="Aqueduct"></tag>
     <tag key="historic" value="archaeological_site" name="Archaeological Site" description="a place in which evidence of past activity is preserved" iconName="tourist_archaeological" areaColor="663300"></tag>
     <tag key="historic" value="battlefield" name="Battlefield" description="The site of a battle or military skirmish in the past. this could be on land or at sea." iconName="tourist_battlefield" areaColor="663300"></tag>
@@ -488,7 +487,6 @@
     <tag key="historic" value="wayside_shrine" name="Wayside Shrine" description="Historical shrine often showing a religious depiction." areaColor="663300"></tag>
     <tag key="historic" value="wreck" name="Wreck" description="A a nautical craft that has unintentionally been sunk or destroyed." iconName="tourist_wreck"></tag>
     <tag key="historic" value="yes" name="Yes"></tag>
-    <tag key="horse" value="*" name="*"></tag>
     <tag key="horse" value="designated" name="Designated"></tag>
     <tag key="horse" value="no" name="No"></tag>
     <tag key="hunting" value="raised_hide" name="Raised Hide" description="A raised hide."></tag>
@@ -586,7 +584,6 @@
     <tag key="landuse" value="wood" name="Wood" type="area"></tag>
     <tag key="landuse" value="wood_(Don't_use)" name="Wood (Don't Use)" type="area"></tag>
     <tag key="lane" value="buffered" name="Buffered"></tag>
-    <tag key="layer" value="*" name="*"></tag>
     <tag key="layer" value="-1" name="-1"></tag>
     <tag key="leisure" value="Red_Light_District" name="Red Light District" type="node;area"></tag>
     <tag key="leisure" value="arena" name="Arena" type="node;area"></tag>
@@ -752,7 +749,6 @@
     <tag key="motorcycle" value="yes" name="Yes"></tag>
     <tag key="motorroad" value="yes" name="Yes"></tag>
     <tag key="mountain_pass" value="yes" name="Yes" iconName="poi_mountain_pass"></tag>
-    <tag key="name" value="*" name="*"></tag>
     <tag key="natural" value="arete" name="Arete" type="node;area" description="Used to tag a peaked ridge."></tag>
     <tag key="natural" value="avalanche_dam" name="Avalanche Dam" type="node;area" description="dam used for protection from avalanches"></tag>
     <tag key="natural" value="bare_rock" name="Bare Rock" type="node;area" description="For areas of solid visible rock."></tag>
@@ -861,7 +857,6 @@
     <tag key="old_railway_operator" value="SP&amp;S" name="Sp&amp;S"></tag>
     <tag key="old_railway_operator" value="Southern" name="Southern"></tag>
     <tag key="old_railway_operator" value="UP" name="Up"></tag>
-    <tag key="oneway" value="*" name="*"></tag>
     <tag key="oneway" value="-1" name="-1"></tag>
     <tag key="oneway" value="1" name="1"></tag>
     <tag key="oneway" value="no" name="No"></tag>
@@ -1632,7 +1627,6 @@
     <tag key="tunnel" value="culvert" name="Culvert" description="For a stream passing under a road. Use it on the section of stream passing under the road."></tag>
     <tag key="tunnel" value="yes" name="Yes"></tag>
     <tag key="two_sided" value="yes" name="Yes"></tag>
-    <tag key="type" value="*" name="*"></tag>
     <tag key="type" value="area" name="Area"></tag>
     <tag key="type" value="associatedStreet" name="Associatedstreet"></tag>
     <tag key="type" value="benchmark" name="Benchmark" description="Used with man_made=survey_point to indicate a benchmark point"></tag>
@@ -1710,7 +1704,6 @@
     <tag key="whitewater" value="put_in;egress" name="Put In;Egress"></tag>
     <tag key="winter_road" value="yes" name="Yes"></tag>
     <tag key="wires" value="double" name="Double"></tag>
-    <tag key="wood" value="*" name="*"></tag>
     <tag key="wood" value="broad-leaved" name="Broad-Leaved" belongsTo="natural=wood;landuse=forest"></tag>
     <tag key="wood" value="broad_leaved" name="Broad Leaved" belongsTo="natural=wood;landuse=forest" description="Describes the type of woodland"></tag>
     <tag key="wood" value="casuarina" name="Casuarina" belongsTo="natural=wood;landuse=forest"></tag>

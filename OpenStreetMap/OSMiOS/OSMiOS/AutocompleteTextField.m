@@ -10,54 +10,35 @@
 
 #import "AutocompleteTextField.h"
 
-@implementation AutocompleteTextField
-@synthesize completions = _allCompletions;
 
+@interface AutocompleteTextFieldDelegate : NSObject<UITextFieldDelegate>
+@property (strong,nonatomic)	id<UITextFieldDelegate>		realDelegate;
+@property (weak,nonatomic)		AutocompleteTextField	*	owner;
+@end
 
-- (id)initWithCoder:(NSCoder *)coder
+@implementation AutocompleteTextFieldDelegate
+
+#if 0
+- (BOOL)respondsToSelector:(SEL)aSelector
 {
-	self = [super initWithCoder:coder];
+	if ( aSelector == @selector(textFieldShouldBeginEditing:) )
+		return [_realDelegate respondsToSelector:aSelector];
+	if ( aSelector == @selector(textFieldDidBeginEditing:) )
+		return [_realDelegate respondsToSelector:aSelector];
+	if ( aSelector == @selector(textFieldShouldEndEditing:) )
+		return [_realDelegate respondsToSelector:aSelector];
+	if ( aSelector == @selector(textFieldDidEndEditing:) )
+		return YES || [_realDelegate respondsToSelector:aSelector];
+	if ( aSelector == @selector(textFieldShouldClear:) )
+		return YES || [_realDelegate respondsToSelector:aSelector];
+	if ( aSelector == @selector(textFieldShouldReturn:) )
+		return [_realDelegate respondsToSelector:aSelector];
+	if ( aSelector == @selector(textField:shouldChangeCharactersInRange:replacementString:) )
+		return YES || [_realDelegate respondsToSelector:aSelector];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
-
-	return self;
+	return NO;
 }
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-		super.delegate = self;
-    }
-    return self;
-}
-
--(void)setDelegate:(id<UITextFieldDelegate>)delegate
-{
-	_realDelegate = delegate;
-	super.delegate = self;
-}
-
--(id<UITextFieldDelegate>)delegate
-{
-	return _realDelegate;
-}
-
-
--(void)setCompletions:(NSArray *)completions
-{
-	_allCompletions = completions;
-	if ( self.delegate != self ) {
-		_realDelegate = self.delegate;
-		super.delegate = self;
-	}
-}
--(NSArray *)completions
-{
-	return _allCompletions;
-}
-
+#endif
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -78,15 +59,14 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+	[_owner clearFilteredCompletionsInternal];
+
 	if ( [_realDelegate respondsToSelector:@selector(textFieldDidEndEditing:)])
 		[_realDelegate textFieldDidEndEditing:textField];
-
-	_filteredCompletions = nil;
-	[self updateCompletionTableView];
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-	[self performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
+	[_owner performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
 
 	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldClear:)])
 		return [_realDelegate textFieldShouldClear:textField];
@@ -100,11 +80,73 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-	[self performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
-	
+	[_owner performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
+
 	if ( [_realDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)])
 		return [_realDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string];
 	return YES;
+}
+
+@end
+
+
+
+@implementation AutocompleteTextField
+@synthesize completions = _allCompletions;
+
+static const CGFloat GradientHeight = 20.0;
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	self = [super initWithCoder:coder];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+
+	_myDelegate = [AutocompleteTextFieldDelegate new];
+	_myDelegate.owner = self;
+	super.delegate = _myDelegate;
+	
+	return self;
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+	self = [super initWithFrame:frame];
+	if (self) {
+		assert(NO);
+	}
+	return self;
+}
+
+-(void)setDelegate:(id<UITextFieldDelegate>)delegate
+{
+	_myDelegate.realDelegate = delegate;
+	super.delegate = _myDelegate;
+}
+
+-(id<UITextFieldDelegate>)delegate
+{
+	return _myDelegate.realDelegate;
+}
+
+-(void)clearFilteredCompletionsInternal
+{
+	_filteredCompletions = nil;
+	[self updateCompletionTableView];
+}
+
+-(void)setCompletions:(NSArray *)completions
+{
+	_allCompletions = completions;
+	if ( self.delegate != _myDelegate ) {
+		_myDelegate.realDelegate = self.delegate;
+		super.delegate = _myDelegate;
+	}
+}
+-(NSArray *)completions
+{
+	return _allCompletions;
 }
 
 
@@ -113,7 +155,6 @@
 	NSDictionary *userInfo = [notification userInfo];
 	CGRect rect = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 	rect = [self.superview convertRect:rect fromView:nil];
-//	NSLog(@"kb = %@",NSStringFromCGSize(rect.size));
 	return rect.size;
 }
 
@@ -121,19 +162,27 @@
 {
 	_keyboardSize = [self keyboardSizeFromNotification:nsNotification];
 
-	if ( _filteredCompletions.count ) {
+	if ( self.editing && _filteredCompletions.count ) {
 		[self updateAutocomplete];
 	}
 }
-- (void) keyboardDidChange:(NSNotification *)nsNotification
+- (void) keyboardWillChange:(NSNotification *)nsNotification
 {
 	_keyboardSize = [self keyboardSizeFromNotification:nsNotification];
 
 	if ( _completionTableView ) {
 		CGRect rect = [self frameForCompletionTableView];
 		_completionTableView.frame = rect;
+
+		CGRect rcGradient = rect;
+		rcGradient.size.height = GradientHeight;
+
+		[CATransaction begin];
+		[CATransaction setAnimationDuration:0.0];
+		_gradientLayer.frame = rcGradient;
+		[CATransaction commit];
 	}
-	if ( _filteredCompletions.count ) {
+	if ( self.editing && _filteredCompletions.count ) {
 		[self updateAutocomplete];
 	}
 }
@@ -158,8 +207,6 @@
 	if ( _filteredCompletions.count ) {
 		if ( _completionTableView == nil ) {
 
-			const CGFloat BackgroundGray = 0.88;
-
 			UITableViewCell * cell = (id)[self.superview superview];
 			UITableView * tableView = (id)[cell superview];
 			assert( [tableView isKindOfClass:[UITableView class]] );
@@ -167,7 +214,7 @@
 			// add completion table to tableview
 			CGRect rect = [self frameForCompletionTableView];
 			_completionTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
-			_completionTableView.backgroundColor = [UIColor colorWithWhite:BackgroundGray alpha:1.0];
+			_completionTableView.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
 			_completionTableView.separatorColor = [UIColor colorWithWhite:0.7 alpha:1.0];
 			_completionTableView.dataSource = self;
 			_completionTableView.delegate = self;
@@ -178,7 +225,7 @@
 						(id)[UIColor colorWithWhite:0.0 alpha:0.6].CGColor,
 						(id)[UIColor colorWithWhite:0.0 alpha:0.0].CGColor ];
 			CGRect rcGradient = rect;
-			rcGradient.size.height = 20;
+			rcGradient.size.height = GradientHeight;
 			_gradientLayer.frame = rcGradient;
 			[tableView.layer addSublayer:_gradientLayer];
 

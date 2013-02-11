@@ -9,19 +9,22 @@
 #import <UIKit/UIKit.h>
 
 @class CAGradientLayer;
+@class AutocompleteTextFieldDelegate;
 
-@interface AutocompleteTextField : UITextField <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface AutocompleteTextField : UITextField <UITableViewDataSource, UITableViewDelegate>
 {
-	id<UITextFieldDelegate>		_realDelegate;
+	AutocompleteTextFieldDelegate	*	_myDelegate;
 
-	CGSize						_keyboardSize;
-	UITableView				*	_completionTableView;
-	CGFloat						_origCellOffset;
-	NSArray					*	_filteredCompletions;
+	CGSize								_keyboardSize;
+	UITableView						*	_completionTableView;
+	CGFloat								_origCellOffset;
+	NSArray							*	_filteredCompletions;
 
-	CAGradientLayer			*	_gradientLayer;
+	CAGradientLayer					*	_gradientLayer;
 }
 
-@property (strong,nonatomic)	NSArray * completions;
+@property (copy,nonatomic)	NSArray * completions;
+
+-(void)clearFilteredCompletionsInternal;
 
 @end

@@ -476,6 +476,7 @@ static TagInfo * g_DefaultRender = nil;
 			@"lanes",
 			@"layer",
 			@"maxspeed",
+			@"name",
 			@"note",
 			@"operator",
 			@"ref",
