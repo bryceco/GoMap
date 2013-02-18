@@ -59,13 +59,13 @@
 	if ( ![[url pathExtension] isEqualToString:@"gpx"] )
 		return NO;
 
-	// Tell our OfflineReaderViewController to process the URL
+	// Process the URL
 	NSData * data = [NSData dataWithContentsOfURL:url];
 
 	double delayInSeconds = 0.1;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Open URL" message:@"Sorry, this feature isn't implemented yet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Open URL" message:@"Sorry, importing GPX isn't implemented yet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alertView show];
 	});
 

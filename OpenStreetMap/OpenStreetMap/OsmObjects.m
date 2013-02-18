@@ -180,6 +180,20 @@ static NSInteger _nextUnusedIdentifier = 0;
 	assert( _ident.longLongValue < 0 && ident > 0 );
 	_ident = @(ident);
 }
+-(void)serverUpdateInPlace:(OsmBaseObject *)newerVersion
+{
+	assert( [self.ident isEqualToNumber:newerVersion.ident] );
+	assert( self.version < newerVersion.version );
+	_tags		= newerVersion.tags;
+	_user		= newerVersion.user;
+	_timestamp	= newerVersion.timestamp;
+	_version	= newerVersion.version;
+	_changeset	= newerVersion.changeset;
+	_uid		= newerVersion.uid;
+	// derived data
+	_renderProperties	= nil;
+	_tagInfo			= nil;
+}
 
 
 
@@ -421,6 +435,12 @@ static NSInteger _nextUnusedIdentifier = 0;
 	_lon = longitude;
 	_lat = latitude;
 }
+-(void)serverUpdateInPlace:(OsmNode *)newerVersion
+{
+	[super serverUpdateInPlace:newerVersion];
+	_lon = newerVersion.lon;
+	_lat = newerVersion.lat;
+}
 
 
 -(BOOL)intersectsBox:(OSMRect)box
@@ -536,6 +556,13 @@ static NSInteger _nextUnusedIdentifier = 0;
 	[_nodes insertObject:node atIndex:index];
 	[node setWayCount:node.wayCount+1 undo:nil];
 }
+
+-(void)serverUpdateInPlace:(OsmWay *)newerVersion
+{
+	[super serverUpdateInPlace:newerVersion];
+	_nodes = [newerVersion.nodes mutableCopy];
+}
+
 
 -(BOOL)isArea
 {
@@ -779,6 +806,13 @@ static NSInteger _nextUnusedIdentifier = 0;
 		}
 	}
 }
+
+-(void)serverUpdateInPlace:(OsmRelation *)newerVersion
+{
+	[super serverUpdateInPlace:newerVersion];
+	_members = [newerVersion.members mutableCopy];
+}
+
 
 -(OSMRect)boundingBox
 {

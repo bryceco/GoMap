@@ -263,7 +263,8 @@ static TagInfo * g_DefaultRender = nil;
 +(NSMutableArray *)readXml
 {
 	NSError * error = nil;
-	NSMutableArray * array = [NSMutableArray new];
+	NSMutableArray * tagList = [NSMutableArray new];
+	NSMutableArray * defaults = [NSMutableArray new];
 	NSString * text = [NSString stringWithContentsOfFile:@"TagInfo.xml" encoding:NSUTF8StringEncoding error:&error];
 	if ( text == nil ) {
 		NSString * path = [[NSBundle mainBundle] pathForResource:@"TagInfo" ofType:@"xml"];
@@ -272,6 +273,7 @@ static TagInfo * g_DefaultRender = nil;
 	NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:text options:0 error:&error];
 	NSXMLElement * root = [doc rootElement];
 	for ( NSXMLElement * tag in root.children ) {
+
 		TagInfo * tagType = [TagInfo new];
 		tagType.key				= [tag attributeForName:@"key"].stringValue;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
@@ -284,9 +286,31 @@ static TagInfo * g_DefaultRender = nil;
 		tagType.lineColor		= [TagInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
 		tagType.areaColor		= [TagInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
 		tagType.lineWidth		= [tag attributeForName:@"lineWidth"].stringValue.doubleValue;
-		[array addObject:tagType];
+
+		if ( [tag.name isEqualToString:@"tag"] ) {
+			[tagList addObject:tagType];
+		} else if ( [tag.name isEqualToString:@"default"] ) {
+			assert( tagType.value == nil );	// not implemented
+			[defaults addObject:tagType];
+		} else {
+			assert(NO);
+		}
 	}
-	return array;
+	for ( TagInfo * def in defaults ) {
+		for ( TagInfo * tag in tagList ) {
+			if ( [tag.key isEqualToString:def.key] ) {
+				if ( tag.iconName == nil )
+					tag.iconName = def.iconName;
+				if ( tag.areaColor == nil )
+					tag.areaColor = def.areaColor;
+				if ( tag.lineColor == nil )
+					tag.lineColor = def.lineColor;
+				if ( tag.lineWidth == 0.0 )
+					tag.lineWidth = def.lineWidth;
+			}
+		}
+	}
+	return tagList;
 }
 
 -(id)initWithXmlFile:(NSString *)file

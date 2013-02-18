@@ -24,7 +24,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 	POITabBarController * tabController = (id)self.tabBarController;
 
-	NSString * type = [tabController.selection isWay] ? @"way" : @"node";
+	NSString * type = [tabController.selection isWay] && ![tabController.selection isArea] ? @"way" : @"node";
 	if ( _parentName == nil ) {
 		_isTopLevel = YES;
 		_parentName = nil;

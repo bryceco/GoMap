@@ -1267,6 +1267,8 @@ CGSize SizeForImage( NSImage * image )
 			if ( d < 3.0 ) {
 				// join first to last
 				[_editorLayer addNode:start toWay:way atIndex:nextIndex];
+				_editorLayer.selectedWay = way;
+				_editorLayer.selectedNode = start;
 				[self placePushpinAtPoint:s object:start];
 				return;
 			}

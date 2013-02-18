@@ -191,6 +191,19 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 			[set addObject:value];
 		}
 	}];
+
+	// special case for street names
+	if ( [key isEqualToString:@"addr:street"] ) {
+		[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+			NSString * value = [object.tags objectForKey:@"highway"];
+			if ( value ) {
+				value = [object.tags objectForKey:@"name"];
+				if ( value ) {
+					[set addObject:value];
+				}
+			}
+		}];
+	}
 	return set;
 }
 
@@ -461,18 +474,14 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 
 // http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
-+ (void)osmDataForBox:(ServerQuery *)query completion:(void(^)(ServerQuery * query,OsmMapData * data,NSError * error))completion
++ (void)osmDataForUrl:(NSString *)url quads:(ServerQuery *)quads completion:(void(^)(ServerQuery * quads,OsmMapData * data,NSError * error))completion
 {
-	OSMRect box = query.rect;
-	NSMutableString * url = [NSMutableString stringWithString:OSM_API_URL];
-	[url appendFormat:@"api/0.6/map?bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
-
 	[[DownloadThreadPool osmPool] streamForUrl:url callback:^(DownloadAgent * agent){
 
 		if ( agent.stream.streamError ) {
 
 			dispatch_async(dispatch_get_main_queue(), ^{
-				completion( query, nil, agent.stream.streamError );
+				completion( quads, nil, agent.stream.streamError );
 			});
 
 		} else {
@@ -496,10 +505,18 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				mapData = nil;
 			}
 			dispatch_async(dispatch_get_main_queue(), ^{
-				completion( query, mapData, error );
+				completion( quads, mapData, error );
 			});
 		}
 	}];
+}
++ (void)osmDataForBox:(ServerQuery *)query completion:(void(^)(ServerQuery * query,OsmMapData * data,NSError * error))completion
+{
+	OSMRect box = query.rect;
+	NSMutableString * url = [NSMutableString stringWithString:OSM_API_URL];
+	[url appendFormat:@"api/0.6/map?bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
+
+	[self osmDataForUrl:url quads:query completion:completion];
 }
 
 - (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion
@@ -687,25 +704,38 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 - (void)merge:(OsmMapData *)newData quadList:(NSArray *)quadList success:(BOOL)success
 {
 	if ( newData ) {
+
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
-			if ( [_nodes objectForKey:key] == nil ) {
+			OsmNode * current = [_nodes objectForKey:key];
+			if ( current == nil ) {
 				[_nodes setObject:node forKey:key];
 				[_spatial addMember:node undo:nil];
+			} else if ( current.version < node.version ) {
+				// already exists, so do an in-place update
+				[current serverUpdateInPlace:node];
 			}
 		}];
 		[newData->_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmWay * way,BOOL * stop){
-			if ( [_ways objectForKey:key] == nil ) {
+			OsmWay * current = [_ways objectForKey:key];
+			if ( current == nil ) {
 				[_ways setObject:way forKey:key];
 				[way resolveToMapData:self];
 				[_spatial addMember:way undo:nil];
+			} else if ( current.version < way.version ) {
+				[current serverUpdateInPlace:way];
+				[current resolveToMapData:self];
 			}
 		}];
 		[newData->_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
+			OsmRelation * current = [_relations objectForKey:key];
 			if ( [_relations objectForKey:key] == nil ) {
 				[_relations setObject:relation forKey:key];
 				[_spatial addMember:relation undo:nil];
+			} else if ( current.version < relation.version ) {
+				[current serverUpdateInPlace:relation];
 			}
 		}];
+
 		// all relations, including old ones, need to be resolved against new objects
 		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
 			[relation resolveToMapData:self];
@@ -1106,6 +1136,27 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSString * url2 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/upload", changesetID];
 			[self putRequest:url2 method:@"POST" xml:xmlChanges completion:^(NSData *data,NSString * errorMessage) {
 				NSString * response = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+
+				if ( [response hasPrefix:@"Version mismatch"] ) {
+
+					// update the bad element and retry
+					DLog( @"Upload error: %@", response);
+					uint32_t localVersion = 0, serverVersion = 0;
+					OsmIdentifier objId = 0;
+					char type[256] = "";
+					if ( sscanf( response.UTF8String, "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld", &localVersion, &serverVersion, type, &objId ) == 4 ) {
+						type[0] = _tolower( type[0] );
+						NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/%s/%lld", type, objId];
+
+						[OsmMapData osmDataForUrl:url3 quads:nil completion:^(ServerQuery *quads, OsmMapData * mapData, NSError *error) {
+							[self merge:mapData quadList:nil success:YES];
+							// try again:
+							[self uploadChangeset:comment completion:completion];
+						}];
+						return;
+					}
+				}
+
 				DLog(@"upload response = %@",response);
 
 				if ( ![response hasPrefix:@"<?xml"] ) {

@@ -56,6 +56,7 @@
 -(void)resetModifyCount:(UndoManager *)undo;
 -(void)serverUpdateVersion:(NSInteger)version;
 -(void)serverUpdateIdent:(OsmIdentifier)ident;
+-(void)serverUpdateInPlace:(OsmBaseObject *)newerVersion;
 
 -(BOOL)isNode;
 -(BOOL)isWay;
