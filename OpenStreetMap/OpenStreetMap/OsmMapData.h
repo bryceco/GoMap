@@ -123,6 +123,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 - (NSString *)changesetAsXml;
 - (NSString *)changesetAsHtml;
 - (void)uploadChangeset:(NSString *)comment completion:(void(^)(NSString * error))completion;
+- (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion;
 
 -(NSArray *)userStatisticsForRegion:(OSMRect)rect;
 -(OSMRect)rootRect;

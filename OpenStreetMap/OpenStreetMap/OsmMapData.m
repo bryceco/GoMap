@@ -1205,6 +1205,35 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 }
 
+- (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion
+{
+#if TARGET_OS_IPHONE
+	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+#else
+	AppDelegate * appDelegate = [[NSApplication sharedApplication] delegate];
+#endif
+
+	self.credentialsUserName = appDelegate.userName;
+	self.credentialsPassword = appDelegate.userPassword;
+
+	NSString * creator = [NSString stringWithFormat:@"%@ %@", appDelegate.appName, appDelegate.appVersion];
+
+	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:@{
+								 @"created_by" : creator,
+								 @"comment" : @"Verifying credentials only"
+								 }];
+	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/changeset/create"];
+
+	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * data,NSString * errorMessage){
+		if ( data ) {
+			completion(nil);
+		} else {
+			completion(errorMessage);
+		}
+	}];
+}
+
+
 
 #pragma mark Pretty print changeset
 

@@ -7,7 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "EditorMapLayer.h"
 #import "LoginViewController.h"
+#import "MapView.h"
+#import "OsmMapData.h"
 #import "UITableViewCell+FixConstraints.h"
 
 @implementation LoginViewController
@@ -22,11 +25,46 @@
 	[sender resignFirstResponder];
 }
 
+- (IBAction)textFieldDidChange:(id)sender
+{
+	_verifyButton.enabled = _username.text.length && _password.text.length;
+}
+
 - (IBAction)registerAccount:(id)sender
 {
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.openstreetmap.org/user/new"]];
 }
 
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	[self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+- (IBAction)verifyAccount:(id)sender
+{
+	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
+	appDelegate.userName		= _username.text;
+	appDelegate.userPassword	= _password.text;
+
+	_activityIndicator.color = UIColor.darkGrayColor;
+	[_activityIndicator startAnimating];
+
+	[appDelegate.mapView.editorLayer.mapData verifyUserCredentialsWithCompletion:^(NSString * errorMessage){
+		[_activityIndicator stopAnimating];
+		if ( errorMessage ) {
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Bad login" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alertView show];
+		} else {
+			[_username resignFirstResponder];
+			[_password resignFirstResponder];
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Login successful" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			alertView.delegate = self;
+			[alertView show];
+		}
+	}];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -35,6 +73,8 @@
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
 	_username.text	= appDelegate.userName;
 	_password.text	= appDelegate.userPassword;
+
+	_verifyButton.enabled = _username.text.length && _password.text.length;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

@@ -1752,18 +1752,22 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
+                                                        <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="5aR-9a-sW0"/>
                                                         <action selector="textFieldReturn:" destination="kl3-Fg-1QU" eventType="editingDidEndOnExit" id="HIT-FM-Ke9"/>
                                                     </connections>
                                                 </textField>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="jcT-tR-WDO"/>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="jcT-tR-WDO" firstAttribute="centerX" secondItem="cqS-u5-4Sy" secondAttribute="centerX" type="default" id="28S-GT-8QZ"/>
                                             <constraint firstAttribute="trailing" secondItem="YQ4-05-lQz" secondAttribute="trailing" constant="19" type="user" id="btX-WB-FrR"/>
+                                            <constraint firstItem="jcT-tR-WDO" firstAttribute="centerY" secondItem="cqS-u5-4Sy" secondAttribute="centerY" type="default" id="dxk-HL-v4l"/>
                                             <constraint firstItem="YQ4-05-lQz" firstAttribute="top" secondItem="cqS-u5-4Sy" secondAttribute="top" constant="8" id="jKV-EF-aPJ"/>
                                             <constraint firstItem="7cc-E7-pzw" firstAttribute="leading" secondItem="cqS-u5-4Sy" secondAttribute="leading" constant="17" id="mlx-2q-gVf"/>
+                                            <constraint firstItem="jcT-tR-WDO" firstAttribute="centerY" secondItem="7cc-E7-pzw" secondAttribute="centerY" type="default" id="ozO-BF-bpV"/>
                                             <constraint firstItem="YQ4-05-lQz" firstAttribute="leading" secondItem="cqS-u5-4Sy" secondAttribute="leading" constant="112" type="user" id="t0b-i1-5sy"/>
-                                            <constraint firstItem="7cc-E7-pzw" firstAttribute="centerY" secondItem="cqS-u5-4Sy" secondAttribute="centerY" type="default" id="zac-6L-8zw"/>
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="D1r-ML-aTO">
@@ -1788,6 +1792,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                     <connections>
+                                                        <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="ahQ-2t-H75"/>
                                                         <action selector="textFieldReturn:" destination="kl3-Fg-1QU" eventType="editingDidEndOnExit" id="ltK-zh-K2l"/>
                                                     </connections>
                                                 </textField>
@@ -1848,10 +1853,17 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Login" id="O6E-f1-A1k">
                         <barButtonItem key="backBarButtonItem" title="Back" id="kt1-K7-kcu"/>
+                        <barButtonItem key="rightBarButtonItem" title="Verify" style="done" id="ctb-pg-pM9">
+                            <connections>
+                                <action selector="verifyAccount:" destination="kl3-Fg-1QU" id="qEc-ab-jnj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="_activityIndicator" destination="jcT-tR-WDO" id="J8A-AQ-LZf"/>
                         <outlet property="_password" destination="e7I-rE-dAW" id="Ugu-EO-x5C"/>
                         <outlet property="_username" destination="YQ4-05-lQz" id="ge6-8t-VeT"/>
+                        <outlet property="_verifyButton" destination="ctb-pg-pM9" id="5cm-I2-11p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CzF-UG-rbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3666,9 +3678,13 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
             <relationships>
                 <relationship kind="action" name="registerAccount:"/>
+                <relationship kind="action" name="textFieldDidChange:"/>
                 <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="action" name="verifyAccount:"/>
+                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="_password" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="_username" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="_verifyButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
         <class className="MapView" superclassName="UIView">
@@ -3731,10 +3747,6 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
         <class className="POIAllTagsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/POIAllTagsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="textFieldChanged:" candidateClass="UITextField"/>
-                <relationship kind="action" name="textFieldReturn:"/>
                 <relationship kind="action" name="toggleEditing:"/>
                 <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
             </relationships>
@@ -3762,9 +3774,6 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
             <relationships>
                 <relationship kind="action" name="cancel:"/>
                 <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="textFieldChanged:" candidateClass="UITextField"/>
-                <relationship kind="action" name="textFieldDidEndEditing:" candidateClass="UITextField"/>
-                <relationship kind="action" name="textFieldEditingDidBegin:" candidateClass="UITextField"/>
                 <relationship kind="action" name="textFieldReturn:"/>
                 <relationship kind="outlet" name="_altNameTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="_buildingTextField" candidateClass="UITextField"/>

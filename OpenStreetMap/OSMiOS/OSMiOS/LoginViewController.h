@@ -10,11 +10,16 @@
 
 @interface LoginViewController : UITableViewController
 {
-	IBOutlet UITextField *	_username;
-	IBOutlet UITextField *	_password;
+	IBOutlet UIBarButtonItem			*	_verifyButton;
+	IBOutlet UITextField				*	_username;
+	IBOutlet UITextField				*	_password;
+	IBOutlet UIActivityIndicatorView	*	_activityIndicator;
 }
 
 - (IBAction)textFieldReturn:(id)sender;
+- (IBAction)textFieldDidChange:(id)sender;
+
 - (IBAction)registerAccount:(id)sender;
+- (IBAction)verifyAccount:(id)sender;
 
 @end
