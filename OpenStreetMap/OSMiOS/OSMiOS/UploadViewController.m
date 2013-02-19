@@ -74,10 +74,17 @@
 {
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
 	if ( appDelegate.userName.length == 0 || appDelegate.userPassword.length == 0 ) {
+#if 0
 		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Missing login information" message:@"Before uploading changes you must provide your OpenStreetMap username and password in the Credentials option under Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		// alertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
 		[alertView show];
 		return;
+#else
+		if ( appDelegate.userName.length == 0 || appDelegate.userPassword.length == 0 ) {
+			[self performSegueWithIdentifier:@"loginSegue" sender:self];
+			return;
+		}
+#endif
 	}
 
 	_mapData.credentialsUserName = appDelegate.userName;

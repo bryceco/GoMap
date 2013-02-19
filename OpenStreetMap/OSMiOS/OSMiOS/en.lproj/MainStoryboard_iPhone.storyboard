@@ -53,7 +53,7 @@
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="Lqh-oy-Vh2"/>
                                             <barButtonItem image="Upload.png" style="plain" id="ma4-oI-tBL">
                                                 <connections>
-                                                    <segue destination="cxn-YY-uLs" kind="modal" id="KUj-9f-Rfl"/>
+                                                    <segue destination="Dby-IV-exS" kind="modal" id="KUj-9f-Rfl"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="gKC-Gr-cf8"/>
@@ -1915,34 +1915,18 @@
             </objects>
             <point key="canvasLocation" x="1460" y="482"/>
         </scene>
-        <!--Upload View Controller-->
+        <!--Upload View Controller - Upload-->
         <scene sceneID="lne-Ek-nNV">
             <objects>
                 <viewController id="cxn-YY-uLs" customClass="UploadViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hf4-uP-AC4">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sev-2f-JII">
-                                <items>
-                                    <navigationItem title="Upload" id="epD-fv-cuS">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7h0-9d-GKW">
-                                            <connections>
-                                                <action selector="cancel:" destination="cxn-YY-uLs" id="tjb-Ta-Rxp"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Commit" style="done" id="feW-AK-msn">
-                                            <connections>
-                                                <action selector="commit:" destination="cxn-YY-uLs" id="XEP-OF-rII"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiw-1G-JUd">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="71" id="m0a-Kj-H4O"/>
+                                    <constraint firstAttribute="height" constant="71" type="user" id="m0a-Kj-H4O"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
@@ -1972,7 +1956,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rqu-ny-n3F">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="PGo-IC-PKS"/>
-                                    <constraint firstAttribute="height" constant="30" id="eMz-Qo-gz9"/>
+                                    <constraint firstAttribute="height" constant="30" type="user" id="eMz-Qo-gz9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <state key="normal" title="Mail">
@@ -1989,28 +1973,40 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" constant="164" id="07N-W4-Yew"/>
-                            <constraint firstItem="sev-2f-JII" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" type="default" id="A82-1V-CSc"/>
                             <constraint firstAttribute="trailing" secondItem="BAY-7z-hwv" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Bzy-bc-IzC"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" constant="138" type="user" id="CRS-l8-CFk"/>
+                            <constraint firstItem="ArV-4u-j7D" firstAttribute="bottom" secondItem="Rqu-ny-n3F" secondAttribute="bottom" type="user" id="Cu6-oq-9lF"/>
                             <constraint firstItem="ArV-4u-j7D" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="Edm-7G-5Kx"/>
                             <constraint firstAttribute="trailing" secondItem="ArV-4u-j7D" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="GF4-aU-Q9H"/>
-                            <constraint firstItem="BAY-7z-hwv" firstAttribute="top" secondItem="Rqu-ny-n3F" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Gcn-FQ-yoB"/>
-                            <constraint firstItem="BAY-7z-hwv" firstAttribute="top" secondItem="ArV-4u-j7D" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="MA0-zm-8Eq"/>
-                            <constraint firstItem="sev-2f-JII" firstAttribute="trailing" secondItem="Hf4-uP-AC4" secondAttribute="trailing" type="default" id="NXL-Fc-2AE"/>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" constant="182" type="user" id="PKH-HZ-fMP"/>
+                            <constraint firstItem="ArV-4u-j7D" firstAttribute="top" secondItem="kiw-1G-JUd" secondAttribute="bottom" constant="27" type="user" id="LXe-5a-V5n"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="top" secondItem="kiw-1G-JUd" secondAttribute="bottom" constant="18" type="user" id="Prd-WO-OTd"/>
                             <constraint firstItem="BAY-7z-hwv" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="ToZ-c0-Kl1"/>
-                            <constraint firstItem="sev-2f-JII" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" type="default" id="ZTe-Wc-DVO"/>
+                            <constraint firstItem="BAY-7z-hwv" firstAttribute="top" secondItem="ArV-4u-j7D" secondAttribute="bottom" constant="19" type="user" id="VtX-Dl-ZpH"/>
+                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="top" secondItem="kiw-1G-JUd" secondAttribute="bottom" constant="9" type="user" id="aXY-Id-FAR"/>
                             <constraint firstItem="kiw-1G-JUd" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="do8-D2-4Ja"/>
-                            <constraint firstAttribute="bottom" secondItem="BAY-7z-hwv" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="enr-ez-Z1O"/>
+                            <constraint firstAttribute="bottom" secondItem="BAY-7z-hwv" secondAttribute="bottom" constant="20" symbolic="YES" type="user" id="enr-ez-Z1O"/>
                             <constraint firstItem="ikj-u9-9Bn" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="hwI-jJ-9u2"/>
                             <constraint firstAttribute="trailing" secondItem="Rqu-ny-n3F" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="lSO-ZJ-8ZI"/>
                             <constraint firstAttribute="trailing" secondItem="kiw-1G-JUd" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="neq-Kx-kwW"/>
-                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" constant="55" type="user" id="svj-TY-SB8"/>
+                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" constant="20" symbolic="YES" type="user" id="oP6-mA-2D5"/>
+                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" constant="129" type="user" id="tJS-eg-pVe"/>
                             <constraint firstItem="5dY-nN-L0Q" firstAttribute="centerX" secondItem="ArV-4u-j7D" secondAttribute="centerX" type="default" id="tt0-ee-obp"/>
                             <constraint firstItem="kiw-1G-JUd" firstAttribute="top" secondItem="ikj-u9-9Bn" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="vhe-bu-3GH"/>
                             <constraint firstAttribute="trailing" secondItem="ikj-u9-9Bn" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="xZw-ma-Zrf"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Upload" id="Mdj-M0-0mZ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7h0-9d-GKW">
+                            <connections>
+                                <action selector="cancel:" destination="cxn-YY-uLs" id="tjb-Ta-Rxp"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Commit" style="done" id="feW-AK-msn">
+                            <connections>
+                                <action selector="commit:" destination="cxn-YY-uLs" id="XEP-OF-rII"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="_cancelButton" destination="7h0-9d-GKW" id="BlW-gr-TNN"/>
                         <outlet property="_commentTextView" destination="kiw-1G-JUd" id="d9E-O1-69d"/>
@@ -2018,11 +2014,12 @@
                         <outlet property="_progressView" destination="5dY-nN-L0Q" id="oUC-Wd-haC"/>
                         <outlet property="_sendMailButton" destination="Rqu-ny-n3F" id="9Du-qC-2eb"/>
                         <outlet property="_xmlTextView" destination="BAY-7z-hwv" id="Pg3-i0-84f"/>
+                        <segue destination="kl3-Fg-1QU" kind="push" identifier="loginSegue" id="FTo-kL-oAC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Snp-b2-Szm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="414" y="1269"/>
+            <point key="canvasLocation" x="814" y="1269"/>
         </scene>
         <!--Upload Table View Controller-->
         <scene sceneID="oQU-hH-L4s">
@@ -2210,7 +2207,7 @@ Clear the Mapnik tile cache  to download the latest tiles that reflect changes y
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fez-n8-rk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1083" y="1206"/>
+            <point key="canvasLocation" x="1609" y="1206"/>
         </scene>
         <!--Credits View Controller - Credits-->
         <scene sceneID="ouR-J9-98f">
@@ -2260,7 +2257,7 @@ http://glyphish.com
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8R-Of-HLg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1468" y="1218"/>
+            <point key="canvasLocation" x="1994" y="1218"/>
         </scene>
         <!--Offline View Controller - Prepare for Offline-->
         <scene sceneID="GPb-Zw-mXf">
@@ -2402,7 +2399,7 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0LN-5K-8UA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1844" y="1225"/>
+            <point key="canvasLocation" x="2370" y="1225"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="ViH-as-IQq">
@@ -3507,7 +3504,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="33" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-Aj-Sdr">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -3615,6 +3612,24 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
             </objects>
             <point key="canvasLocation" x="-1105" y="-74"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SXi-y5-SPo">
+            <objects>
+                <navigationController id="Dby-IV-exS" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WxD-P4-h5V">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="cxn-YY-uLs" kind="relationship" relationship="rootViewController" id="cct-f2-Gee"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UJz-Wh-cNi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="414" y="1269"/>
+        </scene>
     </scenes>
     <resources>
         <image name="BingLogo.png" width="93" height="29"/>
@@ -3628,252 +3643,13 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
         <image name="redo32.png" width="32" height="32"/>
         <image name="undo32.png" width="32" height="32"/>
     </resources>
-    <classes>
-        <class className="AddNewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddNewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="AttributeCustomCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AttributeCustomCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="value" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AutocompleteTextField" superclassName="UITextField">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AutocompleteTextField.h"/>
-        </class>
-        <class className="BingMetadataViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BingMetadataViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="ClearCacheViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClearCacheViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="_aerialDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_mapnikDetail" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_osmDetail" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="CreditsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CreditsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="_textView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="HelpViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HelpViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="outlet" name="_textView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="LoginViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="registerAccount:"/>
-                <relationship kind="action" name="textFieldDidChange:"/>
-                <relationship kind="action" name="textFieldReturn:"/>
-                <relationship kind="action" name="verifyAccount:"/>
-                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="_password" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_username" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_verifyButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="MapView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapView.h"/>
-            <relationships>
-                <relationship kind="action" name="dropPin:"/>
-                <relationship kind="action" name="duplicateSelectedObject:"/>
-                <relationship kind="action" name="handlePanGesture:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="handlePinchGesture:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="action" name="handleTapGesture:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="locateMe:"/>
-                <relationship kind="action" name="redo:"/>
-                <relationship kind="action" name="undo:"/>
-            </relationships>
-        </class>
-        <class className="MapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleLocation:"/>
-                <relationship kind="outlet" name="_redoButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_toolbar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="_trashcanButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_undoButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_uploadButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="locationButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MapView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="NearbyMappersViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NearbyMappersViewController.h"/>
-        </class>
-        <class className="NominatumViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NominatumViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="_searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="_tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="OfflineTableViewCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OfflineTableViewCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="button" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="detailLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="OfflineViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OfflineViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleDownload:"/>
-                <relationship kind="outlet" name="_aerialCell" candidateClass="OfflineTableViewCell"/>
-                <relationship kind="outlet" name="_mapnikCell" candidateClass="OfflineTableViewCell"/>
-            </relationships>
-        </class>
-        <class className="POIAllTagsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIAllTagsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="toggleEditing:"/>
-                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="POIAttributesViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIAttributesViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="_changesetCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="_changesetLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_dateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_extraCell1" candidateClass="AttributeCustomCell"/>
-                <relationship kind="outlet" name="_extraCell2" candidateClass="AttributeCustomCell"/>
-                <relationship kind="outlet" name="_identCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="_identLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_uidLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_userCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="_userLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_versionCell" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="_versionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="POICommonTagsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POICommonTagsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="done:"/>
-                <relationship kind="action" name="textFieldReturn:"/>
-                <relationship kind="outlet" name="_altNameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_buildingTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_cityTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_cuisineTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_designationTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_fixmeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_houseNumberTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_nameTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_noteTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_operatorTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_phoneTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_postalCodeTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_refTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_saveButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_sourceTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_streetTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_typeTextField" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_unitTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_websiteTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="_wifiTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="POICuisineViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POICuisineViewController.h"/>
-        </class>
-        <class className="POIFixMeViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIFixMeViewController.h"/>
-        </class>
-        <class className="POISourceViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POISourceViewController.h"/>
-        </class>
-        <class className="POITabBarController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POITabBarController.h"/>
-        </class>
-        <class className="POITypeViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POITypeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="configure:"/>
-                <relationship kind="outlet" name="_searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-        <class className="POIWiFiViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/POIWiFiViewController.h"/>
-        </class>
-        <class className="SettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="_sendMailCell" candidateClass="UITableViewCell"/>
-            </relationships>
-        </class>
-        <class className="TextPair" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextPair.h"/>
-            <relationships>
-                <relationship kind="outlet" name="_fixConstraint" candidateClass="NSLayoutConstraint"/>
-                <relationship kind="outlet" name="_fixContstraintView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="text1" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="text2" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="UploadTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UploadTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendMail:"/>
-                <relationship kind="outlet" name="_cancelButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_commentTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="_commitButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_progressView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="_sendMailButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="UploadViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UploadViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="sendMail:"/>
-                <relationship kind="outlet" name="_cancelButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_commentTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="_commitButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_progressView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="_sendMailButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="_xmlTextView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="WebPageViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebPageViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doAction:"/>
-                <relationship kind="outlet" name="_actionButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="_activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="_webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="FTo-kL-oAC"/>
         <segue reference="mrH-5v-JIV"/>
     </inferredMetricsTieBreakers>
 </document>
