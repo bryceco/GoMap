@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
+#import "MapViewController.h"
 #import "MercatorTileLayer.h"
 #import "SettingsViewController.h"
 
@@ -76,6 +77,11 @@ static const NSInteger RowMap[] = {
 				mapView.editorLayer.hidden = (map & HIDE_EDITOR) ? YES : NO;
 				mapView.aerialLayer.hidden = (map & HIDE_AERIAL) ? YES : NO;
 				mapView.mapnikLayer.hidden = (map & HIDE_MAPNIK) ? YES : NO;
+
+				// enable/disable editing buttons based on visibility
+				AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+				[appDelegate.mapView.viewController updateDeleteButtonState];
+				[appDelegate.mapView.viewController updateUndoRedoButtonState];
 
 				mapView.editorLayer.textColor = mapView.aerialLayer.hidden ? NSColor.blackColor : NSColor.whiteColor;
 				break;

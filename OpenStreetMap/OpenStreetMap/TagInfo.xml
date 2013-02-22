@@ -52,7 +52,7 @@
     <tag key="amenity" value="car_wash" name="Car Wash" type="node;area" description="A place where you can wash your car." iconName="transport_car_wash" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dcar_wash" />
     <tag key="amenity" value="casino" name="Casino" type="node;area" iconName="tourist_casino"/>
     <tag key="amenity" value="charging_station" name="Charging Station" type="node;area" description="A place to plug in your electrical car"/>
-    <tag key="amenity" value="cinema" name="Cinema" type="node;area" description="Used to mark a cinema." iconName="tourist_cinema" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dcinema" />
+    <tag key="amenity" value="cinema" name="Cinema" type="node;area" description="Used to mark a cinema (movie theater)." iconName="tourist_cinema" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dcinema" />
     <tag key="amenity" value="clinic" name="Clinic" type="node;area" description="Medium-sized medical centres with tens of staff; smaller than a hospital and larger than a doctor's practice." iconName="health_doctors"/>
     <tag key="amenity" value="clock" name="Clock" type="node;area" description="Publicly visible clock." iconName="tourist_clock"/>
     <tag key="amenity" value="coast_guard" name="Coast Guard" type="node;area"/>
@@ -91,7 +91,7 @@
     <tag key="amenity" value="hospital" name="Hospital" type="node;area" description="Used to mark a hospital. Image shows mapnik rendering" iconName="health_hospital" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dhospital" areaColor="EEEEEE"/>
     <tag key="amenity" value="hunting_stand" name="Hunting Stand" type="node;area" description="Hunting stands are open or enclosed platforms used by hunters to place themselves at an elevated height above the terrain." iconName="sport_shooting" />
     <tag key="amenity" value="ice_cream" name="Ice Cream" type="node;area" description="A place that sells ice cream and frozen yoghurt over the counter." iconName="food_ice_cream" areaColor="ECBA52"/>
-    <tag key="amenity" value="jail" name="Jail" type="node;area"/>
+    <tag key="amenity" value="jail" name="Jail (prison)" type="node;area"/>
     <tag key="amenity" value="kindergarten" name="Kindergarten" type="node;area" description="Used to mark a kindergarten." iconName="education_nursery3" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dkindergarten" />
     <tag key="amenity" value="kiosk" name="Kiosk" type="node;area"/>
     <tag key="amenity" value="kneipp_water_cure" name="Kneipp Water Cure" type="node;area" description="A foot bath is a shallow pool, often with handrail."/>
@@ -109,11 +109,11 @@
     <tag key="amenity" value="parking_space" name="Parking Space" type="node;area" description="A single parking space on a parking lot"/>
     <tag key="amenity" value="payment_terminal" name="Payment Terminal" type="node;area"/>
     <tag key="amenity" value="pharmacy" name="Pharmacy" type="node;area" description="A shop where a pharmacist sells medications" iconName="health_pharmacy" wikiPage="http://wiki.openstreetmap.org/wiki/Pharmacy" areaColor="EEEEEE"/>
-    <tag key="amenity" value="place_of_worship" name="Place Of Worship" type="node;area" description="All places of worship independently of the religion or denomination get the tag amenity=place_of_worship ." iconName="place_of_worship_unknown" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dplace_of_worship" />
+    <tag key="amenity" value="place_of_worship" name="Place Of Worship" type="node;area" description="All places of worship independently of the religion or denomination get the tag amenity=place_of_worship (church,temple,mosque)." iconName="place_of_worship_unknown" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dplace_of_worship" />
     <tag key="amenity" value="police" name="Police" type="node;area" description="Used to mark a police station." iconName="amenity_police2" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dpolice" />
     <tag key="amenity" value="post_box" name="Post Box" type="node;area" description="Used to mark the location of a postbox." iconName="amenity_post_box" wikiPage="http://wiki.openstreetmap.org/wiki/Post_box" />
     <tag key="amenity" value="post_office" name="Post Office" type="node;area" description="A place where letters and parcels may be sent or collected." iconName="amenity_post_office" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity=post_office" />
-    <tag key="amenity" value="prison" name="Prison" type="node;area" description="A prison." />
+    <tag key="amenity" value="prison" name="Prison" type="node;area" description="A prison (jail)." />
     <tag key="amenity" value="pub" name="Pub" type="node;area" description="A pub" iconName="food_pub" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dpub" areaColor="ECBA52"/>
     <tag key="amenity" value="public_bath" name="Public Bath" type="node;area"/>
     <tag key="amenity" value="public_building" name="Public Building" type="node;area" description="Used to mark a public building." iconName="amenity_public_building2" />

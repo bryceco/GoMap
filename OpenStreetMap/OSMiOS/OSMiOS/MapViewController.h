@@ -27,4 +27,8 @@
 @property (assign,nonatomic) IBOutlet UIBarButtonItem * locationButton;
 
 -(IBAction)toggleLocation:(id)sender;
+
+- (void)updateDeleteButtonState;
+- (void)updateUndoRedoButtonState;
+
 @end

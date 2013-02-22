@@ -20,6 +20,18 @@
 
 @implementation MapViewController
 
+
+- (void)updateDeleteButtonState
+{
+	_trashcanButton.enabled = self.mapView.editorLayer.selectedPrimary && !self.mapView.editorLayer.hidden;
+}
+
+- (void)updateUndoRedoButtonState
+{
+	_undoButton.enabled = self.mapView.editorLayer.mapData.canUndo && !self.mapView.editorLayer.hidden;
+	_redoButton.enabled = self.mapView.editorLayer.mapData.canRedo && !self.mapView.editorLayer.hidden;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -30,15 +42,14 @@
 	delegate.mapView = self.mapView;
 
 	[self.mapView.editorLayer setSelectionChangeCallback:^{
-		_trashcanButton.enabled = self.mapView.editorLayer.selectedPrimary ? YES : NO;
+		[self updateDeleteButtonState];
 	}];
 
 	// undo/redo buttons
 	_undoButton.enabled = self.mapView.editorLayer.mapData.canUndo;
 	_redoButton.enabled = self.mapView.editorLayer.mapData.canRedo;
 	[self.mapView.editorLayer.mapData addChangeCallback:^{
-		_undoButton.enabled = self.mapView.editorLayer.mapData.canUndo;
-		_redoButton.enabled = self.mapView.editorLayer.mapData.canRedo;
+		[self updateUndoRedoButtonState];
 	}];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:NULL];

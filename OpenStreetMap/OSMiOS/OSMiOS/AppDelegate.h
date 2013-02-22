@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @class MapView;
-@class MapViewController;
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
