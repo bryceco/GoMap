@@ -14,10 +14,11 @@
 #import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
 #import "EditorLayerGL.h"
-#import "LocationBallLayer.h"
+#import "GpxLayer.h"
 #if !TARGET_OS_IPHONE
 #import "HtmlErrorWindow.h"
 #else
+#import "LocationBallLayer.h"
 #import "MapViewController.h"
 #import "PushPinView.h"
 #endif
@@ -29,11 +30,12 @@
 #import "SpeechBalloonView.h"
 
 
+static const CGFloat Z_AERIAL		= -100;
+static const CGFloat Z_MAPNIK		= -99;
+static const CGFloat Z_GPX			= -2;
 static const CGFloat Z_EDITOR		= -1;
 static const CGFloat Z_EDITOR_GL	= -0.5;
-static const CGFloat Z_AERIAL		= -100;
 static const CGFloat Z_BING_LOGO	= 2;
-static const CGFloat Z_MAPNIK		= -99;
 static const CGFloat Z_RULER		= 3;
 static const CGFloat Z_BLINK		= 4;
 static const CGFloat Z_BALLOON		= 5;
@@ -186,6 +188,11 @@ CGSize SizeForImage( NSImage * image )
 		[self.layer addSublayer:_editorLayerGL];
 #endif
 		
+		_gpxLayer = [[GpxLayer alloc] initWithMapView:self];
+		_gpxLayer.zPosition = Z_GPX;
+		_gpxLayer.recording = YES;
+		[self.layer addSublayer:_gpxLayer];
+
 		_rulerLayer = [[RulerLayer alloc] init];
 		_rulerLayer.mapView = self;
 		_rulerLayer.zPosition = Z_RULER;
@@ -352,6 +359,8 @@ CGSize SizeForImage( NSImage * image )
 	_editorLayer.position = center;
 	_editorLayerGL.bounds = bounds;
 	_editorLayerGL.position = center;
+	_gpxLayer.bounds = bounds;
+	_gpxLayer.position = center;
 
 	[CATransaction commit];
 }
@@ -706,6 +715,7 @@ CGSize SizeForImage( NSImage * image )
 	if ( _locationBallLayer ) {
 		CLLocationCoordinate2D coord = _locationManager.location.coordinate;
 		_locationBallLayer.position = [self viewPointForLatitude:coord.latitude longitude:coord.longitude];
+		NSLog(@"using %@",_locationManager.location);
 	}
 }
 
@@ -720,6 +730,12 @@ CGSize SizeForImage( NSImage * image )
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+	NSLog(@"updating with %@",_locationManager.location);
+
+	if ( _gpxLayer.recording ) {
+		[_gpxLayer addPoint:newLocation];
+	}
+
 	if ( !self.trackingLocation ) {
 		[_locationManager stopUpdatingLocation];
 	}

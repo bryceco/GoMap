@@ -19,6 +19,7 @@
 @class CAShapeLayer;
 @class EditorLayerGL;
 @class EditorMapLayer;
+@class GpxLayer;
 @class HtmlErrorWindow;
 @class LocationBallLayer;
 @class MapViewController;
@@ -90,6 +91,7 @@
 @property (readonly,nonatomic)	MercatorTileLayer	*	mapnikLayer;
 @property (readonly,nonatomic)	EditorMapLayer		*	editorLayer;
 @property (readonly,nonatomic)	EditorLayerGL		*	editorLayerGL;
+@property (readonly,nonatomic)	GpxLayer			*	gpxLayer;
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>		*	delegate;
 @property (strong,nonatomic)	CLLocationManager				*	locationManager;
