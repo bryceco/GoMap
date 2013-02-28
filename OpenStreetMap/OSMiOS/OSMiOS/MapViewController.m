@@ -73,10 +73,33 @@
 #endif
 }
 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	if ( buttonIndex == actionSheet.cancelButtonIndex ) {
+		return;
+	}
+	switch ( buttonIndex ) {
+		case 0:
+			[self performSegueWithIdentifier:@"searchSegue" sender:self];
+			break;
+		case 1:
+			[self performSegueWithIdentifier:@"locationSegue" sender:self];
+			break;
+	}
+}
+
 -(void)search:(UILongPressGestureRecognizer *)recognizer
 {
+	UIView * view = recognizer.view;
 	[self installLongPressGestureRecognizer:NO];	// remove so we don't trigger twice during a long press
+#if 1
+	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"GPS Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Search for Location", @"Manage GPX Tracks", nil];
+	[sheet showInView:view];
+#else
 	[self performSegueWithIdentifier:@"searchSegue" sender:recognizer];
+#endif
+	[self installLongPressGestureRecognizer:YES];
 }
 
 

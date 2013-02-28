@@ -17,6 +17,7 @@
 		020CD977169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD976169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png */; };
 		020CD979169D4B7900BF3AAF /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD978169D4B7900BF3AAF /* Default-Landscape@2x~ipad.png */; };
 		020CD97B169D4BC900BF3AAF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD97A169D4BC900BF3AAF /* Default-Landscape~ipad.png */; };
+		0219563216DDC26E00074D15 /* GpxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0219563116DDC26E00074D15 /* GpxViewController.m */; };
 		021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C6AA71686145C00FB17B0 /* UndoManager.m */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021E5D6B16C0507B00B7A02A /* transport_stop.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 021E5D6A16C0507A00B7A02A /* transport_stop.p.64.png */; };
@@ -468,6 +469,8 @@
 		020CD976169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		020CD978169D4B7900BF3AAF /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		020CD97A169D4BC900BF3AAF /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		0219563016DDC26E00074D15 /* GpxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpxViewController.h; sourceTree = "<group>"; };
+		0219563116DDC26E00074D15 /* GpxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpxViewController.m; sourceTree = "<group>"; };
 		021C6AA61686145C00FB17B0 /* UndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndoManager.h; path = ../../OpenStreetMap/UndoManager.h; sourceTree = "<group>"; };
 		021C6AA71686145C00FB17B0 /* UndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UndoManager.m; path = ../../OpenStreetMap/UndoManager.m; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -1111,6 +1114,8 @@
 				022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */,
 				020C2A8E168A7688003F2C2A /* CreditsViewController.h */,
 				020C2A8F168A7688003F2C2A /* CreditsViewController.m */,
+				0219563016DDC26E00074D15 /* GpxViewController.h */,
+				0219563116DDC26E00074D15 /* GpxViewController.m */,
 				02F371B216A4F3E6003E9548 /* HelpViewController.h */,
 				02F371B316A4F3E6003E9548 /* HelpViewController.m */,
 				025A1D001690DC32002B60CB /* Images */,
@@ -1150,6 +1155,8 @@
 				0205460C16767576004A2A23 /* POIWiFiViewController.m */,
 				0296873D167E30C700B8FF2C /* PushPinView.h */,
 				0296873E167E30C700B8FF2C /* PushPinView.m */,
+				025224E616D7292E00B6FD53 /* RotatingNavigationController.h */,
+				025224E716D7292E00B6FD53 /* RotatingNavigationController.m */,
 				02ACBA5816713CCB00BB4414 /* SettingsViewController.h */,
 				02ACBA5916713CCB00BB4414 /* SettingsViewController.m */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
@@ -1162,8 +1169,6 @@
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
-				025224E616D7292E00B6FD53 /* RotatingNavigationController.h */,
-				025224E716D7292E00B6FD53 /* RotatingNavigationController.m */,
 			);
 			name = "Go Map!";
 			path = OSMiOS;
@@ -2092,6 +2097,7 @@
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
 				025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */,
 				0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */,
+				0219563216DDC26E00074D15 /* GpxViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

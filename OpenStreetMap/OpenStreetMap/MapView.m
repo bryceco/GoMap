@@ -190,7 +190,7 @@ CGSize SizeForImage( NSImage * image )
 		
 		_gpxLayer = [[GpxLayer alloc] initWithMapView:self];
 		_gpxLayer.zPosition = Z_GPX;
-		_gpxLayer.recording = YES;
+		_gpxLayer.activeTrack = nil;
 		[self.layer addSublayer:_gpxLayer];
 
 		_rulerLayer = [[RulerLayer alloc] init];
@@ -732,7 +732,7 @@ CGSize SizeForImage( NSImage * image )
 {
 	NSLog(@"updating with %@",_locationManager.location);
 
-	if ( _gpxLayer.recording ) {
+	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
 	}
 

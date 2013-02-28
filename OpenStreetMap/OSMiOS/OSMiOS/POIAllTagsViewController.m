@@ -209,7 +209,7 @@
 	}
 }
 
-- (IBAction)textFieldChanged:(UITextField *)textField
+- (IBAction)textFieldEditingDidEnd:(UITextField *)textField
 {
 	NSInteger tag = textField.tag;
 	assert( tag >= 0 );
@@ -221,7 +221,7 @@
 
 		NSString * text = textField.text;
 		text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		
+
 		// edited tags
 		POITabBarController * tabController = (id)self.tabBarController;
 		if ( isValue ) {
@@ -243,6 +243,11 @@
 
 		_saveButton.enabled = [tabController isTagDictChanged];
 	}
+}
+
+- (IBAction)textFieldChanged:(UITextField *)textField
+{
+//	_saveButton.enabled = [tabController isTagDictChanged];
 }
 
 - (IBAction)toggleEditing:(id)sender

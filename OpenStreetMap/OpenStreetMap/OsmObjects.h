@@ -44,6 +44,7 @@
 @property (readonly,nonatomic)	BOOL				visible;
 
 +(NSArray *)typeKeys;
++(NSDateFormatter *)rfc3339DateFormatter;
 
 -(void)constructTag:(NSString *)tag value:(NSString *)value;
 -(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict;
