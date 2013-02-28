@@ -21,4 +21,6 @@
 
 - (void)commitChanges;
 - (BOOL)isTagDictChanged;
+- (BOOL)isTagDictChanged:(NSDictionary *)newDictionary;
+
 @end

@@ -66,15 +66,20 @@
 	[appDelegate.mapView setTagsForCurrentObject:self.keyValueDict];
 }
 
-- (BOOL)isTagDictChanged
+- (BOOL)isTagDictChanged:(NSDictionary *)newDictionary
 {
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 
 	NSDictionary * tags = appDelegate.mapView.editorLayer.selectedPrimary.tags;
 	if ( tags.count == 0 )
-		return self.keyValueDict.count != 0;
+		return newDictionary.count != 0;
 
-	return ![self.keyValueDict isEqual:tags];
+	return ![newDictionary isEqual:tags];
+}
+
+- (BOOL)isTagDictChanged
+{
+	return [self isTagDictChanged:self.keyValueDict];
 }
 
 

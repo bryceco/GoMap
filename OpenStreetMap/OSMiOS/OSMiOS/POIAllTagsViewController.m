@@ -87,6 +87,13 @@
 	_saveButton.enabled = [tabController isTagDictChanged];
 }
 
+- (void)saveState
+{
+	NSMutableDictionary * dict = [self keyValueDictionary];
+	POITabBarController * tabController = (id)self.tabBarController;
+	tabController.keyValueDict = dict;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -95,6 +102,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[self saveState];
 	[super viewWillDisappear:animated];
 }
 
@@ -175,6 +183,25 @@
 }
 
 
+-(NSMutableDictionary *)keyValueDictionary
+{
+	NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithCapacity:_tags.count];
+	for ( NSArray * kv in _tags ) {
+
+		// strip whitespace around text
+		NSString * key = kv[0];
+		NSString * val = kv[1];
+
+		key = [key stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		val = [val stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+		if ( key.length && val.length ) {
+			[dict setObject:val forKey:key];
+		}
+	}
+	return dict;
+}
+
 
 - (IBAction)textFieldReturn:(id)sender
 {
@@ -211,43 +238,30 @@
 
 - (IBAction)textFieldEditingDidEnd:(UITextField *)textField
 {
-	NSInteger tag = textField.tag;
-	assert( tag >= 0 );
-	BOOL isValue = (tag & 1) != 0;
-
-	if ( tag < RELATION_TAGS ) {
-
-		NSMutableArray * kv = _tags[ tag/2 ];
-
-		NSString * text = textField.text;
-		text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-		// edited tags
-		POITabBarController * tabController = (id)self.tabBarController;
-		if ( isValue ) {
-			// new value
-			kv[1] = text;
-			if ( [kv[0] length] && [kv[1] length] ) {
-				[tabController.keyValueDict setObject:kv[1] forKey:kv[0]];
-			} else {
-				[tabController.keyValueDict removeObjectForKey:kv[0]];
-			}
-		} else {
-			// new key name
-			[tabController.keyValueDict removeObjectForKey:kv[0]];
-			kv[0] = text;
-			if ( [kv[0] length] && [kv[1] length] ) {
-				[tabController.keyValueDict setObject:kv[1] forKey:kv[0]];
-			}
-		}
-
-		_saveButton.enabled = [tabController isTagDictChanged];
-	}
 }
 
 - (IBAction)textFieldChanged:(UITextField *)textField
 {
-//	_saveButton.enabled = [tabController isTagDictChanged];
+	NSInteger tag = textField.tag;
+	assert( tag >= 0 );
+	POITabBarController * tabController = (id)self.tabBarController;
+
+	if ( tag < RELATION_TAGS ) {
+		// edited tags
+		NSMutableArray * kv = _tags[ tag/2 ];
+		BOOL isValue = (tag & 1) != 0;
+
+		if ( isValue ) {
+			// new value
+			kv[1] = textField.text;
+		} else {
+			// new key name
+			kv[0] = textField.text;
+		}
+		
+		NSMutableDictionary * dict = [self keyValueDictionary];
+		_saveButton.enabled = [tabController isTagDictChanged:dict];
+	}
 }
 
 - (IBAction)toggleEditing:(id)sender
@@ -317,7 +331,7 @@
 
 -(IBAction)done:(id)sender
 {
-	// dismiss first so text field resigns before we read its value
+	// Dismiss first so we trigger viewWillDisappear where we save state.
 	[self dismissViewControllerAnimated:YES completion:nil];
 
 	POITabBarController * tabController = (id)self.tabBarController;
