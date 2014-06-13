@@ -17,7 +17,7 @@
 
 
 static const NSInteger BACKGROUND_SECTION	= 0;
-static const NSInteger SENDMAIL_SECTION		= 3;
+//static const NSInteger SENDMAIL_SECTION		= 3;
 
 
 @implementation SettingsViewController
