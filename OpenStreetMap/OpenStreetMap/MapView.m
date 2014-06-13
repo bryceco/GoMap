@@ -34,8 +34,8 @@ static const CGFloat Z_AERIAL		= -100;
 static const CGFloat Z_MAPNIK		= -99;
 static const CGFloat Z_GPX			= -2;
 static const CGFloat Z_EDITOR		= -1;
-static const CGFloat Z_EDITOR_GL	= -0.5;
-static const CGFloat Z_BING_LOGO	= 2;
+//static const CGFloat Z_EDITOR_GL	= -0.5;
+//static const CGFloat Z_BING_LOGO	= 2;
 static const CGFloat Z_RULER		= 3;
 static const CGFloat Z_BLINK		= 4;
 static const CGFloat Z_BALLOON		= 5;
@@ -187,11 +187,12 @@ CGSize SizeForImage( NSImage * image )
 		_editorLayerGL.zPosition = Z_EDITOR_GL;
 		[self.layer addSublayer:_editorLayerGL];
 #endif
-		
+
+#if 0 // support gpx traces
 		_gpxLayer = [[GpxLayer alloc] initWithMapView:self];
 		_gpxLayer.zPosition = Z_GPX;
-		_gpxLayer.activeTrack = nil;
 		[self.layer addSublayer:_gpxLayer];
+#endif
 
 		_rulerLayer = [[RulerLayer alloc] init];
 		_rulerLayer.mapView = self;
@@ -280,6 +281,9 @@ CGSize SizeForImage( NSImage * image )
 	if ( ![self isLocationSpecified] ) {
 		[self locateMe:nil];
 	}
+
+	// make help button have rounded corners
+	_helpButton.layer.cornerRadius = 10.0;
 
 	// observe changes to aerial visibility so we can show/hide bing logo
 	[_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
@@ -715,7 +719,6 @@ CGSize SizeForImage( NSImage * image )
 	if ( _locationBallLayer ) {
 		CLLocationCoordinate2D coord = _locationManager.location.coordinate;
 		_locationBallLayer.position = [self viewPointForLatitude:coord.latitude longitude:coord.longitude];
-		NSLog(@"using %@",_locationManager.location);
 	}
 }
 
@@ -730,7 +733,7 @@ CGSize SizeForImage( NSImage * image )
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-	NSLog(@"updating with %@",_locationManager.location);
+//	NSLog(@"updating with %@",_locationManager.location);
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
@@ -888,6 +891,9 @@ CGSize SizeForImage( NSImage * image )
 	[CATransaction begin];
 	[CATransaction setAnimationDuration:0.0];
 
+//	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+
+
 #if TARGET_OS_IPHONE
 	_pushpinView.arrowPoint = CGPointMake( _pushpinView.arrowPoint.x + delta.x, _pushpinView.arrowPoint.y - delta.y );
 #endif
@@ -902,6 +908,10 @@ CGSize SizeForImage( NSImage * image )
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
+
+#if 0 // IOS 7 temp fix
+	[self layoutIfNeeded];
+#endif
 
 	[CATransaction commit];
 }
@@ -930,6 +940,10 @@ CGSize SizeForImage( NSImage * image )
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
+
+#if 0 // IOS 7 temp fix
+	[self layoutIfNeeded];
+#endif
 
 	[CATransaction commit];
 
@@ -1126,7 +1140,8 @@ CGSize SizeForImage( NSImage * image )
 						break;
 					{
 						MapView * mySelf = weakSelf;
-						mySelf->_alertMove = [[UIAlertView alloc] initWithTitle:@"Confirm move" message:@"Move selected object?" delegate:weakSelf cancelButtonTitle:@"Undo" otherButtonTitles:@"Move", nil];
+						mySelf->_alertMove = [[UIAlertView alloc] initWithTitle:@"Confirm move" message:@"Move selected object?"
+																delegate:weakSelf cancelButtonTitle:@"Undo" otherButtonTitles:@"Move", nil];
 						[mySelf->_alertMove show];
 					}
 					break;
@@ -1153,6 +1168,8 @@ CGSize SizeForImage( NSImage * image )
 	}
 
 	UIButton * button1 = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+	button1.backgroundColor = [UIColor whiteColor]; // don't want transparent background for ios 7
+	button1.layer.cornerRadius = 10.0;
 	[_pushpinView addButton:button1 callback:^{
 		if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedNode && weakSelf.editorLayer.selectedWay.tags.count == 0 ) {
 			// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
@@ -1772,14 +1789,18 @@ checkGrab:
 
     if ( pan.state == UIGestureRecognizerStateBegan ) {
 		[_inertiaTimer invalidate];
+//		DLog( @"start pan" );
     } else if ( pan.state == UIGestureRecognizerStateChanged ) {
+//		DLog( @"move pan" );
 		CGPoint translation = [pan translationInView:self];
 		translation.y = -translation.y;
+//		DLog(@"pan %d trans = %f,%f", pan.state, translation.x, translation.y);
 		[self adjustOriginBy:translation];
 		[pan setTranslation:CGPointMake(0,0) inView:self];
     } else if (pan.state == UIGestureRecognizerStateEnded ) {
+//		DLog( @"finish pan" );
 		CGPoint velocity = [pan velocityInView:self];
-//		DLog(@"pan %d trans = %f,%f vel = %f,%f",pan.state,translation.x,translation.y,velocity.x,velocity.y);
+//		DLog(@"pan %d vel = %f,%f",pan.state,velocity.x,velocity.y);
 		NSDate * startTime = [NSDate date];
 		double interval = 1.0/60.0;
 		double duration = 0.5;
@@ -1795,10 +1816,17 @@ checkGrab:
 			}
 		};
 		_inertiaTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(panInertia:) userInfo:inertiaBlock repeats:YES];
+	} else {
+		DLog( @"state %d", (int)pan.state);
 	}
 }
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
+	if ( pinch.state != UIGestureRecognizerStateChanged )
+		return;
+
+//	NSLog(@"zoom by %f",ratio);
+
 	_userOverrodeLocationZoom = YES;
 
 	[_inertiaTimer invalidate];

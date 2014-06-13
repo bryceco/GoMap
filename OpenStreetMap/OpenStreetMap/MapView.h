@@ -43,6 +43,7 @@
 {
 #if TARGET_OS_IPHONE
 	IBOutlet UIButton				*	_bingMapsLogo;
+	IBOutlet UIButton				*	_helpButton;
 #else
 	CALayer							*	_bingMapsLogo;
 #endif
