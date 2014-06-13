@@ -31,7 +31,7 @@
 
 	for ( OfflineTableViewCell * cell in @[ _aerialCell, _mapnikCell ] ) {
 		cell.tileList = [cell.tileLayer allTilesIntersectingVisibleRect];
-		cell.detailLabel.text = [NSString stringWithFormat:@"%d tiles needed", cell.tileList.count];
+		cell.detailLabel.text = [NSString stringWithFormat:@"%lu tiles needed", (unsigned long)cell.tileList.count];
 		cell.button.enabled = cell.tileList.count > 0;
 	}
 }
@@ -64,7 +64,7 @@
 	NSString * cacheKey = cell.tileList.lastObject;
 	[cell.tileList removeLastObject];
 	[cell.tileLayer downloadTileForKey:cacheKey completion:^{
-		cell.detailLabel.text = [NSString stringWithFormat:@"%d tiles needed", cell.tileList.count];
+		cell.detailLabel.text = [NSString stringWithFormat:@"%lu tiles needed", (unsigned long)cell.tileList.count];
 		if ( cell.activityView.isAnimating ) {
 			[self downloadFileForCell:cell];
 		}

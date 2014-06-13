@@ -216,7 +216,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
 	UITextField * textField = [alert textFieldAtIndex:0];
 	[textField setKeyboardType:UIKeyboardTypeNumberPad];
-	textField.text = [NSString stringWithFormat:@"%d",_mostRecentMaximum];
+	textField.text = [NSString stringWithFormat:@"%ld",(long)_mostRecentMaximum];
 	[alert show];
 }
 
