@@ -129,7 +129,7 @@
 	const CGFloat	arrowHeight = 20 + (_buttonList.count * buttonVerticalSpacing)/2;
 	const CGFloat	arrowWidth = 20;
 	const CGFloat	buttonHorzOffset = 44;
-	const CGFloat	buttonHeight = 31.0;
+	const CGFloat	buttonHeight = _buttonList.count ? [_buttonList[0] frame].size.height : 0;
 
 	CGFloat topGap	= buttonHeight/2 + (_buttonList.count-1)*buttonVerticalSpacing/2;
 
