@@ -285,10 +285,12 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	return url;
 }
 
+#if 0
 -(void)setNeedsLayout
 {
 	[super setNeedsLayout];
 }
+#endif
 
 -(void)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY zoomLevel:(int32_t)zoomLevel completion:(void(^)(NSError * error))completion
 {
@@ -424,6 +426,12 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	OSMRect	rect		= [_mapView mapRectFromVisibleRect];
 	int32_t	zoomLevel	= [self zoomLevel];
 
+#if 0
+	static double prev = 0.0;
+	DLog( @"origin = %f, %f, delta = %f", rect.origin.x, rect.origin.y, rect.origin.y - prev );
+	prev = rect.origin.y;
+#endif
+
 	if ( zoomLevel < 1 ) {
 		zoomLevel = 1;
 	} else if ( zoomLevel > self.maxZoomLevel ) {
@@ -441,6 +449,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	DLog(@"%d sublayers, %d dict", self.sublayers.count, _layerDict.count);
 #endif
 
+	// create any tiles that don't yet exist
 	for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {
 		for ( int32_t tileY = tileNorth; tileY < tileSouth; ++tileY ) {
 			[_mapView progressIncrement:NO];
@@ -454,6 +463,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	}
 
 #if CUSTOM_TRANSFORM
+	// update locations of tiles
 	[_layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * tileKey, CALayer * layer, BOOL *stop) {
 		NSArray * a = [tileKey componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
 		int32_t tileZ = (int32_t) [a[0] integerValue];
@@ -467,6 +477,10 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		rc.origin.y -= 128;
 
 		layer.frame = CGRectMake( rc.origin.x, rc.origin.y, rc.size.width, rc.size.height );
+
+#if 0
+		DLog( @"%d,%d,%d -> %f, %f", tileZ, tileX, tileY, rc.origin.x, rc.origin.y );
+#endif
 	}];
 
 	[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
