@@ -30,11 +30,10 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 @end
 
 @implementation GpxTrack
-@synthesize distance = _distance;
-@synthesize startDate = _startDate;
-
 -(void)addPoint:(CLLocation *)location
 {
+	_recording = YES;
+	 
 	CLLocationCoordinate2D coordinate = location.coordinate;
 
 	GpxPoint * prev = [_points lastObject];
@@ -52,7 +51,13 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 	}
 	[(NSMutableArray *)_points addObject:pt];
 
-	NSLog( @"%f,%f (%f): %d gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, _points.count );
+	NSLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
+}
+
+-(void)finishTrack
+{
+	_recording = NO;
+	_points = [NSArray arrayWithArray:_points];
 }
 
 -(BOOL)saveXmlFile:(NSString * )path
@@ -142,18 +147,34 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 
 -(NSDate *)startDate
 {
-	if ( _startDate == nil ) {
-		if ( _points.count ) {
-			GpxPoint * pt = _points[0];
-			_startDate = pt.timestamp;
-		}
+	if ( _points.count ) {
+		GpxPoint * pt = _points[0];
+		return pt.timestamp;
 	}
-	return _startDate;
+	return nil;
 }
 
+-(NSTimeInterval)duration
+{
+	if ( _points.count == 0 )
+		return 0.0;
+
+	NSDate * finishDate;
+	if ( _recording ) {
+		finishDate = [NSDate date];
+	} else {
+		GpxPoint * pt = _points.lastObject;
+		finishDate = pt.timestamp;
+	}
+	return [finishDate timeIntervalSinceDate:[self startDate]];
+}
 @end
 
+
+
 @implementation GpxLayer
+
+@synthesize activeTrack = _activeTrack;
 
 -(id)initWithMapView:(MapView *)mapView
 {
@@ -171,20 +192,20 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 
 -(void)startNewTrack
 {
-	if ( self.activeTrack ) {
+	if ( _activeTrack ) {
 		[self endActiveTrack];
 	}
-	self.activeTrack = [GpxTrack new];
+	_activeTrack = [GpxTrack new];
 }
 
 -(void)endActiveTrack
 {
-	if ( self.activeTrack ) {
+	if ( _activeTrack ) {
 		if ( self.previousTracks == nil ) {
 			self.previousTracks = [NSMutableArray new];
 		}
-		[self.previousTracks addObject:self.activeTrack];
-		self.activeTrack = nil;
+		[self.previousTracks addObject:_activeTrack];
+		_activeTrack = nil;
 	}
 }
 

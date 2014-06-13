@@ -16,28 +16,37 @@
 @property (assign,nonatomic)	double		longitude;
 @property (assign,nonatomic)	double		latitude;
 @property (assign,nonatomic)	double		elevation;
-@property (assign,nonatomic)	NSDate *	timestamp;
+@property (strong,nonatomic)	NSDate *	timestamp;
 @end
 
 @interface GpxTrack : NSObject
+{
+	BOOL	_recording;
+	double	_distance;
+}
 @property (strong,nonatomic)	NSString	*	name;
 @property (readonly,nonatomic)	NSArray		*	points;
-@property (readonly,nonatomic)	NSDate		*	startDate;
-@property (readonly,nonatomic)	NSTimeInterval	duration;
-@property (readonly,nonatomic)	double			distance;
 
 -(BOOL)saveXmlFile:(NSString * )path;
 -(id)initWithXmlFile:(NSString * )path;
+
+- (NSDate *)startDate;
+- (NSTimeInterval)duration;
+- (double)distance;
+
 @end
 
 @interface GpxLayer : CALayer
 {
 	MapView			*	_mapView;
 }
-@property (strong,nonatomic)	GpxTrack		*	activeTrack;
+@property (readonly,nonatomic)	GpxTrack		*	activeTrack;
 @property (strong,nonatomic)	NSMutableArray	*	previousTracks;
 
 -(id)initWithMapView:(MapView *)mapView;
 -(void)addPoint:(CLLocation *)location;
+
+-(void)startNewTrack;
+-(void)endActiveTrack;
 
 @end
