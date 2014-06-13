@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface GpxViewController : UITableViewController
-@property (strong,nonatomic)	NSArray * gpxTracks;
+{
+	NSTimer						*	_timer;
+	IBOutlet UINavigationBar	*	_navigationBar;
+}
 
 -(IBAction)cancel:(id)sender;
+
+-(IBAction)startTrack:(id)sender;
+-(IBAction)endTrack:(id)sender;
 
 @end
