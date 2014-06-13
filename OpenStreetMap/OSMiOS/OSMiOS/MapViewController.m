@@ -91,9 +91,9 @@
 
 -(void)search:(UILongPressGestureRecognizer *)recognizer
 {
-	UIView * view = recognizer.view;
 	[self installLongPressGestureRecognizer:NO];	// remove so we don't trigger twice during a long press
-#if 1
+#if 0 // enable GPX view
+	UIView * view = recognizer.view;
 	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"GPS Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Search for Location", @"Manage GPX Tracks", nil];
 	[sheet showInView:view];
 #else
