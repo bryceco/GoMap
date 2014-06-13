@@ -1693,7 +1693,7 @@ or in order of z-indexes (if renderer can detect collisions).
 		return result;
 	}];
 
-	_shownObjects = [NSSet setWithArray:a];
+	_shownObjects = a;
 
 	// draw coastline
 	[self drawOceans:a context:ctx];
