@@ -351,6 +351,7 @@
 		02BED999168CACFD00357B94 /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED998168CACFD00357B94 /* LocationBallLayer.m */; };
 		02C4254D1677F7BE00761C54 /* DetailDisclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C4254C1677F7BE00761C54 /* DetailDisclosure.png */; };
 		02C4255016785EA900761C54 /* SpeechBalloonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C4254F16785EA900761C54 /* SpeechBalloonView.m */; };
+		02CCCEFD194AA14C00FCE2F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CCCEFC194AA14C00FCE2F6 /* Foundation.framework */; };
 		02DA58A5161F9B9E007AABB6 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DA58A4161F9B9E007AABB6 /* MainWindowController.m */; };
 		02DFBBAC1631A4AC0021F1C9 /* TagEditorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DFBBAA1631A4AC0021F1C9 /* TagEditorWindowController.m */; };
 		02DFBBAD1631A4AC0021F1C9 /* TagEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02DFBBAB1631A4AC0021F1C9 /* TagEditorWindowController.xib */; };
@@ -751,6 +752,8 @@
 		02C4254C1677F7BE00761C54 /* DetailDisclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DetailDisclosure.png; sourceTree = "<group>"; };
 		02C4254E16785EA900761C54 /* SpeechBalloonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechBalloonView.h; sourceTree = "<group>"; };
 		02C4254F16785EA900761C54 /* SpeechBalloonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechBalloonView.m; sourceTree = "<group>"; };
+		02CCCEF7194A9F7E00FCE2F6 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		02CCCEFC194AA14C00FCE2F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		02DA58A3161F9B9E007AABB6 /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		02DA58A4161F9B9E007AABB6 /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		02DFBBA91631A4AC0021F1C9 /* TagEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagEditorWindowController.h; sourceTree = "<group>"; };
@@ -761,7 +764,6 @@
 		02FE3F5915F113CA00A6CFAE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		02FE3F5C15F113CA00A6CFAE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		02FE3F5D15F113CA00A6CFAE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		02FE3F5E15F113CA00A6CFAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		02FE3F6115F113CA00A6CFAE /* OpenStreetMap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenStreetMap-Info.plist"; sourceTree = "<group>"; };
 		02FE3F6315F113CA00A6CFAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02FE3F6515F113CA00A6CFAE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 				026E8CB21612B7CA0098345C /* CoreLocation.framework in Frameworks */,
 				02FE3F8715F13C7300A6CFAE /* libbz2.dylib in Frameworks */,
 				02FE3F5A15F113CA00A6CFAE /* Cocoa.framework in Frameworks */,
+				02CCCEFD194AA14C00FCE2F6 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1163,25 +1166,18 @@
 		02FE3F5815F113CA00A6CFAE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02CCCEF7194A9F7E00FCE2F6 /* CoreServices.framework */,
 				02FE3F5915F113CA00A6CFAE /* Cocoa.framework */,
+				02CCCEFC194AA14C00FCE2F6 /* Foundation.framework */,
 				026E8CB11612B7CA0098345C /* CoreLocation.framework */,
 				02FE3F8615F13C7300A6CFAE /* libbz2.dylib */,
 				029AD6E9164207340045B20D /* libsqlite3.0.dylib */,
-				02FE3F5B15F113CA00A6CFAE /* Other Frameworks */,
+				02FE3F5C15F113CA00A6CFAE /* AppKit.framework */,
+				02FE3F5D15F113CA00A6CFAE /* CoreData.framework */,
 				026E8CC21612DF620098345C /* QuartzCore.framework */,
 				029AD6F31642EDC40045B20D /* WebKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		02FE3F5B15F113CA00A6CFAE /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				02FE3F5C15F113CA00A6CFAE /* AppKit.framework */,
-				02FE3F5D15F113CA00A6CFAE /* CoreData.framework */,
-				02FE3F5E15F113CA00A6CFAE /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		02FE3F5F15F113CA00A6CFAE /* OpenStreetMap */ = {

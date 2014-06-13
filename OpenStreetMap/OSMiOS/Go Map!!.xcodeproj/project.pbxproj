@@ -107,7 +107,6 @@
 		02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4716713CCB00BB4414 /* Default@2x.png */; };
 		02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4916713CCB00BB4414 /* Default-568h@2x.png */; };
 		02ACBA4D16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */; };
-		02ACBA5016713CCB00BB4414 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4E16713CCB00BB4414 /* MainStoryboard_iPad.storyboard */; };
 		02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5216713CCB00BB4414 /* MapViewController.m */; };
 		02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5916713CCB00BB4414 /* SettingsViewController.m */; };
 		02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */; };
@@ -581,7 +580,6 @@
 		02ACBA4716713CCB00BB4414 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		02ACBA4916713CCB00BB4414 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		02ACBA4C16713CCB00BB4414 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		02ACBA4F16713CCB00BB4414 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		02ACBA5116713CCB00BB4414 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		02ACBA5216713CCB00BB4414 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		02ACBA5816713CCB00BB4414 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -1123,7 +1121,6 @@
 				02ACBD031671730000BB4414 /* KissXML */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
-				02ACBA4E16713CCB00BB4414 /* MainStoryboard_iPad.storyboard */,
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
@@ -1629,8 +1626,13 @@
 		02ACBA2616713CCB00BB4414 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Bryce;
+				TargetAttributes = {
+					02ACBA2E16713CCB00BB4414 = {
+						DevelopmentTeam = MKTTC6734C;
+					};
+				};
 			};
 			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Map!!" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1659,7 +1661,6 @@
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard in Resources */,
-				02ACBA5016713CCB00BB4414 /* MainStoryboard_iPad.storyboard in Resources */,
 				02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */,
 				02ACBBC016713F2B00BB4414 /* BlueBall.png in Resources */,
 				02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */,
@@ -2120,14 +2121,6 @@
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
-		02ACBA4E16713CCB00BB4414 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				02ACBA4F16713CCB00BB4414 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -2155,6 +2148,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2189,11 +2183,14 @@
 		02ACBA6216713CCB00BB4414 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSMiOS/Go Map!!-Prefix.pch";
 				INFOPLIST_FILE = "OSMiOS/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "Go Map!!";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2201,11 +2198,14 @@
 		02ACBA6316713CCB00BB4414 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSMiOS/Go Map!!-Prefix.pch";
 				INFOPLIST_FILE = "OSMiOS/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "Go Map!!";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
