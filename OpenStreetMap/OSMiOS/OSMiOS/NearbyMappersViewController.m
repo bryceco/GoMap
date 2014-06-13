@@ -51,7 +51,7 @@
 	OsmUserStatistics * stats = _mappers[ indexPath.row ];
 	cell.textLabel.text = stats.user;
 	NSString * date = [NSDateFormatter localizedStringFromDate:stats.lastEdit dateStyle:NSDateFormatterMediumStyle timeStyle:kCFDateFormatterNoStyle];
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%d edits, last active %@", stats.editCount, date];
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld edits, last active %@", (long)stats.editCount, date];
 
     return cell;
 }
