@@ -66,11 +66,19 @@
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
+#if 1
+	BOOL result = [_realDelegate respondsToSelector:@selector(textField:textFieldShouldClear:)] ? [_realDelegate textFieldShouldClear:textField] : YES;
+	if ( result ) {
+		[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:@""];
+	}
+	return result;
+#else
 	[_owner performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
 
 	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldClear:)])
 		return [_realDelegate textFieldShouldClear:textField];
 	return YES;
+#endif
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -80,11 +88,20 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+#if 1
+	BOOL result = [_realDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)] ? [_realDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string] : YES;
+	if ( result ) {
+		NSString * newString = [self.owner.text stringByReplacingCharactersInRange:range withString:string];
+		[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:newString];
+	}
+	return result;
+#else
 	[_owner performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
 
 	if ( [_realDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)])
 		return [_realDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string];
 	return YES;
+#endif
 }
 
 @end
@@ -189,8 +206,15 @@ static const CGFloat GradientHeight = 20.0;
 
 -(CGRect)frameForCompletionTableView
 {
+	BOOL iOS7 = NO;
 	UITableViewCell * cell = (id)[self.superview superview];
 	UITableView * tableView = (id)[cell superview];
+	if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
+		// ios 7
+		tableView = (id)tableView.superview.superview;
+		cell = (id)cell.superview;
+		iOS7 = YES;
+	}
 	UIScrollView * scrollView = (id)tableView.superview;
 	UIView * view = scrollView.superview;
 
@@ -207,8 +231,15 @@ static const CGFloat GradientHeight = 20.0;
 	if ( _filteredCompletions.count ) {
 		if ( _completionTableView == nil ) {
 
-			UITableViewCell * cell = (id)[self.superview superview];
-			UITableView * tableView = (id)[cell superview];
+			UITableViewCell * cell = (id)self.superview.superview;
+			UITableView * tableView = (id)cell.superview;
+			BOOL iOS7 = NO;
+			if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
+				// iOS 7
+				iOS7 = YES;
+				tableView = (id)tableView.superview.superview;
+				cell = (id)cell.superview;
+			}
 			assert( [tableView isKindOfClass:[UITableView class]] );
 
 			// add completion table to tableview
@@ -231,6 +262,9 @@ static const CGFloat GradientHeight = 20.0;
 
 			// scroll cell to top
 			CGRect cellFrame = cell.frame;
+			if ( iOS7 ) {
+				cellFrame.origin.y -= 45 + 20;
+			}
 			[tableView setContentOffset:CGPointMake(0,cellFrame.origin.y) animated:YES];
 			tableView.scrollEnabled = NO;
 		}
@@ -245,6 +279,10 @@ static const CGFloat GradientHeight = 20.0;
 
 		UITableViewCell * cell = (id)[self.superview superview];
 		UITableView * tableView = (id)[cell superview];
+		if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
+			// ios 7
+			tableView = (id)tableView.superview.superview;
+		}
 		NSIndexPath * cellIndexPath = [tableView indexPathForCell:cell];
 		[tableView scrollToRowAtIndexPath:cellIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 
@@ -281,10 +319,8 @@ static const CGFloat GradientHeight = 20.0;
     return cell;
 }
 
-
-- (void)updateAutocomplete
+- (void)updateAutocompleteForString:(NSString *)text
 {
-	NSString * text = self.text;
 	// filter completion list by current text
 	if ( text.length ) {
 		_filteredCompletions = [_allCompletions filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * object, NSDictionary *bindings) {
@@ -298,6 +334,11 @@ static const CGFloat GradientHeight = 20.0;
 		return [s1 compare:s2 options:NSCaseInsensitiveSearch];
 	}];
 	[self updateCompletionTableView];
+}
+
+- (void)updateAutocomplete
+{
+	[self updateAutocompleteForString:self.text];
 }
 
 @end
