@@ -13,7 +13,8 @@ typedef enum {
 	QUAD_NW,
 	QUAD_SW,
 	QUAD_SE,
-	QUAD_NE
+	QUAD_NE,
+	QUAD_LAST = 3
 } QUAD_ENUM;
 
 @class OsmBaseObject;

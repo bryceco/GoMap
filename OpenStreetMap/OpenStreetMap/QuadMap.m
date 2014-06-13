@@ -42,7 +42,7 @@ static const double MinRectSize = 360.0 / (1 << 16);
 
 static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 {
-	assert(child < 4);
+	assert(child <= QUAD_LAST);
 	switch ( child ) {
 		case QUAD_NW:
 			return OSMRectMake(parent.origin.x, parent.origin.y, parent.size.width*0.5, parent.size.height*0.5);
@@ -74,7 +74,7 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 		}
 	}
 
-	for ( QUAD_ENUM child = 0; child < 4; ++child ) {
+	for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 		OSMRect rc = ChildRect( child, _rect );
 		if ( OSMRectIntersectsRect( target, rc ) ) {
 
@@ -96,7 +96,7 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 	}
 
 	BOOL isCorrectChild = NO;
-	for ( QUAD_ENUM child = 0; child < 4; ++child ) {
+	for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 		if ( self == _parent->_children[child] ) {
 			isCorrectChild = YES;
 			break;
@@ -107,10 +107,10 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 	if ( success ) {
 		_whole = YES;
 		_busy = NO;
-		for ( QUAD_ENUM child = 0; child < 4; ++child ) {
+		for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 			_children[child] = nil;
 		}
-		for ( QUAD_ENUM child = 0; child < 4; ++child ) {
+		for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 			QuadBox * c = _parent->_children[child];
 			if ( c == nil || !c->_whole )
 				return;
@@ -124,7 +124,7 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 -(void)enumerateWithBlock:(void (^)(QuadBox * quad))block
 {
 	block(self);
-	for ( QUAD_ENUM child = 0; child < 4; ++child ) {
+	for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 		QuadBox * q = _children[ child ];
 		if ( q ) {
 			[q enumerateWithBlock:block];
@@ -171,7 +171,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 	}
 	// find a child member could fit into
 	NSInteger index = -1;
-	for ( QUAD_ENUM child = 0; child < 4; ++child ) {
+	for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 		OSMRect rc = ChildRect( child, _rect );
 		if ( OSMRectIntersectsRect( bbox, rc ) ) {
 			if ( index < 0 ) {
@@ -212,7 +212,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 		return YES;
 	}
 	// find a child member could fit into
-	for ( QUAD_ENUM child = 0; child < 4; ++child ) {
+	for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 		OSMRect rc = ChildRect( child, _rect );
 		if ( OSMRectIntersectsRect( bbox, rc ) ) {
 			if ( [_children[child] removeMember:member bbox:bbox] )
@@ -235,7 +235,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 {
 	if ( _members )
 		block( _members );
-	for ( QUAD_ENUM c = 0; c < 4; ++c ) {
+	for ( QUAD_ENUM c = 0; c <= QUAD_LAST; ++c ) {
 		QuadBox * child = _children[ c ];
 		if ( child && OSMRectIntersectsRect( bbox, child->_rect ) ) {
 			[child findObjectsInArea:bbox block:block];
