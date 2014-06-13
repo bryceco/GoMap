@@ -42,7 +42,7 @@
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
-	_osmDetail.text = [NSString stringWithFormat:@"%d objects", objectCount];
+	_osmDetail.text = [NSString stringWithFormat:@"%ld objects", (long)objectCount];
 	_aerialDetail.text = @"computing size...";
 	_mapnikDetail.text = @"computing size...";
 
