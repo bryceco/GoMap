@@ -51,7 +51,7 @@
 }
 
 
-
+#if 0 // GPX support
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
 	if ( ![url isFileURL] )
@@ -72,6 +72,7 @@
 	// Indicate that we have successfully opened the URL
 	return YES;
 }
+#endif
 
 - (NSString *)appName
 {
