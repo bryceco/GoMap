@@ -32,7 +32,7 @@
 
 static const CGFloat Z_AERIAL		= -100;
 static const CGFloat Z_MAPNIK		= -99;
-static const CGFloat Z_GPX			= -2;
+//static const CGFloat Z_GPX			= -2;
 static const CGFloat Z_EDITOR		= -1;
 //static const CGFloat Z_EDITOR_GL	= -0.5;
 //static const CGFloat Z_BING_LOGO	= 2;
@@ -673,6 +673,7 @@ CGSize SizeForImage( NSImage * image )
 
 -(IBAction)locateMe:(id)sender
 {
+	[_locationManager requestWhenInUseAuthorization];
 	_userOverrodeLocationPosition	= NO;
 	_userOverrodeLocationZoom		= NO;
 	[_locationManager startUpdatingLocation];
@@ -681,7 +682,6 @@ CGSize SizeForImage( NSImage * image )
 #else
 	[self performSelector:@selector(locationUpdateFailed:) withObject:nil afterDelay:5.0];
 #endif
-
 }
 
 -(void)locationUpdateFailed:(NSError *)error
@@ -731,9 +731,11 @@ CGSize SizeForImage( NSImage * image )
 	}
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+
+
+- (void)locationUpdatedTo:(CLLocation *)newLocation
 {
-//	NSLog(@"updating with %@",_locationManager.location);
+	//	NSLog(@"updating with %@",_locationManager.location);
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
@@ -760,7 +762,7 @@ CGSize SizeForImage( NSImage * image )
 #if TARGET_OS_IPHONE
 	_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
 #endif
-	
+
 	if ( _locationBallLayer == nil ) {
 		_locationBallLayer = [LocationBallLayer new];
 		_locationBallLayer.zPosition = Z_BALLOON;
@@ -771,11 +773,24 @@ CGSize SizeForImage( NSImage * image )
 	[self updateUserLocationIndicator];
 }
 
+// delegate for iIOS 6 and later
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+	[self locationUpdatedTo:locations.lastObject];
+}
+
+// delegate for iIOS 5 and earlier
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+	[self locationUpdatedTo:newLocation];
+}
+
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
 	[self locationUpdateFailed:error];
 }
+
 
 #pragma mark Undo/Redo
 
