@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.17" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Fx1-V2-8uJ">
     <dependencies>
+        <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <scenes>
@@ -1946,43 +1947,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiw-1G-JUd">
-                                <rect key="frame" x="20" y="99" width="280" height="71"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="71" id="qks-fs-BdC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
-                                <connections>
-                                    <outlet property="delegate" destination="cxn-YY-uLs" id="wHT-nj-74z"/>
-                                </connections>
-                            </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArV-4u-j7D">
-                                <rect key="frame" x="20" y="175" width="280" height="30"/>
+                                <rect key="frame" x="20" y="182" width="280" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5dY-nN-L0Q">
-                                <rect key="frame" x="142" y="175" width="37" height="30"/>
+                                <rect key="frame" x="142" y="182" width="37" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="CqM-YP-LjX"/>
+                                </constraints>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BAY-7z-hwv">
                                 <rect key="frame" x="20" y="208" width="280" height="252"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="1" constant="256" id="GC9-dV-mZW"/>
-                                </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rqu-ny-n3F">
-                                <rect key="frame" x="240" y="175" width="60" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="prL-CR-VKk"/>
-                                </constraints>
+                                <rect key="frame" x="240" y="182" width="60" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <state key="normal" title="Mail">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1991,6 +1977,16 @@
                                     <action selector="sendMail:" destination="cxn-YY-uLs" eventType="touchUpInside" id="4HH-De-HWJ"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Plh-7W-ceY">
+                                <rect key="frame" x="20" y="95" width="274" height="78"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cxn-YY-uLs" id="Z5P-Wo-kk5"/>
+                                </connections>
+                            </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changeset comment:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikj-u9-9Bn">
                                 <rect key="frame" x="20" y="70" width="280" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2000,27 +1996,27 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="centerY" secondItem="Rqu-ny-n3F" secondAttribute="centerY" id="52n-cJ-jT0"/>
-                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" symbolic="YES" id="Aha-1w-F8D"/>
-                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="leading" secondItem="5dY-nN-L0Q" secondAttribute="trailing" constant="61" id="BjF-Xo-xgX"/>
-                            <constraint firstItem="kiw-1G-JUd" firstAttribute="trailing" secondItem="ikj-u9-9Bn" secondAttribute="trailing" id="HXa-ez-5QX"/>
-                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="top" secondItem="Rqu-ny-n3F" secondAttribute="top" id="Px4-Jy-MHF"/>
-                            <constraint firstItem="BAY-7z-hwv" firstAttribute="leading" secondItem="ArV-4u-j7D" secondAttribute="leading" id="Rdc-jv-xRh"/>
-                            <constraint firstItem="BAY-7z-hwv" firstAttribute="top" secondItem="Rqu-ny-n3F" secondAttribute="bottom" constant="3" id="T1s-rz-ny9"/>
-                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="centerX" secondItem="ArV-4u-j7D" secondAttribute="centerX" id="Uec-aE-ZI5"/>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="trailing" secondItem="Rqu-ny-n3F" secondAttribute="trailing" id="XQp-LX-Fmh"/>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="centerY" secondItem="5dY-nN-L0Q" secondAttribute="centerY" id="ah5-IL-du7"/>
-                            <constraint firstItem="kiw-1G-JUd" firstAttribute="leading" secondItem="ikj-u9-9Bn" secondAttribute="leading" id="cC9-WH-FKI"/>
-                            <constraint firstItem="BAY-7z-hwv" firstAttribute="trailing" secondItem="ArV-4u-j7D" secondAttribute="trailing" id="dNp-oa-vuQ"/>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="top" secondItem="kiw-1G-JUd" secondAttribute="bottom" constant="5" id="enR-KH-d6A"/>
-                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="top" secondItem="8y4-eZ-NBP" secondAttribute="bottom" constant="6" id="gXc-t5-vFm"/>
-                            <constraint firstAttribute="bottom" secondItem="BAY-7z-hwv" secondAttribute="bottom" constant="20" symbolic="YES" id="j5a-lh-b30"/>
-                            <constraint firstItem="kiw-1G-JUd" firstAttribute="top" secondItem="Hf4-uP-AC4" secondAttribute="top" priority="1" constant="102" id="kRV-gK-wsR"/>
-                            <constraint firstItem="kiw-1G-JUd" firstAttribute="top" secondItem="ikj-u9-9Bn" secondAttribute="bottom" constant="8" symbolic="YES" id="q3l-sl-jFL"/>
-                            <constraint firstAttribute="trailing" secondItem="ikj-u9-9Bn" secondAttribute="trailing" constant="20" symbolic="YES" id="rKG-5B-Kcc"/>
-                            <constraint firstItem="kiw-1G-JUd" firstAttribute="trailing" secondItem="ArV-4u-j7D" secondAttribute="trailing" id="sQe-Tv-J07"/>
-                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="bottom" secondItem="ArV-4u-j7D" secondAttribute="bottom" id="uCI-xE-wVr"/>
-                            <constraint firstItem="kiw-1G-JUd" firstAttribute="leading" secondItem="ArV-4u-j7D" secondAttribute="leading" id="wrc-y8-ME5"/>
+                            <constraint firstItem="BAY-7z-hwv" firstAttribute="leading" secondItem="ArV-4u-j7D" secondAttribute="leading" id="2pg-Oj-EB8"/>
+                            <constraint firstAttribute="bottom" secondItem="BAY-7z-hwv" secondAttribute="bottom" constant="20" symbolic="YES" id="3Y7-Hp-7f6"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="trailing" secondItem="ArV-4u-j7D" secondAttribute="trailing" id="76K-wd-YrU"/>
+                            <constraint firstAttribute="trailing" secondItem="ikj-u9-9Bn" secondAttribute="trailing" constant="20" symbolic="YES" id="7M8-Pj-UP7"/>
+                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="leading" secondItem="Plh-7W-ceY" secondAttribute="leading" id="N3F-1B-B3J"/>
+                            <constraint firstItem="ArV-4u-j7D" firstAttribute="leading" secondItem="Plh-7W-ceY" secondAttribute="leading" id="UdC-qv-Nes"/>
+                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="bottom" secondItem="Rqu-ny-n3F" secondAttribute="bottom" id="Uj6-p7-r4Z"/>
+                            <constraint firstItem="ArV-4u-j7D" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="9" id="Wii-if-FCQ"/>
+                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="centerX" secondItem="ArV-4u-j7D" secondAttribute="centerX" id="Wkg-on-Zgm"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="bottom" secondItem="ArV-4u-j7D" secondAttribute="bottom" id="X0i-XH-OBM"/>
+                            <constraint firstAttribute="trailing" secondItem="Plh-7W-ceY" secondAttribute="trailing" constant="26" id="awg-ua-VyH"/>
+                            <constraint firstItem="ArV-4u-j7D" firstAttribute="trailing" secondItem="BAY-7z-hwv" secondAttribute="trailing" id="dIL-cn-fPT"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="9" id="eFI-fp-eig"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="leading" secondItem="5dY-nN-L0Q" secondAttribute="trailing" constant="61" id="j9y-h5-Asm"/>
+                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" symbolic="YES" id="jY1-st-gb6"/>
+                            <constraint firstItem="Plh-7W-ceY" firstAttribute="top" secondItem="8y4-eZ-NBP" secondAttribute="bottom" constant="31" id="scJ-qv-n7l"/>
+                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="9" id="u7t-rK-QS6"/>
+                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="top" secondItem="8y4-eZ-NBP" secondAttribute="bottom" constant="6" id="uOs-rb-gZ8"/>
+                            <constraint firstItem="ikj-u9-9Bn" firstAttribute="trailing" secondItem="Rqu-ny-n3F" secondAttribute="trailing" id="uft-2l-CcL"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="top" secondItem="ikj-u9-9Bn" secondAttribute="bottom" constant="91" id="whR-j3-xKM"/>
+                            <constraint firstItem="BAY-7z-hwv" firstAttribute="top" secondItem="ArV-4u-j7D" secondAttribute="bottom" constant="-4" id="yI6-ZN-gw1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Upload" id="Mdj-M0-0mZ">
@@ -2037,7 +2033,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="_cancelButton" destination="7h0-9d-GKW" id="BlW-gr-TNN"/>
-                        <outlet property="_commentTextView" destination="kiw-1G-JUd" id="d9E-O1-69d"/>
+                        <outlet property="_commentTextView" destination="Plh-7W-ceY" id="22W-4p-EdY"/>
                         <outlet property="_commitButton" destination="feW-AK-msn" id="hjt-Ym-rce"/>
                         <outlet property="_progressView" destination="5dY-nN-L0Q" id="oUC-Wd-haC"/>
                         <outlet property="_sendMailButton" destination="Rqu-ny-n3F" id="9Du-qC-2eb"/>
@@ -3669,7 +3665,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jyC-G0-Vbc">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Search for Location" id="Bfb-FI-LQK">
                                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="1Lg-Le-97T">
@@ -3681,14 +3677,14 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                 </items>
                             </navigationBar>
                             <searchBar contentMode="redraw" placeholder="Niagara Falls" translatesAutoresizingMaskIntoConstraints="NO" id="xw9-Ro-Fai">
-                                <rect key="frame" x="0.0" y="44" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="siu-I6-IEp" id="WHJ-zD-DWG"/>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="abd-jd-9tI">
-                                <rect key="frame" x="0.0" y="88" width="320" height="392"/>
+                                <rect key="frame" x="0.0" y="108" width="320" height="392"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="vRO-Aj-Sdr" style="IBUITableViewCellStyleDefault" id="cM4-jn-BbC">
@@ -3725,12 +3721,12 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="leading" secondItem="SQe-Tw-wQG" secondAttribute="leading" id="L7s-F4-sIf"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="top" secondItem="jyC-G0-Vbc" secondAttribute="bottom" id="MW5-hy-CGk"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="leading" secondItem="SQe-Tw-wQG" secondAttribute="leading" id="SBf-Qz-WXs"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" id="XOx-7Z-PXh"/>
+                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" constant="20" id="XOx-7Z-PXh"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="trailing" secondItem="SQe-Tw-wQG" secondAttribute="trailing" id="Z07-2o-YAz"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="trailing" secondItem="SQe-Tw-wQG" secondAttribute="trailing" id="imf-Fu-CBo"/>
                             <constraint firstItem="jyC-G0-Vbc" firstAttribute="trailing" secondItem="SQe-Tw-wQG" secondAttribute="trailing" id="jrd-cT-OYe"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="centerX" secondItem="xw9-Ro-Fai" secondAttribute="centerX" id="sdn-2O-8GI"/>
-                            <constraint firstItem="abd-jd-9tI" firstAttribute="bottom" secondItem="SQe-Tw-wQG" secondAttribute="bottom" id="zuH-3C-T3Q"/>
+                            <constraint firstItem="abd-jd-9tI" firstAttribute="bottom" secondItem="SQe-Tw-wQG" secondAttribute="bottom" constant="20" id="zuH-3C-T3Q"/>
                         </constraints>
                     </view>
                     <connections>
