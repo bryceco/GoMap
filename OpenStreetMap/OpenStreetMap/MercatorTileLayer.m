@@ -309,7 +309,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	layer = [CALayer layer];
 	layer.zPosition = zoomLevel;
 	layer.anchorPoint = CGPointMake(0,1);
-	layer.edgeAntialiasingMask = 0;
+	layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
 	layer.opaque = YES;
 	[layer setValue:tileKey forKey:@"tileKey"];
 #if !CUSTOM_TRANSFORM

@@ -120,6 +120,8 @@
 
 - (void)didReceiveMemoryWarning
 {
+	[super didReceiveMemoryWarning];
+	
 	DLog(@"memory warning: %f MB used", MemoryUsedMB() );
 
 	[self.mapView flashMessage:@"Low memory: clearing cache"];

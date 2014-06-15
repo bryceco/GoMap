@@ -28,6 +28,8 @@
 @class PushPinView;
 @class RulerLayer;
 @class SpeechBalloonView;
+@class FpsLabel;
+
 
 @protocol MapViewDelegate <NSObject>
 -(void)mapviewSelectionChanged:(id)selection;
@@ -86,6 +88,8 @@
 
 #if TARGET_OS_IPHONE
 @property (assign,nonatomic)	MapViewController	*	viewController;
+@property IBOutlet FpsLabel							*	fpsLabel;
+
 #endif
 
 @property (readonly,nonatomic)	MercatorTileLayer	*	aerialLayer;

@@ -1068,19 +1068,19 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	}
 }
 
--(void)drawMapCssArea:(ObjectSubpart *)subpart context:(CGContextRef)ctx
+-(BOOL)drawMapCssArea:(ObjectSubpart *)subpart context:(CGContextRef)ctx
 {
 	if ( !subpart.object.isWay )
-		return;
+		return NO;
 	OsmWay * way = (id)subpart.object;
 	if ( !way.isArea )
-		return;
+		return NO;
 
 	NSDictionary * cssDict	= subpart.properties;
 	RGBAColor	fillColor;
 	BOOL fill = DictRGB( cssDict, &fillColor,	@"fill-color" );
 	if ( !fill )
-		return;
+		return NO;
 	DictFloat( cssDict, &fillColor.alpha,	@"fill-opacity" );
 	CGPathRef path = [self pathForWay:way];
 	CGContextBeginPath(ctx);
@@ -1088,16 +1088,17 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, fillColor.alpha);
 	CGContextFillPath(ctx);
 	CGPathRelease(path);
+	return YES;
 }
 
--(void)drawArea:(OsmWay *)way context:(CGContextRef)ctx
+-(BOOL)drawArea:(OsmWay *)way context:(CGContextRef)ctx
 {
 	if ( !way.isArea )
-		return;
+		return NO;
 
 	TagInfo * tagInfo = way.tagInfo;
 	if ( tagInfo.areaColor == nil )
-		return;
+		return NO;
 	RGBAColor	fillColor;
 	[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
 	CGPathRef path = [self pathForWay:way];
@@ -1106,6 +1107,7 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, 0.25);
 	CGContextFillPath(ctx);
 	CGPathRelease(path);
+	return YES;
 }
 
 static inline NSColor * ShadowColorForColor( CGFloat r, CGFloat g, CGFloat b )
@@ -1119,17 +1121,17 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	return ShadowColorForColor(r, g, b);
 }
 
--(void)drawWayCasing:(OsmWay *)way context:(CGContextRef)ctx
+-(BOOL)drawWayCasing:(OsmWay *)way context:(CGContextRef)ctx
 {
 	if ( [way isKindOfClass:[ObjectSubpart class]] )
-		return;
+		return NO;
 
 	if ( way.isArea )
-		return;
+		return NO;
 
 	TagInfo * tagInfo = way.tagInfo;
 	if ( tagInfo.lineWidth == 0 )
-		return;
+		return NO;
 
 	CGPathRef path = [self pathForWay:way];
 	CGContextBeginPath(ctx);
@@ -1141,6 +1143,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	CGContextStrokePath(ctx);
 
 	CGPathRelease(path);
+	return YES;
 }
 
 -(void)drawSelectedWayHighlight:(CGPathRef)path width:(CGFloat)lineWidth wayColor:(RGBAColor)wayColor nodes:(NSSet *)nodes context:(CGContextRef)ctx
@@ -1243,7 +1246,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		CGContextStrokePath(ctx);
 }
 
--(void)drawWay:(OsmWay *)way context:(CGContextRef)ctx
+-(BOOL)drawWay:(OsmWay *)way context:(CGContextRef)ctx
 {
 	NSString * name = [way.tags objectForKey:@"name"];
 	if ( [name isEqualToString:@"Test"] ) {
@@ -1274,6 +1277,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	}
 
 	CGPathRelease(path);
+	return YES;
 }
 
 -(void)drawMapCssName:(ObjectSubpart *)subpart context:(CGContextRef)ctx
@@ -1418,6 +1422,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 	// don't draw the same name twice
 	if ( [_nameDrawSet containsObject:name] )
 		return NO;
+	[_nameDrawSet addObject:name];
 
 	//	DLog(@"draw way: %ld nodes", way.nodes.count);
 
@@ -1452,22 +1457,21 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		UIColor * shadowColor = ShadowColorForColor2(self.textColor);
 		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint font:font color:self.textColor shadowColor:shadowColor context:ctx];
 	}
-	[_nameDrawSet addObject:name];
 	return YES;
 }
 
 
--(void)drawNode:(OsmNode *)node context:(CGContextRef)ctx
+-(BOOL)drawNode:(OsmNode *)node context:(CGContextRef)ctx
 {
 	if ( _mapCss ) {
 		ObjectSubpart * subpart = (id)node;
 		OsmBaseObject * object = subpart.object;
 		if ( !object.isNode && !(object.isWay && ((OsmWay *)object).isArea) )
-			return;
+			return NO;
 		NSDictionary * cssDict	= subpart.properties;
 		NSString * iconName = [cssDict objectForKey:@"icon-image"];
 		if ( iconName == nil ) {
-			return;
+			return NO;
 		}
 		node = (id)object;
 	}
@@ -1481,7 +1485,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		pt = [self pointForLat:pt.y lon:pt.x];
 	} else {
 		assert(NO);
-		return;
+		return NO;
 	}
 
 	TagInfo * tagInfo = node.tagInfo;
@@ -1549,6 +1553,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			CGContextStrokePath(ctx);
 		}
 	}
+	return YES;
 }
 
 -(void)drawHighlighedObjects:(CGContextRef)ctx
@@ -1760,7 +1765,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 #if TARGET_OS_IPHONE
-	NSInteger nameLimit = 5;
+	NSInteger nameLimit = 0;
 	NSInteger limit = 100;
 #else
 	// need a way to prevent selecting/modifying objects that are not displayed
@@ -1768,7 +1773,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	NSInteger limit = 500;
 #endif
 
-	NSDate * start = [NSDate date];
+	CFTimeInterval totalTime = CACurrentMediaTime();
 
 	// get objects in visible rect
 	_shownObjects = [self getVisibleObjects];
@@ -1777,7 +1782,6 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 //	DLog(@"%d total objects", _mapData.nodeCount + _mapData.wayCount + _mapData.relationCount);
 //	DLog(@"%d visible objects", (int)_shownObjects.count);
 //	DLog(@"get visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
-	start = [NSDate date];
 
 	// get taginfo for objects
 	for ( OsmBaseObject * object in _shownObjects ) {
@@ -1786,12 +1790,8 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		}
 	}
 
-	start = [NSDate date];
-
 	// sort from big to small objects
 	[_shownObjects partialSortK:limit compare:VisibleSizeLess];
-
-	start = [NSDate date];
 
 	if ( _shownObjects.count > limit ) {
 		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(limit,_shownObjects.count-limit)];
@@ -1800,44 +1800,73 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	[self drawOceans:_shownObjects context:ctx];
 
+	int areaCount = 0;
+	int casingCount = 0;
+	int wayCount = 0;
+	int nodeCount = 0;
+	int nameCount = 0;
+
 	// draw areas
+	CFTimeInterval areaTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
-			[self drawArea:(id)obj context:ctx];
+			areaCount += [self drawArea:(id)obj context:ctx];
 		}
 	}
+	areaTime = CACurrentMediaTime() - areaTime;
+
 	// draw casings
+	CFTimeInterval casingTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
-			[self drawWayCasing:(id)obj context:ctx];
+			casingCount += [self drawWayCasing:(id)obj context:ctx];
 		}
 	}
+	casingTime = CACurrentMediaTime() - casingTime;
+
 	// draw ways
+	CFTimeInterval wayTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
-			[self drawWay:(id)obj context:ctx];
+			wayCount += [self drawWay:(id)obj context:ctx];
 		}
 	}
+	wayTime = CACurrentMediaTime() - wayTime;
+
 	// draw nodes
+	CFTimeInterval nodeTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isNode ) {
-			[self drawNode:(id)obj context:ctx];
+			nodeCount += [self drawNode:(id)obj context:ctx];
 		}
 	}
+	nodeTime = CACurrentMediaTime() - nodeTime;
+
 	// draw names
+	CFTimeInterval nameTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
-			nameLimit -= [self drawWayName:(id)obj context:ctx];
+			BOOL drawn = [self drawWayName:(id)obj context:ctx];
+			nameCount += drawn;
+			nameLimit -= drawn;
 			if ( nameLimit <= 0 )
 				break;
 		}
 	}
+	nameTime = CACurrentMediaTime() - nameTime;
+
 	// draw highlights
 	[self drawHighlighedObjects:ctx];
 
-//	DLog(@"draw visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
-	start = [NSDate date];
+	totalTime = CACurrentMediaTime() - totalTime;
 
+	DLog( @"%.2f: area %d (%.2f), casing %d (%.2f), way %d (%.2f), node %d (%.2f) name %d (%.2f)",
+		 totalTime*1000,
+		 areaCount, areaTime*1000,
+		 casingCount, casingTime*1000,
+		 wayCount, wayTime*1000,
+		 nodeCount, nodeTime*1000,
+		 nameCount, nameTime*1000 );
 }
 
 #pragma mark Hit Testing

@@ -20,6 +20,7 @@
 		0219563216DDC26E00074D15 /* GpxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0219563116DDC26E00074D15 /* GpxViewController.m */; };
 		021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C6AA71686145C00FB17B0 /* UndoManager.m */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
+		021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 021D4E4A194E0BCB002154B3 /* FpsLabel.m */; };
 		021E5D6B16C0507B00B7A02A /* transport_stop.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 021E5D6A16C0507A00B7A02A /* transport_stop.p.64.png */; };
 		02205F3B1674550D00D57D23 /* ArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 02205F3A1674550D00D57D23 /* ArrowBlack.png */; };
 		0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0223DB521675D53200D6F825 /* POITypeViewController.m */; };
@@ -473,6 +474,8 @@
 		021C6AA61686145C00FB17B0 /* UndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndoManager.h; path = ../../OpenStreetMap/UndoManager.h; sourceTree = "<group>"; };
 		021C6AA71686145C00FB17B0 /* UndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UndoManager.m; path = ../../OpenStreetMap/UndoManager.m; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		021D4E49194E0BCB002154B3 /* FpsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FpsLabel.h; sourceTree = "<group>"; };
+		021D4E4A194E0BCB002154B3 /* FpsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FpsLabel.m; sourceTree = "<group>"; };
 		021E5D6A16C0507A00B7A02A /* transport_stop.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transport_stop.p.64.png; sourceTree = "<group>"; };
 		02205F3A1674550D00D57D23 /* ArrowBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlack.png; sourceTree = "<group>"; };
 		0223DB511675D53200D6F825 /* POITypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POITypeViewController.h; sourceTree = "<group>"; };
@@ -1166,6 +1169,8 @@
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
+				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
+				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
 			);
 			name = "Go Map!";
 			path = OSMiOS;
@@ -2072,6 +2077,7 @@
 				0205460A1676721F004A2A23 /* POISourceViewController.m in Sources */,
 				0205460D16767576004A2A23 /* POIWiFiViewController.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
+				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				02A077C3167A567E00686261 /* POIFixMeViewController.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
 				022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */,

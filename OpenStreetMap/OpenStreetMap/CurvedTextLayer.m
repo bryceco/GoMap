@@ -84,6 +84,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 		}
 	}
 	CFRelease(line);
+	CFRelease(ctFont);
 
 	CGContextRestoreGState(ctx);
 }

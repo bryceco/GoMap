@@ -14,6 +14,7 @@
 #import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
 #import "EditorLayerGL.h"
+#import "FpsLabel.h"
 #import "GpxLayer.h"
 #if !TARGET_OS_IPHONE
 #import "HtmlErrorWindow.h"
@@ -198,6 +199,14 @@ CGSize SizeForImage( NSImage * image )
 		_rulerLayer.mapView = self;
 		_rulerLayer.zPosition = Z_RULER;
 		[self.layer addSublayer:_rulerLayer];
+
+#if 1
+		_editorLayer.drawsAsynchronously = YES;
+		_aerialLayer.drawsAsynchronously = YES;
+		_mapnikLayer.drawsAsynchronously = YES;
+		_rulerLayer.drawsAsynchronously	= YES;
+#endif
+
 
 #if !TARGET_OS_IPHONE
 		[self setFrame:frame];
@@ -924,7 +933,7 @@ CGSize SizeForImage( NSImage * image )
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
 
-#if 0 // IOS 7 temp fix
+#if 1 // IOS 7 temp fix, but doesn't seem to affect perf on ios 8
 	[self layoutIfNeeded];
 #endif
 
@@ -1834,6 +1843,7 @@ checkGrab:
 	} else {
 		DLog( @"state %d", (int)pan.state);
 	}
+	[_fpsLabel frameUpdated];
 }
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
