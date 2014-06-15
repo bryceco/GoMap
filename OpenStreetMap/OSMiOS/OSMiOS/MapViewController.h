@@ -19,6 +19,7 @@
 	IBOutlet UIBarButtonItem *	_uploadButton;
 	IBOutlet UIBarButtonItem *	_undoButton;
 	IBOutlet UIBarButtonItem *	_redoButton;
+	IBOutlet UIView			*	_statusBarBackground;
 
 	CLLocationCoordinate2D		_pushPinLocation;
 }

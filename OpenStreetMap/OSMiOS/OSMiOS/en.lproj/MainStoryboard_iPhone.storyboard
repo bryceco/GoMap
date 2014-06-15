@@ -116,11 +116,21 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="66.6 FPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9t5-wq-j1u" customClass="FpsLabel">
-                                        <rect key="frame" x="121" y="29" width="79" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="121" y="29" width="102" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <color key="textColor" red="1" green="0.28449999999999998" blue="0.19" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
+                                        </accessibility>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="Lg8-DR-Vru"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -128,10 +138,14 @@
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="0BL-mM-7or"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="bottom" secondItem="fss-Ag-fKJ" secondAttribute="bottom" id="1kc-bF-5VT"/>
                                     <constraint firstAttribute="bottom" secondItem="I03-YM-uHY" secondAttribute="bottom" constant="63" id="34D-Bs-Oir"/>
+                                    <constraint firstItem="g4c-aL-FjW" firstAttribute="leading" secondItem="GTv-eT-l7q" secondAttribute="leading" id="3Ky-eD-XUk"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" id="JSh-r1-sIJ"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="centerX" secondItem="Zh9-uC-62t" secondAttribute="centerX" id="Oun-QH-4xK"/>
                                     <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="26" id="PTj-zH-igC"/>
+                                    <constraint firstItem="g4c-aL-FjW" firstAttribute="trailing" secondItem="GTv-eT-l7q" secondAttribute="trailing" id="T60-8I-jog"/>
+                                    <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="g4c-aL-FjW" secondAttribute="bottom" priority="1" constant="8" symbolic="YES" id="VdS-iU-4ux"/>
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="26" id="blu-IX-YQW"/>
+                                    <constraint firstItem="g4c-aL-FjW" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" id="cAR-iT-KBF"/>
                                     <constraint firstAttribute="trailing" secondItem="TnL-YC-BCg" secondAttribute="trailing" constant="12" id="hAx-Am-c4P"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="trailing" secondItem="fss-Ag-fKJ" secondAttribute="trailing" id="lPN-o8-UjX"/>
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="o0n-ED-1vg"/>
@@ -166,6 +180,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="_redoButton" destination="GBB-jJ-Cve" id="o8q-85-BLI"/>
+                        <outlet property="_statusBarBackground" destination="g4c-aL-FjW" id="PlL-Xh-DPy"/>
                         <outlet property="_toolbar" destination="GTv-eT-l7q" id="sfg-93-w4E"/>
                         <outlet property="_trashcanButton" destination="ddN-i7-og1" id="oYg-zn-jNe"/>
                         <outlet property="_undoButton" destination="in0-IO-OB6" id="zx7-uA-FJ2"/>
@@ -203,7 +218,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-579" y="-74"/>
+            <point key="canvasLocation" x="-1090" y="-182"/>
         </scene>
         <!--Common Tags View Controller - Point of Interest-->
         <scene sceneID="gM4-dB-RnE">
@@ -3808,7 +3823,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ecj-bb-uDa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1105" y="-74"/>
+            <point key="canvasLocation" x="-1605" y="-182"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SXi-y5-SPo">
