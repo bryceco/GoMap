@@ -234,13 +234,14 @@ static const CGFloat GradientHeight = 20.0;
 			UITableViewCell * cell = (id)self.superview.superview;
 			UITableView * tableView = (id)cell.superview;
 			BOOL iOS7 = NO;
-			if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
+			while ( ![tableView isKindOfClass:[UITableView class]] ) {
 				// iOS 7
 				iOS7 = YES;
-				tableView = (id)tableView.superview.superview;
+				tableView = (id)tableView.superview;
+			}
+			while ( ![cell isKindOfClass:[UITableViewCell class]] ) {
 				cell = (id)cell.superview;
 			}
-			assert( [tableView isKindOfClass:[UITableView class]] );
 
 			// add completion table to tableview
 			CGRect rect = [self frameForCompletionTableView];
@@ -279,9 +280,8 @@ static const CGFloat GradientHeight = 20.0;
 
 		UITableViewCell * cell = (id)[self.superview superview];
 		UITableView * tableView = (id)[cell superview];
-		if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
-			// ios 7
-			tableView = (id)tableView.superview.superview;
+		while ( ![tableView isKindOfClass:[UITableView class]] ) {
+			tableView = (id)tableView.superview;
 		}
 		NSIndexPath * cellIndexPath = [tableView indexPathForCell:cell];
 		[tableView scrollToRowAtIndexPath:cellIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];

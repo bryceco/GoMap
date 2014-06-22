@@ -677,7 +677,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-	assert( _parserStack.count == 0 );
+	assert( _parserStack.count == 0 || _parseError );
 	_parserCurrentElementText = nil;
 	_parserStack = nil;
 }

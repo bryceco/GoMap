@@ -36,6 +36,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
 	[[NSUserDefaults standardUserDefaults] setObject:_historyArray forKey:@"searchHistory"];
 }
 

@@ -21,6 +21,16 @@
 	if ( self ) {
 		self.frame = CGRectMake(0, 0, 16, 16);
 
+		self.actions = @{
+						 @"onOrderIn"	: [NSNull null],
+						 @"onOrderOut"	: [NSNull null],
+						 @"sublayers"	: [NSNull null],
+						 @"contents"	: [NSNull null],
+						 @"bounds"		: [NSNull null],
+						 @"position"	: [NSNull null],
+						 @"transform"	: [NSNull null],
+						 };
+
 		CAShapeLayer * ring = [CAShapeLayer layer];
 		CGFloat startRadius		= 5;
 		CGFloat finishRadius	= 25;

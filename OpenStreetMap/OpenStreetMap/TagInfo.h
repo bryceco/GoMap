@@ -22,7 +22,7 @@
 {
 	NSImage *	_icon;
 	CGImageRef	_cgIcon;
-	CGFloat		_renderSize;
+	NSInteger	_renderSize;
 }
 @property (strong,nonatomic)	NSString	*	key;
 @property (strong,nonatomic)	NSString	*	value;
@@ -42,7 +42,7 @@
 -(CGImageRef)cgIcon;
 -(NSString *)friendlyName2;
 
--(CGFloat)renderSize:(OsmBaseObject *)object;
+-(NSInteger)renderSize:(OsmBaseObject *)object;
 
 +(NSColor *)colorForString:(NSString *)text;
 +(NSString *)stringForColor:(NSColor *)color;

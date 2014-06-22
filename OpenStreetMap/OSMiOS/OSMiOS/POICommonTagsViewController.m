@@ -190,6 +190,7 @@
 
 -(IBAction)done:(id)sender
 {
+	[self resignAll];
 	[self dismissViewControllerAnimated:YES completion:nil];
 
 	POITabBarController * tabController = (id)self.tabBarController;

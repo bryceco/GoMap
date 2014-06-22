@@ -90,6 +90,18 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 						[invocation setArgument:(void *)&i atIndex:2+index];
 					}
 					break;
+				case 'q':
+					{
+						long long l = [obj longLongValue];
+						[invocation setArgument:(void *)&l atIndex:2+index];
+					}
+					break;
+				case 'B':
+					{
+						BOOL b = [obj boolValue];
+						[invocation setArgument:(void *)&b atIndex:2+index];
+					}
+					break;
 				case '@':
 					if ( obj == [NSNull null] )
 						obj = nil;

@@ -25,6 +25,8 @@
 
 extern CGSize SizeForImage(NSImage * image);
 
+// Disable animations
+static NSDictionary * ActionDictionary = nil;
 
 @implementation MercatorTileLayer
 
@@ -41,6 +43,17 @@ extern CGSize SizeForImage(NSImage * image);
 		self.opaque = YES;
 
 		self.needsDisplayOnBoundsChange = YES;
+
+		// disable animations
+		self.actions = @{
+				 @"onOrderIn" : [NSNull null],
+				 @"onOrderOut" : [NSNull null],
+				 @"sublayers" : [NSNull null],
+				 @"contents" : [NSNull null],
+				 @"bounds" : [NSNull null],
+				 @"position" : [NSNull null],
+				 @"transform" : [NSNull null],
+		 };
 
 		_mapView = mapView;
 
@@ -307,10 +320,12 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	// create layer
 	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
 	layer = [CALayer layer];
+	layer.actions = self.actions;
 	layer.zPosition = zoomLevel;
 	layer.anchorPoint = CGPointMake(0,1);
 	layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
 	layer.opaque = YES;
+	layer.hidden = YES;
 	[layer setValue:tileKey forKey:@"tileKey"];
 #if !CUSTOM_TRANSFORM
 	double scale = 256.0 / (1 << zoomLevel);
@@ -327,6 +342,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 #else
 		layer.contents = image;
 #endif
+		layer.hidden = NO;
 		completion(nil);
 		return;
 	}
@@ -346,6 +362,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 #else
 				layer.contents = image;
 #endif
+				layer.hidden = NO;
 				[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
 				completion(nil);
 			});
@@ -374,6 +391,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 #else
 						layer.contents = image;
 #endif
+						layer.hidden = NO;
 						[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
 						completion(nil);
 					});

@@ -200,7 +200,7 @@ CGSize SizeForImage( NSImage * image )
 		_rulerLayer.zPosition = Z_RULER;
 		[self.layer addSublayer:_rulerLayer];
 
-#if 1
+#if 0 // enable for release, disable to measure perf
 		_editorLayer.drawsAsynchronously = YES;
 		_aerialLayer.drawsAsynchronously = YES;
 		_mapnikLayer.drawsAsynchronously = YES;
@@ -458,6 +458,14 @@ CGSize SizeForImage( NSImage * image )
 			ignoreButton = @"Ignore";
 		}
 
+		// don't let message be too long
+		if ( text.length > 1000 ) {
+			NSMutableString * newText = [NSMutableString stringWithString:text];
+			[newText deleteCharactersInRange:NSMakeRange(1000, text.length-1000)];
+			[newText appendString:@"..."];
+			text = newText;
+		}
+
 		_alertError = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:@"OK" otherButtonTitles:ignoreButton, nil];
 		[_alertError show];
 #else
@@ -682,7 +690,11 @@ CGSize SizeForImage( NSImage * image )
 
 -(IBAction)locateMe:(id)sender
 {
-	[_locationManager requestWhenInUseAuthorization];
+	// ios 8 and later:
+	if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization:)] ) {
+		[_locationManager requestWhenInUseAuthorization];
+	}
+
 	_userOverrodeLocationPosition	= NO;
 	_userOverrodeLocationZoom		= NO;
 	[_locationManager startUpdatingLocation];
@@ -912,12 +924,6 @@ CGSize SizeForImage( NSImage * image )
 	if ( delta.x == 0.0 && delta.y == 0.0 )
 		return;
 
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:0.0];
-
-//	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-
-
 #if TARGET_OS_IPHONE
 	_pushpinView.arrowPoint = CGPointMake( _pushpinView.arrowPoint.x + delta.x, _pushpinView.arrowPoint.y - delta.y );
 #endif
@@ -932,12 +938,6 @@ CGSize SizeForImage( NSImage * image )
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
-
-#if 1 // IOS 7 temp fix, but doesn't seem to affect perf on ios 8
-	[self layoutIfNeeded];
-#endif
-
-	[CATransaction commit];
 }
 
 
@@ -954,9 +954,6 @@ CGSize SizeForImage( NSImage * image )
 	}
 #endif
 
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:0.0];
-
 	OSMTransform	transform = self.mapTransform;
 	transform = OSMTransformScale(transform, ratio);
 	self.mapTransform = transform;
@@ -965,17 +962,16 @@ CGSize SizeForImage( NSImage * image )
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
 
-#if 0 // IOS 7 temp fix
-	[self layoutIfNeeded];
-#endif
-
-	[CATransaction commit];
-
 #if TARGET_OS_IPHONE
 	if ( _pushpinView ) {
 		_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
 	}
 #endif
+}
+
+-(void)drawRect:(CGRect)rect
+{
+	[_fpsLabel frameUpdated];
 }
 
 #pragma mark Key presses
@@ -1843,7 +1839,6 @@ checkGrab:
 	} else {
 		DLog( @"state %d", (int)pan.state);
 	}
-	[_fpsLabel frameUpdated];
 }
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {

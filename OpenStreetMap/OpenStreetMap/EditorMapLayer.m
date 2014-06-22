@@ -87,6 +87,16 @@ const CGFloat WayHighlightRadius = 6.0;
 			return data;
 		}];
 
+		self.actions = @{
+						  @"onOrderIn"	: [NSNull null],
+						  @"onOrderOut" : [NSNull null],
+						  @"sublayers"	: [NSNull null],
+						  @"contents"	: [NSNull null],
+						  @"bounds"		: [NSNull null],
+						  @"position"	: [NSNull null],
+						  @"transform"	: [NSNull null],
+		};
+
 		[self setNeedsDisplay];
 	}
 	return self;
@@ -1735,10 +1745,18 @@ static NSComparisonResult VisibleSizeCompare( OsmBaseObject * obj1, OsmBaseObjec
 		return diff > 0 ? NSOrderedAscending : NSOrderedDescending;
 	}
 
-	double size1 = [obj1.tagInfo renderSize:obj1];
-	double size2 = [obj2.tagInfo renderSize:obj2];
-	if ( size1 != size2 )
-		return size1 > size2 ? NSOrderedAscending : NSOrderedDescending;
+	NSInteger size1 = [obj1.tagInfo renderSize:obj1];
+	NSInteger size2 = [obj2.tagInfo renderSize:obj2];
+	if ( size1 > size2 ) return NSOrderedAscending;
+	if ( size1 < size2 ) return NSOrderedDescending;
+	return NSOrderedSame;
+}
+
+static NSComparisonResult VisibleSizeCompareStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
+{
+	NSComparisonResult diff1 = VisibleSizeCompare( obj1, obj2 );
+	if ( diff1 )
+		return diff1;
 
 	// break ties by showing older stuff first
 	OsmIdentifier diff2 = obj1.changeset - obj2.changeset;
@@ -1749,15 +1767,21 @@ static NSComparisonResult VisibleSizeCompare( OsmBaseObject * obj1, OsmBaseObjec
 }
 static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
-	NSComparisonResult result = VisibleSizeCompare( obj1, obj2 );
+	NSComparisonResult result = VisibleSizeCompareStrict( obj1, obj2 );
 	return result < 0;
 }
 
 - (void)drawInContext:(CGContextRef)ctx
 {
-	_nameDrawSet = [NSMutableSet new];
+#if 0
+	// these have no affect on performance:
+	CGContextSetShouldAntialias(ctx, NO);
+	CGContextSetShouldSmoothFonts(ctx, NO);
+	CGContextSetShouldSubpixelPositionFonts(ctx, NO);
+	CGContextSetShouldSubpixelQuantizeFonts(ctx, NO);
+#endif
 
-//	DLog(@"z = %f, fix way labels", log2( _mapView.mapTransform.a ) );
+	_nameDrawSet = [NSMutableSet new];
 
 	if ( _mapCss ) {
 		[self drawMapCssInContext:ctx];
@@ -1765,23 +1789,17 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 #if TARGET_OS_IPHONE
-	NSInteger nameLimit = 0;
-	NSInteger limit = 100;
+	NSInteger objectLimit = 100;
+	NSInteger nameLimit = 10;
 #else
-	// need a way to prevent selecting/modifying objects that are not displayed
+	NSInteger objectLimit = 500;
 	NSInteger nameLimit = 100;
-	NSInteger limit = 500;
 #endif
 
 	CFTimeInterval totalTime = CACurrentMediaTime();
 
 	// get objects in visible rect
 	_shownObjects = [self getVisibleObjects];
-
-//	DLog(@" ");
-//	DLog(@"%d total objects", _mapData.nodeCount + _mapData.wayCount + _mapData.relationCount);
-//	DLog(@"%d visible objects", (int)_shownObjects.count);
-//	DLog(@"get visible = %f",[[NSDate date] timeIntervalSinceDate:start]);
 
 	// get taginfo for objects
 	for ( OsmBaseObject * object in _shownObjects ) {
@@ -1791,10 +1809,37 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	// sort from big to small objects
-	[_shownObjects partialSortK:limit compare:VisibleSizeLess];
+	[_shownObjects partialSortK:objectLimit compare:VisibleSizeLess];
 
-	if ( _shownObjects.count > limit ) {
-		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(limit,_shownObjects.count-limit)];
+	// adjust the list of objects so that we get all or none of the same type
+	if ( _shownObjects.count > objectLimit ) {
+		// We have more objects available than we want to display. If some of the objects are the same size as the last visible object then include those too.
+		NSInteger lastIndex = objectLimit;
+		OsmBaseObject * last = _shownObjects[ objectLimit-1 ];
+		for ( NSInteger i = objectLimit, e = _shownObjects.count; i < e; ++i ) {
+			if ( VisibleSizeCompare( last, _shownObjects[i] ) == NSOrderedSame ) {
+				_shownObjects[lastIndex++] = _shownObjects[i];
+			}
+		}
+		if ( lastIndex - objectLimit >= objectLimit ) {
+			// we doubled the number of objects, so back off instead
+			NSMutableArray * newList = [NSMutableArray arrayWithCapacity:objectLimit];
+			for ( NSInteger i = objectLimit-1; i >= 0; --i ) {
+				OsmBaseObject * item = _shownObjects[ i ];
+				if ( VisibleSizeCompare( item, last ) == NSOrderedAscending ) {
+					[newList addObject:item];
+				}
+			}
+			if ( newList.count >= 1 ) {
+				_shownObjects = newList;
+				lastIndex = _shownObjects.count;
+			}
+		}
+		DLog( @"added %ld same", (long)lastIndex - objectLimit);
+		objectLimit = lastIndex;
+
+		// remove unwanted objects
+		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(objectLimit,_shownObjects.count-objectLimit)];
 		[_shownObjects removeObjectsAtIndexes:range];
 	}
 
@@ -1860,6 +1905,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	totalTime = CACurrentMediaTime() - totalTime;
 
+#if 1
 	DLog( @"%.2f: area %d (%.2f), casing %d (%.2f), way %d (%.2f), node %d (%.2f) name %d (%.2f)",
 		 totalTime*1000,
 		 areaCount, areaTime*1000,
@@ -1867,6 +1913,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		 wayCount, wayTime*1000,
 		 nodeCount, nodeTime*1000,
 		 nameCount, nameTime*1000 );
+#endif
 }
 
 #pragma mark Hit Testing

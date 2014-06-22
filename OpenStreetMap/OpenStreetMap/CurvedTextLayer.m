@@ -7,8 +7,9 @@
 //
 
 #import <CoreText/CoreText.h>
-#import "CurvedTextLayer.h"
+#import <QuartzCore/QuartzCore.h>
 
+#import "CurvedTextLayer.h"
 #import "PathUtil.h"
 
 
@@ -101,8 +102,8 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 #if TARGET_OS_IPHONE
 	if ( font == nil )
 		font = [UIFont systemFontOfSize:10];
-	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : color,		NSFontAttributeName : font }];
-	NSAttributedString * s2 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : shadowColor,	NSFontAttributeName : font }];
+	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor,		NSFontAttributeName : font }];
+	NSAttributedString * s2 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)shadowColor.CGColor,	NSFontAttributeName : font }];
 #else
 	if ( font == nil )
 		font = [NSFont systemFontOfSize:10];

@@ -189,61 +189,59 @@ static TagInfo * g_DefaultRender = nil;
 }
 
 
--(CGFloat)renderSize:(OsmBaseObject *)object
+-(NSInteger)renderSize:(OsmBaseObject *)object
 {
 	static NSDictionary * highwayDict = nil;
 	if ( highwayDict == nil ) {
 		highwayDict = @{
-		@"motorway"			: @4,
-		@"motorway_link"	: @2,
-		@"trunk"			: @3,
-		@"trunk_link"		: @1,
-		@"primary"			: @2,
-		@"primary_link"		: @1,
-		@"secondary"		: @1.5,
-		@"secondary_link"	: @1,
-		@"tertiary"			: @1.4,
-		@"tertiary_link"	: @1,
-		@"living_street"	: @1,
-		@"pedestrian"		: @0.2,
-		@"residential"		: @1.2,
-		@"unclassified"		: @0.9,
-		@"service"			: @0.7,
-		@"track"			: @0.5,
-		@"bus_guideway"		: @0.7,
-		@"raceway"			: @1.1,
-		@"road"				: @1,
-		@"path"				: @0.1,
-		@"footway"			: @0.1,
-		@"cycleway"			: @0.11,
-		@"bridleway"		: @0.11,
-		@"steps"			: @0.09,
-		@"proposed"			: @0.1,
-		@"construction"		: @0.1,
+			@"motorway"			: @4000,
+			@"trunk"			: @3000,
+			@"motorway_link"	: @2100,
+			@"primary"			: @2000,
+			@"trunk_link"		: @1000,
+			@"primary_link"		: @1200,
+			@"secondary"		: @1500,
+			@"tertiary"			: @1400,
+			@"residential"		: @1200,
+			@"raceway"			: @1110,
+			@"secondary_link"	: @1100,
+			@"tertiary_link"	: @1050,
+			@"living_street"	: @1020,
+			@"road"				: @1000,
+			@"unclassified"		: @900,
+			@"service"			: @710,
+			@"bus_guideway"		: @700,
+			@"track"			: @500,
+			@"pedestrian"		: @200,
+			@"cycleway"			: @130,
+			@"path"				: @120,
+			@"bridleway"		: @110,
+			@"footway"			: @100,
+			@"steps"			: @90,
+			@"construction"		: @82,
+			@"proposed"			: @81,
 		};
 	}
-	if ( _renderSize == 0.0 ) {
 
-		if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"coastline"] ) {
-			return _renderSize = 10;
-		}
-		if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
-			return _renderSize = 5;
-		}
-		if ( [_key isEqualToString:@"highway"] ) {
-			if ( _value ) {
-				id priority = highwayDict[_value];
-				_renderSize = [priority doubleValue];
-				if ( _renderSize )
-					return _renderSize;
-			}
-		}
-		_renderSize = nan("");
+	if ( _renderSize )
+		return _renderSize;
+
+
+	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"coastline"] ) {
+		return _renderSize = 10000;
 	}
-	if ( isnan(_renderSize) )
-		return object.isWay ? 1.0 : 0.05;
-
-	return _renderSize;
+	if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
+		return _renderSize = 5000;
+	}
+	if ( [_key isEqualToString:@"highway"] ) {
+		if ( _value ) {
+			id priority = highwayDict[_value];
+			_renderSize = [priority integerValue];
+			if ( _renderSize )
+				return _renderSize;
+		}
+	}
+	return _renderSize = object.isWay ? 999 : 50;
 }
 
 @end

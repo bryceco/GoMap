@@ -48,6 +48,19 @@ NSString * OsmValueForBoolean( BOOL b )
 @synthesize modifyCount = _modifyCount;
 @synthesize ident = _ident;
 
+-(NSString *)description
+{
+	NSMutableString * text = [NSMutableString stringWithFormat:@"id=%@ constructed=%@ deleted=%@ modifyCount=%d",
+			_ident,
+			_constructed ? @"Yes" : @"No",
+			self.deleted ? @"Yes" : @"No",
+			_modifyCount];
+	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+		[text appendFormat:@"\n  '%@' = '%@'", key, value];
+	}];
+	return text;
+}
+
 -(BOOL)isNode
 {
 	return NO;
@@ -398,12 +411,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"OsmNode id=%@ constructed=%@ deleted=%@ modifyCount=%d wayCount=%d",
-			_ident,
-			_constructed ? @"Yes" : @"No",
-			self.deleted ? @"Yes" : @"No",
-			_modifyCount,
-			(int32_t)_wayCount];
+	return [NSString stringWithFormat:@"OsmNode %@", [super description]];
 }
 
 -(BOOL)isNode
@@ -501,7 +509,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"OsmWay id=%@",self.ident];
+	return [NSString stringWithFormat:@"OsmWay %@", [super description]];
 }
 
 
@@ -756,6 +764,11 @@ static NSInteger _nextUnusedIdentifier = 0;
 #pragma mark OsmRelation
 
 @implementation OsmRelation
+
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"OsmRelation %@", [super description]];
+}
 
 -(void)constructMember:(OsmMember *)member
 {
