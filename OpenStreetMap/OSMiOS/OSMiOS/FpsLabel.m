@@ -24,7 +24,7 @@ const int FRAME_COUNT = 61;
 {
 	[super awakeFromNib];
 
-#if defined(DEBUG)
+#if 0 && defined(DEBUG)
 	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink)];
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
 
@@ -37,18 +37,20 @@ const int FRAME_COUNT = 61;
 		} );
 		dispatch_resume(_timer);
 	}
+#else
+	self.text = nil;
+	[self removeFromSuperview];
 #endif
+}
+
+- (void)dealloc
+{
+	dispatch_source_cancel( _timer );
 }
 
 - (void)displayLink
 {
 	[self frameUpdated];
-}
-
-
-- (void)dealloc
-{
-	dispatch_source_cancel( _timer );
 }
 
 - (void)updateText
@@ -77,6 +79,7 @@ const int FRAME_COUNT = 61;
 
 - (void)frameUpdated
 {
+#if defined(DEBUG)
 	// add to history
 	CFTimeInterval now = CACurrentMediaTime();
 	_history[_historyPos++] = now;
@@ -84,6 +87,7 @@ const int FRAME_COUNT = 61;
 		_historyPos = 0;
 
 	[self updateText];
+#endif
 }
 
 @end

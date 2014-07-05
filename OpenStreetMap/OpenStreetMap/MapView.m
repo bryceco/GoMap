@@ -200,7 +200,9 @@ CGSize SizeForImage( NSImage * image )
 		_rulerLayer.zPosition = Z_RULER;
 		[self.layer addSublayer:_rulerLayer];
 
-#if 0 // enable for release, disable to measure perf
+#if defined(DEBUG)
+		// enable for release, disable to measure perf
+#else
 		_editorLayer.drawsAsynchronously = YES;
 		_aerialLayer.drawsAsynchronously = YES;
 		_mapnikLayer.drawsAsynchronously = YES;
@@ -756,7 +758,7 @@ CGSize SizeForImage( NSImage * image )
 
 - (void)locationUpdatedTo:(CLLocation *)newLocation
 {
-	//	NSLog(@"updating with %@",_locationManager.location);
+	//	DLog(@"updating with %@",_locationManager.location);
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
@@ -1845,7 +1847,7 @@ checkGrab:
 	if ( pinch.state != UIGestureRecognizerStateChanged )
 		return;
 
-//	NSLog(@"zoom by %f",ratio);
+//	DLog(@"zoom by %f",ratio);
 
 	_userOverrodeLocationZoom = YES;
 

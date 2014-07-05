@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Bryce. All rights reserved.
 //
 
+#import "DLog.h"
 #import "GpxLayer.h"
 #import "DDXML.h"
 #import "MapView.h"
@@ -51,7 +52,7 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 	}
 	[(NSMutableArray *)_points addObject:pt];
 
-	NSLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
+	DLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
 }
 
 -(void)finishTrack

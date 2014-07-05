@@ -151,7 +151,7 @@
 		self.locationButton.tintColor = nil;
 	}
 	
-#if 0 // GPX longg pres
+#if 0 // GPX long pres
 	// changing the button tint changes the view, so we have to install again
 	[self installLongPressGestureRecognizer:YES];
 #endif
