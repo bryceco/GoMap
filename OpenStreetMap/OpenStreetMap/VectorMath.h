@@ -246,4 +246,16 @@ static inline CGAffineTransform CGAffineTransformFromOSMTransform( OSMTransform 
 	return t;
 }
 
+
+static inline double latp2lat(double a)
+{
+	return 180/M_PI * (2 * atan(exp(a*M_PI/180)) - M_PI/2);
+}
+static inline double lat2latp(double a)
+{
+	return 180/M_PI * log(tan(M_PI/4+a*(M_PI/180)/2));
+}
+
+
+
 #endif

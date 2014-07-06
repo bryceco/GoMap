@@ -52,6 +52,8 @@
 		025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 025224E716D7292E00B6FD53 /* RotatingNavigationController.m */; };
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
+		026370961968A3DB00634E50 /* POIActionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 026370951968A3DB00634E50 /* POIActionsViewController.m */; };
+		0263709B1969ADA200634E50 /* OsmMapData+Orthogonalize.m in Sources */ = {isa = PBXBuildFile; fileRef = 0263709A1969ADA200634E50 /* OsmMapData+Orthogonalize.m */; };
 		0266D3A516C02D9200AD9A83 /* seamark_anchor_berth.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */; };
 		0266D3A616C02D9200AD9A83 /* seamark_anchorage.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */; };
 		0266D3A716C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */; };
@@ -516,6 +518,10 @@
 		025224E716D7292E00B6FD53 /* RotatingNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatingNavigationController.m; sourceTree = "<group>"; };
 		025A1CFA1690B96E002B60CB /* OSM-Logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo57.png"; sourceTree = "<group>"; };
 		025A1CFB1690B96E002B60CB /* OSM-Logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo114.png"; sourceTree = "<group>"; };
+		026370941968A3DB00634E50 /* POIActionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIActionsViewController.h; sourceTree = "<group>"; };
+		026370951968A3DB00634E50 /* POIActionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIActionsViewController.m; sourceTree = "<group>"; };
+		0263709A1969ADA200634E50 /* OsmMapData+Orthogonalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OsmMapData+Orthogonalize.m"; sourceTree = "<group>"; };
+		0263709C1969ADB400634E50 /* OsmMapData+Orthogonalize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OsmMapData+Orthogonalize.h"; sourceTree = "<group>"; };
 		0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchor_berth.p.64.png; sourceTree = "<group>"; };
 		0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchorage.p.64.png; sourceTree = "<group>"; };
 		0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_cardinal.p.64.png; sourceTree = "<group>"; };
@@ -1115,6 +1121,8 @@
 				022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */,
 				020C2A8E168A7688003F2C2A /* CreditsViewController.h */,
 				020C2A8F168A7688003F2C2A /* CreditsViewController.m */,
+				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
+				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
 				02F371B216A4F3E6003E9548 /* HelpViewController.h */,
@@ -1135,6 +1143,10 @@
 				02BED99D168D102600357B94 /* OfflineViewController.h */,
 				02BED99E168D102600357B94 /* OfflineViewController.m */,
 				022B504716857E5F00E6619A /* OSMiOS.entitlements */,
+				0263709C1969ADB400634E50 /* OsmMapData+Orthogonalize.h */,
+				0263709A1969ADA200634E50 /* OsmMapData+Orthogonalize.m */,
+				026370941968A3DB00634E50 /* POIActionsViewController.h */,
+				026370951968A3DB00634E50 /* POIActionsViewController.m */,
 				02A077D0167A77A400686261 /* POIAllTagsViewController.h */,
 				02A077D1167A77A400686261 /* POIAllTagsViewController.m */,
 				023D1721168A36B00011FABC /* POIAttributesViewController.h */,
@@ -1169,8 +1181,6 @@
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
-				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
-				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
 			);
 			name = "Go Map!";
 			path = OSMiOS;
@@ -2051,6 +2061,7 @@
 				02ACBA4416713CCB00BB4414 /* AppDelegate.m in Sources */,
 				02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */,
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
+				026370961968A3DB00634E50 /* POIActionsViewController.m in Sources */,
 				02ACBBC216713F2B00BB4414 /* CurvedTextLayer.m in Sources */,
 				02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */,
 				02ACBBC416713F2B00BB4414 /* EditorMapLayer.m in Sources */,
@@ -2084,6 +2095,7 @@
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
+				0263709B1969ADA200634E50 /* OsmMapData+Orthogonalize.m in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
