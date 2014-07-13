@@ -75,7 +75,7 @@
 		[alertView show];
 
 	} else {
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Not available for this object." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Perform Action" message:@"" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Make Rectangular",@"Reverse Way",@"Merge Objects",@"Straighten Way",@"Split Way",@"Duplicate Object",nil];
 		[alertView show];
 	}
 }

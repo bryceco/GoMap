@@ -112,7 +112,7 @@ typedef void (^dequeueBlock)(void);
 			assert( [NSOperationQueue currentQueue] == _operationQueue );
 			NSHTTPURLResponse * httpResponse = (id)response;
 			if ( error == nil && [httpResponse isKindOfClass:[NSHTTPURLResponse class]] && httpResponse.statusCode >= 400 ) {
-				error = [NSError errorWithDomain:@"HTTP" code:httpResponse.statusCode userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"HTTP error %ld",(long)httpResponse.statusCode]}];
+				// error = [NSError errorWithDomain:@"HTTP" code:httpResponse.statusCode userInfo:@{ NSLocalizedDescriptionKey:[NSString stringWithFormat:@"HTTP error %ld",(long)httpResponse.statusCode]}];
 			}
 		}];
 

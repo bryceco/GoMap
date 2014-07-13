@@ -88,9 +88,11 @@
 
 #if TARGET_OS_IPHONE
 @property (assign,nonatomic)	MapViewController	*	viewController;
-@property IBOutlet FpsLabel							*	fpsLabel;
-
+@property (assign,nonatomic)	IBOutlet FpsLabel	*	fpsLabel;
 #endif
+
+@property (assign,nonatomic)	IBOutlet UIButton	*	actionButton;
+
 
 @property (readonly,nonatomic)	MercatorTileLayer	*	aerialLayer;
 @property (readonly,nonatomic)	MercatorTileLayer	*	mapnikLayer;
@@ -134,6 +136,8 @@
 -(IBAction)duplicateSelectedObject:(id)sender;
 -(IBAction)dropPin:(id)sender;
 -(void)removePin;
+-(void)refreshPushpinText;
+
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
 

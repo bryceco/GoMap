@@ -286,7 +286,7 @@
 		[self refreshCustomArray];
 		[self refreshAttributesArray:_osmObject];
 		
-		_relations = [mapData relationsForObject:osmObject];
+		_relations = osmObject.relations;
 		[_relationsTableView reloadData];
 
 		TagInfo * tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForObject:_osmObject];

@@ -149,12 +149,12 @@ static inline OSMPoint UnitVector( OSMPoint a )
 	return OSMPointMake(a.x/d, a.y/d);
 }
 
-static inline CGFloat CrossMag( OSMPoint a, OSMPoint b )
+static inline double CrossMag( OSMPoint a, OSMPoint b )
 {
 	return a.x*b.y - a.y*b.x;
 }
 
-static inline CGFloat DistanceFromPointToPoint( OSMPoint a, OSMPoint b)
+static inline double DistanceFromPointToPoint( OSMPoint a, OSMPoint b)
 {
 	return Mag( Sub(a,b) );
 }

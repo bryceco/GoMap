@@ -17,10 +17,11 @@
 @class OsmBaseObject;
 @class OsmNode;
 @class OsmWay;
+@class OsmRelation;
 @class QuadMap;
 @class SpeechBalloonLayer;
 
-@interface EditorMapLayer : CALayer
+@interface EditorMapLayer : CALayer<UIActionSheetDelegate>
 {
 	CGSize					_iconSize;
 	double					_highwayScale;
@@ -35,12 +36,16 @@
 
 	NSMutableArray		*	_shownObjects;
 	NSMutableArray		*	_selectionChangeCallbacks;
+
+	UIActionSheet		*	_actionSheet;
+	NSArray				*	_actionList;	// storer mapping of action menu items to selectors
 }
 
 @property (assign,nonatomic)	MapView				*	mapView;
 @property (strong,nonatomic)	NSColor				*	textColor;
-@property (strong,nonatomic)	OsmWay				*	selectedWay;
 @property (strong,nonatomic)	OsmNode				*	selectedNode;
+@property (strong,nonatomic)	OsmWay				*	selectedWay;
+@property (strong,nonatomic)	OsmRelation			*	selectedRelation;
 @property (readonly,nonatomic)	OsmBaseObject		*	selectedPrimary;	// way or node, but not a node in a selected way
 @property (readonly,nonatomic)	OsmMapData			*	mapData;
 @property (assign,nonatomic)	BOOL					addNodeInProgress;

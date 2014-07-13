@@ -34,6 +34,8 @@
 		026E8CC31612DF620098345C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026E8CC21612DF620098345C /* QuartzCore.framework */; };
 		0275409F161E92F3000B7A5C /* TabbingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0275409E161E92F3000B7A5C /* TabbingTableView.m */; };
 		027A46A01673BA2C000BE55C /* OSM-Logo256.ico in Resources */ = {isa = PBXBuildFile; fileRef = 027A469F1673BA2B000BE55C /* OSM-Logo256.ico */; };
+		0284F6F11971B3AA0022D2FC /* OsmMapData+Orthogonalize.m in Sources */ = {isa = PBXBuildFile; fileRef = 0284F6EE1971B3AA0022D2FC /* OsmMapData+Orthogonalize.m */; };
+		0284F6F21971B3AA0022D2FC /* OsmMapData+Straighten.m in Sources */ = {isa = PBXBuildFile; fileRef = 0284F6F01971B3AA0022D2FC /* OsmMapData+Straighten.m */; };
 		029221F51645952200370AA3 /* TagInfoEditorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029221F31645952200370AA3 /* TagInfoEditorWindowController.m */; };
 		029221F61645952200370AA3 /* TagInfoEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029221F41645952200370AA3 /* TagInfoEditorWindowController.xib */; };
 		029223221646D99100370AA3 /* accommodation_alpinehut.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 029221F81646D99100370AA3 /* accommodation_alpinehut.p.64.png */; };
@@ -428,6 +430,10 @@
 		0275409E161E92F3000B7A5C /* TabbingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabbingTableView.m; sourceTree = "<group>"; };
 		0275B3B61615819500124A14 /* OpenStreetMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OpenStreetMap.entitlements; sourceTree = "<group>"; };
 		027A469F1673BA2B000BE55C /* OSM-Logo256.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = "OSM-Logo256.ico"; path = "../OSM-Logo256.ico"; sourceTree = "<group>"; };
+		0284F6ED1971B3AA0022D2FC /* OsmMapData+Orthogonalize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OsmMapData+Orthogonalize.h"; sourceTree = "<group>"; };
+		0284F6EE1971B3AA0022D2FC /* OsmMapData+Orthogonalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OsmMapData+Orthogonalize.m"; sourceTree = "<group>"; };
+		0284F6EF1971B3AA0022D2FC /* OsmMapData+Straighten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OsmMapData+Straighten.h"; sourceTree = "<group>"; };
+		0284F6F01971B3AA0022D2FC /* OsmMapData+Straighten.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OsmMapData+Straighten.m"; sourceTree = "<group>"; };
 		0289D0DC16A88B7B00F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLog.h; sourceTree = "<group>"; };
 		029221F21645952200370AA3 /* TagInfoEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagInfoEditorWindowController.h; sourceTree = "<group>"; };
 		029221F31645952200370AA3 /* TagInfoEditorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagInfoEditorWindowController.m; sourceTree = "<group>"; };
@@ -1221,6 +1227,10 @@
 				02FFCE0716A73593001A5B8A /* NSMutableArray+PartialSort.mm */,
 				02FE3F8B15F1EC0A00A6CFAE /* OsmMapData.h */,
 				02FE3F8C15F1EC0A00A6CFAE /* OsmMapData.m */,
+				0284F6ED1971B3AA0022D2FC /* OsmMapData+Orthogonalize.h */,
+				0284F6EE1971B3AA0022D2FC /* OsmMapData+Orthogonalize.m */,
+				0284F6EF1971B3AA0022D2FC /* OsmMapData+Straighten.h */,
+				0284F6F01971B3AA0022D2FC /* OsmMapData+Straighten.m */,
 				02117C69163C93F800EFC9CE /* OsmObjects.h */,
 				02117C6A163C93F800EFC9CE /* OsmObjects.m */,
 				024ADF3716B1B29D00875658 /* PathUtil.h */,
@@ -1692,6 +1702,7 @@
 				02FE7798161F8E6B004D00D3 /* EditorMapLayer.m in Sources */,
 				02DA58A5161F9B9E007AABB6 /* MainWindowController.m in Sources */,
 				020345A61625C90300FAF3FD /* QuadMap.m in Sources */,
+				0284F6F11971B3AA0022D2FC /* OsmMapData+Orthogonalize.m in Sources */,
 				020345B01627CB1200FAF3FD /* RulerLayer.m in Sources */,
 				02DFBBAC1631A4AC0021F1C9 /* TagEditorWindowController.m in Sources */,
 				02117C6B163C93F800EFC9CE /* OsmObjects.m in Sources */,
@@ -1705,6 +1716,7 @@
 				0218C45F166B318100250514 /* HtmlErrorWindow.m in Sources */,
 				0218C465166BCD0300250514 /* TextInputWindowController.m in Sources */,
 				0242330E1674F975008A3B6A /* VectorMath.m in Sources */,
+				0284F6F21971B3AA0022D2FC /* OsmMapData+Straighten.m in Sources */,
 				02C4255016785EA900761C54 /* SpeechBalloonView.m in Sources */,
 				021C6AA51686143D00FB17B0 /* UndoManager.m in Sources */,
 				02BED999168CACFD00357B94 /* LocationBallLayer.m in Sources */,

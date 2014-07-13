@@ -206,14 +206,12 @@ static const CGFloat GradientHeight = 20.0;
 
 -(CGRect)frameForCompletionTableView
 {
-	BOOL iOS7 = NO;
 	UITableViewCell * cell = (id)[self.superview superview];
 	UITableView * tableView = (id)[cell superview];
 	if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
 		// ios 7
 		tableView = (id)tableView.superview.superview;
 		cell = (id)cell.superview;
-		iOS7 = YES;
 	}
 	UIScrollView * scrollView = (id)tableView.superview;
 	UIView * view = scrollView.superview;

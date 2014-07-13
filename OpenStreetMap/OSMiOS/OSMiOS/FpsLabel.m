@@ -39,13 +39,15 @@ const int FRAME_COUNT = 61;
 	}
 #else
 	self.text = nil;
-	[self removeFromSuperview];
+	self.hidden = YES;
 #endif
 }
 
 - (void)dealloc
 {
-	dispatch_source_cancel( _timer );
+	if ( _timer ) {
+		dispatch_source_cancel( _timer );
+	}
 }
 
 - (void)displayLink

@@ -74,7 +74,6 @@ CGSize SizeForImage( NSImage * image )
 @synthesize trackingLocation	= _trackingLocation;
 @synthesize pushpinView			= _pushpinView;
 
-
 #pragma mark initialization
 
 #if TARGET_OS_IPHONE
@@ -265,6 +264,11 @@ CGSize SizeForImage( NSImage * image )
  								@"editorVisible"	: @YES,
 								@"mapnikVisible"	: @NO,
 	 }];
+
+	// set up action button
+	_actionButton.hidden = YES;
+	[_actionButton addTarget:self.editorLayer action:@selector(actionButton:) forControlEvents:UIControlEventTouchUpInside];
+
 
 	self.aerialLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"aerialVisible"];
 	self.mapnikLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"mapnikVisible"];
@@ -1092,6 +1096,8 @@ CGSize SizeForImage( NSImage * image )
 	return hit;
 }
 
+#pragma mark PushPin
+
 -(void)removePin
 {
 	[_pushpinView removeFromSuperview];
@@ -1156,7 +1162,7 @@ CGSize SizeForImage( NSImage * image )
 						}
 						return;
 					}
-					if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedWay.tags.count == 0 && [weakSelf.editorLayer.mapData relationsForObject:weakSelf.editorLayer.selectedWay].count == 0 )
+					if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedWay.tags.count == 0 && weakSelf.editorLayer.selectedWay.relations.count == 0 )
 						break;
 					if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedNode )
 						break;
@@ -1240,6 +1246,11 @@ CGSize SizeForImage( NSImage * image )
 		// do animation if creating a new object
 		[_pushpinView animateMoveFrom:CGPointMake(self.bounds.origin.x+self.bounds.size.width,self.bounds.origin.y)];
 	}
+}
+
+- (void)refreshPushpinText
+{
+	_pushpinView.text = _editorLayer.selectedPrimary.friendlyDescription;
 }
 
 -(IBAction)interactiveExtendSelectedWay:(id)sender
@@ -1716,6 +1727,7 @@ drop_pin:
 					if ( hit.isNode ) {
 						_editorLayer.selectedNode = (id)hit;
 						_editorLayer.selectedWay = nil;
+						_editorLayer.selectedRelation = nil;
 						_grabbedObject = hit;
 #if !TARGET_OS_IPHONE
 					} else if ( hit == _editorLayer.selectedWay ) {
@@ -1724,10 +1736,12 @@ drop_pin:
 					} else {
 						_editorLayer.selectedNode = nil;
 						_editorLayer.selectedWay = (id)hit;
+						_editorLayer.selectedRelation = nil;
 					}
 				} else {
 					_editorLayer.selectedNode = nil;
 					_editorLayer.selectedWay = nil;
+					_editorLayer.selectedRelation = nil;
 				}
 				[_delegate mapviewSelectionChanged:hit];
 				[_editorLayer clearExtraSelections];

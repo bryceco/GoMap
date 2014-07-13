@@ -16,8 +16,11 @@
 @class OsmBaseObject;
 @class OsmMapData;
 @class OsmMember;
+@class OsmRelation;
 @class TagInfo;
 @class UndoManager;
+
+NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 
 
 @interface OsmBaseObject : NSObject <NSCoding,NSCopying>
@@ -27,11 +30,13 @@
 	BOOL				_constructed;
 	NSDictionary	*	_tags;
 	NSNumber		*	_ident;
+	NSArray			*	_relations;
 }
 @property (readonly,nonatomic)	BOOL					deleted;
 @property (strong,nonatomic)	NSMutableDictionary	*	renderProperties;
 @property (strong,nonatomic)	TagInfo				*	tagInfo;
 @property (readonly,nonatomic)	int32_t					modifyCount;
+@property (readonly,nonatomic)	NSArray				*	relations;
 
 // attributes
 @property (readonly,nonatomic)	NSDictionary	*	tags;
@@ -58,6 +63,8 @@
 -(void)serverUpdateVersion:(NSInteger)version;
 -(void)serverUpdateIdent:(OsmIdentifier)ident;
 -(void)serverUpdateInPlace:(OsmBaseObject *)newerVersion;
+-(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
+-(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 
 -(BOOL)isNode;
 -(BOOL)isWay;
@@ -69,6 +76,9 @@
 -(BOOL)intersectsBox:(OSMRect)box;
 -(OSMRect)boundingBox;
 -(NSString *)friendlyDescription;
+
+-(BOOL)hasInterestingTags;
+
 
 -(BOOL)isModified;
 
@@ -109,8 +119,11 @@
 -(OSMPoint)centerPointWithArea:(double *)area;
 -(BOOL)isArea;
 -(BOOL)isClosed;
+-(BOOL)isOneWay;
+-(BOOL)isSimpleMultipolygonOuterMember;
 -(double)wayArea;
 -(OSMPoint)pointOnWayForPoint:(OSMPoint)point;
+
 @end
 
 
@@ -125,6 +138,16 @@
 
 -(BOOL)intersectsBox:(OSMRect)box;
 -(void)resolveToMapData:(OsmMapData *)mapData;
+-(NSSet *)allMemberObjects;
+
+-(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo;
+-(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo;
+
+-(BOOL)isRestriction;
+-(OsmMember *)memberByRole:(NSString *)role;
+
+-(BOOL)isMultipolygon;
+
 @end
 
 

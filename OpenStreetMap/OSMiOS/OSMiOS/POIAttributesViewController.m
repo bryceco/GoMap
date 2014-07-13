@@ -36,7 +36,7 @@
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 
 	if ( object ) {
-		self.title				= [NSString stringWithFormat:@"%@ Attributes", object.isNode ? @"Node" : @"Way"];
+		self.title				= [NSString stringWithFormat:@"%@ Attributes", object.isNode ? @"Node" : object.isWay ? @"Way" : object.isRelation ? @"Relation" : @""];
 		_identLabel.text		= object.ident.stringValue;
 		_userLabel.text			= object.user;
 		_uidLabel.text			= @(object.uid).stringValue;

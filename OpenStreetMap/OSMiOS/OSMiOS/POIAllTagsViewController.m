@@ -64,7 +64,7 @@
 	// fetch values from tab controller
 	POITabBarController * tabController = (id)self.tabBarController;
 	_tags		= [NSMutableArray arrayWithCapacity:tabController.keyValueDict.count];
-	_relations	= tabController.relationList;
+	_relations	= [tabController.relationList mutableCopy];
 
 	[tabController.keyValueDict enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
 		[_tags addObject:[NSMutableArray arrayWithObjects:tag,value,nil]];
@@ -284,7 +284,8 @@
 	if ( indexPath.section == 0 ) {
 		return indexPath.row < _tags.count;
 	} else {
-		return indexPath.row < _relations.count;
+		// don't allow editing relations here
+		return NO;
 	}
 }
 
@@ -338,5 +339,37 @@
 	[tabController commitChanges];
 }
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+	// don't allow switching to relation if current selection is modified
+	POITabBarController * tabController = (id)self.tabBarController;
+	NSMutableDictionary * dict = [self keyValueDictionary];
+	if ( [tabController isTagDictChanged:dict] ) {
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Object modified" message:@"You must save or discard changes to the current object before editing its associated relation" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+		[alert show];
+		return NO;
+	}
+
+	// switch to relation
+	UITableViewCell * cell = sender;
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	if ( indexPath.section != 1 ) {
+		return NO;
+	}
+
+	// change the selected object in the editor to the relation
+	OsmRelation	* relation = _relations[ indexPath.row ];
+	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	[appDelegate.mapView.editorLayer setSelectedNode:nil];
+	[appDelegate.mapView.editorLayer setSelectedWay:nil];
+	[appDelegate.mapView.editorLayer setSelectedRelation:relation];
+	// dismiss ourself and switch to the relation
+	UIViewController * topController = (id)appDelegate.mapView.viewController;
+	[appDelegate.mapView refreshPushpinText];	// update pushpin description to the relation
+	[self dismissViewControllerAnimated:YES completion:^{
+		[topController performSegueWithIdentifier:@"poiSegue" sender:nil];
+	}];
+	return NO;
+}
 
 @end

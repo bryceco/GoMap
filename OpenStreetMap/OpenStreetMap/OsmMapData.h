@@ -17,6 +17,7 @@
 @class OsmBaseObject;
 @class OsmNode;
 @class OsmWay;
+@class OsmMember;
 @class OsmRelation;
 @class UndoManager;
 
@@ -103,17 +104,20 @@ extern NSString * OsmValueForBoolean( BOOL b );
 // editing
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
 -(OsmWay *)createWay;
+-(OsmRelation *)createRelation;
 -(void)deleteNode:(OsmNode *)node;
 -(void)deleteWay:(OsmWay *)way;
 -(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
 -(void)deleteNodeInWay:(OsmWay *)way index:(NSInteger)index;
+
+-(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index;
+-(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index;
+
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node inWay:(OsmWay *)way;
 -(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object;
 -(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
 @property (strong,nonatomic) void (^undoCommentCallback)(BOOL,NSArray *);
 
-
--(NSArray *)relationsForObject:(OsmBaseObject *)object;
 
 - (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
 

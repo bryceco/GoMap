@@ -37,7 +37,7 @@
 			[_keyValueDict setObject:obj forKey:key];
 		}];
 
-		self.relationList = [[appDelegate.mapView.editorLayer.mapData relationsForObject:selection] mutableCopy];
+		self.relationList = [selection.relations mutableCopy];
 	}
 
 	NSInteger tabIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"POITabIndex"];

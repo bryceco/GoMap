@@ -18,6 +18,8 @@
 #import "MapCSS.h"
 #import "MapView.h"
 #import "OsmMapData.h"
+#import "OsmMapData+Orthogonalize.h"
+#import "OsmMapData+Straighten.h"
 #import "OsmObjects.h"
 #import "PathUtil.h"
 #import "QuadMap.h"
@@ -43,11 +45,12 @@ enum {
 
 @implementation EditorMapLayer
 
-@synthesize mapView			= _mapView;
-@synthesize textColor		= _textColor;
-@synthesize selectedNode	= _selectedNode;
-@synthesize selectedWay		= _selectedWay;
-@synthesize mapData			= _mapData;
+@synthesize mapView				= _mapView;
+@synthesize textColor			= _textColor;
+@synthesize selectedNode		= _selectedNode;
+@synthesize selectedWay			= _selectedWay;
+@synthesize selectedRelation	= _selectedRelation;
+@synthesize mapData				= _mapData;
 
 
 const CGFloat WayHitTestRadius   = 10.0;
@@ -123,16 +126,9 @@ const CGFloat WayHighlightRadius = 6.0;
 {
 	// First save just modified objects, which we can do very fast, in case we get killed during full save
 	OsmMapData * modified = [_mapData modifiedObjects];
-#if 1
-	// save unconditionally, since if we don't save and our full save fails we could roll back to a state containing
-	// dirty objects that were later uploaded.
+
+	// save modified data first, in case full save fails
 	[modified saveSubstitutingSpatial:YES];
-#else
-	if ( modified.nodeCount || modified.wayCount || modified.relationCount ) {
-		// save only modified stuff
-		[modified saveSubstitutingSpatial:YES];
-	}
-#endif
 
 	// Next try to save everything. Since we save atomically this won't overwrite the fast save unless it succeeeds.
 	[_mapData saveSubstitutingSpatial:NO];
@@ -1281,8 +1277,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	CGContextSetLineWidth(ctx, lineWidth);
 	CGContextStrokePath(ctx);
 
-	BOOL drawDirectionArrow = [[way.tags valueForKey:@"oneway"] isEqualToString:@"yes"];
-	if ( drawDirectionArrow ) {
+	if ( way.isOneWay ) {
 		[self drawArrowsForPath:path context:ctx];
 	}
 
@@ -1399,11 +1394,9 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		double dx = lastPoint.x - firstPoint.x;
 		if ( dx < 0 ) {
 			// reverse path
-#if 1
 			CGMutablePathRef path2 = PathReversed( path );
 			CGPathRelease(path);
 			path = path2;
-#endif
 		}
 	}
 	*pLength = length;
@@ -1571,11 +1564,15 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 	NSInteger zoom = [self zoomLevel];
 
 	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
+	if ( _selectedNode ) {
+		[highlights addObject:_selectedNode];
+	}
 	if ( _selectedWay ) {
 		[highlights addObject:_selectedWay];
 	}
-	if ( _selectedNode ) {
-		[highlights addObject:_selectedNode];
+	if ( _selectedRelation ) {
+		NSSet * members = [_selectedRelation allMemberObjects];
+		[highlights addObjectsFromArray:members.allObjects];
 	}
 	if ( _highlightObject ) {
 		[highlights addObject:_highlightObject];
@@ -2111,17 +2108,141 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 #pragma mark Editing
 
-- (void)setSelectedWay:(OsmWay *)way node:(OsmNode *)node
+enum {
+	ACTION_SPLIT,
+	ACTION_RECT,
+	ACTION_STRAIGHT,
+	ACTION_REVERSE,
+	ACTION_DUP,
+	ACTION_DISCONNECT,
+};
+static NSString * ActionTitle[] = {
+	@"Split",
+	@"Make Rectangular",
+	@"Straighten",
+	@"Reverse",
+	@"Duplicate",
+	@"Disconnect",
+};
+
+- (void)updateActionButton
+{
+	self.mapView.actionButton.hidden = !(_selectedWay || _selectedNode) || _selectedRelation;
+}
+- (void)actionButton:(id)sender
+{
+	_actionSheet = nil;
+	_actionList = nil;
+	if ( _selectedRelation ) {
+		// relation
+		return;
+	} else if ( _selectedWay ) {
+		if ( _selectedNode ) {
+			// node in way
+			if ( _selectedNode.wayCount > 1 ) {
+				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
+										   otherButtonTitles:@"Disconnect",nil];
+				_actionList = @[ @(ACTION_DISCONNECT) ];
+			} else {
+				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
+												  otherButtonTitles:@"Split Way",nil];
+				_actionList = @[ @(ACTION_SPLIT) ];
+			}
+		} else {
+			if ( _selectedWay.isArea ) {
+				// polygon
+				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
+										   otherButtonTitles:@"Make Rectangular",@"Duplicate Way",nil];
+				_actionList = @[ @(ACTION_RECT), @(ACTION_DUP) ];
+			} else {
+				// line
+				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
+												  otherButtonTitles:@"Straighten Way",@"Reverse Way",@"Duplicate Way",nil];
+				_actionList = @[ @(ACTION_STRAIGHT), @(ACTION_REVERSE), @(ACTION_DUP) ];
+			}
+		}
+	} else if ( _selectedNode ) {
+		// node
+		_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
+								   otherButtonTitles:@"Duplicate Node",nil];
+		_actionList = @[ @(ACTION_DUP) ];
+	} else {
+		// nothing selected
+		return;
+	}
+#if 0
+	_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:nil];
+	for ( NSNumber * value in _actionList ) {
+		NSString * title = ActionTitle[ value.integerValue ];
+		[_actionSheet addButtonWithTitle:title];
+	}
+#endif
+
+	[_actionSheet showFromRect:self.mapView.actionButton.frame inView:self.mapView animated:YES];
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if ( actionSheet != _actionSheet || _actionList == nil )
+		return;
+	if ( buttonIndex == actionSheet.cancelButtonIndex || buttonIndex == actionSheet.destructiveButtonIndex )
+		return;
+	NSInteger action = buttonIndex - actionSheet.firstOtherButtonIndex;
+	if ( action >= _actionList.count )
+		return;
+	action = [_actionList[ action ] integerValue];
+	NSString * error = nil;
+	switch (action) {
+		case ACTION_DUP:
+			assert(NO);
+			break;
+		case ACTION_RECT:
+			if ( ! [self.mapData orthogonalize:self.selectedWay] )
+				error = @"The way is not sufficiently rectangular";
+			break;
+		case ACTION_REVERSE:
+			if ( ![self.mapData reverse:self.selectedWay] )
+				error = @"Cannot reverse way";
+			break;
+		case ACTION_DISCONNECT:
+			if ( ! [self.mapData disconnectWay:self.selectedWay atNode:self.selectedNode] )
+				error = @"Cannot disconnect way";
+			break;
+		case ACTION_SPLIT:
+			if ( ! [self.mapData splitWay:self.selectedWay atNode:self.selectedNode] )
+				error = @"Cannot split way";
+			break;
+		case ACTION_STRAIGHT:
+			if ( ! [self.mapData straighten:self.selectedWay] )
+				error = @"The way is not sufficiently straight";
+			break;
+		default:
+			break;
+	}
+	if ( error ) {
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Failed" message:error delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+		[alertView show];
+	}
+
+	[self setNeedsDisplay];
+	_actionSheet = nil;
+	_actionList = nil;
+}
+
+
+- (void)setSelectedRelation:(OsmRelation *)relation way:(OsmWay *)way node:(OsmNode *)node
 {
 	[self saveSelection];
 	self.selectedWay  = way;
 	self.selectedNode = node;
+	self.selectedRelation = relation;
+	[self updateActionButton];
 }
 - (void)saveSelection
 {
-	id way  = _selectedWay  ?: [NSNull null];
-	id node = _selectedNode ?: [NSNull null];
-	[_mapData registerUndoWithTarget:self selector:@selector(setSelectedWay:node:) objects:@[way,node]];
+	id way		= _selectedWay  ?: [NSNull null];
+	id node		= _selectedNode ?: [NSNull null];
+	id relation = _selectedRelation ?: [NSNull null];
+	[_mapData registerUndoWithTarget:self selector:@selector(setSelectedRelation:way:node:) objects:@[relation,way,node]];
 }
 
 - (void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta
@@ -2291,7 +2412,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 -(OsmBaseObject *)selectedPrimary
 {
-	return _selectedNode ? _selectedNode : _selectedWay;
+	return _selectedNode ? _selectedNode : _selectedWay ? _selectedWay : _selectedRelation;
 }
 -(OsmNode *)selectedNode
 {
@@ -2301,6 +2422,10 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	return _selectedWay;
 }
+-(OsmRelation *)selectedRelation
+{
+	return _selectedRelation;
+}
 -(void)setSelectedNode:(OsmNode *)selectedNode
 {
 	assert( selectedNode == nil || selectedNode.isNode );
@@ -2308,6 +2433,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		_selectedNode = selectedNode;
 		[self setNeedsDisplayForObject:selectedNode];
 		[self doSelectionChangeCallbacks];
+		[self updateActionButton];
 	}
 }
 -(void)setSelectedWay:(OsmWay *)selectedWay
@@ -2317,6 +2443,17 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		_selectedWay = selectedWay;
 		[self setNeedsDisplayForObject:selectedWay];
 		[self doSelectionChangeCallbacks];
+		[self updateActionButton];
+	}
+}
+-(void)setSelectedRelation:(OsmRelation *)selectedRelation
+{
+	assert( selectedRelation == nil || selectedRelation.isRelation );
+	if ( selectedRelation != _selectedRelation ) {
+		_selectedRelation = selectedRelation;
+		[self setNeedsDisplayForObject:selectedRelation];
+		[self doSelectionChangeCallbacks];
+		[self updateActionButton];
 	}
 }
 

@@ -17,6 +17,7 @@
 		020CD977169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD976169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png */; };
 		020CD979169D4B7900BF3AAF /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD978169D4B7900BF3AAF /* Default-Landscape@2x~ipad.png */; };
 		020CD97B169D4BC900BF3AAF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD97A169D4BC900BF3AAF /* Default-Landscape~ipad.png */; };
+		02130E85196CF58500498297 /* MenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02130E84196CF58500498297 /* MenuIcon.png */; };
 		0219563216DDC26E00074D15 /* GpxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0219563116DDC26E00074D15 /* GpxViewController.m */; };
 		021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C6AA71686145C00FB17B0 /* UndoManager.m */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
@@ -80,6 +81,7 @@
 		027A469B1673B251000BE55C /* OSM-Logo72.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469A1673B251000BE55C /* OSM-Logo72.png */; };
 		027A469E1673B257000BE55C /* OSM-Logo144.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469D1673B257000BE55C /* OSM-Logo144.png */; };
 		027F8330169BFD750009CDAB /* UploadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 027F832F169BFD750009CDAB /* UploadTableViewController.m */; };
+		0284F6EA196DB3F80022D2FC /* OsmMapData+Straighten.m in Sources */ = {isa = PBXBuildFile; fileRef = 0284F6E9196DB3F80022D2FC /* OsmMapData+Straighten.m */; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
 		0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB316A0BB67002C46A9 /* shrub.p.64.png */; };
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
@@ -471,6 +473,7 @@
 		020CD976169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		020CD978169D4B7900BF3AAF /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		020CD97A169D4BC900BF3AAF /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		02130E84196CF58500498297 /* MenuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuIcon.png; sourceTree = "<group>"; };
 		0219563016DDC26E00074D15 /* GpxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpxViewController.h; sourceTree = "<group>"; };
 		0219563116DDC26E00074D15 /* GpxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpxViewController.m; sourceTree = "<group>"; };
 		021C6AA61686145C00FB17B0 /* UndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndoManager.h; path = ../../OpenStreetMap/UndoManager.h; sourceTree = "<group>"; };
@@ -550,6 +553,8 @@
 		027A469D1673B257000BE55C /* OSM-Logo144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "OSM-Logo144.png"; path = "../OSM-Logo144.png"; sourceTree = "<group>"; };
 		027F832E169BFD750009CDAB /* UploadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadTableViewController.h; sourceTree = "<group>"; };
 		027F832F169BFD750009CDAB /* UploadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadTableViewController.m; sourceTree = "<group>"; };
+		0284F6E9196DB3F80022D2FC /* OsmMapData+Straighten.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OsmMapData+Straighten.m"; sourceTree = "<group>"; };
+		0284F6EB196DB4110022D2FC /* OsmMapData+Straighten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OsmMapData+Straighten.h"; sourceTree = "<group>"; };
 		0284FDB116A0B7DA002C46A9 /* tree.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.p.64.png; sourceTree = "<group>"; };
 		0284FDB316A0BB67002C46A9 /* shrub.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shrub.p.64.png; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLog.h; path = ../../OpenStreetMap/DLog.h; sourceTree = "<group>"; };
@@ -994,6 +999,7 @@
 		025A1D001690DC32002B60CB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				02130E84196CF58500498297 /* MenuIcon.png */,
 				02205F3A1674550D00D57D23 /* ArrowBlack.png */,
 				0242331216750C81008A3B6A /* ArrowBlue.png */,
 				02C19B361699EA7A00F75E3C /* bing_rgb.png */,
@@ -1145,6 +1151,8 @@
 				022B504716857E5F00E6619A /* OSMiOS.entitlements */,
 				0263709C1969ADB400634E50 /* OsmMapData+Orthogonalize.h */,
 				0263709A1969ADA200634E50 /* OsmMapData+Orthogonalize.m */,
+				0284F6EB196DB4110022D2FC /* OsmMapData+Straighten.h */,
+				0284F6E9196DB3F80022D2FC /* OsmMapData+Straighten.m */,
 				026370941968A3DB00634E50 /* POIActionsViewController.h */,
 				026370951968A3DB00634E50 /* POIActionsViewController.m */,
 				02A077D0167A77A400686261 /* POIAllTagsViewController.h */,
@@ -1972,6 +1980,7 @@
 				02ACBCEE16713F2B00BB4414 /* transport_traffic_lights.p.64.png in Resources */,
 				02ACBCEF16713F2B00BB4414 /* transport_train_station.p.64.png in Resources */,
 				02ACBCF016713F2B00BB4414 /* transport_train_station2.p.64.png in Resources */,
+				02130E85196CF58500498297 /* MenuIcon.png in Resources */,
 				02ACBCF116713F2B00BB4414 /* transport_tram_stop.p.64.png in Resources */,
 				02ACBCF216713F2B00BB4414 /* transport_turning_circle.p.64.png in Resources */,
 				02ACBCF316713F2B00BB4414 /* transport_walking.p.64.png in Resources */,
@@ -2088,6 +2097,7 @@
 				0205460A1676721F004A2A23 /* POISourceViewController.m in Sources */,
 				0205460D16767576004A2A23 /* POIWiFiViewController.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
+				0284F6EA196DB3F80022D2FC /* OsmMapData+Straighten.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				02A077C3167A567E00686261 /* POIFixMeViewController.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,

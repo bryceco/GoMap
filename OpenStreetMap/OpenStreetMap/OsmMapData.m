@@ -144,32 +144,6 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 }
 
 
--(NSArray *)relationsForObject:(OsmBaseObject *)object
-{
-	__block NSMutableArray * a = nil;
-	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * relation, BOOL *stop) {
-		for ( OsmMember * member in relation.members ) {
-			if ( member.ref == object ) {
-				if ( a == nil )
-					a = [NSMutableArray arrayWithObject:relation];
-				else
-					[a addObject:relation];
-				return;
-			}
-#if 1
-			if ( [member.ref isKindOfClass:[NSNumber class]] ) {
-				NSNumber * ident = member.ref;
-				if ( ident.longLongValue == object.ident.longLongValue ) {
-					assert(NO);
-				}
-			}
-#endif
-		}
-	}];
-	return a;
-}
-
-
 -(NSMutableSet *)tagValuesForKey:(NSString *)key
 {
 	NSMutableSet * set = [NSMutableSet set];
@@ -243,6 +217,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[object setTags:dict undo:_undoManager];
 }
 
+
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc
 {
 	OsmNode * node = [OsmNode new];
@@ -270,6 +245,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[way setDeleted:NO undo:_undoManager];
 	[_spatial addMember:way undo:_undoManager];
 	return way;
+}
+
+-(OsmRelation *)createRelation
+{
+	OsmRelation * relation = [OsmRelation new];
+	[relation constructAsUserCreated];
+	[relation setDeleted:YES undo:nil];
+	[self setConstructed:relation];
+	[_relations setObject:relation forKey:relation.ident];
+
+	[_undoManager registerUndoComment:@"create relation"];
+	[relation setDeleted:NO undo:_undoManager];
+	return relation;
 }
 
 
@@ -324,6 +312,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[node setLongitude:longitude latitude:latitude undo:_undoManager];
 	[_spatial addMember:node undo:_undoManager];
 }
+
+-(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index
+{
+	[_undoManager registerUndoComment:@"add object to relation"];
+	//[_spatial removeMember:relation undo:_undoManager];
+	[relation addMember:member atIndex:index undo:_undoManager];
+	//[_spatial addMember:relation undo:_undoManager];
+}
+-(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index
+{
+	[_undoManager registerUndoComment:@"delete object from relation"];
+	//[_spatial removeMember:relation undo:_undoManager];
+	[relation removeMemberAtIndex:index undo:_undoManager];
+	//[_spatial addMember:relation undo:_undoManager];
+}
+
 
 -(void)incrementModifyCount:(OsmBaseObject *)object
 {

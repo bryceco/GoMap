@@ -10,6 +10,7 @@
 
 #import "iosapi.h"
 #import "CurvedTextLayer.h"
+#import "DLog.h"
 #import "OsmObjects.h"
 #import "OsmMapData.h"
 #import "UndoManager.h"
@@ -47,6 +48,7 @@ NSString * OsmValueForBoolean( BOOL b )
 @synthesize tags = _tags;
 @synthesize modifyCount = _modifyCount;
 @synthesize ident = _ident;
+@synthesize relations = _relations;
 
 -(NSString *)description
 {
@@ -60,6 +62,27 @@ NSString * OsmValueForBoolean( BOOL b )
 	}];
 	return text;
 }
+
+
+
+-(BOOL)hasInterestingTags
+{
+	for ( NSString * key in self.tags ) {
+		if ( [key isEqualToString:@"attribution"] )
+			continue;
+		if ( [key isEqualToString:@"created_by"] )
+			continue;
+		if ( [key isEqualToString:@"source"] )
+			continue;
+		if ( [key isEqualToString:@"odbl"] )
+			continue;
+		if ( [key rangeOfString:@"tiger:"].location == 0 )
+			continue;
+		return YES;
+	}
+	return NO;
+}
+
 
 -(BOOL)isNode
 {
@@ -90,6 +113,30 @@ static NSInteger _nextUnusedIdentifier = 0;
 	--_nextUnusedIdentifier;
 	[[NSUserDefaults standardUserDefaults] setInteger:_nextUnusedIdentifier forKey:@"nextUnusedIdentifier"];
 	return _nextUnusedIdentifier;
+}
+
+
+NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
+{
+	__block NSMutableDictionary * merged = [this mutableCopy];
+	__block BOOL changed = NO;
+	for ( NSString * k in tags ) {
+		NSString * t1 = merged[k];
+		NSString * t2 = tags[k];
+		if (t1 == nil) {
+			changed = true;
+			merged[k] = t2;
+		} else if ( ![t1 isEqualToString:t2] ) {
+			changed = true;
+			NSArray * a1 = [t1 componentsSeparatedByString:@";"];
+			NSArray * a2 = [t2 componentsSeparatedByString:@";"];
+			NSMutableSet * s = [NSMutableSet setWithArray:a1];
+			[s addObjectsFromArray:a2];
+			NSArray * m = [s allObjects];
+			merged[k] = [m componentsJoinedByString:@";"];
+		}
+	}
+	return changed ? merged : this;
 }
 
 #pragma mark Construction
@@ -324,16 +371,17 @@ static NSInteger _nextUnusedIdentifier = 0;
 -(void)encodeWithCoder:(NSCoder *)coder
 {
 	if ( [coder allowsKeyedCoding] ) {
-		[coder encodeObject:_ident		forKey:@"ident"];
-		[coder encodeObject:_user		forKey:@"user"];
-		[coder encodeObject:_timestamp	forKey:@"timestamp"];
-		[coder encodeInteger:_version	forKey:@"version"];
-		[coder encodeInteger:_changeset	forKey:@"changeset"];
-		[coder encodeInteger:_uid		forKey:@"uid"];
-		[coder encodeBool:_visible		forKey:@"visible"];
-		[coder encodeObject:_tags		forKey:@"tags"];
-		[coder encodeBool:_deleted		forKey:@"deleted"];
-		[coder encodeInt32:_modifyCount	forKey:@"modified"];
+		[coder encodeObject:_ident				forKey:@"ident"];
+		[coder encodeObject:_user				forKey:@"user"];
+		[coder encodeObject:_timestamp			forKey:@"timestamp"];
+		[coder encodeInteger:_version			forKey:@"version"];
+		[coder encodeInteger:_changeset			forKey:@"changeset"];
+		[coder encodeInteger:_uid				forKey:@"uid"];
+		[coder encodeBool:_visible				forKey:@"visible"];
+		[coder encodeObject:_tags				forKey:@"tags"];
+		[coder encodeBool:_deleted				forKey:@"deleted"];
+		[coder encodeInt32:_modifyCount			forKey:@"modified"];
+		[coder encodeObject:_relations			forKey:@"relations"];
 	} else {
 		[coder encodeObject:_ident];
 		[coder encodeObject:_user];
@@ -345,6 +393,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 		[coder encodeObject:_tags];
 		[coder encodeBytes:&_deleted	length:sizeof _deleted];
 		[coder encodeBytes:&_modifyCount length:sizeof _modifyCount];
+		[coder encodeObject:_relations];
 	}
 }
 -(id)initWithCoder:(NSCoder *)coder
@@ -362,6 +411,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 			_tags			= [coder decodeObjectForKey:@"tags"];
 			_deleted		= [coder decodeBoolForKey:@"deleted"];
 			_modifyCount	= [coder decodeInt32ForKey:@"modified"];
+			_relations		= [coder decodeObjectForKey:@"relations"];
 		} else {
 			_ident			= [coder decodeObject];
 			_user			= [coder decodeObject];
@@ -373,6 +423,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 			_tags			= [coder decodeObject];
 			_deleted		= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
 			_modifyCount	= *(int32_t		*)[coder decodeBytesWithReturnedLength:NULL];
+			_relations		= [coder decodeObject];
 		}
 	}
 	return self;
@@ -399,6 +450,37 @@ static NSInteger _nextUnusedIdentifier = 0;
 	_deleted = YES;
 	[self setTimestamp:[NSDate date] undo:nil];
 }
+
+
+-(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo
+{
+	if ( _constructed && undo ) {
+		[undo registerUndoWithTarget:self selector:@selector(removeRelation:undo:) objects:@[relation,undo]];
+	}
+	if ( _relations )
+		_relations = [_relations arrayByAddingObject:relation];
+	else
+		_relations = @[ relation ];
+}
+-(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo
+{
+	if ( _constructed && undo ) {
+		[undo registerUndoWithTarget:self selector:@selector(addRelation:undo:) objects:@[relation,undo]];
+	}
+	NSInteger index = [_relations indexOfObject:relation];
+	if ( index == NSNotFound ) {
+		DLog(@"missing relation");
+		return;
+	}
+	if ( _relations.count == 1 ) {
+		_relations = nil;
+	} else {
+		NSMutableArray * a = [_relations mutableCopy];
+		[a removeObjectAtIndex:index];
+		_relations = [NSArray arrayWithArray:a];
+	}
+}
+
 
 @end
 
@@ -584,6 +666,86 @@ static NSInteger _nextUnusedIdentifier = 0;
 {
 	return _nodes.count > 2 && _nodes[0] == _nodes.lastObject;
 }
+
+-(BOOL)isOneWay
+{
+	static NSDictionary * oneWayTags = nil;
+	if ( oneWayTags == nil ) {
+		oneWayTags = @{
+					   @"aerialway" : @{
+							   @"chair_lift" : @YES,
+							   @"mixed_lift" : @YES,
+							   @"t-bar" : @YES,
+							   @"j-bar" : @YES,
+							   @"platter" : @YES,
+							   @"rope_tow" : @YES,
+							   @"magic_carpet" : @YES,
+							   @"yes" : @YES
+							   },
+					   @"highway" : @{
+							   @"motorway" : @YES,
+							   @"motorway_link" : @YES
+							   },
+					   @"junction": @{
+							   @"roundabout" : @YES
+							   },
+					   @"man_made": @{
+							   @"piste:halfpipe" : @YES
+							   },
+					   @"piste:type": @{
+							   @"downhill" : @YES,
+							   @"sled" : @YES,
+							   @"yes" : @YES
+							   },
+					   @"waterway": @{
+							   @"river" : @YES,
+							   @"stream" : @YES
+							   }
+					   };
+	}
+
+	NSString * oneWayVal = [_tags valueForKey:@"oneway"];
+	if ( oneWayVal ) {
+		if ( [oneWayVal isEqualToString:@"yes"] || [oneWayVal isEqualToString:@"1"] || [oneWayVal isEqualToString:@"-1"] )
+			return YES;
+		if ( [oneWayVal isEqualToString:@"no"] || [oneWayVal isEqualToString:@"0"] )
+			return NO;
+	}
+
+	__block BOOL oneWay = NO;
+	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
+		NSDictionary * valueDict = [oneWayTags objectForKey:tag];
+		if ( valueDict ) {
+			if ( valueDict[ value ] ) {
+				oneWay = YES;
+				*stop = YES;
+			}
+		}
+	}];
+	return oneWay;
+}
+
+-(BOOL)isSimpleMultipolygonOuterMember
+{
+	NSArray * parents = self.relations;
+	if (parents.count != 1)
+		return NO;
+
+	OsmRelation * parent = parents[0];
+	if (!parent.isMultipolygon || parent.tags.count > 1)
+		return NO;
+
+	for ( OsmMember * member in parent.members ) {
+		if (member.ref == self ) {
+			if ( ![member.role isEqualToString:@"outer"] )
+				return NO; // Not outer member
+		} else {
+			if ( (member.role == nil || [member.role isEqualToString:@"outer"]))
+				return NO; // Not a simple multipolygon
+		}
+	}
+	return YES;
+};
 
 -(double)wayArea
 {
@@ -785,18 +947,42 @@ static NSInteger _nextUnusedIdentifier = 0;
 	return YES;
 }
 
+-(NSSet *)allMemberObjects
+{
+	NSMutableSet * set = [NSMutableSet new];
+	for ( OsmMember * member in _members ) {
+		if ( [member.ref isKindOfClass:[OsmBaseObject class]] ) {
+			OsmBaseObject * obj = member.ref;
+			if ( obj.isNode || obj.isWay ) {
+				[set addObject:obj];
+			} else if ( obj.isRelation ) {
+				OsmRelation * rel = (id)obj;
+				NSSet * s = [rel allMemberObjects];
+				[set addObjectsFromArray:[s allObjects]];
+			} else {
+				// should never get here: skip
+			}
+		} else {
+			// member is not resolved, so skip it
+		}
+	}
+	return set;
+}
+
+
 -(void)resolveToMapData:(OsmMapData *)mapData
 {
-	for ( NSInteger i = 0, e = _members.count; i < e; ++i ) {
-		OsmMember * member = _members[i];
+	for ( OsmMember * member in _members ) {
 		id ref = member.ref;
 		if ( ![ref isKindOfClass:[NSNumber class]] )
+			// already resolved
 			continue;
 
 		if ( member.isWay ) {
 			OsmWay * way = [mapData wayForRef:ref];
 			if ( way ) {
 				[member resolveRefToObject:way];
+				[way addRelation:self undo:nil];
 			} else {
 				// way is not in current view
 			}
@@ -804,6 +990,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 			OsmNode * node = [mapData nodeForRef:ref];
 			if ( node ) {
 				[member resolveRefToObject:node];
+				[node addRelation:self undo:nil];
 			} else {
 				// node is not in current view
 			}
@@ -811,6 +998,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 			OsmRelation * rel = [mapData relationForRef:ref];
 			if ( rel ) {
 				[member resolveRefToObject:rel];
+				[rel addRelation:self undo:nil];
 			} else {
 				// relation is not in current view
 			}
@@ -819,6 +1007,36 @@ static NSInteger _nextUnusedIdentifier = 0;
 		}
 	}
 }
+
+-(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo
+{
+	assert(undo);
+	OsmMember * member = _members[index];
+	[self incrementModifyCount:undo];
+	[undo registerUndoWithTarget:self selector:@selector(addMember:atIndex:undo:) objects:@[member,@(index),undo]];
+	[_members removeObject:member];
+	OsmBaseObject * obj = member.ref;
+	if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
+		[obj removeRelation:self undo:undo];
+	}
+}
+-(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo
+{
+	if ( _constructed ) {
+		assert(undo);
+		[self incrementModifyCount:undo];
+		[undo registerUndoWithTarget:self selector:@selector(removeMemberAtIndex:undo:) objects:@[@(index),undo]];
+	}
+	if ( _members == nil ) {
+		_members = [NSMutableArray new];
+	}
+	[_members addObject:member];
+	OsmBaseObject * obj = member.ref;
+	if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
+		[obj addRelation:self undo:undo];
+	}
+}
+
 
 -(void)serverUpdateInPlace:(OsmRelation *)newerVersion
 {
@@ -894,6 +1112,30 @@ static NSInteger _nextUnusedIdentifier = 0;
 	}
 	return set;
 }
+
+-(BOOL)isRestriction
+{
+	NSString * type = self.tags[ @"type" ];
+	if ( type && [type hasPrefix:@"restriction:"] )
+		return YES;
+	return NO;
+}
+
+-(OsmMember *)memberByRole:(NSString *)role
+{
+	for ( OsmMember * member in _members ) {
+		if ( [member.role isEqualToString:role] ) {
+			return member;
+		}
+	}
+	return nil;
+}
+
+-(BOOL)isMultipolygon
+{
+	return [_tags[@"type"] isEqualToString:@"multipolygon"];
+}
+
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {

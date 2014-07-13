@@ -14,7 +14,7 @@
 	NSString		*	_typeValue;
 }
 @property (strong,nonatomic)	NSMutableDictionary *	keyValueDict;
-@property (strong,nonatomic)	NSMutableArray		*	relationList;
+@property (strong,nonatomic)	NSArray				*	relationList;
 @property (assign,nonatomic)	id						selection;
 
 - (void)setType:(NSString *)tag value:(NSString *)value byUser:(BOOL)byUser;
