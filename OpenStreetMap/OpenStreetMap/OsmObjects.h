@@ -154,7 +154,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 
 @interface OsmMember : NSObject <NSCoding>
 {
-	NSString *	_type;
+	NSString *	_type;	// way, node, or relation: to help identify ref
 	id			_ref;
 	NSString *	_role;
 }
@@ -163,6 +163,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 @property (readonly,nonatomic)	NSString *	role;
 
 -(id)initWithType:(NSString *)type ref:(NSNumber *)ref role:(NSString *)role;
+-(id)initWithRef:(OsmBaseObject *)ref role:(NSString *)role;
 -(void)resolveRefToObject:(OsmBaseObject *)object;
 
 -(BOOL)isNode;

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class OsmBaseObject;
+
 @interface POITabBarController : UITabBarController
 {
 	NSString		*	_typeTag;
@@ -15,7 +17,7 @@
 }
 @property (strong,nonatomic)	NSMutableDictionary *	keyValueDict;
 @property (strong,nonatomic)	NSArray				*	relationList;
-@property (assign,nonatomic)	id						selection;
+@property (assign,nonatomic)	OsmBaseObject		*	selection;
 
 - (void)setType:(NSString *)tag value:(NSString *)value byUser:(BOOL)byUser;
 

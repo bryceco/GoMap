@@ -2115,6 +2115,8 @@ enum {
 	ACTION_REVERSE,
 	ACTION_DUP,
 	ACTION_DISCONNECT,
+	ACTION_COPYTAGS,
+	ACTION_PASTETAGS,
 };
 static NSString * ActionTitle[] = {
 	@"Split",
@@ -2135,37 +2137,39 @@ static NSString * ActionTitle[] = {
 	_actionList = nil;
 	if ( _selectedRelation ) {
 		// relation
-		return;
+		_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
+										  otherButtonTitles:@"Copy Tags", @"Paste Tags", nil];
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
 	} else if ( _selectedWay ) {
 		if ( _selectedNode ) {
 			// node in way
 			if ( _selectedNode.wayCount > 1 ) {
 				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-										   otherButtonTitles:@"Disconnect",nil];
-				_actionList = @[ @(ACTION_DISCONNECT) ];
+										   otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Disconnect",nil];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DISCONNECT) ];
 			} else {
 				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-												  otherButtonTitles:@"Split Way",nil];
-				_actionList = @[ @(ACTION_SPLIT) ];
+												  otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Split Way",nil];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_SPLIT) ];
 			}
 		} else {
 			if ( _selectedWay.isArea ) {
 				// polygon
 				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-										   otherButtonTitles:@"Make Rectangular",@"Duplicate Way",nil];
-				_actionList = @[ @(ACTION_RECT), @(ACTION_DUP) ];
+										   otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Make Rectangular",@"Duplicate Way",nil];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT), @(ACTION_DUP) ];
 			} else {
 				// line
 				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-												  otherButtonTitles:@"Straighten Way",@"Reverse Way",@"Duplicate Way",nil];
-				_actionList = @[ @(ACTION_STRAIGHT), @(ACTION_REVERSE), @(ACTION_DUP) ];
+												  otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Straighten Way",@"Reverse Way",@"Duplicate Way",nil];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHT), @(ACTION_REVERSE), @(ACTION_DUP) ];
 			}
 		}
 	} else if ( _selectedNode ) {
 		// node
 		_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-								   otherButtonTitles:@"Duplicate Node",nil];
-		_actionList = @[ @(ACTION_DUP) ];
+								   otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Duplicate Node",nil];
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DUP) ];
 	} else {
 		// nothing selected
 		return;
@@ -2192,15 +2196,23 @@ static NSString * ActionTitle[] = {
 	action = [_actionList[ action ] integerValue];
 	NSString * error = nil;
 	switch (action) {
+		case ACTION_COPYTAGS:
+			if ( ! [self.mapData copyTags:self.selectedPrimary] )
+				error = @"The object does contain any tags";
+			break;
+		case ACTION_PASTETAGS:
+			if ( ! [self.mapData pasteTags:self.selectedPrimary] )
+				error = @"No tags to paste";
+			break;
 		case ACTION_DUP:
 			assert(NO);
 			break;
 		case ACTION_RECT:
-			if ( ! [self.mapData orthogonalize:self.selectedWay] )
+			if ( ! [self.mapData orthogonalizeWay:self.selectedWay] )
 				error = @"The way is not sufficiently rectangular";
 			break;
 		case ACTION_REVERSE:
-			if ( ![self.mapData reverse:self.selectedWay] )
+			if ( ![self.mapData reverseWay:self.selectedWay] )
 				error = @"Cannot reverse way";
 			break;
 		case ACTION_DISCONNECT:
@@ -2212,7 +2224,7 @@ static NSString * ActionTitle[] = {
 				error = @"Cannot split way";
 			break;
 		case ACTION_STRAIGHT:
-			if ( ! [self.mapData straighten:self.selectedWay] )
+			if ( ! [self.mapData straightenWay:self.selectedWay] )
 				error = @"The way is not sufficiently straight";
 			break;
 		default:
@@ -2224,6 +2236,8 @@ static NSString * ActionTitle[] = {
 	}
 
 	[self setNeedsDisplay];
+	[self.mapView refreshPushpinText];
+
 	_actionSheet = nil;
 	_actionList = nil;
 }

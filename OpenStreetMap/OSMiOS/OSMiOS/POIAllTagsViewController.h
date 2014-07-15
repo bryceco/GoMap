@@ -27,6 +27,7 @@
 {
 	NSMutableArray				*	_tags;
 	NSMutableArray				*	_relations;
+	NSMutableArray				*	_members;
 	IBOutlet UIBarButtonItem	*	_saveButton;
 }
 

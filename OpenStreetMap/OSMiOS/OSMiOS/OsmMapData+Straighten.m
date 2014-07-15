@@ -13,7 +13,32 @@
 #import "VectorMath.h"
 
 
+
 @implementation OsmMapData (Straighten)
+
+#pragma mark copy/paste tags
+
+- (BOOL)copyTags:(OsmBaseObject *)object
+{
+	_copyPasteScratchpad = [object.tags copy];
+	return _copyPasteScratchpad.count > 0;
+}
+
+- (BOOL)pasteTags:(OsmBaseObject *)object
+{
+	if ( _copyPasteScratchpad.count == 0 )
+		return NO;
+	NSDictionary * newTags = MergeTags(object.tags, _copyPasteScratchpad);
+	[self setTags:newTags forObject:object];
+	return YES;
+}
+
+#pragma mark unjoinNodeFromWway
+
+- (BOOL)disconnectNode:(OsmNode *)node fromWay:(OsmWay *)way
+{
+	return NO;
+}
 
 #pragma mark straighten
 
@@ -22,8 +47,7 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 	return ((node.x - start.x) * (end.x - start.x) + (node.y - start.y) * (end.y - start.y)) / MagSquared(Sub(end,start));
 }
 
-
-- (BOOL)straighten:(OsmWay *)way
+- (BOOL)straightenWay:(OsmWay *)way
 {
 	NSInteger count = way.nodes.count;
 	OSMPoint points[ count ];
@@ -126,7 +150,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 }
 
 
-- (BOOL)reverse:(OsmWay *)way
+- (BOOL)reverseWay:(OsmWay *)way
 {
 	NSDictionary * roleReversals = @{
 		@"forward" : @"backward",
@@ -164,7 +188,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 				NSString * newRole = roleReversals[ member.role ];
 				if ( newRole ) {
 					NSInteger index = [relation.members indexOfObject:member];
-					OsmMember * newMember = [[OsmMember alloc] initWithType:member.type ref:(id)way role:newRole];
+					OsmMember * newMember = [[OsmMember alloc] initWithRef:way role:newRole];
 					[self deleteMemberInRelation:relation index:index];
 					[self addMember:newMember toRelation:relation atIndex:index];
 				}
@@ -224,29 +248,30 @@ NSString * reverseValue( NSString * key, NSString * value)
 // line, circles across the diameter.
 static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 {
-	double lengths[ nodes.count ];
+	NSInteger count = nodes.count;
+	double lengths[ count ];
 	double best = 0;
-	NSInteger idxB;
+	NSInteger idxB = 0;
 
 	// calculate lengths
 	double length = 0;
-	for (NSInteger i = (idxA+1)%nodes.count; i != idxA; i = (i+1)%nodes.count) {
+	for (NSInteger i = (idxA+1)%count; i != idxA; i = (i+1)%count) {
 		OsmNode * n1 = nodes[i];
-		OsmNode * n2 = nodes[(i-1+nodes.count)%nodes.count];
+		OsmNode * n2 = nodes[(i-1+count)%count];
 		length += DistanceFromPointToPoint(n1.location,n2.location);
 		lengths[i] = length;
 	}
 	length = 0;
-	for (NSInteger i = (idxA-1+nodes.count)%nodes.count; i != idxA; i = (i-1+nodes.count)%nodes.count) {
+	for (NSInteger i = (idxA-1+count)%count; i != idxA; i = (i-1+count)%count) {
 		OsmNode * n1 = nodes[i];
-		OsmNode * n2 = nodes[(i+1)%nodes.count];
+		OsmNode * n2 = nodes[(i+1)%count];
 		length += DistanceFromPointToPoint(n1.location,n2.location);
 		if (length < lengths[i])
 			lengths[i] = length;
 	}
 
 	// determine best opposite node to split
-	for (NSInteger i = 0; i < nodes.count; i++) {
+	for (NSInteger i = 0; i < count; i++) {
 		OsmNode * n1 = nodes[idxA];
 		OsmNode * n2 = nodes[i];
 		double cost = lengths[i] / DistanceFromPointToPoint(n1.location,n2.location);
@@ -316,7 +341,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 					OsmMember * via = [relation memberByRole:@"via"];
 					if (via && [wayB.nodes indexOfObject:via.ref] != NSNotFound) {
 						// replace reference to wayA with wayB in relation
-						OsmMember * memberB = [[OsmMember alloc] initWithType:member.type ref:(id)wayB role:member.role];
+						OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:member.role];
 						[self addMember:memberB toRelation:relation atIndex:index+1];
 						[self deleteMemberInRelation:relation index:index];
 					}
@@ -327,7 +352,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 						[self setTags:nil forObject:wayA];
 						[self setTags:nil forObject:wayB];
 					}
-					OsmMember * newMember = [[OsmMember alloc] initWithType:@"way" ref:(id)wayB role:member.role];
+					OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
 					[self addMember:newMember toRelation:relation atIndex:relation.members.count];
 				}
 
@@ -340,14 +365,14 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		NSMutableDictionary * tags = [wayA.tags mutableCopy];
 		[tags setValue:@"multipolygon" forKey:@"type"];
 		[self setTags:tags forObject:multipolygon];
-		OsmMember * memberA = [[OsmMember alloc] initWithType:@"way" ref:(id)wayA role:@"outer"];
-		OsmMember * memberB = [[OsmMember alloc] initWithType:@"way" ref:(id)wayB role:@"outer"];
+		OsmMember * memberA = [[OsmMember alloc] initWithRef:wayA role:@"outer"];
+		OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:@"outer"];
 		[self addMember:memberA toRelation:multipolygon atIndex:0];
 		[self addMember:memberB toRelation:multipolygon atIndex:1];
 		[self setTags:nil forObject:wayA];
 		[self setTags:nil forObject:wayB];
 	}
-
+	
 	return YES;
 }
 

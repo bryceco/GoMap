@@ -136,7 +136,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			merged[k] = [m componentsJoinedByString:@";"];
 		}
 	}
-	return changed ? merged : this;
+	return changed ? [NSDictionary dictionaryWithDictionary:merged] : this;
 }
 
 #pragma mark Construction
@@ -351,13 +351,27 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 
 	if ( self.isNode && ((OsmNode *)self).wayCount > 0 )
-		return @"(node in way)";
+		return [NSString stringWithFormat:@"(node %@ in way)", self.ident];
 
 	if ( self.isNode )
-		return @"(node)";
+		return [NSString stringWithFormat:@"(node %@)", self.ident];
 
 	if ( self.isWay )
-		return @"(way)";
+		return [NSString stringWithFormat:@"(way %@)", self.ident];
+
+	if ( self.isRelation ) {
+		OsmRelation * relation = (id)self;
+		NSString * type = relation.tags[@"type"];
+		if ( type.length ) {
+			name = relation.tags[type];
+			if ( name.length ) {
+				return [NSString stringWithFormat:@"%@ (%@)", type, name];
+			} else {
+				return [NSString stringWithFormat:@"%@ (relation)",type];
+			}
+		}
+		return [NSString stringWithFormat:@"(relation %@)", self.ident];
+	}
 
 	return @"other object";
 }
@@ -1176,10 +1190,29 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 	return self;
 }
+-(id)initWithRef:(OsmBaseObject *)ref role:(NSString *)role
+{
+	self = [super init];
+	if ( self ) {
+		_ref = ref;
+		_role = role;
+		if ( ref.isNode )
+			_type = @"node";
+		else if ( ref.isWay )
+			_type = @"way";
+		else if ( ref.isRelation )
+			_type = @"relation";
+		else {
+			_type = nil;
+		}
+	}
+	return self;
+}
 
 -(void)resolveRefToObject:(OsmBaseObject *)object
 {
 	assert( [_ref isKindOfClass:[NSNumber class]] );
+	assert( (object.isNode && self.isNode) || (object.isWay && self.isWay) || (object.isRelation && self.isRelation) );
 	_ref = object;
 }
 

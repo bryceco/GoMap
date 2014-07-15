@@ -12,6 +12,6 @@
 
 @interface OsmMapData (Orthogonalize)
 
-- (BOOL)orthogonalize:(OsmWay *)way;
+- (BOOL)orthogonalizeWay:(OsmWay *)way;
 
 @end

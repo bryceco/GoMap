@@ -14,8 +14,10 @@
 
 @interface OsmMapData (Straighten)
 
-- (BOOL)straighten:(OsmWay *)way;
-- (BOOL)reverse:(OsmWay *)way;
+- (BOOL)copyTags:(OsmBaseObject *)object;
+- (BOOL)pasteTags:(OsmBaseObject *)object;
+- (BOOL)straightenWay:(OsmWay *)way;
+- (BOOL)reverseWay:(OsmWay *)way;
 - (BOOL)disconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;
 - (BOOL)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;
 

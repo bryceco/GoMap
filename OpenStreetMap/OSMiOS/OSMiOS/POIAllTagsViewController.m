@@ -18,7 +18,8 @@
 #import "UITableViewCell+FixConstraints.h"
 
 
-#define RELATION_TAGS 1024
+#define RELATION_TAGS	1024
+#define MEMBER_TAGS		2048
 
 
 @implementation TextPair
@@ -65,6 +66,7 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 	_tags		= [NSMutableArray arrayWithCapacity:tabController.keyValueDict.count];
 	_relations	= [tabController.relationList mutableCopy];
+	_members	= tabController.selection.isRelation ? [((OsmRelation *)tabController.selection).members mutableCopy] : nil;
 
 	[tabController.keyValueDict enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
 		[_tags addObject:[NSMutableArray arrayWithObjects:tag,value,nil]];
@@ -110,15 +112,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 2;
+	POITabBarController * tabController = (id)self.tabBarController;
+	if ( tabController.selection.isRelation )
+		return 3;
+	else
+		return 2;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	if ( section == 0 )
+	if ( section == 0 ) {
 		return @"Tags";
-	else
+	} else if ( section == 1 ) {
 		return @"Relations";
+	} else {
+		return @"Members";
+	}
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -126,15 +135,19 @@
 	if ( section == 0 ) {
 		// tags
 		return _tags.count + 1;
-	} else {
+	} else if ( section == 1 ) {
 		// relations
 		return _relations.count;
+	} else {
+		return _members.count + 1;
 	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
+
+		// Tags
 		if ( indexPath.row == _tags.count ) {
 			AddNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
 			[cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
@@ -153,29 +166,54 @@
 		cell.text1.tag = 2*indexPath.row;
 		cell.text2.tag = 2*indexPath.row + 1;
 		return cell;
-	} else {
+
+	} else if ( indexPath.section == 1 ) {
+
+		// Relations
 		if ( indexPath.row == _relations.count ) {
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
 			cell.tag = -1;
 			return cell;
 		}
-		POITabBarController * tabController = (id)self.tabBarController;
 		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath];
 		cell.text1.enabled = NO;
 		cell.text2.enabled = NO;
 		cell.text1.tag = RELATION_TAGS + 2*indexPath.row;
 		cell.text2.tag = RELATION_TAGS + 2*indexPath.row + 1;
 		OsmRelation	* relation = _relations[ indexPath.row ];
-		NSString * relationName = [relation.tags objectForKey:@"name"];
+		NSString * relationName = [relation friendlyDescription];
 		if ( relationName == nil )
 			relationName = relation.ident.stringValue;
 		cell.text1.text = relationName;
-		cell.text2.text = nil;
-		for ( OsmMember * member in relation.members ) {
-			if ( member.ref == tabController.selection ) {
-				cell.text2.text = member.role;
-				break;
-			}
+		cell.text2.text = relation.tags[ @"type" ];
+
+		return cell;
+
+	} else {
+
+		// Members
+		if ( indexPath.row == _members.count ) {
+			AddNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
+			[cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
+			cell.tag = -1;
+			return cell;
+		}
+		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
+		cell.text1.enabled = YES;
+		cell.text2.enabled = YES;
+		cell.text1.tag = MEMBER_TAGS + 2*indexPath.row;
+		cell.text2.tag = MEMBER_TAGS + 2*indexPath.row + 1;
+		OsmMember	* member = _members[ indexPath.row ];
+		if ( [member isKindOfClass:[OsmMember class]] ) {
+			OsmBaseObject * ref = member.ref;
+			NSString * memberName = [ref isKindOfClass:[OsmBaseObject class]] ? ref.friendlyDescription : [NSString stringWithFormat:@"%@ %@",member.type, member.ref];
+			cell.text1.text = member.role;
+			cell.text2.text = memberName;
+		} else {
+			NSArray * values = (id)member;
+			cell.text1.text = values[0];
+			cell.text2.text = values[1];
 		}
 
 		return cell;
@@ -281,11 +319,14 @@
 // Don't allow deleting the "Add Tag" row
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	NSLog(@"%d, %d",(int)indexPath.section, (int)indexPath.row);
 	if ( indexPath.section == 0 ) {
 		return indexPath.row < _tags.count;
-	} else {
+	} else if ( indexPath.section == 1 ) {
 		// don't allow editing relations here
 		return NO;
+	} else {
+		return indexPath.row < _members.count;
 	}
 }
 
@@ -299,8 +340,10 @@
 			NSString * tag = kv[0];
 			[tabController.keyValueDict removeObjectForKey:tag];
 			[_tags removeObjectAtIndex:indexPath.row];
-		} else {
+		} else if ( indexPath.section == 1 ) {
 			[_relations removeObjectAtIndex:indexPath.row];
+		} else  {
+			[_members removeObjectAtIndex:indexPath.row];
 		}
 		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
@@ -315,14 +358,18 @@
 
 - (void)addTagCell:(id)sender
 {
-	[_tags addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
-	NSIndexPath * indexPath = [NSIndexPath indexPathForRow:_tags.count-1 inSection:0];
+	UITableViewCell * cell = sender;	// starts out as UIButton
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
+		cell = (id)[cell superview];
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	if ( indexPath.section == 0 ) {
+		[_tags addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
+	} else if ( indexPath.section == 2 ) {
+		[_members addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
+	} else {
+		return;
+	}
 	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-}
-
-- (void)addRelationCell:(id)sender
-{
-
 }
 
 -(IBAction)cancel:(id)sender

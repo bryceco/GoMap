@@ -58,6 +58,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 	QuadMap				*	_region;	// currently downloaded region
 	QuadBox				*	_spatial;	// spatial index of osm data
 	UndoManager			*	_undoManager;
+	NSDictionary		*	_copyPasteScratchpad;
 
 	BOOL					_substSpatialOnSave;
 }
