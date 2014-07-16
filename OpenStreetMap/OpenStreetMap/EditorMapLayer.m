@@ -2111,9 +2111,10 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 enum {
 	ACTION_SPLIT,
 	ACTION_RECT,
-	ACTION_STRAIGHT,
+	ACTION_STRAIGHTEN,
 	ACTION_REVERSE,
-	ACTION_DUP,
+	ACTION_DUPLICATE,
+	ACTION_JOIN,
 	ACTION_DISCONNECT,
 	ACTION_COPYTAGS,
 	ACTION_PASTETAGS,
@@ -2124,6 +2125,7 @@ static NSString * ActionTitle[] = {
 	@"Straighten",
 	@"Reverse",
 	@"Duplicate",
+	@"Join",
 	@"Disconnect",
 	@"Copy Tags",
 	@"Paste Tags",
@@ -2144,22 +2146,22 @@ static NSString * ActionTitle[] = {
 		if ( _selectedNode ) {
 			// node in way
 			if ( _selectedNode.wayCount > 1 ) {
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DISCONNECT) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DISCONNECT), @(ACTION_JOIN) ];
 			} else {
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_SPLIT) ];
 			}
 		} else {
 			if ( _selectedWay.isClosed ) {
 				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT), @(ACTION_DUP) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT), @(ACTION_DUPLICATE) ];
 			} else {
 				// line
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHT), @(ACTION_REVERSE), @(ACTION_DUP) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_DUPLICATE) ];
 			}
 		}
 	} else if ( _selectedNode ) {
 		// node
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DUP) ];
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DUPLICATE) ];
 	} else {
 		// nothing selected
 		return;
@@ -2188,7 +2190,7 @@ static NSString * ActionTitle[] = {
 			if ( ! [self.mapData pasteTags:self.selectedPrimary] )
 				error = @"No tags to paste";
 			break;
-		case ACTION_DUP:
+		case ACTION_DUPLICATE:
 			assert(NO);
 			break;
 		case ACTION_RECT:
@@ -2199,6 +2201,10 @@ static NSString * ActionTitle[] = {
 			if ( ![self.mapData reverseWay:self.selectedWay] )
 				error = @"Cannot reverse way";
 			break;
+		case ACTION_JOIN:
+			if ( ![self.mapData joinWay:self.selectedWay atNode:self.selectedNode] )
+				error = @"Cannot join selection";
+			break;
 		case ACTION_DISCONNECT:
 			if ( ! [self.mapData disconnectWay:self.selectedWay atNode:self.selectedNode] )
 				error = @"Cannot disconnect way";
@@ -2207,7 +2213,7 @@ static NSString * ActionTitle[] = {
 			if ( ! [self.mapData splitWay:self.selectedWay atNode:self.selectedNode] )
 				error = @"Cannot split way";
 			break;
-		case ACTION_STRAIGHT:
+		case ACTION_STRAIGHTEN:
 			if ( ! [self.mapData straightenWay:self.selectedWay] )
 				error = @"The way is not sufficiently straight";
 			break;

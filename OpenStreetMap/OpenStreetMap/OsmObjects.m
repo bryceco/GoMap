@@ -686,7 +686,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 				@"bench": @true,
 				@"clock": @true,
 				@"drinking_water": @true,
-				@"parking_entrance": @YES,
+				@"parking_entrance": @true,
 				@"post_box": @true,
 				@"telephone": @true,
 				@"vending_machine": @true,

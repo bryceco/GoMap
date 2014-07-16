@@ -20,5 +20,6 @@
 - (BOOL)reverseWay:(OsmWay *)way;
 - (BOOL)disconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;
 - (BOOL)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;
+- (BOOL)joinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode;
 
 @end

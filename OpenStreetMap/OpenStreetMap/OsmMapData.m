@@ -120,6 +120,21 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	return [_relations objectForKey:ref];
 }
 
+-(NSArray *)waysContainingNode:(OsmNode *)node
+{
+	__block NSMutableArray * a = [NSMutableArray new];
+	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * w, BOOL *stop) {
+		for ( OsmNode * n in w.nodes ) {
+			if ( n == node ) {
+				[a addObject:w];
+				break;
+			}
+		}
+	}];
+	return a;
+}
+
+
 - (void)enumerateObjectsUsingBlock:(void (^)(OsmBaseObject * obj))block
 {
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmNode * node,BOOL * stop){

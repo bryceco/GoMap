@@ -322,7 +322,14 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	} else {
 
-		NSInteger idx = [wayA.nodes indexOfObject:node];
+		// duplicate common node since it ends up in both halves
+		CLLocationCoordinate2D loc = { node.lat, node.lon };
+		OsmNode * newNode = [self createNodeAtLocation:loc];
+		[self setTags:node.tags forObject:newNode];
+		[self addNode:newNode toWay:wayB atIndex:0];
+
+		// place remaining nodes in 2nd way
+		NSInteger idx = [wayA.nodes indexOfObject:node] + 1;
 		while ( idx < wayA.nodes.count ) {
 			[self addNode:wayA.nodes[idx] toWay:wayB atIndex:wayB.nodes.count];
 			[self deleteNodeInWay:wayA index:idx];
@@ -373,6 +380,80 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		[self setTags:nil forObject:wayB];
 	}
 	
+	return YES;
+}
+
+#pragma mark Join
+
+-(BOOL)joinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode
+{
+	if ( selectedWay.isClosed )
+		return NO;
+
+	NSArray * ways = [self waysContainingNode:selectedNode];
+	if ( ways.count != 2 )
+		return NO;
+	OsmWay * otherWay = nil;
+	if ( ways[0] == selectedWay ) {
+		otherWay = ways[1];
+	} else if ( ways[1] == selectedWay ) {
+		otherWay = ways[0];
+	} else {
+		return NO;
+	}
+	if ( otherWay.isClosed )
+		return NO;
+
+#if 1
+	// don't allow joining to a way that is part of a relation
+	if ( otherWay.relations.count > 0 )
+		return NO;
+	if ( selectedWay.relations.count > 0 )
+		return NO;
+#else
+	// make sure no nodes are part of a turn restriction
+	NSArray * relations = [selectedWay.relations arrayByAddingObjectsFromArray:otherWay.relations];
+	for ( OsmRelation * parent in relations ) {
+		if ( parent.isRestriction ) {
+			for ( OsmMember * m in parent.members ) {
+				if ( [selectedWay.nodes containsObject:m.ref] || [otherWay.nodes containsObject:m.ref] )
+					return NO;
+			}
+		}
+	}
+#endif
+
+	// join nodes, preserving selected way
+	if ( selectedWay.nodes.lastObject == otherWay.nodes[0] ) {
+		[_undoManager registerUndoComment:@"Join"];
+		for ( OsmNode * n in otherWay.nodes ) {
+			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
+		}
+	} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
+		[_undoManager registerUndoComment:@"Join"];
+		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
+			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
+		}
+	} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
+		[_undoManager registerUndoComment:@"Join"];
+		for ( OsmNode * n in otherWay.nodes ) {
+			[self addNode:n toWay:selectedWay atIndex:0];
+		}
+	} else if ( selectedWay.nodes[0] == otherWay.nodes.lastObject ) {
+		[_undoManager registerUndoComment:@"Join"];
+		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
+			[self addNode:n toWay:selectedWay atIndex:0];
+		}
+	} else {
+		return NO;
+	}
+
+	// join tags
+	NSDictionary * newTags = MergeTags(selectedWay.tags, otherWay.tags);
+	[self setTags:newTags forObject:selectedWay];
+
+	[self deleteWay:otherWay];
+
 	return YES;
 }
 

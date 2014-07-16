@@ -94,6 +94,8 @@ extern NSString * OsmValueForBoolean( BOOL b );
 -(int32_t)nodeCount;
 -(int32_t)relationCount;
 
+-(NSArray *)waysContainingNode:(OsmNode *)node;
+
 -(OsmNode *)nodeForRef:(NSNumber *)ref;
 -(OsmWay *)wayForRef:(NSNumber *)ref;
 -(OsmRelation *)relationForRef:(NSNumber *)ref;
