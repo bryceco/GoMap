@@ -229,16 +229,15 @@ static const CGFloat GradientHeight = 20.0;
 	if ( _filteredCompletions.count ) {
 		if ( _completionTableView == nil ) {
 
-			UITableViewCell * cell = (id)self.superview.superview;
+			UITableViewCell * cell = (id)self.superview;
+			while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
+				cell = (id)cell.superview;
 			UITableView * tableView = (id)cell.superview;
 			BOOL iOS7 = NO;
-			while ( ![tableView isKindOfClass:[UITableView class]] ) {
+			while ( tableView && ![tableView isKindOfClass:[UITableView class]] ) {
 				// iOS 7
 				iOS7 = YES;
 				tableView = (id)tableView.superview;
-			}
-			while ( ![cell isKindOfClass:[UITableViewCell class]] ) {
-				cell = (id)cell.superview;
 			}
 
 			// add completion table to tableview
@@ -276,14 +275,17 @@ static const CGFloat GradientHeight = 20.0;
 		[_gradientLayer removeFromSuperlayer];
 		_gradientLayer = nil;
 
-		UITableViewCell * cell = (id)[self.superview superview];
+		UITableViewCell * cell = (id)[self superview];
+		while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
+			cell = (id)cell.superview;
 		UITableView * tableView = (id)[cell superview];
-		while ( ![tableView isKindOfClass:[UITableView class]] ) {
+		while ( tableView && ![tableView isKindOfClass:[UITableView class]] ) {
 			tableView = (id)tableView.superview;
 		}
-		NSIndexPath * cellIndexPath = [tableView indexPathForCell:cell];
-		[tableView scrollToRowAtIndexPath:cellIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-
+		if ( tableView ) {
+			NSIndexPath * cellIndexPath = [tableView indexPathForCell:cell];
+			[tableView scrollToRowAtIndexPath:cellIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+		}
 		tableView.scrollEnabled = YES;
 	}
 }

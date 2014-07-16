@@ -387,9 +387,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 -(BOOL)joinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode
 {
-	if ( selectedWay.isClosed )
-		return NO;
-
 	NSArray * ways = [self waysContainingNode:selectedNode];
 	if ( ways.count != 2 )
 		return NO;
@@ -401,8 +398,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	} else {
 		return NO;
 	}
-	if ( otherWay.isClosed )
-		return NO;
 
 #if 1
 	// don't allow joining to a way that is part of a relation
