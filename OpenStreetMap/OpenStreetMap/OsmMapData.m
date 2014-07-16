@@ -272,13 +272,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)deleteWay:(OsmWay *)way
 {
 	[_undoManager registerUndoComment:@"delete way"];
-#if 1
-	while ( way.nodes.count ) {
-		[self deleteNodeInWay:way index:0];
-	}
-#endif
-	[way setDeleted:YES undo:_undoManager];
 	[_spatial removeMember:way undo:_undoManager];
+	while ( way.nodes.count ) {
+		[self deleteNodeInWay:way index:way.nodes.count-1];
+	}
+	[way setDeleted:YES undo:_undoManager];
 }
 
 -(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index

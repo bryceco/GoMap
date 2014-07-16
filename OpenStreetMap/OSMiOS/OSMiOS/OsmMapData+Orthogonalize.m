@@ -90,10 +90,10 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 	return r;
 }
 
--(BOOL)orthogonalize:(OsmWay *)way
+-(BOOL)orthogonalizeWay:(OsmWay *)way
 {
 	// needs a closed way to work properly.
-	if ( !way.isWay || !way.isArea || way.nodes.count < 3 ) {
+	if ( !way.isWay || !way.isClosed || way.nodes.count < 3 ) {
 		return NO;
 	}
 
@@ -280,7 +280,7 @@ static void step( OSMPoint points[], NSInteger count )
 - (BOOL)orthogonalize:(OsmWay *)way;
 {
 	// needs a closed way to work properly.
-	if ( !way.isWay || !way.isArea || way.nodes.count < 4 ) {
+	if ( !way.isWay || !way.isClosed || way.nodes.count < 4 ) {
 		return false;
 	}
 

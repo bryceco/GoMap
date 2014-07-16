@@ -2106,7 +2106,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return (id) [EditorMapLayer osmHitTest:point mapView:_mapView objects:list testNodes:YES ignoreList:nil segment:&segment];
 }
 
-#pragma mark Editing
+#pragma mark Action Sheet
 
 enum {
 	ACTION_SPLIT,
@@ -2125,6 +2125,8 @@ static NSString * ActionTitle[] = {
 	@"Reverse",
 	@"Duplicate",
 	@"Disconnect",
+	@"Copy Tags",
+	@"Paste Tags",
 };
 
 - (void)updateActionButton
@@ -2137,63 +2139,45 @@ static NSString * ActionTitle[] = {
 	_actionList = nil;
 	if ( _selectedRelation ) {
 		// relation
-		_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-										  otherButtonTitles:@"Copy Tags", @"Paste Tags", nil];
 		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
 	} else if ( _selectedWay ) {
 		if ( _selectedNode ) {
 			// node in way
 			if ( _selectedNode.wayCount > 1 ) {
-				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-										   otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Disconnect",nil];
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DISCONNECT) ];
 			} else {
-				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-												  otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Split Way",nil];
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_SPLIT) ];
 			}
 		} else {
-			if ( _selectedWay.isArea ) {
+			if ( _selectedWay.isClosed ) {
 				// polygon
-				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-										   otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Make Rectangular",@"Duplicate Way",nil];
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT), @(ACTION_DUP) ];
 			} else {
 				// line
-				_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-												  otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Straighten Way",@"Reverse Way",@"Duplicate Way",nil];
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHT), @(ACTION_REVERSE), @(ACTION_DUP) ];
 			}
 		}
 	} else if ( _selectedNode ) {
 		// node
-		_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-								   otherButtonTitles:@"Copy Tags", @"Paste Tags", @"Duplicate Node",nil];
 		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DUP) ];
 	} else {
 		// nothing selected
 		return;
 	}
-#if 0
-	_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:nil];
+	_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 	for ( NSNumber * value in _actionList ) {
 		NSString * title = ActionTitle[ value.integerValue ];
 		[_actionSheet addButtonWithTitle:title];
 	}
-#endif
+	_actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:@"Cancel"];
 
 	[_actionSheet showFromRect:self.mapView.actionButton.frame inView:self.mapView animated:YES];
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if ( actionSheet != _actionSheet || _actionList == nil )
+	if ( actionSheet != _actionSheet || _actionList == nil || buttonIndex >= _actionList.count )
 		return;
-	if ( buttonIndex == actionSheet.cancelButtonIndex || buttonIndex == actionSheet.destructiveButtonIndex )
-		return;
-	NSInteger action = buttonIndex - actionSheet.firstOtherButtonIndex;
-	if ( action >= _actionList.count )
-		return;
-	action = [_actionList[ action ] integerValue];
+	NSInteger action = [_actionList[ buttonIndex ] integerValue];
 	NSString * error = nil;
 	switch (action) {
 		case ACTION_COPYTAGS:
@@ -2231,7 +2215,7 @@ static NSString * ActionTitle[] = {
 			break;
 	}
 	if ( error ) {
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Failed" message:error delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 		[alertView show];
 	}
 
@@ -2242,6 +2226,7 @@ static NSString * ActionTitle[] = {
 	_actionList = nil;
 }
 
+#pragma mark Editing
 
 - (void)setSelectedRelation:(OsmRelation *)relation way:(OsmWay *)way node:(OsmNode *)node
 {

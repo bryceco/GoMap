@@ -165,11 +165,11 @@ NSString * reverseValue( NSString * key, NSString * value)
 
 	// reverse nodes
 	NSArray * newNodes = [[way.nodes reverseObjectEnumerator] allObjects];
-	while ( way.nodes.count ) {
-		[self deleteNodeInWay:way index:0];
-	}
 	for ( NSInteger i = 0; i < newNodes.count; ++i ) {
 		[self addNode:newNodes[i] toWay:way atIndex:i];
+	}
+	while ( way.nodes.count > newNodes.count ) {
+		[self deleteNodeInWay:way index:way.nodes.count-1];
 	}
 
 	// reverse tags
@@ -294,7 +294,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	[self setTags:wayA.tags forObject:wayB];
 
 	OsmRelation * isOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.relations.lastObject : nil;
-	BOOL isArea = wayA.isArea;
+	BOOL isClosed = wayA.isClosed;
 
 	if (wayA.isClosed) {
 
@@ -360,7 +360,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		}
 	}
 
-	if (!isOuter && isArea) {
+	if (!isOuter && isClosed) {
 		OsmRelation * multipolygon = [self createRelation];
 		NSMutableDictionary * tags = [wayA.tags mutableCopy];
 		[tags setValue:@"multipolygon" forKey:@"type"];

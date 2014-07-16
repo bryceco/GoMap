@@ -18,21 +18,24 @@
 
 
 
-BOOL OsmBooleanForValue( NSString * value )
+BOOL IsOsmBooleanTrue( NSString * value )
 {
 	if ( [value isEqualToString:@"true"] )
 		return YES;
-	if ( [value isEqualToString:@"false"] )
-		return NO;
 	if ( [value isEqualToString:@"yes"] )
 		return YES;
-	if ( [value isEqualToString:@"no"] )
-		return NO;
 	if ( [value isEqualToString:@"1"] )
 		return YES;
+	return NO;
+}
+BOOL IsOsmBooleanFalse( NSString * value )
+{
+	if ( [value isEqualToString:@"false"] )
+		return YES;
+	if ( [value isEqualToString:@"no"] )
+		return YES;
 	if ( [value isEqualToString:@"0"] )
-		return NO;
-	assert(NO);
+		return YES;
 	return NO;
 }
 NSString * OsmValueForBoolean( BOOL b )
@@ -149,7 +152,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	_user		= [attributeDict valueForKey:@"user"];
 	_uid		= (int32_t) [[attributeDict valueForKey:@"uid"] integerValue];
 	NSString * isVisible = [attributeDict valueForKey:@"visible"];
-	_visible	= OsmBooleanForValue(isVisible);
+	_visible	= !IsOsmBooleanFalse(isVisible);
 	_ident		= @([[attributeDict valueForKey:@"id"] longLongValue]);
 	_timestamp	= [attributeDict valueForKey:@"timestamp"];
 }
@@ -351,13 +354,13 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 
 	if ( self.isNode && ((OsmNode *)self).wayCount > 0 )
-		return [NSString stringWithFormat:@"(node %@ in way)", self.ident];
+		return @"(node in way)";
 
 	if ( self.isNode )
-		return [NSString stringWithFormat:@"(node %@)", self.ident];
+		return @"(node)";
 
 	if ( self.isWay )
-		return [NSString stringWithFormat:@"(way %@)", self.ident];
+		return @"(way)";
 
 	if ( self.isRelation ) {
 		OsmRelation * relation = (id)self;
@@ -670,10 +673,115 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(BOOL)isArea
 {
-	if ( _nodes.count > 2 && _nodes[0] == _nodes.lastObject )
+	static NSDictionary * areaKeys = nil;
+	if ( areaKeys == nil ) {
+		areaKeys = @{
+			@"aeroway": @{
+				@"gate": @true,
+				@"taxiway": @true
+			},
+			@"amenity": @{
+				@"atm": @true,
+				@"bbq": @true,
+				@"bench": @true,
+				@"clock": @true,
+				@"drinking_water": @true,
+				@"parking_entrance": @YES,
+				@"post_box": @true,
+				@"telephone": @true,
+				@"vending_machine": @true,
+				@"waste_basket": @true
+			},
+			@"area": @{},
+			@"barrier": @{
+				@"block": @true,
+				@"bollard": @true,
+				@"cattle_grid": @true,
+				@"cycle_barrier": @true,
+				@"entrance": @true,
+				@"fence": @true,
+				@"gate": @true,
+				@"kissing_gate": @true,
+				@"lift_gate": @true,
+				@"stile": @true,
+				@"toll_booth": @true
+			},
+			@"building": @{
+				@"entrance": @true
+			},
+			@"craft": @{},
+			@"emergency": @{
+				@"fire_hydrant": @true,
+				@"phone": @true
+			},
+			@"golf": @{
+				@"hole": @true
+			},
+			@"historic": @{
+				@"boundary_stone": @true
+			},
+			@"landuse": @{},
+			@"leisure": @{
+				@"picnic_table": @true,
+				@"slipway": @true
+			},
+			@"man_made": @{
+				@"cutline": @true,
+				@"embankment": @true,
+				@"flagpole": @true,
+				@"pipeline": @true,
+				@"survey_point": @true
+			},
+			@"military": @{},
+			@"natural": @{
+				@"coastline": @true,
+				@"peak": @true,
+				@"spring": @true,
+				@"tree": @true
+			},
+			@"office": @{},
+			@"piste:type": @{},
+			@"place": @{},
+			@"power": @{
+				@"line": @true,
+				@"minor_line": @true,
+				@"pole": @true,
+				@"tower": @true
+			},
+			@"public_transport": @{
+				@"stop_position": @true
+			},
+			@"shop": @{},
+			@"tourism": @{
+				@"viewpoint": @true
+			},
+			@"waterway": @{
+				@"canal": @true,
+				@"ditch": @true,
+				@"drain": @true,
+				@"river": @true,
+				@"stream": @true,
+				@"weir": @true
+			}
+		};
+	}
+
+	NSString * value = _tags[@"area"];
+	if ( value && IsOsmBooleanTrue(value) )
 		return YES;
-	NSString * value = [_tags valueForKey:@"area"];
-	return value && OsmBooleanForValue( value );
+	if ( !self.isClosed )
+		return NO;
+	if ( value && IsOsmBooleanFalse(value) )
+		return NO;
+	__block BOOL area = NO;
+	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * val, BOOL *stop) {
+		NSDictionary * exclude = areaKeys[key];
+		if ( exclude && !exclude[val] ) {
+			area = YES;
+			*stop = YES;
+		}
+	}];
+	return area;
 }
 
 -(BOOL)isClosed

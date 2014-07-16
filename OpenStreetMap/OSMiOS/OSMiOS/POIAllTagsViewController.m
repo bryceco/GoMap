@@ -22,6 +22,9 @@
 #define MEMBER_TAGS		2048
 
 
+#define EDIT_RELATIONS 0
+
+
 @implementation TextPair
 
 - (void)willTransitionToState:(UITableViewCellStateMask)state
@@ -139,7 +142,11 @@
 		// relations
 		return _relations.count;
 	} else {
+#if EDIT_RELATIONS
 		return _members.count + 1;
+#else
+		return _members.count;
+#endif
 	}
 }
 
@@ -181,11 +188,8 @@
 		cell.text1.tag = RELATION_TAGS + 2*indexPath.row;
 		cell.text2.tag = RELATION_TAGS + 2*indexPath.row + 1;
 		OsmRelation	* relation = _relations[ indexPath.row ];
-		NSString * relationName = [relation friendlyDescription];
-		if ( relationName == nil )
-			relationName = relation.ident.stringValue;
-		cell.text1.text = relationName;
-		cell.text2.text = relation.tags[ @"type" ];
+		cell.text1.text = relation.ident.stringValue;
+		cell.text2.text = [relation friendlyDescription];
 
 		return cell;
 
@@ -200,8 +204,13 @@
 			return cell;
 		}
 		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
+#if EDIT_RELATIONS
 		cell.text1.enabled = YES;
 		cell.text2.enabled = YES;
+#else
+		cell.text1.enabled = NO;
+		cell.text2.enabled = NO;
+#endif
 		cell.text1.tag = MEMBER_TAGS + 2*indexPath.row;
 		cell.text2.tag = MEMBER_TAGS + 2*indexPath.row + 1;
 		OsmMember	* member = _members[ indexPath.row ];
@@ -326,7 +335,11 @@
 		// don't allow editing relations here
 		return NO;
 	} else {
+#if EDIT_RELATIONS
 		return indexPath.row < _members.count;
+#else
+		return NO;
+#endif
 	}
 }
 

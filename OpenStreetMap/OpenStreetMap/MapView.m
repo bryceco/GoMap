@@ -1275,7 +1275,7 @@ CGSize SizeForImage( NSImage * image )
 	} else {
 
 		if ( node && way && way.nodes.count ) {
-			if ( way.isArea )
+			if ( way.isClosed )
 				return;
 			if ( !(node == way.nodes[0] || node == way.nodes.lastObject) ) {
 				// both a node and way selected but node is not an endpoint
