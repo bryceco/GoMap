@@ -84,6 +84,9 @@
 -(void)deleteSelectedObject;
 -(void)cancelOperation;
 
+- (BOOL)copyTags:(OsmBaseObject *)object;
+- (BOOL)pasteTags:(OsmBaseObject *)object;
+
 - (void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
 - (void)save;
 

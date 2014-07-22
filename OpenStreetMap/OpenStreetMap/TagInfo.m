@@ -276,7 +276,7 @@ static TagInfo * g_DefaultRender = nil;
 		tagType.key				= [tag attributeForName:@"key"].stringValue;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
 		tagType.friendlyName	= [tag attributeForName:@"name"].stringValue;
-		tagType.description		= [tag attributeForName:@"description"].stringValue;
+		tagType.summary			= [tag attributeForName:@"description"].stringValue;
 		tagType.type			= [tag attributeForName:@"type"].stringValue;
 		tagType.belongsTo		= [tag attributeForName:@"belongsTo"].stringValue;
 		tagType.iconName		= [tag attributeForName:@"iconName"].stringValue;
@@ -376,7 +376,7 @@ static TagInfo * g_DefaultRender = nil;
 			return YES;
 		if ( [tag.key rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
 			return YES;
-		if ( tag.description && [tag.description rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
+		if ( tag.summary && [tag.summary rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
 			return YES;
 		return NO;
 	}]];

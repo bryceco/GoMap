@@ -30,13 +30,15 @@
 @property (strong,nonatomic)	NSString	*	type;
 @property (strong,nonatomic)	NSString	*	belongsTo;
 @property (strong,nonatomic)	NSString	*	iconName;
-@property (strong,nonatomic)	NSString	*	description;
+@property (strong,nonatomic)	NSString	*	summary;
 @property (strong,nonatomic)	NSString	*	wikiPage;
 @property (strong,nonatomic)	NSColor		*	lineColor;
 @property (assign,nonatomic)	NSString	*	lineColorText;
 @property (assign,nonatomic)	CGFloat			lineWidth;
 @property (strong,nonatomic)	NSColor		*	areaColor;
 @property (assign,nonatomic)	NSString	*	areaColorText;
+// to cache scaled icon:
+@property (strong,nonatomic)	NSImage		*	scaledIcon;
 
 -(NSImage *)icon;
 -(CGImageRef)cgIcon;

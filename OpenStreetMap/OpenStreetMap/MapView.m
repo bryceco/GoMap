@@ -696,8 +696,18 @@ CGSize SizeForImage( NSImage * image )
 
 -(IBAction)locateMe:(id)sender
 {
+	CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+	if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
+		NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+		NSString * title = [NSString stringWithFormat:@"Turn On Location Services to Allow %@ to Determine Your Location",appName];
+		_alertGps = [[UIAlertView alloc] initWithTitle:title message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[_alertGps show];
+		self.trackingLocation = NO;
+		return;
+	}
+
 	// ios 8 and later:
-	if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization:)] ) {
+	if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] ) {
 		[_locationManager requestWhenInUseAuthorization];
 	}
 
@@ -713,12 +723,8 @@ CGSize SizeForImage( NSImage * image )
 
 -(void)locationUpdateFailed:(NSError *)error
 {
-	if ( !_trackingLocation ) {
-		[_locationManager stopUpdatingLocation];
-#if TARGET_OS_IPHONE
-		[_locationManager stopUpdatingHeading];
-#endif
-	}
+	self.trackingLocation = NO;
+
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
 
 	if ( ![self isLocationSpecified] ) {

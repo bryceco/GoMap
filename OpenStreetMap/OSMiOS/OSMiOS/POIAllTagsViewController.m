@@ -18,10 +18,6 @@
 #import "UITableViewCell+FixConstraints.h"
 
 
-#define RELATION_TAGS	1024
-#define MEMBER_TAGS		2048
-
-
 #define EDIT_RELATIONS 0
 
 
@@ -150,6 +146,10 @@
 	}
 }
 
+-(void)textFieldEditingDidEnd:(id)sender
+{
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
@@ -159,7 +159,6 @@
 			AddNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
 			[cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
 			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
-			cell.tag = -1;
 			return cell;
 		}
 		TextPair * cell = [tableView dequeueReusableCellWithIdentifier:@"TagCell" forIndexPath:indexPath];
@@ -169,9 +168,6 @@
 		cell.text2.enabled = YES;
 		cell.text1.text = kv[0];
 		cell.text2.text = kv[1];
-		// assign tags so we can map changes back to rows
-		cell.text1.tag = 2*indexPath.row;
-		cell.text2.tag = 2*indexPath.row + 1;
 		return cell;
 
 	} else if ( indexPath.section == 1 ) {
@@ -179,14 +175,11 @@
 		// Relations
 		if ( indexPath.row == _relations.count ) {
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
-			cell.tag = -1;
 			return cell;
 		}
 		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath];
 		cell.text1.enabled = NO;
 		cell.text2.enabled = NO;
-		cell.text1.tag = RELATION_TAGS + 2*indexPath.row;
-		cell.text2.tag = RELATION_TAGS + 2*indexPath.row + 1;
 		OsmRelation	* relation = _relations[ indexPath.row ];
 		cell.text1.text = relation.ident.stringValue;
 		cell.text2.text = [relation friendlyDescription];
@@ -200,7 +193,6 @@
 			AddNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
 			[cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
 			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
-			cell.tag = -1;
 			return cell;
 		}
 		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
@@ -211,8 +203,6 @@
 		cell.text1.enabled = NO;
 		cell.text2.enabled = NO;
 #endif
-		cell.text1.tag = MEMBER_TAGS + 2*indexPath.row;
-		cell.text2.tag = MEMBER_TAGS + 2*indexPath.row + 1;
 		OsmMember	* member = _members[ indexPath.row ];
 		if ( [member isKindOfClass:[OsmMember class]] ) {
 			OsmBaseObject * ref = member.ref;
@@ -257,13 +247,17 @@
 
 - (IBAction)textFieldEditingDidBegin:(UITextField *)textField
 {
-	NSInteger tag = textField.tag;
-	assert( tag >= 0 );
-	BOOL isValue = (tag & 1) != 0;
+	UITableViewCell * cell = (id)textField.superview;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
+		cell = (id)cell.superview;
+	TextPair * pair = (id)cell;
+	BOOL isValue = textField == pair.text2;
 
-	if ( tag < RELATION_TAGS ) {
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
 
-		NSMutableArray * kv = _tags[ tag/2 ];
+	if ( indexPath.section == 0 ) {
+
+		NSMutableArray * kv = _tags[ indexPath.row ];
 
 		if ( isValue ) {
 			// get list of values for current key
@@ -283,20 +277,20 @@
 	}
 }
 
-- (IBAction)textFieldEditingDidEnd:(UITextField *)textField
-{
-}
-
 - (IBAction)textFieldChanged:(UITextField *)textField
 {
-	NSInteger tag = textField.tag;
-	assert( tag >= 0 );
+	UITableViewCell * cell = (id)textField.superview;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
+		cell = (id)cell.superview;
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+
 	POITabBarController * tabController = (id)self.tabBarController;
 
-	if ( tag < RELATION_TAGS ) {
+	if ( indexPath.section == 0 ) {
 		// edited tags
-		NSMutableArray * kv = _tags[ tag/2 ];
-		BOOL isValue = (tag & 1) != 0;
+		TextPair * pair = (id)cell;
+		NSMutableArray * kv = _tags[ indexPath.row ];
+		BOOL isValue = textField == pair.text2;
 
 		if ( isValue ) {
 			// new value

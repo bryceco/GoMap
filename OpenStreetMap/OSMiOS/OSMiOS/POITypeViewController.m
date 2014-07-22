@@ -38,8 +38,9 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	_mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
 	for ( NSArray * kv in a ) {
 		TagInfo * tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForKey:kv[0] value:kv[1]];
-		assert( tagInfo );
-		[_mostRecentArray addObject:tagInfo];
+		if ( tagInfo ) {
+			[_mostRecentArray addObject:tagInfo];
+		}
 	}
 }
 
@@ -80,7 +81,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		NSString * text = tagInfo.friendlyName2;
 		cell.textLabel.text = text;
 		cell.imageView.image = tagInfo.icon;
-		cell.detailTextLabel.text = tagInfo.description;
+		cell.detailTextLabel.text = tagInfo.summary;
 		return cell;
 	}
 
@@ -90,7 +91,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		TagInfo * tagInfo = _mostRecentArray[ indexPath.row ];
 		cell.textLabel.text = tagInfo.friendlyName2;
 		cell.imageView.image = tagInfo.icon;
-		cell.detailTextLabel.text = tagInfo.description;
+		cell.detailTextLabel.text = tagInfo.summary;
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		return cell;
 	} else {
@@ -108,7 +109,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 			TagInfo * tagInfo = _typeArray[ indexPath.row ];
 			cell.textLabel.text = tagInfo.friendlyName ?: tagInfo.friendlyName2;
 			cell.imageView.image = tagInfo.icon;
-			cell.detailTextLabel.text = tagInfo.description;
+			cell.detailTextLabel.text = tagInfo.summary;
 			POITabBarController * tabController = (id)self.tabBarController;
 			BOOL selected = [[tabController.keyValueDict valueForKey:tagInfo.key] isEqualToString:tagInfo.value];
 			cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;

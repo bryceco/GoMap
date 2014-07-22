@@ -236,7 +236,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc
 {
 	OsmNode * node = [OsmNode new];
-	[node constructAsUserCreated];
+	[node constructAsUserCreated:self.credentialsUserName];
 	[node setLongitude:loc.longitude latitude:loc.latitude undo:nil];
 	[node setDeleted:YES undo:nil];
 	[self setConstructed:node];
@@ -251,7 +251,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(OsmWay *)createWay
 {
 	OsmWay * way = [OsmWay new];
-	[way constructAsUserCreated];
+	[way constructAsUserCreated:self.credentialsUserName];
 	[way setDeleted:YES undo:nil];
 	[self setConstructed:way];
 	[_ways setObject:way forKey:way.ident];
@@ -265,7 +265,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(OsmRelation *)createRelation
 {
 	OsmRelation * relation = [OsmRelation new];
-	[relation constructAsUserCreated];
+	[relation constructAsUserCreated:self.credentialsUserName];
 	[relation setDeleted:YES undo:nil];
 	[self setConstructed:relation];
 	[_relations setObject:relation forKey:relation.ident];
@@ -1233,18 +1233,27 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	self.credentialsUserName = appDelegate.userName;
 	self.credentialsPassword = appDelegate.userPassword;
 
-	NSString * creator = [NSString stringWithFormat:@"%@ %@", appDelegate.appName, appDelegate.appVersion];
-
-	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:@{
-								 @"created_by" : creator,
-								 @"comment" : @"Verifying credentials only"
-								 }];
-	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/changeset/create"];
-
-	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * data,NSString * errorMessage){
+	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/user/details"];
+	[self putRequest:url method:@"GET" xml:nil completion:^(NSData * data,NSString * errorMessage){
+		BOOL ok = NO;
 		if ( data ) {
+			NSString * text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:text options:0 error:NULL];
+			NSXMLElement * root = [doc rootElement];
+			NSArray * users = [root elementsForName:@"user"];
+			if ( users.count ) {
+				NSXMLElement * user = [users lastObject];
+				NSString * creation = [user attributeForName:@"account_created"].stringValue;
+				if ( creation.length ) {
+					ok = YES;
+				}
+			}
+		}
+		if ( ok ) {
 			completion(nil);
 		} else {
+			if ( errorMessage == nil )
+				errorMessage = @"Not found";
 			completion(errorMessage);
 		}
 	}];
@@ -1683,6 +1692,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	[self enumerateObjectsInRegion:rect block:^(OsmBaseObject * base) {
 		NSDate * date = [base dateForTimestamp];
+		if ( base.user.length == 0 ) {
+			NSLog(@"object %@, uid = %d", base, base.uid);
+		}
 		OsmUserStatistics * stats = dict[ base.user ];
 		if ( stats == nil ) {
 			stats = [OsmUserStatistics new];

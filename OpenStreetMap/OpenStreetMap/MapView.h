@@ -76,6 +76,7 @@
 	UIAlertView						*	_alertError;
 	UIAlertView						*	_alertMove;
 	UIAlertView						*	_alertUndo;
+	UIAlertView						*	_alertGps;
 #else
 	HtmlErrorWindow					*	_htmlErrorWindow;
 #endif

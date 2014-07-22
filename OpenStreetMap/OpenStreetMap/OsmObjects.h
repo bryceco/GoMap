@@ -53,7 +53,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 
 -(void)constructTag:(NSString *)tag value:(NSString *)value;
 -(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict;
--(void)constructAsUserCreated;
+-(void)constructAsUserCreated:(NSString *)userName;
 -(void)setConstructed;
 -(void)incrementModifyCount:(UndoManager *)undo;
 -(void)setTags:(NSDictionary *)tags undo:(UndoManager *)undo;

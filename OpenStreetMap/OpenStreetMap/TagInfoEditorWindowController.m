@@ -124,7 +124,7 @@
 		if ( tag.belongsTo.length )
 			[element addAttribute:[NSXMLNode attributeWithName:@"belongsTo"		stringValue:tag.belongsTo]];
 		if ( tag.description.length )
-			[element addAttribute:[NSXMLNode attributeWithName:@"description"	stringValue:tag.description]];
+			[element addAttribute:[NSXMLNode attributeWithName:@"description"	stringValue:tag.summary]];
 		if ( tag.iconName.length )
 			[element addAttribute:[NSXMLNode attributeWithName:@"iconName"		stringValue:tag.iconName]];
 		if ( tag.wikiPage.length )
@@ -304,7 +304,7 @@
 		}
 		if ( value.length == 0 )
 			continue;
-		tagType.description = desc;
+		tagType.summary = desc;
 	}
 }
 

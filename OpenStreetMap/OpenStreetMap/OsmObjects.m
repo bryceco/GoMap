@@ -454,13 +454,13 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return self;
 }
 
--(void)constructAsUserCreated
+-(void)constructAsUserCreated:(NSString *)userName
 {
 	// newly created by user
 	assert( !_constructed );
 	_ident = @( [OsmBaseObject nextUnusedIdentifier] );
 	_visible = YES;
-	_user = @"";
+	_user = userName;
 	_version = 1;
 	_changeset = 0;
 	_uid = 0;

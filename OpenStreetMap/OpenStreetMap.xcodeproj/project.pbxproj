@@ -1302,6 +1302,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Bryce;
+				TargetAttributes = {
+					02FE3F5415F113CA00A6CFAE = {
+						DevelopmentTeam = MKTTC6734C;
+					};
+				};
 			};
 			buildConfigurationList = 02FE3F4F15F113CA00A6CFAE /* Build configuration list for PBXProject "OpenStreetMap" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1805,7 +1810,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OpenStreetMap/OpenStreetMap.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenStreetMap/OpenStreetMap-Prefix.pch";
@@ -1820,7 +1826,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OpenStreetMap/OpenStreetMap.entitlements;
-				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenStreetMap/OpenStreetMap-Prefix.pch";

@@ -16,23 +16,6 @@
 
 @implementation OsmMapData (Straighten)
 
-#pragma mark copy/paste tags
-
-- (BOOL)copyTags:(OsmBaseObject *)object
-{
-	_copyPasteScratchpad = [object.tags copy];
-	return _copyPasteScratchpad.count > 0;
-}
-
-- (BOOL)pasteTags:(OsmBaseObject *)object
-{
-	if ( _copyPasteScratchpad.count == 0 )
-		return NO;
-	NSDictionary * newTags = MergeTags(object.tags, _copyPasteScratchpad);
-	[self setTags:newTags forObject:object];
-	return YES;
-}
-
 #pragma mark unjoinNodeFromWway
 
 - (BOOL)disconnectNode:(OsmNode *)node fromWay:(OsmWay *)way

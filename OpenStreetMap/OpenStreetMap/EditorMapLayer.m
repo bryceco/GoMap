@@ -148,17 +148,18 @@ const CGFloat WayHighlightRadius = 6.0;
 
 #pragma mark Map data
 
+const double MinIconSizeInPixels = 24;
+const double MinIconSizeInMeters = 4.0;
+
 - (void)updateIconSize
 {
-	const double minIconSizeInPixels = 24;
-	const double minIconSizeInMeters = 4.0;
 	double metersPerPixel = [_mapView metersPerPixel];
-	if ( minIconSizeInPixels * metersPerPixel < minIconSizeInMeters ) {
-		_iconSize.width  = minIconSizeInMeters / metersPerPixel;
-		_iconSize.height = minIconSizeInMeters / metersPerPixel;
+	if ( MinIconSizeInPixels * metersPerPixel < MinIconSizeInMeters ) {
+		_iconSize.width  = round(MinIconSizeInMeters / metersPerPixel);
+		_iconSize.height = round(MinIconSizeInMeters / metersPerPixel);
 	} else {
-		_iconSize.width	 = minIconSizeInPixels;
-		_iconSize.height = minIconSizeInPixels;
+		_iconSize.width	 = MinIconSizeInPixels;
+		_iconSize.height = MinIconSizeInPixels;
 	}
 
 #if 1
@@ -1490,19 +1491,31 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		assert(NO);
 		return NO;
 	}
+	pt.x = round(pt.x);	// performance optimization when drawing
+	pt.y = round(pt.y);
 
+	BOOL untagged = NO;
 	TagInfo * tagInfo = node.tagInfo;
 	if ( tagInfo.icon ) {
 
+		UIImage * icon = tagInfo.icon;
+		if ( _iconSize.height == MinIconSizeInPixels ) {
+			if ( tagInfo.scaledIcon == nil ) {
+				UIGraphicsBeginImageContext( _iconSize );
+				[icon drawInRect:CGRectMake(0,0,_iconSize.width,_iconSize.height)];
+				tagInfo.scaledIcon = UIGraphicsGetImageFromCurrentImageContext();
+				UIGraphicsEndImageContext();
+			}
+			icon = tagInfo.scaledIcon;
+		}
+
 		// draw with icon
-		pt.x = round(pt.x);	// performance optimization when drawing images
-		pt.y = round(pt.y);
 		CGContextSaveGState(ctx);
 		CGContextTranslateCTM(ctx, 0, pt.y+_iconSize.height);
 		CGContextScaleCTM(ctx, 1.0, -1.0);
-		CGRect rect = CGRectMake(pt.x-_iconSize.width/2, _iconSize.height/2, _iconSize.width, _iconSize.height);
+		CGRect rect = CGRectMake(pt.x-round(_iconSize.width/2), round(_iconSize.height/2), _iconSize.width, _iconSize.height);
 		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.whiteColor.CGColor );
-		CGContextDrawImage( ctx, rect, tagInfo.cgIcon );
+		CGContextDrawImage( ctx, rect, icon.CGImage );
 		CGContextRestoreGState(ctx);
 
 	} else {
@@ -1510,35 +1523,35 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		// draw generic box
 		CGContextSetLineWidth(ctx, 2.0);
 		CGFloat red, green, blue;
-		if ( node.tags.count ) {
-			if ( [node.tags objectForKey:@"shop"] ) {
-				red = 0xAC/255.0;
-				green = 0x39/255.0;
-				blue = 0xAC/255.0;
-			} else if ( [node.tags objectForKey:@"amenity"] ) {
-				red = 0x73/255.0;
-				green = 0x4A/255.0;
-				blue = 0x08/255.0;
-			} else if ( [node.tags objectForKey:@"tourism"] || [node.tags objectForKey:@"transport"] ) {
-				red = 0x00/255.0;
-				green = 0x92/255.0;
-				blue = 0xDA/255.0;
-			} else if ( [node.tags objectForKey:@"medical"] ) {
-				red = 0xDA/255.0;
-				green = 0x00/255.0;
-				blue = 0x92/255.0;
-			} else {
-				red = 0;
-				green = 0;
-				blue = 1;
-			}
+		if ( node.tags[@"shop"] ) {
+			red = 0xAC/255.0;
+			green = 0x39/255.0;
+			blue = 0xAC/255.0;
+		} else if ( node.tags[@"amenity"] || node.tags[@"building"] || node.tags[@"leisure"] ) {
+			red = 0x73/255.0;
+			green = 0x4A/255.0;
+			blue = 0x08/255.0;
+		} else if ( node.tags[@"tourism"] || node.tags[@"transport"] ) {
+			red = 0x00/255.0;
+			green = 0x92/255.0;
+			blue = 0xDA/255.0;
+		} else if ( node.tags[@"medical"] ) {
+			red = 0xDA/255.0;
+			green = 0x00/255.0;
+			blue = 0x92/255.0;
+		} else if ( node.tags[@"name"] ) {
+			// blue for generic interesting nodes
+			red = 0;
+			green = 0;
+			blue = 1;
 		} else {
 			// gray for untagged nodes
-			green = blue = red = 0.5;
+			untagged = YES;
+			red = green = blue = 0.5;
 		}
 		CGContextSetRGBStrokeColor(ctx, red, green, blue, 1.0);
 
-		NSString * houseNumber = DrawNodeAsHouseNumber( node.tags );
+		NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( node.tags ) : nil;
 		if ( houseNumber ) {
 
 			UIColor * shadowColor = ShadowColorForColor2(self.textColor);
@@ -1547,10 +1560,8 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 
 		} else {
 
-			pt.x = round(pt.x);	// performance optimization when drawing images
-			pt.y = round(pt.y);
 			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, ShadowColorForColor(red, green, blue).CGColor );
-			CGRect rect = CGRectMake(pt.x + - _iconSize.width/4, pt.y - _iconSize.height/4, _iconSize.width/2, _iconSize.height/2);
+			CGRect rect = CGRectMake(pt.x - round(_iconSize.width/4), pt.y - round(_iconSize.height/4), round(_iconSize.width/2), round(_iconSize.height/2));
 			CGContextBeginPath(ctx);
 			CGContextAddRect(ctx, rect);
 			CGContextStrokePath(ctx);
@@ -2108,6 +2119,23 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 #pragma mark Action Sheet
 
+- (BOOL)copyTags:(OsmBaseObject *)object
+{
+	[[NSUserDefaults standardUserDefaults] setObject:object.tags forKey:@"copyPasteTags"];
+	return object.tags.count > 0;
+}
+
+- (BOOL)pasteTags:(OsmBaseObject *)object
+{
+	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
+	if ( copyPasteTags.count == 0 )
+		return NO;
+	NSDictionary * newTags = MergeTags(object.tags, copyPasteTags);
+	[self.mapData setTags:newTags forObject:object];
+	return YES;
+}
+
+
 enum {
 	ACTION_SPLIT,
 	ACTION_RECT,
@@ -2153,15 +2181,15 @@ static NSString * ActionTitle[] = {
 		} else {
 			if ( _selectedWay.isClosed ) {
 				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT), @(ACTION_DUPLICATE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT) ];
 			} else {
 				// line
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_DUPLICATE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
 			}
 		}
 	} else if ( _selectedNode ) {
 		// node
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DUPLICATE) ];
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
 	} else {
 		// nothing selected
 		return;
@@ -2175,6 +2203,8 @@ static NSString * ActionTitle[] = {
 
 	[_actionSheet showFromRect:self.mapView.actionButton.frame inView:self.mapView animated:YES];
 }
+
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if ( actionSheet != _actionSheet || _actionList == nil || buttonIndex >= _actionList.count )
@@ -2183,15 +2213,15 @@ static NSString * ActionTitle[] = {
 	NSString * error = nil;
 	switch (action) {
 		case ACTION_COPYTAGS:
-			if ( ! [self.mapData copyTags:self.selectedPrimary] )
+			if ( ! [self copyTags:self.selectedPrimary] )
 				error = @"The object does contain any tags";
 			break;
 		case ACTION_PASTETAGS:
-			if ( ! [self.mapData pasteTags:self.selectedPrimary] )
+			if ( ! [self pasteTags:self.selectedPrimary] )
 				error = @"No tags to paste";
 			break;
 		case ACTION_DUPLICATE:
-			assert(NO);
+			error = @"Not implemented";
 			break;
 		case ACTION_RECT:
 			if ( ! [self.mapData orthogonalizeWay:self.selectedWay] )

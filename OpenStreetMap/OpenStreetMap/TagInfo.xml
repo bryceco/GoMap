@@ -659,8 +659,7 @@
     <tag key="leisure" value="sailing_club" name="Sailing Club" type="node;area"/>
     <tag key="leisure" value="ski_playground" name="Ski Playground" type="node;area" description="a designated location developed specially for kids"/>
     <tag key="leisure" value="slipway" name="Slipway" type="node;area" description="A slipway is a ramp into the water for launching a boat." iconName="transport_slipway" areaColor="C7F1A3"/>
-    <tag key="leisure" value="sport_centre" name="Sport Centre" type="node;area"/>
-    <tag key="leisure" value="sports_centre" name="Sports Centre" type="node;area" description="A distinct facility where a range of sports take place within an enclosed area" iconName="sport_leisure_centre" areaColor="C7F1A3"/>
+    <tag key="leisure" value="sports_centre" name="Sports Centre" type="node;area" description="A distinct facility where a range of sports take place within an enclosed area (gym)" iconName="sport_leisure_centre" areaColor="C7F1A3"/>
     <tag key="leisure" value="stadium" name="Stadium" type="node;area" iconName="sport_stadium" areaColor="C7F1A3"/>
     <tag key="leisure" value="swimming_pool" name="Swimming Pool" type="node;area" description="A place built for swimming" areaColor="C7F1A3"/>
     <tag key="leisure" value="track" name="Track" type="node;area" iconName="sport_leisure_centre" lineColor="C7F1A3" areaColor="C7F1A3" lineWidth="2.000000"/>
