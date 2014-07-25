@@ -150,6 +150,13 @@
 {
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// Fix bug on iPad where cell heights come back as -1:
+	// CGFloat h = [super tableView:tableView heightForRowAtIndexPath:indexPath];
+	return 44.0;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
