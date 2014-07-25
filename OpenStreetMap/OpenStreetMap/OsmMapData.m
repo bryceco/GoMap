@@ -124,12 +124,8 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 {
 	__block NSMutableArray * a = [NSMutableArray new];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * w, BOOL *stop) {
-		for ( OsmNode * n in w.nodes ) {
-			if ( n == node ) {
-				[a addObject:w];
-				break;
-			}
-		}
+		if ( [w.nodes containsObject:node] )
+			[a addObject:w];
 	}];
 	return a;
 }
@@ -1272,6 +1268,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					   [tag attributeForName:@"v"].stringValue];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
 }
+-(void)updateString:(NSMutableAttributedString *)string withMember:(NSXMLElement *)tag
+{
+	NSFont * font = [NSFont fontWithName:@"Helvetica" size:12];
+	NSString * text = [NSString stringWithFormat:@"\t\t%@ %@: \"%@\"\n",
+					   [tag attributeForName:@"type"].stringValue,
+					   [tag attributeForName:@"ref"].stringValue,
+					   [tag attributeForName:@"role"].stringValue];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+}
 
 -(void)updateString:(NSMutableAttributedString *)string withNode:(NSXMLElement *)node
 {
@@ -1307,6 +1312,23 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}
 }
+-(void)updateString:(NSMutableAttributedString *)string withRelation:(NSXMLElement *)relation
+{
+	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
+	NSString * text = [NSString stringWithFormat:@"\tRelation %@ (%d members)\n",
+					   [relation attributeForName:@"id"].stringValue,
+					   (int)relation.childCount];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+	for ( NSXMLElement * tag in relation.children ) {
+		if ( [tag.name isEqualToString:@"tag"] ) {
+			[self updateString:string withTag:(NSXMLElement *)tag];
+		} else if ( [tag.name isEqualToString:@"member"] ) {
+			[self updateString:string withMember:(NSXMLElement *)tag];
+		} else {
+			assert(NO);
+		}
+	}
+}
 -(void)updateString:(NSMutableAttributedString *)string withHeader:(NSString *)header objects:(NSArray *)objects
 {
 	if ( objects.count == 0 )
@@ -1318,6 +1340,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[self updateString:string withNode:object];
 		} else if ( [object.name isEqualToString:@"way"] ) {
 			[self updateString:string withWay:object];
+		} else if ( [object.name isEqualToString:@"relation"] ) {
+			[self updateString:string withRelation:object];
 		} else {
 			assert(NO);
 		}

@@ -2173,11 +2173,18 @@ static NSString * ActionTitle[] = {
 	} else if ( _selectedWay ) {
 		if ( _selectedNode ) {
 			// node in way
-			if ( _selectedNode.wayCount > 1 ) {
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DISCONNECT), @(ACTION_JOIN) ];
-			} else {
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_SPLIT) ];
-			}
+			NSArray * parentWays = [self.mapData waysContainingNode:_selectedNode];
+			BOOL disconnect = parentWays.count > 1 || _selectedNode.hasInterestingTags;
+			BOOL split = _selectedWay.isClosed || (_selectedNode != _selectedWay.nodes[0] && _selectedNode != _selectedWay.nodes.lastObject);
+			BOOL join = parentWays.count > 1;
+			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_PASTETAGS), nil];
+			if ( disconnect )
+				[a addObject:@(ACTION_DISCONNECT)];
+			if ( split )
+				[a addObject:@(ACTION_SPLIT)];
+			if ( join )
+				[a addObject:@(ACTION_JOIN)];
+			_actionList = [NSArray arrayWithArray:a];
 		} else {
 			if ( _selectedWay.isClosed ) {
 				// polygon

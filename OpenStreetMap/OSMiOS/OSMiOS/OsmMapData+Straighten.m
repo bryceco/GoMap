@@ -255,6 +255,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	// determine best opposite node to split
 	for (NSInteger i = 0; i < count; i++) {
+		if ( i == idxA )
+			continue;
 		OsmNode * n1 = nodes[idxA];
 		OsmNode * n2 = nodes[i];
 		double cost = lengths[i] / DistanceFromPointToPoint(n1.location,n2.location);
@@ -297,6 +299,12 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		for ( OsmNode * n in wayB.nodes ) {
 			NSInteger i = [wayA.nodes indexOfObject:n];
 			[self deleteNodeInWay:wayA index:i];
+		}
+
+		// rebase A so it starts with selected node
+		while ( wayA.nodes[0] != node ) {
+			[self addNode:wayA.nodes[0] toWay:wayA atIndex:wayA.nodes.count];
+			[self deleteNodeInWay:wayA index:0];
 		}
 
 		// add shared endpoints
