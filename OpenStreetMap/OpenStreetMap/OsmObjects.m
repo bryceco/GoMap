@@ -121,6 +121,8 @@ static NSInteger _nextUnusedIdentifier = 0;
 
 NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
+	if ( this.count == 0 )
+		return [tags copy];
 	__block NSMutableDictionary * merged = [this mutableCopy];
 	__block BOOL changed = NO;
 	for ( NSString * k in tags ) {

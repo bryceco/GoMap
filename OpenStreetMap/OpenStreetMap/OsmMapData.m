@@ -305,6 +305,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	[_spatial removeMember:way undo:_undoManager];
 	[way removeNodeAtIndex:index undo:_undoManager];
+	// if removing the node leads to 2 identical nodes being consecutive delete one of them as well
+	while ( index > 0 && index < way.nodes.count && way.nodes[index-1] == way.nodes[index] )
+		[way removeNodeAtIndex:index undo:_undoManager];
 	[_spatial addMember:way undo:_undoManager];
 
 	if ( node.wayCount == 0 ) {
@@ -511,7 +514,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				} else if ( error ) {
 					// use the parser's reported error
 				} else {
-					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"Parse error" }];
+					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"Data not available" }];
 				}
 			}
 			if ( error ) {
@@ -1127,11 +1130,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 #endif
 
 	NSString * creator = [NSString stringWithFormat:@"%@ %@", appDelegate.appName, appDelegate.appVersion];
-	
-	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:@{
-									@"created_by" : creator,
-									@"comment" : comment
-								 }];
+
+	NSMutableDictionary * tags = [NSMutableDictionary dictionaryWithDictionary:@{ @"created_by" : creator }];
+	if ( comment.length )
+		[tags addEntriesFromDictionary:@{ @"comment" : comment }];
+	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:tags];
 	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/changeset/create"];
 
 	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * data,NSString * errorMessage){
