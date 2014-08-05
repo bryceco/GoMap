@@ -1269,14 +1269,14 @@ CGSize SizeForImage( NSImage * image )
 
 	if ( way && !node ) {
 		// add new node at point
-		OsmNode * node = [_editorLayer createNodeAtPoint:point];
+		OsmNode * newNode = [_editorLayer createNodeAtPoint:point];
 		NSInteger segment;
 		OsmBaseObject * object = [_editorLayer osmHitTestSelection:point segment:&segment];
 		if ( object == nil )
 			return;
-		[_editorLayer.mapData addNode:node toWay:way atIndex:segment+1];
-		_editorLayer.selectedNode = node;
-		[self placePushpinAtPoint:point object:node];
+		[_editorLayer.mapData addNode:newNode toWay:way atIndex:segment+1];
+		_editorLayer.selectedNode = newNode;
+		[self placePushpinAtPoint:point object:newNode];
 
 	} else {
 
@@ -1632,8 +1632,8 @@ drop_pin:
 
 - (void)singleClick:(CGPoint)point extendedCommand:(BOOL)extendedCommand
 {
-	_grabbedObject = nil;
 	OsmBaseObject * hit = nil;
+	_grabbedObject = nil;
 
 	if ( _editorLayer.addNodeInProgress || _editorLayer.addWayInProgress ) {
 
@@ -1642,7 +1642,7 @@ drop_pin:
 
 			// check if connecting to existing way
 			NSInteger segment;
-			OsmBaseObject * hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:nil];
+			hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:nil];
 
 			// create node
 			_editorLayer.addNodeInProgress = NO;
@@ -1661,7 +1661,7 @@ drop_pin:
 
 			// check if connecting to existing way
 			NSInteger segment;
-			OsmBaseObject * hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:nil];
+			hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:nil];
 			OsmNode * node = nil;
 			if ( hit && hit.isNode ) {
 

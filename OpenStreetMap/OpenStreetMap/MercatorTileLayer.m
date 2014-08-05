@@ -351,19 +351,19 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		
 		// check disk cache
 		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
-		NSData * data = [[NSData alloc] initWithContentsOfFile:cachePath];
-		NSImage * image = data ? [[NSImage alloc] initWithData:data] : nil;	// force read of data from disk prior to adding image to layer
-		if ( image ) {
+		NSData * fileData = [[NSData alloc] initWithContentsOfFile:cachePath];
+		NSImage * fileImage = fileData ? [[NSImage alloc] initWithData:fileData] : nil;	// force read of data from disk prior to adding image to layer
+		if ( fileImage ) {
 
 			// image is in disk cache
 			dispatch_async(dispatch_get_main_queue(), ^(void) {
 #if TARGET_OS_IPHONE
-				layer.contents = (__bridge id)image.CGImage;
+				layer.contents = (__bridge id)fileImage.CGImage;
 #else
 				layer.contents = image;
 #endif
 				layer.hidden = NO;
-				[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
+				[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
 				completion(nil);
 			});
 
