@@ -154,10 +154,14 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 -(void)addMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
 {
 	if ( !_isSplit && (_members == nil || _members.count < MAX_MEMBERS_PER_LEVEL) ) {
-		if ( _members == nil )
+		if ( _members == nil ) {
 			_members = [NSMutableArray arrayWithObject:member];
-		else
+		} else {
+#if defined(DEBUG)
+			assert( ![_members containsObject:member] );
+#endif
 			[_members addObject:member];
+		}
 		return;
 	}
 	if ( !_isSplit ) {
@@ -191,10 +195,14 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 		[_children[index] addMember:member bbox:bbox];
 	} else {
 		// add to self
-		if ( _members == nil )
+		if ( _members == nil ) {
 			_members = [NSMutableArray arrayWithObject:member];
-		else
+		} else {
+#if defined(DEBUG)
+			assert( ![_members containsObject:member] );
+#endif
 			[_members addObject:member];
+		}
 	}
 }
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo

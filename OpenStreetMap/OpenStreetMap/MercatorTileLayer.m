@@ -335,10 +335,10 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	[self addSublayer:layer];
 
 	// check memory cache
-	NSImage * image = [_memoryTileCache objectForKey:cacheKey];
-	if ( image ) {
+	NSImage * cachedImage = [_memoryTileCache objectForKey:cacheKey];
+	if ( cachedImage ) {
 #if TARGET_OS_IPHONE
-		layer.contents = (__bridge id)image.CGImage;
+		layer.contents = (__bridge id)cachedImage.CGImage;
 #else
 		layer.contents = image;
 #endif
@@ -539,8 +539,13 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	NSSet * currentSet = [NSSet setWithArray:currentTiles];
 
 	OSMRect	rect			= [_mapView mapRectFromVisibleRect];
+#if CUSTOM_TRANSFORM
+	int32_t	minZoomLevel	= [self roundZoomUp] ? (int32_t)ceil(log2(_mapView.mapTransform.a))
+												 : (int32_t)floor(log2(_mapView.mapTransform.a));
+#else
 	int32_t	minZoomLevel	= [self roundZoomUp] ? (int32_t)ceil(log2(self.affineTransform.a))
 												 : (int32_t)floor(log2(self.affineTransform.a));
+#endif
 	if ( minZoomLevel < 1 ) {
 		minZoomLevel = 1;
 	}

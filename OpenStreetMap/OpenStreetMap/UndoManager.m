@@ -363,9 +363,9 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 }
 
 
--(NSArray *)objectRefs
+-(NSSet *)objectRefs
 {
-	NSMutableArray * refs = [NSMutableArray new];
+	NSMutableSet * refs = [NSMutableSet new];
 	for ( UndoAction * action in _undoStack ) {
 		[refs addObject:action.target];
 		[refs addObjectsFromArray:action.objects];

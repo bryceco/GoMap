@@ -119,10 +119,10 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 	[_undoManager registerUndoComment:@"Make Rectangular"];
 
 	double epsilon = 1e-4;
-	double score = 0.0;
 
 	if (count == 3) {
 
+		double score = 0.0;
 		NSInteger corner = 0;
 		double dotp = 1.0;
 

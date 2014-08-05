@@ -553,8 +553,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	// check how much area we're trying to download, and if too large complain
 	NSError * error = nil;
 	double area = 0.0;
-	for ( QuadBox * box in newQuads ) {
-		area += box.rect.size.width * box.rect.size.height;
+	for ( QuadBox * qbox in newQuads ) {
+		area += qbox.rect.size.width * qbox.rect.size.height;
 	}
 	if ( area > 0.25 ) {
 		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : @"The area for which you are attempting to download data is too large. Please zoom in or hide the Editor layer under Settings" }];
@@ -963,8 +963,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSXMLElement * element = [OsmMapData elementForObject:way changeset:changeset];
 			[deleteWayElement addChild:element];
 			for ( OsmNode * node in way.nodes ) {
-				NSXMLElement * element = [OsmMapData elementForObject:node changeset:changeset];
-				[deleteWayElement addChild:element];
+				NSXMLElement * nodeElement = [OsmMapData elementForObject:node changeset:changeset];
+				[deleteWayElement addChild:nodeElement];
 			}
 		} else if ( way.isModified && !way.deleted ) {
 			// added/modified
@@ -1137,9 +1137,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:tags];
 	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/changeset/create"];
 
-	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * data,NSString * errorMessage){
-		if ( data ) {
-			NSString * changesetID = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * putData,NSString * putErrorMessage){
+		if ( putData ) {
+			NSString * changesetID = [[NSString alloc] initWithBytes:putData.bytes length:putData.length encoding:NSUTF8StringEncoding];
 			DLog(@"changeset ID = %@",changesetID);
 
 			NSXMLDocument * xmlChanges = [self createXmlWithChangeset:changesetID];
@@ -1150,8 +1150,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			}
 
 			NSString * url2 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/upload", changesetID];
-			[self putRequest:url2 method:@"POST" xml:xmlChanges completion:^(NSData *data,NSString * errorMessage) {
-				NSString * response = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+			[self putRequest:url2 method:@"POST" xml:xmlChanges completion:^(NSData *postData,NSString * postErrorMessage) {
+				NSString * response = [[NSString alloc] initWithBytes:postData.bytes length:postData.length encoding:NSUTF8StringEncoding];
 
 				if ( [response hasPrefix:@"Version mismatch"] ) {
 
@@ -1176,12 +1176,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				DLog(@"upload response = %@",response);
 
 				if ( ![response hasPrefix:@"<?xml"] ) {
-					completion( errorMessage ?: response );
+					completion( postErrorMessage ?: response );
 					return;
 				}
 
 				NSError * error = nil;
-				NSXMLDocument * diffDoc = [[NSXMLDocument alloc] initWithData:data options:0 error:&error];
+				NSXMLDocument * diffDoc = [[NSXMLDocument alloc] initWithData:postData options:0 error:&error];
 				if ( error ) {
 					completion( error.localizedDescription );
 					return;
@@ -1216,7 +1216,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			}];
 
 		} else {
-			completion(errorMessage);
+			completion(putErrorMessage);
 		}
 	}];
 }
@@ -1539,7 +1539,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[self copyRelation:object];
 		}
 	}];
-	NSArray * undoObjects = [_undoManager objectRefs];
+	NSSet * undoObjects = [_undoManager objectRefs];
 	for ( id object in undoObjects ) {
 		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
 			OsmBaseObject * obj = object;
@@ -1578,7 +1578,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)purgeSoft
 {
 	// get a list of all dirty objects
-	NSMutableArray * dirty = [NSMutableArray new];
+	NSMutableSet * dirty = [NSMutableSet new];
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
 		if ( object.isModified ) {
 			[dirty addObject:object];
@@ -1597,8 +1597,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 
 	// get objects referenced by undo manager
-	NSArray * undoRefs = [_undoManager objectRefs];
-	[dirty addObjectsFromArray:undoRefs];
+	NSSet * undoRefs = [_undoManager objectRefs];
+	[dirty unionSet:undoRefs];
 
 	// purge everything
 	[self purgeExceptUndo];

@@ -120,10 +120,9 @@ static const NSInteger RowMap[] = {
 		NSInteger maxRow = [self.tableView numberOfRowsInSection:indexPath.section];
 		for ( NSInteger row = 0; row < maxRow; ++row ) {
 			NSIndexPath * tmpPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
-			UITableViewCell * cell = [tableView cellForRowAtIndexPath:tmpPath];
-			cell.accessoryType = UITableViewCellAccessoryNone;
+			UITableViewCell * tmpCell = [tableView cellForRowAtIndexPath:tmpPath];
+			tmpCell.accessoryType = UITableViewCellAccessoryNone;
 		}
-		UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 		// automatically dismiss settings when a new background is selected
 		[self.navigationController popToRootViewControllerAnimated:YES];

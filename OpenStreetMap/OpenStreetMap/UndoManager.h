@@ -48,7 +48,7 @@ typedef void(^UndoManagerChangeCallback)(void);
 @property (readonly) BOOL canRedo;
 @property (assign) NSInteger runLoopCounter;
 
--(NSArray *)objectRefs;
+-(NSSet *)objectRefs;
 
 -(void)addChangeCallback:(UndoManagerChangeCallback)callback;
 

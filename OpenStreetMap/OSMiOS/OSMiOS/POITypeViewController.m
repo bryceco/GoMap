@@ -127,7 +127,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	}
 
 	NSMutableArray * a = [[NSMutableArray alloc] initWithCapacity:_mostRecentArray.count];
-	for ( TagInfo * tagInfo in _mostRecentArray ) {
+	for ( tagInfo in _mostRecentArray ) {
 		NSArray * kv = @[ tagInfo.key, tagInfo.value ];
 		[a addObject:kv];
 	}

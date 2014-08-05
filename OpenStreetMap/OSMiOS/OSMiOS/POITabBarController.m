@@ -49,8 +49,13 @@
 {
 	if ( byUser ) {
 		// remove conflicting tags
-		for ( NSString * tag in [OsmBaseObject typeKeys] ) {
-			[_keyValueDict removeObjectForKey:tag];
+		for ( NSString * tag2 in [OsmBaseObject typeKeys] ) {
+			if ( [tag2 isEqualToString:@"building"] ) {
+				// don't remove building attribute if it already exists
+				if ( [tag isEqualToString:@"amenity"] || [tag isEqualToString:@"shop"] )
+					continue;
+			}
+			[_keyValueDict removeObjectForKey:tag2];
 		}
 	}
 

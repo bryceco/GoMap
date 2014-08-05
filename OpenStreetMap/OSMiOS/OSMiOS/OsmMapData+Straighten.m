@@ -236,6 +236,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	double best = 0;
 	NSInteger idxB = 0;
 
+	assert(idxA >= 0 && idxA < count);
+
 	// calculate lengths
 	double length = 0;
 	for (NSInteger i = (idxA+1)%count; i != idxA; i = (i+1)%count) {

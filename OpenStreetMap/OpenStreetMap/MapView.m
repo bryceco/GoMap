@@ -1150,12 +1150,12 @@ CGSize SizeForImage( NSImage * image )
 							if ( way.isArea ) {
 								weakSelf.editorLayer.selectedNode = nil;
 								OSMPoint center = way.centerPoint;
-								CGPoint point = [weakSelf viewPointForLatitude:center.y longitude:center.x];
-								[weakSelf placePushpinAtPoint:point object:way];
+								CGPoint centerPoint = [weakSelf viewPointForLatitude:center.y longitude:center.x];
+								[weakSelf placePushpinAtPoint:centerPoint object:way];
 							} else {
-								CGPoint point = [weakSelf viewPointForLatitude:hitNode.lat longitude:hitNode.lon];
+								CGPoint newPoint = [weakSelf viewPointForLatitude:hitNode.lat longitude:hitNode.lon];
 								weakSelf.editorLayer.selectedNode = (id)hit;
-								[weakSelf placePushpinAtPoint:point object:hitNode];
+								[weakSelf placePushpinAtPoint:newPoint object:hitNode];
 							}
 						}
 						if ( hit.isWay ) {
