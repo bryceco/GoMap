@@ -80,7 +80,6 @@
 		0277E29416A673CC00456BED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0277E29316A673CC00456BED /* OpenGLES.framework */; };
 		027A469B1673B251000BE55C /* OSM-Logo72.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469A1673B251000BE55C /* OSM-Logo72.png */; };
 		027A469E1673B257000BE55C /* OSM-Logo144.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469D1673B257000BE55C /* OSM-Logo144.png */; };
-		027F8330169BFD750009CDAB /* UploadTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 027F832F169BFD750009CDAB /* UploadTableViewController.m */; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
 		0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB316A0BB67002C46A9 /* shrub.p.64.png */; };
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
@@ -551,8 +550,6 @@
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027A469A1673B251000BE55C /* OSM-Logo72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "OSM-Logo72.png"; path = "../OSM-Logo72.png"; sourceTree = "<group>"; };
 		027A469D1673B257000BE55C /* OSM-Logo144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "OSM-Logo144.png"; path = "../OSM-Logo144.png"; sourceTree = "<group>"; };
-		027F832E169BFD750009CDAB /* UploadTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadTableViewController.h; sourceTree = "<group>"; };
-		027F832F169BFD750009CDAB /* UploadTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadTableViewController.m; sourceTree = "<group>"; };
 		0284FDB116A0B7DA002C46A9 /* tree.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.p.64.png; sourceTree = "<group>"; };
 		0284FDB316A0BB67002C46A9 /* shrub.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shrub.p.64.png; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLog.h; path = ../../OpenStreetMap/DLog.h; sourceTree = "<group>"; };
@@ -1176,8 +1173,6 @@
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				020C2A89168A6DF3003F2C2A /* UITableViewCell+FixConstraints.h */,
 				020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */,
-				027F832E169BFD750009CDAB /* UploadTableViewController.h */,
-				027F832F169BFD750009CDAB /* UploadTableViewController.m */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
@@ -2113,7 +2108,6 @@
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
-				027F8330169BFD750009CDAB /* UploadTableViewController.m in Sources */,
 				02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */,
 				0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,

@@ -19,6 +19,8 @@
 	IBOutlet UIBarButtonItem			*	_cancelButton;
 	IBOutlet UIActivityIndicatorView	*	_progressView;
 	IBOutlet UIButton					*	_sendMailButton;
+	IBOutlet UIButton					*	_editXmlButton;
 }
+-(IBAction)editXml:(id)sender;
 -(IBAction)sendMail:(id)sender;
 @end

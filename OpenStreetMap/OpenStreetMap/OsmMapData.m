@@ -897,7 +897,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 
 
-+(NSXMLElement *)elementForObject:(OsmBaseObject *)object changeset:(NSString *)changeset
++(NSXMLElement *)elementForObject:(OsmBaseObject *)object
 {
 	NSString * type =	object.isNode		? @"node" :
 						object.isWay		? @"way" :
@@ -908,8 +908,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSXMLElement * element = [NSXMLNode elementWithName:type];
 	[element addAttribute:[NSXMLNode attributeWithName:@"id" stringValue:object.ident.stringValue]];
 	[element addAttribute:[NSXMLNode attributeWithName:@"timestamp" stringValue:object.timestamp]];
-	if ( changeset.length )
-		[element addAttribute:[NSXMLNode attributeWithName:@"changeset" stringValue:changeset]];
 	[element addAttribute:[NSXMLNode attributeWithName:@"version" stringValue:@(object.version).stringValue]];
 	return element;
 }
@@ -924,7 +922,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 }
 
-- (NSXMLDocument *)createXmlWithChangeset:(NSString *)changeset
+- (NSXMLDocument *)createXml
 {
 	NSXMLElement * createNodeElement	= [NSXMLNode elementWithName:@"create"];
 	NSXMLElement * modifyNodeElement	= [NSXMLNode elementWithName:@"modify"];
@@ -943,11 +941,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmNode * node, BOOL *stop) {
 		if ( node.deleted && node.ident.longLongValue > 0 ) {
 			// deleted
-			NSXMLElement * element = [OsmMapData elementForObject:node changeset:changeset];
+			NSXMLElement * element = [OsmMapData elementForObject:node];
 			[deleteNodeElement addChild:element];
 		} else if ( node.isModified && !node.deleted ) {
 			// added/modified
-			NSXMLElement * element = [OsmMapData elementForObject:node changeset:changeset];
+			NSXMLElement * element = [OsmMapData elementForObject:node];
 			[element addAttribute:[NSXMLNode attributeWithName:@"lat" stringValue:@(node.lat).stringValue]];
 			[element addAttribute:[NSXMLNode attributeWithName:@"lon" stringValue:@(node.lon).stringValue]];
 			[OsmMapData addTagsForObject:node element:element];
@@ -960,15 +958,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
 		if ( way.deleted && way.ident.longLongValue > 0 ) {
-			NSXMLElement * element = [OsmMapData elementForObject:way changeset:changeset];
+			NSXMLElement * element = [OsmMapData elementForObject:way];
 			[deleteWayElement addChild:element];
 			for ( OsmNode * node in way.nodes ) {
-				NSXMLElement * nodeElement = [OsmMapData elementForObject:node changeset:changeset];
+				NSXMLElement * nodeElement = [OsmMapData elementForObject:node];
 				[deleteWayElement addChild:nodeElement];
 			}
 		} else if ( way.isModified && !way.deleted ) {
 			// added/modified
-			NSXMLElement * element = [OsmMapData elementForObject:way changeset:changeset];
+			NSXMLElement * element = [OsmMapData elementForObject:way];
 			for ( OsmNode * node in way.nodes ) {
 				NSXMLElement * refElement = [NSXMLElement elementWithName:@"nd"];
 				[refElement addAttribute:[NSXMLNode attributeWithName:@"ref" stringValue:node.ident.stringValue]];
@@ -984,11 +982,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
 		if ( relation.deleted && relation.ident.longLongValue > 0 ) {
-			NSXMLElement * element = [OsmMapData elementForObject:relation changeset:changeset];
+			NSXMLElement * element = [OsmMapData elementForObject:relation];
 			[deleteRelationElement addChild:element];
 		} else if ( relation.isModified && !relation.deleted ) {
 			// added/modified
-			NSXMLElement * element = [OsmMapData elementForObject:relation changeset:changeset];
+			NSXMLElement * element = [OsmMapData elementForObject:relation];
 			for ( OsmMember * member in relation.members ) {
 				NSNumber * ref = nil;
 				if ( [member.ref isKindOfClass:[NSNumber class]] ) {
@@ -1121,7 +1119,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 
 
-- (void)uploadChangeset:(NSString *)comment completion:(void(^)(NSString * errorMessage))completion
++ (void)updateChangesetXml:(NSXMLDocument *)xmlDoc withChangesetID:(NSString *)changesetID
+{
+	NSXMLElement * osmChange = [xmlDoc rootElement];
+	for ( NSXMLElement * changeType in osmChange.children ) {	// create/modify/delete
+		for ( NSXMLElement * osmObject in changeType.children ) {	// node/way/relation
+			if ( [osmObject isKindOfClass:[DDXMLElement class]] ) {
+				[osmObject addAttribute:[NSXMLNode attributeWithName:@"changeset" stringValue:changesetID]];
+			}
+		}
+	}
+}
+
+- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment retry:(BOOL)retry completion:(void(^)(NSString * errorMessage))completion
 {
 #if TARGET_OS_IPHONE
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
@@ -1142,18 +1152,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSString * changesetID = [[NSString alloc] initWithBytes:putData.bytes length:putData.length encoding:NSUTF8StringEncoding];
 			DLog(@"changeset ID = %@",changesetID);
 
-			NSXMLDocument * xmlChanges = [self createXmlWithChangeset:changesetID];
+			[OsmMapData updateChangesetXml:xmlChanges withChangesetID:changesetID];
+
 			DLog(@"change XML = %@",xmlChanges);
-			if ( xmlChanges == nil ) {
-				completion( @"No changes to apply" );
-				return;
-			}
 
 			NSString * url2 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/upload", changesetID];
 			[self putRequest:url2 method:@"POST" xml:xmlChanges completion:^(NSData *postData,NSString * postErrorMessage) {
 				NSString * response = [[NSString alloc] initWithBytes:postData.bytes length:postData.length encoding:NSUTF8StringEncoding];
 
-				if ( [response hasPrefix:@"Version mismatch"] ) {
+				if ( retry && [response hasPrefix:@"Version mismatch"] ) {
 
 					// update the bad element and retry
 					DLog( @"Upload error: %@", response);
@@ -1167,7 +1174,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 						[OsmMapData osmDataForUrl:url3 quads:nil completion:^(ServerQuery *quads, OsmMapData * mapData, NSError *error) {
 							[self merge:mapData quadList:nil success:YES];
 							// try again:
-							[self uploadChangeset:comment completion:completion];
+							[self uploadChangesetWithComment:comment completion:completion];
 						}];
 						return;
 					}
@@ -1220,6 +1227,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}];
 }
+
+- (void)uploadChangesetWithComment:(NSString *)comment completion:(void(^)(NSString * errorMessage))completion
+{
+	NSXMLDocument * xmlChanges = [self createXml];
+	if ( xmlChanges == nil ) {
+		completion( @"No changes to apply" );
+		return;
+	}
+	[self uploadChangeset:xmlChanges comment:comment retry:YES completion:completion];
+}
+
 
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion
 {
@@ -1353,7 +1371,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(NSAttributedString *)changesetAsAttributedString
 {
-	NSXMLDocument * doc = [self createXmlWithChangeset:@"0"];
+	NSXMLDocument * doc = [self createXml];
 	if ( doc == nil )
 		return nil;
 	NSMutableAttributedString * string = [NSMutableAttributedString new];
@@ -1376,10 +1394,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (NSString *)changesetAsXml
 {
-	NSXMLDocument * xml = [self createXmlWithChangeset:@""];
+	NSXMLDocument * xml = [self createXml];
 	if ( xml == nil )
 		return nil;
-	return xml.XMLString;
+	return [xml XMLStringWithOptions:NSXMLNodePrettyPrint];
 }
 
 -(NSString *)changesetAsHtml

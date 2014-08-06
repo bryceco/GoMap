@@ -9,6 +9,10 @@
 #import <MessageUI/MessageUI.h>
 #import <QuartzCore/QuartzCore.h>
 
+#if TARGET_OS_IPHONE
+#import "DDXML.h"
+#endif
+
 #import "AppDelegate.h"
 #import "MapView.h"
 #import "EditorMapLayer.h"
@@ -53,6 +57,7 @@
 	_commentTextView.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"uploadComment"];
 
 	_sendMailButton.enabled = (text != nil);
+	_editXmlButton.enabled = (text != nil);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -74,17 +79,10 @@
 {
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
 	if ( appDelegate.userName.length == 0 || appDelegate.userPassword.length == 0 ) {
-#if 0
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Missing login information" message:@"Before uploading changes you must provide your OpenStreetMap username and password in the Credentials option under Settings" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		// alertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-		[alertView show];
-		return;
-#else
 		if ( appDelegate.userName.length == 0 || appDelegate.userPassword.length == 0 ) {
 			[self performSegueWithIdentifier:@"loginSegue" sender:self];
 			return;
 		}
-#endif
 	}
 
 	_mapData.credentialsUserName = appDelegate.userName;
@@ -97,8 +95,8 @@
 
 	NSString * comment = _commentTextView.text;
 	comment = [comment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	
-	[_mapData uploadChangeset:comment completion:^(NSString * error){
+
+	void (^completion)(NSString *) = ^void(NSString * error) {
 		[_progressView stopAnimating];
 		[_commitButton setEnabled:YES];
 		[_cancelButton setEnabled:YES];
@@ -114,7 +112,44 @@
 				[appDelegate.mapView flashMessage:@"Upload complete!" duration:1.5];
 			});
 		}
-	}];
+	};
+
+	if ( _xmlTextView.editable ) {
+		
+		// upload user-edited text
+		NSString * xmlText = _xmlTextView.text;
+		NSError * error = nil;
+		NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
+		if ( error ) {
+			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"XML Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			return;
+		}
+		[_mapData uploadChangeset:xmlDoc comment:comment retry:NO completion:completion];
+
+	} else {
+		// normal upload
+		[_mapData uploadChangesetWithComment:comment completion:completion];
+	}
+}
+
+-(IBAction)editXml:(id)sender
+{
+	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
+
+	MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
+	mail.mailComposeDelegate = self;
+	[mail setSubject:[NSString stringWithFormat:@"%@ changeset", appDelegate.appName]];
+	NSString * xml = [_mapData changesetAsXml];
+	xml = [xml stringByAppendingString:@"\n\n\n\n\n\n\n\n\n\n\n\n"];
+	_xmlTextView.attributedText = nil;
+	_xmlTextView.text = xml;
+	_xmlTextView.editable = YES;
+	_sendMailButton.enabled = NO;
+	_editXmlButton.enabled = NO;
+
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Edit XML" message:@"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	[alert show];
 }
 
 -(IBAction)sendMail:(id)sender

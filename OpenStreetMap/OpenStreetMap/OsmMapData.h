@@ -11,6 +11,7 @@
 
 #import "VectorMath.h"
 
+@class NSXMLDocument;
 @class MapView;
 @class QuadBox;
 @class QuadMap;
@@ -129,7 +130,8 @@ extern NSString * OsmValueForBoolean( BOOL b );
 - (NSArray *)createChangeset;
 - (NSString *)changesetAsXml;
 - (NSString *)changesetAsHtml;
-- (void)uploadChangeset:(NSString *)comment completion:(void(^)(NSString * error))completion;
+- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment retry:(BOOL)retry completion:(void(^)(NSString * error))completion;
+- (void)uploadChangesetWithComment:(NSString *)comment completion:(void(^)(NSString * error))completion;
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion;
 
 -(NSArray *)userStatisticsForRegion:(OSMRect)rect;
