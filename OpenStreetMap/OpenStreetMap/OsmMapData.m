@@ -271,12 +271,32 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return relation;
 }
 
+-(void)removeFromParentRelations:(OsmBaseObject *)object
+{
+	while ( object.relations.count ) {
+		OsmRelation * relation = object.relations.lastObject;
+		NSInteger memberIndex = 0;
+		while ( memberIndex < relation.members.count ) {
+			OsmMember * member = relation.members[memberIndex];
+			if ( member.ref == object ) {
+				[self deleteMemberInRelation:relation index:memberIndex];
+			} else {
+				++memberIndex;
+			}
+		}
+	}
+}
+
 
 -(void)deleteNode:(OsmNode *)node
 {
 	assert( node.wayCount == 0 );
 	[_undoManager registerUndoComment:@"delete node"];
+
+	[self removeFromParentRelations:node];
+
 	[node setDeleted:YES undo:_undoManager];
+
 	[_spatial removeMember:node undo:_undoManager];
 }
 
@@ -284,10 +304,26 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	[_undoManager registerUndoComment:@"delete way"];
 	[_spatial removeMember:way undo:_undoManager];
+
+	[self removeFromParentRelations:way];
+
 	while ( way.nodes.count ) {
 		[self deleteNodeInWay:way index:way.nodes.count-1];
 	}
 	[way setDeleted:YES undo:_undoManager];
+}
+
+-(void)deleteRelation:(OsmRelation *)relation
+{
+	[_undoManager registerUndoComment:@"delete relation"];
+	[_spatial removeMember:relation undo:_undoManager];
+
+	[self removeFromParentRelations:relation];
+
+	while ( relation.members.count ) {
+		[relation removeMemberAtIndex:relation.members.count-1 undo:_undoManager];
+	}
+	[relation setDeleted:YES undo:_undoManager];
 }
 
 -(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index

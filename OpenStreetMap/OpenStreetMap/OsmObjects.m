@@ -476,6 +476,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	if ( _constructed && undo ) {
 		[undo registerUndoWithTarget:self selector:@selector(removeRelation:undo:) objects:@[relation,undo]];
 	}
+
 	if ( _relations )
 		_relations = [_relations arrayByAddingObject:relation];
 	else

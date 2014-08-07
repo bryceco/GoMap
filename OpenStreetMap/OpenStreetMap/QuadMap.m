@@ -231,10 +231,11 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 }
 -(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo
 {
-	if ( undo ) {
+	BOOL ok = [self removeMember:member bbox:member.boundingBox];
+	if ( ok && undo ) {
 		[undo registerUndoWithTarget:self selector:@selector(addMember:undo:) objects:@[member,undo]];
 	}
-	return [self removeMember:member bbox:member.boundingBox];
+	return ok;
 }
 
 
