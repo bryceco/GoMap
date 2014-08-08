@@ -1376,7 +1376,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		point = [self pointForLat:point.y lon:point.x];
 		CGPoint cgPoint = CGPointFromOSMPoint(point);
 
-		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
+		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint width:0 font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
 	}
 }
 
@@ -1489,7 +1489,9 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		// don't draw names on objects too narrow for the label
 		OSMRect bbox = object.boundingBox;
 		double pixelWidth = bbox.size.width * MetersPerDegree( bbox.origin.y ) / _mapView.metersPerPixel;
-		if ( name.length * Pixels_Per_Character > pixelWidth * 1.5 )
+		const NSInteger MaxLines = 3;
+		pixelWidth = pixelWidth * 0.9;
+		if ( name.length * Pixels_Per_Character > pixelWidth * MaxLines )
 			return NO;
 		
 		OSMPoint point = way ? way.centerPoint : relation.centerPoint;
@@ -1497,7 +1499,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		CGPoint cgPoint = CGPointFromOSMPoint(point);
 		UIFont * font = [UIFont systemFontOfSize:11];
 		UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint font:font color:self.textColor shadowColor:shadowColor context:ctx];
+		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:self.textColor shadowColor:shadowColor context:ctx];
 	}
 	return YES;
 }
@@ -1594,7 +1596,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 
 			UIColor * shadowColor = ShadowColorForColor2(self.textColor);
 			CGPoint point = CGPointFromOSMPoint(pt);
-			[CurvedTextLayer drawString:houseNumber	centeredOnPoint:point font:nil color:self.textColor shadowColor:shadowColor context:ctx];
+			[CurvedTextLayer drawString:houseNumber	centeredOnPoint:point width:0 font:nil color:self.textColor shadowColor:shadowColor context:ctx];
 
 		} else {
 

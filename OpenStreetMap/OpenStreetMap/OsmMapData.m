@@ -1709,7 +1709,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	_substSpatialOnSave = substituteSpatial;
 
-	NSDate * startDate = [NSDate date];
 	NSString * path = [self pathToArchiveFile];
 
 	NSMutableData * data = [NSMutableData data];
@@ -1719,12 +1718,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[archiver finishEncoding];
 	[data writeToFile:path atomically:YES];
 
-	//DLog( @"%f seconds to archive", [[NSDate date] timeIntervalSinceDate:startDate] );
-	//DLog( @"%f MB", data.length * 1e-6);
-	startDate = [NSDate date];
 	BOOL ok = data  &&  [data writeToFile:path atomically:YES];
-	//DLog( @"%f seconds to write", [[NSDate date] timeIntervalSinceDate:startDate] );
-	//DLog(@"map data = %f MB", (double)data.length/(1024*1024));
 	return ok;
 }
 -(id)initWithCachedData

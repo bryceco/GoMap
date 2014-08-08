@@ -18,6 +18,6 @@
 }
 
 +(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(NSColor *)shadowColor context:(CGContextRef)ctx;
-+(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)point font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx;
++(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)point width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx;
 
 @end

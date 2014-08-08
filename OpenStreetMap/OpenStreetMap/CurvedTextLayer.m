@@ -68,10 +68,11 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 			CGFloat angle, length;
 			PathPositionAndAngleForOffset( path, offset+glyphPositions[runGlyphIndex].x, &pos, &angle, &length );
 
-			NSInteger segmentCount;
-			for ( segmentCount = 0; runGlyphIndex+segmentCount < runGlyphCount; ++segmentCount ) {
+			NSInteger segmentCount = 0;
+			while ( runGlyphIndex+segmentCount < runGlyphCount ) {
 				positions[segmentCount].x = glyphPositions[runGlyphIndex+segmentCount].x - glyphPositions[runGlyphIndex].x;
 				positions[segmentCount].y = 0;
+				++segmentCount;
 				if ( glyphPositions[runGlyphIndex+segmentCount].x >= length )
 					break;
 			}
@@ -103,8 +104,10 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	[self drawString:string alongPath:path offset:offset stroke:NO  color:color		  context:ctx];
 }
 
-+(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)point font:(NSFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx
++(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)center width:(CGFloat)lineWidth font:(NSFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx
 {
+	CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
+
 #if TARGET_OS_IPHONE
 	if ( font == nil )
 		font = [UIFont systemFontOfSize:10];
@@ -116,33 +119,64 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:name attributes:@{NSForegroundColorAttributeName : self.textColor}];
 #endif
 
-	CTLineRef ct1 = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s1 );
-	CTLineRef ct2 = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)s2 );
+	CGFloat lineHeight = font.lineHeight;
 
-	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
-	CGRect textRect = CTLineGetBoundsWithOptions( ct1, 0 );
-	point.x = round( point.x - (textRect.origin.x+textRect.size.width)/2 );
-	point.y = round( point.y + (textRect.origin.y+textRect.size.height)/2 );
+	// compute number of characters in each line of text
+	const NSInteger maxLines = 20;
+	NSInteger lineCount = 0;
+	NSInteger charPerLine[ maxLines ];
+	NSInteger charCount = CFAttributedStringGetLength( (__bridge CFAttributedStringRef)s1 );
+	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString( (__bridge CFAttributedStringRef)s1 );
+	if ( lineWidth == 0 ) {
+		charPerLine[lineCount++] = charCount;
+	} else {
+		NSInteger start = 0;
+		while ( lineCount < maxLines ) {
+			CFIndex count = CTTypesetterSuggestLineBreak( typesetter, start, lineWidth );
+			charPerLine[ lineCount++ ] = count;
+			start += count;
+			if ( start >= charCount )
+				break;
+		}
+	}
 
-	CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
+	// iterate over lines
+	NSInteger start = 0;
+	for ( NSInteger line = 0; line < lineCount; ++line )  {
+		CFIndex count = charPerLine[ line ];
+		CTLineRef ct1 = CTTypesetterCreateLine( typesetter, CFRangeMake(start,count) );
+		CTLineRef ct2 = CTLineCreateWithAttributedString( (__bridge CFAttributedStringRef)[s2 attributedSubstringFromRange:NSMakeRange(start,count)] );
 
-	// draw shadow
-	CGContextSetLineWidth( ctx, TEXT_SHADOW_WIDTH);
-	CGContextSetLineJoin( ctx, kCGLineJoinRound );
-	CGContextSetStrokeColorWithColor(ctx, shadowColor.CGColor);
-	CGContextSetFillColorWithColor(ctx, shadowColor.CGColor);
-	CGContextSetTextDrawingMode(ctx, kCGTextFillStroke);
-	CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
-	CTLineDraw(ct2, ctx);
+		// center on point
+		CGRect textRect = CTLineGetBoundsWithOptions( ct1, 0 );
+		CGPoint point = {
+			round( center.x - (textRect.origin.x+textRect.size.width)/2 ),
+			round( center.y + lineHeight*(1 + line - lineCount/2) )
+		};
 
-	// draw text
-	CGContextSetTextDrawingMode(ctx, kCGTextFill);
-	CGContextSetFillColorWithColor(ctx, color.CGColor);
-	CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
-	CTLineDraw(ct1, ctx);
+		// draw shadow
+		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
+		CGContextSetLineWidth( ctx, TEXT_SHADOW_WIDTH);
+		CGContextSetLineJoin( ctx, kCGLineJoinRound );
+		CGContextSetStrokeColorWithColor(ctx, shadowColor.CGColor);
+		CGContextSetFillColorWithColor(ctx, shadowColor.CGColor);
+		CGContextSetTextDrawingMode(ctx, kCGTextFillStroke);
+		CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
+		CTLineDraw(ct2, ctx);
 
-	CFRelease(ct1);
-	CFRelease(ct2);
+		// draw text
+		CGContextSetTextDrawingMode(ctx, kCGTextFill);
+		CGContextSetFillColorWithColor(ctx, color.CGColor);
+		CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
+		CTLineDraw(ct1, ctx);
+
+		CFRelease(ct1);
+		CFRelease(ct2);
+
+		start += count;
+	}
+
+	CFRelease(typesetter);
 	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
 }
 
