@@ -71,7 +71,7 @@ const CGFloat WayHighlightRadius = 6.0;
 		NSDate * startDate = [NSDate date];
 		_mapData = [[OsmMapData alloc] initWithCachedData];
 		double delta = [[NSDate date] timeIntervalSinceDate:startDate];
-		DLog(@"Load time = %f seconds",delta);
+		//DLog(@"Load time = %f seconds",delta);
 #if TARGET_OS_IPHONE
 		if ( _mapData && delta > 5.0 ) {
 			NSString * text = @"Your OSM data cache is getting large, which may lead to slow startup and shutdown times. You may want to clear the cache (under Settings) to improve performance.";
@@ -401,12 +401,18 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		OsmBaseObject * object = obj;
 		if ( [object isKindOfClass:[ObjectSubpart class]] )
 			object = [(ObjectSubpart *)object object];
-		if ( [[object.tags valueForKey:@"natural"] isEqualToString:@"coastline"] ) {
-			[segments addObject:object];
+		if ( object.isCoastline ) {
+			if ( object.isWay ) {
+				[segments addObject:object];
+			} else if ( object.isRelation ) {
+				NSArray * wayList = [self wayListForMultipolygonRelation:(id)object];
+				[segments addObjectsFromArray:wayList];
+			}
 		}
 	}
 	if ( segments.count == 0 )
 		return;
+
 	NSMutableArray * outlineList = [NSMutableArray new];
 	while ( segments.count ) {
 		// find all connected segments
@@ -1061,7 +1067,7 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 
 -(void)drawMapCssCoastline:(ObjectSubpart *)subpart context:(CGContextRef)ctx
 {
-	if ( [[subpart.object.tags valueForKey:@"natural"] isEqualToString:@"coastline"] && subpart.object.isWay) {
+	if ( subpart.object.isCoastline && subpart.object.isWay) {
 		RGBAColor	lineColor = { 0, 0, 1, 1.0 };
 		CGContextSetLineCap(ctx, kCGLineCapRound);
 		CGContextSetLineJoin(ctx, kCGLineJoinRound);
@@ -1098,22 +1104,46 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	return YES;
 }
 
--(BOOL)drawArea:(OsmWay *)way context:(CGContextRef)ctx
+-(NSArray *)wayListForMultipolygonRelation:(OsmRelation *)relation
 {
-	if ( !way.isArea )
+	NSMutableArray * a = [NSMutableArray arrayWithCapacity:relation.members.count];
+	for ( OsmMember * mem in relation.members ) {
+		if ( [mem.role isEqualToString:@"outer"] || [mem.role isEqualToString:@"inner"] ) {
+			if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
+				[a addObject:mem.ref];
+			}
+		}
+	}
+	return a;
+}
+
+-(BOOL)drawArea:(OsmBaseObject *)object context:(CGContextRef)ctx
+{
+	OsmWay * way = object.isWay ? (id)object : nil;
+	OsmRelation * relation = object.isRelation ? (id)object : nil;
+
+	if ( way && !way.isArea )
 		return NO;
 
-	TagInfo * tagInfo = way.tagInfo;
+	TagInfo * tagInfo = object.tagInfo;
 	if ( tagInfo.areaColor == nil )
 		return NO;
+
+	if ( object.isCoastline )
+		return NO;	// already handled during ocean drawing
+
+	NSArray * wayList = way ? @[ way ] : [self wayListForMultipolygonRelation:relation];
+
 	RGBAColor	fillColor;
 	[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
-	CGPathRef path = [self pathForWay:way];
 	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
+	for ( OsmWay * w in wayList ) {
+		CGPathRef path = [self pathForWay:w];
+		CGContextAddPath(ctx, path);
+		CGPathRelease(path);
+	}
 	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, 0.25);
 	CGContextFillPath(ctx);
-	CGPathRelease(path);
 	return YES;
 }
 
@@ -1128,28 +1158,35 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	return ShadowColorForColor(r, g, b);
 }
 
--(BOOL)drawWayCasing:(OsmWay *)way context:(CGContextRef)ctx
+-(BOOL)drawWayCasing:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
-	if ( [way isKindOfClass:[ObjectSubpart class]] )
+	if ( ![object isKindOfClass:[OsmBaseObject class]] )
+		// could be ObjectSubpart
 		return NO;
 
-	if ( way.isArea )
-		return NO;
-
-	TagInfo * tagInfo = way.tagInfo;
+	TagInfo * tagInfo = object.tagInfo;
 	if ( tagInfo.lineWidth == 0 )
 		return NO;
 
-	CGPathRef path = [self pathForWay:way];
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
+	OsmWay * way = object.isWay ? (id)object : nil;
+	OsmRelation * relation = object.isRelation ? (id)object : nil;
 
+	if ( way && way.isArea )
+		return NO;
+
+	NSArray * wayList = way ? @[ way ] : [self wayListForMultipolygonRelation:relation];
+
+	CGContextBeginPath(ctx);
+	for ( OsmWay * w in wayList ) {
+		CGPathRef path = [self pathForWay:w];
+		CGContextAddPath(ctx, path);
+		CGPathRelease(path);
+	}
 	CGFloat red = 0.2, green = 0.2, blue = 0.2, alpha = 1.0;
 	CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
 	CGContextSetLineWidth(ctx, (1+tagInfo.lineWidth)*_highwayScale);
 	CGContextStrokePath(ctx);
 
-	CGPathRelease(path);
 	return YES;
 }
 
@@ -1253,22 +1290,21 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		CGContextStrokePath(ctx);
 }
 
--(BOOL)drawWay:(OsmWay *)way context:(CGContextRef)ctx
+-(BOOL)drawWay:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
-	NSString * name = [way.tags objectForKey:@"name"];
-	if ( [name isEqualToString:@"Test"] ) {
-		name = nil;
-	}
+	TagInfo * tagInfo = object.tagInfo;
 
-	TagInfo * tagInfo = way.tagInfo;
-	assert( tagInfo );
+	OsmWay * way = object.isWay ? (id)object : nil;
+	OsmRelation * relation = object.isRelation ? (id)object : nil;
 
-	//	DLog(@"draw way: %ld nodes", way.nodes.count);
+	NSArray * wayList = way ? @[ way ] : [self wayListForMultipolygonRelation:relation];
 
-	CGPathRef path = [self pathForWay:way];
 	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
-
+	for ( OsmWay * w in wayList ) {
+		CGPathRef path = [self pathForWay:w];
+		CGContextAddPath(ctx, path);
+		CGPathRelease(path);
+	}
 	CGFloat red = 0, green = 0, blue = 0, alpha = 1;
 	[tagInfo.lineColor getRed:&red green:&green blue:&blue alpha:&alpha];
 	CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
@@ -1278,11 +1314,12 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	CGContextSetLineWidth(ctx, lineWidth);
 	CGContextStrokePath(ctx);
 
-	if ( way.isOneWay ) {
+	if ( way && way.isOneWay ) {
+		CGPathRef path = CGContextCopyPath(ctx);
 		[self drawArrowsForPath:path context:ctx];
+		CGPathRelease(path);
 	}
 
-	CGPathRelease(path);
 	return YES;
 }
 
@@ -1412,14 +1449,14 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 }
 
 
--(BOOL)drawWayName:(OsmWay *)way context:(CGContextRef)ctx
+-(BOOL)drawWayName:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
 	const CGFloat Pixels_Per_Character = 8.0;
 
 	// add street names
-	NSString * name = [way.tags valueForKey:@"name"];
+	NSString * name = [object.tags valueForKey:@"name"];
 	if ( name == nil )
-		name = DrawNodeAsHouseNumber( way.tags );
+		name = DrawNodeAsHouseNumber( object.tags );
 	if ( name == nil )
 		return NO;
 
@@ -1428,10 +1465,11 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		return NO;
 	[_nameDrawSet addObject:name];
 
-	//	DLog(@"draw way: %ld nodes", way.nodes.count);
+	OsmWay * way = object.isWay ? (id)object : nil;
+	OsmRelation * relation = object.isRelation ? (id)object : nil;
 
-	BOOL area = way.nodes.count >= 3 && way.nodes[0] == way.nodes.lastObject;
-	if ( !area ) {
+	BOOL isHighway = way && !way.isClosed;
+	if ( isHighway ) {
 
 		double length = 0.0;
 		CGPathRef path = [self pathClippedToViewRect:way length:&length];
@@ -1449,12 +1487,12 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 	} else {
 
 		// don't draw names on objects too narrow for the label
-		OSMRect bbox = [way boundingBox];
+		OSMRect bbox = object.boundingBox;
 		double pixelWidth = bbox.size.width * MetersPerDegree( bbox.origin.y ) / _mapView.metersPerPixel;
 		if ( name.length * Pixels_Per_Character > pixelWidth * 1.5 )
 			return NO;
 		
-		OSMPoint point = [way centerPoint];
+		OSMPoint point = way ? way.centerPoint : relation.centerPoint;
 		point = [self pointForLat:point.y lon:point.x];
 		CGPoint cgPoint = CGPointFromOSMPoint(point);
 		UIFont * font = [UIFont systemFontOfSize:11];
@@ -1632,8 +1670,12 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 {
 	OSMRect box = [_mapView viewportLongitudeLatitude];
 	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_mapData.wayCount];
+	NSMutableSet * relations = [NSMutableSet new];
 	[_mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
 		if ( !obj.deleted ) {
+			if ( obj.relations ) {
+				[relations addObjectsFromArray:obj.relations];
+			}
 			if ( obj.isWay ) {
 				[a addObject:obj];
 				for ( OsmNode * node in ((OsmWay *)obj).nodes ) {
@@ -1648,7 +1690,9 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 			}
 		}
 	}];
-//	DLog(@"%ld ways, %ld nodes", (long)wayCount, (long)nodeCount);
+	for ( OsmRelation * r in relations ) {
+		[a addObject:r];
+	}
 	return a;
 }
 
@@ -1843,7 +1887,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				lastIndex = _shownObjects.count;
 			}
 		}
-		DLog( @"added %ld same", (long)lastIndex - objectLimit);
+		// DLog( @"added %ld same", (long)lastIndex - objectLimit);
 		objectLimit = lastIndex;
 
 		// remove unwanted objects
@@ -1851,18 +1895,21 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		[_shownObjects removeObjectsAtIndexes:range];
 	}
 
-	[self drawOceans:_shownObjects context:ctx];
-
 	int areaCount = 0;
 	int casingCount = 0;
 	int wayCount = 0;
 	int nodeCount = 0;
 	int nameCount = 0;
 
+	// draw oceans
+	[self drawOceans:_shownObjects context:ctx];
+
 	// draw areas
 	CFTimeInterval areaTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
+			areaCount += [self drawArea:(id)obj context:ctx];
+		} else if ( obj.isRelation && ((OsmRelation *)obj).isMultipolygon ) {
 			areaCount += [self drawArea:(id)obj context:ctx];
 		}
 	}
@@ -1872,7 +1919,9 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	CFTimeInterval casingTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
-			casingCount += [self drawWayCasing:(id)obj context:ctx];
+			casingCount += [self drawWayCasing:obj context:ctx];
+		} else if ( obj.isRelation && ((OsmRelation *)obj).isMultipolygon ) {
+			casingCount += [self drawWayCasing:obj context:ctx];
 		}
 	}
 	casingTime = CACurrentMediaTime() - casingTime;
@@ -1881,7 +1930,9 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	CFTimeInterval wayTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
-			wayCount += [self drawWay:(id)obj context:ctx];
+			wayCount += [self drawWay:obj context:ctx];
+		} else if ( obj.isRelation && ((OsmRelation *)obj).isMultipolygon ) {
+			wayCount += [self drawWay:obj context:ctx];
 		}
 	}
 	wayTime = CACurrentMediaTime() - wayTime;
@@ -1898,8 +1949,9 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	// draw names
 	CFTimeInterval nameTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
-		if ( obj.isWay ) {
-			BOOL drawn = [self drawWayName:(id)obj context:ctx];
+
+		if ( obj.isWay || (obj.isRelation && ((OsmRelation *)obj).isMultipolygon) ) {
+			BOOL drawn = [self drawWayName:obj context:ctx];
 			nameCount += drawn;
 			nameLimit -= drawn;
 			if ( nameLimit <= 0 )
@@ -1913,7 +1965,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	totalTime = CACurrentMediaTime() - totalTime;
 
-#if 1
+#if 0
 	DLog( @"%.2f: area %d (%.2f), casing %d (%.2f), way %d (%.2f), node %d (%.2f) name %d (%.2f)",
 		 totalTime*1000,
 		 areaCount, areaTime*1000,

@@ -1186,11 +1186,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * putData,NSString * putErrorMessage){
 		if ( putData ) {
 			NSString * changesetID = [[NSString alloc] initWithBytes:putData.bytes length:putData.length encoding:NSUTF8StringEncoding];
-			DLog(@"changeset ID = %@",changesetID);
+			// DLog(@"changeset ID = %@",changesetID);
 
 			[OsmMapData updateChangesetXml:xmlChanges withChangesetID:changesetID];
 
-			DLog(@"change XML = %@",xmlChanges);
+			// DLog(@"change XML = %@",xmlChanges);
 
 			NSString * url2 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/upload", changesetID];
 			[self putRequest:url2 method:@"POST" xml:xmlChanges completion:^(NSData *postData,NSString * postErrorMessage) {
@@ -1216,7 +1216,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					}
 				}
 
-				DLog(@"upload response = %@",response);
+				//DLog(@"upload response = %@",response);
 
 				if ( ![response hasPrefix:@"<?xml"] ) {
 					completion( postErrorMessage ?: response );
@@ -1251,7 +1251,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					if ( errorMessage )
 						errorMessage = [errorMessage stringByAppendingString:@" (ignored, changes already committed)"];
 					completion(errorMessage);
-					DLog(@"changeset closed");
+					// DLog(@"changeset closed");
 				}];
 
 				// reset undo stack after upload so user can't accidently undo a commit (wouldn't work anyhow because we don't undo version numbers on objects)
@@ -1719,12 +1719,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[archiver finishEncoding];
 	[data writeToFile:path atomically:YES];
 
-	DLog( @"%f seconds to archive", [[NSDate date] timeIntervalSinceDate:startDate] );
-	DLog( @"%f MB", data.length * 1e-6);
+	//DLog( @"%f seconds to archive", [[NSDate date] timeIntervalSinceDate:startDate] );
+	//DLog( @"%f MB", data.length * 1e-6);
 	startDate = [NSDate date];
 	BOOL ok = data  &&  [data writeToFile:path atomically:YES];
-	DLog( @"%f seconds to write", [[NSDate date] timeIntervalSinceDate:startDate] );
-	DLog(@"map data = %f MB", (double)data.length/(1024*1024));
+	//DLog( @"%f seconds to write", [[NSDate date] timeIntervalSinceDate:startDate] );
+	//DLog(@"map data = %f MB", (double)data.length/(1024*1024));
 	return ok;
 }
 -(id)initWithCachedData

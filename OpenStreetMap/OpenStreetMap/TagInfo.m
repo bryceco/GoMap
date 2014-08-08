@@ -230,6 +230,9 @@ static TagInfo * g_DefaultRender = nil;
 	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"coastline"] ) {
 		return _renderSize = 10000;
 	}
+	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"water"] ) {
+		return _renderSize = 9000;
+	}
 	if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
 		return _renderSize = 5000;
 	}
@@ -241,7 +244,7 @@ static TagInfo * g_DefaultRender = nil;
 				return _renderSize;
 		}
 	}
-	return _renderSize = object.isWay ? 999 : 50;
+	return _renderSize = object.isWay || (object.isRelation && ((OsmRelation *)object).isMultipolygon) ? 999 : 50;
 }
 
 @end
@@ -571,12 +574,13 @@ static TagInfo * g_DefaultRender = nil;
 
 	if ( g_DefaultRender == nil ) {
 		g_DefaultRender = [TagInfo new];
+		g_DefaultRender.key = @"DEFAULT";
 #if TARGET_OS_IPHONE
 		g_DefaultRender.lineColor = [NSColor colorWithRed:0 green:0 blue:0 alpha:1];
 #else
 		g_DefaultRender.lineColor = [NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:1];
 #endif
-		g_DefaultRender.lineWidth = 1.0;
+		g_DefaultRender.lineWidth = 0.0;
 	}
 	return g_DefaultRender;
 }

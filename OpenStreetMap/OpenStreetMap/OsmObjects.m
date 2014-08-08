@@ -86,6 +86,21 @@ NSString * OsmValueForBoolean( BOOL b )
 	return NO;
 }
 
+-(BOOL)isCoastline
+{
+	if ( !self.isRelation && _relations.count == 0 )
+		return NO;
+	NSString * natural = _tags[@"natural"];
+	if ( natural ) {
+		if ( [natural isEqualToString:@"coastline"] )
+			return YES;
+		if ( [natural isEqualToString:@"water"] ) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
 
 -(BOOL)isNode
 {
@@ -1180,6 +1195,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			OSMRect rc = obj.boundingBox;
 			if ( first ) {
 				box = rc;
+				first = NO;
 			} else {
 				box = OSMRectUnion(box,rc);
 			}
@@ -1259,6 +1275,25 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 -(BOOL)isMultipolygon
 {
 	return [_tags[@"type"] isEqualToString:@"multipolygon"];
+}
+
+-(OSMPoint)centerPoint
+{
+	NSMutableArray * outerSet = [NSMutableArray new];
+	for ( OsmMember * member in _members ) {
+		if ( [member.role isEqualToString:@"outer"] ) {
+			OsmWay * way = member.ref;
+			if ( [way isKindOfClass:[OsmWay class]] ) {
+				[outerSet addObject:way];
+			}
+		}
+	}
+	if ( outerSet.count == 1 ) {
+		return [outerSet[0] centerPoint];
+	} else {
+		OSMRect rc = [self boundingBox];
+		return OSMPointMake( rc.origin.x + rc.size.width/2, rc.origin.y+rc.size.height);
+	}
 }
 
 

@@ -162,7 +162,7 @@ typedef void (^dequeueBlock)(void);
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-	DLog(@"upload %d/%d", (int)totalBytesWritten, (int)totalBytesExpectedToWrite);
+	// DLog(@"upload %d/%d", (int)totalBytesWritten, (int)totalBytesExpectedToWrite);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error

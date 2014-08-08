@@ -79,6 +79,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 
 -(BOOL)hasInterestingTags;
 
+-(BOOL)isCoastline;
 
 -(BOOL)isModified;
 
@@ -147,6 +148,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 -(OsmMember *)memberByRole:(NSString *)role;
 
 -(BOOL)isMultipolygon;
+-(OSMPoint)centerPoint;
 
 @end
 

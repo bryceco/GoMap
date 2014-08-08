@@ -284,7 +284,6 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 		assert(action.group);
 		if ( currentGroup < 0 ) {
 			currentGroup = action.group;
-			DLog(@"undo group %d",(int32_t)currentGroup);
 		} else if ( action.group != currentGroup )
 			break;
 
@@ -344,12 +343,10 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 -(void)beginUndoGrouping
 {
 	NSNumber * group = _groupingStack.count ? _groupingStack.lastObject : @(self.runLoopCounter);
-	DLog(@"begin undo group %@",group);
 	[_groupingStack addObject:group];
 }
 -(void)endUndoGrouping
 {
-	DLog(@"end undo group %@",[_groupingStack lastObject]);
 	[_groupingStack removeLastObject];
 }
 

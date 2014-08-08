@@ -329,7 +329,6 @@
 // Don't allow deleting the "Add Tag" row
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSLog(@"%d, %d",(int)indexPath.section, (int)indexPath.row);
 	if ( indexPath.section == 0 ) {
 		return indexPath.row < _tags.count;
 	} else if ( indexPath.section == 1 ) {
