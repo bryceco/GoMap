@@ -64,7 +64,7 @@ void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval
 	CGPathApplyBlock( path, block );
 }
 
-void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, CGPoint * pPos, CGFloat * pAngle )
+void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
 {
 	__block BOOL	done = NO;
 	__block CGPoint	previous = { 0 };
@@ -93,6 +93,7 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, CGPoint 
 				pPos->x = previous.x + offset * dx + baselineOffset.x;
 				pPos->y = previous.y + offset * dy + baselineOffset.y;
 				*pAngle = atan2f(dy,dx);
+				*pLength = len - offset;
 
 				if ( offset < len ) {
 					// found it

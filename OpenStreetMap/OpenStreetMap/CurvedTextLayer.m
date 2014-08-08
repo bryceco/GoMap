@@ -54,34 +54,40 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 		CTRunRef	run				= (CTRunRef)CFArrayGetValueAtIndex( runArray, runIndex );
 		CFIndex		runGlyphCount	= CTRunGetGlyphCount( run );
 		CTFontRef	runFont			= CFDictionaryGetValue( CTRunGetAttributes(run), kCTFontAttributeName );
+		CGGlyph		glyphs[ runGlyphCount ];
+		CGPoint		glyphPositions[ runGlyphCount ];
+		CGPoint		positions[ runGlyphCount ];
+		CTRunGetGlyphs( run, CFRangeMake(0,runGlyphCount), glyphs);
+		CTRunGetPositions( run, CFRangeMake(0,runGlyphCount), glyphPositions );
 
 		for ( CFIndex runGlyphIndex = 0; runGlyphIndex < runGlyphCount; runGlyphIndex++ ) {
 
 			CGContextSaveGState(ctx);
 
-			CFRange range = CFRangeMake(runGlyphIndex, 1);
-
-			CGPoint glyphPosition;
-			CTRunGetPositions( run, range, &glyphPosition );
-
 			CGPoint pos;
-			CGFloat angle;
-			PathPositionAndAngleForOffset( path, offset+glyphPosition.x, &pos, &angle );
+			CGFloat angle, length;
+			PathPositionAndAngleForOffset( path, offset+glyphPositions[runGlyphIndex].x, &pos, &angle, &length );
 
-			// We use a different affine transform for each glyph, to position and rotate it
+			NSInteger segmentCount;
+			for ( segmentCount = 0; runGlyphIndex+segmentCount < runGlyphCount; ++segmentCount ) {
+				positions[segmentCount].x = glyphPositions[runGlyphIndex+segmentCount].x - glyphPositions[runGlyphIndex].x;
+				positions[segmentCount].y = 0;
+				if ( glyphPositions[runGlyphIndex+segmentCount].x >= length )
+					break;
+			}
+
+			// We use a different affine transform for each glyph segment, to position and rotate it
 			// based on its calculated position along the path.
 			CGContextTranslateCTM( ctx, pos.x, pos.y );
 			CGContextRotateCTM( ctx, angle );
 			CGContextScaleCTM( ctx, 1.0, -1.0 );
 
-			CGGlyph glyph;
-			CTRunGetGlyphs(run, range, &glyph);
-			CGPoint position = { 0, 0 };
-
-			// outlined text
-			CTFontDrawGlyphs( runFont, &glyph, &position, 1, ctx );
+			// draw text
+			CTFontDrawGlyphs( runFont, &glyphs[runGlyphIndex], positions, segmentCount, ctx );
 			
 			CGContextRestoreGState(ctx);
+
+			runGlyphIndex += segmentCount - 1;
 		}
 	}
 	CFRelease(line);
@@ -120,6 +126,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 	CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
 
+	// draw shadow
 	CGContextSetLineWidth( ctx, TEXT_SHADOW_WIDTH);
 	CGContextSetLineJoin( ctx, kCGLineJoinRound );
 	CGContextSetStrokeColorWithColor(ctx, shadowColor.CGColor);
@@ -128,6 +135,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
 	CTLineDraw(ct2, ctx);
 
+	// draw text
 	CGContextSetTextDrawingMode(ctx, kCGTextFill);
 	CGContextSetFillColorWithColor(ctx, color.CGColor);
 	CGContextSetTextPosition(ctx, point.x, point.y);	// this applies a transform, so do it after flipping
