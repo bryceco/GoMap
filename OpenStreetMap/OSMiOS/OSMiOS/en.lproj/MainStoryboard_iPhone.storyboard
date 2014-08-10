@@ -2040,7 +2040,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5dY-nN-L0Q">
-                                <rect key="frame" x="142" y="182" width="37" height="37"/>
+                                <rect key="frame" x="142" y="174" width="37" height="37"/>
                                 <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem ipsum dolor sit er elit lamet," translatesAutoresizingMaskIntoConstraints="NO" id="Plh-7W-ceY">
@@ -2093,7 +2093,7 @@
                         <constraints>
                             <constraint firstItem="ikj-u9-9Bn" firstAttribute="top" secondItem="8y4-eZ-NBP" secondAttribute="bottom" constant="6" id="0Q8-Tr-JWb"/>
                             <constraint firstAttribute="trailing" secondItem="Plh-7W-ceY" secondAttribute="trailing" constant="20" id="2T2-8i-5ha"/>
-                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="8" id="5B5-Oy-pzF"/>
+                            <constraint firstItem="5dY-nN-L0Q" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" id="5B5-Oy-pzF"/>
                             <constraint firstItem="ArV-4u-j7D" firstAttribute="leading" secondItem="Plh-7W-ceY" secondAttribute="leading" id="8qG-YH-33c"/>
                             <constraint firstItem="ikj-u9-9Bn" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" id="8t6-SN-3gb"/>
                             <constraint firstItem="Plh-7W-ceY" firstAttribute="top" secondItem="8y4-eZ-NBP" secondAttribute="bottom" constant="32" id="8yc-d5-dCE"/>
