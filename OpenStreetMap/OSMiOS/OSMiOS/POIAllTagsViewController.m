@@ -14,6 +14,7 @@
 #import "OsmObjects.h"
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
+#import "PushPinView.h"
 #import "TagInfo.h"
 #import "UITableViewCell+FixConstraints.h"
 
@@ -423,6 +424,9 @@
 	[appDelegate.mapView.editorLayer setSelectedNode:nil];
 	[appDelegate.mapView.editorLayer setSelectedWay:nil];
 	[appDelegate.mapView.editorLayer setSelectedRelation:relation];
+
+	[appDelegate.mapView placePushpinAtPoint:appDelegate.mapView.pushpinView.arrowPoint object:relation];
+
 	// dismiss ourself and switch to the relation
 	UIViewController * topController = (id)appDelegate.mapView.viewController;
 	[appDelegate.mapView refreshPushpinText];	// update pushpin description to the relation

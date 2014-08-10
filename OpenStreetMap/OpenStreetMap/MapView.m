@@ -837,8 +837,10 @@ CGSize SizeForImage( NSImage * image )
 		OSMPoint pt = [_editorLayer.selectedWay centerPoint];
 		CGPoint point = [self viewPointForLatitude:pt.y longitude:pt.x];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
-	} else {
-		// nothing
+	} else if (_editorLayer.selectedRelation ) {
+		OSMPoint pt = [_editorLayer.selectedRelation centerPoint];
+		CGPoint point = [self viewPointForLatitude:pt.y longitude:pt.x];
+		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	}
 #endif
 }

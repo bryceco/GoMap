@@ -883,6 +883,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( xml ) {
 		NSData * data = [xml XMLDataWithOptions:0];
 		[request setHTTPBody:data];
+		[request setValue:@"application/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 	}
 	[request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
 	// request.timeoutInterval = 15*60;

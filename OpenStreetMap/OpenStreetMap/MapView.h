@@ -138,6 +138,8 @@
 -(IBAction)dropPin:(id)sender;
 -(void)removePin;
 -(void)refreshPushpinText;
+-(void)placePushpinForSelection;
+-(void)placePushpinAtPoint:(CGPoint)point object:(OsmBaseObject *)object;
 
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
