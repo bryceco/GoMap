@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
+#import "KeyChain.h"
 #import "LoginViewController.h"
 #import "MapView.h"
 #import "OsmMapData.h"
@@ -86,8 +87,8 @@
 		appDelegate.userName		= _username.text;
 		appDelegate.userPassword	= _password.text;
 
-		[[NSUserDefaults standardUserDefaults] setObject:appDelegate.userName		forKey:@"username"];
-		[[NSUserDefaults standardUserDefaults] setObject:appDelegate.userPassword	forKey:@"password"];
+		[KeyChain setString:appDelegate.userName forIdentifier:@"username"];
+		[KeyChain setString:appDelegate.userPassword forIdentifier:@"password"];
 	}
 }
 

@@ -9,7 +9,7 @@
 
 #import "AppDelegate.h"
 #import "DownloadThreadPool.h"
-
+#import "KeyChain.h"
 
 
 @implementation AppDelegate
@@ -29,8 +29,26 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	self.userName		= [defaults objectForKey:@"username"];
-	self.userPassword	= [defaults objectForKey:@"password"];
+
+	[KeyChain deleteStringForIdentifier:@"username"];
+	[KeyChain deleteStringForIdentifier:@"password"];
+
+	// read name/password from keychain
+	self.userName		= [KeyChain getStringForIdentifier:@"username"];
+	self.userPassword	= [KeyChain getStringForIdentifier:@"password"];
+
+	if ( self.userName.length == 0 ) {
+		self.userName		= [defaults objectForKey:@"username"];
+		self.userPassword	= [defaults objectForKey:@"password"];
+
+		if ( self.userName.length )
+			[KeyChain setString:self.userName		forIdentifier:@"username"];
+		if ( self.userPassword.length )
+			[KeyChain setString:self.userPassword	forIdentifier:@"password"];
+
+		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+	}
 
 	[DownloadThreadPool setUserAgent:[NSString stringWithFormat:@"%@/%@", self.appName, self.appVersion]];
 
