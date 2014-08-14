@@ -58,6 +58,9 @@
 			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Bad login" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alertView show];
 		} else {
+			// verifying credentials may update the appDelegate values when we subsitute name for correct case:
+			_username.text	= appDelegate.userName;
+			_password.text	= appDelegate.userPassword;
 			[_username resignFirstResponder];
 			[_password resignFirstResponder];
 			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Login successful" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

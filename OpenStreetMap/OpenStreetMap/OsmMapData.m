@@ -1275,7 +1275,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self uploadChangeset:xmlChanges comment:comment retry:YES completion:completion];
 }
 
-
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion
 {
 #if TARGET_OS_IPHONE
@@ -1297,8 +1296,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSArray * users = [root elementsForName:@"user"];
 			if ( users.count ) {
 				NSXMLElement * user = [users lastObject];
-				NSString * creation = [user attributeForName:@"account_created"].stringValue;
-				if ( creation.length ) {
+				NSString * displayName = [user attributeForName:@"display_name"].stringValue;
+				if ( [displayName compare:_credentialsUserName options:NSCaseInsensitiveSearch] == NSOrderedSame ) {
+					// update display name to have proper case:
+					self.credentialsUserName = displayName;
+					appDelegate.userName = displayName;
 					ok = YES;
 				}
 			}
