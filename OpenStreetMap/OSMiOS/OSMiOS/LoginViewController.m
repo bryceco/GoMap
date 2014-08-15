@@ -45,6 +45,9 @@
 
 - (IBAction)verifyAccount:(id)sender
 {
+	if ( _activityIndicator.isAnimating )
+		return;
+
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
 	appDelegate.userName		= _username.text;
 	appDelegate.userPassword	= _password.text;
