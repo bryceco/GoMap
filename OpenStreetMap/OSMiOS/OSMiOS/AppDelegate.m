@@ -30,9 +30,6 @@
 {
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 
-	[KeyChain deleteStringForIdentifier:@"username"];
-	[KeyChain deleteStringForIdentifier:@"password"];
-
 	// read name/password from keychain
 	self.userName		= [KeyChain getStringForIdentifier:@"username"];
 	self.userPassword	= [KeyChain getStringForIdentifier:@"password"];

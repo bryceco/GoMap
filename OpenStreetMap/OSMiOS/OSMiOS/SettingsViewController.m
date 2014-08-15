@@ -134,6 +134,10 @@ static const NSInteger RowMap[] = {
 			mail.mailComposeDelegate = self;
 			[mail setSubject:[NSString stringWithFormat:@"%@ %@ feedback", appDelegate.appName, appDelegate.appVersion]];
 			[mail setToRecipients:@[@"bryceco@yahoo.com"]];
+			if ( appDelegate.userName.length ) {
+				NSString * body = [NSString stringWithFormat:@"OSM ID: %@ (optional)\n\n",appDelegate.userName];
+				[mail setMessageBody:body isHTML:NO];
+			}
 			[self.navigationController presentViewController:mail animated:YES completion:nil];
 		} else {
 			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Cannot compose message" message:@"Mail delivery is not available on this device" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
