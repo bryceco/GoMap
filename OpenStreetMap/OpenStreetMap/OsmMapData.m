@@ -878,6 +878,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion
 {
+	if ( [url hasPrefix:@"http:"] ) {
+		url = [@"https" stringByAppendingString:[url substringFromIndex:4]];
+	}
+
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
 	[request setHTTPMethod:method];
 	if ( xml ) {
@@ -1224,10 +1228,16 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					return;
 				}
 
+
 				NSError * error = nil;
 				NSXMLDocument * diffDoc = [[NSXMLDocument alloc] initWithData:postData options:0 error:&error];
 				if ( error ) {
 					completion( error.localizedDescription );
+					return;
+				}
+
+				if ( ![diffDoc.rootElement.name isEqualToString:@"diffResult"] ) {
+					completion( @"Upload failed: invalid server respsonse" );
 					return;
 				}
 
@@ -1243,7 +1253,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					} else if ( [name isEqualToString:@"relation"] ) {
 						[self updateObjectDictionary:_relations oldId:oldId.longLongValue newId:newId.longLongValue version:newVersion.integerValue];
 					} else {
-						assert(NO);
+						DLog( @"Bad upload diff document" );
 					}
 				}
 
@@ -1771,7 +1781,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self enumerateObjectsInRegion:rect block:^(OsmBaseObject * base) {
 		NSDate * date = [base dateForTimestamp];
 		if ( base.user.length == 0 ) {
-			NSLog(@"object %@, uid = %d", base, base.uid);
+			DLog(@"Empty user name for object: object %@, uid = %d", base, base.uid);
+			return;
 		}
 		OsmUserStatistics * stats = dict[ base.user ];
 		if ( stats == nil ) {

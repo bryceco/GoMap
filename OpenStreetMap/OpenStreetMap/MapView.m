@@ -219,9 +219,12 @@ CGSize SizeForImage( NSImage * image )
 			NSArray * comment = comments.count == 0 ? nil : undo ? comments.lastObject : comments[0];
 			NSString * action = comment[0];
 			NSData * location = comment[1];
-			assert( location.length == sizeof(OSMTransform));
-			OSMTransform transform = *(OSMTransform *)[location bytes];
-			self.mapTransform = transform;
+			if ( location.length == sizeof(OSMTransform) ) {
+				OSMTransform transform = *(OSMTransform *)[location bytes];
+				self.mapTransform = transform;
+			} else {
+				DLog(@"bad undo comment");
+			}
 			NSString * message = [NSString stringWithFormat:@"%@ %@", title, action];
 			[self flashMessage:message];
 		};
