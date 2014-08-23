@@ -49,13 +49,6 @@
 
 	[DownloadThreadPool setUserAgent:[NSString stringWithFormat:@"%@/%@", self.appName, self.appVersion]];
 
-#if 0 && DEBUG
-	int size = 200 * 1000 * 1000;
-	static void * big;
-	big = malloc( size );
-	memset( (void *)big, 'x', size );
-#endif
-
 	NSURL * url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
 	if ( url ) {
 		// somebody handed us a URL to open

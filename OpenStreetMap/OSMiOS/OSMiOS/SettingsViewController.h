@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface SettingsViewController : UITableViewController <MFMailComposeViewControllerDelegate>
 {
 	IBOutlet UITableViewCell	*	_sendMailCell;

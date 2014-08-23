@@ -445,6 +445,9 @@
 		02BED99F168D102700357B94 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99E168D102600357B94 /* OfflineViewController.m */; };
 		02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C19B341699E8C000F75E3C /* BingMetadataViewController.m */; };
 		02C19B371699EA7A00F75E3C /* bing_rgb.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C19B361699EA7A00F75E3C /* bing_rgb.png */; };
+		02C3C73419A5A40C003B6783 /* AerialListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73319A5A40C003B6783 /* AerialListViewController.m */; };
+		02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73619A5D679003B6783 /* AerialEditViewController.m */; };
+		02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73919A6DCEA003B6783 /* AerialList.m */; };
 		02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C4255216796B5800761C54 /* SpeechBalloonView.m */; };
 		02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
@@ -956,6 +959,12 @@
 		02C19B331699E8BF00F75E3C /* BingMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BingMetadataViewController.h; sourceTree = "<group>"; };
 		02C19B341699E8C000F75E3C /* BingMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BingMetadataViewController.m; sourceTree = "<group>"; };
 		02C19B361699EA7A00F75E3C /* bing_rgb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bing_rgb.png; sourceTree = "<group>"; };
+		02C3C73219A5A40C003B6783 /* AerialListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AerialListViewController.h; sourceTree = "<group>"; };
+		02C3C73319A5A40C003B6783 /* AerialListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AerialListViewController.m; sourceTree = "<group>"; };
+		02C3C73519A5D679003B6783 /* AerialEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AerialEditViewController.h; sourceTree = "<group>"; };
+		02C3C73619A5D679003B6783 /* AerialEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AerialEditViewController.m; sourceTree = "<group>"; };
+		02C3C73819A6DCEA003B6783 /* AerialList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AerialList.h; sourceTree = "<group>"; };
+		02C3C73919A6DCEA003B6783 /* AerialList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AerialList.m; sourceTree = "<group>"; };
 		02C4255116796B5800761C54 /* SpeechBalloonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonView.h; path = ../../OpenStreetMap/SpeechBalloonView.h; sourceTree = "<group>"; };
 		02C4255216796B5800761C54 /* SpeechBalloonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonView.m; path = ../../OpenStreetMap/SpeechBalloonView.m; sourceTree = "<group>"; };
 		02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutocompleteTextField.h; sourceTree = "<group>"; };
@@ -1119,6 +1128,10 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
+				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
+				02C3C73619A5D679003B6783 /* AerialEditViewController.m */,
+				02C3C73219A5A40C003B6783 /* AerialListViewController.h */,
+				02C3C73319A5A40C003B6783 /* AerialListViewController.m */,
 				02ACBA4216713CCB00BB4414 /* AppDelegate.h */,
 				02ACBA4316713CCB00BB4414 /* AppDelegate.m */,
 				02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */,
@@ -1518,6 +1531,8 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				02C3C73819A6DCEA003B6783 /* AerialList.h */,
+				02C3C73919A6DCEA003B6783 /* AerialList.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
 				02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */,
 				02ACBA6F16713F2A00BB4414 /* BlueBall.png */,
@@ -2076,6 +2091,7 @@
 				02ACBBC416713F2B00BB4414 /* EditorMapLayer.m in Sources */,
 				02ACBBC616713F2B00BB4414 /* MapCSS.l in Sources */,
 				02ACBBC716713F2B00BB4414 /* MapCSS.m in Sources */,
+				02C3C73419A5A40C003B6783 /* AerialListViewController.m in Sources */,
 				02E626701997168800565D62 /* KeyChain.m in Sources */,
 				02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */,
 				02ACBBCB16713F2B00BB4414 /* MercatorTileLayer.m in Sources */,
@@ -2114,6 +2130,8 @@
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
 				02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
+				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,
+				02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */,
 				02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,

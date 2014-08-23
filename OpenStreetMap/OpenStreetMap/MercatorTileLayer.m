@@ -85,26 +85,14 @@ static NSDictionary * ActionDictionary = nil;
 			[[NSFileManager defaultManager] createDirectoryAtPath:_tileCacheDirectory withIntermediateDirectories:YES attributes:NULL error:NULL];
 		}
 
-#if 0
-		// get logo image
-		[self fetchMetadata:^(NSString * url,NSArray * subdomains,NSString * logo){
-			_tileURL = url;
-			_hostSubdomains = subdomains;
-
-			if ( completion && logo ) {
-				[[DownloadThreadPool generalPool] dataForUrl:logo completion:^(NSData * data,NSError * error){
-					if ( data && !error ) {
-						NSImage * image = [[NSImage alloc] initWithData:data];
-						completion(image);
-					}
-				}];
-			}
-		}];
-#endif
-
 		[self purgeOldCacheItemsAsync];
 	}
 	return self;
+}
+
+-(void)dealloc
+{
+	[_mapView removeObserver:self forKeyPath:@"mapTransform"];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

@@ -2027,7 +2027,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		return 1000000;
 	delta.x /= maxDegrees.width;
 	delta.y /= maxDegrees.height;
-	CGFloat dist = sqrt( delta.x*delta.x + delta.y*delta.y);
+	CGFloat dist = hypot(delta.x, delta.y);
 	return dist;
 }
 

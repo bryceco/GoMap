@@ -17,6 +17,8 @@
 #import "VectorMath.h"
 
 @class CAShapeLayer;
+@class AerialList;
+@class AerialService;
 @class EditorLayerGL;
 @class EditorMapLayer;
 @class GpxLayer;
@@ -110,6 +112,9 @@
 @property (assign,nonatomic)	BOOL								trackingLocation;
 @property (readonly,nonatomic)	PushPinView						*	pushpinView;
 
+@property (strong,nonatomic)	AerialList					*	customAerials;
+
+
 -(void)presentError:(NSError *)error;
 
 -(OSMRect)mapRectFromVisibleRect;
@@ -122,6 +127,7 @@
 -(void)flashMessage:(NSString *)message;
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration;
 
+-(void)setAerialService:(AerialService *)service;
 
 -(BOOL)isLocationSpecified;
 

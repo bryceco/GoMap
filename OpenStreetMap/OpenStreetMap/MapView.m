@@ -10,25 +10,27 @@
 
 #import "iosapi.h"
 #import "BingMapsGeometry.h"
+#import "AerialList.h"
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
 #import "EditorLayerGL.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
-#if !TARGET_OS_IPHONE
-#import "HtmlErrorWindow.h"
-#else
-#import "LocationBallLayer.h"
-#import "MapViewController.h"
-#import "PushPinView.h"
-#endif
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "OsmMapData.h"
 #import "OsmObjects.h"
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
+
+#if TARGET_OS_IPHONE
+#import "LocationBallLayer.h"
+#import "MapViewController.h"
+#import "PushPinView.h"
+#else
+#import "HtmlErrorWindow.h"
+#endif
 
 
 static const CGFloat Z_AERIAL		= -100;
@@ -41,9 +43,6 @@ static const CGFloat Z_RULER		= 3;
 static const CGFloat Z_BLINK		= 4;
 static const CGFloat Z_BALLOON		= 5;
 static const CGFloat Z_FLASH		= 6;
-
-
-#define BING_MAPS_KEY	@"ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk"
 
 
 CGSize SizeForImage( NSImage * image )
@@ -76,6 +75,39 @@ CGSize SizeForImage( NSImage * image )
 
 #pragma mark initialization
 
+
+-(void)setAerialService:(AerialService *)service
+{
+	if ( [_aerialLayer.tileServerUrl isEqualToString:service.url] && [[_aerialLayer.tileServerSubdomains componentsJoinedByString:@","] isEqualToString:service.tileServers] )
+		return;
+
+	[_aerialLayer removeFromSuperlayer];
+
+	NSString * name = service == self.customAerials.bingAerial ? @"BingAerialTiles" : service.cacheName;
+	_aerialLayer = [[MercatorTileLayer alloc] initWithName:name mapView:self callback:nil];
+
+	_aerialLayer.tileServerUrl = service.url;
+	_aerialLayer.tileServerSubdomains = [service.tileServers componentsSeparatedByString:@","];
+	_aerialLayer.maxZoomLevel = (int32_t)service.maxZoom ?: 21;
+
+	_aerialLayer.roundZoomUp = YES;
+	if ( service == self.customAerials.bingAerial ) {
+		// Bing
+		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
+		_aerialLayer.placeholderImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BingPlaceholderImage" ofType:@"png"]];
+	} else {
+		// custom
+		_aerialLayer.tileServerUrl = service.url;
+		_aerialLayer.tileServerSubdomains = [service.tileServers componentsSeparatedByString:@","];
+		_aerialLayer.placeholderImage = nil;
+	}
+	_aerialLayer.zPosition = Z_AERIAL;
+	_aerialLayer.opacity = 0.75;
+	[self.layer addSublayer:_aerialLayer];
+}
+
+
+
 #if TARGET_OS_IPHONE
 - (id)initWithCoder:(NSCoder *)coder
 #else
@@ -94,61 +126,12 @@ CGSize SizeForImage( NSImage * image )
 #endif
 		self.layer.masksToBounds = YES;
 
-		_aerialLayer = [[MercatorTileLayer alloc] initWithName:@"BingAerialTiles" mapView:self callback:nil];
-		_aerialLayer.maxZoomLevel = 21;
-		_aerialLayer.roundZoomUp = YES;
-		_aerialLayer.tileServerUrl = @"http://ecn.{t}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=1049&key=" BING_MAPS_KEY;
-		_aerialLayer.tileServerSubdomains = @[ @"t0", @"t1", @"t2", @"t3" ];
-//		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?mapArea=%f,%f,%f,%f&zoomLevel=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
-//		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/v1/Imagery/BasicMetadata/Aerial?centerPoint=%f,%f&zoomLevel=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
-//		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/40.714550167322159,-74.007124900817871?zl=15&output=xml&key=" BING_MAPS_KEY;
-		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&key=" BING_MAPS_KEY;
-		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
-
-
-		_aerialLayer.placeholderImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BingPlaceholderImage" ofType:@"png"]];
-		_aerialLayer.zPosition = Z_AERIAL;
-		_aerialLayer.opacity = 0.75;
-		[self.layer addSublayer:_aerialLayer];
+		// set aerial layer
+		self.customAerials = [AerialList new];
+		[self setAerialService:self.customAerials.currentAerial];
 
 		// bing logo
 		{
-#if 0
-			// fetch bing logo
-			NSString * url = [NSString stringWithFormat:@"http://dev.virtualearth.net/REST/v1/Imagery/Metadata/Aerial?"
-							  @"mapArea=0.0,0.0,1.0,1.0&"
-							  @"key=" BING_MAPS_KEY ];
-			[[DownloadThreadPool generalPool] dataForUrl:url completion:^(NSData * data,NSError * error) {
-				if ( data && !error ) {
-					id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-					NSString * logo = [json objectForKey:@"brandLogoUri"];
-#if 0
-					id p1 = [json objectForKey:@"resourceSets"];
-					id p2 = [p1 objectAtIndex:0];
-					id p3 = [p2 objectForKey:@"resources"];
-					id p4 = [p3 objectAtIndex:0];
-					_aerialLayer.tileServerUrl	= [p4 objectForKey:@"imageUrl"];
-					_aerialLayer.tileServerSubdomains = [p4 objectForKey:@"imageUrlSubdomains"];
-#endif
-					[[DownloadThreadPool generalPool] dataForUrl:logo completion:^(NSData * data,NSError * error) {
-						NSImage * image = [[NSImage alloc] initWithData:data];
-						if ( image ) {
-							CGSize size = SizeForImage(image);
-							_bingMapsLogo = [CALayer layer];
-#if TARGET_OS_IPHONE
-							_bingMapsLogo.imageView.image = image;
-							_bingMapsLogo.frame = CGRectMake(10, 10, size.width/2, size.height/2);
-#else
-							_bingMapsLogo.zPosition = Z_BING_LOGO;
-							_bingMapsLogo.contents = image;
-							_bingMapsLogo.frame = CGRectMake(10, 10, size.width, size.height);
-							[self.layer addSublayer:_bingMapsLogo];
-#endif
-						}
-					}];
-				}
-			}];
-#else
 #if TARGET_OS_IPHONE
 #else
 			NSImage * image = [NSImage imageNamed:@"BingLogo.png"];
@@ -160,9 +143,7 @@ CGSize SizeForImage( NSImage * image )
 			_bingMapsLogo.frame = CGRectMake(10, 10, size.width, size.height);
 			[self.layer addSublayer:_bingMapsLogo];
 #endif
-#endif
 		}
-
 
 		_mapnikLayer = [[MercatorTileLayer alloc] initWithName:@"MapnikTiles"  mapView:self callback:nil];
 		_mapnikLayer.maxZoomLevel = 18;
@@ -346,6 +327,8 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setBool:!_editorLayer.hidden forKey:@"editorVisible"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
+
+	[self.customAerials save];
 
 	// then save data
 	[_editorLayer save];
