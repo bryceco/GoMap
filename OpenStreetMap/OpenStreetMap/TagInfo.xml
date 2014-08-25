@@ -958,27 +958,27 @@
 
 	<tag key="place" value="allotments" name="Allotments" type="area"/>
     <tag key="place" value="area" name="Area" type="area"/>
-    <tag key="place" value="city" name="City" type="area" description="A large populated place, usually over 100,000 inhabitants." iconName="poi_place_city" areaColor="8DE3CB"/>
-    <tag key="place" value="continent" name="Continent" type="area" description="Identifies the world's continents" areaColor="8DE3CB"/>
-    <tag key="place" value="country" name="Country" type="area" description="Nation states and other high-level national political/administrative areas." areaColor="8DE3CB"/>
-    <tag key="place" value="county" name="County" type="area" areaColor="8DE3CB"/>
+    <tag key="place" value="city" name="City" type="area" description="A large populated place, usually over 100,000 inhabitants." iconName="poi_place_city" />
+    <tag key="place" value="continent" name="Continent" type="area" description="Identifies the world's continents" />
+    <tag key="place" value="country" name="Country" type="area" description="Nation states and other high-level national political/administrative areas." />
+    <tag key="place" value="county" name="County" type="area" />
     <tag key="place" value="district" name="District" type="area"/>
     <tag key="place" value="farm" name="Farm" type="area"/>
-    <tag key="place" value="hamlet" name="Hamlet" type="area" description="A settlement with less than 100-200 inhabitants." iconName="poi_place_hamlet" areaColor="8DE3CB"/>
-    <tag key="place" value="island" name="Island" type="area" description="An island is any piece of land that is completely surrounded by water and isolated from other significant landmasses." areaColor="8DE3CB"/>
-    <tag key="place" value="islet" name="Islet" type="area" description="An islet is any hamlet sized piece of land that is completely surrounded by water and isolated from other landmasses." areaColor="8DE3CB"/>
+    <tag key="place" value="hamlet" name="Hamlet" type="area" description="A settlement with less than 100-200 inhabitants." iconName="poi_place_hamlet" />
+    <tag key="place" value="island" name="Island" type="area" description="An island is any piece of land that is completely surrounded by water and isolated from other significant landmasses." />
+    <tag key="place" value="islet" name="Islet" type="area" description="An islet is any hamlet sized piece of land that is completely surrounded by water and isolated from other landmasses." />
     <tag key="place" value="isolated_dwelling" name="Isolated Dwelling" type="area" areaColor="8DE3CB"/>
-    <tag key="place" value="locality" name="Locality" type="area" description="A Locality is a named place that has no population." areaColor="8DE3CB"/>
+    <tag key="place" value="locality" name="Locality" type="area" description="A Locality is a named place that has no population." />
     <tag key="place" value="municipality" name="Municipality" type="area"/>
-    <tag key="place" value="neighbourhood" name="Neighbourhood" type="area" description="A neighbourhood is a smaller named, geographically localised place within a suburb of a larger city or within a town or village" areaColor="8DE3CB"/>
+    <tag key="place" value="neighbourhood" name="Neighbourhood" type="area" description="A neighbourhood is a smaller named, geographically localised place within a suburb of a larger city or within a town or village" />
     <tag key="place" value="ocean" name="Ocean" type="area" description="The world's five main major oceanic divisions."/>
     <tag key="place" value="quarter" name="Quarter" type="area"/>
-    <tag key="place" value="region" name="Region" type="area" areaColor="8DE3CB"/>
+    <tag key="place" value="region" name="Region" type="area" />
     <tag key="place" value="sea" name="Sea" type="area" description="A part of an ocean."/>
-    <tag key="place" value="state" name="State" type="area" description="A large sub-national political/administrative area." areaColor="8DE3CB"/>
-    <tag key="place" value="suburb" name="Suburb" type="area" description="A part of a town or city with a well-known name and often a distinct identity." iconName="poi_place_suburb" areaColor="8DE3CB"/>
-    <tag key="place" value="town" name="Town" type="area" description="A settlement with between 10,000 and 100,000 inhabitants." iconName="poi_place_town" areaColor="8DE3CB"/>
-    <tag key="place" value="village" name="Village" type="area" description="A settlement with between 1,000 and 10,000 inhabitants." iconName="poi_place_village" areaColor="8DE3CB"/>
+    <tag key="place" value="state" name="State" type="area" description="A large sub-national political/administrative area." />
+    <tag key="place" value="suburb" name="Suburb" type="area" description="A part of a town or city with a well-known name and often a distinct identity." iconName="poi_place_suburb" />
+    <tag key="place" value="town" name="Town" type="area" description="A settlement with between 10,000 and 100,000 inhabitants." iconName="poi_place_town" />
+    <tag key="place" value="village" name="Village" type="area" description="A settlement with between 1,000 and 10,000 inhabitants." iconName="poi_place_village" />
 
 	<tag key="power" value="cable" name="Cable" type="way" description="Cabling of low / high voltage lines"/>
     <tag key="power" value="cable_distribution_cabinet" name="Cable Distribution Cabinet" type="node" description="Cable distribution cabinet"/>
@@ -1749,12 +1749,10 @@
     <tag key="type" value="lane_restriction" name="Lane Restriction"/>
     <tag key="type" value="leading_light" name="Leading Light"/>
     <tag key="type" value="leading_line" name="Leading Line"/>
-    <tag key="type" value="multipolygon" name="Multipolygon"/>
     <tag key="type" value="network" name="Network"/>
     <tag key="type" value="observation_spot" name="Observation Spot" description="Used with man_made=survey_point to indicate a observation spot"/>
     <tag key="type" value="public_transport" name="Public Transport" description="Represents a public transport related relation."/>
     <tag key="type" value="restriction" name="Restriction" wikiPage="http://wiki.openstreetmap.org/wiki/Turn_restrictions"/>
-    <tag key="type" value="route" name="Route"/>
     <tag key="type" value="route_master" name="Route Master"/>
     <tag key="type" value="site" name="Site" description="Used for grouping several features together as one conceptual 'site' (eg a convention complex)."/>
     <tag key="type" value="street" name="Street"/>

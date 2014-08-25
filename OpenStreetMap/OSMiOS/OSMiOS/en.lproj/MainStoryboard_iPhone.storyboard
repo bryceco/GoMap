@@ -3,7 +3,6 @@
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
-        <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main Map View Controller-->
@@ -1693,7 +1692,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNq-Ya-Ajv">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNq-Ya-Ajv">
                                                     <rect key="frame" x="261" y="11" width="22" height="22"/>
                                                     <state key="normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1703,6 +1702,10 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="lNq-Ya-Ajv" secondAttribute="centerY" id="ZN8-VA-rgJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="lNq-Ya-Ajv" secondAttribute="trailing" constant="37" id="mxi-8i-8gC"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="title" destination="Uhw-U4-LLZ" id="i9D-hO-NlG"/>
@@ -2719,8 +2722,12 @@ http://glyphish.com
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lxe-4A-Zw3" id="vzX-E7-7y5">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zI2-YM-qbl">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zI2-YM-qbl">
                                             <rect key="frame" x="108" y="7" width="104" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="kp5-QB-yx2"/>
+                                                <constraint firstAttribute="width" constant="104" id="v0B-io-Crp"/>
+                                            </constraints>
                                             <state key="normal" title="Add New">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -2729,6 +2736,10 @@ http://glyphish.com
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="zI2-YM-qbl" secondAttribute="centerY" id="Igd-vs-zPD"/>
+                                        <constraint firstAttribute="centerX" secondItem="zI2-YM-qbl" secondAttribute="centerX" id="j98-mE-XhB"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -2761,13 +2772,17 @@ http://glyphish.com
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r2p-bs-O14" id="1BF-UO-Q0K">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yue-km-52a">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yue-km-52a">
                                                     <rect key="frame" x="23" y="11" width="55" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="eXw-5O-hKa"/>
+                                                        <constraint firstAttribute="width" constant="55" id="rID-Of-Odv"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bing aerial" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w75-Lj-3jF">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bing aerial" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w75-Lj-3jF">
                                                     <rect key="frame" x="86" y="7" width="214" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -2777,8 +2792,11 @@ http://glyphish.com
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="w75-Lj-3jF" secondAttribute="trailing" constant="12" id="QKa-1n-h45"/>
+                                                <constraint firstItem="yue-km-52a" firstAttribute="leading" secondItem="1BF-UO-Q0K" secondAttribute="leading" constant="23" id="QFE-XE-v6R"/>
                                                 <constraint firstItem="w75-Lj-3jF" firstAttribute="leading" secondItem="yue-km-52a" secondAttribute="trailing" constant="8" id="aGh-Nc-O0u"/>
+                                                <constraint firstAttribute="centerY" secondItem="yue-km-52a" secondAttribute="centerY" id="bTp-ni-5Qr"/>
+                                                <constraint firstAttribute="centerY" secondItem="w75-Lj-3jF" secondAttribute="centerY" id="ebQ-kf-2Zc"/>
+                                                <constraint firstAttribute="trailing" secondItem="w75-Lj-3jF" secondAttribute="trailing" constant="20" id="zzb-HR-ghZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -2791,13 +2809,16 @@ http://glyphish.com
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EJ2-Ez-WPn" id="VWp-r7-bbP">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="URL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swu-t3-p5w">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swu-t3-p5w">
                                                     <rect key="frame" x="23" y="11" width="55" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="55" id="Xgp-mH-Msn"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dzT-B4-za3">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dzT-B4-za3">
                                                     <rect key="frame" x="86" y="7" width="214" height="30"/>
                                                     <string key="placeholder">http://{t}.tile.org/{z}/{x}/{y}.png
  </string>
@@ -2809,8 +2830,11 @@ http://glyphish.com
                                                 </textField>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="swu-t3-p5w" firstAttribute="leading" secondItem="VWp-r7-bbP" secondAttribute="leading" constant="23" id="CVT-pk-w3x"/>
+                                                <constraint firstAttribute="trailing" secondItem="dzT-B4-za3" secondAttribute="trailing" constant="20" id="DeP-Vv-hlf"/>
+                                                <constraint firstAttribute="centerY" secondItem="swu-t3-p5w" secondAttribute="centerY" id="GAV-gt-9lS"/>
+                                                <constraint firstAttribute="centerY" secondItem="dzT-B4-za3" secondAttribute="centerY" id="Lq8-Th-0Ir"/>
                                                 <constraint firstItem="dzT-B4-za3" firstAttribute="leading" secondItem="swu-t3-p5w" secondAttribute="trailing" constant="8" id="unh-eb-mw5"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="dzT-B4-za3" secondAttribute="trailing" constant="12" id="xic-rh-YF7"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -2819,14 +2843,21 @@ http://glyphish.com
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kif-mu-Ggv" id="cUW-ML-rih">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Tile Servers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m82-UX-J5c">
-                                                    <rect key="frame" x="23" y="11" width="109" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tile Servers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m82-UX-J5c">
+                                                    <rect key="frame" x="23" y="11" width="108" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="A9W-9t-tyB"/>
+                                                        <constraint firstAttribute="width" constant="108" id="fub-AM-uII"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fY-G4-i12">
-                                                    <rect key="frame" x="131" y="7" width="169" height="30"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4fY-G4-i12">
+                                                    <rect key="frame" x="132" y="7" width="168" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="m7u-M9-L5h"/>
+                                                    </constraints>
                                                     <string key="placeholder">a,b,c
  </string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -2837,8 +2868,11 @@ http://glyphish.com
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="4fY-G4-i12" secondAttribute="trailing" constant="12" id="0Dz-RV-BCy"/>
-                                                <constraint firstItem="4fY-G4-i12" firstAttribute="leading" secondItem="m82-UX-J5c" secondAttribute="trailing" constant="-1" id="IoL-KA-MKt"/>
+                                                <constraint firstItem="4fY-G4-i12" firstAttribute="leading" secondItem="m82-UX-J5c" secondAttribute="trailing" constant="1" id="IoL-KA-MKt"/>
+                                                <constraint firstAttribute="centerY" secondItem="4fY-G4-i12" secondAttribute="centerY" id="W5J-bm-FTL"/>
+                                                <constraint firstItem="m82-UX-J5c" firstAttribute="leading" secondItem="cUW-ML-rih" secondAttribute="leading" constant="23" id="j9w-F3-dua"/>
+                                                <constraint firstAttribute="centerY" secondItem="m82-UX-J5c" secondAttribute="centerY" id="kze-Wl-far"/>
+                                                <constraint firstAttribute="trailing" secondItem="4fY-G4-i12" secondAttribute="trailing" constant="20" id="zYF-Zx-4KL"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

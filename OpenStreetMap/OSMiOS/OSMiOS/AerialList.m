@@ -128,9 +128,9 @@ static NSString * CUSTOMAERIALENABLED_KEY = @"AerialListEnabled";
 	static AerialService * bing = nil;
 	if ( bing == nil ) {
 		bing = [AerialService aerialWithName:@"Bing"
-											   url:@"http://ecn.{t}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=1049&key=" BING_MAPS_KEY
-										   servers:@"t0,t1,t2,t3"
-										   maxZoom:21];
+										 url:@"http://ecn.{t}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
+									 servers:@"t0,t1,t2,t3"
+									 maxZoom:21];
 	}
 	return bing;
 }
