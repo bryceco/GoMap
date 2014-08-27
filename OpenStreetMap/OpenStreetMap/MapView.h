@@ -79,6 +79,7 @@
 	UIAlertView						*	_alertMove;
 	UIAlertView						*	_alertUndo;
 	UIAlertView						*	_alertGps;
+	UILabel							*	_flashLabel;
 #else
 	HtmlErrorWindow					*	_htmlErrorWindow;
 #endif
@@ -115,7 +116,6 @@
 @property (strong,nonatomic)	AerialList					*	customAerials;
 
 
--(void)presentError:(NSError *)error;
 
 -(OSMRect)mapRectFromVisibleRect;
 -(OSMRect)viewRectFromMapRect:(OSMRect)mapRect;
@@ -126,6 +126,7 @@
 
 -(void)flashMessage:(NSString *)message;
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration;
+-(void)presentError:(NSError *)error flash:(BOOL)flash;
 
 -(void)setAerialService:(AerialService *)service;
 

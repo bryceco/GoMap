@@ -537,6 +537,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			});
 
 		} else {
+
 			OsmMapData * mapData = [[OsmMapData alloc] init];
 			NSError * error = nil;
 			BOOL ok = [mapData parseXmlStream:agent.stream error:&error];
@@ -560,6 +561,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				completion( quads, mapData, error );
 			});
 		}
+
 	}];
 }
 + (void)osmDataForBox:(ServerQuery *)query completion:(void(^)(ServerQuery * query,OsmMapData * data,NSError * error))completion
@@ -596,6 +598,16 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : @"The area for which you are attempting to download data is too large. Please zoom in or hide the Editor layer under Settings" }];
 		newQuads = nil;
 	}
+
+#if 0
+	{
+		CFTimeInterval t = CACurrentMediaTime();
+		[OsmMapData osmDataForUrl:@"http://api.openstreetmap.org/api/0.6/relation/2793848/full" quads:nil completion:^(ServerQuery * quads,OsmMapData * data,NSError * error2){
+			CFTimeInterval t2 = CACurrentMediaTime() - t;
+			DLog(@"%f",t2);
+		}];
+	}
+#endif
 
 	if ( newQuads.count == 0 ) {
 		++activeRequests;
@@ -680,14 +692,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		// osm header
 		NSString * version		= [attributeDict valueForKey:@"version"];
-#if 0
-		NSString * generator	= [attributeDict valueForKey:@"generator"];
-		NSString * copyright	= [attributeDict valueForKey:@"copyright"];
-		NSString * attribution	= [attributeDict valueForKey:@"attribution"];
-		NSString * license		= [attributeDict valueForKey:@"license"];
-		assert( version && generator && copyright && attribution && license);
-#endif
-		assert( [version isEqualToString:@"0.6"] );
+		if ( ![version isEqualToString:@"0.6"] ) {
+			_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"OSM data must be version 0.6 (fetched '%@')", version]}];
+			[parser abortParsing];
+		}
 		[_parserStack addObject:@"osm"];
 
 	} else if ( [elementName isEqualToString:@"bounds"] ) {
@@ -747,6 +755,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		if ( error ) {
 			*error = _parseError;
 		}
+		[stream close];	// close stream so the writer knows if we won't be reading any more
 	}
 
 	return ok;
@@ -1684,7 +1693,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			} else {
 				assert(NO);
 			}
-			[_spatial addMember:object undo:nil];
+			if ( !object.deleted ) {
+				[_spatial addMember:object undo:nil];
+			}
 
 		} else {
 			// ignore

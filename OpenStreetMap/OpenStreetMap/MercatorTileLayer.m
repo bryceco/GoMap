@@ -461,7 +461,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 			[_mapView progressIncrement:NO];
 			[self fetchTileForTileX:tileX tileY:tileY zoomLevel:zoomLevel completion:^(NSError * error) {
 				if ( error ) {
-					[_mapView presentError:error];
+					[_mapView presentError:error flash:YES];
 				}
 				[_mapView progressDecrement];
 			}];

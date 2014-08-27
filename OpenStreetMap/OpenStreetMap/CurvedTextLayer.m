@@ -120,6 +120,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 #endif
 
 	CGFloat lineHeight = font.lineHeight;
+	CGFloat lineDescent = font.descender;
 
 	// compute number of characters in each line of text
 	const NSInteger maxLines = 20;
@@ -151,7 +152,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 		CGRect textRect = CTLineGetBoundsWithOptions( ct1, 0 );
 		CGPoint point = {
 			round( center.x - (textRect.origin.x+textRect.size.width)/2 ),
-			round( center.y + lineHeight*(1 + line - lineCount/2) )
+			round( center.y + lineHeight*(1 + line - lineCount/2.0) + lineDescent )
 		};
 
 		// draw shadow

@@ -380,33 +380,52 @@ CGSize SizeForImage( NSImage * image )
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration
 {
 #if TARGET_OS_IPHONE
-	UILabel * view = [UILabel new];
-	view.font = [UIFont boldSystemFontOfSize:18];
-	view.text = message;
-	view.textAlignment = NSTextAlignmentCenter;
-	view.textColor = UIColor.whiteColor;
-	view.backgroundColor = UIColor.blackColor;
-	view.layer.cornerRadius = 10;
-	view.layer.zPosition = Z_FLASH;
-	view.alpha = 0.0;
-	[view sizeToFit];
-	CGRect rc = view.frame;
+	const CGFloat MAX_ALPHA = 0.8;
+
+	if ( _flashLabel == nil ) {
+		_flashLabel = [UILabel new];
+		_flashLabel.font = [UIFont boldSystemFontOfSize:18];
+		_flashLabel.textAlignment = NSTextAlignmentCenter;
+		_flashLabel.textColor = UIColor.whiteColor;
+		_flashLabel.backgroundColor = UIColor.blackColor;
+		_flashLabel.layer.cornerRadius = 15;
+		_flashLabel.layer.masksToBounds = YES;
+		_flashLabel.layer.zPosition = Z_FLASH;
+		_flashLabel.hidden = YES;
+		[self addSubview:_flashLabel];
+	}
+
+	_flashLabel.text = message;
+
+	// set size/position
+	[_flashLabel sizeToFit];
+	CGRect rc = _flashLabel.frame;
 	rc.origin.x = self.bounds.origin.x + (self.bounds.size.width - rc.size.width) / 2;
 	rc.origin.y = self.bounds.origin.y + self.bounds.size.height/4 + (self.bounds.size.height - rc.size.height) / 2;
 	rc = CGRectInset(rc, -20, -20);
-	view.frame = rc;
-	[self addSubview:view];
+	_flashLabel.frame = rc;
 
-	[UIView animateWithDuration:0.25 animations:^{
-		view.alpha = 0.8;
-	}];
+	if ( _flashLabel.hidden ) {
+		// animate in
+		_flashLabel.alpha = 0.0;
+		_flashLabel.hidden = NO;
+		[UIView animateWithDuration:0.25 animations:^{
+			_flashLabel.alpha = MAX_ALPHA;
+		}];
+	} else {
+		// already displayed
+		[_flashLabel.layer removeAllAnimations];
+		_flashLabel.alpha = MAX_ALPHA;
+	}
 
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.7 * NSEC_PER_SEC);
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC);
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 		[UIView animateWithDuration:0.25 animations:^{
-			view.alpha = 0.0;
+			_flashLabel.alpha = 0.0;
 		} completion:^(BOOL finished){
-			[view removeFromSuperview];
+			if ( finished && ((CALayer *)_flashLabel.layer.presentationLayer).opacity == 0.0 ) {
+				_flashLabel.hidden = YES;
+			}
 		}];
 	});
 #endif
@@ -418,7 +437,7 @@ CGSize SizeForImage( NSImage * image )
 }
 
 
--(void)presentError:(NSError *)error
+-(void)presentError:(NSError *)error flash:(BOOL)flash
 {
 	if ( _lastErrorDate == nil || [[NSDate date] timeIntervalSinceDate:_lastErrorDate] > 3.0 ) {
 
@@ -458,8 +477,12 @@ CGSize SizeForImage( NSImage * image )
 			text = newText;
 		}
 
-		_alertError = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:@"OK" otherButtonTitles:ignoreButton, nil];
-		[_alertError show];
+		if ( flash ) {
+			[self flashMessage:[NSString stringWithFormat:@"%@: %@",title,text] duration:0.9];
+		} else {
+			_alertError = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:@"OK" otherButtonTitles:ignoreButton, nil];
+			[_alertError show];
+		}
 #else
 		if ( [text.uppercaseString hasPrefix:@"<!DOCTYPE HTML"] ) {
 			_htmlErrorWindow = [[HtmlErrorWindow alloc] initWithHtml:text];
@@ -470,7 +493,9 @@ CGSize SizeForImage( NSImage * image )
 		}
 #endif
 	}
-	_lastErrorDate = [NSDate date];
+	if ( !flash ) {
+		_lastErrorDate = [NSDate date];
+	}
 }
 
 #pragma mark Coordinate Transforms
@@ -730,7 +755,7 @@ CGSize SizeForImage( NSImage * image )
 	} else {
 		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text} ];
 	}
-	[self presentError:error];
+	[self presentError:error flash:NO];
 }
 
 - (void)updateUserLocationIndicator
@@ -1834,7 +1859,7 @@ checkGrab:
 {
 	_userOverrodeLocationPosition = YES;
 
-    if ( pan.state == UIGestureRecognizerStateBegan ) {
+	if ( pan.state == UIGestureRecognizerStateBegan ) {
 		[_inertiaTimer invalidate];
 //		DLog( @"start pan" );
     } else if ( pan.state == UIGestureRecognizerStateChanged ) {
@@ -1844,7 +1869,7 @@ checkGrab:
 //		DLog(@"pan %d trans = %f,%f", pan.state, translation.x, translation.y);
 		[self adjustOriginBy:translation];
 		[pan setTranslation:CGPointMake(0,0) inView:self];
-    } else if (pan.state == UIGestureRecognizerStateEnded ) {
+    } else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ) {	// cancelled occurs when we throw an error dialog
 //		DLog( @"finish pan" );
 		CGPoint velocity = [pan velocityInView:self];
 //		DLog(@"pan %d vel = %f,%f",pan.state,velocity.x,velocity.y);
@@ -1863,8 +1888,10 @@ checkGrab:
 			}
 		};
 		_inertiaTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(panInertia:) userInfo:inertiaBlock repeats:YES];
+	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
+		DLog( @"pan gesture failed" );
 	} else {
-		DLog( @"state %d", (int)pan.state);
+		DLog( @"pan gesture %d", (int)pan.state);
 	}
 }
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch

@@ -179,8 +179,17 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 		_runLoopObserver = CFRunLoopObserverCreate( kCFAllocatorDefault, kCFRunLoopAfterWaiting,
 																YES, 0, RunLoopObserverCallBack, &context );
 		CFRunLoopAddObserver(CFRunLoopGetMain(), _runLoopObserver, kCFRunLoopCommonModes);
+//		DLog(@"add observer %@",_runLoopObserver);
 	}
 	return self;
+}
+
+-(void)dealloc
+{
+	if ( _runLoopObserver ) {
+		CFRunLoopRemoveObserver( CFRunLoopGetMain(), _runLoopObserver, kCFRunLoopCommonModes );
+//		DLog(@"remove observer %@",_runLoopObserver);
+	}
 }
 
 -(BOOL) canUndo
@@ -400,11 +409,6 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 		_runLoopCounter = *(NSInteger *)[coder decodeBytesWithReturnedLength:NULL];
 	}
     return self;
-}
-
--(void)dealloc
-{
-	CFRunLoopRemoveObserver( CFRunLoopGetMain(), _runLoopObserver, kCFRunLoopCommonModes );
 }
 
 @end

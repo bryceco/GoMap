@@ -11,6 +11,7 @@
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 
+
 static NSString * g_UserAgent = nil;
 
 typedef void (^dequeueBlock)(void);
@@ -259,7 +260,6 @@ typedef void (^dequeueBlock)(void);
 	});
 	return pool;
 }
-
 
 
 -(void)submitBlockToQueue:(void(^)(dequeueBlock))block

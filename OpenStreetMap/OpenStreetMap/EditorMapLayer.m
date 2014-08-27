@@ -204,11 +204,16 @@ const double MinIconSizeInMeters = 4.0;
 
 	[_mapData updateWithBox:box mapView:_mapView completion:^(BOOL partial,NSError * error) {
 		if ( error ) {
-			[_mapView presentError:error];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				// present error asynchrounously so we don't interrupt the current UI action
+				[_mapView presentError:error flash:YES];
+			});
 		} else {
 			[self setNeedsDisplay];
 		}
 	}];
+
+	[self setNeedsDisplay];
 }
 
 -(void)didReceiveMemoryWarning
@@ -589,8 +594,8 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 #if 0
 	// drawing green/red entry/exit segments
 	for ( NSArray * outline in outlineList ) {
-		OSMPoint p1 = [outline[0] pointValue];
-		OSMPoint p2 = [outline[1] pointValue];
+		OSMPoint p1 = [outline[0] point];
+		OSMPoint p2 = [outline[1] point];
 		CGContextBeginPath(ctx);
 		CGContextSetLineCap(ctx, kCGLineCapRound);
 		CGContextMoveToPoint(ctx, p1.x, p1.y);
@@ -599,13 +604,13 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		CGContextSetRGBStrokeColor(ctx, 0, 1, 0, 1);	// green
 		CGContextStrokePath(ctx);
 		//
-		p1 = [outline.lastObject pointValue];
-		p2 = [outline[outline.count-2] pointValue];
+		p1 = [outline.lastObject point];
+		p2 = [outline[outline.count-2] point];
 		CGContextBeginPath(ctx);
 		CGContextMoveToPoint(ctx, p1.x, p1.y);
 		CGContextAddLineToPoint(ctx, p2.x, p2.y);
 		CGContextSetLineWidth(ctx, 6);
-		CGContextSetRGBStrokeColor(ctx, 1, 0, 0, 1);	// green
+		CGContextSetRGBStrokeColor(ctx, 1, 0, 0, 1);	// red
 		CGContextStrokePath(ctx);
 	}
 #endif
