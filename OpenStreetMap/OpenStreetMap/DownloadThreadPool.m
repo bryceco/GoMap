@@ -69,6 +69,18 @@ typedef void (^dequeueBlock)(void);
 {
 }
 
+-(NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
+{
+	if ( response && [response isKindOfClass:[NSHTTPURLResponse class]] ) {
+		NSHTTPURLResponse * httpResponse = (id)response;
+		if ( httpResponse.statusCode == 302 || httpResponse.statusCode == 303 ) {
+			// redirect
+			DLog(@"redirect:\n   %@ -> \n   %@",connection.originalRequest, request);
+		}
+	}
+	return request;
+}
+
 -(id)initWithURL:(NSURL *)url partialCallback:(void(^)(NSData *))particalCallback completionCallback:(void(^)(NSURLResponse * response, NSError * error))completionCallback
 {
 	self = [super init];

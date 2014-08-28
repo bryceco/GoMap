@@ -31,8 +31,6 @@
 	[super viewWillDisappear:animated];
 
 	if ( [self isMovingFromParentViewController] ) {
-		NSIndexPath * indexPath = self.tableView.indexPathForSelectedRow;
-		_aerials.currentIndex = indexPath.row;
 	}
 }
 
@@ -104,6 +102,11 @@
 		// Delete the row from the data source
 		[_aerials removeServiceAtIndex:indexPath.row];
 		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+		if ( indexPath.row == _aerials.currentIndex ) {
+			_aerials.currentIndex = 0;
+		} else if ( indexPath.row < _aerials.currentIndex ) {
+			--_aerials.currentIndex;
+		}
 	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
 		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 	}
@@ -129,6 +132,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	_aerials.currentIndex = indexPath.row;
 	[self.navigationController popViewControllerAnimated:YES];
 }
 

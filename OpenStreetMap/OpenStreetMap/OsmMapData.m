@@ -364,16 +364,16 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index
 {
 	[_undoManager registerUndoComment:@"add object to relation"];
-	//[_spatial removeMember:relation undo:_undoManager];
+	[_spatial removeMember:relation undo:_undoManager];
 	[relation addMember:member atIndex:index undo:_undoManager];
-	//[_spatial addMember:relation undo:_undoManager];
+	[_spatial addMember:relation undo:_undoManager];
 }
 -(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index
 {
 	[_undoManager registerUndoComment:@"delete object from relation"];
-	//[_spatial removeMember:relation undo:_undoManager];
+	[_spatial removeMember:relation undo:_undoManager];
 	[relation removeMemberAtIndex:index undo:_undoManager];
-	//[_spatial addMember:relation undo:_undoManager];
+	[_spatial addMember:relation undo:_undoManager];
 }
 
 
