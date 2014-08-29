@@ -405,7 +405,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 						[data writeToFile:cachePath atomically:YES];
 					});
 
-				} else if ( zoomLevel > 1 && zoomLevel < preferredZoom - 3 ) {
+				} else if ( zoomLevel > 1 && zoomLevel >= preferredZoom - 3 ) {
 
 					// try to show tile at one zoom level higher
 					dispatch_async(dispatch_get_main_queue(), ^(void){

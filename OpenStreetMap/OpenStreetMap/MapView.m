@@ -606,13 +606,12 @@ CGSize SizeForImage( NSImage * image )
 -(CGPoint)viewPointForLatitude:(double)latitude longitude:(double)longitude
 {
 	CGRect bounds = self.bounds;
-	OSMRect box = [self viewportLongitudeLatitude];
-	// linear interpolation, not precise
-	double hDelta = (longitude - box.origin.x) / box.size.width;
-	double vDelta = (latitude - box.origin.y) / box.size.height;
-	OSMPoint pt;
-	pt.x = bounds.origin.x + hDelta * bounds.size.width;
-	pt.y = bounds.origin.y + (1-vDelta) * bounds.size.height;
+	OSMRect rc = [self mapRectFromVisibleRect];
+	OSMPoint pt = [MapView mapPointForLatitude:latitude longitude:longitude];
+	pt.x = fmod(256 + pt.x - rc.origin.x, 256.0);
+	pt.y = fmod(256 + pt.y - rc.origin.y, 256.0);
+	pt.x = bounds.origin.x + pt.x/rc.size.width * bounds.size.width;
+	pt.y = bounds.origin.y + pt.y/rc.size.height * bounds.size.height;
 	return CGPointFromOSMPoint( pt );
 }
 
