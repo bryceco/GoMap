@@ -105,6 +105,7 @@ CGSize SizeForImage( NSImage * image )
 		// bing logo
 		{
 #if TARGET_OS_IPHONE
+			// button provided by storyboard
 #else
 			NSImage * image = [NSImage imageNamed:@"BingLogo.png"];
 			assert(image);
@@ -119,15 +120,8 @@ CGSize SizeForImage( NSImage * image )
 
 		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_mapnikLayer.aerialService = [AerialService mapnik];
-		_mapnikLayer.roundZoomUp = NO;
 		_mapnikLayer.zPosition = Z_MAPNIK;
 		[self.layer addSublayer:_mapnikLayer];
-
-#if 0
-		// mapquest
-		_mapquestLayer.tileServerUrl = @"http://otile{t}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg";
-		_mapquestLayer.tileServerSubdomains = @[ @"a", @"b", @"c" ];
-#endif
 
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
 		_editorLayer.zPosition = Z_EDITOR;
@@ -184,11 +178,6 @@ CGSize SizeForImage( NSImage * image )
 	return self;
 }
 
-- (BOOL)acceptsFirstResponder
-{
-	return YES;
-}
-
 -(void)awakeFromNib
 {
 #if TARGET_OS_IPHONE
@@ -228,7 +217,7 @@ CGSize SizeForImage( NSImage * image )
 	self.mapnikLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"mapnikVisible"];
 	self.editorLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"editorVisible"];
 
-	_bingMapsLogo.hidden = self.aerialLayer.hidden;
+	[self updateBingButton];
 
 	// get current location
 	double zoom			= [[NSUserDefaults standardUserDefaults] doubleForKey:@"zoom"];
@@ -262,6 +251,11 @@ CGSize SizeForImage( NSImage * image )
 #endif
 
 	_editorLayer.textColor = _aerialLayer.hidden ? NSColor.blackColor : NSColor.whiteColor;
+}
+
+- (BOOL)acceptsFirstResponder
+{
+	return YES;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -346,6 +340,12 @@ CGSize SizeForImage( NSImage * image )
 {
 	return YES;
 }
+
+-(void)updateBingButton
+{
+	_bingMapsLogo.hidden = self.aerialLayer.hidden || !self.aerialLayer.aerialService.isBingAerial;
+}
+
 
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration
 {

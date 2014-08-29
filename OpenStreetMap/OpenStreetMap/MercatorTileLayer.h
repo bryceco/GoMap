@@ -22,7 +22,6 @@
 }
 
 @property (strong,nonatomic) AerialService *		aerialService;
-@property (assign,nonatomic) BOOL					roundZoomUp;
 
 @property (assign,nonatomic) MapView	*	mapView;
 

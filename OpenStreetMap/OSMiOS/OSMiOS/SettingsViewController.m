@@ -109,6 +109,8 @@ static const NSInteger RowMap[] = {
 			mapView.editorLayer.hidden = (map & HIDE_EDITOR) ? YES : NO;
 			mapView.aerialLayer.hidden = (map & HIDE_AERIAL) ? YES : NO;
 			mapView.mapnikLayer.hidden = (map & HIDE_MAPNIK) ? YES : NO;
+
+			[mapView updateBingButton];
 			break;
 		}
 	}
@@ -125,15 +127,13 @@ static const NSInteger RowMap[] = {
 
 -(void)setCustomAerialCellTitle
 {
-#if 0
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 	AerialList * aerials = appDelegate.mapView.customAerials;
-	NSIndexPath * path = [NSIndexPath indexPathForRow:4 inSection:BACKGROUND_SECTION];
+	NSIndexPath * path = [NSIndexPath indexPathForRow:2 inSection:BACKGROUND_SECTION];
 	CustomBackgroundCell * cell = (id)[self.tableView cellForRowAtIndexPath:path];
 	if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
 		cell.title.text = aerials.currentAerial.name;
 	}
-#endif
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

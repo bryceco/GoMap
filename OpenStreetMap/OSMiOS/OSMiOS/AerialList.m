@@ -31,7 +31,16 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return [[AerialService alloc] initWithName:name url:url subdomains:subdomains maxZoom:maxZoom];
 }
 
-+(AerialService *)bingAerial
+-(BOOL)isBingAerial
+{
+	if ( [self.url hasPrefix:@"http://ecn.{t}.tiles.virtualearth.net"] )
+		return YES;
+	if ( [self.url hasPrefix:@"https://ecn.{t}.tiles.virtualearth.net"] )
+		return YES;
+	return NO;
+}
+
++(AerialService *)defaultBingAerial
 {
 	static AerialService * bing = nil;
 	static dispatch_once_t onceToken;
@@ -73,7 +82,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 -(NSString *)cacheName
 {
-	if ( self == [AerialService bingAerial] )
+	if ( self.isBingAerial )
 		return @"BingAerialTiles";
 
 	const char *cstr = [_url cStringUsingEncoding:NSUTF8StringEncoding];
@@ -84,14 +93,14 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 }
 -(NSString *)metadataUrl
 {
-	if ( self == [AerialService bingAerial] ) {
+	if ( self.isBingAerial ) {
 		return @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
 	}
 	return nil;
 }
 -(NSData *)placeholderImage
 {
-	if ( self == [AerialService bingAerial] ) {
+	if ( self.isBingAerial ) {
 		static NSData * data;
 		static dispatch_once_t onceToken;
 		dispatch_once(&onceToken, ^{
@@ -100,6 +109,11 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		return data;
 	}
 	return nil;
+}
+
+-(BOOL)roundZoomUp
+{
+	return self == [AerialService mapnik] ? NO : YES;
 }
 
 
@@ -132,7 +146,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	return @[
 
-			 [AerialService bingAerial],
+			 [AerialService defaultBingAerial],
 
 			 [AerialService aerialWithName:@"MapBox Aerial"
 											 url:@"http://{t}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
@@ -179,7 +193,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 -(AerialService *)currentAerial
 {
 	if ( self.currentIndex >= _list.count )
-		return [AerialService bingAerial];
+		return [AerialService defaultBingAerial];
 	return _list[ self.currentIndex ];
 }
 

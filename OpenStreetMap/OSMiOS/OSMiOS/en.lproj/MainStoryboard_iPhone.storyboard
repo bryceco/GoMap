@@ -75,10 +75,8 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-IT-DQC">
                                         <rect key="frame" x="9" y="26" width="66" height="24"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="6Pf-if-VPI"/>
                                             <constraint firstAttribute="width" constant="66" id="Mze-7r-Jr4"/>
                                             <constraint firstAttribute="height" constant="24" id="SkQ-sE-D6j"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="66" id="ujo-lD-72Q"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" image="BingLogo.png">
@@ -1652,26 +1650,43 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Aerial only - no editing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkA-eM-zsE">
-                                                    <rect key="frame" x="16" y="11" width="207" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aerial only -" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkA-eM-zsE">
+                                                    <rect key="frame" x="16" y="11" width="99" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="99" id="ViN-jS-ybn"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWu-pg-SAm">
-                                                    <rect key="frame" x="261" y="11" width="22" height="22"/>
+                                                    <rect key="frame" x="282" y="13" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="0EB-Rn-Kam"/>
+                                                    </constraints>
                                                     <connections>
                                                         <segue destination="kDI-TR-PJA" kind="push" id="SVE-q5-NyA"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjc-g1-9Lh">
+                                                    <rect key="frame" x="114" y="13" width="162" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="SWu-pg-SAm" secondAttribute="centerY" id="Rg0-FU-ubY"/>
-                                                <constraint firstAttribute="trailing" secondItem="SWu-pg-SAm" secondAttribute="trailing" constant="37" id="aSW-zx-iAL"/>
+                                                <constraint firstItem="rjc-g1-9Lh" firstAttribute="leading" secondItem="fkA-eM-zsE" secondAttribute="trailing" constant="-1" id="FEF-FZ-fSe"/>
+                                                <constraint firstAttribute="centerY" secondItem="rjc-g1-9Lh" secondAttribute="centerY" constant="-1.5" id="JEK-ZQ-p3f"/>
+                                                <constraint firstAttribute="centerY" secondItem="SWu-pg-SAm" secondAttribute="centerY" constant="-2" id="Rg0-FU-ubY"/>
+                                                <constraint firstAttribute="trailing" secondItem="SWu-pg-SAm" secondAttribute="trailing" constant="16" id="aSW-zx-iAL"/>
+                                                <constraint firstItem="SWu-pg-SAm" firstAttribute="leading" secondItem="rjc-g1-9Lh" secondAttribute="trailing" constant="6" id="dUY-rU-Rwy"/>
+                                                <constraint firstAttribute="centerY" secondItem="fkA-eM-zsE" secondAttribute="centerY" id="qPo-Xz-Brd"/>
+                                                <constraint firstItem="fkA-eM-zsE" firstAttribute="leading" secondItem="pHD-3v-WZW" secondAttribute="leading" constant="16" id="wU9-Ww-HyB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="title" destination="fkA-eM-zsE" id="7gA-i9-lN7"/>
+                                            <outlet property="title" destination="rjc-g1-9Lh" id="9TM-FG-12t"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="zY7-5o-Ogj" style="IBUITableViewCellStyleDefault" id="2Vz-lG-Dy5">
@@ -1681,7 +1696,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Mapnik only - no editing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zY7-5o-Ogj">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Mapnik only" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zY7-5o-Ogj">
                                                     <rect key="frame" x="15" y="0.0" width="290" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -1835,7 +1850,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0tk-5d-BCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="452" y="482"/>
+            <point key="canvasLocation" x="452" y="481"/>
         </scene>
         <!--Login-->
         <scene sceneID="9rC-iQ-Obp">

@@ -116,6 +116,7 @@
 @property (strong,nonatomic)	AerialList					*	customAerials;
 
 
+-(void)updateBingButton;
 
 -(OSMRect)mapRectFromVisibleRect;
 -(OSMRect)viewRectFromMapRect:(OSMRect)mapRect;

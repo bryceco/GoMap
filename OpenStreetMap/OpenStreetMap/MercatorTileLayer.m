@@ -70,9 +70,6 @@ static NSDictionary * ActionDictionary = nil;
 #endif
 
 		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
-
-		// defaults:
-		self.roundZoomUp = YES;
 	}
 	return self;
 }
@@ -91,7 +88,6 @@ static NSDictionary * ActionDictionary = nil;
 	self.sublayers = nil;
 	[_memoryTileCache removeAllObjects];
 	[_layerDict removeAllObjects];
-	[self purgeOldCacheItemsAsync];
 
 	// update service
 	_aerialService = service;
@@ -106,8 +102,6 @@ static NSDictionary * ActionDictionary = nil;
 							   stringByAppendingPathComponent:service.cacheName];
 		[[NSFileManager defaultManager] createDirectoryAtPath:_tileCacheDirectory withIntermediateDirectories:YES attributes:NULL error:NULL];
 	}
-
-	self.roundZoomUp = YES;
 
 	[self purgeOldCacheItemsAsync];
 	[self setNeedsDisplay];
@@ -127,8 +121,8 @@ static NSDictionary * ActionDictionary = nil;
 -(int32_t)zoomLevel
 {
 	double z = _mapView.mapTransform.a;
-	return self.roundZoomUp ? (int32_t)ceil(log2(z))
-							: (int32_t)floor(log2(z));
+	return self.aerialService.roundZoomUp	? (int32_t)ceil(log2(z))
+											: (int32_t)floor(log2(z));
 }
 
 
@@ -168,6 +162,8 @@ static NSDictionary * ActionDictionary = nil;
 -(void)purgeOldCacheItemsAsync
 {
 	NSString * cacheDir = _tileCacheDirectory;
+	if ( cacheDir.length == 0 )
+		return;
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 		NSDate * now = [NSDate date];
@@ -546,8 +542,8 @@ static inline int32_t modulus( int32_t a, int32_t n)
 
 	OSMRect	rect			= [_mapView mapRectFromVisibleRect];
 #if CUSTOM_TRANSFORM
-	int32_t	minZoomLevel	= [self roundZoomUp] ? (int32_t)ceil(log2(_mapView.mapTransform.a))
-												 : (int32_t)floor(log2(_mapView.mapTransform.a));
+	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(_mapView.mapTransform.a))
+															 : (int32_t)floor(log2(_mapView.mapTransform.a));
 #else
 	int32_t	minZoomLevel	= [self roundZoomUp] ? (int32_t)ceil(log2(self.affineTransform.a))
 												 : (int32_t)floor(log2(self.affineTransform.a));

@@ -19,10 +19,12 @@
 @property (readonly) NSString	*	cacheName;
 @property (readonly) NSString	*	metadataUrl;
 @property (readonly) NSData		*	placeholderImage;
+@property (readonly) BOOL			roundZoomUp;
+
+-(BOOL)isBingAerial;
 
 -(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom;
 +(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom;
-+(instancetype)bingAerial;
 +(instancetype)mapnik;
 
 @end
