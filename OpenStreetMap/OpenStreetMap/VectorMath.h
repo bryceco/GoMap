@@ -167,6 +167,23 @@ BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect );
 
 
 
+static inline OSMTransform WrapTransform( OSMTransform transform )
+{
+	while ( transform.tx >= 128 * transform.a ) {
+		transform.tx -= 256 * transform.a;
+	}
+	while ( transform.tx <= -128 * transform.a ) {
+		transform.tx += 256 * transform.a;
+	}
+	while ( transform.ty >= 128 * transform.a ) {
+		transform.ty -= 256 * transform.a;
+	}
+	while ( transform.ty <= -128 * transform.a ) {
+		transform.ty += 256 * transform.a;
+	}
+	return transform;
+}
+
 static inline OSMTransform OSMTransformIdentity(void)
 {
 	OSMTransform transform = { 0 };

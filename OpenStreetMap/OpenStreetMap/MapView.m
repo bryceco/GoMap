@@ -479,6 +479,7 @@ CGSize SizeForImage( NSImage * image )
 	transform.d = zoom;
 	transform.tx = -(point.x - 128)*zoom;
 	transform.ty = -(point.y - 128)*zoom;
+	transform = WrapTransform(transform);
 	self.mapTransform = transform;
 }
 
@@ -491,6 +492,7 @@ CGSize SizeForImage( NSImage * image )
 	transform.d = zoom;
 	transform.tx = -(point.x - 128)*zoom;
 	transform.ty = -(point.y - 128)*zoom;
+	transform = WrapTransform(transform);
 	self.mapTransform = transform;
 }
 
@@ -502,25 +504,26 @@ CGSize SizeForImage( NSImage * image )
 	if ( t.a == 0 && t.d == 0 )
 		return OSMRectZero();
 
-#if 1
+#if 0
 	OSMTransform ti = OSMTransformInvert( t );
 	OSMRect mapRect = OSMRectFromCGRect( viewRect );
 	mapRect = OSMRectOffset( mapRect, -mapRect.size.width/2, -mapRect.size.height/2);
 	mapRect = OSMRectApplyAffineTransform( mapRect, ti );
 	mapRect = OSMRectOffset(mapRect, -128, -128);
+	return mapRect;
 #else
 	OSMRect mapRect2;
 	mapRect2.origin.x = viewRect.origin.x - (t.tx + viewRect.size.width/2) / t.a  - 128;
 	mapRect2.origin.y = viewRect.origin.y - (t.ty + viewRect.size.height/2) / t.a - 128;
 	mapRect2.size.width  = viewRect.size.width  / t.a;
 	mapRect2.size.height = viewRect.size.height / t.a;
+	return mapRect2;
 #endif
 
 #if 0
 	DLog(@"\n");
 	DLog(@"scale3 = %@", NSStringFromRect(mapRect) );
 #endif
-	return mapRect;
 }
 
 -(OSMRect)viewRectFromMapRect:(OSMRect)mapRect
@@ -926,6 +929,7 @@ CGSize SizeForImage( NSImage * image )
 		OSMTransform transform = self.mapTransform;
 		CGFloat zoom = 1.0 / transform.a;
 		transform = OSMTransformTranslate( transform, delta.x*zoom, -delta.y*zoom );
+		transform = WrapTransform( transform );
 		self.mapTransform = transform;
 	}
 

@@ -1694,6 +1694,8 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 				if ( ((OsmNode *)obj).wayCount == 0 ) {
 					[a addObject:obj];
 				}
+			} else if ( obj.isRelation ) {
+				[relations addObject:obj];
 			}
 		}
 	}];
