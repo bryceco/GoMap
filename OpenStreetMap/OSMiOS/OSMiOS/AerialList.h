@@ -12,14 +12,18 @@
 
 
 @interface AerialService : NSObject
-@property (readonly) NSString * name;
-@property (readonly) NSString * url;
-@property (readonly) NSString * tileServers;
-@property (readonly) NSInteger	maxZoom;
-@property (readonly) NSString * cacheName;
+@property (readonly) NSString	*	name;
+@property (readonly) NSString	*	url;
+@property (readonly) NSArray	*	subdomains;
+@property (readonly) NSInteger		maxZoom;
+@property (readonly) NSString	*	cacheName;
+@property (readonly) NSString	*	metadataUrl;
+@property (readonly) NSData		*	placeholderImage;
 
--(instancetype)initWithName:(NSString *)name url:(NSString *)url servers:(NSString *)servers maxZoom:(NSInteger)maxZoom;
-+(instancetype)aerialWithName:(NSString *)name url:(NSString *)url servers:(NSString *)servers maxZoom:(NSInteger)maxZoom;
+-(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom;
++(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom;
++(instancetype)bingAerial;
++(instancetype)mapnik;
 
 @end
 
@@ -29,11 +33,8 @@
 	NSMutableArray *	_list;
 }
 
-@property BOOL								enabled;
 @property (readonly) AerialService *	currentAerial;
-@property NSInteger							currentIndex;
-
--(AerialService *)bingAerial;
+@property NSInteger						currentIndex;
 
 -(void)load;
 -(void)save;

@@ -76,38 +76,6 @@ CGSize SizeForImage( NSImage * image )
 #pragma mark initialization
 
 
--(void)setAerialService:(AerialService *)service
-{
-	if ( [_aerialLayer.tileServerUrl isEqualToString:service.url] && [[_aerialLayer.tileServerSubdomains componentsJoinedByString:@","] isEqualToString:service.tileServers] )
-		return;
-
-	[_aerialLayer removeFromSuperlayer];
-
-	NSString * name = service == self.customAerials.bingAerial ? @"BingAerialTiles" : service.cacheName;
-	_aerialLayer = [[MercatorTileLayer alloc] initWithName:name mapView:self callback:nil];
-
-	_aerialLayer.tileServerUrl = service.url;
-	_aerialLayer.tileServerSubdomains = [service.tileServers componentsSeparatedByString:@","];
-	_aerialLayer.maxZoomLevel = (int32_t)service.maxZoom ?: 21;
-
-	_aerialLayer.roundZoomUp = YES;
-	if ( service == self.customAerials.bingAerial ) {
-		// Bing
-		_aerialLayer.metadataUrl = @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
-		_aerialLayer.placeholderImage = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BingPlaceholderImage" ofType:@"png"]];
-	} else {
-		// custom
-		_aerialLayer.tileServerUrl = service.url;
-		_aerialLayer.tileServerSubdomains = [service.tileServers componentsSeparatedByString:@","];
-		_aerialLayer.placeholderImage = nil;
-	}
-	_aerialLayer.zPosition = Z_AERIAL;
-	_aerialLayer.opacity = 0.75;
-	[self.layer addSublayer:_aerialLayer];
-}
-
-
-
 #if TARGET_OS_IPHONE
 - (id)initWithCoder:(NSCoder *)coder
 #else
@@ -128,7 +96,11 @@ CGSize SizeForImage( NSImage * image )
 
 		// set aerial layer
 		self.customAerials = [AerialList new];
-		[self setAerialService:self.customAerials.currentAerial];
+		_aerialLayer = [[MercatorTileLayer alloc] initWithMapView:self];
+		_aerialLayer.zPosition = Z_AERIAL;
+		_aerialLayer.opacity = 0.75;
+		_aerialLayer.aerialService = self.customAerials.currentAerial;
+		[self.layer addSublayer:_aerialLayer];
 
 		// bing logo
 		{
@@ -145,11 +117,9 @@ CGSize SizeForImage( NSImage * image )
 #endif
 		}
 
-		_mapnikLayer = [[MercatorTileLayer alloc] initWithName:@"MapnikTiles"  mapView:self callback:nil];
-		_mapnikLayer.maxZoomLevel = 18;
+		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
+		_mapnikLayer.aerialService = [AerialService mapnik];
 		_mapnikLayer.roundZoomUp = NO;
-		_mapnikLayer.tileServerUrl = @"http://{t}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-		_mapnikLayer.tileServerSubdomains = @[ @"a", @"b", @"c" ];
 		_mapnikLayer.zPosition = Z_MAPNIK;
 		[self.layer addSublayer:_mapnikLayer];
 

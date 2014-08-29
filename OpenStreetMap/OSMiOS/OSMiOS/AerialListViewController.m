@@ -11,6 +11,7 @@
 #import "AerialListViewController.h"
 #import "AerialEditViewController.h"
 #import "MapView.h"
+#import "SettingsViewController.h"
 #import "UITableViewCell+FixConstraints.h"
 
 
@@ -133,7 +134,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	_aerials.currentIndex = indexPath.row;
+#if 0
 	[self.navigationController popViewControllerAnimated:YES];
+#else
+	// if popping all the way up we need to tell Settings to save changes
+	[self.settingsViewController applyChanges];
+	[self.navigationController popToRootViewControllerAnimated:YES];
+#endif
 }
 
 
@@ -153,13 +160,12 @@
 				cell = (id)[cell superview];
 			NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
 			if ( indexPath == nil || indexPath.row >= _aerials.count )
-				row = _aerials.count;	// should never happen
-			else
-				row = indexPath.row;
+				return;
+			row = indexPath.row;
 			AerialService * service = [_aerials serviceAtIndex:row];
 			c.name = service.name;
 			c.url = service.url;
-			c.tileServers = service.tileServers;
+			c.tileServers = [service.subdomains componentsJoinedByString:@","];
 			c.zoom = @(service.maxZoom);
 		}
 

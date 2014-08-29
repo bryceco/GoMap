@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class AerialList;
+@class SettingsViewController;
 
 @interface AerialListViewController : UITableViewController <UITableViewDelegate,UITableViewDataSource>
 {
 	AerialList * _aerials;
 }
+
+@property (weak) SettingsViewController * settingsViewController;
 
 @end

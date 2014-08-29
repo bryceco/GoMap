@@ -128,8 +128,6 @@
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration;
 -(void)presentError:(NSError *)error flash:(BOOL)flash;
 
--(void)setAerialService:(AerialService *)service;
-
 -(BOOL)isLocationSpecified;
 
 +(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;

@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#import <MessageUI/MessageUI.h>
-
 #import "AppDelegate.h"
 #import "AerialList.h"
 #import "AerialListViewController.h"
@@ -41,10 +39,9 @@ enum {
 
 static const NSInteger RowMap[] = {
 	HIDE_AERIAL | HIDE_MAPNIK,		// editor only
-	HIDE_MAPNIK,					// editor + bing
-	HIDE_EDITOR | HIDE_MAPNIK,		// bing only
+	HIDE_MAPNIK,					// editor + aerial
+	HIDE_EDITOR | HIDE_MAPNIK,		// aerial only
 	HIDE_EDITOR | HIDE_AERIAL,		// mapnik only
-	HIDE_MAPNIK,					// editor + custom
 };
 
 - (void)viewDidLoad
@@ -56,24 +53,32 @@ static const NSInteger RowMap[] = {
 {
 	[super viewWillAppear:animated];
 
-	self.navigationController.navigationBarHidden = NO;
+	if ( [self isMovingToParentViewController] ) {
+		// becoming visible the first time
+		self.navigationController.navigationBarHidden = NO;
 
-	MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
+		MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
 
-	NSInteger value = 0;
-	value |= mapView.editorLayer.hidden ? HIDE_EDITOR : 0;
-	value |= mapView.aerialLayer.hidden ? HIDE_AERIAL : 0;
-	value |= mapView.mapnikLayer.hidden ? HIDE_MAPNIK : 0;
-	for ( NSInteger row = 0; row < sizeof RowMap/sizeof RowMap[0]; ++row ) {
-		if ( mapView.customAerials.enabled ? row == 4 : value == RowMap[row] ) {
-			NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:BACKGROUND_SECTION];
-			UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-			cell.accessoryType = UITableViewCellAccessoryCheckmark;
-			break;
+		NSInteger value = 0;
+		value |= mapView.editorLayer.hidden ? HIDE_EDITOR : 0;
+		value |= mapView.aerialLayer.hidden ? HIDE_AERIAL : 0;
+		value |= mapView.mapnikLayer.hidden ? HIDE_MAPNIK : 0;
+		for ( NSInteger row = 0; row < sizeof RowMap/sizeof RowMap[0]; ++row ) {
+			if ( value == RowMap[row] ) {
+				NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:BACKGROUND_SECTION];
+				UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+				cell.accessoryType = UITableViewCellAccessoryCheckmark;
+				break;
+			}
 		}
-	}
 
-	[self setCustomAerialCellTitle];
+		[self setCustomAerialCellTitle];
+
+	} else {
+		// returning from child view
+
+		[self setCustomAerialCellTitle];
+	}
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,55 +86,54 @@ static const NSInteger RowMap[] = {
 	[cell fixConstraints];
 }
 
+- (void)applyChanges
+{
+	NSInteger maxRow = [self.tableView numberOfRowsInSection:BACKGROUND_SECTION];
+	for ( NSInteger row = 0; row < maxRow; ++row ) {
+		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:BACKGROUND_SECTION];
+		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+		if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
+			MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
+
+			// enable/disable editing buttons based on visibility
+			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+			[appDelegate.mapView.viewController updateDeleteButtonState];
+			[appDelegate.mapView.viewController updateUndoRedoButtonState];
+
+			// update aerial before setting hidden, because we are replacing the layer
+			mapView.aerialLayer.aerialService = mapView.customAerials.currentAerial;
+
+			mapView.editorLayer.textColor = mapView.aerialLayer.hidden ? NSColor.blackColor : NSColor.whiteColor;
+
+			NSInteger map = RowMap[ row ];
+			mapView.editorLayer.hidden = (map & HIDE_EDITOR) ? YES : NO;
+			mapView.aerialLayer.hidden = (map & HIDE_AERIAL) ? YES : NO;
+			mapView.mapnikLayer.hidden = (map & HIDE_MAPNIK) ? YES : NO;
+			break;
+		}
+	}
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
 
 	if ( [self isMovingFromParentViewController] ) {
-		NSInteger maxRow = [self.tableView numberOfRowsInSection:BACKGROUND_SECTION];
-		for ( NSInteger row = 0; row < maxRow; ++row ) {
-			NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:BACKGROUND_SECTION];
-			UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-			if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
-				MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
-				NSInteger map = RowMap[ row ];
-				mapView.editorLayer.hidden = (map & HIDE_EDITOR) ? YES : NO;
-				mapView.aerialLayer.hidden = (map & HIDE_AERIAL) ? YES : NO;
-				mapView.mapnikLayer.hidden = (map & HIDE_MAPNIK) ? YES : NO;
-
-				// enable/disable editing buttons based on visibility
-				AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-				[appDelegate.mapView.viewController updateDeleteButtonState];
-				[appDelegate.mapView.viewController updateUndoRedoButtonState];
-
-				mapView.editorLayer.textColor = mapView.aerialLayer.hidden ? NSColor.blackColor : NSColor.whiteColor;
-
-				if ( row == 4 ) {
-					appDelegate.mapView.customAerials.enabled = YES;
-					[appDelegate.mapView setAerialService:mapView.customAerials.currentAerial];
-				} else {
-					appDelegate.mapView.customAerials.enabled = NO;
-					[appDelegate.mapView setAerialService:mapView.customAerials.bingAerial];
-				}
-				break;
-			}
-		}
+		[self applyChanges];
 	}
 }
 
 -(void)setCustomAerialCellTitle
 {
+#if 0
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 	AerialList * aerials = appDelegate.mapView.customAerials;
 	NSIndexPath * path = [NSIndexPath indexPathForRow:4 inSection:BACKGROUND_SECTION];
 	CustomBackgroundCell * cell = (id)[self.tableView cellForRowAtIndexPath:path];
 	if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
-		if ( aerials.currentIndex < aerials.count ) {
-			cell.title.text = aerials.currentAerial.name;
-		} else {
-			cell.title.text = @"Custom Aerial...";
-		}
+		cell.title.text = aerials.currentAerial.name;
 	}
+#endif
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -183,6 +187,14 @@ static const NSInteger RowMap[] = {
 	if ( indexPath.section == BACKGROUND_SECTION ) {
 		UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
 		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ( [segue.destinationViewController isKindOfClass:[AerialListViewController class]] ) {
+		AerialListViewController * aerialList = segue.destinationViewController;
+		aerialList.settingsViewController = self;
 	}
 }
 

@@ -13,6 +13,7 @@
 
 #import "iosapi.h"
 
+#import "AerialList.h"
 #import "BingMapsGeometry.h"
 #import "DLog.h"
 #import "DownloadThreadPool.h"
@@ -36,7 +37,7 @@ static NSDictionary * ActionDictionary = nil;
 #pragma mark Implementation
 
 
--(id)initWithName:(NSString *)name mapView:(MapView *)mapView callback:(void(^)(NSImage * logo))completion;
+-(instancetype)initWithMapView:(MapView *)mapView
 {
 	self = [super init];
 	if ( self ) {
@@ -71,21 +72,7 @@ static NSDictionary * ActionDictionary = nil;
 		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
 
 		// defaults:
-		self.maxZoomLevel = 21;
 		self.roundZoomUp = YES;
-
-		// get tile cache folder
-		_tileCacheDirectory = nil;
-		NSArray *paths = NSSearchPathForDirectoriesInDomains( NSCachesDirectory, NSUserDomainMask, YES );
-		if ( [paths count] ) {
-			NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-			_tileCacheDirectory = [[[paths objectAtIndex:0]
-											stringByAppendingPathComponent:bundleName]
-										   stringByAppendingPathComponent:name];
-			[[NSFileManager defaultManager] createDirectoryAtPath:_tileCacheDirectory withIntermediateDirectories:YES attributes:NULL error:NULL];
-		}
-
-		[self purgeOldCacheItemsAsync];
 	}
 	return self;
 }
@@ -93,6 +80,37 @@ static NSDictionary * ActionDictionary = nil;
 -(void)dealloc
 {
 	[_mapView removeObserver:self forKeyPath:@"mapTransform"];
+}
+
+-(void)setAerialService:(AerialService *)service
+{
+	if ( service == _aerialService )
+		return;
+
+	// remove previous data
+	self.sublayers = nil;
+	[_memoryTileCache removeAllObjects];
+	[_layerDict removeAllObjects];
+	[self purgeOldCacheItemsAsync];
+
+	// update service
+	_aerialService = service;
+
+	// get tile cache folder
+	_tileCacheDirectory = nil;
+	NSArray *paths = NSSearchPathForDirectoriesInDomains( NSCachesDirectory, NSUserDomainMask, YES );
+	if ( [paths count] ) {
+		NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+		_tileCacheDirectory = [[[paths objectAtIndex:0]
+								stringByAppendingPathComponent:bundleName]
+							   stringByAppendingPathComponent:service.cacheName];
+		[[NSFileManager defaultManager] createDirectoryAtPath:_tileCacheDirectory withIntermediateDirectories:YES attributes:NULL error:NULL];
+	}
+
+	self.roundZoomUp = YES;
+
+	[self purgeOldCacheItemsAsync];
+	[self setNeedsDisplay];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -116,7 +134,7 @@ static NSDictionary * ActionDictionary = nil;
 
 -(void)metadata:(void(^)(NSData *,NSError *))callback
 {
-	if ( self.metadataUrl == nil ) {
+	if ( self.aerialService.metadataUrl == nil ) {
 		callback( nil, nil );
 	} else {
 		OSMRect rc = [self.mapView viewportLongitudeLatitude];
@@ -124,7 +142,7 @@ static NSDictionary * ActionDictionary = nil;
 		int32_t	zoomLevel	= [self zoomLevel];
 		if ( zoomLevel > 21 )
 			zoomLevel = 21;
-		NSString * url = [NSString stringWithFormat:self.metadataUrl, rc.origin.y+rc.size.height/2, rc.origin.x+rc.size.width/2, zoomLevel];
+		NSString * url = [NSString stringWithFormat:self.aerialService.metadataUrl, rc.origin.y+rc.size.height/2, rc.origin.x+rc.size.width/2, zoomLevel];
 
 		[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:YES completion:callback];
 	}
@@ -262,7 +280,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 
 -(BOOL)isPlaceholderImage:(NSData *)data
 {
-	return _placeholderImage && [data isEqualToData:_placeholderImage];
+	return [self.aerialService.placeholderImage isEqualToData:data];
 }
 
 -(NSString *)quadKeyForZoom:(int32_t)zoom tileX:(int32_t)tileX tileY:(int32_t)tileY
@@ -272,8 +290,8 @@ static inline int32_t modulus( int32_t a, int32_t n)
 
 -(NSString *)urlForZoom:(int32_t)zoom tileX:(int32_t)tileX tileY:(int32_t)tileY
 {
-	NSMutableString * url = [_tileServerUrl mutableCopy];
-	NSString * t = [_tileServerSubdomains objectAtIndex:(tileX+tileY)%_tileServerSubdomains.count];
+	NSMutableString * url = [self.aerialService.url mutableCopy];
+	NSString * t = self.aerialService.subdomains.count ? [self.aerialService.subdomains objectAtIndex:(tileX+tileY)%self.aerialService.subdomains.count] : @"{t}";
 	NSString * u = [self quadKeyForZoom:zoom tileX:tileX tileY:tileY];
 	NSString * x = [NSString stringWithFormat:@"%d",tileX];
 	NSString * y = [NSString stringWithFormat:@"%d",tileY];
@@ -440,8 +458,8 @@ static inline int32_t modulus( int32_t a, int32_t n)
 
 	if ( zoomLevel < 1 ) {
 		zoomLevel = 1;
-	} else if ( zoomLevel > self.maxZoomLevel ) {
-		zoomLevel = self.maxZoomLevel;
+	} else if ( zoomLevel > self.aerialService.maxZoom ) {
+		zoomLevel = self.aerialService.maxZoom;
 	}
 
 	double zoom = (1 << zoomLevel) / 256.0;
@@ -537,7 +555,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	if ( minZoomLevel < 1 ) {
 		minZoomLevel = 1;
 	}
-	int32_t maxZoomLevel = self.maxZoomLevel;
+	int32_t maxZoomLevel = self.aerialService.maxZoom;
 	if ( maxZoomLevel > minZoomLevel + 2 )
 		maxZoomLevel = minZoomLevel + 2;
 

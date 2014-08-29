@@ -21,16 +21,12 @@
 	NSMutableDictionary				*	_layerDict;
 }
 
-@property (assign,nonatomic) int32_t	maxZoomLevel;
-@property (assign,nonatomic) BOOL		roundZoomUp;
-@property (copy,nonatomic) NSString *	tileServerUrl;
-@property (copy,nonatomic) NSArray	*	tileServerSubdomains;
-@property (copy,nonatomic) NSString *	metadataUrl;
-@property (strong,nonatomic) NSData *	placeholderImage;
+@property (strong,nonatomic) AerialService *		aerialService;
+@property (assign,nonatomic) BOOL					roundZoomUp;
 
 @property (assign,nonatomic) MapView	*	mapView;
 
--(id)initWithName:(NSString *)name mapView:(MapView *)mapView callback:(void(^)(NSImage * logo))completion;
+-(id)initWithMapView:(MapView *)mapView;
 -(IBAction)purgeTileCache;
 -(NSInteger)diskCacheSize;
 -(int32_t)zoomLevel;

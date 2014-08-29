@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <MessageUI/MessageUI.h>
+
 #import <UIKit/UIKit.h>
 
 
@@ -13,4 +15,7 @@
 {
 	IBOutlet UITableViewCell	*	_sendMailCell;
 }
+
+-(void)applyChanges;
+
 @end

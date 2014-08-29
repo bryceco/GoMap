@@ -35,15 +35,14 @@
 -(IBAction)done:(id)sender
 {
 	// remove white space from subdomain list
-	NSMutableArray * a = [[tileServersField.text componentsSeparatedByString:@","] mutableCopy];
-	for ( NSInteger i = 0; i < a.count; ++i ) {
-		a[i] = [a[i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	NSMutableArray * subdomains = [[tileServersField.text componentsSeparatedByString:@","] mutableCopy];
+	for ( NSInteger i = 0; i < subdomains.count; ++i ) {
+		subdomains[i] = [subdomains[i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
-	NSString * tileServers = [a componentsJoinedByString:@","];
 
 	AerialService * service = [AerialService aerialWithName:[nameField.text	stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 																	url:[urlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-																servers:tileServers
+																subdomains:subdomains
 																maxZoom:[zoomField.text integerValue]];
 	self.completion(service);
 
