@@ -1660,7 +1660,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWu-pg-SAm">
-                                                    <rect key="frame" x="282" y="13" width="22" height="22"/>
+                                                    <rect key="frame" x="282" y="11" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="0EB-Rn-Kam"/>
                                                     </constraints>
@@ -1669,7 +1669,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rjc-g1-9Lh">
-                                                    <rect key="frame" x="114" y="13" width="162" height="21"/>
+                                                    <rect key="frame" x="114" y="11" width="162" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1677,8 +1677,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="rjc-g1-9Lh" firstAttribute="leading" secondItem="fkA-eM-zsE" secondAttribute="trailing" constant="-1" id="FEF-FZ-fSe"/>
-                                                <constraint firstAttribute="centerY" secondItem="rjc-g1-9Lh" secondAttribute="centerY" constant="-1.5" id="JEK-ZQ-p3f"/>
-                                                <constraint firstAttribute="centerY" secondItem="SWu-pg-SAm" secondAttribute="centerY" constant="-2" id="Rg0-FU-ubY"/>
+                                                <constraint firstAttribute="centerY" secondItem="rjc-g1-9Lh" secondAttribute="centerY" id="JEK-ZQ-p3f"/>
+                                                <constraint firstAttribute="centerY" secondItem="SWu-pg-SAm" secondAttribute="centerY" id="Rg0-FU-ubY"/>
                                                 <constraint firstAttribute="trailing" secondItem="SWu-pg-SAm" secondAttribute="trailing" constant="16" id="aSW-zx-iAL"/>
                                                 <constraint firstItem="SWu-pg-SAm" firstAttribute="leading" secondItem="rjc-g1-9Lh" secondAttribute="trailing" constant="6" id="dUY-rU-Rwy"/>
                                                 <constraint firstAttribute="centerY" secondItem="fkA-eM-zsE" secondAttribute="centerY" id="qPo-Xz-Brd"/>

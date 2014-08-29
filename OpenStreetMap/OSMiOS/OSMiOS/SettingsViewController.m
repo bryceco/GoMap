@@ -53,11 +53,11 @@ static const NSInteger RowMap[] = {
 {
 	[super viewWillAppear:animated];
 
+	MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
+
 	if ( [self isMovingToParentViewController] ) {
 		// becoming visible the first time
 		self.navigationController.navigationBarHidden = NO;
-
-		MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
 
 		NSInteger value = 0;
 		value |= mapView.editorLayer.hidden ? HIDE_EDITOR : 0;
@@ -75,7 +75,11 @@ static const NSInteger RowMap[] = {
 		[self setCustomAerialCellTitle];
 
 	} else {
+
 		// returning from child view
+		if ( mapView.customAerials.count == 0 ) {
+			[mapView.customAerials reset];
+		}
 
 		[self setCustomAerialCellTitle];
 	}
@@ -195,6 +199,7 @@ static const NSInteger RowMap[] = {
 	if ( [segue.destinationViewController isKindOfClass:[AerialListViewController class]] ) {
 		AerialListViewController * aerialList = segue.destinationViewController;
 		aerialList.settingsViewController = self;
+
 	}
 }
 

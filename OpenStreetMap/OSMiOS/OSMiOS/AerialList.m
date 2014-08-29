@@ -21,7 +21,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		_name = name ?: @"";
 		_url = url ?: @"";
 		_subdomains = subdomains;
-		_maxZoom = maxZoom ?: 21;
+		_maxZoom = (int32_t)maxZoom ?: 21;
 	}
 	return self;
 }

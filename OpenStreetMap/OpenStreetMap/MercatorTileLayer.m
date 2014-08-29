@@ -307,7 +307,10 @@ static inline int32_t modulus( int32_t a, int32_t n)
 }
 #endif
 
--(void)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY zoomLevel:(int32_t)zoomLevel completion:(void(^)(NSError * error))completion
+-(void)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY
+		   preferredZoom:(int32_t)preferredZoom
+			   zoomLevel:(int32_t)zoomLevel
+			  completion:(void(^)(NSError * error))completion
 {
 	int32_t tileModX = modulus( tileX, 1<<zoomLevel );
 	int32_t tileModY = modulus( tileY, 1<<zoomLevel );
@@ -402,11 +405,14 @@ static inline int32_t modulus( int32_t a, int32_t n)
 						[data writeToFile:cachePath atomically:YES];
 					});
 
-				} else if ( zoomLevel > 1 ) {
+				} else if ( zoomLevel > 1 && zoomLevel < preferredZoom - 3 ) {
 
 					// try to show tile at one zoom level higher
 					dispatch_async(dispatch_get_main_queue(), ^(void){
-						[self fetchTileForTileX:tileX>>1 tileY:tileY>>1 zoomLevel:zoomLevel-1 completion:completion];
+						[self fetchTileForTileX:tileX>>1 tileY:tileY>>1
+								  preferredZoom:preferredZoom
+									  zoomLevel:zoomLevel-1
+									 completion:completion];
 					});
 
 				} else {
@@ -473,7 +479,10 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {
 		for ( int32_t tileY = tileNorth; tileY < tileSouth; ++tileY ) {
 			[_mapView progressIncrement:NO];
-			[self fetchTileForTileX:tileX tileY:tileY zoomLevel:zoomLevel completion:^(NSError * error) {
+			[self fetchTileForTileX:tileX tileY:tileY
+					  preferredZoom:zoomLevel
+						  zoomLevel:zoomLevel
+						 completion:^(NSError * error) {
 				if ( error ) {
 					[_mapView presentError:error flash:YES];
 				}

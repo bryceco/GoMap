@@ -15,7 +15,7 @@
 @property (readonly) NSString	*	name;
 @property (readonly) NSString	*	url;
 @property (readonly) NSArray	*	subdomains;
-@property (readonly) NSInteger		maxZoom;
+@property (readonly) int32_t		maxZoom;
 @property (readonly) NSString	*	cacheName;
 @property (readonly) NSString	*	metadataUrl;
 @property (readonly) NSData		*	placeholderImage;
@@ -40,6 +40,7 @@
 
 -(void)load;
 -(void)save;
+-(void)reset;
 
 -(NSInteger)count;
 -(AerialService *)serviceAtIndex:(NSUInteger)index;
