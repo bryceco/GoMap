@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <sys/utsname.h>
 #import <CoreText/CoreText.h>
 
 #import "NSMutableArray+PartialSort.h"
@@ -725,6 +726,51 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 }
 
 #pragma mark Drawing
+
+-(BOOL)hasFastGraphics
+{
+	static BOOL isFast = YES;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		struct utsname systemInfo;
+		uname(&systemInfo);
+		NSString * name = [[NSString alloc] initWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+		NSDictionary * dict = @{
+							  @"i386"      :@"Simulator",
+							  @"iPod1,1"   :@"iPod Touch",      // (Original)
+							  @"iPod2,1"   :@"iPod Touch",      // (Second Generation)
+							  @"iPod3,1"   :@"iPod Touch",      // (Third Generation)
+							  @"iPod4,1"   :@"iPod Touch",      // (Fourth Generation)
+							  @"iPhone1,1" :@"iPhone",          // (Original)
+							  @"iPhone1,2" :@"iPhone",          // (3G)
+							  @"iPhone2,1" :@"iPhone",          // (3GS)
+							  @"iPad1,1"   :@"iPad",            // (Original)
+							  @"iPad2,1"   :@"iPad 2",          //
+							  @"iPad3,1"   :@"iPad",            // (3rd Generation)
+							  @"iPhone3,1" :@"iPhone 4",        //
+							  @"iPhone4,1" :@"iPhone 4S",       //
+//							  @"iPhone5,1" :@"iPhone 5",        // (model A1428, AT&T/Canada)
+//							  @"iPhone5,2" :@"iPhone 5",        // (model A1429, everything else)
+							  @"iPad3,3"   :@"iPad",            // (3rd Generation)
+//							  @"iPad3,4"   :@"iPad",            // (4th Generation)
+							  @"iPad2,5"   :@"iPad Mini",       // (Original)
+//							  @"iPhone5,3" :@"iPhone 5c",       // (model A1456, A1532 | GSM)
+//							  @"iPhone5,4" :@"iPhone 5c",       // (model A1507, A1516, A1526 (China), A1529 | Global)
+//							  @"iPhone6,1" :@"iPhone 5s",       // (model A1433, A1533 | GSM)
+//							  @"iPhone6,2" :@"iPhone 5s",       // (model A1457, A1518, A1528 (China), A1530 | Global)
+//							  @"iPad4,1"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Wifi
+//							  @"iPad4,2"   :@"iPad Air",        // 5th Generation iPad (iPad Air) - Cellular
+//							  @"iPad4,4"   :@"iPad Mini",       // (2nd Generation iPad Mini - Wifi)
+//							  @"iPad4,5"   :@"iPad Mini"        // (2nd Generation iPad Mini - Cellular)
+				};
+		NSString * value = [dict objectForKey:name];
+		if ( value.length > 0 ) {
+			isFast = NO;
+		}
+	});
+	return isFast;
+}
+
 
 -(BOOL)enableMapCss
 {
@@ -1483,9 +1529,6 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			CGPathRelease( path );
 			return NO;
 		}
-
-		CGContextBeginPath(ctx);
-		CGContextAddPath(ctx, path);
 		[CurvedTextLayer drawString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
 		CGPathRelease(path);
 
@@ -1850,8 +1893,8 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 #if TARGET_OS_IPHONE
-	NSInteger objectLimit = 100;
-	NSInteger nameLimit = 10;
+	NSInteger objectLimit	= [self hasFastGraphics] ? 100 : 50;
+	NSInteger nameLimit		= [self hasFastGraphics] ? 10 : 5;
 #else
 	NSInteger objectLimit = 500;
 	NSInteger nameLimit = 100;

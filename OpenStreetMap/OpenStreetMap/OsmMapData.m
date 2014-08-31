@@ -23,6 +23,7 @@
 #import "OsmObjects.h"
 #import "QuadMap.h"
 #import "UndoManager.h"
+#import "VectorMath.h"
 
 
 static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
@@ -543,9 +544,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			BOOL ok = [mapData parseXmlStream:agent.stream error:&error];
 			if ( !ok ) {
 				if ( agent.dataHeader.length ) {
-					// probably some html-encoded error message from the server
-					NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
-					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
+					// probably some html-encoded error message from the server, or if cancelled then the leading portion of the xml download
+					//NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
+					//error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
+					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"Data not available" }];
 				} else if ( agent.stream.streamError ) {
 					error = agent.stream.streamError;
 				} else if ( error ) {
@@ -585,29 +587,18 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		completion( activeRequests > 0, error );
 	};
 
-	// get list of new quads to fetch
-	NSArray * newQuads = [_region newQuadsForRect:box];
-
 	// check how much area we're trying to download, and if too large complain
 	NSError * error = nil;
-	double area = 0.0;
-	for ( QuadBox * qbox in newQuads ) {
-		area += qbox.rect.size.width * qbox.rect.size.height;
+	NSArray * newQuads = nil;
+	double area = SurfaceArea( box );
+	BOOL tooLarge = area > 10.0*1000*1000;	// square kilometer
+	if ( !tooLarge ) {
+		// get list of new quads to fetch
+		newQuads = [_region newQuadsForRect:box];
+	} else {
+		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : @"Edit download region is too large" }];
+		[[DownloadThreadPool osmPool] cancelAllDownloads];
 	}
-	if ( area > 0.25 ) {
-		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : @"The area for which you are attempting to download data is too large. Please zoom in or hide the Editor layer under Settings" }];
-		newQuads = nil;
-	}
-
-#if 0
-	{
-		CFTimeInterval t = CACurrentMediaTime();
-		[OsmMapData osmDataForUrl:@"http://api.openstreetmap.org/api/0.6/relation/2793848/full" quads:nil completion:^(ServerQuery * quads,OsmMapData * data,NSError * error2){
-			CFTimeInterval t2 = CACurrentMediaTime() - t;
-			DLog(@"%f",t2);
-		}];
-	}
-#endif
 
 	if ( newQuads.count == 0 ) {
 		++activeRequests;

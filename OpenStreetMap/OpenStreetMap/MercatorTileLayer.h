@@ -9,6 +9,7 @@
 #import "iosapi.h"
 #import <QuartzCore/QuartzCore.h> 
 
+@class AerialService;
 @class MapView;
 
 
@@ -21,9 +22,8 @@
 	NSMutableDictionary				*	_layerDict;
 }
 
-@property (strong,nonatomic) AerialService *		aerialService;
-
-@property (assign,nonatomic) MapView	*	mapView;
+@property (strong,nonatomic) AerialService	*	aerialService;
+@property (assign,nonatomic) MapView		*	mapView;
 
 -(id)initWithMapView:(MapView *)mapView;
 -(IBAction)purgeTileCache;

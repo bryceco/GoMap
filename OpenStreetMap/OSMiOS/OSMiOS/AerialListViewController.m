@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MercatorTileLayer.h"
 #import "AerialList.h"
 #import "AerialListViewController.h"
 #import "AerialEditViewController.h"
@@ -133,7 +134,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	MapView * mapView = appDelegate.mapView;
+
 	_aerials.currentIndex = indexPath.row;
+
+	_aerials = appDelegate.mapView.customAerials;
+	mapView.aerialLayer.aerialService = _aerials.currentAerial;
+
 #if 0
 	[self.navigationController popViewControllerAnimated:YES];
 #else

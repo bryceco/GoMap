@@ -164,11 +164,13 @@ CGFloat DistanceFromPointToLineSegment( OSMPoint point, OSMPoint line1, OSMPoint
 CGFloat DistanceFromLineToPoint( OSMPoint lineStart, OSMPoint lineDirection, OSMPoint point );
 OSMPoint IntersectionOfTwoVectors( OSMPoint p1, OSMPoint v1, OSMPoint p2, OSMPoint v2 );
 BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect );
+double SurfaceArea( OSMRect latLon );
 
 
-
-static inline OSMTransform WrapTransform( OSMTransform transform )
+static inline OSMTransform OSMTransformWrap256( OSMTransform transform )
 {
+	if ( transform.a == 0 )
+		return transform;
 	while ( transform.tx >= 128 * transform.a ) {
 		transform.tx -= 256 * transform.a;
 	}
@@ -189,6 +191,11 @@ static inline OSMTransform OSMTransformIdentity(void)
 	OSMTransform transform = { 0 };
 	transform.a = transform.d = 1.0;
 	return transform;
+}
+
+static inline BOOL OSMTransformEqual( OSMTransform t1, OSMTransform t2 )
+{
+	return memcmp( &t1, &t2, sizeof t1) == 0;
 }
 
 static inline OSMTransform OSMTransformTranslate( OSMTransform transform, double dx, double dy )

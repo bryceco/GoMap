@@ -72,6 +72,8 @@ CGSize SizeForImage( NSImage * image )
 @synthesize editorLayer			= _editorLayer;
 @synthesize trackingLocation	= _trackingLocation;
 @synthesize pushpinView			= _pushpinView;
+@synthesize viewState			= _viewState;
+
 
 #pragma mark initialization
 
@@ -153,7 +155,6 @@ CGSize SizeForImage( NSImage * image )
 		_rulerLayer.drawsAsynchronously	= YES;
 #endif
 
-
 #if !TARGET_OS_IPHONE
 		[self setFrame:frame];
 #endif
@@ -186,6 +187,11 @@ CGSize SizeForImage( NSImage * image )
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:[NSApplication sharedApplication]];
 #endif
 
+	_zoomToEditLabel.layer.cornerRadius = 5;
+	_zoomToEditLabel.layer.masksToBounds = YES;
+	_zoomToEditLabel.backgroundColor = [UIColor whiteColor];
+	_zoomToEditLabel.alpha = 0.5;
+
 #if TARGET_OS_IPHONE
 	_progressIndicator.color = NSColor.greenColor;
 #endif
@@ -206,16 +212,14 @@ CGSize SizeForImage( NSImage * image )
 								@"aerialVisible"	: @YES,
  								@"editorVisible"	: @YES,
 								@"mapnikVisible"	: @NO,
+								@"mapViewState"		: @(MAPVIEW_EDITORAERIAL),
 	 }];
 
 	// set up action button
 	_actionButton.hidden = YES;
 	[_actionButton addTarget:self.editorLayer action:@selector(actionButton:) forControlEvents:UIControlEventTouchUpInside];
 
-
-	self.aerialLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"aerialVisible"];
-	self.mapnikLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"mapnikVisible"];
-	self.editorLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"editorVisible"];
+	self.viewState = [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
 
 	[self updateBingButton];
 
@@ -253,6 +257,81 @@ CGSize SizeForImage( NSImage * image )
 	_editorLayer.textColor = _aerialLayer.hidden ? NSColor.blackColor : NSColor.whiteColor;
 }
 
+-(void)setViewStateOverride:(BOOL)override
+{
+	[self setViewState:_viewState override:override];
+}
+-(void)setViewState:(MapViewState)state
+{
+	[self setViewState:state override:_viewStateOverride];
+}
+
+static inline MapViewState StateFor(MapViewState state, BOOL override)
+{
+	if ( override && (state == MAPVIEW_EDITOR || state == MAPVIEW_EDITORAERIAL) )
+		return MAPVIEW_MAPNIK;
+	return state;
+}
+
+-(void)setViewState:(MapViewState)state override:(BOOL)override
+{
+	if ( _viewState == state && _viewStateOverride == override )
+		return;
+	bool wasMapnik = StateFor(_viewState,_viewStateOverride) == MAPVIEW_MAPNIK;
+	MapViewState state2 = StateFor( state, override );
+	_viewState = state;
+	_viewStateOverride = override;
+	if ( state2 == MAPVIEW_MAPNIK && wasMapnik )
+		return;
+
+	// enable/disable editing buttons based on visibility
+	[_viewController updateDeleteButtonState];
+	[_viewController updateUndoRedoButtonState];
+
+	switch (state2) {
+		case MAPVIEW_EDITOR:
+			_editorLayer.textColor = NSColor.blackColor;
+			_editorLayer.hidden = NO;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			break;
+		case MAPVIEW_EDITORAERIAL:
+			_editorLayer.textColor = NSColor.whiteColor;
+			_aerialLayer.aerialService = _customAerials.currentAerial;
+			_editorLayer.hidden = NO;
+			_aerialLayer.hidden = NO;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			break;
+		case MAPVIEW_AERIAL:
+			_aerialLayer.aerialService = _customAerials.currentAerial;
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = NO;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			break;
+		case MAPVIEW_MAPNIK:
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = NO;
+			_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
+			break;
+		case MAPVIEW_NONE:
+			// shouldn't occur
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = YES;
+			break;
+	}
+
+	[self updateBingButton];
+}
+-(MapViewState)viewState
+{
+	return _viewState;
+}
+
 - (BOOL)acceptsFirstResponder
 {
 	return YES;
@@ -286,9 +365,7 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setDouble:transform.tx forKey:@"translateX"];
 	[[NSUserDefaults standardUserDefaults] setDouble:transform.ty forKey:@"translateY"];
 
-	[[NSUserDefaults standardUserDefaults] setBool:!_aerialLayer.hidden forKey:@"aerialVisible"];
-	[[NSUserDefaults standardUserDefaults] setBool:!_mapnikLayer.hidden forKey:@"mapnikVisible"];
-	[[NSUserDefaults standardUserDefaults] setBool:!_editorLayer.hidden forKey:@"editorVisible"];
+	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState forKey:@"mapViewState"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -448,7 +525,7 @@ CGSize SizeForImage( NSImage * image )
 		}
 
 		if ( flash ) {
-			[self flashMessage:[NSString stringWithFormat:@"%@: %@",title,text] duration:0.9];
+			[self flashMessage:text duration:0.9];
 		} else {
 			_alertError = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:@"OK" otherButtonTitles:ignoreButton, nil];
 			[_alertError show];
@@ -479,7 +556,6 @@ CGSize SizeForImage( NSImage * image )
 	transform.d = zoom;
 	transform.tx = -(point.x - 128)*zoom;
 	transform.ty = -(point.y - 128)*zoom;
-	transform = WrapTransform(transform);
 	self.mapTransform = transform;
 }
 
@@ -492,7 +568,6 @@ CGSize SizeForImage( NSImage * image )
 	transform.d = zoom;
 	transform.tx = -(point.x - 128)*zoom;
 	transform.ty = -(point.y - 128)*zoom;
-	transform = WrapTransform(transform);
 	self.mapTransform = transform;
 }
 
@@ -916,26 +991,45 @@ CGSize SizeForImage( NSImage * image )
 #endif
 }
 
--(void)adjustOriginBy:(CGPoint)delta
+-(void)setMapTransform:(OSMTransform)mapTransform
 {
-	if ( delta.x == 0.0 && delta.y == 0.0 )
+	if ( OSMTransformEqual(mapTransform, _mapTransform) )
 		return;
 
 #if TARGET_OS_IPHONE
-	_pushpinView.arrowPoint = CGPointMake( _pushpinView.arrowPoint.x + delta.x, _pushpinView.arrowPoint.y - delta.y );
+	// save pushpinView coordinates
+	CLLocationCoordinate2D pp = { 0 };
+	if ( _pushpinView ) {
+		pp = [self longitudeLatitudeForViewPoint:_pushpinView.arrowPoint];
+	}
 #endif
 
-	{
-		OSMTransform transform = self.mapTransform;
-		CGFloat zoom = 1.0 / transform.a;
-		transform = OSMTransformTranslate( transform, delta.x*zoom, -delta.y*zoom );
-		transform = WrapTransform( transform );
-		self.mapTransform = transform;
-	}
+	// update transform
+	_mapTransform = mapTransform = OSMTransformWrap256( mapTransform );
+
+	// determine if we've zoomed out enough to disable editing
+	OSMRect box = [self viewportLongitudeLatitude];
+	double area = SurfaceArea( box );
+	self.viewStateOverride = area > 10.0*1000*1000;
 
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
+
+#if TARGET_OS_IPHONE
+	// update pushpin location
+	if ( _pushpinView ) {
+		_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
+	}
+#endif
+}
+
+-(void)adjustOriginBy:(CGPoint)delta
+{
+	if ( delta.x == 0.0 && delta.y == 0.0 )
+		return;
+	CGFloat zoom = 1.0 / _mapTransform.a;
+	self.mapTransform = OSMTransformTranslate( _mapTransform, delta.x*zoom, -delta.y*zoom );
 }
 
 
@@ -943,28 +1037,7 @@ CGSize SizeForImage( NSImage * image )
 {
 	if ( ratio == 1.0 )
 		return;
-
-#if TARGET_OS_IPHONE
-	// adjust pushpinView
-	CLLocationCoordinate2D pp = { 0 };
-	if ( _pushpinView ) {
-		pp = [self longitudeLatitudeForViewPoint:_pushpinView.arrowPoint];
-	}
-#endif
-
-	OSMTransform	transform = self.mapTransform;
-	transform = OSMTransformScale(transform, ratio);
-	self.mapTransform = transform;
-
-	[_rulerLayer updateDisplay];
-	[self updateMouseCoordinates];
-	[self updateUserLocationIndicator];
-
-#if TARGET_OS_IPHONE
-	if ( _pushpinView ) {
-		_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
-	}
-#endif
+	self.mapTransform = OSMTransformScale( _mapTransform, ratio );
 }
 
 -(void)drawRect:(CGRect)rect

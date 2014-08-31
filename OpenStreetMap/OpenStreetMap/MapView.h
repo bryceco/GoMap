@@ -39,6 +39,14 @@
 -(void)doubleClickSelection:(id)selection;
 @end
 
+typedef enum _MapViewState {
+	MAPVIEW_NONE = -1,
+	MAPVIEW_EDITOR,
+	MAPVIEW_EDITORAERIAL,
+	MAPVIEW_AERIAL,
+	MAPVIEW_MAPNIK,
+} MapViewState;
+
 #if TARGET_OS_IPHONE
 @interface MapView : UIView <CLLocationManagerDelegate>
 #else
@@ -66,7 +74,7 @@
 	BOOL								_userOverrodeLocationPosition;
 	BOOL								_userOverrodeLocationZoom;
 
-	id									_blinkObject;
+	id									_blinkObject;	// used for creating a moving dots animation during selection
 	NSInteger							_blinkSegment;
 	CAShapeLayer					*	_blinkLayer;
 
@@ -84,16 +92,20 @@
 	HtmlErrorWindow					*	_htmlErrorWindow;
 #endif
 
-	NSDate							*	_lastErrorDate;
+	NSDate							*	_lastErrorDate;		// to prevent spamming of error dialogs
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
 
-	NSTimer							*	_inertiaTimer;
+	NSTimer							*	_inertiaTimer;		// for adding inertia to map panning
 }
 
 #if TARGET_OS_IPHONE
 @property (assign,nonatomic)	MapViewController	*	viewController;
 @property (assign,nonatomic)	IBOutlet FpsLabel	*	fpsLabel;
+@property (assign,nonatomic)	IBOutlet UILabel	*	zoomToEditLabel;
 #endif
+
+@property (assign,nonatomic)	MapViewState			viewState;
+@property (assign,nonatomic)	BOOL					viewStateOverride;
 
 @property (assign,nonatomic)	IBOutlet UIButton	*	actionButton;
 
@@ -104,14 +116,14 @@
 @property (readonly,nonatomic)	EditorLayerGL		*	editorLayerGL;
 @property (readonly,nonatomic)	GpxLayer			*	gpxLayer;
 
-@property (weak,nonatomic)		NSObject<MapViewDelegate>		*	delegate;
-@property (strong,nonatomic)	CLLocationManager				*	locationManager;
-@property (readonly,nonatomic)	OSMRect								viewportLongitudeLatitude;
-@property (readonly,nonatomic)	CGFloat								mouseLongitude;
-@property (readonly,nonatomic)	CGFloat								mouseLatitude;
-@property (assign,nonatomic)	OSMTransform						mapTransform;
-@property (assign,nonatomic)	BOOL								trackingLocation;
-@property (readonly,nonatomic)	PushPinView						*	pushpinView;
+@property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
+@property (strong,nonatomic)	CLLocationManager			*	locationManager;
+@property (readonly,nonatomic)	OSMRect							viewportLongitudeLatitude;
+@property (readonly,nonatomic)	CGFloat							mouseLongitude;
+@property (readonly,nonatomic)	CGFloat							mouseLatitude;
+@property (assign,nonatomic)	OSMTransform					mapTransform;
+@property (assign,nonatomic)	BOOL							trackingLocation;
+@property (readonly,nonatomic)	PushPinView					*	pushpinView;
 
 @property (strong,nonatomic)	AerialList					*	customAerials;
 

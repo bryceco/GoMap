@@ -95,6 +95,7 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 		return;
 	}
 
+#if DEBUG
 	BOOL isCorrectChild = NO;
 	for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 		if ( self == _parent->_children[child] ) {
@@ -103,6 +104,7 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 		}
 	}
 	assert( isCorrectChild );
+#endif
 
 	if ( success ) {
 		_whole = YES;

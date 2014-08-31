@@ -14,6 +14,14 @@
 
 static NSString * g_UserAgent = nil;
 
+
+@interface CancelFlag : NSObject
+@property BOOL	cancel;
+@end
+@implementation CancelFlag
+@end
+
+
 typedef void (^dequeueBlock)(void);
 
 
@@ -23,9 +31,11 @@ typedef void (^dequeueBlock)(void);
 	NSURLConnection		*	_connection;
 	NSURLResponse		*	_response;
 
+	CancelFlag			*	_cancel;
+
 	void				(^	_partialCallback)(NSData *);
 	void				(^	_completionCallback)(NSURLResponse * response, NSError * error);
-	void				(^	_dequeue)(void);
+	dequeueBlock			_dequeue;
 
 	// stream interface
 	void				(^	_streamCallback)(DownloadAgent *);
@@ -49,6 +59,10 @@ typedef void (^dequeueBlock)(void);
 	return _dataHeader;
 }
 
+-(void)cancel
+{
+	_cancel.cancel = YES;
+}
 
 -(void)cleanupAndDealloc
 {
@@ -129,7 +143,6 @@ typedef void (^dequeueBlock)(void);
 			}
 		}];
 
-
 	_data = [NSMutableData data];
 	CFReadStreamRef		cfReadStream;
 	CFWriteStreamRef	cfWriteStream;
@@ -145,9 +158,10 @@ typedef void (^dequeueBlock)(void);
 	return self;
 }
 
--(void)startWithDequeue:(void(^)(void))dequeue
+-(void)startWithDequeue:(dequeueBlock)dequeue cancelFlag:(CancelFlag *)flag
 {
 	_dequeue = dequeue;
+	_cancel = flag;
 
 	assert( _partialCallback && _completionCallback );
 
@@ -157,7 +171,14 @@ typedef void (^dequeueBlock)(void);
 		});
 	}
 
-	[_connection start];
+	if ( _cancel.cancel ) {
+		[_connection cancel];
+		[_operationQueue addOperationWithBlock:^{
+			[self connection:_connection didFailWithError:[NSError errorWithDomain:@"HTTP" code:408 userInfo:@{ NSLocalizedDescriptionKey:@"Cancelled"}]];
+		}];
+	} else {
+		[_connection start];
+	}
 }
 
 #pragma mark Connection delegate methods
@@ -171,6 +192,10 @@ typedef void (^dequeueBlock)(void);
 {
 	assert( [NSOperationQueue currentQueue] == _operationQueue );
 	_partialCallback( data );
+	if ( _cancel.cancel ) {
+		[_connection cancel];
+		[self connection:_connection didFailWithError:[NSError errorWithDomain:@"HTTP" code:408 userInfo:@{ NSLocalizedDescriptionKey:@"Cancelled"}]];
+	}
 }
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
@@ -242,6 +267,7 @@ typedef void (^dequeueBlock)(void);
 		_maxConnections			= max;
 		_queue					= dispatch_queue_create("openstreetmap.DownloadQueue", DISPATCH_QUEUE_SERIAL );
 		_connectionSemaphore	= dispatch_semaphore_create( _maxConnections );
+		_cancelFlags			= [NSMutableSet new];
 	}
 	return self;
 }
@@ -274,20 +300,36 @@ typedef void (^dequeueBlock)(void);
 }
 
 
--(void)submitBlockToQueue:(void(^)(dequeueBlock))block
+-(void)submitBlockToQueue:(void(^)(CancelFlag *,dequeueBlock))block
 {
+	CancelFlag * flag = [CancelFlag new];
+	@synchronized(_cancelFlags) {
+		[_cancelFlags addObject:flag];
+	}
 	dispatch_async(_queue, ^{
 		dispatch_semaphore_wait( _connectionSemaphore, DISPATCH_TIME_FOREVER );
-		block( ^{
+		block( flag, ^{
 			dispatch_semaphore_signal( _connectionSemaphore );
+			@synchronized(_cancelFlags) {
+				[_cancelFlags removeObject:flag];
+			}
 		});
 	});
 }
 
 
+-(void)streamForUrl:(NSString *)url callback:(void(^)(DownloadAgent *))callback
+{
+	[self submitBlockToQueue:^(CancelFlag * flag,dequeueBlock dequeue){
+		DownloadAgent * download = [[DownloadAgent alloc] initWithURL:[NSURL URLWithString:url] streamCallback:callback];
+		[download startWithDequeue:dequeue cancelFlag:flag];
+	}];
+}
+
+
 -(void)dataForUrl:(NSString *)url partialCallback:(void(^)(NSData *))partialCallback completion:(void(^)(NSURLResponse * response, NSError * error))completion
 {
-	[self submitBlockToQueue:^(dequeueBlock dequeue){
+	[self submitBlockToQueue:^(CancelFlag * flag,dequeueBlock dequeue){
 		DownloadAgent * download = [[DownloadAgent alloc] initWithURL:[NSURL URLWithString:url]
 													  partialCallback:^( NSData * data ) {
 														  partialCallback( data );
@@ -295,19 +337,9 @@ typedef void (^dequeueBlock)(void);
 												   completionCallback:^( NSURLResponse * response, NSError * error ) {
 													   completion( response, error );
 												   }];
-		[download startWithDequeue:dequeue];
+		[download startWithDequeue:dequeue cancelFlag:flag];
 	}];
 }
-
-
--(void)streamForUrl:(NSString *)url callback:(void(^)(DownloadAgent *))callback
-{
-	[self submitBlockToQueue:^(dequeueBlock dequeue){
-		DownloadAgent * download = [[DownloadAgent alloc] initWithURL:[NSURL URLWithString:url] streamCallback:callback];
-		[download startWithDequeue:dequeue];
-	}];
-}
-
 
 -(void)dataForUrl:(NSString *)url completeOnMain:(BOOL)completeOnMain completion:(void(^)(NSData * data,NSError * error))completion
 {
@@ -349,6 +381,15 @@ typedef void (^dequeueBlock)(void);
 -(void)dataForUrl:(NSString *)url completion:(void(^)(NSData * data,NSError * error))completion
 {
 	[self dataForUrl:url completeOnMain:YES completion:completion];
+}
+
+-(void)cancelAllDownloads
+{
+	@synchronized(_cancelFlags) {
+		for ( CancelFlag * flag in _cancelFlags ) {
+			flag.cancel = YES;
+		}
+	}
 }
 
 @end

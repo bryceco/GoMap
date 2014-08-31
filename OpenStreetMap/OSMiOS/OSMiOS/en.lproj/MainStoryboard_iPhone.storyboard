@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Fx1-V2-8uJ">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
     </dependencies>
     <scenes>
@@ -136,6 +135,15 @@
                                         <color key="textColor" red="1" green="0.28449999999999998" blue="0.19" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoom to Edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N5Q-nV-TPG">
+                                        <rect key="frame" x="92" y="27" width="137" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="137" id="cmg-8A-dGP"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -159,7 +167,9 @@
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="trailing" secondItem="fss-Ag-fKJ" secondAttribute="trailing" id="lPN-o8-UjX"/>
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="o0n-ED-1vg"/>
                                     <constraint firstAttribute="trailing" secondItem="I03-YM-uHY" secondAttribute="trailing" constant="20" symbolic="YES" id="rel-sj-ohw"/>
+                                    <constraint firstAttribute="centerX" secondItem="N5Q-nV-TPG" secondAttribute="centerX" id="uqA-n8-R0J"/>
                                     <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="28" id="yVK-0X-myy"/>
+                                    <constraint firstItem="N5Q-nV-TPG" firstAttribute="top" secondItem="g4c-aL-FjW" secondAttribute="bottom" constant="7" id="zae-S9-XDQ"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="_bingMapsLogo" destination="2Ka-IT-DQC" id="y5a-cy-cWA"/>
@@ -167,6 +177,7 @@
                                     <outlet property="_progressIndicator" destination="Zh9-uC-62t" id="ITW-gB-RtP"/>
                                     <outlet property="actionButton" destination="1lZ-1f-E9O" id="bzI-qv-dm5"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
+                                    <outlet property="zoomToEditLabel" destination="N5Q-nV-TPG" id="Sfg-zh-7aq"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
                                 </connections>
                             </view>
@@ -228,7 +239,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1090" y="-182"/>
+            <point key="canvasLocation" x="-1148" y="-182"/>
         </scene>
         <!--Point of Interest-->
         <scene sceneID="gM4-dB-RnE">

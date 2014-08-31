@@ -164,3 +164,16 @@ BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect )
 
 	return YES;
 }
+
+// area in square meters
+double SurfaceArea( OSMRect latLon )
+{
+	// http://mathforum.org/library/drmath/view/63767.html
+	static const double EarthRadius = 6378137;
+	double lon1 = latLon.origin.x;
+	double lat1 = latLon.origin.y;
+	double lon2 = latLon.origin.x + latLon.size.width;
+	double lat2 = latLon.origin.y + latLon.size.height;
+	double A = M_PI*EarthRadius*EarthRadius * fabs(sin(lat1*(M_PI/180))-sin(lat2*(M_PI/180))) * fabs(lon1-lon2)/180;
+	return A;
+}

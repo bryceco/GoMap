@@ -31,19 +31,6 @@ static const NSInteger BACKGROUND_SECTION	= 0;
 
 @implementation SettingsViewController
 
-enum {
-	HIDE_EDITOR = 1,
-	HIDE_AERIAL = 2,
-	HIDE_MAPNIK = 4
-};
-
-static const NSInteger RowMap[] = {
-	HIDE_AERIAL | HIDE_MAPNIK,		// editor only
-	HIDE_MAPNIK,					// editor + aerial
-	HIDE_EDITOR | HIDE_MAPNIK,		// aerial only
-	HIDE_EDITOR | HIDE_AERIAL,		// mapnik only
-};
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -59,18 +46,9 @@ static const NSInteger RowMap[] = {
 		// becoming visible the first time
 		self.navigationController.navigationBarHidden = NO;
 
-		NSInteger value = 0;
-		value |= mapView.editorLayer.hidden ? HIDE_EDITOR : 0;
-		value |= mapView.aerialLayer.hidden ? HIDE_AERIAL : 0;
-		value |= mapView.mapnikLayer.hidden ? HIDE_MAPNIK : 0;
-		for ( NSInteger row = 0; row < sizeof RowMap/sizeof RowMap[0]; ++row ) {
-			if ( value == RowMap[row] ) {
-				NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:BACKGROUND_SECTION];
-				UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-				cell.accessoryType = UITableViewCellAccessoryCheckmark;
-				break;
-			}
-		}
+		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:mapView.viewState inSection:BACKGROUND_SECTION];
+		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 
 		[self setCustomAerialCellTitle];
 
@@ -98,23 +76,7 @@ static const NSInteger RowMap[] = {
 		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
 		if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
 			MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
-
-			// enable/disable editing buttons based on visibility
-			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-			[appDelegate.mapView.viewController updateDeleteButtonState];
-			[appDelegate.mapView.viewController updateUndoRedoButtonState];
-
-			// update aerial before setting hidden, because we are replacing the layer
-			mapView.aerialLayer.aerialService = mapView.customAerials.currentAerial;
-
-			mapView.editorLayer.textColor = mapView.aerialLayer.hidden ? NSColor.blackColor : NSColor.whiteColor;
-
-			NSInteger map = RowMap[ row ];
-			mapView.editorLayer.hidden = (map & HIDE_EDITOR) ? YES : NO;
-			mapView.aerialLayer.hidden = (map & HIDE_AERIAL) ? YES : NO;
-			mapView.mapnikLayer.hidden = (map & HIDE_MAPNIK) ? YES : NO;
-
-			[mapView updateBingButton];
+			mapView.viewState = (MapViewState)row;
 			break;
 		}
 	}
@@ -199,7 +161,6 @@ static const NSInteger RowMap[] = {
 	if ( [segue.destinationViewController isKindOfClass:[AerialListViewController class]] ) {
 		AerialListViewController * aerialList = segue.destinationViewController;
 		aerialList.settingsViewController = self;
-
 	}
 }
 
