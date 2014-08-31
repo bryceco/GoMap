@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Fx1-V2-8uJ">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
     </dependencies>
     <scenes>
@@ -2072,7 +2073,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArV-4u-j7D">
-                                <rect key="frame" x="20" y="182" width="280" height="21"/>
+                                <rect key="frame" x="20" y="185" width="83" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="83" id="EBE-NL-HTr"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -2105,8 +2109,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcE-yO-3eH">
-                                <rect key="frame" x="215" y="178" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcE-yO-3eH">
+                                <rect key="frame" x="231" y="179" width="30" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="uCD-Mx-dnE"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <state key="normal" title="Edit"/>
                                 <connections>
@@ -2114,7 +2121,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rqu-ny-n3F">
-                                <rect key="frame" x="269" y="177" width="31" height="32"/>
+                                <rect key="frame" x="269" y="179" width="31" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="31" id="rmd-V7-AmF"/>
                                 </constraints>
@@ -2136,16 +2143,21 @@
                             <constraint firstItem="ikj-u9-9Bn" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" id="8t6-SN-3gb"/>
                             <constraint firstItem="Plh-7W-ceY" firstAttribute="top" secondItem="8y4-eZ-NBP" secondAttribute="bottom" constant="32" id="8yc-d5-dCE"/>
                             <constraint firstItem="Plh-7W-ceY" firstAttribute="trailing" secondItem="Rqu-ny-n3F" secondAttribute="trailing" id="9xI-7y-n1e"/>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="centerY" secondItem="Rqu-ny-n3F" secondAttribute="centerY" constant="-0.5" id="Ctf-em-vgF"/>
                             <constraint firstItem="Plh-7W-ceY" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" id="EOT-P1-WgA"/>
+                            <constraint firstItem="hcE-yO-3eH" firstAttribute="centerY" secondItem="ArV-4u-j7D" secondAttribute="centerY" id="F6O-jM-uVV"/>
                             <constraint firstItem="9lK-gJ-spY" firstAttribute="top" secondItem="BAY-7z-hwv" secondAttribute="bottom" constant="20" id="J3o-wq-fUA"/>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="trailing" secondItem="Plh-7W-ceY" secondAttribute="trailing" id="Q0o-em-QPU"/>
                             <constraint firstItem="BAY-7z-hwv" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="34" id="QMD-tA-btW"/>
-                            <constraint firstItem="ArV-4u-j7D" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="8" id="eoK-yv-ldk"/>
+                            <constraint firstItem="hcE-yO-3eH" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="5" id="UbC-7P-NEw"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="5" id="e2h-BD-unh"/>
+                            <constraint firstItem="ArV-4u-j7D" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="11" id="eoK-yv-ldk"/>
+                            <constraint firstItem="hcE-yO-3eH" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="5" id="gaB-JE-bDl"/>
                             <constraint firstAttribute="centerX" secondItem="5dY-nN-L0Q" secondAttribute="centerX" constant="-0.5" id="h9Q-uE-hlJ"/>
+                            <constraint firstItem="Rqu-ny-n3F" firstAttribute="leading" secondItem="hcE-yO-3eH" secondAttribute="trailing" constant="8" id="kJc-ia-hSI"/>
+                            <constraint firstItem="ArV-4u-j7D" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="11" id="mpd-Mh-jcq"/>
                             <constraint firstAttribute="trailing" secondItem="ikj-u9-9Bn" secondAttribute="trailing" constant="20" id="nYc-nI-dCx"/>
                             <constraint firstAttribute="trailing" secondItem="BAY-7z-hwv" secondAttribute="trailing" constant="20" id="nZG-oD-c05"/>
                             <constraint firstItem="BAY-7z-hwv" firstAttribute="leading" secondItem="Hf4-uP-AC4" secondAttribute="leading" constant="20" id="xzQ-5Q-cXb"/>
+                            <constraint firstItem="hcE-yO-3eH" firstAttribute="centerY" secondItem="Rqu-ny-n3F" secondAttribute="centerY" id="yeu-fG-kZO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Upload" id="Mdj-M0-0mZ">
@@ -4222,7 +4234,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
     <inferredMetricsTieBreakers>
         <segue reference="OEI-9h-7td"/>
         <segue reference="222-H0-L76"/>
-        <segue reference="DvT-fe-8IR"/>
+        <segue reference="FTo-kL-oAC"/>
         <segue reference="KuK-gp-RBs"/>
     </inferredMetricsTieBreakers>
 </document>

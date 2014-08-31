@@ -207,7 +207,9 @@ const double MinIconSizeInMeters = 4.0;
 		if ( error ) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				// present error asynchrounously so we don't interrupt the current UI action
-				[_mapView presentError:error flash:YES];
+				if ( !self.hidden ) {	// if we've been hidden don't bother displaying errors
+					[_mapView presentError:error flash:YES];
+				}
 			});
 		} else {
 			[self setNeedsDisplay];

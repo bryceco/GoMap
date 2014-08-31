@@ -589,7 +589,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	// check how much area we're trying to download, and if too large complain
 	NSError * error = nil;
-#if 0
+#if 1
 	NSArray * newQuads = nil;
 	double area = SurfaceArea( box );
 	BOOL tooLarge = area > 10.0*1000*1000;	// square kilometer
