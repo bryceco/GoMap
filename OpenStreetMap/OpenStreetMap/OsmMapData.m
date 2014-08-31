@@ -589,6 +589,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	// check how much area we're trying to download, and if too large complain
 	NSError * error = nil;
+#if 0
 	NSArray * newQuads = nil;
 	double area = SurfaceArea( box );
 	BOOL tooLarge = area > 10.0*1000*1000;	// square kilometer
@@ -599,6 +600,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : @"Edit download region is too large" }];
 		[[DownloadThreadPool osmPool] cancelAllDownloads];
 	}
+#else
+	NSArray * newQuads = [_region newQuadsForRect:box];
+#endif
 
 	if ( newQuads.count == 0 ) {
 		++activeRequests;

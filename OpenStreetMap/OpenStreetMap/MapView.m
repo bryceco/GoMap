@@ -288,42 +288,47 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	[_viewController updateDeleteButtonState];
 	[_viewController updateUndoRedoButtonState];
 
-	switch (state2) {
-		case MAPVIEW_EDITOR:
-			_editorLayer.textColor = NSColor.blackColor;
-			_editorLayer.hidden = NO;
-			_aerialLayer.hidden = YES;
-			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
-			break;
-		case MAPVIEW_EDITORAERIAL:
-			_editorLayer.textColor = NSColor.whiteColor;
-			_aerialLayer.aerialService = _customAerials.currentAerial;
-			_editorLayer.hidden = NO;
-			_aerialLayer.hidden = NO;
-			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
-			break;
-		case MAPVIEW_AERIAL:
-			_aerialLayer.aerialService = _customAerials.currentAerial;
-			_editorLayer.hidden = YES;
-			_aerialLayer.hidden = NO;
-			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
-			break;
-		case MAPVIEW_MAPNIK:
-			_editorLayer.hidden = YES;
-			_aerialLayer.hidden = YES;
-			_mapnikLayer.hidden = NO;
-			_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
-			break;
-		case MAPVIEW_NONE:
-			// shouldn't occur
-			_editorLayer.hidden = YES;
-			_aerialLayer.hidden = YES;
-			_mapnikLayer.hidden = YES;
-			break;
-	}
+	dispatch_async(dispatch_get_main_queue(), ^{	// do this a little bit later so it can be animated
+		[CATransaction begin];
+		[CATransaction setAnimationDuration:0.5];
+		switch (state2) {
+			case MAPVIEW_EDITOR:
+				_editorLayer.textColor = NSColor.blackColor;
+				_editorLayer.hidden = NO;
+				_aerialLayer.hidden = YES;
+				_mapnikLayer.hidden = YES;
+				_zoomToEditLabel.hidden = YES;
+				break;
+			case MAPVIEW_EDITORAERIAL:
+				_editorLayer.textColor = NSColor.whiteColor;
+				_aerialLayer.aerialService = _customAerials.currentAerial;
+				_editorLayer.hidden = NO;
+				_aerialLayer.hidden = NO;
+				_mapnikLayer.hidden = YES;
+				_zoomToEditLabel.hidden = YES;
+				break;
+			case MAPVIEW_AERIAL:
+				_aerialLayer.aerialService = _customAerials.currentAerial;
+				_editorLayer.hidden = YES;
+				_aerialLayer.hidden = NO;
+				_mapnikLayer.hidden = YES;
+				_zoomToEditLabel.hidden = YES;
+				break;
+			case MAPVIEW_MAPNIK:
+				_editorLayer.hidden = YES;
+				_aerialLayer.hidden = YES;
+				_mapnikLayer.hidden = NO;
+				_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
+				break;
+			case MAPVIEW_NONE:
+				// shouldn't occur
+				_editorLayer.hidden = YES;
+				_aerialLayer.hidden = YES;
+				_mapnikLayer.hidden = YES;
+				break;
+		}
+		[CATransaction commit];
+	});
 
 	[self updateBingButton];
 }
