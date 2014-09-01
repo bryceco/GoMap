@@ -140,7 +140,7 @@ static const NSInteger BACKGROUND_SECTION	= 0;
 			[mail setMessageBody:body isHTML:NO];
 			[self.navigationController presentViewController:mail animated:YES completion:nil];
 		} else {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Cannot compose message" message:@"Mail delivery is not available on this device" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alert show];
 		}
 	}

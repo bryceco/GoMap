@@ -116,7 +116,7 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 	}
 #endif
 
-	[_undoManager registerUndoComment:@"Make Rectangular"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"Make Rectangular",nil)];
 
 	double epsilon = 1e-4;
 
@@ -309,7 +309,7 @@ static void step( OSMPoint points[], NSInteger count )
 	}
 
 	// apply new positions
-	[_undoManager registerUndoComment:@"Make Rectangular"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"Make Rectangular",nil)];
 
 	for ( NSInteger i = 0; i < way.nodes.count; ++i ) {
 		NSInteger modi = i < count ? i : 0;

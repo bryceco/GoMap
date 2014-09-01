@@ -42,21 +42,21 @@
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
-	_osmDetail.text = [NSString stringWithFormat:@"%ld objects", (long)objectCount];
-	_aerialDetail.text = @"computing size...";
-	_mapnikDetail.text = @"computing size...";
+	_osmDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
+	_aerialDetail.text = NSLocalizedString(@"computing size...",nil);
+	_mapnikDetail.text = NSLocalizedString(@"computing size...",nil);
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSInteger aerialSize = [appDelegate.mapView.aerialLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
-			_aerialDetail.text = [NSString stringWithFormat:@"%.2f MB", (double)aerialSize/(1024*1024)];
+			_aerialDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)aerialSize/(1024*1024)];
 		});
 	});
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSInteger mapnikSize = [appDelegate.mapView.mapnikLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
-			_mapnikDetail.text = [NSString stringWithFormat:@"%.2f MB", (double)mapnikSize/(1024*1024)];
+			_mapnikDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)mapnikSize/(1024*1024)];
 		});
 	});
 }
@@ -79,7 +79,7 @@
 	switch ( indexPath.row ) {
 		case 0:	// OSM
 			if ( [appDelegate.mapView.editorLayer.mapData changesetAsXml] ) {
-				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Purge", nil];
+				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning",nil) message:NSLocalizedString(@"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"Purge",nil), nil];
 				[alertView show];
 				return;
 			}

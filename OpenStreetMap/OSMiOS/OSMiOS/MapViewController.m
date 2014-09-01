@@ -97,7 +97,11 @@
 	[self installLongPressGestureRecognizer:NO];	// remove so we don't trigger twice during a long press
 #if 0 // enable GPX view
 	UIView * view = recognizer.view;
-	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"GPS Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Search for Location", @"Manage GPX Tracks", nil];
+	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"GPS Action",nil)
+														delegate:self
+											   cancelButtonTitle:NSLocalizedString(@"Cancel",nil)
+										  destructiveButtonTitle:nil
+											   otherButtonTitles:NSLocalizedString(@"Search for Location",nil), NSLocalizedString(@"Manage GPX Tracks",nil), nil];
 	[sheet showInView:view];
 #else
 	[self performSegueWithIdentifier:@"searchSegue" sender:recognizer];
@@ -127,7 +131,7 @@
 	
 	DLog(@"memory warning: %f MB used", MemoryUsedMB() );
 
-	[self.mapView flashMessage:@"Low memory: clearing cache"];
+	[self.mapView flashMessage:NSLocalizedString(@"Low memory: clearing cache",nil)];
 
 	[_mapView.editorLayer didReceiveMemoryWarning];
 }

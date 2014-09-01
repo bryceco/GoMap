@@ -48,7 +48,7 @@
 	if ( text == nil ) {
 		_commitButton.enabled = NO;
 		UIFont * font = [UIFont fontWithName:@"Helvetica" size:16];
-		_xmlTextView.attributedText = [[NSAttributedString alloc] initWithString:@"Nothing to upload, no changes have been made." attributes:@{ NSFontAttributeName : font }];
+		_xmlTextView.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Nothing to upload, no changes have been made.",nil) attributes:@{ NSFontAttributeName : font }];
 	} else {
 		_commitButton.enabled = YES;
 		_xmlTextView.attributedText = text;
@@ -101,7 +101,7 @@
 		[_commitButton setEnabled:YES];
 		[_cancelButton setEnabled:YES];
 		if ( error ) {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Unable to upload changes" message:error delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Unable to upload changes",nil) message:error delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alert show];
 		} else {
 			[self dismissViewControllerAnimated:YES completion:nil];
@@ -109,7 +109,7 @@
 			// flash success message
 			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC));
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-				[appDelegate.mapView flashMessage:@"Upload complete!" duration:1.5];
+				[appDelegate.mapView flashMessage:NSLocalizedString(@"Upload complete!",nil) duration:1.5];
 			});
 		}
 	};
@@ -121,7 +121,7 @@
 		NSError * error = nil;
 		NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
 		if ( error ) {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"XML Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"XML Error",nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alert show];
 			return;
 		}
@@ -148,7 +148,7 @@
 	_sendMailButton.enabled = NO;
 	_editXmlButton.enabled = NO;
 
-	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Edit XML" message:@"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Edit XML",nil) message:NSLocalizedString(@"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 	[alert show];
 }
 
@@ -164,7 +164,7 @@
 		[mail addAttachmentData:[xml dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"application/xml" fileName:@"osmChange.osc"];
 		[self presentViewController:mail animated:YES completion:nil];
 	} else {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Cannot compose message" message:@"Mail delivery is not available on this device" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 		[alert show];
 	}
 }

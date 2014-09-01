@@ -75,8 +75,8 @@ const CGFloat WayHighlightRadius = 6.0;
 		//DLog(@"Load time = %f seconds",delta);
 #if TARGET_OS_IPHONE
 		if ( _mapData && delta > 5.0 ) {
-			NSString * text = @"Your OSM data cache is getting large, which may lead to slow startup and shutdown times. You may want to clear the cache (under Settings) to improve performance.";
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Cache size warning" message:text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times. You may want to clear the cache (under Settings) to improve performance.",nil);
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alertView show];
 		}
 #endif
@@ -2255,17 +2255,7 @@ enum {
 	ACTION_COPYTAGS,
 	ACTION_PASTETAGS,
 };
-static NSString * ActionTitle[] = {
-	@"Split",
-	@"Make Rectangular",
-	@"Straighten",
-	@"Reverse",
-	@"Duplicate",
-	@"Join",
-	@"Disconnect",
-	@"Copy Tags",
-	@"Paste Tags",
-};
+static NSArray * ActionTitle;
 
 - (void)updateActionButton
 {
@@ -2273,6 +2263,20 @@ static NSString * ActionTitle[] = {
 }
 - (void)actionButton:(id)sender
 {
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		ActionTitle = @[
+			NSLocalizedString(@"Split",nil),
+			NSLocalizedString(@"Make Rectangular",nil),
+			NSLocalizedString(@"Straighten",nil),
+			NSLocalizedString(@"Reverse",nil),
+			NSLocalizedString(@"Duplicate",nil),
+			NSLocalizedString(@"Join",nil),
+			NSLocalizedString(@"Disconnect",nil),
+			NSLocalizedString(@"Copy Tags",nil),
+			NSLocalizedString(@"Paste Tags",nil),
+		];
+	});
 	_actionSheet = nil;
 	_actionList = nil;
 	if ( _selectedRelation ) {
@@ -2309,12 +2313,12 @@ static NSString * ActionTitle[] = {
 		// nothing selected
 		return;
 	}
-	_actionSheet = [[UIActionSheet alloc] initWithTitle:@"Perform Action" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	_actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Perform Action",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 	for ( NSNumber * value in _actionList ) {
 		NSString * title = ActionTitle[ value.integerValue ];
 		[_actionSheet addButtonWithTitle:title];
 	}
-	_actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:@"Cancel"];
+	_actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
 
 	[_actionSheet showFromRect:self.mapView.actionButton.frame inView:self.mapView animated:YES];
 }
@@ -2329,44 +2333,44 @@ static NSString * ActionTitle[] = {
 	switch (action) {
 		case ACTION_COPYTAGS:
 			if ( ! [self copyTags:self.selectedPrimary] )
-				error = @"The object does contain any tags";
+				error = NSLocalizedString(@"The object does contain any tags",nil);
 			break;
 		case ACTION_PASTETAGS:
 			if ( ! [self pasteTags:self.selectedPrimary] )
-				error = @"No tags to paste";
+				error = NSLocalizedString(@"No tags to paste",nil);
 			break;
 		case ACTION_DUPLICATE:
-			error = @"Not implemented";
+			error = NSLocalizedString(@"Not implemented",nil);
 			break;
 		case ACTION_RECT:
 			if ( ! [self.mapData orthogonalizeWay:self.selectedWay] )
-				error = @"The way is not sufficiently rectangular";
+				error = NSLocalizedString(@"The way is not sufficiently rectangular",nil);
 			break;
 		case ACTION_REVERSE:
 			if ( ![self.mapData reverseWay:self.selectedWay] )
-				error = @"Cannot reverse way";
+				error = NSLocalizedString(@"Cannot reverse way",nil);
 			break;
 		case ACTION_JOIN:
 			if ( ![self.mapData joinWay:self.selectedWay atNode:self.selectedNode] )
-				error = @"Cannot join selection";
+				error = NSLocalizedString(@"Cannot join selection",nil);
 			break;
 		case ACTION_DISCONNECT:
 			if ( ! [self.mapData disconnectWay:self.selectedWay atNode:self.selectedNode] )
-				error = @"Cannot disconnect way";
+				error = NSLocalizedString(@"Cannot disconnect way",nil);
 			break;
 		case ACTION_SPLIT:
 			if ( ! [self.mapData splitWay:self.selectedWay atNode:self.selectedNode] )
-				error = @"Cannot split way";
+				error = NSLocalizedString(@"Cannot split way",nil);
 			break;
 		case ACTION_STRAIGHTEN:
 			if ( ! [self.mapData straightenWay:self.selectedWay] )
-				error = @"The way is not sufficiently straight";
+				error = NSLocalizedString(@"The way is not sufficiently straight",nil);
 			break;
 		default:
 			break;
 	}
 	if ( error ) {
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil, nil];
 		[alertView show];
 	}
 

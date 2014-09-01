@@ -58,7 +58,7 @@
 	[appDelegate.mapView.editorLayer.mapData verifyUserCredentialsWithCompletion:^(NSString * errorMessage){
 		[_activityIndicator stopAnimating];
 		if ( errorMessage ) {
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Bad login" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Bad login",nil) message:errorMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alertView show];
 		} else {
 			// verifying credentials may update the appDelegate values when we subsitute name for correct case:
@@ -66,7 +66,7 @@
 			_password.text	= appDelegate.userPassword;
 			[_username resignFirstResponder];
 			[_password resignFirstResponder];
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Login successful" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login successful",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			alertView.delegate = self;
 			[alertView show];
 		}

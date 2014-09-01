@@ -52,7 +52,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( _isTopLevel ) {
-		return section == 0 ? @"Most recent" : @"All choices";
+		return section == 0 ? NSLocalizedString(@"Most recent",nil) : NSLocalizedString(@"All choices",nil);
 	} else {
 		return nil;
 	}
@@ -213,7 +213,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 -(IBAction)configure:(id)sender
 {
-	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Show Recent Items" message:@"Number of recent items to display" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Show Recent Items",nil) message:NSLocalizedString(@"Number of recent items to display",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"OK",nil), nil];
 	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
 	UITextField * textField = [alert textFieldAtIndex:0];
 	[textField setKeyboardType:UIKeyboardTypeNumberPad];

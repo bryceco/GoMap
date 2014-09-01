@@ -364,7 +364,7 @@ static int token;
 		self.rules = ruleList;
 	}
 	@catch ( NSString * expected ) {
-		expected = [NSString stringWithFormat:@"MapCSS parse error: expected '%@' at line %d, found '%s'", expected, yylineno, yytext];
+		expected = [NSString stringWithFormat:NSLocalizedString(@"MapCSS parse error: expected '%@' at line %d, found '%s'",nil), expected, yylineno, yytext];
 		*error = [NSError errorWithDomain:@"MapCSSParser" code:200 userInfo:@{ NSLocalizedDescriptionKey : expected}];
 		self.rules = nil;
 	}

@@ -454,8 +454,8 @@
 		02E626701997168800565D62 /* KeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E6266F1997168800565D62 /* KeyChain.m */; };
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
 		02E8436519B39FAD0044AC1D /* Notes.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* Notes.m */; };
-		02E8436819B3AF7A0044AC1D /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436719B3AF7A0044AC1D /* XMLReader.m */; };
 		02E8436F19B407C40044AC1D /* WebPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E8436E19B407C40044AC1D /* WebPageView.xib */; };
+		02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02E8437E19B4DE510044AC1D /* Localizable.strings */; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
 		02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F371B316A4F3E6003E9548 /* HelpViewController.m */; };
 		02F373F916822C2C004614D4 /* UploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F373F816822C2C004614D4 /* UploadViewController.m */; };
@@ -596,7 +596,6 @@
 		02ACBA4516713CCB00BB4414 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		02ACBA4716713CCB00BB4414 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		02ACBA4916713CCB00BB4414 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		02ACBA4C16713CCB00BB4414 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		02ACBA5116713CCB00BB4414 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		02ACBA5216713CCB00BB4414 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		02ACBA5816713CCB00BB4414 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -980,9 +979,12 @@
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
 		02E8436319B39FAD0044AC1D /* Notes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notes.h; path = ../../OpenStreetMap/Notes.h; sourceTree = "<group>"; };
 		02E8436419B39FAD0044AC1D /* Notes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notes.m; path = ../../OpenStreetMap/Notes.m; sourceTree = "<group>"; };
-		02E8436619B3AF7A0044AC1D /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = ../../OpenStreetMap/XMLReader.h; sourceTree = "<group>"; };
-		02E8436719B3AF7A0044AC1D /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = ../../OpenStreetMap/XMLReader.m; sourceTree = "<group>"; };
 		02E8436E19B407C40044AC1D /* WebPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPageView.xib; sourceTree = "<group>"; };
+		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		02E8437A19B4DDB30044AC1D /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainStoryboard_iPhone.strings"; sourceTree = "<group>"; };
+		02E8437B19B4DDB30044AC1D /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		02E8437D19B4DE510044AC1D /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		02E8438219B4DF960044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		02F371B216A4F3E6003E9548 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		02F371B316A4F3E6003E9548 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
@@ -1209,6 +1211,7 @@
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
+				02E8437E19B4DE510044AC1D /* Localizable.strings */,
 			);
 			name = "Go Map!";
 			path = OSMiOS;
@@ -1543,8 +1546,6 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				02E8436619B3AF7A0044AC1D /* XMLReader.h */,
-				02E8436719B3AF7A0044AC1D /* XMLReader.m */,
 				02C3C73819A6DCEA003B6783 /* AerialList.h */,
 				02C3C73919A6DCEA003B6783 /* AerialList.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
@@ -1696,6 +1697,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
+				"zh-Hant",
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
@@ -1717,6 +1720,7 @@
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard in Resources */,
+				02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */,
 				02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */,
 				02ACBBC016713F2B00BB4414 /* BlueBall.png in Resources */,
 				02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */,
@@ -2147,7 +2151,6 @@
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
 				020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
-				02E8436819B3AF7A0044AC1D /* XMLReader.m in Sources */,
 				02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,
@@ -2175,6 +2178,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				02ACBA3D16713CCB00BB4414 /* en */,
+				02E8437B19B4DDB30044AC1D /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2182,9 +2186,19 @@
 		02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				02ACBA4C16713CCB00BB4414 /* en */,
+				02E8437919B4DD730044AC1D /* Base */,
+				02E8437A19B4DDB30044AC1D /* zh-Hant */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		02E8437E19B4DE510044AC1D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02E8437D19B4DE510044AC1D /* zh-Hant */,
+				02E8438219B4DF960044AC1D /* Base */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

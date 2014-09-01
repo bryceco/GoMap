@@ -81,12 +81,12 @@
 			}];
 
 			NSString * text = [attrList componentsJoinedByString:@"\n\n• "];
-			self.textView.text = [NSString stringWithFormat:@"Background imagery %@", text];
+			self.textView.text = [NSString stringWithFormat:NSLocalizedString(@"Background imagery %@",nil), text];
 
 		} else if ( error ) {
-			self.textView.text = [NSString stringWithFormat:@"Error fetching metadata: %@", error.localizedDescription];
+			self.textView.text = [NSString stringWithFormat:NSLocalizedString(@"Error fetching metadata: %@",nil), error.localizedDescription];
 		} else {
-			self.textView.text = @"An unknown error occurred fetching metadata";
+			self.textView.text = NSLocalizedString(@"An unknown error occurred fetching metadata",nil);
 		}
 	}];
 }

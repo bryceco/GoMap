@@ -44,9 +44,9 @@
 {
 	switch ( section ) {
 		case 0:
-			return @"Style";
+			return NSLocalizedString(@"Style",nil);
 		case 1:
-			return @"Ethnicity";
+			return NSLocalizedString(@"Ethnicity",nil);
 	}
 	return nil;
 }

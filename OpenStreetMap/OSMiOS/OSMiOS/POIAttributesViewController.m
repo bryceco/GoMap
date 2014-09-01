@@ -36,7 +36,7 @@
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 
 	if ( object ) {
-		self.title				= [NSString stringWithFormat:@"%@ Attributes", object.isNode ? @"Node" : object.isWay ? @"Way" : object.isRelation ? @"Relation" : @""];
+		self.title				= [NSString stringWithFormat:NSLocalizedString(@"%@ Attributes",nil), object.isNode ? NSLocalizedString(@"Node",nil) : object.isWay ? NSLocalizedString(@"Way",nil) : object.isRelation ? NSLocalizedString(@"Relation",nil) : @""];
 		_identLabel.text		= object.ident.stringValue;
 		_userLabel.text			= object.user;
 		_uidLabel.text			= @(object.uid).stringValue;
@@ -44,7 +44,7 @@
 		_versionLabel.text		= @(object.version).stringValue;
 		_changesetLabel.text	= @(object.changeset).stringValue;
 	} else {
-		self.title				= @"No Object Selected";
+		self.title				= NSLocalizedString(@"No Object Selected",nil);
 		_identLabel.text		= nil;
 		_userLabel.text			= nil;
 		_uidLabel.text			= nil;
@@ -62,13 +62,13 @@
 
 	if ( object.isNode ) {
 		OsmNode * node = (id)object;
-		_extraCell1.title.text = @"Latitude";
-		_extraCell2.title.text = @"Longitude";
+		_extraCell1.title.text = NSLocalizedString(@"Latitude",nil);
+		_extraCell2.title.text = NSLocalizedString(@"Longitude",nil);
 		_extraCell1.value.text = @(node.lat).stringValue;
 		_extraCell2.value.text = @(node.lon).stringValue;
 	} else if ( object.isWay ) {
 		OsmWay * way = (id)object;
-		_extraCell1.title.text = @"Nodes";
+		_extraCell1.title.text = NSLocalizedString(@"Nodes",nil);
 		_extraCell1.value.text = @(way.nodeSet.count).stringValue;
 		_extraCell2.title.text = nil;
 		_extraCell2.value.text = nil;
@@ -121,14 +121,14 @@
 			web.title = type.capitalizedString;
 			web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@", type, object.ident];
 		} else if ( cell == _userCell ) {
-			web.title = @"User";
+			web.title = NSLocalizedString(@"User",nil);
 			web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/user/%@", object.user];
 		} else if ( cell == _versionCell ) {
-			web.title = @"History";
+			web.title = NSLocalizedString(@"History",nil);
 			NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
 			web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@/history", type, object.ident];
 		} else if ( cell == _changesetCell ) {
-			web.title = @"Changeset";
+			web.title = NSLocalizedString(@"Changeset",nil);
 			web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/changeset/%ld", (long)object.changeset];
 		} else {
 			assert( NO );

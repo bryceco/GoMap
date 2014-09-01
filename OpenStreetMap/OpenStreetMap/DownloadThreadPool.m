@@ -174,7 +174,7 @@ typedef void (^dequeueBlock)(void);
 	if ( _cancel.cancel ) {
 		[_connection cancel];
 		[_operationQueue addOperationWithBlock:^{
-			[self connection:_connection didFailWithError:[NSError errorWithDomain:@"HTTP" code:408 userInfo:@{ NSLocalizedDescriptionKey:@"Cancelled"}]];
+			[self connection:_connection didFailWithError:[NSError errorWithDomain:@"HTTP" code:408 userInfo:@{ NSLocalizedDescriptionKey:NSLocalizedString(@"Cancelled",nil)}]];
 		}];
 	} else {
 		[_connection start];

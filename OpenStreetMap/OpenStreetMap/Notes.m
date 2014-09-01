@@ -13,7 +13,6 @@
 #import "DownloadThreadPool.h"
 #import "Notes.h"
 #import "OsmMapData.h"
-#import "XMLReader.h"
 
 @implementation OsmNoteComment
 -(instancetype)initWithXml:(NSXMLElement *)noteElement
@@ -23,6 +22,8 @@
 		for ( NSXMLElement * child in noteElement.children ) {
 			if ( [child.name isEqualToString:@"date"] ) {
 				_date = child.stringValue;
+			} else if ( [child.name isEqualToString:@"user"] ) {
+				_user = child.stringValue;
 			} else if ( [child.name isEqualToString:@"action"] ) {
 				_action = child.stringValue;
 			} else if ( [child.name isEqualToString:@"text"] ) {
@@ -81,7 +82,6 @@
 
 -(void)updateForRegion:(OSMRect)box completion:(void(^)(void))completion
 {
-#if 0
 	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?closed=0&bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
 	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:YES completion:^(NSData *data, NSError *error) {
 		if ( data && error == nil ) {
@@ -91,33 +91,14 @@
 			NSLog( @"%@", text);
 
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
-				double		lat			= [noteElement attributeForName:@"lat"].stringValue.doubleValue;
-				double		lon			= [noteElement attributeForName:@"lon"].stringValue.doubleValue;
-				OsmNote * newNote = [[OsmNote alloc] initWithLat:lat lon:lon ident:-1];
-				for ( NSXMLElement * child in noteElement.children ) {
-					if ( [child.name isEqualToString:@"id"] ) {
-						newNote.ident = child.stringValue.integerValue;
-					} else 
+				OsmNote * note = [[OsmNote alloc] initWithXml:noteElement];
+				if ( note ) {
+					[_list addObject:note];
 				}
-
-				NSArray * a = [element nodesForXPath:@"./id" error:nil];
-				if ( a.count == 0 )
-					continue;
-				NSInteger	ident = ((NSXMLElement *)a.lastObject).stringValue.integerValue;
-				if ( ident == 0 )
-					continue;
-				for ( NSXMLElement * c in [element nodesForXPath:@"./comments/comment" error:nil] ) {
-#if 0
-					NSString * text =
-					[newNote.comments addObject:text];
-#endif
-				}
-
 			}
 		}
 		completion();
 	}];
-#endif
 }
 
 -(NSArray *)notesInRegion:(OSMRect)box

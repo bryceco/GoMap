@@ -371,13 +371,13 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 
 	if ( self.isNode && ((OsmNode *)self).wayCount > 0 )
-		return @"(node in way)";
+		return NSLocalizedString(@"(node in way)",nil);
 
 	if ( self.isNode )
-		return @"(node)";
+		return NSLocalizedString(@"(node)",nil);
 
 	if ( self.isWay )
-		return @"(way)";
+		return NSLocalizedString(@"(way)",nil);
 
 	if ( self.isRelation ) {
 		OsmRelation * relation = (id)self;
@@ -387,13 +387,13 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			if ( name.length ) {
 				return [NSString stringWithFormat:@"%@ (%@)", type, name];
 			} else {
-				return [NSString stringWithFormat:@"%@ (relation)",type];
+				return [NSString stringWithFormat:NSLocalizedString(@"%@ (relation)",nil),type];
 			}
 		}
-		return [NSString stringWithFormat:@"(relation %@)", self.ident];
+		return [NSString stringWithFormat:NSLocalizedString(@"(relation %@)",nil), self.ident];
 	}
 
-	return @"other object";
+	return NSLocalizedString(@"other object",nil);
 }
 
 

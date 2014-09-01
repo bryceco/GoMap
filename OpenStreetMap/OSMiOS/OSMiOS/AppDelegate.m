@@ -73,7 +73,7 @@
 	double delayInSeconds = 0.1;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Open URL" message:@"Sorry, importing GPX isn't implemented yet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL",nil) message:NSLocalizedString((@"Sorry, importing GPX isn't implemented yet",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 		[alertView show];
 	});
 

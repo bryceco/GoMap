@@ -51,7 +51,7 @@
 	OsmUserStatistics * stats = _mappers[ indexPath.row ];
 	cell.textLabel.text = stats.user;
 	NSString * date = [NSDateFormatter localizedStringFromDate:stats.lastEdit dateStyle:NSDateFormatterMediumStyle timeStyle:kCFDateFormatterNoStyle];
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld edits, last active %@", (long)stats.editCount, date];
+	cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld edits, last active %@",nil), (long)stats.editCount, date];
 
     return cell;
 }
@@ -66,7 +66,7 @@
 	NSString * user = stats.user;
 
 	WebPageViewController * web = segue.destinationViewController;
-	web.title = @"User";
+	web.title = NSLocalizedString(@"User",nil);
 	web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/user/%@", user];
 
 	[super prepareForSegue:segue sender:sender];

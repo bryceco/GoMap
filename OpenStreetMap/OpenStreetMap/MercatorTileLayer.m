@@ -382,7 +382,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 				if ( error ) {
 					data = nil;
 				} else if ( [self isPlaceholderImage:data] ) {
-					error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"No image data at current zoom level",
+					error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"No image data at current zoom level",nil),
 																								@"Ignorable" : @(YES)}];
 				} else {
 					image = [[NSImage alloc] initWithData:data];
@@ -429,7 +429,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 							}
 						}
 						if ( text.length < 5 ) {
-							text = @"No image data available";
+							text = NSLocalizedString(@"No image data available",nil);
 						}
 						error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{NSLocalizedDescriptionKey:text}];
 					}

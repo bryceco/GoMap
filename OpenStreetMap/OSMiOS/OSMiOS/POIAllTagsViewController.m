@@ -122,11 +122,11 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( section == 0 ) {
-		return @"Tags";
+		return NSLocalizedString(@"Tags",nil);
 	} else if ( section == 1 ) {
-		return @"Relations";
+		return NSLocalizedString(@"Relations",nil);
 	} else {
-		return @"Members";
+		return NSLocalizedString(@"Members",nil);
 	}
 }
 
@@ -322,7 +322,7 @@
 	self.navigationItem.rightBarButtonItem.enabled = !editing && [tabController isTagDictChanged];
 	[self.tableView setEditing:editing animated:YES];
 	UIBarButtonItem * button = sender;
-	button.title = editing ? @"Done" : @"Edit";
+	button.title = editing ? NSLocalizedString(@"Done",nil) : NSLocalizedString(@"Edit",nil);
 	button.style = editing ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
 }
 
@@ -406,7 +406,7 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSMutableDictionary * dict = [self keyValueDictionary];
 	if ( [tabController isTagDictChanged:dict] ) {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Object modified" message:@"You must save or discard changes to the current object before editing its associated relation" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Object modified",nil) message:NSLocalizedString(@"You must save or discard changes to the current object before editing its associated relation",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Okay",nil) otherButtonTitles:nil];
 		[alert show];
 		return NO;
 	}

@@ -55,7 +55,7 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
 	[_activityIndicator stopAnimating];
-	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error loading web page" message:error.localizedDescription delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error loading web page",nil) message:error.localizedDescription delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 	[alert show];
 }
 
@@ -72,7 +72,7 @@
 				[mail setMessageBody:self.url isHTML:NO];
 				[self.navigationController presentViewController:mail animated:YES completion:nil];
 			} else {
-				UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Cannot compose message" message:@"Mail delivery is not available on this device" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 				[alert show];
 			}
 			break;
@@ -95,7 +95,7 @@
 
 - (IBAction)doAction:(id)sender
 {
-	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mail", @"Open in Safari", nil];
+	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Action",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Mail",nil), NSLocalizedString(@"Open in Safari",nil), nil];
 	[sheet showFromBarButtonItem:_actionButton animated:YES];
 }
 

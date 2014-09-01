@@ -163,7 +163,7 @@ CGSize SizeForImage( NSImage * image )
 
 #if TARGET_OS_IPHONE
 		_editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSArray * comments){
-			NSString * title = undo ? @"Undo" : @"Redo";
+			NSString * title = undo ? NSLocalizedString(@"Undo",nil) : NSLocalizedString(@"Redo",nil);
 			NSArray * comment = comments.count == 0 ? nil : undo ? comments.lastObject : comments[0];
 			NSString * action = comment[0];
 			NSData * location = comment[1];
@@ -502,21 +502,9 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 			// present HTML error code
 			WebPageViewController * webController = [[WebPageViewController alloc] initWithNibName:@"WebPageView" bundle:nil];
 			[webController view];
-			[[webController.navBar.items lastObject] setTitle:@"Download Error"];
+			[[webController.navBar.items lastObject] setTitle:NSLocalizedString(@"Error",nil)];
 			[webController.webView loadHTMLString:error.localizedDescription baseURL:nil];
 			[self.viewController presentViewController:webController animated:YES completion:nil];
-#if 0
-			UIViewController * viewController = [UIViewController new];
-			UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-			UIWebView * webview = [UIWebView new];
-			viewController.view = webview;
-			viewController.navigationItem.title = @"Not found";
-			[navController dismissViewControllerAnimated:YES completion:nil];
-			viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:navController action:@selector(popViewControllerAnimated:)];
-			[webview loadHTMLString:error.localizedDescription baseURL:nil];
-			[self.viewController presentViewController:navController animated:YES completion:nil];
-			[self.viewController dismissViewControllerAnimated:YES completion:nil];
-#endif
 			_lastErrorDate = [NSDate date];
 			return;
 		}
@@ -529,7 +517,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 
 #if TARGET_OS_IPHONE
 		BOOL isNetworkError = NO;
-		NSString * title = @"Error";
+		NSString * title = NSLocalizedString(@"Error",nil);
 		NSString * ignoreButton = nil;
 		if ( [[error userInfo] valueForKey:@"NSErrorFailingURLKey"] )
 			isNetworkError = YES;
@@ -543,8 +531,8 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 				_ignoreNetworkErrorsUntilDate = nil;
 			if ( _ignoreNetworkErrorsUntilDate )
 				return;
-			title = @"Network error";
-			ignoreButton = @"Ignore";
+			title = NSLocalizedString(@"Network error",nil);
+			ignoreButton = NSLocalizedString(@"Ignore",nil);
 		}
 
 		// don't let message be too long
@@ -558,7 +546,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		if ( flash ) {
 			[self flashMessage:text duration:0.9];
 		} else {
-			_alertError = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:@"OK" otherButtonTitles:ignoreButton, nil];
+			_alertError = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:ignoreButton, nil];
 			[_alertError show];
 		}
 #else
@@ -788,8 +776,8 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 	if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
 		NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-		NSString * title = [NSString stringWithFormat:@"Turn On Location Services to Allow %@ to Determine Your Location",appName];
-		_alertGps = [[UIAlertView alloc] initWithTitle:title message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+		_alertGps = [[UIAlertView alloc] initWithTitle:title message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 		[_alertGps show];
 		self.trackingLocation = NO;
 		return;
@@ -825,9 +813,9 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		self.mapTransform = transform;
 	}
 
-	NSString * text = [NSString stringWithFormat:@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",
-					   error ? error.localizedDescription : @"Error: Location services timed out."];
-	text = [@"The current location cannot be determined: " stringByAppendingString:text];
+	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",nil),
+					   error ? error.localizedDescription : NSLocalizedString(@"Location services timed out.",nil)];
+	text = [NSLocalizedString(@"The current location cannot be determined: ",nil) stringByAppendingString:text];
 	if ( error ) {
 		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text, NSUnderlyingErrorKey : error} ];
 	} else {
@@ -938,7 +926,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 {
 #if TARGET_OS_IPHONE
 	if ( _editorLayer.hidden ) {
-		[self flashMessage:@"Editing layer not visible"];
+		[self flashMessage:NSLocalizedString(@"Editing layer not visible",nil)];
 		return;
 	}
 	// if just dropped a pin then undo removes the pin
@@ -1053,10 +1041,6 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
 	}
 #endif
-
-	[_notes updateForRegion:box completion:^{
-		DLog(@"%ld notes", _notes.list.count);
-	}];
 }
 
 -(void)adjustOriginBy:(CGPoint)delta
@@ -1133,7 +1117,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 -(IBAction)delete:(id)sender
 {
 #if TARGET_OS_IPHONE
-	_alertDelete = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Delete selection?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+	_alertDelete = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"Delete",nil), nil];
 	[_alertDelete show];
 #else
 	[_editorLayer deleteSelectedObject];
@@ -1212,7 +1196,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		_pushpinView = nil;
 	}
 	_pushpinView = [PushPinView new];
-	_pushpinView.text = object ? object.friendlyDescription : @"(new object)";
+	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
 	_pushpinView.layer.zPosition = Z_BALLOON;
 
 	_pushpinView.arrowPoint = point;
@@ -1268,8 +1252,8 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 						break;
 					{
 						MapView * mySelf = weakSelf;
-						mySelf->_alertMove = [[UIAlertView alloc] initWithTitle:@"Confirm move" message:@"Move selected object?"
-																delegate:weakSelf cancelButtonTitle:@"Undo" otherButtonTitles:@"Move", nil];
+						mySelf->_alertMove = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil)
+																delegate:weakSelf cancelButtonTitle:NSLocalizedString(@"Undo",nil) otherButtonTitles:NSLocalizedString(@"Move",nil), nil];
 						[mySelf->_alertMove show];
 					}
 					break;
@@ -1470,14 +1454,14 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 {
 #if TARGET_OS_IPHONE
 	if ( _editorLayer.hidden ) {
-		[self flashMessage:@"Editing layer not visible"];
+		[self flashMessage:NSLocalizedString(@"Editing layer not visible",nil)];
 		return;
 	}
 	if ( _pushpinView ) {
 
 		if ( !CGRectContainsPoint( self.bounds, _pushpinView.arrowPoint ) ) {
 			// pushpin is off screen
-			[self flashMessage:@"Selected object is off screen"];
+			[self flashMessage:NSLocalizedString(@"Selected object is off screen",nil)];
 		} else if ( _editorLayer.selectedWay && _editorLayer.selectedNode ) {
 			// already editing a way so try to extend it
 			[self interactiveExtendSelectedWay:nil];
@@ -1979,6 +1963,14 @@ checkGrab:
 {
 	if ( pinch.state != UIGestureRecognizerStateChanged )
 		return;
+
+
+	if ( pinch.state == UIGestureRecognizerStateEnded ) {
+		OSMRect box = [self viewportLongitudeLatitude];
+		[_notes updateForRegion:box completion:^{
+			DLog(@"%ld notes", (long)_notes.list.count);
+		}];
+	}
 
 //	DLog(@"zoom by %f",ratio);
 

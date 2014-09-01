@@ -65,7 +65,7 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 		}
 	}
 
-	[_undoManager registerUndoComment:@"Straighten"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"Straighten",nil)];
 
 	for ( NSInteger i = count-1; i >= 0; --i ) {
 		if ( isnan( points[i].x ) ) {
@@ -144,7 +144,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 		@"west" : @"east"
 	};
 
-	[_undoManager registerUndoComment:@"Reverse"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"Reverse",nil)];
 
 	// reverse nodes
 	NSArray * newNodes = [[way.nodes reverseObjectEnumerator] allObjects];
@@ -189,7 +189,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 	if ( node.wayCount < 2 )
 		return NO;
 
-	[_undoManager registerUndoComment:@"Disconnect"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"Disconnect",nil)];
 
 	CLLocationCoordinate2D loc = { node.lat, node.lon };
 	OsmNode * newNode = [self createNodeAtLocation:loc];
@@ -273,7 +273,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 -(BOOL)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
-	[_undoManager registerUndoComment:@"Split"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"Split",nil)];
 
 	OsmWay * wayA = selectedWay;
 	OsmWay * wayB = [self createWay];
@@ -413,22 +413,22 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	// join nodes, preserving selected way
 	if ( selectedWay.nodes.lastObject == otherWay.nodes[0] ) {
-		[_undoManager registerUndoComment:@"Join"];
+		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in otherWay.nodes ) {
 			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
 		}
 	} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
-		[_undoManager registerUndoComment:@"Join"];
+		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
 			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
 		}
 	} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
-		[_undoManager registerUndoComment:@"Join"];
+		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in otherWay.nodes ) {
 			[self addNode:n toWay:selectedWay atIndex:0];
 		}
 	} else if ( selectedWay.nodes[0] == otherWay.nodes.lastObject ) {
-		[_undoManager registerUndoComment:@"Join"];
+		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
 			[self addNode:n toWay:selectedWay atIndex:0];
 		}

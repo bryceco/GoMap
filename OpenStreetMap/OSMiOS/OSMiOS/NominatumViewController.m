@@ -168,7 +168,7 @@
 			}
 
 			if ( _resultsArray.count == 0 ) {
-				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"No results found" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No results found",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 				[alertView show];
 			}
 

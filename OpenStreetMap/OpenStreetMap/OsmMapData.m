@@ -225,7 +225,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	dict = DictWithTagsTruncatedTo255( dict );
 
-	[_undoManager registerUndoComment:@"set tags"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"set tags",nil)];
 	[object setTags:dict undo:_undoManager];
 }
 
@@ -239,7 +239,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self setConstructed:node];
 	[_nodes setObject:node forKey:node.ident];
 	
-	[_undoManager registerUndoComment:@"create node"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"create node",nil)];
 	[node setDeleted:NO undo:_undoManager];
 	[_spatial addMember:node undo:_undoManager];
 	return node;
@@ -253,7 +253,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self setConstructed:way];
 	[_ways setObject:way forKey:way.ident];
 
-	[_undoManager registerUndoComment:@"create way"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"create way",nil)];
 	[way setDeleted:NO undo:_undoManager];
 	[_spatial addMember:way undo:_undoManager];
 	return way;
@@ -267,7 +267,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self setConstructed:relation];
 	[_relations setObject:relation forKey:relation.ident];
 
-	[_undoManager registerUndoComment:@"create relation"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"create relation",nil)];
 	[relation setDeleted:NO undo:_undoManager];
 	return relation;
 }
@@ -292,7 +292,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)deleteNode:(OsmNode *)node
 {
 	assert( node.wayCount == 0 );
-	[_undoManager registerUndoComment:@"delete node"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"delete node",nil)];
 
 	[self removeFromParentRelations:node];
 
@@ -303,7 +303,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)deleteWay:(OsmWay *)way
 {
-	[_undoManager registerUndoComment:@"delete way"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"delete way",nil)];
 	[_spatial removeMember:way undo:_undoManager];
 
 	[self removeFromParentRelations:way];
@@ -316,7 +316,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)deleteRelation:(OsmRelation *)relation
 {
-	[_undoManager registerUndoComment:@"delete relation"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"delete relation",nil)];
 	[_spatial removeMember:relation undo:_undoManager];
 
 	[self removeFromParentRelations:relation];
@@ -329,14 +329,14 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index
 {
-	[_undoManager registerUndoComment:@"add node to way"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"add node to way",nil)];
 	[_spatial removeMember:way undo:_undoManager];
 	[way addNode:node atIndex:index undo:_undoManager];
 	[_spatial addMember:way undo:_undoManager];
 }
 -(void)deleteNodeInWay:(OsmWay *)way index:(NSInteger)index
 {
-	[_undoManager registerUndoComment:@"delete node from way"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"delete node from way",nil)];
 	OsmNode * node = way.nodes[ index ];
 	assert( node.wayCount > 0 );
 
@@ -353,7 +353,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node inWay:(OsmWay *)way
 {
-	[_undoManager registerUndoComment:@"move"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"move",nil)];
 	[_spatial removeMember:node undo:_undoManager];
 	if ( way ) {
 		[self incrementModifyCount:way];
@@ -364,14 +364,14 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index
 {
-	[_undoManager registerUndoComment:@"add object to relation"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"add object to relation",nil)];
 	[_spatial removeMember:relation undo:_undoManager];
 	[relation addMember:member atIndex:index undo:_undoManager];
 	[_spatial addMember:relation undo:_undoManager];
 }
 -(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index
 {
-	[_undoManager registerUndoComment:@"delete object from relation"];
+	[_undoManager registerUndoComment:NSLocalizedString(@"delete object from relation",nil)];
 	[_spatial removeMember:relation undo:_undoManager];
 	[relation removeMemberAtIndex:index undo:_undoManager];
 	[_spatial addMember:relation undo:_undoManager];
@@ -547,13 +547,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					// probably some html-encoded error message from the server, or if cancelled then the leading portion of the xml download
 					//NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
 					//error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
-					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"Data not available" }];
+					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Data not available",nil) }];
 				} else if ( agent.stream.streamError ) {
 					error = agent.stream.streamError;
 				} else if ( error ) {
 					// use the parser's reported error
 				} else {
-					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : @"Data not available" }];
+					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Data not available",nil) }];
 				}
 			}
 			if ( error ) {
@@ -597,7 +597,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// get list of new quads to fetch
 		newQuads = [_region newQuadsForRect:box];
 	} else {
-		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : @"Edit download region is too large" }];
+		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Edit download region is too large",nil) }];
 		[[DownloadThreadPool osmPool] cancelAllDownloads];
 	}
 #else
@@ -688,7 +688,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// osm header
 		NSString * version		= [attributeDict valueForKey:@"version"];
 		if ( ![version isEqualToString:@"0.6"] ) {
-			_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"OSM data must be version 0.6 (fetched '%@')", version]}];
+			_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"OSM data must be version 0.6 (fetched '%@')",nil), version]}];
 			[parser abortParsing];
 		}
 		[_parserStack addObject:@"osm"];
@@ -1358,8 +1358,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSString * lat = [node attributeForName:@"lat"].stringValue;
 	NSString * lon = [node attributeForName:@"lon"].stringValue;
 	NSString * text = lat && lon
-	? [NSString stringWithFormat:@"\tNode %@ (%.6f,%.6f)\n", [node attributeForName:@"id"].stringValue, lat.doubleValue, lon.doubleValue]
-	: [NSString stringWithFormat:@"\tNode %@\n", [node attributeForName:@"id"].stringValue];
+		? [NSString stringWithFormat:NSLocalizedString(@"\tNode %@ (%.6f,%.6f)\n",nil), [node attributeForName:@"id"].stringValue, lat.doubleValue, lon.doubleValue]
+		: [NSString stringWithFormat:NSLocalizedString(@"\tNode %@\n",nil), [node attributeForName:@"id"].stringValue];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
 	for ( NSXMLElement * tag in node.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
@@ -1372,7 +1372,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)updateString:(NSMutableAttributedString *)string withWay:(NSXMLElement *)way
 {
 	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
-	NSString * text = [NSString stringWithFormat:@"\tWay %@ (%d entries)\n",
+	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"\tWay %@ (%d entries)\n",nil),
 					   [way attributeForName:@"id"].stringValue,
 					   (int)way.childCount];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
@@ -1389,7 +1389,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)updateString:(NSMutableAttributedString *)string withRelation:(NSXMLElement *)relation
 {
 	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
-	NSString * text = [NSString stringWithFormat:@"\tRelation %@ (%d members)\n",
+	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"\tRelation %@ (%d members)\n",nil),
 					   [relation attributeForName:@"id"].stringValue,
 					   (int)relation.childCount];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
@@ -1434,13 +1434,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSArray * creates = [root elementsForName:@"create"];
 	NSArray * modifys = [root elementsForName:@"modify"];
 	for ( NSXMLElement * delete in deletes ) {
-		[self updateString:string withHeader:@"Delete\n" objects:delete.children];
+		[self updateString:string withHeader:NSLocalizedString(@"Delete\n",nil) objects:delete.children];
 	}
 	for ( NSXMLElement * create in creates ) {
-		[self updateString:string withHeader:@"Create\n" objects:create.children];
+		[self updateString:string withHeader:NSLocalizedString(@"Create\n",nil) objects:create.children];
 	}
 	for ( NSXMLElement * modify in modifys ) {
-		[self updateString:string withHeader:@"Modify\n" objects:modify.children];
+		[self updateString:string withHeader:NSLocalizedString(@"Modify\n",nil) objects:modify.children];
 	}
 	return string;
 }

@@ -55,7 +55,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return @"You can define your own aerial background layers here";
+	return NSLocalizedString(@"You can define your own aerial background layers here",nil);
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
