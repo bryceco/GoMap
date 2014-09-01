@@ -1561,8 +1561,11 @@
 				0277E29016A66C1800456BED /* EditorLayerGL.m */,
 				02ACBA7516713F2A00BB4414 /* EditorMapLayer.h */,
 				02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */,
+				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				0228442A16D8870C00A1C051 /* GpxLayer.h */,
 				0228442B16D8870C00A1C051 /* GpxLayer.m */,
+				02E6266E1997168800565D62 /* KeyChain.h */,
+				02E6266F1997168800565D62 /* KeyChain.m */,
 				02ACBA7716713F2A00BB4414 /* location.png */,
 				02BED99A168CBC5300357B94 /* LocationBallLayer.h */,
 				02BED99B168CBC5400357B94 /* LocationBallLayer.m */,
@@ -1607,9 +1610,6 @@
 				02ACBBBC16713F2A00BB4414 /* UndoManagerDump.m */,
 				02ACBBBD16713F2A00BB4414 /* VectorMath.h */,
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
-				02E6266E1997168800565D62 /* KeyChain.h */,
-				02E6266F1997168800565D62 /* KeyChain.m */,
-				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 			);
 			name = Shared;
 			sourceTree = "<group>";

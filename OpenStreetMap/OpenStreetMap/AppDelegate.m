@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
 #import "MainWindowController.h"
+#import "TagInfo.h"
 
 
 @implementation AppDelegate

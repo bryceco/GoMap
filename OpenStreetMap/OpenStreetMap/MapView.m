@@ -1961,18 +1961,17 @@ checkGrab:
 }
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
-	if ( pinch.state != UIGestureRecognizerStateChanged )
-		return;
-
-
+#if DEBUG
 	if ( pinch.state == UIGestureRecognizerStateEnded ) {
 		OSMRect box = [self viewportLongitudeLatitude];
 		[_notes updateForRegion:box completion:^{
 			DLog(@"%ld notes", (long)_notes.list.count);
 		}];
 	}
+#endif
 
-//	DLog(@"zoom by %f",ratio);
+	if ( pinch.state != UIGestureRecognizerStateChanged )
+		return;
 
 	_userOverrodeLocationZoom = YES;
 
