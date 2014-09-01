@@ -19,6 +19,7 @@
 #import "GpxLayer.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
+#import "Notes.h"
 #import "OsmMapData.h"
 #import "OsmObjects.h"
 #import "RulerLayer.h"
@@ -28,6 +29,7 @@
 #import "LocationBallLayer.h"
 #import "MapViewController.h"
 #import "PushPinView.h"
+#import "WebPageViewController.h"
 #else
 #import "HtmlErrorWindow.h"
 #endif
@@ -219,7 +221,7 @@ CGSize SizeForImage( NSImage * image )
 	_actionButton.hidden = YES;
 	[_actionButton addTarget:self.editorLayer action:@selector(actionButton:) forControlEvents:UIControlEventTouchUpInside];
 
-	self.viewState = [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
+	self.viewState = (MapViewState)[[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
 
 	[self updateBingButton];
 
@@ -243,6 +245,8 @@ CGSize SizeForImage( NSImage * image )
 	if ( ![self isLocationSpecified] ) {
 		[self locateMe:nil];
 	}
+
+	_notes = [Notes new];
 
 	// make help button have rounded corners
 	_helpButton.layer.cornerRadius = 10.0;
@@ -488,12 +492,34 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	[self flashMessage:message duration:0.7];
 }
 
-
 -(void)presentError:(NSError *)error flash:(BOOL)flash
 {
 	if ( _lastErrorDate == nil || [[NSDate date] timeIntervalSinceDate:_lastErrorDate] > 3.0 ) {
 
 		NSString * text = error.localizedDescription;
+
+		if ( [error.domain isEqualToString:@"HTTP"] && error.code >= 400 && error.code < 500 ) {
+			// present HTML error code
+			WebPageViewController * webController = [[WebPageViewController alloc] initWithNibName:@"WebPageView" bundle:nil];
+			[webController view];
+			[[webController.navBar.items lastObject] setTitle:@"Download Error"];
+			[webController.webView loadHTMLString:error.localizedDescription baseURL:nil];
+			[self.viewController presentViewController:webController animated:YES completion:nil];
+#if 0
+			UIViewController * viewController = [UIViewController new];
+			UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+			UIWebView * webview = [UIWebView new];
+			viewController.view = webview;
+			viewController.navigationItem.title = @"Not found";
+			[navController dismissViewControllerAnimated:YES completion:nil];
+			viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:navController action:@selector(popViewControllerAnimated:)];
+			[webview loadHTMLString:error.localizedDescription baseURL:nil];
+			[self.viewController presentViewController:navController animated:YES completion:nil];
+			[self.viewController dismissViewControllerAnimated:YES completion:nil];
+#endif
+			_lastErrorDate = [NSDate date];
+			return;
+		}
 
 #if 0
 		id ignorable = [error.userInfo objectForKey:@"Ignorable"];
@@ -1027,6 +1053,10 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
 	}
 #endif
+
+	[_notes updateForRegion:box completion:^{
+		DLog(@"%ld notes", _notes.list.count);
+	}];
 }
 
 -(void)adjustOriginBy:(CGPoint)delta

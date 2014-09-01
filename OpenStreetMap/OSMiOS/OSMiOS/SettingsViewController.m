@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <sys/utsname.h>
+
 #import "AppDelegate.h"
 #import "AerialList.h"
 #import "AerialListViewController.h"
@@ -77,6 +79,7 @@ static const NSInteger BACKGROUND_SECTION	= 0;
 		if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
 			MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
 			mapView.viewState = (MapViewState)row;
+			mapView.aerialLayer.aerialService = mapView.customAerials.currentAerial;
 			break;
 		}
 	}
@@ -128,10 +131,13 @@ static const NSInteger BACKGROUND_SECTION	= 0;
 			mail.mailComposeDelegate = self;
 			[mail setSubject:[NSString stringWithFormat:@"%@ %@ feedback", appDelegate.appName, appDelegate.appVersion]];
 			[mail setToRecipients:@[@"bryceco@yahoo.com"]];
+			struct utsname systemInfo = { 0 };
+			uname(&systemInfo);
+			NSMutableString * body = [NSMutableString stringWithFormat:@"Device: %s\n",systemInfo.machine];
 			if ( appDelegate.userName.length ) {
-				NSString * body = [NSString stringWithFormat:@"OSM ID: %@ (optional)\n\n",appDelegate.userName];
-				[mail setMessageBody:body isHTML:NO];
+				[body appendString:[NSString stringWithFormat:@"OSM ID: %@ (optional)\n\n",appDelegate.userName]];
 			}
+			[mail setMessageBody:body isHTML:NO];
 			[self.navigationController presentViewController:mail animated:YES completion:nil];
 		} else {
 			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Cannot compose message" message:@"Mail delivery is not available on this device" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

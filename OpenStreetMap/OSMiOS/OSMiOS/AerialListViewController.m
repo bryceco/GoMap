@@ -33,6 +33,9 @@
 	[super viewWillDisappear:animated];
 
 	if ( [self isMovingFromParentViewController] ) {
+		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		MapView * mapView = appDelegate.mapView;
+		mapView.aerialLayer.aerialService = _aerials.currentAerial;
 	}
 }
 
@@ -138,8 +141,6 @@
 	MapView * mapView = appDelegate.mapView;
 
 	_aerials.currentIndex = indexPath.row;
-
-	_aerials = appDelegate.mapView.customAerials;
 	mapView.aerialLayer.aerialService = _aerials.currentAerial;
 
 #if 0

@@ -33,8 +33,6 @@
 		NSURL * url = [NSURL URLWithString:escape];
 		NSURLRequest * request = [NSURLRequest requestWithURL:url];
 		[_webView loadRequest:request];
-	} else {
-		[_webView loadHTMLString:@"No data available" baseURL:nil];
 	}
 }
 
@@ -99,6 +97,13 @@
 {
 	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Mail", @"Open in Safari", nil];
 	[sheet showFromBarButtonItem:_actionButton animated:YES];
+}
+
+#pragma mark Generic page controls
+
+- (IBAction)cancel:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

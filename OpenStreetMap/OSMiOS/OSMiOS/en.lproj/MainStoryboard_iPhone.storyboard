@@ -1149,7 +1149,7 @@
                     <connections>
                         <outlet property="_actionButton" destination="5Du-CA-cFl" id="v4j-V7-3e6"/>
                         <outlet property="_activityIndicator" destination="M9Q-l6-Lsw" id="7pm-Za-p29"/>
-                        <outlet property="_webView" destination="OJf-xH-lf8" id="wJk-Xu-Y1y"/>
+                        <outlet property="webView" destination="OJf-xH-lf8" id="7W1-gp-0De"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x9R-cA-JP5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2811,9 +2811,9 @@ http://glyphish.com
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="yue-km-52a" firstAttribute="leading" secondItem="1BF-UO-Q0K" secondAttribute="leading" constant="23" id="QFE-XE-v6R"/>
-                                                <constraint firstItem="w75-Lj-3jF" firstAttribute="leading" secondItem="yue-km-52a" secondAttribute="trailing" constant="8" id="aGh-Nc-O0u"/>
                                                 <constraint firstAttribute="centerY" secondItem="yue-km-52a" secondAttribute="centerY" id="bTp-ni-5Qr"/>
                                                 <constraint firstAttribute="centerY" secondItem="w75-Lj-3jF" secondAttribute="centerY" id="ebQ-kf-2Zc"/>
+                                                <constraint firstItem="w75-Lj-3jF" firstAttribute="leading" secondItem="1BF-UO-Q0K" secondAttribute="leading" constant="86" id="jdg-hA-UoD"/>
                                                 <constraint firstAttribute="trailing" secondItem="w75-Lj-3jF" secondAttribute="trailing" constant="20" id="zzb-HR-ghZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -2848,11 +2848,11 @@ http://glyphish.com
                                                 </textField>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="dzT-B4-za3" firstAttribute="leading" secondItem="VWp-r7-bbP" secondAttribute="leading" constant="86" id="5Jg-OC-ksl"/>
                                                 <constraint firstItem="swu-t3-p5w" firstAttribute="leading" secondItem="VWp-r7-bbP" secondAttribute="leading" constant="23" id="CVT-pk-w3x"/>
                                                 <constraint firstAttribute="trailing" secondItem="dzT-B4-za3" secondAttribute="trailing" constant="20" id="DeP-Vv-hlf"/>
                                                 <constraint firstAttribute="centerY" secondItem="swu-t3-p5w" secondAttribute="centerY" id="GAV-gt-9lS"/>
                                                 <constraint firstAttribute="centerY" secondItem="dzT-B4-za3" secondAttribute="centerY" id="Lq8-Th-0Ir"/>
-                                                <constraint firstItem="dzT-B4-za3" firstAttribute="leading" secondItem="swu-t3-p5w" secondAttribute="trailing" constant="8" id="unh-eb-mw5"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -2886,7 +2886,7 @@ http://glyphish.com
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="4fY-G4-i12" firstAttribute="leading" secondItem="m82-UX-J5c" secondAttribute="trailing" constant="1" id="IoL-KA-MKt"/>
+                                                <constraint firstItem="4fY-G4-i12" firstAttribute="leading" secondItem="cUW-ML-rih" secondAttribute="leading" constant="132" id="U1b-ee-oSs"/>
                                                 <constraint firstAttribute="centerY" secondItem="4fY-G4-i12" secondAttribute="centerY" id="W5J-bm-FTL"/>
                                                 <constraint firstItem="m82-UX-J5c" firstAttribute="leading" secondItem="cUW-ML-rih" secondAttribute="leading" constant="23" id="j9w-F3-dua"/>
                                                 <constraint firstAttribute="centerY" secondItem="m82-UX-J5c" secondAttribute="centerY" id="kze-Wl-far"/>
@@ -2899,13 +2899,13 @@ http://glyphish.com
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ID7-lH-gL7" id="2xt-YE-Yaa">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Max Zoom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voF-Yf-33h">
-                                                    <rect key="frame" x="23" y="11" width="108" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Zoom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voF-Yf-33h">
+                                                    <rect key="frame" x="23" y="11" width="83" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="21" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uQ3-vb-l3H">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="21" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uQ3-vb-l3H">
                                                     <rect key="frame" x="131" y="7" width="40" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
@@ -2914,6 +2914,13 @@ http://glyphish.com
                                                     </connections>
                                                 </textField>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="uQ3-vb-l3H" secondAttribute="centerY" id="BCq-ZR-Bwe"/>
+                                                <constraint firstAttribute="trailing" secondItem="uQ3-vb-l3H" secondAttribute="trailing" constant="149" id="L4B-hZ-uNW"/>
+                                                <constraint firstItem="uQ3-vb-l3H" firstAttribute="leading" secondItem="2xt-YE-Yaa" secondAttribute="leading" constant="131" id="Qjy-0a-EX4"/>
+                                                <constraint firstItem="voF-Yf-33h" firstAttribute="leading" secondItem="2xt-YE-Yaa" secondAttribute="leading" constant="23" id="lcA-8N-Thx"/>
+                                                <constraint firstAttribute="centerY" secondItem="voF-Yf-33h" secondAttribute="centerY" id="so8-lL-hWG"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -4233,7 +4240,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="OEI-9h-7td"/>
-        <segue reference="222-H0-L76"/>
+        <segue reference="mrH-5v-JIV"/>
         <segue reference="FTo-kL-oAC"/>
         <segue reference="KuK-gp-RBs"/>
     </inferredMetricsTieBreakers>

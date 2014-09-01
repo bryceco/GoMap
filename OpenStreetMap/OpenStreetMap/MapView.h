@@ -26,6 +26,7 @@
 @class LocationBallLayer;
 @class MapViewController;
 @class MercatorTileLayer;
+@class Notes;
 @class OsmBaseObject;
 @class PushPinView;
 @class RulerLayer;
@@ -109,6 +110,7 @@ typedef enum _MapViewState {
 
 @property (assign,nonatomic)	IBOutlet UIButton	*	actionButton;
 
+@property (readonly,nonatomic)	Notes				*	notes;
 
 @property (readonly,nonatomic)	MercatorTileLayer	*	aerialLayer;
 @property (readonly,nonatomic)	MercatorTileLayer	*	mapnikLayer;

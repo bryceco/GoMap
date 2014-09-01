@@ -11,12 +11,14 @@
 
 @interface WebPageViewController : UIViewController <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 {
-	IBOutlet UIWebView					*	_webView;
 	IBOutlet UIActivityIndicatorView	*	_activityIndicator;
 	IBOutlet UIBarButtonItem			*	_actionButton;
 }
-@property (copy,nonatomic)	NSString * url;
-@property (copy,nonatomic)	NSString * title;
-
+@property (assign,nonatomic)	IBOutlet UIWebView	*	webView;
+@property (copy,nonatomic)		NSString			*	url;
 - (IBAction)doAction:(id)sender;
+
+// used by custom web view, not storyboard:
+@property (assign,nonatomic)	IBOutlet	UINavigationBar	*	navBar;
+- (IBAction)cancel:(id)sender;
 @end

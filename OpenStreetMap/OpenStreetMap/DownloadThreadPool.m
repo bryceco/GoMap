@@ -354,16 +354,7 @@ typedef void (^dequeueBlock)(void);
 			data = nil;
 		} else if ( [httpResponse isKindOfClass:[NSHTTPURLResponse class]] && httpResponse.statusCode >= 400 ) {
 			DLog(@"HTTP error %ld: %@", (long)httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode] );
-			NSString * text = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
-#if !TARGET_OS_IPHONE
-			if ( [text hasPrefix:@"<html>" ] ) {
-				NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:text options:0 error:nil];
-				NSArray * a = [doc nodesForXPath:@"./html/body/p" error:nil];
-				if ( a.count ) {
-					text = [a.lastObject stringValue];
-				}
-			}
-#endif
+			NSString * text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			error = [NSError errorWithDomain:@"HTTP" code:httpResponse.statusCode userInfo:@{ NSLocalizedDescriptionKey:text}];
 			data = nil;
 		}

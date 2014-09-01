@@ -734,7 +734,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	static BOOL isFast = YES;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		struct utsname systemInfo;
+		struct utsname systemInfo = { 0 };
 		uname(&systemInfo);
 		NSString * name = [[NSString alloc] initWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 		NSDictionary * dict = @{
@@ -1887,6 +1887,8 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	CGContextSetShouldSubpixelQuantizeFonts(ctx, NO);
 #endif
 
+	DLog(@"Start draw");
+
 	_nameDrawSet = [NSMutableSet new];
 
 	if ( _mapCss ) {
@@ -2019,7 +2021,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	totalTime = CACurrentMediaTime() - totalTime;
 
-#if 0
+#if 1
 	DLog( @"%.2f: area %d (%.2f), casing %d (%.2f), way %d (%.2f), node %d (%.2f) name %d (%.2f)",
 		 totalTime*1000,
 		 areaCount, areaTime*1000,
