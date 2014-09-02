@@ -1961,7 +1961,7 @@ checkGrab:
 }
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
-#if DEBUG
+#if 0 && DEBUG
 	if ( pinch.state == UIGestureRecognizerStateEnded ) {
 		OSMRect box = [self viewportLongitudeLatitude];
 		[_notes updateForRegion:box completion:^{

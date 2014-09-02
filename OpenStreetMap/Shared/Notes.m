@@ -33,6 +33,10 @@
 	}
 	return self;
 }
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@ %@: %@",_date,_user?:@"",_action,_text];
+}
 @end
 
 
@@ -50,8 +54,6 @@
 				_created = child.stringValue;
 			} else if ( [child.name isEqualToString:@"status"] ) {
 				_status = child.stringValue;
-			} else if ( [child.name isEqualToString:@"date_created"] ) {
-				_created = child.stringValue;
 			} else if ( [child.name isEqualToString:@"comments"] ) {
 				_comments = [NSMutableArray new];
 				for ( NSXMLElement * commentElement in child.children ) {
@@ -65,7 +67,14 @@
 	}
 	return self;
 }
-
+-(NSString *)description
+{
+	NSMutableString * text = [NSMutableString stringWithFormat:@"Note %ld - %@:\n", _ident,_status];
+	for ( OsmNoteComment * comment in _comments ) {
+		[text appendString:[NSString stringWithFormat:@"  %@\n",comment.description]];
+	}
+	return text;
+}
 @end
 
 
@@ -97,6 +106,7 @@
 				}
 			}
 		}
+		NSLog(@"Notes:\n%@",self);
 		completion();
 	}];
 }
@@ -104,6 +114,15 @@
 -(NSArray *)notesInRegion:(OSMRect)box
 {
 	return nil;
+}
+
+-(NSString *)description
+{
+	NSMutableString * text = [NSMutableString new];
+	for ( OsmNote * note in _list ) {
+		[text appendString:[note description]];
+	}
+	return text;;
 }
 
 @end
