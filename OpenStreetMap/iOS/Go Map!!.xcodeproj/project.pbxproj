@@ -979,9 +979,7 @@
 		02E8436419B39FAD0044AC1D /* Notes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notes.m; path = ../Shared/Notes.m; sourceTree = "<group>"; };
 		02E8436E19B407C40044AC1D /* WebPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPageView.xib; sourceTree = "<group>"; };
 		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		02E8437A19B4DDB30044AC1D /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainStoryboard_iPhone.strings"; sourceTree = "<group>"; };
 		02E8437B19B4DDB30044AC1D /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		02E8437D19B4DE510044AC1D /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		02E8438219B4DF960044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		02F371B216A4F3E6003E9548 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
@@ -2185,7 +2183,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				02E8437919B4DD730044AC1D /* Base */,
-				02E8437A19B4DDB30044AC1D /* zh-Hant */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -2193,7 +2190,6 @@
 		02E8437E19B4DE510044AC1D /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				02E8437D19B4DE510044AC1D /* zh-Hant */,
 				02E8438219B4DF960044AC1D /* Base */,
 			);
 			name = Localizable.strings;

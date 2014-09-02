@@ -406,7 +406,7 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSMutableDictionary * dict = [self keyValueDictionary];
 	if ( [tabController isTagDictChanged:dict] ) {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Object modified",nil) message:NSLocalizedString(@"You must save or discard changes to the current object before editing its associated relation",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Okay",nil) otherButtonTitles:nil];
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Object modified",nil) message:NSLocalizedString(@"You must save or discard changes to the current object before editing its associated relation",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 		[alert show];
 		return NO;
 	}
