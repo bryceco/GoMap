@@ -11,7 +11,7 @@
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
-#import "../OSMiOS/OSMiOS/AppDelegate.h"
+#import "../iOS/AppDelegate.h"
 #else
 #import "AppDelegate.h"
 #endif
