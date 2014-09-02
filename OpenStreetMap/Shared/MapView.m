@@ -37,6 +37,9 @@
 
 static const CGFloat Z_AERIAL		= -100;
 static const CGFloat Z_MAPNIK		= -99;
+static const CGFloat Z_LOCATOR		= -50;
+static const CGFloat Z_GPSTRACE		= -40;
+
 //static const CGFloat Z_GPX			= -2;
 static const CGFloat Z_EDITOR		= -1;
 //static const CGFloat Z_EDITOR_GL	= -0.5;
@@ -97,14 +100,54 @@ CGSize SizeForImage( NSImage * image )
 		self.wantsLayer = YES;
 #endif
 		self.layer.masksToBounds = YES;
+		self.backgroundColor = UIColor.darkGrayColor;
 
-		// set aerial layer
+		// get aerial database
 		self.customAerials = [AerialList new];
+
+		NSMutableArray * bg = [NSMutableArray new];
+
+		_locatorLayer  = [[MercatorTileLayer alloc] initWithMapView:self];
+		_locatorLayer.zPosition = Z_LOCATOR;
+		_locatorLayer.aerialService = [AerialService mapboxLocator];
+		[bg addObject:_locatorLayer];
+
+		_gpsTraceLayer = [[MercatorTileLayer alloc] initWithMapView:self];
+		_gpsTraceLayer.zPosition = Z_GPSTRACE;
+		_gpsTraceLayer.aerialService = [AerialService gpsTrace];
+		[bg addObject:_gpsTraceLayer];
+
 		_aerialLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_aerialLayer.zPosition = Z_AERIAL;
 		_aerialLayer.opacity = 0.75;
 		_aerialLayer.aerialService = self.customAerials.currentAerial;
-		[self.layer addSublayer:_aerialLayer];
+		[bg addObject:_aerialLayer];
+
+		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
+		_mapnikLayer.aerialService = [AerialService mapnik];
+		_mapnikLayer.zPosition = Z_MAPNIK;
+		[bg addObject:_mapnikLayer];
+
+		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
+		_editorLayer.zPosition = Z_EDITOR;
+		[bg addObject:_editorLayer];
+
+#if 0
+		_editorLayerGL = [[EditorLayerGL alloc] initWithMapView:self];
+		_editorLayerGL.zPosition = Z_EDITOR_GL;
+		[bg addObject:_editorLayerGL];
+#endif
+
+#if 0 // support gpx traces
+		_gpxLayer = [[GpxLayer alloc] initWithMapView:self];
+		_gpxLayer.zPosition = Z_GPX;
+		[self.layer addSublayer:_gpxLayer];
+#endif
+
+		_backgroundLayers = [NSArray arrayWithArray:bg];
+		for ( CALayer * layer in _backgroundLayers ) {
+			[self.layer addSublayer:layer];
+		}
 
 		// bing logo
 		{
@@ -122,27 +165,6 @@ CGSize SizeForImage( NSImage * image )
 #endif
 		}
 
-		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
-		_mapnikLayer.aerialService = [AerialService mapnik];
-		_mapnikLayer.zPosition = Z_MAPNIK;
-		[self.layer addSublayer:_mapnikLayer];
-
-		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
-		_editorLayer.zPosition = Z_EDITOR;
-		[self.layer addSublayer:_editorLayer];
-
-#if 0
-		_editorLayerGL = [[EditorLayerGL alloc] initWithMapView:self];
-		_editorLayerGL.zPosition = Z_EDITOR_GL;
-		[self.layer addSublayer:_editorLayerGL];
-#endif
-
-#if 0 // support gpx traces
-		_gpxLayer = [[GpxLayer alloc] initWithMapView:self];
-		_gpxLayer.zPosition = Z_GPX;
-		[self.layer addSublayer:_gpxLayer];
-#endif
-
 		_rulerLayer = [[RulerLayer alloc] init];
 		_rulerLayer.mapView = self;
 		_rulerLayer.zPosition = Z_RULER;
@@ -151,9 +173,9 @@ CGSize SizeForImage( NSImage * image )
 #if defined(DEBUG)
 		// enable for release, disable to measure perf
 #else
-		_editorLayer.drawsAsynchronously = YES;
-		_aerialLayer.drawsAsynchronously = YES;
-		_mapnikLayer.drawsAsynchronously = YES;
+		for ( CALayer * layer in _backgroundLayers ) {
+			layer.drawsAsynchronously = YES;
+		}
 		_rulerLayer.drawsAsynchronously	= YES;
 #endif
 
@@ -402,10 +424,12 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	CGPoint center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 	bounds.origin.x = -center.x - 128;
 	bounds.origin.y = -center.y - 128;
-	_aerialLayer.bounds = bounds;
-	_mapnikLayer.bounds = bounds;
-	_aerialLayer.position = center;
-	_mapnikLayer.position = center;
+	for ( CALayer * layer in _backgroundLayers ) {
+		if ( [layer isKindOfClass:[MercatorTileLayer class]] ) {
+			layer.bounds = bounds;
+			layer.position = center;
+		}
+	}
 
 	bounds.origin.x = -center.x;
 	bounds.origin.y = -center.y;
@@ -705,8 +729,16 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	CGRect bounds = self.bounds;
 	OSMRect rc = [self mapRectFromVisibleRect];
 	OSMPoint pt = [MapView mapPointForLatitude:latitude longitude:longitude];
-	pt.x = fmod(256 + pt.x - rc.origin.x, 256.0);
-	pt.y = fmod(256 + pt.y - rc.origin.y, 256.0);
+	pt.x -= rc.origin.x;
+	pt.y -= rc.origin.y;
+	while ( pt.x >= 128.0 )
+		pt.x -= 256.0;
+	while ( pt.y >= 128.0 )
+		pt.y -= 256.0;
+	while ( pt.x < -128.0 )
+		pt.x += 256.0;
+	while ( pt.y < -128.0 )
+		pt.y += 256.0;
 	pt.x = bounds.origin.x + pt.x/rc.size.width * bounds.size.width;
 	pt.y = bounds.origin.y + pt.y/rc.size.height * bounds.size.height;
 	return CGPointFromOSMPoint( pt );
@@ -1514,7 +1546,6 @@ drop_pin:
 #endif
 }
 
-
 -(void)unblinkObject
 {
 	[_blinkLayer removeFromSuperlayer];
@@ -1530,7 +1561,7 @@ drop_pin:
 	[_blinkLayer removeFromSuperlayer];
 	_blinkObject = object;
 	_blinkSegment = segment;
-	
+
 	// create a layer for the object
 	_blinkLayer = [CAShapeLayer layer];
 	CGMutablePathRef path = CGPathCreateMutable();
@@ -1558,6 +1589,7 @@ drop_pin:
 	_blinkLayer.frame		= self.bounds;
 	_blinkLayer.zPosition	= Z_BLINK;
 	_blinkLayer.strokeColor	= NSColor.whiteColor.CGColor;
+	_blinkLayer.lineDashPhase = 0.0;
 	_blinkLayer.lineDashPattern = @[ @(3), @(3) ];
 	[self.layer addSublayer:_blinkLayer];
 	CABasicAnimation * dashAnimation = [CABasicAnimation animationWithKeyPath:@"lineDashPhase"];
@@ -1566,7 +1598,6 @@ drop_pin:
 	dashAnimation.duration	= 0.20;
 	dashAnimation.repeatCount = 10000;
 	[_blinkLayer addAnimation:dashAnimation forKey:@"linePhase"];
-
 	CGPathRelease(path);
 }
 

@@ -69,7 +69,7 @@
 }
 -(NSString *)description
 {
-	NSMutableString * text = [NSMutableString stringWithFormat:@"Note %ld - %@:\n", _ident,_status];
+	NSMutableString * text = [NSMutableString stringWithFormat:@"Note %ld - %@:\n", (long)_ident,_status];
 	for ( OsmNoteComment * comment in _comments ) {
 		[text appendString:[NSString stringWithFormat:@"  %@\n",comment.description]];
 	}

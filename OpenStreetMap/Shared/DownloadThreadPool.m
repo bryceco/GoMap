@@ -81,6 +81,7 @@ typedef void (^dequeueBlock)(void);
 
 -(void)dealloc
 {
+	[_readStream close];
 }
 
 -(NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response

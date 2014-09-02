@@ -43,7 +43,8 @@
 	AerialService * service = [AerialService aerialWithName:[nameField.text	stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 																	url:[urlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 																subdomains:subdomains
-																maxZoom:[zoomField.text integerValue]];
+																maxZoom:[zoomField.text integerValue]
+																roundUp:YES];
 	self.completion(service);
 
 	[self.navigationController popViewControllerAnimated:YES];

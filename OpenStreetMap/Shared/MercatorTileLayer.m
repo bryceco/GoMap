@@ -41,7 +41,7 @@ static NSDictionary * ActionDictionary = nil;
 {
 	self = [super init];
 	if ( self ) {
-		self.opaque = YES;
+		//self.opaque = YES;
 
 		self.needsDisplayOnBoundsChange = YES;
 

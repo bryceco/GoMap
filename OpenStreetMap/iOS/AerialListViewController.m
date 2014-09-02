@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Bryce. All rights reserved.
 //
 
-#import "AppDelegate.h"
-#import "MercatorTileLayer.h"
 #import "AerialList.h"
 #import "AerialListViewController.h"
 #import "AerialEditViewController.h"
+#import "AppDelegate.h"
+#import "DisplayViewController.h"
 #import "MapView.h"
-#import "SettingsViewController.h"
+#import "MercatorTileLayer.h"
 #import "UITableViewCell+FixConstraints.h"
 
 
@@ -147,7 +147,7 @@
 	[self.navigationController popViewControllerAnimated:YES];
 #else
 	// if popping all the way up we need to tell Settings to save changes
-	[self.settingsViewController applyChanges];
+	[self.displayViewController applyChanges];
 	[self.navigationController popToRootViewControllerAnimated:YES];
 #endif
 }

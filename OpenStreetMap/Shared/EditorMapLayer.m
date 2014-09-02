@@ -1879,16 +1879,6 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 - (void)drawInContext:(CGContextRef)ctx
 {
-#if 0
-	// these have no affect on performance:
-	CGContextSetShouldAntialias(ctx, NO);
-	CGContextSetShouldSmoothFonts(ctx, NO);
-	CGContextSetShouldSubpixelPositionFonts(ctx, NO);
-	CGContextSetShouldSubpixelQuantizeFonts(ctx, NO);
-#endif
-
-	DLog(@"Start draw");
-
 	_nameDrawSet = [NSMutableSet new];
 
 	if ( _mapCss ) {
@@ -2021,7 +2011,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	totalTime = CACurrentMediaTime() - totalTime;
 
-#if 1
+#if 0
 	DLog( @"%.2f: area %d (%.2f), casing %d (%.2f), way %d (%.2f), node %d (%.2f) name %d (%.2f)",
 		 totalTime*1000,
 		 areaCount, areaTime*1000,

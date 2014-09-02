@@ -14,7 +14,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 @implementation AerialService
 
--(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom
+-(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
 {
 	self = [super init];
 	if ( self ) {
@@ -22,13 +22,14 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		_url = url ?: @"";
 		_subdomains = subdomains;
 		_maxZoom = (int32_t)maxZoom ?: 21;
+		_roundZoomUp = roundUp;
 	}
 	return self;
 }
 
-+(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom
++(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
 {
-	return [[AerialService alloc] initWithName:name url:url subdomains:subdomains maxZoom:maxZoom];
+	return [[AerialService alloc] initWithName:name url:url subdomains:subdomains maxZoom:maxZoom roundUp:roundUp];
 }
 
 -(BOOL)isBingAerial
@@ -48,35 +49,66 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		bing = [AerialService aerialWithName:@"Bing Aerial"
 										 url:@"http://ecn.{t}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
 								  subdomains:@[@"t0", @"t1", @"t2", @"t3"]
-									 maxZoom:21];
+									 maxZoom:21
+									 roundUp:YES];
 	});
 	return bing;
 }
 
 +(instancetype)mapnik
 {
-	static AerialService * mapnik = nil;
+	static AerialService * service = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		mapnik = [AerialService aerialWithName:@"MapnikTiles"
+		service = [AerialService aerialWithName:@"MapnikTiles"
 										   url:@"http://{t}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 									subdomains:@[ @"a", @"b", @"c" ]
-									   maxZoom:18];
+									   maxZoom:18
+										roundUp:NO];
 	});
-	return mapnik;
+	return service;
 }
++(instancetype)gpsTrace
+{
+	static AerialService * service = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		service = [AerialService aerialWithName:@"OSM GPS Traces"
+								  url:@"https://gps-{t}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png"
+									 subdomains:@[ @"a", @"b", @"c" ]
+										maxZoom:20
+										roundUp:NO];
+	});
+	return service;
+}
++(instancetype)mapboxLocator
+{
+	static AerialService * service = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		service = [AerialService aerialWithName:@"Mapbox Locator"
+											url:@"http://{t}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
+									 subdomains:@[ @"a", @"b", @"c" ]
+										maxZoom:20
+										roundUp:NO];
+	});
+	return service;
+}
+
+
 
 -(NSDictionary *)dictionary
 {
 	return @{ @"name" : _name,
 			  @"url" : _url,
 			  @"subdomains" : _subdomains,
-			  @"zoom" : @(_maxZoom)
+			  @"zoom" : @(_maxZoom),
+			  @"roundUp" : @(_roundZoomUp)
 			  };
 }
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
-	return [self initWithName:dict[@"name"] url:dict[@"url"] subdomains:dict[@"subdomains"] maxZoom:[dict[@"zoom"] integerValue]];
+	return [self initWithName:dict[@"name"] url:dict[@"url"] subdomains:dict[@"subdomains"] maxZoom:[dict[@"zoom"] integerValue] roundUp:[dict[@"roundUp"] boolValue]];
 }
 
 
@@ -110,12 +142,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	}
 	return nil;
 }
-
--(BOOL)roundZoomUp
-{
-	return self == [AerialService mapnik] ? NO : YES;
-}
-
 
 -(NSString *)description
 {
@@ -151,17 +177,14 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			 [AerialService aerialWithName:@"MapBox Aerial"
 											 url:@"http://{t}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
 									  subdomains:@[@"a", @"b", @"c"]
-										 maxZoom:19],
+										 maxZoom:19
+								   roundUp:YES],
 
 			 [AerialService aerialWithName:@"MapQuest Open Aerial"
 											 url:@"http://otile{t}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
 									  subdomains:@[ @"1", @"2", @"3", @"4" ]
-										 maxZoom:20],
-
-			 [AerialService aerialWithName:@"OSM GPS Traces"
-											 url:@"https://gps-{t}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png"
-									  subdomains:@[ @"a", @"b", @"c" ]
-										 maxZoom:20],
+										 maxZoom:20
+									roundUp:YES],
 			 ];
 }
 

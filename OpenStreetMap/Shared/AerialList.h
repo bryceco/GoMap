@@ -23,9 +23,11 @@
 
 -(BOOL)isBingAerial;
 
--(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom;
-+(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom;
+-(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp;
++(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp;
 +(instancetype)mapnik;
++(instancetype)gpsTrace;
++(instancetype)mapboxLocator;
 
 @end
 

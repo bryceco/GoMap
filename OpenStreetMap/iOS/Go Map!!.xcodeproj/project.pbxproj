@@ -28,6 +28,7 @@
 		02205F3B1674550D00D57D23 /* ArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 02205F3A1674550D00D57D23 /* ArrowBlack.png */; };
 		0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0223DB521675D53200D6F825 /* POITypeViewController.m */; };
 		0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0223DB5616765C9000D6F825 /* POICommonTagsViewController.m */; };
+		0225A36A19B63F0D008B63BA /* DisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0225A36919B63F0D008B63BA /* DisplayViewController.m */; };
 		0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0228442B16D8870C00A1C051 /* GpxLayer.m */; };
 		0228442F16DD25FF00A1C051 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 0228442D16DD25FF00A1C051 /* Settings.png */; };
 		0228443016DD25FF00A1C051 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0228442E16DD25FF00A1C051 /* Settings@2x.png */; };
@@ -497,6 +498,8 @@
 		0223DB521675D53200D6F825 /* POITypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POITypeViewController.m; sourceTree = "<group>"; };
 		0223DB5516765C9000D6F825 /* POICommonTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POICommonTagsViewController.h; sourceTree = "<group>"; };
 		0223DB5616765C9000D6F825 /* POICommonTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POICommonTagsViewController.m; sourceTree = "<group>"; };
+		0225A36819B63EFE008B63BA /* DisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayViewController.h; sourceTree = "<group>"; };
+		0225A36919B63F0D008B63BA /* DisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayViewController.m; sourceTree = "<group>"; };
 		0228442A16D8870C00A1C051 /* GpxLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpxLayer.h; path = ../Shared/GpxLayer.h; sourceTree = "<group>"; };
 		0228442B16D8870C00A1C051 /* GpxLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GpxLayer.m; path = ../Shared/GpxLayer.m; sourceTree = "<group>"; };
 		0228442D16DD25FF00A1C051 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -1156,6 +1159,8 @@
 				022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */,
 				020C2A8E168A7688003F2C2A /* CreditsViewController.h */,
 				020C2A8F168A7688003F2C2A /* CreditsViewController.m */,
+				0225A36819B63EFE008B63BA /* DisplayViewController.h */,
+				0225A36919B63F0D008B63BA /* DisplayViewController.m */,
 				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
 				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
@@ -1165,6 +1170,7 @@
 				025A1D001690DC32002B60CB /* Images */,
 				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				02ACBD031671730000BB4414 /* KissXML */,
+				02E8437E19B4DE510044AC1D /* Localizable.strings */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */,
@@ -1208,10 +1214,9 @@
 				020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
+				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
-				02E8436E19B407C40044AC1D /* WebPageView.xib */,
-				02E8437E19B4DE510044AC1D /* Localizable.strings */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -2125,6 +2130,7 @@
 				02ACBD161671730000BB4414 /* DDXMLElement.m in Sources */,
 				02ACBD171671730000BB4414 /* DDXMLNode.m in Sources */,
 				02ACBD2416717D7000BB4414 /* TagInfo.m in Sources */,
+				0225A36A19B63F0D008B63BA /* DisplayViewController.m in Sources */,
 				024233101674FDB4008A3B6A /* VectorMath.m in Sources */,
 				0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */,
 				0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */,

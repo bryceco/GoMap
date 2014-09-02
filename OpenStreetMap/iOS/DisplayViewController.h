@@ -11,8 +11,10 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SettingsViewController : UITableViewController <MFMailComposeViewControllerDelegate>
+@interface DisplayViewController : UITableViewController
 {
-	IBOutlet UITableViewCell	*	_sendMailCell;
 }
+
+-(void)applyChanges;
+
 @end

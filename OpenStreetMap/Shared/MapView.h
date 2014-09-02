@@ -117,6 +117,10 @@ typedef enum _MapViewState {
 @property (readonly,nonatomic)	EditorMapLayer		*	editorLayer;
 @property (readonly,nonatomic)	EditorLayerGL		*	editorLayerGL;
 @property (readonly,nonatomic)	GpxLayer			*	gpxLayer;
+// overlays
+@property (readonly,nonatomic)	MercatorTileLayer	*	locatorLayer;
+@property (readonly,nonatomic)	MercatorTileLayer	*	gpsTraceLayer;
+@property (readonly,nonatomic)	NSArray				*	backgroundLayers;
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
 @property (strong,nonatomic)	CLLocationManager			*	locationManager;
