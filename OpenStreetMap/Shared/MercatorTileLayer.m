@@ -174,7 +174,7 @@ static NSDictionary * ActionDictionary = nil;
 			stat( path.UTF8String, &status );
 			NSDate * date = [NSDate dateWithTimeIntervalSince1970:status.st_mtimespec.tv_sec];
 			NSTimeInterval age = [now timeIntervalSinceDate:date];
-			if ( age > 60.0*60*24*14 ) {
+			if ( age > 7.0 * 24*60*60 ) {
 				[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 			}
 		}

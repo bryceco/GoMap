@@ -235,8 +235,6 @@ CGSize SizeForImage( NSImage * image )
 								@"translateX"		: @(nan("")),
 								@"translateY"		: @(nan("")),
 								@"mapViewState"		: @(MAPVIEW_EDITORAERIAL),
-								@"locatorVisible"	: @(NO),
-								@"gpsTraceVisible"	: @(NO),
 								}];
 
 	// set up action button
@@ -246,9 +244,8 @@ CGSize SizeForImage( NSImage * image )
 	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f] }
 									   forState:UIControlStateNormal];
 
-	self.viewState = (MapViewState)[[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
-	self.locatorLayer.hidden  = ![[NSUserDefaults standardUserDefaults] boolForKey:@"locatorVisible"];
-	self.gpsTraceLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"gpsTraceVisible"];
+	self.viewState		 = (MapViewState) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
+	self.viewOverlayMask = (ViewOverlayMask) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewOverlays"];
 
 	[self updateBingButton];
 
@@ -290,29 +287,45 @@ CGSize SizeForImage( NSImage * image )
 
 -(void)setViewStateOverride:(BOOL)override
 {
-	[self setViewState:_viewState override:override];
+	[self setViewState:_viewState overlays:_viewOverlayMask override:override];
 }
 -(void)setViewState:(MapViewState)state
 {
-	[self setViewState:state override:_viewStateOverride];
+	[self setViewState:state overlays:_viewOverlayMask override:_viewStateOverride];
+}
+-(void)setViewOverlayMask:(ViewOverlayMask)mask
+{
+	[self setViewState:_viewState overlays:mask override:_viewStateOverride];
 }
 
 static inline MapViewState StateFor(MapViewState state, BOOL override)
 {
-	if ( override && (state == MAPVIEW_EDITOR || state == MAPVIEW_EDITORAERIAL) )
+	if ( override && state == MAPVIEW_EDITOR )
 		return MAPVIEW_MAPNIK;
+	if ( override && state == MAPVIEW_EDITORAERIAL )
+		return MAPVIEW_AERIAL;
 	return state;
 }
-
--(void)setViewState:(MapViewState)state override:(BOOL)override
+static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask mask, BOOL override)
 {
-	if ( _viewState == state && _viewStateOverride == override )
+	if ( override && state == MAPVIEW_EDITORAERIAL )
+		return mask | VIEW_OVERLAY_LOCATOR;
+	return mask;
+}
+
+-(void)setViewState:(MapViewState)state overlays:(ViewOverlayMask)overlays override:(BOOL)override
+{
+	if ( _viewState == state && _viewOverlayMask == overlays && _viewStateOverride == override )
 		return;
-	bool wasMapnik = StateFor(_viewState,_viewStateOverride) == MAPVIEW_MAPNIK;
-	MapViewState state2 = StateFor( state, override );
+
+	MapViewState oldState = StateFor(_viewState,_viewStateOverride);
+	MapViewState newState = StateFor( state, override );
+	ViewOverlayMask oldOverlays = OverlaysFor(_viewState, _viewOverlayMask, _viewStateOverride);
+	ViewOverlayMask newOverlays = OverlaysFor(state, overlays, override);
 	_viewState = state;
+	_viewOverlayMask = overlays;
 	_viewStateOverride = override;
-	if ( state2 == MAPVIEW_MAPNIK && wasMapnik )
+	if ( newState == oldState && newOverlays == oldOverlays )
 		return;
 
 	// enable/disable editing buttons based on visibility
@@ -322,7 +335,11 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	dispatch_async(dispatch_get_main_queue(), ^{	// do this a little bit later so it can be animated
 		[CATransaction begin];
 		[CATransaction setAnimationDuration:0.5];
-		switch (state2) {
+
+		_locatorLayer.hidden  = (newOverlays & VIEW_OVERLAY_LOCATOR) == 0;
+		_gpsTraceLayer.hidden = (newOverlays & VIEW_OVERLAY_GPSTRACE) == 0;
+
+		switch (newState) {
 			case MAPVIEW_EDITOR:
 				_editorLayer.textColor = NSColor.blackColor;
 				_editorLayer.hidden = NO;
@@ -418,8 +435,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	[[NSUserDefaults standardUserDefaults] setDouble:transform.ty forKey:@"translateY"];
 
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState forKey:@"mapViewState"];
-	[[NSUserDefaults standardUserDefaults] setBool:!self.locatorLayer.hidden forKey:@"locatorVisible"];
-	[[NSUserDefaults standardUserDefaults] setBool:!self.gpsTraceLayer.hidden forKey:@"gpsTraceVisible"];
+	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask forKey:@"mapViewOverlaysa"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 

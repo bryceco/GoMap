@@ -48,6 +48,11 @@ typedef enum _MapViewState {
 	MAPVIEW_MAPNIK,
 } MapViewState;
 
+typedef enum _ViewOverlayMask {
+	VIEW_OVERLAY_LOCATOR	= 1 << 0,
+	VIEW_OVERLAY_GPSTRACE	= 1 << 1,
+} ViewOverlayMask;
+
 #if TARGET_OS_IPHONE
 @interface MapView : UIView <CLLocationManagerDelegate>
 #else
@@ -107,6 +112,7 @@ typedef enum _MapViewState {
 
 @property (assign,nonatomic)	MapViewState			viewState;			// layer currently displayed
 @property (assign,nonatomic)	BOOL					viewStateOverride;	// override layer because we're zoomed out
+@property (assign,nonatomic)	ViewOverlayMask			viewOverlayMask;
 
 @property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
 

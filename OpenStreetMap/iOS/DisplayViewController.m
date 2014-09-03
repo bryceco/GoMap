@@ -99,8 +99,10 @@ static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
 	NSIndexPath * gpsTracePath = [NSIndexPath indexPathForRow:OVERLAY_GPSTRACE_ROW inSection:OVERLAY_SECTION];
 	UITableViewCell * locatorCell = [self.tableView cellForRowAtIndexPath:locatorPath];
 	UITableViewCell * gpsTraceCell = [self.tableView cellForRowAtIndexPath:gpsTracePath];
-	mapView.locatorLayer.hidden = (locatorCell.accessoryType != UITableViewCellAccessoryCheckmark);
-	mapView.gpsTraceLayer.hidden = (gpsTraceCell.accessoryType != UITableViewCellAccessoryCheckmark);
+	ViewOverlayMask mask = 0;
+	mask |= locatorCell.accessoryType  == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_LOCATOR  : 0;
+	mask |= gpsTraceCell.accessoryType == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_GPSTRACE : 0;
+	mapView.viewOverlayMask = mask;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
