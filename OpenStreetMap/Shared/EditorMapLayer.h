@@ -76,6 +76,8 @@
 
 - (void)setSelectionChangeCallback:(void (^)(void))callback;
 
+- (void)presentEditActions:(id)sender;	// extended editing actions for objects
+
 -(OsmNode *)createNodeAtPoint:(CGPoint)point;
 -(OsmWay *)createWayWithNode:(OsmNode *)node;
 -(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way;

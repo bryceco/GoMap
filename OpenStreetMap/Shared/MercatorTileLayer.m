@@ -369,6 +369,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 #endif
 				layer.hidden = NO;
 				[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
+				[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
 				completion(nil);
 			});
 
@@ -398,6 +399,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 #endif
 						layer.hidden = NO;
 						[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
+						[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
 						completion(nil);
 					});
 								   
@@ -506,10 +508,6 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		rc.origin.y -= 128;
 
 		layer.frame = CGRectMake( rc.origin.x, rc.origin.y, rc.size.width, rc.size.height );
-
-#if 0
-		DLog( @"%d,%d,%d -> %f, %f", tileZ, tileX, tileY, rc.origin.x, rc.origin.y );
-#endif
 	}];
 
 	[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];

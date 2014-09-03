@@ -2247,11 +2247,7 @@ enum {
 };
 static NSArray * ActionTitle;
 
-- (void)updateActionButton
-{
-	self.mapView.actionButton.hidden = !(_selectedWay || _selectedNode) || _selectedRelation;
-}
-- (void)actionButton:(id)sender
+- (void)presentEditActions:(id)sender
 {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -2310,7 +2306,7 @@ static NSArray * ActionTitle;
 	}
 	_actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
 
-	[_actionSheet showFromRect:self.mapView.actionButton.frame inView:self.mapView animated:YES];
+	[_actionSheet showFromRect:self.mapView.editControl.frame inView:self.mapView animated:YES];
 }
 
 
@@ -2379,7 +2375,7 @@ static NSArray * ActionTitle;
 	self.selectedWay  = way;
 	self.selectedNode = node;
 	self.selectedRelation = relation;
-	[self updateActionButton];
+	[_mapView updateEditControl];
 }
 - (void)saveSelection
 {
@@ -2577,7 +2573,7 @@ static NSArray * ActionTitle;
 		_selectedNode = selectedNode;
 		[self setNeedsDisplayForObject:selectedNode];
 		[self doSelectionChangeCallbacks];
-		[self updateActionButton];
+		[_mapView updateEditControl];
 	}
 }
 -(void)setSelectedWay:(OsmWay *)selectedWay
@@ -2587,7 +2583,7 @@ static NSArray * ActionTitle;
 		_selectedWay = selectedWay;
 		[self setNeedsDisplayForObject:selectedWay];
 		[self doSelectionChangeCallbacks];
-		[self updateActionButton];
+		[_mapView updateEditControl];
 	}
 }
 -(void)setSelectedRelation:(OsmRelation *)selectedRelation
@@ -2597,7 +2593,7 @@ static NSArray * ActionTitle;
 		_selectedRelation = selectedRelation;
 		[self setNeedsDisplayForObject:selectedRelation];
 		[self doSelectionChangeCallbacks];
-		[self updateActionButton];
+		[_mapView updateEditControl];
 	}
 }
 

@@ -138,9 +138,6 @@ static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
 		}
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 
-		// automatically dismiss settings when a new background is selected
-		[self.navigationController popToRootViewControllerAnimated:YES];
-
 	} else if ( indexPath.section == OVERLAY_SECTION ) {
 
 		// toggle checkmark
@@ -151,6 +148,9 @@ static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
 		}
 	}
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+	// automatically dismiss settings when a new background is selected
+	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath

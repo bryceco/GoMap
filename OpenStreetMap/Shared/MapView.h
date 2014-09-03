@@ -105,10 +105,10 @@ typedef enum _MapViewState {
 @property (assign,nonatomic)	IBOutlet UILabel	*	zoomToEditLabel;
 #endif
 
-@property (assign,nonatomic)	MapViewState			viewState;
-@property (assign,nonatomic)	BOOL					viewStateOverride;
+@property (assign,nonatomic)	MapViewState			viewState;			// layer currently displayed
+@property (assign,nonatomic)	BOOL					viewStateOverride;	// override layer because we're zoomed out
 
-@property (assign,nonatomic)	IBOutlet UIButton	*	actionButton;
+@property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
 
 @property (readonly,nonatomic)	Notes				*	notes;
 
@@ -135,6 +135,7 @@ typedef enum _MapViewState {
 
 
 -(void)updateBingButton;
+-(void)updateEditControl;				// show/hide edit control based on selection
 
 -(OSMRect)mapRectFromVisibleRect;
 -(OSMRect)viewRectFromMapRect:(OSMRect)mapRect;

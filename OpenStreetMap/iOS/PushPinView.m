@@ -120,18 +120,19 @@
 
 -(void)layoutSubviews
 {
+	const NSInteger buttonCount = MAX(_buttonList.count,1);
 	const CGFloat	moveButtonGap = 3.0;
 	const CGFloat	buttonVerticalSpacing = 55;
 	const CGSize	textSize = _textLayer.preferredFrameSize;
 	const CGFloat	textAlleyWidth = 5;
 	const CGSize	boxSize = { textSize.width + 2*textAlleyWidth + moveButtonGap + _moveButton.frame.size.width,
 								textSize.height + 2*textAlleyWidth };
-	const CGFloat	arrowHeight = 20 + (_buttonList.count * buttonVerticalSpacing)/2;
+	const CGFloat	arrowHeight = 20 + (buttonCount * buttonVerticalSpacing)/2;
 	const CGFloat	arrowWidth = 20;
 	const CGFloat	buttonHorzOffset = 44;
 	const CGFloat	buttonHeight = _buttonList.count ? [_buttonList[0] frame].size.height : 0;
 
-	CGFloat topGap	= buttonHeight/2 + (_buttonList.count-1)*buttonVerticalSpacing/2;
+	CGFloat topGap	= buttonHeight/2 + (buttonCount-1)*buttonVerticalSpacing/2;
 
 	// creat path with arrow
 	const CGFloat cornerRadius = 4;

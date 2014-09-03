@@ -39,12 +39,11 @@ static const CGFloat Z_AERIAL		= -100;
 static const CGFloat Z_MAPNIK		= -99;
 static const CGFloat Z_LOCATOR		= -50;
 static const CGFloat Z_GPSTRACE		= -40;
-
-//static const CGFloat Z_GPX			= -2;
-static const CGFloat Z_EDITOR		= -1;
-//static const CGFloat Z_EDITOR_GL	= -0.5;
+//static const CGFloat Z_GPX		= -30;
+static const CGFloat Z_EDITOR		= -20;
+//static const CGFloat Z_EDITOR_GL	= -19;
+static const CGFloat Z_RULER		= -5;	// ruler is being buttons
 //static const CGFloat Z_BING_LOGO	= 2;
-static const CGFloat Z_RULER		= 3;
 static const CGFloat Z_BLINK		= 4;
 static const CGFloat Z_BALLOON		= 5;
 static const CGFloat Z_FLASH		= 6;
@@ -240,8 +239,11 @@ CGSize SizeForImage( NSImage * image )
 	 }];
 
 	// set up action button
-	_actionButton.hidden = YES;
-	[_actionButton addTarget:self.editorLayer action:@selector(actionButton:) forControlEvents:UIControlEventTouchUpInside];
+	_editControl.hidden = YES;
+	_editControl.selected = NO;
+	_editControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f] }
+									   forState:UIControlStateNormal];
 
 	self.viewState = (MapViewState)[[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
 
@@ -363,6 +365,23 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	return _viewState;
 }
 
+-(IBAction)editAction:(id)sender
+{
+	UISegmentedControl * segmentedControl = (UISegmentedControl *) sender;
+	NSInteger segment = segmentedControl.selectedSegmentIndex;
+	if ( segment == 0 ) {
+		// Tags
+		[self editTags:sender];
+	} else if ( segment == 1 ) {
+		// Delete
+		[self delete:sender];
+	} else {
+		// More
+		[self.editorLayer presentEditActions:sender];
+	}
+	segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+}
+
 - (BOOL)acceptsFirstResponder
 {
 	return YES;
@@ -379,8 +398,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 			_editorLayer.selectedNode = nil;
 			_editorLayer.selectedWay = nil;
 #if TARGET_OS_IPHONE
-			[_pushpinView removeFromSuperview];
-			_pushpinView = nil;
+			[self removePin];
 #endif
 		}
 	} else {
@@ -963,13 +981,11 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	}
 	// if just dropped a pin then undo removes the pin
 	if ( _pushpinView && _editorLayer.selectedPrimary == nil ) {
-		[_pushpinView removeFromSuperview];
-		_pushpinView = nil;
+		[self removePin];
 		return;
 	}
 
-	[_pushpinView removeFromSuperview];
-	_pushpinView = nil;
+	[self removePin];
 #endif
 
 	[_editorLayer.mapData undo];
@@ -985,8 +1001,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		[self flashMessage:@"Editing layer not visible"];
 		return;
 	}
-	[_pushpinView removeFromSuperview];
-	_pushpinView = nil;
+	[self removePin];
 #endif
 
 	[_editorLayer.mapData redo];
@@ -1118,8 +1133,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	if ( alertView == _alertDelete ) {
 		if ( buttonIndex == 1 ) {
 			[_editorLayer deleteSelectedObject];
-			[_pushpinView removeFromSuperview];
-			_pushpinView = nil;
+			[self removePin];
 		}
 		_alertDelete = nil;
 	}
@@ -1136,8 +1150,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 			[_editorLayer.mapData undo];
 			[_editorLayer.mapData removeMostRecentRedo];
 			[_editorLayer setNeedsDisplay];
-			[_pushpinView removeFromSuperview];
-			_pushpinView = nil;
+			[self removePin];
 		} else {
 			// okay
 		}
@@ -1214,19 +1227,53 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 
 #pragma mark PushPin
 
+-(IBAction)editTags:(id)sender
+{
+	if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
+		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+		self.editorLayer.selectedNode = nil;
+	}
+	[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
+}
+
+- (void)updateEditControl
+{
+	BOOL show = (_pushpinView || _editorLayer.selectedWay || _editorLayer.selectedNode) && !_editorLayer.selectedRelation;
+	_editControl.hidden = !show;
+	if ( show ) {
+		if ( _editorLayer.selectedPrimary == nil ) {
+			// show only Tags button
+			if ( _editControl.numberOfSegments != 1 ) {
+				[_editControl removeSegmentAtIndex:1 animated:NO];
+				[_editControl removeSegmentAtIndex:1 animated:NO];
+			}
+		} else {
+			if ( _editControl.numberOfSegments != 3 ) {
+				[_editControl insertSegmentWithTitle:NSLocalizedString(@"Delete",nil) atIndex:1 animated:NO];
+				[_editControl insertSegmentWithTitle:NSLocalizedString(@"More...",nil) atIndex:2 animated:NO];
+			}
+		}
+		if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
+			// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+			self.editorLayer.selectedNode = nil;
+		}
+	}
+}
+
 -(void)removePin
 {
-	[_pushpinView removeFromSuperview];
-	_pushpinView = nil;
+	if ( _pushpinView ) {
+		[_pushpinView removeFromSuperview];
+		_pushpinView = nil;
+		[self updateEditControl];
+	}
 }
 
 -(void)placePushpinAtPoint:(CGPoint)point object:(OsmBaseObject *)object
 {
 	// drop in center of screen
-	if ( _pushpinView ) {
-		[_pushpinView removeFromSuperview];
-		_pushpinView = nil;
-	}
+	[self removePin];
+
 	_pushpinView = [PushPinView new];
 	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
 	_pushpinView.layer.zPosition = Z_BALLOON;
@@ -1311,18 +1358,16 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		};
 	}
 
+	[self updateEditControl];
+
+#if 0
 	UIButton * button1 = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 	button1.backgroundColor = [UIColor whiteColor]; // don't want transparent background for ios 7
 	button1.layer.cornerRadius = 10.0;
 	[_pushpinView addButton:button1 callback:^{
-		if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedNode && weakSelf.editorLayer.selectedWay.tags.count == 0 ) {
-			// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-			weakSelf.editorLayer.selectedNode = nil;
-		}
-		[weakSelf.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
+		[weakSelf editTags:nil];
 	}];
 
-#if 0
 	if ( YES ) {
 		UIButton * button2 = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		__weak MapView * weakSelf = self;
@@ -1331,7 +1376,7 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		}];
 	}
 #endif
-	
+
 #if 0
 	UIButton * button2 = [UIButton buttonWithType:UIButtonTypeCustom];
 	button2.frame = CGRectMake( 0, 0, 29, 29 );
@@ -1880,10 +1925,8 @@ drop_pin:
 			}
 		}
 #if TARGET_OS_IPHONE
-		if ( _pushpinView ) {
-			[_pushpinView removeFromSuperview];
-			_pushpinView = nil;
-		}
+		[self removePin];
+
 		if ( _editorLayer.selectedPrimary ) {
 			if ( _editorLayer.selectedPrimary.isNode ) {
 				// center on node
