@@ -109,11 +109,13 @@ CGSize SizeForImage( NSImage * image )
 		_locatorLayer  = [[MercatorTileLayer alloc] initWithMapView:self];
 		_locatorLayer.zPosition = Z_LOCATOR;
 		_locatorLayer.aerialService = [AerialService mapboxLocator];
+		_locatorLayer.hidden = YES;
 		[bg addObject:_locatorLayer];
 
 		_gpsTraceLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_gpsTraceLayer.zPosition = Z_GPSTRACE;
 		_gpsTraceLayer.aerialService = [AerialService gpsTrace];
+		_gpsTraceLayer.hidden = YES;
 		[bg addObject:_gpsTraceLayer];
 
 		_aerialLayer = [[MercatorTileLayer alloc] initWithMapView:self];
@@ -232,11 +234,10 @@ CGSize SizeForImage( NSImage * image )
 								@"zoom"				: @(nan("")),
 								@"translateX"		: @(nan("")),
 								@"translateY"		: @(nan("")),
-								@"aerialVisible"	: @YES,
- 								@"editorVisible"	: @YES,
-								@"mapnikVisible"	: @NO,
 								@"mapViewState"		: @(MAPVIEW_EDITORAERIAL),
-	 }];
+								@"locatorVisible"	: @(NO),
+								@"gpsTraceVisible"	: @(NO),
+								}];
 
 	// set up action button
 	_editControl.hidden = YES;
@@ -246,6 +247,8 @@ CGSize SizeForImage( NSImage * image )
 									   forState:UIControlStateNormal];
 
 	self.viewState = (MapViewState)[[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
+	self.locatorLayer.hidden  = ![[NSUserDefaults standardUserDefaults] boolForKey:@"locatorVisible"];
+	self.gpsTraceLayer.hidden = ![[NSUserDefaults standardUserDefaults] boolForKey:@"gpsTraceVisible"];
 
 	[self updateBingButton];
 
@@ -415,6 +418,8 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 	[[NSUserDefaults standardUserDefaults] setDouble:transform.ty forKey:@"translateY"];
 
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState forKey:@"mapViewState"];
+	[[NSUserDefaults standardUserDefaults] setBool:!self.locatorLayer.hidden forKey:@"locatorVisible"];
+	[[NSUserDefaults standardUserDefaults] setBool:!self.gpsTraceLayer.hidden forKey:@"gpsTraceVisible"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 

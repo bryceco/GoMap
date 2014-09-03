@@ -78,7 +78,8 @@
 			break;
 		case 1:
 			{
-				NSURL * url = [NSURL URLWithString:self.url];
+				NSString * escape = [self.url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+				NSURL * url = [NSURL URLWithString:escape];
 				[[UIApplication sharedApplication] openURL:url];
 			}
 			break;
