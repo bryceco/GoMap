@@ -46,17 +46,35 @@
 	_aerialDetail.text = NSLocalizedString(@"computing size...",nil);
 	_mapnikDetail.text = NSLocalizedString(@"computing size...",nil);
 
+	// aerial
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSInteger aerialSize = [appDelegate.mapView.aerialLayer diskCacheSize];
+		NSInteger size = [appDelegate.mapView.aerialLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
-			_aerialDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)aerialSize/(1024*1024)];
+			_aerialDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
 		});
 	});
 
+	// mapnik
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSInteger mapnikSize = [appDelegate.mapView.mapnikLayer diskCacheSize];
+		NSInteger size = [appDelegate.mapView.mapnikLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
-			_mapnikDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)mapnikSize/(1024*1024)];
+			_mapnikDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
+		});
+	});
+
+	// locator overlay
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		NSInteger size = [appDelegate.mapView.locatorLayer diskCacheSize];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			_locatorDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
+		});
+	});
+
+	// gps overlay
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		NSInteger size = [appDelegate.mapView.gpsTraceLayer diskCacheSize];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			_gpsTraceDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
 		});
 	});
 }
@@ -91,6 +109,12 @@
 			break;
 		case 2:	// Mapnik
 			[appDelegate.mapView.mapnikLayer purgeTileCache];
+			break;
+		case 3:	// Locator Overlay
+			[appDelegate.mapView.locatorLayer purgeTileCache];
+			break;
+		case 4:	// GPS Overlay
+			[appDelegate.mapView.gpsTraceLayer purgeTileCache];
 			break;
 	}
 	[self.navigationController popViewControllerAnimated:YES];

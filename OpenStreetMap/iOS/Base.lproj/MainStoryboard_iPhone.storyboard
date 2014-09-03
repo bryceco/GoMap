@@ -1770,7 +1770,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0tk-5d-BCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="452" y="481"/>
+            <point key="canvasLocation" x="668" y="493"/>
         </scene>
         <!--Login-->
         <scene sceneID="9rC-iQ-Obp">
@@ -2093,7 +2093,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Snp-b2-Szm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="804" y="1266"/>
+            <point key="canvasLocation" x="108" y="1225"/>
         </scene>
         <!--Gpx View Controller-->
         <scene sceneID="Vlb-u7-FZh">
@@ -2222,7 +2222,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BoP-nI-DeC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-693" y="661"/>
+            <point key="canvasLocation" x="-1005" y="1213"/>
         </scene>
         <!--Upload Table View Controller-->
         <scene sceneID="oQU-hH-L4s">
@@ -2311,7 +2311,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTL-vJ-c01" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-43" y="1269"/>
+            <point key="canvasLocation" x="-631" y="1225"/>
         </scene>
         <!--Clear Cache-->
         <scene sceneID="gQK-3a-ECG">
@@ -2323,11 +2323,11 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Discard &amp; Refresh" id="SNa-W1-wga">
-                                <string key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
+                                <mutableString key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
 
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
-Clear the Mapnik tile cache  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</string>
+Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</mutableString>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Tbo-ge-Amz" detailTextLabel="QeZ-5t-GnS" style="IBUITableViewCellStyleSubtitle" id="880-7S-VMO">
                                         <rect key="frame" x="0.0" y="119" width="320" height="44"/>
@@ -2395,6 +2395,50 @@ Clear the Mapnik tile cache  to download the latest tiles that reflect changes y
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="cfe-0O-z4y" detailTextLabel="Po2-4Z-i8t" style="IBUITableViewCellStyleSubtitle" id="cZv-l9-rIL">
+                                        <rect key="frame" x="0.0" y="207" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cZv-l9-rIL" id="LeP-gg-Gob">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear Locator Overlay Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cfe-0O-z4y">
+                                                    <rect key="frame" x="15" y="2" width="154" height="22"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Po2-4Z-i8t">
+                                                    <rect key="frame" x="15" y="24" width="50" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="klC-Oh-Oyd" detailTextLabel="UT3-uR-YpN" style="IBUITableViewCellStyleSubtitle" id="R0d-2b-Psc">
+                                        <rect key="frame" x="0.0" y="207" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R0d-2b-Psc" id="Lcc-Zv-GIu">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear GPS Overlay Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="klC-Oh-Oyd">
+                                                    <rect key="frame" x="15" y="2" width="154" height="22"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UT3-uR-YpN">
+                                                    <rect key="frame" x="15" y="24" width="50" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -2408,6 +2452,8 @@ Clear the Mapnik tile cache  to download the latest tiles that reflect changes y
                     </navigationItem>
                     <connections>
                         <outlet property="_aerialDetail" destination="9pN-dp-rZU" id="EV7-yd-Ymu"/>
+                        <outlet property="_gpsTraceDetail" destination="UT3-uR-YpN" id="PcU-x9-RqR"/>
+                        <outlet property="_locatorDetail" destination="Po2-4Z-i8t" id="0mD-3R-3Kt"/>
                         <outlet property="_mapnikDetail" destination="XHN-uF-r8g" id="Zdf-Zl-6Nk"/>
                         <outlet property="_osmDetail" destination="QeZ-5t-GnS" id="ElV-tb-aD1"/>
                     </connections>
@@ -2431,7 +2477,7 @@ Clear the Mapnik tile cache  to download the latest tiles that reflect changes y
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHr-ta-k6F">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <mutableString key="text">Copyright © 2012-2014 Bryce Cogswell. 
+                                <string key="text">Copyright © 2012-2014 Bryce Cogswell. 
 All rights reserved.
 
 OpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):
@@ -2450,7 +2496,7 @@ http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
-</mutableString>
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -2682,7 +2728,7 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wxq-VJ-xIg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1263" y="1206"/>
+            <point key="canvasLocation" x="-133" y="534"/>
         </scene>
         <!--Aerial Provider-->
         <scene sceneID="dnN-xl-4M0">
@@ -2863,7 +2909,7 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u0l-Qk-PMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1263" y="1771"/>
+            <point key="canvasLocation" x="255" y="522"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="ViH-as-IQq">
@@ -3646,6 +3692,9 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="ijx-N9-1eO" secondAttribute="centerY" id="BA8-hS-cQX"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
                                             <constraint firstItem="9pc-Qg-5ip" firstAttribute="leading" secondItem="ijx-N9-1eO" secondAttribute="trailing" constant="8" symbolic="YES" id="2Xh-kg-sdc"/>
@@ -4124,7 +4173,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJz-Wh-cNi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="414" y="1269"/>
+            <point key="canvasLocation" x="-270" y="1234"/>
         </scene>
         <!--Display-->
         <scene sceneID="6Mc-SX-nIf">
@@ -4279,7 +4328,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qfn-yi-XU8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="66" y="482"/>
+            <point key="canvasLocation" x="-502" y="534"/>
         </scene>
     </scenes>
     <resources>
@@ -4305,8 +4354,8 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="OEI-9h-7td"/>
-        <segue reference="DvT-fe-8IR"/>
-        <segue reference="KuK-gp-RBs"/>
+        <segue reference="Mpg-EL-lNX"/>
         <segue reference="mrH-5v-JIV"/>
+        <segue reference="FTo-kL-oAC"/>
     </inferredMetricsTieBreakers>
 </document>

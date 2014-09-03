@@ -1253,6 +1253,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
 		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
 		self.editorLayer.selectedNode = nil;
+		[self refreshPushpinText];
 	}
 	[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
 }
@@ -1277,6 +1278,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
 			// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
 			self.editorLayer.selectedNode = nil;
+			[self refreshPushpinText];
 		}
 	}
 }

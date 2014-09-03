@@ -13,5 +13,7 @@
 	IBOutlet UILabel *	_osmDetail;
 	IBOutlet UILabel *	_aerialDetail;
 	IBOutlet UILabel *	_mapnikDetail;
+	IBOutlet UILabel *	_locatorDetail;
+	IBOutlet UILabel *	_gpsTraceDetail;
 }
 @end

@@ -87,6 +87,8 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 	}
 }
 
+// This runs after we attempted to download a quad.
+// If the download succeeded we can mark this region and its children as whole.
 -(void)makeWhole:(BOOL)success
 {
 	assert(_parent);
@@ -155,7 +157,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
 -(void)addMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
 {
-	if ( !_isSplit && (_members == nil || _members.count < MAX_MEMBERS_PER_LEVEL) ) {
+	if ( !_isSplit && _members.count < MAX_MEMBERS_PER_LEVEL ) {
 		if ( _members == nil ) {
 			_members = [NSMutableArray arrayWithObject:member];
 		} else {
@@ -181,9 +183,9 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 		OSMRect rc = ChildRect( child, _rect );
 		if ( OSMRectIntersectsRect( bbox, rc ) ) {
 			if ( index < 0 ) {
-				index = child;
+				index = child;	// item crosses this child
 			} else {
-				index = -1;
+				index = -1;		// item crosses multiple children, so has to stay in parent
 				break;
 			}
 		}

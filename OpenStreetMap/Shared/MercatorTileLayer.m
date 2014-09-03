@@ -201,6 +201,7 @@ static NSDictionary * ActionDictionary = nil;
 
 	NSMutableArray * removeList = [NSMutableArray array];
 
+	// remove any tiles that don't intersect the current view
 	for ( CALayer * layer in self.sublayers ) {
 		OSMRect layerFrame = OSMRectFromCGRect( layer.frame );
 		if ( ! OSMRectIntersectsRect( rect, layerFrame ) ) {
@@ -215,17 +216,18 @@ static NSDictionary * ActionDictionary = nil;
 			layer.contents = nil;
 		}
 	}
-
 	[removeList removeAllObjects];
 
+	// next remove objects that are covered by a parent (larger) object
 	NSMutableArray *	layerList[ MAX_ZOOM ] = { nil };
-	BOOL				uncovered[ MAX_ZOOM ] = { NO };
+	BOOL				transparent[ MAX_ZOOM ] = { NO };	// some objects at this level are transparent
+	// place each object in a zoom level bucket
 	for ( CALayer * layer in self.sublayers ) {
 		NSString * tileKey = [layer valueForKey:@"tileKey"];
 		NSUInteger z = tileKey.integerValue;	// zoom level
 		if ( z < MAX_ZOOM ) {
 			if ( layer.contents == nil ) {
-				uncovered[ z ] = YES;
+				transparent[ z ] = YES;
 			}
 			if ( layerList[ z ] == nil ) {
 				layerList[ z ] = [NSMutableArray arrayWithObject:layer];
@@ -235,22 +237,24 @@ static NSDictionary * ActionDictionary = nil;
 		}
 	}
 
+	// remove tiles at zoom levels less than us if we don't have any transparent tiles (we've tiled everything in greater detail)
 	BOOL remove = NO;
 	for ( NSInteger z = zoomLevel; z >= 0; --z ) {
 		if ( remove ) {
 			[removeList addObjectsFromArray:layerList[z]];
 		}
-		if ( !uncovered[z] ) {
+		if ( !transparent[z] ) {
 			remove = YES;
 		}
 	}
 
+	// remove tiles at zoom levels greater than us if we're not transparent (we cover the more detailed tiles)
 	remove = NO;
 	for ( NSInteger z = zoomLevel; z < MAX_ZOOM; ++z ) {
 		if ( remove ) {
 			[removeList addObjectsFromArray:layerList[z]];
 		}
-		if ( !uncovered[z] ) {
+		if ( !transparent[z] ) {
 			remove = YES;
 		}
 	}
@@ -352,7 +356,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		return;
 	}
 
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
 		
 		// check disk cache
 		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
@@ -445,6 +449,7 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		}
 	});
 }
+
 
 -(void)layoutSublayers
 {
