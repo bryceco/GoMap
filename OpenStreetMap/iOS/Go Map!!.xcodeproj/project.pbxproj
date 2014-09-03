@@ -448,6 +448,8 @@
 		02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73619A5D679003B6783 /* AerialEditViewController.m */; };
 		02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73919A6DCEA003B6783 /* AerialList.m */; };
 		02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C4255216796B5800761C54 /* SpeechBalloonView.m */; };
+		02C43C8A19B6F6C70037A298 /* 103-map.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C43C8819B6F6C70037A298 /* 103-map.png */; };
+		02C43C8B19B6F6C70037A298 /* 103-map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C43C8919B6F6C70037A298 /* 103-map@2x.png */; };
 		02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
 		02E626701997168800565D62 /* KeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E6266F1997168800565D62 /* KeyChain.m */; };
@@ -971,6 +973,8 @@
 		02C3C73919A6DCEA003B6783 /* AerialList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AerialList.m; path = ../Shared/AerialList.m; sourceTree = "<group>"; };
 		02C4255116796B5800761C54 /* SpeechBalloonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonView.h; path = ../Shared/SpeechBalloonView.h; sourceTree = "<group>"; };
 		02C4255216796B5800761C54 /* SpeechBalloonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonView.m; path = ../Shared/SpeechBalloonView.m; sourceTree = "<group>"; };
+		02C43C8819B6F6C70037A298 /* 103-map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103-map.png"; sourceTree = "<group>"; };
+		02C43C8919B6F6C70037A298 /* 103-map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103-map@2x.png"; sourceTree = "<group>"; };
 		02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutocompleteTextField.h; sourceTree = "<group>"; };
 		02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutocompleteTextField.m; sourceTree = "<group>"; };
 		02DC59801671B79100213558 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -1021,6 +1025,8 @@
 		025A1D001690DC32002B60CB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				02C43C8819B6F6C70037A298 /* 103-map.png */,
+				02C43C8919B6F6C70037A298 /* 103-map@2x.png */,
 				02205F3A1674550D00D57D23 /* ArrowBlack.png */,
 				0242331216750C81008A3B6A /* ArrowBlue.png */,
 				02C19B361699EA7A00F75E3C /* bing_rgb.png */,
@@ -1717,6 +1723,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
+				02C43C8A19B6F6C70037A298 /* 103-map.png in Resources */,
 				02ACBA4616713CCB00BB4414 /* Default.png in Resources */,
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
@@ -1972,6 +1979,7 @@
 				02ACBCBF16713F2B00BB4414 /* tourist_steam_train.p.64.png in Resources */,
 				02ACBCC016713F2B00BB4414 /* tourist_theatre.p.64.png in Resources */,
 				02ACBCC116713F2B00BB4414 /* tourist_theme_park.p.64.png in Resources */,
+				02C43C8B19B6F6C70037A298 /* 103-map@2x.png in Resources */,
 				02ACBCC216713F2B00BB4414 /* tourist_view_point.p.64.png in Resources */,
 				02ACBCC316713F2B00BB4414 /* tourist_waterwheel.p.64.png in Resources */,
 				02ACBCC416713F2B00BB4414 /* tourist_wayside_cross.p.64.png in Resources */,

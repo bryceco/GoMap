@@ -65,7 +65,7 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem systemItem="flexibleSpace" id="4kg-8e-lu7"/>
-                                            <barButtonItem image="MenuIcon.png" style="plain" id="43k-EH-kfB">
+                                            <barButtonItem image="103-map.png" style="plain" id="43k-EH-kfB">
                                                 <connections>
                                                     <segue destination="UfZ-fJ-hyB" kind="push" id="YAs-Pe-6oG"/>
                                                 </connections>
@@ -4283,8 +4283,8 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
         </scene>
     </scenes>
     <resources>
+        <image name="103-map.png" width="26" height="21"/>
         <image name="BingLogo.png" width="93" height="29"/>
-        <image name="MenuIcon.png" width="26" height="26"/>
         <image name="PoiAdvanced.png" width="26" height="18"/>
         <image name="PoiSimple.png" width="29" height="23"/>
         <image name="Settings.png" width="26" height="26"/>
