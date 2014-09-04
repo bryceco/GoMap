@@ -393,8 +393,8 @@
 
 -(IBAction)done:(id)sender
 {
-	// Dismiss first so we trigger viewWillDisappear where we save state.
 	[self dismissViewControllerAnimated:YES completion:nil];
+	[self saveState];
 
 	POITabBarController * tabController = (id)self.tabBarController;
 	[tabController commitChanges];

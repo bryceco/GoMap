@@ -54,6 +54,7 @@ static NSDictionary * ActionDictionary = nil;
 				 @"bounds" : [NSNull null],
 				 @"position" : [NSNull null],
 				 @"transform" : [NSNull null],
+				 @"hidden"	: [NSNull null],
 		 };
 
 		_mapView = mapView;
@@ -263,8 +264,8 @@ static NSDictionary * ActionDictionary = nil;
 		NSString * key = [layer valueForKey:@"tileKey"];
 		if ( key ) {
 			[_layerDict removeObjectForKey:key];
-			[layer removeFromSuperlayer];
 			layer.contents = nil;
+			[layer removeFromSuperlayer];
 		}
 	}
 }
@@ -304,16 +305,14 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	return url;
 }
 
-#if 0
--(void)setNeedsLayout
-{
-	[super setNeedsLayout];
-}
-#endif
 
--(void)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY
-		   preferredZoom:(int32_t)preferredZoom
+
+typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
+
+-(BOOL)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY
+				 minZoom:(int32_t)minZoom
 			   zoomLevel:(int32_t)zoomLevel
+			 cacheLevel:(CACHE_LEVEL)cacheLevel
 			  completion:(void(^)(NSError * error))completion
 {
 	int32_t tileModX = modulus( tileX, 1<<zoomLevel );
@@ -322,12 +321,24 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	NSString * tileKey = [NSString stringWithFormat:@"%d,%d,%d",zoomLevel,tileX,tileY];
 	CALayer * layer = [_layerDict valueForKey:tileKey];
 	if ( layer ) {
-		completion(nil);
-		return;
+		if ( completion )
+			completion(nil);
+		return YES;
+	}
+
+	// check memory cache
+	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
+	NSImage * cachedImage = [_memoryTileCache objectForKey:cacheKey];
+	if ( cachedImage == nil ) {
+		// if a parent tile already covers the area then load it while we wait for the correct tile to be loaded from disk/network
+		if ( zoomLevel > minZoom ) {
+			[self fetchTileForTileX:tileX>>1 tileY:tileY>>1 minZoom:minZoom zoomLevel:zoomLevel-1 cacheLevel:CACHE_MEMORY completion:nil];
+		}
+		if ( cacheLevel == CACHE_MEMORY )
+			return NO;
 	}
 
 	// create layer
-	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
 	layer = [CALayer layer];
 	layer.actions = self.actions;
 	layer.zPosition = zoomLevel;
@@ -343,8 +354,6 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	[_layerDict setObject:layer forKey:tileKey];
 	[self addSublayer:layer];
 
-	// check memory cache
-	NSImage * cachedImage = [_memoryTileCache objectForKey:cacheKey];
 	if ( cachedImage ) {
 #if TARGET_OS_IPHONE
 		layer.contents = (__bridge id)cachedImage.CGImage;
@@ -352,9 +361,11 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		layer.contents = image;
 #endif
 		layer.hidden = NO;
-		completion(nil);
-		return;
+		if ( completion )
+			completion(nil);
+		return YES;
 	}
+
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
 		
@@ -366,18 +377,33 @@ static inline int32_t modulus( int32_t a, int32_t n)
 
 			// image is in disk cache
 			dispatch_async(dispatch_get_main_queue(), ^(void) {
+				if ( layer.superlayer ) {
 #if TARGET_OS_IPHONE
-				layer.contents = (__bridge id)fileImage.CGImage;
+					layer.contents = (__bridge id)fileImage.CGImage;
 #else
-				layer.contents = image;
+					layer.contents = image;
 #endif
-				layer.hidden = NO;
-				[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
-				[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
-				completion(nil);
+					layer.hidden = NO;
+					[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
+					[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
+				} else {
+					// layer no longer needed
+				}
+				if ( completion ) {
+					completion(nil);
+				}
 			});
 
 		} else {
+
+			// if a parent tile already covers the area then load it while we wait for the correct tile to be loaded from network
+			if ( zoomLevel > minZoom ) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self fetchTileForTileX:tileX>>1 tileY:tileY>>1 minZoom:minZoom zoomLevel:zoomLevel-1 cacheLevel:CACHE_DISK completion:nil];
+				});
+			}
+			if ( cacheLevel == CACHE_DISK )
+				return;
 
 			// fetch image from server
 			NSString * url = [self urlForZoom:zoomLevel	tileX:tileModX tileY:tileModY];
@@ -396,28 +422,36 @@ static inline int32_t modulus( int32_t a, int32_t n)
 				if ( image ) {
 
 					dispatch_sync(dispatch_get_main_queue(), ^(void){
+						if ( layer.superlayer ) {
 #if TARGET_OS_IPHONE
-						layer.contents = (__bridge id) image.CGImage;
+							layer.contents = (__bridge id) image.CGImage;
 #else
-						layer.contents = image;
+							layer.contents = image;
 #endif
-						layer.hidden = NO;
-						[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
-						[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
-						completion(nil);
+							layer.hidden = NO;
+							[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
+							[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
+						} else {
+							// no longer needed
+							[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
+						}
+						if ( completion ) {
+							completion(nil);
+						}
 					});
 								   
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 						[data writeToFile:cachePath atomically:YES];
 					});
 
-				} else if ( zoomLevel > 1 && zoomLevel >= preferredZoom - 3 ) {
+				} else if ( zoomLevel > minZoom ) {
 
 					// try to show tile at one zoom level higher
 					dispatch_async(dispatch_get_main_queue(), ^(void){
 						[self fetchTileForTileX:tileX>>1 tileY:tileY>>1
-								  preferredZoom:preferredZoom
+								  minZoom:minZoom
 									  zoomLevel:zoomLevel-1
+									cacheLevel:CACHE_NETWORK
 									 completion:completion];
 					});
 
@@ -440,14 +474,17 @@ static inline int32_t modulus( int32_t a, int32_t n)
 						error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{NSLocalizedDescriptionKey:text}];
 					}
 
-					dispatch_async(dispatch_get_main_queue(), ^(void){
-						completion(error);
-					});
+					if ( completion ) {
+						dispatch_async(dispatch_get_main_queue(), ^(void){
+							completion(error);
+						});
+					}
 				}
 			
 			}];
 		}
 	});
+	return NO;	// not immediately satisfied
 }
 
 
@@ -487,8 +524,9 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		for ( int32_t tileY = tileNorth; tileY < tileSouth; ++tileY ) {
 			[_mapView progressIncrement:NO];
 			[self fetchTileForTileX:tileX tileY:tileY
-					  preferredZoom:zoomLevel
+						minZoom:MAX(zoomLevel-8,1)
 						  zoomLevel:zoomLevel
+						cacheLevel:CACHE_NETWORK
 						 completion:^(NSError * error) {
 				if ( error ) {
 					[_mapView presentError:error flash:YES];

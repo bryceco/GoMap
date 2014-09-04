@@ -8,8 +8,10 @@
 
 
 #import "AppDelegate.h"
+#import "BingMapsGeometry.h"
 #import "DownloadThreadPool.h"
 #import "KeyChain.h"
+#import "MapView.h"
 
 
 @implementation AppDelegate
@@ -59,28 +61,58 @@
 }
 
 
-#if 0 // GPX support
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-	if ( ![url isFileURL] )
-		return NO;
-	if ( ![[url pathExtension] isEqualToString:@"gpx"] )
-		return NO;
+	NSScanner * scanner = [NSScanner scannerWithString:url.resourceSpecifier];
 
-	// Process the URL
-	NSData * data = [NSData dataWithContentsOfURL:url];
+	// open to longitude/latitude
+	if ( [url.resourceSpecifier hasPrefix:@"//center="] ) {
+		BOOL ok = YES;
+		double lat = 0, lon = 0;
+		if ( ![scanner scanUpToString:@"=" intoString:NULL] )
+			ok = NO;
+		if ( ![scanner scanString:@"=" intoString:NULL] )
+			ok = NO;
+		if ( ![scanner scanDouble:&lat] )
+			ok = NO;
+		if ( ![scanner scanString:@"," intoString:NULL] )
+			ok = NO;
+		if ( ![scanner scanDouble:&lon] )
+			ok = NO;
+		if ( ok ) {
+			double delayInSeconds = 0.1;
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				double metersPerDegree = MetersPerDegree( lat );
+				double minMeters = 50;
+				double widthDegrees = widthDegrees = minMeters / metersPerDegree;
+				[self.mapView setTransformForLatitude:lat longitude:lon width:widthDegrees];
+			});
+		} else {
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL",nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@",nil),url.absoluteString] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
+			[alertView show];
+		}
+	}
 
-	double delayInSeconds = 0.1;
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL",nil) message:NSLocalizedString(@"Sorry, importing GPX isn't implemented yet",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-		[alertView show];
-	});
+#if 0 // GPX support
+	if ( url.isFileURL && [url.pathExtension isEqualToString:@"gpx"] ) {
 
-	// Indicate that we have successfully opened the URL
-	return YES;
-}
+		// Process the URL
+		NSData * data = [NSData dataWithContentsOfURL:url];
+
+		double delayInSeconds = 0.1;
+		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL",nil) message:NSLocalizedString(@"Sorry, importing GPX isn't implemented yet",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
+			[alertView show];
+		});
+
+		// Indicate that we have successfully opened the URL
+		return YES;
+	}
 #endif
+	return NO;
+}
 
 - (NSString *)appName
 {

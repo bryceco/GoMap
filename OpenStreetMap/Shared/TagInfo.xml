@@ -452,7 +452,7 @@
     <tag key="highway" value="moving_walkway" name="Moving Walkway" type="way"/>
     <tag key="highway" value="passing_place" name="Passing Place" type="way" description="A passing place on a single track road."/>
     <tag key="highway" value="path" name="Path" type="way" description="A generic path" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dpath" lineColor="00FF00" lineWidth="1.000000"/>
-    <tag key="highway" value="pedestrian" name="Pedestrian" type="way" description="For Roads , i.e. mainly / exclusively for pedestrians (often Shopping Areas)." lineColor="00FF00" lineWidth="3.000000"/>
+    <tag key="highway" value="pedestrian" name="Pedestrian" type="way" description="For Roads , i.e. mainly / exclusively for pedestrians (often Shopping Areas)." lineColor="008000" areaColor="a0a0a0" lineWidth="2.000000"/>
     <tag key="highway" value="piste" name="Piste" type="way"/>
     <tag key="highway" value="platform" name="Platform" type="node;area" description="A platform of a bus station." lineColor="C0C0C0" areaColor="C0C0C0" lineWidth="2.000000"/>
     <tag key="highway" value="primary" name="Primary" type="way" description="A highway linking large towns." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary" lineColor="FB805F" lineWidth="3.000000"/>

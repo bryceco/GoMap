@@ -122,11 +122,13 @@ CGSize SizeForImage( NSImage * image )
 		_aerialLayer.zPosition = Z_AERIAL;
 		_aerialLayer.opacity = 0.75;
 		_aerialLayer.aerialService = self.customAerials.currentAerial;
+		_aerialLayer.hidden = YES;
 		[bg addObject:_aerialLayer];
 
 		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_mapnikLayer.aerialService = [AerialService mapnik];
 		_mapnikLayer.zPosition = Z_MAPNIK;
+		_mapnikLayer.hidden = YES;
 		[bg addObject:_mapnikLayer];
 
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
@@ -1275,11 +1277,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 				[_editControl insertSegmentWithTitle:NSLocalizedString(@"More...",nil) atIndex:2 animated:NO];
 			}
 		}
-		if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
-			// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-			self.editorLayer.selectedNode = nil;
-			[self refreshPushpinText];
-		}
 	}
 }
 
@@ -1447,11 +1444,18 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	if ( way && !node ) {
 		// add new node at point
-		OsmNode * newNode = [_editorLayer createNodeAtPoint:prevPoint];
 		NSInteger segment;
 		OsmBaseObject * object = [_editorLayer osmHitTestSelection:prevPoint segment:&segment];
-		if ( object == nil )
+		if ( object == nil ) {
+			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Select location",nil)
+															 message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)
+															delegate:nil
+												   cancelButtonTitle:NSLocalizedString(@"OK",nil)
+												   otherButtonTitles:nil];
+			[alert show];
 			return;
+		}
+		OsmNode * newNode = [_editorLayer createNodeAtPoint:prevPoint];
 		[_editorLayer.mapData addNode:newNode toWay:way atIndex:segment+1];
 		_editorLayer.selectedNode = newNode;
 		[self placePushpinAtPoint:prevPoint object:newNode];
@@ -1608,7 +1612,7 @@ drop_pin:
 	} else {
 		// update current object
 		[_editorLayer.mapData setTags:tags forObject:_editorLayer.selectedPrimary];
-		_pushpinView.text = _editorLayer.selectedPrimary.friendlyDescription;
+		[self refreshPushpinText];
 	}
 	[_editorLayer setNeedsDisplay];
 #endif
