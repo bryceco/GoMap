@@ -157,6 +157,7 @@ static NSDictionary * ActionDictionary = nil;
 	[_memoryTileCache removeAllObjects];
 	[_layerDict removeAllObjects];
 	self.sublayers = nil;
+	DLog(@"purge");
 	[self setNeedsLayout];
 }
 
@@ -212,6 +213,7 @@ static NSDictionary * ActionDictionary = nil;
 	for ( CALayer * layer in removeList ) {
 		NSString * key = [layer valueForKey:@"tileKey"];
 		if ( key ) {
+			// DLog(@"discard %@ - %@",key,layer);
 			[_layerDict removeObjectForKey:key];
 			[layer removeFromSuperlayer];
 			layer.contents = nil;
@@ -263,6 +265,7 @@ static NSDictionary * ActionDictionary = nil;
 	for ( CALayer * layer in removeList ) {
 		NSString * key = [layer valueForKey:@"tileKey"];
 		if ( key ) {
+			// DLog(@"prune %@ - %@",key,layer);
 			[_layerDict removeObjectForKey:key];
 			layer.contents = nil;
 			[layer removeFromSuperlayer];
@@ -320,7 +323,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 	NSString * tileKey = [NSString stringWithFormat:@"%d,%d,%d",zoomLevel,tileX,tileY];
 	CALayer * layer = [_layerDict valueForKey:tileKey];
-	if ( layer ) {
+	if ( layer && cacheLevel <= [[layer valueForKey:@"cacheLevel"] integerValue] ) {
 		if ( completion )
 			completion(nil);
 		return YES;
@@ -338,21 +341,24 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 			return NO;
 	}
 
-	// create layer
-	layer = [CALayer layer];
-	layer.actions = self.actions;
-	layer.zPosition = zoomLevel;
-	layer.anchorPoint = CGPointMake(0,1);
-	layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
-	layer.opaque = YES;
-	layer.hidden = YES;
-	[layer setValue:tileKey forKey:@"tileKey"];
+	if ( layer == nil ) {
+		// create layer
+		layer = [CALayer layer];
+		layer.actions = self.actions;
+		layer.zPosition = zoomLevel;
+		layer.anchorPoint = CGPointMake(0,1);
+		layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
+		layer.opaque = YES;
+		layer.hidden = YES;
+		[layer setValue:tileKey	forKey:@"tileKey"];
 #if !CUSTOM_TRANSFORM
-	double scale = 256.0 / (1 << zoomLevel);
-	layer.frame = CGRectMake( tileX * scale, tileY * scale, scale, scale );
+		double scale = 256.0 / (1 << zoomLevel);
+		layer.frame = CGRectMake( tileX * scale, tileY * scale, scale, scale );
 #endif
-	[_layerDict setObject:layer forKey:tileKey];
-	[self addSublayer:layer];
+		[_layerDict setObject:layer forKey:tileKey];
+		[self addSublayer:layer];
+	}
+	[layer setValue:@(cacheLevel) forKey:@"cacheLevel"];
 
 	if ( cachedImage ) {
 #if TARGET_OS_IPHONE
@@ -439,7 +445,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 							completion(nil);
 						}
 					});
-								   
+
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 						[data writeToFile:cachePath atomically:YES];
 					});
@@ -514,6 +520,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	int32_t tileSouth	= ceil( (rect.origin.y + rect.size.height) * zoom );
 	int32_t tileEast	= ceil( (rect.origin.x + rect.size.width ) * zoom );
 
+
 #if 0
 	DLog(@"tiling %d x %d", tileEast - tileWest, tileSouth - tileNorth );
 	DLog(@"%d sublayers, %d dict", self.sublayers.count, _layerDict.count);
@@ -522,6 +529,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	// create any tiles that don't yet exist
 	for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {
 		for ( int32_t tileY = tileNorth; tileY < tileSouth; ++tileY ) {
+
 			[_mapView progressIncrement:NO];
 			[self fetchTileForTileX:tileX tileY:tileY
 						minZoom:MAX(zoomLevel-8,1)
