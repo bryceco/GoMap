@@ -66,12 +66,10 @@
 	NSScanner * scanner = [NSScanner scannerWithString:url.resourceSpecifier];
 
 	// open to longitude/latitude
-	if ( [url.resourceSpecifier hasPrefix:@"//center="] ) {
+	if ( [url.resourceSpecifier hasPrefix:@"//?"] ) {
 		BOOL ok = YES;
 		double lat = 0, lon = 0;
-		if ( ![scanner scanUpToString:@"=" intoString:NULL] )
-			ok = NO;
-		if ( ![scanner scanString:@"=" intoString:NULL] )
+		if ( ![scanner scanString:@"center=" intoString:NULL] )
 			ok = NO;
 		if ( ![scanner scanDouble:&lat] )
 			ok = NO;

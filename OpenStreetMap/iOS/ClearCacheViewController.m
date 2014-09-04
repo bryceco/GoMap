@@ -18,19 +18,6 @@
 
 @implementation ClearCacheViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
 
 #pragma mark - Table view data source
 
@@ -43,10 +30,9 @@
 
 	NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
 	_osmDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
-	_aerialDetail.text = NSLocalizedString(@"computing size...",nil);
-	_mapnikDetail.text = NSLocalizedString(@"computing size...",nil);
 
 	// aerial
+	_aerialDetail.text = NSLocalizedString(@"computing size...",nil);
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSInteger size = [appDelegate.mapView.aerialLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -55,6 +41,7 @@
 	});
 
 	// mapnik
+	_mapnikDetail.text = NSLocalizedString(@"computing size...",nil);
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSInteger size = [appDelegate.mapView.mapnikLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -63,6 +50,7 @@
 	});
 
 	// locator overlay
+	_locatorDetail.text = NSLocalizedString(@"computing size...",nil);
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSInteger size = [appDelegate.mapView.locatorLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -71,6 +59,7 @@
 	});
 
 	// gps overlay
+	_gpsTraceDetail.text = NSLocalizedString(@"computing size...",nil);
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		NSInteger size = [appDelegate.mapView.gpsTraceLayer diskCacheSize];
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -81,6 +70,7 @@
 
 #pragma mark - Table view delegate
 
+// called if attempting to clear dirty editor data
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if ( buttonIndex == 1 ) {

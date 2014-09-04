@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.9" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Fx1-V2-8uJ">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
@@ -1651,30 +1651,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Reset" id="7dc-K6-1YR">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="fau-MH-Ky2" style="IBUITableViewCellStyleDefault" id="vGr-Hy-26l">
-                                        <rect key="frame" x="0.0" y="435" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vGr-Hy-26l" id="kx7-P4-Mrg">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear Cache" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fau-MH-Ky2">
-                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="2Gc-MU-wny" kind="push" id="w56-Yf-hlS"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Miscellaneous" id="nIn-2k-PYG">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="jcn-Lx-tj3" style="IBUITableViewCellStyleDefault" id="Qsr-Ud-xsW">
@@ -1770,7 +1746,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0tk-5d-BCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="668" y="493"/>
+            <point key="canvasLocation" x="1020" y="453"/>
         </scene>
         <!--Login-->
         <scene sceneID="9rC-iQ-Obp">
@@ -1920,7 +1896,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CzF-UG-rbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1094" y="482"/>
+            <point key="canvasLocation" x="1446" y="442"/>
         </scene>
         <!--Nearby Mappers-->
         <scene sceneID="Tnx-bm-RHs">
@@ -1966,7 +1942,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EYi-WK-eV8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1460" y="482"/>
+            <point key="canvasLocation" x="1812" y="442"/>
         </scene>
         <!--Upload-->
         <scene sceneID="lne-Ek-nNV">
@@ -2093,7 +2069,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Snp-b2-Szm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="108" y="1225"/>
+            <point key="canvasLocation" x="-191" y="1737"/>
         </scene>
         <!--Gpx View Controller-->
         <scene sceneID="Vlb-u7-FZh">
@@ -2222,7 +2198,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BoP-nI-DeC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1005" y="1213"/>
+            <point key="canvasLocation" x="-1460" y="797"/>
         </scene>
         <!--Upload Table View Controller-->
         <scene sceneID="oQU-hH-L4s">
@@ -2311,7 +2287,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTL-vJ-c01" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-631" y="1225"/>
+            <point key="canvasLocation" x="-1102" y="973"/>
         </scene>
         <!--Clear Cache-->
         <scene sceneID="gQK-3a-ECG">
@@ -2323,11 +2299,11 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Discard &amp; Refresh" id="SNa-W1-wga">
-                                <mutableString key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
+                                <string key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
 
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
-Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</mutableString>
+Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Tbo-ge-Amz" detailTextLabel="QeZ-5t-GnS" style="IBUITableViewCellStyleSubtitle" id="880-7S-VMO">
                                         <rect key="frame" x="0.0" y="119" width="320" height="44"/>
@@ -2460,7 +2436,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fez-n8-rk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1609" y="1206"/>
+            <point key="canvasLocation" x="-45" y="553"/>
         </scene>
         <!--Credits-->
         <scene sceneID="ouR-J9-98f">
@@ -2728,7 +2704,7 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wxq-VJ-xIg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-133" y="534"/>
+            <point key="canvasLocation" x="-333" y="1134"/>
         </scene>
         <!--Aerial Provider-->
         <scene sceneID="dnN-xl-4M0">
@@ -2909,7 +2885,7 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u0l-Qk-PMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="255" y="522"/>
+            <point key="canvasLocation" x="55" y="1122"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="ViH-as-IQq">
@@ -3561,7 +3537,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crr-EC-dTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-668" y="-1136"/>
+            <point key="canvasLocation" x="-724" y="-1116"/>
         </scene>
         <!--Bing Metadata View Controller-->
         <scene sceneID="I12-cf-9pY">
@@ -4173,7 +4149,7 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJz-Wh-cNi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-270" y="1234"/>
+            <point key="canvasLocation" x="-577" y="1737"/>
         </scene>
         <!--Display-->
         <scene sceneID="6Mc-SX-nIf">
@@ -4317,6 +4293,27 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Reset" id="wev-ax-u4C">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="2ZY-zi-luF" style="IBUITableViewCellStyleDefault" id="ku2-Cg-EFu">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ku2-Cg-EFu" id="tNN-Wv-20T">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Clear Cache" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ZY-zi-luF">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="2Gc-MU-wny" kind="push" id="E1j-nf-9AC"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="UfZ-fJ-hyB" id="dSH-cu-im9"/>
@@ -4354,8 +4351,8 @@ When displaying Bing aerial photography click the Bing logo to retrieve Bing cop
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="OEI-9h-7td"/>
-        <segue reference="Mpg-EL-lNX"/>
-        <segue reference="mrH-5v-JIV"/>
+        <segue reference="hnZ-Fq-F0U"/>
         <segue reference="FTo-kL-oAC"/>
+        <segue reference="KuK-gp-RBs"/>
     </inferredMetricsTieBreakers>
 </document>

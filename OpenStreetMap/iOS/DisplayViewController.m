@@ -21,6 +21,7 @@
 
 static const NSInteger BACKGROUND_SECTION	= 0;
 static const NSInteger OVERLAY_SECTION		= 1;
+static const NSInteger CACHE_SECTION		= 2;
 
 static const NSInteger OVERLAY_LOCATOR_ROW = 0;
 static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
@@ -36,11 +37,6 @@ static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
 
 
 @implementation DisplayViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -148,11 +144,15 @@ static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
 		} else {
 			cell.accessoryType = UITableViewCellAccessoryCheckmark;
 		}
+	} else if ( indexPath.section == CACHE_SECTION ) {
+
 	}
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	// automatically dismiss settings when a new background is selected
-	[self.navigationController popToRootViewControllerAnimated:YES];
+	if ( indexPath.section == BACKGROUND_SECTION || indexPath.section == OVERLAY_SECTION ) {
+		[self.navigationController popToRootViewControllerAnimated:YES];
+	}
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
