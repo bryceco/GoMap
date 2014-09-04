@@ -323,7 +323,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 	NSString * tileKey = [NSString stringWithFormat:@"%d,%d,%d",zoomLevel,tileX,tileY];
 	CALayer * layer = [_layerDict valueForKey:tileKey];
-	if ( layer && cacheLevel <= [[layer valueForKey:@"cacheLevel"] integerValue] ) {
+	CACHE_LEVEL prevCacheLevelForLayer = [[layer valueForKey:@"cacheLevel"] integerValue];
+	if ( layer && cacheLevel <= prevCacheLevelForLayer ) {
 		if ( completion )
 			completion(nil);
 		return YES;
@@ -374,10 +375,10 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
-		
+
 		// check disk cache
 		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
-		NSData * fileData = [[NSData alloc] initWithContentsOfFile:cachePath];
+		NSData * fileData = (prevCacheLevelForLayer < CACHE_DISK) ? [[NSData alloc] initWithContentsOfFile:cachePath] : nil;
 		NSImage * fileImage = fileData ? [[NSImage alloc] initWithData:fileData] : nil;	// force read of data from disk prior to adding image to layer
 		if ( fileImage ) {
 
