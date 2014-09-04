@@ -63,21 +63,28 @@
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-	NSScanner * scanner = [NSScanner scannerWithString:url.resourceSpecifier];
-
 	// open to longitude/latitude
-	if ( [url.resourceSpecifier hasPrefix:@"//?"] ) {
-		BOOL ok = YES;
+	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] ) {
+
+		NSArray * params = [url.query componentsSeparatedByString:@"&"];
+		BOOL hasCenter = NO;
 		double lat = 0, lon = 0;
-		if ( ![scanner scanString:@"center=" intoString:NULL] )
-			ok = NO;
-		if ( ![scanner scanDouble:&lat] )
-			ok = NO;
-		if ( ![scanner scanString:@"," intoString:NULL] )
-			ok = NO;
-		if ( ![scanner scanDouble:&lon] )
-			ok = NO;
-		if ( ok ) {
+		for ( NSString * param in params ) {
+			NSScanner * scanner = [NSScanner scannerWithString:param];
+			if ( [scanner scanString:@"center=" intoString:NULL] ) {
+				BOOL ok = YES;
+				if ( ![scanner scanDouble:&lat] )
+					ok = NO;
+				if ( ![scanner scanString:@"," intoString:NULL] )
+					ok = NO;
+				if ( ![scanner scanDouble:&lon] )
+					ok = NO;
+				hasCenter = ok;
+			} else {
+				// unrecognized parameter
+			}
+		}
+		if ( hasCenter ) {
 			double delayInSeconds = 0.1;
 			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
