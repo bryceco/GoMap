@@ -59,9 +59,9 @@
 			[mail setToRecipients:@[@"bryceco@yahoo.com"]];
 			struct utsname systemInfo = { 0 };
 			uname(&systemInfo);
-			NSMutableString * body = [NSMutableString stringWithFormat:@"Device: %s\n",systemInfo.machine];
+			NSMutableString * body = [NSMutableString stringWithFormat:@"Device: '%s'\n",systemInfo.machine];
 			if ( appDelegate.userName.length ) {
-				[body appendString:[NSString stringWithFormat:@"OSM ID: %@ (optional)\n\n",appDelegate.userName]];
+				[body appendString:[NSString stringWithFormat:@"OSM ID: '%@' (optional)\n\n",appDelegate.userName]];
 			}
 			[mail setMessageBody:body isHTML:NO];
 			[self.navigationController presentViewController:mail animated:YES completion:nil];
