@@ -1,0 +1,20 @@
+{
+    "icon": "highway-trunk",
+    "fields": [
+        "oneway",
+        "maxspeed",
+        "structure",
+        "access",
+        "lanes",
+        "surface",
+        "ref"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "highway": "trunk"
+    },
+    "terms": [],
+    "name": "Trunk Road"
+}

@@ -1,0 +1,14 @@
+{
+    "icon": "triangle-stroked",
+    "fields": [
+        "population"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "place": "hamlet"
+    },
+    "name": "Hamlet"
+}

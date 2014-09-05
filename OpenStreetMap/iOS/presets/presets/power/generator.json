@@ -1,0 +1,16 @@
+{
+    "name": "Power Generator",
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "power": "generator"
+    },
+    "fields": [
+        "generator/source",
+        "generator/method",
+        "generator/type"
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "icon": "pitch",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "leisure": "sports_centre"
+    },
+    "terms": [
+        "gym"
+    ],
+    "fields": [
+        "sport"
+    ],
+    "name": "Sports Center / Gym"
+}

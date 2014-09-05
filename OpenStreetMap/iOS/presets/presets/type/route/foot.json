@@ -1,0 +1,16 @@
+{
+    "geometry": [
+        "relation"
+    ],
+    "tags": {
+        "type": "route",
+        "route": "foot"
+    },
+    "name": "Foot Route",
+    "icon": "route-foot",
+    "fields": [
+        "ref",
+        "operator",
+        "network"
+    ]
+}

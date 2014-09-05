@@ -33,14 +33,6 @@
 	<string>1.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>1.2</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location will be displayed and followed on the map.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -52,6 +44,14 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1.2</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location will be displayed and followed on the map.</string>
 	<key>UIFileSharingEnabled</key>
 	<false/>
 	<key>UIInterfaceOrientation</key>

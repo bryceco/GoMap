@@ -1,0 +1,19 @@
+{
+    "geometry": [
+        "line",
+        "area"
+    ],
+    "terms": [
+        "landing strip"
+    ],
+    "fields": [
+        "ref",
+        "surface",
+        "length",
+        "width"
+    ],
+    "tags": {
+        "aeroway": "runway"
+    },
+    "name": "Runway"
+}

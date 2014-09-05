@@ -1,0 +1,16 @@
+{
+    "icon": "building",
+    "fields": [
+        "building",
+        "levels",
+        "address"
+    ],
+    "geometry": [
+        "area"
+    ],
+    "tags": {
+        "building": "*"
+    },
+    "terms": [],
+    "name": "Building"
+}

@@ -67,11 +67,16 @@
 	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] ) {
 
 		NSArray * params = [url.query componentsSeparatedByString:@"&"];
-		BOOL hasCenter = NO;
-		double lat = 0, lon = 0;
+		BOOL hasCenter = NO, hasZoom = NO;
+		double lat = 0, lon = 0, zoom = 0;
+		MapViewState view = MAPVIEW_NONE;
+
 		for ( NSString * param in params ) {
 			NSScanner * scanner = [NSScanner scannerWithString:param];
+
 			if ( [scanner scanString:@"center=" intoString:NULL] ) {
+
+				// scan center
 				BOOL ok = YES;
 				if ( ![scanner scanDouble:&lat] )
 					ok = NO;
@@ -80,6 +85,28 @@
 				if ( ![scanner scanDouble:&lon] )
 					ok = NO;
 				hasCenter = ok;
+
+			} else if ( [scanner scanString:@"zoom=" intoString:NULL] ) {
+
+				// scan zoom
+				BOOL ok = YES;
+				if ( ![scanner scanDouble:&zoom] )
+					ok = NO;
+				hasZoom = ok;
+
+			} else if ( [scanner scanString:@"view=" intoString:NULL] ) {
+
+				// scan view
+				if ( [scanner scanString:@"aerial+editor" intoString:NULL] ) {
+					view = MAPVIEW_EDITORAERIAL;
+				} else if ( [scanner scanString:@"aerial" intoString:NULL] ) {
+					view = MAPVIEW_AERIAL;
+				} else if ( [scanner scanString:@"mapnik" intoString:NULL] ) {
+					view = MAPVIEW_MAPNIK;
+				} else if ( [scanner scanString:@"editor" intoString:NULL] ) {
+					view = MAPVIEW_EDITOR;
+				}
+
 			} else {
 				// unrecognized parameter
 			}
@@ -92,6 +119,9 @@
 				double minMeters = 50;
 				double widthDegrees = widthDegrees = minMeters / metersPerDegree;
 				[self.mapView setTransformForLatitude:lat longitude:lon width:widthDegrees];
+				if ( view != MAPVIEW_NONE ) {
+					self.mapView.viewState = view;
+				}
 			});
 		} else {
 			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL",nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@",nil),url.absoluteString] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];

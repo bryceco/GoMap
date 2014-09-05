@@ -1,0 +1,16 @@
+{
+    "icon": "commercial",
+    "fields": [
+        "address",
+        "smoking"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "building": "commercial"
+    },
+    "name": "Commercial Building"
+}

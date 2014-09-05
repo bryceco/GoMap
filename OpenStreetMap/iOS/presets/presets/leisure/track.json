@@ -1,0 +1,17 @@
+{
+    "icon": "pitch",
+    "fields": [
+        "surface",
+        "lit",
+        "width"
+    ],
+    "geometry": [
+        "point",
+        "line",
+        "area"
+    ],
+    "tags": {
+        "leisure": "track"
+    },
+    "name": "Race Track"
+}

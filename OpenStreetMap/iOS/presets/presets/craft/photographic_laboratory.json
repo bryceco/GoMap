@@ -1,0 +1,21 @@
+{
+    "name": "Photographic Laboratory",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "photographic laboratory",
+        "film developer"
+    ],
+    "tags": {
+        "craft": "photographic_laboratory"
+    },
+    "icon": "camera",
+    "fields": [
+        "building_area",
+        "address",
+        "operator",
+        "opening_hours"
+    ]
+}

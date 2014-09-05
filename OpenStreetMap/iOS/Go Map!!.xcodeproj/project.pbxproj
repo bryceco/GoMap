@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0205460616766808004A2A23 /* POICuisineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0205460516766808004A2A23 /* POICuisineViewController.m */; };
-		0205460A1676721F004A2A23 /* POISourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020546091676721F004A2A23 /* POISourceViewController.m */; };
-		0205460D16767576004A2A23 /* POIWiFiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0205460C16767576004A2A23 /* POIWiFiViewController.m */; };
+		0205460616766808004A2A23 /* POIPresetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0205460516766808004A2A23 /* POIPresetViewController.m */; };
 		020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */; };
 		020C2A8D168A7522003F2C2A /* eye2.png in Resources */ = {isa = PBXBuildFile; fileRef = 020C2A8C168A7522003F2C2A /* eye2.png */; };
 		020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8F168A7688003F2C2A /* CreditsViewController.m */; };
@@ -46,6 +44,7 @@
 		0228444816DD339300A1C051 /* undo32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0228444616DD339300A1C051 /* undo32@2x.png */; };
 		022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A53167B8F1C00D7A5AC /* POITabBarController.m */; };
 		022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */; };
+		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02329DB716D33FB100D20646 /* FuturePlist.txt */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
@@ -83,6 +82,8 @@
 		027A469E1673B257000BE55C /* OSM-Logo144.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469D1673B257000BE55C /* OSM-Logo144.png */; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
 		0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB316A0BB67002C46A9 /* shrub.p.64.png */; };
+		028F504519B949780093C423 /* CommonTagList.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* CommonTagList.m */; };
+		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
 		02912D46168504AC00A541BC /* move.png in Resources */ = {isa = PBXBuildFile; fileRef = 02912D45168504AC00A541BC /* move.png */; };
 		02912D49168504D200A541BC /* wrench.png in Resources */ = {isa = PBXBuildFile; fileRef = 02912D48168504D200A541BC /* wrench.png */; };
@@ -99,7 +100,6 @@
 		0296876B1680D57800B8FF2C /* bullseye.png in Resources */ = {isa = PBXBuildFile; fileRef = 0296876A1680D57700B8FF2C /* bullseye.png */; };
 		0296876E1680D5D400B8FF2C /* redo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 0296876C1680D5D400B8FF2C /* redo32.png */; };
 		0296876F1680D5D400B8FF2C /* undo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 0296876D1680D5D400B8FF2C /* undo32.png */; };
-		02A077C3167A567E00686261 /* POIFixMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A077C2167A567D00686261 /* POIFixMeViewController.m */; };
 		02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A077D1167A77A400686261 /* POIAllTagsViewController.m */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
@@ -467,12 +467,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0205460416766808004A2A23 /* POICuisineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POICuisineViewController.h; sourceTree = "<group>"; };
-		0205460516766808004A2A23 /* POICuisineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POICuisineViewController.m; sourceTree = "<group>"; };
-		020546081676721F004A2A23 /* POISourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POISourceViewController.h; sourceTree = "<group>"; };
-		020546091676721F004A2A23 /* POISourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POISourceViewController.m; sourceTree = "<group>"; };
-		0205460B16767575004A2A23 /* POIWiFiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIWiFiViewController.h; sourceTree = "<group>"; };
-		0205460C16767576004A2A23 /* POIWiFiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIWiFiViewController.m; sourceTree = "<group>"; };
+		0205460416766808004A2A23 /* POIPresetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIPresetViewController.h; sourceTree = "<group>"; };
+		0205460516766808004A2A23 /* POIPresetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIPresetViewController.m; sourceTree = "<group>"; };
 		020C2A89168A6DF3003F2C2A /* UITableViewCell+FixConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+FixConstraints.h"; sourceTree = "<group>"; };
 		020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FixConstraints.m"; sourceTree = "<group>"; };
 		020C2A8C168A7522003F2C2A /* eye2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye2.png; sourceTree = "<group>"; };
@@ -523,6 +519,8 @@
 		022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearCacheViewController.h; sourceTree = "<group>"; };
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearCacheViewController.m; sourceTree = "<group>"; };
 		022B504716857E5F00E6619A /* OSMiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OSMiOS.entitlements; sourceTree = "<group>"; };
+		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresetController.h; sourceTree = "<group>"; };
+		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresetController.m; sourceTree = "<group>"; };
 		02329DB716D33FB100D20646 /* FuturePlist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FuturePlist.txt; sourceTree = "<group>"; };
 		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
@@ -565,6 +563,9 @@
 		0284FDB116A0B7DA002C46A9 /* tree.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.p.64.png; sourceTree = "<group>"; };
 		0284FDB316A0BB67002C46A9 /* shrub.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shrub.p.64.png; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; };
+		028F504319B949780093C423 /* CommonTagList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTagList.h; path = ../Shared/CommonTagList.h; sourceTree = "<group>"; };
+		028F504419B949780093C423 /* CommonTagList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommonTagList.m; path = ../Shared/CommonTagList.m; sourceTree = "<group>"; };
+		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = presets; sourceTree = "<group>"; };
 		029043A11682797A00BE3480 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		029043A21682797A00BE3480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		02912D45168504AC00A541BC /* move.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = move.png; sourceTree = "<group>"; };
@@ -583,8 +584,6 @@
 		0296876A1680D57700B8FF2C /* bullseye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bullseye.png; sourceTree = "<group>"; };
 		0296876C1680D5D400B8FF2C /* redo32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redo32.png; sourceTree = "<group>"; };
 		0296876D1680D5D400B8FF2C /* undo32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo32.png; sourceTree = "<group>"; };
-		02A077C1167A567D00686261 /* POIFixMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIFixMeViewController.h; sourceTree = "<group>"; };
-		02A077C2167A567D00686261 /* POIFixMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIFixMeViewController.m; sourceTree = "<group>"; };
 		02A077D0167A77A400686261 /* POIAllTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAllTagsViewController.h; sourceTree = "<group>"; };
 		02A077D1167A77A400686261 /* POIAllTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAllTagsViewController.m; sourceTree = "<group>"; };
 		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1164,6 +1163,8 @@
 				022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */,
 				020C2A8E168A7688003F2C2A /* CreditsViewController.h */,
 				020C2A8F168A7688003F2C2A /* CreditsViewController.m */,
+				0230558919B931A50041B151 /* CustomPresetController.h */,
+				0230558A19B931B20041B151 /* CustomPresetController.m */,
 				0225A36819B63EFE008B63BA /* DisplayViewController.h */,
 				0225A36919B63F0D008B63BA /* DisplayViewController.m */,
 				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
@@ -1195,18 +1196,13 @@
 				023D1722168A36B10011FABC /* POIAttributesViewController.m */,
 				0223DB5516765C9000D6F825 /* POICommonTagsViewController.h */,
 				0223DB5616765C9000D6F825 /* POICommonTagsViewController.m */,
-				0205460416766808004A2A23 /* POICuisineViewController.h */,
-				0205460516766808004A2A23 /* POICuisineViewController.m */,
-				02A077C1167A567D00686261 /* POIFixMeViewController.h */,
-				02A077C2167A567D00686261 /* POIFixMeViewController.m */,
-				020546081676721F004A2A23 /* POISourceViewController.h */,
-				020546091676721F004A2A23 /* POISourceViewController.m */,
+				0205460416766808004A2A23 /* POIPresetViewController.h */,
+				0205460516766808004A2A23 /* POIPresetViewController.m */,
 				022A2A52167B8F1C00D7A5AC /* POITabBarController.h */,
 				022A2A53167B8F1C00D7A5AC /* POITabBarController.m */,
 				0223DB511675D53200D6F825 /* POITypeViewController.h */,
 				0223DB521675D53200D6F825 /* POITypeViewController.m */,
-				0205460B16767575004A2A23 /* POIWiFiViewController.h */,
-				0205460C16767576004A2A23 /* POIWiFiViewController.m */,
+				028F504619BA2F460093C423 /* presets */,
 				0296873D167E30C700B8FF2C /* PushPinView.h */,
 				0296873E167E30C700B8FF2C /* PushPinView.m */,
 				025224E616D7292E00B6FD53 /* RotatingNavigationController.h */,
@@ -1559,6 +1555,8 @@
 				02C3C73919A6DCEA003B6783 /* AerialList.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
+				028F504319B949780093C423 /* CommonTagList.h */,
+				028F504419B949780093C423 /* CommonTagList.m */,
 				02ACBA7116713F2A00BB4414 /* CurvedTextLayer.h */,
 				02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */,
 				0289D0DD16A88BA300F86151 /* DLog.h */,
@@ -1724,6 +1722,7 @@
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
 				02C43C8A19B6F6C70037A298 /* 103-map.png in Resources */,
 				02ACBA4616713CCB00BB4414 /* Default.png in Resources */,
+				028F504719BA2F460093C423 /* presets in Resources */,
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard in Resources */,
@@ -2141,13 +2140,10 @@
 				024233101674FDB4008A3B6A /* VectorMath.m in Sources */,
 				0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */,
 				0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */,
-				0205460616766808004A2A23 /* POICuisineViewController.m in Sources */,
-				0205460A1676721F004A2A23 /* POISourceViewController.m in Sources */,
-				0205460D16767576004A2A23 /* POIWiFiViewController.m in Sources */,
+				0205460616766808004A2A23 /* POIPresetViewController.m in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Straighten.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
-				02A077C3167A567E00686261 /* POIFixMeViewController.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
 				022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */,
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,
@@ -2155,6 +2151,7 @@
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				02F9B89819B58A440008E0FE /* MapCSS.l in Sources */,
+				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
 				02E8436519B39FAD0044AC1D /* Notes.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
@@ -2172,6 +2169,7 @@
 				0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
 				024ADF3616AE44CB00875658 /* Model.xcdatamodeld in Sources */,
+				028F504519B949780093C423 /* CommonTagList.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
 				025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */,

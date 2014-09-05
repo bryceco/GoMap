@@ -1,0 +1,15 @@
+{
+    "icon": "playground",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "leisure": "playground"
+    },
+    "name": "Playground",
+    "terms": [
+        "jungle gym",
+        "play area"
+    ]
+}

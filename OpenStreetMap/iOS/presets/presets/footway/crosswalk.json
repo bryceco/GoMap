@@ -1,0 +1,22 @@
+{
+    "fields": [
+        "crossing",
+        "access",
+        "surface",
+        "sloped_curb",
+        "tactile_paving"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "highway": "footway",
+        "footway": "crossing",
+        "crossing": "zebra"
+    },
+    "terms": [
+        "crosswalk",
+        "zebra crossing"
+    ],
+    "name": "Crosswalk"
+}

@@ -1,0 +1,15 @@
+{
+    "geometry": [
+        "relation"
+    ],
+    "tags": {
+        "type": "route",
+        "route": "tram"
+    },
+    "name": "Tram Route",
+    "icon": "route-tram",
+    "fields": [
+        "ref",
+        "operator"
+    ]
+}

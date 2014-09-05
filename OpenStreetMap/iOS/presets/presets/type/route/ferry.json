@@ -1,0 +1,16 @@
+{
+    "geometry": [
+        "relation"
+    ],
+    "tags": {
+        "type": "route",
+        "route": "ferry"
+    },
+    "name": "Ferry Route",
+    "icon": "route-ferry",
+    "fields": [
+        "ref",
+        "operator",
+        "network"
+    ]
+}

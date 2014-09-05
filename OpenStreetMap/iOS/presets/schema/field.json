@@ -1,0 +1,103 @@
+{
+    "title": "Field",
+    "description": "A reusable form element for presets",
+    "type": "object",
+    "properties": {
+        "key": {
+            "description": "Tag key whose value is to be displayed",
+            "type": "string"
+        },
+        "keys": {
+            "description": "Tag keys whose value is to be displayed",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "reference": {
+            "description": "Taginfo documentation parameters (to be used when a field manages multiple tags)",
+            "type": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "key": {
+                            "description": "For documentation of a key",
+                            "type": "string",
+                            "required": true
+                        },
+                        "value": {
+                            "description": "For documentation of a tag (key and value)",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "rtype": {
+                            "description": "For documentation of a relation type",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "type": {
+            "description": "Type of field",
+            "type": "string",
+            "enum": [
+                "access",
+                "address",
+                "check",
+                "combo",
+                "defaultcheck",
+                "text",
+                "maxspeed",
+                "number",
+                "tel",
+                "email",
+                "url",
+                "radio",
+                "textarea",
+                "localized",
+                "wikipedia",
+                "typeCombo",
+                "restrictions"
+            ],
+            "required": true
+        },
+        "label": {
+            "description": "English label for the form",
+            "type": "string",
+            "required": true
+        },
+        "geometry": {
+            "type": "string"
+        },
+        "default": {
+            "type": "string"
+        },
+        "options": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "universal": {
+            "type": "boolean",
+            "default": false
+        },
+        "icon": {
+            "type": "string"
+        },
+        "placeholder": {
+            "type": "string"
+        },
+        "strings": {
+            "type": "object"
+        }
+    },
+    "additionalProperties": false
+}

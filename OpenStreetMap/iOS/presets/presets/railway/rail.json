@@ -1,0 +1,16 @@
+{
+    "icon": "railway-rail",
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "railway": "rail"
+    },
+    "fields": [
+        "structure",
+        "gauge",
+        "electrified"
+    ],
+    "terms": [],
+    "name": "Rail"
+}

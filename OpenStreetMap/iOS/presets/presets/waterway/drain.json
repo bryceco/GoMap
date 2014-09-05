@@ -1,0 +1,13 @@
+{
+    "icon": "waterway-stream",
+    "fields": [
+        "tunnel"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "waterway": "drain"
+    },
+    "name": "Drain"
+}

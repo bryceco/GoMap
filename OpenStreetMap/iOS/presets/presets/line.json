@@ -1,0 +1,6 @@
+{
+    "name": "Line",
+    "tags": {},
+    "geometry": ["line"],
+    "matchScore": 0.1
+}

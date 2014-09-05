@@ -1,0 +1,18 @@
+{
+    "fields": [
+        "surface",
+        "lit",
+        "width",
+        "oneway",
+        "structure",
+        "access"
+    ],
+    "geometry": [
+        "line", "area"
+    ],
+    "tags": {
+        "highway": "pedestrian"
+    },
+    "terms": [],
+    "name": "Pedestrian"
+}

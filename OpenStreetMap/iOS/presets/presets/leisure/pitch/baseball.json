@@ -1,0 +1,16 @@
+{
+    "icon": "baseball",
+    "fields": [
+        "lit"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "leisure": "pitch",
+        "sport": "baseball"
+    },
+    "terms": [],
+    "name": "Baseball Diamond"
+}

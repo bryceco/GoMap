@@ -8,89 +8,218 @@
 
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
+#import "CommonTagList.h"
+#import "DLog.h"
+#import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "EditorMapLayer.h"
-#import "POICommonTagsViewController.h"
-#import "POITabBarController.h"
 #import "OsmObjects.h"
+#import "POICommonTagsViewController.h"
+#import "POIPresetViewController.h"
+#import "POITabBarController.h"
 #import "POITabBarController.h"
 #import "TagInfo.h"
 #import "UITableViewCell+FixConstraints.h"
 
+
+@interface CommonTagCell : UITableViewCell
+@property (assign,nonatomic)	IBOutlet	UILabel					*	nameLabel;
+@property (assign,nonatomic)	IBOutlet	UILabel					*	nameLabel2;
+@property (assign,nonatomic)	IBOutlet	AutocompleteTextField	*	valueField;
+@property (assign,nonatomic)	IBOutlet	AutocompleteTextField	*	valueField2;
+@property (strong,nonatomic)				CommonTag				*	commonTag;
+@property (strong,nonatomic)				CommonTag				*	commonTag2;
+@end
+
+@implementation CommonTagCell
+@end
+
+
+
 @implementation POICommonTagsViewController
 
-
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-	self = [super initWithCoder:aDecoder];
-	return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-	_tagMap = @[
-		@[ _nameTextField,				@"name" ],
-		@[ _altNameTextField,			@"alt_name" ],
-		@[ _cuisineTextField,			@"cuisine" ],
-		@[ _wifiTextField,				@"wifi" ],
-		@[ _operatorTextField,			@"operator" ],
-		@[ _refTextField,				@"ref" ],
-		@[ _buildingTextField,			@"addr:housename" ],
-		@[ _houseNumberTextField,		@"addr:housenumber" ],
-		@[ _unitTextField,				@"addr:unit" ],
-		@[ _streetTextField,			@"addr:street" ],
-		@[ _cityTextField,				@"addr:city" ],
-		@[ _postalCodeTextField,		@"addr:postcode" ],
-		@[ _phoneTextField,				@"phone" ],
-		@[ _websiteTextField,			@"website" ],
-		@[ _designationTextField,		@"designation" ],
-		@[ _sourceTextField,			@"source" ],
-		@[ _fixmeTextField,				@"fixme" ],
-		@[ _noteTextField,				@"note" ],
-	];
+	_tags = [CommonTagList new];
 
-	UIColor * textColor = [UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0];
-	for ( NSArray * a in _tagMap ) {
-		UITextField * textField = a[0];
-		textField.textColor = textColor;
-	}
-	_typeTextField.textColor = textColor;
+	// add edit button
+	self.navigationItem.rightBarButtonItems = @[ self.navigationItem.rightBarButtonItem, self.editButtonItem ];
 }
 
 - (void)loadState
 {
-	// copy values out of tab bar controller
 	POITabBarController	* tabController = (id)self.tabBarController;
-	for ( NSArray * a in _tagMap ) {
-		NSString * tag = a[1];
-		NSString * value = [tabController.keyValueDict valueForKey:tag];
-		UITextField * field = a[0];
-		field.text = value;
-	}
+	_saveButton.enabled = [tabController isTagDictChanged];
+}
 
+- (NSString *)typeStringForDict:(NSDictionary *)dict
+{
 	for ( NSString * tag in [OsmBaseObject typeKeys] ) {
-		NSString * value = [tabController.keyValueDict valueForKey:tag];
+		NSString * value = dict[ tag ];
 		if ( value.length ) {
 			NSString * text = [NSString stringWithFormat:@"%@ (%@)", value, tag];
 			text = [text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
 			text = text.capitalizedString;
-			_typeTextField.text = text;
-			break;
+			return text;
 		}
 	}
-
-	_saveButton.enabled = [tabController isTagDictChanged];
+	return nil;
 }
+
+#pragma mark - Table view data source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	return [_tags sectionNameAtIndex:section];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	return _tags.sectionCount;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return [_tags tagsInSection:section];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( YES ) {
+
+		CommonTagCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagSingle" forIndexPath:indexPath];
+		CommonTag * commonTag = [_tags tagAtIndexPath:indexPath];
+		cell.nameLabel.text = commonTag.name;
+		cell.valueField.placeholder = commonTag.placeholder;
+		cell.valueField.delegate = self;
+		cell.valueField.textColor = [UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0];
+		cell.commonTag = commonTag;
+
+		[cell.valueField removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
+		[cell.valueField addTarget:self action:@selector(textFieldReturn:)			forControlEvents:UIControlEventEditingDidEndOnExit];
+		[cell.valueField addTarget:self action:@selector(textFieldChanged:)			forControlEvents:UIControlEventEditingChanged];
+		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
+
+		cell.accessoryType = commonTag.presetList.count ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+
+		POITabBarController	* tabController = (id)self.tabBarController;
+		NSDictionary * dict = tabController.keyValueDict;
+
+		if ( indexPath.section == 0 && indexPath.row == 0 ) {
+			// Type cell
+			cell.valueField.text = [self typeStringForDict:dict];
+			cell.valueField.enabled = NO;
+		} else {
+			// Regular cell
+			cell.valueField.text = dict[ commonTag.tag ];
+			cell.valueField.enabled = YES;
+		}
+
+		return cell;
+
+	} else {
+
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDouble" forIndexPath:indexPath];
+		return cell;
+	}
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	CommonTagCell * cell = (id) [tableView cellForRowAtIndexPath:indexPath];
+	if ( cell.accessoryType == UITableViewCellAccessoryNone )
+		return;
+	if ( indexPath.section == 0 && indexPath.row == 0 ) {
+		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
+	} else {
+		[self performSegueWithIdentifier:@"POIPresetSegue" sender:cell];
+	}
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	CommonTagCell * cell = sender;
+	if ( [segue.destinationViewController isKindOfClass:[POIPresetViewController class]] ) {
+		POIPresetViewController * preset = segue.destinationViewController;
+		preset.tag = cell.commonTag.tag;
+		preset.valueDefinitions = cell.commonTag.presetList;
+	}
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.section == 0 && indexPath.row == 0 )
+		return NO;
+	return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.row == [_tags tagsInSection:indexPath.section]-1 )
+		return UITableViewCellEditingStyleInsert;
+	else
+		return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		// Delete the row from the data source
+		[_tags removeTagAtIndexPath:indexPath];
+		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
+		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+	}
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+{
+	CommonTag * tag = [_tags tagAtIndexPath:fromIndexPath];
+	[_tags removeTagAtIndexPath:fromIndexPath];
+	[_tags insertTag:tag atIndexPath:toIndexPath];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.section == 0 && indexPath.row == 0 )
+		return NO;
+//	if ( indexPath.section == 4 && indexPath.row == _tags.list.count-1 )
+//		return NO;
+	return YES;
+}
+
+
+#pragma mark display
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+
 	[self loadState];
+
+	if ( [self isMovingToParentViewController] ) {
+	} else {
+		// reload cells when coming back from preset picker
+		POITabBarController * tabController = (id)self.tabBarController;
+		NSDictionary * dict = tabController.keyValueDict;
+		for ( CommonTagCell * cell in self.tableView.visibleCells ) {
+			if ( cell.commonTag.tag == nil ) {
+				// type cell
+				cell.valueField.text = [self typeStringForDict:dict];
+			} else {
+				cell.valueField.text = dict[ cell.commonTag.tag ];
+			}
+		}
+	}
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
 	[self resignAll];
+	[super viewWillDisappear:animated];
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,58 +227,55 @@
 	[cell fixConstraints];
 }
 
+-(IBAction)cancel:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(IBAction)done:(id)sender
+{
+	[self resignAll];
+	[self dismissViewControllerAnimated:YES completion:nil];
+
+	POITabBarController * tabController = (id)self.tabBarController;
+	[tabController commitChanges];
+}
+
+#pragma mark - Table view delegate
+
+
 - (void)resignAll
 {
-	for ( NSArray * a in _tagMap ) {
-		UITextField * field = a[0];
-		[field resignFirstResponder];
+	for (CommonTagCell * cell in self.tableView.visibleCells) {
+		[cell.valueField resignFirstResponder];
+		[cell.valueField2 resignFirstResponder];
 	}
 }
 
 
 - (IBAction)textFieldReturn:(id)sender
 {
-#if 1
 	[sender resignFirstResponder];
-#else
-	UITextField * textField = sender;
-	NSInteger nextTag = textField.tag + 1;
-	// Try to find next responder
-	UIView * tableView = [[[textField superview] superview] superview];
-	UIView * nextResponder = [tableView viewWithTag:nextTag];
-	if ( nextResponder ) {
-		// Found next responder, so set it.
-		[nextResponder becomeFirstResponder];
-		_firstResponder = nextResponder;
-		id cell = [[nextResponder superview] superview];
-		NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-		[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-	} else {
-		// Not found, so remove keyboard.
-		[textField resignFirstResponder];
-		_firstResponder = nil;
-	}
-#endif
 }
 
--(NSString *)tagKeyForTextField:(UITextField *)textField
+-(CommonTagCell *)cellForTextField:(UITextField *)textField
 {
-	NSString * key = nil;
-	for ( NSArray * a in _tagMap ) {
-		if ( a[0] == textField ) {
-			key = a[1];
-			break;
-		}
+	CommonTagCell * cell = (id) [textField superview];
+	while ( cell && ![cell isKindOfClass:[CommonTagCell class]] ) {
+		cell = (id)cell.superview;
 	}
-	assert(key);
-	return key;
+	return cell;
 }
 
 - (IBAction)textFieldEditingDidBegin:(UITextField *)textField
 {
 	if ( [textField isKindOfClass:[AutocompleteTextField class]] ) {
+
 		// get list of values for current key
-		NSString * key = [self tagKeyForTextField:textField];
+		CommonTagCell * cell = [self cellForTextField:textField];
+		NSString * key = cell.commonTag.tag;
+		if ( key == nil )
+			return;	// should never happen
 		NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
 		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 		NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
@@ -166,7 +292,10 @@
 
 - (IBAction)textFieldDidEndEditing:(UITextField *)textField
 {
-	NSString * key = [self tagKeyForTextField:textField];
+	CommonTagCell * cell = [self cellForTextField:textField];
+	NSString * key = cell.commonTag.tag;
+	if ( key == nil )
+		return;	// should never happen
 	NSString * value = textField.text;
 	value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	textField.text = value;
@@ -181,28 +310,5 @@
 
 	_saveButton.enabled = [tabController isTagDictChanged];
 }
-
-
--(IBAction)cancel:(id)sender
-{
-	[self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(IBAction)done:(id)sender
-{
-	[self resignAll];
-	[self dismissViewControllerAnimated:YES completion:nil];
-
-	POITabBarController * tabController = (id)self.tabBarController;
-	[tabController commitChanges];
-}
-
-
-
-#pragma mark - Table view data source
-
-
-#pragma mark - Table view delegate
-
 
 @end

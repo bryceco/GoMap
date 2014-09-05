@@ -1,0 +1,12 @@
+{
+    "name": "Administrative Boundary",
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "boundary": "administrative"
+    },
+    "fields": [
+        "admin_level"
+    ]
+}

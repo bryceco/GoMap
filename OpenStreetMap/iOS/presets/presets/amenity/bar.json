@@ -1,0 +1,19 @@
+{
+    "icon": "bar",
+    "fields": [
+        "building_area",
+        "address",
+        "opening_hours",
+        "smoking"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "amenity": "bar"
+    },
+    "terms": [],
+    "name": "Bar"
+}

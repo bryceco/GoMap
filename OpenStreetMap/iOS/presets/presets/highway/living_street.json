@@ -1,0 +1,17 @@
+{
+    "icon": "highway-living-street",
+    "fields": [
+        "oneway",
+        "maxspeed",
+        "structure",
+        "access",
+        "surface"
+    ],
+    "geometry": [
+        "line"
+    ],
+    "tags": {
+        "highway": "living_street"
+    },
+    "name": "Living Street"
+}

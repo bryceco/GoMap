@@ -1,0 +1,22 @@
+{
+    "icon": "airport",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "airplane",
+        "airport",
+        "aerodrome"
+    ],
+    "fields": [
+        "ref",
+        "iata",
+        "icao",
+        "operator"
+    ],
+    "tags": {
+        "aeroway": "aerodrome"
+    },
+    "name": "Airport"
+}

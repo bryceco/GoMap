@@ -323,7 +323,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 	NSString * tileKey = [NSString stringWithFormat:@"%d,%d,%d",zoomLevel,tileX,tileY];
 	CALayer * layer = [_layerDict valueForKey:tileKey];
-	CACHE_LEVEL prevCacheLevelForLayer = [[layer valueForKey:@"cacheLevel"] integerValue];
+	CACHE_LEVEL prevCacheLevelForLayer = (CACHE_LEVEL) [[layer valueForKey:@"cacheLevel"] integerValue];
 	if ( layer && cacheLevel <= prevCacheLevelForLayer ) {
 		if ( completion )
 			completion(nil);

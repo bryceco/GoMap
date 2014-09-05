@@ -1,0 +1,14 @@
+{
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "amenity": "marketplace"
+    },
+    "fields": [
+        "building_area"
+    ],
+    "name": "Marketplace"
+}

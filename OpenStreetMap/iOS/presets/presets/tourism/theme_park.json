@@ -1,0 +1,15 @@
+{
+    "fields": [
+        "operator",
+        "address"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "tourism": "theme_park"
+    },
+    "name": "Theme Park"
+}

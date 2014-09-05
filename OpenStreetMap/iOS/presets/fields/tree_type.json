@@ -1,0 +1,10 @@
+{
+    "key": "type",
+    "type": "combo",
+    "label": "Type",
+    "options": [
+        "broad_leaved",
+        "conifer",
+        "palm"
+    ]
+}

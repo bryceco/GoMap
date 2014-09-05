@@ -1,0 +1,17 @@
+{
+    "icon": "building",
+    "fields": [
+        "address",
+        "levels",
+        "smoking"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "building": "public"
+    },
+    "name": "Public Building"
+}

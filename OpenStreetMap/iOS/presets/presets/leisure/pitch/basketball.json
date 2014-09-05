@@ -1,0 +1,18 @@
+{
+    "icon": "basketball",
+    "fields": [
+        "surface",
+        "hoops",
+        "lit"
+    ],
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "leisure": "pitch",
+        "sport": "basketball"
+    },
+    "terms": [],
+    "name": "Basketball Court"
+}

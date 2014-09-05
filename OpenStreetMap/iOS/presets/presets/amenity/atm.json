@@ -1,0 +1,14 @@
+{
+    "icon": "bank",
+    "fields": [
+        "operator"
+    ],
+    "geometry": [
+        "point",
+        "vertex"
+    ],
+    "tags": {
+        "amenity": "atm"
+    },
+    "name": "ATM"
+}

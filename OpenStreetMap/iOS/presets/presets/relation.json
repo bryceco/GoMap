@@ -1,0 +1,9 @@
+{
+    "name": "Relation",
+    "icon": "relation",
+    "tags": {},
+    "geometry": ["relation"],
+    "fields": [
+        "relation"
+    ]
+}

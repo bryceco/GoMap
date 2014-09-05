@@ -1,0 +1,20 @@
+{
+    "name": "Clinic",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "terms": [
+        "clinic",
+        "medical clinic"
+    ],
+    "tags": {
+        "amenity": "clinic"
+    },
+    "icon": "hospital",
+    "fields": [
+        "building_area",
+        "address",
+        "opening_hours"
+    ]
+}

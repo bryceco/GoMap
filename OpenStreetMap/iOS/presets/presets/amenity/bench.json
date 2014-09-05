@@ -1,0 +1,14 @@
+{
+    "geometry": [
+        "point",
+        "vertex",
+        "line"
+    ],
+    "tags": {
+        "amenity": "bench"
+    },
+    "fields": [
+        "backrest"
+    ],
+    "name": "Bench"
+}

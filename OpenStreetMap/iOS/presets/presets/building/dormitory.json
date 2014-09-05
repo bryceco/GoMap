@@ -1,0 +1,17 @@
+{
+    "icon": "building",
+    "fields": [
+        "address",
+        "levels",
+        "smoking"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "building": "dormitory"
+    },
+    "name": "Dormitory"
+}

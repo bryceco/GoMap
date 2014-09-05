@@ -1,0 +1,16 @@
+{
+    "icon": "cemetery",
+    "fields": [
+        "religion",
+        "denomination"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "amenity": "grave_yard"
+    },
+    "name": "Graveyard"
+}

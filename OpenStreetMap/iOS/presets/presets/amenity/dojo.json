@@ -1,0 +1,19 @@
+{
+    "icon": "pitch",
+    "geometry" : [
+        "point", "area"
+    ],
+    "terms": [
+        "martial arts",
+        "dojo",
+        "dojang"
+    ],
+    "tags": {
+        "amenity": "dojo"
+    },
+    "fields": [
+        "address",
+        "sport"
+    ],
+    "name": "Dojo / Martial Arts Academy"
+}

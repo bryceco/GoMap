@@ -1,0 +1,8 @@
+{
+    "name": "Area",
+    "tags": {
+        "area": "yes"
+    },
+    "geometry": ["area"],
+    "matchScore": 0.1
+}

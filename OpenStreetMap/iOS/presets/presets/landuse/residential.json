@@ -1,0 +1,12 @@
+{
+    "icon": "building",
+    "geometry": [
+        "point",
+        "area"
+    ],
+    "tags": {
+        "landuse": "residential"
+    },
+    "terms": [],
+    "name": "Residential"
+}

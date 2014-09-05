@@ -1,0 +1,14 @@
+{
+    "fields": [
+        "access"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "line"
+    ],
+    "tags": {
+        "barrier": "bollard"
+    },
+    "name": "Bollard"
+}

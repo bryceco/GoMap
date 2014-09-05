@@ -1,0 +1,16 @@
+{
+    "fields": [
+        "operator",
+        "address",
+        "smoking"
+    ],
+    "geometry": [
+        "point",
+        "vertex",
+        "area"
+    ],
+    "tags": {
+        "tourism": "caravan_site"
+    },
+    "name": "RV Park"
+}
