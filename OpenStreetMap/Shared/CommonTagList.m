@@ -8,30 +8,105 @@
 
 #import "iosapi.h"
 #import "CommonTagList.h"
+#import "DLog.h"
 #import "TagInfo.h"
 
 
-@implementation CommonTag
--(instancetype)initWithName:(NSString *)name tag:(NSString *)tag placeholder:(NSString *)placeholder presets:(NSArray *)presets
+static NSString * prettyTag( NSString * tag )
+{
+	tag = [tag stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+	tag = [tag capitalizedString];
+	return tag;
+}
+
+
+
+@implementation CommonPreset
+-(instancetype)initWithName:(NSString *)name tagValue:(NSString *)value
 {
 	self = [super init];
 	if ( self ) {
-		_name			= name;
-		_tag			= tag;
-		_placeholder	= placeholder;
-		_presetList		= presets;
+		_name = name ?: prettyTag(value);
+		_tagValue = value;
 	}
 	return self;
 }
-+(instancetype)tagWithName:(NSString *)name tag:(NSString *)tag placeholder:(NSString *)placeholder presets:(NSArray *)presets
++(instancetype)presetWithName:(NSString *)name tagValue:(NSString *)value
 {
-	return [[CommonTag alloc] initWithName:name tag:tag placeholder:placeholder presets:presets];
+	return [[CommonPreset alloc] initWithName:name tagValue:value];
+}
+@end
+
+@implementation CommonGroup
+-(instancetype)initWithName:(NSString *)name tags:(NSArray *)tags
+{
+	self = [super init];
+	if ( self ) {
+#if DEBUG
+		if ( tags.count )	assert( [tags.lastObject isKindOfClass:[CommonTag class]] );
+#endif
+		_name = name;
+		_tags = tags;
+	}
+	return self;
+}
++(instancetype)groupWithName:(NSString *)name tags:(NSArray *)tags
+{
+	return [[CommonGroup alloc] initWithName:name tags:tags];
+}
+-(void)mergeTagsFromGroup:(CommonGroup *)other
+{
+	if ( _tags == nil )
+		_tags = other.tags;
+	else
+		_tags = [_tags arrayByAddingObjectsFromArray:other.tags];
+}
+@end
+
+
+@implementation CommonTag
+-(instancetype)initWithName:(NSString *)name tagKey:(NSString *)tag placeholder:(NSString *)placeholder presets:(NSArray *)presets
+{
+	self = [super init];
+	if ( self ) {
+
+		if ( placeholder == nil ) {
+			if ( presets.count > 1 ) {
+				NSMutableString * s = [NSMutableString new];
+				for ( NSInteger i = 0; i < 3; ++i ) {
+					if ( i >= presets.count )
+						break;
+					CommonPreset * p = presets[i];
+					if ( p.tagValue.length >= 20 )
+						continue;
+					if ( s.length )
+						[s appendString:@", "];
+					[s appendString:p.tagValue];
+				}
+				[s appendString:@"..."];
+				placeholder = s;
+			} else {
+				placeholder = @"Unknown";
+			}
+		}
+
+		_name			= name;
+		_tagKey			= tag;
+		_placeholder	= placeholder;
+		_presetList		= presets.count ? presets : nil;
+	}
+	return self;
+}
++(instancetype)tagWithName:(NSString *)name tagKey:(NSString *)tag placeholder:(NSString *)placeholder presets:(NSArray *)presets
+{
+	return [[CommonTag alloc] initWithName:name tagKey:tag placeholder:placeholder presets:presets];
 }
 @end
 
 
 @implementation CommonTagList
 
+#if 0
 -(NSArray *)builtinSectionNames
 {
 	return @[
@@ -77,11 +152,209 @@
 		],
 	];
 }
+#endif
+
+-(CommonGroup *)groupForField:(NSString *)field geometry:(NSString *)geometry
+{
+	static NSMutableDictionary * presetCache = nil;
+	if ( presetCache == nil ) {
+		presetCache = [NSMutableDictionary new];
+	}
+
+	NSString * root = [[NSBundle mainBundle] resourcePath];
+	NSString * path = [NSString stringWithFormat:@"%@/presets/fields/%@.json",root,field];
+	NSData * data = [NSData dataWithContentsOfFile:path];
+	NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+	if ( dict == nil )
+		return nil;
+
+	NSString * geo = dict[@"geometry"];
+	if ( [geo rangeOfString:geometry].location == NSNotFound ) {
+		DLog(@"skip %@",field);
+		return nil;
+	}
+
+	NSString	*	type = dict[@"type"];
+	NSArray		*	keyArray = dict[ @"keys" ];
+	NSString	*	givenName = dict[@"label"];
+	NSString	*	placeholder = dict[@"placeholder"];
+	NSDictionary *	optionStringsDict = dict[ @"strings" ][ @"options" ];
+	NSArray		*	optionArray = dict[ @"options" ];
+	DLog(@"%@",dict);
+
+
+	if ( [type isEqualToString:@"defaultcheck"] || [type isEqualToString:@"check"] ) {
+
+		NSArray * presets = @[ [CommonPreset presetWithName:@"Yes" tagValue:@"yes"], [CommonPreset presetWithName:@"No" tagValue:@"no"] ];
+		CommonTag * tag = [CommonTag tagWithName:givenName tagKey:field placeholder:placeholder presets:presets];
+		CommonGroup * group = [CommonGroup groupWithName:nil tags:@[ tag ]];
+		return group;
+
+	} else if ( [type isEqualToString:@"radio"] ) {
+
+		NSMutableArray * presets = [NSMutableArray new];
+		if ( keyArray ) {
+			for ( NSString * k in keyArray ) {
+				NSString * label = optionStringsDict[ k ];
+				[presets addObject:[CommonPreset presetWithName:label tagValue:k]];
+			}
+		} else if ( optionArray ) {
+			for ( NSString * v in optionArray ) {
+				[presets addObject:[CommonPreset presetWithName:nil tagValue:v]];
+			}
+		} else {
+#if DEBUG
+			assert(NO);
+#endif
+		}
+
+		CommonTag * tag = [CommonTag tagWithName:givenName tagKey:field placeholder:placeholder presets:presets];
+		CommonGroup * group = [CommonGroup groupWithName:nil tags:@[ tag ]];
+		return group;
+
+	} else if ( [type isEqualToString:@"combo"] ) {
+
+		NSMutableArray * presets = [NSMutableArray new];
+		if ( optionStringsDict ) {
+
+			[optionStringsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
+				[presets addObject:[CommonPreset presetWithName:v tagValue:k]];
+			}];
+			[presets sortUsingComparator:^NSComparisonResult(CommonPreset * obj1, CommonPreset * obj2) {
+				return [obj1.name compare:obj2.name];
+			}];
+
+		} else if ( optionArray ) {
+
+			for ( NSString * v in optionArray ) {
+				[presets addObject:[CommonPreset presetWithName:nil tagValue:v]];
+			}
+
+		} else {
+
+			// check tagInfo
+			if ( presetCache[field] ) {
+				// already got them once
+				presets = presetCache[field];
+			} else {
+				NSString * urlText = [NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/key/values?key=%@&page=1&rp=25&sortname=count_all&sortorder=desc",field];
+				NSURL * url = [NSURL URLWithString:urlText];
+				data = [NSData dataWithContentsOfURL:url];
+				optionStringsDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+				NSArray * values = optionStringsDict[@"data"];
+				for ( NSDictionary * v in values ) {
+					if ( [v[@"fraction"] doubleValue] < 0.01 )
+						continue;
+					NSString * val = v[@"value"];
+					[presets addObject:[CommonPreset presetWithName:nil tagValue:val]];
+				}
+				[presetCache setObject:presets forKey:field];
+			}
+		}
+
+		CommonTag * tag = [CommonTag tagWithName:givenName tagKey:field placeholder:placeholder presets:presets];
+		CommonGroup * group = [CommonGroup groupWithName:nil tags:@[ tag ]];
+		return group;
+
+	} else if ( [type isEqualToString:@"address"] ) {
+
+		NSString * ref = dict[@"reference"][@"key"];
+		NSDictionary * placeholders = dict[ @"strings" ][ @"placeholders" ];
+		NSMutableArray * addrs = [NSMutableArray new];
+		for ( NSString * k in dict[@"keys"] ) {
+			NSString * name = [k substringFromIndex:ref.length+1];
+			placeholder = placeholders[name];
+			name = prettyTag( name );
+			CommonTag * tag = [CommonTag tagWithName:name tagKey:k placeholder:placeholder presets:nil];
+			[addrs addObject:tag];
+		}
+		CommonGroup * group = [CommonGroup groupWithName:givenName tags:addrs];
+		return group;
+
+	} else if ( [type isEqualToString:@"text"] ||
+			    [type isEqualToString:@"number"] ||
+			    [type isEqualToString:@"textarea"] ||
+			    [type isEqualToString:@"tel"] ||
+			    [type isEqualToString:@"url"] ||
+			    [type isEqualToString:@"wikipedia"] )
+	{
+
+		// no presets
+		CommonTag * tag = [CommonTag tagWithName:givenName tagKey:field placeholder:placeholder presets:nil];
+		CommonGroup * group = [CommonGroup groupWithName:nil tags:@[tag]];
+		return group;
+
+	} else if ( [type isEqualToString:@"maxspeed"] ) {
+
+		// special case
+		CommonTag * tag = [CommonTag tagWithName:givenName tagKey:field placeholder:placeholder presets:nil];
+		CommonGroup * group = [CommonGroup groupWithName:nil tags:@[tag]];
+		return group;
+
+	} else if ( [type isEqualToString:@"access"] ) {
+
+		// special case
+		CommonTag * tag = [CommonTag tagWithName:givenName tagKey:field placeholder:placeholder presets:nil];
+		CommonGroup * group = [CommonGroup groupWithName:nil tags:@[tag]];
+		return group;
+
+	} else {
+
+#if DEBUG
+		assert(NO);
+#endif
+		CommonTag * tag = [CommonTag tagWithName:givenName tagKey:field placeholder:placeholder presets:nil];
+		CommonGroup * group = [CommonGroup groupWithName:nil tags:@[tag]];
+		return group;
+
+	}
+}
+
+-(void)setPresetsForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry
+{
+	CommonTag * typeTag = [CommonTag tagWithName:@"Type" tagKey:nil placeholder:@"" presets:@[@"",@""]];
+	CommonTag * nameTag = [CommonTag tagWithName:@"Name" tagKey:@"name" placeholder:@"common name" presets:nil];
+	CommonGroup * typeGroup = [CommonGroup groupWithName:@"Type" tags:@[ typeTag, nameTag ] ];
+
+	_sectionList = [NSMutableArray arrayWithArray:@[ typeGroup ]];
+
+	NSString * root = [[NSBundle mainBundle] resourcePath];
+	NSString * path = [NSString stringWithFormat:@"%@/presets/presets/%@/%@.json",root,key,value];
+	NSData * data = [NSData dataWithContentsOfFile:path];
+	if ( data ) {
+		NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+		NSArray * fields = dict[ @"fields" ];
+
+		for ( NSString * field in fields ) {
+			CommonGroup * group = [self groupForField:field geometry:geometry];
+			if ( group == nil )
+				continue;
+			// if both this group and the previous don't have a name then merge them
+			if ( group.name == nil && _sectionList.count > 1 ) {
+				CommonGroup * prev = _sectionList.lastObject;
+				if ( prev.name == nil ) {
+					[prev mergeTagsFromGroup:group];
+					continue;
+				}
+			}
+			[_sectionList addObject:group];
+		}
+	}
+
+	NSArray * extras = @[ @"elevation", @"note", @"phone", @"website", @"wheelchair", @"wikipedia" ];
+	CommonGroup * extraGroup = [CommonGroup groupWithName:@"Other" tags:nil];
+	for ( NSString * field in extras ) {
+		CommonGroup * group = [self groupForField:field geometry:geometry];
+		[extraGroup mergeTagsFromGroup:group];
+	}
+	[_sectionList addObject:extraGroup];
+}
 
 -(instancetype)init
 {
 	self = [super init];
 	if ( self ) {
+#if 0
 		_sectionList = [[NSUserDefaults standardUserDefaults] objectForKey:@"CommonTagList"];
 		if ( _sectionList.count == 0 ) {
 			_sectionList		= [[self builtinSections] mutableCopy];
@@ -109,6 +382,7 @@
 				_sectionList[i] = [tagList mutableCopy];
 			}
 		}
+#endif
 	}
 	return self;
 }
@@ -118,21 +392,21 @@
 	return _sectionList.count;
 }
 
--(NSString *)sectionNameAtIndex:(NSInteger)index
+-(CommonGroup *)groupAtIndex:(NSInteger)index
 {
-	return _sectionNameList[ index ];
+	return _sectionList[ index ];
 }
 
 -(NSInteger)tagsInSection:(NSInteger)index
 {
-	NSArray * tags = _sectionList[ index ];
-	return tags.count;
+	CommonGroup * group = _sectionList[ index ];
+	return group.tags.count;
 }
 
 -(CommonTag *)tagAtSection:(NSInteger)section row:(NSInteger)row
 {
-	NSArray * tags = _sectionList[ section ];
-	CommonTag * tag = tags[ row ];
+	CommonGroup * group = _sectionList[ section ];
+	CommonTag * tag = group.tags[ row ];
 	return tag;
 }
 
@@ -141,10 +415,11 @@
 	return [self tagAtSection:indexPath.section row:indexPath.row];
 }
 
+#if 0
 -(void)insertTag:(CommonTag *)tag atIndexPath:(NSIndexPath *)indexPath
 {
-	NSMutableArray * tags = _sectionList[ indexPath.section ];
-	[tags insertObject:tag atIndex:indexPath.row];
+	CommonGroup * group = _sectionList[ indexPath.section ];
+	[group.tags insertObject:tag atIndex:indexPath.row];
 }
 
 -(void)removeTagAtIndexPath:(NSIndexPath *)indexPath
@@ -152,5 +427,6 @@
 	NSMutableArray * tags = _sectionList[ indexPath.section ];
 	[tags removeObjectAtIndex:indexPath.row];
 }
+#endif
 
 @end

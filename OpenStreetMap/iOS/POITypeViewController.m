@@ -86,7 +86,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	}
 
 	if ( _isTopLevel && indexPath.section == 0 ) {
-		// mose recents
+		// most recents
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		TagInfo * tagInfo = _mostRecentArray[ indexPath.row ];
 		cell.textLabel.text = tagInfo.friendlyName2;

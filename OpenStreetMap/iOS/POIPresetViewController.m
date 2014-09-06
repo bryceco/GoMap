@@ -7,6 +7,7 @@
 //
 
 #import "iosapi.h"
+#import "CommonTagList.h"
 #import "POIPresetViewController.h"
 #import "POITabBarController.h"
 #import "TagInfo.h"
@@ -18,12 +19,12 @@
 {
     [super viewDidLoad];
 
+#if 0
 	_sectionValues	= [NSMutableArray new];
 	_sectionNames	= [NSMutableArray new];
 
-	for ( NSInteger i = 0; i+1 < self.valueDefinitions.count; i += 2 ) {
-		NSString * sectionHeader	= _valueDefinitions[i];
-		NSArray * valueList			= _valueDefinitions[i+1];
+	for ( NSInteger i = 0; i < self.valueDefinitions.count; i++ ) {
+		NSArray * valueList	= _valueDefinitions[i];
 		if ( [valueList isKindOfClass:[NSString class]] ) {
 			// expand using taginfo
 			SEL selector = NSSelectorFromString((id)valueList);
@@ -42,39 +43,41 @@
 		[_sectionValues addObject:valueList];
 		[_sectionNames addObject:sectionHeader];
 	}
+#endif
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return _sectionValues.count;
+	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	NSArray * values = _sectionValues[ section ];
-	return values.count;
+	return _valueDefinitions.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return _sectionNames[ section ];
+	return nil;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-	NSArray * a = _sectionValues[ indexPath.section ];
-	NSString * rawtext = a[ indexPath.row ];
-	NSString * text = [rawtext stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-	text = [text capitalizedString];
-	cell.textLabel.text = text;
+	CommonPreset * preset = _valueDefinitions[ indexPath.row ];
+	if ( preset.name ) {
+		cell.textLabel.text = preset.name;
+	} else {
+		NSString * text = [preset.tagValue stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+		text = [text capitalizedString];
+		cell.textLabel.text = text;
+	}
 
 	POITabBarController * tabController = (id)self.tabBarController;
-	BOOL selected = [[tabController.keyValueDict valueForKey:@"cuisine"] isEqualToString:rawtext];
+	BOOL selected = [[tabController.keyValueDict valueForKey:self.tag] isEqualToString:preset.tagValue];
 	cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
     return cell;
@@ -82,11 +85,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSArray * a = _sectionValues[ indexPath.section ];
-	NSString * value = a[ indexPath.row ];
-	assert(value);
+	CommonPreset * preset = _valueDefinitions[ indexPath.row ];
 	POITabBarController * tab = (id)self.tabBarController;
-	[tab.keyValueDict setObject:value forKey:self.tag];
+	[tab.keyValueDict setObject:preset.tagValue forKey:self.tag];
 
 	[self.navigationController popViewControllerAnimated:YES];
 }

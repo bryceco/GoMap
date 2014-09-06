@@ -10,8 +10,6 @@
 
 @interface POIPresetViewController : UITableViewController
 {
-	NSMutableArray	*	_sectionNames;
-	NSMutableArray	*	_sectionValues;
 }
 
 @property NSString	*	tag;

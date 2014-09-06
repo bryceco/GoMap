@@ -260,25 +260,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagSingle" id="l7g-Wi-ks5" customClass="CommonTagCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagType" id="l7g-Wi-ks5" customClass="CommonTagCell">
                                 <rect key="frame" x="0.0" y="207" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7g-Wi-ks5" id="5MU-Jz-yPQ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Alt Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P3A-5n-1Iq">
-                                            <rect key="frame" x="19" y="10" width="76" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3A-5n-1Iq">
+                                            <rect key="frame" x="15" y="10" width="51" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="XdU-Zg-9HJ"/>
-                                                <constraint firstAttribute="width" constant="76" id="bOe-3Q-7S5"/>
+                                                <constraint firstAttribute="width" constant="51" id="bOe-3Q-7S5"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mickey D's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7" customClass="AutocompleteTextField">
-                                            <rect key="frame" x="97" y="7" width="202" height="30"/>
+                                            <rect key="frame" x="72" y="7" width="214" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="aI3-W4-aeV"/>
                                             </constraints>
@@ -288,16 +288,56 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="pxY-di-zg7" firstAttribute="leading" secondItem="l7g-Wi-ks5" secondAttribute="leading" constant="97" id="6wN-Aq-qMg"/>
+                                    <constraint firstItem="pxY-di-zg7" firstAttribute="leading" secondItem="l7g-Wi-ks5" secondAttribute="leading" constant="72" id="6wN-Aq-qMg"/>
                                     <constraint firstItem="pxY-di-zg7" firstAttribute="centerY" secondItem="l7g-Wi-ks5" secondAttribute="centerY" id="7b4-m2-euq"/>
-                                    <constraint firstAttribute="trailing" secondItem="pxY-di-zg7" secondAttribute="trailing" constant="21" id="KA0-g1-46V"/>
-                                    <constraint firstItem="P3A-5n-1Iq" firstAttribute="baseline" secondItem="pxY-di-zg7" secondAttribute="baseline" id="hNs-Ia-tl6"/>
-                                    <constraint firstItem="P3A-5n-1Iq" firstAttribute="leading" secondItem="l7g-Wi-ks5" secondAttribute="leading" constant="19" id="i97-d1-ltK"/>
+                                    <constraint firstAttribute="trailing" secondItem="pxY-di-zg7" secondAttribute="trailing" constant="34" id="KA0-g1-46V"/>
+                                    <constraint firstItem="P3A-5n-1Iq" firstAttribute="baseline" secondItem="pxY-di-zg7" secondAttribute="baseline" constant="-1" id="hNs-Ia-tl6"/>
+                                    <constraint firstItem="P3A-5n-1Iq" firstAttribute="leading" secondItem="l7g-Wi-ks5" secondAttribute="leading" constant="15" id="i97-d1-ltK"/>
                                     <constraint firstItem="P3A-5n-1Iq" firstAttribute="top" secondItem="l7g-Wi-ks5" secondAttribute="top" constant="10" id="meS-r1-UIk"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="nameLabel" destination="P3A-5n-1Iq" id="tqE-4g-nUM"/>
                                     <outlet property="valueField" destination="pxY-di-zg7" id="yoH-3C-IlU"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagSingle" id="hWx-B4-Qoo" customClass="CommonTagCell">
+                                <rect key="frame" x="0.0" y="207" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hWx-B4-Qoo" id="dDC-Qx-OfJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Housenumber" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vli-Ct-Lpz">
+                                            <rect key="frame" x="15" y="10" width="111" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="PWL-7z-OCr"/>
+                                                <constraint firstAttribute="width" constant="111" id="zGI-Hk-ngK"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mickey D's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Nw-ha-JK5" customClass="AutocompleteTextField">
+                                            <rect key="frame" x="132" y="7" width="154" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="hun-Kn-7eN"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
+                                        </textField>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstItem="9Nw-ha-JK5" firstAttribute="centerY" secondItem="hWx-B4-Qoo" secondAttribute="centerY" id="A57-6b-F5T"/>
+                                    <constraint firstItem="9Nw-ha-JK5" firstAttribute="leading" secondItem="hWx-B4-Qoo" secondAttribute="leading" constant="132" id="Bob-l2-JE5"/>
+                                    <constraint firstItem="Vli-Ct-Lpz" firstAttribute="top" secondItem="hWx-B4-Qoo" secondAttribute="top" constant="10" id="JS1-Yx-jnd"/>
+                                    <constraint firstItem="Vli-Ct-Lpz" firstAttribute="baseline" secondItem="9Nw-ha-JK5" secondAttribute="baseline" constant="-1" id="M1d-l0-TCh"/>
+                                    <constraint firstItem="Vli-Ct-Lpz" firstAttribute="leading" secondItem="hWx-B4-Qoo" secondAttribute="leading" constant="15" id="ZGH-l1-Rgu"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Nw-ha-JK5" secondAttribute="trailing" constant="34" id="re0-nf-8EW"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="nameLabel" destination="Vli-Ct-Lpz" id="yVs-k8-pQR"/>
+                                    <outlet property="valueField" destination="9Nw-ha-JK5" id="NIc-ST-cSI"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagDouble" id="dRo-ye-TGk" customClass="CommonTagCell">
@@ -323,8 +363,8 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                                         </textField>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dd-0k-3ti">
-                                            <rect key="frame" x="19" y="10" width="69" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9dd-0k-3ti">
+                                            <rect key="frame" x="15" y="10" width="69" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="69" id="Ef7-Ku-px1"/>
                                             </constraints>
@@ -349,11 +389,11 @@
                                     <constraint firstItem="9dd-0k-3ti" firstAttribute="top" secondItem="dRo-ye-TGk" secondAttribute="top" constant="10" id="FNr-Wk-syP"/>
                                     <constraint firstItem="1U6-kJ-pEt" firstAttribute="width" secondItem="nOz-Bc-6Lt" secondAttribute="width" id="J2G-LA-DoT"/>
                                     <constraint firstItem="nOz-Bc-6Lt" firstAttribute="leading" secondItem="Kad-hP-Tf2" secondAttribute="trailing" constant="2" id="Ou3-hK-74B"/>
-                                    <constraint firstItem="9dd-0k-3ti" firstAttribute="leading" secondItem="dRo-ye-TGk" secondAttribute="leading" constant="19" id="Rto-sm-JeB"/>
+                                    <constraint firstItem="9dd-0k-3ti" firstAttribute="leading" secondItem="dRo-ye-TGk" secondAttribute="leading" constant="15" id="Rto-sm-JeB"/>
                                     <constraint firstItem="nOz-Bc-6Lt" firstAttribute="baseline" secondItem="Kad-hP-Tf2" secondAttribute="baseline" id="Se0-qu-RfQ"/>
                                     <constraint firstItem="Kad-hP-Tf2" firstAttribute="leading" secondItem="1U6-kJ-pEt" secondAttribute="trailing" constant="13" id="T42-SF-bLh"/>
                                     <constraint firstItem="Kad-hP-Tf2" firstAttribute="top" secondItem="dRo-ye-TGk" secondAttribute="top" constant="11" id="TDV-Wo-ubT"/>
-                                    <constraint firstItem="1U6-kJ-pEt" firstAttribute="leading" secondItem="9dd-0k-3ti" secondAttribute="trailing" constant="8" symbolic="YES" id="ab4-os-U2k"/>
+                                    <constraint firstItem="1U6-kJ-pEt" firstAttribute="leading" secondItem="9dd-0k-3ti" secondAttribute="trailing" constant="12" id="ab4-os-U2k"/>
                                     <constraint firstAttribute="trailing" secondItem="nOz-Bc-6Lt" secondAttribute="trailing" constant="21" id="kYD-pB-jVS"/>
                                     <constraint firstItem="nOz-Bc-6Lt" firstAttribute="top" secondItem="dRo-ye-TGk" secondAttribute="top" constant="8" id="xkw-XC-qCx"/>
                                 </constraints>
@@ -551,7 +591,7 @@
                             <outlet property="delegate" destination="Bw2-cG-bAN" id="SUb-t8-bSM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Cuisine" id="v1b-PG-XxE">
+                    <navigationItem key="navigationItem" title="Presets" id="v1b-PG-XxE">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Hgu-iP-FnG"/>
                     </navigationItem>
                 </tableViewController>

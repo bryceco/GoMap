@@ -21,7 +21,7 @@
 	[super viewDidLoad];
 
 	nameField.text = self.commonTag.name;
-	tagField.text = _commonTag.tag;
+	tagField.text = _commonTag.tagKey;
 	placeholderField.text = _commonTag.placeholder;
 }
 
@@ -40,7 +40,7 @@
 	NSString * placeholder  = [placeholderField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	NSArray * presets = nil;
 
-	CommonTag * commonTag = [CommonTag tagWithName:name tag:tag placeholder:placeholder presets:presets];
+	CommonTag * commonTag = [CommonTag tagWithName:name tagKey:tag placeholder:placeholder presets:presets];
 	self.completion(commonTag);
 	[self.navigationController popViewControllerAnimated:YES];
 }
