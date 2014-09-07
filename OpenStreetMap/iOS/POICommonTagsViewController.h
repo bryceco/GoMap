@@ -15,6 +15,7 @@
 {
 	CommonTagList				*	_tags;
 	IBOutlet UIBarButtonItem	*	_saveButton;
+	BOOL							_keyboardShowing;
 }
 
 - (IBAction)textFieldReturn:(id)sender;

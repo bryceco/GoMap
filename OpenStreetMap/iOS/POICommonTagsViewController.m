@@ -41,10 +41,79 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 
-	_tags = [CommonTagList new];
+	_tags = [CommonTagList sharedList];
+
+	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+	[center addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
+	[center addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardWillHideNotification object:nil];
 }
+
+-(void)dealloc
+{
+	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+	[center removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+	[center removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+}
+
+-(void)keyboardDidShow
+{
+	_keyboardShowing = YES;
+}
+-(void)keyboardDidHide
+{
+	_keyboardShowing = NO;
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self updatePresets];
+	});
+}
+
+-(void)updatePresets
+{
+	POITabBarController * tabController = (id)self.tabBarController;
+	NSDictionary * dict = tabController.keyValueDict;
+
+	OsmBaseObject * object = tabController.selection;
+	NSString * geometry = object.isWay ? ((OsmWay *)object).isArea ? GEOMETRY_AREA : GEOMETRY_WAY :
+							object.isNode ? ((OsmNode *)object).wayCount > 0 ? GEOMETRY_VERTEX : GEOMETRY_NODE :
+							object.isRelation ? ((OsmRelation *)object).isMultipolygon ? GEOMETRY_AREA : GEOMETRY_WAY :
+							@"unkown";
+
+	__weak POICommonTagsViewController * weakSelf = self;
+	__weak CommonTagList * weakTags = _tags;
+	[_tags setPresetsForDict:dict geometry:geometry update:^{
+		POICommonTagsViewController * mySelf = weakSelf;
+		if ( !mySelf->_keyboardShowing ) {
+			[weakTags setPresetsForDict:dict geometry:geometry update:nil];
+			[weakSelf.tableView reloadData];
+		}
+	}];
+	[self.tableView reloadData];
+}
+
+#pragma mark display
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+
+	[self loadState];
+
+	if ( [self isMovingToParentViewController] ) {
+		// first appearance
+	} else {
+		// reload cells when coming back from preset picker
+		[self updatePresets];
+	}
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+	[self resignAll];
+	[super viewWillDisappear:animated];
+}
+
 
 - (void)loadState
 {
@@ -89,19 +158,23 @@
 	return 44.0;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	return _tags.sectionCount + 1;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+	if ( section == _tags.sectionCount )
+		return nil;
 	CommonGroup * group = [_tags groupAtIndex:section];
 	return group.name;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-	return _tags.sectionCount;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+	if ( section == _tags.sectionCount )
+		return 1;
 	return [_tags tagsInSection:section];
 }
 
@@ -109,7 +182,11 @@
 {
 	if ( YES ) {
 
-		
+		if ( indexPath.section == _tags.sectionCount ) {
+			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CustomizePresets" forIndexPath:indexPath];
+			return cell;
+		}
+
 		NSString * key = [_tags tagAtIndexPath:indexPath].tagKey;
 		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";
 
@@ -125,6 +202,7 @@
 		[cell.valueField addTarget:self action:@selector(textFieldReturn:)			forControlEvents:UIControlEventEditingDidEndOnExit];
 		[cell.valueField addTarget:self action:@selector(textFieldChanged:)			forControlEvents:UIControlEventEditingChanged];
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
+		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
 
 		cell.accessoryType = commonTag.presetList.count ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 
@@ -133,7 +211,10 @@
 
 		if ( indexPath.section == 0 && indexPath.row == 0 ) {
 			// Type cell
-			cell.valueField.text = [self typeStringForDict:dict];
+			NSString * text = [_tags featureName];
+			if ( text == nil )
+				text = [self typeStringForDict:dict];
+			cell.valueField.text = text;
 			cell.valueField.enabled = NO;
 		} else {
 			// Regular cell
@@ -170,92 +251,6 @@
 		preset.valueDefinitions = cell.commonTag.presetList;
 		preset.navigationItem.title = cell.commonTag.name;
 	}
-}
-
-#if 0
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.section == 0 && indexPath.row == 0 )
-		return NO;
-	return YES;
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.row == [_tags tagsInSection:indexPath.section]-1 )
-		return UITableViewCellEditingStyleInsert;
-	else
-		return UITableViewCellEditingStyleDelete;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if (editingStyle == UITableViewCellEditingStyleDelete) {
-		// Delete the row from the data source
-		[_tags removeTagAtIndexPath:indexPath];
-		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
-		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-	}
-}
-
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-	CommonTag * tag = [_tags tagAtIndexPath:fromIndexPath];
-	[_tags removeTagAtIndexPath:fromIndexPath];
-	[_tags insertTag:tag atIndexPath:toIndexPath];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.section == 0 && indexPath.row == 0 )
-		return NO;
-//	if ( indexPath.section == 4 && indexPath.row == _tags.list.count-1 )
-//		return NO;
-	return YES;
-}
-#endif
-
-#pragma mark display
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-
-	[self loadState];
-
-	if ( [self isMovingToParentViewController] ) {
-	} else {
-		// reload cells when coming back from preset picker
-		POITabBarController * tabController = (id)self.tabBarController;
-		NSDictionary * dict = tabController.keyValueDict;
-
-		OsmBaseObject * object = tabController.selection;
-		NSString * geometry = object.isWay ? ((OsmWay *)object).isArea ? GEOMETRY_AREA : GEOMETRY_WAY :
-							object.isNode ? ((OsmNode *)object).wayCount > 0 ? GEOMETRY_VERTEX : GEOMETRY_NODE :
-							object.isRelation ? ((OsmRelation *)object).isMultipolygon ? GEOMETRY_AREA : GEOMETRY_WAY :
-							@"unkown";
-
-		NSString * key = [self typeKeyForDict:dict];
-		[_tags setPresetsForKey:key value:dict[key] geometry:geometry];
-		[self.tableView reloadData];
-#if 0
-		for ( CommonTagCell * cell in self.tableView.visibleCells ) {
-			if ( cell.commonTag.tag == nil ) {
-				// type cell
-				cell.valueField.text = [self typeStringForDict:dict];
-			} else {
-				cell.valueField.text = dict[ cell.commonTag.tag ];
-			}
-		}
-#endif
-	}
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-	[self resignAll];
-	[super viewWillDisappear:animated];
 }
 
 -(IBAction)cancel:(id)sender

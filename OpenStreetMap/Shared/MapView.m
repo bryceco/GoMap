@@ -218,6 +218,7 @@ CGSize SizeForImage( NSImage * image )
 	_zoomToEditLabel.layer.masksToBounds = YES;
 	_zoomToEditLabel.backgroundColor = [UIColor whiteColor];
 	_zoomToEditLabel.alpha = 0.5;
+	_zoomToEditLabel.hidden = YES;
 
 #if TARGET_OS_IPHONE
 	_progressIndicator.color = NSColor.greenColor;

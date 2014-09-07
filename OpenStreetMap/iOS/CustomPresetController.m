@@ -20,9 +20,22 @@
 {
 	[super viewDidLoad];
 
-	nameField.text = self.commonTag.name;
-	tagField.text = _commonTag.tagKey;
-	placeholderField.text = _commonTag.placeholder;
+	_valueFieldList = @[ _value1Field, _value2Field, _value3Field, _value4Field,  _value5Field,  _value6Field,
+						 _value7Field, _value8Field, _value9Field, _value10Field, _value11Field, _value12Field ];
+
+	_nameField.text				= _customPreset.name;
+	_appliesToTagField.text		= _customPreset.appliesToKey;
+	_appliesToValueField.text	= _customPreset.appliesToValue;
+	_keyField.text				= _customPreset.tagKey;
+
+	NSInteger idx = 0;
+	for ( UITextField * textField in _valueFieldList ) {
+		if ( idx >= _customPreset.presetList.count )
+			break;
+		CommonPreset * preset = _customPreset.presetList[ idx ];
+		textField.text = preset.tagValue;
+		++idx;
+	}
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -35,13 +48,27 @@
 -(IBAction)done:(id)sender
 {
 	// remove white space from subdomain list
-	NSString * name = [nameField.text	stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	NSString * tag  = [tagField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	NSString * placeholder  = [placeholderField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	NSArray * presets = nil;
-
-	CommonTag * commonTag = [CommonTag tagWithName:name tagKey:tag placeholder:placeholder presets:presets];
-	self.completion(commonTag);
+	NSString * name = [_nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	NSString * key  = [_keyField.text  stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	if ( name.length == 0 || key.length == 0 )
+		return;
+	NSString * appliesToKey = [_appliesToTagField.text	 stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	NSString * appliesToVal = [_appliesToValueField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	NSMutableArray * presets = [NSMutableArray new];
+	for ( UITextField * field in _valueFieldList ) {
+		NSString * value = [field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		if ( value.length ) {
+			CommonPreset * preset = [CommonPreset presetWithName:nil tagValue:value];
+			[presets addObject:preset];
+		}
+	}
+	
+	_customPreset = [CustomPreset tagWithName:name tagKey:key placeholder:nil presets:presets];
+	_customPreset.appliesToKey = appliesToKey;
+	_customPreset.appliesToValue = appliesToVal;
+	if ( _completion ) {
+		_completion(_customPreset);
+	}
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -57,7 +84,7 @@
 
 -(IBAction)contentChanged:(id)sender
 {
-	if ( nameField.text.length > 0 && tagField.text.length > 0 ) {
+	if ( _nameField.text.length > 0 && _keyField.text.length > 0 ) {
 		self.navigationItem.rightBarButtonItem.enabled = YES;
 	} else {
 		self.navigationItem.rightBarButtonItem.enabled = NO;
