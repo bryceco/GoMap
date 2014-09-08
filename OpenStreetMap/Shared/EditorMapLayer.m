@@ -1887,12 +1887,6 @@ or in order of z-indexes (if renderer can detect collisions).
 }
 
 
-
-static NSComparisonResult VisibleSizeCompare( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	NSInteger diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
-	return diff < 0 ? NSOrderedAscending : diff < 0 ? NSOrderedDescending : NSOrderedSame;
-}
 static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
 	NSInteger diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
@@ -1931,7 +1925,8 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( OsmBaseObject * object in _shownObjects ) {
 		if ( object.tagInfo == nil ) {
 			object.tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForObject:object];
-
+		}
+		if ( object.renderPriorityCached == 0 ) {
 			if ( object.modifyCount ) {
 				object.renderPriorityCached = 1000000;
 			} else {

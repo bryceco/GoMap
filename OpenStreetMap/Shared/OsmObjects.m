@@ -244,11 +244,13 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	else
 		++_modifyCount;
 	assert( _modifyCount >= 0 );
+	self.renderPriorityCached = 0;	// need to recompute this because we prioritize dirty objects
 }
 -(void)resetModifyCount:(UndoManager *)undo
 {
 	assert(undo);
 	_modifyCount = 0;
+	self.renderPriorityCached = 0;
 }
 
 -(void)serverUpdateVersion:(NSInteger)version
