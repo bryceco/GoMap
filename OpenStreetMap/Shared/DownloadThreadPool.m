@@ -233,7 +233,9 @@ typedef void (^dequeueBlock)(void);
 	switch ( eventCode ) {
 		case NSStreamEventHasSpaceAvailable:
 		{
+#if DEBUG
 			assert( stream == _writeStream );
+#endif
 			[_operationQueue addOperationWithBlock:^{
 				assert( [NSOperationQueue currentQueue] == _operationQueue );
 				if ( _data.length ) {

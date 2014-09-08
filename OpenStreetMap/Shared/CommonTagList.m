@@ -254,9 +254,6 @@ static NSString * prettyTag( NSString * tag )
 					NSString * urlText = [NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/key/values?key=%@&page=1&rp=25&sortname=count_all&sortorder=desc",key];
 					NSURL * url = [NSURL URLWithString:urlText];
 					NSData * data = [NSData dataWithContentsOfURL:url];
-
-					sleep(5);
-
 					if ( data ) {
 						NSMutableArray * presets2 = [NSMutableArray new];
 						NSDictionary * dict2 = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];

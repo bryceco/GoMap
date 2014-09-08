@@ -10,7 +10,7 @@
 
 
 #define GEOMETRY_AREA	@"area"
-#define	GEOMETRY_WAY	@"way"
+#define	GEOMETRY_WAY	@"line"
 #define GEOMETRY_NODE	@"point"
 #define GEOMETRY_VERTEX	@"vertex"
 

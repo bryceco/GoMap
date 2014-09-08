@@ -218,14 +218,18 @@ static TagInfo * g_DefaultRender = nil;
 			@"bridleway"		: @110,
 			@"footway"			: @100,
 			@"steps"			: @90,
-			@"construction"		: @82,
-			@"proposed"			: @81,
+			@"construction"		: @80,
+			@"proposed"			: @70,
 		};
 	}
 
-	if ( _renderSize )
+	if ( _renderSize ) {
+		if ( object.isWay || object.isRelation.isMultipolygon )
+			return _renderSize + 2;
+		if ( object.isRelation )
+			return _renderSize + 1;
 		return _renderSize;
-
+	}
 
 	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"coastline"] ) {
 		return _renderSize = 10000;
@@ -244,7 +248,13 @@ static TagInfo * g_DefaultRender = nil;
 				return _renderSize;
 		}
 	}
-	return _renderSize = object.isWay || (object.isRelation && ((OsmRelation *)object).isMultipolygon) ? 999 : 50;
+	if ( [_key isEqualToString:@"railway"] ) {
+		return _renderSize = 1250;
+	}
+
+	// get a default value
+	_renderSize = 50;
+	return [self renderSize:object];
 }
 
 @end

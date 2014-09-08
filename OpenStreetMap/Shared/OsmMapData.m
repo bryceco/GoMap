@@ -148,7 +148,7 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 {
 	[_spatial findObjectsInArea:bbox block:^(NSArray * a){
 		for ( OsmBaseObject * o in a ) {
-			if ( [o intersectsBox:bbox] ) {
+			if ( [o overlapsBox:bbox] ) {
 				block( o );
 			}
 		}

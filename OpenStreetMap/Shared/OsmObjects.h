@@ -16,7 +16,9 @@
 @class OsmBaseObject;
 @class OsmMapData;
 @class OsmMember;
+@class OsmNode;
 @class OsmRelation;
+@class OsmWay;
 @class TagInfo;
 @class UndoManager;
 
@@ -48,6 +50,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 @property (readonly,nonatomic)	int32_t				uid;
 @property (readonly,nonatomic)	BOOL				visible;
 
+// extra stuff
+@property (assign,nonatomic)	NSInteger			renderPriorityCached;
+
 +(NSArray *)typeKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;
 
@@ -66,13 +71,14 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 -(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 -(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 
--(BOOL)isNode;
--(BOOL)isWay;
--(BOOL)isRelation;
+-(OsmNode *)isNode;
+-(OsmWay *)isWay;
+-(OsmRelation *)isRelation;
 
 -(NSDate *)dateForTimestamp;
 
 -(NSSet *)nodeSet;
+-(BOOL)overlapsBox:(OSMRect)box;
 -(BOOL)intersectsBox:(OSMRect)box;
 -(OSMRect)boundingBox;
 -(NSString *)friendlyDescription;
@@ -113,7 +119,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 -(void)removeNodeAtIndex:(NSInteger)index undo:(UndoManager *)undo;
 -(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo;
 
--(BOOL)intersectsBox:(OSMRect)box;
+-(BOOL)overlapsBox:(OSMRect)box;
 -(OSMRect)boundingBox;
 -(void)resolveToMapData:(OsmMapData *)mapData;
 -(OSMPoint)centerPoint;
@@ -137,7 +143,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
 
 -(void)constructMember:(OsmMember *)member;
 
--(BOOL)intersectsBox:(OSMRect)box;
+-(BOOL)overlapsBox:(OSMRect)box;
 -(void)resolveToMapData:(OsmMapData *)mapData;
 -(NSSet *)allMemberObjects;
 

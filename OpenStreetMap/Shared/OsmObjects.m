@@ -102,17 +102,17 @@ NSString * OsmValueForBoolean( BOOL b )
 }
 
 
--(BOOL)isNode
+-(OsmNode *)isNode
 {
-	return NO;
+	return nil;
 }
--(BOOL)isWay
+-(OsmWay *)isWay
 {
-	return NO;
+	return nil;
 }
--(BOOL)isRelation
+-(OsmRelation *)isRelation
 {
-	return NO;
+	return nil;
 }
 -(OSMRect)boundingBox
 {
@@ -312,11 +312,17 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	assert(NO);
 	return nil;
 }
+-(BOOL)overlapsBox:(OSMRect)box
+{
+	assert(NO);
+	return NO;
+}
 -(BOOL)intersectsBox:(OSMRect)box
 {
 	assert(NO);
 	return NO;
 }
+
 
 +(NSArray *)typeKeys
 {
@@ -531,9 +537,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return [NSString stringWithFormat:@"OsmNode %@", [super description]];
 }
 
--(BOOL)isNode
+-(OsmNode *)isNode
 {
-	return YES;
+	return self;
 }
 
 -(OSMPoint)location
@@ -568,11 +574,17 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 
+-(BOOL)overlapsBox:(OSMRect)box
+{
+	OSMPoint point = { _lon, _lat };
+	return OSMRectContainsPoint( box, point );
+}
 -(BOOL)intersectsBox:(OSMRect)box
 {
 	OSMPoint point = { _lon, _lat };
 	return OSMRectContainsPoint( box, point );
 }
+
 
 -(id)initWithCoder:(NSCoder *)coder
 {
@@ -641,9 +653,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 
--(BOOL)isWay
+-(OsmWay *)isWay
 {
-	return YES;
+	return self;
 }
 
 -(void)resolveToMapData:(OsmMapData *)mapData
@@ -922,46 +934,28 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	return [NSSet setWithArray:_nodes];
 }
+-(BOOL)overlapsBox:(OSMRect)box
+{
+	return OSMRectIntersectsRect(box, self.boundingBox);
+}
 -(BOOL)intersectsBox:(OSMRect)box
 {
-#if 1
-	return OSMRectIntersectsRect(box, self.boundingBox);
-#else
 	BOOL first = YES;
-	int prevRow, prevCol;
-
-	if ( nodes.count >= 3 && nodes[0] == nodes.lastObject ) {
-		// area
-		return CGRectIntersectsRect(self.boundingBox, box);
-	}
-	for ( OsmNode * node in nodes ) {
-		int row = node->lat < box.origin.y ? -1 : node->lat > box.origin.y+box.size.height ? 1 : 0;
-		int col = node->lon < box.origin.x ? -1 : node->lon > box.origin.x+box.size.width  ? 1 : 0;
-		if ( row == 0  &&  col == 0 )
-			return YES;
-		if ( !first ) {
-			if ( row == prevRow ) {
-				if ( row == 0  &&  col != prevCol )
-					return YES;
-			} else {
-				if ( col != prevCol )
-					return YES;
-			}
-			if ( col == prevCol ) {
-				if ( col == 0  &&  row != prevRow )
-					return YES;
-			} else {
-				if ( row != prevRow )
-					return YES;
-			}
+	OSMPoint prevPt;
+	for ( OsmNode * node in _nodes ) {
+		if ( first ) {
+			first = NO;
+			prevPt = node.location;
+			continue;
 		}
-		first = NO;
-		prevRow = row;
-		prevCol = col;
+		OSMPoint pt = node.location;
+		if ( LineSegmentIntersectsRectangle(prevPt, pt, box) )
+			return YES;
+		prevPt = pt;
 	}
 	return NO;
-#endif
 }
+
 -(OSMRect)boundingBox
 {
 	double minX, maxX, minY, maxY;
@@ -1082,9 +1076,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 }
 
--(BOOL)isRelation
+-(OsmRelation *)isRelation
 {
-	return YES;
+	return self;
 }
 
 -(NSSet *)allMemberObjects
@@ -1204,26 +1198,28 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return box;
 }
 
+-(BOOL)overlapsBox:(OSMRect)box
+{
+	for ( OsmMember * member in _members ) {
+		OsmBaseObject * object = member.ref;
+		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
+			if ( [object overlapsBox:box] )
+				return YES;
+		} else {
+			// unresolved ref
+		}
+	}
+	return NO;
+}
 -(BOOL)intersectsBox:(OSMRect)box
 {
 	for ( OsmMember * member in _members ) {
-		if ( [member.ref isKindOfClass:[NSNumber class]] )
-			continue;	// unresolved reference
-
-		if ( member.isNode ) {
-			OsmNode * node = member.ref;
-			if ( OSMRectContainsPoint( box, node.location ) )
-				return YES;
-		} else if ( member.isWay ) {
-			OsmWay * way = member.ref;
-			if ( OSMRectIntersectsRect( way.boundingBox, box ) )
-				return YES;
-		} else if ( member.isRelation ) {
-			OsmRelation * relation = member.ref;
-			if ( [relation intersectsBox:box] )
+		OsmBaseObject * object = member.ref;
+		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
+			if ( [object intersectsBox:box] )
 				return YES;
 		} else {
-			assert(NO);
+			// unresolved ref
 		}
 	}
 	return NO;

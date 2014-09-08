@@ -230,6 +230,7 @@ const double MinIconSizeInMeters = 4.0;
 static void AppendNodes( NSMutableArray * list, OsmWay * way, BOOL back )
 {
 	if ( back ) {
+		// insert at back of list
 		BOOL first = YES;
 		for ( OsmNode * node in way.nodes ) {
 			if ( first )
@@ -238,6 +239,7 @@ static void AppendNodes( NSMutableArray * list, OsmWay * way, BOOL back )
 				[list addObject:node];
 		}
 	} else {
+		// insert at front of list
 		NSMutableArray * a = [NSMutableArray arrayWithCapacity:way.nodes.count];
 		for ( OsmNode * node in way.nodes ) {
 			[a addObject:node];
@@ -301,6 +303,32 @@ static BOOL IsClockwisePolygon( NSArray * points )
 	}
 	return sum >= 0;
 }
+
+static BOOL IsClockwiseWay( OsmWay * way )
+{
+	if ( !way.isClosed )
+		return NO;
+	if ( way.nodes.count < 4 )
+		return NO;
+	CGFloat sum = 0;
+	BOOL first = YES;
+	OSMPoint offset;
+	OSMPoint previous;
+	for ( OsmNode * node in way.nodes )  {
+		OSMPoint point = node.location;
+		if ( first ) {
+			offset = point;
+			previous.x = previous.y = 0;
+			first = NO;
+		} else {
+			OSMPoint current = { point.x - offset.x, point.y - offset.y };
+			sum += previous.x*current.y - previous.y*current.x;
+			previous = current;
+		}
+	}
+	return sum >= 0;
+}
+
 
 
 static BOOL RotateLoop( NSMutableArray * loop, OSMRect viewRect )
@@ -409,12 +437,25 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		OsmBaseObject * object = obj;
 		if ( [object isKindOfClass:[ObjectSubpart class]] )
 			object = [(ObjectSubpart *)object object];
+		if ( object.isWay.isClosed && [object.tags[@"natural"] isEqualToString:@"water"] ) {
+			continue;	// lakes are handled later
+		}
 		if ( object.isCoastline ) {
 			if ( object.isWay ) {
 				[segments addObject:object];
 			} else if ( object.isRelation ) {
 				NSArray * wayList = [self wayListForMultipolygonRelation:(id)object];
-				[segments addObjectsFromArray:wayList];
+				for ( OsmWay * way in wayList ) {
+					if ( way.isClosed && [way.tags[@"natural"] isEqualToString:@"water"] && IsClockwiseWay(way) ) {
+						OsmWay * reversed = [OsmWay new];
+						for ( OsmNode * n in [way.nodes reverseObjectEnumerator] ) {
+							[reversed addNode:n atIndex:reversed.nodes.count undo:nil];
+						}
+						[segments addObject:reversed];
+					} else {
+						[segments addObject:way];
+					}
+				}
 			}
 		}
 	}
@@ -426,6 +467,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		// find all connected segments
 		OsmWay * way = segments.anyObject;
 		[segments removeObject:way];
+
 		OsmNode * firstNode = way.nodes[0];
 		OsmNode * lastNode = way.nodes.lastObject;
 		NSMutableArray * nodeList = [NSMutableArray arrayWithObject:firstNode];
@@ -1560,7 +1602,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 	if ( _mapCss ) {
 		ObjectSubpart * subpart = (id)node;
 		OsmBaseObject * object = subpart.object;
-		if ( !object.isNode && !(object.isWay && ((OsmWay *)object).isArea) )
+		if ( !object.isNode && !object.isWay.isArea )
 			return NO;
 		NSDictionary * cssDict	= subpart.properties;
 		NSString * iconName = [cssDict objectForKey:@"icon-image"];
@@ -1575,12 +1617,15 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		pt = [self pointForLat:node.lat lon:node.lon];
 	} else if ( node.isWay ) {
 		// this path is taken when MapCSS is drawing an icon in the center of an area, such as a parking lot
-		pt = [((OsmWay *)node) centerPoint];
+		pt = [node.isWay centerPoint];
 		pt = [self pointForLat:pt.y lon:pt.x];
 	} else {
 		assert(NO);
 		return NO;
 	}
+#if DEBUG
+	assert( CGRectContainsPoint(self.bounds,CGPointMake(pt.x, pt.y)) );
+#endif
 	pt.x = round(pt.x);	// performance optimization when drawing
 	pt.y = round(pt.y);
 
@@ -1731,7 +1776,7 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 			if ( obj.isWay ) {
 				[a addObject:obj];
 				for ( OsmNode * node in ((OsmWay *)obj).nodes ) {
-					if ( ShouldDisplayNodeInWay( node.tags ) ) {
+					if ( [node overlapsBox:box] && ShouldDisplayNodeInWay( node.tags ) ) {
 						[a addObject:node];
 					}
 				}
@@ -1845,36 +1890,13 @@ or in order of z-indexes (if renderer can detect collisions).
 
 static NSComparisonResult VisibleSizeCompare( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
-	// always display dirty objects
-	NSInteger diff = obj1.modifyCount - obj2.modifyCount;
-	if ( diff ) {
-		return diff > 0 ? NSOrderedAscending : NSOrderedDescending;
-	}
-
-	NSInteger size1 = [obj1.tagInfo renderSize:obj1];
-	NSInteger size2 = [obj2.tagInfo renderSize:obj2];
-	if ( size1 > size2 ) return NSOrderedAscending;
-	if ( size1 < size2 ) return NSOrderedDescending;
-	return NSOrderedSame;
-}
-
-static NSComparisonResult VisibleSizeCompareStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	NSComparisonResult diff1 = VisibleSizeCompare( obj1, obj2 );
-	if ( diff1 )
-		return diff1;
-
-	// break ties by showing older stuff first
-	OsmIdentifier diff2 = obj1.changeset - obj2.changeset;
-	if ( diff2 )
-		return diff2 > 0 ? NSOrderedAscending : NSOrderedDescending;
-	diff2 = obj1.ident.longLongValue - obj2.ident.longLongValue;
-	return diff2 > 0 ? NSOrderedAscending : NSOrderedDescending;
+	NSInteger diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
+	return diff < 0 ? NSOrderedAscending : diff < 0 ? NSOrderedDescending : NSOrderedSame;
 }
 static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
-	NSComparisonResult result = VisibleSizeCompareStrict( obj1, obj2 );
-	return result < 0;
+	NSInteger diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
+	return diff > 0;	// sort descending
 }
 
 - (void)drawInContext:(CGContextRef)ctx
@@ -1894,6 +1916,12 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	NSInteger nameLimit = 100;
 #endif
 
+	if ( _iconSize.width > MinIconSizeInPixels ) {
+		// we're zoomed in very far, so show everything
+		objectLimit = 1000000;
+	}
+
+
 	CFTimeInterval totalTime = CACurrentMediaTime();
 
 	// get objects in visible rect
@@ -1903,34 +1931,45 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( OsmBaseObject * object in _shownObjects ) {
 		if ( object.tagInfo == nil ) {
 			object.tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForObject:object];
+
+			if ( object.modifyCount ) {
+				object.renderPriorityCached = 1000000;
+			} else {
+				object.renderPriorityCached = [object.tagInfo renderSize:object];
+			}
 		}
 	}
 
 	// sort from big to small objects
-	[_shownObjects partialSortK:objectLimit compare:VisibleSizeLess];
+	[_shownObjects partialSortK:2*objectLimit+1 compare:VisibleSizeLess];
 
 	// adjust the list of objects so that we get all or none of the same type
 	if ( _shownObjects.count > objectLimit ) {
 		// We have more objects available than we want to display. If some of the objects are the same size as the last visible object then include those too.
 		NSInteger lastIndex = objectLimit;
 		OsmBaseObject * last = _shownObjects[ objectLimit-1 ];
-		for ( NSInteger i = objectLimit, e = _shownObjects.count; i < e; ++i ) {
-			if ( VisibleSizeCompare( last, _shownObjects[i] ) == NSOrderedSame ) {
-				_shownObjects[lastIndex++] = _shownObjects[i];
+		NSInteger lastRenderPriority = last.renderPriorityCached;
+		for ( NSInteger i = objectLimit, e = MIN(_shownObjects.count,2*objectLimit); i < e; ++i ) {
+			OsmBaseObject * o = _shownObjects[ i ];
+			if ( o.renderPriorityCached == lastRenderPriority ) {
+				lastIndex++;
+			} else {
+				break;
 			}
 		}
-		if ( lastIndex - objectLimit >= objectLimit ) {
+		if ( lastIndex >= 2*objectLimit ) {
 			// we doubled the number of objects, so back off instead
-			NSMutableArray * newList = [NSMutableArray arrayWithCapacity:objectLimit];
+			NSInteger removeCount = 0;
 			for ( NSInteger i = objectLimit-1; i >= 0; --i ) {
-				OsmBaseObject * item = _shownObjects[ i ];
-				if ( VisibleSizeCompare( item, last ) == NSOrderedAscending ) {
-					[newList addObject:item];
+				OsmBaseObject * o = _shownObjects[ i ];
+				if ( o.renderPriorityCached == lastRenderPriority ) {
+					++removeCount;
+				} else {
+					break;
 				}
 			}
-			if ( newList.count >= 1 ) {
-				_shownObjects = newList;
-				lastIndex = _shownObjects.count;
+			if ( removeCount < objectLimit ) {
+				lastIndex = objectLimit - removeCount;
 			}
 		}
 		// DLog( @"added %ld same", (long)lastIndex - objectLimit);
