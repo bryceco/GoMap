@@ -25,6 +25,17 @@
 }
 @end
 
+@implementation OSMRectBoxed
++(OSMRectBoxed *)rectWithRect:(OSMRect)rect
+{
+	OSMRectBoxed * r = [OSMRectBoxed new];
+	r->_rect = rect;
+	return r;
+}
+@end
+
+
+
 double Determinant( OSMTransform t )
 {
 	return t.a * t.d - t.b * t.c;

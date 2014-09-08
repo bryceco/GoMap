@@ -35,6 +35,11 @@ typedef struct _OSMTransform {
 +(OSMPointBoxed *)pointWithPoint:(OSMPoint)point;
 @end
 
+@interface OSMRectBoxed : NSObject
+@property (readonly,nonatomic) OSMRect rect;
++(OSMRectBoxed *)rectWithRect:(OSMRect)rect;
+@end
+
 
 static inline OSMPoint OSMPointMake(double x, double y)
 {

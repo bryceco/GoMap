@@ -22,7 +22,7 @@
 @class TagInfo;
 @class UndoManager;
 
-NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags);
+NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 
 
 @interface OsmBaseObject : NSObject <NSCoding,NSCopying>

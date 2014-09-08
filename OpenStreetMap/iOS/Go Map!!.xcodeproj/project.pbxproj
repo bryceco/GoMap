@@ -44,6 +44,7 @@
 		0228444816DD339300A1C051 /* undo32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0228444616DD339300A1C051 /* undo32@2x.png */; };
 		022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A53167B8F1C00D7A5AC /* POITabBarController.m */; };
 		022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */; };
+		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02329DB716D33FB100D20646 /* FuturePlist.txt */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
@@ -519,6 +520,8 @@
 		022A2A53167B8F1C00D7A5AC /* POITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POITabBarController.m; sourceTree = "<group>"; };
 		022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearCacheViewController.h; sourceTree = "<group>"; };
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearCacheViewController.m; sourceTree = "<group>"; };
+		022B09A519BD3F710041687B /* QuadMapC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuadMapC.h; path = ../Shared/QuadMapC.h; sourceTree = "<group>"; };
+		022B09A619BD3F7B0041687B /* QuadMapC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadMapC.mm; path = ../Shared/QuadMapC.mm; sourceTree = "<group>"; };
 		022B504716857E5F00E6619A /* OSMiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OSMiOS.entitlements; sourceTree = "<group>"; };
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresetController.h; sourceTree = "<group>"; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresetController.m; sourceTree = "<group>"; };
@@ -1604,6 +1607,8 @@
 				02ACBA8716713F2A00BB4414 /* png */,
 				02ACBBB216713F2A00BB4414 /* QuadMap.h */,
 				02ACBBB316713F2A00BB4414 /* QuadMap.m */,
+				022B09A519BD3F710041687B /* QuadMapC.h */,
+				022B09A619BD3F7B0041687B /* QuadMapC.mm */,
 				02ACBBB416713F2A00BB4414 /* RulerLayer.h */,
 				02ACBBB516713F2A00BB4414 /* RulerLayer.m */,
 				02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */,
@@ -2161,6 +2166,7 @@
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
 				02E8436519B39FAD0044AC1D /* Notes.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
+				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
 				020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
 				02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */,

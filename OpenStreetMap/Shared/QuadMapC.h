@@ -19,23 +19,18 @@ typedef enum {
 
 @class OsmBaseObject;
 
+class QuadBoxCC;
 
-@interface QuadBox : NSObject <NSCoding>
+@interface QuadBoxC : NSObject <NSCoding>
 {
-	@public
-	QuadBox			*	_children[ 4 ];
-	QuadBox			*	_parent;
-	BOOL				_whole;				// fully downloaded
-	BOOL				_busy;				// currently downloading
-	NSMutableArray	*	_members;
-	BOOL				_isSplit;
+	QuadBoxCC * _cpp;
 }
 @property (readonly,nonatomic)	OSMRect		rect;
 
--(id)initWithRect:(OSMRect)rect parent:(QuadBox *)parent;
+-(id)initWithRect:(OSMRect)rect;
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 -(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(NSArray *))block;
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block;
 -(NSInteger)quadCount;
 -(NSInteger)memberCount;
 -(void)reset;
@@ -44,19 +39,19 @@ typedef enum {
 
 
 
-@interface QuadMap : NSObject <NSCoding>
+@interface QuadMapC : NSObject <NSCoding>
 {
 }
-@property (readonly,nonatomic)	QuadBox	*	rootQuad;
+@property (readonly,nonatomic)	QuadBoxC	*	rootQuad;
 
--(void)mergeDerivedRegion:(QuadMap *)other success:(BOOL)success;
+-(void)mergeDerivedRegion:(QuadMapC *)other success:(BOOL)success;
 -(id)initWithRect:(OSMRect)rect;
 -(NSArray *)newQuadsForRect:(OSMRect)newRect;
--(void)makeWhole:(QuadBox *)quad success:(BOOL)success;
+-(void)makeWhole:(QuadBoxC *)quad success:(BOOL)success;
 -(NSInteger)count;
--(void)enumerateWithBlock:(void (^)(QuadBox * quad))block;
+//-(void)enumerateWithBlock:(void (^)(QuadBoxC * quad))block;
 -(void)addMember:(OsmBaseObject *)member;
 -(void)removeMember:(OsmBaseObject *)member;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(NSArray *))block;
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block;
 
 @end
