@@ -25,13 +25,19 @@
 @end
 
 @interface CommonTag : NSObject
-@property NSString			*	name;
-@property NSString			*	tagKey;
-@property NSString			*	placeholder;
-@property NSArray			*	presetList;		// array of CommonPreset
+@property (readonly,nonatomic) NSString					*	name;
+@property (readonly,nonatomic) NSString					*	tagKey;
+@property (readonly,nonatomic) NSString					*	placeholder;
+@property (readonly,nonatomic) NSArray					*	presetList;		// array of CommonPreset
+@property (readonly,nonatomic) UIKeyboardType				keyboardType;
+@property (readonly,nonatomic) UITextAutocapitalizationType	autocapitalizationType;
 
--(instancetype)initWithName:(NSString *)name tagKey:(NSString *)tag placeholder:(NSString *)placeholder presets:(NSArray *)presets;
-+(instancetype)tagWithName:(NSString *)name tagKey:(NSString *)tag placeholder:(NSString *)placeholder presets:(NSArray *)presets;
+-(instancetype)initWithName:(NSString *)name tagKey:(NSString *)tag placeholder:(NSString *)placeholder
+				   keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
+					presets:(NSArray *)presets;
++(instancetype)tagWithName:(NSString *)name tagKey:(NSString *)tag placeholder:(NSString *)placeholder
+				   keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
+				   presets:(NSArray *)presets;
 -(instancetype)initWithCoder:(NSCoder *)coder;
 -(void)encodeWithCoder:(NSCoder *)enCoder;
 @end

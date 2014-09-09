@@ -157,6 +157,7 @@ static NSDictionary * ActionDictionary = nil;
 	[_memoryTileCache removeAllObjects];
 	[_layerDict removeAllObjects];
 	self.sublayers = nil;
+	[[NSURLCache sharedURLCache] removeAllCachedResponses];
 	DLog(@"purge");
 	[self setNeedsLayout];
 }

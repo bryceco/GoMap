@@ -62,8 +62,10 @@
 			[presets addObject:preset];
 		}
 	}
+	UIKeyboardType keyboard = UIKeyboardTypeDefault;
+	UITextAutocapitalizationType capitalize = UITextAutocapitalizationTypeNone;
 	
-	_customPreset = [CustomPreset tagWithName:name tagKey:key placeholder:nil presets:presets];
+	_customPreset = [CustomPreset tagWithName:name tagKey:key placeholder:nil keyboard:keyboard capitalize:capitalize presets:presets];
 	_customPreset.appliesToKey = appliesToKey;
 	_customPreset.appliesToValue = appliesToVal;
 	if ( _completion ) {

@@ -201,6 +201,8 @@
 		cell.valueField.textColor = [UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0];
 		cell.commonTag = commonTag;
 
+		cell.valueField.keyboardType = commonTag.keyboardType;
+		cell.valueField.autocapitalizationType = commonTag.autocapitalizationType;
 		[cell.valueField removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 		[cell.valueField addTarget:self action:@selector(textFieldReturn:)			forControlEvents:UIControlEventEditingDidEndOnExit];
 		[cell.valueField addTarget:self action:@selector(textFieldChanged:)			forControlEvents:UIControlEventEditingChanged];
