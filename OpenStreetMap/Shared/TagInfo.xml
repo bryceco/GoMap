@@ -108,7 +108,7 @@
     <tag key="amenity" value="parking_entrance" name="Parking Entrance" type="node;area" description="A entrance to an underground or multi storey parking facility"/>
     <tag key="amenity" value="parking_space" name="Parking Space" type="node;area" description="A single parking space on a parking lot"/>
     <tag key="amenity" value="payment_terminal" name="Payment Terminal" type="node;area"/>
-    <tag key="amenity" value="pharmacy" name="Pharmacy" type="node;area" description="A shop where a pharmacist sells medications" iconName="health_pharmacy" wikiPage="http://wiki.openstreetmap.org/wiki/Pharmacy" areaColor="EEEEEE"/>
+    <tag key="amenity" value="pharmacy" name="Pharmacy" type="node;area" description="A shop where a pharmacist sells medications (drugstore)" iconName="health_pharmacy" wikiPage="http://wiki.openstreetmap.org/wiki/Pharmacy" areaColor="EEEEEE"/>
     <tag key="amenity" value="place_of_worship" name="Place Of Worship" type="node;area" description="All places of worship independently of the religion or denomination get the tag amenity=place_of_worship (church,temple,mosque)." iconName="place_of_worship_unknown" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dplace_of_worship" />
     <tag key="amenity" value="police" name="Police" type="node;area" description="Used to mark a police station." iconName="amenity_police2" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dpolice" />
     <tag key="amenity" value="post_box" name="Post Box" type="node;area" description="Used to mark the location of a postbox." iconName="amenity_post_box" wikiPage="http://wiki.openstreetmap.org/wiki/Post_box" />
@@ -467,7 +467,7 @@
     <tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dservice" lineColor="809BC0" lineWidth="1.000000"/>
     <tag key="highway" value="services" name="Services" type="way" description="Place where drivers can leave a road to refuel, rest, or take refreshments." areaColor="C0C0C0"/>
     <tag key="highway" value="speed_camera" name="Speed Camera" type="node_in_way" description="A fixed road-side or overhead speed camera"/>
-    <tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps on footways." iconName="barrier_steps" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps" lineColor="00FF00" lineWidth="1.000000"/>
+    <tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps" lineColor="00FF00" lineWidth="1.000000"/>
     <tag key="highway" value="stile" name="Stile" type="way"/>
     <tag key="highway" value="stop" name="Stop" type="way" description="Used to mark stop signs" iconName="transport_stop"/>
     <tag key="highway" value="street_lamp" name="Street Lamp" type="node" description="A single pole with one or more lights to illuminate the street."/>
@@ -1481,7 +1481,7 @@
     <tag key="shop" value="glaziery" name="Glaziery" type="node;area" areaColor="00005F"/>
     <tag key="shop" value="greengrocer" name="Greengrocer" type="node;area" description="A shop which sells fruits and vegetables" iconName="shopping_greengrocer" areaColor="00005F"/>
     <tag key="shop" value="haberdashery" name="Haberdashery" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="hairdresser" name="Hairdresser" type="node;area" description="A hairdressers shop where you can get your hair cut" iconName="shopping_hairdresser" areaColor="00005F"/>
+    <tag key="shop" value="hairdresser" name="Hairdresser" type="node;area" description="A hairdressers shop where you can get your hair cut (barber)" iconName="shopping_hairdresser" areaColor="00005F"/>
     <tag key="shop" value="hairdresser_supply" name="Hairdresser Supply" type="node;area" description="A shop, where you can buy hairdressing supplies" areaColor="00005F"/>
     <tag key="shop" value="hardware" name="Hardware" type="node;area" description="A shop which sells timber, tools and other building products" areaColor="00005F"/>
     <tag key="shop" value="hearing_aid_dispenser" name="Hearing Aid Dispenser" type="node;area" iconName="shopping_hearing_aids" areaColor="00005F"/>
