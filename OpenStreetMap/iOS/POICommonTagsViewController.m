@@ -41,6 +41,9 @@
 
 - (void)viewDidLoad
 {
+	// have to update presets before call super because super asks for the number of sections
+	[self updatePresets];
+
 	[super viewDidLoad];
 
 	_tags = [CommonTagList sharedList];
@@ -72,7 +75,12 @@
 -(void)updatePresets
 {
 	POITabBarController * tabController = (id)self.tabBarController;
+
+	_saveButton.enabled = [tabController isTagDictChanged];
+
 	NSDictionary * dict = tabController.keyValueDict;
+
+
 
 	OsmBaseObject * object = tabController.selection;
 	NSString * geometry = object.isWay ? ((OsmWay *)object).isArea ? GEOMETRY_AREA : GEOMETRY_WAY :
@@ -98,12 +106,8 @@
 {
 	[super viewWillAppear:animated];
 
-	[self loadState];
-
 	if ( [self isMovingToParentViewController] ) {
-		// first appearance
 	} else {
-		// reload cells when coming back from preset picker
 		[self updatePresets];
 	}
 }
@@ -112,13 +116,6 @@
 {
 	[self resignAll];
 	[super viewWillDisappear:animated];
-}
-
-
-- (void)loadState
-{
-	POITabBarController	* tabController = (id)self.tabBarController;
-	_saveButton.enabled = [tabController isTagDictChanged];
 }
 
 - (NSString *)typeKeyForDict:(NSDictionary *)dict
@@ -167,6 +164,8 @@
 {
 	if ( section == _tags.sectionCount )
 		return nil;
+	if ( section > _tags.sectionCount )
+		return nil;
 	CommonGroup * group = [_tags groupAtIndex:section];
 	return group.name;
 }
@@ -175,6 +174,8 @@
 {
 	if ( section == _tags.sectionCount )
 		return 1;
+	if ( section > _tags.sectionCount )
+		return 0;
 	return [_tags tagsInSection:section];
 }
 
@@ -186,6 +187,8 @@
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CustomizePresets" forIndexPath:indexPath];
 			return cell;
 		}
+		if ( indexPath.section > _tags.sectionCount )
+			return nil;
 
 		NSString * key = [_tags tagAtIndexPath:indexPath].tagKey;
 		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";

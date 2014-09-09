@@ -20,8 +20,6 @@
 
 - (IBAction)textFieldReturn:(id)sender;
 
-- (void)loadState;
-
 -(IBAction)cancel:(id)sender;
 -(IBAction)done:(id)sender;
 
