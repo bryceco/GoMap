@@ -45,13 +45,14 @@
 		022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A53167B8F1C00D7A5AC /* POITabBarController.m */; };
 		022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */; };
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
+		022B09AA19BE9A3B0041687B /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A919BE9A3B0041687B /* CoreData.m */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02329DB716D33FB100D20646 /* FuturePlist.txt */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
 		0242331316750C81008A3B6A /* ArrowBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0242331216750C81008A3B6A /* ArrowBlue.png */; };
-		024ADF3616AE44CB00875658 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3416AE44CB00875658 /* Model.xcdatamodeld */; };
+		024ADF3616AE44CB00875658 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */; };
 		024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3B16B1B38B00875658 /* PathUtil.m */; };
 		024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */; };
 		025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 025224E716D7292E00B6FD53 /* RotatingNavigationController.m */; };
@@ -522,6 +523,8 @@
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearCacheViewController.m; sourceTree = "<group>"; };
 		022B09A519BD3F710041687B /* QuadMapC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuadMapC.h; path = ../Shared/QuadMapC.h; sourceTree = "<group>"; };
 		022B09A619BD3F7B0041687B /* QuadMapC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadMapC.mm; path = ../Shared/QuadMapC.mm; sourceTree = "<group>"; };
+		022B09A819BE9A3B0041687B /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
+		022B09A919BE9A3B0041687B /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
 		022B504716857E5F00E6619A /* OSMiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OSMiOS.entitlements; sourceTree = "<group>"; };
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresetController.h; sourceTree = "<group>"; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresetController.m; sourceTree = "<group>"; };
@@ -531,7 +534,7 @@
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../Shared/VectorMath.m; sourceTree = "<group>"; };
 		0242331216750C81008A3B6A /* ArrowBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlue.png; sourceTree = "<group>"; };
-		024ADF3516AE44CB00875658 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
 		024ADF3A16B1B38A00875658 /* PathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PathUtil.h; path = ../Shared/PathUtil.h; sourceTree = "<group>"; };
 		024ADF3B16B1B38B00875658 /* PathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PathUtil.m; path = ../Shared/PathUtil.m; sourceTree = "<group>"; };
 		024B4CA019BBE65F00BBA60B /* CustomPresetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresetListViewController.h; sourceTree = "<group>"; };
@@ -1167,6 +1170,9 @@
 				02C19B341699E8C000F75E3C /* BingMetadataViewController.m */,
 				022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */,
 				022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */,
+				022B09A819BE9A3B0041687B /* CoreData.h */,
+				022B09A919BE9A3B0041687B /* CoreData.m */,
+				024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */,
 				020C2A8E168A7688003F2C2A /* CreditsViewController.h */,
 				020C2A8F168A7688003F2C2A /* CreditsViewController.m */,
 				0230558919B931A50041B151 /* CustomPresetController.h */,
@@ -1190,7 +1196,6 @@
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
-				024ADF3416AE44CB00875658 /* Model.xcdatamodeld */,
 				02BED98C168BF87100357B94 /* NearbyMappersViewController.h */,
 				02BED98D168BF87200357B94 /* NearbyMappersViewController.m */,
 				02F8F4321696004B002A0820 /* NominatumViewController.h */,
@@ -2134,6 +2139,7 @@
 				02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */,
 				02ACBBCB16713F2B00BB4414 /* MercatorTileLayer.m in Sources */,
 				02ACBBCC16713F2B00BB4414 /* OsmMapData.m in Sources */,
+				022B09AA19BE9A3B0041687B /* CoreData.m in Sources */,
 				02ACBBCD16713F2B00BB4414 /* OsmObjects.m in Sources */,
 				02ACBCF816713F2B00BB4414 /* QuadMap.m in Sources */,
 				02ACBCF916713F2B00BB4414 /* RulerLayer.m in Sources */,
@@ -2180,7 +2186,7 @@
 				02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */,
 				0277E29116A66C1800456BED /* EditorLayerGL.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
-				024ADF3616AE44CB00875658 /* Model.xcdatamodeld in Sources */,
+				024ADF3616AE44CB00875658 /* CoreData.xcdatamodeld in Sources */,
 				028F504519B949780093C423 /* CommonTagList.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
@@ -2341,13 +2347,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		024ADF3416AE44CB00875658 /* Model.xcdatamodeld */ = {
+		024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				024ADF3516AE44CB00875658 /* Model.xcdatamodel */,
+				024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */,
 			);
-			currentVersion = 024ADF3516AE44CB00875658 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			currentVersion = 024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

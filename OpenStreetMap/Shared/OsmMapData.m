@@ -7,7 +7,6 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import <sqlite3.h>
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
@@ -1755,33 +1754,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	self = [unarchiver decodeObjectForKey:@"OsmMapData"];
 	return self;
 }
-
-
-
-#if 0
--(BOOL)saveSqlite
-{
-	NSString * path = @"data.sqlite3";
-	sqlite3 * db = NULL;
-	int rc = sqlite3_open_v2( path.UTF8String, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL );
-	if ( rc ) {
-		return NO;
-	}
-
-    sqlite3_stmt *statement;
-	rc = sqlite3_prepare_v2( db, "SELECT k,v,line_color,line_width,area_color FROM josm_style_rules", -1, &statement, nil );
-    assert(rc == SQLITE_OK);
-	while ( sqlite3_step(statement) == SQLITE_ROW )  {
-		const char * szKey			= (char *)sqlite3_column_text(statement, 0);
-		const char * szValue		= (char *)sqlite3_column_text(statement, 1);
-		const char * szLineColor	= (char *)sqlite3_column_text(statement, 2);
-		const char * szLineWidth	= (char *)sqlite3_column_text(statement, 3);
-		const char * szAreaColor	= (char *)sqlite3_column_text(statement, 4);
-	}
-	sqlite3_finalize(statement);
-	sqlite3_close(db);
-}
-#endif
 
 
 -(NSArray *)userStatisticsForRegion:(OSMRect)rect
