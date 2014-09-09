@@ -273,6 +273,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 -(BOOL)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
+	BOOL createRelations = NO;
+
 	[_undoManager registerUndoComment:NSLocalizedString(@"Split",nil)];
 
 	OsmWay * wayA = selectedWay;
@@ -282,7 +284,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	OsmRelation * isOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.relations.lastObject : nil;
 	BOOL isClosed = wayA.isClosed;
-
 	if (wayA.isClosed) {
 
 		// remove duplicated node
@@ -360,17 +361,20 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		}
 	}
 
-	if (!isOuter && isClosed) {
-		OsmRelation * multipolygon = [self createRelation];
-		NSMutableDictionary * tags = [wayA.tags mutableCopy];
-		[tags setValue:@"multipolygon" forKey:@"type"];
-		[self setTags:tags forObject:multipolygon];
-		OsmMember * memberA = [[OsmMember alloc] initWithRef:wayA role:@"outer"];
-		OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:@"outer"];
-		[self addMember:memberA toRelation:multipolygon atIndex:0];
-		[self addMember:memberB toRelation:multipolygon atIndex:1];
-		[self setTags:nil forObject:wayA];
-		[self setTags:nil forObject:wayB];
+	if ( createRelations ) {
+		// convert split buildings into relations
+		if (!isOuter && isClosed) {
+			OsmRelation * multipolygon = [self createRelation];
+			NSMutableDictionary * tags = [wayA.tags mutableCopy];
+			[tags setValue:@"multipolygon" forKey:@"type"];
+			[self setTags:tags forObject:multipolygon];
+			OsmMember * memberA = [[OsmMember alloc] initWithRef:wayA role:@"outer"];
+			OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:@"outer"];
+			[self addMember:memberA toRelation:multipolygon atIndex:0];
+			[self addMember:memberB toRelation:multipolygon atIndex:1];
+			[self setTags:nil forObject:wayA];
+			[self setTags:nil forObject:wayB];
+		}
 	}
 	
 	return YES;
