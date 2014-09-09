@@ -9,6 +9,44 @@
 #import <CoreData/CoreData.h>
 
 #import "CoreData.h"
+#import "OsmMapData.h"
+#import "OsmObjects.h"
+
+
+@implementation OsmBaseObjectCD
+
+@synthesize renderPriorityCached;
+@synthesize tagInfo;
+@synthesize wasDeleted;
+@synthesize boundingBox;
+
+@dynamic deleted;
+@dynamic renderProperties;
+@dynamic modifyCount;
+@dynamic relations;
+
+// attributes
+@dynamic tags;
+@dynamic ident;
+@dynamic user;
+@dynamic timestamp;
+@dynamic version;
+@dynamic changeset;
+@dynamic uid;
+@dynamic visible;
+
+@end
+
+
+@implementation OsmNodeCD
+@dynamic lat;
+@dynamic lon;
+@dynamic wayCount;
+@end
+
+
+
+
 
 @implementation CoreData
 
@@ -78,6 +116,7 @@
 	return YES;
 }
 
+
 - (void)applicationWillTerminate
 {
 	if ( !self.managedObjectContext.hasChanges ) {
@@ -85,6 +124,33 @@
 	}
 
 	[self save];
+}
+
+- (BOOL)saveMapData:(OsmMapData *)mapData
+{
+	[mapData enumerateObjectsUsingBlock:^(OsmBaseObject * obj){
+		if ( obj.isNode ) {
+			OsmNodeCD * node = [NSEntityDescription insertNewObjectForEntityForName:@"OsmNode" inManagedObjectContext:_managedObjectContext];
+
+			node.wasDeleted		= obj.deleted;
+			node.modifyCount	= obj.modifyCount;
+			node.relations		= obj.relations;
+
+			// attributes
+			node.tags			= obj.tags;
+			node.ident			= obj.ident.longLongValue;
+			node.user			= obj.user;
+			node.timestamp		= obj.timestamp;
+			node.version		= obj.version;
+			node.changeset		= obj.changeset;
+			node.uid			= obj.uid;
+			node.visible		= obj.visible;
+
+			[nodeList addObject:node];
+		}
+	}];
+
+	return [self save];
 }
 
 @end

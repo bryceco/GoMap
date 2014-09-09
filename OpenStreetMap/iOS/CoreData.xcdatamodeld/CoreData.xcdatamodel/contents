@@ -1,61 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6220.17" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Node" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    <entity name="BaseObject" syncable="YES">
+        <attribute name="changeset" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="uid" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="wasDeleted" attributeType="Boolean" syncable="YES"/>
+        <relationship name="member" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationMember" inverseName="object" inverseEntity="RelationMember" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="object" inverseEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="Node" parentEntity="BaseObject" syncable="YES">
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="member" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationMember" inverseName="node_ref" inverseEntity="RelationMember" syncable="YES"/>
-        <relationship name="tags" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="NodeTag" inverseName="node" inverseEntity="NodeTag" syncable="YES"/>
-        <relationship name="way" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Way" inverseName="nodes" inverseEntity="Way" syncable="YES"/>
+        <relationship name="parentWays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Way" inverseName="nodes" inverseEntity="Way" syncable="YES"/>
     </entity>
-    <entity name="NodeTag" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="k" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="v" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="node" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="tags" inverseEntity="Node" syncable="YES"/>
-    </entity>
-    <entity name="Relation" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="member" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationMember" inverseName="relation_ref" inverseEntity="RelationMember" syncable="YES"/>
-        <relationship name="tags" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationTag" inverseName="relation" inverseEntity="RelationTag" syncable="YES"/>
+    <entity name="Relation" parentEntity="BaseObject" syncable="YES">
+        <relationship name="members" toMany="YES" minCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="RelationMember" inverseName="relation" inverseEntity="RelationMember" syncable="YES"/>
     </entity>
     <entity name="RelationMember" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="ref_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="node_ref" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="member" inverseEntity="Node" syncable="YES"/>
-        <relationship name="relation_ref" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Relation" inverseName="member" inverseEntity="Relation" syncable="YES"/>
-        <relationship name="way_ref" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Way" inverseName="member" inverseEntity="Way" syncable="YES"/>
+        <relationship name="object" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BaseObject" inverseName="member" inverseEntity="BaseObject" syncable="YES"/>
+        <relationship name="relation" maxCount="1" deletionRule="Nullify" destinationEntity="Relation" inverseName="members" inverseEntity="Relation" syncable="YES"/>
     </entity>
-    <entity name="RelationTag" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="k" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="v" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="relation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Relation" inverseName="tags" inverseEntity="Relation" syncable="YES"/>
+    <entity name="Tag" syncable="YES">
+        <attribute name="k" attributeType="String" minValueString="1" maxValueString="255" syncable="YES"/>
+        <attribute name="v" attributeType="String" minValueString="1" maxValueString="255" syncable="YES"/>
+        <relationship name="object" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BaseObject" inverseName="tags" inverseEntity="BaseObject" syncable="YES"/>
     </entity>
-    <entity name="Way" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="member" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RelationMember" inverseName="way_ref" inverseEntity="RelationMember" syncable="YES"/>
-        <relationship name="nodes" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="way" inverseEntity="Node" syncable="YES"/>
-        <relationship name="tags" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="WayTag" inverseName="way" inverseEntity="WayTag" syncable="YES"/>
-    </entity>
-    <entity name="WayTag" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="k" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="v" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="way" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Way" inverseName="tags" inverseEntity="Way" syncable="YES"/>
+    <entity name="Way" parentEntity="BaseObject" syncable="YES">
+        <relationship name="nodes" toMany="YES" minCount="2" deletionRule="Nullify" ordered="YES" destinationEntity="Node" inverseName="parentWays" inverseEntity="Node" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Node" positionX="-153" positionY="126" width="128" height="150"/>
-        <element name="NodeTag" positionX="-126" positionY="351" width="128" height="103"/>
-        <element name="Relation" positionX="214" positionY="129" width="128" height="105"/>
-        <element name="RelationMember" positionX="196" positionY="-81" width="128" height="165"/>
-        <element name="RelationTag" positionX="223" positionY="345" width="128" height="105"/>
-        <element name="Way" positionX="52" positionY="126" width="128" height="105"/>
-        <element name="WayTag" positionX="54" positionY="345" width="128" height="105"/>
+        <element name="Node" positionX="-306" positionY="81" width="128" height="88"/>
+        <element name="Tag" positionX="-171" positionY="452" width="128" height="88"/>
+        <element name="Relation" positionX="34" positionY="81" width="128" height="58"/>
+        <element name="RelationMember" positionX="81" positionY="180" width="128" height="103"/>
+        <element name="Way" positionX="-126" positionY="83" width="128" height="58"/>
+        <element name="BaseObject" positionX="-155" positionY="203" width="128" height="163"/>
     </elements>
 </model>
