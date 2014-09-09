@@ -1893,6 +1893,14 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	NSInteger diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
 	return diff > 0;	// sort descending
 }
+static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
+{
+	long long diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
+	if ( diff == 0 )
+		diff = obj1.ident.longLongValue - obj2.ident.longLongValue;	// older objects are bigger
+	return diff > 0;	// sort descending
+}
+
 
 - (void)drawInContext:(CGContextRef)ctx
 {
@@ -1937,7 +1945,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	// sort from big to small objects
-	[_shownObjects partialSortK:2*objectLimit+1 compare:VisibleSizeLess];
+	[_shownObjects partialSortK:2*objectLimit+1 compare:VisibleSizeLessStrict];
 
 	// adjust the list of objects so that we get all or none of the same type
 	if ( _shownObjects.count > objectLimit ) {
@@ -1990,7 +1998,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
 			areaCount += [self drawArea:(id)obj context:ctx];
-		} else if ( obj.isRelation && ((OsmRelation *)obj).isMultipolygon ) {
+		} else if ( obj.isRelation.isMultipolygon ) {
 			areaCount += [self drawArea:(id)obj context:ctx];
 		}
 	}
@@ -2001,7 +2009,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
 			casingCount += [self drawWayCasing:obj context:ctx];
-		} else if ( obj.isRelation && ((OsmRelation *)obj).isMultipolygon ) {
+		} else if ( obj.isRelation.isMultipolygon ) {
 			casingCount += [self drawWayCasing:obj context:ctx];
 		}
 	}
@@ -2012,7 +2020,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( OsmBaseObject * obj in _shownObjects ) {
 		if ( obj.isWay ) {
 			wayCount += [self drawWay:obj context:ctx];
-		} else if ( obj.isRelation && ((OsmRelation *)obj).isMultipolygon ) {
+		} else if ( obj.isRelation.isMultipolygon ) {
 			wayCount += [self drawWay:obj context:ctx];
 		}
 	}
@@ -2031,7 +2039,7 @@ static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	CFTimeInterval nameTime = CACurrentMediaTime();
 	for ( OsmBaseObject * obj in _shownObjects ) {
 
-		if ( obj.isWay || (obj.isRelation && ((OsmRelation *)obj).isMultipolygon) ) {
+		if ( obj.isWay || obj.isRelation.isMultipolygon ) {
 			BOOL drawn = [self drawWayName:obj context:ctx];
 			nameCount += drawn;
 			nameLimit -= drawn;
