@@ -15,9 +15,6 @@
 
 static const double MinRectSize = 360.0 / (1 << 16);
 
-#define QuadBox QuadBoxC
-#define QuadMap	QuadMapC
-
 
 
 class QuadBoxCC
@@ -38,7 +35,7 @@ public:
 		_whole = _busy = _isSplit = false;
 	}
 
-	const OSMRect rect()
+	const OSMRect rect() const
 	{
 		return _rect;
 	}
@@ -70,7 +67,7 @@ public:
 		}
 	}
 
-	void missingPieces( std::vector<QuadBoxCC *> & pieces, OSMRect target )
+	void missingPieces( std::vector<QuadBoxCC *> & pieces, const OSMRect & target )
 	{
 		if ( _whole || _busy )
 			return;
@@ -140,7 +137,7 @@ public:
 		}
 	}
 
-	void enumerateWithBlock( void (^block)(QuadBoxCC * quad) )
+	void enumerateWithBlock( void (^block)(const QuadBoxCC * quad) ) const
 	{
 		block(this);
 		for ( int child = 0; child <= QUAD_LAST; ++child ) {
@@ -151,18 +148,18 @@ public:
 		}
 	}
 
-	NSInteger quadCount()
+	NSInteger quadCount() const
 	{
 		__block NSInteger c = 0;
-		this->enumerateWithBlock(^(QuadBoxCC *quad) {
+		this->enumerateWithBlock(^(const QuadBoxCC *quad) {
 			++c;
 		});
 		return c;
 	}
-	NSInteger memberCount()
+	NSInteger memberCount() const
 	{
 		__block NSInteger c = 0;
-		this->enumerateWithBlock(^(QuadBoxCC *quad) {
+		this->enumerateWithBlock(^(const QuadBoxCC *quad) {
 			c += quad->_members.size();
 		});
 		return c;
@@ -170,7 +167,7 @@ public:
 
 	static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
-	void addMember(OsmBaseObject * member, OSMRect bbox)
+	void addMember(OsmBaseObject * member, const OSMRect & bbox)
 	{
 		if ( !_isSplit && _members.size() < MAX_MEMBERS_PER_LEVEL ) {
 #if defined(DEBUG)
@@ -214,7 +211,7 @@ public:
 		}
 	}
 
-	BOOL removeMember( OsmBaseObject * member, OSMRect bbox )
+	BOOL removeMember( OsmBaseObject * member, const OSMRect & bbox )
 	{
 		auto iter = std::find(_members.begin(), _members.end(), member);
 		if ( iter != _members.end() ) {
@@ -232,10 +229,12 @@ public:
 		return NO;
 	}
 
-	void findObjectsInArea( OSMRect bbox, void (^block)(OsmBaseObject *) )
+	void findObjectsInArea( const OSMRect & bbox, void (^block)(OsmBaseObject *) ) const
 	{
-		for ( const auto & m : _members ) {
-			block( m );
+		for ( const auto & obj : _members ) {
+			OSMRect rc = obj->_boundingBox;	// fast access
+			if ( OSMRectIntersectsRect( rc, bbox ) )
+				block( obj );
 		}
 		for ( int c = 0; c <= QUAD_LAST; ++c ) {
 			QuadBoxCC * child = _children[ c ];
@@ -247,7 +246,11 @@ public:
 };
 
 
-@implementation QuadBoxC
+
+#define QuadBox QuadBoxC
+#define QuadMap	QuadMapC
+
+@implementation QuadBox
 
 -(id)initWithRect:(OSMRect)rect
 {
@@ -256,6 +259,12 @@ public:
 		_cpp = new QuadBoxCC( rect, NULL );
 	}
 	return self;
+}
+
+-(void)dealloc
+{
+	delete _cpp;
+	_cpp = NULL;
 }
 
 -(void)reset
@@ -269,7 +278,7 @@ public:
 	_cpp->missingPieces(missing, target);
 	for ( const auto & iter : missing ) {
 		OSMRect rc = iter->rect();
-		OSMRectBoxed * box = [OSMRectBoxed rectWithRect:rc];
+		QuadBoxC * box = [[QuadBoxC alloc] initWithRect:rc];
 		[pieces addObject:box];
 	}
 }
@@ -318,7 +327,7 @@ public:
 	return ok;
 }
 
--(void)enumerateWithBlock:(void (^)(QuadBoxCC * quad))block
+-(void)enumerateWithBlock:(void (^)(const QuadBoxCC * quad))block
 {
 	_cpp->enumerateWithBlock(block);
 }
@@ -434,7 +443,7 @@ public:
 
 -(void)addMember:(OsmBaseObject *)member
 {
-	OSMRect box = [member boundingBox];
+	OSMRect box = member.boundingBox;
 	[_rootQuad addMember:member bbox:box];
 }
 
@@ -443,12 +452,12 @@ public:
 	OSMRect box = [member boundingBox];
 	[_rootQuad removeMember:member bbox:box];
 }
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
 {
 	[_rootQuad findObjectsInArea:bbox block:block];
 }
 
--(void)enumerateWithBlock:(void (^)(QuadBoxCC * quad))block
+-(void)enumerateWithBlock:(void (^)(const QuadBoxCC * quad))block
 {
 	[_rootQuad enumerateWithBlock:block];
 }
@@ -456,7 +465,7 @@ public:
 -(NSInteger)count
 {
 	__block NSInteger c = 0;
-	[self enumerateWithBlock:^(QuadBoxCC * quad){
+	[self enumerateWithBlock:^(const QuadBoxCC * quad){
 		++c;
 	}];
 	return c;

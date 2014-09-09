@@ -52,6 +52,7 @@ NSString * OsmValueForBoolean( BOOL b )
 @synthesize modifyCount = _modifyCount;
 @synthesize ident = _ident;
 @synthesize relations = _relations;
+@synthesize boundingBox = _boundingBox;
 
 -(NSString *)description
 {
@@ -115,6 +116,12 @@ NSString * OsmValueForBoolean( BOOL b )
 	return nil;
 }
 -(OSMRect)boundingBox
+{
+	if ( _boundingBox.origin.x == 0 && _boundingBox.origin.y == 0 && _boundingBox.size.width == 0 && _boundingBox.size.height == 0 )
+		_boundingBox = [self boundingBoxCompute];
+	return _boundingBox;
+}
+-(OSMRect)boundingBoxCompute
 {
 	assert(NO);
 	return OSMRectMake(0, 0, 0, 0);
@@ -228,6 +235,14 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	assert(_timestamp);
 }
 
+-(void)clearCachedProperties
+{
+	_renderProperties		= nil;
+	_tagInfo				= nil;
+	_renderPriorityCached	= 0;
+	_boundingBox			= OSMRectMake(0, 0, 0, 0);
+}
+
 -(BOOL)isModified
 {
 	return _modifyCount > 0;
@@ -244,13 +259,16 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	else
 		++_modifyCount;
 	assert( _modifyCount >= 0 );
-	self.renderPriorityCached = 0;	// need to recompute this because we prioritize dirty objects
+
+	// update cached values
+	[self clearCachedProperties];
 }
 -(void)resetModifyCount:(UndoManager *)undo
 {
 	assert(undo);
 	_modifyCount = 0;
-	self.renderPriorityCached = 0;
+
+	[self clearCachedProperties];
 }
 
 -(void)serverUpdateVersion:(NSInteger)version
@@ -273,8 +291,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	_changeset	= newerVersion.changeset;
 	_uid		= newerVersion.uid;
 	// derived data
-	_renderProperties	= nil;
-	_tagInfo			= nil;
+	[self clearCachedProperties];
 }
 
 
@@ -306,7 +323,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		[undo registerUndoWithTarget:self selector:@selector(setTags:undo:) objects:@[_tags?:[NSNull null],undo]];
 	}
 	_tags = tags;
-	_tagInfo = nil;
+	[self clearCachedProperties];
 }
 
 -(NSSet *)nodeSet
@@ -316,15 +333,8 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 -(BOOL)overlapsBox:(OSMRect)box
 {
-	assert(NO);
-	return NO;
+	return OSMRectIntersectsRect( self.boundingBox, box );
 }
--(BOOL)intersectsBox:(OSMRect)box
-{
-	assert(NO);
-	return NO;
-}
-
 
 +(NSArray *)typeKeys
 {
@@ -552,7 +562,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	return [NSSet setWithObject:self];
 }
--(OSMRect)boundingBox
+-(OSMRect)boundingBoxCompute
 {
 	OSMRect rc = { _lon, _lat, 0, 0 };
 	return rc;
@@ -573,18 +583,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	[super serverUpdateInPlace:newerVersion];
 	_lon = newerVersion.lon;
 	_lat = newerVersion.lat;
-}
-
-
--(BOOL)overlapsBox:(OSMRect)box
-{
-	OSMPoint point = { _lon, _lat };
-	return OSMRectContainsPoint( box, point );
-}
--(BOOL)intersectsBox:(OSMRect)box
-{
-	OSMPoint point = { _lon, _lat };
-	return OSMRectContainsPoint( box, point );
 }
 
 
@@ -936,29 +934,8 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	return [NSSet setWithArray:_nodes];
 }
--(BOOL)overlapsBox:(OSMRect)box
-{
-	return OSMRectIntersectsRect(box, self.boundingBox);
-}
--(BOOL)intersectsBox:(OSMRect)box
-{
-	BOOL first = YES;
-	OSMPoint prevPt;
-	for ( OsmNode * node in _nodes ) {
-		if ( first ) {
-			first = NO;
-			prevPt = node.location;
-			continue;
-		}
-		OSMPoint pt = node.location;
-		if ( LineSegmentIntersectsRectangle(prevPt, pt, box) )
-			return YES;
-		prevPt = pt;
-	}
-	return NO;
-}
 
--(OSMRect)boundingBox
+-(OSMRect)boundingBoxCompute
 {
 	double minX, maxX, minY, maxY;
 	BOOL first = YES;
@@ -1181,7 +1158,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 
--(OSMRect)boundingBox
+-(OSMRect)boundingBoxCompute
 {
 	BOOL first = YES;
 	OSMRect box = { 0, 0, 0, 0 };
@@ -1198,33 +1175,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		}
 	}
 	return box;
-}
-
--(BOOL)overlapsBox:(OSMRect)box
-{
-	for ( OsmMember * member in _members ) {
-		OsmBaseObject * object = member.ref;
-		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
-			if ( [object overlapsBox:box] )
-				return YES;
-		} else {
-			// unresolved ref
-		}
-	}
-	return NO;
-}
--(BOOL)intersectsBox:(OSMRect)box
-{
-	for ( OsmMember * member in _members ) {
-		OsmBaseObject * object = member.ref;
-		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
-			if ( [object intersectsBox:box] )
-				return YES;
-		} else {
-			// unresolved ref
-		}
-	}
-	return NO;
 }
 
 -(NSSet *)nodeSet
@@ -1289,7 +1239,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	if ( outerSet.count == 1 ) {
 		return [outerSet[0] centerPoint];
 	} else {
-		OSMRect rc = [self boundingBox];
+		OSMRect rc = self.boundingBox;
 		return OSMPointMake( rc.origin.x + rc.size.width/2, rc.origin.y+rc.size.height);
 	}
 }

@@ -353,6 +353,10 @@ static NSString * prettyTag( NSString * tag )
 	[presetDict enumerateKeysAndObjectsUsingBlock:^(NSString * fieldName, NSDictionary * dict, BOOL * stop) {
 
 		__block BOOL match = NO;
+		id suggestion = dict[@"suggestion"];
+		if ( suggestion )
+			return;
+
 		NSArray * geom = dict[@"geometry"];
 		for ( NSString * g in geom ) {
 			if ( [g isEqualToString:geometry] ) {

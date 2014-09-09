@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
+#ifdef __cplusplus
 typedef enum {
 	QUAD_NW,
 	QUAD_SW,
@@ -16,21 +16,22 @@ typedef enum {
 	QUAD_NE,
 	QUAD_LAST = 3
 } QUAD_ENUM;
+#endif
+
 
 @class OsmBaseObject;
-
-class QuadBoxCC;
+struct QuadBoxCC;
 
 @interface QuadBoxC : NSObject <NSCoding>
 {
-	QuadBoxCC * _cpp;
+	struct QuadBoxCC * _cpp;
 }
 @property (readonly,nonatomic)	OSMRect		rect;
 
 -(id)initWithRect:(OSMRect)rect;
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 -(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block;
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 -(NSInteger)quadCount;
 -(NSInteger)memberCount;
 -(void)reset;
@@ -49,9 +50,8 @@ class QuadBoxCC;
 -(NSArray *)newQuadsForRect:(OSMRect)newRect;
 -(void)makeWhole:(QuadBoxC *)quad success:(BOOL)success;
 -(NSInteger)count;
-//-(void)enumerateWithBlock:(void (^)(QuadBoxC * quad))block;
 -(void)addMember:(OsmBaseObject *)member;
 -(void)removeMember:(OsmBaseObject *)member;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block;
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 
 @end

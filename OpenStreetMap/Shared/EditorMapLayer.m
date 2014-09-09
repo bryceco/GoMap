@@ -1773,22 +1773,23 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 			if ( obj.relations ) {
 				[relations addObjectsFromArray:obj.relations];
 			}
-			if ( obj.isWay ) {
+			if ( obj.isNode ) {
+				if ( ((OsmNode *)obj).wayCount == 0 ) {
+					[a addObject:obj];
+				}
+			} else if ( obj.isWay ) {
 				[a addObject:obj];
 				for ( OsmNode * node in ((OsmWay *)obj).nodes ) {
 					if ( [node overlapsBox:box] && ShouldDisplayNodeInWay( node.tags ) ) {
 						[a addObject:node];
 					}
 				}
-			} else if ( obj.isNode ) {
-				if ( ((OsmNode *)obj).wayCount == 0 ) {
-					[a addObject:obj];
-				}
 			} else if ( obj.isRelation ) {
 				[relations addObject:obj];
 			}
 		}
 	}];
+
 	for ( OsmRelation * r in relations ) {
 		[a addObject:r];
 	}

@@ -33,6 +33,8 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 	NSDictionary	*	_tags;
 	NSNumber		*	_ident;
 	NSArray			*	_relations;
+@public
+	OSMRect				_boundingBox;
 }
 @property (readonly,nonatomic)	BOOL					deleted;
 @property (strong,nonatomic)	NSMutableDictionary	*	renderProperties;
@@ -52,6 +54,8 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 
 // extra stuff
 @property (assign,nonatomic)	NSInteger			renderPriorityCached;
+@property (assign,nonatomic)	OSMRect				boundingBox;
+-(OSMRect)boundingBoxCompute;
 
 +(NSArray *)typeKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;
@@ -79,7 +83,6 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 
 -(NSSet *)nodeSet;
 -(BOOL)overlapsBox:(OSMRect)box;
--(BOOL)intersectsBox:(OSMRect)box;
 -(OSMRect)boundingBox;
 -(NSString *)friendlyDescription;
 
@@ -119,8 +122,6 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 -(void)removeNodeAtIndex:(NSInteger)index undo:(UndoManager *)undo;
 -(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo;
 
--(BOOL)overlapsBox:(OSMRect)box;
--(OSMRect)boundingBox;
 -(void)resolveToMapData:(OsmMapData *)mapData;
 -(OSMPoint)centerPoint;
 -(OSMPoint)centerPointWithArea:(double *)area;
@@ -143,7 +144,6 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 
 -(void)constructMember:(OsmMember *)member;
 
--(BOOL)overlapsBox:(OSMRect)box;
 -(void)resolveToMapData:(OsmMapData *)mapData;
 -(NSSet *)allMemberObjects;
 

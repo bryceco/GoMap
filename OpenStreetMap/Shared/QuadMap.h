@@ -35,7 +35,7 @@ typedef enum {
 -(id)initWithRect:(OSMRect)rect parent:(QuadBox *)parent;
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 -(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(NSArray *))block;
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 -(NSInteger)quadCount;
 -(NSInteger)memberCount;
 -(void)reset;
@@ -57,6 +57,6 @@ typedef enum {
 -(void)enumerateWithBlock:(void (^)(QuadBox * quad))block;
 -(void)addMember:(OsmBaseObject *)member;
 -(void)removeMember:(OsmBaseObject *)member;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(NSArray *))block;
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 
 @end

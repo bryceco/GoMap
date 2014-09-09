@@ -146,12 +146,8 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 }
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
 {
-	[_spatial findObjectsInArea:bbox block:^(NSArray * a){
-		for ( OsmBaseObject * o in a ) {
-			if ( [o overlapsBox:bbox] ) {
-				block( o );
-			}
-		}
+	[_spatial findObjectsInArea:bbox block:^(OsmBaseObject * o){
+		block( o );
 	}];
 }
 
@@ -768,7 +764,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[_spatial addMember:node undo:nil];
 			} else if ( current.version < node.version ) {
 				// already exists, so do an in-place update
+				[_spatial removeMember:current undo:nil];
 				[current serverUpdateInPlace:node];
+				[_spatial addMember:current undo:nil];
 			}
 		}];
 		[newData->_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmWay * way,BOOL * stop){
@@ -778,8 +776,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[way resolveToMapData:self];
 				[_spatial addMember:way undo:nil];
 			} else if ( current.version < way.version ) {
+				[_spatial removeMember:current undo:nil];
 				[current serverUpdateInPlace:way];
 				[current resolveToMapData:self];
+				[_spatial addMember:current undo:nil];
 			}
 		}];
 		[newData->_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
@@ -788,13 +788,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[_relations setObject:relation forKey:key];
 				[_spatial addMember:relation undo:nil];
 			} else if ( current.version < relation.version ) {
+				[_spatial removeMember:current undo:nil];
 				[current serverUpdateInPlace:relation];
+				[_spatial addMember:current undo:nil];
 			}
 		}];
 
 		// all relations, including old ones, need to be resolved against new objects
 		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
+			[_spatial removeMember:relation undo:nil];
 			[relation resolveToMapData:self];
+			[_spatial addMember:relation undo:nil];
 		}];
 
 

@@ -244,10 +244,12 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
 
 
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(NSArray *))block
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * object))block
 {
-	if ( _members )
-		block( _members );
+	for ( OsmBaseObject * obj in _members ) {
+		if ( [obj overlapsBox:bbox] )
+			block( obj );
+	}
 	for ( QUAD_ENUM c = 0; c <= QUAD_LAST; ++c ) {
 		QuadBox * child = _children[ c ];
 		if ( child && OSMRectIntersectsRect( bbox, child->_rect ) ) {
@@ -255,6 +257,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 		}
 	}
 }
+
 
 
 -(void)encodeWithCoder:(NSCoder *)coder
@@ -367,7 +370,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 	OSMRect box = [member boundingBox];
 	[_rootQuad removeMember:member bbox:box];
 }
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(NSArray *))block
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
 {
 	[_rootQuad findObjectsInArea:bbox block:block];
 }
