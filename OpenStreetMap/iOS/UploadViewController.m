@@ -44,6 +44,9 @@
 	MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
 	_mapData = mapView.editorLayer.mapData;
 
+	NSString * comment = [[NSUserDefaults standardUserDefaults] objectForKey:@"uploadComment"];
+	_commentTextView.text = comment;
+
 	NSAttributedString * text = [_mapData changesetAsAttributedString];
 	if ( text == nil ) {
 		_commitButton.enabled = NO;
@@ -53,8 +56,6 @@
 		_commitButton.enabled = YES;
 		_xmlTextView.attributedText = text;
 	}
-
-	_commentTextView.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"uploadComment"];
 
 	_sendMailButton.enabled = (text != nil);
 	_editXmlButton.enabled = (text != nil);
