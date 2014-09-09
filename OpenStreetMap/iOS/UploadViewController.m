@@ -121,8 +121,7 @@
 		NSError * error = nil;
 		NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
 		if ( error ) {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"XML Error",nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			[alert show];
+			completion( NSLocalizedString( @"The XML is improperly formed", nil ) );
 			return;
 		}
 		[_mapData uploadChangeset:xmlDoc comment:comment retry:NO completion:completion];

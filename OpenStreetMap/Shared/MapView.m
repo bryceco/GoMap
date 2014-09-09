@@ -1497,7 +1497,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			}
 			CGFloat screenBottom = self.bounds.origin.y+self.bounds.size.height;
 			if ( screenBottom - newPoint.y < 190 )
-				newPoint.y = screenBottom - 1`	`	90;
+				newPoint.y = screenBottom - 190;
 		} else if ( way.nodes.count == 2 ) {
 			// create 3rd point 90 degrees from first 2
 			OsmNode * n1 = way.nodes[1-prevIndex];
