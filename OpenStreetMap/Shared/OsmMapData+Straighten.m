@@ -376,7 +376,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			[self setTags:nil forObject:wayB];
 		}
 	}
-	
+
 	return YES;
 }
 
