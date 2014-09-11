@@ -48,6 +48,7 @@
 		022B09AA19BE9A3B0041687B /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A919BE9A3B0041687B /* CoreData.m */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02329DB716D33FB100D20646 /* FuturePlist.txt */; };
+		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
@@ -529,6 +530,7 @@
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresetController.h; sourceTree = "<group>"; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresetController.m; sourceTree = "<group>"; };
 		02329DB716D33FB100D20646 /* FuturePlist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FuturePlist.txt; sourceTree = "<group>"; };
+		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Go Map!!/Images.xcassets"; sourceTree = "<group>"; };
 		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
@@ -1202,7 +1204,6 @@
 				02F8F4331696004B002A0820 /* NominatumViewController.m */,
 				02BED99D168D102600357B94 /* OfflineViewController.h */,
 				02BED99E168D102600357B94 /* OfflineViewController.m */,
-				022B504716857E5F00E6619A /* OSMiOS.entitlements */,
 				02A077D0167A77A400686261 /* POIAllTagsViewController.h */,
 				02A077D1167A77A400686261 /* POIAllTagsViewController.m */,
 				023D1721168A36B00011FABC /* POIAttributesViewController.h */,
@@ -1238,15 +1239,17 @@
 		02ACBA3A16713CCB00BB4414 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */,
-				02ACBA3F16713CCB00BB4414 /* main.m */,
-				025A1CFB1690B96E002B60CB /* OSM-Logo114.png */,
-				027A469D1673B257000BE55C /* OSM-Logo144.png */,
-				025A1CFA1690B96E002B60CB /* OSM-Logo57.png */,
-				027A469A1673B251000BE55C /* OSM-Logo72.png */,
+				02329DB716D33FB100D20646 /* FuturePlist.txt */,
 				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
 				02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */,
-				02329DB716D33FB100D20646 /* FuturePlist.txt */,
+				023B892A19C148790060CDB5 /* Images.xcassets */,
+				02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */,
+				02ACBA3F16713CCB00BB4414 /* main.m */,
+				025A1CFA1690B96E002B60CB /* OSM-Logo57.png */,
+				027A469A1673B251000BE55C /* OSM-Logo72.png */,
+				025A1CFB1690B96E002B60CB /* OSM-Logo114.png */,
+				027A469D1673B257000BE55C /* OSM-Logo144.png */,
+				022B504716857E5F00E6619A /* OSMiOS.entitlements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2020,6 +2023,7 @@
 				02ACBCDA16713F2B00BB4414 /* transport_marina.p.64.png in Resources */,
 				02ACBCDB16713F2B00BB4414 /* transport_miniroundabout_anticlockwise.p.64.png in Resources */,
 				02ACBCDC16713F2B00BB4414 /* transport_miniroundabout_clockwise.p.64.png in Resources */,
+				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
 				02ACBCDD16713F2B00BB4414 /* transport_parking.p.64.png in Resources */,
 				02ACBCDE16713F2B00BB4414 /* transport_parking_bicycle.p.64.png in Resources */,
 				02ACBCDF16713F2B00BB4414 /* transport_parking_car.p.64.png in Resources */,
@@ -2289,6 +2293,8 @@
 		02ACBA6216713CCB00BB4414 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2308,6 +2314,8 @@
 		02ACBA6316713CCB00BB4414 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
