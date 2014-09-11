@@ -124,7 +124,7 @@
 				}
 			});
 		} else {
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL",nil) message:[NSString stringWithFormat:NSLocalizedString(@"%@",nil),url.absoluteString] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
+			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alertView show];
 		}
 	}
