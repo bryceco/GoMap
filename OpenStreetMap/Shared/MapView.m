@@ -269,6 +269,13 @@ CGSize SizeForImage( NSImage * image )
 		self.mapTransform = OSMTransformIdentity();
 	}
 
+#if 0 && DEBUG
+	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPan:)];
+	panGestureRecognizer.minimumNumberOfTouches = 2;
+	panGestureRecognizer.maximumNumberOfTouches = 2;
+	[self addGestureRecognizer:panGestureRecognizer];
+#endif
+
 	if ( ![self isLocationSpecified] ) {
 		[self locateMe:nil];
 	}
@@ -2118,6 +2125,21 @@ checkGrab:
 			[self doubleClick:point];
 		}
 	}
+}
+
+- (IBAction)twoFingerPan:(UIPanGestureRecognizer *)pan
+{
+	static double angle = 0.0;
+	CGPoint translation = [pan translationInView:self];
+	angle = translation.y;
+	if ( angle > 60 )
+		angle = 60;
+	if ( angle < -60 )
+		angle = -60;
+	CATransform3D t = CATransform3DIdentity;
+	t.m34 = 1.0 / -2000;
+	t = CATransform3DRotate(t, angle * M_PI / 180.0f, 1.0, 0.0, 0.0);
+	self.layer.transform = t;
 }
 
 - (void)updateSpeechBalloonPosition
