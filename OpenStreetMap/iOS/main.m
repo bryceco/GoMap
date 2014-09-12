@@ -13,11 +13,11 @@
 
 void mysighandler(int signal, struct __siginfo * info, void * ctx)
 {
-
 }
 
 int main(int argc, char *argv[])
 {
+#if 0
 	struct sigaction mySigAction;
 	mySigAction.sa_sigaction = mysighandler;
 	mySigAction.sa_flags = SA_SIGINFO;
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	sigaction(SIGXCPU, &mySigAction, NULL);
 	sigaction(SIGXFSZ, &mySigAction, NULL);
 	sigaction(0x91, &mySigAction, NULL);	// bad access
-
+#endif
 
 	@autoreleasepool {
 	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
