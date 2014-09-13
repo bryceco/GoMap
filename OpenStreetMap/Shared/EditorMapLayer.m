@@ -150,7 +150,7 @@ const CGFloat WayHighlightRadius = 6.0;
 #pragma mark Map data
 
 const double MinIconSizeInPixels = 24;
-const double MinIconSizeInMeters = 4.0;
+const double MinIconSizeInMeters = 2.0;
 
 - (void)updateIconSize
 {
@@ -1656,7 +1656,6 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 	} else {
 
 		// draw generic box
-		CGContextSetLineWidth(ctx, 2.0);
 		CGFloat red, green, blue;
 		if ( node.tags[@"shop"] ) {
 			red = 0xAC/255.0;
@@ -1695,6 +1694,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 
 		} else {
 
+			CGContextSetLineWidth(ctx, 2.0);
 			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, ShadowColorForColor(red, green, blue).CGColor );
 			CGRect rect = CGRectMake(pt.x - round(_iconSize.width/4), pt.y - round(_iconSize.height/4), round(_iconSize.width/2), round(_iconSize.height/2));
 			CGContextBeginPath(ctx);
@@ -1702,6 +1702,20 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			CGContextStrokePath(ctx);
 		}
 	}
+
+	// if zoomed in very close then provide targeting lines
+	if ( _iconSize.width > 64 ) {
+		CGContextSetStrokeColorWithColor( ctx, NSColor.blackColor.CGColor );
+		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.whiteColor.CGColor );
+		CGContextSetLineWidth( ctx, 1.0 );
+		CGContextBeginPath(ctx);
+		CGPoint line1[2] = { pt.x - 10, pt.y, pt.x+10, pt.y };
+		CGPoint line2[2] = { pt.x, pt.y - 10, pt.x, pt.y + 10 };
+		CGContextAddLines( ctx, line1, 2 );
+		CGContextAddLines( ctx, line2, 2 );
+		CGContextStrokePath(ctx);
+	}
+
 	return YES;
 }
 

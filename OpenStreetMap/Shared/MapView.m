@@ -269,7 +269,7 @@ CGSize SizeForImage( NSImage * image )
 		self.mapTransform = OSMTransformIdentity();
 	}
 
-#if DEBUG
+#if 0 && DEBUG
 	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPan:)];
 	panGestureRecognizer.minimumNumberOfTouches = 2;
 	panGestureRecognizer.maximumNumberOfTouches = 2;
