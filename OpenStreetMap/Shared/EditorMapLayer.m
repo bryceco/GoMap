@@ -2274,14 +2274,19 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return (id) [EditorMapLayer osmHitTest:point mapView:_mapView objects:list testNodes:YES ignoreList:nil segment:&segment];
 }
 
-#pragma mark Action Sheet
+#pragma mark Copy/Paste
 
 - (BOOL)copyTags:(OsmBaseObject *)object
 {
 	[[NSUserDefaults standardUserDefaults] setObject:object.tags forKey:@"copyPasteTags"];
 	return object.tags.count > 0;
 }
+- (BOOL)canPasteTags
+{
+	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
+	return copyPasteTags.count > 0;
 
+}
 - (BOOL)pasteTags:(OsmBaseObject *)object
 {
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
@@ -2293,138 +2298,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 
-enum {
-	ACTION_SPLIT,
-	ACTION_RECT,
-	ACTION_STRAIGHTEN,
-	ACTION_REVERSE,
-	ACTION_DUPLICATE,
-	ACTION_JOIN,
-	ACTION_DISCONNECT,
-	ACTION_COPYTAGS,
-	ACTION_PASTETAGS,
-};
-static NSArray * ActionTitle;
-
-- (void)presentEditActions:(id)sender
-{
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		ActionTitle = @[
-			NSLocalizedString(@"Split",nil),
-			NSLocalizedString(@"Make Rectangular",nil),
-			NSLocalizedString(@"Straighten",nil),
-			NSLocalizedString(@"Reverse",nil),
-			NSLocalizedString(@"Duplicate",nil),
-			NSLocalizedString(@"Join",nil),
-			NSLocalizedString(@"Disconnect",nil),
-			NSLocalizedString(@"Copy Tags",nil),
-			NSLocalizedString(@"Paste Tags",nil),
-		];
-	});
-	_actionSheet = nil;
-	_actionList = nil;
-	if ( _selectedRelation ) {
-		// relation
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
-	} else if ( _selectedWay ) {
-		if ( _selectedNode ) {
-			// node in way
-			NSArray * parentWays = [self.mapData waysContainingNode:_selectedNode];
-			BOOL disconnect = parentWays.count > 1 || _selectedNode.hasInterestingTags;
-			BOOL split = _selectedWay.isClosed || (_selectedNode != _selectedWay.nodes[0] && _selectedNode != _selectedWay.nodes.lastObject);
-			BOOL join = parentWays.count > 1;
-			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_PASTETAGS), nil];
-			if ( disconnect )
-				[a addObject:@(ACTION_DISCONNECT)];
-			if ( split )
-				[a addObject:@(ACTION_SPLIT)];
-			if ( join )
-				[a addObject:@(ACTION_JOIN)];
-			_actionList = [NSArray arrayWithArray:a];
-		} else {
-			if ( _selectedWay.isClosed ) {
-				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT) ];
-			} else {
-				// line
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
-			}
-		}
-	} else if ( _selectedNode ) {
-		// node
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
-	} else {
-		// nothing selected
-		return;
-	}
-	_actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Perform Action",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-	for ( NSNumber * value in _actionList ) {
-		NSString * title = ActionTitle[ value.integerValue ];
-		[_actionSheet addButtonWithTitle:title];
-	}
-	_actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
-
-	[_actionSheet showFromRect:self.mapView.editControl.frame inView:self.mapView animated:YES];
-}
-
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if ( actionSheet != _actionSheet || _actionList == nil || buttonIndex >= _actionList.count )
-		return;
-	NSInteger action = [_actionList[ buttonIndex ] integerValue];
-	NSString * error = nil;
-	switch (action) {
-		case ACTION_COPYTAGS:
-			if ( ! [self copyTags:self.selectedPrimary] )
-				error = NSLocalizedString(@"The object does contain any tags",nil);
-			break;
-		case ACTION_PASTETAGS:
-			if ( ! [self pasteTags:self.selectedPrimary] )
-				error = NSLocalizedString(@"No tags to paste",nil);
-			break;
-		case ACTION_DUPLICATE:
-			error = NSLocalizedString(@"Not implemented",nil);
-			break;
-		case ACTION_RECT:
-			if ( ! [self.mapData orthogonalizeWay:self.selectedWay] )
-				error = NSLocalizedString(@"The way is not sufficiently rectangular",nil);
-			break;
-		case ACTION_REVERSE:
-			if ( ![self.mapData reverseWay:self.selectedWay] )
-				error = NSLocalizedString(@"Cannot reverse way",nil);
-			break;
-		case ACTION_JOIN:
-			if ( ![self.mapData joinWay:self.selectedWay atNode:self.selectedNode] )
-				error = NSLocalizedString(@"Cannot join selection",nil);
-			break;
-		case ACTION_DISCONNECT:
-			if ( ! [self.mapData disconnectWay:self.selectedWay atNode:self.selectedNode] )
-				error = NSLocalizedString(@"Cannot disconnect way",nil);
-			break;
-		case ACTION_SPLIT:
-			if ( ! [self.mapData splitWay:self.selectedWay atNode:self.selectedNode] )
-				error = NSLocalizedString(@"Cannot split way",nil);
-			break;
-		case ACTION_STRAIGHTEN:
-			if ( ! [self.mapData straightenWay:self.selectedWay] )
-				error = NSLocalizedString(@"The way is not sufficiently straight",nil);
-			break;
-		default:
-			break;
-	}
-	if ( error ) {
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil, nil];
-		[alertView show];
-	}
-
-	[self setNeedsDisplay];
-	[self.mapView refreshPushpinText];
-
-	_actionSheet = nil;
-	_actionList = nil;
-}
 
 #pragma mark Editing
 

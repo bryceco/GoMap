@@ -36,9 +36,6 @@
 
 	NSMutableArray		*	_shownObjects;
 	NSMutableArray		*	_selectionChangeCallbacks;
-
-	UIActionSheet		*	_actionSheet;
-	NSArray				*	_actionList;	// storer mapping of action menu items to selectors
 }
 
 @property (assign,nonatomic)	MapView				*	mapView;
@@ -79,8 +76,6 @@
 
 - (void)setSelectionChangeCallback:(void (^)(void))callback;
 
-- (void)presentEditActions:(id)sender;	// extended editing actions for objects
-
 -(OsmNode *)createNodeAtPoint:(CGPoint)point;
 -(OsmWay *)createWayWithNode:(OsmNode *)node;
 -(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way;
@@ -91,6 +86,8 @@
 
 - (BOOL)copyTags:(OsmBaseObject *)object;
 - (BOOL)pasteTags:(OsmBaseObject *)object;
+- (BOOL)canPasteTags;
+
 
 - (void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
 - (void)save;

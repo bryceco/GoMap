@@ -21,6 +21,8 @@
 #import "MercatorTileLayer.h"
 #import "Notes.h"
 #import "OsmMapData.h"
+#import "OsmMapData+Orthogonalize.h"
+#import "OsmMapData+Straighten.h"
 #import "OsmObjects.h"
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
@@ -400,23 +402,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(MapViewState)viewState
 {
 	return _viewState;
-}
-
--(IBAction)editAction:(id)sender
-{
-	UISegmentedControl * segmentedControl = (UISegmentedControl *) sender;
-	NSInteger segment = segmentedControl.selectedSegmentIndex;
-	if ( segment == 0 ) {
-		// Tags
-		[self editTags:sender];
-	} else if ( segment == 1 ) {
-		// Delete
-		[self delete:sender];
-	} else {
-		// More
-		[self.editorLayer presentEditActions:sender];
-	}
-	segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
 }
 
 - (BOOL)acceptsFirstResponder
@@ -1225,7 +1210,235 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 }
 
-#pragma mark Editing
+
+#pragma mark Edit Actions
+
+typedef enum {
+	// used for extended edit actions:
+	ACTION_SPLIT,
+	ACTION_RECT,
+	ACTION_STRAIGHTEN,
+	ACTION_REVERSE,
+	ACTION_DUPLICATE,
+	ACTION_JOIN,
+	ACTION_DISCONNECT,
+	ACTION_COPYTAGS,
+	ACTION_PASTETAGS,
+	// used by edit control:
+	ACTION_EDITTAGS,
+	ACTION_DELETE,
+	ACTION_MORE,
+} EDIT_ACTION;
+NSString * ActionTitle( NSInteger action )
+{
+	switch (action) {
+		case ACTION_SPLIT:		return NSLocalizedString(@"Split",nil);
+		case ACTION_RECT:		return NSLocalizedString(@"Make Rectangular",nil);
+		case ACTION_STRAIGHTEN:	return NSLocalizedString(@"Straighten",nil);
+		case ACTION_REVERSE:	return NSLocalizedString(@"Reverse",nil);
+		case ACTION_DUPLICATE:	return NSLocalizedString(@"Duplicate",nil);
+		case ACTION_JOIN:		return NSLocalizedString(@"Join",nil);
+		case ACTION_DISCONNECT:	return NSLocalizedString(@"Disconnect",nil);
+		case ACTION_COPYTAGS:	return NSLocalizedString(@"Copy Tags",nil);
+		case ACTION_PASTETAGS:	return NSLocalizedString(@"Paste",nil);
+		case ACTION_EDITTAGS:	return NSLocalizedString(@"Tags", nil);
+		case ACTION_DELETE:		return NSLocalizedString(@"Delete",nil);
+		case ACTION_MORE:		return NSLocalizedString(@"More...",nil);
+	};
+	return nil;
+}
+
+- (void)presentEditActionSheet:(id)sender
+{
+	_actionSheet = nil;
+	_actionList = nil;
+	if ( _editorLayer.selectedRelation ) {
+		// relation
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
+	} else if ( _editorLayer.selectedWay ) {
+		if ( _editorLayer.selectedNode ) {
+			// node in way
+			NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
+			BOOL disconnect = parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
+			BOOL split = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
+			BOOL join = parentWays.count > 1;
+			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_PASTETAGS), nil];
+			if ( disconnect )
+				[a addObject:@(ACTION_DISCONNECT)];
+			if ( split )
+				[a addObject:@(ACTION_SPLIT)];
+			if ( join )
+				[a addObject:@(ACTION_JOIN)];
+			_actionList = [NSArray arrayWithArray:a];
+		} else {
+			if ( _editorLayer.selectedWay.isClosed ) {
+				// polygon
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT) ];
+			} else {
+				// line
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
+			}
+		}
+	} else if ( _editorLayer.selectedNode ) {
+		// node
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
+	} else {
+		// nothing selected
+		return;
+	}
+	_actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Perform Action",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	for ( NSNumber * value in _actionList ) {
+		NSString * title = ActionTitle( value.integerValue );
+		[_actionSheet addButtonWithTitle:title];
+	}
+	_actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
+
+	[_actionSheet showFromRect:_editControl.frame inView:self animated:YES];
+}
+
+-(void)performEditAction:(NSInteger)action
+{
+	NSString * error = nil;
+	switch (action) {
+		case ACTION_COPYTAGS:
+			if ( ! [_editorLayer copyTags:_editorLayer.selectedPrimary] )
+				error = NSLocalizedString(@"The object does contain any tags",nil);
+			break;
+		case ACTION_PASTETAGS:
+			if ( _editorLayer.selectedPrimary == nil ) {
+				// pasting to brand new object, so we need to create it first
+				[self setTagsForCurrentObject:@{}];
+			}
+			if ( _editorLayer.selectedWay && _editorLayer.selectedNode && _editorLayer.selectedWay.tags.count == 0 ) {
+				// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+				_editorLayer.selectedNode = nil;
+				[self refreshPushpinText];
+			}
+			if ( ! [_editorLayer pasteTags:_editorLayer.selectedPrimary] )
+				error = NSLocalizedString(@"No tags to paste",nil);
+			break;
+		case ACTION_DUPLICATE:
+			error = NSLocalizedString(@"Not implemented",nil);
+			break;
+		case ACTION_RECT:
+			if ( ! [_editorLayer.mapData orthogonalizeWay:_editorLayer.selectedWay] )
+				error = NSLocalizedString(@"The way is not sufficiently rectangular",nil);
+			break;
+		case ACTION_REVERSE:
+			if ( ![_editorLayer.mapData reverseWay:_editorLayer.selectedWay] )
+				error = NSLocalizedString(@"Cannot reverse way",nil);
+			break;
+		case ACTION_JOIN:
+			if ( ![_editorLayer.mapData joinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode] )
+				error = NSLocalizedString(@"Cannot join selection",nil);
+			break;
+		case ACTION_DISCONNECT:
+			if ( ! [_editorLayer.mapData disconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode] )
+				error = NSLocalizedString(@"Cannot disconnect way",nil);
+			break;
+		case ACTION_SPLIT:
+			if ( ! [_editorLayer.mapData splitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode] )
+				error = NSLocalizedString(@"Cannot split way",nil);
+			break;
+		case ACTION_STRAIGHTEN:
+			if ( ! [_editorLayer.mapData straightenWay:_editorLayer.selectedWay] )
+				error = NSLocalizedString(@"The way is not sufficiently straight",nil);
+			break;
+		case ACTION_EDITTAGS:
+			[self presentTagEditor:nil];
+			break;
+		case ACTION_DELETE:
+			[self delete:nil];
+			break;
+		case ACTION_MORE:
+			[self presentEditActionSheet:nil];
+			break;
+		default:
+			error = NSLocalizedString(@"Not implemented",nil);
+			break;
+	}
+	if ( error ) {
+		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil, nil];
+		[alertView show];
+	}
+
+	[self setNeedsDisplay];
+	[self refreshPushpinText];
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	// processing for selecting one of multipe objects
+	if ( actionSheet == _multiSelectSheet ) {
+		if ( buttonIndex < _multiSelectObjects.count ) {
+			OsmBaseObject * object = _multiSelectObjects[ buttonIndex ];
+			if ( object.isNode ) {
+				[_editorLayer setSelectedNode:object.isNode];
+			} else if ( object.isWay ) {
+				[_editorLayer setSelectedWay:object.isWay];
+			}
+		} else {
+			// Cancel button pressed
+		}
+		return;
+	}
+
+	if ( actionSheet == _actionSheet ) {
+		if ( _actionList == nil || buttonIndex >= _actionList.count )
+			return;
+		NSInteger action = [_actionList[ buttonIndex ] integerValue];
+		[self performEditAction:action];
+		_actionSheet = nil;
+		_actionList = nil;
+	}
+}
+
+-(IBAction)presentTagEditor:(id)sender
+{
+	if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
+		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+		self.editorLayer.selectedNode = nil;
+		[self refreshPushpinText];
+	}
+	[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
+}
+
+-(IBAction)editControlAction:(id)sender
+{
+	UISegmentedControl * segmentedControl = (UISegmentedControl *) sender;
+	NSInteger segment = segmentedControl.selectedSegmentIndex;
+	if ( segment < _editControlActions.count ) {
+		NSNumber * action = _editControlActions[ segment ];
+		[self performEditAction:action.integerValue];
+	}
+	segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+}
+
+- (void)updateEditControl
+{
+	BOOL show = (_pushpinView || _editorLayer.selectedWay || _editorLayer.selectedNode) && !_editorLayer.selectedRelation;
+	_editControl.hidden = !show;
+	if ( show ) {
+		if ( _editorLayer.selectedPrimary == nil ) {
+			// brand new node
+			if ( _editorLayer.canPasteTags )
+				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
+			else
+				self.editControlActions = @[ @(ACTION_EDITTAGS) ];
+		} else {
+			self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
+		}
+		[_editControl removeAllSegments];
+		for ( NSNumber * action in _editControlActions ) {
+			NSString * title = ActionTitle( action.integerValue );
+			[_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
+		}
+	}
+}
+
+#pragma mark PushPin
+
 
 #if TARGET_OS_IPHONE
 -(OsmBaseObject *)dragConnectionForNode:(OsmNode *)node segment:(NSInteger *)segment
@@ -1257,38 +1470,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 										  ignoreList:ignoreList
 											 segment:segment];
 	return hit;
-}
-
-#pragma mark PushPin
-
--(IBAction)editTags:(id)sender
-{
-	if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
-		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-		self.editorLayer.selectedNode = nil;
-		[self refreshPushpinText];
-	}
-	[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
-}
-
-- (void)updateEditControl
-{
-	BOOL show = (_pushpinView || _editorLayer.selectedWay || _editorLayer.selectedNode) && !_editorLayer.selectedRelation;
-	_editControl.hidden = !show;
-	if ( show ) {
-		if ( _editorLayer.selectedPrimary == nil ) {
-			// show only Tags button
-			if ( _editControl.numberOfSegments != 1 ) {
-				[_editControl removeSegmentAtIndex:1 animated:NO];
-				[_editControl removeSegmentAtIndex:1 animated:NO];
-			}
-		} else {
-			if ( _editControl.numberOfSegments != 3 ) {
-				[_editControl insertSegmentWithTitle:NSLocalizedString(@"Delete",nil) atIndex:1 animated:NO];
-				[_editControl insertSegmentWithTitle:NSLocalizedString(@"More...",nil) atIndex:2 animated:NO];
-			}
-		}
-	}
 }
 
 -(void)removePin
@@ -2145,19 +2326,6 @@ checkGrab:
 		_multiSelectSheet.cancelButtonIndex = [_multiSelectSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
 		[_multiSelectSheet showInView:self];
 
-	}
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if ( actionSheet == _multiSelectSheet ) {
-		if ( buttonIndex < _multiSelectObjects.count ) {
-			OsmBaseObject * object = _multiSelectObjects[ buttonIndex ];
-			if ( object.isNode ) {
-				[self.editorLayer setSelectedNode:object.isNode];
-			} else if ( object.isWay ) {
-				[self.editorLayer setSelectedWay:object.isWay];
-			}
-		}
 	}
 }
 

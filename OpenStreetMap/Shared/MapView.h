@@ -96,6 +96,9 @@ typedef enum _ViewOverlayMask {
 	UIActionSheet					*	_multiSelectSheet;
 	NSArray							*	_multiSelectObjects;
 	UILabel							*	_flashLabel;
+
+	UIActionSheet					*	_actionSheet;
+	NSArray							*	_actionList;	// storer mapping of action menu items to actions
 #else
 	HtmlErrorWindow					*	_htmlErrorWindow;
 #endif
@@ -117,6 +120,7 @@ typedef enum _ViewOverlayMask {
 @property (assign,nonatomic)	ViewOverlayMask			viewOverlayMask;
 
 @property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
+@property (strong,nonatomic)	NSArray						*	editControlActions;
 
 @property (readonly,nonatomic)	Notes				*	notes;
 
