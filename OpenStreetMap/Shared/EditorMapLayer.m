@@ -2132,20 +2132,15 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return dist;
 }
 
-+ (OsmBaseObject *)osmHitTest:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
-					ignoreList:(NSArray *)ignoreList segment:(NSInteger *)segment
+// distance is in units of the hit test radius (WayHitTestRadius)
++ (void)osmHitTestEnumerate:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
+				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
-	CGSize iconSize = CGSizeMake(16, 16);
 	CLLocationCoordinate2D location = [mapView longitudeLatitudeForViewPoint:point];
 	OSMRect viewCoord = [mapView viewportLongitudeLatitude];
 	OSMSize pixelsPerDegree = { mapView.bounds.size.width / viewCoord.size.width, mapView.bounds.size.height / viewCoord.size.height };
 
-	__unsafe_unretained id hit = nil;
-	NSInteger hitSegment = 0;
-	CGFloat bestDist = 1000000;
-
-	OSMSize maxDegreesNode = { iconSize.width  / pixelsPerDegree.width, iconSize.height / pixelsPerDegree.height };
-	OSMSize maxDegreesWay = { WayHitTestRadius / pixelsPerDegree.width, WayHitTestRadius / pixelsPerDegree.height };
+	OSMSize maxDegrees = { WayHitTestRadius / pixelsPerDegree.width, WayHitTestRadius / pixelsPerDegree.height };
 
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.deleted )
@@ -2153,13 +2148,10 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		if ( object.isNode ) {
 			OsmNode * node = (id)object;
 			if ( ![ignoreList containsObject:node] ) {
-				if ( segment || testNodes || node.wayCount == 0 ) {
-					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegreesNode forNode:node];
-					if ( dist < bestDist ) {
-						if ( dist < bestDist ) {
-							bestDist = dist;
-							hit = node;
-						}
+				if ( testNodes || node.wayCount == 0 ) {
+					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forNode:node];
+					if ( dist <= 1.0 ) {
+						block( node, dist, 0 );
 					}
 				}
 			}
@@ -2167,58 +2159,52 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			OsmWay * way = (id)object;
 			if ( ![ignoreList containsObject:way] ) {
 				NSInteger seg;
-				CGFloat dist = [self osmHitTest:location maxDegrees:maxDegreesWay forWay:way segment:&seg];
-				if ( dist < bestDist ) {
-					if ( dist < bestDist ) {
-						bestDist = dist;
-						hit = way;
-						hitSegment = seg;
-					}
+				CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
+				if ( dist <= 1.0 ) {
+					block( object, dist, seg );
 				}
 			}
 			if ( testNodes ) {
 				for ( OsmNode * node in way.nodes ) {
 					if ( [ignoreList containsObject:node] )
 						continue;
-					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegreesNode forNode:node];
-					if ( dist < bestDist ) {
-						if ( dist < bestDist ) {
-							bestDist = dist;
-							hit = node;
-						}
+					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forNode:node];
+					if ( dist < 1.0 ) {
+						block( node, dist, 0 );
 					}
 				}
 			}
 		}
 	}
+}
 
++ (OsmBaseObject *)osmHitTest:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
+				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
+{
+	// this is slightly different because we removed the test for whether asking for the segment
+	if ( pSegment && !testNodes ) {
+		DLog(@"hit test broken");
+	}
+	__block __unsafe_unretained id hit = nil;
+	__block NSInteger hitSegment = 0;
+	__block CGFloat bestDist = 1000000;
+	[EditorMapLayer osmHitTestEnumerate:point mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
+		if ( dist < bestDist ) {
+			if ( dist < bestDist ) {
+				bestDist = dist;
+				hit = obj;
+				hitSegment = segment;
+			}
+		}
+	}];
 	if ( bestDist <= 1.0 ) {
-		if ( segment )
-			*segment = hitSegment;
+		if ( pSegment )
+			*pSegment = hitSegment;
 		return hit;
 	}
 	return nil;
 }
 
-- (NSArray *)objectsNearPoint:(CGPoint)point
-{
-	// get list of objects to hit test
-	CGSize iconSize = CGSizeMake(16, 16);
-	CLLocationCoordinate2D location = [_mapView longitudeLatitudeForViewPoint:point];
-	OSMRect viewCoord = [_mapView viewportLongitudeLatitude];
-	OSMSize pixelsPerDegree = { _mapView.bounds.size.width / viewCoord.size.width, _mapView.bounds.size.height / viewCoord.size.height };
-
-	OSMSize maxDegreesNode = { iconSize.width  / pixelsPerDegree.width, iconSize.height / pixelsPerDegree.height };
-	OSMSize maxDegreesWay = { WayHitTestRadius / pixelsPerDegree.width, WayHitTestRadius / pixelsPerDegree.height };
-	OSMSize size = { MAX( maxDegreesNode.width, maxDegreesWay.width ), MAX( maxDegreesNode.height, maxDegreesWay.height ) };
-	OSMRect hitRect = { location.longitude - size.width/2, location.latitude - size.height/2, size.width, size.height };
-
-	__block NSMutableArray * objects = [NSMutableArray new];
-	[_mapData enumerateObjectsInRegion:hitRect block:^(OsmBaseObject * object){
-		[objects addObject:object];
-	}];
-	return objects;
-}
 
 -(NSArray *)shownObjects
 {
@@ -2237,6 +2223,25 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	return [self osmHitTest:point segment:NULL ignoreList:nil];
 }
+
+// return close objects sorted by distance
+- (NSArray *)osmHitTestAll:(CGPoint)point
+{
+	NSMutableArray * objects = [NSMutableArray new];
+	[EditorMapLayer osmHitTestEnumerate:point mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
+		NSArray * pair = @[ obj, @(dist) ];
+		[objects addObject:pair];
+	}];
+	[objects sortUsingComparator:^NSComparisonResult(NSArray * pair1, NSArray * pair2) {
+		CGFloat diff = [pair1[1] doubleValue] - [pair2[1] doubleValue];
+		return diff < 0 ? NSOrderedAscending : diff > 0 ? NSOrderedDescending : NSOrderedSame;
+	}];
+	for ( NSInteger i = 0; i < objects.count; ++i ) {
+		objects[i] = objects[i][0];
+	}
+	return objects;
+}
+
 
 - (OsmBaseObject *)osmHitTestSelection:(CGPoint)point segment:(NSInteger *)segment
 {

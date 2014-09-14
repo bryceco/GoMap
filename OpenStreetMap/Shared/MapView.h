@@ -54,7 +54,7 @@ typedef enum _ViewOverlayMask {
 } ViewOverlayMask;
 
 #if TARGET_OS_IPHONE
-@interface MapView : UIView <CLLocationManagerDelegate>
+@interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate>
 #else
 @interface MapView : NSView <CLLocationManagerDelegate>
 #endif
@@ -93,6 +93,8 @@ typedef enum _ViewOverlayMask {
 	UIAlertView						*	_alertMove;
 	UIAlertView						*	_alertUndo;
 	UIAlertView						*	_alertGps;
+	UIActionSheet					*	_multiSelectSheet;
+	NSArray							*	_multiSelectObjects;
 	UILabel							*	_flashLabel;
 #else
 	HtmlErrorWindow					*	_htmlErrorWindow;

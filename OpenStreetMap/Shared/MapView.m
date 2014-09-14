@@ -270,11 +270,14 @@ CGSize SizeForImage( NSImage * image )
 	}
 
 #if 0 && DEBUG
-	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerPan:)];
+	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerPanGesture:)];
 	panGestureRecognizer.minimumNumberOfTouches = 2;
 	panGestureRecognizer.maximumNumberOfTouches = 2;
 	[self addGestureRecognizer:panGestureRecognizer];
 #endif
+
+	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+	[self addGestureRecognizer:longPress];
 
 	if ( ![self isLocationSpecified] ) {
 		[self locateMe:nil];
@@ -727,10 +730,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	const double earthRadius = 6378137.0; // meters
 	const double circumference = 2 * M_PI * earthRadius;
 	double metersPerPixel = (viewCoord.size.height / 360 * circumference) / self.bounds.size.height;
-#if 0
-	DLog(@"coord = %f,%f  %f,%f", viewCoord.origin.x, viewCoord.origin.y, viewCoord.origin.x+viewCoord.size.width, viewCoord.origin.y+viewCoord.size.height);
-	DLog(@"meters/pixel = %f", metersPerPixel);
-#endif
 	if ( isnan(metersPerPixel) )
 		return 0.0;
 	
@@ -2127,7 +2126,42 @@ checkGrab:
 	}
 }
 
-- (IBAction)twoFingerPan:(UIPanGestureRecognizer *)pan
+- (IBAction)handleLongPressGesture:(UILongPressGestureRecognizer *)longPress
+{
+	if ( longPress.state == UIGestureRecognizerStateBegan ) {
+		CGPoint point = [longPress locationInView:self];
+
+		NSArray * objects = [self.editorLayer osmHitTestAll:point];
+		if ( objects.count < 2 )
+			return;
+		if ( objects.count > 5 )
+			objects = [objects subarrayWithRange:NSMakeRange(0, 5)];
+		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+		_multiSelectObjects = objects;
+		for ( OsmBaseObject * obj in objects ) {
+			NSString * title = obj.friendlyDescription;
+			[_multiSelectSheet addButtonWithTitle:title];
+		}
+		_multiSelectSheet.cancelButtonIndex = [_multiSelectSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
+		[_multiSelectSheet showInView:self];
+
+	}
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if ( actionSheet == _multiSelectSheet ) {
+		if ( buttonIndex < _multiSelectObjects.count ) {
+			OsmBaseObject * object = _multiSelectObjects[ buttonIndex ];
+			if ( object.isNode ) {
+				[self.editorLayer setSelectedNode:object.isNode];
+			} else if ( object.isWay ) {
+				[self.editorLayer setSelectedWay:object.isWay];
+			}
+		}
+	}
+}
+
+- (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
 {
 	static double angle = 0.0;
 	CGPoint translation = [pan translationInView:self];

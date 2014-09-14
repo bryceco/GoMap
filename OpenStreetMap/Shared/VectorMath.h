@@ -130,7 +130,7 @@ static inline CGFloat MagSquared( OSMPoint a )
 
 static inline CGFloat Mag( OSMPoint a )
 {
-	return sqrt( a.x*a.x + a.y*a.y );
+	return hypot(a.x, a.y);
 }
 
 static inline OSMPoint Add( OSMPoint a, OSMPoint b )

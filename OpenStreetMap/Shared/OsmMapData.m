@@ -1753,9 +1753,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	@try {
 		NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 		self = [unarchiver decodeObjectForKey:@"OsmMapData"];
-		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
-			[relation resolveToMapData:self];
-		}];
+		if ( self ) {
+			[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
+				[relation resolveToMapData:self];
+			}];
+		}
 	}
 	@catch (id exception) {
 		self = nil;
