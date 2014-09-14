@@ -2128,10 +2128,10 @@ checkGrab:
 
 - (IBAction)handleLongPressGesture:(UILongPressGestureRecognizer *)longPress
 {
-	if ( longPress.state == UIGestureRecognizerStateBegan ) {
+	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
 		CGPoint point = [longPress locationInView:self];
 
-		NSArray * objects = [self.editorLayer osmHitTestAll:point];
+		NSArray * objects = [self.editorLayer osmHitTestMultiple:point];
 		if ( objects.count < 2 )
 			return;
 		if ( objects.count > 5 )

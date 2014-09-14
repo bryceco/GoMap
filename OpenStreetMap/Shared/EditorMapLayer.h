@@ -64,8 +64,7 @@
 - (OsmBaseObject *)osmHitTestSelection:(CGPoint)point segment:(NSInteger *)segment;
 + (OsmBaseObject *)osmHitTest:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)segment;
-- (NSArray *)osmHitTestAll:(CGPoint)point;
-
+- (NSArray *)osmHitTestMultiple:(CGPoint)point;
 
 
 -(NSArray *)shownObjects;

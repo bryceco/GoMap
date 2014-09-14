@@ -2181,10 +2181,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 + (OsmBaseObject *)osmHitTest:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
 {
-	// this is slightly different because we removed the test for whether asking for the segment
-	if ( pSegment && !testNodes ) {
-		DLog(@"hit test broken");
-	}
 	__block __unsafe_unretained id hit = nil;
 	__block NSInteger hitSegment = 0;
 	__block CGFloat bestDist = 1000000;
@@ -2225,7 +2221,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // return close objects sorted by distance
-- (NSArray *)osmHitTestAll:(CGPoint)point
+- (NSArray *)osmHitTestMultiple:(CGPoint)point
 {
 	NSMutableArray * objects = [NSMutableArray new];
 	[EditorMapLayer osmHitTestEnumerate:point mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
