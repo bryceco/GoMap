@@ -1394,24 +1394,24 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 
 	NSArray * wayList = way ? @[ way ] : [self wayListForMultipolygonRelation:relation];
 
-	CGContextBeginPath(ctx);
-	for ( OsmWay * w in wayList ) {
-		CGPathRef path = [self pathForWay:w];
-		CGContextAddPath(ctx, path);
-		CGPathRelease(path);
-	}
 	CGFloat red = 0, green = 0, blue = 0, alpha = 1;
 	[tagInfo.lineColor getRed:&red green:&green blue:&blue alpha:&alpha];
-	CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
 	CGFloat lineWidth = tagInfo.lineWidth*_highwayScale;
 	if ( lineWidth == 0 )
 		lineWidth = 1;
-	CGContextSetLineWidth(ctx, lineWidth);
-	CGContextStrokePath(ctx);
 
-	if ( way && way.isOneWay ) {
-		CGPathRef path = CGContextCopyPath(ctx);
-		[self drawArrowsForPath:path context:ctx];
+	for ( OsmWay * w in wayList ) {
+		CGContextBeginPath(ctx);
+		CGPathRef path = [self pathForWay:w];
+		CGContextAddPath(ctx, path);
+		CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
+		CGContextSetLineWidth(ctx, lineWidth);
+
+		CGContextStrokePath(ctx);
+
+		if ( way && way.isOneWay ) {
+			[self drawArrowsForPath:path context:ctx];
+		}
 		CGPathRelease(path);
 	}
 
@@ -1933,7 +1933,8 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	NSInteger nameLimit = 100;
 #endif
 
-	if ( _iconSize.width > MinIconSizeInPixels ) {
+	double metersPerPixel = [_mapView metersPerPixel];
+	if ( metersPerPixel < 0.05 ) {
 		// we're zoomed in very far, so show everything
 		objectLimit = 1000000;
 	}
