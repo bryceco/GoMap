@@ -1752,11 +1752,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return nil;
 }
 
+#if DEBUG
 static NSMutableSet * allArchiveClasses = nil;
+#endif
 
 -(id)archiver:(NSKeyedArchiver *)archiver willEncodeObject:(id)object
 {
-#if DEBUG
+#if 0 && DEBUG
 	if ( allArchiveClasses == nil ) {
 		allArchiveClasses = [NSMutableSet new];
 	}

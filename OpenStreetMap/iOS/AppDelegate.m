@@ -32,6 +32,13 @@
 {
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 
+	// save the app version so we can detect upgrades
+	NSString * prevVersion = [defaults objectForKey:@"appVersion"];
+	if ( ![prevVersion isEqualToString:self.appVersion] ) {
+		NSLog(@"Upgrade!");
+	}
+	[defaults setObject:self.appVersion forKey:@"appVersion"];
+
 	// read name/password from keychain
 	self.userName		= [KeyChain getStringForIdentifier:@"username"];
 	self.userPassword	= [KeyChain getStringForIdentifier:@"password"];
