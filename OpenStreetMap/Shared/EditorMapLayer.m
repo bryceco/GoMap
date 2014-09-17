@@ -2218,18 +2218,18 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 // return close objects sorted by distance
 - (NSArray *)osmHitTestMultiple:(CGPoint)point
 {
-	NSMutableArray * objects = [NSMutableArray new];
+	NSMutableSet * objectSet = [NSMutableSet new];
 	[EditorMapLayer osmHitTestEnumerate:point mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
-		NSArray * pair = @[ obj, @(dist) ];
-		[objects addObject:pair];
+		[objectSet addObject:obj];
 	}];
-	[objects sortUsingComparator:^NSComparisonResult(NSArray * pair1, NSArray * pair2) {
-		CGFloat diff = [pair1[1] doubleValue] - [pair2[1] doubleValue];
-		return diff < 0 ? NSOrderedAscending : diff > 0 ? NSOrderedDescending : NSOrderedSame;
+	NSMutableArray * objects = [objectSet.allObjects mutableCopy];
+	[objects sortUsingComparator:^NSComparisonResult(OsmBaseObject * o1, OsmBaseObject * o2) {
+		int diff = (o1.isNode?YES:NO) - (o2.isNode?YES:NO);
+		if ( diff )
+			return diff < 0 ? NSOrderedAscending : NSOrderedDescending;
+		int64_t diff2 = o1.ident.longLongValue - o2.ident.longLongValue;
+		return diff2 < 0 ? NSOrderedAscending : diff2 > 0 ? NSOrderedDescending : NSOrderedSame;
 	}];
-	for ( NSInteger i = 0; i < objects.count; ++i ) {
-		objects[i] = objects[i][0];
-	}
 	return objects;
 }
 
