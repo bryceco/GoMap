@@ -1688,9 +1688,6 @@ NSString * ActionTitle( NSInteger action )
 				newPoint.x = fabs(centerPoint.x-prevPoint.x) < 30 ? prevPoint.x + 60 : 2*centerPoint.x - prevPoint.x;
 				newPoint.y = prevPoint.y;
 			}
-			CGFloat screenBottom = self.bounds.origin.y+self.bounds.size.height;
-			if ( screenBottom - newPoint.y < 190 )
-				newPoint.y = screenBottom - 190;
 		} else if ( way.nodes.count == 2 ) {
 			// create 3rd point 90 degrees from first 2
 			OsmNode * n1 = way.nodes[1-prevIndex];
@@ -1727,6 +1724,16 @@ NSString * ActionTitle( NSInteger action )
 			a1 += a1 - a2;
 			newPoint = CGPointMake( prevPoint.x + dist*cos(a1), prevPoint.y + dist*sin(a1) );
 		}
+		// make sure selected point is on-screen
+		CGRect rc = self.bounds;
+		rc.origin.x += 20;
+		rc.origin.y += 20;
+		rc.size.width -= 40;
+		rc.size.height -= 190+20;
+		newPoint.x = MAX( newPoint.x, rc.origin.x );
+		newPoint.x = MIN( newPoint.x, rc.origin.x+rc.size.width);
+		newPoint.y = MAX( newPoint.y, rc.origin.y );
+		newPoint.y = MIN( newPoint.y, rc.origin.y+rc.size.height);
 
 		if ( way.nodes.count >= 2 ) {
 			OsmNode * start = prevIndex == 0 ? way.nodes.lastObject : way.nodes[0];
