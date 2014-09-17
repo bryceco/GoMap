@@ -61,6 +61,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 +(NSDateFormatter *)rfc3339DateFormatter;
 
 -(void)constructTag:(NSString *)tag value:(NSString *)value;
+-(void)constructBaseAttributesWithVersion:(int32_t)version changeset:(int64_t)changeset user:(NSString *)user uid:(int32_t)uid ident:(int64_t)ident timestamp:(NSString *)timestmap;
 -(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict;
 -(void)constructAsUserCreated:(NSString *)userName;
 -(void)setConstructed;
@@ -70,6 +71,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 -(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo;
 -(void)resetModifyCount:(UndoManager *)undo;
 -(void)serverUpdateVersion:(NSInteger)version;
+-(void)serverUpdateChangeset:(OsmIdentifier)changeset;
 -(void)serverUpdateIdent:(OsmIdentifier)ident;
 -(void)serverUpdateInPlace:(OsmBaseObject *)newerVersion;
 -(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
@@ -119,6 +121,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 @property (readonly,nonatomic)	NSArray *	nodes;
 
 -(void)constructNode:(NSNumber *)node;
+-(void)constructNodeList:(NSMutableArray *)nodes;
 -(void)removeNodeAtIndex:(NSInteger)index undo:(UndoManager *)undo;
 -(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo;
 

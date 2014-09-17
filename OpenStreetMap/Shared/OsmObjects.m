@@ -30,6 +30,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 BOOL IsOsmBooleanFalse( NSString * value )
 {
+	if ( [value respondsToSelector:@selector(boolValue)] )
+		return [value boolValue];
 	if ( [value isEqualToString:@"false"] )
 		return YES;
 	if ( [value isEqualToString:@"no"] )
@@ -168,17 +170,28 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 #pragma mark Construction
 
--(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict
+-(void)constructBaseAttributesWithVersion:(int32_t)version changeset:(int64_t)changeset user:(NSString *)user uid:(int32_t)uid ident:(int64_t)ident timestamp:(NSString *)timestmap
 {
 	assert( !_constructed );
-	_version	= (int32_t) [[attributeDict valueForKey:@"version"] integerValue];
-	_changeset	= [[attributeDict valueForKey:@"changeset"] longLongValue];
-	_user		= [attributeDict valueForKey:@"user"];
-	_uid		= (int32_t) [[attributeDict valueForKey:@"uid"] integerValue];
-	NSString * isVisible = [attributeDict valueForKey:@"visible"];
-	_visible	= !IsOsmBooleanFalse(isVisible);
-	_ident		= @([[attributeDict valueForKey:@"id"] longLongValue]);
-	_timestamp	= [attributeDict valueForKey:@"timestamp"];
+	_version	= version;
+	_changeset	= changeset;
+	_user		= user;
+	_uid		= uid;
+	_visible	= YES;
+	_ident		= @(ident);
+	_timestamp	= timestmap;
+}
+
+-(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict
+{
+	int32_t		version		= (int32_t) [[attributeDict valueForKey:@"version"] integerValue];
+	int64_t		changeset	= [[attributeDict valueForKey:@"changeset"] longLongValue];
+	NSString *	user		= [attributeDict valueForKey:@"user"];
+	int32_t		uid			= (int32_t) [[attributeDict valueForKey:@"uid"] integerValue];
+	int64_t		ident		= [[attributeDict valueForKey:@"id"] longLongValue];
+	NSString *	timestamp	= [attributeDict valueForKey:@"timestamp"];
+
+	[self constructBaseAttributesWithVersion:version changeset:changeset user:user uid:uid ident:ident timestamp:timestamp];
 }
 
 -(void)constructTag:(NSString *)tag value:(NSString *)value
@@ -201,6 +214,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 -(void)setConstructed
 {
+	assert(_user);
 	_constructed = YES;
 	_modifyCount = 0;
 }
@@ -274,6 +288,10 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 -(void)serverUpdateVersion:(NSInteger)version
 {
 	_version = (int32_t)version;
+}
+-(void)serverUpdateChangeset:(OsmIdentifier)changeset
+{
+	_changeset = changeset;
 }
 -(void)serverUpdateIdent:(OsmIdentifier)ident
 {
@@ -467,7 +485,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	assert( !_constructed );
 	_ident = @( [OsmBaseObject nextUnusedIdentifier] );
 	_visible = YES;
-	_user = userName;
+	_user = userName ?: @"";
 	_version = 1;
 	_changeset = 0;
 	_uid = 0;
@@ -622,6 +640,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	} else {
 		[_nodes addObject:node];
 	}
+}
+-(void)constructNodeList:(NSMutableArray *)nodes
+{
+	assert( !_constructed );
+	_nodes = nodes;
 }
 
 

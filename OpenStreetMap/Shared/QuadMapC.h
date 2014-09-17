@@ -43,7 +43,7 @@ struct QuadBoxCC;
 @interface QuadMapC : NSObject <NSCoding>
 {
 }
-@property (readonly,nonatomic)	QuadBoxC	*	rootQuad;
+@property (strong,nonatomic)	QuadBoxC	*	rootQuad;
 
 -(void)mergeDerivedRegion:(QuadMapC *)other success:(BOOL)success;
 -(id)initWithRect:(OSMRect)rect;

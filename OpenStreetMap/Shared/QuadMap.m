@@ -13,11 +13,13 @@
 
 static const double MinRectSize = 360.0 / (1 << 16);
 
+static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
+
 
 @implementation QuadBox
 @synthesize rect = _rect;
 
--(id)initWithRect:(OSMRect)rect parent:(QuadBox *)parent;
+-(instancetype)initWithRect:(OSMRect)rect parent:(QuadBox *)parent;
 {
 	self = [super init];
 	if ( self ) {
@@ -25,6 +27,11 @@ static const double MinRectSize = 360.0 / (1 << 16);
 		_parent = parent;
 	}
 	return self;
+}
+
+-(instancetype)init
+{
+	return [self initWithRect:MAP_RECT parent:nil];
 }
 
 -(void)reset
@@ -209,13 +216,6 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 		}
 	}
 }
--(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo
-{
-	if ( undo ) {
-		[undo registerUndoWithTarget:self selector:@selector(removeMember:undo:) objects:@[member,undo]];
-	}
-	[self addMember:member bbox:member.boundingBox];
-}
 
 -(BOOL)removeMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
 {
@@ -232,14 +232,6 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 		}
 	}
 	return NO;
-}
--(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo
-{
-	BOOL ok = [self removeMember:member bbox:member.boundingBox];
-	if ( ok && undo ) {
-		[undo registerUndoWithTarget:self selector:@selector(addMember:undo:) objects:@[member,undo]];
-	}
-	return ok;
 }
 
 
@@ -262,53 +254,29 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-	if ( [coder allowsKeyedCoding] ) {
-		[coder encodeObject:_children[0]					forKey:@"child0"];
-		[coder encodeObject:_children[1]					forKey:@"child1"];
-		[coder encodeObject:_children[2]					forKey:@"child2"];
-		[coder encodeObject:_children[3]					forKey:@"child3"];
-		[coder encodeObject:_parent							forKey:@"parent"];
-		[coder encodeBool:_whole							forKey:@"whole"];
-		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
-		[coder encodeObject:_members						forKey:@"members"];
-		[coder encodeBool:_isSplit							forKey:@"split"];
-	} else {
-		[coder encodeObject:_children[0]];
-		[coder encodeObject:_children[1]];
-		[coder encodeObject:_children[2]];
-		[coder encodeObject:_children[3]];
-		[coder encodeObject:_parent];
-		[coder encodeBytes:&_whole length:sizeof _whole];
-		[coder encodeBytes:&_rect length:sizeof _rect];
-		[coder encodeObject:_members];
-		[coder encodeBytes:&_isSplit length:sizeof _isSplit];
-	}
+	[coder encodeObject:_children[0]					forKey:@"child0"];
+	[coder encodeObject:_children[1]					forKey:@"child1"];
+	[coder encodeObject:_children[2]					forKey:@"child2"];
+	[coder encodeObject:_children[3]					forKey:@"child3"];
+	[coder encodeObject:_parent							forKey:@"parent"];
+	[coder encodeBool:_whole							forKey:@"whole"];
+	[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
+	[coder encodeObject:_members						forKey:@"members"];
+	[coder encodeBool:_isSplit							forKey:@"split"];
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if ( self ) {
-		if ( [coder allowsKeyedCoding] ) {
-			_children[0]	= [coder decodeObjectForKey:@"child0"];
-			_children[1]	= [coder decodeObjectForKey:@"child1"];
-			_children[2]	= [coder decodeObjectForKey:@"child2"];
-			_children[3]	= [coder decodeObjectForKey:@"child3"];
-			_parent			= [coder decodeObjectForKey:@"parent"];
-			_whole			= [coder decodeBoolForKey:@"whole"];
-			_isSplit		= [coder decodeBoolForKey:@"split"];
-			_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
-			_members		= [coder decodeObjectForKey:@"members"];
-		} else {
-			_children[0]	= [coder decodeObject];
-			_children[1]	= [coder decodeObject];
-			_children[2]	= [coder decodeObject];
-			_children[3]	= [coder decodeObject];
-			_parent			= [coder decodeObject];
-			_whole			= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
-			_isSplit		= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
-			_rect			= *(OSMRect		*)[coder decodeBytesWithReturnedLength:NULL];
-			_members		= [coder decodeObject];
-		}
+		_children[0]	= [coder decodeObjectForKey:@"child0"];
+		_children[1]	= [coder decodeObjectForKey:@"child1"];
+		_children[2]	= [coder decodeObjectForKey:@"child2"];
+		_children[3]	= [coder decodeObjectForKey:@"child3"];
+		_parent			= [coder decodeObjectForKey:@"parent"];
+		_whole			= [coder decodeBoolForKey:@"whole"];
+		_isSplit		= [coder decodeBoolForKey:@"split"];
+		_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
+		_members		= [coder decodeObjectForKey:@"members"];
 	}
 	return self;
 }
@@ -318,13 +286,18 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
 @implementation QuadMap
 
--(id)initWithRect:(OSMRect)rect
+-(instancetype)initWithRect:(OSMRect)rect
 {
 	self = [super init];
 	if ( self ) {
 		_rootQuad = [[QuadBox alloc] initWithRect:rect parent:nil];
 	}
 	return self;
+}
+
+-(instancetype)init
+{
+	return [self initWithRect:MAP_RECT];
 }
 
 -(void)mergeDerivedRegion:(QuadMap *)other success:(BOOL)success
@@ -370,6 +343,26 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 	OSMRect box = [member boundingBox];
 	[_rootQuad removeMember:member bbox:box];
 }
+
+-(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo
+{
+	if ( undo ) {
+		[undo registerUndoWithTarget:self selector:@selector(removeMember:undo:) objects:@[member,undo]];
+	}
+	[self.rootQuad addMember:member bbox:member.boundingBox];
+}
+-(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo
+{
+	BOOL ok = [self.rootQuad removeMember:member bbox:member.boundingBox];
+	if ( ok && undo ) {
+		[undo registerUndoWithTarget:self selector:@selector(addMember:undo:) objects:@[member,undo]];
+	}
+	return ok;
+}
+
+
+
+
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
 {
 	[_rootQuad findObjectsInArea:bbox block:block];

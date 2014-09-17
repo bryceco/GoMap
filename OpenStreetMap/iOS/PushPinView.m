@@ -67,6 +67,8 @@
 }
 -(void)setText:(NSString *)text
 {
+	if ( [text isEqualToString:_textLayer.string] )
+		return;
 	_textLayer.string = text;
 	[self setNeedsLayout];
 }

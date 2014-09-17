@@ -11,15 +11,16 @@
 
 #import "VectorMath.h"
 
-@class NSXMLDocument;
+@class EditorMapLayer;
 @class MapView;
+@class NSXMLDocument;
+@class OsmBaseObject;
+@class OsmMember;
+@class OsmNode;
+@class OsmRelation;
+@class OsmWay;
 @class QuadBox;
 @class QuadMap;
-@class OsmBaseObject;
-@class OsmNode;
-@class OsmWay;
-@class OsmMember;
-@class OsmRelation;
 @class UndoManager;
 
 
@@ -49,7 +50,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 
 
 
-@interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate>
+@interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate>
 {
 	NSString			*	_parserCurrentElementText;
 	NSMutableArray		*	_parserStack;
@@ -58,17 +59,16 @@ extern NSString * OsmValueForBoolean( BOOL b );
 	NSMutableDictionary	*	_ways;
 	NSMutableDictionary	*	_relations;
 	QuadMap				*	_region;	// currently downloaded region
-	QuadBox				*	_spatial;	// spatial index of osm data
+	QuadMap				*	_spatial;	// spatial index of osm data
 	UndoManager			*	_undoManager;
-
-	BOOL					_substSpatialOnSave;
 }
 
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
+@property (weak,nonatomic)	EditorMapLayer	*	editorMapLayerForArchive; // only used when saving/restoring undo manager
 
--(id)initWithCachedData;
--(BOOL)saveSubstitutingSpatial:(BOOL)substituteSpatial;
+-(id)initWithCachedData:(EditorMapLayer *)editorMapLayerForArchive;
+-(void)save;
 
 -(void)purgeHard;
 -(void)purgeSoft;

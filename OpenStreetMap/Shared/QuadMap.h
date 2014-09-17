@@ -33,8 +33,6 @@ typedef enum {
 @property (readonly,nonatomic)	OSMRect		rect;
 
 -(id)initWithRect:(OSMRect)rect parent:(QuadBox *)parent;
--(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
--(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 -(NSInteger)quadCount;
 -(NSInteger)memberCount;
@@ -47,7 +45,7 @@ typedef enum {
 @interface QuadMap : NSObject <NSCoding>
 {
 }
-@property (readonly,nonatomic)	QuadBox	*	rootQuad;
+@property (strong,nonatomic)	QuadBox	*	rootQuad;
 
 -(void)mergeDerivedRegion:(QuadMap *)other success:(BOOL)success;
 -(id)initWithRect:(OSMRect)rect;
@@ -55,8 +53,9 @@ typedef enum {
 -(void)makeWhole:(QuadBox *)quad success:(BOOL)success;
 -(NSInteger)count;
 -(void)enumerateWithBlock:(void (^)(QuadBox * quad))block;
--(void)addMember:(OsmBaseObject *)member;
--(void)removeMember:(OsmBaseObject *)member;
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
+
+-(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
+-(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 
 @end

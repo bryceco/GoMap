@@ -70,7 +70,7 @@ const CGFloat WayHighlightRadius = 6.0;
 		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
 
 		NSDate * startDate = [NSDate date];
-		_mapData = [[OsmMapData alloc] initWithCachedData];
+		_mapData = [[OsmMapData alloc] initWithCachedData:self];
 		double delta = [[NSDate date] timeIntervalSinceDate:startDate];
 		//DLog(@"Load time = %f seconds",delta);
 #if TARGET_OS_IPHONE
@@ -125,14 +125,8 @@ const CGFloat WayHighlightRadius = 6.0;
 
 - (void)save
 {
-	// First save just modified objects, which we can do very fast, in case we get killed during full save
-	OsmMapData * modified = [_mapData modifiedObjects];
-
-	// save modified data first, in case full save fails
-	[modified saveSubstitutingSpatial:YES];
-
-	// Next try to save everything. Since we save atomically this won't overwrite the fast save unless it succeeeds.
-	[_mapData saveSubstitutingSpatial:NO];
+	_mapData.editorMapLayerForArchive = self;
+	[_mapData save];
 }
 
 - (id < CAAction >)actionForKey:(NSString *)key

@@ -1623,7 +1623,9 @@ NSString * ActionTitle( NSInteger action )
 
 - (void)refreshPushpinText
 {
-	_pushpinView.text = _editorLayer.selectedPrimary.friendlyDescription;
+	NSString * text = _editorLayer.selectedPrimary.friendlyDescription;
+	text = text ?: @"(new object)";
+	_pushpinView.text = text;
 }
 
 -(IBAction)interactiveExtendSelectedWay:(id)sender

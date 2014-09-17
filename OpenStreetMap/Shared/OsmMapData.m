@@ -24,8 +24,16 @@
 #import "UndoManager.h"
 #import "VectorMath.h"
 
+#if 1 || DEBUG
+#define USE_SQL 1
+#endif
 
-static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
+#if USE_SQL
+#import "Database.h"
+#import "EditorMapLayer.h"
+#endif
+
+
 
 
 @implementation OsmUserStatistics
@@ -57,8 +65,8 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 		_nodes			= [NSMutableDictionary dictionaryWithCapacity:1000];
 		_ways			= [NSMutableDictionary dictionaryWithCapacity:1000];
 		_relations		= [NSMutableDictionary dictionaryWithCapacity:10];
-		_region			= [[QuadMap alloc] initWithRect:MAP_RECT];
-		_spatial		= [[QuadBox alloc] initWithRect:MAP_RECT parent:nil];
+		_region			= [QuadMap new];
+		_spatial		= [QuadMap new];
 		_undoManager	= [UndoManager new];
 	}
 	return self;
@@ -67,7 +75,7 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 -(OSMRect)rootRect
 {
-	return _spatial.rect;
+	return _spatial.rootQuad.rect;
 }
 
 
@@ -186,6 +194,37 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 		}];
 	}
 	return set;
+}
+
+
+-(NSArray *)userStatisticsForRegion:(OSMRect)rect
+{
+	NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+
+	[self enumerateObjectsInRegion:rect block:^(OsmBaseObject * base) {
+		NSDate * date = [base dateForTimestamp];
+		if ( base.user.length == 0 ) {
+			DLog(@"Empty user name for object: object %@, uid = %d", base, base.uid);
+			return;
+		}
+		OsmUserStatistics * stats = dict[ base.user ];
+		if ( stats == nil ) {
+			stats = [OsmUserStatistics new];
+			stats.user = base.user;
+			stats.changeSets = [NSMutableSet setWithObject:@(base.changeset)];
+			stats.lastEdit = date;
+			stats.editCount = 1;
+			dict[ base.user ] = stats;
+		} else {
+			++stats.editCount;
+			[stats.changeSets addObject:@(base.changeset)];
+			if ( [date compare:stats.lastEdit] > 0 )
+				stats.lastEdit = date;
+		}
+		stats.changeSetsCount = stats.changeSets.count;
+	}];
+
+	return [dict allValues];
 }
 
 
@@ -578,7 +617,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[mapView progressDecrement];
 		--activeRequests;
 		//	DLog(@"merge %ld nodes, %ld ways", mapData.nodes.count, mapData.ways.count);
-		[self merge:mapData quadList:query.quadList success:(mapData && error==nil)];
+		[self merge:mapData fromDownload:YES quadList:query.quadList success:(mapData && error==nil)];
 		completion( activeRequests > 0, error );
 	};
 
@@ -752,20 +791,25 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 
 
-- (void)merge:(OsmMapData *)newData quadList:(NSArray *)quadList success:(BOOL)success
+- (void)merge:(OsmMapData *)newData fromDownload:(BOOL)downloaded quadList:(NSArray *)quadList success:(BOOL)success
 {
 	if ( newData ) {
+
+		NSMutableArray * newNodes = [NSMutableArray new];
+		NSMutableArray * newWays = [NSMutableArray new];
 
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			OsmNode * current = [_nodes objectForKey:key];
 			if ( current == nil ) {
 				[_nodes setObject:node forKey:key];
 				[_spatial addMember:node undo:nil];
+				[newNodes addObject:node];
 			} else if ( current.version < node.version ) {
 				// already exists, so do an in-place update
 				[_spatial removeMember:current undo:nil];
 				[current serverUpdateInPlace:node];
 				[_spatial addMember:current undo:nil];
+				[newNodes addObject:node];
 			}
 		}];
 		[newData->_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmWay * way,BOOL * stop){
@@ -774,11 +818,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[_ways setObject:way forKey:key];
 				[way resolveToMapData:self];
 				[_spatial addMember:way undo:nil];
+				[newWays addObject:way];
 			} else if ( current.version < way.version ) {
 				[_spatial removeMember:current undo:nil];
 				[current serverUpdateInPlace:way];
 				[current resolveToMapData:self];
 				[_spatial addMember:current undo:nil];
+				[newWays addObject:way];
 			}
 		}];
 		[newData->_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
@@ -810,6 +856,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[newData->_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
 			[relation setConstructed];
 		}];
+
+		// store new nodes in database
+		if ( downloaded ) {
+			[self sqlSaveNodes:newNodes saveWays:newWays deleteNodes:nil deleteWays:nil isUpdate:NO];
+		}
 	}
 
 	for ( QuadBox * q in quadList ) {
@@ -819,7 +870,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 #pragma mark Upload
 
--(void) updateObjectDictionary:(NSMutableDictionary *)dictionary oldId:(OsmIdentifier)oldId  newId:(OsmIdentifier)newId version:(NSInteger)newVersion
+-(void) updateObjectDictionary:(NSMutableDictionary *)dictionary oldId:(OsmIdentifier)oldId  newId:(OsmIdentifier)newId version:(NSInteger)newVersion changeset:(OsmIdentifier)changeset sqlUpdate:(NSMutableDictionary *)sqlUpdate
 {
 	OsmBaseObject * object = [dictionary objectForKey:@(oldId)];
 	assert( object && object.ident.longLongValue == oldId );
@@ -837,11 +888,14 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		} else {
 			assert(NO);
 		}
+		[sqlUpdate setObject:@(NO) forKey:object];	// mark for deletion
 		return;
 	}
 
 	assert( newVersion > 0 );
 	[object serverUpdateVersion:newVersion];
+	[object serverUpdateChangeset:changeset];
+	[sqlUpdate setObject:@(YES) forKey:object];	// mark for insertion
 
 	if ( oldId != newId ) {
 		// replace placeholer object with new server provided identity
@@ -1220,7 +1274,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 						NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/%s/%lld", type, objId];
 
 						[OsmMapData osmDataForUrl:url3 quads:nil completion:^(ServerQuery *quads, OsmMapData * mapData, NSError *error) {
-							[self merge:mapData quadList:nil success:YES];
+							[self merge:mapData fromDownload:YES quadList:nil success:YES];
 							// try again:
 							[self uploadChangesetWithComment:comment completion:completion];
 						}];
@@ -1248,21 +1302,25 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					return;
 				}
 
+				NSMutableDictionary * sqlUpdate = [NSMutableDictionary new];
 				for ( NSXMLElement * element in diffDoc.rootElement.children ) {
 					NSString * name			= element.name;
 					NSString * oldId		= [element attributeForName:@"old_id"].stringValue;
 					NSString * newId		= [element attributeForName:@"new_id"].stringValue;
 					NSString * newVersion	= [element attributeForName:@"new_version"].stringValue;
+
 					if ( [name isEqualToString:@"node"] ) {
-						[self updateObjectDictionary:_nodes oldId:oldId.longLongValue newId:newId.longLongValue version:newVersion.integerValue];
+						[self updateObjectDictionary:_nodes oldId:oldId.longLongValue newId:newId.longLongValue version:newVersion.integerValue changeset:changesetID.longLongValue sqlUpdate:sqlUpdate];
 					} else if ( [name isEqualToString:@"way"] ) {
-						[self updateObjectDictionary:_ways oldId:oldId.longLongValue newId:newId.longLongValue version:newVersion.integerValue];
+						[self updateObjectDictionary:_ways oldId:oldId.longLongValue newId:newId.longLongValue version:newVersion.integerValue changeset:changesetID.longLongValue sqlUpdate:sqlUpdate];
 					} else if ( [name isEqualToString:@"relation"] ) {
-						[self updateObjectDictionary:_relations oldId:oldId.longLongValue newId:newId.longLongValue version:newVersion.integerValue];
+						[self updateObjectDictionary:_relations oldId:oldId.longLongValue newId:newId.longLongValue version:newVersion.integerValue changeset:changesetID.longLongValue sqlUpdate:sqlUpdate];
 					} else {
 						DLog( @"Bad upload diff document" );
 					}
 				}
+
+				[self updateSql:sqlUpdate isUpdate:YES];
 
 				NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/close", changesetID];
 				[self putRequest:url3 method:@"PUT" xml:nil completion:^(NSData *data,NSString * errorMessage) {
@@ -1483,38 +1541,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-#if 0
-	DLog(@"%ld nodes", (long)_nodes.count);
-	DLog(@"%ld ways", (long)_ways.count);
-	DLog(@"%ld relations", (long)_relations.count);
-	DLog(@"%ld regions", (long)_region.count);
-	DLog(@"%ld spatial quads", (long)_spatial.quadCount);
-	DLog(@"%ld spatial members", (long)_spatial.memberCount);
+#if USE_SQL
+	[coder encodeObject:_nodes			forKey:@"nodes"];
+	[coder encodeObject:_ways			forKey:@"ways"];
+	[coder encodeObject:_spatial		forKey:@"spatial"];
+#else
+	[coder encodeObject:_nodes			forKey:@"nodes"];
+	[coder encodeObject:_ways			forKey:@"ways"];
+	[coder encodeObject:_spatial		forKey:@"spatial"];
 #endif
 
-	if ( [coder allowsKeyedCoding] ) {
-		[coder encodeObject:_nodes			forKey:@"nodes"];
-		[coder encodeObject:_ways			forKey:@"ways"];
-		[coder encodeObject:_relations		forKey:@"relations"];
-		[coder encodeObject:_region			forKey:@"region"];
-		[coder encodeObject:_spatial		forKey:@"spatial"];
-		[coder encodeObject:_undoManager	forKey:@"undoManager"];
-	} else {
-		[coder encodeObject:_nodes];
-		[coder encodeObject:_ways];
-		[coder encodeObject:_relations];
-		[coder encodeObject:_region];
-		[coder encodeObject:_spatial];
-		[coder encodeObject:_undoManager];
-	}
-#if 0
-	DLog(@"nodes     = %f", [s2 timeIntervalSinceDate:s1]);
-	DLog(@"ways      = %f", [s3 timeIntervalSinceDate:s2]);
-	DLog(@"relations = %f", [s4 timeIntervalSinceDate:s3]);
-	DLog(@"regions   = %f", [s5 timeIntervalSinceDate:s4]);
-	DLog(@"spatial   = %f", [s6 timeIntervalSinceDate:s5]);
-	DLog(@"undo      = %f", [s7 timeIntervalSinceDate:s6]);
-#endif
+	[coder encodeObject:_relations		forKey:@"relations"];
+	[coder encodeObject:_region			forKey:@"region"];
+	[coder encodeObject:_undoManager	forKey:@"undoManager"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -1523,35 +1562,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( self ) {
 
 		@try {
-			if ( [coder allowsKeyedCoding] ) {
-				_nodes			= [coder decodeObjectForKey:@"nodes"];
-				_ways			= [coder decodeObjectForKey:@"ways"];
-				_relations		= [coder decodeObjectForKey:@"relations"];
-				_region			= [coder decodeObjectForKey:@"region"];
-				_spatial		= [coder decodeObjectForKey:@"spatial"];
-				_undoManager	= [coder decodeObjectForKey:@"undoManager"];
-			} else {
-				_nodes			= [coder decodeObject];
-				_ways			= [coder decodeObject];
-				_relations		= [coder decodeObject];
-				_region			= [coder decodeObject];
-				_spatial		= [coder decodeObject];
-				_undoManager	= [coder decodeObject];
-			}
-			if ( (_nodes.count == 0 && _ways.count == 0 && _relations.count == 0) || _undoManager == nil ) {
+			_nodes			= [coder decodeObjectForKey:@"nodes"];
+			_ways			= [coder decodeObjectForKey:@"ways"];
+			_relations		= [coder decodeObjectForKey:@"relations"];
+			_region			= [coder decodeObjectForKey:@"region"];
+			_spatial		= [coder decodeObjectForKey:@"spatial"];
+			_undoManager	= [coder decodeObjectForKey:@"undoManager"];
+
+			if ( _nodes == nil || _ways == nil || _relations == nil || _undoManager == nil || _spatial == nil ) {
 				self = nil;
 			} else {
 				if ( _region == nil ) {
-					_region	= [[QuadMap alloc] initWithRect:MAP_RECT];
+					// This path taken if we came from a quick-save
+					_region	= [QuadMap new];
 
 					// didn't save spatial, so add everything back into it
-					[_nodes enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
-						[_spatial addMember:object undo:nil];
-					}];
-					[_ways enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
-						[_spatial addMember:object undo:nil];
-					}];
-					[_relations enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
+					[self enumerateObjectsUsingBlock:^(OsmBaseObject *object) {
 						[_spatial addMember:object undo:nil];
 					}];
 				}
@@ -1595,8 +1621,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	// get modified nodes and ways
 	OsmMapData * modified = [[OsmMapData alloc] init];
-	// we don't preserve any regions
-	modified->_region = nil;
 
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmNode * object, BOOL *stop) {
 		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
@@ -1608,11 +1632,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[modified copyWay:object];
 		}
 	}];
+#if USE_SQL
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * object, BOOL *stop) {
+		[self copyRelation:object];
+	}];
+#else
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * object, BOOL *stop) {
 		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
 			[self copyRelation:object];
 		}
 	}];
+#endif
 	NSSet * undoObjects = [_undoManager objectRefs];
 	for ( id object in undoObjects ) {
 		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
@@ -1639,8 +1669,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_nodes removeAllObjects];
 	[_ways removeAllObjects];
 	[_relations removeAllObjects];
-	[_spatial reset];
-	_region  = [[QuadMap alloc] initWithRect:MAP_RECT];
+	[_spatial.rootQuad reset];
+	_region  = [QuadMap new];
+#if USE_SQL
+	Database * db = [Database new];
+	[db dropTables];
+#endif
 }
 
 -(void)purgeHard
@@ -1718,19 +1752,36 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return nil;
 }
 
-- (id)archiver:(NSKeyedArchiver *)archiver willEncodeObject:(id)object
+static NSMutableSet * allArchiveClasses = nil;
+
+-(id)archiver:(NSKeyedArchiver *)archiver willEncodeObject:(id)object
 {
-	// when saving a copy of modification the undo manager will try to save _spatial, but we need to save our (empty) copy instead
-	if ( _substSpatialOnSave && [object isKindOfClass:[QuadBox class]] ) {
-		return _spatial;
+#if DEBUG
+	if ( allArchiveClasses == nil ) {
+		allArchiveClasses = [NSMutableSet new];
+	}
+	[allArchiveClasses addObject:NSStringFromClass([object class])];
+#endif
+
+	if ( [object isKindOfClass:[OsmMapData class]] ) {
+		return self;
+	}
+	if ( [object isKindOfClass:[EditorMapLayer class]] ) {
+		return self.editorMapLayerForArchive;
+	}
+	return object;
+}
+-(id)unarchiver:(NSKeyedUnarchiver *)unarchiver didDecodeObject:(id)object
+{
+	if ( [object isKindOfClass:[EditorMapLayer class]] ) {
+		return self.editorMapLayerForArchive;
 	}
 	return object;
 }
 
--(BOOL)saveSubstitutingSpatial:(BOOL)substituteSpatial
-{
-	_substSpatialOnSave = substituteSpatial;
 
+-(BOOL)saveArchive
+{
 	NSString * path = [self pathToArchiveFile];
 
 	NSMutableData * data = [NSMutableData data];
@@ -1740,10 +1791,86 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[archiver finishEncoding];
 	[data writeToFile:path atomically:YES];
 
+#if DEBUG
+	for ( id obj in [allArchiveClasses.allObjects sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
+		return [obj1 compare:obj2];
+	}] ) {
+		DLog(@"archived %@",obj);
+	}
+#endif
+
 	BOOL ok = data  &&  [data writeToFile:path atomically:YES];
 	return ok;
 }
--(id)initWithCachedData
+
+-(void)sqlSaveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays isUpdate:(BOOL)isUpdate
+{
+#if USE_SQL
+	CFTimeInterval t = CACurrentMediaTime();
+	Database * db = [Database new];
+	[db createTables];
+	[db saveNodes:saveNodes saveWays:saveWays deleteNodes:deleteNodes deleteWays:deleteWays isUpdate:(BOOL)isUpdate];
+	t = CACurrentMediaTime() - t;
+	DLog(@"sql save %ld nodes, %ld ways, time = %f",saveNodes.count, saveWays.count, t);
+#endif
+}
+
+-(void)updateSql:(NSDictionary *)sqlUpdate isUpdate:(BOOL)isUpdate
+{
+	NSMutableArray * insertNode = [NSMutableArray new];
+	NSMutableArray * insertWay	= [NSMutableArray new];
+	NSMutableArray * deleteNode = [NSMutableArray new];
+	NSMutableArray * deleteWay	= [NSMutableArray new];
+	[sqlUpdate enumerateKeysAndObjectsUsingBlock:^(OsmBaseObject * object, NSNumber * insert, BOOL *stop) {
+		if ( object.isNode ) {
+			if ( insert.boolValue )
+				[insertNode addObject:object];
+			else
+				[deleteNode addObject:object];
+		} else if ( object.isWay ) {
+			if ( insert.boolValue )
+				[insertWay addObject:object];
+			else
+				[deleteWay addObject:object];
+		} else {
+			assert(NO);
+		}
+	}];
+	[self sqlSaveNodes:insertNode saveWays:insertWay deleteNodes:deleteNode deleteWays:deleteWay isUpdate:(BOOL)isUpdate];
+}
+
+
+-(void)save
+{
+	CFTimeInterval t = CACurrentMediaTime();
+#if USE_SQL
+	// save dirty data and relations
+	OsmMapData * modified = [self modifiedObjects];
+	modified->_region = _region;
+	QuadBox * root = _spatial.rootQuad;
+	modified->_spatial = _spatial;
+	modified.editorMapLayerForArchive = self.editorMapLayerForArchive;
+	_spatial.rootQuad = nil;
+	[modified saveArchive];
+	_spatial.rootQuad = root;
+#else
+	// First save just modified objects, which we can do very fast, in case we get killed during full save
+	OsmMapData * modified = [self modifiedObjects];
+	modified->_region = nil;	// don't preserve regions because we will need to reload all data
+	QuadBox * root = _spatial.rootQuad;
+	modified->_spatial = _spatial;
+	_spatial.rootQuad = nil;
+	[modified saveArchive];
+	_spatial.rootQuad = root;
+
+	// Next try to save everything. Since we save atomically this won't overwrite the fast save unless it succeeeds.
+	[self saveArchive];
+#endif
+	t = CACurrentMediaTime() - t;
+	DLog(@"archive save time = %f",t);
+}
+
+-(instancetype)initWithCachedData:(EditorMapLayer *)editorMapLayerForArchive
 {
 	NSString * path = [self pathToArchiveFile];
 	NSData * data = [NSData dataWithContentsOfFile:path];
@@ -1751,50 +1878,41 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		return nil;
 	}
 	@try {
+		self.editorMapLayerForArchive = editorMapLayerForArchive;	// so we can update editor references during unarchive
 		NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+		unarchiver.delegate = self;
 		self = [unarchiver decodeObjectForKey:@"OsmMapData"];
 		if ( self ) {
+			// convert relation members from ids back into objects
 			[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
 				[relation resolveToMapData:self];
 			}];
 		}
+#if USE_SQL
+		if ( self ) {
+			// rebuild spatial database
+			_spatial.rootQuad = [QuadBox new];
+			[self enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
+				if ( !obj.deleted )
+					[_spatial addMember:obj undo:nil];
+			}];
+
+			// merge info from SQL database
+			Database * db = [Database new];
+			NSMutableDictionary * newNodes = [db querySqliteNodes];
+			NSMutableDictionary * newWays = [db querySqliteWays];
+			OsmMapData * newData = [[OsmMapData alloc] init];
+			newData->_nodes = newNodes;
+			newData->_ways = newWays;
+			[self merge:newData fromDownload:NO quadList:nil success:YES];
+		}
+#endif
 	}
 	@catch (id exception) {
 		self = nil;
 	}
 
 	return self;
-}
-
-
--(NSArray *)userStatisticsForRegion:(OSMRect)rect
-{
-	NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-
-	[self enumerateObjectsInRegion:rect block:^(OsmBaseObject * base) {
-		NSDate * date = [base dateForTimestamp];
-		if ( base.user.length == 0 ) {
-			DLog(@"Empty user name for object: object %@, uid = %d", base, base.uid);
-			return;
-		}
-		OsmUserStatistics * stats = dict[ base.user ];
-		if ( stats == nil ) {
-			stats = [OsmUserStatistics new];
-			stats.user = base.user;
-			stats.changeSets = [NSMutableSet setWithObject:@(base.changeset)];
-			stats.lastEdit = date;
-			stats.editCount = 1;
-			dict[ base.user ] = stats;
-		} else {
-			++stats.editCount;
-			[stats.changeSets addObject:@(base.changeset)];
-			if ( [date compare:stats.lastEdit] > 0 )
-				stats.lastEdit = date;
-		}
-		stats.changeSetsCount = stats.changeSets.count;
-	}];
-
-	return [dict allValues];
 }
 
 @end
