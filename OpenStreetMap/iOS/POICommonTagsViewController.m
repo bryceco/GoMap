@@ -81,11 +81,11 @@
 	NSDictionary * dict = tabController.keyValueDict;
 
 
-
 	OsmBaseObject * object = tabController.selection;
-	NSString * geometry = object.isWay ? ((OsmWay *)object).isArea ? GEOMETRY_AREA : GEOMETRY_WAY :
-							object.isNode ? ((OsmNode *)object).wayCount > 0 ? GEOMETRY_VERTEX : GEOMETRY_NODE :
-							object.isRelation ? ((OsmRelation *)object).isMultipolygon ? GEOMETRY_AREA : GEOMETRY_WAY :
+	NSString * geometry = object == nil ? GEOMETRY_NODE :
+							object.isWay ? object.isWay.isArea ? GEOMETRY_AREA : GEOMETRY_WAY :
+							object.isNode ? object.isNode.wayCount > 0 ? GEOMETRY_VERTEX : GEOMETRY_NODE :
+							object.isRelation ? object.isRelation.isMultipolygon ? GEOMETRY_AREA : GEOMETRY_WAY :
 							@"unkown";
 
 	__weak POICommonTagsViewController * weakSelf = self;
