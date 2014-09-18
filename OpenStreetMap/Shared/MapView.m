@@ -1120,10 +1120,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)adjustZoomBy:(CGFloat)ratio
 {
+	const double maxZoomIn = 1 << 30;
 	if ( ratio == 1.0 )
 		return;
 	if ( ratio * _mapTransform.a < 1.0 ) {
 		ratio = 1.0 / _mapTransform.a;
+	}
+	if ( ratio * _mapTransform.a > maxZoomIn ) {
+		ratio = maxZoomIn / _mapTransform.a;
 	}
 	self.mapTransform = OSMTransformScale( _mapTransform, ratio );
 }
