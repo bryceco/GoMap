@@ -1122,6 +1122,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	if ( ratio == 1.0 )
 		return;
+	if ( ratio * _mapTransform.a < 1.0 ) {
+		ratio = 1.0 / _mapTransform.a;
+	}
 	self.mapTransform = OSMTransformScale( _mapTransform, ratio );
 }
 
