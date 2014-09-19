@@ -88,6 +88,11 @@
 
 @synthesize iconName = _iconName;
 
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _type];
+}
+
 static TagInfo * g_DefaultRender = nil;
 
 -(NSImage *)icon

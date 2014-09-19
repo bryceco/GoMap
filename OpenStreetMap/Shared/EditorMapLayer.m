@@ -418,10 +418,13 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 
+#if DEBUG
 	assert( crossCnt <= 2 );
 	for ( NSInteger i = 0; i < crossCnt; ++i ) {
 		assert( IsPointInRect(pts[i], rect) );
 	}
+#endif
+
 	return crossCnt;
 }
 
@@ -574,7 +577,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		// never intersects screen
 	} else if ( trimmedSegment ) {
 		// entered but never exited
-		NSLog(@"entered but never exited");
 		[newWays removeLastObject];
 	}
 	return newWays;
@@ -597,7 +599,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 -(void)drawOceans:(NSArray *)objectList context:(CGContextRef)ctx
 {
-	NSLog(@"draw oceans");
 	// get all coastline ways
 	NSMutableArray * outerSegments = [NSMutableArray new];
 	NSMutableArray * innerSegments = [NSMutableArray new];
@@ -1357,8 +1358,8 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	if ( tagInfo.lineWidth == 0 )
 		return NO;
 
-	OsmWay * way = object.isWay ? (id)object : nil;
-	OsmRelation * relation = object.isRelation ? (id)object : nil;
+	OsmWay * way = object.isWay;
+	OsmRelation * relation = object.isRelation;
 
 	if ( way && way.isArea )
 		return NO;
