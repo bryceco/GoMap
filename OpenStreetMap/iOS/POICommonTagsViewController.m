@@ -91,8 +91,9 @@
 	__weak POICommonTagsViewController * weakSelf = self;
 	__weak CommonTagList * weakTags = _tags;
 	[_tags setPresetsForDict:dict geometry:geometry update:^{
+		// this may complete much later, even after we've been dismissed
 		POICommonTagsViewController * mySelf = weakSelf;
-		if ( !mySelf->_keyboardShowing ) {
+		if ( mySelf && !mySelf->_keyboardShowing ) {
 			[weakTags setPresetsForDict:dict geometry:geometry update:nil];
 			[weakSelf.tableView reloadData];
 		}

@@ -221,12 +221,13 @@ const double MinIconSizeInMeters = 2.0;
 
 #pragma mark Draw Ocean
 
-static void AppendNodes( NSMutableArray * list, OsmWay * way, BOOL back )
+static void AppendNodes( NSMutableArray * list, OsmWay * way, BOOL addToBack, BOOL reverseNodes )
 {
-	if ( back ) {
+	NSEnumerator * nodes = reverseNodes ? [way.nodes reverseObjectEnumerator] : [way.nodes objectEnumerator];
+	if ( addToBack ) {
 		// insert at back of list
 		BOOL first = YES;
-		for ( OsmNode * node in way.nodes ) {
+		for ( OsmNode * node in nodes ) {
 			if ( first )
 				first = NO;
 			else
@@ -235,7 +236,7 @@ static void AppendNodes( NSMutableArray * list, OsmWay * way, BOOL back )
 	} else {
 		// insert at front of list
 		NSMutableArray * a = [NSMutableArray arrayWithCapacity:way.nodes.count];
-		for ( OsmNode * node in way.nodes ) {
+		for ( OsmNode * node in nodes ) {
 			[a addObject:node];
 		}
 		[a removeLastObject];
@@ -279,7 +280,7 @@ static BOOL IsClockwisePolygon( NSArray * points )
 {
 	assert( points[0] == points.lastObject );
 	assert( points.count >= 4 );	// first and last repeat
-	CGFloat sum = 0;
+	double area = 0;
 	BOOL first = YES;
 	OSMPoint offset;
 	OSMPoint previous;
@@ -291,11 +292,12 @@ static BOOL IsClockwisePolygon( NSArray * points )
 			first = NO;
 		} else {
 			OSMPoint current = { point.x - offset.x, point.y - offset.y };
-			sum += previous.x*current.y - previous.y*current.x;
+			area += previous.x*current.y - previous.y*current.x;
 			previous = current;
 		}
 	}
-	return sum >= 0;
+	area *= 0.5;
+	return area >= 0;
 }
 
 static BOOL IsClockwiseWay( OsmWay * way )
@@ -423,198 +425,286 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	return crossCnt;
 }
 
-
--(void)drawOceans:(NSArray *)objectList context:(CGContextRef)ctx
+// input is an array of OsmWay
+// output is an array of arrays of OsmNode
+// take a list of ways and return a new list of ways with contiguous ways joined together.
+-(NSMutableArray *)joinConnectedWays:(NSMutableArray *)origList
 {
-	NSMutableSet * segments = [NSMutableSet new];
-	for ( id obj in objectList ) {
-		OsmBaseObject * object = obj;
-		if ( [object isKindOfClass:[ObjectSubpart class]] )
-			object = [(ObjectSubpart *)object object];
-		if ( object.isWay.isClosed && [object.tags[@"natural"] isEqualToString:@"water"] ) {
-			continue;	// lakes are handled later
-		}
-		if ( object.isCoastline ) {
-			if ( object.isWay ) {
-				[segments addObject:object];
-			} else if ( object.isRelation ) {
-				NSArray * wayList = [self wayListForMultipolygonRelation:(id)object];
-				for ( OsmWay * way in wayList ) {
-					if ( way.isClosed && [way.tags[@"natural"] isEqualToString:@"water"] && IsClockwiseWay(way) ) {
-						OsmWay * reversed = [OsmWay new];
-						for ( OsmNode * n in [way.nodes reverseObjectEnumerator] ) {
-							[reversed addNode:n atIndex:reversed.nodes.count undo:nil];
-						}
-						[segments addObject:reversed];
-					} else {
-						[segments addObject:way];
-					}
-				}
-			}
-		}
-	}
-	if ( segments.count == 0 )
-		return;
-
-	NSMutableArray * outlineList = [NSMutableArray new];
-	while ( segments.count ) {
+	// connect ways together forming congiguous runs
+	NSMutableArray * newList = [NSMutableArray new];
+	while ( origList.count ) {
 		// find all connected segments
-		OsmWay * way = segments.anyObject;
-		[segments removeObject:way];
+		OsmWay * way = origList.lastObject;
+		[origList removeObject:way];
 
 		OsmNode * firstNode = way.nodes[0];
 		OsmNode * lastNode = way.nodes.lastObject;
 		NSMutableArray * nodeList = [NSMutableArray arrayWithObject:firstNode];
-		AppendNodes( nodeList, way, YES );
+		AppendNodes( nodeList, way, YES, NO );
 		while ( nodeList[0] != nodeList.lastObject ) {
 			// find a way adjacent to current list
-			for ( way in segments ) {
-				if ( way.nodes[0] == lastNode ) {
-					AppendNodes( nodeList, way, YES );
+			for ( way in origList ) {
+				if ( lastNode == way.nodes[0] ) {
+					AppendNodes( nodeList, way, YES, NO );
 					lastNode = nodeList.lastObject;
 					break;
 				}
-				if ( way.nodes.lastObject == firstNode ) {
-					AppendNodes( nodeList, way, NO );
+				if ( lastNode == way.nodes.lastObject ) {
+					AppendNodes( nodeList, way, YES, YES );
+					lastNode = nodeList.lastObject;
+					break;
+				}
+				if ( firstNode == way.nodes.lastObject ) {
+					AppendNodes( nodeList, way, NO, NO );
+					firstNode = nodeList[0];
+					break;
+				}
+				if ( firstNode == way.nodes[0] ) {
+					AppendNodes( nodeList, way, NO, YES );
 					firstNode = nodeList[0];
 					break;
 				}
 			}
 			if ( way == nil )
-				break;
-			[segments removeObject:way];
+				break;	// didn't find anything to connect to
+			[origList removeObject:way];
 		}
-		[outlineList addObject:nodeList];
+		[newList addObject:nodeList];
 	}
-	segments = nil;
+	return newList;
+}
+
+-(void)convertNodesToPoints:(NSMutableArray *)nodeList
+{
+	if ( nodeList.count == 0 )
+		return;
+	BOOL isLoop = nodeList.count > 1 && nodeList[0] == nodeList.lastObject;
+	for ( NSInteger index = 0, count = nodeList.count; index < count; ++index ) {
+		if ( isLoop && index == count-1 ) {
+			nodeList[index] = nodeList[0];
+		} else {
+			OsmNode * node = nodeList[index];
+			OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+			nodeList[index] = [OSMPointBoxed pointWithPoint:pt];
+		}
+	}
+}
+
+
+-(NSMutableArray *)visibleSegmentsOfWay:(NSMutableArray *)way inView:(OSMRect)viewRect
+{
+	// trim nodes in outlines to only internal paths
+	NSMutableArray * newWays = [NSMutableArray new];
+
+	BOOL first = YES;
+	BOOL prevInside;
+	BOOL isLoop = way[0] == way.lastObject;
+	OSMPoint prevPoint;
+	NSInteger index = 0;
+	NSInteger lastEntry = -1;
+	NSMutableArray * trimmedSegment = nil;
+
+	if ( isLoop ) {
+		// rotate loop to ensure start/end point is outside viewRect
+		BOOL ok = RotateLoop(way, viewRect);
+		if ( !ok ) {
+			// entire loop is inside view
+			[newWays addObject:way];
+			return newWays;
+		}
+	}
+
+	for ( OSMPointBoxed * value in way ) {
+		OSMPoint pt = value.point;
+		BOOL isInside = OSMRectContainsPoint( viewRect, pt );
+		if ( first ) {
+			first = NO;
+		} else {
+
+			BOOL isEntry = NO;
+			BOOL isExit = NO;
+			if ( prevInside ) {
+				if ( isInside ) {
+					// still inside
+				} else {
+					// moved to outside
+					isExit = YES;
+				}
+			} else {
+				if ( isInside ) {
+					// moved inside
+					isEntry = YES;
+				} else {
+					// if previous and current are both outside maybe we intersected
+					if ( LineSegmentIntersectsRectangle( prevPoint, pt, viewRect ) ) {
+						isEntry = YES;
+						isExit = YES;
+					} else {
+						// still outside
+					}
+				}
+			}
+
+			OSMPoint pts[ 2 ];
+			NSInteger crossCnt = (isEntry || isExit) ? ClipLineToRect( prevPoint, pt, viewRect, pts ) : 0;
+			if ( isEntry ) {
+				// start tracking trimmed segment
+				assert( crossCnt >= 1 );
+				OSMPointBoxed * v = [OSMPointBoxed pointWithPoint:pts[0] ];
+				trimmedSegment = [NSMutableArray arrayWithObject:v];
+				[newWays addObject:trimmedSegment];
+				lastEntry = index-1;
+			}
+			if ( isExit ) {
+				// end of trimmed segment. If the way began inside the viewrect then trimmedSegment is nil and gets ignored
+				assert( crossCnt >= 1 );
+				OSMPointBoxed * v = [OSMPointBoxed pointWithPoint:pts[crossCnt-1]];
+				[trimmedSegment addObject:v];
+				trimmedSegment = nil;
+			} else if ( isInside ) {
+				// internal node for trimmed segment
+				[trimmedSegment addObject:value];
+			}
+		}
+		prevInside = isInside;
+		prevPoint = pt;
+		++index;
+	}
+	if ( lastEntry < 0 ) {
+		// never intersects screen
+	} else if ( trimmedSegment ) {
+		// entered but never exited
+		NSLog(@"entered but never exited");
+		[newWays removeLastObject];
+	}
+	return newWays;
+}
+
+
+-(void)addPointList:(NSArray *)list toContextPath:(CGContextRef)ctx
+{
+	BOOL first = YES;
+	for ( OSMPointBoxed * point in list ) {
+		OSMPoint p = point.point;
+		if ( first ) {
+			first = NO;
+			CGContextMoveToPoint(ctx, p.x, p.y );
+		} else {
+			CGContextAddLineToPoint(ctx, p.x, p.y);
+		}
+	}
+}
+
+-(void)drawOceans:(NSArray *)objectList context:(CGContextRef)ctx
+{
+	NSLog(@"draw oceans");
+	// get all coastline ways
+	NSMutableArray * outerSegments = [NSMutableArray new];
+	NSMutableArray * innerSegments = [NSMutableArray new];
+	for ( id obj in objectList ) {
+		OsmBaseObject * object = obj;
+		if ( [object isKindOfClass:[ObjectSubpart class]] )
+			object = [(ObjectSubpart *)object object];
+		if ( object.isWay.isClosed && [object.tags[@"natural"] isEqualToString:@"water"] ) {
+			continue;	// lakes are not a concern of this function
+		}
+		if ( object.isCoastline ) {
+			if ( object.isWay ) {
+				[outerSegments addObject:object];
+			} else if ( object.isRelation ) {
+				for ( OsmMember * mem in object.isRelation.members ) {
+					if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
+						if ( [mem.role isEqualToString:@"outer"] ) {
+							[outerSegments addObject:mem.ref];
+						} else if ( [mem.role isEqualToString:@"inner"] ) {
+							[innerSegments addObject:mem.ref];
+						} else {
+							// skip
+						}
+					}
+				}
+			}
+		}
+	}
+	if ( outerSegments.count == 0 )
+		return;
+
+	// connect ways together forming congiguous runs
+	outerSegments = [self joinConnectedWays:outerSegments];
+	innerSegments = [self joinConnectedWays:innerSegments];
+
+	// convert lists of nodes to screen points
+	for ( NSMutableArray * a in outerSegments )
+		[self convertNodesToPoints:a];
+	for ( NSMutableArray * a in innerSegments )
+		[self convertNodesToPoints:a];
+
 	CGRect cgViewRect = self.bounds;
 	OSMRect viewRect = { cgViewRect.origin.x, cgViewRect.origin.y, cgViewRect.size.width, cgViewRect.size.height };
 	CGPoint viewCenter = { viewRect.origin.x+viewRect.size.width/2, viewRect.origin.y+viewRect.size.height/2 };
 
-	// convert nodes to points
-	for ( NSMutableArray * outline in outlineList ) {
-		BOOL isLoop = outline[0] == outline.lastObject;
-		for ( NSInteger index = 0, count = outline.count; index < count; ++index ) {
-			if ( isLoop && index == count-1 ) {
-				outline[index] = outline[0];
-			} else {
-				OsmNode * node = outline[index];
-				OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
-				outline[index] = [OSMPointBoxed pointWithPoint:pt];
-			}
-		}
-	}
-
-	// trim nodes in outlines to only internal paths
-	NSMutableArray * islands = nil;
-	NSMutableArray * outlineList2 = [NSMutableArray new];
-	for ( NSMutableArray * outline in outlineList ) {
-		BOOL first = YES;
-		BOOL prevInside;
-		BOOL isLoop = outline[0] == outline.lastObject;
-		OSMPoint prevPoint;
-		NSInteger index = 0;
-		NSInteger lastEntry = -1;
-		NSMutableArray * outline2 = nil;
-
-		if ( isLoop ) {
-			BOOL ok = RotateLoop(outline, viewRect);
-			if ( !ok ) {
-				// entire loop is inside view
-				if ( islands == nil ) {
-					islands = [NSMutableArray arrayWithObject:outline];
-				} else {
-					[islands addObject:outline];
-				}
-				continue;
-			}
-		}
-
-		for ( OSMPointBoxed * value in outline ) {
-			OSMPoint pt = value.point;
-			BOOL isInside = OSMRectContainsPoint( viewRect, pt );
-			if ( first ) {
-				first = NO;
-			} else {
-
-				BOOL isEntry = NO;
-				BOOL isExit = NO;
-				if ( prevInside ) {
-					if ( isInside ) {
-						// still inside
-					} else {
-						// moved to outside
-						isExit = YES;
-					}
-				} else {
-					if ( isInside ) {
-						// moved inside
-						isEntry = YES;
-					} else {
-						// if previous and current are both outside maybe we intersected
-						if ( LineSegmentIntersectsRectangle( prevPoint, pt, viewRect ) ) {
-							isEntry = YES;
-							isExit = YES;
-						} else {
-							// still outside
-						}
-					}
-				}
-
-				if ( index == 1 && isInside && !isEntry ) {
-					// DLog(@"first node is not outside");
-					return;
-				}
-
-				OSMPoint pts[ 2 ];
-				NSInteger crossCnt = (isEntry || isExit) ? ClipLineToRect( prevPoint, pt, viewRect, pts ) : 0;
-				if ( isEntry ) {
-					assert( crossCnt >= 1 );
-					OSMPointBoxed * v = [OSMPointBoxed pointWithPoint:pts[0] ];
-					outline2 = [NSMutableArray arrayWithObject:v];
-					[outlineList2 addObject:outline2];
-					lastEntry = index-1;
-				}
-				if ( isExit ) {
-					assert( crossCnt >= 1 );
-					OSMPointBoxed * v = [OSMPointBoxed pointWithPoint:pts[crossCnt-1]];
-					[outline2 addObject:v];
-					outline2 = nil;
-				} else if ( isInside ) {
-					[outline2 addObject:value];
-				}
-			}
-			prevInside = isInside;
-			prevPoint = pt;
-			++index;
-		}
-		if ( lastEntry < 0 ) {
-			// never intersects screen
-		} else if ( outline2 ) {
-			// entered but never exited
-			return;
-		}
-	}
-	outlineList = outlineList2;
-	outlineList2 = nil;
-
-	for ( id island in islands ) {
-		[outlineList removeObject:island];
-	}
-
-	[outlineList filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * outline, NSDictionary *bindings) {
-		return outline.count > 0;
+#if 0
+	// discard any segments that begin or end inside the view rectangle
+	NSArray * innerInvalid = [innerSegments filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * way, NSDictionary *bindings) {
+		return way[0] != way.lastObject && (OSMRectContainsPoint(viewRect, [way[0] point]) || OSMRectContainsPoint(viewRect, [(OsmWay *)way.lastObject point]) );
 	}]];
-	if ( outlineList.count == 0 && islands.count == 0 )
+	NSArray * outerInvalid = [innerSegments filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * way, NSDictionary *bindings) {
+		return way[0] != way.lastObject && (OSMRectContainsPoint(viewRect, [way[0] point]) || OSMRectContainsPoint(viewRect, [way.lastObject point]) );
+	}]];
+	[innerSegments removeObjectsInArray:innerInvalid];
+	[outerSegments removeObjectsInArray:outerInvalid];
+#endif
+
+	// ensure that outer ways are clockwise and inner ways are counterclockwise
+	for ( NSMutableArray * way in outerSegments ) {
+		if ( way[0] == way.lastObject ) {
+			if ( !IsClockwisePolygon( way ) ) {
+				// reverse points
+				for ( NSInteger i = 0, j = way.count-1; i < j; ++i, --j ) {
+					[way exchangeObjectAtIndex:i withObjectAtIndex:j];
+				}
+			}
+		}
+	}
+	for ( NSMutableArray * way in innerSegments ) {
+		if ( way[0] == way.lastObject ) {
+			if ( IsClockwisePolygon( way ) ) {
+				// reverse points
+				for ( NSInteger i = 0, j = way.count-1; i < j; ++i, --j ) {
+					[way exchangeObjectAtIndex:i withObjectAtIndex:j];
+				}
+			}
+		}
+	}
+
+	// trim nodes in segments to only visible paths
+	NSMutableArray * visibleSegments = [NSMutableArray new];
+	for ( NSMutableArray * way in outerSegments ) {
+		NSArray * other = [self visibleSegmentsOfWay:way inView:viewRect];
+		[visibleSegments addObjectsFromArray:other];
+	}
+	for ( NSMutableArray * way in innerSegments ) {
+		[visibleSegments addObjectsFromArray:[self visibleSegmentsOfWay:way inView:viewRect]];
+	}
+
+	if ( visibleSegments.count == 0 ) {
+		// nothing is on screen
 		return;
+	}
+
+	// pull islands into a separate list
+	NSArray * islands = [visibleSegments filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * way, NSDictionary *bindings) {
+		return way[0] == way.lastObject;
+	}]];
+	[visibleSegments removeObjectsInArray:islands];
 
 	// get list of all external points
 	NSMutableSet * pointSet = [NSMutableSet new];
 	NSMutableDictionary * entryDict = [NSMutableDictionary new];
-	for ( NSArray * outline in outlineList ) {
-		[pointSet addObject:outline[0]];
-		[pointSet addObject:outline.lastObject];
-		[entryDict setObject:outline forKey:outline[0]];
+	for ( NSArray * way in visibleSegments ) {
+		[pointSet addObject:way[0]];
+		[pointSet addObject:way.lastObject];
+		[entryDict setObject:way forKey:way[0]];
 	}
 
 	// sort points clockwise
@@ -632,7 +722,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 #if 0
 	// drawing green/red entry/exit segments
-	for ( NSArray * outline in outlineList ) {
+	for ( NSArray * outline in visibleSegments ) {
 		OSMPoint p1 = [outline[0] point];
 		OSMPoint p2 = [outline[1] point];
 		CGContextBeginPath(ctx);
@@ -654,25 +744,16 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	}
 #endif
 
-	// now have a set of discontiguous arrays of coastline nodes, add points at screen corners to connect them
+	// now have a set of discontiguous arrays of coastline nodes. Draw segments adding points at screen corners to connect them
 	BOOL haveCoastline = NO;
 	CGContextBeginPath(ctx);
-	while ( outlineList.count ) {
+	while ( visibleSegments.count ) {
 
-		BOOL firstPoint = YES;
-		NSArray * firstOutline = outlineList.lastObject;
+		NSArray * firstOutline = visibleSegments.lastObject;
 		OSMPointBoxed * exit  = firstOutline.lastObject;
-		[outlineList removeObject:firstOutline];
+		[visibleSegments removeObject:firstOutline];
 
-		for ( OSMPointBoxed * value in firstOutline ) {
-			OSMPoint pt = value.point;
-			if ( firstPoint ) {
-				firstPoint = NO;
-				CGContextMoveToPoint( ctx, pt.x, pt.y );
-			} else {
-				CGContextAddLineToPoint( ctx, pt.x, pt.y );
-			}
-		}
+		[self addPointList:firstOutline toContextPath:ctx];
 
 		for (;;) {
 			// find next point following exit point
@@ -723,7 +804,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			if ( nextOutline == firstOutline ) {
 				break;
 			}
-			if ( ![outlineList containsObject:nextOutline] ) {
+			if ( ![visibleSegments containsObject:nextOutline] ) {
 				return;
 			}
 			for ( OSMPointBoxed * value in nextOutline ) {
@@ -732,26 +813,21 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			}
 
 			exit = nextOutline.lastObject;
-			[outlineList removeObject:nextOutline];
+			[visibleSegments removeObject:nextOutline];
 		}
 	}
-	BOOL first = NO;
+
+	// draw islands
 	for ( NSArray * island in islands ) {
-		first = YES;
-		for ( OSMPointBoxed * value in island ) {
-			OSMPoint pt = value.point;
-			if ( first ) {
-				first = NO;
-				CGContextMoveToPoint( ctx, pt.x, pt.y );
-			} else {
-				CGContextAddLineToPoint( ctx, pt.x, pt.y );
-			}
-		}
+		[self addPointList:island toContextPath:ctx];
+
 		if ( !haveCoastline && IsClockwisePolygon(island) ) {
 			// this will still fail if we have an island with a lake in it
 			haveCoastline = YES;
 		}
 	}
+
+	// if no coastline then draw water everywhere
 	if ( !haveCoastline ) {
 		CGContextMoveToPoint(ctx, viewRect.origin.x, viewRect.origin.y);
 		CGContextAddLineToPoint(ctx, viewRect.origin.x+viewRect.size.width, viewRect.origin.y);
@@ -1208,8 +1284,8 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 
 -(BOOL)drawArea:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
-	OsmWay * way = object.isWay ? (id)object : nil;
-	OsmRelation * relation = object.isRelation ? (id)object : nil;
+	OsmWay * way = object.isWay;
+	OsmRelation * relation = object.isRelation;
 
 	if ( way && !way.isArea )
 		return NO;
@@ -1221,18 +1297,42 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	if ( object.isCoastline )
 		return NO;	// already handled during ocean drawing
 
-	NSArray * wayList = way ? @[ way ] : [self wayListForMultipolygonRelation:relation];
 
+	NSMutableArray * outer = way ? [NSMutableArray arrayWithObject:way] : [NSMutableArray arrayWithCapacity:relation.members.count];
+	NSMutableArray * inner = way ? nil : [NSMutableArray arrayWithCapacity:relation.members.count];
+	for ( OsmMember * mem in relation.members ) {
+		if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
+			if ( [mem.role isEqualToString:@"outer"] )
+				[outer addObject:mem.ref];
+			else if ( [mem.role isEqualToString:@"inner"] ) {
+				[inner addObject:mem.ref];
+			}
+		}
+	}
+
+	// join connected nodes together
+	outer = [self joinConnectedWays:outer];
+	inner = [self joinConnectedWays:inner];
+
+	// convert from nodes to screen points
+	for ( NSMutableArray * a in outer )
+		[self convertNodesToPoints:a];
+	for ( NSMutableArray * a in inner )
+		[self convertNodesToPoints:a];
+
+	// draw
+	CGContextBeginPath(ctx);
+	for ( NSArray * w in outer ) {
+		[self addPointList:w toContextPath:ctx];
+	}
+	for ( NSArray * w in inner ) {
+		[self addPointList:w toContextPath:ctx];
+	}
 	RGBAColor	fillColor;
 	[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
-	CGContextBeginPath(ctx);
-	for ( OsmWay * w in wayList ) {
-		CGPathRef path = [self pathForWay:w];
-		CGContextAddPath(ctx, path);
-		CGPathRelease(path);
-	}
 	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, 0.25);
 	CGContextFillPath(ctx);
+
 	return YES;
 }
 

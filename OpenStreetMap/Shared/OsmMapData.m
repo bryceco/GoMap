@@ -1603,6 +1603,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)copyRelation:(OsmRelation *)relation
 {
 	[_relations setObject:relation forKey:relation.ident];
+#if USE_SQL
+	// don't copy member objects
+#else
 	for ( OsmMember * member in relation.members ) {
 		if ( [member.ref isKindOfClass:[NSNumber class]] )
 			continue;
@@ -1616,6 +1619,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			assert(NO);
 		}
 	}
+#endif
 }
 -(OsmMapData *)modifiedObjects
 {
@@ -1634,12 +1638,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 #if USE_SQL
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * object, BOOL *stop) {
-		[self copyRelation:object];
+		[modified copyRelation:object];
 	}];
 #else
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * object, BOOL *stop) {
 		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
-			[self copyRelation:object];
+			[modified copyRelation:object];
 		}
 	}];
 #endif
@@ -1813,7 +1817,7 @@ static NSMutableSet * allArchiveClasses = nil;
 	[db createTables];
 	[db saveNodes:saveNodes saveWays:saveWays deleteNodes:deleteNodes deleteWays:deleteWays isUpdate:(BOOL)isUpdate];
 	t = CACurrentMediaTime() - t;
-	DLog(@"sql save %ld nodes, %ld ways, time = %f",saveNodes.count, saveWays.count, t);
+	DLog(@"sql save %ld nodes, %ld ways, time = %f", (long)saveNodes.count, (long)saveWays.count, t);
 #endif
 }
 
@@ -1869,7 +1873,7 @@ static NSMutableSet * allArchiveClasses = nil;
 	[self saveArchive];
 #endif
 	t = CACurrentMediaTime() - t;
-	DLog(@"archive save time = %f",t);
+	DLog(@"archive save %ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, t);
 }
 
 -(instancetype)initWithCachedData:(EditorMapLayer *)editorMapLayerForArchive

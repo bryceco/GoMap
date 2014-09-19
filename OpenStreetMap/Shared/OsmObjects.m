@@ -1253,6 +1253,10 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 @implementation OsmMember
 
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ role=%@; type=%@;ref=%@;", [super description], _role, _type, _ref ];
+}
 -(id)initWithType:(NSString *)type ref:(NSNumber *)ref role:(NSString *)role
 {
 	self = [super init];

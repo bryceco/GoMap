@@ -23,6 +23,10 @@
 {
 	return self;
 }
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ %p> x=%f,y=%f",[self class],self,_point.x,_point.y];
+}
 @end
 
 @implementation OSMRectBoxed

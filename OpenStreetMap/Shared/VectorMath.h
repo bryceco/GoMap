@@ -118,17 +118,17 @@ static inline BOOL OSMRectContainsRect( OSMRect a, OSMRect b )
 }
 
 
-static inline CGFloat Dot( OSMPoint a, OSMPoint b )
+static inline double Dot( OSMPoint a, OSMPoint b )
 {
 	return a.x*b.x + a.y*b.y;
 }
 
-static inline CGFloat MagSquared( OSMPoint a )
+static inline double MagSquared( OSMPoint a )
 {
 	return a.x*a.x + a.y*a.y;
 }
 
-static inline CGFloat Mag( OSMPoint a )
+static inline double Mag( OSMPoint a )
 {
 	return hypot(a.x, a.y);
 }
@@ -162,6 +162,11 @@ static inline double CrossMag( OSMPoint a, OSMPoint b )
 static inline double DistanceFromPointToPoint( OSMPoint a, OSMPoint b)
 {
 	return Mag( Sub(a,b) );
+}
+static inline OSMPoint OffsetPoint( OSMPoint p, double dx, double dy )
+{
+	OSMPoint p2 = { p.x+dx, p.y+dy };
+	return p2;
 }
 
 OSMPoint ClosestPointOnLineToPoint( OSMPoint a, OSMPoint b, OSMPoint p );
