@@ -1798,18 +1798,18 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		}
 	}
 
-	// if zoomed in very close then provide targeting lines
+	// if zoomed in very close then provide crosshairs
 	if ( _iconSize.width > 64 ) {
 		CGContextSetStrokeColorWithColor( ctx, NSColor.blackColor.CGColor );
 		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.whiteColor.CGColor );
-		CGContextSetLineWidth( ctx, 1.0 );
+		CGContextSetLineWidth( ctx, 2.0 );
 		CGContextBeginPath(ctx);
 		CGPoint line1[2] = { pt.x - 10, pt.y, pt.x+10, pt.y };
 		CGPoint line2[2] = { pt.x, pt.y - 10, pt.x, pt.y + 10 };
 		CGContextAddLines( ctx, line1, 2 );
 		CGContextAddLines( ctx, line2, 2 );
 		CGContextStrokePath(ctx);
-	}
+}
 
 	return YES;
 }
