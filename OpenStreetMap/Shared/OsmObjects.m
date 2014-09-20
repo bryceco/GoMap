@@ -698,9 +698,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(BOOL)isArea
 {
-	static NSDictionary * areaKeys = nil;
-	if ( areaKeys == nil ) {
-		areaKeys = @{
+	static NSDictionary * exclusions = nil;
+	if ( exclusions == nil ) {
+		exclusions = @{
 			@"aeroway": @{
 				@"gate": @true,
 				@"taxiway": @true
@@ -726,6 +726,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 				@"entrance": @true,
 				@"fence": @true,
 				@"gate": @true,
+				@"hedge": @true,
 				@"kissing_gate": @true,
 				@"lift_gate": @true,
 				@"stile": @true,
@@ -800,7 +801,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		return NO;
 	__block BOOL area = NO;
 	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * val, BOOL *stop) {
-		NSDictionary * exclude = areaKeys[key];
+		NSDictionary * exclude = exclusions[key];
 		if ( exclude && !exclude[val] ) {
 			area = YES;
 			*stop = YES;

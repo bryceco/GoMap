@@ -2220,8 +2220,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		fabs(location.longitude - node.lon),
 		fabs(location.latitude - node.lat)
 	};
-	if ( delta.x > maxDegrees.width || delta.y > maxDegrees.height )
-		return 1000000;
 	delta.x /= maxDegrees.width;
 	delta.y /= maxDegrees.height;
 	CGFloat dist = hypot(delta.x, delta.y);
@@ -2237,6 +2235,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	OSMSize pixelsPerDegree = { mapView.bounds.size.width / viewCoord.size.width, mapView.bounds.size.height / viewCoord.size.height };
 
 	OSMSize maxDegrees = { WayHitTestRadius / pixelsPerDegree.width, WayHitTestRadius / pixelsPerDegree.height };
+	const double NODE_BIAS = 0.8;	// make nodes appear closer so they can be selected
 
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.deleted )
@@ -2246,6 +2245,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			if ( ![ignoreList containsObject:node] ) {
 				if ( testNodes || node.wayCount == 0 ) {
 					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forNode:node];
+					dist *= NODE_BIAS;
 					if ( dist <= 1.0 ) {
 						block( node, dist, 0 );
 					}
@@ -2265,6 +2265,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 					if ( [ignoreList containsObject:node] )
 						continue;
 					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forNode:node];
+					dist *= NODE_BIAS;
 					if ( dist < 1.0 ) {
 						block( node, dist, 0 );
 					}
@@ -2282,11 +2283,9 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	__block CGFloat bestDist = 1000000;
 	[EditorMapLayer osmHitTestEnumerate:point mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
 		if ( dist < bestDist ) {
-			if ( dist < bestDist ) {
-				bestDist = dist;
-				hit = obj;
-				hitSegment = segment;
-			}
+			bestDist = dist;
+			hit = obj;
+			hitSegment = segment;
 		}
 	}];
 	if ( bestDist <= 1.0 ) {
