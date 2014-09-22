@@ -16,8 +16,10 @@
 @property (strong, nonatomic)	UIWindow *	window;
 @property (weak,nonatomic)		MapView *	mapView;
 
-@property (strong,nonatomic) NSString *	userName;
-@property (strong,nonatomic) NSString *	userPassword;
+@property (strong,nonatomic) NSString	*	userName;
+@property (strong,nonatomic) NSString	*	userPassword;
+
+@property (readonly,nonatomic) BOOL			isAppUpgrade;
 
 -(NSString *)appName;
 -(NSString *)appVersion;

@@ -487,9 +487,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( [newAction.selector isEqualToString:@"setLongitude:latitude:undo:"] ) {
 		return YES;
 	}
-	if ( [newAction.selector isEqualToString:@"doComment:location:"] ) {
-		return YES;
-	}
 	if ( [newAction.selector isEqualToString:@"setSelectedRelation:way:node:"] ) {
 		return	newAction.objects[0] == prevAction.objects[0] &&
 				newAction.objects[1] == prevAction.objects[1] &&

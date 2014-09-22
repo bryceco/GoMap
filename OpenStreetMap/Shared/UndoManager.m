@@ -241,8 +241,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 {
 	action.group = _groupingStack.count ? [_groupingStack.lastObject integerValue] : self.runLoopCounter;
 
-#if DEBUG
-	// check if we can ignore this undo action
+	// ask delegate if we can ignore this undo action because it is redundant
 	if ( !_isUndoing && !_isRedoing && [self.delegate respondsToSelector:@selector(undoAction:duplicatesPreviousAction:)] ) {
 		NSArray * stack = _undoStack;
 		NSInteger group = action.group;
@@ -250,6 +249,14 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 			UndoAction * prevAction = stack[ index ];
 			if ( prevAction.group != group )
 				break;
+
+			// special case for comments: only look at most recent
+			if ( [action.selector isEqualToString:@"doComment:location:"] && [prevAction.selector isEqualToString:action.selector] ) {
+				if ( [action.objects[0] isEqualToString:prevAction.objects[0]] )
+					return;
+				break;
+			}
+
 			BOOL dup = [_delegate undoAction:action duplicatesPreviousAction:prevAction];
 			if ( dup ) {
 				// don't bother registering this action
@@ -257,7 +264,6 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 			}
 		}
 	}
-#endif
 
 	[self willChangeValueForKey:@"canUndo"];
 	[self willChangeValueForKey:@"canRedo"];
@@ -284,6 +290,8 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 - (void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
 {
 	assert(target);
+	DbgAssert( [target respondsToSelector:selector] );
+
 	UndoAction * action = [[UndoAction alloc] init];
 	action.target = target;
 	action.selector = NSStringFromSelector(selector);

@@ -8,14 +8,9 @@
 
 #import <sqlite3.h>
 
+#import "DLog.h"
 #import "Database.h"
 #import "OsmObjects.h"
-
-#if DEBUG
-#define DbgAssert(x)	assert(x)
-#else
-#define DbgAssert(x)	(void)0
-#endif
 
 @implementation Database
 

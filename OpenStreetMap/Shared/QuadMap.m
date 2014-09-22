@@ -372,7 +372,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 				NSData * from = [NSData dataWithBytes:&fromBox length:sizeof fromBox];
 				[undo registerUndoWithTarget:self selector:@selector(updateMemberBoxed:toBox:fromBox:undo:) objects:@[member,from,to,undo]];
 			} else {
-				[undo registerUndoWithTarget:self selector:@selector(removeMember:member:undo:) objects:@[member,undo]];
+				[undo registerUndoWithTarget:self selector:@selector(removeMember:undo:) objects:@[member,undo]];
 			}
 		}
 	} else {

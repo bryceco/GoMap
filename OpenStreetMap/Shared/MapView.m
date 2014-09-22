@@ -1750,8 +1750,8 @@ NSString * ActionTitle( NSInteger action )
 				// join first to last
 				[_editorLayer addNode:start toWay:way atIndex:nextIndex];
 				_editorLayer.selectedWay = way;
-				_editorLayer.selectedNode = start;
-				[self placePushpinAtPoint:s object:start];
+				_editorLayer.selectedNode = nil;
+				[self placePushpinAtPoint:s object:way];
 				return;
 			}
 		}

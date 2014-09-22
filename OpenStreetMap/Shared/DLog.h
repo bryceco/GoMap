@@ -12,7 +12,8 @@
 #if defined(DEBUG)
 #import "mach/mach.h"
 
-#define DLog(...) NSLog( __VA_ARGS__ )
+#define DLog(...)		NSLog( __VA_ARGS__ )
+#define DbgAssert(x)	assert(x)
 
 static double MemoryUsedMB(void)
 {
@@ -23,7 +24,9 @@ static double MemoryUsedMB(void)
 }
 
 #else
-#define DLog(...)
-#endif
 
+#define DLog(...)		(void)0
+#define DbgAssert(x)	(void)0
+
+#endif
 #endif

@@ -86,6 +86,19 @@
 		}
 	}
 
+	if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"userDidPreviousUpload"] ) {
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+		UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Commit", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+			[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userDidPreviousUpload"];
+			[self commit:nil];
+		}];
+		[alert addAction:cancelAction];
+		[alert addAction:okAction];
+		[self presentViewController:alert animated:YES completion:nil];
+		return;
+	}
+
 	_mapData.credentialsUserName = appDelegate.userName;
 	_mapData.credentialsPassword = appDelegate.userPassword;
 

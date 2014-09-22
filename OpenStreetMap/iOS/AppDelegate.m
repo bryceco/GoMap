@@ -36,6 +36,7 @@
 	NSString * prevVersion = [defaults objectForKey:@"appVersion"];
 	if ( ![prevVersion isEqualToString:self.appVersion] ) {
 		NSLog(@"Upgrade!");
+		_isAppUpgrade = YES;
 	}
 	[defaults setObject:self.appVersion forKey:@"appVersion"];
 
