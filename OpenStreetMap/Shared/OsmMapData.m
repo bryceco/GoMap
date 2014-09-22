@@ -70,8 +70,36 @@
 		_undoManager	= [UndoManager new];
 
 		_undoManager.delegate = self;
+
+		[self setupPeriodicSaveTimer];
 	}
 	return self;
+}
+
+-(void)dealloc
+{
+	[_periodicSaveTimer invalidate];
+}
+
+-(void)setupPeriodicSaveTimer
+{
+	__weak OsmMapData * weakSelf = self;
+	[_undoManager addChangeCallback:^{
+		OsmMapData * myself = weakSelf;
+		if ( myself == nil )
+			return;
+		if ( myself->_periodicSaveTimer == nil ) {
+			myself->_periodicSaveTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:myself selector:@selector(periodicSave:) userInfo:nil repeats:YES];
+		}
+		myself->_periodicSaveNeeded = YES;
+	}];
+}
+-(void)periodicSave:(NSTimer *)timer
+{
+	if ( _periodicSaveNeeded ) {
+		_periodicSaveNeeded = NO;
+		[self save];
+	}
 }
 
 
@@ -1590,6 +1618,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 			_undoManager.delegate = self;
 
+			[self setupPeriodicSaveTimer];
+
 			if ( _nodes == nil || _ways == nil || _relations == nil || _undoManager == nil || _spatial == nil ) {
 				self = nil;
 			} else {
@@ -1895,6 +1925,8 @@ static NSMutableSet * allArchiveClasses = nil;
 #endif
 	t = CACurrentMediaTime() - t;
 	DLog(@"archive save %ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, t);
+
+	_periodicSaveNeeded = NO;
 }
 
 -(instancetype)initWithCachedData:(EditorMapLayer *)editorMapLayerForArchive

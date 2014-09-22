@@ -61,6 +61,8 @@ extern NSString * OsmValueForBoolean( BOOL b );
 	QuadMap				*	_region;	// currently downloaded region
 	QuadMap				*	_spatial;	// spatial index of osm data
 	UndoManager			*	_undoManager;
+	NSTimer				*	_periodicSaveTimer;
+	BOOL					_periodicSaveNeeded;
 }
 
 @property (copy,nonatomic)	NSString *	credentialsUserName;
