@@ -55,6 +55,7 @@ typedef enum {
 -(void)enumerateWithBlock:(void (^)(QuadBox * quad))block;
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 
+-(void)updateMember:(OsmBaseObject *)member fromBox:(OSMRect)bbox undo:(UndoManager *)undo;
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 -(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 

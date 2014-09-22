@@ -20,6 +20,12 @@
 @property (strong,nonatomic)	NSInvocation *	invocation;
 @end
 
+
+@protocol UndoManagerDelegate <NSObject>
+-(BOOL)undoAction:(UndoAction *)newAction duplicatesPreviousAction:(UndoAction *)prevAction;
+@end
+
+
 typedef void(^UndoManagerChangeCallback)(void);
 
 @interface UndoManager : NSObject <NSCoding>
@@ -41,6 +47,7 @@ typedef void(^UndoManagerChangeCallback)(void);
 
 @property (strong,nonatomic) void (^commentCallback)(BOOL undo,NSArray * comments);
 @property (strong,nonatomic) NSData * (^locationCallback)();
+@property (weak,nonatomic)	id<UndoManagerDelegate> delegate;
 
 @property (readonly) BOOL isUndoing;
 @property (readonly) BOOL isRedoing;

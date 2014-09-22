@@ -9,6 +9,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 
+#import "UndoManager.h"
 #import "VectorMath.h"
 
 @class EditorMapLayer;
@@ -21,7 +22,6 @@
 @class OsmWay;
 @class QuadBox;
 @class QuadMap;
-@class UndoManager;
 
 
 BOOL IsOsmBooleanTrue( NSString * value );
@@ -50,7 +50,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 
 
 
-@interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate>
+@interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate, UndoManagerDelegate>
 {
 	NSString			*	_parserCurrentElementText;
 	NSMutableArray		*	_parserStack;

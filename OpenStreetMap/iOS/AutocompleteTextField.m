@@ -18,28 +18,10 @@
 
 @implementation AutocompleteTextFieldDelegate
 
-#if 0
-- (BOOL)respondsToSelector:(SEL)aSelector
+-(void)dealloc
 {
-	if ( aSelector == @selector(textFieldShouldBeginEditing:) )
-		return [_realDelegate respondsToSelector:aSelector];
-	if ( aSelector == @selector(textFieldDidBeginEditing:) )
-		return [_realDelegate respondsToSelector:aSelector];
-	if ( aSelector == @selector(textFieldShouldEndEditing:) )
-		return [_realDelegate respondsToSelector:aSelector];
-	if ( aSelector == @selector(textFieldDidEndEditing:) )
-		return YES || [_realDelegate respondsToSelector:aSelector];
-	if ( aSelector == @selector(textFieldShouldClear:) )
-		return YES || [_realDelegate respondsToSelector:aSelector];
-	if ( aSelector == @selector(textFieldShouldReturn:) )
-		return [_realDelegate respondsToSelector:aSelector];
-	if ( aSelector == @selector(textField:shouldChangeCharactersInRange:replacementString:) )
-		return YES || [_realDelegate respondsToSelector:aSelector];
-
-	return NO;
+	_realDelegate = nil;
 }
-#endif
-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
 	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldBeginEditing:)])
@@ -66,19 +48,11 @@
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-#if 1
 	BOOL result = [_realDelegate respondsToSelector:@selector(textField:textFieldShouldClear:)] ? [_realDelegate textFieldShouldClear:textField] : YES;
 	if ( result ) {
 		[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:@""];
 	}
 	return result;
-#else
-	[_owner performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
-
-	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldClear:)])
-		return [_realDelegate textFieldShouldClear:textField];
-	return YES;
-#endif
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -88,20 +62,12 @@
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-#if 1
 	BOOL result = [_realDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)] ? [_realDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string] : YES;
 	if ( result ) {
 		NSString * newString = [self.owner.text stringByReplacingCharactersInRange:range withString:string];
 		[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:newString];
 	}
 	return result;
-#else
-	[_owner performSelector:@selector(updateAutocomplete) withObject:nil afterDelay:0.0];
-
-	if ( [_realDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)])
-		return [_realDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string];
-	return YES;
-#endif
 }
 
 @end
@@ -117,7 +83,8 @@ static const CGFloat GradientHeight = 20.0;
 {
 	self = [super initWithCoder:coder];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)   name:UIKeyboardWillShowNotification object:nil];
+//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:)   name:UIKeyboardDidShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
 	_myDelegate = [AutocompleteTextFieldDelegate new];
@@ -125,6 +92,12 @@ static const CGFloat GradientHeight = 20.0;
 	super.delegate = _myDelegate;
 	
 	return self;
+}
+
+-(void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	_myDelegate = nil;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -182,6 +155,14 @@ static const CGFloat GradientHeight = 20.0;
 	if ( self.editing && _filteredCompletions.count ) {
 		[self updateAutocomplete];
 	}
+}
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+#if 0
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self updateAutocompleteForString:@""];
+	});
+#endif
 }
 - (void) keyboardWillChange:(NSNotification *)nsNotification
 {
@@ -321,6 +302,8 @@ static const CGFloat GradientHeight = 20.0;
 
 - (void)updateAutocompleteForString:(NSString *)text
 {
+	if ( [text isEqualToString:@" "] )
+		text = @"";
 	// filter completion list by current text
 	if ( text.length ) {
 		_filteredCompletions = [_allCompletions filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * object, NSDictionary *bindings) {

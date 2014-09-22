@@ -54,6 +54,11 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
     return self;
 }
 
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@ %@ (%@) %ld", [super description], _target, _selector, _objects, (long)_group];
+}
+
 -(void)performAction
 {
 	if ( _selector ) {
@@ -236,6 +241,24 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 {
 	action.group = _groupingStack.count ? [_groupingStack.lastObject integerValue] : self.runLoopCounter;
 
+#if DEBUG
+	// check if we can ignore this undo action
+	if ( !_isUndoing && !_isRedoing && [self.delegate respondsToSelector:@selector(undoAction:duplicatesPreviousAction:)] ) {
+		NSArray * stack = _undoStack;
+		NSInteger group = action.group;
+		for ( NSInteger index = stack.count-1; index >= 0; --index ) {
+			UndoAction * prevAction = stack[ index ];
+			if ( prevAction.group != group )
+				break;
+			BOOL dup = [_delegate undoAction:action duplicatesPreviousAction:prevAction];
+			if ( dup ) {
+				// don't bother registering this action
+				return;
+			}
+		}
+	}
+#endif
+
 	[self willChangeValueForKey:@"canUndo"];
 	[self willChangeValueForKey:@"canRedo"];
 	
@@ -254,6 +277,8 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	for ( UndoManagerChangeCallback callback in _observerList ) {
 		callback();
 	}
+
+	NSLog(@"undo stack size = %ld", (long)_undoStack.count);
 }
 
 - (void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects

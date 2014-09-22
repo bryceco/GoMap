@@ -68,6 +68,8 @@
 		_region			= [QuadMap new];
 		_spatial		= [QuadMap new];
 		_undoManager	= [UndoManager new];
+
+		_undoManager.delegate = self;
 	}
 	return self;
 }
@@ -364,9 +366,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index
 {
 	[_undoManager registerUndoComment:NSLocalizedString(@"add node to way",nil)];
-	[_spatial removeMember:way undo:_undoManager];
+	OSMRect origBox = way.boundingBox;
 	[way addNode:node atIndex:index undo:_undoManager];
-	[_spatial addMember:way undo:_undoManager];
+	[_spatial updateMember:way fromBox:origBox undo:_undoManager];
 }
 -(void)deleteNodeInWay:(OsmWay *)way index:(NSInteger)index
 {
@@ -374,12 +376,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	OsmNode * node = way.nodes[ index ];
 	assert( node.wayCount > 0 );
 
-	[_spatial removeMember:way undo:_undoManager];
+	OSMRect bbox = way.boundingBox;
 	[way removeNodeAtIndex:index undo:_undoManager];
 	// if removing the node leads to 2 identical nodes being consecutive delete one of them as well
 	while ( index > 0 && index < way.nodes.count && way.nodes[index-1] == way.nodes[index] )
 		[way removeNodeAtIndex:index undo:_undoManager];
-	[_spatial addMember:way undo:_undoManager];
+	[_spatial updateMember:way fromBox:bbox undo:_undoManager];
 
 	if ( node.wayCount == 0 ) {
 		[self deleteNode:node];
@@ -388,27 +390,27 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node inWay:(OsmWay *)way
 {
 	[_undoManager registerUndoComment:NSLocalizedString(@"move",nil)];
-	[_spatial removeMember:node undo:_undoManager];
+	OSMRect bbox = node.boundingBox;
 	if ( way ) {
 		[self incrementModifyCount:way];
 	}
 	[node setLongitude:longitude latitude:latitude undo:_undoManager];
-	[_spatial addMember:node undo:_undoManager];
+	[_spatial updateMember:node fromBox:bbox undo:_undoManager];
 }
 
 -(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index
 {
 	[_undoManager registerUndoComment:NSLocalizedString(@"add object to relation",nil)];
-	[_spatial removeMember:relation undo:_undoManager];
+	OSMRect bbox = relation.boundingBox;
 	[relation addMember:member atIndex:index undo:_undoManager];
-	[_spatial addMember:relation undo:_undoManager];
+	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
 }
 -(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index
 {
 	[_undoManager registerUndoComment:NSLocalizedString(@"delete object from relation",nil)];
-	[_spatial removeMember:relation undo:_undoManager];
+	OSMRect bbox = relation.boundingBox;
 	[relation removeMemberAtIndex:index undo:_undoManager];
-	[_spatial addMember:relation undo:_undoManager];
+	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
 }
 
 
@@ -475,6 +477,26 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	_undoManager.locationCallback = callback;
 }
 
+-(BOOL)undoAction:(UndoAction *)newAction duplicatesPreviousAction:(UndoAction *)prevAction
+{
+	if ( newAction.target != prevAction.target )
+		return NO;
+	if ( ![newAction.selector isEqualToString:prevAction.selector] )
+		return NO;
+	// same target and selector
+	if ( [newAction.selector isEqualToString:@"setLongitude:latitude:undo:"] ) {
+		return YES;
+	}
+	if ( [newAction.selector isEqualToString:@"doComment:location:"] ) {
+		return YES;
+	}
+	if ( [newAction.selector isEqualToString:@"setSelectedRelation:way:node:"] ) {
+		return	newAction.objects[0] == prevAction.objects[0] &&
+				newAction.objects[1] == prevAction.objects[1] &&
+				newAction.objects[2] == prevAction.objects[2];
+	}
+	return NO;
+}
 
 
 
@@ -806,9 +828,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[newNodes addObject:node];
 			} else if ( current.version < node.version ) {
 				// already exists, so do an in-place update
-				[_spatial removeMember:current undo:nil];
+				OSMRect bbox = current.boundingBox;
 				[current serverUpdateInPlace:node];
-				[_spatial addMember:current undo:nil];
+				[_spatial updateMember:current fromBox:bbox undo:nil];
 				[newNodes addObject:node];
 			}
 		}];
@@ -820,10 +842,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[_spatial addMember:way undo:nil];
 				[newWays addObject:way];
 			} else if ( current.version < way.version ) {
-				[_spatial removeMember:current undo:nil];
+				OSMRect bbox = current.boundingBox;
 				[current serverUpdateInPlace:way];
 				[current resolveToMapData:self];
-				[_spatial addMember:current undo:nil];
+				[_spatial updateMember:current fromBox:bbox undo:nil];
 				[newWays addObject:way];
 			}
 		}];
@@ -833,17 +855,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[_relations setObject:relation forKey:key];
 				[_spatial addMember:relation undo:nil];
 			} else if ( current.version < relation.version ) {
-				[_spatial removeMember:current undo:nil];
+				OSMRect bbox = current.boundingBox;
 				[current serverUpdateInPlace:relation];
-				[_spatial addMember:current undo:nil];
+				[_spatial updateMember:current fromBox:bbox undo:nil];
 			}
 		}];
 
 		// all relations, including old ones, need to be resolved against new objects
 		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
-			[_spatial removeMember:relation undo:nil];
+			OSMRect bbox = relation.boundingBox;
 			[relation resolveToMapData:self];
-			[_spatial addMember:relation undo:nil];
+			[_spatial updateMember:relation fromBox:bbox undo:nil];
 		}];
 
 
@@ -1568,6 +1590,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			_region			= [coder decodeObjectForKey:@"region"];
 			_spatial		= [coder decodeObjectForKey:@"spatial"];
 			_undoManager	= [coder decodeObjectForKey:@"undoManager"];
+
+			_undoManager.delegate = self;
 
 			if ( _nodes == nil || _ways == nil || _relations == nil || _undoManager == nil || _spatial == nil ) {
 				self = nil;

@@ -1369,7 +1369,7 @@ NSString * ActionTitle( NSInteger action )
 		[alertView show];
 	}
 
-	[self setNeedsDisplay];
+	[self.editorLayer setNeedsDisplay];
 	[self refreshPushpinText];
 }
 
