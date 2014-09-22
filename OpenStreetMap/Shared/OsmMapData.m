@@ -89,18 +89,15 @@
 		if ( myself == nil )
 			return;
 		if ( myself->_periodicSaveTimer == nil ) {
-			myself->_periodicSaveTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:myself selector:@selector(periodicSave:) userInfo:nil repeats:YES];
+			myself->_periodicSaveTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:myself selector:@selector(periodicSave:) userInfo:nil repeats:NO];
 		}
-		myself->_periodicSaveNeeded = YES;
 	}];
 }
 -(void)periodicSave:(NSTimer *)timer
 {
-	if ( _periodicSaveNeeded ) {
-		_periodicSaveNeeded = NO;
-		[self save];
-	}
+	[self save];	// this will also set the timer to nil
 }
+
 
 
 -(OSMRect)rootRect
@@ -660,9 +657,14 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	__block int activeRequests = 0;
 
+	CFTimeInterval t = CACurrentMediaTime();
+
 	void(^mergePartialResults)(ServerQuery * query,OsmMapData * mapData,NSError * error) = ^(ServerQuery * query,OsmMapData * mapData,NSError * error){
 		[mapView progressDecrement];
 		--activeRequests;
+		if ( activeRequests == 0 ) {
+			DLog(@"download time = %f",CACurrentMediaTime()-t);
+		}
 		//	DLog(@"merge %ld nodes, %ld ways", mapData.nodes.count, mapData.ways.count);
 		[self merge:mapData fromDownload:YES quadList:query.quadList success:(mapData && error==nil)];
 		completion( activeRequests > 0, error );
@@ -782,12 +784,26 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		double maxLon = [[attributeDict valueForKey:@"maxlon"] doubleValue];
 #endif
 		[_parserStack addObject:@"bounds"];
+
+	} else if ( [elementName isEqualToString:@"note"] ) {
+
+		// issued by Overpass API server
+		[_parserStack addObject:elementName];
+		
+	} else if ( [elementName isEqualToString:@"meta"] ) {
+
+		// issued by Overpass API server
+		[_parserStack addObject:elementName];
 		
 	} else {
 
 		DLog(@"OSM parser: Unknown tag '%@'", elementName);
+		[_parserStack addObject:elementName];
+#if 0
 		_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"OSM parser: Unknown tag '%@'", elementName]}];
 		[parser abortParsing];
+#endif
+
 	}
 }
 
@@ -1368,6 +1384,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				}
 
 				[self updateSql:sqlUpdate isUpdate:YES];
+				[self save];
 
 				NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/close", changesetID];
 				[self putRequest:url3 method:@"PUT" xml:nil completion:^(NSData *data,NSString * errorMessage) {
@@ -1926,7 +1943,8 @@ static NSMutableSet * allArchiveClasses = nil;
 	t = CACurrentMediaTime() - t;
 	DLog(@"archive save %ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, t);
 
-	_periodicSaveNeeded = NO;
+	[_periodicSaveTimer invalidate];
+	_periodicSaveTimer = nil;
 }
 
 -(instancetype)initWithCachedData:(EditorMapLayer *)editorMapLayerForArchive

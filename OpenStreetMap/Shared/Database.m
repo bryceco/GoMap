@@ -332,7 +332,6 @@
 	sqlite3_stmt * nodeStatement = NULL;
 	int rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes", -1, &nodeStatement, nil );
 	if ( rc != SQLITE_OK ) {
-		DbgAssert(NO);
 		return nil;
 	}
 
@@ -374,7 +373,6 @@
 	sqlite3_stmt * wayStatement = NULL;
 	int rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways", -1, &wayStatement, nil );
 	if ( rc != SQLITE_OK ) {
-		DbgAssert(NO);
 		return nil;
 	}
 

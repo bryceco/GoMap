@@ -31,6 +31,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 
 #if 1
 #define OSM_API_URL	@"http://api.openstreetmap.org/"
+//#define OSM_API_URL	@"http://api.openstreetmap.fr/"	// faster: 4.62 seconds compared to 7.4 for .org server
 #elif 1
 #define OSM_API_URL	@"http://api.hosm.gwhat.org/"
 #elif 0
@@ -62,7 +63,6 @@ extern NSString * OsmValueForBoolean( BOOL b );
 	QuadMap				*	_spatial;	// spatial index of osm data
 	UndoManager			*	_undoManager;
 	NSTimer				*	_periodicSaveTimer;
-	BOOL					_periodicSaveNeeded;
 }
 
 @property (copy,nonatomic)	NSString *	credentialsUserName;
