@@ -830,9 +830,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		if ( trackingLocation ) {
 			[self locateMe:nil];
 		} else {
-			[self.locationManager stopUpdatingLocation];
+			[_locationManager stopUpdatingLocation];
 #if TARGET_OS_IPHONE
-			[self.locationManager stopUpdatingHeading];
+			[_locationManager stopUpdatingHeading];
 #endif
 			[_locationBallLayer removeFromSuperlayer];
 			_locationBallLayer = nil;
@@ -896,8 +896,16 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 - (void)updateUserLocationIndicator
 {
 	if ( _locationBallLayer ) {
+		// set new position
 		CLLocationCoordinate2D coord = _locationManager.location.coordinate;
 		_locationBallLayer.position = [self viewPointForLatitude:coord.latitude longitude:coord.longitude];
+
+		// set location accuracy
+		CLLocationAccuracy meters = _locationManager.location.horizontalAccuracy;
+		CGFloat pixels = meters / [self metersPerPixel];
+		if ( pixels == 0.0 )
+			pixels = 100.0;
+		_locationBallLayer.radiusInPixels = pixels;
 	}
 }
 
@@ -914,7 +922,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 - (void)locationUpdatedTo:(CLLocation *)newLocation
 {
-	//	DLog(@"updating with %@",_locationManager.location);
+	// check if we moved an appreciable distance
+	double delta = hypot( newLocation.coordinate.latitude - _currentLocation.coordinate.latitude, newLocation.coordinate.longitude - _currentLocation.coordinate.longitude);
+	delta *= MetersPerDegree( newLocation.coordinate.latitude );
+	if ( delta < 0.1 && fabs(newLocation.horizontalAccuracy - _currentLocation.horizontalAccuracy) < 1.0 )
+		return;
+	_currentLocation = [newLocation copy];
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
@@ -1424,7 +1437,7 @@ NSString * ActionTitle( NSInteger action )
 
 - (void)updateEditControl
 {
-	BOOL show = (_pushpinView || _editorLayer.selectedWay || _editorLayer.selectedNode) && !_editorLayer.selectedRelation;
+	BOOL show = _pushpinView || _editorLayer.selectedWay || _editorLayer.selectedNode || _editorLayer.selectedRelation;
 	_editControl.hidden = !show;
 	if ( show ) {
 		if ( _editorLayer.selectedPrimary == nil ) {
@@ -1434,7 +1447,10 @@ NSString * ActionTitle( NSInteger action )
 			else
 				self.editControlActions = @[ @(ACTION_EDITTAGS) ];
 		} else {
-			self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
+			if ( _editorLayer.selectedPrimary.isRelation )
+				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
+			else
+				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
 		}
 		[_editControl removeAllSegments];
 		for ( NSNumber * action in _editControlActions ) {

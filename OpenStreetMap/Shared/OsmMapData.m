@@ -657,13 +657,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	__block int activeRequests = 0;
 
-	CFTimeInterval t = CACurrentMediaTime();
-
 	void(^mergePartialResults)(ServerQuery * query,OsmMapData * mapData,NSError * error) = ^(ServerQuery * query,OsmMapData * mapData,NSError * error){
 		[mapView progressDecrement];
 		--activeRequests;
 		if ( activeRequests == 0 ) {
-			DLog(@"download time = %f",CACurrentMediaTime()-t);
 		}
 		//	DLog(@"merge %ld nodes, %ld ways", mapData.nodes.count, mapData.ways.count);
 		[self merge:mapData fromDownload:YES quadList:query.quadList success:(mapData && error==nil)];

@@ -107,6 +107,9 @@ typedef enum _ViewOverlayMask {
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
 
 	NSTimer							*	_inertiaTimer;		// for adding inertia to map panning
+
+	CLLocationManager				*	_locationManager;
+	CLLocation						*	_currentLocation;
 }
 
 #if TARGET_OS_IPHONE
@@ -135,7 +138,6 @@ typedef enum _ViewOverlayMask {
 @property (readonly,nonatomic)	NSArray				*	backgroundLayers;
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
-@property (strong,nonatomic)	CLLocationManager			*	locationManager;
 @property (readonly,nonatomic)	OSMRect							viewportLongitudeLatitude;
 @property (readonly,nonatomic)	CGFloat							mouseLongitude;
 @property (readonly,nonatomic)	CGFloat							mouseLatitude;

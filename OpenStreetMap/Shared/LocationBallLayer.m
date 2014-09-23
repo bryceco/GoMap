@@ -14,12 +14,15 @@
 @synthesize showHeading = _showHeading;
 @synthesize heading = _heading;
 @synthesize headingAccuracy	= _headingAccuracy;
+@synthesize radiusInPixels = _radiusInPixels;
 
 - (id)init
 {
 	self = [super init];
 	if ( self ) {
 		self.frame = CGRectMake(0, 0, 16, 16);
+
+		_radiusInPixels = 25.0;
 
 		self.actions = @{
 						 @"onOrderIn"	: [NSNull null],
@@ -31,38 +34,22 @@
 						 @"transform"	: [NSNull null],
 						 };
 
-		CAShapeLayer * ring = [CAShapeLayer layer];
-		CGFloat startRadius		= 5;
-		CGFloat finishRadius	= 25;
-		CGMutablePathRef startPath = CGPathCreateMutable();
-		CGPathAddEllipseInRect( startPath, NULL, CGRectMake(-startRadius, -startRadius, 2*startRadius, 2*startRadius));
-
-		CGMutablePathRef finishPath = CGPathCreateMutable();
-		CGPathAddEllipseInRect( finishPath, NULL, CGRectMake(-finishRadius, -finishRadius, 2*finishRadius, 2*finishRadius));
+		_ringLayer = [CAShapeLayer layer];
 #if TARGET_OS_IPHONE
-		ring.fillColor		= UIColor.clearColor.CGColor;
-		ring.strokeColor	= [UIColor colorWithRed:0.5 green:0.5 blue:1.0 alpha:1.0].CGColor;
+		_ringLayer.fillColor		= UIColor.clearColor.CGColor;
+		_ringLayer.strokeColor	= [UIColor colorWithRed:0.5 green:0.5 blue:1.0 alpha:1.0].CGColor;
 #else
-		ring.fillColor		= [NSColor colorWithCalibratedRed:0.8 green:0.8 blue:1.0 alpha:0.4].CGColor;
-		ring.strokeColor	= [NSColor colorWithCalibratedRed:0.5 green:0.5 blue:1.0 alpha:1.0].CGColor;
+		_ringLayer.fillColor		= [NSColor colorWithCalibratedRed:0.8 green:0.8 blue:1.0 alpha:0.4].CGColor;
+		_ringLayer.strokeColor	= [NSColor colorWithCalibratedRed:0.5 green:0.5 blue:1.0 alpha:1.0].CGColor;
 #endif
-		ring.lineWidth		= 2.0;
-		ring.frame			= self.bounds;
-		ring.position		= CGPointMake(16,16);
+		_ringLayer.lineWidth		= 2.0;
+		_ringLayer.frame			= self.bounds;
+		_ringLayer.position		= CGPointMake(16,16);
 
-		CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"path"];
-		anim.duration		= 2.0;
-		anim.fromValue		= (__bridge id)startPath;
-		anim.toValue		= (__bridge id)finishPath;
-		anim.removedOnCompletion = NO;
-		anim.fillMode		= kCAFillModeForwards;
-		anim.repeatCount	= HUGE_VALF;
+		CABasicAnimation * animation = [self ringAnimationWithRadius:100];
 
-		CGPathRelease(startPath);
-		CGPathRelease(finishPath);
-
-		[ring addAnimation:anim forKey:nil];
-		[self addSublayer:ring];
+		[_ringLayer addAnimation:animation forKey:@"ring"];
+		[self addSublayer:_ringLayer];
 
 		CALayer * imageLayer = [CALayer layer];
 		NSImage * image = [NSImage imageNamed:@"BlueBall"];
@@ -75,6 +62,29 @@
 		[self addSublayer:imageLayer];
 	}
 	return self;
+}
+
+-(CABasicAnimation *)ringAnimationWithRadius:(CGFloat)radius
+{
+	CGFloat startRadius		= 5;
+	CGFloat finishRadius	= radius;
+	CGMutablePathRef startPath = CGPathCreateMutable();
+	CGPathAddEllipseInRect( startPath, NULL, CGRectMake(-startRadius, -startRadius, 2*startRadius, 2*startRadius));
+
+	CGMutablePathRef finishPath = CGPathCreateMutable();
+	CGPathAddEllipseInRect( finishPath, NULL, CGRectMake(-finishRadius, -finishRadius, 2*finishRadius, 2*finishRadius));
+	CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"path"];
+	anim.duration		= 2.0;
+	anim.fromValue		= (__bridge id)startPath;
+	anim.toValue		= (__bridge id)finishPath;
+	anim.removedOnCompletion = NO;
+	anim.fillMode		= kCAFillModeForwards;
+	anim.repeatCount	= HUGE_VALF;
+
+	CGPathRelease(startPath);
+	CGPathRelease(finishPath);
+
+	return anim;
 }
 
 
@@ -98,7 +108,8 @@
 			[self addSublayer:_headingLayer];
 		}
 
-		CGFloat radius = 40;
+		// draw heading
+		CGFloat radius = 40.0;
 		CGMutablePathRef path = CGPathCreateMutable();
 		CGPathAddArc(path, NULL, 0.0, 0.0, radius, _heading - _headingAccuracy, _heading + _headingAccuracy, NO);
 		CGPathAddLineToPoint(path, NULL, 0, 0);
@@ -163,6 +174,15 @@
 	if ( _headingAccuracy != headingAccuracy ) {
 		_headingAccuracy = headingAccuracy;
 		[self setNeedsLayout];
+	}
+}
+
+-(void)setRadiusInPixels:(CGFloat)radiusInPixels
+{
+	if ( _radiusInPixels != radiusInPixels ) {
+		_radiusInPixels = radiusInPixels;
+		CABasicAnimation * animation = [self ringAnimationWithRadius:_radiusInPixels];
+		[_ringLayer addAnimation:animation forKey:@"ring"];
 	}
 }
 
