@@ -1341,7 +1341,9 @@ NSString * ActionTitle( NSInteger action )
 			error = NSLocalizedString(@"Not implemented",nil);
 			break;
 		case ACTION_RECT:
-			if ( ! [_editorLayer.mapData orthogonalizeWay:_editorLayer.selectedWay] )
+			if ( !OSMRectContainsRect( self.viewportLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) )
+				error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
+			else if ( ! [_editorLayer.mapData orthogonalizeWay:_editorLayer.selectedWay] )
 				error = NSLocalizedString(@"The way is not sufficiently rectangular",nil);
 			break;
 		case ACTION_REVERSE:
@@ -1361,7 +1363,9 @@ NSString * ActionTitle( NSInteger action )
 				error = NSLocalizedString(@"Cannot split way",nil);
 			break;
 		case ACTION_STRAIGHTEN:
-			if ( ! [_editorLayer.mapData straightenWay:_editorLayer.selectedWay] )
+			if ( !OSMRectContainsRect( self.viewportLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) )
+				error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
+			else if ( ! [_editorLayer.mapData straightenWay:_editorLayer.selectedWay] )
 				error = NSLocalizedString(@"The way is not sufficiently straight",nil);
 			break;
 		case ACTION_EDITTAGS:
