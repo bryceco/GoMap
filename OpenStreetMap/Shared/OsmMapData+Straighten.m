@@ -316,13 +316,10 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	} else {
 
-		// duplicate common node since it ends up in both halves
-		CLLocationCoordinate2D loc = { node.lat, node.lon };
-		OsmNode * newNode = [self createNodeAtLocation:loc];
-		[self setTags:node.tags forObject:newNode];
-		[self addNode:newNode toWay:wayB atIndex:0];
+		// place common node in new way
+		[self addNode:node toWay:wayB atIndex:0];
 
-		// place remaining nodes in 2nd way
+		// move remaining nodes to 2nd way
 		NSInteger idx = [wayA.nodes indexOfObject:node] + 1;
 		while ( idx < wayA.nodes.count ) {
 			[self addNode:wayA.nodes[idx] toWay:wayB atIndex:wayB.nodes.count];

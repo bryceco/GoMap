@@ -91,13 +91,13 @@ NSString * OsmValueForBoolean( BOOL b )
 
 -(BOOL)isCoastline
 {
-	if ( !self.isRelation && _relations.count == 0 )
-		return NO;
 	NSString * natural = _tags[@"natural"];
 	if ( natural ) {
 		if ( [natural isEqualToString:@"coastline"] )
 			return YES;
 		if ( [natural isEqualToString:@"water"] ) {
+			if ( !self.isRelation && _relations.count == 0 )
+				return NO;	// its a lake or something
 			return YES;
 		}
 	}

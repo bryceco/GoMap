@@ -178,6 +178,7 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 		}
 
 		// remove empty nodes on straight sections
+		// * deleting nodes that are referenced by non-downloaded ways could case data loss
 		for (NSInteger i = count-1; i >= 0; i--) {
 			OsmNode * node = way.nodes[i];
 

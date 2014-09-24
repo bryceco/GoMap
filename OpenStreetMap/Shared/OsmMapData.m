@@ -1381,7 +1381,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				}
 
 				[self updateSql:sqlUpdate isUpdate:YES];
-				[self save];
 
 				NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/close", changesetID];
 				[self putRequest:url3 method:@"PUT" xml:nil completion:^(NSData *data,NSString * errorMessage) {
@@ -1883,6 +1882,7 @@ static NSMutableSet * allArchiveClasses = nil;
 	[db saveNodes:saveNodes saveWays:saveWays deleteNodes:deleteNodes deleteWays:deleteWays isUpdate:(BOOL)isUpdate];
 	t = CACurrentMediaTime() - t;
 	DLog(@"sql save %ld nodes, %ld ways, time = %f", (long)saveNodes.count, (long)saveWays.count, t);
+	[self save];
 #endif
 }
 

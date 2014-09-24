@@ -13,11 +13,10 @@
 
 
 @interface UndoAction : NSObject <NSCoding>
-@property (copy,nonatomic)		NSString	*	selector;
-@property (strong,nonatomic)	id				target;
-@property (strong,nonatomic)	NSArray		*	objects;
+@property (readonly,nonatomic)	NSString	*	selector;
+@property (readonly,nonatomic)	id				target;
+@property (readonly,nonatomic)	NSArray		*	objects;
 @property (assign)				NSInteger		group;
-@property (strong,nonatomic)	NSInvocation *	invocation;
 @end
 
 
@@ -61,7 +60,6 @@ typedef void(^UndoManagerChangeCallback)(void);
 
 - (void)registerUndoComment:(NSString *)comment;
 - (void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
-- (id)registerUndoWithInvocationTarget:(id)target;
 
 -(void)registerUndo:(UndoAction *)action;
 -(void)undo;

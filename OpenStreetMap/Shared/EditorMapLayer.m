@@ -77,7 +77,7 @@ const CGFloat WayHighlightRadius = 6.0;
 			t = CACurrentMediaTime() - t;
 #if TARGET_OS_IPHONE
 			if ( _mapData && t > 10.0 ) {
-				NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times. You may want to clear the cache (under Settings) to improve performance.",nil);
+				NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times. You may want to clear the cache (under Display settings) to improve performance.",nil);
 				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 				[alertView show];
 			}

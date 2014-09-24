@@ -22,35 +22,35 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 @implementation UndoAction
 
+-(instancetype)initWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
+{
+	DbgAssert( target && selector );
+	self = [super init];
+	if ( self ) {
+		_target = target;
+		_selector = NSStringFromSelector(selector);
+		_objects = objects;
+	}
+	return self;
+}
+
+
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-	if ( [coder allowsKeyedCoding] ) {
-		[coder encodeObject:_target		forKey:@"target"];
-		[coder encodeObject:_selector	forKey:@"selector"];
-		[coder encodeObject:_objects	forKey:@"objects"];
-		[coder encodeInteger:_group		forKey:@"group"];
-	} else {
-		[coder encodeObject:_target];
-		[coder encodeObject:_selector];
-		[coder encodeObject:_objects];
-		[coder encodeBytes:&_group length:sizeof _group];
-	}
+	DbgAssert(_target);
+	[coder encodeObject:_target		forKey:@"target"];
+	[coder encodeObject:_selector	forKey:@"selector"];
+	[coder encodeObject:_objects	forKey:@"objects"];
+	[coder encodeInteger:_group		forKey:@"group"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
-	if ( [coder allowsKeyedCoding] ) {
-		_target		= [coder decodeObjectForKey:@"target"];
-		_selector	= [coder decodeObjectForKey:@"selector"];
-		_objects	= [coder decodeObjectForKey:@"objects"];
-		_group		= [coder decodeIntegerForKey:@"group"];
-	} else {
-		_target		= [coder decodeObject];
-		_selector	= [coder decodeObject];
-		_objects	= [coder decodeObject];
-		_group		= *(NSInteger *)[coder decodeBytesWithReturnedLength:NULL];
-	}
+	_target		= [coder decodeObjectForKey:@"target"];
+	_selector	= [coder decodeObjectForKey:@"selector"];
+	_objects	= [coder decodeObjectForKey:@"objects"];
+	_group		= [coder decodeIntegerForKey:@"group"];
     return self;
 }
 
@@ -120,48 +120,10 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 		return;
 	}
 	
-	if ( _invocation ) {
-		[_invocation invoke];
-		return;
-	}
-	
 	// unknown action type
 	assert(NO);
 }
 
-@end
-
-
-@interface UndoProxy : NSProxy
-{
-	id				_target;
-	UndoManager	*	_undoManager;
-}
-+ (UndoProxy *)undoProxyWithTarget:(id)target manager:(UndoManager *)manager;
-@end
-@implementation UndoProxy
-- (id)initWithTarget:(id)aTarget manager:(UndoManager *)manager
-{
-	_target = aTarget;
-	_undoManager = manager;
-	return self;
-}
-+ (UndoProxy *)undoProxyWithTarget:(id)target manager:(UndoManager *)manager
-{
-	return [[UndoProxy alloc] initWithTarget:target manager:manager];
-}
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
-{
-	return [_target methodSignatureForSelector:selector];
-}
-- (void)forwardInvocation:(NSInvocation *)invocation
-{
-	[invocation setTarget:_target];
-	UndoAction * action = [[UndoAction alloc] init];
-	action.target		= _target;
-	action.invocation	= invocation;
-	[_undoManager registerUndo:action];
-}
 @end
 
 
@@ -292,11 +254,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	assert(target);
 	DbgAssert( [target respondsToSelector:selector] );
 
-	UndoAction * action = [[UndoAction alloc] init];
-	action.target = target;
-	action.selector = NSStringFromSelector(selector);
-	action.objects = objects;
-	assert( action.selector );
+	UndoAction * action = [[UndoAction alloc] initWithTarget:target selector:selector objects:objects];
 	[self registerUndo:action];
 }
 
@@ -310,11 +268,6 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 {
 	NSData * location = self.locationCallback();
 	[self registerUndoWithTarget:self selector:@selector(doComment:location:) objects:@[comment,location]];
-}
-
--(id)registerUndoWithInvocationTarget:(id)target
-{
-	return [UndoProxy undoProxyWithTarget:target manager:self];
 }
 
 +(void)doActionGroupFromStack:(NSMutableArray *)stack
