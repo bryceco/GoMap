@@ -70,10 +70,12 @@ const CGFloat WayHighlightRadius = 6.0;
 		// observe changes to geometry
 		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
 
+		[OsmMapData setEditorMapLayerForArchive:self];
+
 		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 		if ( !appDelegate.isAppUpgrade ) {
 			CFTimeInterval t = CACurrentMediaTime();
-			_mapData = [[OsmMapData alloc] initWithCachedData:self];
+			_mapData = [[OsmMapData alloc] initWithCachedData];
 			t = CACurrentMediaTime() - t;
 #if TARGET_OS_IPHONE
 			if ( _mapData && t > 10.0 ) {
@@ -131,7 +133,6 @@ const CGFloat WayHighlightRadius = 6.0;
 
 - (void)save
 {
-	_mapData.editorMapLayerForArchive = self;
 	[_mapData save];
 }
 

@@ -10,10 +10,11 @@
 #define OpenStreetMap_DLog_h
 
 #if defined(DEBUG)
+#import <Foundation/Foundation.h>
 #import "mach/mach.h"
 
 #define DLog(...)		NSLog( __VA_ARGS__ )
-#define DbgAssert(x)	assert(x)
+#define DbgAssert(x)	NSAssert((x),@"unspecified")
 
 static double MemoryUsedMB(void)
 {

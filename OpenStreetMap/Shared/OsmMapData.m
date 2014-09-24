@@ -57,6 +57,21 @@
 
 @implementation OsmMapData
 
+static EditorMapLayer * g_EditorMapLayerForArchive = nil;
+
++(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer
+{
+	DbgAssert(editorLayer);
+	g_EditorMapLayerForArchive = editorLayer;
+
+}
++(EditorMapLayer *)editorMapLayerForArchive
+{
+	DbgAssert(g_EditorMapLayerForArchive);
+	return g_EditorMapLayerForArchive;
+}
+
+
 -(id)init
 {
 	self = [super init];
@@ -1820,31 +1835,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return nil;
 }
 
-#if DEBUG
-static NSMutableSet * allArchiveClasses = nil;
-#endif
-
 -(id)archiver:(NSKeyedArchiver *)archiver willEncodeObject:(id)object
 {
-#if 0 && DEBUG
-	if ( allArchiveClasses == nil ) {
-		allArchiveClasses = [NSMutableSet new];
-	}
-	[allArchiveClasses addObject:NSStringFromClass([object class])];
-#endif
-
 	if ( [object isKindOfClass:[OsmMapData class]] ) {
 		return self;
 	}
 	if ( [object isKindOfClass:[EditorMapLayer class]] ) {
-		return self.editorMapLayerForArchive;
+		DbgAssert( g_EditorMapLayerForArchive );
+		return g_EditorMapLayerForArchive;
 	}
 	return object;
 }
 -(id)unarchiver:(NSKeyedUnarchiver *)unarchiver didDecodeObject:(id)object
 {
 	if ( [object isKindOfClass:[EditorMapLayer class]] ) {
-		return self.editorMapLayerForArchive;
+		DbgAssert( g_EditorMapLayerForArchive );
+		return g_EditorMapLayerForArchive;
 	}
 	return object;
 }
@@ -1860,14 +1866,6 @@ static NSMutableSet * allArchiveClasses = nil;
 	[archiver encodeObject:self forKey:@"OsmMapData"];
 	[archiver finishEncoding];
 	[data writeToFile:path atomically:YES];
-
-#if DEBUG
-	for ( id obj in [allArchiveClasses.allObjects sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
-		return [obj1 compare:obj2];
-	}] ) {
-		DLog(@"archived %@",obj);
-	}
-#endif
 
 	BOOL ok = data  &&  [data writeToFile:path atomically:YES];
 	return ok;
@@ -1916,11 +1914,11 @@ static NSMutableSet * allArchiveClasses = nil;
 	CFTimeInterval t = CACurrentMediaTime();
 #if USE_SQL
 	// save dirty data and relations
+	DbgAssert(g_EditorMapLayerForArchive);
 	OsmMapData * modified = [self modifiedObjects];
 	modified->_region = _region;
 	QuadBox * root = _spatial.rootQuad;
 	modified->_spatial = _spatial;
-	modified.editorMapLayerForArchive = self.editorMapLayerForArchive;
 	_spatial.rootQuad = nil;
 	[modified saveArchive];
 	_spatial.rootQuad = root;
@@ -1944,7 +1942,7 @@ static NSMutableSet * allArchiveClasses = nil;
 	_periodicSaveTimer = nil;
 }
 
--(instancetype)initWithCachedData:(EditorMapLayer *)editorMapLayerForArchive
+-(instancetype)initWithCachedData
 {
 	NSString * path = [self pathToArchiveFile];
 	NSData * data = [NSData dataWithContentsOfFile:path];
@@ -1952,7 +1950,6 @@ static NSMutableSet * allArchiveClasses = nil;
 		return nil;
 	}
 	@try {
-		self.editorMapLayerForArchive = editorMapLayerForArchive;	// so we can update editor references during unarchive
 		NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 		unarchiver.delegate = self;
 		self = [unarchiver decodeObjectForKey:@"OsmMapData"];

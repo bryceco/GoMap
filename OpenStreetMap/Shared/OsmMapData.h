@@ -67,9 +67,11 @@ extern NSString * OsmValueForBoolean( BOOL b );
 
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
-@property (weak,nonatomic)	EditorMapLayer	*	editorMapLayerForArchive; // only used when saving/restoring undo manager
 
--(id)initWithCachedData:(EditorMapLayer *)editorMapLayerForArchive;
++(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer; // only used when saving/restoring undo manager
++(EditorMapLayer *)editorMapLayerForArchive; // only used when saving/restoring undo manager
+
+-(id)initWithCachedData;
 -(void)save;
 
 -(void)purgeHard;

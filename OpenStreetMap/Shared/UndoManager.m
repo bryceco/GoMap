@@ -51,6 +51,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	_selector	= [coder decodeObjectForKey:@"selector"];
 	_objects	= [coder decodeObjectForKey:@"objects"];
 	_group		= [coder decodeIntegerForKey:@"group"];
+	DbgAssert(_target);
     return self;
 }
 
