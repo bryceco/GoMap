@@ -135,7 +135,7 @@ typedef enum _ViewOverlayMask {
 // overlays
 @property (readonly,nonatomic)	MercatorTileLayer	*	locatorLayer;
 @property (readonly,nonatomic)	MercatorTileLayer	*	gpsTraceLayer;
-@property (readonly,nonatomic)	NSArray				*	backgroundLayers;
+@property (readonly,nonatomic)	NSArray				*	backgroundLayers;	// list of all layers that need to be resized, etc.
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
 @property (readonly,nonatomic)	OSMRect							viewportLongitudeLatitude;

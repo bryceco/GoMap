@@ -71,6 +71,10 @@ CGSize SizeForImage( NSImage * image )
 }
 
 
+@interface MapView ()
+@property (strong,nonatomic) IBOutlet UIView	*	statusBarBackground;
+@end
+
 @implementation MapView
 
 @synthesize aerialLayer			= _aerialLayer;
@@ -234,6 +238,10 @@ CGSize SizeForImage( NSImage * image )
 		_locationManager.activityType = CLActivityTypeFitness;
 #endif
 	}
+
+	// white background for status bar
+	_statusBarBackground.backgroundColor = NSColor.whiteColor;
+	_statusBarBackground.alpha = 0.25;
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
 								@"zoom"				: @(nan("")),
@@ -481,6 +489,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_editorLayerGL.position = center;
 	_gpxLayer.bounds = bounds;
 	_gpxLayer.position = center;
+
+	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
 
 	[CATransaction commit];
 }

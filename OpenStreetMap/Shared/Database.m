@@ -12,6 +12,42 @@
 #import "Database.h"
 #import "OsmObjects.h"
 
+#if DEBUG && 0
+#define USE_RTREE	1
+#else
+#define USEE_RTREE	0
+#endif
+
+
+#if USE_RTREE
+typedef enum {
+	OSM_TYPE_NODE		= 1,
+	OSM_TYPE_WAY		= 2,
+	OSM_TYPE_RELATION	= 3
+} OSM_TYPE;
+static inline OSM_TYPE TypeForObject( OsmBaseObject * object )
+{
+	return object.isNode ? OSM_TYPE_NODE : object.isWay ? OSM_TYPE_WAY : OSM_TYPE_RELATION;
+}
+static inline OsmIdentifier TaggedIdent( OsmIdentifier ident, OSM_TYPE type )
+{
+	return ident | ((uint64_t)type << 62);
+}
+static inline OsmIdentifier TaggedObjectIdent( OsmBaseObject * object )
+{
+	return TaggedIdent( object.ident.longLongValue, TypeForObject(object) );
+}
+static inline OsmIdentifier UntaggedIdent( OsmIdentifier ident )
+{
+	return ident & 0x3FFFFFFFFFFFFFFF;
+}
+static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
+{
+	return (OSM_TYPE)((ident >> 62) & 3);
+}
+#endif
+
+
 @implementation Database
 
 - (NSString *)databasePath
@@ -23,6 +59,7 @@
 							stringByAppendingPathComponent:bundleName]
 						   stringByAppendingPathComponent:@"data.sqlite3"];
 		[[NSFileManager defaultManager] createDirectoryAtPath:path.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:NULL error:NULL];
+		DLog(@"sql = %@",path);
 		return path;
 	}
 	return nil;
@@ -47,6 +84,14 @@
 
 -(void)dealloc
 {
+#if USE_RTREE
+	if ( _spatialInsert ) {
+		sqlite3_finalize(_spatialInsert);
+	}
+	if ( _spatialDelete ) {
+		sqlite3_finalize(_spatialDelete);
+	}
+#endif
 	if ( _db ) {
 		sqlite3_close(_db);
 	}
@@ -60,6 +105,9 @@
 	rc = sqlite3_exec(_db, "drop table way_tags;",		0, 0, 0);
 	rc = sqlite3_exec(_db, "drop table way_nodes;",		0, 0, 0);
 	rc = sqlite3_exec(_db, "drop table ways;",			0, 0, 0);
+#if USE_RTREE
+	rc = sqlite3_exec(_db, "drop table spatial;",		0, 0, 0);
+#endif
 }
 
 -(void)createTables
@@ -114,8 +162,70 @@
 					  "FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);",
 					  0, 0, 0);
 	DbgAssert(rc == SQLITE_OK);
+
+#if USE_RTREE
+	rc = sqlite3_exec(_db, "create virtual table if not exists spatial using rtree("
+					  "ident	int8		primary key	not null,"
+					  "minX		double		not null,"
+					  "maxX		double		not null,"
+					  "minY		double		not null,"
+					  "maxY		double		not null"
+					  ");",
+					  0, 0, 0);
+	DbgAssert(rc == SQLITE_OK);
+#endif
 }
 
+#if USE_RTREE
+-(BOOL)deleteSpatial:(OsmBaseObject *)object
+{
+	int rc;
+	if ( _spatialDelete == NULL ) {
+		rc = sqlite3_prepare_v2( _db, "INSERT INTO spatial (ident) VALUES (?,?);", -1, &_spatialDelete, nil );
+		if ( rc != SQLITE_OK ) {
+			DbgAssert(NO);
+			return NO;
+		}
+	}
+
+	rc = sqlite3_reset(_spatialDelete);
+	rc = sqlite3_clear_bindings(_spatialDelete);
+	rc = sqlite3_bind_int64(_spatialDelete,	1, TaggedObjectIdent(object));
+	rc = sqlite3_step(_spatialDelete);
+	return rc == SQLITE_DONE;
+}
+
+-(BOOL)addToSpatial:(OsmBaseObject *)object
+{
+	int rc;
+	if ( _spatialInsert == NULL ) {
+		rc = sqlite3_prepare_v2( _db, "INSERT INTO spatial (ident,minX, maxX,minY, maxY) VALUES (?,?,?,?,?);", -1, &_spatialInsert, nil );
+		if ( rc != SQLITE_OK ) {
+			DbgAssert(NO);
+			return NO;
+		}
+	}
+
+	OSMRect bbox = object.boundingBox;
+	rc = sqlite3_reset(_spatialInsert);
+	rc = sqlite3_clear_bindings(_spatialInsert);
+	rc = sqlite3_bind_int64(_spatialInsert,		1, TaggedObjectIdent(object));
+	rc = sqlite3_bind_double(_spatialInsert,	2, bbox.origin.x);
+	rc = sqlite3_bind_double(_spatialInsert,	3, bbox.origin.x+bbox.size.width);
+	rc = sqlite3_bind_double(_spatialInsert,	4, bbox.origin.y);
+	rc = sqlite3_bind_double(_spatialInsert,	5, bbox.origin.y+bbox.size.height);
+retry:
+	rc = sqlite3_step(_spatialInsert);
+	if ( rc == SQLITE_CONSTRAINT ) {
+		// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
+		[self deleteSpatial:object];
+		goto retry;
+	}
+
+	DbgAssert(rc == SQLITE_DONE);
+	return rc == SQLITE_DONE;
+}
+#endif
 
 -(BOOL)saveNodes:(NSArray *)nodes
 {
@@ -171,6 +281,9 @@
 				DbgAssert(NO);
 			}
 		}];
+#if USE_RTREE
+		[self addToSpatial:node];
+#endif
 	}
 
 	sqlite3_finalize(nodeStatement);
@@ -247,6 +360,9 @@
 			rc2 = sqlite3_step(nodeStatement);
 			DbgAssert(rc2 == SQLITE_DONE);
 		}
+#if USE_RTREE
+		[self addToSpatial:way];
+#endif
 	}
 
 	sqlite3_finalize(wayStatement);

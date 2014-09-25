@@ -1401,21 +1401,23 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	CGContextStrokePath(ctx);
 	CGPathRelease(selectionPath);
 
-	if ( nodes ) {
-		// draw nodes of way
-		for ( OsmNode * node in nodes ) {
-			OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
-			if ( node == _selectedNode ) {
-				CGContextSetRGBStrokeColor(ctx, 1,0,0, 1);	// red
-			} else {
-				CGContextSetRGBStrokeColor(ctx, 0,1,0, 1);	// green
-			}
-			CGContextBeginPath(ctx);
-			CGContextSetLineWidth(ctx, 2);
-			CGRect rect = CGRectMake(pt.x - WayHighlightRadius, pt.y - WayHighlightRadius, 2*WayHighlightRadius, 2*WayHighlightRadius);
-			CGContextAddEllipseInRect(ctx, rect);
-			CGContextStrokePath(ctx);
+	// draw nodes of way
+	for ( OsmNode * node in nodes ) {
+		OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+		if ( node == _selectedNode ) {
+			CGContextSetRGBStrokeColor(ctx, 1,0,0, 1);	// red
+		} else {
+			CGContextSetRGBStrokeColor(ctx, 0,1,0, 1);	// green
 		}
+		CGContextBeginPath(ctx);
+		CGContextSetLineWidth(ctx, 2);
+		CGRect rect = CGRectMake(pt.x - WayHighlightRadius, pt.y - WayHighlightRadius, 2*WayHighlightRadius, 2*WayHighlightRadius);
+		if ( [node hasInterestingTags] ) {
+			CGContextAddRect(ctx, rect);
+		} else {
+			CGContextAddEllipseInRect(ctx, rect);
+		}
+		CGContextStrokePath(ctx);
 	}
 	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
 }

@@ -114,9 +114,9 @@
                                             <segue destination="XIv-Uv-W3O" kind="modal" id="CvQ-Su-F4k"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
+                                    <view alpha="0.24999999999999967" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
                                         </accessibility>
@@ -169,18 +169,13 @@
                                     <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="26" id="PTj-zH-igC"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="trailing" secondItem="GTv-eT-l7q" secondAttribute="trailing" id="T60-8I-jog"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="11" id="VKx-lR-ejS"/>
-                                    <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="g4c-aL-FjW" secondAttribute="bottom" priority="1" constant="8" symbolic="YES" id="VdS-iU-4ux"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="9t5-wq-j1u" secondAttribute="bottom" constant="55" id="WDm-wY-ec4"/>
-                                    <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="26" id="blu-IX-YQW"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" id="cAR-iT-KBF"/>
                                     <constraint firstAttribute="trailing" secondItem="TnL-YC-BCg" secondAttribute="trailing" constant="12" id="hAx-Am-c4P"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="trailing" secondItem="fss-Ag-fKJ" secondAttribute="trailing" id="lPN-o8-UjX"/>
-                                    <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="o0n-ED-1vg"/>
                                     <constraint firstAttribute="centerX" secondItem="zrW-uc-hfQ" secondAttribute="centerX" constant="-12.5" id="oyJ-uQ-7Yp"/>
                                     <constraint firstAttribute="trailing" secondItem="I03-YM-uHY" secondAttribute="trailing" constant="20" symbolic="YES" id="rel-sj-ohw"/>
                                     <constraint firstAttribute="centerX" secondItem="N5Q-nV-TPG" secondAttribute="centerX" id="uqA-n8-R0J"/>
-                                    <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="28" id="yVK-0X-myy"/>
-                                    <constraint firstItem="N5Q-nV-TPG" firstAttribute="top" secondItem="g4c-aL-FjW" secondAttribute="bottom" constant="7" id="zae-S9-XDQ"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="_bingMapsLogo" destination="2Ka-IT-DQC" id="y5a-cy-cWA"/>
@@ -188,6 +183,7 @@
                                     <outlet property="_progressIndicator" destination="Zh9-uC-62t" id="ITW-gB-RtP"/>
                                     <outlet property="editControl" destination="zrW-uc-hfQ" id="0UY-5Y-O1k"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
+                                    <outlet property="statusBarBackground" destination="g4c-aL-FjW" id="YBa-Op-9me"/>
                                     <outlet property="zoomToEditLabel" destination="N5Q-nV-TPG" id="Sfg-zh-7aq"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
                                 </connections>
@@ -196,10 +192,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="N5Q-nV-TPG" firstAttribute="top" secondItem="46u-9o-e4m" secondAttribute="bottom" constant="7" id="APS-6e-gMO"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="trailing" secondItem="j5Z-hB-i8A" secondAttribute="trailing" id="H27-5O-hII"/>
+                            <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="46u-9o-e4m" secondAttribute="bottom" constant="8" id="NYU-xa-AsV"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="ZUW-Zx-W4g"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="jfH-he-UaM"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="bottom" secondItem="j5Z-hB-i8A" secondAttribute="bottom" id="wYw-UC-WD7"/>
+                            <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="46u-9o-e4m" secondAttribute="bottom" constant="6" id="yqX-1V-qf3"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="0bZ-QH-3ce" appends="YES" id="qRj-Ec-HPc"/>
@@ -212,7 +211,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="_redoButton" destination="GBB-jJ-Cve" id="o8q-85-BLI"/>
-                        <outlet property="_statusBarBackground" destination="g4c-aL-FjW" id="PlL-Xh-DPy"/>
                         <outlet property="_toolbar" destination="GTv-eT-l7q" id="sfg-93-w4E"/>
                         <outlet property="_undoButton" destination="in0-IO-OB6" id="zx7-uA-FJ2"/>
                         <outlet property="_uploadButton" destination="ma4-oI-tBL" id="wVI-LB-h9R"/>
@@ -4462,10 +4460,10 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="KuK-gp-RBs"/>
+        <segue reference="OEI-9h-7td"/>
         <segue reference="hnZ-Fq-F0U"/>
         <segue reference="FTo-kL-oAC"/>
-        <segue reference="ZKT-be-rhK"/>
+        <segue reference="KuK-gp-RBs"/>
         <segue reference="g2g-Jn-Tdv"/>
     </inferredMetricsTieBreakers>
 </document>

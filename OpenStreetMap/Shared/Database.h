@@ -10,8 +10,11 @@
 
 @interface Database : NSObject
 {
-	NSString		*	_path;
-	struct sqlite3	*	_db;
+	NSString			*	_path;
+	struct sqlite3		*	_db;
+
+	struct sqlite3_stmt	*	_spatialInsert;
+	struct sqlite3_stmt	*	_spatialDelete;
 }
 
 -(void)dropTables;

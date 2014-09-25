@@ -45,9 +45,6 @@
 		[self updateDeleteButtonState];
 	}];
 
-	_statusBarBackground.backgroundColor = NSColor.whiteColor;
-	_statusBarBackground.alpha = 0.25;
-
 	// undo/redo buttons
 	_undoButton.enabled = self.mapView.editorLayer.mapData.canUndo;
 	_redoButton.enabled = self.mapView.editorLayer.mapData.canRedo;
