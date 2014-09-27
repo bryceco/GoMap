@@ -916,23 +916,26 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 -(OSMPoint)pointForLat:(double)lat lon:(double)lon
 {
 	OSMPoint pt = [MapView mapPointForLatitude:lat longitude:lon];
+
+#if 0
+	OSMPoint p2 = [_mapView screenPointFromMapPoint:pt];
+#else
 	OSMTransform transform = _mapView.mapTransform;
-#if 1
 	OSMPoint p2 = { pt.x - 128, pt.y - 128 };
 	p2 = OSMPointApplyAffineTransform( p2, transform );
-	pt.x = p2.x;
-	pt.y = p2.y;
-#else
-	pt.x = (pt.x-128)*transform.a + transform.tx;
-	pt.y = (pt.y-128)*transform.a + transform.ty;
 #endif
 
+	pt.x = p2.x;
+	pt.y = p2.y;
+
+#if 1
 	// modulus
 	double denom = 256*transform.a;
 	if ( pt.x > denom/2 )
 		pt.x -= denom;
 	else if ( pt.x < -denom/2 )
 		pt.x += denom;
+#endif
 
 	return pt;
 }
@@ -2239,7 +2242,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 + (void)osmHitTestEnumerate:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
-	CLLocationCoordinate2D location = [mapView longitudeLatitudeForViewPoint:point];
+	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point];
 	OSMRect viewCoord = [mapView viewportLongitudeLatitude];
 	OSMSize pixelsPerDegree = { mapView.bounds.size.width / viewCoord.size.width, mapView.bounds.size.height / viewCoord.size.height };
 
@@ -2427,7 +2430,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	CGPoint pt = [_mapView viewPointForLatitude:node.lat longitude:node.lon];
 	pt.x += delta.x;
 	pt.y -= delta.y;
-	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForViewPoint:pt];
+	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt];
 	[_mapData setLongitude:loc.longitude latitude:loc.latitude forNode:node inWay:_selectedWay];
 
 	[self setNeedsDisplay];
@@ -2438,7 +2441,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	[self saveSelection];
 
-	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForViewPoint:point];
+	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:point];
 	OsmNode * node = [_mapData createNodeAtLocation:loc];
 	[self setNeedsDisplay];
 	return node;

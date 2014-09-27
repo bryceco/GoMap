@@ -57,6 +57,12 @@ static inline CGPoint CGPointFromOSMPoint( OSMPoint pt )
 	return p;
 }
 
+static inline CGRect CGRectFromOSMRect( OSMRect rc )
+{
+	CGRect r = { (CGFloat)rc.origin.x, (CGFloat)rc.origin.y, (CGFloat)rc.size.width, (CGFloat)rc.size.height };
+	return r;
+}
+
 static inline OSMRect OSMRectZero()
 {
 	OSMRect rc = { 0 };
@@ -206,6 +212,12 @@ static inline OSMTransform OSMTransformIdentity(void)
 static inline BOOL OSMTransformEqual( OSMTransform t1, OSMTransform t2 )
 {
 	return memcmp( &t1, &t2, sizeof t1) == 0;
+}
+
+static inline OSMTransform OSMTransformMakeTranslation( double dx, double dy )
+{
+	OSMTransform t = { 1, 0, 0, 1, dx, dy };
+	return t;
 }
 
 static inline OSMTransform OSMTransformTranslate( OSMTransform transform, double dx, double dy )

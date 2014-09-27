@@ -168,7 +168,7 @@
 	// save start location for pushpin
 	if ( _mapView.pushpinView ) {
 		CGPoint pt = _mapView.pushpinView.arrowPoint;
-		_pushPinLocation = [_mapView longitudeLatitudeForViewPoint:pt];
+		_pushPinLocation = [_mapView longitudeLatitudeForScreenPoint:pt];
 	}
 }
 

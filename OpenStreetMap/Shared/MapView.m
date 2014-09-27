@@ -641,6 +641,166 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 #pragma mark Coordinate Transforms
 
+// point is 0..256
++(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point
+{
+	double x = point.x / 256;
+	double y = point.y / 256;
+	x = x - floor(x);	// modulus
+	y = y - floor(y);
+	x = x - 0.5;
+	y = y - 0.5;
+
+	OSMPoint loc;
+	loc.y = 90 - 360 * atan(exp(y * 2 * M_PI)) / M_PI;
+	loc.x = 360 * x;
+	return loc;
+}
++(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
+{
+	double x = (longitude + 180) / 360;
+	double sinLatitude = sin(latitude * M_PI / 180);
+	double y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * M_PI);
+	OSMPoint point = { x * 256, y * 256 };
+	return point;
+}
+
+-(OSMTransform)screenFromMapTransform
+{
+	OSMTransform t1 = OSMTransformMakeTranslation(128, 128);
+	OSMTransform t = OSMTransformConcat( t1, _mapTransform );
+	return t;
+}
+
+-(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point
+{
+	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
+
+	OSMTransform t = [self screenFromMapTransform];
+	OSMTransform ti = OSMTransformInvert( t );
+	point = OSMPointMake( point.x - screenRect.size.width/2, point.y - screenRect.size.height/2);
+	point = OSMPointApplyAffineTransform( point, ti );
+	return point;
+}
+
+-(OSMPoint)screenPointFromMapPoint:(OSMPoint)point
+{
+	OSMTransform t = [self screenFromMapTransform];
+	point = OSMPointApplyAffineTransform( point, t );
+	return point;
+}
+
+// get view into 256 map
+-(OSMRect)mapRectFromScreenRect
+{
+	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
+	if ( _mapTransform.a == 0 && _mapTransform.d == 0 )
+		return OSMRectZero();
+
+	OSMPoint p1 = [self mapPointFromScreenPoint:OSMPointMake(screenRect.origin.x,screenRect.origin.y)];
+	OSMPoint p2 = [self mapPointFromScreenPoint:OSMPointMake(screenRect.origin.x+screenRect.size.width, screenRect.origin.y+screenRect.size.height)];
+	OSMRect rect3 = OSMRectMake(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
+
+#if 0
+	OSMTransform ti = OSMTransformInvert( _mapTransform );
+	OSMRect mapRect = screenRect;
+	mapRect = OSMRectOffset( mapRect, -mapRect.size.width/2, -mapRect.size.height/2);
+	mapRect = OSMRectApplyAffineTransform( mapRect, ti );
+	mapRect = OSMRectOffset(mapRect, -128, -128);
+#endif
+
+#if 0
+	OSMRect mapRect2;
+	mapRect2.origin.x = screenRect.origin.x - (t.tx + screenRect.size.width/2) / t.a  - 128;
+	mapRect2.origin.y = screenRect.origin.y - (t.ty + screenRect.size.height/2) / t.a - 128;
+	mapRect2.size.width  = viewRect.size.width  / t.a;
+	mapRect2.size.height = viewRect.size.height / t.a;
+#endif
+
+#if 0
+	// DLog(@"view %@ -> map %@", NSStringFromCGRect(viewRect), NSStringFromCGRect(CGRectFromOSMRect(mapRect2)) );
+	DLog(@"%@ = %@", NSStringFromCGRect(CGRectFromOSMRect(mapRect)), NSStringFromCGRect(CGRectFromOSMRect(rect3)) );
+#endif
+
+	return rect3;
+}
+
+-(OSMRect)screenRectFromMapRect:(OSMRect)rect
+{
+#if 1
+	OSMPoint p1 = [self screenPointFromMapPoint:OSMPointMake(rect.origin.x, rect.origin.y)];
+	OSMPoint p2 = [self screenPointFromMapPoint:OSMPointMake(rect.origin.x+rect.size.width, rect.origin.y+rect.size.height)];
+	OSMRect rect2 = OSMRectMake(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
+#endif
+
+#if 0
+	// using single matrix
+	OSMTransform t = [self screenFromMapTransform];
+	OSMRect rect1 = OSMRectApplyAffineTransform(rect, t);
+#endif
+
+	return rect2;
+}
+
+-(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point
+{
+	OSMPoint mapPoint = [self mapPointFromScreenPoint:OSMPointMake(point.x, point.y)];
+	OSMPoint coord = [MapView longitudeLatitudeFromMapPoint:mapPoint];
+	CLLocationCoordinate2D loc = { coord.y, coord.x };
+	return loc;
+}
+
+-(double)metersPerPixel
+{
+	// compute meters/pixel
+	OSMRect viewCoord = [self viewportLongitudeLatitude];
+	if ( viewCoord.size.width <= 0.0 || viewCoord.size.height <= 0.0 )
+		return 0.0;
+	const double earthRadius = 6378137.0; // meters
+	const double circumference = 2 * M_PI * earthRadius;
+	double metersPerPixel = (viewCoord.size.height / 360 * circumference) / self.bounds.size.height;
+	if ( isnan(metersPerPixel) )
+		return 0.0;
+	
+	return metersPerPixel;
+}
+
+-(OSMRect)viewportLongitudeLatitude
+{
+	OSMRect rc = [self mapRectFromScreenRect];
+	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
+	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
+	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
+	northeast = [MapView longitudeLatitudeFromMapPoint:northeast];
+	rc.origin.x = southwest.x;
+	rc.origin.y = southwest.y;
+	rc.size.width = northeast.x - southwest.x;
+	rc.size.height = northeast.y - southwest.y;
+	if ( rc.size.width < 0 ) // crossed 180 degrees longitude
+		rc.size.width += 360;
+	return rc;
+}
+
+-(CGPoint)viewPointForLatitude:(double)latitude longitude:(double)longitude
+{
+	CGRect bounds = self.bounds;
+	OSMRect rc = [self mapRectFromScreenRect];
+	OSMPoint pt = [MapView mapPointForLatitude:latitude longitude:longitude];
+	pt.x -= rc.origin.x;
+	pt.y -= rc.origin.y;
+	while ( pt.x >= 128.0 )
+		pt.x -= 256.0;
+	while ( pt.y >= 128.0 )
+		pt.y -= 256.0;
+	while ( pt.x < -128.0 )
+		pt.x += 256.0;
+	while ( pt.y < -128.0 )
+		pt.y += 256.0;
+	pt.x = bounds.origin.x + pt.x/rc.size.width * bounds.size.width;
+	pt.y = bounds.origin.y + pt.y/rc.size.height * bounds.size.height;
+	return CGPointFromOSMPoint( pt );
+}
+
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees
 {
 	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
@@ -665,131 +825,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	self.mapTransform = transform;
 }
 
-// get view into 256 map
--(OSMRect)mapRectFromVisibleRect
-{
-	CGRect viewRect = self.layer.bounds;
-	OSMTransform t = self.mapTransform;
-	if ( t.a == 0 && t.d == 0 )
-		return OSMRectZero();
-
-#if 0
-	OSMTransform ti = OSMTransformInvert( t );
-	OSMRect mapRect = OSMRectFromCGRect( viewRect );
-	mapRect = OSMRectOffset( mapRect, -mapRect.size.width/2, -mapRect.size.height/2);
-	mapRect = OSMRectApplyAffineTransform( mapRect, ti );
-	mapRect = OSMRectOffset(mapRect, -128, -128);
-	return mapRect;
-#else
-	OSMRect mapRect2;
-	mapRect2.origin.x = viewRect.origin.x - (t.tx + viewRect.size.width/2) / t.a  - 128;
-	mapRect2.origin.y = viewRect.origin.y - (t.ty + viewRect.size.height/2) / t.a - 128;
-	mapRect2.size.width  = viewRect.size.width  / t.a;
-	mapRect2.size.height = viewRect.size.height / t.a;
-	return mapRect2;
-#endif
-
-#if 0
-	DLog(@"\n");
-	DLog(@"scale3 = %@", NSStringFromRect(mapRect) );
-#endif
-}
-
--(OSMRect)viewRectFromMapRect:(OSMRect)mapRect
-{
-	mapRect = OSMRectOffset(mapRect, 128, 128);
-	mapRect = OSMRectApplyAffineTransform( mapRect, self.mapTransform );
-	mapRect = OSMRectOffset( mapRect, mapRect.size.width/2, mapRect.size.height/2);
-	return mapRect;
-}
-
--(CLLocationCoordinate2D)longitudeLatitudeForViewPoint:(CGPoint)point
-{
-	CGRect viewRect = self.layer.bounds;
-	OSMTransform t = self.mapTransform;
-	OSMPoint mapPoint;
-	mapPoint.x = viewRect.origin.x - (t.tx + viewRect.size.width/2 - point.x) / t.a - 128;
-	mapPoint.y = viewRect.origin.y - (t.ty + viewRect.size.height/2 - point.y) / t.a - 128;
-
-	OSMPoint coord = [MapView longitudeLatitudeFromMapPoint:mapPoint];
-	CLLocationCoordinate2D loc = { coord.y, coord.x };
-	return loc;
-}
-
--(double)metersPerPixel
-{
-	// compute meters/pixel
-	OSMRect viewCoord = [self viewportLongitudeLatitude];
-	if ( viewCoord.size.width <= 0.0 || viewCoord.size.height <= 0.0 )
-		return 0.0;
-	const double earthRadius = 6378137.0; // meters
-	const double circumference = 2 * M_PI * earthRadius;
-	double metersPerPixel = (viewCoord.size.height / 360 * circumference) / self.bounds.size.height;
-	if ( isnan(metersPerPixel) )
-		return 0.0;
-	
-	return metersPerPixel;
-}
-
-
-+(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point
-{
-	double x = point.x / 256;
-	double y = point.y / 256;
-    x = x - floor(x);	// modulus
-	y = y - floor(y);
-	x = x - 0.5;
-	y = 0.5 - y;
-
-	OSMPoint loc;
-	loc.y = 90 - 360 * atan(exp(-y * 2 * M_PI)) / M_PI;
-	loc.x = 360 * x;
-	return loc;
-}
-+(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
-{
-	double x = (longitude + 180) / 360;
-	double sinLatitude = sin(latitude * M_PI / 180);
-	double y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * M_PI);
-	OSMPoint point = { x * 256, y * 256 };
-	return point;
-}
-
--(OSMRect)viewportLongitudeLatitude
-{
-	OSMRect rc = [self mapRectFromVisibleRect];
-	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
-	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
-	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
-	northeast = [MapView longitudeLatitudeFromMapPoint:northeast];
-	rc.origin.x = southwest.x;
-	rc.origin.y = southwest.y;
-	rc.size.width = northeast.x - southwest.x;
-	rc.size.height = northeast.y - southwest.y;
-	if ( rc.size.width < 0 ) // crossed 180 degrees longitude
-		rc.size.width += 360;
-	return rc;
-}
-
--(CGPoint)viewPointForLatitude:(double)latitude longitude:(double)longitude
-{
-	CGRect bounds = self.bounds;
-	OSMRect rc = [self mapRectFromVisibleRect];
-	OSMPoint pt = [MapView mapPointForLatitude:latitude longitude:longitude];
-	pt.x -= rc.origin.x;
-	pt.y -= rc.origin.y;
-	while ( pt.x >= 128.0 )
-		pt.x -= 256.0;
-	while ( pt.y >= 128.0 )
-		pt.y -= 256.0;
-	while ( pt.x < -128.0 )
-		pt.x += 256.0;
-	while ( pt.y < -128.0 )
-		pt.y += 256.0;
-	pt.x = bounds.origin.x + pt.x/rc.size.width * bounds.size.width;
-	pt.y = bounds.origin.y + pt.y/rc.size.height * bounds.size.height;
-	return CGPointFromOSMPoint( pt );
-}
 
 #pragma mark Progress indicator
 
@@ -949,7 +984,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
 
 #if TARGET_OS_IPHONE
-	CLLocationCoordinate2D pp = [self longitudeLatitudeForViewPoint:_pushpinView.arrowPoint];
+	CLLocationCoordinate2D pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint];
 #endif
 
 	if ( !_userOverrodeLocationPosition ) {
@@ -1108,7 +1143,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	// save pushpinView coordinates
 	CLLocationCoordinate2D pp = { 0 };
 	if ( _pushpinView ) {
-		pp = [self longitudeLatitudeForViewPoint:_pushpinView.arrowPoint];
+		pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint];
 	}
 #endif
 
@@ -2201,7 +2236,7 @@ drop_pin:
 				OsmNode * node = (id)_editorLayer.selectedPrimary;
 				point = [self viewPointForLatitude:node.lat longitude:node.lon];
 			} else if ( _editorLayer.selectedPrimary.isWay ) {
-				CLLocationCoordinate2D latLon = [self longitudeLatitudeForViewPoint:point];
+				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point];
 				OSMPoint pt = { latLon.longitude, latLon.latitude };
 				pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
 				point = [self viewPointForLatitude:pt.y longitude:pt.x];

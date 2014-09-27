@@ -884,7 +884,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				OSMRect bbox = current.boundingBox;
 				[current serverUpdateInPlace:node];
 				[_spatial updateMember:current fromBox:bbox undo:nil];
-				[newNodes addObject:node];
+				[newNodes addObject:current];
 			}
 		}];
 		[newData->_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmWay * way,BOOL * stop){
@@ -899,7 +899,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[current serverUpdateInPlace:way];
 				[current resolveToMapData:self];
 				[_spatial updateMember:current fromBox:bbox undo:nil];
-				[newWays addObject:way];
+				[newWays addObject:current];
 			}
 		}];
 		[newData->_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){

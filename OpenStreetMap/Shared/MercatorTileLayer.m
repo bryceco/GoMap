@@ -501,7 +501,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	if ( self.hidden )
 		return;
 
-	OSMRect	rect		= [_mapView mapRectFromVisibleRect];
+	OSMRect	rect		= [_mapView mapRectFromScreenRect];
 	int32_t	zoomLevel	= [self zoomLevel];
 
 #if 0
@@ -555,8 +555,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 		int32_t tileY = (int32_t) [a[2] integerValue];
 
 		double scale = 256.0 / (1 << tileZ);
-		OSMRect rc = { (tileX - 0.5) * scale, (tileY - 0.5) * scale, scale, scale };
-		rc = [_mapView viewRectFromMapRect:rc];
+		OSMRect rc = { tileX * scale, tileY * scale, scale, scale };
+		rc = [_mapView screenRectFromMapRect:rc];
 		rc.origin.x -= 128;
 		rc.origin.y -= 128;
 
@@ -594,13 +594,13 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	}];
 }
 
-
+// Used for bulk downloading tiles for offline use
 -(NSMutableArray *)allTilesIntersectingVisibleRect
 {
 	NSArray * currentTiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_tileCacheDirectory error:NULL];
 	NSSet * currentSet = [NSSet setWithArray:currentTiles];
 
-	OSMRect	rect			= [_mapView mapRectFromVisibleRect];
+	OSMRect	rect			= [_mapView mapRectFromScreenRect];
 #if CUSTOM_TRANSFORM
 	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(_mapView.mapTransform.a))
 															 : (int32_t)floor(log2(_mapView.mapTransform.a));

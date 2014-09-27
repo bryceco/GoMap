@@ -214,7 +214,8 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 -(void)setConstructed
 {
-	assert(_user);
+	if ( _user == nil )
+		_user = @"";	// some old objects don't have users attached to them
 	_constructed = YES;
 	_modifyCount = 0;
 }

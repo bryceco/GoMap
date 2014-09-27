@@ -151,8 +151,8 @@ typedef enum _ViewOverlayMask {
 -(void)updateBingButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
 
--(OSMRect)mapRectFromVisibleRect;
--(OSMRect)viewRectFromMapRect:(OSMRect)mapRect;
+-(OSMRect)mapRectFromScreenRect;
+-(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
 
 -(void)progressIncrement:(BOOL)animate;
 -(void)progressDecrement;
@@ -167,10 +167,11 @@ typedef enum _ViewOverlayMask {
 +(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
 +(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
 -(CGPoint)viewPointForLatitude:(double)latitude longitude:(double)longitude;
+-(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
 -(double)metersPerPixel;
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;
 
--(CLLocationCoordinate2D)longitudeLatitudeForViewPoint:(CGPoint)point;
+-(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point;
 
 -(IBAction)locateMe:(id)sender;
 -(IBAction)duplicateSelectedObject:(id)sender;
