@@ -198,7 +198,7 @@ const double MinIconSizeInMeters = 2.0;
 	if ( self.hidden )
 		return;
 
-	OSMRect box = [_mapView viewportLongitudeLatitude];
+	OSMRect box = [_mapView screenLongitudeLatitude];
 	if ( box.size.height <= 0 || box.size.width <= 0 )
 		return;
 
@@ -1710,8 +1710,8 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		assert(NO);
 		return NO;
 	}
-#if DEBUG
-	assert( CGRectContainsPoint(self.bounds,CGPointMake(pt.x, pt.y)) );
+#if DEBUG && 0
+	NSAssert( CGRectContainsPoint(self.bounds,CGPointMake(pt.x, pt.y)), nil );
 #endif
 	pt.x = round(pt.x);	// performance optimization when drawing
 	pt.y = round(pt.y);
@@ -1866,7 +1866,7 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 
 -(NSMutableArray *)getVisibleObjects
 {
-	OSMRect box = [_mapView viewportLongitudeLatitude];
+	OSMRect box = [_mapView screenLongitudeLatitude];
 	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_mapData.wayCount];
 	NSMutableSet * relations = [NSMutableSet new];
 	[_mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
@@ -2223,7 +2223,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
 	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point];
-	OSMRect viewCoord = [mapView viewportLongitudeLatitude];
+	OSMRect viewCoord = [mapView screenLongitudeLatitude];
 	OSMSize pixelsPerDegree = { mapView.bounds.size.width / viewCoord.size.width, mapView.bounds.size.height / viewCoord.size.height };
 
 	OSMSize maxDegrees = { WayHitTestRadius / pixelsPerDegree.width, WayHitTestRadius / pixelsPerDegree.height };
@@ -2407,7 +2407,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	[self saveSelection];
 
-	CGPoint pt = [_mapView viewPointForLatitude:node.lat longitude:node.lon];
+	CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 	pt.x += delta.x;
 	pt.y -= delta.y;
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt];

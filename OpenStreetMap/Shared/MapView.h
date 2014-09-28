@@ -110,6 +110,8 @@ typedef enum _ViewOverlayMask {
 
 	CLLocationManager				*	_locationManager;
 	CLLocation						*	_currentLocation;
+
+	CGFloat								_rotationCurrent;
 }
 
 #if TARGET_OS_IPHONE
@@ -153,8 +155,16 @@ typedef enum _ViewOverlayMask {
 -(void)updateBingButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
 
++(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
++(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
 -(OSMRect)mapRectFromScreenRect;
+-(OSMRect)screenLongitudeLatitude;
+-(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude;
+-(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point;
 -(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
+-(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
+-(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;
+-(double)metersPerPixel;
 
 -(void)progressIncrement:(BOOL)animate;
 -(void)progressDecrement;
@@ -165,16 +175,6 @@ typedef enum _ViewOverlayMask {
 -(void)presentError:(NSError *)error flash:(BOOL)flash;
 
 -(BOOL)isLocationSpecified;
-
-+(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
-+(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
--(CGPoint)viewPointForLatitude:(double)latitude longitude:(double)longitude;
-
--(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
--(double)metersPerPixel;
--(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;
-
--(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point;
 
 -(IBAction)locateMe:(id)sender;
 -(IBAction)duplicateSelectedObject:(id)sender;

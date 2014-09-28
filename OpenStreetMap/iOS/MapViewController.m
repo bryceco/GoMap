@@ -180,7 +180,7 @@
 
 	// set new pushpin position
 	if ( _mapView.pushpinView ) {
-		_mapView.pushpinView.arrowPoint = [_mapView viewPointForLatitude:_pushPinLocation.latitude longitude:_pushPinLocation.longitude];
+		_mapView.pushpinView.arrowPoint = [_mapView screenPointForLatitude:_pushPinLocation.latitude longitude:_pushPinLocation.longitude];
 	}
 }
 

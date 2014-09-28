@@ -23,7 +23,7 @@
 
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 
-	OSMRect rect = [appDelegate.mapView viewportLongitudeLatitude];
+	OSMRect rect = [appDelegate.mapView screenLongitudeLatitude];
 	_mappers = [appDelegate.mapView.editorLayer.mapData userStatisticsForRegion:rect];
 
 	_mappers = [_mappers sortedArrayUsingComparator:^NSComparisonResult(OsmUserStatistics * s1, OsmUserStatistics * s2) {

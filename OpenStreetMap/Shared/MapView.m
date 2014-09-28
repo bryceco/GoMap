@@ -289,6 +289,8 @@ CGSize SizeForImage( NSImage * image )
 
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
 	[self addGestureRecognizer:longPress];
+	UIRotationGestureRecognizer * rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotationGesture:)];
+	[self addGestureRecognizer:rotationGesture];
 
 	if ( ![self isLocationSpecified] ) {
 		[self locateMe:nil];
@@ -706,23 +708,48 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(double)metersPerPixel
 {
 	// compute meters/pixel
-	OSMRect viewCoord = [self viewportLongitudeLatitude];
+	OSMRect viewCoord = [self screenLongitudeLatitude];
 	if ( viewCoord.size.width <= 0.0 || viewCoord.size.height <= 0.0 )
 		return 0.0;
 	const double earthRadius = 6378137.0; // meters
 	const double circumference = 2 * M_PI * earthRadius;
-	double metersPerPixel = (viewCoord.size.height / 360 * circumference) / self.bounds.size.height;
+	double metersPerPixel = (viewCoord.size.width / 360 * circumference) / self.bounds.size.width;
 	if ( isnan(metersPerPixel) )
 		return 0.0;
 	
 	return metersPerPixel;
 }
 
--(OSMRect)viewportLongitudeLatitude
+-(OSMRect)screenLongitudeLatitude
 {
+#if 1
+	OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
+	OSMPoint corners[] = {
+		rc.origin.x, rc.origin.y,
+		rc.origin.x + rc.size.width, rc.origin.y,
+		rc.origin.x + rc.size.width, rc.origin.y + rc.size.height,
+		rc.origin.x, rc.origin.y + rc.size.height
+	};
+	for ( int i = 0; i < 4; ++i ) {
+		corners[i] = [self mapPointFromScreenPoint:corners[i]];
+	}
+	double minX = corners[0].x;
+	double minY = corners[0].y;
+	double maxX = minX;
+	double maxY = minY;
+	for ( int i = 1; i < 4; ++i ) {
+		minX = MIN( minX, corners[i].x );
+		maxX = MAX( maxX, corners[i].x );
+		minY = MIN( minY, corners[i].y );
+		maxY = MAX( maxY, corners[i].y );
+	}
+	OSMPoint southwest = { minX, maxY };
+	OSMPoint northeast = { maxX, minY };
+#else
 	OSMRect rc = [self mapRectFromScreenRect];
 	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
 	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
+#endif
 	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
 	northeast = [MapView longitudeLatitudeFromMapPoint:northeast];
 	rc.origin.x = southwest.x;
@@ -734,35 +761,23 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return rc;
 }
 
--(CGPoint)viewPointForLatitude:(double)latitude longitude:(double)longitude
+-(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude
 {
-	CGRect bounds = self.bounds;
-	OSMRect rc = [self mapRectFromScreenRect];
 	OSMPoint pt = [MapView mapPointForLatitude:latitude longitude:longitude];
-	pt.x -= rc.origin.x;
-	pt.y -= rc.origin.y;
-	while ( pt.x >= 128.0 )
-		pt.x -= 256.0;
-	while ( pt.y >= 128.0 )
-		pt.y -= 256.0;
-	while ( pt.x < -128.0 )
-		pt.x += 256.0;
-	while ( pt.y < -128.0 )
-		pt.y += 256.0;
-	pt.x = bounds.origin.x + pt.x/rc.size.width * bounds.size.width;
-	pt.y = bounds.origin.y + pt.y/rc.size.height * bounds.size.height;
-	return CGPointFromOSMPoint( pt );
+	pt = [self screenPointFromMapPoint:pt];
+	return CGPointFromOSMPoint(pt);
 }
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees
 {
 	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
 	CGFloat zoom = 360 / (widthDegrees / 2);
+	CGRect rc = self.layer.bounds;
 	OSMTransform transform = { 0 };
 	transform.a = zoom;
 	transform.d = zoom;
-	transform.tx = -(point.x - 128)*zoom;
-	transform.ty = -(point.y - 128)*zoom;
+	transform.tx = -point.x*zoom + rc.size.width/2;
+	transform.ty = -point.y*zoom + rc.size.height/2;
 	self.screenFromMapTransform = transform;
 }
 
@@ -770,11 +785,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
 	CGFloat zoom = _screenFromMapTransform.a;
+	CGRect rc = self.layer.bounds;
 	OSMTransform transform = { 0 };
 	transform.a = zoom;
 	transform.d = zoom;
-	transform.tx = -(point.x - 128)*zoom;
-	transform.ty = -(point.y - 128)*zoom;
+	transform.tx = -point.x*zoom + rc.size.width/2;
+	transform.ty = -point.y*zoom + rc.size.height/2;
 	self.screenFromMapTransform = transform;
 }
 
@@ -896,7 +912,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( _locationBallLayer ) {
 		// set new position
 		CLLocationCoordinate2D coord = _locationManager.location.coordinate;
-		_locationBallLayer.position = [self viewPointForLatitude:coord.latitude longitude:coord.longitude];
+		_locationBallLayer.position = [self screenPointForLatitude:coord.latitude longitude:coord.longitude];
 
 		// set location accuracy
 		CLLocationAccuracy meters = _locationManager.location.horizontalAccuracy;
@@ -950,7 +966,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		}
 	}
 #if TARGET_OS_IPHONE
-	_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
+	_pushpinView.arrowPoint = [self screenPointForLatitude:pp.latitude longitude:pp.longitude];
 #endif
 
 	if ( _locationBallLayer == nil ) {
@@ -988,15 +1004,15 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 #if TARGET_OS_IPHONE
 	if ( _editorLayer.selectedNode ) {
-		CGPoint point = [self viewPointForLatitude:_editorLayer.selectedNode.lat longitude:_editorLayer.selectedNode.lon];
+		CGPoint point = [self screenPointForLatitude:_editorLayer.selectedNode.lat longitude:_editorLayer.selectedNode.lon];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedNode];
 	} else if ( _editorLayer.selectedWay ) {
 		OSMPoint pt = [_editorLayer.selectedWay centerPoint];
-		CGPoint point = [self viewPointForLatitude:pt.y longitude:pt.x];
+		CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	} else if (_editorLayer.selectedRelation ) {
 		OSMPoint pt = [_editorLayer.selectedRelation centerPoint];
-		CGPoint point = [self viewPointForLatitude:pt.y longitude:pt.x];
+		CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	}
 #endif
@@ -1103,7 +1119,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_screenFromMapTransform = mapTransform;
 
 	// determine if we've zoomed out enough to disable editing
-	OSMRect box = [self viewportLongitudeLatitude];
+	OSMRect box = [self screenLongitudeLatitude];
 	double area = SurfaceArea( box );
 	self.viewStateOverride = area > 10.0*1000*1000;
 
@@ -1114,7 +1130,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #if TARGET_OS_IPHONE
 	// update pushpin location
 	if ( _pushpinView ) {
-		_pushpinView.arrowPoint = [self viewPointForLatitude:pp.latitude longitude:pp.longitude];
+		_pushpinView.arrowPoint = [self screenPointForLatitude:pp.latitude longitude:pp.longitude];
 	}
 #endif
 }
@@ -1144,6 +1160,17 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	OSMTransform t = _screenFromMapTransform;
 	t = OSMTransformTranslate( t, tx, ty);
 	t = OSMTransformScale( t, ratio );
+	self.screenFromMapTransform = t;
+}
+
+-(void)rotateBy:(CGFloat)angle aroundScreenPoint:(CGPoint)zoomCenter
+{
+	if ( angle == 0.0 )
+		return;
+	OSMTransform t = self.screenFromMapTransform;
+	t = OSMTransformTranslate( t, -zoomCenter.x, -zoomCenter.y );
+	t = OSMTransformRotate( t, angle );
+	t = OSMTransformTranslate( t, zoomCenter.x, zoomCenter.y );
 	self.screenFromMapTransform = t;
 }
 
@@ -1548,10 +1575,10 @@ NSString * ActionTitle( NSInteger action )
 							if ( way.isArea ) {
 								weakSelf.editorLayer.selectedNode = nil;
 								OSMPoint center = way.centerPoint;
-								CGPoint centerPoint = [weakSelf viewPointForLatitude:center.y longitude:center.x];
+								CGPoint centerPoint = [weakSelf screenPointForLatitude:center.y longitude:center.x];
 								[weakSelf placePushpinAtPoint:centerPoint object:way];
 							} else {
-								CGPoint newPoint = [weakSelf viewPointForLatitude:hitNode.lat longitude:hitNode.lon];
+								CGPoint newPoint = [weakSelf screenPointForLatitude:hitNode.lat longitude:hitNode.lon];
 								weakSelf.editorLayer.selectedNode = (id)hit;
 								[weakSelf placePushpinAtPoint:newPoint object:hitNode];
 							}
@@ -1720,7 +1747,7 @@ NSString * ActionTitle( NSInteger action )
 		} else if ( way.nodes.count == 2 ) {
 			// create 3rd point 90 degrees from first 2
 			OsmNode * n1 = way.nodes[1-prevIndex];
-			CGPoint p1 = [self viewPointForLatitude:n1.lat longitude:n1.lon];
+			CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon];
 			CGPoint delta = { p1.x - prevPoint.x, p1.y - prevPoint.y };
 			double len = hypot( delta.x, delta.y );
 			if ( len > 100 ) {
@@ -1738,8 +1765,8 @@ NSString * ActionTitle( NSInteger action )
 			// create 4th point and beyond following angle of previous 3
 			OsmNode * n1 = prevIndex == 0 ? way.nodes[1] : way.nodes[prevIndex-1];
 			OsmNode * n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex-2];
-			CGPoint p1 = [self viewPointForLatitude:n1.lat longitude:n1.lon];
-			CGPoint p2 = [self viewPointForLatitude:n2.lat longitude:n2.lon];
+			CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon];
+			CGPoint p2 = [self screenPointForLatitude:n2.lat longitude:n2.lon];
 			OSMPoint d1 = { prevPoint.x - p1.x, prevPoint.y - p1.y };
 			OSMPoint d2 = { p1.x - p2.x, p1.y - p2.y };
 			double a1 = atan2( d1.y, d1.x );
@@ -1766,7 +1793,7 @@ NSString * ActionTitle( NSInteger action )
 
 		if ( way.nodes.count >= 2 ) {
 			OsmNode * start = prevIndex == 0 ? way.nodes.lastObject : way.nodes[0];
-			CGPoint s = [self viewPointForLatitude:start.lat longitude:start.lon];
+			CGPoint s = [self screenPointForLatitude:start.lat longitude:start.lon];
 			double d = hypot( s.x - newPoint.x, s.y - newPoint.y );
 			if ( d < 3.0 ) {
 				// join first to last
@@ -1872,7 +1899,7 @@ drop_pin:
 	CGMutablePathRef path = CGPathCreateMutable();
 	if ( object.isNode ) {
 		OsmNode * node = (id)object;
-		CGPoint center = [self viewPointForLatitude:node.lat longitude:node.lon];
+		CGPoint center = [self screenPointForLatitude:node.lat longitude:node.lon];
 		CGRect rect = CGRectMake(center.x, center.y, 0, 0);
 		rect = CGRectInset( rect, -10, -10 );
 		CGPathAddEllipseInRect(path, NULL, rect);
@@ -1881,8 +1908,8 @@ drop_pin:
 		assert( way.nodes.count >= segment+2 );
 		OsmNode * n1 = way.nodes[segment];
 		OsmNode * n2 = way.nodes[segment+1];
-		CGPoint p1 = [self viewPointForLatitude:n1.lat longitude:n1.lon];
-		CGPoint p2 = [self viewPointForLatitude:n2.lat longitude:n2.lon];
+		CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon];
+		CGPoint p2 = [self screenPointForLatitude:n2.lat longitude:n2.lon];
 		CGPathMoveToPoint(path, NULL, p1.x, p1.y);
 		CGPathAddLineToPoint(path, NULL, p2.x, p2.y);
 	} else {
@@ -1942,7 +1969,7 @@ drop_pin:
 {
 	if ( _editorLayer.selectedPrimary.isNode ) {
 		OsmNode * origNode = (id)_editorLayer.selectedPrimary;
-		CGPoint pt = [self viewPointForLatitude:origNode.lat longitude:origNode.lon];
+		CGPoint pt = [self screenPointForLatitude:origNode.lat longitude:origNode.lon];
 		pt.x += 20;
 		pt.y += 20;
 		OsmNode * newNode = [_editorLayer createNodeAtPoint:pt];
@@ -1959,7 +1986,7 @@ drop_pin:
 				[_editorLayer.mapData addNode:newWay.nodes[0] toWay:newWay atIndex:newWay.nodes.count];
 				break;
 			}
-			CGPoint pt = [self viewPointForLatitude:origNode.lat longitude:origNode.lon];
+			CGPoint pt = [self screenPointForLatitude:origNode.lat longitude:origNode.lon];
 			pt.x += 20;
 			pt.y += 20;
 			OsmNode * newNode = [_editorLayer createNodeAtPoint:pt];
@@ -2191,12 +2218,12 @@ drop_pin:
 			if ( _editorLayer.selectedPrimary.isNode ) {
 				// center on node
 				OsmNode * node = (id)_editorLayer.selectedPrimary;
-				point = [self viewPointForLatitude:node.lat longitude:node.lon];
+				point = [self screenPointForLatitude:node.lat longitude:node.lon];
 			} else if ( _editorLayer.selectedPrimary.isWay ) {
 				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point];
 				OSMPoint pt = { latLon.longitude, latLon.latitude };
 				pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
-				point = [self viewPointForLatitude:pt.y longitude:pt.x];
+				point = [self screenPointForLatitude:pt.y longitude:pt.x];
 			}
 			[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 		}
@@ -2356,6 +2383,19 @@ checkGrab:
 
 	}
 }
+
+- (IBAction)handleRotationGesture:(UIRotationGestureRecognizer *)rotationGesture
+{
+	if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
+		// ignore
+	} else {
+		CGPoint centerPoint = [rotationGesture locationInView:self];
+		CGFloat angle = rotationGesture.rotation - _rotationCurrent;
+		[self rotateBy:angle aroundScreenPoint:centerPoint];
+	}
+	_rotationCurrent = rotationGesture.rotation;
+}
+
 
 - (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
 {

@@ -132,7 +132,7 @@ static NSDictionary * ActionDictionary = nil;
 	if ( self.aerialService.metadataUrl == nil ) {
 		callback( nil, nil );
 	} else {
-		OSMRect rc = [self.mapView viewportLongitudeLatitude];
+		OSMRect rc = [self.mapView screenLongitudeLatitude];
 
 		int32_t	zoomLevel	= [self zoomLevel];
 		if ( zoomLevel > 21 )
