@@ -33,7 +33,7 @@
 
 		// observe changes to geometry
 		_mapView = mapView;
-		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
+		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 
 
 		self.opaque = YES;
@@ -63,7 +63,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ( object == _mapView && [keyPath isEqualToString:@"mapTransform"] )  {
+	if ( object == _mapView && [keyPath isEqualToString:@"screenFromMapTransform"] )  {
 		[self drawContent];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

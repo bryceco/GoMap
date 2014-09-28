@@ -661,7 +661,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		if ( ![ref isKindOfClass:[NSNumber class]] )
 			continue;
 		OsmNode * node = [mapData nodeForRef:ref];
-		assert(node);
+		NSAssert(node,nil);
 		_nodes[i] = node;
 		[node setWayCount:node.wayCount+1 undo:nil];
 	}

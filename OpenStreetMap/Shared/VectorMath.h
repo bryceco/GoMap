@@ -46,15 +46,21 @@ static inline OSMPoint OSMPointMake(double x, double y)
 	OSMPoint pt = { x, y };
 	return pt;
 }
-static inline OSMRect OSMRectMake(double x, double y, double w, double h)
+static inline OSMPoint OSMPointFromCGPoint( CGPoint pt )
 {
-	OSMRect rc = { x, y, w, h };
-	return rc;
+	OSMPoint point = { pt.x, pt.y };
+	return point;
 }
 static inline CGPoint CGPointFromOSMPoint( OSMPoint pt )
 {
 	CGPoint p = { (CGFloat)pt.x, (CGFloat)pt.y };
 	return p;
+}
+
+static inline OSMRect OSMRectMake(double x, double y, double w, double h)
+{
+	OSMRect rc = { x, y, w, h };
+	return rc;
 }
 
 static inline CGRect CGRectFromOSMRect( OSMRect rc )
@@ -222,9 +228,8 @@ static inline OSMTransform OSMTransformMakeTranslation( double dx, double dy )
 
 static inline OSMTransform OSMTransformTranslate( OSMTransform transform, double dx, double dy )
 {
-	double z = transform.a;
-	transform.tx += dx * z;
-	transform.ty += dy * z;
+	transform.tx += dx;
+	transform.ty += dy;
 	return transform;
 }
 static inline OSMTransform OSMTransformScale( OSMTransform transform, double scale )

@@ -136,7 +136,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	self.mapView.frame = self.view.bounds;
+	CGRect rc = self.view.bounds;
+	self.mapView.frame = rc;
 	[self installLongPressGestureRecognizer:YES];
 }
 

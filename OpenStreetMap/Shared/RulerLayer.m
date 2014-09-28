@@ -71,14 +71,14 @@
 }
 -(void)setMapView:(MapView *)mapView
 {
-	[_mapView removeObserver:self forKeyPath:@"mapTransform"];
+	[_mapView removeObserver:self forKeyPath:@"screenFromMapTransform"];
 	_mapView = mapView;
-	[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
+	[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ( object == _mapView && [keyPath isEqualToString:@"mapTransform"] ) {
+	if ( object == _mapView && [keyPath isEqualToString:@"screenFromMapTransform"] ) {
 		[self updateDisplay];
 	}
 }

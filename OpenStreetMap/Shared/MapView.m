@@ -83,6 +83,7 @@ CGSize SizeForImage( NSImage * image )
 @synthesize trackingLocation	= _trackingLocation;
 @synthesize pushpinView			= _pushpinView;
 @synthesize viewState			= _viewState;
+@synthesize screenFromMapTransform	= _screenFromMapTransform;
 
 
 #pragma mark initialization
@@ -200,7 +201,7 @@ CGSize SizeForImage( NSImage * image )
 			NSData * location = comment[1];
 			if ( location.length == sizeof(OSMTransform) ) {
 				OSMTransform transform = *(OSMTransform *)[location bytes];
-				self.mapTransform = transform;
+				self.screenFromMapTransform = transform;
 			} else {
 				DLog(@"bad undo comment");
 			}
@@ -274,9 +275,9 @@ CGSize SizeForImage( NSImage * image )
 		transform.d = zoom;
 		transform.tx = translateX;
 		transform.ty = translateY;
-		self.mapTransform = transform;
+		self.screenFromMapTransform = transform;
 	} else {
-		self.mapTransform = OSMTransformIdentity();
+		self.screenFromMapTransform = OSMTransformIdentity();
 	}
 
 #if 0 && DEBUG
@@ -439,13 +440,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)applicationWillTerminate :(NSNotification *)notification
 {
 	// save defaults first
-	OSMTransform transform = self.mapTransform;
-	[[NSUserDefaults standardUserDefaults] setDouble:transform.a forKey:@"zoom"];
-	[[NSUserDefaults standardUserDefaults] setDouble:transform.tx forKey:@"translateX"];
-	[[NSUserDefaults standardUserDefaults] setDouble:transform.ty forKey:@"translateY"];
+	OSMTransform transform = self.screenFromMapTransform;
+	[[NSUserDefaults standardUserDefaults] setDouble:transform.a	forKey:@"zoom"];
+	[[NSUserDefaults standardUserDefaults] setDouble:transform.tx	forKey:@"translateX"];
+	[[NSUserDefaults standardUserDefaults] setDouble:transform.ty	forKey:@"translateY"];
 
-	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState forKey:@"mapViewState"];
-	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask forKey:@"mapViewOverlaysa"];
+	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState		forKey:@"mapViewState"];
+	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask	forKey:@"mapViewOverlaysa"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -469,28 +470,16 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_rulerLayer.frame = rect;
 #endif
 
-	CGRect	bounds = self.bounds;
-	CGPoint center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-	bounds.origin.x = -center.x - 128;
-	bounds.origin.y = -center.y - 128;
 	for ( CALayer * layer in _backgroundLayers ) {
-		if ( [layer isKindOfClass:[MercatorTileLayer class]] ) {
-			layer.bounds = bounds;
-			layer.position = center;
-		}
+		layer.frame = self.layer.bounds;
 	}
 
-	bounds.origin.x = -center.x;
-	bounds.origin.y = -center.y;
-	bounds.size = self.bounds.size;
-	_editorLayer.bounds = bounds;
-	_editorLayer.position = center;
-	_editorLayerGL.bounds = bounds;
-	_editorLayerGL.position = center;
-	_gpxLayer.bounds = bounds;
-	_gpxLayer.position = center;
-
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
+
+	if ( ![self isLocationSpecified] ) {
+		OSMRect rc = OSMRectFromCGRect( self.layer.frame );
+		self.screenFromMapTransform = OSMTransformMakeTranslation( rc.origin.x+rc.size.width/2 - 128, rc.origin.y+rc.size.height/2 - 128);
+	}
 
 	[CATransaction commit];
 }
@@ -667,19 +656,17 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(OSMTransform)screenFromMapTransform
 {
-	OSMTransform t1 = OSMTransformMakeTranslation(128, 128);
-	OSMTransform t = OSMTransformConcat( t1, _mapTransform );
-	return t;
+	return _screenFromMapTransform;
+}
+-(OSMTransform)mapFromScreenTransform
+{
+	return OSMTransformInvert( _screenFromMapTransform );
 }
 
 -(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point
 {
-	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
-
-	OSMTransform t = [self screenFromMapTransform];
-	OSMTransform ti = OSMTransformInvert( t );
-	point = OSMPointMake( point.x - screenRect.size.width/2, point.y - screenRect.size.height/2);
-	point = OSMPointApplyAffineTransform( point, ti );
+	OSMTransform t = [self mapFromScreenTransform];
+	point = OSMPointApplyAffineTransform( point, t );
 	return point;
 }
 
@@ -693,53 +680,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 // get view into 256 map
 -(OSMRect)mapRectFromScreenRect
 {
+	OSMTransform t = [self mapFromScreenTransform];
+	if ( t.a == 0 && t.d == 0 )
+		return OSMRectZero();	// not initialized yet
 	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
-	if ( _mapTransform.a == 0 && _mapTransform.d == 0 )
-		return OSMRectZero();
-
-	OSMPoint p1 = [self mapPointFromScreenPoint:OSMPointMake(screenRect.origin.x,screenRect.origin.y)];
-	OSMPoint p2 = [self mapPointFromScreenPoint:OSMPointMake(screenRect.origin.x+screenRect.size.width, screenRect.origin.y+screenRect.size.height)];
-	OSMRect rect3 = OSMRectMake(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
-
-#if 0
-	OSMTransform ti = OSMTransformInvert( _mapTransform );
-	OSMRect mapRect = screenRect;
-	mapRect = OSMRectOffset( mapRect, -mapRect.size.width/2, -mapRect.size.height/2);
-	mapRect = OSMRectApplyAffineTransform( mapRect, ti );
-	mapRect = OSMRectOffset(mapRect, -128, -128);
-#endif
-
-#if 0
-	OSMRect mapRect2;
-	mapRect2.origin.x = screenRect.origin.x - (t.tx + screenRect.size.width/2) / t.a  - 128;
-	mapRect2.origin.y = screenRect.origin.y - (t.ty + screenRect.size.height/2) / t.a - 128;
-	mapRect2.size.width  = viewRect.size.width  / t.a;
-	mapRect2.size.height = viewRect.size.height / t.a;
-#endif
-
-#if 0
-	// DLog(@"view %@ -> map %@", NSStringFromCGRect(viewRect), NSStringFromCGRect(CGRectFromOSMRect(mapRect2)) );
-	DLog(@"%@ = %@", NSStringFromCGRect(CGRectFromOSMRect(mapRect)), NSStringFromCGRect(CGRectFromOSMRect(rect3)) );
-#endif
-
-	return rect3;
+	return OSMRectApplyAffineTransform(screenRect, t);
 }
 
 -(OSMRect)screenRectFromMapRect:(OSMRect)rect
 {
-#if 1
-	OSMPoint p1 = [self screenPointFromMapPoint:OSMPointMake(rect.origin.x, rect.origin.y)];
-	OSMPoint p2 = [self screenPointFromMapPoint:OSMPointMake(rect.origin.x+rect.size.width, rect.origin.y+rect.size.height)];
-	OSMRect rect2 = OSMRectMake(p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);
-#endif
-
-#if 0
 	// using single matrix
 	OSMTransform t = [self screenFromMapTransform];
-	OSMRect rect1 = OSMRectApplyAffineTransform(rect, t);
-#endif
-
-	return rect2;
+	rect = OSMRectApplyAffineTransform(rect, t);
+	return rect;
 }
 
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point
@@ -810,19 +763,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	transform.d = zoom;
 	transform.tx = -(point.x - 128)*zoom;
 	transform.ty = -(point.y - 128)*zoom;
-	self.mapTransform = transform;
+	self.screenFromMapTransform = transform;
 }
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
 {
 	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
-	CGFloat zoom = _mapTransform.a;
+	CGFloat zoom = _screenFromMapTransform.a;
 	OSMTransform transform = { 0 };
 	transform.a = zoom;
 	transform.d = zoom;
 	transform.tx = -(point.x - 128)*zoom;
 	transform.ty = -(point.y - 128)*zoom;
-	self.mapTransform = transform;
+	self.screenFromMapTransform = transform;
 }
 
 
@@ -924,7 +877,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		transform.a = transform.d = 106344;
 		transform.tx = 9241972;
 		transform.ty = 4112460;
-		self.mapTransform = transform;
+		self.screenFromMapTransform = transform;
 	}
 
 	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",nil),
@@ -1105,8 +1058,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(BOOL)isLocationSpecified
 {
-	OSMTransform transform = self.mapTransform;
-	return transform.a != 1 || transform.tx != 0 || transform.ty != 0;
+	return !OSMTransformEqual( _screenFromMapTransform, OSMTransformIdentity() );
 }
 
 -(void)setMousePoint:(CGPoint)point
@@ -1134,9 +1086,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 }
 
--(void)setMapTransform:(OSMTransform)mapTransform
+-(void)setScreenFromMapTransform:(OSMTransform)mapTransform
 {
-	if ( OSMTransformEqual(mapTransform, _mapTransform) )
+	if ( OSMTransformEqual(mapTransform, _screenFromMapTransform) )
 		return;
 
 #if TARGET_OS_IPHONE
@@ -1148,7 +1100,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 
 	// update transform
-	_mapTransform = mapTransform = OSMTransformWrap256( mapTransform );
+	_screenFromMapTransform = mapTransform;
 
 	// determine if we've zoomed out enough to disable editing
 	OSMRect box = [self viewportLongitudeLatitude];
@@ -1171,23 +1123,28 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	if ( delta.x == 0.0 && delta.y == 0.0 )
 		return;
-	CGFloat zoom = 1.0 / _mapTransform.a;
-	self.mapTransform = OSMTransformTranslate( _mapTransform, delta.x*zoom, -delta.y*zoom );
+	self.screenFromMapTransform = OSMTransformTranslate( _screenFromMapTransform, delta.x, -delta.y );
 }
 
-
--(void)adjustZoomBy:(CGFloat)ratio
+-(void)adjustZoomBy:(CGFloat)ratio aroundScreenPoint:(CGPoint)zoomCenter
 {
 	const double maxZoomIn = 1 << 30;
 	if ( ratio == 1.0 )
 		return;
-	if ( ratio * _mapTransform.a < 1.0 ) {
-		ratio = 1.0 / _mapTransform.a;
+	if ( ratio * _screenFromMapTransform.a < 1.0 ) {
+		ratio = 1.0 / _screenFromMapTransform.a;
 	}
-	if ( ratio * _mapTransform.a > maxZoomIn ) {
-		ratio = maxZoomIn / _mapTransform.a;
+	if ( ratio * _screenFromMapTransform.a > maxZoomIn ) {
+		ratio = maxZoomIn / _screenFromMapTransform.a;
 	}
-	self.mapTransform = OSMTransformScale( _mapTransform, ratio );
+
+	double tx = -zoomCenter.x * (ratio - 1);
+	double ty = -zoomCenter.y * (ratio - 1);
+
+	OSMTransform t = _screenFromMapTransform;
+	t = OSMTransformTranslate( t, tx, ty);
+	t = OSMTransformScale( t, ratio );
+	self.screenFromMapTransform = t;
 }
 
 -(void)drawRect:(CGRect)rect
@@ -2354,22 +2311,12 @@ checkGrab:
 
 	[_inertiaTimer invalidate];
 
-	CGPoint point = [pinch locationInView:self];
-	CGFloat scale = pinch.scale;
-
-	CGRect bounds = self.bounds;
-	CGPoint center = CGPointMake(bounds.origin.x + bounds.size.width/2, bounds.origin.y + bounds.size.height/2);
-	point.x = center.x - point.x;
-	point.y = center.y - point.y;
-	point.y = -point.y;
-	point.x *= scale - 1;
-	point.y *= scale - 1;
 
 	[CATransaction begin];
 	[CATransaction setAnimationDuration:0.0];
 
-	[self adjustOriginBy:point];
-	[self adjustZoomBy:scale];
+	CGPoint zoomCenter = [pinch locationInView:self];
+	[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];
 
 	[CATransaction commit];
 

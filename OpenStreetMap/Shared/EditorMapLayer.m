@@ -68,7 +68,7 @@ const CGFloat WayHighlightRadius = 6.0;
 		self.textColor = NSColor.whiteColor;
 
 		// observe changes to geometry
-		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
+		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 
 		[OsmMapData setEditorMapLayerForArchive:self];
 
@@ -94,7 +94,7 @@ const CGFloat WayHighlightRadius = 6.0;
 
 		__weak EditorMapLayer * weakSelf = self;
 		[_mapData setUndoLocationCallback:^NSData *{
-			OSMTransform trans = [weakSelf.mapView mapTransform];
+			OSMTransform trans = [weakSelf.mapView screenFromMapTransform];
 			NSData * data = [NSData dataWithBytes:&trans length:sizeof trans];
 			return data;
 		}];
@@ -117,7 +117,7 @@ const CGFloat WayHighlightRadius = 6.0;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ( object == _mapView && [keyPath isEqualToString:@"mapTransform"] )  {
+	if ( object == _mapView && [keyPath isEqualToString:@"screenFromMapTransform"] )  {
 		[self updateMapLocation];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -916,27 +916,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 -(OSMPoint)pointForLat:(double)lat lon:(double)lon
 {
 	OSMPoint pt = [MapView mapPointForLatitude:lat longitude:lon];
-
-#if 0
-	OSMPoint p2 = [_mapView screenPointFromMapPoint:pt];
-#else
-	OSMTransform transform = _mapView.mapTransform;
-	OSMPoint p2 = { pt.x - 128, pt.y - 128 };
-	p2 = OSMPointApplyAffineTransform( p2, transform );
-#endif
-
-	pt.x = p2.x;
-	pt.y = p2.y;
-
-#if 1
-	// modulus
-	double denom = 256*transform.a;
-	if ( pt.x > denom/2 )
-		pt.x -= denom;
-	else if ( pt.x < -denom/2 )
-		pt.x += denom;
-#endif
-
+	pt = [_mapView screenPointFromMapPoint:pt];
 	return pt;
 }
 
@@ -959,7 +939,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 -(NSInteger)zoomLevel
 {
-	return (NSInteger)floor( log2( _mapView.mapTransform.a ) );
+	return (NSInteger)floor( log2( _mapView.screenFromMapTransform.a ) );
 }
 
 typedef struct RGBAColor {

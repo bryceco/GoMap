@@ -70,14 +70,14 @@ static NSDictionary * ActionDictionary = nil;
 		_memoryTileCache.totalCostLimit = 100*1000*1000; // 100 MB
 #endif
 
-		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
+		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 	}
 	return self;
 }
 
 -(void)dealloc
 {
-	[_mapView removeObserver:self forKeyPath:@"mapTransform"];
+	[_mapView removeObserver:self forKeyPath:@"screenFromMapTransform"];
 }
 
 -(void)setAerialService:(AerialService *)service
@@ -110,7 +110,7 @@ static NSDictionary * ActionDictionary = nil;
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ( object == _mapView && [keyPath isEqualToString:@"mapTransform"] ) {
+	if ( object == _mapView && [keyPath isEqualToString:@"screenFromMapTransform"] ) {
 #if CUSTOM_TRANSFORM
 		[self setNeedsLayout];
 #else
@@ -121,7 +121,7 @@ static NSDictionary * ActionDictionary = nil;
 
 -(int32_t)zoomLevel
 {
-	double z = _mapView.mapTransform.a;
+	double z = _mapView.screenFromMapTransform.a;
 	return self.aerialService.roundZoomUp	? (int32_t)ceil(log2(z))
 											: (int32_t)floor(log2(z));
 }
@@ -556,10 +556,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 		double scale = 256.0 / (1 << tileZ);
 		OSMRect rc = { tileX * scale, tileY * scale, scale, scale };
-		rc = [_mapView screenRectFromMapRect:rc];
-		rc.origin.x -= 128;
-		rc.origin.y -= 128;
 
+		rc = [_mapView screenRectFromMapRect:rc];
 		layer.frame = CGRectMake( rc.origin.x, rc.origin.y, rc.size.width, rc.size.height );
 	}];
 
@@ -602,8 +600,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 	OSMRect	rect			= [_mapView mapRectFromScreenRect];
 #if CUSTOM_TRANSFORM
-	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(_mapView.mapTransform.a))
-															 : (int32_t)floor(log2(_mapView.mapTransform.a));
+	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(_mapView.screenFromMapTransform.a))
+															 : (int32_t)floor(log2(_mapView.screenFromMapTransform.a));
 #else
 	int32_t	minZoomLevel	= [self roundZoomUp] ? (int32_t)ceil(log2(self.affineTransform.a))
 												 : (int32_t)floor(log2(self.affineTransform.a));

@@ -184,7 +184,7 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 		_mapView = mapView;
 
 		// observe changes to geometry
-		[_mapView addObserver:self forKeyPath:@"mapTransform" options:0 context:NULL];
+		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 
 		[self setNeedsDisplay];
 	}
@@ -220,7 +220,7 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ( object == _mapView && [keyPath isEqualToString:@"mapTransform"] )  {
+	if ( object == _mapView && [keyPath isEqualToString:@"screenFromMapTransform"] )  {
 		[self setNeedsDisplay];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -259,7 +259,7 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 -(OSMPoint)pointForLat:(double)lat lon:(double)lon
 {
 	OSMPoint pt = [MapView mapPointForLatitude:lat longitude:lon];
-	OSMTransform transform = _mapView.mapTransform;
+	OSMTransform transform = _mapView.screenFromMapTransform;
 #if 1
 	OSMPoint p2 = { pt.x - 128, pt.y - 128 };
 	p2 = OSMPointApplyAffineTransform( p2, transform );

@@ -141,7 +141,9 @@ typedef enum _ViewOverlayMask {
 @property (readonly,nonatomic)	OSMRect							viewportLongitudeLatitude;
 @property (readonly,nonatomic)	CGFloat							mouseLongitude;
 @property (readonly,nonatomic)	CGFloat							mouseLatitude;
-@property (assign,nonatomic)	OSMTransform					mapTransform;
+@property (assign,nonatomic)	OSMTransform					screenFromMapTransform;
+@property (readonly,nonatomic)	OSMTransform					mapFromScreenTransform;
+
 @property (assign,nonatomic)	BOOL							trackingLocation;
 @property (readonly,nonatomic)	PushPinView					*	pushpinView;
 
@@ -167,6 +169,7 @@ typedef enum _ViewOverlayMask {
 +(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
 +(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
 -(CGPoint)viewPointForLatitude:(double)latitude longitude:(double)longitude;
+
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
 -(double)metersPerPixel;
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;
