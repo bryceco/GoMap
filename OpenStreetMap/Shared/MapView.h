@@ -163,6 +163,7 @@ typedef enum _ViewOverlayMask {
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point;
 -(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
+-(OSMRect)boundingMapRectForScreen;
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;
 -(double)metersPerPixel;
 

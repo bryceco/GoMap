@@ -195,6 +195,14 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
 {
+	if ( bbox.origin.x < 180 && bbox.origin.x + bbox.size.width > 180 ) {
+		OSMRect left = { bbox.origin.x, bbox.origin.y, 180-bbox.origin.x, bbox.size.height };
+		OSMRect right = { -180, bbox.origin.y, bbox.origin.x + bbox.size.width - 180, bbox.size.height };
+		[self enumerateObjectsInRegion:left block:block];
+		[self enumerateObjectsInRegion:right block:block];
+		return;
+	}
+
 	[_spatial findObjectsInArea:bbox block:^(OsmBaseObject * o){
 		block( o );
 	}];
@@ -1874,6 +1882,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)sqlSaveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays isUpdate:(BOOL)isUpdate
 {
 #if USE_SQL
+	if ( saveNodes.count == 0 && saveWays.count == 0 && deleteNodes.count == 0 && deleteWays.count == 0 )
+		return;
 	CFTimeInterval t = CACurrentMediaTime();
 	Database * db = [Database new];
 	[db createTables];
@@ -1936,7 +1946,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self saveArchive];
 #endif
 	t = CACurrentMediaTime() - t;
-	DLog(@"archive save %ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, t);
+	DLog(@"archive save %ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.count, t);
 
 	[_periodicSaveTimer invalidate];
 	_periodicSaveTimer = nil;

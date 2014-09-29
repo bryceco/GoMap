@@ -21,13 +21,12 @@
 #import "MercatorTileLayer.h"
 
 
-#define CUSTOM_TRANSFORM 1
+#define CUSTOM_TRANSFORM 0
 
 
 extern CGSize SizeForImage(NSImage * image);
 
-// Disable animations
-static NSDictionary * ActionDictionary = nil;
+
 
 @implementation MercatorTileLayer
 
@@ -47,14 +46,14 @@ static NSDictionary * ActionDictionary = nil;
 
 		// disable animations
 		self.actions = @{
-				 @"onOrderIn" : [NSNull null],
-				 @"onOrderOut" : [NSNull null],
-				 @"sublayers" : [NSNull null],
-				 @"contents" : [NSNull null],
-				 @"bounds" : [NSNull null],
-				 @"position" : [NSNull null],
-				 @"transform" : [NSNull null],
-				 @"hidden"	: [NSNull null],
+				 @"onOrderIn"	: [NSNull null],
+				 @"onOrderOut"	: [NSNull null],
+				 @"sublayers"	: [NSNull null],
+				 @"contents"	: [NSNull null],
+				 @"bounds"		: [NSNull null],
+				 @"position"	: [NSNull null],
+				 @"transform"	: [NSNull null],
+				 @"hidden"		: [NSNull null],
 		 };
 
 		_mapView = mapView;
@@ -114,16 +113,26 @@ static NSDictionary * ActionDictionary = nil;
 #if CUSTOM_TRANSFORM
 		[self setNeedsLayout];
 #else
-		self.affineTransform = CGAffineTransformFromOSMTransform( _mapView.mapTransform );
+		self.affineTransform = CGAffineTransformFromOSMTransform( _mapView.screenFromMapTransform );
+		[self setNeedsLayout];
 #endif
 	}
 }
 
+#if !CUSTOM_TRANSFORM
+-(void)setFrame:(CGRect)frame
+{
+	[super setFrame:frame];
+	assert(NO);	// since we are transformed we should set bounds and position instead
+}
+#endif
+
+
 -(int32_t)zoomLevel
 {
-	double z = _mapView.screenFromMapTransform.a;
-	return self.aerialService.roundZoomUp	? (int32_t)ceil(log2(z))
-											: (int32_t)floor(log2(z));
+	double scaleX = OSMTransformScaleX( _mapView.screenFromMapTransform );
+	return self.aerialService.roundZoomUp	? (int32_t)ceil(log2(scaleX))
+											: (int32_t)floor(log2(scaleX));
 }
 
 
@@ -268,8 +277,8 @@ static NSDictionary * ActionDictionary = nil;
 		if ( key ) {
 			// DLog(@"prune %@ - %@",key,layer);
 			[_layerDict removeObjectForKey:key];
-			layer.contents = nil;
 			[layer removeFromSuperlayer];
+			layer.contents = nil;
 		}
 	}
 }
@@ -393,7 +402,12 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 #endif
 					layer.hidden = NO;
 					[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
+#if CUSTOM_TRANSFORM
 					[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
+#else
+					OSMRect rc = [_mapView boundingMapRectForScreen];
+					[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
+#endif
 				} else {
 					// layer no longer needed
 				}
@@ -438,7 +452,12 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 #endif
 							layer.hidden = NO;
 							[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
+#if CUSTOM_TRANSFORM
 							[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
+#else
+							OSMRect rc = [_mapView boundingMapRectForScreen];
+							[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
+#endif
 						} else {
 							// no longer needed
 							[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
@@ -495,20 +514,13 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	return NO;	// not immediately satisfied
 }
 
-
 -(void)layoutSublayers
 {
 	if ( self.hidden )
 		return;
 
-	OSMRect	rect		= [_mapView mapRectFromScreenRect];
+	OSMRect	rect		= [_mapView boundingMapRectForScreen];
 	int32_t	zoomLevel	= [self zoomLevel];
-
-#if 0
-	static double prev = 0.0;
-	DLog( @"origin = %f, %f, delta = %f", rect.origin.x, rect.origin.y, rect.origin.y - prev );
-	prev = rect.origin.y;
-#endif
 
 	if ( zoomLevel < 1 ) {
 		zoomLevel = 1;
@@ -521,12 +533,6 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	int32_t tileWest	= floor( rect.origin.x * zoom );
 	int32_t tileSouth	= ceil( (rect.origin.y + rect.size.height) * zoom );
 	int32_t tileEast	= ceil( (rect.origin.x + rect.size.width ) * zoom );
-
-
-#if 0
-	DLog(@"tiling %d x %d", tileEast - tileWest, tileSouth - tileNorth );
-	DLog(@"%d sublayers, %d dict", self.sublayers.count, _layerDict.count);
-#endif
 
 	// create any tiles that don't yet exist
 	for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {
@@ -556,14 +562,14 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 		double scale = 256.0 / (1 << tileZ);
 		OSMRect rc = { tileX * scale, tileY * scale, scale, scale };
-
 		rc = [_mapView screenRectFromMapRect:rc];
 		layer.frame = CGRectMake( rc.origin.x, rc.origin.y, rc.size.width, rc.size.height );
 	}];
 
 	[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
 #else
-	[self removeUnneededTilesForRect:rect zoomLevel:zoomLevel];
+	OSMRect rc = [_mapView boundingMapRectForScreen];
+	[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
 #endif
 
 	[_mapView progressAnimate];
@@ -600,11 +606,11 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 	OSMRect	rect			= [_mapView mapRectFromScreenRect];
 #if CUSTOM_TRANSFORM
-	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(_mapView.screenFromMapTransform.a))
-															 : (int32_t)floor(log2(_mapView.screenFromMapTransform.a));
+	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(fabs(_mapView.screenFromMapTransform.a)))
+															 : (int32_t)floor(log2(fabs(_mapView.screenFromMapTransform.a)));
 #else
-	int32_t	minZoomLevel	= [self roundZoomUp] ? (int32_t)ceil(log2(self.affineTransform.a))
-												 : (int32_t)floor(log2(self.affineTransform.a));
+	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)))
+															 : (int32_t)floor(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)));
 #endif
 	if ( minZoomLevel < 1 ) {
 		minZoomLevel = 1;

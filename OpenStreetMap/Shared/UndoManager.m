@@ -169,6 +169,11 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	return _redoStack.count > 0;
 }
 
+-(NSInteger)count
+{
+	return _undoStack.count + _redoStack.count;
+}
+
 -(void)removeMostRecentRedo
 {
 	assert( _redoStack.count );

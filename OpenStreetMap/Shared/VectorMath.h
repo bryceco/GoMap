@@ -220,6 +220,15 @@ static inline BOOL OSMTransformEqual( OSMTransform t1, OSMTransform t2 )
 	return memcmp( &t1, &t2, sizeof t1) == 0;
 }
 
+static inline double OSMTransformScaleX( OSMTransform t )
+{
+	return hypot(t.a,t.c);
+}
+static inline double OSMTransformRotation( OSMTransform t )
+{
+	return atan2( t.b, t.a );
+}
+
 static inline OSMTransform OSMTransformMakeTranslation( double dx, double dy )
 {
 	OSMTransform t = { 1, 0, 0, 1, dx, dy };
@@ -275,6 +284,11 @@ static inline OSMPoint OSMPointApplyAffineTransform( OSMPoint pt, OSMTransform t
 	p.y = pt.x * transform.b + pt.y * transform.d + transform.ty;
 	return p;
 }
+static inline double OSMTransformTranslationX( OSMTransform t )
+{
+	return t.tx;
+}
+
 static inline OSMRect OSMRectApplyAffineTransform( OSMRect rc, OSMTransform transform )
 {
 	OSMPoint p1 = OSMPointApplyAffineTransform( rc.origin, transform);

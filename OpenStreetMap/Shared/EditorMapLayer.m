@@ -939,7 +939,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 -(NSInteger)zoomLevel
 {
-	return (NSInteger)floor( log2( _mapView.screenFromMapTransform.a ) );
+	return (NSInteger)floor( log2( OSMTransformScaleX(_mapView.screenFromMapTransform) ) );
 }
 
 typedef struct RGBAColor {

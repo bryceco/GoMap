@@ -48,11 +48,12 @@ typedef void(^UndoManagerChangeCallback)(void);
 @property (strong,nonatomic) NSData * (^locationCallback)();
 @property (weak,nonatomic)	id<UndoManagerDelegate> delegate;
 
-@property (readonly) BOOL isUndoing;
-@property (readonly) BOOL isRedoing;
-@property (readonly) BOOL canUndo;
-@property (readonly) BOOL canRedo;
-@property (assign) NSInteger runLoopCounter;
+@property (readonly,nonatomic) BOOL			isUndoing;
+@property (readonly,nonatomic) BOOL			isRedoing;
+@property (readonly,nonatomic) BOOL			canUndo;
+@property (readonly,nonatomic) BOOL			canRedo;
+@property (readonly,nonatomic)	NSInteger	count;
+@property (assign) NSInteger				runLoopCounter;
 
 -(NSSet *)objectRefs;
 

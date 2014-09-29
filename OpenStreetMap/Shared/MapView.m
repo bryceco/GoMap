@@ -473,7 +473,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 
 	for ( CALayer * layer in _backgroundLayers ) {
-		layer.frame = self.layer.bounds;
+		if ( [layer isKindOfClass:[MercatorTileLayer class]] ) {
+			layer.anchorPoint = CGPointMake(0,0);
+			layer.position = CGPointMake(0,0);
+			layer.bounds = self.layer.bounds;
+		} else {
+			layer.position = self.layer.position;
+			layer.bounds = self.layer.bounds;
+		}
 	}
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
@@ -676,6 +683,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	OSMTransform t = [self screenFromMapTransform];
 	point = OSMPointApplyAffineTransform( point, t );
+	double dist = 256 * OSMTransformScaleX(t);
+	if ( point.x > dist/2 )
+		point.x -= dist;
+	else if ( point.x < -dist/2 )
+		point.x += dist;
 	return point;
 }
 
@@ -720,9 +732,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return metersPerPixel;
 }
 
--(OSMRect)screenLongitudeLatitude
+-(OSMRect)boundingMapRectForScreen
 {
-#if 1
 	OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
 	OSMPoint corners[] = {
 		rc.origin.x, rc.origin.y,
@@ -743,13 +754,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		minY = MIN( minY, corners[i].y );
 		maxY = MAX( maxY, corners[i].y );
 	}
-	OSMPoint southwest = { minX, maxY };
-	OSMPoint northeast = { maxX, minY };
+	rc = OSMRectMake( minX, minY, maxX-minX, maxY-minY);
+	return rc;
+}
+
+-(OSMRect)screenLongitudeLatitude
+{
+#if 1
+	OSMRect rc = [self boundingMapRectForScreen];
 #else
 	OSMRect rc = [self mapRectFromScreenRect];
+#endif
 	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
 	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
-#endif
 	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
 	northeast = [MapView longitudeLatitudeFromMapPoint:northeast];
 	rc.origin.x = southwest.x;
@@ -784,7 +801,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
 {
 	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
-	CGFloat zoom = _screenFromMapTransform.a;
+	CGFloat zoom = OSMTransformScaleX( _screenFromMapTransform );
 	CGRect rc = self.layer.bounds;
 	OSMTransform transform = { 0 };
 	transform.a = zoom;
@@ -793,7 +810,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	transform.ty = -point.y*zoom + rc.size.height/2;
 	self.screenFromMapTransform = transform;
 }
-
 
 #pragma mark Progress indicator
 
@@ -926,8 +942,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
 	if ( _locationBallLayer ) {
+		double radians = OSMTransformRotation( _screenFromMapTransform );
 		_locationBallLayer.headingAccuracy	= newHeading.headingAccuracy * M_PI / 180;
-		_locationBallLayer.heading			= (newHeading.trueHeading - 90) * M_PI / 180;
+		_locationBallLayer.heading			= (newHeading.trueHeading - 90) * M_PI / 180 + radians;
 		_locationBallLayer.showHeading		= YES;
 	}
 }
@@ -939,7 +956,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	// check if we moved an appreciable distance
 	double delta = hypot( newLocation.coordinate.latitude - _currentLocation.coordinate.latitude, newLocation.coordinate.longitude - _currentLocation.coordinate.longitude);
 	delta *= MetersPerDegree( newLocation.coordinate.latitude );
-	if ( delta < 0.1 && fabs(newLocation.horizontalAccuracy - _currentLocation.horizontalAccuracy) < 1.0 )
+	if ( _locationBallLayer && delta < 0.1 && fabs(newLocation.horizontalAccuracy - _currentLocation.horizontalAccuracy) < 1.0 )
 		return;
 	_currentLocation = [newLocation copy];
 
@@ -1107,6 +1124,25 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( OSMTransformEqual(mapTransform, _screenFromMapTransform) )
 		return;
 
+#if 0
+	NSLog(@"t  = %@", NSStringFromCGAffineTransform(CGAffineTransformFromOSMTransform(mapTransform)));
+
+	double angle = OSMTransformRotation(mapTransform);
+	OSMTransform t = OSMTransformRotate(mapTransform, -angle);
+	NSLog(@"dx,dy = %f, %f",t.tx, t.ty);
+	double scale = 256*OSMTransformScaleX(mapTransform);
+	if ( t.tx > 0 )
+		mapTransform.tx
+#endif
+#if 0
+	double scale = 256*OSMTransformScaleX(mapTransform);
+	if ( mapTransform.tx > 0 ) {
+		mapTransform.tx -= scale;
+	} else if ( mapTransform.tx < -scale ) {
+		mapTransform.tx += scale;
+	}
+#endif
+
 #if TARGET_OS_IPHONE
 	// save pushpinView coordinates
 	CLLocationCoordinate2D pp = { 0 };
@@ -1147,11 +1183,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	const double maxZoomIn = 1 << 30;
 	if ( ratio == 1.0 )
 		return;
-	if ( ratio * _screenFromMapTransform.a < 1.0 ) {
-		ratio = 1.0 / _screenFromMapTransform.a;
+	double scale = OSMTransformScaleX(_screenFromMapTransform);
+	if ( ratio * scale < 1.0 ) {
+		ratio = 1.0 / scale;
 	}
-	if ( ratio * _screenFromMapTransform.a > maxZoomIn ) {
-		ratio = maxZoomIn / _screenFromMapTransform.a;
+	if ( ratio * scale > maxZoomIn ) {
+		ratio = maxZoomIn / scale;
 	}
 
 	double tx = -zoomCenter.x * (ratio - 1);
@@ -1172,6 +1209,10 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	t = OSMTransformRotate( t, angle );
 	t = OSMTransformTranslate( t, zoomCenter.x, zoomCenter.y );
 	self.screenFromMapTransform = t;
+
+	if ( _locationBallLayer ) {
+		_locationBallLayer.heading = _locationBallLayer.heading + angle;
+	}
 }
 
 -(void)drawRect:(CGRect)rect
