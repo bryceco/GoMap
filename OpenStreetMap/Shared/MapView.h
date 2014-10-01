@@ -60,7 +60,7 @@ typedef enum {
 } GPS_STATE;
 
 #if TARGET_OS_IPHONE
-@interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate>
+@interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate>
 #else
 @interface MapView : NSView <CLLocationManagerDelegate>
 #endif
@@ -160,6 +160,8 @@ typedef enum {
 
 -(void)updateBingButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
+
+-(void)viewDidAppear;
 
 +(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
 +(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;

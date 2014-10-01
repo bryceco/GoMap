@@ -1946,7 +1946,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self saveArchive];
 #endif
 	t = CACurrentMediaTime() - t;
-	DLog(@"archive save %ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.count, t);
+	DLog(@"archive save %ld,%ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.count, (long)_region.count, t);
 
 	[_periodicSaveTimer invalidate];
 	_periodicSaveTimer = nil;

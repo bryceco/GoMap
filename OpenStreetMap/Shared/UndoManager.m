@@ -251,8 +251,6 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	for ( UndoManagerChangeCallback callback in _observerList ) {
 		callback();
 	}
-
-	NSLog(@"undo stack size = %ld", (long)_undoStack.count);
 }
 
 - (void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects

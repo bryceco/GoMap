@@ -138,6 +138,7 @@
 	[super viewDidAppear:animated];
 	CGRect rc = self.view.bounds;
 	self.mapView.frame = rc;
+	[self.mapView viewDidAppear];
 	[self installLongPressGestureRecognizer:YES];
 }
 
