@@ -927,10 +927,24 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 - (void)setGpsState:(GPS_STATE)gpsState
 {
 	if ( gpsState != _gpsState ) {
+		if ( _gpsState == GPS_STATE_HEADING ) {
+			// orient toward north
+			CGPoint center;
+			if ( _locationBallLayer ) {
+				center = _locationBallLayer.position;
+			} else {
+				CGRect rc = self.bounds;
+				center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2);
+			}
+			double rotation = OSMTransformRotation( _screenFromMapTransform );
+			[self rotateBy:-rotation aroundScreenPoint:center];
+		}
+
 		_gpsState = gpsState;
 		if ( _gpsState != GPS_STATE_NONE ) {
 			[self locateMe:nil];
 		} else {
+			// turn off updates
 			[_locationManager stopUpdatingLocation];
 #if TARGET_OS_IPHONE
 			[_locationManager stopUpdatingHeading];
@@ -1016,15 +1030,30 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		double screenAngle = OSMTransformRotation( _screenFromMapTransform );
 		_locationBallLayer.headingAccuracy	= newHeading.headingAccuracy * M_PI / 180;
 		_locationBallLayer.showHeading		= YES;
+		double heading = newHeading.trueHeading * M_PI / 180;
+		switch ( [[UIApplication sharedApplication] statusBarOrientation] ) {
+			case UIDeviceOrientationPortraitUpsideDown:
+				heading += M_PI;
+				break;
+			case UIDeviceOrientationLandscapeLeft:
+				heading += M_PI/2;
+				break;
+			case UIDeviceOrientationLandscapeRight:
+				heading -= M_PI/2;
+				break;
+			case UIDeviceOrientationPortrait:
+			default:
+				break;
+		}
 		if ( _gpsState == GPS_STATE_LOCATION ) {
-			_locationBallLayer.heading	= (newHeading.trueHeading - 90) * M_PI / 180 + screenAngle;
+			_locationBallLayer.heading	= heading + screenAngle - M_PI/2;
 		}
 		if ( _gpsState == GPS_STATE_HEADING ) {
 			// rotate to new heading
-			double newAngle = -newHeading.trueHeading * M_PI / 180;
-			double delta = newAngle - screenAngle;
+			double delta = -(heading + screenAngle);
 			[self rotateBy:delta aroundScreenPoint:_locationBallLayer.position];
 			_locationBallLayer.heading	= M_PI*3/2;
+			NSLog(@"heading = %f",newHeading.trueHeading);
 		}
 	}
 }

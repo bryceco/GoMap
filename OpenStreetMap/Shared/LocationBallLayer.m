@@ -133,21 +133,6 @@
 {
 #if TARGET_OS_IPHONE
 	if ( _heading != heading ) {
-		switch ( [[UIApplication sharedApplication] statusBarOrientation] ) {
-			case UIDeviceOrientationPortraitUpsideDown:
-				heading += M_PI;
-				break;
-			case UIDeviceOrientationLandscapeLeft:
-				heading += M_PI/2;
-				break;
-			case UIDeviceOrientationLandscapeRight:
-				heading -= M_PI/2;
-				break;
-			case UIDeviceOrientationPortrait:
-			default:
-				break;
-		}
-
 		_heading = heading;
 		[self setNeedsLayout];
 	}
