@@ -53,6 +53,12 @@ typedef enum _ViewOverlayMask {
 	VIEW_OVERLAY_GPSTRACE	= 1 << 1,
 } ViewOverlayMask;
 
+typedef enum {
+	GPS_STATE_NONE,
+	GPS_STATE_LOCATION,
+	GPS_STATE_HEADING,
+} GPS_STATE;
+
 #if TARGET_OS_IPHONE
 @interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate>
 #else
@@ -146,7 +152,7 @@ typedef enum _ViewOverlayMask {
 @property (assign,nonatomic)	OSMTransform					screenFromMapTransform;
 @property (readonly,nonatomic)	OSMTransform					mapFromScreenTransform;
 
-@property (assign,nonatomic)	BOOL							trackingLocation;
+@property (assign,nonatomic)	GPS_STATE						gpsState;
 @property (readonly,nonatomic)	PushPinView					*	pushpinView;
 
 @property (strong,nonatomic)	AerialList					*	customAerials;

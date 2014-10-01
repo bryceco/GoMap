@@ -80,7 +80,7 @@ CGSize SizeForImage( NSImage * image )
 @synthesize aerialLayer			= _aerialLayer;
 @synthesize mapnikLayer			= _mapnikLayer;
 @synthesize editorLayer			= _editorLayer;
-@synthesize trackingLocation	= _trackingLocation;
+@synthesize gpsState			= _gpsState;
 @synthesize pushpinView			= _pushpinView;
 @synthesize viewState			= _viewState;
 @synthesize screenFromMapTransform	= _screenFromMapTransform;
@@ -245,9 +245,9 @@ CGSize SizeForImage( NSImage * image )
 	_statusBarBackground.alpha = 0.25;
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
-								@"zoom"				: @(nan("")),
-								@"translateX"		: @(nan("")),
-								@"translateY"		: @(nan("")),
+								@"view.scale"		: @(nan("")),
+								@"view.latitude"	: @(nan("")),
+								@"view.longitude"	: @(nan("")),
 								@"mapViewState"		: @(MAPVIEW_EDITORAERIAL),
 								}];
 
@@ -264,20 +264,12 @@ CGSize SizeForImage( NSImage * image )
 	[self updateBingButton];
 
 	// get current location
-	double zoom			= [[NSUserDefaults standardUserDefaults] doubleForKey:@"zoom"];
-	double translateX	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"translateX"];
-	double translateY	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"translateY"];
-	if ( !isnan(translateX) && !isnan(translateY) && !isnan(zoom) ) {
-		OSMTransform transform;
-		transform.a = zoom;
-		transform.b = 0;
-		transform.c = 0;
-		transform.d = zoom;
-		transform.tx = translateX;
-		transform.ty = translateY;
-		self.screenFromMapTransform = transform;
-	} else {
-		self.screenFromMapTransform = OSMTransformIdentity();
+	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
+	double latitude		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.latitude"];
+	double longitude	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.longitude"];
+	self.screenFromMapTransform = OSMTransformIdentity();
+	if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
+		[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 	}
 
 #if 0 && DEBUG
@@ -442,10 +434,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)applicationWillTerminate :(NSNotification *)notification
 {
 	// save defaults first
-	OSMTransform transform = self.screenFromMapTransform;
-	[[NSUserDefaults standardUserDefaults] setDouble:transform.a	forKey:@"zoom"];
-	[[NSUserDefaults standardUserDefaults] setDouble:transform.tx	forKey:@"translateX"];
-	[[NSUserDefaults standardUserDefaults] setDouble:transform.ty	forKey:@"translateY"];
+	CGRect rc = self.layer.bounds;
+	OSMPoint center = { rc.origin.x + rc.size.width/2, rc.origin.y + rc.size.height/2 };
+	center = [self mapPointFromScreenPoint:center];
+	center = [MapView longitudeLatitudeFromMapPoint:center];
+	double scale = OSMTransformScaleX(self.screenFromMapTransform);
+	[[NSUserDefaults standardUserDefaults] setDouble:scale		forKey:@"view.scale"];
+	[[NSUserDefaults standardUserDefaults] setDouble:center.y	forKey:@"view.latitude"];
+	[[NSUserDefaults standardUserDefaults] setDouble:center.x	forKey:@"view.longitude"];
 
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState		forKey:@"mapViewState"];
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask	forKey:@"mapViewOverlaysa"];
@@ -639,6 +635,58 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 #pragma mark Coordinate Transforms
 
+-(void)setScreenFromMapTransform:(OSMTransform)t
+{
+	if ( OSMTransformEqual(t, _screenFromMapTransform) )
+		return;
+
+#if TARGET_OS_IPHONE
+	// save pushpinView coordinates
+	CLLocationCoordinate2D pp = { 0 };
+	if ( _pushpinView ) {
+		pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint];
+	}
+#endif
+
+	// Wrap around if we translate too far
+	OSMPoint unitX = UnitVector(OSMPointMake(t.a, t.b));
+	OSMPoint unitY = { -unitX.y, unitX.x };
+	OSMPoint tran = { t.tx, t.ty };
+	double dx = Dot(tran, unitX);	// translation distance in x direction
+	double dy = Dot(tran, unitY);
+	double mapSize = 256 * OSMTransformScaleX(t);
+	if ( dx > 0 ) {
+		t = OSMTransformTranslate(t, -mapSize*unitX.x, -mapSize*unitX.y);
+	} else if ( dx < -mapSize ) {
+		t = OSMTransformTranslate(t, mapSize*unitX.x, mapSize*unitX.y);
+	}
+	if ( dy > 0 ) {
+		t = OSMTransformTranslate(t, -mapSize*unitY.x, -mapSize*unitY.y);
+	} else if ( dy < -mapSize ) {
+		t = OSMTransformTranslate(t, mapSize*unitY.x, mapSize*unitY.y);
+	}
+
+	// update transform
+	_screenFromMapTransform = t;
+
+	// determine if we've zoomed out enough to disable editing
+	double metersPerPixel = [self metersPerPixel];
+	CGRect rc = self.layer.bounds;
+	double area = rc.size.height * rc.size.width * metersPerPixel * metersPerPixel;
+	self.viewStateOverride = area > 10.0*1000*1000;
+
+	[_rulerLayer updateDisplay];
+	[self updateMouseCoordinates];
+	[self updateUserLocationIndicator];
+
+#if TARGET_OS_IPHONE
+	// update pushpin location
+	if ( _pushpinView ) {
+		_pushpinView.arrowPoint = [self screenPointForLatitude:pp.latitude longitude:pp.longitude];
+	}
+#endif
+}
+
 // point is 0..256
 +(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point
 {
@@ -683,11 +731,20 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	OSMTransform t = [self screenFromMapTransform];
 	point = OSMPointApplyAffineTransform( point, t );
-	double dist = 256 * OSMTransformScaleX(t);
-	if ( point.x > dist/2 )
-		point.x -= dist;
-	else if ( point.x < -dist/2 )
-		point.x += dist;
+	if ( YES ) {
+		// only need to do this if we're zoomed out all the way: pick the best world map on which to display location
+		CGRect screenRC = self.bounds;
+		OSMPoint screenCenter = { screenRC.origin.x + screenRC.size.width/2, screenRC.origin.y + screenRC.size.height/2 };
+		double mapSize = 256 * OSMTransformScaleX(t);
+		if ( point.x - screenCenter.x > mapSize/2 )
+			point.x -= mapSize;
+		else if ( screenCenter.x - point.x > mapSize/2 )
+			point.x += mapSize;
+		if ( point.y - screenCenter.y > mapSize/2 )
+			point.y -= mapSize;
+		else if ( screenCenter.y - point.y > mapSize/2 )
+			point.y += mapSize;
+	}
 	return point;
 }
 
@@ -719,17 +776,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(double)metersPerPixel
 {
-	// compute meters/pixel
-	OSMRect viewCoord = [self screenLongitudeLatitude];
-	if ( viewCoord.size.width <= 0.0 || viewCoord.size.height <= 0.0 )
-		return 0.0;
+	OSMRect rc = [self mapRectFromScreenRect];
+	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
+	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
+	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
+	northeast = [MapView longitudeLatitudeFromMapPoint:northeast];
+	OSMRect latLon = { southwest.x*M_PI/180, southwest.y*M_PI/180, (northeast.x - southwest.x)*M_PI/180, (northeast.y - southwest.y)*M_PI/180 };
+	if ( latLon.size.width < 0 ) // crossed 180 degrees longitude
+		latLon.size.width += 2*M_PI;
 	const double earthRadius = 6378137.0; // meters
-	const double circumference = 2 * M_PI * earthRadius;
-	double metersPerPixel = (viewCoord.size.width / 360 * circumference) / self.bounds.size.width;
-	if ( isnan(metersPerPixel) )
-		return 0.0;
-	
-	return metersPerPixel;
+	double a = pow(sin(latLon.size.height/2),2) + cos(latLon.origin.y) * cos(latLon.origin.y+latLon.size.height) * pow(sin(latLon.size.width/2),2);
+	double meters = earthRadius * 2 * atan2(sqrt(a), sqrt(1-a));
+	double pixels = hypot(self.bounds.size.width,self.bounds.size.height);
+	return meters/pixels;
 }
 
 -(OSMRect)boundingMapRectForScreen
@@ -798,6 +857,18 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	self.screenFromMapTransform = transform;
 }
 
+-(void)setTransformForLatitude:(double)latitude longitude:(double)longitude scale:(double)scale
+{
+	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
+	OSMTransform transform = { 0 };
+	CGRect rc = self.layer.bounds;
+	transform.a = scale;
+	transform.d = scale;
+	transform.tx = -point.x*scale + rc.size.width/2;
+	transform.ty = -point.y*scale + rc.size.height/2;
+	self.screenFromMapTransform = transform;
+}
+
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
 {
 	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
@@ -849,15 +920,15 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 #pragma mark Location manager
 
-- (BOOL)trackingLocation
+- (GPS_STATE)gpsState
 {
-	return _trackingLocation;
+	return _gpsState;
 }
-- (void)setTrackingLocation:(BOOL)trackingLocation
+- (void)setGpsState:(GPS_STATE)gpsState
 {
-	if ( trackingLocation != _trackingLocation ) {
-		_trackingLocation = trackingLocation;
-		if ( trackingLocation ) {
+	if ( gpsState != _gpsState ) {
+		_gpsState = gpsState;
+		if ( _gpsState != GPS_STATE_NONE ) {
 			[self locateMe:nil];
 		} else {
 			[_locationManager stopUpdatingLocation];
@@ -878,7 +949,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
 		_alertGps = [[UIAlertView alloc] initWithTitle:title message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 		[_alertGps show];
-		self.trackingLocation = NO;
+		self.gpsState = GPS_STATE_NONE;
 		return;
 	}
 
@@ -899,7 +970,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)locationUpdateFailed:(NSError *)error
 {
-	self.trackingLocation = NO;
+	self.gpsState = GPS_STATE_NONE;
 
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
 
@@ -942,10 +1013,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
 	if ( _locationBallLayer ) {
-		double radians = OSMTransformRotation( _screenFromMapTransform );
+		double screenAngle = OSMTransformRotation( _screenFromMapTransform );
 		_locationBallLayer.headingAccuracy	= newHeading.headingAccuracy * M_PI / 180;
-		_locationBallLayer.heading			= (newHeading.trueHeading - 90) * M_PI / 180 + radians;
 		_locationBallLayer.showHeading		= YES;
+		if ( _gpsState == GPS_STATE_LOCATION ) {
+			_locationBallLayer.heading	= (newHeading.trueHeading - 90) * M_PI / 180 + screenAngle;
+		}
+		if ( _gpsState == GPS_STATE_HEADING ) {
+			// rotate to new heading
+			double newAngle = -newHeading.trueHeading * M_PI / 180;
+			double delta = newAngle - screenAngle;
+			[self rotateBy:delta aroundScreenPoint:_locationBallLayer.position];
+			_locationBallLayer.heading	= M_PI*3/2;
+		}
 	}
 }
 
@@ -964,7 +1044,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_gpxLayer addPoint:newLocation];
 	}
 
-	if ( !self.trackingLocation ) {
+	if ( self.gpsState == GPS_STATE_NONE ) {
 		[_locationManager stopUpdatingLocation];
 	}
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
@@ -1119,63 +1199,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 }
 
--(void)setScreenFromMapTransform:(OSMTransform)mapTransform
-{
-	if ( OSMTransformEqual(mapTransform, _screenFromMapTransform) )
-		return;
-
-#if 0
-	NSLog(@"t  = %@", NSStringFromCGAffineTransform(CGAffineTransformFromOSMTransform(mapTransform)));
-
-	double angle = OSMTransformRotation(mapTransform);
-	OSMTransform t = OSMTransformRotate(mapTransform, -angle);
-	NSLog(@"dx,dy = %f, %f",t.tx, t.ty);
-	double scale = 256*OSMTransformScaleX(mapTransform);
-	if ( t.tx > 0 )
-		mapTransform.tx
-#endif
-#if 0
-	double scale = 256*OSMTransformScaleX(mapTransform);
-	if ( mapTransform.tx > 0 ) {
-		mapTransform.tx -= scale;
-	} else if ( mapTransform.tx < -scale ) {
-		mapTransform.tx += scale;
-	}
-#endif
-
-#if TARGET_OS_IPHONE
-	// save pushpinView coordinates
-	CLLocationCoordinate2D pp = { 0 };
-	if ( _pushpinView ) {
-		pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint];
-	}
-#endif
-
-	// update transform
-	_screenFromMapTransform = mapTransform;
-
-	// determine if we've zoomed out enough to disable editing
-	OSMRect box = [self screenLongitudeLatitude];
-	double area = SurfaceArea( box );
-	self.viewStateOverride = area > 10.0*1000*1000;
-
-	[_rulerLayer updateDisplay];
-	[self updateMouseCoordinates];
-	[self updateUserLocationIndicator];
-
-#if TARGET_OS_IPHONE
-	// update pushpin location
-	if ( _pushpinView ) {
-		_pushpinView.arrowPoint = [self screenPointForLatitude:pp.latitude longitude:pp.longitude];
-	}
-#endif
-}
-
 -(void)adjustOriginBy:(CGPoint)delta
 {
 	if ( delta.x == 0.0 && delta.y == 0.0 )
 		return;
-	self.screenFromMapTransform = OSMTransformTranslate( _screenFromMapTransform, delta.x, -delta.y );
+
+	OSMTransform t = OSMTransformTranslate( _screenFromMapTransform, delta.x, delta.y );
+	self.screenFromMapTransform = t;
 }
 
 -(void)adjustZoomBy:(CGFloat)ratio aroundScreenPoint:(CGPoint)zoomCenter
@@ -1204,6 +1234,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	if ( angle == 0.0 )
 		return;
+
 	OSMTransform t = self.screenFromMapTransform;
 	t = OSMTransformTranslate( t, -zoomCenter.x, -zoomCenter.y );
 	t = OSMTransformRotate( t, angle );
@@ -2308,7 +2339,6 @@ checkGrab:
 		CGPoint center = CGPointMake(bounds.origin.x + bounds.size.width/2, bounds.origin.y + bounds.size.height/2);
 		point.x = center.x - point.x;
 		point.y = center.y - point.y;
-		point.y = -point.y;
 		[self adjustOriginBy:point];
 		[self adjustZoomBy:2.0];
 	}
@@ -2332,7 +2362,6 @@ checkGrab:
     } else if ( pan.state == UIGestureRecognizerStateChanged ) {
 //		DLog( @"move pan" );
 		CGPoint translation = [pan translationInView:self];
-		translation.y = -translation.y;
 //		DLog(@"pan %d trans = %f,%f", pan.state, translation.x, translation.y);
 		[self adjustOriginBy:translation];
 		[pan setTranslation:CGPointMake(0,0) inView:self];
@@ -2349,8 +2378,8 @@ checkGrab:
 				[_inertiaTimer invalidate];
 			} else {
 				CGPoint translation;
-				translation.x =  velocity.x / 60 * (duration - deltaTime)/duration;
-				translation.y = -velocity.y / 60 * (duration - deltaTime)/duration;
+				translation.x = velocity.x / 60 * (duration - deltaTime)/duration;
+				translation.y = velocity.y / 60 * (duration - deltaTime)/duration;
 				[self adjustOriginBy:translation];
 			}
 		};
@@ -2488,8 +2517,6 @@ checkGrab:
 	CGPoint delta = CGPointMake( point.x-_lastMouseDragPos.x, point.y-_lastMouseDragPos.y);
 	_lastMouseDragPos = point;
 
-	delta.y = -delta.y;
-
 	if ( _grabbedObject ) {
 		if ( _grabbedObject.isNode ) {
 			[_editorLayer adjustNode:(OsmNode *)_grabbedObject byDistance:delta];
@@ -2589,7 +2616,6 @@ checkGrab:
 			CGRect bounds = self.bounds;
 			CGPoint center = CGPointMake(bounds.origin.x + bounds.size.width/2, bounds.origin.y + bounds.size.height/2);
 			CGPoint delta = { center.x - point.x, center.y - point.y };
-			delta.y = -delta.y;
 			delta.x *= ratio - 1;
 			delta.y *= ratio - 1;
 			[self adjustOriginBy:delta];
@@ -2597,7 +2623,7 @@ checkGrab:
 		[self adjustZoomBy:ratio];
 	} else {
 		// scroll
-		CGPoint delta = CGPointMake( event.scrollingDeltaX, -event.scrollingDeltaY );
+		CGPoint delta = CGPointMake( event.scrollingDeltaX, event.scrollingDeltaY );
 		if ( ! event.hasPreciseScrollingDeltas ) {
 			delta = CGPointMake(delta.x * 10, delta.y * 10);
 		}

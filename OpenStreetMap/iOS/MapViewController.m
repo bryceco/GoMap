@@ -144,9 +144,19 @@
 
 -(IBAction)toggleLocation:(id)sender
 {
-	self.mapView.trackingLocation = !self.mapView.trackingLocation;
-	
-	if ( self.mapView.trackingLocation ) {
+	switch (self.mapView.gpsState) {
+		case GPS_STATE_NONE:
+			self.mapView.gpsState = GPS_STATE_LOCATION;
+			break;
+		case GPS_STATE_LOCATION:
+			self.mapView.gpsState = GPS_STATE_HEADING;
+			break;
+		default:
+			self.mapView.gpsState = GPS_STATE_NONE;
+			break;
+	}
+
+	if ( self.mapView.gpsState != GPS_STATE_NONE ) {
 		UIColor * tint = [UIColor colorWithRed:0.5 green:0.5 blue:1.0 alpha:1.0];
 		self.locationButton.tintColor = tint;
 	} else {
@@ -159,7 +169,7 @@
 
 -(void)applicationWillResignActive:(id)sender
 {
-	if ( self.mapView.trackingLocation ) {
+	while ( self.mapView.gpsState != GPS_STATE_NONE ) {
 		[self toggleLocation:nil];
 	}
 }

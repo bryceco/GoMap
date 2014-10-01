@@ -98,12 +98,11 @@
 	double widthDegrees = widthDegrees = minMeters / metersPerDegree;
 
 	// disable GPS
-	if ( appDelegate.mapView.trackingLocation ) {
+	while ( appDelegate.mapView.gpsState != GPS_STATE_NONE ) {
 		[appDelegate.mapView.viewController toggleLocation:self];
 	}
 
 	[appDelegate.mapView setTransformForLatitude:lat1 longitude:lon1 width:widthDegrees];
-
 
 	[self dismissViewControllerAnimated:YES completion:nil];
 }

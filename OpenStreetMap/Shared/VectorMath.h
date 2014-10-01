@@ -188,7 +188,7 @@ OSMPoint IntersectionOfTwoVectors( OSMPoint p1, OSMPoint v1, OSMPoint p2, OSMPoi
 BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect );
 double SurfaceArea( OSMRect latLon );
 
-
+#if 0
 static inline OSMTransform OSMTransformWrap256( OSMTransform transform )
 {
 	if ( transform.a == 0 )
@@ -207,6 +207,7 @@ static inline OSMTransform OSMTransformWrap256( OSMTransform transform )
 	}
 	return transform;
 }
+#endif
 
 static inline OSMTransform OSMTransformIdentity(void)
 {
