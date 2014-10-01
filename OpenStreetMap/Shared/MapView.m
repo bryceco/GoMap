@@ -263,6 +263,7 @@ CGSize SizeForImage( NSImage * image )
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
 	[self addGestureRecognizer:longPress];
 	UIRotationGestureRecognizer * rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotationGesture:)];
+	rotationGesture.delegate = self;
 	[self addGestureRecognizer:rotationGesture];
 
 	_notes = [Notes new];
@@ -2420,6 +2421,10 @@ checkGrab:
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
+	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
+		return NO;
+	if ( [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
+		return NO;
 	return YES;
 }
 - (void)panInertia:(NSTimer *)timer
