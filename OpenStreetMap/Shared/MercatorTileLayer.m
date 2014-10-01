@@ -21,7 +21,7 @@
 #import "MercatorTileLayer.h"
 
 
-#define CUSTOM_TRANSFORM 0
+#define CUSTOM_TRANSFORM 1
 
 
 extern CGSize SizeForImage(NSImage * image);
@@ -554,16 +554,26 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 #if CUSTOM_TRANSFORM
 	// update locations of tiles
+
+	double tRotation = OSMTransformRotation( _mapView.screenFromMapTransform );
+	double tScale	= OSMTransformScaleX( _mapView.screenFromMapTransform );
+
 	[_layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * tileKey, CALayer * layer, BOOL *stop) {
 		NSArray * a = [tileKey componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
 		int32_t tileZ = (int32_t) [a[0] integerValue];
 		int32_t tileX = (int32_t) [a[1] integerValue];
 		int32_t tileY = (int32_t) [a[2] integerValue];
-
 		double scale = 256.0 / (1 << tileZ);
-		OSMRect rc = { tileX * scale, tileY * scale, scale, scale };
-		rc = [_mapView screenRectFromMapRect:rc];
-		layer.frame = CGRectMake( rc.origin.x, rc.origin.y, rc.size.width, rc.size.height );
+
+		OSMPoint pt = { tileX * scale, tileY * scale };
+		pt = [_mapView screenPointFromMapPoint:pt];
+		layer.position		= CGPointFromOSMPoint( pt );
+		layer.bounds		= CGRectMake( 0, 0, 256, 256 );
+		layer.anchorPoint	= CGPointMake(0, 0);
+
+		scale *= tScale / 256;
+		CGAffineTransform t	= CGAffineTransformScale( CGAffineTransformMakeRotation( tRotation), scale, scale );
+		layer.affineTransform = t;
 	}];
 
 	[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
@@ -605,13 +615,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	NSSet * currentSet = [NSSet setWithArray:currentTiles];
 
 	OSMRect	rect			= [_mapView mapRectFromScreenRect];
-#if CUSTOM_TRANSFORM
-	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(fabs(_mapView.screenFromMapTransform.a)))
-															 : (int32_t)floor(log2(fabs(_mapView.screenFromMapTransform.a)));
-#else
 	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)))
 															 : (int32_t)floor(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)));
-#endif
 	if ( minZoomLevel < 1 ) {
 		minZoomLevel = 1;
 	}

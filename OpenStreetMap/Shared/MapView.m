@@ -761,8 +761,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(OSMRect)screenRectFromMapRect:(OSMRect)rect
 {
 	// using single matrix
-	OSMTransform t = [self screenFromMapTransform];
-	rect = OSMRectApplyAffineTransform(rect, t);
+	rect = OSMRectApplyAffineTransform(rect, self.screenFromMapTransform);
 	return rect;
 }
 
