@@ -554,9 +554,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 #if CUSTOM_TRANSFORM
 	// update locations of tiles
-
-	double tRotation = OSMTransformRotation( _mapView.screenFromMapTransform );
-	double tScale	= OSMTransformScaleX( _mapView.screenFromMapTransform );
+	double tRotation	= OSMTransformRotation( _mapView.screenFromMapTransform );
+	double tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
 
 	[_layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * tileKey, CALayer * layer, BOOL *stop) {
 		NSArray * a = [tileKey componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];

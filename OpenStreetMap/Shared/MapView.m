@@ -641,7 +641,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
+
+
 #pragma mark Coordinate Transforms
+
+
 
 -(void)setScreenFromMapTransform:(OSMTransform)t
 {
@@ -742,21 +746,34 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point
 {
 	point = OSMPointApplyAffineTransform( point, _screenFromMapTransform );
+	return point;
+}
+
+-(CGPoint)wrapScreenPoint:(CGPoint)pt
+{
 	if ( fabs(_screenFromMapTransform.a) < 16 && fabs(_screenFromMapTransform.c) < 16 ) {
 		// only need to do this if we're zoomed out all the way: pick the best world map on which to display location
-		CGRect screenRC = self.bounds;
-		OSMPoint screenCenter = { screenRC.origin.x + screenRC.size.width/2, screenRC.origin.y + screenRC.size.height/2 };
+
+		CGRect rc = self.layer.bounds;
+		OSMPoint unitX = UnitVector(OSMPointMake(_screenFromMapTransform.a, _screenFromMapTransform.b));
+		OSMPoint unitY = { -unitX.y, unitX.x };
 		double mapSize = 256 * OSMTransformScaleX(_screenFromMapTransform);
-		if ( point.x - screenCenter.x > mapSize/2 )
-			point.x -= mapSize;
-		else if ( screenCenter.x - point.x > mapSize/2 )
-			point.x += mapSize;
-		if ( point.y - screenCenter.y > mapSize/2 )
-			point.y -= mapSize;
-		else if ( screenCenter.y - point.y > mapSize/2 )
-			point.y += mapSize;
+		if ( pt.x > rc.origin.x+rc.size.width ) {
+			pt.x -= mapSize*unitX.x;
+			pt.y -= mapSize*unitX.y;
+		} else if ( pt.x < rc.origin.x ) {
+			pt.x += mapSize*unitX.x;
+			pt.y += mapSize*unitX.y;
+		}
+		if ( pt.y > rc.origin.y+rc.size.height ) {
+			pt.x -= mapSize*unitY.x;
+			pt.y -= mapSize*unitY.y;
+		} else if ( pt.y < 0 ) {
+			pt.x += mapSize*unitY.x;
+			pt.y += mapSize*unitY.y;
+		}
 	}
-	return point;
+	return pt;
 }
 
 // get view into 256 map
@@ -1051,7 +1068,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( _locationBallLayer ) {
 		// set new position
 		CLLocationCoordinate2D coord = _locationManager.location.coordinate;
-		_locationBallLayer.position = [self screenPointForLatitude:coord.latitude longitude:coord.longitude];
+		CGPoint point = [self screenPointForLatitude:coord.latitude longitude:coord.longitude];
+		point = [self wrapScreenPoint:point];
+		_locationBallLayer.position = point;
 
 		// set location accuracy
 		CLLocationAccuracy meters = _locationManager.location.horizontalAccuracy;
