@@ -146,7 +146,6 @@ typedef enum {
 @property (readonly,nonatomic)	NSArray				*	backgroundLayers;	// list of all layers that need to be resized, etc.
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
-@property (readonly,nonatomic)	OSMRect							viewportLongitudeLatitude;
 @property (readonly,nonatomic)	CGFloat							mouseLongitude;
 @property (readonly,nonatomic)	CGFloat							mouseLatitude;
 @property (assign,nonatomic)	OSMTransform					screenFromMapTransform;
