@@ -40,13 +40,19 @@
 
 
 
+#if TRANSFORM_3D
+#else
 double Determinant( OSMTransform t )
 {
 	return t.a * t.d - t.b * t.c;
 }
+#endif
 
-OSMTransform OSMTransformInvert( OSMTransform t )
+OSMTransform OSMTransformInvert( const OSMTransform t )
 {
+#if TRANSFORM_3D
+	return CATransform3DInvert(t);
+#else
 	//	|  a   b   0  |
 	//	|  c   d   0  |
 	//	| tx  ty   1  |
@@ -63,7 +69,16 @@ OSMTransform OSMTransformInvert( OSMTransform t )
 	a.d = s * t.a;
 	a.ty = s * (t.b * t.tx - t.a * t.ty);
 
+#if 0 // confirmed: everything works correctly
+	CGAffineTransform cg = { t.a, t.b, t.c, t.d, t.tx, t.ty };
+	CGAffineTransform i = CGAffineTransformInvert( cg );
+	NSLog(@"%@",NSStringFromCGAffineTransform(i));
+	OSMTransform r = { i.a, i.b, i.c, i.d, i.tx, i.ty };
+	return r;
+#endif
+
 	return a;
+#endif
 }
 
 OSMPoint ClosestPointOnLineToPoint( OSMPoint a, OSMPoint b, OSMPoint p )

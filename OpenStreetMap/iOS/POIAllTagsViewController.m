@@ -323,7 +323,7 @@
 	[self.tableView setEditing:editing animated:YES];
 	UIBarButtonItem * button = sender;
 	button.title = editing ? NSLocalizedString(@"Done",nil) : NSLocalizedString(@"Edit",nil);
-	button.style = editing ? UIBarButtonItemStyleDone : UIBarButtonItemStyleBordered;
+	button.style = editing ? UIBarButtonItemStyleDone : UIBarButtonItemStylePlain;
 }
 
 

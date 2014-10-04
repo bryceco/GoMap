@@ -19,6 +19,7 @@
 @class CAShapeLayer;
 @class AerialList;
 @class AerialService;
+@class BuildingsView;
 @class EditorLayerGL;
 @class EditorMapLayer;
 @class GpxLayer;
@@ -143,6 +144,7 @@ typedef enum {
 // overlays
 @property (readonly,nonatomic)	MercatorTileLayer	*	locatorLayer;
 @property (readonly,nonatomic)	MercatorTileLayer	*	gpsTraceLayer;
+@property (readonly,nonatomic)	BuildingsView		*	buildingsLayer;
 @property (readonly,nonatomic)	NSArray				*	backgroundLayers;	// list of all layers that need to be resized, etc.
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;

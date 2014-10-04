@@ -9,8 +9,10 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "iosapi.h"
-#import "BingMapsGeometry.h"
+
 #import "AerialList.h"
+#import "BingMapsGeometry.h"
+#import "BuildingsView.h"
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
@@ -145,6 +147,11 @@ CGSize SizeForImage( NSImage * image )
 		[bg addObject:_editorLayer];
 
 #if 0
+		_buildingsLayer = [[BuildingsView alloc] initWithMapView:self];
+		[self addSubview:_buildingsLayer];
+#endif
+
+#if 0
 		_editorLayerGL = [[EditorLayerGL alloc] initWithMapView:self];
 		_editorLayerGL.zPosition = Z_EDITOR_GL;
 		[bg addObject:_editorLayerGL];
@@ -253,7 +260,7 @@ CGSize SizeForImage( NSImage * image )
 	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f] }
 									   forState:UIControlStateNormal];
 
-#if 0 && DEBUG
+#if DEBUG && 1
 	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerPanGesture:)];
 	panGestureRecognizer.minimumNumberOfTouches = 2;
 	panGestureRecognizer.maximumNumberOfTouches = 2;
@@ -304,6 +311,7 @@ CGSize SizeForImage( NSImage * image )
 	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
 	double latitude		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.latitude"];
 	double longitude	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.longitude"];
+#if 1
 	if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
 		[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 	} else {
@@ -312,6 +320,7 @@ CGSize SizeForImage( NSImage * image )
 
 		[self locateMe:nil];
 	}
+#endif
 }
 
 
@@ -467,19 +476,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[_editorLayer save];
 }
 
--(void)setFrame:(CGRect)frameRect
+-(void)setFrame:(CGRect)rect
 {
-	[super setFrame:frameRect];
+	[super setFrame:rect];
 
 	[CATransaction begin];
 	[CATransaction setAnimationDuration:0.0];
 #if TARGET_OS_IPHONE
-	CGRect rect = CGRectMake(10, frameRect.size.height - 80, 150, 30);
-	_rulerLayer.frame = rect;
+	_rulerLayer.frame = CGRectMake(10, rect.size.height - 80, 150, 30);
 #else
-	CGRect rect = CGRectMake(10, frameRect.size.height - 40, 150, 30);
-	_rulerLayer.frame = rect;
+	_rulerLayer.frame = CGRectMake(10, rect.size.height - 40, 150, 30);
 #endif
+
+	_buildingsLayer.frame = rect;
 
 	for ( CALayer * layer in _backgroundLayers ) {
 		if ( [layer isKindOfClass:[MercatorTileLayer class]] ) {
@@ -660,27 +669,30 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 #endif
 
+#if 1
 	// Wrap around if we translate too far
-	OSMPoint unitX = UnitVector(OSMPointMake(t.a, t.b));
+	OSMPoint unitX = UnitX(t);
 	OSMPoint unitY = { -unitX.y, unitX.x };
-	OSMPoint tran = { t.tx, t.ty };
+	OSMPoint tran = Translation(t);
 	double dx = Dot(tran, unitX);	// translation distance in x direction
 	double dy = Dot(tran, unitY);
-	double mapSize = 256 * OSMTransformScaleX(t);
+	double scale = OSMTransformScaleX(t);
+	double mapSize = 256 * scale;
 	if ( dx > 0 ) {
 		double mul = ceil(dx/mapSize);
-		t = OSMTransformTranslate(t, -mul*mapSize*unitX.x, -mul*mapSize*unitX.y);
+		t = OSMTransformTranslate(t, -mul*mapSize/scale, 0);
 	} else if ( dx < -mapSize ) {
 		double mul = floor(-dx/mapSize);
-		t = OSMTransformTranslate(t, mul*mapSize*unitX.x, mul*mapSize*unitX.y);
+		t = OSMTransformTranslate(t, mul*mapSize/scale, 0);
 	}
 	if ( dy > 0 ) {
 		double mul = ceil(dy/mapSize);
-		t = OSMTransformTranslate(t, -mul*mapSize*unitY.x, -mul*mapSize*unitY.y);
+		t = OSMTransformTranslate(t, 0, -mul*mapSize/scale);
 	} else if ( dy < -mapSize ) {
 		double mul = floor(-dy/mapSize);
-		t = OSMTransformTranslate(t, mul*mapSize*unitY.x, mul*mapSize*unitY.y);
+		t = OSMTransformTranslate(t, 0, mul*mapSize/scale);
 	}
+#endif
 
 	// update transform
 	_screenFromMapTransform = t;
@@ -738,24 +750,22 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point
 {
-	OSMTransform t = [self mapFromScreenTransform];
-	point = OSMPointApplyAffineTransform( point, t );
-	return point;
+	return OSMPointApplyTransform( point, self.mapFromScreenTransform );
 }
 
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point
 {
-	point = OSMPointApplyAffineTransform( point, _screenFromMapTransform );
+	point = OSMPointApplyTransform( point, _screenFromMapTransform );
 	return point;
 }
 
 -(CGPoint)wrapScreenPoint:(CGPoint)pt
 {
-	if ( fabs(_screenFromMapTransform.a) < 16 && fabs(_screenFromMapTransform.c) < 16 ) {
+	if ( YES /*fabs(_screenFromMapTransform.a) < 16 && fabs(_screenFromMapTransform.c) < 16*/ ) {
 		// only need to do this if we're zoomed out all the way: pick the best world map on which to display location
 
 		CGRect rc = self.layer.bounds;
-		OSMPoint unitX = UnitVector(OSMPointMake(_screenFromMapTransform.a, _screenFromMapTransform.b));
+		OSMPoint unitX = UnitX(_screenFromMapTransform);
 		OSMPoint unitY = { -unitX.y, unitX.x };
 		double mapSize = 256 * OSMTransformScaleX(_screenFromMapTransform);
 		if ( pt.x > rc.origin.x+rc.size.width ) {
@@ -779,17 +789,16 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 // get view into 256 map
 -(OSMRect)mapRectFromScreenRect
 {
-	OSMTransform t = [self mapFromScreenTransform];
-	if ( t.a == 0 && t.d == 0 )
-		return OSMRectZero();	// not initialized yet
 	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
-	return OSMRectApplyAffineTransform(screenRect, t);
+	OSMRect rc = OSMRectApplyTransform( screenRect, self.mapFromScreenTransform );
+	//NSLog(@"%@",NSStringFromCGRect(CGRectFromOSMRect(rc)));
+	return rc;
 }
 
 -(OSMRect)screenRectFromMapRect:(OSMRect)rect
 {
 	// using single matrix
-	rect = OSMRectApplyAffineTransform(rect, self.screenFromMapTransform);
+	rect = OSMRectApplyTransform(rect, self.screenFromMapTransform);
 	return rect;
 }
 
@@ -873,16 +882,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude scale:(double)scale
 {
-#if 0
-	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
-	OSMTransform transform = { 0 };
-	CGRect rc = self.layer.bounds;
-	transform.a = scale;
-	transform.d = scale;
-	transform.tx = -point.x*scale + rc.size.width/2;
-	transform.ty = -point.y*scale + rc.size.height/2;
-	self.screenFromMapTransform = transform;
-#else
 	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude];
 	CGRect rc = self.layer.bounds;
 	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
@@ -891,7 +890,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
 	[self adjustOriginBy:delta];
 	[self adjustZoomBy:ratio aroundScreenPoint:center];
-#endif
 }
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
@@ -1045,11 +1043,15 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	if ( ![self isLocationSpecified] ) {
 		// go home
+#if 1
+		[self setTransformForLatitude:47.6858 longitude:-122.1917 width:0.01];
+#else
 		OSMTransform transform = { 0 };
 		transform.a = transform.d = 106344;
 		transform.tx = 9241972;
 		transform.ty = 4112460;
 		self.screenFromMapTransform = transform;
+#endif
 	}
 
 	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",nil),
@@ -1295,7 +1297,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( delta.x == 0.0 && delta.y == 0.0 )
 		return;
 
-	OSMTransform t = OSMTransformTranslate( _screenFromMapTransform, delta.x, delta.y );
+	OSMTransform o = OSMTransformMakeTranslation(delta.x, delta.y);
+	OSMTransform t = OSMTransformConcat( _screenFromMapTransform, o );
 	self.screenFromMapTransform = t;
 }
 
@@ -1312,12 +1315,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		ratio = maxZoomIn / scale;
 	}
 
-	double tx = -zoomCenter.x * (ratio - 1);
-	double ty = -zoomCenter.y * (ratio - 1);
-
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter)];
 	OSMTransform t = _screenFromMapTransform;
+	t = OSMTransformTranslate( t, offset.x, offset.y );
 	t = OSMTransformScale( t, ratio );
-	t = OSMTransformTranslate( t, tx, ty);
+	t = OSMTransformTranslate( t, -offset.x, -offset.y );
 	self.screenFromMapTransform = t;
 }
 
@@ -1326,10 +1328,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( angle == 0.0 )
 		return;
 
-	OSMTransform t = self.screenFromMapTransform;
-	t = OSMTransformTranslate( t, -zoomCenter.x, -zoomCenter.y );
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter)];
+	OSMTransform t = _screenFromMapTransform;
+	t = OSMTransformTranslate( t, offset.x, offset.y );
 	t = OSMTransformRotate( t, angle );
-	t = OSMTransformTranslate( t, zoomCenter.x, zoomCenter.y );
+	t = OSMTransformTranslate( t, -offset.x, -offset.y );
 	self.screenFromMapTransform = t;
 
 	if ( _locationBallLayer ) {
@@ -2248,8 +2251,161 @@ drop_pin:
 #endif
 }
 
-#pragma mark Mouse movment
 
+#pragma mark Gestures
+
+
+#if TARGET_OS_IPHONE
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
+		return NO;
+	if ( [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
+		return NO;
+	return YES;
+}
+- (void)panInertia:(NSTimer *)timer
+{
+	void (^inertiaBlock)() = (void (^)())timer.userInfo;
+	inertiaBlock();
+}
+- (void)handlePanGesture:(UIPanGestureRecognizer *)pan
+{
+	_userOverrodeLocationPosition = YES;
+
+	if ( pan.state == UIGestureRecognizerStateBegan ) {
+		// start pan
+		[_inertiaTimer invalidate];
+	} else if ( pan.state == UIGestureRecognizerStateChanged ) {
+		// move pan
+		CGPoint translation = [pan translationInView:self];
+		[self adjustOriginBy:translation];
+		[pan setTranslation:CGPointMake(0,0) inView:self];
+	} else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ) {	// cancelled occurs when we throw an error dialog
+		// finish pan
+		CGPoint velocity = [pan velocityInView:self];
+		NSDate * startTime = [NSDate date];
+		double interval = 1.0/60.0;
+		double duration = 0.5;
+		void (^inertiaBlock)() = ^{
+			double deltaTime = [[NSDate date] timeIntervalSinceDate:startTime];
+			if ( deltaTime >= duration ) {
+				[_inertiaTimer invalidate];
+			} else {
+				CGPoint translation;
+				translation.x = velocity.x / 60 * (duration - deltaTime)/duration;
+				translation.y = velocity.y / 60 * (duration - deltaTime)/duration;
+				[self adjustOriginBy:translation];
+			}
+		};
+		_inertiaTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(panInertia:) userInfo:inertiaBlock repeats:YES];
+	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
+		DLog( @"pan gesture failed" );
+	} else {
+		DLog( @"pan gesture %d", (int)pan.state);
+	}
+}
+- (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
+{
+	if ( pinch.state != UIGestureRecognizerStateChanged )
+		return;
+
+	_userOverrodeLocationZoom = YES;
+
+	[_inertiaTimer invalidate];
+
+
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:0.0];
+
+	CGPoint zoomCenter = [pinch locationInView:self];
+	[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];
+
+	[CATransaction commit];
+
+	[pinch setScale:1.0];
+}
+- (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap
+{
+	if ( tap.state == UIGestureRecognizerStateEnded ) {
+		CGPoint point = [tap locationInView:self];
+		BOOL extendedCommand = NO;
+		if ( tap.numberOfTapsRequired == 1 ) {
+			[self singleClick:point extendedCommand:extendedCommand];
+		}
+	}
+}
+
+- (IBAction)handleLongPressGesture:(UILongPressGestureRecognizer *)longPress
+{
+	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
+		CGPoint point = [longPress locationInView:self];
+
+		NSArray * objects = [self.editorLayer osmHitTestMultiple:point];
+		if ( objects.count < 2 )
+			return;
+		if ( objects.count > 5 )
+			objects = [objects subarrayWithRange:NSMakeRange(0, 5)];
+		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+		_multiSelectObjects = objects;
+		for ( OsmBaseObject * obj in objects ) {
+			NSString * title = obj.friendlyDescription;
+			[_multiSelectSheet addButtonWithTitle:title];
+		}
+		_multiSelectSheet.cancelButtonIndex = [_multiSelectSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
+		[_multiSelectSheet showInView:self];
+
+	}
+}
+
+- (IBAction)handleRotationGesture:(UIRotationGestureRecognizer *)rotationGesture
+{
+	if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
+		// ignore
+	} else {
+		CGPoint centerPoint = [rotationGesture locationInView:self];
+		CGFloat angle = rotationGesture.rotation - _rotationCurrent;
+		[self rotateBy:angle aroundScreenPoint:centerPoint];
+	}
+	_rotationCurrent = rotationGesture.rotation;
+}
+
+
+- (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
+{
+#if TRANSFORM_3D && 0
+	CGPoint translation = [pan translationInView:self];
+	double delta = -translation.y/20 / 180 * M_PI;
+
+	// limit maximum rotation
+	OSMTransform t = _screenFromMapTransform;
+	double currentRotation = atan2( t.m23, t.m22 );
+	double maxRotation = 60 * (M_PI/180);
+	if ( currentRotation+delta > maxRotation )
+		delta = maxRotation - currentRotation;
+	if ( currentRotation+delta < 0 )
+		delta = -currentRotation;
+
+	CGRect rc = self.bounds;
+	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center)];
+
+	//	t.m34 = 1.0 / -2000;
+	t = OSMTransformTranslate( t, offset.x, offset.y );
+	t = CATransform3DRotate(t, delta, 1.0, 0.0, 0.0);
+	t = OSMTransformTranslate( t, -offset.x, -offset.y );
+	self.screenFromMapTransform = t;
+#endif
+}
+
+- (void)updateSpeechBalloonPosition
+{
+}
+#endif
+
+
+#pragma mark Mouse movment
 
 - (void)singleClick:(CGPoint)point extendedCommand:(BOOL)extendedCommand
 {
@@ -2413,9 +2569,10 @@ checkGrab:
 	}
 }
 
+#if !TARGET_OS_IPHONE
+
 - (void)doubleClick:(CGPoint)point
 {
-#if !TARGET_OS_IPHONE
 	OsmBaseObject * selection = [_editorLayer osmHitTestSelection:point];
 	if ( selection ) {
 
@@ -2433,159 +2590,7 @@ checkGrab:
 		[self adjustOriginBy:point];
 		[self adjustZoomBy:2.0];
 	}
-#endif
 }
-
-#if TARGET_OS_IPHONE
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
-		return NO;
-	if ( [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
-		return NO;
-	return YES;
-}
-- (void)panInertia:(NSTimer *)timer
-{
-	void (^inertiaBlock)() = (void (^)())timer.userInfo;
-	inertiaBlock();
-}
-- (void)handlePanGesture:(UIPanGestureRecognizer *)pan
-{
-	_userOverrodeLocationPosition = YES;
-
-	if ( pan.state == UIGestureRecognizerStateBegan ) {
-		[_inertiaTimer invalidate];
-//		DLog( @"start pan" );
-    } else if ( pan.state == UIGestureRecognizerStateChanged ) {
-//		DLog( @"move pan" );
-		CGPoint translation = [pan translationInView:self];
-//		DLog(@"pan %d trans = %f,%f", pan.state, translation.x, translation.y);
-		[self adjustOriginBy:translation];
-		[pan setTranslation:CGPointMake(0,0) inView:self];
-    } else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ) {	// cancelled occurs when we throw an error dialog
-//		DLog( @"finish pan" );
-		CGPoint velocity = [pan velocityInView:self];
-//		DLog(@"pan %d vel = %f,%f",pan.state,velocity.x,velocity.y);
-		NSDate * startTime = [NSDate date];
-		double interval = 1.0/60.0;
-		double duration = 0.5;
-		void (^inertiaBlock)() = ^{
-			double deltaTime = [[NSDate date] timeIntervalSinceDate:startTime];
-			if ( deltaTime >= duration ) {
-				[_inertiaTimer invalidate];
-			} else {
-				CGPoint translation;
-				translation.x = velocity.x / 60 * (duration - deltaTime)/duration;
-				translation.y = velocity.y / 60 * (duration - deltaTime)/duration;
-				[self adjustOriginBy:translation];
-			}
-		};
-		_inertiaTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(panInertia:) userInfo:inertiaBlock repeats:YES];
-	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
-		DLog( @"pan gesture failed" );
-	} else {
-		DLog( @"pan gesture %d", (int)pan.state);
-	}
-}
-- (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
-{
-#if 0 && DEBUG
-	if ( pinch.state == UIGestureRecognizerStateEnded ) {
-		OSMRect box = [self viewportLongitudeLatitude];
-		[_notes updateForRegion:box completion:^{
-			DLog(@"%ld notes", (long)_notes.list.count);
-		}];
-	}
-#endif
-
-	if ( pinch.state != UIGestureRecognizerStateChanged )
-		return;
-
-	_userOverrodeLocationZoom = YES;
-
-	[_inertiaTimer invalidate];
-
-
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:0.0];
-
-	CGPoint zoomCenter = [pinch locationInView:self];
-	[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];
-
-	[CATransaction commit];
-
-	[pinch setScale:1.0];
-}
-- (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap
-{
-	if ( tap.state == UIGestureRecognizerStateEnded ) {
-		CGPoint point = [tap locationInView:self];
-		BOOL extendedCommand = NO;
-		if ( tap.numberOfTapsRequired == 1 ) {
-			[self singleClick:point extendedCommand:extendedCommand];
-		} else if ( tap.numberOfTapsRequired == 2 ) {
-			[self doubleClick:point];
-		}
-	}
-}
-
-- (IBAction)handleLongPressGesture:(UILongPressGestureRecognizer *)longPress
-{
-	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
-		CGPoint point = [longPress locationInView:self];
-
-		NSArray * objects = [self.editorLayer osmHitTestMultiple:point];
-		if ( objects.count < 2 )
-			return;
-		if ( objects.count > 5 )
-			objects = [objects subarrayWithRange:NSMakeRange(0, 5)];
-		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-		_multiSelectObjects = objects;
-		for ( OsmBaseObject * obj in objects ) {
-			NSString * title = obj.friendlyDescription;
-			[_multiSelectSheet addButtonWithTitle:title];
-		}
-		_multiSelectSheet.cancelButtonIndex = [_multiSelectSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
-		[_multiSelectSheet showInView:self];
-
-	}
-}
-
-- (IBAction)handleRotationGesture:(UIRotationGestureRecognizer *)rotationGesture
-{
-	if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
-		// ignore
-	} else {
-		CGPoint centerPoint = [rotationGesture locationInView:self];
-		CGFloat angle = rotationGesture.rotation - _rotationCurrent;
-		[self rotateBy:angle aroundScreenPoint:centerPoint];
-	}
-	_rotationCurrent = rotationGesture.rotation;
-}
-
-
-- (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
-{
-	static double angle = 0.0;
-	CGPoint translation = [pan translationInView:self];
-	angle = translation.y;
-	if ( angle > 60 )
-		angle = 60;
-	if ( angle < -60 )
-		angle = -60;
-	CATransform3D t = CATransform3DIdentity;
-	t.m34 = 1.0 / -2000;
-	t = CATransform3DRotate(t, angle * M_PI / 180.0f, 1.0, 0.0, 0.0);
-	self.layer.transform = t;
-}
-
-- (void)updateSpeechBalloonPosition
-{
-}
-
-#else
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
@@ -2754,6 +2759,6 @@ checkGrab:
 	[self setCursorForPoint:point];
 }
 #endif
-#endif
+#endif	// desktop
 
 @end

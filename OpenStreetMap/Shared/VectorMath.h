@@ -9,6 +9,10 @@
 #ifndef Rocket_VectorMath_h
 #define Rocket_VectorMath_h
 
+
+#define TRANSFORM_3D 1
+
+
 typedef struct _OSMPoint {
 	double	x, y;
 } OSMPoint;
@@ -22,6 +26,9 @@ typedef struct _OSMRect {
 	OSMSize		size;
 } OSMRect;
 
+#if TRANSFORM_3D
+typedef CATransform3D OSMTransform;
+#else
 typedef struct _OSMTransform {
 //	|  a   b   0  |
 //	|  c   d   0  |
@@ -29,6 +36,7 @@ typedef struct _OSMTransform {
 	double a, b, c, d;
 	double tx, ty;
 } OSMTransform;
+#endif
 
 @interface OSMPointBoxed : NSObject
 @property (readonly,nonatomic) OSMPoint	point;
@@ -40,6 +48,7 @@ typedef struct _OSMTransform {
 +(OSMRectBoxed *)rectWithRect:(OSMRect)rect;
 @end
 
+#pragma mark Point
 
 static inline OSMPoint OSMPointMake(double x, double y)
 {
@@ -55,78 +64,6 @@ static inline CGPoint CGPointFromOSMPoint( OSMPoint pt )
 {
 	CGPoint p = { (CGFloat)pt.x, (CGFloat)pt.y };
 	return p;
-}
-
-static inline OSMRect OSMRectMake(double x, double y, double w, double h)
-{
-	OSMRect rc = { x, y, w, h };
-	return rc;
-}
-
-static inline CGRect CGRectFromOSMRect( OSMRect rc )
-{
-	CGRect r = { (CGFloat)rc.origin.x, (CGFloat)rc.origin.y, (CGFloat)rc.size.width, (CGFloat)rc.size.height };
-	return r;
-}
-
-static inline OSMRect OSMRectZero()
-{
-	OSMRect rc = { 0 };
-	return rc;
-}
-
-static inline OSMRect OSMRectOffset( OSMRect rect, double dx, double dy )
-{
-	rect.origin.x += dx;
-	rect.origin.y += dy;
-	return rect;
-}
-
-static inline OSMTransform OSMAffineTransformInvert( OSMTransform transform );
-static inline OSMRect OSMRectApplyAffineTransform( OSMRect rect, OSMTransform transform );
-
-static inline OSMRect OSMRectFromCGRect( CGRect cg )
-{
-	OSMRect rc = { cg.origin.x, cg.origin.y, cg.size.width, cg.size.height };
-	return rc;
-}
-static inline BOOL OSMRectContainsPoint( OSMRect rc, OSMPoint pt )
-{
-	return	pt.x >= rc.origin.x &&
-			pt.x <= rc.origin.x + rc.size.width &&
-			pt.y >= rc.origin.y &&
-			pt.y <= rc.origin.y + rc.size.height;
-}
-static inline BOOL OSMRectIntersectsRect( OSMRect a, OSMRect b )
-{
-	if ( a.origin.x >= b.origin.x + b.size.width )
-		return NO;
-	if ( a.origin.x + a.size.width < b.origin.x )
-		return NO;
-	if ( a.origin.y >= b.origin.y + b.size.height )
-		return NO;
-	if ( a.origin.y + a.size.height < b.origin.y )
-		return NO;
-	return YES;
-}
-
-
-static inline OSMRect OSMRectUnion( OSMRect a, OSMRect b )
-{
-	double minX = MIN(a.origin.x,b.origin.x);
-	double minY = MIN(a.origin.y,b.origin.y);
-	double maxX = MAX(a.origin.x+a.size.width,b.origin.x+b.size.width);
-	double maxY = MAX(a.origin.y+a.size.height,b.origin.y+b.size.height);
-	OSMRect r = { minX, minY, maxX - minX, maxY - minY };
-	return r;
-}
-
-static inline BOOL OSMRectContainsRect( OSMRect a, OSMRect b )
-{
-	return	a.origin.x <= b.origin.x &&
-			a.origin.y <= b.origin.y &&
-			a.origin.x + a.size.width >= b.origin.x + b.size.width &&
-			a.origin.y + a.size.height >= b.origin.y + b.size.height;
 }
 
 
@@ -188,32 +125,110 @@ OSMPoint IntersectionOfTwoVectors( OSMPoint p1, OSMPoint v1, OSMPoint p2, OSMPoi
 BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect );
 double SurfaceArea( OSMRect latLon );
 
-#if 0
-static inline OSMTransform OSMTransformWrap256( OSMTransform transform )
+#pragma mark Rect
+
+static inline OSMRect OSMRectMake(double x, double y, double w, double h)
 {
-	if ( transform.a == 0 )
-		return transform;
-	while ( transform.tx >= 128 * transform.a ) {
-		transform.tx -= 256 * transform.a;
-	}
-	while ( transform.tx <= -128 * transform.a ) {
-		transform.tx += 256 * transform.a;
-	}
-	while ( transform.ty >= 128 * transform.a ) {
-		transform.ty -= 256 * transform.a;
-	}
-	while ( transform.ty <= -128 * transform.a ) {
-		transform.ty += 256 * transform.a;
-	}
-	return transform;
+	OSMRect rc = { x, y, w, h };
+	return rc;
 }
+
+static inline CGRect CGRectFromOSMRect( OSMRect rc )
+{
+	CGRect r = { (CGFloat)rc.origin.x, (CGFloat)rc.origin.y, (CGFloat)rc.size.width, (CGFloat)rc.size.height };
+	return r;
+}
+
+static inline OSMRect OSMRectZero()
+{
+	OSMRect rc = { 0 };
+	return rc;
+}
+
+static inline OSMRect OSMRectOffset( OSMRect rect, double dx, double dy )
+{
+	rect.origin.x += dx;
+	rect.origin.y += dy;
+	return rect;
+}
+
+static inline OSMRect OSMRectFromCGRect( CGRect cg )
+{
+	OSMRect rc = { cg.origin.x, cg.origin.y, cg.size.width, cg.size.height };
+	return rc;
+}
+static inline BOOL OSMRectContainsPoint( OSMRect rc, OSMPoint pt )
+{
+	return	pt.x >= rc.origin.x &&
+	pt.x <= rc.origin.x + rc.size.width &&
+	pt.y >= rc.origin.y &&
+	pt.y <= rc.origin.y + rc.size.height;
+}
+static inline BOOL OSMRectIntersectsRect( OSMRect a, OSMRect b )
+{
+	if ( a.origin.x >= b.origin.x + b.size.width )
+		return NO;
+	if ( a.origin.x + a.size.width < b.origin.x )
+		return NO;
+	if ( a.origin.y >= b.origin.y + b.size.height )
+		return NO;
+	if ( a.origin.y + a.size.height < b.origin.y )
+		return NO;
+	return YES;
+}
+
+
+static inline OSMRect OSMRectUnion( OSMRect a, OSMRect b )
+{
+	double minX = MIN(a.origin.x,b.origin.x);
+	double minY = MIN(a.origin.y,b.origin.y);
+	double maxX = MAX(a.origin.x+a.size.width,b.origin.x+b.size.width);
+	double maxY = MAX(a.origin.y+a.size.height,b.origin.y+b.size.height);
+	OSMRect r = { minX, minY, maxX - minX, maxY - minY };
+	return r;
+}
+
+static inline BOOL OSMRectContainsRect( OSMRect a, OSMRect b )
+{
+	return	a.origin.x <= b.origin.x &&
+	a.origin.y <= b.origin.y &&
+	a.origin.x + a.size.width >= b.origin.x + b.size.width &&
+	a.origin.y + a.size.height >= b.origin.y + b.size.height;
+}
+
+
+
+#pragma mark Transform
+
+OSMTransform OSMTransformInvert( OSMTransform t );
+
+
+static inline CGAffineTransform CGAffineTransformFromOSMTransform( OSMTransform transform )
+{
+#if TRANSFORM_3D
+	return CATransform3DGetAffineTransform(transform);
+#else
+	CGAffineTransform t;
+	t.a = transform.a;
+	t.b = transform.b;
+	t.c = transform.c;
+	t.d = transform.d;
+	t.tx = transform.tx;
+	t.ty = transform.ty;
+	return t;
 #endif
+}
+
 
 static inline OSMTransform OSMTransformIdentity(void)
 {
+#if TRANSFORM_3D
+	return CATransform3DIdentity;
+#else
 	OSMTransform transform = { 0 };
 	transform.a = transform.d = 1.0;
 	return transform;
+#endif
 }
 
 static inline BOOL OSMTransformEqual( OSMTransform t1, OSMTransform t2 )
@@ -223,38 +238,19 @@ static inline BOOL OSMTransformEqual( OSMTransform t1, OSMTransform t2 )
 
 static inline double OSMTransformScaleX( OSMTransform t )
 {
+#if TRANSFORM_3D
+	double d = sqrt( t.m11*t.m11 + t.m12*t.m12 + t.m13*t.m13 );
+	return d;
+#else
 	return hypot(t.a,t.c);
-}
-static inline double OSMTransformRotation( OSMTransform t )
-{
-	return atan2( t.b, t.a );
-}
-
-static inline OSMTransform OSMTransformMakeTranslation( double dx, double dy )
-{
-	OSMTransform t = { 1, 0, 0, 1, dx, dy };
-	return t;
-}
-
-static inline OSMTransform OSMTransformTranslate( OSMTransform transform, double dx, double dy )
-{
-	transform.tx += dx;
-	transform.ty += dy;
-	return transform;
-}
-static inline OSMTransform OSMTransformScale( OSMTransform transform, double scale )
-{
-	transform.a *= scale;
-	transform.b *= scale;
-	transform.c *= scale;
-	transform.d *= scale;
-	transform.tx *= scale;
-	transform.ty *= scale;
-	return transform;
+#endif
 }
 
 static inline OSMTransform OSMTransformConcat( OSMTransform a, OSMTransform b )
 {
+#if TRANSFORM_3D
+	return CATransform3DConcat(a, b);
+#else
 	//	|  a   b   0  |
 	//	|  c   d   0  |
 	//	| tx  ty   1  |
@@ -266,51 +262,124 @@ static inline OSMTransform OSMTransformConcat( OSMTransform a, OSMTransform b )
 	c.tx = a.tx*b.a + a.ty*b.c + b.tx;
 	c.ty = a.tx*b.b + a.ty*b.d + b.ty;
 	return c;
+#endif
 }
 
+static inline double OSMTransformRotation( OSMTransform t )
+{
+#if TRANSFORM_3D
+	return atan2( t.m12, t.m11 );
+#else
+	return atan2( t.b, t.a );
+#endif
+}
+
+static inline OSMTransform OSMTransformMakeTranslation( double dx, double dy )
+{
+#if TRANSFORM_3D
+	return CATransform3DMakeTranslation(dx, dy, 0);
+#else
+	OSMTransform t = { 1, 0, 0, 1, dx, dy };
+	return t;
+#endif
+}
+
+static inline OSMTransform OSMTransformTranslate( OSMTransform t, double dx, double dy )
+{
+#if TRANSFORM_3D
+	return CATransform3DTranslate(t, dx, dy, 0);
+#else
+	t.tx += t.a * dx + t.c * dy;
+	t.ty += t.b * dx + t.d * dy;
+	return t;
+#endif
+}
+static inline OSMTransform OSMTransformScale( OSMTransform t, double scale )
+{
+#if TRANSFORM_3D
+	return CATransform3DScale(t, scale, scale, scale);
+#else
+	t.a *= scale;
+	t.b *= scale;
+	t.c *= scale;
+	t.d *= scale;
+	return t;
+#endif
+}
 
 static inline OSMTransform OSMTransformRotate( OSMTransform transform, double angle )
 {
+#if TRANSFORM_3D
+	return CATransform3DRotate( transform, angle, 0, 0, 1 );
+#else
 	double s = sin(angle);
 	double c = cos(angle);
-
 	OSMTransform t = { c, s, -s, c, 0, 0 };
-	return OSMTransformConcat( transform, t );
+	return OSMTransformConcat( t, transform );
+#endif
 }
 
-static inline OSMPoint OSMPointApplyAffineTransform( OSMPoint pt, OSMTransform transform )
+static inline OSMPoint OSMPointApplyTransform( OSMPoint pt, OSMTransform t )
 {
+#if TRANSFORM_3D
+	double zp = 0.0;
+	double x = t.m11 * pt.x + t.m21 * pt.y + t.m31 * zp + t.m41;
+	double y = t.m12 * pt.x + t.m22 * pt.y + t.m32 * zp + t.m42;
+#if 0
+	if ( t.m34 ) {
+		double z = t.m13 * pt.x + t.m23 * pt.y + t.m33 * zp + t.m43;
+		// use z and m34 to "shrink" objects as they get farther away (perspective)
+		// http://en.wikipedia.org/wiki/3D_projection
+		double ex = x;	// eye position
+		double ey = y;
+		double ez = z;
+		OSMTransform p = {
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			-ex/ez, -ey/ez, 1, 1/ez,
+			0, 0, 0, 0
+		};
+		x += -ex/ez;
+		y += -ey/ez;
+	}
+#endif
+	return OSMPointMake( x, y );
+#else
 	OSMPoint p;
-	p.x = pt.x * transform.a + pt.y * transform.c + transform.tx;
-	p.y = pt.x * transform.b + pt.y * transform.d + transform.ty;
+	p.x = pt.x * t.a + pt.y * t.c + t.tx;
+	p.y = pt.x * t.b + pt.y * t.d + t.ty;
 	return p;
-}
-static inline double OSMTransformTranslationX( OSMTransform t )
-{
-	return t.tx;
+#endif
 }
 
-static inline OSMRect OSMRectApplyAffineTransform( OSMRect rc, OSMTransform transform )
+static inline OSMRect OSMRectApplyTransform( OSMRect rc, OSMTransform transform )
 {
-	OSMPoint p1 = OSMPointApplyAffineTransform( rc.origin, transform);
-	OSMPoint p2 = OSMPointApplyAffineTransform( OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height), transform);
+	OSMPoint p1 = OSMPointApplyTransform( rc.origin, transform);
+	OSMPoint p2 = OSMPointApplyTransform( OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height), transform);
 	OSMRect r2 = { p1.x, p1.y, p2.x-p1.x, p2.y-p1.y };
 	return r2;
 }
 
-OSMTransform OSMTransformInvert( OSMTransform t );
-
-static inline CGAffineTransform CGAffineTransformFromOSMTransform( OSMTransform transform )
+static inline OSMPoint UnitX( OSMTransform t )
 {
-	CGAffineTransform t;
-	t.a = transform.a;
-	t.b = transform.b;
-	t.c = transform.c;
-	t.d = transform.d;
-	t.tx = transform.tx;
-	t.ty = transform.ty;
-	return t;
+#if TRANSFORM_3D
+	OSMPoint p = UnitVector(OSMPointMake(t.m11, t.m12));
+	return p;
+#else
+	return UnitVector(OSMPointMake(t.a, t.b));
+#endif
 }
+
+static inline OSMPoint Translation( OSMTransform t )
+{
+#if TRANSFORM_3D
+	OSMPoint p = OSMPointMake(t.m41, t.m42);
+	return p;
+#else
+	return OSMPointMake( t.tx, t.ty );
+#endif
+}
+
 
 
 static inline double latp2lat(double a)

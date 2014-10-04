@@ -256,38 +256,13 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 
 #pragma mark Drawing
 
--(OSMPoint)pointForLat:(double)lat lon:(double)lon
-{
-	OSMPoint pt = [MapView mapPointForLatitude:lat longitude:lon];
-	OSMTransform transform = _mapView.screenFromMapTransform;
-#if 1
-	OSMPoint p2 = { pt.x - 128, pt.y - 128 };
-	p2 = OSMPointApplyAffineTransform( p2, transform );
-	pt.x = p2.x;
-	pt.y = p2.y;
-#else
-	pt.x = (pt.x-128)*transform.a + transform.tx;
-	pt.y = (pt.y-128)*transform.a + transform.ty;
-#endif
-
-	// modulus
-	double denom = 256*transform.a;
-	if ( pt.x > denom/2 )
-		pt.x -= denom;
-	else if ( pt.x < -denom/2 )
-		pt.x += denom;
-
-	return pt;
-}
-
-
 
 -(void)drawTrack:(NSArray *)way context:(CGContextRef)ctx
 {
 	CGMutablePathRef	path = CGPathCreateMutable();
 	NSInteger			count = 0;
 	for ( GpxPoint * point in self.activeTrack.points ) {
-		OSMPoint pt = [self pointForLat:point.latitude lon:point.longitude];
+		CGPoint pt = [_mapView screenPointForLatitude:point.latitude longitude:point.longitude];
 		if ( count == 0 ) {
 			CGPathMoveToPoint(path, NULL, pt.x, pt.y );
 		} else {

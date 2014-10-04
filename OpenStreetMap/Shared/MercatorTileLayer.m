@@ -21,7 +21,7 @@
 #import "MercatorTileLayer.h"
 
 
-#define CUSTOM_TRANSFORM 1
+#define CUSTOM_TRANSFORM 0
 
 
 extern CGSize SizeForImage(NSImage * image);
@@ -357,12 +357,12 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 		layer = [CALayer layer];
 		layer.actions = self.actions;
 		layer.zPosition = zoomLevel;
-		layer.anchorPoint = CGPointMake(0,1);
 		layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
 		layer.opaque = YES;
 		layer.hidden = YES;
 		[layer setValue:tileKey	forKey:@"tileKey"];
 #if !CUSTOM_TRANSFORM
+		layer.anchorPoint = CGPointMake(0,1);
 		double scale = 256.0 / (1 << zoomLevel);
 		layer.frame = CGRectMake( tileX * scale, tileY * scale, scale, scale );
 #endif
