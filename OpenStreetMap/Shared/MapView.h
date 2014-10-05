@@ -119,6 +119,7 @@ typedef enum {
 	CLLocation						*	_currentLocation;
 
 	CGFloat								_rotationCurrent;
+	CGFloat								_birdsEyeRotation;
 }
 
 #if TARGET_OS_IPHONE
@@ -166,13 +167,18 @@ typedef enum {
 
 +(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
 +(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
--(OSMRect)mapRectFromScreenRect;
+
 -(OSMRect)screenLongitudeLatitude;
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude;
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point;
--(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
+
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
+-(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point;
+
+-(OSMRect)mapRectFromScreenRect;
+-(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
 -(OSMRect)boundingMapRectForScreen;
+
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;
 -(double)metersPerPixel;
 

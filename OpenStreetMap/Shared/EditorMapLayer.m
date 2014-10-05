@@ -379,6 +379,9 @@ static inline void Sort2( double p[] )
 
 static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoint * pts )
 {
+	if ( isinf(p1.x) || isinf(p2.x) )
+		return 0;
+
 	double top		= rect.origin.y;
 	double bottom	= rect.origin.y + rect.size.height;
 	double left		= rect.origin.x;
@@ -595,6 +598,8 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	BOOL first = YES;
 	for ( OSMPointBoxed * point in list ) {
 		OSMPoint p = point.point;
+		if ( isinf(p.x) )
+			break;
 		if ( first ) {
 			first = NO;
 			CGContextMoveToPoint(ctx, p.x, p.y );
@@ -915,9 +920,9 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 -(OSMPoint)pointForLat:(double)lat lon:(double)lon
 {
-	OSMPoint pt = [MapView mapPointForLatitude:lat longitude:lon];
-	pt = [_mapView screenPointFromMapPoint:pt];
-	return pt;
+	OSMPoint mapPt = [MapView mapPointForLatitude:lat longitude:lon];
+	OSMPoint screenPt = [_mapView screenPointFromMapPoint:mapPt];
+	return screenPt;
 }
 
 
@@ -927,6 +932,8 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	BOOL first = YES;
 	for ( OsmNode * node in way.nodes ) {
 		OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+		if ( isinf(pt.x) )
+			break;
 		if ( first ) {
 			CGPathMoveToPoint(path, NULL, pt.x, pt.y);
 			first = NO;
@@ -1562,6 +1569,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	}
 }
 
+// clip a way to the path inside the viewable rect so we can draw a name on it
 -(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength CF_RETURNS_RETAINED
 {
 	CGMutablePathRef	path = NULL;

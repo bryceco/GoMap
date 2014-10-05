@@ -417,21 +417,13 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-	if ( [coder allowsKeyedCoding] ) {
-		[coder encodeObject:_rootQuad forKey:@"rootQuad"];
-	} else {
-		[coder encodeObject:_rootQuad];
-	}
+	[coder encodeObject:_rootQuad forKey:@"rootQuad"];
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if ( self ) {
-		if ( [coder allowsKeyedCoding] ) {
-			_rootQuad	= [coder decodeObjectForKey:@"rootQuad"];
-		} else {
-			_rootQuad	= [coder decodeObject];
-		}
+		_rootQuad	= [coder decodeObjectForKey:@"rootQuad"];
 	}
 	return self;
 }

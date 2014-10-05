@@ -15,7 +15,7 @@
 #if DEBUG && 0
 #define USE_RTREE	1
 #else
-#define USEE_RTREE	0
+#define USE_RTREE	0
 #endif
 
 
@@ -49,6 +49,8 @@ static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
 
 
 @implementation Database
+
+#pragma mark initialize
 
 - (NSString *)databasePath
 {
@@ -114,6 +116,8 @@ static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
 {
 	int rc;
 
+	// nodes
+
 	rc = sqlite3_exec(_db, "CREATE TABLE IF NOT EXISTS nodes("
 					  "	IDENT		INT8	unique PRIMARY KEY	NOT NULL,"
 					  "	USER        varchar(255)		NOT NULL,"
@@ -134,6 +138,8 @@ static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
 					  "FOREIGN KEY(ident) REFERENCES nodes(ident) on delete cascade);",
 					  0, 0, 0);
 	DbgAssert(rc == SQLITE_OK);
+
+	// ways
 
 	rc = sqlite3_exec(_db, "CREATE TABLE IF NOT EXISTS ways("
 					  "	IDENT		INT8	unique PRIMARY KEY	NOT NULL,"
@@ -156,12 +162,46 @@ static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
 	DbgAssert(rc == SQLITE_OK);
 
 	rc = sqlite3_exec(_db, "create table if not exists way_tags("
-					  "ident int8 not null,"
-					  "key varchar(255) not null,"
-					  "value varchar(255) not null,"
+					  "ident	int8			not null,"
+					  "key		varchar(255)	not null,"
+					  "value	varchar(255)	not null,"
 					  "FOREIGN KEY(ident) REFERENCES ways(ident) on delete cascade);",
 					  0, 0, 0);
 	DbgAssert(rc == SQLITE_OK);
+
+	// relations
+
+	rc = sqlite3_exec(_db, "CREATE TABLE IF NOT EXISTS relations("
+					  "	IDENT		INT8	unique PRIMARY KEY	NOT NULL,"
+					  "	USER        varchar(255)		NOT NULL,"
+					  "	TIMESTAMP   varchar(255)		NOT NULL,"
+					  "	VERSION     INT					NOT NULL,"
+					  "	CHANGESET   INT8				NOT NULL,"
+					  "	UID         INT					NOT NULL,"
+					  "	membercount INT					NOT NULL"
+					  ");",
+					  0, 0, 0);
+	DbgAssert(rc == SQLITE_OK);
+
+	rc = sqlite3_exec(_db, "create table if not exists relation_members("
+					  "ident		int8			not null,"
+					  "type			varchar[255]	not null,"
+					  "ref			int8			not null,"
+					  "role			varchar[255]	not null,"
+					  "member_index	int4			not null,"
+					  "FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);",
+					  0, 0, 0);
+	DbgAssert(rc == SQLITE_OK);
+
+	rc = sqlite3_exec(_db, "create table if not exists relation_tags("
+					  "ident	int8			not null,"
+					  "key		varchar(255)	not null,"
+					  "value	varchar(255)	not null,"
+					  "FOREIGN KEY(ident) REFERENCES relations(ident) on delete cascade);",
+					  0, 0, 0);
+	DbgAssert(rc == SQLITE_OK);
+
+	// spatial
 
 #if USE_RTREE
 	rc = sqlite3_exec(_db, "create virtual table if not exists spatial using rtree("
@@ -175,6 +215,9 @@ static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
 	DbgAssert(rc == SQLITE_OK);
 #endif
 }
+
+
+#pragma mark spatial
 
 #if USE_RTREE
 -(BOOL)deleteSpatial:(OsmBaseObject *)object
@@ -226,6 +269,8 @@ retry:
 	return rc == SQLITE_DONE;
 }
 #endif
+
+#pragma mark save
 
 -(BOOL)saveNodes:(NSArray *)nodes
 {
@@ -372,6 +417,93 @@ retry:
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
+
+-(BOOL)saveRelations:(NSArray *)relations
+{
+	if ( relations.count == 0 )
+		return YES;
+
+	sqlite3_stmt * baseStatement;
+	int rc = sqlite3_prepare_v2( _db, "INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);", -1, &baseStatement, nil );
+	if ( rc != SQLITE_OK) {
+		DbgAssert(NO);
+		return NO;
+	}
+
+	sqlite3_stmt * tagStatement;
+	rc = sqlite3_prepare_v2( _db, "INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil );
+	if ( rc != SQLITE_OK ) {
+		DbgAssert(NO);
+		return NO;
+	}
+
+	sqlite3_stmt * memberStatement;
+	rc = sqlite3_prepare_v2( _db, "INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);", -1, &memberStatement, nil );
+	DbgAssert(rc == SQLITE_OK);
+
+	for ( OsmRelation * relation in relations ) {
+	retry:
+		// update way
+		rc = sqlite3_reset(baseStatement);
+		rc = sqlite3_clear_bindings(baseStatement);
+		rc = sqlite3_bind_int64(baseStatement,	1, relation.ident.longLongValue);
+		rc = sqlite3_bind_text(baseStatement,	2, relation.user.UTF8String, -1, NULL);
+		rc = sqlite3_bind_text(baseStatement,	3, relation.timestamp.UTF8String, -1, NULL);
+		rc = sqlite3_bind_int(baseStatement,	4, relation.version);
+		rc = sqlite3_bind_int64(baseStatement,	5, relation.changeset);
+		rc = sqlite3_bind_int(baseStatement,	6, relation.uid);
+		rc = sqlite3_bind_int(baseStatement,	7, (int)relation.members.count);
+		rc = sqlite3_step(baseStatement);
+		if ( rc == SQLITE_CONSTRAINT ) {
+			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
+			[self deleteRelations:@[ relation ]];
+			goto retry;
+		}
+		if ( rc != SQLITE_DONE ) {
+			DbgAssert(NO);
+			continue;
+		}
+
+		[relation.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+			int rc2;
+			rc2 = sqlite3_reset(tagStatement);
+			rc2 = sqlite3_clear_bindings(tagStatement);
+			rc2 = sqlite3_bind_int64(tagStatement,	1, relation.ident.longLongValue);
+			rc2 = sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL);
+			rc2 = sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL);
+			rc2 = sqlite3_step(tagStatement);
+			DbgAssert(rc2 == SQLITE_DONE);
+		}];
+
+		int index = 0;
+		for ( OsmMember * member in relation.members ) {
+			int rc2;
+			NSNumber * ref = [member.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)member.ref).ident : member.ref;
+			rc2 = sqlite3_reset(memberStatement);
+			rc2 = sqlite3_clear_bindings(memberStatement);
+			rc2 = sqlite3_bind_int64(memberStatement,	1, relation.ident.longLongValue);
+			rc2 = sqlite3_bind_text(memberStatement,	2, member.type.UTF8String, -1, NULL);
+			rc2 = sqlite3_bind_int64(memberStatement,	3, ref.longLongValue);
+			rc2 = sqlite3_bind_text(memberStatement,	4, member.role.UTF8String, -1, NULL);
+			rc2 = sqlite3_bind_int(memberStatement,		5, index++);
+			rc2 = sqlite3_step(memberStatement);
+			DbgAssert(rc2 == SQLITE_DONE);
+		}
+#if USE_RTREE
+		[self addToSpatial:relation];
+#endif
+	}
+
+	sqlite3_finalize(baseStatement);
+	sqlite3_finalize(tagStatement);
+	sqlite3_finalize(memberStatement);
+
+	return rc == SQLITE_OK || rc == SQLITE_DONE;
+}
+
+
+#pragma mark delete
+
 -(BOOL)deleteNodes:(NSArray *)nodes
 {
 	if ( nodes.count == 0 )
@@ -418,7 +550,34 @@ retry:
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
--(BOOL)saveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays isUpdate:(BOOL)isUpdate
+-(BOOL)deleteRelations:(NSArray *)relations
+{
+	if ( relations.count == 0 )
+		return YES;
+
+	sqlite3_stmt * relationStatement;
+	int rc = sqlite3_prepare_v2( _db, "DELETE from RELATIONS where ident=?;", -1, &relationStatement, nil );
+	if ( rc != SQLITE_OK ) {
+		DbgAssert(NO);
+		return NO;
+	}
+
+	for ( OsmRelation * relation in relations ) {
+		rc = sqlite3_reset(relationStatement);
+		rc = sqlite3_clear_bindings(relationStatement);
+		rc = sqlite3_bind_int64(relationStatement, 1, relation.ident.longLongValue);
+		rc = sqlite3_step(relationStatement);
+		DbgAssert(rc == SQLITE_DONE);
+	}
+	sqlite3_finalize(relationStatement);
+	return rc == SQLITE_OK || rc == SQLITE_DONE;
+}
+
+#pragma mark update
+
+-(BOOL)saveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
+		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
+		isUpdate:(BOOL)isUpdate
 {
 	int rc;
 	rc = sqlite3_exec(_db, "BEGIN", 0, 0, 0);
@@ -426,11 +585,14 @@ retry:
 	if ( isUpdate ) {
 		[self deleteNodes:saveNodes];
 		[self deleteWays:saveWays];
+		[self deleteRelations:saveRelations];
 	}
 	[self saveNodes:saveNodes];
 	[self saveWays:saveWays];
+	[self saveRelations:saveRelations];
 	[self deleteNodes:deleteNodes];
 	[self deleteWays:deleteWays];
+	[self deleteRelations:deleteRelations];
 	rc = sqlite3_exec(_db, "COMMIT", 0, 0, 0);
 	DbgAssert(rc == SQLITE_OK);
 
@@ -438,7 +600,47 @@ retry:
 }
 
 
+#pragma mark query
 
+-(BOOL)queryTagTable:(NSString *)tableName forObjects:(NSDictionary *)objectDict
+{
+	NSString * query = [NSString stringWithFormat:@"SELECT key,value,ident FROM %@", tableName];
+	sqlite3_stmt * tagStatement = NULL;
+	int rc = sqlite3_prepare_v2( _db, query.UTF8String, -1, &tagStatement, nil );
+	if ( rc != SQLITE_OK ) {
+		DbgAssert(NO);
+		return NO;
+	}
+
+	rc = sqlite3_reset(tagStatement);
+	rc = sqlite3_clear_bindings(tagStatement);
+	DbgAssert(rc == SQLITE_OK);
+	while ( (rc = sqlite3_step(tagStatement)) == SQLITE_ROW) {
+		const uint8_t * ckey	= sqlite3_column_text(tagStatement, 0);
+		const uint8_t * cvalue	= sqlite3_column_text(tagStatement, 1);
+		int64_t			ident	= sqlite3_column_int64(tagStatement, 2);
+
+		NSString * key = [NSString stringWithUTF8String:(char *)ckey];
+		NSString * value = [NSString stringWithUTF8String:(char *)cvalue];
+
+		OsmBaseObject * obj = objectDict[ @(ident) ];
+		assert( obj );
+		NSMutableDictionary * tags = (id)obj.tags;
+		if ( tags == nil ) {
+			tags = [NSMutableDictionary new];
+			[obj setTags:tags undo:nil];
+		}
+		[tags setObject:value forKey:key];
+	}
+	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
+
+	[objectDict enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * obj, BOOL *stop) {
+		[obj setConstructed];
+	}];
+
+	sqlite3_finalize(tagStatement);
+	return YES;
+}
 
 -(NSMutableDictionary *)querySqliteNodes
 {
@@ -524,7 +726,6 @@ retry:
 	return ways;
 }
 
-
 -(void)queryNodesForWays:(NSDictionary *)ways
 {
 	sqlite3_stmt * nodeStatement = NULL;
@@ -537,7 +738,7 @@ retry:
 	while ( (rc = sqlite3_step(nodeStatement)) == SQLITE_ROW) {
 		int64_t		ident		= sqlite3_column_int64(nodeStatement, 0);
 		int64_t		node_id		= sqlite3_column_int64(nodeStatement, 1);
-		int64_t		node_index	= sqlite3_column_int(nodeStatement, 2);
+		int			node_index	= sqlite3_column_int(nodeStatement, 2);
 
 		OsmWay * way = ways[ @(ident) ];
 		NSMutableArray * list = (id)way.nodes;
@@ -550,45 +751,77 @@ retry:
 }
 
 
--(BOOL)queryTagTable:(NSString *)tableName forObjects:(NSDictionary *)objectDict
+-(NSMutableDictionary *)querySqliteRelations
 {
-	NSString * query = [NSString stringWithFormat:@"SELECT key,value,ident FROM %@", tableName];
-	sqlite3_stmt * tagStatement = NULL;
-	int rc = sqlite3_prepare_v2( _db, query.UTF8String, -1, &tagStatement, nil );
+	if ( _db == NULL )
+		return nil;
+
+	sqlite3_stmt * relationStatement = NULL;
+	int rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations", -1, &relationStatement, nil );
 	if ( rc != SQLITE_OK ) {
-		DbgAssert(NO);
-		return NO;
+		return nil;
 	}
 
-	rc = sqlite3_reset(tagStatement);
-	rc = sqlite3_clear_bindings(tagStatement);
-	DbgAssert(rc == SQLITE_OK);
-	while ( (rc = sqlite3_step(tagStatement)) == SQLITE_ROW) {
-		const uint8_t * ckey	= sqlite3_column_text(tagStatement, 0);
-		const uint8_t * cvalue	= sqlite3_column_text(tagStatement, 1);
-		int64_t			ident	= sqlite3_column_int64(tagStatement, 2);
+	NSMutableDictionary * relations = [NSMutableDictionary new];
+	while ( (rc = sqlite3_step(relationStatement)) == SQLITE_ROW )  {
+		int64_t			ident		= sqlite3_column_int64(relationStatement, 0);
+		const uint8_t *	user		= sqlite3_column_text(relationStatement, 1);
+		const uint8_t *	timestamp	= sqlite3_column_text(relationStatement, 2);
+		int32_t			version		= sqlite3_column_int(relationStatement, 3);
+		int32_t			changeset	= sqlite3_column_int(relationStatement, 4);
+		int32_t			uid			= sqlite3_column_int(relationStatement, 5);
+		int32_t			membercount	= sqlite3_column_int(relationStatement, 6);
 
-		NSString * key = [NSString stringWithUTF8String:(char *)ckey];
-		NSString * value = [NSString stringWithUTF8String:(char *)cvalue];
-
-		OsmBaseObject * obj = objectDict[ @(ident) ];
-		assert( obj );
-		NSMutableDictionary * tags = (id)obj.tags;
-		if ( tags == nil ) {
-			tags = [NSMutableDictionary new];
-			[obj setTags:tags undo:nil];
+		OsmRelation * relation = [[OsmRelation alloc] init];
+		[relation  constructBaseAttributesWithVersion:version
+									   changeset:changeset
+											user:[NSString stringWithUTF8String:(const char *)user]
+											 uid:uid
+										   ident:ident
+									   timestamp:[NSString stringWithUTF8String:(const char *)timestamp]];
+		for ( NSInteger i = 0; i < membercount; ++i ) {
+			[relation constructMember:(OsmMember *)[NSNull null]];
 		}
-		[tags setObject:value forKey:key];
+		[relations setObject:relation forKey:relation.ident];
+	}
+	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
+	sqlite3_finalize(relationStatement);
+
+	[self queryTagTable:@"relation_tags" forObjects:relations];
+	[self queryMembersForRelations:relations];
+
+	return relations;
+}
+
+-(void)queryMembersForRelations:(NSDictionary *)relations
+{
+	sqlite3_stmt * memberStatement = NULL;
+
+	int rc = sqlite3_prepare_v2( _db, "SELECT ident,type,ref,role,member_index FROM relation_members", -1, &memberStatement, nil );
+	if ( rc != SQLITE_OK) {
+		DbgAssert(NO);
+		return;
+	}
+
+	while ( (rc = sqlite3_step(memberStatement)) == SQLITE_ROW) {
+		int64_t			ident			= sqlite3_column_int64(memberStatement, 0);
+		const uint8_t * type			= sqlite3_column_text(memberStatement, 1);
+		int64_t			ref				= sqlite3_column_int64(memberStatement, 2);
+		const uint8_t * role			= sqlite3_column_text(memberStatement, 3);
+		int				member_index	= sqlite3_column_int(memberStatement, 4);
+
+		OsmRelation * relation = relations[ @(ident) ];
+		OsmMember * member = [[OsmMember alloc] initWithType:[NSString stringWithUTF8String:(const char *)type] ref:@(ref) role:[NSString stringWithUTF8String:(const char *)role]];
+		NSMutableArray * list = (id)relation.members;
+		DbgAssert( list );
+		list[member_index] = member;
 	}
 	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
 
-	[objectDict enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * obj, BOOL *stop) {
-		[obj setConstructed];
-	}];
-
-	sqlite3_finalize(tagStatement);
-	return YES;
+	sqlite3_finalize(memberStatement);
 }
+
+
 
 
 @end

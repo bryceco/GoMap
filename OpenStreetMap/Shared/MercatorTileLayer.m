@@ -21,7 +21,7 @@
 #import "MercatorTileLayer.h"
 
 
-#define CUSTOM_TRANSFORM 0
+#define CUSTOM_TRANSFORM 1
 
 
 extern CGSize SizeForImage(NSImage * image);
@@ -533,6 +533,11 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	int32_t tileWest	= floor( rect.origin.x * zoom );
 	int32_t tileSouth	= ceil( (rect.origin.y + rect.size.height) * zoom );
 	int32_t tileEast	= ceil( (rect.origin.x + rect.size.width ) * zoom );
+
+	if ( (tileEast-tileWest)*(tileSouth-tileNorth) > 100 ) {
+		DLog(@"Bad tile transform");
+		return;	// something is wrong
+	}
 
 	// create any tiles that don't yet exist
 	for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {

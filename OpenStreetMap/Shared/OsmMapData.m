@@ -880,6 +880,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		NSMutableArray * newNodes = [NSMutableArray new];
 		NSMutableArray * newWays = [NSMutableArray new];
+		NSMutableArray * newRelations = [NSMutableArray new];
 
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			OsmNode * current = [_nodes objectForKey:key];
@@ -915,10 +916,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			if ( [_relations objectForKey:key] == nil ) {
 				[_relations setObject:relation forKey:key];
 				[_spatial addMember:relation undo:nil];
+				[newRelations addObject:relation];
 			} else if ( current.version < relation.version ) {
 				OSMRect bbox = current.boundingBox;
 				[current serverUpdateInPlace:relation];
 				[_spatial updateMember:current fromBox:bbox undo:nil];
+				[newRelations addObject:current];
 			}
 		}];
 
@@ -942,7 +945,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		// store new nodes in database
 		if ( downloaded ) {
-			[self sqlSaveNodes:newNodes saveWays:newWays deleteNodes:nil deleteWays:nil isUpdate:NO];
+			[self sqlSaveNodes:newNodes saveWays:newWays saveRelations:newRelations deleteNodes:nil deleteWays:nil deleteRelations:nil isUpdate:NO];
 		}
 	}
 
@@ -1624,18 +1627,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (void)encodeWithCoder:(NSCoder *)coder
 {
-#if USE_SQL
 	[coder encodeObject:_nodes			forKey:@"nodes"];
 	[coder encodeObject:_ways			forKey:@"ways"];
-	[coder encodeObject:_spatial		forKey:@"spatial"];
-#else
-	[coder encodeObject:_nodes			forKey:@"nodes"];
-	[coder encodeObject:_ways			forKey:@"ways"];
-	[coder encodeObject:_spatial		forKey:@"spatial"];
-#endif
-
 	[coder encodeObject:_relations		forKey:@"relations"];
 	[coder encodeObject:_region			forKey:@"region"];
+	[coder encodeObject:_spatial		forKey:@"spatial"];
 	[coder encodeObject:_undoManager	forKey:@"undoManager"];
 }
 
@@ -1723,17 +1719,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[modified copyWay:object];
 		}
 	}];
-#if USE_SQL
-	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * object, BOOL *stop) {
-		[modified copyRelation:object];
-	}];
-#else
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmRelation * object, BOOL *stop) {
 		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
 			[modified copyRelation:object];
 		}
 	}];
-#endif
+
 	NSSet * undoObjects = [_undoManager objectRefs];
 	for ( id object in undoObjects ) {
 		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
@@ -1879,7 +1870,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return ok;
 }
 
--(void)sqlSaveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays isUpdate:(BOOL)isUpdate
+-(void)sqlSaveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
+		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
+		   isUpdate:(BOOL)isUpdate
 {
 #if USE_SQL
 	if ( saveNodes.count == 0 && saveWays.count == 0 && deleteNodes.count == 0 && deleteWays.count == 0 )
@@ -1887,7 +1880,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	CFTimeInterval t = CACurrentMediaTime();
 	Database * db = [Database new];
 	[db createTables];
-	[db saveNodes:saveNodes saveWays:saveWays deleteNodes:deleteNodes deleteWays:deleteWays isUpdate:(BOOL)isUpdate];
+	[db saveNodes:saveNodes saveWays:saveWays saveRelations:saveRelations deleteNodes:deleteNodes deleteWays:deleteWays deleteRelations:deleteRelations isUpdate:isUpdate];
 	t = CACurrentMediaTime() - t;
 	DLog(@"sql save %ld nodes, %ld ways, time = %f", (long)saveNodes.count, (long)saveWays.count, t);
 	[self save];
@@ -1896,10 +1889,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)updateSql:(NSDictionary *)sqlUpdate isUpdate:(BOOL)isUpdate
 {
-	NSMutableArray * insertNode = [NSMutableArray new];
-	NSMutableArray * insertWay	= [NSMutableArray new];
-	NSMutableArray * deleteNode = [NSMutableArray new];
-	NSMutableArray * deleteWay	= [NSMutableArray new];
+	NSMutableArray * insertNode		= [NSMutableArray new];
+	NSMutableArray * insertWay		= [NSMutableArray new];
+	NSMutableArray * insertRelation	= [NSMutableArray new];
+	NSMutableArray * deleteNode		= [NSMutableArray new];
+	NSMutableArray * deleteWay		= [NSMutableArray new];
+	NSMutableArray * deleteRelation	= [NSMutableArray new];
 	[sqlUpdate enumerateKeysAndObjectsUsingBlock:^(OsmBaseObject * object, NSNumber * insert, BOOL *stop) {
 		if ( object.isNode ) {
 			if ( insert.boolValue )
@@ -1911,11 +1906,16 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[insertWay addObject:object];
 			else
 				[deleteWay addObject:object];
+		} else if ( object.isRelation ) {
+			if ( insert.boolValue )
+				[insertRelation addObject:object];
+			else
+				[deleteRelation addObject:object];
 		} else {
 			assert(NO);
 		}
 	}];
-	[self sqlSaveNodes:insertNode saveWays:insertWay deleteNodes:deleteNode deleteWays:deleteWay isUpdate:(BOOL)isUpdate];
+	[self sqlSaveNodes:insertNode saveWays:insertWay saveRelations:insertRelation deleteNodes:deleteNode deleteWays:deleteWay deleteRelations:deleteRelation isUpdate:isUpdate];
 }
 
 
@@ -1963,12 +1963,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 		unarchiver.delegate = self;
 		self = [unarchiver decodeObjectForKey:@"OsmMapData"];
-		if ( self ) {
-			// convert relation members from ids back into objects
-			[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
-				[relation resolveToMapData:self];
-			}];
-		}
 #if USE_SQL
 		if ( self ) {
 			// rebuild spatial database
@@ -1980,12 +1974,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 			// merge info from SQL database
 			Database * db = [Database new];
-			NSMutableDictionary * newNodes = [db querySqliteNodes];
-			NSMutableDictionary * newWays = [db querySqliteWays];
+			NSMutableDictionary * newNodes		= [db querySqliteNodes];
+			NSMutableDictionary * newWays		= [db querySqliteWays];
+			NSMutableDictionary * newRelations	= [db querySqliteRelations];
+
 			OsmMapData * newData = [[OsmMapData alloc] init];
 			newData->_nodes = newNodes;
 			newData->_ways = newWays;
+			newData->_relations = newRelations;
 			[self merge:newData fromDownload:NO quadList:nil success:YES];
+		}
+#else
+		if ( self ) {
+			// convert relation members from ids back into objects
+			[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
+				[relation resolveToMapData:self];
+			}];
 		}
 #endif
 	}

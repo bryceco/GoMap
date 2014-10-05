@@ -1313,9 +1313,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	OsmBaseObject * o = _ref;
 	NSNumber * ref = [_ref isKindOfClass:[OsmBaseObject class]] ? o.ident : _ref;
-	[coder encodeObject:_type forKey:@"type"];
-	[coder encodeObject:ref forKey:@"ref"];
-	[coder encodeObject:_role forKey:@"role"];
+	[coder encodeObject:_type	forKey:@"type"];
+	[coder encodeObject:ref		forKey:@"ref"];
+	[coder encodeObject:_role	forKey:@"role"];
 }
 -(id)initWithCoder:(NSCoder *)coder
 {

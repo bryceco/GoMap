@@ -69,14 +69,6 @@ OSMTransform OSMTransformInvert( const OSMTransform t )
 	a.d = s * t.a;
 	a.ty = s * (t.b * t.tx - t.a * t.ty);
 
-#if 0 // confirmed: everything works correctly
-	CGAffineTransform cg = { t.a, t.b, t.c, t.d, t.tx, t.ty };
-	CGAffineTransform i = CGAffineTransformInvert( cg );
-	NSLog(@"%@",NSStringFromCGAffineTransform(i));
-	OSMTransform r = { i.a, i.b, i.c, i.d, i.tx, i.ty };
-	return r;
-#endif
-
 	return a;
 #endif
 }

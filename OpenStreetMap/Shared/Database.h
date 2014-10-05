@@ -19,8 +19,13 @@
 
 -(void)dropTables;
 -(void)createTables;
--(BOOL)saveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays deleteNodes:(NSArray *)nodes deleteWays:(NSArray *)ways isUpdate:(BOOL)isUpdate;
+
+-(BOOL)saveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
+		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
+		isUpdate:(BOOL)isUpdate;
+
 -(NSMutableDictionary *)querySqliteNodes;
 -(NSMutableDictionary *)querySqliteWays;
+-(NSMutableDictionary *)querySqliteRelations;
 
 @end

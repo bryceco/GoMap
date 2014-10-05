@@ -10,7 +10,7 @@
 #define Rocket_VectorMath_h
 
 
-#define TRANSFORM_3D 1
+#define TRANSFORM_3D 0
 
 
 typedef struct _OSMPoint {
@@ -307,6 +307,19 @@ static inline OSMTransform OSMTransformScale( OSMTransform t, double scale )
 #endif
 }
 
+static inline OSMTransform OSMTransformScaleXY( OSMTransform t, double scaleX, double scaleY )
+{
+#if TRANSFORM_3D
+	return CATransform3DScale(t, scaleX, scaleY, 1.0);
+#else
+	t.a *= scaleX;
+	t.b *= scaleY;
+	t.c *= scaleX;
+	t.d *= scaleY;
+	return t;
+#endif
+}
+
 static inline OSMTransform OSMTransformRotate( OSMTransform transform, double angle )
 {
 #if TRANSFORM_3D
@@ -332,7 +345,7 @@ static inline OSMPoint OSMPointApplyTransform( OSMPoint pt, OSMTransform t )
 		// http://en.wikipedia.org/wiki/3D_projection
 		double ex = x;	// eye position
 		double ey = y;
-		double ez = z;
+		double ez = -1/t.m34;
 		OSMTransform p = {
 			1, 0, 0, 0,
 			0, 1, 0, 0,

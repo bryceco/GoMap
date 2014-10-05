@@ -260,7 +260,7 @@ CGSize SizeForImage( NSImage * image )
 	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f] }
 									   forState:UIControlStateNormal];
 
-#if DEBUG && 1
+#if DEBUG && 0
 	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerPanGesture:)];
 	panGestureRecognizer.minimumNumberOfTouches = 2;
 	panGestureRecognizer.maximumNumberOfTouches = 2;
@@ -750,12 +750,48 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point
 {
+	if ( _birdsEyeRotation ) {
+		// narrow things toward top of screen
+		double D = 1000.0;	// distance from eye to center of screen
+		CGRect rc = self.layer.bounds;
+		CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+
+		point.x -= center.x;
+		point.y -= center.y;
+
+		double z = point.y * -sin( _birdsEyeRotation );	// rotation around x axis gives a z value from y offset
+		double scale = D / (D + z);
+
+		point.x /= scale;
+		point.y /= scale * cos( _birdsEyeRotation );
+
+		point.x += center.x;
+		point.y += center.y;
+	}
 	return OSMPointApplyTransform( point, self.mapFromScreenTransform );
 }
 
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point
 {
 	point = OSMPointApplyTransform( point, _screenFromMapTransform );
+	if ( _birdsEyeRotation ) {
+		// narrow things toward top of screen
+		double D = 1000.0;	// distance from eye to center of screen
+		CGRect rc = self.layer.bounds;
+		CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+		point.x -= center.x;
+		point.y -= center.y;
+
+		double z = point.y * -sin( _birdsEyeRotation );	// rotation around x axis gives a z value from y offset
+		double scale = D / (D + z);
+		if ( scale < 0 )
+			scale = 1.0/0.0;
+		point.x *= scale;
+		point.y *= scale * cos( _birdsEyeRotation );
+
+		point.x += center.x;
+		point.y += center.y;
+	}
 	return point;
 }
 
@@ -2374,14 +2410,17 @@ drop_pin:
 
 - (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
 {
-#if TRANSFORM_3D && 0
 	CGPoint translation = [pan translationInView:self];
 	double delta = -translation.y/20 / 180 * M_PI;
 
 	// limit maximum rotation
 	OSMTransform t = _screenFromMapTransform;
+	double maxRotation = 65 * (M_PI/180);
+#if TRANSFORM_3D
 	double currentRotation = atan2( t.m23, t.m22 );
-	double maxRotation = 60 * (M_PI/180);
+#else
+	double currentRotation = _birdsEyeRotation;
+#endif
 	if ( currentRotation+delta > maxRotation )
 		delta = maxRotation - currentRotation;
 	if ( currentRotation+delta < 0 )
@@ -2393,10 +2432,14 @@ drop_pin:
 
 	//	t.m34 = 1.0 / -2000;
 	t = OSMTransformTranslate( t, offset.x, offset.y );
+#if TRANSFORM_3D
 	t = CATransform3DRotate(t, delta, 1.0, 0.0, 0.0);
+#else
+//	t = OSMTransformScaleXY( t, 1.0, cos(_birdsEyeRotation+delta)/cos(_birdsEyeRotation) );
+	_birdsEyeRotation += delta;
+#endif
 	t = OSMTransformTranslate( t, -offset.x, -offset.y );
 	self.screenFromMapTransform = t;
-#endif
 }
 
 - (void)updateSpeechBalloonPosition
