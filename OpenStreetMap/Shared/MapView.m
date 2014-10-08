@@ -2365,18 +2365,20 @@ drop_pin:
 		[pan setTranslation:CGPointMake(0,0) inView:self];
 	} else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ) {	// cancelled occurs when we throw an error dialog
 		// finish pan
-		CGPoint velocity = [pan velocityInView:self];
-		NSDate * startTime = [NSDate date];
+		CGPoint initialVelecity = [pan velocityInView:self];
+		CFTimeInterval startTime = CACurrentMediaTime();
 		double interval = 1.0/60.0;
 		double duration = 0.5;
 		void (^inertiaBlock)() = ^{
-			double deltaTime = [[NSDate date] timeIntervalSinceDate:startTime];
-			if ( deltaTime >= duration ) {
+			double now = CACurrentMediaTime();
+			double timeOffset = now - startTime;
+			if ( timeOffset >= duration ) {
 				[_inertiaTimer invalidate];
 			} else {
 				CGPoint translation;
-				translation.x = velocity.x / 60 * (duration - deltaTime)/duration;
-				translation.y = velocity.y / 60 * (duration - deltaTime)/duration;
+				double t = timeOffset / duration;	// time [0..1]
+				translation.x = (1-t) * initialVelecity.x * interval;
+				translation.y = (1-t) * initialVelecity.y * interval;
 				[self adjustOriginBy:translation];
 			}
 		};
