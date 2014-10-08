@@ -60,6 +60,8 @@ extern CGSize SizeForImage(NSImage * image);
 
 		_layerDict = [NSMutableDictionary dictionary];
 
+		self.backgroundColor = [UIColor darkGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
+
 		_memoryTileCache = [[NSCache alloc] init];
 		_memoryTileCache.delegate = self;
 #if TARGET_OS_IPHONE

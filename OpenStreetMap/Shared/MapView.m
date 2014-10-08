@@ -189,14 +189,10 @@ CGSize SizeForImage( NSImage * image )
 		_rulerLayer.zPosition = Z_RULER;
 		[self.layer addSublayer:_rulerLayer];
 
-#if defined(DEBUG)
-		// enable for release, disable to measure perf
-#else
 		for ( CALayer * layer in _backgroundLayers ) {
 			layer.drawsAsynchronously = YES;
 		}
 		_rulerLayer.drawsAsynchronously	= YES;
-#endif
 
 #if !TARGET_OS_IPHONE
 		[self setFrame:frame];
@@ -386,7 +382,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 				_aerialLayer.hidden = YES;
 				_mapnikLayer.hidden = YES;
 				_zoomToEditLabel.hidden = YES;
-				self.backgroundColor = UIColor.whiteColor;
 				break;
 			case MAPVIEW_EDITORAERIAL:
 				_editorLayer.textColor = NSColor.whiteColor;
@@ -395,7 +390,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 				_aerialLayer.hidden = NO;
 				_mapnikLayer.hidden = YES;
 				_zoomToEditLabel.hidden = YES;
-				self.backgroundColor = UIColor.darkGrayColor;
 				break;
 			case MAPVIEW_AERIAL:
 				_aerialLayer.aerialService = _customAerials.currentAerial;
@@ -403,14 +397,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 				_aerialLayer.hidden = NO;
 				_mapnikLayer.hidden = YES;
 				_zoomToEditLabel.hidden = YES;
-				self.backgroundColor = UIColor.darkGrayColor;
 				break;
 			case MAPVIEW_MAPNIK:
 				_editorLayer.hidden = YES;
 				_aerialLayer.hidden = YES;
 				_mapnikLayer.hidden = NO;
 				_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
-				self.backgroundColor = UIColor.whiteColor;
 				break;
 			case MAPVIEW_NONE:
 				// shouldn't occur
