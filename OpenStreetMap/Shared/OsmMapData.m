@@ -732,8 +732,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	if ( [elementName isEqualToString:@"node"] ) {
 
-		double lat	= [[attributeDict valueForKey:@"lat"] doubleValue];
-		double lon	= [[attributeDict valueForKey:@"lon"] doubleValue];
+		double lat	= [[attributeDict objectForKey:@"lat"] doubleValue];
+		double lon	= [[attributeDict objectForKey:@"lon"] doubleValue];
 		OsmNode * node = [OsmNode new];
 		[node setLongitude:lon latitude:lat undo:nil];
 		[node constructBaseAttributesFromXmlDict:attributeDict];
@@ -751,8 +751,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	} else if ( [elementName isEqualToString:@"tag"] ) {
 		
-		NSString * key		= [attributeDict valueForKey:@"k"];
-		NSString * value	= [attributeDict valueForKey:@"v"];
+		NSString * key		= [attributeDict objectForKey:@"k"];
+		NSString * value	= [attributeDict objectForKey:@"v"];
 		assert( key && value );
 		OsmBaseObject * object = _parserStack.lastObject;
 		[object constructTag:key value:value];
@@ -761,7 +761,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	} else if ( [elementName isEqualToString:@"nd"] ) {
 
 		OsmWay * way = [_parserStack lastObject];
-		NSString * ref = [attributeDict valueForKey:@"ref"];
+		NSString * ref = [attributeDict objectForKey:@"ref"];
 		assert( ref );
 		[way constructNode:@(ref.longLongValue)];
 		[_parserStack addObject:@"nd"];
@@ -776,9 +776,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	} else if ( [elementName isEqualToString:@"member"] ) {
 
-		NSString *	type = [attributeDict valueForKey:@"type"];
-		NSNumber *	ref  = @([[attributeDict valueForKey:@"ref"] longLongValue]);
-		NSString *	role = [attributeDict valueForKey:@"role"];
+		NSString *	type = [attributeDict objectForKey:@"type"];
+		NSNumber *	ref  = @([[attributeDict objectForKey:@"ref"] longLongValue]);
+		NSString *	role = [attributeDict objectForKey:@"role"];
 
 		OsmMember * member = [[OsmMember alloc] initWithType:type ref:ref role:role];
 
@@ -789,7 +789,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	} else if ( [elementName isEqualToString:@"osm"] ) {
 
 		// osm header
-		NSString * version		= [attributeDict valueForKey:@"version"];
+		NSString * version		= [attributeDict objectForKey:@"version"];
 		if ( ![version isEqualToString:@"0.6"] ) {
 			_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:NSLocalizedString(@"OSM data must be version 0.6 (fetched '%@')",nil), version]}];
 			[parser abortParsing];
@@ -798,10 +798,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	} else if ( [elementName isEqualToString:@"bounds"] ) {
 #if 0
-		double minLat = [[attributeDict valueForKey:@"minlat"] doubleValue];
-		double minLon = [[attributeDict valueForKey:@"minlon"] doubleValue];
-		double maxLat = [[attributeDict valueForKey:@"maxlat"] doubleValue];
-		double maxLon = [[attributeDict valueForKey:@"maxlon"] doubleValue];
+		double minLat = [[attributeDict objectForKey:@"minlat"] doubleValue];
+		double minLon = [[attributeDict objectForKey:@"minlon"] doubleValue];
+		double maxLat = [[attributeDict objectForKey:@"maxlat"] doubleValue];
+		double maxLon = [[attributeDict objectForKey:@"maxlon"] doubleValue];
 #endif
 		[_parserStack addObject:@"bounds"];
 

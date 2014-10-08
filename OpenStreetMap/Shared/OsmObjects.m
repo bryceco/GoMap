@@ -184,12 +184,12 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict
 {
-	int32_t		version		= (int32_t) [[attributeDict valueForKey:@"version"] integerValue];
-	int64_t		changeset	= [[attributeDict valueForKey:@"changeset"] longLongValue];
-	NSString *	user		= [attributeDict valueForKey:@"user"];
-	int32_t		uid			= (int32_t) [[attributeDict valueForKey:@"uid"] integerValue];
-	int64_t		ident		= [[attributeDict valueForKey:@"id"] longLongValue];
-	NSString *	timestamp	= [attributeDict valueForKey:@"timestamp"];
+	int32_t		version		= (int32_t) [[attributeDict objectForKey:@"version"] integerValue];
+	int64_t		changeset	= [[attributeDict objectForKey:@"changeset"] longLongValue];
+	NSString *	user		= [attributeDict objectForKey:@"user"];
+	int32_t		uid			= (int32_t) [[attributeDict objectForKey:@"uid"] integerValue];
+	int64_t		ident		= [[attributeDict objectForKey:@"id"] longLongValue];
+	NSString *	timestamp	= [attributeDict objectForKey:@"timestamp"];
 
 	[self constructBaseAttributesWithVersion:version changeset:changeset user:user uid:uid ident:ident timestamp:timestamp];
 }
@@ -256,6 +256,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	_tagInfo				= nil;
 	_renderPriorityCached	= 0;
 	_boundingBox			= OSMRectMake(0, 0, 0, 0);
+
+	for ( CALayer * layer in _shapeLayers ) {
+		[layer removeFromSuperlayer];
+	}
+	_shapeLayers			= nil;
 }
 
 -(BOOL)isModified
@@ -372,7 +377,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	NSArray * typeList = [OsmBaseObject typeKeys];
 
-	NSString * name = [_tags valueForKey:@"name"];
+	NSString * name = [_tags objectForKey:@"name"];
 	if ( name.length )
 		return name;
 
@@ -384,7 +389,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 				return type2;
 			}
 			if ( [name isEqualToString:@"pitch"] && [type isEqualToString:@"leisure"] ) {
-				NSString * sport = [_tags valueForKey:@"sport"];
+				NSString * sport = [_tags objectForKey:@"sport"];
 				if ( sport.length ) {
 					return [NSString stringWithFormat:@"%@ %@ (leisure)", sport, name];
 				}
@@ -396,7 +401,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	if ( [[_tags objectForKey:@"sidewalk"] isEqualToString:@"yes"] )
 		return @"sidewalk";
 
-	name = [_tags valueForKey:@"addr:housenumber"];
+	name = [_tags objectForKey:@"addr:housenumber"];
 	if ( name ) {
 		NSString * street = [_tags objectForKey:@"addr:street"];
 		NSString * unit = [_tags objectForKey:@"addr:unit"];
@@ -853,7 +858,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 					   };
 	}
 
-	NSString * oneWayVal = [_tags valueForKey:@"oneway"];
+	NSString * oneWayVal = [_tags objectForKey:@"oneway"];
 	if ( oneWayVal ) {
 		if ( [oneWayVal isEqualToString:@"yes"] || [oneWayVal isEqualToString:@"1"] || [oneWayVal isEqualToString:@"-1"] )
 			return YES;

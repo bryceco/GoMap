@@ -332,7 +332,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	int32_t tileModY = modulus( tileY, 1<<zoomLevel );
 
 	NSString * tileKey = [NSString stringWithFormat:@"%d,%d,%d",zoomLevel,tileX,tileY];
-	CALayer * layer = [_layerDict valueForKey:tileKey];
+	CALayer * layer = [_layerDict objectForKey:tileKey];
 	CACHE_LEVEL prevCacheLevelForLayer = (CACHE_LEVEL) [[layer valueForKey:@"cacheLevel"] integerValue];
 	if ( layer && cacheLevel <= prevCacheLevelForLayer ) {
 		if ( completion )
@@ -618,7 +618,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	NSArray * currentTiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_tileCacheDirectory error:NULL];
 	NSSet * currentSet = [NSSet setWithArray:currentTiles];
 
-	OSMRect	rect			= [_mapView mapRectFromScreenRect];
+	OSMRect	rect			= [_mapView boundingMapRectForScreen];
 	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)))
 															 : (int32_t)floor(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)));
 	if ( minZoomLevel < 1 ) {

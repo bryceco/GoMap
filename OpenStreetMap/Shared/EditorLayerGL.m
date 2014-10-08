@@ -168,7 +168,6 @@ Vertex3D Vertex3DMake( GLfloat	x, GLfloat	y, CGFloat	z )
 	glDrawElements(GL_TRIANGLES, sizeof(Indices)/sizeof(Indices[0]), GL_UNSIGNED_BYTE, 0);
 
 
-
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_indexBuffer);
 }

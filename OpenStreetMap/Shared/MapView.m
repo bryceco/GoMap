@@ -607,7 +607,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		NSString * ignoreButton = nil;
 		if ( [[error userInfo] valueForKey:@"NSErrorFailingURLKey"] )
 			isNetworkError = YES;
-		NSError * underError = [[error userInfo] valueForKey:@"NSUnderlyingError"];
+		NSError * underError = [[error userInfo] objectForKey:@"NSUnderlyingError"];
 		if ( [underError isKindOfClass:[NSError class]] ) {
 			if ( [underError.domain isEqualToString:(NSString *)kCFErrorDomainCFNetwork] )
 				isNetworkError = YES;
@@ -699,13 +699,24 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	// determine if we've zoomed out enough to disable editing
 	double metersPerPixel = [self metersPerPixel];
-	CGRect rc = self.layer.bounds;
+	const CGRect rc = self.layer.bounds;
 	double area = rc.size.height * rc.size.width * metersPerPixel * metersPerPixel;
 	self.viewStateOverride = area > 10.0*1000*1000;
 
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
+
+#if DEBUG && 0
+	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	CLLocationCoordinate2D loc = [self longitudeLatitudeForScreenPoint:center];
+	NSLog( @"center = %f, %f", loc.longitude, loc.latitude);
+	static CLLocationCoordinate2D prev = { 0, 0 };
+	if ( prev.latitude && fabs(prev.longitude-loc.longitude)+fabs(prev.latitude-loc.latitude) > 1 ) {
+		NSLog(@"big");
+	}
+	prev = loc;
+#endif
 
 #if TARGET_OS_IPHONE
 	// update pushpin location
@@ -822,20 +833,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return pt;
 }
 
-// get view into 256 map
--(OSMRect)mapRectFromScreenRect
+-(OSMRect)mapRectFromScreenRect:(OSMRect)rect
 {
-	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
-	OSMRect rc = OSMRectApplyTransform( screenRect, self.mapFromScreenTransform );
-	//NSLog(@"%@",NSStringFromCGRect(CGRectFromOSMRect(rc)));
-	return rc;
+	return OSMRectApplyTransform( rect, self.mapFromScreenTransform );
 }
-
 -(OSMRect)screenRectFromMapRect:(OSMRect)rect
 {
-	// using single matrix
-	rect = OSMRectApplyTransform(rect, self.screenFromMapTransform);
-	return rect;
+	return OSMRectApplyTransform(rect, self.screenFromMapTransform);
 }
 
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point
@@ -848,7 +852,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(double)metersPerPixel
 {
-	OSMRect rc = [self mapRectFromScreenRect];
+	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
+	OSMRect rc = [self mapRectFromScreenRect:screenRect];
 	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
 	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
 	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
@@ -863,9 +868,35 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return meters/pixels;
 }
 
--(OSMRect)boundingMapRectForScreen
+-(OSMRect)boundingScreenRectForMapRect:(OSMRect)mapRect
 {
-	OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
+	OSMRect rc = mapRect;
+	OSMPoint corners[] = {
+		rc.origin.x, rc.origin.y,
+		rc.origin.x + rc.size.width, rc.origin.y,
+		rc.origin.x + rc.size.width, rc.origin.y + rc.size.height,
+		rc.origin.x, rc.origin.y + rc.size.height
+	};
+	for ( int i = 0; i < 4; ++i ) {
+		corners[i] = [self screenPointFromMapPoint:corners[i]];
+	}
+	double minX = corners[0].x;
+	double minY = corners[0].y;
+	double maxX = minX;
+	double maxY = minY;
+	for ( int i = 1; i < 4; ++i ) {
+		minX = MIN( minX, corners[i].x );
+		maxX = MAX( maxX, corners[i].x );
+		minY = MIN( minY, corners[i].y );
+		maxY = MAX( maxY, corners[i].y );
+	}
+	rc = OSMRectMake( minX, minY, maxX-minX, maxY-minY);
+	return rc;
+}
+
+-(OSMRect)boundingMapRectForScreenRect:(OSMRect)screenRect
+{
+	OSMRect rc = screenRect;
 	OSMPoint corners[] = {
 		rc.origin.x, rc.origin.y,
 		rc.origin.x + rc.size.width, rc.origin.y,
@@ -887,6 +918,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 	rc = OSMRectMake( minX, minY, maxX-minX, maxY-minY);
 	return rc;
+}
+
+-(OSMRect)boundingMapRectForScreen
+{
+	OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
+	return [self boundingMapRectForScreenRect:rc];
 }
 
 -(OSMRect)screenLongitudeLatitude
@@ -918,14 +955,20 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude scale:(double)scale
 {
+#if 1
+	OSMPoint center = [MapView mapPointForLatitude:latitude longitude:longitude];
+	[self setMapCenter:center scale:scale];
+#else
 	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude];
 	CGRect rc = self.layer.bounds;
 	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
 
 	CGPoint delta = { center.x - point.x, center.y - point.y };
 	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
+
 	[self adjustOriginBy:delta];
 	[self adjustZoomBy:ratio aroundScreenPoint:center];
+#endif
 }
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
@@ -934,41 +977,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	CGRect rc = self.layer.bounds;
 	OSMPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
 	CGPoint delta = { center.x - point.x, center.y - point.y };
-	OSMTransform t = OSMTransformTranslate( _screenFromMapTransform, -delta.x, -delta.y );
-	self.screenFromMapTransform = t;
+	[self adjustOriginBy:delta];
 }
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees
 {
-#if 1
 	double scale = 360/(widthDegrees / 2);
 	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 	return;
-
-	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude];
-	CGRect rc = self.layer.bounds;
-	OSMPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
-	OSMPoint delta = { center.x - point.x, center.y - point.y };
-	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
-
-	double tx = delta.x - center.x * (ratio - 1);
-	double ty = delta.y - center.y * (ratio - 1);
-
-	OSMTransform t = OSMTransformTranslate( _screenFromMapTransform, tx, ty);
-	t = OSMTransformScale( t, ratio );
-	self.screenFromMapTransform = t;
-
-#else
-	OSMPoint point = [MapView mapPointForLatitude:latitude longitude:longitude];
-	CGFloat zoom = 360 / (widthDegrees / 2);
-	CGRect rc = self.layer.bounds;
-	OSMTransform transform = { 0 };
-	transform.a = zoom;
-	transform.d = zoom;
-	transform.tx = -point.x*zoom + rc.size.width/2;
-	transform.ty = -point.y*zoom + rc.size.height/2;
-	self.screenFromMapTransform = transform;
-#endif
 }
 
 #pragma mark Progress indicator
@@ -1146,7 +1162,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		if ( _gpsState == GPS_STATE_HEADING ) {
 			// rotate to new heading
 			double delta = -(heading + screenAngle);
-			[self rotateBy:delta aroundScreenPoint:_locationBallLayer.position];
+			if ( CGRectContainsPoint( self.bounds, _locationBallLayer.position ) ) {
+				[self rotateBy:delta aroundScreenPoint:_locationBallLayer.position];
+			} else {
+				CGRect rc = self.bounds;
+				CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+				[self rotateBy:delta aroundScreenPoint:center];
+
+			}
 			_locationBallLayer.heading	= M_PI*3/2;
 		}
 	}
@@ -1326,6 +1349,28 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	point = [self convertPoint:point fromView:nil];
 	[self setMousePoint:point];
 #endif
+}
+
+-(void)setMapCenter:(OSMPoint)mapCenter scale:(double)scale
+{
+	OSMTransform t = _screenFromMapTransform;
+
+	// translate
+	OSMPoint point = [self screenPointFromMapPoint:mapCenter];
+	CGRect rc = self.layer.bounds;
+	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	CGPoint delta = { center.x - point.x, center.y - point.y };
+	OSMTransform o = OSMTransformMakeTranslation(delta.x, delta.y);
+	t = OSMTransformConcat( _screenFromMapTransform, o );
+
+	// zoom
+	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center)];
+	t = OSMTransformTranslate( t, offset.x, offset.y );
+	t = OSMTransformScale( t, ratio );
+	t = OSMTransformTranslate( t, -offset.x, -offset.y );
+
+	self.screenFromMapTransform = t;
 }
 
 -(void)adjustOriginBy:(CGPoint)delta
@@ -2351,14 +2396,8 @@ drop_pin:
 
 	[_inertiaTimer invalidate];
 
-
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:0.0];
-
 	CGPoint zoomCenter = [pinch locationInView:self];
 	[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];
-
-	[CATransaction commit];
 
 	[pinch setScale:1.0];
 }

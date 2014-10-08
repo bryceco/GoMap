@@ -30,6 +30,11 @@
 #import "VectorMath.h"
 
 
+#define USE_SHAPELAYERS 1
+
+#define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
+
+
 enum {
 	SUBPART_AREA = 1,
 	SUBPART_WAY = 2,
@@ -100,16 +105,15 @@ const CGFloat WayHighlightRadius = 6.0;
 		}];
 
 		self.actions = @{
-						  @"onOrderIn"	: [NSNull null],
-						  @"onOrderOut" : [NSNull null],
+//						  @"onOrderIn"	: [NSNull null],
+//						  @"onOrderOut" : [NSNull null],
+						  @"hidden"		: [NSNull null],
 						  @"sublayers"	: [NSNull null],
 						  @"contents"	: [NSNull null],
 						  @"bounds"		: [NSNull null],
 						  @"position"	: [NSNull null],
 						  @"transform"	: [NSNull null],
 		};
-
-		[self setNeedsDisplay];
 	}
 	return self;
 }
@@ -188,7 +192,11 @@ const double MinIconSizeInMeters = 2.0;
 	}
 
 	_speechBalloon.hidden = YES;
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 	[self updateMapLocation];
 }
 
@@ -213,11 +221,19 @@ const double MinIconSizeInMeters = 2.0;
 				}
 			});
 		} else {
+#if USE_SHAPELAYERS
+			[self setNeedsLayout];
+#else
 			[self setNeedsDisplay];
+#endif
 		}
 	}];
 
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 }
 
 -(void)didReceiveMemoryWarning
@@ -497,7 +513,22 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			nodeList[index] = nodeList[0];
 		} else {
 			OsmNode * node = nodeList[index];
-			OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+			nodeList[index] = [OSMPointBoxed pointWithPoint:OSMPointFromCGPoint(pt)];
+		}
+	}
+}
++(void)convertNodesToPoints:(NSMutableArray *)nodeList
+{
+	if ( nodeList.count == 0 )
+		return;
+	BOOL isLoop = nodeList.count > 1 && nodeList[0] == nodeList.lastObject;
+	for ( NSInteger index = 0, count = nodeList.count; index < count; ++index ) {
+		if ( isLoop && index == count-1 ) {
+			nodeList[index] = nodeList[0];
+		} else {
+			OsmNode * node = nodeList[index];
+			OSMPoint pt = [MapView mapPointForLatitude:node.lat longitude:node.lon];
 			nodeList[index] = [OSMPointBoxed pointWithPoint:pt];
 		}
 	}
@@ -608,6 +639,28 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 }
++(void)addBoxedPointList:(NSArray *)list toPath:(CGMutablePathRef)path refPoint:(CGPoint)refPoint
+{
+	OSMPointBoxed * first = nil;
+	for ( OSMPointBoxed * point in list ) {
+		OSMPoint p = point.point;
+		p.x -= refPoint.x;
+		p.y -= refPoint.y;
+		p.x *= PATH_SCALING;
+		p.y *= PATH_SCALING;
+		if ( isinf(p.x) )
+			break;
+		if ( first == nil ) {
+			first = point;
+			CGPathMoveToPoint(path, NULL, p.x, p.y );
+		} else if ( point == first ) {
+			CGPathCloseSubpath( path );
+		} else {
+			CGPathAddLineToPoint( path, NULL, p.x, p.y );
+		}
+	}
+}
+
 
 -(void)drawOceans:(NSArray *)objectList context:(CGContextRef)ctx
 {
@@ -913,16 +966,12 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			_mapCss = nil;
 		}
 		[self didChangeValueForKey:@"enableMapCss"];
+#if USE_SHAPELAYERS
+		[self setNeedsLayout];
+#else
 		[self setNeedsDisplay];
+#endif
 	}
-}
-
-
--(OSMPoint)pointForLat:(double)lat lon:(double)lon
-{
-	OSMPoint mapPt = [MapView mapPointForLatitude:lat longitude:lon];
-	OSMPoint screenPt = [_mapView screenPointFromMapPoint:mapPt];
-	return screenPt;
 }
 
 
@@ -931,7 +980,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	CGMutablePathRef path = CGPathCreateMutable();
 	BOOL first = YES;
 	for ( OsmNode * node in way.nodes ) {
-		OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+		CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 		if ( isinf(pt.x) )
 			break;
 		if ( first ) {
@@ -1145,7 +1194,7 @@ static RGBAColor RGBFromString( NSString * text )
 			}
 			colorDict = [NSDictionary dictionaryWithDictionary:dict];
 		}
-		NSNumber * index = [colorDict valueForKey:text];
+		NSNumber * index = [colorDict objectForKey:text];
 		if ( index ) {
 			return ColorList[ index.integerValue ].color;
 		}
@@ -1225,6 +1274,461 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	}
 	return a.count;
 }
+
+
+#if USE_SHAPELAYERS
+enum {
+	Z_BASE				= -10,
+	Z_OCEAN				= Z_BASE + 1,
+	Z_AREA				= Z_BASE + 2,
+	Z_CASING			= Z_BASE + 3,
+	Z_LINE				= Z_BASE + 4,
+	Z_NODE				= Z_BASE + 5,
+	Z_TEXT				= Z_BASE + 6,
+	Z_HIGHLIGHT_WAY		= Z_BASE + 7,
+	Z_HIGHLIGHT_NODE	= Z_BASE + 8,
+};
+
+-(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(CGPoint *)refPoint CF_RETURNS_RETAINED
+{
+	NSArray * wayList = object.isWay ? @[ object ] : object.isRelation ? [self wayListForMultipolygonRelation:object.isRelation] : nil;
+	if ( wayList == nil )
+		return nil;
+
+	CGMutablePathRef path = CGPathCreateMutable();
+	CGPoint initial = { 0, 0 };
+	for ( OsmWay * way in wayList ) {
+
+		BOOL first = YES;
+		for ( OsmNode * node in way.nodes ) {
+			OSMPoint pt = [MapView mapPointForLatitude:node.lat longitude:node.lon];
+			if ( refPoint ) {
+				initial = CGPointMake(pt.x, pt.y);
+				*refPoint = initial;
+				refPoint = NULL;
+			}
+			pt.x -= initial.x;
+			pt.y -= initial.y;
+			pt.x *= PATH_SCALING;
+			pt.y *= PATH_SCALING;
+			if ( isinf(pt.x) )
+				break;
+			if ( first ) {
+				CGPathMoveToPoint(path, NULL, pt.x, pt.y);
+				first = NO;
+			} else {
+				CGPathAddLineToPoint(path, NULL, pt.x, pt.y);
+			}
+		}
+	}
+	return path;
+}
+
+-(NSArray *)getShapeLayersForObject:(OsmBaseObject *)object
+{
+	if ( object.shapeLayers )
+		return object.shapeLayers;
+
+	TagInfo * tagInfo = object.tagInfo;
+	NSMutableArray * layers = [NSMutableArray new];
+
+	if ( object.isNode ) {
+
+		if ( _mapCss ) {
+#if 0
+			ObjectSubpart * subpart = (id)object;
+			OsmBaseObject * subObject = subpart.object;
+			if ( !subObject.isNode && !subObject.isWay.isArea )
+				return NO;
+			NSDictionary * cssDict	= subpart.properties;
+			NSString * iconName = [cssDict objectForKey:@"icon-image"];
+			if ( iconName == nil ) {
+				return NO;
+			}
+			object = (id)subObject;
+#endif
+		}
+
+		OSMPoint pt;
+		if ( object.isNode ) {
+			pt = [MapView mapPointForLatitude:object.isNode.lat longitude:object.isNode.lon];
+		} else if ( object.isWay ) {
+			// this path is taken when MapCSS is drawing an icon in the center of an area, such as a parking lot
+			OSMPoint latLon = [object.isWay centerPoint];
+			pt = [MapView mapPointForLatitude:latLon.y longitude:latLon.x];
+		} else {
+			assert(NO);
+		}
+#if DEBUG && 0
+		NSAssert( CGRectContainsPoint(self.bounds,CGPointMake(pt.x, pt.y)), nil );
+#endif
+
+		BOOL untagged = NO;
+		if ( tagInfo.icon ) {
+
+			UIImage * icon	= tagInfo.icon;
+			CALayer * layer = [CALayer new];
+			layer.bounds		= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+			layer.anchorPoint	= CGPointMake(0.5, 0.5);
+			layer.position		= CGPointMake(pt.x,pt.y);
+			layer.contents		= (id)icon.CGImage;
+			layer.shadowColor	= NSColor.whiteColor.CGColor;
+			layer.shadowPath	= CGPathCreateWithRect( layer.bounds, NULL );
+			layer.shadowRadius	= 0.0;
+			layer.shadowOffset	= CGSizeMake(0,0);
+			layer.shadowOpacity	= 0.25;
+			layer.zPosition		= Z_NODE;
+			[layers addObject:layer];
+
+		} else {
+
+			// draw generic box
+			CGFloat red, green, blue;
+			if ( object.tags[@"shop"] ) {
+				red = 0xAC/255.0;
+				green = 0x39/255.0;
+				blue = 0xAC/255.0;
+			} else if ( object.tags[@"amenity"] || object.tags[@"building"] || object.tags[@"leisure"] ) {
+				red = 0x73/255.0;
+				green = 0x4A/255.0;
+				blue = 0x08/255.0;
+			} else if ( object.tags[@"tourism"] || object.tags[@"transport"] ) {
+				red = 0x00/255.0;
+				green = 0x92/255.0;
+				blue = 0xDA/255.0;
+			} else if ( object.tags[@"medical"] ) {
+				red = 0xDA/255.0;
+				green = 0x00/255.0;
+				blue = 0x92/255.0;
+			} else if ( object.tags[@"name"] ) {
+				// blue for generic interesting nodes
+				red = 0;
+				green = 0;
+				blue = 1;
+			} else {
+				// gray for untagged nodes
+				untagged = YES;
+				red = green = blue = 0.5;
+			}
+
+			NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( object.tags ) : nil;
+			if ( houseNumber ) {
+
+				UIColor * shadowColor = ShadowColorForColor2(self.textColor);
+				CALayer * layer = [CurvedTextLayer layerWithString:houseNumber width:0 font:nil color:self.textColor shadowColor:shadowColor];
+				layer.anchorPoint	= CGPointMake(0.5, 0.5);
+				layer.position		= CGPointMake(pt.x, pt.y);
+				layer.zPosition		= Z_NODE;
+				[layers addObject:layer];
+
+			} else {
+
+				// generic box
+				CAShapeLayer * layer = [CAShapeLayer new];
+				CGRect rect = CGRectMake(-round(MinIconSizeInPixels/4), -round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
+				CGPathRef path		= CGPathCreateWithRect( rect, NULL );
+				layer.path			= path;
+
+				layer.anchorPoint	= CGPointMake(0, 0);
+				layer.position		= CGPointMake(pt.x,pt.y);
+				layer.strokeColor	= [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
+				layer.fillColor		= [UIColor clearColor].CGColor;
+				layer.lineWidth		= 2.0;
+
+				layer.shadowPath	= CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
+				layer.shadowColor	= UIColor.whiteColor.CGColor; // ShadowColorForColor(red, green, blue).CGColor;
+				layer.shadowRadius	= 0.0;
+				layer.shadowOffset	= CGSizeMake(0,0);
+				layer.shadowOpacity	= 0.25;
+
+				layer.zPosition		= Z_NODE;
+				[layers addObject:layer];
+				CGPathRelease(path);
+			}
+		}
+
+		// if zoomed in very close then provide crosshairs
+		if ( _iconSize.width > 64 ) {
+#if 0
+			CGContextSetStrokeColorWithColor( ctx, NSColor.blackColor.CGColor );
+			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.whiteColor.CGColor );
+			CGContextSetLineWidth( ctx, 2.0 );
+			CGContextBeginPath(ctx);
+			CGPoint line1[2] = { pt.x - 10, pt.y, pt.x+10, pt.y };
+			CGPoint line2[2] = { pt.x, pt.y - 10, pt.x, pt.y + 10 };
+			CGContextAddLines( ctx, line1, 2 );
+			CGContextAddLines( ctx, line2, 2 );
+			CGContextStrokePath(ctx);
+#endif
+		}
+	}
+
+	// casing
+	if ( object.isWay || object.isRelation.isMultipolygon ) {
+		if ( tagInfo.lineWidth && !object.isWay.isArea ) {
+			CGPoint refPoint;
+			CGPathRef path = [self pathForObject:object refPoint:&refPoint];
+			if ( path ) {
+				CAShapeLayer * layer = [CAShapeLayer new];
+				layer.anchorPoint	= CGPointMake(0, 0);
+				layer.position		= refPoint;
+				layer.path			= path;
+				layer.strokeColor	= [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
+				layer.fillColor		= [UIColor clearColor].CGColor;
+				layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
+				layer.lineCap		= kCALineCapRound;
+				layer.lineJoin		= kCALineJoinRound;
+				layer.zPosition		= Z_CASING;
+				[layer setValue:@(layer.lineWidth) forKey:@"lineWidth.orig"];
+				[layers addObject:layer];
+				CGPathRelease(path);
+			}
+		}
+	}
+
+	// way
+	if ( object.isWay || object.isRelation.isMultipolygon ) {
+		CGPoint refPoint;
+		CGPathRef path = [self pathForObject:object refPoint:&refPoint];
+
+		if ( path ) {
+			CGFloat red = 0, green = 0, blue = 0, alpha = 1;
+			[tagInfo.lineColor getRed:&red green:&green blue:&blue alpha:&alpha];
+			CGFloat lineWidth = tagInfo.lineWidth*_highwayScale;
+			if ( lineWidth == 0 )
+				lineWidth = 1;
+
+			CAShapeLayer * layer = [CAShapeLayer new];
+			layer.anchorPoint	= CGPointMake(0, 0);
+			layer.position		= refPoint;
+			layer.path			= path;
+			CGColorRef color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha].CGColor;
+			layer.strokeColor	= color;
+			layer.fillColor		= [UIColor clearColor].CGColor;
+			layer.lineWidth		= lineWidth;
+			layer.lineCap		= kCALineCapRound;
+			layer.lineJoin		= kCALineJoinRound;
+			layer.zPosition		= Z_LINE;
+			[layer setValue:@(layer.lineWidth) forKey:@"lineWidth.orig"];
+#if 0
+			if ( way && way.isOneWay ) {
+				[self drawArrowsForPath:path context:ctx];
+			}
+#endif
+			CGPathRelease(path);
+			[layers addObject:layer];
+		}
+	}
+
+	// Area
+	if ( object.isWay.isArea || object.isRelation.isMultipolygon ) {
+		if ( tagInfo.areaColor && !object.isCoastline ) {
+
+			NSMutableArray * outer = object.isWay ? [NSMutableArray arrayWithObject:object.isWay] : [NSMutableArray arrayWithCapacity:object.isRelation.members.count];
+			NSMutableArray * inner = object.isWay ? nil : [NSMutableArray arrayWithCapacity:object.isRelation.members.count];
+			for ( OsmMember * mem in object.isRelation.members ) {
+				if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
+					if ( [mem.role isEqualToString:@"outer"] )
+						[outer addObject:mem.ref];
+					else if ( [mem.role isEqualToString:@"inner"] ) {
+						[inner addObject:mem.ref];
+					}
+				}
+			}
+
+			// join connected nodes together
+			outer = [self joinConnectedWays:outer];
+			inner = [self joinConnectedWays:inner];
+
+			// convert from nodes to screen points
+			for ( NSMutableArray * a in outer )
+				[EditorMapLayer convertNodesToPoints:a];
+			for ( NSMutableArray * a in inner )
+				[EditorMapLayer convertNodesToPoints:a];
+
+			// draw
+			CGMutablePathRef path = CGPathCreateMutable();
+			CGPoint refPoint = CGPointFromOSMPoint( ((OSMPointBoxed *)outer[0][0]).point );
+			for ( NSArray * w in outer ) {
+				[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
+			}
+			for ( NSArray * w in inner ) {
+				[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
+			}
+			RGBAColor	fillColor;
+			[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
+			CAShapeLayer * layer = [CAShapeLayer new];
+			layer.anchorPoint	= CGPointMake(0,0);
+			layer.position		= refPoint;
+			layer.path			= path;
+			layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:0.25].CGColor;
+			layer.lineCap		= kCALineCapRound;
+			layer.lineJoin		= kCALineJoinRound;
+			layer.zPosition		= Z_AREA;
+			[layers addObject:layer];
+			CGPathRelease(path);
+		}
+	}
+
+
+	// Names
+	if ( object.isWay || object.isRelation.isMultipolygon ) {
+		const CGFloat Pixels_Per_Character = 8.0;
+
+		// get object name, or address if no name
+		NSString * name = [object.tags objectForKey:@"name"];
+		if ( name == nil )
+			name = DrawNodeAsHouseNumber( object.tags );
+
+		if ( name ) {
+
+			BOOL isHighway = object.isWay && !object.isWay.isClosed;
+			if ( isHighway ) {
+
+				double length = 0.0;
+				CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
+				double offset = (length - name.length * Pixels_Per_Character) / 2;
+				if ( offset >= 0 ) {
+#if 0
+					[CurvedTextLayer drawString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
+#endif
+				}
+				CGPathRelease(path);
+
+			} else {
+
+				OSMPoint point = object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
+				OSMPoint pt = [MapView mapPointForLatitude:point.y longitude:point.x];
+
+				UIFont * font = [UIFont systemFontOfSize:11];
+				UIColor * shadowColor = ShadowColorForColor2(self.textColor);
+				CALayer * layer = [CurvedTextLayer layerWithString:name width:0 font:font color:self.textColor shadowColor:shadowColor];
+				layer.anchorPoint	= CGPointMake(0.5, 0.5);
+				layer.position		= CGPointMake(pt.x, pt.y);
+				layer.zPosition		= Z_TEXT;
+				[layers addObject:layer];
+			}
+		}
+	}
+	
+	NSDictionary * actions = @{
+					  @"onOrderIn"			: [NSNull null],
+					  @"onOrderOut"			: [NSNull null],
+					  @"sublayers"			: [NSNull null],
+					  @"contents"			: [NSNull null],
+					  @"bounds"				: [NSNull null],
+					  @"position"			: [NSNull null],
+					  @"transform"			: [NSNull null],
+					  @"affineTransform"	: [NSNull null],
+					  @"hidden"				: [NSNull null],
+					  };
+	for ( CALayer * layer in layers ) {
+		layer.actions = actions;
+	}
+
+	object.shapeLayers = layers;
+	return layers;
+}
+
+
+// highlighting
+
+-(NSArray *)getShapeLayersForHighlights
+{
+	NSInteger zoom = [self zoomLevel];
+
+	NSMutableArray * layers		= [NSMutableArray new];
+	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
+	if ( _selectedNode ) {
+		[highlights addObject:_selectedNode];
+	}
+	if ( _selectedWay ) {
+		[highlights addObject:_selectedWay];
+	}
+	if ( _selectedRelation ) {
+		NSSet * members = [_selectedRelation allMemberObjects];
+		[highlights addObjectsFromArray:members.allObjects];
+	}
+	if ( _highlightObject ) {
+		[highlights addObject:_highlightObject];
+	}
+	for ( OsmBaseObject * object in highlights ) {
+		BOOL selected = object == _selectedNode || object == _selectedWay || [self.extraSelections containsObject:object];
+
+		if ( object.isWay ) {
+			CGFloat		lineWidth	= MaxSubpartWidthForWay( object.isWay, @(zoom) );
+			CGPathRef	path		= [self pathForWay:object.isWay];
+			RGBAColor	wayColor	= { 1, 1, !selected, 1 };
+
+			if ( lineWidth == 0 )
+				lineWidth = 1;
+			lineWidth += 2;	// since we're drawing highlight 2-wide we don't want it to intrude inward on way
+
+			CAShapeLayer * layer = [CAShapeLayer new];
+			layer.strokeColor	= [UIColor colorWithRed:wayColor.red green:wayColor.green blue:wayColor.blue alpha:wayColor.alpha].CGColor;
+			layer.lineWidth		= lineWidth;
+//			layer.shadowColor	= UIColor.yellowColor.CGColor;
+//			layer.shadowOffset	= CGSizeMake(0,0);
+//			layer.shadowOpacity	= 1.0;
+//			layer.shadowRadius	= 5.0;
+			layer.path			= path;
+			layer.fillColor		= UIColor.clearColor.CGColor;
+			layer.zPosition		= Z_HIGHLIGHT_WAY;
+			[layers addObject:layer];
+			[layer setValue:@(layer.lineWidth) forKey:@"lineWidth.orig"];
+			CGPathRelease(path);
+
+			// draw nodes of way
+			NSSet * nodes = object == _selectedWay ? object.nodeSet : nil;
+			for ( OsmNode * node in nodes ) {
+				layer				= [CAShapeLayer new];
+				CGRect		rect	= CGRectMake(-WayHighlightRadius, -WayHighlightRadius, 2*WayHighlightRadius, 2*WayHighlightRadius);
+				layer.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+				layer.strokeColor	= node == _selectedNode ? UIColor.redColor.CGColor : UIColor.greenColor.CGColor;
+				layer.fillColor		= UIColor.clearColor.CGColor;
+				layer.lineWidth		= 2.0;
+				if ( [node hasInterestingTags] ) {
+					layer.path		= CGPathCreateWithRect(rect, NULL);
+				} else {
+					layer.path		= CGPathCreateWithEllipseInRect(rect, NULL);
+				}
+				layer.zPosition		= Z_HIGHLIGHT_NODE;
+				[layers addObject:layer];
+			}
+
+		} else if ( object.isNode ) {
+
+			OsmNode * node = (id)object;
+			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+
+			CAShapeLayer * layer = [CAShapeLayer new];
+			CGRect rect = CGRectMake(pt.x - MinIconSizeInPixels/2, pt.y - MinIconSizeInPixels/2, MinIconSizeInPixels, MinIconSizeInPixels);
+			rect = CGRectInset( rect, -3, -3 );
+			CGPathRef path		= CGPathCreateWithRect( rect, NULL );
+			layer.path			= path;
+
+			layer.anchorPoint	= CGPointMake(0, 0);
+			layer.position		= CGPointMake(pt.x,pt.y);
+			layer.strokeColor	= [UIColor colorWithRed:1.0 green:1.0 blue:selected?0.0:1.0 alpha:1.0].CGColor;
+			layer.fillColor		= [UIColor clearColor].CGColor;
+			layer.lineWidth		= 2.0;
+
+			layer.shadowPath	= CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
+			layer.shadowColor	= UIColor.blackColor.CGColor;
+			layer.shadowRadius	= 0.0;
+			layer.shadowOffset	= CGSizeMake(0,0);
+			layer.shadowOpacity	= 0.25;
+
+			layer.zPosition		= Z_HIGHLIGHT_NODE;
+			[layers addObject:layer];
+			CGPathRelease(path);
+		}
+	}
+	return layers;
+}
+
+
+#endif
 
 
 
@@ -1355,14 +1859,10 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	if ( tagInfo.lineWidth == 0 )
 		return NO;
 
-	OsmWay * way = object.isWay;
-	OsmRelation * relation = object.isRelation;
-
-	if ( way && way.isArea )
+	if ( object.isWay.isArea )
 		return NO;
 
-	NSArray * wayList = way ? @[ way ] : [self wayListForMultipolygonRelation:relation];
-
+	NSArray * wayList = object.isWay ? @[ object ] : [self wayListForMultipolygonRelation:object.isRelation];
 	CGContextBeginPath(ctx);
 	for ( OsmWay * w in wayList ) {
 		CGPathRef path = [self pathForWay:w];
@@ -1373,9 +1873,9 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
 	CGContextSetLineWidth(ctx, (1+tagInfo.lineWidth)*_highwayScale);
 	CGContextStrokePath(ctx);
-
 	return YES;
 }
+
 
 -(void)drawSelectedWayHighlight:(CGPathRef)path width:(CGFloat)lineWidth wayColor:(RGBAColor)wayColor nodes:(NSSet *)nodes context:(CGContextRef)ctx
 {
@@ -1393,7 +1893,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 
 	// draw nodes of way
 	for ( OsmNode * node in nodes ) {
-		OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+		CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 		if ( node == _selectedNode ) {
 			CGContextSetRGBStrokeColor(ctx, 1,0,0, 1);	// red
 		} else {
@@ -1401,7 +1901,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		}
 		CGContextBeginPath(ctx);
 		CGContextSetLineWidth(ctx, 2);
-		CGRect rect = CGRectMake(pt.x - WayHighlightRadius, pt.y - WayHighlightRadius, 2*WayHighlightRadius, 2*WayHighlightRadius);
+		CGRect rect = CGRectMake( round(pt.x - WayHighlightRadius), round(pt.y - WayHighlightRadius), 2*WayHighlightRadius, 2*WayHighlightRadius);
 		if ( [node hasInterestingTags] ) {
 			CGContextAddRect(ctx, rect);
 		} else {
@@ -1520,7 +2020,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		return;
 	if ( [textKey characterAtIndex:0] == '"' )
 		textKey = [textKey substringWithRange:NSMakeRange(1, textKey.length-2)];
-	NSString * name = [subpart.object.tags valueForKey:textKey];
+	NSString * name = [subpart.object.tags objectForKey:textKey];
 	if ( name == nil )
 		return;
 	// don't draw the same name twice
@@ -1562,8 +2062,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	} else {
 		// it is a node or area
 		OSMPoint point = [way centerPoint];
-		point = [self pointForLat:point.y lon:point.x];
-		CGPoint cgPoint = CGPointFromOSMPoint(point);
+		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
 
 		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint width:0 font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
 	}
@@ -1583,7 +2082,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 
 	for ( OsmNode * node in way.nodes ) {
 
-		OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+		OSMPoint pt = OSMPointFromCGPoint( [_mapView screenPointForLatitude:node.lat longitude:node.lon] );
 		BOOL inside = OSMRectContainsPoint( viewRect, pt );
 
 		if ( first ) {
@@ -1644,7 +2143,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 	const CGFloat Pixels_Per_Character = 8.0;
 
 	// add street names
-	NSString * name = [object.tags valueForKey:@"name"];
+	NSString * name = [object.tags objectForKey:@"name"];
 	if ( name == nil )
 		name = DrawNodeAsHouseNumber( object.tags );
 	if ( name == nil )
@@ -1682,8 +2181,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			return NO;
 		
 		OSMPoint point = way ? way.centerPoint : relation.centerPoint;
-		point = [self pointForLat:point.y lon:point.x];
-		CGPoint cgPoint = CGPointFromOSMPoint(point);
+		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
 		UIFont * font = [UIFont systemFontOfSize:11];
 		UIColor * shadowColor = ShadowColorForColor2(self.textColor);
 		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:self.textColor shadowColor:shadowColor context:ctx];
@@ -1707,13 +2205,13 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		node = (id)object;
 	}
 
-	OSMPoint pt;
+	CGPoint pt;
 	if ( node.isNode ) {
-		pt = [self pointForLat:node.lat lon:node.lon];
+		pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 	} else if ( node.isWay ) {
 		// this path is taken when MapCSS is drawing an icon in the center of an area, such as a parking lot
-		pt = [node.isWay centerPoint];
-		pt = [self pointForLat:pt.y lon:pt.x];
+		OSMPoint latLon = [node.isWay centerPoint];
+		pt = [_mapView screenPointForLatitude:latLon.y longitude:latLon.x];
 	} else {
 		assert(NO);
 		return NO;
@@ -1784,8 +2282,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		if ( houseNumber ) {
 
 			UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-			CGPoint point = CGPointFromOSMPoint(pt);
-			[CurvedTextLayer drawString:houseNumber	centeredOnPoint:point width:0 font:nil color:self.textColor shadowColor:shadowColor context:ctx];
+			[CurvedTextLayer drawString:houseNumber	centeredOnPoint:pt width:0 font:nil color:self.textColor shadowColor:shadowColor context:ctx];
 
 		} else {
 
@@ -1809,7 +2306,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		CGContextAddLines( ctx, line1, 2 );
 		CGContextAddLines( ctx, line2, 2 );
 		CGContextStrokePath(ctx);
-}
+	}
 
 	return YES;
 }
@@ -1845,7 +2342,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			CGPathRelease(path);
 		} else if ( object.isNode ) {
 			OsmNode * node = (id)object;
-			OSMPoint pt = [self pointForLat:node.lat lon:node.lon];
+			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 
 			CGContextBeginPath(ctx);
 			if ( selected )
@@ -1954,7 +2451,7 @@ or in order of z-indexes (if renderer can detect collisions).
 				subpart.object		= object;
 				subpart.subpart		= subpartID;
 				subpart.properties	= props;
-				subpart.zIndex		= [[props valueForKey:@"z-index"] doubleValue];
+				subpart.zIndex		= [[props objectForKey:@"z-index"] doubleValue];
 				[subs addObject:subpart];
 			}];
 			subparts = subs;
@@ -2011,18 +2508,15 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 }
 
 
-- (void)drawInContext:(CGContextRef)ctx
+
+- (NSMutableArray *)getObjectsToDisplay
 {
-	_nameDrawSet = [NSMutableSet new];
-
-	if ( _mapCss ) {
-		[self drawMapCssInContext:ctx];
-		return;
-	}
-
 #if TARGET_OS_IPHONE
 	NSInteger objectLimit	= [self hasFastGraphics] ? 100 : 50;
 	NSInteger nameLimit		= [self hasFastGraphics] ? 10 : 5;
+#if USE_SHAPELAYERS
+	objectLimit *= 3;
+#endif
 #else
 	NSInteger objectLimit = 500;
 	NSInteger nameLimit = 100;
@@ -2034,14 +2528,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		objectLimit = 1000000;
 	}
 
-
-	CFTimeInterval totalTime = CACurrentMediaTime();
-
 	// get objects in visible rect
-	_shownObjects = [self getVisibleObjects];
+	NSMutableArray * objects = [self getVisibleObjects];
 
 	// get taginfo for objects
-	for ( OsmBaseObject * object in _shownObjects ) {
+	for ( OsmBaseObject * object in objects ) {
 		if ( object.tagInfo == nil ) {
 			object.tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForObject:object];
 		}
@@ -2055,16 +2546,16 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	// sort from big to small objects
-	[_shownObjects partialSortK:2*objectLimit+1 compare:VisibleSizeLessStrict];
+	[objects partialSortK:2*objectLimit+1 compare:VisibleSizeLessStrict];
 
 	// adjust the list of objects so that we get all or none of the same type
-	if ( _shownObjects.count > objectLimit ) {
+	if ( objects.count > objectLimit ) {
 		// We have more objects available than we want to display. If some of the objects are the same size as the last visible object then include those too.
 		NSInteger lastIndex = objectLimit;
-		OsmBaseObject * last = _shownObjects[ objectLimit-1 ];
+		OsmBaseObject * last = objects[ objectLimit-1 ];
 		NSInteger lastRenderPriority = last.renderPriorityCached;
-		for ( NSInteger i = objectLimit, e = MIN(_shownObjects.count,2*objectLimit); i < e; ++i ) {
-			OsmBaseObject * o = _shownObjects[ i ];
+		for ( NSInteger i = objectLimit, e = MIN(objects.count,2*objectLimit); i < e; ++i ) {
+			OsmBaseObject * o = objects[ i ];
 			if ( o.renderPriorityCached == lastRenderPriority ) {
 				lastIndex++;
 			} else {
@@ -2075,7 +2566,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 			// we doubled the number of objects, so back off instead
 			NSInteger removeCount = 0;
 			for ( NSInteger i = objectLimit-1; i >= 0; --i ) {
-				OsmBaseObject * o = _shownObjects[ i ];
+				OsmBaseObject * o = objects[ i ];
 				if ( o.renderPriorityCached == lastRenderPriority ) {
 					++removeCount;
 				} else {
@@ -2090,15 +2581,170 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		objectLimit = lastIndex;
 
 		// remove unwanted objects
-		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(objectLimit,_shownObjects.count-objectLimit)];
-		[_shownObjects removeObjectsAtIndexes:range];
+		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(objectLimit,objects.count-objectLimit)];
+		[objects removeObjectsAtIndexes:range];
 	}
+	return objects;
+}
+
+
+#if USE_SHAPELAYERS
+- (void)layoutSublayers
+{
+	if ( self.hidden )
+		return;
+
+	NSArray * previousObjects = _shownObjects;
+
+	_shownObjects = [self getObjectsToDisplay];
+
+	// remove layers no longer visible
+	NSMutableSet * removals = [NSMutableSet setWithArray:previousObjects];
+	for ( OsmBaseObject * object in _shownObjects ) {
+		[removals removeObject:object];
+	}
+#if 1
+	for ( OsmBaseObject * object in removals ) {
+		for ( CALayer * layer in object.shapeLayers ) {
+			[layer removeFromSuperlayer];
+		}
+	}
+#else
+	// use fade when removing objects
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:0.5];
+	[CATransaction setCompletionBlock:^{
+		for ( OsmBaseObject * object in removals ) {
+			for ( CALayer * layer in object.shapeLayers ) {
+				[layer removeFromSuperlayer];
+			}
+		}
+	}];
+	for ( OsmBaseObject * object in removals ) {
+		for ( CALayer * layer in object.shapeLayers ) {
+			layer.hidden = YES;
+		}
+	}
+	[CATransaction commit];
+#endif
+
+	const double	tRotation	= OSMTransformRotation( _mapView.screenFromMapTransform );
+	const double	tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
+	const double	pScale		= tScale / PATH_SCALING;
+
+	for ( OsmBaseObject * obj in _shownObjects ) {
+
+		// NSLog(@"%@",obj);
+
+		NSArray * layers = [self getShapeLayersForObject:obj];
+
+		for ( CALayer * layer in layers ) {
+
+			// configure the layer for presentation
+
+			OSMPoint pt = OSMPointFromCGPoint( layer.position );
+			OSMPoint pt2 = OSMPointApplyTransform( pt, _mapView.screenFromMapTransform );
+
+			if ( [layer isKindOfClass:[CAShapeLayer class]] && !obj.isNode ) {
+
+				// way or area -- need to rotate and scale
+				CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
+				t = CGAffineTransformScale( t, pScale, pScale );
+				t = CGAffineTransformRotate( t, tRotation );
+				layer.affineTransform = t;
+
+				layer.bounds = CGRectMake(0, 0, round(256/tScale), round(256/tScale));
+
+				if ( [layer isKindOfClass:[CAShapeLayer class]] ) {
+					CAShapeLayer * shape = (id)layer;
+					NSNumber * lineWidth = [shape valueForKey:@"lineWidth.orig"];
+					shape.lineWidth = lineWidth.doubleValue / pScale;
+				}
+
+			} else {
+
+				// node or text -- no scale transform applied
+				if ( [layer isKindOfClass:[CATextLayer class]] ) {
+
+					// get size of building (or whatever) into which we need to fit the text
+					if ( obj.isNode ) {
+						// its a node with text, such as an address node
+					} else {
+						// its a label on a building or polygon
+						OSMRect rc = obj.boundingBox;
+						OSMPoint p1 = [MapView mapPointForLatitude:rc.origin.y+rc.size.height longitude:rc.origin.x];	// latitude increases opposite of map
+						OSMPoint p2 = [MapView mapPointForLatitude:rc.origin.y longitude:rc.origin.x+rc.size.width];
+						rc = OSMRectMake( p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);	// map size
+						rc = [_mapView boundingScreenRectForMapRect:rc];
+						if ( layer.bounds.size.width >= 1.1*rc.size.width ) {
+							// text label is too big so hide it
+							[layer removeFromSuperlayer];
+							continue;
+						}
+					}
+					layer.affineTransform	= CGAffineTransformMakeTranslation( round(pt2.x-pt.x), round(pt2.y-pt.y) );
+
+				} else {
+
+					// its an icon or a generic box
+					layer.affineTransform	= CGAffineTransformMakeTranslation( round(pt2.x-pt.x), round(pt2.y-pt.y));
+
+				}
+			}
+
+			// add the layer if not already present
+
+			if ( layer.superlayer == nil ) {
+				layer.hidden = YES;
+				[self addSublayer:layer];
+				layer.hidden = NO;
+			}
+		}
+	}
+
+
+	// draw highlights
+	NSArray * highlightLayers = [self getShapeLayersForHighlights];
+	for ( CALayer * layer in (id)_highlightLayer ) {
+		[layer removeFromSuperlayer];
+	}
+	_highlightLayer = (id)highlightLayers;
+	for ( CALayer * layer in highlightLayers ) {
+		[self addSublayer:layer];
+	}
+
+	// NSLog(@"%ld layers", (long)self.sublayers.count);
+}
+#endif
+
+-(void)setNeedsLayout
+{
+	[super setNeedsLayout];
+}
+
+
+#if !USE_SHAPELAYERS
+- (void)drawInContext:(CGContextRef)ctx
+{
+	if ( self.hidden )
+		return;
+
+	if ( _mapCss ) {
+		[self drawMapCssInContext:ctx];
+		return;
+	}
+
+	CFTimeInterval totalTime = CACurrentMediaTime();
 
 	int areaCount = 0;
 	int casingCount = 0;
 	int wayCount = 0;
 	int nodeCount = 0;
 	int nameCount = 0;
+
+	_shownObjects = [self getObjectsToDisplay];
+
+	_nameDrawSet = [NSMutableSet new];
 
 	// draw oceans
 	[self drawOceans:_shownObjects context:ctx];
@@ -2174,6 +2820,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		 nameCount, nameTime*1000 );
 #endif
 }
+#endif
+
+
 
 #pragma mark Hit Testing
 
@@ -2421,7 +3070,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt];
 	[_mapData setLongitude:loc.longitude latitude:loc.latitude forNode:node inWay:_selectedWay];
 
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 }
 
 
@@ -2431,7 +3084,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:point];
 	OsmNode * node = [_mapData createNodeAtLocation:loc];
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 	return node;
 }
 
@@ -2441,7 +3098,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 	OsmWay * way = [_mapData createWay];
 	[_mapData addNode:node toWay:way atIndex:0];
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 	return way;
 }
 
@@ -2450,7 +3111,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	[self saveSelection];
 
 	[_mapData addNode:node toWay:way atIndex:index];
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 }
 
 -(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way allowDegenerate:(BOOL)allowDegenerate
@@ -2521,7 +3186,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	[_speechBalloon removeFromSuperlayer];
 	_speechBalloon = nil;
 
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 }
 
 -(void)cancelOperation
@@ -2544,7 +3213,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 -(void)setNeedsDisplayForObject:(OsmBaseObject *)object
 {
 #if 1
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 #else
 	if ( object == nil ) {
 		[self setNeedsDisplay];
@@ -2633,14 +3306,22 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		else
 			[_extraSelections addObject:object];
 	}
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
 	[self setNeedsDisplay];
+#endif
 	[self doSelectionChangeCallbacks];
 }
 - (void)clearExtraSelections
 {
 	if ( _extraSelections ) {
 		_extraSelections = nil;
+#if USE_SHAPELAYERS
+		[self setNeedsLayout];
+#else
 		[self setNeedsDisplay];
+#endif
 		[self doSelectionChangeCallbacks];
 	}
 }
@@ -2654,7 +3335,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	if ( object != _highlightObject ) {
 		_highlightObject = object;
+#if USE_SHAPELAYERS
+		[self setNeedsLayout];
+#else
 		[self setNeedsDisplay];
+#endif
 	}
 	NSString * name = [_highlightObject friendlyDescription];
 	if ( name ) {
@@ -2663,8 +3348,8 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			[self addSublayer:_speechBalloon];
 		}
 		if ( _highlightObject.isNode ) {
-			OsmNode * n = (id)_highlightObject;
-			mousePoint = CGPointFromOSMPoint( [self pointForLat:n.lat lon:n.lon] );
+			OsmNode * node = (id)_highlightObject;
+			mousePoint = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 		} else {
 			mousePoint = [self convertPoint:mousePoint fromLayer:_mapView.layer];
 		}
@@ -2710,8 +3395,30 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 #else
 		_textColor = [textColor colorUsingColorSpaceName:NSDeviceRGBColorSpace];
 #endif
+#if USE_SHAPELAYERS
+		// need to refresh all text objects
+		[_mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
+			obj.shapeLayers = nil;
+		}];
+		self.sublayers = nil;
+#endif
+#if USE_SHAPELAYERS
+		[self setNeedsLayout];
+#else
 		[self setNeedsDisplay];
+#endif
 	}
+}
+
+#pragma mark Coding
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+}
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+	// This is just here for completeness. The current object will be substituted during decode.
+	return [super init];
 }
 
 @end

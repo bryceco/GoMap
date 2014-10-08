@@ -175,8 +175,10 @@ typedef enum {
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
 -(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point;
 
--(OSMRect)mapRectFromScreenRect;
--(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
+//-(OSMRect)mapRectFromScreenRect:(OSMRect)rect;
+//-(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
+-(OSMRect)boundingScreenRectForMapRect:(OSMRect)mapRect;
+-(OSMRect)boundingMapRectForScreenRect:(OSMRect)screenRect;
 -(OSMRect)boundingMapRectForScreen;
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;

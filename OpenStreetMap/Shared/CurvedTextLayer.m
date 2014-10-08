@@ -181,4 +181,163 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
 }
 
+
++(CGSize)sizeOfText:(NSAttributedString *)string
+{
+	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( (CFAttributedStringRef)string );
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), NULL, CGSizeMake(70, CGFLOAT_MAX), NULL);
+	CFRelease(framesetter);
+	return suggestedSize;
+}
+
++(CALayer *)layerWithString:(NSString *)string width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor
+{
+	CATextLayer * layer = [CATextLayer new];
+
+	if ( font == nil )
+		font = [UIFont systemFontOfSize:10];
+	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor,		NSFontAttributeName : font }];
+//	NSAttributedString * s2 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)shadowColor.CGColor,	NSFontAttributeName : font }];
+
+	CGRect bounds = { 0 };
+	bounds.size = [CurvedTextLayer sizeOfText:s1];
+	bounds = CGRectInset( bounds, -3, -1 );
+	bounds.size.width  = ceil( bounds.size.width );
+	bounds.size.height = ceil( bounds.size.height );
+	layer.bounds = bounds;
+
+	layer.string			= s1;
+	layer.truncationMode	= kCATruncationNone;
+	layer.wrapped			= YES;
+	layer.alignmentMode		= kCAAlignmentCenter;
+
+	layer.shadowPath		= CGPathCreateWithRect(bounds, NULL);
+	layer.shadowColor		= shadowColor.CGColor;
+	layer.shadowRadius		= 0.0;
+	layer.shadowOffset		= CGSizeMake(0,0);
+	layer.shadowOpacity		= 0.5;
+
+	return layer;
+}
+
+
+// - (UIBezierPath*) bezierPathWithString:(NSString*) string font:(UIFont*) font inRect:(CGRect) rect;
+// Requires CoreText.framework
+// This creates a graphical version of the input screen, line wrapped to the input rect.
+// Core Text involves a whole hierarchy of objects, all requiring manual management.
+// http://stackoverflow.com/questions/10152574/catextlayer-blurry-text-after-rotation
+- (UIBezierPath*) bezierPathWithString:(NSString *)string font:(UIFont *)font inRect:(CGRect)rect
+{
+	UIBezierPath *combinedGlyphsPath = nil;
+	CGMutablePathRef combinedGlyphsPathRef = CGPathCreateMutable();
+	if (combinedGlyphsPathRef)
+	{
+		// It would be easy to wrap the text into a different shape, including arbitrary bezier paths, if needed.
+		UIBezierPath *frameShape = [UIBezierPath bezierPathWithRect:rect];
+
+		// If the font name wasn't found while creating the font object, the result is a crash.
+		// Avoid this by falling back to the system font.
+		CTFontRef fontRef;
+		if ([font fontName])
+			fontRef = CTFontCreateWithName((__bridge CFStringRef) [font fontName], [font pointSize], NULL);
+		else if (font)
+			fontRef = CTFontCreateUIFontForLanguage(kCTFontUserFontType, [font pointSize], NULL);
+		else
+			fontRef = CTFontCreateUIFontForLanguage(kCTFontUserFontType, [UIFont systemFontSize], NULL);
+
+		if (fontRef)
+		{
+			CGPoint basePoint = CGPointMake(0, CTFontGetAscent(fontRef));
+			CFStringRef keys[] = { kCTFontAttributeName };
+			CFTypeRef values[] = { fontRef };
+			CFDictionaryRef attributesRef = CFDictionaryCreate(NULL, (const void **)&keys, (const void **)&values,
+															   sizeof(keys) / sizeof(keys[0]), &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+
+			if (attributesRef)
+			{
+				CFAttributedStringRef attributedStringRef = CFAttributedStringCreate(NULL, (__bridge CFStringRef) string, attributesRef);
+
+				if (attributedStringRef)
+				{
+					CTFramesetterRef frameSetterRef = CTFramesetterCreateWithAttributedString(attributedStringRef);
+
+					if (frameSetterRef)
+					{
+						CTFrameRef frameRef = CTFramesetterCreateFrame(frameSetterRef, CFRangeMake(0,0), [frameShape CGPath], NULL);
+
+						if (frameRef)
+						{
+							CFArrayRef lines = CTFrameGetLines(frameRef);
+							CFIndex lineCount = CFArrayGetCount(lines);
+							CGPoint lineOrigins[lineCount];
+							CTFrameGetLineOrigins(frameRef, CFRangeMake(0, lineCount), lineOrigins);
+
+							for (CFIndex lineIndex = 0; lineIndex<lineCount; lineIndex++)
+							{
+								CTLineRef lineRef = CFArrayGetValueAtIndex(lines, lineIndex);
+								CGPoint lineOrigin = lineOrigins[lineIndex];
+
+								CFArrayRef runs = CTLineGetGlyphRuns(lineRef);
+
+								CFIndex runCount = CFArrayGetCount(runs);
+								for (CFIndex runIndex = 0; runIndex<runCount; runIndex++)
+								{
+									CTRunRef runRef = CFArrayGetValueAtIndex(runs, runIndex);
+
+									CFIndex glyphCount = CTRunGetGlyphCount(runRef);
+									CGGlyph glyphs[glyphCount];
+									CGSize glyphAdvances[glyphCount];
+									CGPoint glyphPositions[glyphCount];
+
+									CFRange runRange = CFRangeMake(0, glyphCount);
+									CTRunGetGlyphs(runRef, CFRangeMake(0, glyphCount), glyphs);
+									CTRunGetPositions(runRef, runRange, glyphPositions);
+
+									CTFontGetAdvancesForGlyphs(fontRef, kCTFontDefaultOrientation, glyphs, glyphAdvances, glyphCount);
+
+									for (CFIndex glyphIndex = 0; glyphIndex<glyphCount; glyphIndex++)
+									{
+										CGGlyph glyph = glyphs[glyphIndex];
+
+										// For regular UIBezierPath drawing, we need to invert around the y axis.
+										CGAffineTransform glyphTransform = CGAffineTransformMakeTranslation(lineOrigin.x+glyphPositions[glyphIndex].x, rect.size.height-lineOrigin.y-glyphPositions[glyphIndex].y);
+										glyphTransform = CGAffineTransformScale(glyphTransform, 1, -1);
+
+										CGPathRef glyphPathRef = CTFontCreatePathForGlyph(fontRef, glyph, &glyphTransform);
+										if (glyphPathRef)
+										{
+											// Finally carry out the appending.
+											CGPathAddPath(combinedGlyphsPathRef, NULL, glyphPathRef);
+
+											CFRelease(glyphPathRef);
+										}
+
+										basePoint.x += glyphAdvances[glyphIndex].width;
+										basePoint.y += glyphAdvances[glyphIndex].height;
+									}
+								}
+								basePoint.x = 0;
+								basePoint.y += CTFontGetAscent(fontRef) + CTFontGetDescent(fontRef) + CTFontGetLeading(fontRef);
+							}
+
+							CFRelease(frameRef);
+						}
+
+						CFRelease(frameSetterRef);
+					}
+					CFRelease(attributedStringRef);
+				}
+				CFRelease(attributesRef);
+			}
+			CFRelease(fontRef);
+		}
+		// Casting a CGMutablePathRef to a CGPathRef seems to be the only way to convert what was just built into a UIBezierPath.
+		combinedGlyphsPath = [UIBezierPath bezierPathWithCGPath:(CGPathRef) combinedGlyphsPathRef];
+
+		CGPathRelease(combinedGlyphsPathRef);
+	}
+	return combinedGlyphsPath;
+}
+
+
 @end

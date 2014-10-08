@@ -77,7 +77,7 @@
 	}
 
 	POITabBarController * tabController = (id)self.tabBarController;
-	BOOL selected = [[tabController.keyValueDict valueForKey:self.tag] isEqualToString:preset.tagValue];
+	BOOL selected = [[tabController.keyValueDict objectForKey:self.tag] isEqualToString:preset.tagValue];
 	cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 
     return cell;

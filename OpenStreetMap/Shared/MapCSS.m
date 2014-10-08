@@ -29,7 +29,7 @@ static int token;
 @implementation MapCssCondition
 -(BOOL)matchTags:(OsmBaseObject *)object
 {
-	NSString * value = [object.tags valueForKey:self.tag];
+	NSString * value = [object.tags objectForKey:self.tag];
 	if ( value == nil && [self.tag isEqualToString:@"way_area"] && object.isWay ) {
 		double area = [(OsmWay *)object wayArea];
 		value = [@(area) stringValue];
@@ -394,7 +394,7 @@ static int token;
 				} else {
 					[propertyDict addEntriesFromDictionary:rule.properties];
 				}
-				haveExit = [propertyDict valueForKey:@"exit"] != nil;
+				haveExit = [propertyDict objectForKey:@"exit"] != nil;
 			}
 			if ( haveExit )
 				break;

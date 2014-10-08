@@ -21,7 +21,7 @@
 @class QuadMap;
 @class SpeechBalloonLayer;
 
-@interface EditorMapLayer : CALayer<UIActionSheetDelegate>
+@interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>
 {
 	CGSize					_iconSize;
 	double					_highwayScale;
@@ -34,8 +34,10 @@
 	MapCSS				*	_mapCss;
 	NSMutableSet		*	_nameDrawSet;
 
-	NSMutableArray		*	_shownObjects;
+	NSArray				*	_shownObjects;
 	NSMutableArray		*	_selectionChangeCallbacks;
+
+	CALayer				*	_highlightLayer;
 }
 
 @property (assign,nonatomic)	MapView				*	mapView;
@@ -51,8 +53,6 @@
 
 - (id)initWithMapView:(MapView *)mapView;
 - (void)didReceiveMemoryWarning;
-
-- (OSMPoint)pointForLat:(double)lat lon:(double)lon;
 
 - (OsmNode *)osmHitTestNodeInSelection:(CGPoint)point;
 - (OsmBaseObject *)osmHitTest:(CGPoint)point;

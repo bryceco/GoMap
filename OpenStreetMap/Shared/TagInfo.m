@@ -371,7 +371,7 @@ static TagInfo * g_DefaultRender = nil;
 	}]];
 
 	// get values for key (creates an array of TagInfo)
-	NSDictionary * valueDict = [_keyDict valueForKey:belongTo];
+	NSDictionary * valueDict = [_keyDict objectForKey:belongTo];
 	NSArray * valueArray = [valueDict allValues];
 	valueArray = [valueArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(TagInfo * tagInfo, NSDictionary *bindings) {
 		return [tagInfo.type rangeOfString:type].length > 0;
@@ -435,7 +435,7 @@ static TagInfo * g_DefaultRender = nil;
 	} else {
 
 		// get values for key
-		NSDictionary * valueDict = [_keyDict valueForKey:key];
+		NSDictionary * valueDict = [_keyDict objectForKey:key];
 		NSArray * valueArray = [valueDict allValues];
 		valueArray = [valueArray sortedArrayUsingComparator:^NSComparisonResult(TagInfo * obj1, TagInfo * obj2) {
 			return [obj1.friendlyName caseInsensitiveCompare:obj2.friendlyName];
@@ -554,8 +554,8 @@ static TagInfo * g_DefaultRender = nil;
 
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {
-	NSDictionary * valDict = [_keyDict valueForKey:key];
-	return [valDict valueForKey:value];
+	NSDictionary * valDict = [_keyDict objectForKey:key];
+	return [valDict objectForKey:value];
 }
 
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object
@@ -571,9 +571,9 @@ static TagInfo * g_DefaultRender = nil;
 	// try exact match
 	__block TagInfo * best = nil;
 	[object.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
-		NSDictionary * valDict = [_keyDict valueForKey:key];
+		NSDictionary * valDict = [_keyDict objectForKey:key];
 		if ( valDict ) {
-			TagInfo * render = [valDict valueForKey:value];
+			TagInfo * render = [valDict objectForKey:value];
 			if ( render == nil )
 				return;
 			if ( best == nil || (best.lineColor == nil && render.lineColor) || (!best.iconName && render.iconName) )

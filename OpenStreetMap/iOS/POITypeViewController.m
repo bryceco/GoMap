@@ -111,7 +111,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 			cell.imageView.image = tagInfo.icon;
 			cell.detailTextLabel.text = tagInfo.summary;
 			POITabBarController * tabController = (id)self.tabBarController;
-			BOOL selected = [[tabController.keyValueDict valueForKey:tagInfo.key] isEqualToString:tagInfo.value];
+			BOOL selected = [[tabController.keyValueDict objectForKey:tagInfo.key] isEqualToString:tagInfo.value];
 			cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 			return cell;
 		}

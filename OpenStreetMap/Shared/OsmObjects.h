@@ -55,6 +55,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 // extra stuff
 @property (assign,nonatomic)	NSInteger			renderPriorityCached;
 @property (assign,nonatomic)	OSMRect				boundingBox;
+@property (strong,nonatomic)	NSArray			*	shapeLayers;
 
 +(NSArray *)typeKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;
