@@ -18,10 +18,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	self = [super init];
 	if ( self ) {
-		_name = name ?: @"";
-		_url = url ?: @"";
+		_name		= name ?: @"";
+		_url		= url ?: @"";
 		_subdomains = subdomains;
-		_maxZoom = (int32_t)maxZoom ?: 21;
+		_maxZoom	= (int32_t)maxZoom ?: 21;
 		_roundZoomUp = roundUp;
 	}
 	return self;

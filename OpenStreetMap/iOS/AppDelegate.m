@@ -126,6 +126,9 @@
 				double metersPerDegree = MetersPerDegree( lat );
 				double minMeters = 50;
 				double widthDegrees = widthDegrees = minMeters / metersPerDegree;
+				if ( hasZoom ) {
+					widthDegrees = 360.0 / pow(2,zoom);
+				}
 				[self.mapView setTransformForLatitude:lat longitude:lon width:widthDegrees];
 				if ( view != MAPVIEW_NONE ) {
 					self.mapView.viewState = view;

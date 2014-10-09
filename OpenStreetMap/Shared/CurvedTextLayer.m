@@ -211,12 +211,14 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	layer.wrapped			= YES;
 	layer.alignmentMode		= kCAAlignmentCenter;
 
-	layer.shadowPath		= CGPathCreateWithRect(bounds, NULL);
+	CGPathRef shadowPath	= CGPathCreateWithRect(bounds, NULL);
+	layer.shadowPath		= shadowPath;
 	layer.shadowColor		= shadowColor.CGColor;
 	layer.shadowRadius		= 0.0;
 	layer.shadowOffset		= CGSizeMake(0,0);
 	layer.shadowOpacity		= 0.5;
 
+	CGPathRelease(shadowPath);
 	return layer;
 }
 

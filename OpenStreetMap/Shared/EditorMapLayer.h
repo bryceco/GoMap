@@ -37,7 +37,7 @@
 	NSArray				*	_shownObjects;
 	NSMutableArray		*	_selectionChangeCallbacks;
 
-	CALayer				*	_highlightLayer;
+	NSArray				*	_highlightLayers;
 }
 
 @property (assign,nonatomic)	MapView				*	mapView;

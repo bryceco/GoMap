@@ -1488,7 +1488,7 @@ enum {
 
 	// way
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
-		CGPoint refPoint;
+		CGPoint refPoint = { 0, 0 };
 		CGPathRef path = [self pathForObject:object refPoint:&refPoint];
 
 		if ( path ) {
@@ -1687,13 +1687,11 @@ enum {
 				layer.strokeColor	= node == _selectedNode ? UIColor.redColor.CGColor : UIColor.greenColor.CGColor;
 				layer.fillColor		= UIColor.clearColor.CGColor;
 				layer.lineWidth		= 2.0;
-				if ( [node hasInterestingTags] ) {
-					layer.path		= CGPathCreateWithRect(rect, NULL);
-				} else {
-					layer.path		= CGPathCreateWithEllipseInRect(rect, NULL);
-				}
+				path = [node hasInterestingTags] ? CGPathCreateWithRect(rect, NULL) : CGPathCreateWithEllipseInRect(rect, NULL);
+				layer.path			= path;
 				layer.zPosition		= Z_HIGHLIGHT_NODE;
 				[layers addObject:layer];
+				CGPathRelease(path);
 			}
 
 		} else if ( object.isNode ) {
@@ -1702,7 +1700,7 @@ enum {
 			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 
 			CAShapeLayer * layer = [CAShapeLayer new];
-			CGRect rect = CGRectMake(pt.x - MinIconSizeInPixels/2, pt.y - MinIconSizeInPixels/2, MinIconSizeInPixels, MinIconSizeInPixels);
+			CGRect rect = CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2, MinIconSizeInPixels, MinIconSizeInPixels);
 			rect = CGRectInset( rect, -3, -3 );
 			CGPathRef path		= CGPathCreateWithRect( rect, NULL );
 			layer.path			= path;
@@ -1713,7 +1711,8 @@ enum {
 			layer.fillColor		= [UIColor clearColor].CGColor;
 			layer.lineWidth		= 2.0;
 
-			layer.shadowPath	= CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
+			CGPathRef shadowPath = CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
+			layer.shadowPath	= shadowPath;
 			layer.shadowColor	= UIColor.blackColor.CGColor;
 			layer.shadowRadius	= 0.0;
 			layer.shadowOffset	= CGSizeMake(0,0);
@@ -1722,6 +1721,7 @@ enum {
 			layer.zPosition		= Z_HIGHLIGHT_NODE;
 			[layers addObject:layer];
 			CGPathRelease(path);
+			CGPathRelease(shadowPath);
 		}
 	}
 	return layers;
@@ -2703,13 +2703,14 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 
-	// draw highlights
-	NSArray * highlightLayers = [self getShapeLayersForHighlights];
-	for ( CALayer * layer in (id)_highlightLayer ) {
+	// draw highlights: these layers are computed in screen coordinates and don't need to be transformed
+	for ( CALayer * layer in _highlightLayers ) {
+		// remove old highlights
 		[layer removeFromSuperlayer];
 	}
-	_highlightLayer = (id)highlightLayers;
-	for ( CALayer * layer in highlightLayers ) {
+	_highlightLayers = [self getShapeLayersForHighlights];
+	for ( CALayer * layer in _highlightLayers ) {
+		// add new highlights
 		[self addSublayer:layer];
 	}
 
@@ -2733,6 +2734,8 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		[self drawMapCssInContext:ctx];
 		return;
 	}
+
+	NSInteger nameLimit	= [self hasFastGraphics] ? 10 : 5;
 
 	CFTimeInterval totalTime = CACurrentMediaTime();
 

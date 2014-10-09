@@ -390,6 +390,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 				_aerialLayer.hidden = NO;
 				_mapnikLayer.hidden = YES;
 				_zoomToEditLabel.hidden = YES;
+				_aerialLayer.opacity = 0.75;
 				break;
 			case MAPVIEW_AERIAL:
 				_aerialLayer.aerialService = _customAerials.currentAerial;
@@ -397,6 +398,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 				_aerialLayer.hidden = NO;
 				_mapnikLayer.hidden = YES;
 				_zoomToEditLabel.hidden = YES;
+				_aerialLayer.opacity = 1.0;
 				break;
 			case MAPVIEW_MAPNIK:
 				_editorLayer.hidden = YES;
@@ -1343,26 +1345,17 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 }
 
--(void)setMapCenter:(OSMPoint)mapCenter scale:(double)scale
+-(void)setMapCenter:(OSMPoint)mapCenter scale:(double)newScale
 {
-	OSMTransform t = _screenFromMapTransform;
-
 	// translate
 	OSMPoint point = [self screenPointFromMapPoint:mapCenter];
 	CGRect rc = self.layer.bounds;
 	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
 	CGPoint delta = { center.x - point.x, center.y - point.y };
-	OSMTransform o = OSMTransformMakeTranslation(delta.x, delta.y);
-	t = OSMTransformConcat( _screenFromMapTransform, o );
+	[self adjustOriginBy:delta];
 
-	// zoom
-	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
-	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center)];
-	t = OSMTransformTranslate( t, offset.x, offset.y );
-	t = OSMTransformScale( t, ratio );
-	t = OSMTransformTranslate( t, -offset.x, -offset.y );
-
-	self.screenFromMapTransform = t;
+	double ratio = newScale / OSMTransformScaleX(_screenFromMapTransform);
+	[self adjustZoomBy:ratio aroundScreenPoint:center];
 }
 
 -(void)adjustOriginBy:(CGPoint)delta
