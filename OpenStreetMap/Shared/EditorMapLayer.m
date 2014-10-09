@@ -1287,6 +1287,7 @@ enum {
 	Z_TEXT				= Z_BASE + 6,
 	Z_HIGHLIGHT_WAY		= Z_BASE + 7,
 	Z_HIGHLIGHT_NODE	= Z_BASE + 8,
+	Z_ARROWS			= Z_BASE + 9,
 };
 
 -(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(CGPoint *)refPoint CF_RETURNS_RETAINED
@@ -1722,6 +1723,42 @@ enum {
 			[layers addObject:layer];
 			CGPathRelease(path);
 			CGPathRelease(shadowPath);
+		}
+	}
+
+	// Arrow heads
+	for ( OsmBaseObject * object in _shownObjects ) {
+		if ( object.isOneWay ) {
+			CGPathRef	path	= [self pathForWay:object.isWay];
+
+			double interval = 100;
+
+			InvokeBlockAlongPath( path, interval/2, interval, ^(OSMPoint loc, OSMPoint dir){
+				// draw direction arrow at loc/dir
+				double len = 15;
+				double width = 5;
+
+				OSMPoint p1 = { loc.x - dir.x*len + dir.y*width, loc.y - dir.y*len - dir.x*width };
+				OSMPoint p2 = { loc.x - dir.x*len - dir.y*width, loc.y - dir.y*len + dir.x*width };
+
+				CGMutablePathRef arrowPath = CGPathCreateMutable();
+				CGPathMoveToPoint(arrowPath, NULL, p1.x, p1.y);
+				CGPathAddLineToPoint(arrowPath, NULL, loc.x, loc.y);
+				CGPathAddLineToPoint(arrowPath, NULL, p2.x, p2.y);
+				CGPathAddLineToPoint(arrowPath, NULL, loc.x-dir.x*len*0.5, loc.y-dir.y*len*0.5);
+				CGPathCloseSubpath(arrowPath);
+
+				CAShapeLayer * arrow = [CAShapeLayer new];
+				arrow.path = arrowPath;
+				arrow.lineWidth = 1;
+				arrow.fillColor = UIColor.blackColor.CGColor;
+				arrow.zPosition	= Z_ARROWS;
+				[layers addObject:arrow];
+				CGPathRelease(arrowPath);
+			});
+
+			CGPathRelease(path);
+
 		}
 	}
 	return layers;

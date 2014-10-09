@@ -2397,7 +2397,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 }
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan
 {
-
 	_userOverrodeLocationPosition = YES;
 
 	if ( pan.state == UIGestureRecognizerStateBegan ) {

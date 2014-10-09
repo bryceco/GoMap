@@ -33,6 +33,8 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 	NSDictionary	*	_tags;
 	NSNumber		*	_ident;
 	NSArray			*	_relations;
+
+	NSNumber		*	_isOneWay;
 @public
 	OSMRect				_boundingBox;
 }
@@ -56,6 +58,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 @property (assign,nonatomic)	NSInteger			renderPriorityCached;
 @property (assign,nonatomic)	OSMRect				boundingBox;
 @property (strong,nonatomic)	NSArray			*	shapeLayers;
+@property (readonly,nonatomic)	BOOL				isOneWay;
 
 +(NSArray *)typeKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;
@@ -130,9 +133,9 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 -(void)resolveToMapData:(OsmMapData *)mapData;
 -(OSMPoint)centerPoint;
 -(OSMPoint)centerPointWithArea:(double *)area;
+-(BOOL)computeIsOneWay;
 -(BOOL)isArea;
 -(BOOL)isClosed;
--(BOOL)isOneWay;
 -(BOOL)isSimpleMultipolygonOuterMember;
 -(double)wayArea;
 -(OSMPoint)pointOnWayForPoint:(OSMPoint)point;

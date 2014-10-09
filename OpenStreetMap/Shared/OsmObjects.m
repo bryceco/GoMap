@@ -255,6 +255,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	_renderProperties		= nil;
 	_tagInfo				= nil;
 	_renderPriorityCached	= 0;
+	_isOneWay				= nil;
 	_boundingBox			= OSMRectMake(0, 0, 0, 0);
 
 	for ( CALayer * layer in _shapeLayers ) {
@@ -319,6 +320,12 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 
+-(BOOL)isOneWay
+{
+	if ( _isOneWay == nil )
+		_isOneWay = self.isWay.computeIsOneWay ? @(YES) : @(NO);
+	return _isOneWay.boolValue;
+}
 
 -(BOOL)deleted
 {
@@ -821,7 +828,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return _nodes.count > 2 && _nodes[0] == _nodes.lastObject;
 }
 
--(BOOL)isOneWay
+-(BOOL)computeIsOneWay
 {
 	static NSDictionary * oneWayTags = nil;
 	if ( oneWayTags == nil ) {
