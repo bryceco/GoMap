@@ -19,8 +19,6 @@
 	IBOutlet UIBarButtonItem *	_uploadButton;
 	IBOutlet UIBarButtonItem *	_undoButton;
 	IBOutlet UIBarButtonItem *	_redoButton;
-
-	CLLocationCoordinate2D		_pushPinLocation;	// temporary, used only during screen rotation
 }
 
 @property (assign,nonatomic) IBOutlet MapView		*	mapView;

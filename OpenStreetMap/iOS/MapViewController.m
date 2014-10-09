@@ -177,22 +177,11 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	// save start location for pushpin
-	if ( _mapView.pushpinView ) {
-		CGPoint pt = _mapView.pushpinView.arrowPoint;
-		_pushPinLocation = [_mapView longitudeLatitudeForScreenPoint:pt];
-	}
 }
-
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
 	CGRect rc = self.view.superview.bounds;
 	self.mapView.frame = rc;
-
-	// set new pushpin position
-	if ( _mapView.pushpinView ) {
-		_mapView.pushpinView.arrowPoint = [_mapView screenPointForLatitude:_pushPinLocation.latitude longitude:_pushPinLocation.longitude];
-	}
 }
 
 

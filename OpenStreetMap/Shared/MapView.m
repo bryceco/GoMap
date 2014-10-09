@@ -487,6 +487,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	_buildingsLayer.frame = rect;
 
+	CGSize oldSize = _editorLayer.bounds.size;
+	if ( oldSize.width ) {
+		CGSize newSize = rect.size;
+		CGPoint delta = { (newSize.width - oldSize.width)/2, (newSize.height - oldSize.height)/2 };
+		[self adjustOriginBy:delta];
+	}
+
 	for ( CALayer * layer in _backgroundLayers ) {
 		if ( [layer isKindOfClass:[MercatorTileLayer class]] ) {
 			layer.anchorPoint = CGPointMake(0,0);
@@ -1039,7 +1046,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 				center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2);
 			}
 			double rotation = OSMTransformRotation( _screenFromMapTransform );
-			[self rotateBy:-rotation aroundScreenPoint:center];
+			[self animateRotationBy:-rotation aroundPoint:center];
 		}
 
 		_gpsState = gpsState;
@@ -1140,6 +1147,44 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 static NSString * const DisplayLinkHeading	= @"Heading";
 
+- (void)animateRotationBy:(double)deltaHeading aroundPoint:(CGPoint)center
+{
+	if ( fabs(deltaHeading) < 0.00001 )
+		return;
+
+	// don't rotate the long way around
+	while ( deltaHeading < -M_PI )
+		deltaHeading += 2*M_PI;
+	while ( deltaHeading > M_PI )
+		deltaHeading -= 2*M_PI;
+
+	CFTimeInterval startTime = CACurrentMediaTime();
+	double duration = 0.4;
+	__weak MapView * weakSelf = self;
+	__block double prevHeading = 0;
+	[_displayLink addName:DisplayLinkHeading block:^{
+		MapView * myself = weakSelf;
+		if ( myself ) {
+			CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+			if ( elapsedTime >= duration ) {
+				[myself->_displayLink removeName:DisplayLinkHeading];
+			} else {
+				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
+				double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
+					t /= d/2;
+					if (t < 1) return c/2*t*t + b;
+					t--;
+					return -c/2 * (t*(t-2) - 1) + b;
+				};
+				double miniHeading = easeInOutQuad( elapsedTime, 0, deltaHeading, duration);
+				[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
+				myself->_locationBallLayer.heading	= M_PI*3/2;
+				prevHeading = miniHeading;
+			}
+		}
+	}];
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
 	if ( _locationBallLayer ) {
@@ -1167,9 +1212,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		}
 		if ( _gpsState == GPS_STATE_HEADING ) {
 			// rotate to new heading
-			double delta = -(heading + screenAngle);
 			CGPoint	center;
-
 			if ( CGRectContainsPoint( self.bounds, _locationBallLayer.position ) ) {
 				center = _locationBallLayer.position;
 			} else {
@@ -1177,37 +1220,8 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 				center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
 			}
 
-			// don't rotate the long way around
-			while ( delta < -M_PI )
-				delta += 2*M_PI;
-			while ( delta > M_PI )
-				delta -= 2*M_PI;
-
-			CFTimeInterval startTime = CACurrentMediaTime();
-			double duration = 0.4;
-			__weak MapView * weakSelf = self;
-			__block double prevHeading = 0;
-			[_displayLink addName:DisplayLinkHeading block:^{
-				MapView * myself = weakSelf;
-				if ( myself ) {
-					CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
-					if ( elapsedTime >= duration ) {
-						[myself->_displayLink removeName:DisplayLinkPanning];
-					} else {
-						// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
-						double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
-							t /= d/2;
-							if (t < 1) return c/2*t*t + b;
-							t--;
-							return -c/2 * (t*(t-2) - 1) + b;
-						};
-						double miniHeading = easeInOutQuad( elapsedTime, 0, delta, duration);
-						[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
-						myself->_locationBallLayer.heading	= M_PI*3/2;
-						prevHeading = miniHeading;
-					}
-				}
-			}];
+			double delta = -(heading + screenAngle);
+			[self animateRotationBy:delta aroundPoint:center];
 		}
 	}
 }
