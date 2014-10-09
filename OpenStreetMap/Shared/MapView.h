@@ -20,6 +20,7 @@
 @class AerialList;
 @class AerialService;
 @class BuildingsView;
+@class DisplayLink;
 @class EditorLayerGL;
 @class EditorMapLayer;
 @class GpxLayer;
@@ -113,7 +114,7 @@ typedef enum {
 	NSDate							*	_lastErrorDate;		// to prevent spamming of error dialogs
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
 
-	NSTimer							*	_inertiaTimer;		// for adding inertia to map panning
+	DisplayLink						*	_displayLink;
 
 	CLLocationManager				*	_locationManager;
 	CLLocation						*	_currentLocation;

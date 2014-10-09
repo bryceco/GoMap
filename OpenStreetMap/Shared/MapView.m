@@ -13,6 +13,7 @@
 #import "AerialList.h"
 #import "BingMapsGeometry.h"
 #import "BuildingsView.h"
+#import "DisplayLink.h"
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
@@ -109,6 +110,8 @@ CGSize SizeForImage( NSImage * image )
 #endif
 		self.layer.masksToBounds = YES;
 		self.backgroundColor = UIColor.whiteColor;
+
+		_displayLink = [DisplayLink new];
 
 		_screenFromMapTransform = OSMTransformIdentity();
 
@@ -1135,6 +1138,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return YES;
 }
 
+static NSString * const DisplayLinkHeading	= @"Heading";
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
 	if ( _locationBallLayer ) {
@@ -1163,15 +1168,43 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		if ( _gpsState == GPS_STATE_HEADING ) {
 			// rotate to new heading
 			double delta = -(heading + screenAngle);
+			CGPoint	center;
+
 			if ( CGRectContainsPoint( self.bounds, _locationBallLayer.position ) ) {
-				[self rotateBy:delta aroundScreenPoint:_locationBallLayer.position];
+				center = _locationBallLayer.position;
 			} else {
 				CGRect rc = self.bounds;
-				CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
-				[self rotateBy:delta aroundScreenPoint:center];
-
+				center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
 			}
-			_locationBallLayer.heading	= M_PI*3/2;
+
+			while ( delta < -M_PI )
+				delta += 2*M_PI;
+
+			CFTimeInterval startTime = CACurrentMediaTime();
+			double duration = 0.25;
+			__weak MapView * weakSelf = self;
+			__block double prevHeading = 0;
+			[_displayLink addName:DisplayLinkHeading block:^{
+				MapView * myself = weakSelf;
+				if ( myself ) {
+					CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+					if ( elapsedTime >= duration ) {
+						[myself->_displayLink removeName:DisplayLinkPanning];
+					} else {
+						// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
+						double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
+							t /= d/2;
+							if (t < 1) return c/2*t*t + b;
+							t--;
+							return -c/2 * (t*(t-2) - 1) + b;
+						};
+						double miniHeading = easeInOutQuad( elapsedTime, 0, delta, duration);
+						[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
+						myself->_locationBallLayer.heading	= M_PI*3/2;
+						prevHeading = miniHeading;
+					}
+				}
+			}];
 		}
 	}
 }
@@ -2330,6 +2363,8 @@ drop_pin:
 
 #if TARGET_OS_IPHONE
 
+static NSString * const DisplayLinkPanning	= @"Panning";
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
 	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
@@ -2345,11 +2380,12 @@ drop_pin:
 }
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan
 {
+
 	_userOverrodeLocationPosition = YES;
 
 	if ( pan.state == UIGestureRecognizerStateBegan ) {
 		// start pan
-		[_inertiaTimer invalidate];
+		[_displayLink removeName:DisplayLinkPanning];
 	} else if ( pan.state == UIGestureRecognizerStateChanged ) {
 		// move pan
 		CGPoint translation = [pan translationInView:self];
@@ -2359,22 +2395,24 @@ drop_pin:
 		// finish pan
 		CGPoint initialVelecity = [pan velocityInView:self];
 		CFTimeInterval startTime = CACurrentMediaTime();
-		double interval = 1.0/60.0;
 		double duration = 0.5;
-		void (^inertiaBlock)() = ^{
-			double now = CACurrentMediaTime();
-			double timeOffset = now - startTime;
-			if ( timeOffset >= duration ) {
-				[_inertiaTimer invalidate];
-			} else {
-				CGPoint translation;
-				double t = timeOffset / duration;	// time [0..1]
-				translation.x = (1-t) * initialVelecity.x * interval;
-				translation.y = (1-t) * initialVelecity.y * interval;
-				[self adjustOriginBy:translation];
+		__weak MapView * weakSelf = self;
+		[_displayLink addName:DisplayLinkPanning block:^{
+			MapView * myself = weakSelf;
+			if ( myself ) {
+				double now = CACurrentMediaTime();
+				double timeOffset = now - startTime;
+				if ( timeOffset >= duration ) {
+					[myself->_displayLink removeName:DisplayLinkPanning];
+				} else {
+					CGPoint translation;
+					double t = timeOffset / duration;	// time [0..1]
+					translation.x = (1-t) * initialVelecity.x * myself->_displayLink.duration;
+					translation.y = (1-t) * initialVelecity.y * myself->_displayLink.duration;
+					[myself adjustOriginBy:translation];
+				}
 			}
-		};
-		_inertiaTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(panInertia:) userInfo:inertiaBlock repeats:YES];
+		}];
 	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
 		DLog( @"pan gesture failed" );
 	} else {
@@ -2388,7 +2426,7 @@ drop_pin:
 
 	_userOverrodeLocationZoom = YES;
 
-	[_inertiaTimer invalidate];
+	[_displayLink removeName:DisplayLinkPanning];
 
 	CGPoint zoomCenter = [pinch locationInView:self];
 	[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];

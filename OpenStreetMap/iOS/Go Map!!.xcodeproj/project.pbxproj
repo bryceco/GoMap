@@ -61,6 +61,7 @@
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
 		025B841419DCF4350053C637 /* BuildingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 025B841319DCF4350053C637 /* BuildingsView.m */; };
 		025B841719DCF55C0053C637 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025B841619DCF55C0053C637 /* SceneKit.framework */; };
+		0260484219E66C8700415CB1 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0260484119E66C8700415CB1 /* DisplayLink.m */; };
 		0266D3A516C02D9200AD9A83 /* seamark_anchor_berth.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */; };
 		0266D3A616C02D9200AD9A83 /* seamark_anchorage.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */; };
 		0266D3A716C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */; };
@@ -552,6 +553,8 @@
 		025B841319DCF4350053C637 /* BuildingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuildingsView.m; path = ../Shared/BuildingsView.m; sourceTree = "<group>"; };
 		025B841519DCF4480053C637 /* BuildingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildingsView.h; path = ../Shared/BuildingsView.h; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		0260484019E66C8700415CB1 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; };
+		0260484119E66C8700415CB1 /* DisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplayLink.m; path = ../Shared/DisplayLink.m; sourceTree = "<group>"; };
 		0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchor_berth.p.64.png; sourceTree = "<group>"; };
 		0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchorage.p.64.png; sourceTree = "<group>"; };
 		0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_cardinal.p.64.png; sourceTree = "<group>"; };
@@ -1593,6 +1596,8 @@
 				02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */,
 				02A194AE19C69701002338DA /* Database.h */,
 				02A194AF19C69701002338DA /* Database.m */,
+				0260484019E66C8700415CB1 /* DisplayLink.h */,
+				0260484119E66C8700415CB1 /* DisplayLink.m */,
 				0289D0DD16A88BA300F86151 /* DLog.h */,
 				02ACBA7316713F2A00BB4414 /* DownloadThreadPool.h */,
 				02ACBA7416713F2A00BB4414 /* DownloadThreadPool.m */,
@@ -2214,6 +2219,7 @@
 				025B841419DCF4350053C637 /* BuildingsView.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
+				0260484219E66C8700415CB1 /* DisplayLink.m in Sources */,
 				025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */,
 				0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */,
 				0219563216DDC26E00074D15 /* GpxViewController.m in Sources */,
