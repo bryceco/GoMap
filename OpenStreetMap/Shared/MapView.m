@@ -134,12 +134,14 @@ CGSize SizeForImage( NSImage * image )
 		_aerialLayer.opacity = 0.75;
 		_aerialLayer.aerialService = self.customAerials.currentAerial;
 		_aerialLayer.hidden = YES;
+		_aerialLayer.backgroundColor = [UIColor darkGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_aerialLayer];
 
 		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_mapnikLayer.aerialService = [AerialService mapnik];
 		_mapnikLayer.zPosition = Z_MAPNIK;
 		_mapnikLayer.hidden = YES;
+		_aerialLayer.backgroundColor = [UIColor lightGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_mapnikLayer];
 
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
@@ -368,53 +370,51 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[_viewController updateDeleteButtonState];
 	[_viewController updateUndoRedoButtonState];
 
-	dispatch_async(dispatch_get_main_queue(), ^{	// do this a little bit later so it can be animated
-		[CATransaction begin];
-		[CATransaction setAnimationDuration:0.5];
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:0.5];
 
-		_locatorLayer.hidden  = (newOverlays & VIEW_OVERLAY_LOCATOR) == 0;
-		_gpsTraceLayer.hidden = (newOverlays & VIEW_OVERLAY_GPSTRACE) == 0;
+	_locatorLayer.hidden  = (newOverlays & VIEW_OVERLAY_LOCATOR) == 0;
+	_gpsTraceLayer.hidden = (newOverlays & VIEW_OVERLAY_GPSTRACE) == 0;
 
-		switch (newState) {
-			case MAPVIEW_EDITOR:
-				_editorLayer.textColor = NSColor.blackColor;
-				_editorLayer.hidden = NO;
-				_aerialLayer.hidden = YES;
-				_mapnikLayer.hidden = YES;
-				_zoomToEditLabel.hidden = YES;
-				break;
-			case MAPVIEW_EDITORAERIAL:
-				_editorLayer.textColor = NSColor.whiteColor;
-				_aerialLayer.aerialService = _customAerials.currentAerial;
-				_editorLayer.hidden = NO;
-				_aerialLayer.hidden = NO;
-				_mapnikLayer.hidden = YES;
-				_zoomToEditLabel.hidden = YES;
-				_aerialLayer.opacity = 0.75;
-				break;
-			case MAPVIEW_AERIAL:
-				_aerialLayer.aerialService = _customAerials.currentAerial;
-				_editorLayer.hidden = YES;
-				_aerialLayer.hidden = NO;
-				_mapnikLayer.hidden = YES;
-				_zoomToEditLabel.hidden = YES;
-				_aerialLayer.opacity = 1.0;
-				break;
-			case MAPVIEW_MAPNIK:
-				_editorLayer.hidden = YES;
-				_aerialLayer.hidden = YES;
-				_mapnikLayer.hidden = NO;
-				_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
-				break;
-			case MAPVIEW_NONE:
-				// shouldn't occur
-				_editorLayer.hidden = YES;
-				_aerialLayer.hidden = YES;
-				_mapnikLayer.hidden = YES;
-				break;
-		}
-		[CATransaction commit];
-	});
+	switch (newState) {
+		case MAPVIEW_EDITOR:
+			_editorLayer.textColor = NSColor.blackColor;
+			_editorLayer.hidden = NO;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			break;
+		case MAPVIEW_EDITORAERIAL:
+			_editorLayer.textColor = NSColor.whiteColor;
+			_aerialLayer.aerialService = _customAerials.currentAerial;
+			_editorLayer.hidden = NO;
+			_aerialLayer.hidden = NO;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			_aerialLayer.opacity = 0.75;
+			break;
+		case MAPVIEW_AERIAL:
+			_aerialLayer.aerialService = _customAerials.currentAerial;
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = NO;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			_aerialLayer.opacity = 1.0;
+			break;
+		case MAPVIEW_MAPNIK:
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = NO;
+			_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
+			break;
+		case MAPVIEW_NONE:
+			// shouldn't occur
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = YES;
+			break;
+	}
+	[CATransaction commit];
 
 	[self updateBingButton];
 }
@@ -1054,6 +1054,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
+
 -(IBAction)locateMe:(id)sender
 {
 	CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
@@ -1129,9 +1130,15 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
+- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager
+{
+	return YES;
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
 	if ( _locationBallLayer ) {
+
 		double screenAngle = OSMTransformRotation( _screenFromMapTransform );
 		_locationBallLayer.headingAccuracy	= newHeading.headingAccuracy * M_PI / 180;
 		_locationBallLayer.showHeading		= YES;

@@ -441,9 +441,21 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	OSMRect bbox = node.boundingBox;
 	if ( way ) {
 		[self incrementModifyCount:way];
+		if ( node.wayCount > 1 ) {
+			// need to redraw all ways that node belongs to
+			for ( OsmWay * w in [self waysContainingNode:node] ) {
+				[self clearCachedProperties:w undo:_undoManager];
+			}
+		}
 	}
 	[node setLongitude:longitude latitude:latitude undo:_undoManager];
 	[_spatial updateMember:node fromBox:bbox undo:_undoManager];
+}
+
+-(void)clearCachedProperties:(OsmBaseObject *)object undo:(UndoManager *)undo
+{
+	[undo registerUndoWithTarget:self selector:@selector(clearCachedProperties:undo:) objects:@[object,undo]];
+	[object clearCachedProperties];
 }
 
 -(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index

@@ -77,6 +77,8 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 -(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 -(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 
+-(void)clearCachedProperties;
+
 -(OsmNode *)isNode;
 -(OsmWay *)isWay;
 -(OsmRelation *)isRelation;
