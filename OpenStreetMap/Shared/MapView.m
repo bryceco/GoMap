@@ -1177,11 +1177,14 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 				center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
 			}
 
+			// don't rotate the long way around
 			while ( delta < -M_PI )
 				delta += 2*M_PI;
+			while ( delta > M_PI )
+				delta -= 2*M_PI;
 
 			CFTimeInterval startTime = CACurrentMediaTime();
-			double duration = 0.25;
+			double duration = 0.4;
 			__weak MapView * weakSelf = self;
 			__block double prevHeading = 0;
 			[_displayLink addName:DisplayLinkHeading block:^{
