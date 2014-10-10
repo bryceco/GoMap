@@ -1735,7 +1735,8 @@ enum {
 
 			InvokeBlockAlongPath( path, interval/2, interval, ^(OSMPoint loc, OSMPoint dir){
 				// draw direction arrow at loc/dir
-				double len = 15;
+				BOOL reversed = object.isOneWay == ONEWAY_BACKWARD;
+				double len = reversed ? -15 : 15;
 				double width = 5;
 
 				OSMPoint p1 = { loc.x - dir.x*len + dir.y*width, loc.y - dir.y*len - dir.x*width };
@@ -1985,7 +1986,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	CGContextSetLineDash(ctx, 0.0f, NULL, 0);
 }
 
--(void)drawArrowsForPath:(CGPathRef)path context:(CGContextRef)ctx
+-(void)drawArrowsForPath:(CGPathRef)path context:(CGContextRef)ctx reversed:(BOOL)reversed
 {
 	BOOL solid = YES;
 	double interval = 100;
@@ -2041,7 +2042,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		CGContextStrokePath(ctx);
 
 		if ( way && way.isOneWay ) {
-			[self drawArrowsForPath:path context:ctx];
+			[self drawArrowsForPath:path context:ctx reversed:way.isOneWay == ONEWAY_BACKWARD];
 		}
 		CGPathRelease(path);
 	}

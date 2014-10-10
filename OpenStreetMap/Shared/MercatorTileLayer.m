@@ -104,18 +104,16 @@ extern CGSize SizeForImage(NSImage * image);
 	}
 
 	[self purgeOldCacheItemsAsync];
-	[self setNeedsDisplay];
+	[self setNeedsLayout];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ( object == _mapView && [keyPath isEqualToString:@"screenFromMapTransform"] ) {
-#if CUSTOM_TRANSFORM
-		[self setNeedsLayout];
-#else
+#if !CUSTOM_TRANSFORM
 		self.affineTransform = CGAffineTransformFromOSMTransform( _mapView.screenFromMapTransform );
-		[self setNeedsLayout];
 #endif
+		[self setNeedsLayout];
 	}
 }
 
@@ -225,6 +223,7 @@ extern CGSize SizeForImage(NSImage * image);
 		if ( key ) {
 			// DLog(@"discard %@ - %@",key,layer);
 			[_layerDict removeObjectForKey:key];
+			NSLog(@"prune %@",key);
 			[layer removeFromSuperlayer];
 			layer.contents = nil;
 		}
@@ -276,6 +275,7 @@ extern CGSize SizeForImage(NSImage * image);
 		NSString * key = [layer valueForKey:@"tileKey"];
 		if ( key ) {
 			// DLog(@"prune %@ - %@",key,layer);
+			NSLog(@"prune %@",key);
 			[_layerDict removeObjectForKey:key];
 			[layer removeFromSuperlayer];
 			layer.contents = nil;
@@ -343,6 +343,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	// check memory cache
 	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
 	NSImage * cachedImage = [_memoryTileCache objectForKey:cacheKey];
+	NSLog(@"memory fetch %@",cacheKey);
 	if ( cachedImage == nil ) {
 		// if a parent tile already covers the area then load it while we wait for the correct tile to be loaded from disk/network
 		if ( zoomLevel > minZoom ) {
@@ -383,10 +384,10 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 		return YES;
 	}
 
-
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
 
 		// check disk cache
+		NSLog(@"disk fetch %@",cacheKey);
 		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
 		NSData * fileData = (prevCacheLevelForLayer < CACHE_DISK) ? [[NSData alloc] initWithContentsOfFile:cachePath] : nil;
 		NSImage * fileImage = fileData ? [[NSImage alloc] initWithData:fileData] : nil;	// force read of data from disk prior to adding image to layer
@@ -428,6 +429,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 				return;
 
 			// fetch image from server
+			NSLog(@"network fetch %@",cacheKey);
 			NSString * url = [self urlForZoom:zoomLevel	tileX:tileModX tileY:tileModY];
 			[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:NO completion:^(NSData * data,NSError * error) {
 
@@ -514,10 +516,19 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	return NO;	// not immediately satisfied
 }
 
+-(void)setNeedsLayout
+{
+	if ( _isPerformingLayout )
+		return;
+	[super setNeedsLayout];
+}
+
 -(void)layoutSublayers
 {
 	if ( self.hidden )
 		return;
+
+	_isPerformingLayout = YES;
 
 	OSMRect	rect		= [_mapView boundingMapRectForScreen];
 	int32_t	zoomLevel	= [self zoomLevel];
@@ -563,12 +574,10 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	double tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
 
 	[_layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * tileKey, CALayer * layer, BOOL *stop) {
-		NSArray * a = [tileKey componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
-		int32_t tileZ = (int32_t) [a[0] integerValue];
-		int32_t tileX = (int32_t) [a[1] integerValue];
-		int32_t tileY = (int32_t) [a[2] integerValue];
-		double scale = 256.0 / (1 << tileZ);
+		int32_t tileZ, tileX, tileY;
+		sscanf( tileKey.UTF8String, "%d,%d,%d", &tileZ, &tileX, &tileY );
 
+		double scale = 256.0 / (1 << tileZ);
 		OSMPoint pt = { tileX * scale, tileY * scale };
 		pt = [_mapView screenPointFromMapPoint:pt];
 		layer.position		= CGPointFromOSMPoint( pt );
@@ -585,6 +594,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	OSMRect rc = [_mapView boundingMapRectForScreen];
 	[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
 #endif
+
+	_isPerformingLayout = NO;
 
 	[_mapView progressAnimate];
 }

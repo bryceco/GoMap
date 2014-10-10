@@ -320,11 +320,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 
--(BOOL)isOneWay
+-(ONEWAY)isOneWay
 {
 	if ( _isOneWay == nil )
-		_isOneWay = self.isWay.computeIsOneWay ? @(YES) : @(NO);
-	return _isOneWay.boolValue;
+		_isOneWay = @(self.isWay.computeIsOneWay);
+	return (ONEWAY)_isOneWay.intValue;
 }
 
 -(BOOL)deleted
@@ -828,7 +828,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return _nodes.count > 2 && _nodes[0] == _nodes.lastObject;
 }
 
--(BOOL)computeIsOneWay
+-(ONEWAY)computeIsOneWay
 {
 	static NSDictionary * oneWayTags = nil;
 	if ( oneWayTags == nil ) {
@@ -867,18 +867,20 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 	NSString * oneWayVal = [_tags objectForKey:@"oneway"];
 	if ( oneWayVal ) {
-		if ( [oneWayVal isEqualToString:@"yes"] || [oneWayVal isEqualToString:@"1"] || [oneWayVal isEqualToString:@"-1"] )
-			return YES;
+		if ( [oneWayVal isEqualToString:@"yes"] || [oneWayVal isEqualToString:@"1"] )
+			return ONEWAY_FORWARD;
 		if ( [oneWayVal isEqualToString:@"no"] || [oneWayVal isEqualToString:@"0"] )
-			return NO;
+			return ONEWAY_NONE;
+		if ( [oneWayVal isEqualToString:@"-1"] )
+			return ONEWAY_BACKWARD;
 	}
 
-	__block BOOL oneWay = NO;
+	__block ONEWAY oneWay = ONEWAY_NONE;
 	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
 		NSDictionary * valueDict = [oneWayTags objectForKey:tag];
 		if ( valueDict ) {
 			if ( valueDict[ value ] ) {
-				oneWay = YES;
+				oneWay = ONEWAY_FORWARD;
 				*stop = YES;
 			}
 		}

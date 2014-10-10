@@ -105,14 +105,13 @@ static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
 
 -(void)dropTables
 {
-	int rc;
-	SqlCheck( sqlite3_exec(_db, "drop table node_tags;",	0, 0, 0) );
-	SqlCheck( sqlite3_exec(_db, "drop table nodes;",		0, 0, 0) );
-	SqlCheck( sqlite3_exec(_db, "drop table way_tags;",		0, 0, 0) );
-	SqlCheck( sqlite3_exec(_db, "drop table way_nodes;",	0, 0, 0) );
-	SqlCheck( sqlite3_exec(_db, "drop table ways;",			0, 0, 0) );
+	sqlite3_exec(_db, "drop table node_tags;",	0, 0, 0 );
+	sqlite3_exec(_db, "drop table nodes;",		0, 0, 0 );
+	sqlite3_exec(_db, "drop table way_tags;",	0, 0, 0 );
+	sqlite3_exec(_db, "drop table way_nodes;",	0, 0, 0 );
+	sqlite3_exec(_db, "drop table ways;",		0, 0, 0 );
 #if USE_RTREE
-	SqlCheck( sqlite3_exec(_db, "drop table spatial;",		0, 0, 0) );
+	sqlite3_exec(_db, "drop table spatial;",	0, 0, 0 );
 #endif
 }
 

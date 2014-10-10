@@ -46,6 +46,11 @@ typedef void (^dequeueBlock)(void);
 	NSInteger				_downloadBytes;
 }
 
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ - %@", [super description], _connection];
+}
+
 -(NSInputStream *)stream
 {
 	return _readStream;

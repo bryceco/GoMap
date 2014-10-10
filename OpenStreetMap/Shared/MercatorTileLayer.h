@@ -20,6 +20,7 @@
 	NSString						*	_logoUrl;
 
 	NSMutableDictionary				*	_layerDict;
+	BOOL								_isPerformingLayout;
 }
 
 @property (strong,nonatomic) AerialService	*	aerialService;

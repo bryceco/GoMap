@@ -24,6 +24,11 @@
 
 NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 
+typedef enum {
+	ONEWAY_BACKWARD	= -1,
+	ONEWAY_NONE		= 0,
+	ONEWAY_FORWARD	= 1,
+} ONEWAY;
 
 @interface OsmBaseObject : NSObject <NSCoding,NSCopying>
 {
@@ -58,7 +63,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 @property (assign,nonatomic)	NSInteger			renderPriorityCached;
 @property (assign,nonatomic)	OSMRect				boundingBox;
 @property (strong,nonatomic)	NSArray			*	shapeLayers;
-@property (readonly,nonatomic)	BOOL				isOneWay;
+@property (readonly,nonatomic)	ONEWAY				isOneWay;
 
 +(NSArray *)typeKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;
@@ -133,7 +138,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 -(void)resolveToMapData:(OsmMapData *)mapData;
 -(OSMPoint)centerPoint;
 -(OSMPoint)centerPointWithArea:(double *)area;
--(BOOL)computeIsOneWay;
+-(ONEWAY)computeIsOneWay;
 -(BOOL)isArea;
 -(BOOL)isClosed;
 -(BOOL)isSimpleMultipolygonOuterMember;
