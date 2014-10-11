@@ -31,6 +31,8 @@
 
 
 #define USE_SHAPELAYERS 1
+#define FADE_INOUT		1
+
 
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
 
@@ -1621,7 +1623,10 @@ enum {
 					  @"position"			: [NSNull null],
 					  @"transform"			: [NSNull null],
 					  @"affineTransform"	: [NSNull null],
+#if FADE_INOUT
+#else
 					  @"hidden"				: [NSNull null],
+#endif
 					  };
 	for ( CALayer * layer in layers ) {
 		layer.actions = actions;
@@ -1668,10 +1673,6 @@ enum {
 			CAShapeLayer * layer = [CAShapeLayer new];
 			layer.strokeColor	= [UIColor colorWithRed:wayColor.red green:wayColor.green blue:wayColor.blue alpha:wayColor.alpha].CGColor;
 			layer.lineWidth		= lineWidth;
-//			layer.shadowColor	= UIColor.yellowColor.CGColor;
-//			layer.shadowOffset	= CGSizeMake(0,0);
-//			layer.shadowOpacity	= 1.0;
-//			layer.shadowRadius	= 5.0;
 			layer.path			= path;
 			layer.fillColor		= UIColor.clearColor.CGColor;
 			layer.zPosition		= Z_HIGHLIGHT_WAY;
@@ -2553,7 +2554,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	NSInteger objectLimit	= [self hasFastGraphics] ? 100 : 50;
 	NSInteger nameLimit		= [self hasFastGraphics] ? 10 : 5;
 #if USE_SHAPELAYERS
-	objectLimit *= 3;
+//	objectLimit *= 3;
 #endif
 #else
 	NSInteger objectLimit = 500;
@@ -2635,35 +2636,47 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	NSArray * previousObjects = _shownObjects;
 
 	_shownObjects = [self getObjectsToDisplay];
+	[_shownObjects addObjectsFromArray:_fadingOutSet.allObjects];
 
 	// remove layers no longer visible
 	NSMutableSet * removals = [NSMutableSet setWithArray:previousObjects];
 	for ( OsmBaseObject * object in _shownObjects ) {
 		[removals removeObject:object];
 	}
-#if 1
-	for ( OsmBaseObject * object in removals ) {
-		for ( CALayer * layer in object.shapeLayers ) {
-			[layer removeFromSuperlayer];
-		}
-	}
-#else
 	// use fade when removing objects
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:0.5];
-	[CATransaction setCompletionBlock:^{
+	if ( removals.count ) {
+#if FADE_INOUT
+		[CATransaction begin];
+		[CATransaction setAnimationDuration:1.0];
+		[CATransaction setCompletionBlock:^{
+			for ( OsmBaseObject * object in removals ) {
+				[_fadingOutSet removeObject:object];
+				for ( CALayer * layer in object.shapeLayers ) {
+					[layer removeFromSuperlayer];
+				}
+			}
+			NSLog(@"remove %f",CACurrentMediaTime());
+		}];
+		for ( OsmBaseObject * object in removals ) {
+			[_fadingOutSet unionSet:removals];
+			for ( CALayer * layer in object.shapeLayers ) {
+				layer.hidden = YES;
+			}
+		}
+		NSLog(@"begin fade %f",CACurrentMediaTime());
+		[CATransaction commit];
+#else
 		for ( OsmBaseObject * object in removals ) {
 			for ( CALayer * layer in object.shapeLayers ) {
 				[layer removeFromSuperlayer];
 			}
 		}
-	}];
-	for ( OsmBaseObject * object in removals ) {
-		for ( CALayer * layer in object.shapeLayers ) {
-			layer.hidden = YES;
-		}
+#endif
 	}
-	[CATransaction commit];
+
+#if FADE_INOUT
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:1.0];
 #endif
 
 	const double	tRotation	= OSMTransformRotation( _mapView.screenFromMapTransform );
@@ -2731,15 +2744,18 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 			}
 
 			// add the layer if not already present
-
 			if ( layer.superlayer == nil ) {
-				layer.hidden = YES;
-				[self addSublayer:layer];
+#if FADE_INOUT
 				layer.hidden = NO;
+#endif
+				[self addSublayer:layer];
 			}
 		}
 	}
 
+#if FADE_INOUT
+	[CATransaction commit];
+#endif
 
 	// draw highlights: these layers are computed in screen coordinates and don't need to be transformed
 	for ( CALayer * layer in _highlightLayers ) {

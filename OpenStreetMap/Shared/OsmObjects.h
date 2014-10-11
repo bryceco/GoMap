@@ -169,6 +169,8 @@ typedef enum {
 -(BOOL)isMultipolygon;
 -(OSMPoint)centerPoint;
 
+-(BOOL)containsObject:(OsmBaseObject *)object;
+
 @end
 
 

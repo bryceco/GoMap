@@ -170,8 +170,9 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 			_members = [NSMutableArray arrayWithObject:member];
 			return YES;
 		} else {
-			if ( [_members containsObject:member] )
+			if ( [_members containsObject:member] ) {
 				return NO;
+			}
 			[_members addObject:member];
 			return YES;
 		}
@@ -211,8 +212,10 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 			_members = [NSMutableArray arrayWithObject:member];
 			return YES;
 		} else {
-			if ( [_members containsObject:member] )
+			if ( [_members containsObject:member] ) {
+				NSLog(@"already in %@",self);
 				return NO;
+			}
 			[_members addObject:member];
 			return YES;
 		}
@@ -234,6 +237,21 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 		}
 	}
 	return NO;
+}
+
+-(instancetype)getQuadBoxMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
+{
+	if ( [_members containsObject:member] ) {
+		return self;
+	}
+	// find a child member could fit into
+	for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
+		OSMRect rc = ChildRect( child, _rect );
+		if ( OSMRectIntersectsRect( bbox, rc ) ) {
+			return [_children[child] getQuadBoxMember:member bbox:bbox];
+		}
+	}
+	return nil;
 }
 
 
@@ -363,20 +381,24 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 }
 -(void)updateMember:(OsmBaseObject *)member toBox:(OSMRect)toBox fromBox:(OSMRect)fromBox undo:(UndoManager *)undo
 {
-	BOOL added = [self.rootQuad addMember:member bbox:toBox];
-	if ( added ) {
-		BOOL removed = [self.rootQuad removeMember:member bbox:fromBox];
+	QuadBox * fromQuad = [_rootQuad getQuadBoxMember:member bbox:fromBox];
+	if ( fromQuad ) {
+		if ( OSMRectContainsRect( fromQuad.rect, toBox ) ) {
+			// It fits in its current box. It might fit into a child, but this path is rare and not worth optimizing.
+			return;
+		}
+		[fromQuad removeMember:member bbox:fromBox];
+		[_rootQuad addMember:member bbox:toBox];
 		if ( undo ) {
-			if ( removed ) {
-				NSData * to = [NSData dataWithBytes:&toBox length:sizeof toBox];
-				NSData * from = [NSData dataWithBytes:&fromBox length:sizeof fromBox];
-				[undo registerUndoWithTarget:self selector:@selector(updateMemberBoxed:toBox:fromBox:undo:) objects:@[member,from,to,undo]];
-			} else {
-				[undo registerUndoWithTarget:self selector:@selector(removeMember:undo:) objects:@[member,undo]];
-			}
+			NSData * toData = [NSData dataWithBytes:&toBox length:sizeof toBox];
+			NSData * fromData = [NSData dataWithBytes:&fromBox length:sizeof fromBox];
+			[undo registerUndoWithTarget:self selector:@selector(updateMemberBoxed:toBox:fromBox:undo:) objects:@[member,fromData,toData,undo]];
 		}
 	} else {
-		// it ended up in the same quad as before
+		[_rootQuad addMember:member bbox:toBox];
+		if ( undo ) {
+			[undo registerUndoWithTarget:self selector:@selector(removeMember:undo:) objects:@[member,undo]];
+		}
 	}
 }
 -(void)updateMemberBoxed:(OsmBaseObject *)member toBox:(NSData *)toBox fromBox:(NSData *)fromBox undo:(UndoManager *)undo

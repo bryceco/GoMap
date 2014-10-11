@@ -34,10 +34,13 @@
 	MapCSS				*	_mapCss;
 	NSMutableSet		*	_nameDrawSet;
 
-	NSArray				*	_shownObjects;
+	NSMutableArray		*	_shownObjects;
+	NSMutableSet		*	_fadingOutSet;
+
 	NSMutableArray		*	_selectionChangeCallbacks;
 
 	NSArray				*	_highlightLayers;
+
 }
 
 @property (assign,nonatomic)	MapView				*	mapView;

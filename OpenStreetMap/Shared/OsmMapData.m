@@ -179,6 +179,22 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	}];
 	return a;
 }
+-(NSArray *)objectsContainingObject:(OsmBaseObject *)object
+{
+	__block NSMutableArray * a = [NSMutableArray new];
+	if ( object.isNode ) {
+		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
+			if ( [way.nodes containsObject:object] )
+				[a addObject:way];
+		}];
+	}
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
+		if ( [relation containsObject:object] )
+			[a addObject:relation];
+	}];
+	return a;
+}
+
 
 
 - (void)enumerateObjectsUsingBlock:(void (^)(OsmBaseObject * obj))block
@@ -339,7 +355,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	[_undoManager registerUndoComment:NSLocalizedString(@"create way",nil)];
 	[way setDeleted:NO undo:_undoManager];
-	[_spatial addMember:way undo:_undoManager];
 	return way;
 }
 
@@ -438,18 +453,25 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node inWay:(OsmWay *)way
 {
 	[_undoManager registerUndoComment:NSLocalizedString(@"move",nil)];
-	OSMRect bbox = node.boundingBox;
-	if ( way ) {
-		[self incrementModifyCount:way];
-		if ( node.wayCount > 1 ) {
-			// need to redraw all ways that node belongs to
-			for ( OsmWay * w in [self waysContainingNode:node] ) {
-				[self clearCachedProperties:w undo:_undoManager];
-			}
-		}
+
+	// need to update all ways/relation which contain the node
+	NSArray * parents = [self objectsContainingObject:node];
+	NSMutableArray * parentBoxes = [NSMutableArray arrayWithCapacity:parents.count];
+	for ( OsmBaseObject * parent in parents ) {
+		[parentBoxes addObject:[OSMRectBoxed rectWithRect:parent.boundingBox]];
 	}
+
+	OSMRect bboxNode = node.boundingBox;
 	[node setLongitude:longitude latitude:latitude undo:_undoManager];
-	[_spatial updateMember:node fromBox:bbox undo:_undoManager];
+	[_spatial updateMember:node fromBox:bboxNode undo:_undoManager];
+
+	for ( NSInteger i = 0; i < parents.count; ++i ) {
+		OsmBaseObject * parent = parents[i];
+		OSMRectBoxed * box = parentBoxes[i];
+		[self incrementModifyCount:parent];
+		[self clearCachedProperties:parent undo:_undoManager];
+		[_spatial updateMember:parent fromBox:box.rect undo:_undoManager];
+	}
 }
 
 -(void)clearCachedProperties:(OsmBaseObject *)object undo:(UndoManager *)undo

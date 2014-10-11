@@ -223,7 +223,7 @@ extern CGSize SizeForImage(NSImage * image);
 		if ( key ) {
 			// DLog(@"discard %@ - %@",key,layer);
 			[_layerDict removeObjectForKey:key];
-			NSLog(@"prune %@",key);
+//			NSLog(@"prune %@",key);
 			[layer removeFromSuperlayer];
 			layer.contents = nil;
 		}
@@ -275,7 +275,7 @@ extern CGSize SizeForImage(NSImage * image);
 		NSString * key = [layer valueForKey:@"tileKey"];
 		if ( key ) {
 			// DLog(@"prune %@ - %@",key,layer);
-			NSLog(@"prune %@",key);
+//			NSLog(@"prune %@",key);
 			[_layerDict removeObjectForKey:key];
 			[layer removeFromSuperlayer];
 			layer.contents = nil;
@@ -343,7 +343,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	// check memory cache
 	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
 	NSImage * cachedImage = [_memoryTileCache objectForKey:cacheKey];
-	NSLog(@"memory fetch %@",cacheKey);
+//	NSLog(@"memory fetch %@",cacheKey);
 	if ( cachedImage == nil ) {
 		// if a parent tile already covers the area then load it while we wait for the correct tile to be loaded from disk/network
 		if ( zoomLevel > minZoom ) {
@@ -387,7 +387,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
 
 		// check disk cache
-		NSLog(@"disk fetch %@",cacheKey);
+//		NSLog(@"disk fetch %@",cacheKey);
 		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
 		NSData * fileData = (prevCacheLevelForLayer < CACHE_DISK) ? [[NSData alloc] initWithContentsOfFile:cachePath] : nil;
 		NSImage * fileImage = fileData ? [[NSImage alloc] initWithData:fileData] : nil;	// force read of data from disk prior to adding image to layer
@@ -429,7 +429,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 				return;
 
 			// fetch image from server
-			NSLog(@"network fetch %@",cacheKey);
+//			NSLog(@"network fetch %@",cacheKey);
 			NSString * url = [self urlForZoom:zoomLevel	tileX:tileModX tileY:tileModY];
 			[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:NO completion:^(NSData * data,NSError * error) {
 

@@ -1247,6 +1247,25 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 }
 
+-(BOOL)containsObject:(OsmBaseObject *)object
+{
+	for ( OsmMember * member in _members ) {
+		if ( member.ref == object )
+			return YES;
+		if ( [member.ref isKindOfClass:[OsmRelation class]] ) {
+			OsmRelation * r = member.ref;
+			if ( [r containsObject:object] )
+				return YES;
+		}
+		if ( object.isNode && [member.ref isKindOfClass:[OsmWay class]] ) {
+			OsmWay * w = member.ref;
+			if ( [w.nodes containsObject:object] )
+				return YES;
+		}
+	}
+	return NO;
+}
+
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
