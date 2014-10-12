@@ -13,6 +13,7 @@
 	CADisplayLink		*	_displayLink;
 	NSMutableDictionary	*	_blockDict;
 }
++(instancetype)shared;
 -(void)addName:(NSString *)name block:(void(^)(void))block;
 -(void)removeName:(NSString *)name;
 -(CFTimeInterval)duration;

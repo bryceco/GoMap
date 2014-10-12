@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Bryce. All rights reserved.
 //
 
+#import "DisplayLink.h"
 #import "FpsLabel.h"
 
 #define ENABLE_FPS	1
@@ -18,7 +19,6 @@ const int FRAME_COUNT = 61;
 	int					_historyPos;
 	CFTimeInterval		_history[ FRAME_COUNT ];	// average last 60 frames
 	dispatch_source_t	_timer;
-	CADisplayLink	*	_displayLink;
 }
 
 - (void)awakeFromNib
@@ -26,9 +26,13 @@ const int FRAME_COUNT = 61;
 	[super awakeFromNib];
 
 #if ENABLE_FPS
-	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink)];
-	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+	DisplayLink * displayLink = [DisplayLink shared];
+	__weak FpsLabel * weakSelf = self;
+	[displayLink addName:@"FpsLabel" block:^{
+		[weakSelf frameUpdated];
+	}];
 
+	// create a timer to update the text twice a second
 	dispatch_queue_t queue = dispatch_get_main_queue();
 	_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
 	if ( _timer ) {
@@ -47,13 +51,10 @@ const int FRAME_COUNT = 61;
 - (void)dealloc
 {
 	if ( _timer ) {
+		DisplayLink * displayLink = [DisplayLink shared];
+		[displayLink removeName:@"FpsLabel"];
 		dispatch_source_cancel( _timer );
 	}
-}
-
-- (void)displayLink
-{
-	[self frameUpdated];
 }
 
 - (void)updateText

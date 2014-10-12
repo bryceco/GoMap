@@ -202,8 +202,8 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	CGRect bounds = { 0 };
 	bounds.size = [CurvedTextLayer sizeOfText:s1];
 	bounds = CGRectInset( bounds, -3, -1 );
-	bounds.size.width  = ceil( bounds.size.width );
-	bounds.size.height = ceil( bounds.size.height );
+	bounds.size.width  = 2 * ceil( bounds.size.width/2 );	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
+	bounds.size.height = 2 * ceil( bounds.size.height/2 );
 	layer.bounds = bounds;
 
 	layer.string			= s1;
@@ -211,14 +211,16 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	layer.wrapped			= YES;
 	layer.alignmentMode		= kCAAlignmentCenter;
 
+#if 1
 	CGPathRef shadowPath	= CGPathCreateWithRect(bounds, NULL);
 	layer.shadowPath		= shadowPath;
 	layer.shadowColor		= shadowColor.CGColor;
 	layer.shadowRadius		= 0.0;
 	layer.shadowOffset		= CGSizeMake(0,0);
 	layer.shadowOpacity		= 0.5;
-
 	CGPathRelease(shadowPath);
+#endif
+
 	return layer;
 }
 

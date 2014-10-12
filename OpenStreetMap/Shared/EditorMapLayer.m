@@ -1371,8 +1371,15 @@ enum {
 
 		BOOL untagged = NO;
 		if ( tagInfo.icon ) {
-
-			UIImage * icon	= tagInfo.icon;
+			UIImage * icon = tagInfo.scaledIcon;
+			CGFloat uiScaling = [[UIScreen mainScreen] scale];
+			if ( icon == nil ) {
+				UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
+				[tagInfo.icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+				icon = UIGraphicsGetImageFromCurrentImageContext();
+				UIGraphicsEndImageContext();
+				tagInfo.scaledIcon = icon;
+			}
 			CALayer * layer = [CALayer new];
 			layer.bounds		= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
 			layer.anchorPoint	= CGPointMake(0.5, 0.5);
@@ -1384,9 +1391,6 @@ enum {
 			layer.shadowOffset	= CGSizeMake(0,0);
 			layer.shadowOpacity	= 0.25;
 			layer.zPosition		= Z_NODE;
-
-			layer.shouldRasterize		= YES;
-			layer.rasterizationScale	= [[UIScreen mainScreen] scale];
 
 			[layer setValue:@(pt.x) forKey:@"_position_x"];
 			[layer setValue:@(pt.y) forKey:@"_position_y"];
@@ -1545,35 +1549,37 @@ enum {
 			outer = [self joinConnectedWays:outer];
 			inner = [self joinConnectedWays:inner];
 
-			// convert from nodes to screen points
-			for ( NSMutableArray * a in outer )
-				[EditorMapLayer convertNodesToPoints:a];
-			for ( NSMutableArray * a in inner )
-				[EditorMapLayer convertNodesToPoints:a];
+			if ( outer.count > 0 ) {
+				// convert from nodes to screen points
+				for ( NSMutableArray * a in outer )
+					[EditorMapLayer convertNodesToPoints:a];
+				for ( NSMutableArray * a in inner )
+					[EditorMapLayer convertNodesToPoints:a];
 
-			// draw
-			CGMutablePathRef path = CGPathCreateMutable();
-			CGPoint refPoint = CGPointFromOSMPoint( ((OSMPointBoxed *)outer[0][0]).point );
-			for ( NSArray * w in outer ) {
-				[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
+				// draw
+				CGMutablePathRef path = CGPathCreateMutable();
+				CGPoint refPoint = CGPointFromOSMPoint( ((OSMPointBoxed *)outer[0][0]).point );
+				for ( NSArray * w in outer ) {
+					[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
+				}
+				for ( NSArray * w in inner ) {
+					[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
+				}
+				RGBAColor	fillColor;
+				[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
+				CAShapeLayer * layer = [CAShapeLayer new];
+				layer.anchorPoint	= CGPointMake(0,0);
+				layer.position		= refPoint;
+				layer.path			= path;
+				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:0.25].CGColor;
+				layer.lineCap		= kCALineCapRound;
+				layer.lineJoin		= kCALineJoinRound;
+				layer.zPosition		= Z_AREA;
+				[layer setValue:@(refPoint.x) forKey:@"_position_x"];
+				[layer setValue:@(refPoint.y) forKey:@"_position_y"];
+				[layers addObject:layer];
+				CGPathRelease(path);
 			}
-			for ( NSArray * w in inner ) {
-				[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
-			}
-			RGBAColor	fillColor;
-			[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
-			CAShapeLayer * layer = [CAShapeLayer new];
-			layer.anchorPoint	= CGPointMake(0,0);
-			layer.position		= refPoint;
-			layer.path			= path;
-			layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:0.25].CGColor;
-			layer.lineCap		= kCALineCapRound;
-			layer.lineJoin		= kCALineJoinRound;
-			layer.zPosition		= Z_AREA;
-			[layer setValue:@(refPoint.x) forKey:@"_position_x"];
-			[layer setValue:@(refPoint.y) forKey:@"_position_y"];
-			[layers addObject:layer];
-			CGPathRelease(path);
 		}
 	}
 
@@ -2752,6 +2758,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				pt2.x = round(pt2.x);
 				pt2.y = round(pt2.y);
 				layer.position = CGPointFromOSMPoint(pt2);
+#if 0
+				if ( [layer isKindOfClass:[CATextLayer class]] ) {
+					NSLog(@"text layer = %@", NSStringFromCGRect(layer.frame));
+				}
+#endif
 			}
 
 			// add the layer if not already present

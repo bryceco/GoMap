@@ -10,11 +10,25 @@
 
 @implementation DisplayLink
 
++(instancetype)shared
+{
+	static DisplayLink * g_shared;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		g_shared = [DisplayLink new];
+	});
+	return g_shared;
+}
+
+
 -(instancetype)init
 {
 	self = [super init];
 	if ( self ) {
 		_blockDict = [NSMutableDictionary new];
+		_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update:)];
+		_displayLink.paused = YES;
+		[_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 	}
 	return self;
 }
@@ -37,12 +51,8 @@
 
 -(void)addName:(NSString *)name block:(void(^)(void))block;
 {
-	if ( _displayLink == nil ) {
-		_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update:)];
-		[_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-	}
-
 	[_blockDict setObject:block forKey:name];
+	_displayLink.paused = NO;
 }
 
 -(void)removeName:(NSString *)name;
@@ -50,15 +60,12 @@
 	[_blockDict removeObjectForKey:name];
 
 	if ( _blockDict.count == 0 ) {
-		[_displayLink removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-		_displayLink = nil;
+		_displayLink.paused = YES;
 	}
 }
 
 -(void)dealloc
 {
-	for ( NSString * name in _blockDict.allKeys ) {
-		[self removeName:name];
-	}
+	[_displayLink removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 }
 @end

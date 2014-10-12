@@ -114,8 +114,6 @@ typedef enum {
 	NSDate							*	_lastErrorDate;		// to prevent spamming of error dialogs
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
 
-	DisplayLink						*	_displayLink;
-
 	CLLocationManager				*	_locationManager;
 	CLLocation						*	_currentLocation;
 

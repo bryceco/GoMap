@@ -111,8 +111,6 @@ CGSize SizeForImage( NSImage * image )
 		self.layer.masksToBounds = YES;
 		self.backgroundColor = UIColor.whiteColor;
 
-		_displayLink = [DisplayLink new];
-
 		_screenFromMapTransform = OSMTransformIdentity();
 
 		// get aerial database
@@ -194,10 +192,12 @@ CGSize SizeForImage( NSImage * image )
 		_rulerLayer.zPosition = Z_RULER;
 		[self.layer addSublayer:_rulerLayer];
 
+#if 0	// no evidence this help things
 		for ( CALayer * layer in _backgroundLayers ) {
 			layer.drawsAsynchronously = YES;
 		}
 		_rulerLayer.drawsAsynchronously	= YES;
+#endif
 
 #if !TARGET_OS_IPHONE
 		[self setFrame:frame];
@@ -328,7 +328,8 @@ CGSize SizeForImage( NSImage * image )
 	self.screenFromMapTransform = t;
 	__block int side = 0, distance = 0;
 	__weak MapView * weakSelf = self;
-	[_displayLink addName:@"autoScroll" block:^{
+	DisplayLink * displayLink = [DisplayLink shared];
+	[displayLink addName:@"autoScroll" block:^{
 		int dx = 0, dy = 0;
 		switch ( side ) {
 			case 0:
@@ -1191,12 +1192,13 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	double duration = 0.4;
 	__weak MapView * weakSelf = self;
 	__block double prevHeading = 0;
-	[_displayLink addName:DisplayLinkHeading block:^{
+	__weak DisplayLink * displayLink = [DisplayLink shared];
+	[displayLink addName:DisplayLinkHeading block:^{
 		MapView * myself = weakSelf;
 		if ( myself ) {
 			CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
 			if ( elapsedTime >= duration ) {
-				[myself->_displayLink removeName:DisplayLinkHeading];
+				[displayLink removeName:DisplayLinkHeading];
 			} else {
 				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
 				double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
@@ -2430,7 +2432,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 	if ( pan.state == UIGestureRecognizerStateBegan ) {
 		// start pan
-		[_displayLink removeName:DisplayLinkPanning];
+		DisplayLink * displayLink = [DisplayLink shared];
+		[displayLink removeName:DisplayLinkPanning];
 	} else if ( pan.state == UIGestureRecognizerStateChanged ) {
 		// move pan
 		CGPoint translation = [pan translationInView:self];
@@ -2442,18 +2445,19 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		CFTimeInterval startTime = CACurrentMediaTime();
 		double duration = 0.5;
 		__weak MapView * weakSelf = self;
-		[_displayLink addName:DisplayLinkPanning block:^{
+		__weak DisplayLink * displayLink = [DisplayLink shared];
+		[displayLink addName:DisplayLinkPanning block:^{
 			MapView * myself = weakSelf;
 			if ( myself ) {
 				double now = CACurrentMediaTime();
 				double timeOffset = now - startTime;
 				if ( timeOffset >= duration ) {
-					[myself->_displayLink removeName:DisplayLinkPanning];
+					[displayLink removeName:DisplayLinkPanning];
 				} else {
 					CGPoint translation;
 					double t = timeOffset / duration;	// time [0..1]
-					translation.x = (1-t) * initialVelecity.x * myself->_displayLink.duration;
-					translation.y = (1-t) * initialVelecity.y * myself->_displayLink.duration;
+					translation.x = (1-t) * initialVelecity.x * displayLink.duration;
+					translation.y = (1-t) * initialVelecity.y * displayLink.duration;
 					[myself adjustOriginBy:translation];
 				}
 			}
@@ -2471,7 +2475,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 	_userOverrodeLocationZoom = YES;
 
-	[_displayLink removeName:DisplayLinkPanning];
+	DisplayLink * displayLink = [DisplayLink shared];
+	[displayLink removeName:DisplayLinkPanning];
 
 	CGPoint zoomCenter = [pinch locationInView:self];
 	[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];

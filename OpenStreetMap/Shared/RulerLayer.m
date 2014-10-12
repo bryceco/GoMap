@@ -40,23 +40,14 @@
 		_metricTextLayer.alignmentMode		= kCAAlignmentCenter;
 		_britishTextLayer.alignmentMode		= kCAAlignmentCenter;
 
-		_shapeLayer.shadowColor				= NSColor.whiteColor.CGColor;
-		_shapeLayer.shadowRadius			= 5.0;
-		_shapeLayer.shadowOpacity			= 1.0;
-		_shapeLayer.masksToBounds			= NO;
-		_shapeLayer.shadowOffset			= CGSizeMake(1, 1);
+		self.shadowColor					= NSColor.whiteColor.CGColor;
+		self.shadowRadius					= 0.0;
+		self.shadowOpacity					= 0.4;
+		self.shadowOffset					= CGSizeMake(0,0);
 
-		_metricTextLayer.shadowColor		= NSColor.whiteColor.CGColor;
-		_metricTextLayer.shadowRadius		= 5.0;
-		_metricTextLayer.shadowOpacity		= 1.0;
-		_metricTextLayer.masksToBounds		= NO;
-		_metricTextLayer.shadowOffset		= CGSizeMake(0,0);
-
-		_britishTextLayer.shadowColor		= NSColor.whiteColor.CGColor;
-		_britishTextLayer.shadowRadius		= 5.0;
-		_britishTextLayer.shadowOpacity		= 1.0;
-		_britishTextLayer.masksToBounds		= NO;
-		_britishTextLayer.shadowOffset		= CGSizeMake(0,0);
+		_shapeLayer.shadowOpacity			= 0.0;
+		_metricTextLayer.shadowOpacity		= 0.0;
+		_britishTextLayer.shadowOpacity		= 0.0;
 
 		[self addSublayer:_shapeLayer];
 		[self addSublayer:_metricTextLayer];
@@ -182,6 +173,10 @@ double roundToEvenValue( double value )
 
 	_metricTextLayer.string  = [NSString stringWithFormat:@"%ld %@%@", (long)metricWide,  metricUnit,  metricWide  > 1 ? metricSuffix  : @"" ];
 	_britishTextLayer.string = [NSString stringWithFormat:@"%ld %@%@", (long)britishWide, britishUnit, britishWide > 1 ? britishSuffix : @"" ];
+
+	rect.size.width = MAX(metricPixels,britishPixels);
+	rect = CGRectInset( rect, -2, -2 );
+	self.shadowPath = [[UIBezierPath bezierPathWithRect:rect] CGPath];
 }
 
 @end
