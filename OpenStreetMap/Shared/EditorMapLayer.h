@@ -41,6 +41,7 @@
 
 	NSArray				*	_highlightLayers;
 
+	BOOL					_isPerformingLayout;
 }
 
 @property (assign,nonatomic)	MapView				*	mapView;

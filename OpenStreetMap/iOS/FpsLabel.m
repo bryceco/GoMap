@@ -8,9 +8,10 @@
 
 #import "FpsLabel.h"
 
+#define ENABLE_FPS	1
+
 
 const int FRAME_COUNT = 61;
-
 
 @implementation FpsLabel
 {
@@ -24,7 +25,7 @@ const int FRAME_COUNT = 61;
 {
 	[super awakeFromNib];
 
-#if 0 && defined(DEBUG)
+#if ENABLE_FPS
 	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLink)];
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
 
@@ -81,7 +82,7 @@ const int FRAME_COUNT = 61;
 
 - (void)frameUpdated
 {
-#if defined(DEBUG)
+#if ENABLE_FPS
 	// add to history
 	CFTimeInterval now = CACurrentMediaTime();
 	_history[_historyPos++] = now;

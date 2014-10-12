@@ -31,7 +31,7 @@
 
 
 #define USE_SHAPELAYERS 1
-#define FADE_INOUT		1
+#define FADE_INOUT		0
 
 
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
@@ -73,6 +73,8 @@ const CGFloat WayHighlightRadius = 6.0;
 		_mapView = mapView;
 
 		self.textColor = NSColor.whiteColor;
+
+		_fadingOutSet = [NSMutableSet new];
 
 		// observe changes to geometry
 		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
@@ -120,6 +122,19 @@ const CGFloat WayHighlightRadius = 6.0;
 	return self;
 }
 
+#if 0
+- (id < CAAction >)actionForKey:(NSString *)key
+{
+	if ( [key isEqualToString:@"transform"] )
+		return nil;
+	if ( [key isEqualToString:@"bounds"] )
+		return nil;
+	if ( [key isEqualToString:@"position"] )
+		return nil;
+	DLog(@"actionForKey: %@",key);
+	return [super actionForKey:key];
+}
+#endif
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -140,18 +155,6 @@ const CGFloat WayHighlightRadius = 6.0;
 - (void)save
 {
 	[_mapData save];
-}
-
-- (id < CAAction >)actionForKey:(NSString *)key
-{
-	if ( [key isEqualToString:@"transform"] )
-		return nil;
-	if ( [key isEqualToString:@"bounds"] )
-		return nil;
-	if ( [key isEqualToString:@"position"] )
-		return nil;
-//	DLog(@"actionForKey: %@",key);
-	return [super actionForKey:key];
 }
 
 #pragma mark Map data
@@ -1381,6 +1384,12 @@ enum {
 			layer.shadowOffset	= CGSizeMake(0,0);
 			layer.shadowOpacity	= 0.25;
 			layer.zPosition		= Z_NODE;
+
+			layer.shouldRasterize		= YES;
+			layer.rasterizationScale	= [[UIScreen mainScreen] scale];
+
+			[layer setValue:@(pt.x) forKey:@"_position_x"];
+			[layer setValue:@(pt.y) forKey:@"_position_y"];
 			[layers addObject:layer];
 
 		} else {
@@ -1422,6 +1431,8 @@ enum {
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_NODE;
+				[layer setValue:@(pt.x) forKey:@"_position_x"];
+				[layer setValue:@(pt.y) forKey:@"_position_y"];
 				[layers addObject:layer];
 
 			} else {
@@ -1445,24 +1456,11 @@ enum {
 				layer.shadowOpacity	= 0.25;
 
 				layer.zPosition		= Z_NODE;
+				[layer setValue:@(pt.x) forKey:@"_position_x"];
+				[layer setValue:@(pt.y) forKey:@"_position_y"];
 				[layers addObject:layer];
 				CGPathRelease(path);
 			}
-		}
-
-		// if zoomed in very close then provide crosshairs
-		if ( _iconSize.width > 64 ) {
-#if 0
-			CGContextSetStrokeColorWithColor( ctx, NSColor.blackColor.CGColor );
-			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.whiteColor.CGColor );
-			CGContextSetLineWidth( ctx, 2.0 );
-			CGContextBeginPath(ctx);
-			CGPoint line1[2] = { pt.x - 10, pt.y, pt.x+10, pt.y };
-			CGPoint line2[2] = { pt.x, pt.y - 10, pt.x, pt.y + 10 };
-			CGContextAddLines( ctx, line1, 2 );
-			CGContextAddLines( ctx, line2, 2 );
-			CGContextStrokePath(ctx);
-#endif
 		}
 	}
 
@@ -1482,7 +1480,9 @@ enum {
 				layer.lineCap		= kCALineCapRound;
 				layer.lineJoin		= kCALineJoinRound;
 				layer.zPosition		= Z_CASING;
-				[layer setValue:@(layer.lineWidth) forKey:@"lineWidth.orig"];
+				[layer setValue:@(refPoint.x) forKey:@"_position_x"];
+				[layer setValue:@(refPoint.y) forKey:@"_position_y"];
+				[layer setValue:@(layer.lineWidth) forKey:@"_lineWidth"];
 				[layers addObject:layer];
 				CGPathRelease(path);
 			}
@@ -1512,7 +1512,9 @@ enum {
 			layer.lineCap		= kCALineCapRound;
 			layer.lineJoin		= kCALineJoinRound;
 			layer.zPosition		= Z_LINE;
-			[layer setValue:@(layer.lineWidth) forKey:@"lineWidth.orig"];
+			[layer setValue:@(refPoint.x) forKey:@"_position_x"];
+			[layer setValue:@(refPoint.y) forKey:@"_position_y"];
+			[layer setValue:@(layer.lineWidth) forKey:@"_lineWidth"];
 #if 0
 			if ( way && way.isOneWay ) {
 				[self drawArrowsForPath:path context:ctx];
@@ -1568,6 +1570,8 @@ enum {
 			layer.lineCap		= kCALineCapRound;
 			layer.lineJoin		= kCALineJoinRound;
 			layer.zPosition		= Z_AREA;
+			[layer setValue:@(refPoint.x) forKey:@"_position_x"];
+			[layer setValue:@(refPoint.y) forKey:@"_position_y"];
 			[layers addObject:layer];
 			CGPathRelease(path);
 		}
@@ -1585,7 +1589,7 @@ enum {
 
 		if ( name ) {
 
-			BOOL isHighway = object.isWay && !object.isWay.isClosed;
+			BOOL isHighway = object.isWay && !object.isWay.isArea;
 			if ( isHighway ) {
 
 				double length = 0.0;
@@ -1609,6 +1613,8 @@ enum {
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
+				[layer setValue:@(pt.x) forKey:@"_position_x"];
+				[layer setValue:@(pt.y) forKey:@"_position_y"];
 				[layers addObject:layer];
 			}
 		}
@@ -1626,6 +1632,7 @@ enum {
 #if FADE_INOUT
 #else
 					  @"hidden"				: [NSNull null],
+					  @"opacity"			: [NSNull null],
 #endif
 					  };
 	for ( CALayer * layer in layers ) {
@@ -1677,7 +1684,7 @@ enum {
 			layer.fillColor		= UIColor.clearColor.CGColor;
 			layer.zPosition		= Z_HIGHLIGHT_WAY;
 			[layers addObject:layer];
-			[layer setValue:@(layer.lineWidth) forKey:@"lineWidth.orig"];
+			[layer setValue:@(layer.lineWidth) forKey:@"_lineWidth"];
 			CGPathRelease(path);
 
 			// draw nodes of way
@@ -2633,6 +2640,8 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	if ( self.hidden )
 		return;
 
+	_isPerformingLayout = YES;
+
 	NSArray * previousObjects = _shownObjects;
 
 	_shownObjects = [self getObjectsToDisplay];
@@ -2651,19 +2660,20 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		[CATransaction setCompletionBlock:^{
 			for ( OsmBaseObject * object in removals ) {
 				[_fadingOutSet removeObject:object];
+				[_shownObjects removeObject:object];
 				for ( CALayer * layer in object.shapeLayers ) {
-					[layer removeFromSuperlayer];
+					if ( layer.opacity < 0.1 ) {
+						[layer removeFromSuperlayer];
+					}
 				}
 			}
-			NSLog(@"remove %f",CACurrentMediaTime());
 		}];
 		for ( OsmBaseObject * object in removals ) {
 			[_fadingOutSet unionSet:removals];
 			for ( CALayer * layer in object.shapeLayers ) {
-				layer.hidden = YES;
+				layer.opacity = 0.01;
 			}
 		}
-		NSLog(@"begin fade %f",CACurrentMediaTime());
 		[CATransaction commit];
 #else
 		for ( OsmBaseObject * object in removals ) {
@@ -2683,20 +2693,20 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	const double	tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
 	const double	pScale		= tScale / PATH_SCALING;
 
-	for ( OsmBaseObject * obj in _shownObjects ) {
+	for ( OsmBaseObject * object in _shownObjects ) {
 
 		// NSLog(@"%@",obj);
 
-		NSArray * layers = [self getShapeLayersForObject:obj];
+		NSArray * layers = [self getShapeLayersForObject:object];
 
 		for ( CALayer * layer in layers ) {
 
 			// configure the layer for presentation
 
-			OSMPoint pt = OSMPointFromCGPoint( layer.position );
+			OSMPoint pt = { [[layer valueForKey:@"_position_x"] doubleValue], [[layer valueForKey:@"_position_y"] doubleValue] };
 			OSMPoint pt2 = OSMPointApplyTransform( pt, _mapView.screenFromMapTransform );
 
-			if ( [layer isKindOfClass:[CAShapeLayer class]] && !obj.isNode ) {
+			if ( [layer isKindOfClass:[CAShapeLayer class]] && !object.isNode ) {
 
 				// way or area -- need to rotate and scale
 				CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
@@ -2708,7 +2718,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 				if ( [layer isKindOfClass:[CAShapeLayer class]] ) {
 					CAShapeLayer * shape = (id)layer;
-					NSNumber * lineWidth = [shape valueForKey:@"lineWidth.orig"];
+					NSNumber * lineWidth = [shape valueForKey:@"_lineWidth"];
 					shape.lineWidth = lineWidth.doubleValue / pScale;
 				}
 
@@ -2718,11 +2728,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				if ( [layer isKindOfClass:[CATextLayer class]] ) {
 
 					// get size of building (or whatever) into which we need to fit the text
-					if ( obj.isNode ) {
+					if ( object.isNode ) {
 						// its a node with text, such as an address node
 					} else {
 						// its a label on a building or polygon
-						OSMRect rc = obj.boundingBox;
+						OSMRect rc = object.boundingBox;
 						OSMPoint p1 = [MapView mapPointForLatitude:rc.origin.y+rc.size.height longitude:rc.origin.x];	// latitude increases opposite of map
 						OSMPoint p2 = [MapView mapPointForLatitude:rc.origin.y longitude:rc.origin.x+rc.size.width];
 						rc = OSMRectMake( p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);	// map size
@@ -2733,20 +2743,22 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 							continue;
 						}
 					}
-					layer.affineTransform	= CGAffineTransformMakeTranslation( round(pt2.x-pt.x), round(pt2.y-pt.y) );
 
 				} else {
 
 					// its an icon or a generic box
-					layer.affineTransform	= CGAffineTransformMakeTranslation( round(pt2.x-pt.x), round(pt2.y-pt.y));
-
 				}
+
+				pt2.x = round(pt2.x);
+				pt2.y = round(pt2.y);
+				layer.position = CGPointFromOSMPoint(pt2);
 			}
 
 			// add the layer if not already present
 			if ( layer.superlayer == nil ) {
 #if FADE_INOUT
-				layer.hidden = NO;
+				[layer removeAllAnimations];
+				layer.opacity = 1.0;
 #endif
 				[self addSublayer:layer];
 			}
@@ -2769,11 +2781,15 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	// NSLog(@"%ld layers", (long)self.sublayers.count);
+
+	_isPerformingLayout = NO;
 }
 #endif
 
 -(void)setNeedsLayout
 {
+	if ( _isPerformingLayout )
+		return;
 	[super setNeedsLayout];
 }
 

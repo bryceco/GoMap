@@ -322,6 +322,35 @@ CGSize SizeForImage( NSImage * image )
 		[self locateMe:nil];
 	}
 #endif
+
+#if 1
+	OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
+	self.screenFromMapTransform = t;
+	__block int side = 0, distance = 0;
+	__weak MapView * weakSelf = self;
+	[_displayLink addName:@"autoScroll" block:^{
+		int dx = 0, dy = 0;
+		switch ( side ) {
+			case 0:
+				dx = 1;
+				break;
+			case 1:
+				dy = 1;
+				break;
+			case 2:
+				dx = -1;
+				break;
+			case 3:
+				dy = -1;
+				break;
+		}
+		if ( ++distance > 30 ) {
+			side = (side+1) % 4;
+			distance = 0;
+		}
+		[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
+	}];
+#endif
 }
 
 

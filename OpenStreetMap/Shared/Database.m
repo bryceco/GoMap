@@ -13,7 +13,13 @@
 #import "OsmObjects.h"
 
 
-#define SqlCheck(e)	NSAssert((rc=(e)) == SQLITE_OK,@"SQL error")
+#define DoAssert(condition)	\
+if (!(condition)) {		\
+[[NSAssertionHandler currentHandler] handleFailureInMethod:_cmd object:self file:[NSString stringWithUTF8String:__FILE__] lineNumber:__LINE__ description:@"SQL Error"]; \
+} else (void)0
+
+#define SqlCheck(e)	DoAssert((rc=(e)) == SQLITE_OK)
+
 
 
 #if DEBUG && 0
@@ -282,10 +288,10 @@ retry:
 	if ( nodes.count == 0 )
 		return YES;
 
-	sqlite3_stmt * nodeStatement;
+	sqlite3_stmt * nodeStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);", -1, &nodeStatement, nil ));
 
-	sqlite3_stmt * tagStatement;
+	sqlite3_stmt * tagStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
 
 	for ( OsmNode * node in nodes ) {
@@ -340,13 +346,13 @@ retry:
 	if ( ways.count == 0 )
 		return YES;
 
-	sqlite3_stmt * wayStatement;
+	sqlite3_stmt * wayStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);", -1, &wayStatement, nil ));
 
-	sqlite3_stmt * tagStatement;
+	sqlite3_stmt * tagStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
 
-	sqlite3_stmt * nodeStatement;
+	sqlite3_stmt * nodeStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO way_nodes (ident,node_id,node_index) VALUES (?,?,?);", -1, &nodeStatement, nil ));
 
 	for ( OsmWay * way in ways ) {
@@ -412,13 +418,13 @@ retry:
 	if ( relations.count == 0 )
 		return YES;
 
-	sqlite3_stmt * baseStatement;
+	sqlite3_stmt * baseStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);", -1, &baseStatement, nil ));
 
-	sqlite3_stmt * tagStatement;
+	sqlite3_stmt * tagStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
 
-	sqlite3_stmt * memberStatement;
+	sqlite3_stmt * memberStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);", -1, &memberStatement, nil ));
 
 	for ( OsmRelation * relation in relations ) {
@@ -488,7 +494,7 @@ retry:
 		return YES;
 
 	int rc;
-	sqlite3_stmt * nodeStatement;
+	sqlite3_stmt * nodeStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "DELETE from NODES where ident=?;", -1, &nodeStatement, nil ));
 	for ( OsmNode * node in nodes ) {
 		sqlite3_reset(nodeStatement);
@@ -507,7 +513,7 @@ retry:
 		return YES;
 
 	int rc;
-	sqlite3_stmt * nodeStatement;
+	sqlite3_stmt * nodeStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "DELETE from WAYS where ident=?;", -1, &nodeStatement, nil ));
 
 	for ( OsmWay * way in ways ) {
@@ -527,7 +533,7 @@ retry:
 		return YES;
 
 	int rc;
-	sqlite3_stmt * relationStatement;
+	sqlite3_stmt * relationStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "DELETE from RELATIONS where ident=?;", -1, &relationStatement, nil ));
 
 	for ( OsmRelation * relation in relations ) {

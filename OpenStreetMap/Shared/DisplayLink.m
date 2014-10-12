@@ -10,7 +10,6 @@
 
 @implementation DisplayLink
 
-
 -(instancetype)init
 {
 	self = [super init];
@@ -38,16 +37,18 @@
 
 -(void)addName:(NSString *)name block:(void(^)(void))block;
 {
-	if ( _blockDict.count == 0 ) {
+	if ( _displayLink == nil ) {
 		_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update:)];
 		[_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 	}
+
 	[_blockDict setObject:block forKey:name];
 }
 
 -(void)removeName:(NSString *)name;
 {
 	[_blockDict removeObjectForKey:name];
+
 	if ( _blockDict.count == 0 ) {
 		[_displayLink removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
 		_displayLink = nil;
