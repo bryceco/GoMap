@@ -323,7 +323,8 @@ CGSize SizeForImage( NSImage * image )
 	}
 #endif
 
-#if 1
+#if 0
+	// automaatically scroll view for frame rate testing
 	OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
 	self.screenFromMapTransform = t;
 	__block int side = 0, distance = 0;

@@ -9,10 +9,10 @@
 #import "DisplayLink.h"
 #import "FpsLabel.h"
 
-#define ENABLE_FPS	1
+#define ENABLE_FPS	0
 
 
-const int FRAME_COUNT = 61;
+const int FRAME_COUNT = 60;
 
 @implementation FpsLabel
 {

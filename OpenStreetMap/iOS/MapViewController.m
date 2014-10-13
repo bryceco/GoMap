@@ -142,7 +142,6 @@
 	[self installLongPressGestureRecognizer:YES];
 }
 
-
 -(IBAction)toggleLocation:(id)sender
 {
 	switch (self.mapView.gpsState) {
@@ -158,8 +157,7 @@
 	}
 
 	if ( self.mapView.gpsState != GPS_STATE_NONE ) {
-		UIColor * tint = [UIColor colorWithRed:0.5 green:0.5 blue:1.0 alpha:1.0];
-		self.locationButton.tintColor = tint;
+		self.locationButton.tintColor = UIColor.whiteColor;
 	} else {
 		self.locationButton.tintColor = nil;
 	}

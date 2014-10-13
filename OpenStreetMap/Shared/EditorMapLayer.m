@@ -37,6 +37,9 @@
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
 
 
+#define DEFAULT_LINECAP		kCALineCapSquare
+#define DEFAULT_LINEJOIN	kCALineJoinMiter
+
 enum {
 	SUBPART_AREA = 1,
 	SUBPART_WAY = 2,
@@ -629,7 +632,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 }
 
 
--(void)addPointList:(NSArray *)list toContextPath:(CGContextRef)ctx
+-(void)addPointList:(NSArray *)list toPath:(CGMutablePathRef)path
 {
 	BOOL first = YES;
 	for ( OSMPointBoxed * point in list ) {
@@ -638,9 +641,9 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			break;
 		if ( first ) {
 			first = NO;
-			CGContextMoveToPoint(ctx, p.x, p.y );
+			CGPathMoveToPoint( path, NULL, p.x, p.y );
 		} else {
-			CGContextAddLineToPoint(ctx, p.x, p.y);
+			CGPathAddLineToPoint( path, NULL, p.x, p.y);
 		}
 	}
 }
@@ -667,7 +670,11 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 }
 
 
--(void)drawOceans:(NSArray *)objectList context:(CGContextRef)ctx
+#if USE_SHAPELAYERS
+-(CAShapeLayer *)getOceanLayer:(NSArray *)objectList
+#else
+-(BOOL)drawOceans:(NSArray *)objectList context:(CGContextRef)ctx
+#endif
 {
 	// get all coastline ways
 	NSMutableArray * outerSegments = [NSMutableArray new];
@@ -698,7 +705,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 	if ( outerSegments.count == 0 )
-		return;
+		return NO;
 
 	// connect ways together forming congiguous runs
 	outerSegments = [self joinConnectedWays:outerSegments];
@@ -760,7 +767,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 	if ( visibleSegments.count == 0 ) {
 		// nothing is on screen
-		return;
+		return NO;
 	}
 
 	// pull islands into a separate list
@@ -817,14 +824,14 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 	// now have a set of discontiguous arrays of coastline nodes. Draw segments adding points at screen corners to connect them
 	BOOL haveCoastline = NO;
-	CGContextBeginPath(ctx);
+	CGMutablePathRef path = CGPathCreateMutable();
 	while ( visibleSegments.count ) {
 
 		NSArray * firstOutline = visibleSegments.lastObject;
 		OSMPointBoxed * exit  = firstOutline.lastObject;
 		[visibleSegments removeObject:firstOutline];
 
-		[self addPointList:firstOutline toContextPath:ctx];
+		[self addPointList:firstOutline toPath:path];
 
 		for (;;) {
 			// find next point following exit point
@@ -834,8 +841,10 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 				NSInteger entryIndex = (exitIndex+1) % points.count;
 				nextOutline = [entryDict objectForKey:points[entryIndex]];
 			}
-			if ( nextOutline == nil )
-				return;
+			if ( nextOutline == nil ) {
+				CGPathRelease(path);
+				return NO;
+			}
 			OSMPointBoxed * entry = nextOutline[0];
 
 			// connect exit point to entry point following clockwise borders
@@ -851,22 +860,22 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 							if ( wall2 == 0 && point1.y > point2.y )
 								break;
 							point1 = OSMPointMake(viewRect.origin.x, viewRect.origin.y);
-							CGContextAddLineToPoint( ctx, point1.x, point1.y );
+							CGPathAddLineToPoint( path, NULL, point1.x, point1.y );
 						case SIDE_TOP:
 							if ( wall2 == 1 && point1.x < point2.x )
 								break;
 							point1 = OSMPointMake(viewRect.origin.x+viewRect.size.width, viewRect.origin.y );
-							CGContextAddLineToPoint( ctx, point1.x, point1.y );
+							CGPathAddLineToPoint( path, NULL, point1.x, point1.y );
 						case SIDE_RIGHT:
 							if ( wall2 == 2 && point1.y < point2.y )
 								break;
 							point1 = OSMPointMake(viewRect.origin.x+viewRect.size.width, viewRect.origin.y+viewRect.size.height);
-							CGContextAddLineToPoint( ctx, point1.x, point1.y );
+							CGPathAddLineToPoint( path, NULL, point1.x, point1.y );
 						case SIDE_BOTTOM:
 							if ( wall2 == 3 && point1.x > point2.x )
 								break;
 							point1 = OSMPointMake(viewRect.origin.x, viewRect.origin.y+viewRect.size.height);
-							CGContextAddLineToPoint( ctx, point1.x, point1.y );
+							CGPathAddLineToPoint( path, NULL, point1.x, point1.y );
 						}
 				}
 			}
@@ -876,11 +885,12 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 				break;
 			}
 			if ( ![visibleSegments containsObject:nextOutline] ) {
-				return;
+				CGPathRelease(path);
+				return NO;
 			}
 			for ( OSMPointBoxed * value in nextOutline ) {
 				OSMPoint pt = value.point;
-				CGContextAddLineToPoint( ctx, pt.x, pt.y );
+				CGPathAddLineToPoint( path, NULL, pt.x, pt.y );
 			}
 
 			exit = nextOutline.lastObject;
@@ -890,7 +900,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 	// draw islands
 	for ( NSArray * island in islands ) {
-		[self addPointList:island toContextPath:ctx];
+		[self addPointList:island toPath:path];
 
 		if ( !haveCoastline && IsClockwisePolygon(island) ) {
 			// this will still fail if we have an island with a lake in it
@@ -900,14 +910,32 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 	// if no coastline then draw water everywhere
 	if ( !haveCoastline ) {
-		CGContextMoveToPoint(ctx, viewRect.origin.x, viewRect.origin.y);
-		CGContextAddLineToPoint(ctx, viewRect.origin.x+viewRect.size.width, viewRect.origin.y);
-		CGContextAddLineToPoint(ctx, viewRect.origin.x+viewRect.size.width, viewRect.origin.y+viewRect.size.height);
-		CGContextAddLineToPoint(ctx, viewRect.origin.x, viewRect.origin.y+viewRect.size.height);
-		CGContextClosePath(ctx);
+		CGPathMoveToPoint(path, NULL, viewRect.origin.x, viewRect.origin.y);
+		CGPathAddLineToPoint(path, NULL, viewRect.origin.x+viewRect.size.width, viewRect.origin.y);
+		CGPathAddLineToPoint(path, NULL, viewRect.origin.x+viewRect.size.width, viewRect.origin.y+viewRect.size.height);
+		CGPathAddLineToPoint(path, NULL, viewRect.origin.x, viewRect.origin.y+viewRect.size.height);
+		CGPathCloseSubpath(path);
 	}
+#if USE_SHAPELAYERS
+	CAShapeLayer * layer = [CAShapeLayer new];
+	layer.path = path;
+	layer.frame			= self.bounds;
+	layer.fillColor		= [UIColor colorWithRed:0 green:0 blue:1 alpha:0.1].CGColor;
+	layer.strokeColor	= [UIColor blueColor].CGColor;
+	layer.lineJoin		= DEFAULT_LINEJOIN;
+	layer.lineCap		= DEFAULT_LINECAP;
+	layer.lineWidth		= 2.0;
+	layer.zPosition		= Z_OCEAN;
+	CGPathRelease(path);
+	return layer;
+#else
+	CGContextBeginPath(ctx);
+	CGContextAddPath(ctx, path);
 	CGContextSetRGBFillColor(ctx, 0, 0, 1, 0.3);
 	CGContextFillPath(ctx);
+	CGPathRelease(path);
+	return YES;
+#endif
 }
 
 #pragma mark Drawing
@@ -1280,6 +1308,38 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	return a.count;
 }
 
+-(RGBAColor)defaultColorForObject:(OsmBaseObject *)object
+{
+	RGBAColor c;
+	c.alpha = 1.0;
+	if ( object.tags[@"shop"] ) {
+		c.red = 0xAC/255.0;
+		c.green = 0x39/255.0;
+		c.blue = 0xAC/255.0;
+	} else if ( object.tags[@"amenity"] || object.tags[@"building"] || object.tags[@"leisure"] ) {
+		c.red = 0x73/255.0;
+		c.green = 0x4A/255.0;
+		c.blue = 0x08/255.0;
+	} else if ( object.tags[@"tourism"] || object.tags[@"transport"] ) {
+		c.red = 0x00/255.0;
+		c.green = 0x92/255.0;
+		c.blue = 0xDA/255.0;
+	} else if ( object.tags[@"medical"] ) {
+		c.red = 0xDA/255.0;
+		c.green = 0x00/255.0;
+		c.blue = 0x92/255.0;
+	} else if ( object.tags[@"name"] ) {
+		// blue for generic interesting nodes
+		c.red = 0;
+		c.green = 0;
+		c.blue = 1;
+	} else {
+		// gray for untagged nodes
+		c.alpha = 0.0;
+		c.red = c.green = c.blue = 0.5;
+	}
+	return c;
+}
 
 #if USE_SHAPELAYERS
 enum {
@@ -1365,11 +1425,7 @@ enum {
 		} else {
 			assert(NO);
 		}
-#if DEBUG && 0
-		NSAssert( CGRectContainsPoint(self.bounds,CGPointMake(pt.x, pt.y)), nil );
-#endif
 
-		BOOL untagged = NO;
 		if ( tagInfo.icon ) {
 			UIImage * icon = tagInfo.scaledIcon;
 			CGFloat uiScaling = [[UIScreen mainScreen] scale];
@@ -1399,34 +1455,8 @@ enum {
 		} else {
 
 			// draw generic box
-			CGFloat red, green, blue;
-			if ( object.tags[@"shop"] ) {
-				red = 0xAC/255.0;
-				green = 0x39/255.0;
-				blue = 0xAC/255.0;
-			} else if ( object.tags[@"amenity"] || object.tags[@"building"] || object.tags[@"leisure"] ) {
-				red = 0x73/255.0;
-				green = 0x4A/255.0;
-				blue = 0x08/255.0;
-			} else if ( object.tags[@"tourism"] || object.tags[@"transport"] ) {
-				red = 0x00/255.0;
-				green = 0x92/255.0;
-				blue = 0xDA/255.0;
-			} else if ( object.tags[@"medical"] ) {
-				red = 0xDA/255.0;
-				green = 0x00/255.0;
-				blue = 0x92/255.0;
-			} else if ( object.tags[@"name"] ) {
-				// blue for generic interesting nodes
-				red = 0;
-				green = 0;
-				blue = 1;
-			} else {
-				// gray for untagged nodes
-				untagged = YES;
-				red = green = blue = 0.5;
-			}
-
+			RGBAColor color = [self defaultColorForObject:object];
+			BOOL untagged = color.alpha == 0.0;
 			NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( object.tags ) : nil;
 			if ( houseNumber ) {
 
@@ -1449,8 +1479,8 @@ enum {
 
 				layer.anchorPoint	= CGPointMake(0, 0);
 				layer.position		= CGPointMake(pt.x,pt.y);
-				layer.strokeColor	= [UIColor colorWithRed:red green:green blue:blue alpha:1.0].CGColor;
-				layer.fillColor		= [UIColor clearColor].CGColor;
+				layer.strokeColor	= [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
+				layer.fillColor		= nil;
 				layer.lineWidth		= 2.0;
 
 				layer.shadowPath	= CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
@@ -1458,8 +1488,8 @@ enum {
 				layer.shadowRadius	= 0.0;
 				layer.shadowOffset	= CGSizeMake(0,0);
 				layer.shadowOpacity	= 0.25;
-
 				layer.zPosition		= Z_NODE;
+
 				[layer setValue:@(pt.x) forKey:@"_position_x"];
 				[layer setValue:@(pt.y) forKey:@"_position_y"];
 				[layers addObject:layer];
@@ -1479,10 +1509,10 @@ enum {
 				layer.position		= refPoint;
 				layer.path			= path;
 				layer.strokeColor	= [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
-				layer.fillColor		= [UIColor clearColor].CGColor;
+				layer.fillColor		= nil;
 				layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
-				layer.lineCap		= kCALineCapRound;
-				layer.lineJoin		= kCALineJoinRound;
+				layer.lineCap		= DEFAULT_LINECAP;
+				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_CASING;
 				[layer setValue:@(refPoint.x) forKey:@"_position_x"];
 				[layer setValue:@(refPoint.y) forKey:@"_position_y"];
@@ -1509,21 +1539,15 @@ enum {
 			layer.anchorPoint	= CGPointMake(0, 0);
 			layer.position		= refPoint;
 			layer.path			= path;
-			CGColorRef color = [UIColor colorWithRed:red green:green blue:blue alpha:alpha].CGColor;
-			layer.strokeColor	= color;
-			layer.fillColor		= [UIColor clearColor].CGColor;
+			layer.strokeColor	= [UIColor colorWithRed:red green:green blue:blue alpha:alpha].CGColor;
+			layer.fillColor		= nil;
 			layer.lineWidth		= lineWidth;
-			layer.lineCap		= kCALineCapRound;
-			layer.lineJoin		= kCALineJoinRound;
+			layer.lineCap		= DEFAULT_LINECAP;
+			layer.lineJoin		= DEFAULT_LINEJOIN;
 			layer.zPosition		= Z_LINE;
 			[layer setValue:@(refPoint.x) forKey:@"_position_x"];
 			[layer setValue:@(refPoint.y) forKey:@"_position_y"];
 			[layer setValue:@(layer.lineWidth) forKey:@"_lineWidth"];
-#if 0
-			if ( way && way.isOneWay ) {
-				[self drawArrowsForPath:path context:ctx];
-			}
-#endif
 			CGPathRelease(path);
 			[layers addObject:layer];
 		}
@@ -1572,8 +1596,8 @@ enum {
 				layer.position		= refPoint;
 				layer.path			= path;
 				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:0.25].CGColor;
-				layer.lineCap		= kCALineCapRound;
-				layer.lineJoin		= kCALineJoinRound;
+				layer.lineCap		= DEFAULT_LINECAP;
+				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
 				[layer setValue:@(refPoint.x) forKey:@"_position_x"];
 				[layer setValue:@(refPoint.y) forKey:@"_position_y"];
@@ -1582,7 +1606,6 @@ enum {
 			}
 		}
 	}
-
 
 	// Names
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
@@ -1652,7 +1675,7 @@ enum {
 
 // highlighting
 
--(NSArray *)getShapeLayersForHighlights
+-(NSMutableArray *)getShapeLayersForHighlights
 {
 	NSInteger zoom = [self zoomLevel];
 
@@ -1776,6 +1799,7 @@ enum {
 
 		}
 	}
+
 	return layers;
 }
 
@@ -1875,18 +1899,20 @@ enum {
 		[self convertNodesToPoints:a];
 
 	// draw
-	CGContextBeginPath(ctx);
+	CGMutablePathRef path = CGPathCreateMutable();
 	for ( NSArray * w in outer ) {
-		[self addPointList:w toContextPath:ctx];
+		[self addPointList:w toPath:path];
 	}
 	for ( NSArray * w in inner ) {
-		[self addPointList:w toContextPath:ctx];
+		[self addPointList:w toPath:path];
 	}
 	RGBAColor	fillColor;
+	CGContextBeginPath(ctx);
+	CGContextAddPath(ctx, path);
 	[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
 	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, 0.25);
 	CGContextFillPath(ctx);
-
+	CGPathRelease(path);
 	return YES;
 }
 
@@ -2521,10 +2547,12 @@ or in order of z-indexes (if renderer can detect collisions).
 	_shownObjects = a;
 
 	// draw coastline
+#if !USE_SHAPELAYERS
 	[self drawOceans:a context:ctx];
 	for ( ObjectSubpart * obj in a ) {
 		[self drawMapCssCoastline:obj context:ctx];
 	}
+#endif
 	// draw areas
 	for ( ObjectSubpart * obj in a ) {
 		[self drawMapCssArea:obj context:ctx];
@@ -2785,7 +2813,14 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		// remove old highlights
 		[layer removeFromSuperlayer];
 	}
+
+	// get highlights
 	_highlightLayers = [self getShapeLayersForHighlights];
+	// get ocean
+	CAShapeLayer * ocean = [self getOceanLayer:_shownObjects];
+	if ( ocean ) {
+		[_highlightLayers addObject:ocean];
+	}
 	for ( CALayer * layer in _highlightLayers ) {
 		// add new highlights
 		[self addSublayer:layer];

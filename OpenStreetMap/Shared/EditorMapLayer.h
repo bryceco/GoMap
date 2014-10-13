@@ -39,7 +39,7 @@
 
 	NSMutableArray		*	_selectionChangeCallbacks;
 
-	NSArray				*	_highlightLayers;
+	NSMutableArray		*	_highlightLayers;
 
 	BOOL					_isPerformingLayout;
 }
