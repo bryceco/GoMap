@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #import <QuartzCore/QuartzCore.h>
 #include <dirent.h>
-
+#include <libkern/OSAtomic.h>
 
 #import "iosapi.h"
 
@@ -319,13 +319,14 @@ static inline int32_t modulus( int32_t a, int32_t n)
 }
 
 
-
-typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
+typedef enum {
+	DOWNLOAD_STATUS_DISK_FETCH,
+	DOWNLOAD_STATUS_NETWORK_FETCH,
+} DOWNLOAD_STATUS;
 
 -(BOOL)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY
 				 minZoom:(int32_t)minZoom
 			   zoomLevel:(int32_t)zoomLevel
-			 cacheLevel:(CACHE_LEVEL)cacheLevel
 			  completion:(void(^)(NSError * error))completion
 {
 	int32_t tileModX = modulus( tileX, 1<<zoomLevel );
@@ -333,45 +334,34 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 	NSString * tileKey = [NSString stringWithFormat:@"%d,%d,%d",zoomLevel,tileX,tileY];
 	CALayer * layer = [_layerDict objectForKey:tileKey];
-	CACHE_LEVEL prevCacheLevelForLayer = (CACHE_LEVEL) [[layer valueForKey:@"cacheLevel"] integerValue];
-	if ( layer && cacheLevel <= prevCacheLevelForLayer ) {
+	if ( layer ) {
 		if ( completion )
 			completion(nil);
 		return YES;
 	}
 
+	// create layer
+	layer = [CALayer layer];
+	layer.actions = self.actions;
+	layer.zPosition = zoomLevel;
+	layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
+	layer.opaque = YES;
+	layer.hidden = YES;
+	[layer setValue:tileKey	forKey:@"tileKey"];
+#if !CUSTOM_TRANSFORM
+	layer.anchorPoint = CGPointMake(0,1);
+	double scale = 256.0 / (1 << zoomLevel);
+	layer.frame = CGRectMake( tileX * scale, tileY * scale, scale, scale );
+#endif
+	[_layerDict setObject:layer forKey:tileKey];
+
+	OSAtomicIncrement32( &_isPerformingLayout );
+	[self addSublayer:layer];
+	OSAtomicDecrement32( &_isPerformingLayout );
+
 	// check memory cache
 	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
 	NSImage * cachedImage = [_memoryTileCache objectForKey:cacheKey];
-//	NSLog(@"memory fetch %@",cacheKey);
-	if ( cachedImage == nil ) {
-		// if a parent tile already covers the area then load it while we wait for the correct tile to be loaded from disk/network
-		if ( zoomLevel > minZoom ) {
-			[self fetchTileForTileX:tileX>>1 tileY:tileY>>1 minZoom:minZoom zoomLevel:zoomLevel-1 cacheLevel:CACHE_MEMORY completion:nil];
-		}
-		if ( cacheLevel == CACHE_MEMORY )
-			return NO;
-	}
-
-	if ( layer == nil ) {
-		// create layer
-		layer = [CALayer layer];
-		layer.actions = self.actions;
-		layer.zPosition = zoomLevel;
-		layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
-		layer.opaque = YES;
-		layer.hidden = YES;
-		[layer setValue:tileKey	forKey:@"tileKey"];
-#if !CUSTOM_TRANSFORM
-		layer.anchorPoint = CGPointMake(0,1);
-		double scale = 256.0 / (1 << zoomLevel);
-		layer.frame = CGRectMake( tileX * scale, tileY * scale, scale, scale );
-#endif
-		[_layerDict setObject:layer forKey:tileKey];
-		[self addSublayer:layer];
-	}
-	[layer setValue:@(cacheLevel) forKey:@"cacheLevel"];
-
 	if ( cachedImage ) {
 #if TARGET_OS_IPHONE
 		layer.contents = (__bridge id)cachedImage.CGImage;
@@ -387,9 +377,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
 
 		// check disk cache
-//		NSLog(@"disk fetch %@",cacheKey);
 		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
-		NSData * fileData = (prevCacheLevelForLayer < CACHE_DISK) ? [[NSData alloc] initWithContentsOfFile:cachePath] : nil;
+		NSData * fileData = [[NSData alloc] initWithContentsOfFile:cachePath];
 		NSImage * fileImage = fileData ? [[NSImage alloc] initWithData:fileData] : nil;	// force read of data from disk prior to adding image to layer
 		if ( fileImage ) {
 
@@ -419,17 +408,7 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 
 		} else {
 
-			// if a parent tile already covers the area then load it while we wait for the correct tile to be loaded from network
-			if ( zoomLevel > minZoom ) {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[self fetchTileForTileX:tileX>>1 tileY:tileY>>1 minZoom:minZoom zoomLevel:zoomLevel-1 cacheLevel:CACHE_DISK completion:nil];
-				});
-			}
-			if ( cacheLevel == CACHE_DISK )
-				return;
-
 			// fetch image from server
-//			NSLog(@"network fetch %@",cacheKey);
 			NSString * url = [self urlForZoom:zoomLevel	tileX:tileModX tileY:tileModY];
 			[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:NO completion:^(NSData * data,NSError * error) {
 
@@ -480,7 +459,6 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 						[self fetchTileForTileX:tileX>>1 tileY:tileY>>1
 								  minZoom:minZoom
 									  zoomLevel:zoomLevel-1
-									cacheLevel:CACHE_NETWORK
 									 completion:completion];
 					});
 
@@ -523,12 +501,10 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	[super setNeedsLayout];
 }
 
--(void)layoutSublayers
+-(void)layoutSublayersSafe
 {
 	if ( self.hidden )
 		return;
-
-	_isPerformingLayout = YES;
 
 	OSMRect	rect		= [_mapView boundingMapRectForScreen];
 	int32_t	zoomLevel	= [self zoomLevel];
@@ -558,7 +534,6 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 			[self fetchTileForTileX:tileX tileY:tileY
 						minZoom:MAX(zoomLevel-8,1)
 						  zoomLevel:zoomLevel
-						cacheLevel:CACHE_NETWORK
 						 completion:^(NSError * error) {
 				if ( error ) {
 					[_mapView presentError:error flash:YES];
@@ -595,10 +570,18 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
 #endif
 
-	_isPerformingLayout = NO;
 
 	[_mapView progressAnimate];
 }
+
+-(void)layoutSublayers
+{
+	OSAtomicIncrement32( &_isPerformingLayout );
+	[self layoutSublayersSafe];
+	OSAtomicDecrement32( &_isPerformingLayout );
+}
+
+
 
 -(void)downloadTileForKey:(NSString *)cacheKey completion:(void(^)(void))completion
 {
@@ -660,6 +643,8 @@ typedef enum { CACHE_MEMORY, CACHE_DISK, CACHE_NETWORK } CACHE_LEVEL;
 	}
 	return neededTiles;
 }
+
+
 
 
 -(void)setTransform:(CATransform3D)transform

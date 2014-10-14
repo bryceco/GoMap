@@ -42,6 +42,7 @@ typedef enum {
 	NSNumber		*	_isOneWay;
 @public
 	OSMRect				_boundingBox;
+	NSInteger			renderPriorityCached;
 }
 @property (readonly,nonatomic)	BOOL					deleted;
 @property (strong,nonatomic)	NSMutableDictionary	*	renderProperties;
@@ -60,7 +61,6 @@ typedef enum {
 @property (readonly,nonatomic)	BOOL				visible;
 
 // extra stuff
-@property (assign,nonatomic)	NSInteger			renderPriorityCached;
 @property (assign,nonatomic)	OSMRect				boundingBox;
 @property (strong,nonatomic)	NSArray			*	shapeLayers;
 @property (readonly,nonatomic)	ONEWAY				isOneWay;

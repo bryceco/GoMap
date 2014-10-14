@@ -323,7 +323,7 @@ CGSize SizeForImage( NSImage * image )
 	}
 #endif
 
-#if 0
+#if 1
 	// automaatically scroll view for frame rate testing
 	OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
 	self.screenFromMapTransform = t;
@@ -1293,7 +1293,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		if ( _userOverrodeLocationZoom ) {
 			[self setTransformForLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 		} else {
-			double widthDegrees = 60 /*meters*/ / EarthRadius * 360;
+			double widthDegrees = 20 /*meters*/ / EarthRadius * 360;
 			[self setTransformForLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude width:widthDegrees];
 		}
 	}

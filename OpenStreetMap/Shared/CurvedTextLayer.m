@@ -215,19 +215,22 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	layer.shadowColor		= shadowColor.CGColor;
 	layer.shadowRadius		= 0.0;
 	layer.shadowOffset		= CGSizeMake(0,0);
-	layer.shadowOpacity		= 0.5;
+	layer.shadowOpacity		= 0.3;
 	CGPathRelease(shadowPath);
 
 	return layer;
 }
 
 
-+(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color
++(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(UIColor *)shadowColor
 {
 	NSMutableArray * layers = [NSMutableArray new];
 
 	CTFontRef ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
-	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ (NSString *)kCTFontAttributeName : (__bridge id)ctFont }];
+	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
+																	  attributes:@{
+																				   (NSString *)kCTFontAttributeName : (__bridge id)ctFont,
+																				   (NSString *)kCTForegroundColorAttributeName : (id)color.CGColor }];
 	CFAttributedStringRef attrStringRef = (__bridge CFAttributedStringRef)attrString;
 	NSInteger charCount = CFAttributedStringGetLength( attrStringRef );
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( attrStringRef );
@@ -249,10 +252,17 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 		layer.bounds			= bounds;
 		layer.affineTransform	= CGAffineTransformRotate( CGAffineTransformMakeTranslation(pos.x, pos.y), angle );
 		layer.anchorPoint		= CGPointMake(0,0);
-		layer.foregroundColor	= color.CGColor;
 		layer.truncationMode	= kCATruncationNone;
 		layer.wrapped			= NO;
 		layer.alignmentMode		= kCAAlignmentCenter;
+
+		CGPathRef	shadowPath	= CGPathCreateWithRect(bounds, NULL);
+		layer.shadowColor		= shadowColor.CGColor;
+		layer.shadowRadius		= 0.0;
+		layer.shadowOffset		= CGSizeMake(0, 0);
+		layer.shadowOpacity		= 0.3;
+		layer.shadowPath		= shadowPath;
+		CGPathRelease(shadowPath);
 
 		[layers addObject:layer];
 

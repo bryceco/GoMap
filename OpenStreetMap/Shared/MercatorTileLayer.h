@@ -16,11 +16,11 @@
 @interface MercatorTileLayer : CALayer <NSCacheDelegate>
 {
 	NSString						*	_tileCacheDirectory;
-	NSCache							*	_memoryTileCache;
+	NSCache							*	_memoryTileCache;		// cache of tiles kept in memory
 	NSString						*	_logoUrl;
 
-	NSMutableDictionary				*	_layerDict;
-	BOOL								_isPerformingLayout;
+	NSMutableDictionary				*	_layerDict;				// map of tiles currently displayed
+	int32_t								_isPerformingLayout;
 }
 
 @property (strong,nonatomic) AerialService	*	aerialService;

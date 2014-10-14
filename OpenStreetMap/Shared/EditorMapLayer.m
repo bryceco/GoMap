@@ -1816,7 +1816,7 @@ enum {
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						double offset = (length - name.length * Pixels_Per_Character) / 2;	// center along way
 						if ( offset >= 0 ) {
-							NSArray * a = [CurvedTextLayer layersWithString:name alongPath:path offset:offset color:self.textColor];
+							NSArray * a = [CurvedTextLayer layersWithString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor)];
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;
@@ -2604,12 +2604,12 @@ or in order of z-indexes (if renderer can detect collisions).
 
 static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
-	NSInteger diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
+	NSInteger diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
 	return diff > 0;	// sort descending
 }
 static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
-	long long diff = obj1.renderPriorityCached - obj2.renderPriorityCached;
+	long long diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
 	if ( diff == 0 )
 		diff = obj1.ident.longLongValue - obj2.ident.longLongValue;	// older objects are bigger
 	return diff > 0;	// sort descending
@@ -2644,27 +2644,32 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		if ( object.tagInfo == nil ) {
 			object.tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForObject:object];
 		}
-		if ( object.renderPriorityCached == 0 ) {
+		if ( object->renderPriorityCached == 0 ) {
 			if ( object.modifyCount ) {
-				object.renderPriorityCached = 1000000;
+				object->renderPriorityCached = 1000000;
 			} else {
-				object.renderPriorityCached = [object.tagInfo renderSize:object];
+				object->renderPriorityCached = [object.tagInfo renderSize:object];
 			}
 		}
 	}
 
 	// sort from big to small objects
+#if 0
 	[objects partialSortK:2*objectLimit+1 compare:VisibleSizeLessStrict];
+#else
+	[objects partialSortOsmObjectVisibleSize:2*objectLimit+1];
+#endif
+
 
 	// adjust the list of objects so that we get all or none of the same type
 	if ( objects.count > objectLimit ) {
 		// We have more objects available than we want to display. If some of the objects are the same size as the last visible object then include those too.
 		NSInteger lastIndex = objectLimit;
 		OsmBaseObject * last = objects[ objectLimit-1 ];
-		NSInteger lastRenderPriority = last.renderPriorityCached;
+		NSInteger lastRenderPriority = last->renderPriorityCached;
 		for ( NSInteger i = objectLimit, e = MIN(objects.count,2*objectLimit); i < e; ++i ) {
 			OsmBaseObject * o = objects[ i ];
-			if ( o.renderPriorityCached == lastRenderPriority ) {
+			if ( o->renderPriorityCached == lastRenderPriority ) {
 				lastIndex++;
 			} else {
 				break;
@@ -2675,7 +2680,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 			NSInteger removeCount = 0;
 			for ( NSInteger i = objectLimit-1; i >= 0; --i ) {
 				OsmBaseObject * o = objects[ i ];
-				if ( o.renderPriorityCached == lastRenderPriority ) {
+				if ( o->renderPriorityCached == lastRenderPriority ) {
 					++removeCount;
 				} else {
 					break;

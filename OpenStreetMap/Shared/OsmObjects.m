@@ -254,7 +254,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	_renderProperties		= nil;
 	_tagInfo				= nil;
-	_renderPriorityCached	= 0;
+	renderPriorityCached	= 0;
 	_isOneWay				= nil;
 	_boundingBox			= OSMRectMake(0, 0, 0, 0);
 
