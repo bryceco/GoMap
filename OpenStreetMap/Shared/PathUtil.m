@@ -64,7 +64,7 @@ void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval
 	CGPathApplyBlock( path, block );
 }
 
-void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
+void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
 {
 	__block BOOL	done = NO;
 	__block CGPoint	previous = { 0 };
@@ -82,12 +82,12 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, CGPoint 
 				CGPoint pt = points[0];
 				CGFloat dx = pt.x - previous.x;
 				CGFloat dy = pt.y - previous.y;
-				CGFloat len = hypotf(dx,dy);
+				CGFloat len = hypot(dx,dy);
 				dx /= len;
 				dy /= len;
 
 				// shift text off baseline
-				CGPoint baselineOffset = { dy * 3, -dx * 3 };
+				CGPoint baselineOffset = { dy * baselineOffsetDistance, -dx * baselineOffsetDistance };
 
 				// always set position/angle because if we fall off the end we need it set
 				pPos->x = previous.x + offset * dx + baselineOffset.x;

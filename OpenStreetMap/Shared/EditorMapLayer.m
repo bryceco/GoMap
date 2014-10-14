@@ -40,6 +40,9 @@
 #define DEFAULT_LINECAP		kCALineCapSquare
 #define DEFAULT_LINEJOIN	kCALineJoinMiter
 
+const CGFloat Pixels_Per_Character = 8.0;
+
+
 enum {
 	SUBPART_AREA = 1,
 	SUBPART_WAY = 2,
@@ -1609,10 +1612,9 @@ enum {
 
 	// Names
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
-		const CGFloat Pixels_Per_Character = 8.0;
 
 		// get object name, or address if no name
-		NSString * name = [object.tags objectForKey:@"name"];
+		NSString * name = object.tags[@"name"];
 		if ( name == nil )
 			name = DrawNodeAsHouseNumber( object.tags );
 
@@ -1621,15 +1623,16 @@ enum {
 			BOOL isHighway = object.isWay && !object.isWay.isArea;
 			if ( isHighway ) {
 
+#if 0
 				double length = 0.0;
 				CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 				double offset = (length - name.length * Pixels_Per_Character) / 2;
 				if ( offset >= 0 ) {
-#if 0
-					[CurvedTextLayer drawString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
-#endif
+					NSArray * a = [CurvedTextLayer layersWithString:name alongPath:path offset:offset color:self.textColor];
+					[layers addObjectsFromArray:a];
 				}
 				CGPathRelease(path);
+#endif
 
 			} else {
 
@@ -1677,6 +1680,9 @@ enum {
 
 -(NSMutableArray *)getShapeLayersForHighlights
 {
+	NSInteger nameLimit	= [self hasFastGraphics] ? 10 : 5;
+	NSMutableSet * nameSet = [NSMutableSet new];
+
 	NSInteger zoom = [self zoomLevel];
 
 	NSMutableArray * layers		= [NSMutableArray new];
@@ -1763,13 +1769,13 @@ enum {
 		}
 	}
 
-	// Arrow heads
+	// Arrow heads and street names
 	for ( OsmBaseObject * object in _shownObjects ) {
 		if ( object.isOneWay ) {
+
+			// arrow heads
 			CGPathRef	path	= [self pathForWay:object.isWay];
-
 			double interval = 100;
-
 			InvokeBlockAlongPath( path, interval/2, interval, ^(OSMPoint loc, OSMPoint dir){
 				// draw direction arrow at loc/dir
 				BOOL reversed = object.isOneWay == ONEWAY_BACKWARD;
@@ -1797,6 +1803,30 @@ enum {
 
 			CGPathRelease(path);
 
+		}
+
+		// street names
+		if ( nameLimit > 0 ) {
+			BOOL isHighway = object.isWay && !object.isWay.isArea;
+			if ( isHighway ) {
+				NSString * name = object.tags[ @"name" ];
+				if ( name ) {
+					if ( ![nameSet containsObject:name] ) {
+						double length = 0.0;
+						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
+						double offset = (length - name.length * Pixels_Per_Character) / 2;	// center along way
+						if ( offset >= 0 ) {
+							NSArray * a = [CurvedTextLayer layersWithString:name alongPath:path offset:offset color:self.textColor];
+							if ( a.count ) {
+								[layers addObjectsFromArray:a];
+								--nameLimit;
+								[nameSet addObject:name];
+							}
+						}
+						CGPathRelease(path);
+					}
+				}
+			}
 		}
 	}
 
@@ -2218,8 +2248,6 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 
 -(BOOL)drawWayName:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
-	const CGFloat Pixels_Per_Character = 8.0;
-
 	// add street names
 	NSString * name = [object.tags objectForKey:@"name"];
 	if ( name == nil )
@@ -2593,9 +2621,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
 #if TARGET_OS_IPHONE
 	NSInteger objectLimit	= [self hasFastGraphics] ? 100 : 50;
-	NSInteger nameLimit		= [self hasFastGraphics] ? 10 : 5;
 #if USE_SHAPELAYERS
-//	objectLimit *= 3;
+#else
+	NSInteger nameLimit		= [self hasFastGraphics] ? 10 : 5;
 #endif
 #else
 	NSInteger objectLimit = 500;

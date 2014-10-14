@@ -66,7 +66,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 			CGPoint pos;
 			CGFloat angle, length;
-			PathPositionAndAngleForOffset( path, offset+glyphPositions[runGlyphIndex].x, &pos, &angle, &length );
+			PathPositionAndAngleForOffset( path, offset+glyphPositions[runGlyphIndex].x, 3, &pos, &angle, &length );
 
 			NSInteger segmentCount = 0;
 			while ( runGlyphIndex+segmentCount < runGlyphCount ) {
@@ -196,22 +196,20 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 	if ( font == nil )
 		font = [UIFont systemFontOfSize:10];
-	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor,		NSFontAttributeName : font }];
-//	NSAttributedString * s2 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)shadowColor.CGColor,	NSFontAttributeName : font }];
+	NSAttributedString * s = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor, NSFontAttributeName : font }];
 
 	CGRect bounds = { 0 };
-	bounds.size = [CurvedTextLayer sizeOfText:s1];
+	bounds.size = [CurvedTextLayer sizeOfText:s];
 	bounds = CGRectInset( bounds, -3, -1 );
 	bounds.size.width  = 2 * ceil( bounds.size.width/2 );	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
 	bounds.size.height = 2 * ceil( bounds.size.height/2 );
 	layer.bounds = bounds;
 
-	layer.string			= s1;
+	layer.string			= s;
 	layer.truncationMode	= kCATruncationNone;
 	layer.wrapped			= YES;
 	layer.alignmentMode		= kCAAlignmentCenter;
 
-#if 1
 	CGPathRef shadowPath	= CGPathCreateWithRect(bounds, NULL);
 	layer.shadowPath		= shadowPath;
 	layer.shadowColor		= shadowColor.CGColor;
@@ -219,9 +217,53 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	layer.shadowOffset		= CGSizeMake(0,0);
 	layer.shadowOpacity		= 0.5;
 	CGPathRelease(shadowPath);
-#endif
 
 	return layer;
+}
+
+
++(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color
+{
+	NSMutableArray * layers = [NSMutableArray new];
+
+	CTFontRef ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
+	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ (NSString *)kCTFontAttributeName : (__bridge id)ctFont }];
+	CFAttributedStringRef attrStringRef = (__bridge CFAttributedStringRef)attrString;
+	NSInteger charCount = CFAttributedStringGetLength( attrStringRef );
+	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( attrStringRef );
+	CTTypesetterRef typesetter = CTFramesetterGetTypesetter( framesetter );
+	double lineHeight = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0,attrString.length), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL).height;
+	CFIndex currentCharacter = 0;
+	double currentPixelOffset = offset;
+	while ( currentCharacter < charCount ) {
+		// get the number of characters that fit in the current path segment and create a text layer for it
+		CGPoint pos;
+		CGFloat angle, length;
+		PathPositionAndAngleForOffset( path, currentPixelOffset, lineHeight, &pos, &angle, &length );
+		CFIndex count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, length );
+
+		CATextLayer * layer = [CATextLayer layer];
+		layer.string = [attrString attributedSubstringFromRange:NSMakeRange(currentCharacter,count)];
+		CGRect bounds = { 0 };
+		bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(currentCharacter,count), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL);
+		layer.bounds			= bounds;
+		layer.affineTransform	= CGAffineTransformRotate( CGAffineTransformMakeTranslation(pos.x, pos.y), angle );
+		layer.anchorPoint		= CGPointMake(0,0);
+		layer.foregroundColor	= color.CGColor;
+		layer.truncationMode	= kCATruncationNone;
+		layer.wrapped			= NO;
+		layer.alignmentMode		= kCAAlignmentCenter;
+
+		[layers addObject:layer];
+
+		currentCharacter += count;
+		currentPixelOffset += bounds.size.width;
+	}
+
+	CFRelease(framesetter);
+	CFRelease(ctFont);
+
+	return layers;
 }
 
 
