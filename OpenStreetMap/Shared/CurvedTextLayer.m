@@ -224,9 +224,14 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 +(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(UIColor *)shadowColor
 {
+	static CTFontRef ctFont = NULL;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
+	});
+
 	NSMutableArray * layers = [NSMutableArray new];
 
-	CTFontRef ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
 																	  attributes:@{
 																				   (NSString *)kCTFontAttributeName : (__bridge id)ctFont,
@@ -268,10 +273,11 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 		currentCharacter += count;
 		currentPixelOffset += bounds.size.width;
-	}
 
+		if ( [string characterAtIndex:currentCharacter-1] == ' ' )
+			currentPixelOffset += 8;	// add room for space which is not included in framesetter size
+	}
 	CFRelease(framesetter);
-	CFRelease(ctFont);
 
 	return layers;
 }

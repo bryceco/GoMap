@@ -527,7 +527,6 @@
 		022A2A53167B8F1C00D7A5AC /* POITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POITabBarController.m; sourceTree = "<group>"; };
 		022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearCacheViewController.h; sourceTree = "<group>"; };
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearCacheViewController.m; sourceTree = "<group>"; };
-		022B09A519BD3F710041687B /* QuadMapC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuadMapC.h; path = ../Shared/QuadMapC.h; sourceTree = "<group>"; };
 		022B09A619BD3F7B0041687B /* QuadMapC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadMapC.mm; path = ../Shared/QuadMapC.mm; sourceTree = "<group>"; };
 		022B09A819BE9A3B0041687B /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
 		022B09A919BE9A3B0041687B /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
@@ -1638,7 +1637,6 @@
 				02ACBA8716713F2A00BB4414 /* png */,
 				02ACBBB216713F2A00BB4414 /* QuadMap.h */,
 				02ACBBB316713F2A00BB4414 /* QuadMap.m */,
-				022B09A519BD3F710041687B /* QuadMapC.h */,
 				022B09A619BD3F7B0041687B /* QuadMapC.mm */,
 				02ACBBB416713F2A00BB4414 /* RulerLayer.h */,
 				02ACBBB516713F2A00BB4414 /* RulerLayer.m */,

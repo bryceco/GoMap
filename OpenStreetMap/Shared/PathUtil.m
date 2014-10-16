@@ -20,6 +20,15 @@ void CGPathApplyBlock( CGPathRef path, ApplyPathCallback block )
 	CGPathApply(path, (__bridge void *)block, InvokeBlockAlongPathCallback2);
 }
 
+NSInteger CGPathPointCount( CGPathRef path )
+{
+	__block NSInteger count = 0;
+	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint *points) {
+		++count;
+	});
+	return count;
+}
+
 void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(OSMPoint pt, OSMPoint direction) )
 {
 	__block CGFloat offset = initialOffset;
@@ -66,12 +75,13 @@ void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval
 
 void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
 {
-	__block BOOL	done = NO;
+	__block BOOL	reachedOffset = NO;
+	__block BOOL	quit = NO;
 	__block CGPoint	previous = { 0 };
 	__block CGFloat	offset = startOffset;
 
 	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint * points) {
-		if ( done )
+		if ( quit )
 			return;
 		switch ( type ) {
 			case kCGPathElementMoveToPoint:
@@ -85,23 +95,32 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double b
 				CGFloat len = hypot(dx,dy);
 				dx /= len;
 				dy /= len;
+				CGFloat a = atan2f(dy,dx);
 
 				// shift text off baseline
 				CGPoint baselineOffset = { dy * baselineOffsetDistance, -dx * baselineOffsetDistance };
 
-				// always set position/angle because if we fall off the end we need it set
-				pPos->x = previous.x + offset * dx + baselineOffset.x;
-				pPos->y = previous.y + offset * dy + baselineOffset.y;
-				*pAngle = atan2f(dy,dx);
-				*pLength = len - offset;
+				if ( !reachedOffset ) {
+					// always set position/angle because if we fall off the end we need it set
+					pPos->x = previous.x + offset * dx + baselineOffset.x;
+					pPos->y = previous.y + offset * dy + baselineOffset.y;
+					*pAngle = a;
+					*pLength = len - offset;
+				} else {
+					if ( fabs(a - *pAngle) < M_PI/40 ) {
+						// continuation of previous
+						*pLength = len - offset;
+					} else {
+						quit = YES;
+					}
+				}
 
 				if ( offset < len ) {
 					// found it
-					done = YES;
-				} else {
-					offset -= len;
-					previous = pt;
+					reachedOffset = YES;
 				}
+				offset -= len;
+				previous = pt;
 			}
 				break;
 			case kCGPathElementAddQuadCurveToPoint:

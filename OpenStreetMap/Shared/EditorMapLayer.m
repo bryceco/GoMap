@@ -710,6 +710,8 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	if ( outerSegments.count == 0 )
 		return NO;
 
+
+
 	// connect ways together forming congiguous runs
 	outerSegments = [self joinConnectedWays:outerSegments];
 	innerSegments = [self joinConnectedWays:innerSegments];
@@ -1676,16 +1678,14 @@ enum {
 }
 
 
-// highlighting
-
 -(NSMutableArray *)getShapeLayersForHighlights
 {
-	NSInteger nameLimit	= [self hasFastGraphics] ? 10 : 5;
-	NSMutableSet * nameSet = [NSMutableSet new];
+	NSInteger			nameLimit	= [self hasFastGraphics] ? 10 : 5;
+	NSMutableSet	*	nameSet		= [NSMutableSet new];
+	NSMutableArray	*	layers		= [NSMutableArray new];
 
+	// highlighting
 	NSInteger zoom = [self zoomLevel];
-
-	NSMutableArray * layers		= [NSMutableArray new];
 	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
 	if ( _selectedNode ) {
 		[highlights addObject:_selectedNode];
@@ -2620,14 +2620,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 - (NSMutableArray *)getObjectsToDisplay
 {
 #if TARGET_OS_IPHONE
-	NSInteger objectLimit	= [self hasFastGraphics] ? 100 : 50;
-#if USE_SHAPELAYERS
-#else
-	NSInteger nameLimit		= [self hasFastGraphics] ? 10 : 5;
-#endif
+	NSInteger objectLimit = [self hasFastGraphics] ? 100 : 50;
 #else
 	NSInteger objectLimit = 500;
-	NSInteger nameLimit = 100;
 #endif
 
 	double metersPerPixel = [_mapView metersPerPixel];

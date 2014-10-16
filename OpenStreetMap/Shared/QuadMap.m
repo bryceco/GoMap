@@ -11,15 +11,16 @@
 #import "UndoManager.h"
 
 
-static const double MinRectSize = 360.0 / (1 << 16);
-
 static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
+#undef QuadBox
+
+static const double MinRectSize = 360.0 / (1 << 16);
 
 @implementation QuadBox
 @synthesize rect = _rect;
 
--(instancetype)initWithRect:(OSMRect)rect parent:(QuadBox *)parent;
+-(instancetype)initWithRect:(OSMRect)rect parent:(QuadBox *)parent
 {
 	self = [super init];
 	if ( self ) {
@@ -27,6 +28,11 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 		_parent = parent;
 	}
 	return self;
+}
+
+-(instancetype)initWithRect:(OSMRect)rect
+{
+	return [self initWithRect:rect parent:nil];
 }
 
 -(instancetype)init
@@ -141,23 +147,6 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 			[q enumerateWithBlock:block];
 		}
 	}
-}
-
--(NSInteger)quadCount
-{
-	__block NSInteger c = 0;
-	[self enumerateWithBlock:^(QuadBox *quad) {
-		++c;
-	}];
-	return c;
-}
--(NSInteger)memberCount
-{
-	__block NSInteger c = 0;
-	[self enumerateWithBlock:^(QuadBox *quad) {
-		c += quad->_members.count;
-	}];
-	return c;
 }
 
 static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
@@ -304,13 +293,19 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 @end
 
 
+
+#if USE_QUAD_C
+#define QuadBox QuadBoxC
+#endif // USE_QUAD_C
+
+
 @implementation QuadMap
 
 -(instancetype)initWithRect:(OSMRect)rect
 {
 	self = [super init];
 	if ( self ) {
-		_rootQuad = [[QuadBox alloc] initWithRect:rect parent:nil];
+		_rootQuad = [[QuadBox alloc] initWithRect:rect];
 	}
 	return self;
 }
@@ -422,8 +417,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 }
 
 
-
--(void)enumerateWithBlock:(void (^)(QuadBox * quad))block
+-(void)enumerateWithBlock:(void (^)(QuadBoxEnumerationType quad))block
 {
 	[_rootQuad enumerateWithBlock:block];
 }
@@ -431,7 +425,7 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 -(NSInteger)count
 {
 	__block NSInteger c = 0;
-	[self enumerateWithBlock:^(QuadBox * quad){
+	[self enumerateWithBlock:^(QuadBoxEnumerationType quad){
 		++c;
 	}];
 	return c;

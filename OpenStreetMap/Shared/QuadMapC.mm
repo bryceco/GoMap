@@ -9,12 +9,13 @@
 #include <vector>
 
 #import "OsmObjects.h"
-#import "QuadMapC.h"
+#import "QuadMap.h"
 #import "UndoManager.h"
 
 
 static const double MinRectSize = 360.0 / (1 << 16);
 
+static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 
 class QuadBoxCC
@@ -27,17 +28,25 @@ private:
 	bool							_whole;
 	bool							_busy;
 	bool							_isSplit;
+	QuadBoxC					*	_owner;
 
 public:
-	QuadBoxCC( OSMRect rect, QuadBoxCC * parent ) : _rect(rect), _parent(parent)
+	QuadBoxCC( OSMRect rect, QuadBoxCC * parent, QuadBoxC * owner ) : _rect(rect), _parent(parent), _owner(owner)
 	{
 		_children[0] = _children[1] = _children[2] = _children[3] = NULL;
 		_whole = _busy = _isSplit = false;
+		if ( _owner == nil )
+			_owner = [[QuadBoxC alloc] initWithThis:this];
 	}
 
 	const OSMRect rect() const
 	{
 		return _rect;
+	}
+
+	QuadBoxC * owner() const
+	{
+		return _owner;
 	}
 
 	void reset()
@@ -67,6 +76,28 @@ public:
 		}
 	}
 
+	// find a child member could fit into
+	int childForRect( const OSMRect & child ) const
+	{
+		double midX = _rect.origin.x + _rect.size.width*0.5;
+		double midY = _rect.origin.y + _rect.size.height*0.5;
+		BOOL west = NO;
+		BOOL north = NO;
+		if ( child.origin.x < midX ) {
+			// west
+			if ( child.origin.x + child.size.width >= midX )
+				return -1;
+			west = YES;
+		}
+		if ( child.origin.y < midY ) {
+			// north
+			if ( child.origin.y + child.size.height >= midY )
+				return -1;
+			north = YES;
+		}
+		return (int)north << 1 | west;
+	}
+
 	void missingPieces( std::vector<QuadBoxCC *> & pieces, const OSMRect & target )
 	{
 		if ( _whole || _busy )
@@ -91,7 +122,7 @@ public:
 			if ( OSMRectIntersectsRect( target, rc ) ) {
 
 				if ( _children[child] == nil ) {
-					_children[child] = new QuadBoxCC( rc, this);
+					_children[child] = new QuadBoxCC( rc, this, nil );
 				}
 
 				_children[child]->missingPieces(pieces,target);
@@ -148,27 +179,14 @@ public:
 		}
 	}
 
-	NSInteger quadCount() const
-	{
-		__block NSInteger c = 0;
-		this->enumerateWithBlock(^(const QuadBoxCC *quad) {
-			++c;
-		});
-		return c;
-	}
-	NSInteger memberCount() const
-	{
-		__block NSInteger c = 0;
-		this->enumerateWithBlock(^(const QuadBoxCC *quad) {
-			c += quad->_members.size();
-		});
-		return c;
-	}
-
 	static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 
-	void addMember(OsmBaseObject * member, const OSMRect & bbox)
+	void addMember(OsmBaseObject * member, const OSMRect & bbox, int depth)
 	{
+		if ( depth > 100 ) {
+			NSLog(@"deep");
+		}
+
 		if ( !_isSplit && _members.size() < MAX_MEMBERS_PER_LEVEL ) {
 #if defined(DEBUG)
 			// assert( !_members. containsObject:member] );
@@ -182,29 +200,18 @@ public:
 			std::vector<OsmBaseObject *> childList( _members );
 			_members.clear();
 			for ( const auto & c : childList ) {
-				this->addMember( c, c.boundingBox );
+				this->addMember( c, c.boundingBox, depth );
 			}
 		}
 		// find a child member could fit into
-		NSInteger index = -1;
-		for ( int child = 0; child <= QUAD_LAST; ++child ) {
-			OSMRect rc = ChildRect( (QUAD_ENUM)child, _rect );
-			if ( OSMRectIntersectsRect( bbox, rc ) ) {
-				if ( index < 0 ) {
-					index = child;	// item crosses this child
-				} else {
-					index = -1;		// item crosses multiple children, so has to stay in parent
-					break;
-				}
-			}
-		}
+		NSInteger index = childForRect( bbox );
 		if ( index >= 0 ) {
 			// add to child quad
 			if ( _children[index] == nil ) {
 				OSMRect rc = ChildRect( (QUAD_ENUM)index, _rect );
-				_children[index] = new QuadBoxCC( rc, this );
+				_children[index] = new QuadBoxCC( rc, this, nil );
 			}
-			_children[index]->addMember(member,bbox);
+			_children[index]->addMember(member,bbox,depth+1);
 		} else {
 			// add to self
 			_members.push_back(member);
@@ -232,8 +239,7 @@ public:
 	void findObjectsInArea( const OSMRect & bbox, void (^block)(OsmBaseObject *) ) const
 	{
 		for ( const auto & obj : _members ) {
-			OSMRect rc = obj->_boundingBox;	// fast access
-			if ( OSMRectIntersectsRect( rc, bbox ) )
+			if ( OSMRectIntersectsRect( obj->_boundingBox, bbox ) )
 				block( obj );
 		}
 		for ( int c = 0; c <= QUAD_LAST; ++c ) {
@@ -243,20 +249,88 @@ public:
 			}
 		}
 	}
+
+
+	QuadBoxCC * getQuadBoxMember(OsmBaseObject * member, const OSMRect & bbox) const
+	{
+		auto iter = std::find(_members.begin(), _members.end(), member);
+		if ( iter != _members.end() ) {
+			return const_cast<QuadBoxCC *>(this);
+		}
+
+		// find a child member could fit into
+		for ( int child = 0; child <= QUAD_LAST; ++child ) {
+			OSMRect rc = ChildRect( (QUAD_ENUM)child, _rect );
+			if ( OSMRectIntersectsRect( bbox, rc ) ) {
+				return _children[child] ? _children[child]->getQuadBoxMember(member, bbox) : NULL;
+			}
+		}
+		return NULL;
+	}
+
+	void encodeWithCoder(NSCoder * coder) const
+	{
+		if ( _children[0] )	{ [coder encodeObject:_children[0]->_owner	forKey:@"child0"]; }
+		if ( _children[1] ) { [coder encodeObject:_children[1]->_owner	forKey:@"child1"]; }
+		if ( _children[2] ) { [coder encodeObject:_children[2]->_owner	forKey:@"child2"]; }
+		if ( _children[3] ) { [coder encodeObject:_children[3]->_owner	forKey:@"child3"]; }
+		[coder encodeBool:_whole												forKey:@"whole"];
+		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
+		[coder encodeBool:_isSplit												forKey:@"split"];
+		//		[coder encodeObject:_parent							forKey:@"parent"];
+		//		[coder encodeObject:_members						forKey:@"members"];
+	}
+	void initWithCoder(NSCoder * coder)
+	{
+		QuadBoxC * children[4];
+		children[0]	= [coder decodeObjectForKey:@"child0"];
+		children[1]	= [coder decodeObjectForKey:@"child1"];
+		children[2]	= [coder decodeObjectForKey:@"child2"];
+		children[3]	= [coder decodeObjectForKey:@"child3"];
+		for ( NSInteger i = 0; i < 4; ++i ) {
+			if ( children[i] ) {
+				_children[i] = children[i].cpp;
+				_children[i]->_parent = this;
+			}
+		}
+		_whole			= [coder decodeBoolForKey:@"whole"];
+		_isSplit		= [coder decodeBoolForKey:@"split"];
+		_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
+		_parent			= NULL;
+		//		_parent			= [coder decodeObjectForKey:@"parent"];
+		//		_members		= [coder decodeObjectForKey:@"members"];
+	}
+	QuadBoxCC( NSCoder * coder, QuadBoxC * owner )
+	{
+		initWithCoder(coder);
+		_owner = owner;
+	}
 };
 
 
 
-#define QuadBox QuadBoxC
-#define QuadMap	QuadMapC
+@implementation QuadBoxC
 
-@implementation QuadBox
-
--(id)initWithRect:(OSMRect)rect
+-(instancetype)initWithRect:(OSMRect)rect
 {
 	self = [super init];
 	if ( self ) {
-		_cpp = new QuadBoxCC( rect, NULL );
+		_cpp = new QuadBoxCC( rect, NULL, self );
+	}
+	return self;
+}
+
+-(instancetype)init
+{
+	return [self initWithRect:MAP_RECT];
+}
+
+-(instancetype)initWithThis:(QuadBoxCC *)cpp
+{
+	self = [super init];
+	if ( self ) {
+		assert(cpp);
+		_cpp = cpp;
 	}
 	return self;
 }
@@ -272,13 +346,18 @@ public:
 	_cpp->reset();
 }
 
+-(OSMRect)rect
+{
+	return _cpp->rect();
+}
+
 -(void)missingPieces:(NSMutableArray *)pieces intersectingRect:(OSMRect)target
 {
 	std::vector<QuadBoxCC *> missing;
 	_cpp->missingPieces(missing, target);
 	for ( const auto & iter : missing ) {
-		OSMRect rc = iter->rect();
-		QuadBoxC * box = [[QuadBoxC alloc] initWithRect:rc];
+		QuadBoxCC & q = *iter;
+		QuadBoxC * box = q.owner();
 		[pieces addObject:box];
 	}
 }
@@ -290,27 +369,11 @@ public:
 	_cpp->makeWhole(success);
 }
 
--(NSInteger)quadCount
-{
-	return _cpp->quadCount();
-}
-
--(NSInteger)memberCount
-{
-	return _cpp->memberCount();
-}
-
 -(void)addMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
 {
-	_cpp->addMember(member, bbox);
-}
-
--(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo
-{
-	if ( undo ) {
-		[undo registerUndoWithTarget:self selector:@selector(removeMember:undo:) objects:@[member,undo]];
-	}
-	[self addMember:member bbox:member.boundingBox];
+	if ( bbox.origin.x == 0 && bbox.origin.y == 0 && bbox.size.width == 0 && bbox.size.height == 0 )
+		return;
+	_cpp->addMember(member, bbox, 0);
 }
 
 -(BOOL)removeMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
@@ -318,16 +381,19 @@ public:
 	return _cpp->removeMember(member, bbox);
 }
 
--(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo
+-(instancetype)getQuadBoxMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
 {
-	BOOL ok = [self removeMember:member bbox:member.boundingBox];
-	if ( ok && undo ) {
-		[undo registerUndoWithTarget:self selector:@selector(addMember:undo:) objects:@[member,undo]];
-	}
-	return ok;
+	QuadBoxCC * c = _cpp->getQuadBoxMember(member, bbox);
+	if ( c )
+		return c->owner();
+	return nil;
 }
 
--(void)enumerateWithBlock:(void (^)(const QuadBoxCC * quad))block
+
+
+
+
+-(void)enumerateWithBlock:(void (^)(const struct QuadBoxCC * quad))block
 {
 	_cpp->enumerateWithBlock(block);
 }
@@ -340,154 +406,13 @@ public:
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-#if 0
-	if ( [coder allowsKeyedCoding] ) {
-		[coder encodeObject:_children[0]					forKey:@"child0"];
-		[coder encodeObject:_children[1]					forKey:@"child1"];
-		[coder encodeObject:_children[2]					forKey:@"child2"];
-		[coder encodeObject:_children[3]					forKey:@"child3"];
-		[coder encodeObject:_parent							forKey:@"parent"];
-		[coder encodeBool:_whole							forKey:@"whole"];
-		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
-		[coder encodeObject:_members						forKey:@"members"];
-		[coder encodeBool:_isSplit							forKey:@"split"];
-	} else {
-		[coder encodeObject:_children[0]];
-		[coder encodeObject:_children[1]];
-		[coder encodeObject:_children[2]];
-		[coder encodeObject:_children[3]];
-		[coder encodeObject:_parent];
-		[coder encodeBytes:&_whole length:sizeof _whole];
-		[coder encodeBytes:&_rect length:sizeof _rect];
-		[coder encodeObject:_members];
-		[coder encodeBytes:&_isSplit length:sizeof _isSplit];
-	}
-#endif
+	_cpp->encodeWithCoder(coder);
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if ( self ) {
-#if 0
-		if ( [coder allowsKeyedCoding] ) {
-			_children[0]	= [coder decodeObjectForKey:@"child0"];
-			_children[1]	= [coder decodeObjectForKey:@"child1"];
-			_children[2]	= [coder decodeObjectForKey:@"child2"];
-			_children[3]	= [coder decodeObjectForKey:@"child3"];
-			_parent			= [coder decodeObjectForKey:@"parent"];
-			_whole			= [coder decodeBoolForKey:@"whole"];
-			_isSplit		= [coder decodeBoolForKey:@"split"];
-			_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
-			_members		= [coder decodeObjectForKey:@"members"];
-		} else {
-			_children[0]	= [coder decodeObject];
-			_children[1]	= [coder decodeObject];
-			_children[2]	= [coder decodeObject];
-			_children[3]	= [coder decodeObject];
-			_parent			= [coder decodeObject];
-			_whole			= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
-			_isSplit		= *(BOOL		*)[coder decodeBytesWithReturnedLength:NULL];
-			_rect			= *(OSMRect		*)[coder decodeBytesWithReturnedLength:NULL];
-			_members		= [coder decodeObject];
-		}
-#endif
-	}
-	return self;
-}
-
-@end
-
-
-@implementation QuadMap
-
--(id)initWithRect:(OSMRect)rect
-{
-	self = [super init];
-	if ( self ) {
-		_rootQuad = [[QuadBox alloc] initWithRect:rect];
-	}
-	return self;
-}
-
--(void)mergeDerivedRegion:(QuadMap *)other success:(BOOL)success
-{
-	assert( other.count == 1 );
-	[self makeWhole:other->_rootQuad success:success];
-}
-
-
--(NSArray *)newQuadsForRect:(OSMRect)newRect
-{
-	NSMutableArray * quads = [NSMutableArray new];
-
-	assert( newRect.origin.x <= 180 && newRect.origin.x >= -180 );
-	if ( newRect.origin.x + newRect.size.width > 180 ) {
-		OSMRect half;
-		half.origin.x = -180;
-		half.size.width = newRect.origin.x + newRect.size.width - 180;
-		half.origin.y = newRect.origin.y;
-		half.size.height = newRect.size.height;
-		[_rootQuad missingPieces:quads intersectingRect:half];
-		newRect.size.width = 180 - newRect.origin.x;
-	}
-	[_rootQuad missingPieces:quads intersectingRect:newRect];
-	return quads;
-}
-
-
--(void)makeWhole:(QuadBox *)quad success:(BOOL)success
-{
-	[quad makeWhole:success];
-}
-
-
--(void)addMember:(OsmBaseObject *)member
-{
-	OSMRect box = member.boundingBox;
-	[_rootQuad addMember:member bbox:box];
-}
-
--(void)removeMember:(OsmBaseObject *)member
-{
-	OSMRect box = [member boundingBox];
-	[_rootQuad removeMember:member bbox:box];
-}
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
-{
-	[_rootQuad findObjectsInArea:bbox block:block];
-}
-
--(void)enumerateWithBlock:(void (^)(const QuadBoxCC * quad))block
-{
-	[_rootQuad enumerateWithBlock:block];
-}
-
--(NSInteger)count
-{
-	__block NSInteger c = 0;
-	[self enumerateWithBlock:^(const QuadBoxCC * quad){
-		++c;
-	}];
-	return c;
-}
-
--(void)encodeWithCoder:(NSCoder *)coder
-{
-	if ( [coder allowsKeyedCoding] ) {
-		[coder encodeObject:_rootQuad forKey:@"rootQuad"];
-	} else {
-		[coder encodeObject:_rootQuad];
-	}
-}
--(id)initWithCoder:(NSCoder *)coder
-{
-	self = [super init];
-	if ( self ) {
-		if ( [coder allowsKeyedCoding] ) {
-			_rootQuad	= [coder decodeObjectForKey:@"rootQuad"];
-		} else {
-			_rootQuad	= [coder decodeObject];
-		}
+		_cpp = new QuadBoxCC( coder, self );
 	}
 	return self;
 }

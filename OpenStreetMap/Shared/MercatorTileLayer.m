@@ -52,6 +52,7 @@ extern CGSize SizeForImage(NSImage * image);
 				 @"contents"	: [NSNull null],
 				 @"bounds"		: [NSNull null],
 				 @"position"	: [NSNull null],
+				 @"anchorPoint"	: [NSNull null],
 				 @"transform"	: [NSNull null],
 				 @"hidden"		: [NSNull null],
 		 };

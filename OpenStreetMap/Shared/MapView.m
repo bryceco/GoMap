@@ -2521,6 +2521,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 {
 	if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
 		// ignore
+#if DEBUG
+		DisplayLink * displayLink = [DisplayLink shared];
+		[displayLink removeName:@"autoScroll"];
+#endif
 	} else {
 		CGPoint centerPoint = [rotationGesture locationInView:self];
 		CGFloat angle = rotationGesture.rotation - _rotationCurrent;

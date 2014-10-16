@@ -22,6 +22,7 @@
 @class OsmWay;
 @class QuadBox;
 @class QuadMap;
+@class QuadMapC;
 
 
 BOOL IsOsmBooleanTrue( NSString * value );

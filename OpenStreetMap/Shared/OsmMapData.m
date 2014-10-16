@@ -1888,7 +1888,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return object;
 }
 
-
 -(BOOL)saveArchive
 {
 	NSString * path = [self pathToArchiveFile];
