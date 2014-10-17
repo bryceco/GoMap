@@ -13,14 +13,18 @@
 @class NSLayoutManager;
 @class NSTextContainer;
 
-@interface CurvedTextLayer : CALayer
+@interface CurvedTextLayer : NSObject <NSCacheDelegate>
 {
+	NSCache	* _layerCache;
+	NSCache	* _framesetterCache;
 }
 
-+(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(NSColor *)shadowColor context:(CGContextRef)ctx;
-+(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)point width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx;
++(instancetype)shared;
 
-+(CALayer *)layerWithString:(NSString *)string width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor;
-+(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(UIColor *)shadowColor;
+-(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(NSColor *)shadowColor context:(CGContextRef)ctx;
+-(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)point width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx;
+
+-(CALayer *)layerWithString:(NSString *)string width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor;
+-(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(UIColor *)shadowColor;
 
 @end

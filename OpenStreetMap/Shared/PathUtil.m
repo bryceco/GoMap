@@ -29,6 +29,15 @@ NSInteger CGPathPointCount( CGPathRef path )
 	return count;
 }
 
+NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] )
+{
+	__block NSInteger index = 0;
+	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint *points) {
+		pointList[ index++ ] = points[0];
+	});
+	return index;
+}
+
 void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(OSMPoint pt, OSMPoint direction) )
 {
 	__block CGFloat offset = initialOffset;
@@ -131,7 +140,6 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double b
 		}
 	});
 }
-
 
 // reverse path
 CGMutablePathRef PathReversed( CGPathRef path )

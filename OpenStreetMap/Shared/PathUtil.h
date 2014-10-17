@@ -18,5 +18,6 @@ void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval
 CGMutablePathRef PathReversed( CGPathRef path ) CF_RETURNS_RETAINED;
 void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength );
 NSInteger CGPathPointCount( CGPathRef path );
+NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] );
 
 #endif

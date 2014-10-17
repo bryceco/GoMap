@@ -1466,7 +1466,7 @@ enum {
 			if ( houseNumber ) {
 
 				UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-				CALayer * layer = [CurvedTextLayer layerWithString:houseNumber width:0 font:nil color:self.textColor shadowColor:shadowColor];
+				CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber width:0 font:nil color:self.textColor shadowColor:shadowColor];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_NODE;
@@ -1643,7 +1643,7 @@ enum {
 
 				UIFont * font = [UIFont systemFontOfSize:11];
 				UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-				CALayer * layer = [CurvedTextLayer layerWithString:name width:0 font:font color:self.textColor shadowColor:shadowColor];
+				CALayer * layer = [CurvedTextLayer.shared layerWithString:name width:0 font:font color:self.textColor shadowColor:shadowColor];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
@@ -1816,7 +1816,7 @@ enum {
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						double offset = (length - name.length * Pixels_Per_Character) / 2;	// center along way
 						if ( offset >= 0 ) {
-							NSArray * a = [CurvedTextLayer layersWithString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor)];
+							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor)];
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;
@@ -2165,14 +2165,14 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		CGPathRef path = [self pathForWay:way];
 		CGContextBeginPath(ctx);
 		CGContextAddPath(ctx, path);
-		[CurvedTextLayer drawString:name alongPath:path offset:5.0 color:color shadowColor:shadowColor context:ctx];
+		[CurvedTextLayer.shared drawString:name alongPath:path offset:5.0 color:color shadowColor:shadowColor context:ctx];
 		CGPathRelease(path);
 	} else {
 		// it is a node or area
 		OSMPoint point = [way centerPoint];
 		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
 
-		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint width:0 font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
+		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:0 font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
 	}
 }
 
@@ -2273,7 +2273,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			CGPathRelease( path );
 			return NO;
 		}
-		[CurvedTextLayer drawString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
+		[CurvedTextLayer.shared drawString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
 		CGPathRelease(path);
 
 	} else {
@@ -2290,7 +2290,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
 		UIFont * font = [UIFont systemFontOfSize:11];
 		UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-		[CurvedTextLayer drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:self.textColor shadowColor:shadowColor context:ctx];
+		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:self.textColor shadowColor:shadowColor context:ctx];
 	}
 	return YES;
 }
@@ -2388,7 +2388,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		if ( houseNumber ) {
 
 			UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-			[CurvedTextLayer drawString:houseNumber	centeredOnPoint:pt width:0 font:nil color:self.textColor shadowColor:shadowColor context:ctx];
+			[CurvedTextLayer.shared drawString:houseNumber	centeredOnPoint:pt width:0 font:nil color:self.textColor shadowColor:shadowColor context:ctx];
 
 		} else {
 

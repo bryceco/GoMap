@@ -12,13 +12,38 @@
 #import "CurvedTextLayer.h"
 #import "PathUtil.h"
 
+#define USE_CACHE 1
+
 
 @implementation CurvedTextLayer
 
 static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
+-(instancetype)init
+{
+	self = [super init];
+	if ( self ) {
+#if USE_CACHE
+		_layerCache			= [NSCache new];
+		_framesetterCache	= [NSCache new];
+		_framesetterCache.delegate = self;
+#endif
+	}
+	return self;
+}
 
-+(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset stroke:(BOOL)stroke color:(NSColor *)color context:(CGContextRef)ctx
++(instancetype)shared
+{
+	static CurvedTextLayer * g_shared = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		g_shared = [CurvedTextLayer new];
+	});
+	return g_shared;
+}
+
+
+-(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset stroke:(BOOL)stroke color:(NSColor *)color context:(CGContextRef)ctx
 {
 	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
 
@@ -98,13 +123,13 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 }
 
 
-+(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(NSColor *)shadowColor context:(CGContextRef)ctx
+-(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(NSColor *)shadowColor context:(CGContextRef)ctx
 {
 	[self drawString:string alongPath:path offset:offset stroke:YES color:shadowColor context:ctx];
 	[self drawString:string alongPath:path offset:offset stroke:NO  color:color		  context:ctx];
 }
 
-+(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)center width:(CGFloat)lineWidth font:(NSFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx
+-(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)center width:(CGFloat)lineWidth font:(NSFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx
 {
 	CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0)); // view's coordinates are flipped
 
@@ -181,16 +206,24 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
 }
 
-
-+(CGSize)sizeOfText:(NSAttributedString *)string
+-(CTFramesetterRef)framesetterForString:(NSAttributedString *)attrString
 {
-	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( (CFAttributedStringRef)string );
+	CTFramesetterRef framesetter = (__bridge CTFramesetterRef)[_framesetterCache objectForKey:attrString.string];
+	if ( framesetter == NULL ) {
+		framesetter = CTFramesetterCreateWithAttributedString( (__bridge CFAttributedStringRef)attrString );
+		[_framesetterCache setObject:(__bridge id)framesetter forKey:attrString.string];
+	}
+	return framesetter;
+}
+
+-(CGSize)sizeOfText:(NSAttributedString *)string
+{
+	CTFramesetterRef framesetter = [self framesetterForString:string];
 	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), NULL, CGSizeMake(70, CGFLOAT_MAX), NULL);
-	CFRelease(framesetter);
 	return suggestedSize;
 }
 
-+(CALayer *)layerWithString:(NSString *)string width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor
+-(CALayer *)layerWithString:(NSString *)string width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor
 {
 	CATextLayer * layer = [CATextLayer new];
 
@@ -199,7 +232,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	NSAttributedString * s = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor, NSFontAttributeName : font }];
 
 	CGRect bounds = { 0 };
-	bounds.size = [CurvedTextLayer sizeOfText:s];
+	bounds.size = [self sizeOfText:s];
 	bounds = CGRectInset( bounds, -3, -1 );
 	bounds.size.width  = 2 * ceil( bounds.size.width/2 );	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
 	bounds.size.height = 2 * ceil( bounds.size.height/2 );
@@ -222,7 +255,82 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 }
 
 
-+(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(UIColor *)shadowColor
+static NSInteger EliminatePointsOnStraightSegments( NSInteger pointCount, CGPoint points[] )
+{
+	if ( pointCount < 3 )
+		return pointCount;
+
+	NSInteger dst = 1;
+	for ( NSInteger	src = 1; src < pointCount-1; ++src ) {
+		OSMPoint dir = {	points[src+1].x-points[dst-1].x,
+							points[src+1].y-points[dst-1].y };
+		dir = UnitVector(dir);
+		double dist = DistanceFromLineToPoint( OSMPointFromCGPoint(points[dst-1]), dir, OSMPointFromCGPoint(points[src]) );
+		if ( dist < 2.0 ) {
+			// essentially a straight line, so remove point
+		} else {
+			points[ dst ] = points[ src ];
+			++dst;
+		}
+	}
+	points[ dst ] = points[ pointCount-1 ];
+	return dst+1;
+}
+
+static NSInteger LongestStraightSegment( NSInteger pathPointCount, const CGPoint pathPoints[] )
+{
+	CGFloat longest = 0;
+	NSInteger longestIndex = 0;
+	for ( int i = 1; i < pathPointCount; ++i ) {
+		CGPoint p1 = pathPoints[i-1];
+		CGPoint p2 = pathPoints[i];
+		CGPoint delta = { p1.x - p2.x, p1.y - p2.y };
+		CGFloat len = hypot( delta.x, delta.y );
+		if ( len > longest ) {
+			longest = len;
+			longestIndex = i-1;
+		}
+	}
+	return longestIndex;
+}
+
+
+static void PositionAndAngleForOffset( NSInteger pointCount, const CGPoint points[], double offset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
+{
+	CGPoint	previous = points[0];
+
+	for ( NSInteger	index = 1; index < pointCount; ++index ) {
+		CGPoint pt = points[ index ];
+		CGFloat dx = pt.x - previous.x;
+		CGFloat dy = pt.y - previous.y;
+		CGFloat len = hypot(dx,dy);
+		CGFloat a = atan2f(dy,dx);
+
+
+		if ( offset < len ) {
+			// found it
+			dx /= len;
+			dy /= len;
+			CGPoint baselineOffset = { dy * baselineOffsetDistance, -dx * baselineOffsetDistance };
+			pPos->x = previous.x + offset * dx + baselineOffset.x;
+			pPos->y = previous.y + offset * dy + baselineOffset.y;
+			*pAngle = a;
+			*pLength = len - offset;
+			return;
+		}
+		offset -= len;
+		previous = pt;
+	}
+}
+
+-(void)cache:(NSCache *)cache willEvictObject:(id)obj
+{
+	if ( cache == _framesetterCache ) {
+		CFRelease( (__bridge CTFramesetterRef)obj );
+	}
+}
+
+-(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(UIColor *)shadowColor
 {
 	static CTFontRef ctFont = NULL;
 	static dispatch_once_t onceToken;
@@ -232,174 +340,84 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 	NSMutableArray * layers = [NSMutableArray new];
 
+	// get line segments
+	NSInteger pathPointCount = CGPathPointCount( path );
+	CGPoint pathPoints[ pathPointCount ];
+	CGPathGetPoints( path, pathPoints );
+	pathPointCount = EliminatePointsOnStraightSegments( pathPointCount, pathPoints );
+
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
-																	  attributes:@{
-																				   (NSString *)kCTFontAttributeName : (__bridge id)ctFont,
-																				   (NSString *)kCTForegroundColorAttributeName : (id)color.CGColor }];
-	CFAttributedStringRef attrStringRef = (__bridge CFAttributedStringRef)attrString;
-	NSInteger charCount = CFAttributedStringGetLength( attrStringRef );
-	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( attrStringRef );
+																		 attributes:@{
+																					  (NSString *)kCTFontAttributeName : (__bridge id)ctFont,
+																					  (NSString *)kCTForegroundColorAttributeName : (id)color.CGColor }];
+	CTFramesetterRef framesetter = [self framesetterForString:attrString];
+	NSInteger charCount = string.length;
 	CTTypesetterRef typesetter = CTFramesetterGetTypesetter( framesetter );
-	double lineHeight = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0,attrString.length), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL).height;
+
+	double lineHeight = 16.0; // CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0,attrString.length), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL).height;
 	CFIndex currentCharacter = 0;
 	double currentPixelOffset = offset;
 	while ( currentCharacter < charCount ) {
+
 		// get the number of characters that fit in the current path segment and create a text layer for it
 		CGPoint pos;
 		CGFloat angle, length;
-		PathPositionAndAngleForOffset( path, currentPixelOffset, lineHeight, &pos, &angle, &length );
+		PositionAndAngleForOffset( pathPointCount, pathPoints, currentPixelOffset, lineHeight, &pos, &angle, &length );
 		CFIndex count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, length );
+#if USE_CACHE
+		NSString * cacheKey = [NSString stringWithFormat:@"%@:%f",[string substringWithRange:NSMakeRange(currentCharacter, count)],angle];
+		CATextLayer * layer = [_layerCache objectForKey:cacheKey];
+#else
+		CATextLayer * layer = nil;
+#endif
+		CGFloat pixelLength;
+		if ( layer == nil ) {
+			layer = [CATextLayer layer];
+			layer.actions			= @{ @"position" : [NSNull null] };
+			NSAttributedString * attribSubstring = [attrString attributedSubstringFromRange:NSMakeRange(currentCharacter,count)];
+			layer.string			= attribSubstring;
+			CGRect bounds = { 0 };
+			bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(currentCharacter,count), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL);
+			pixelLength = bounds.size.width;
+			layer.bounds			= bounds;
+			layer.affineTransform	= CGAffineTransformMakeRotation( angle );
+			layer.position			= pos;
+			layer.anchorPoint		= CGPointMake(0,0);
+			layer.truncationMode	= kCATruncationNone;
+			layer.wrapped			= NO;
+			layer.alignmentMode		= kCAAlignmentCenter;
 
-		CATextLayer * layer = [CATextLayer layer];
-		layer.string = [attrString attributedSubstringFromRange:NSMakeRange(currentCharacter,count)];
-		CGRect bounds = { 0 };
-		bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(currentCharacter,count), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL);
-		layer.bounds			= bounds;
-		layer.affineTransform	= CGAffineTransformRotate( CGAffineTransformMakeTranslation(pos.x, pos.y), angle );
-		layer.anchorPoint		= CGPointMake(0,0);
-		layer.truncationMode	= kCATruncationNone;
-		layer.wrapped			= NO;
-		layer.alignmentMode		= kCAAlignmentCenter;
+			layer.shouldRasterize	= YES;
+			layer.contentsScale		= [[UIScreen mainScreen] scale];
 
-		CGPathRef	shadowPath	= CGPathCreateWithRect(bounds, NULL);
-		layer.shadowColor		= shadowColor.CGColor;
-		layer.shadowRadius		= 0.0;
-		layer.shadowOffset		= CGSizeMake(0, 0);
-		layer.shadowOpacity		= 0.3;
-		layer.shadowPath		= shadowPath;
-		CGPathRelease(shadowPath);
+			CGPathRef	shadowPath	= CGPathCreateWithRect(bounds, NULL);
+			layer.shadowColor		= shadowColor.CGColor;
+			layer.shadowRadius		= 0.0;
+			layer.shadowOffset		= CGSizeMake(0, 0);
+			layer.shadowOpacity		= 0.3;
+			layer.shadowPath		= shadowPath;
+			CGPathRelease(shadowPath);
+
+#if USE_CACHE
+			[_layerCache setObject:layer forKey:cacheKey];
+#endif
+		} else {
+			layer.position			= pos;
+			pixelLength				= layer.bounds.size.width;
+		}
 
 		[layers addObject:layer];
 
 		currentCharacter += count;
-		currentPixelOffset += bounds.size.width;
+		currentPixelOffset += pixelLength;
 
 		if ( [string characterAtIndex:currentCharacter-1] == ' ' )
 			currentPixelOffset += 8;	// add room for space which is not included in framesetter size
 	}
+#if !USE_CACHE
 	CFRelease(framesetter);
-
+#endif
 	return layers;
 }
-
-
-// - (UIBezierPath*) bezierPathWithString:(NSString*) string font:(UIFont*) font inRect:(CGRect) rect;
-// Requires CoreText.framework
-// This creates a graphical version of the input screen, line wrapped to the input rect.
-// Core Text involves a whole hierarchy of objects, all requiring manual management.
-// http://stackoverflow.com/questions/10152574/catextlayer-blurry-text-after-rotation
-- (UIBezierPath*) bezierPathWithString:(NSString *)string font:(UIFont *)font inRect:(CGRect)rect
-{
-	UIBezierPath *combinedGlyphsPath = nil;
-	CGMutablePathRef combinedGlyphsPathRef = CGPathCreateMutable();
-	if (combinedGlyphsPathRef)
-	{
-		// It would be easy to wrap the text into a different shape, including arbitrary bezier paths, if needed.
-		UIBezierPath *frameShape = [UIBezierPath bezierPathWithRect:rect];
-
-		// If the font name wasn't found while creating the font object, the result is a crash.
-		// Avoid this by falling back to the system font.
-		CTFontRef fontRef;
-		if ([font fontName])
-			fontRef = CTFontCreateWithName((__bridge CFStringRef) [font fontName], [font pointSize], NULL);
-		else if (font)
-			fontRef = CTFontCreateUIFontForLanguage(kCTFontUserFontType, [font pointSize], NULL);
-		else
-			fontRef = CTFontCreateUIFontForLanguage(kCTFontUserFontType, [UIFont systemFontSize], NULL);
-
-		if (fontRef)
-		{
-			CGPoint basePoint = CGPointMake(0, CTFontGetAscent(fontRef));
-			CFStringRef keys[] = { kCTFontAttributeName };
-			CFTypeRef values[] = { fontRef };
-			CFDictionaryRef attributesRef = CFDictionaryCreate(NULL, (const void **)&keys, (const void **)&values,
-															   sizeof(keys) / sizeof(keys[0]), &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-
-			if (attributesRef)
-			{
-				CFAttributedStringRef attributedStringRef = CFAttributedStringCreate(NULL, (__bridge CFStringRef) string, attributesRef);
-
-				if (attributedStringRef)
-				{
-					CTFramesetterRef frameSetterRef = CTFramesetterCreateWithAttributedString(attributedStringRef);
-
-					if (frameSetterRef)
-					{
-						CTFrameRef frameRef = CTFramesetterCreateFrame(frameSetterRef, CFRangeMake(0,0), [frameShape CGPath], NULL);
-
-						if (frameRef)
-						{
-							CFArrayRef lines = CTFrameGetLines(frameRef);
-							CFIndex lineCount = CFArrayGetCount(lines);
-							CGPoint lineOrigins[lineCount];
-							CTFrameGetLineOrigins(frameRef, CFRangeMake(0, lineCount), lineOrigins);
-
-							for (CFIndex lineIndex = 0; lineIndex<lineCount; lineIndex++)
-							{
-								CTLineRef lineRef = CFArrayGetValueAtIndex(lines, lineIndex);
-								CGPoint lineOrigin = lineOrigins[lineIndex];
-
-								CFArrayRef runs = CTLineGetGlyphRuns(lineRef);
-
-								CFIndex runCount = CFArrayGetCount(runs);
-								for (CFIndex runIndex = 0; runIndex<runCount; runIndex++)
-								{
-									CTRunRef runRef = CFArrayGetValueAtIndex(runs, runIndex);
-
-									CFIndex glyphCount = CTRunGetGlyphCount(runRef);
-									CGGlyph glyphs[glyphCount];
-									CGSize glyphAdvances[glyphCount];
-									CGPoint glyphPositions[glyphCount];
-
-									CFRange runRange = CFRangeMake(0, glyphCount);
-									CTRunGetGlyphs(runRef, CFRangeMake(0, glyphCount), glyphs);
-									CTRunGetPositions(runRef, runRange, glyphPositions);
-
-									CTFontGetAdvancesForGlyphs(fontRef, kCTFontDefaultOrientation, glyphs, glyphAdvances, glyphCount);
-
-									for (CFIndex glyphIndex = 0; glyphIndex<glyphCount; glyphIndex++)
-									{
-										CGGlyph glyph = glyphs[glyphIndex];
-
-										// For regular UIBezierPath drawing, we need to invert around the y axis.
-										CGAffineTransform glyphTransform = CGAffineTransformMakeTranslation(lineOrigin.x+glyphPositions[glyphIndex].x, rect.size.height-lineOrigin.y-glyphPositions[glyphIndex].y);
-										glyphTransform = CGAffineTransformScale(glyphTransform, 1, -1);
-
-										CGPathRef glyphPathRef = CTFontCreatePathForGlyph(fontRef, glyph, &glyphTransform);
-										if (glyphPathRef)
-										{
-											// Finally carry out the appending.
-											CGPathAddPath(combinedGlyphsPathRef, NULL, glyphPathRef);
-
-											CFRelease(glyphPathRef);
-										}
-
-										basePoint.x += glyphAdvances[glyphIndex].width;
-										basePoint.y += glyphAdvances[glyphIndex].height;
-									}
-								}
-								basePoint.x = 0;
-								basePoint.y += CTFontGetAscent(fontRef) + CTFontGetDescent(fontRef) + CTFontGetLeading(fontRef);
-							}
-
-							CFRelease(frameRef);
-						}
-
-						CFRelease(frameSetterRef);
-					}
-					CFRelease(attributedStringRef);
-				}
-				CFRelease(attributesRef);
-			}
-			CFRelease(fontRef);
-		}
-		// Casting a CGMutablePathRef to a CGPathRef seems to be the only way to convert what was just built into a UIBezierPath.
-		combinedGlyphsPath = [UIBezierPath bezierPathWithCGPath:(CGPathRef) combinedGlyphsPathRef];
-
-		CGPathRelease(combinedGlyphsPathRef);
-	}
-	return combinedGlyphsPath;
-}
-
 
 @end

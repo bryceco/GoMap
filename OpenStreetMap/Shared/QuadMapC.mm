@@ -28,7 +28,7 @@ private:
 	bool							_whole;
 	bool							_busy;
 	bool							_isSplit;
-	QuadBoxC					*	_owner;
+	__strong QuadBoxC			*	_owner;
 
 public:
 	QuadBoxCC( OSMRect rect, QuadBoxCC * parent, QuadBoxC * owner ) : _rect(rect), _parent(parent), _owner(owner)
@@ -37,6 +37,12 @@ public:
 		_whole = _busy = _isSplit = false;
 		if ( _owner == nil )
 			_owner = [[QuadBoxC alloc] initWithThis:this];
+	}
+
+	~QuadBoxCC()
+	{
+		reset();
+		_owner = nil;
 	}
 
 	const OSMRect rect() const
@@ -51,10 +57,10 @@ public:
 
 	void reset()
 	{
-		_children[ 0 ] = nil;
-		_children[ 1 ] = nil;
-		_children[ 2 ] = nil;
-		_children[ 3 ] = nil;
+		delete _children[ 0 ];	_children[ 0 ] = NULL;
+		delete _children[ 1 ];	_children[ 1 ] = NULL;
+		delete _children[ 2 ];	_children[ 2 ] = NULL;
+		delete _children[ 3 ];	_children[ 3 ] = NULL;
 		_whole	= false;
 		_busy = false;
 		_isSplit = false;
@@ -270,10 +276,10 @@ public:
 
 	void encodeWithCoder(NSCoder * coder) const
 	{
-		if ( _children[0] )	{ [coder encodeObject:_children[0]->_owner	forKey:@"child0"]; }
-		if ( _children[1] ) { [coder encodeObject:_children[1]->_owner	forKey:@"child1"]; }
-		if ( _children[2] ) { [coder encodeObject:_children[2]->_owner	forKey:@"child2"]; }
-		if ( _children[3] ) { [coder encodeObject:_children[3]->_owner	forKey:@"child3"]; }
+		if ( _children[0] )	{ [coder encodeObject:_children[0]->owner()	forKey:@"child0"]; }
+		if ( _children[1] ) { [coder encodeObject:_children[1]->owner()	forKey:@"child1"]; }
+		if ( _children[2] ) { [coder encodeObject:_children[2]->owner()	forKey:@"child2"]; }
+		if ( _children[3] ) { [coder encodeObject:_children[3]->owner()	forKey:@"child3"]; }
 		[coder encodeBool:_whole												forKey:@"whole"];
 		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
 		[coder encodeBool:_isSplit												forKey:@"split"];
@@ -291,6 +297,8 @@ public:
 			if ( children[i] ) {
 				_children[i] = children[i].cpp;
 				_children[i]->_parent = this;
+			} else {
+				_children[i] = NULL;
 			}
 		}
 		_whole			= [coder decodeBoolForKey:@"whole"];
@@ -335,10 +343,10 @@ public:
 	return self;
 }
 
+
+
 -(void)dealloc
 {
-	delete _cpp;
-	_cpp = NULL;
 }
 
 -(void)reset

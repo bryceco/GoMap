@@ -346,19 +346,6 @@ static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 	[quad makeWhole:success];
 }
 
-
--(void)addMember:(OsmBaseObject *)member
-{
-	OSMRect box = [member boundingBox];
-	[_rootQuad addMember:member bbox:box];
-}
-
--(void)removeMember:(OsmBaseObject *)member
-{
-	OSMRect box = [member boundingBox];
-	[_rootQuad removeMember:member bbox:box];
-}
-
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo
 {
 	if ( undo ) {
