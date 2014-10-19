@@ -49,8 +49,8 @@
 		return;
 
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
-	appDelegate.userName		= _username.text;
-	appDelegate.userPassword	= _password.text;
+	appDelegate.userName		= [_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	appDelegate.userPassword	= [_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
 	_activityIndicator.color = UIColor.darkGrayColor;
 	[_activityIndicator startAnimating];
@@ -90,8 +90,8 @@
 
 	if ( [self isMovingFromParentViewController] ) {
 		AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
-		appDelegate.userName		= _username.text;
-		appDelegate.userPassword	= _password.text;
+		appDelegate.userName		= [_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		appDelegate.userPassword	= [_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
 		[KeyChain setString:appDelegate.userName forIdentifier:@"username"];
 		[KeyChain setString:appDelegate.userPassword forIdentifier:@"password"];

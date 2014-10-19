@@ -219,9 +219,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		return;
 	}
 
-	[_spatial findObjectsInArea:bbox block:^(OsmBaseObject * o){
-		block( o );
-	}];
+	[_spatial findObjectsInArea:bbox block:block];
 }
 
 
@@ -469,7 +467,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		OsmBaseObject * parent = parents[i];
 		OSMRectBoxed * box = parentBoxes[i];
 		[self incrementModifyCount:parent];
-		[self clearCachedProperties:parent undo:_undoManager];
+//		[self clearCachedProperties:parent undo:_undoManager];
+		[parent computeBoundingBox];
 		[_spatial updateMember:parent fromBox:box.rect undo:_undoManager];
 	}
 }

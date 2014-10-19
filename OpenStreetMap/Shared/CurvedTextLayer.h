@@ -13,10 +13,15 @@
 @class NSLayoutManager;
 @class NSTextContainer;
 
+#define USE_CURVEDLAYER_CACHE 1
+
 @interface CurvedTextLayer : NSObject <NSCacheDelegate>
 {
-	NSCache	* _layerCache;
-	NSCache	* _framesetterCache;
+#if USE_CURVEDLAYER_CACHE
+	NSCache	*	_layerCache;
+	NSCache	*	_framesetterCache;
+	UIColor	*	_cachedColor;
+#endif
 }
 
 +(instancetype)shared;

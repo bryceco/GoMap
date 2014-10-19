@@ -1774,9 +1774,7 @@ enum {
 		if ( object.isOneWay ) {
 
 			// arrow heads
-			CGPathRef	path	= [self pathForWay:object.isWay];
-			double interval = 100;
-			InvokeBlockAlongPath( path, interval/2, interval, ^(OSMPoint loc, OSMPoint dir){
+			[self invokeAlongScreenClippedWay:object.isWay offset:50 interval:100 block:^(OSMPoint loc, OSMPoint dir){
 				// draw direction arrow at loc/dir
 				BOOL reversed = object.isOneWay == ONEWAY_BACKWARD;
 				double len = reversed ? -15 : 15;
@@ -1799,10 +1797,7 @@ enum {
 				arrow.zPosition	= Z_ARROWS;
 				[layers addObject:arrow];
 				CGPathRelease(arrowPath);
-			});
-
-			CGPathRelease(path);
-
+			}];
 		}
 
 		// street names
@@ -2176,17 +2171,14 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	}
 }
 
-// clip a way to the path inside the viewable rect so we can draw a name on it
--(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength CF_RETURNS_RETAINED
+
+
+-(void)invokeAlongScreenClippedWay:(OsmWay *)way block:(BOOL(^)(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit))block
 {
-	CGMutablePathRef	path = NULL;
-	double				length = 0.0;
 	OSMRect				viewRect = OSMRectFromCGRect( self.bounds );
 	BOOL				prevInside;
 	OSMPoint			prev = { 0 };
 	BOOL				first = YES;
-	OSMPoint			firstPoint = { 0 };
-	OSMPoint			lastPoint = { 0 };
 
 	for ( OsmNode * node in way.nodes ) {
 
@@ -2209,21 +2201,61 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 
 		OSMPoint p1 = prevInside ? prev : cross[0];
 		OSMPoint p2 = inside	 ? pt   : cross[ crossCnt-1 ];
-		if ( path == NULL ) {
-			path = CGPathCreateMutable();
-			CGPathMoveToPoint( path, NULL, p1.x, p1.y );
-			firstPoint = prev;
-		}
-		CGPathAddLineToPoint( path, NULL, p2.x, p2.y );
-		lastPoint = pt;
-		length += hypot( p1.x - p2.x, p1.y - p2.y );
-		if ( !inside )
-			break;
+
+		block( p1, p2, !prevInside, !inside );
 
 	next:
 		prev = pt;
 		prevInside = inside;
 	}
+}
+
+
+-(void)invokeAlongScreenClippedWay:(OsmWay *)way offset:(double)initialOffset interval:(double)interval block:(void(^)(OSMPoint pt, OSMPoint direction))block
+{
+	__block double offset = initialOffset;
+	[self invokeAlongScreenClippedWay:way block:^BOOL(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit) {
+		if ( isEntry )
+			offset = initialOffset;
+		double dx = p2.x - p1.x;
+		double dy = p2.y - p1.y;
+		double len = hypot( dx, dy );
+		dx /= len;
+		dy /= len;
+		while ( offset < len ) {
+			// found it
+			OSMPoint pos = { p1.x + offset * dx, p1.y + offset * dy };
+			OSMPoint dir = { dx, dy };
+			block( pos, dir );
+			offset += interval;
+		}
+		offset -= len;
+		return YES;
+	}];
+}
+
+
+// clip a way to the path inside the viewable rect so we can draw a name on it
+-(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength CF_RETURNS_RETAINED
+{
+	__block CGMutablePathRef	path = NULL;
+	__block	double				length = 0.0;
+	__block	OSMPoint			firstPoint = { 0 };
+	__block	OSMPoint			lastPoint = { 0 };
+
+	[self invokeAlongScreenClippedWay:way block:^(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit ){
+		if ( path == NULL ) {
+			path = CGPathCreateMutable();
+			CGPathMoveToPoint( path, NULL, p1.x, p1.y );
+			firstPoint = p1;
+		}
+		CGPathAddLineToPoint( path, NULL, p2.x, p2.y );
+		lastPoint = p2;
+		length += hypot( p1.x - p2.x, p1.y - p2.y );
+		if ( isExit )
+			return NO;
+		return YES;
+	}];
 	if ( path ) {
 		// orient path so text draws right-side up
 		double dx = lastPoint.x - firstPoint.x;
@@ -2234,7 +2266,9 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 			path = path2;
 		}
 	}
-	*pLength = length;
+	if ( pLength )
+		*pLength = length;
+
 	return path;
 }
 
@@ -2697,13 +2731,8 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 
 #if USE_SHAPELAYERS
-- (void)layoutSublayers
+- (void)layoutSublayersSafe
 {
-	if ( self.hidden )
-		return;
-
-	_isPerformingLayout = YES;
-
 	NSArray * previousObjects = _shownObjects;
 
 	_shownObjects = [self getObjectsToDisplay];
@@ -2844,6 +2873,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	// get highlights
 	_highlightLayers = [self getShapeLayersForHighlights];
+	
 	// get ocean
 	CAShapeLayer * ocean = [self getOceanLayer:_shownObjects];
 	if ( ocean ) {
@@ -2855,7 +2885,15 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	// NSLog(@"%ld layers", (long)self.sublayers.count);
+}
 
+- (void)layoutSublayers
+{
+	if ( self.hidden )
+		return;
+
+	_isPerformingLayout = YES;
+	[self layoutSublayersSafe];
 	_isPerformingLayout = NO;
 }
 #endif

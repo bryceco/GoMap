@@ -120,13 +120,13 @@ NSString * OsmValueForBoolean( BOOL b )
 -(OSMRect)boundingBox
 {
 	if ( _boundingBox.origin.x == 0 && _boundingBox.origin.y == 0 && _boundingBox.size.width == 0 && _boundingBox.size.height == 0 )
-		_boundingBox = [self boundingBoxCompute];
+		[self computeBoundingBox];
 	return _boundingBox;
 }
--(OSMRect)boundingBoxCompute
+-(void)computeBoundingBox
 {
 	assert(NO);
-	return OSMRectMake(0, 0, 0, 0);
+	_boundingBox = OSMRectMake(0, 0, 0, 0);
 }
 
 
@@ -256,7 +256,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	_tagInfo				= nil;
 	renderPriorityCached	= 0;
 	_isOneWay				= nil;
-	_boundingBox			= OSMRectMake(0, 0, 0, 0);
 
 	for ( CALayer * layer in _shapeLayers ) {
 		[layer removeFromSuperlayer];
@@ -565,10 +564,10 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	return [NSSet setWithObject:self];
 }
--(OSMRect)boundingBoxCompute
+-(void)computeBoundingBox
 {
 	OSMRect rc = { _lon, _lat, 0, 0 };
-	return rc;
+	_boundingBox = rc;
 }
 
 -(void)setLongitude:(double)longitude latitude:(double)latitude undo:(UndoManager *)undo
@@ -687,6 +686,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	[undo registerUndoWithTarget:self selector:@selector(addNode:atIndex:undo:) objects:@[node,@(index),undo]];
 	[_nodes removeObjectAtIndex:index];
 	[node setWayCount:node.wayCount-1 undo:nil];
+	[self computeBoundingBox];
 }
 -(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo
 {
@@ -700,6 +700,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 	[_nodes insertObject:node atIndex:index];
 	[node setWayCount:node.wayCount+1 undo:nil];
+	[self computeBoundingBox];
 }
 
 -(void)serverUpdateInPlace:(OsmWay *)newerVersion
@@ -946,7 +947,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return [NSSet setWithArray:_nodes];
 }
 
--(OSMRect)boundingBoxCompute
+-(void)computeBoundingBox
 {
 	double minX, maxX, minY, maxY;
 	BOOL first = YES;
@@ -964,9 +965,10 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		}
 	}
 	if ( first ) {
-		return OSMRectMake(0, 0, 0, 0);
+		_boundingBox = OSMRectMake(0, 0, 0, 0);
+	} else {
+		_boundingBox = OSMRectMake(minX, minY, maxX-minX, maxY-minY);
 	}
-	return OSMRectMake(minX, minY, maxX-minX, maxY-minY);
 }
 -(OSMPoint)centerPointWithArea:(double *)area
 {
@@ -1161,7 +1163,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 
--(OSMRect)boundingBoxCompute
+-(void)computeBoundingBox
 {
 	BOOL first = YES;
 	OSMRect box = { 0, 0, 0, 0 };
@@ -1177,7 +1179,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			}
 		}
 	}
-	return box;
+	_boundingBox = box;
 }
 
 -(NSSet *)nodeSet

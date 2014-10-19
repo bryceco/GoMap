@@ -40,6 +40,9 @@
 #endif
 
 
+#define FRAMERATE_TEST 1
+
+
 static const CGFloat Z_AERIAL		= -100;
 static const CGFloat Z_MAPNIK		= -99;
 static const CGFloat Z_LOCATOR		= -50;
@@ -323,7 +326,7 @@ CGSize SizeForImage( NSImage * image )
 	}
 #endif
 
-#if 1
+#if FRAMERATE_TEST
 	// automaatically scroll view for frame rate testing
 	OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
 	self.screenFromMapTransform = t;
@@ -1495,11 +1498,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	}
 }
 
--(void)drawRect:(CGRect)rect
-{
-	[_fpsLabel frameUpdated];
-}
-
 #pragma mark Key presses
 
 // Escape key
@@ -2521,7 +2519,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 {
 	if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
 		// ignore
-#if DEBUG
+#if FRAMERATE_TEST
 		DisplayLink * displayLink = [DisplayLink shared];
 		[displayLink removeName:@"autoScroll"];
 #endif

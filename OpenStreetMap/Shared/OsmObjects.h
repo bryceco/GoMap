@@ -94,6 +94,7 @@ typedef enum {
 -(NSDate *)dateForTimestamp;
 
 -(NSSet *)nodeSet;
+-(void)computeBoundingBox;
 -(BOOL)overlapsBox:(OSMRect)box;
 -(OSMRect)boundingBox;
 -(NSString *)friendlyDescription;

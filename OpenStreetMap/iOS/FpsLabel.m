@@ -9,7 +9,7 @@
 #import "DisplayLink.h"
 #import "FpsLabel.h"
 
-#define ENABLE_FPS	0
+#define ENABLE_FPS	1
 
 
 const int FRAME_COUNT = 60;
@@ -42,6 +42,12 @@ const int FRAME_COUNT = 60;
 		} );
 		dispatch_resume(_timer);
 	}
+	self.layer.shadowColor		= UIColor.whiteColor.CGColor;
+	self.layer.shadowPath		= CGPathCreateWithRect(self.bounds, NULL);
+	self.layer.shadowOpacity	= 0.3;
+	self.layer.shadowRadius		= 0;
+	self.layer.shadowOffset		= CGSizeMake(0, 0);
+
 #else
 	self.text = nil;
 	self.hidden = YES;
@@ -59,26 +65,28 @@ const int FRAME_COUNT = 60;
 
 - (void)updateText
 {
-	CFTimeInterval now = CACurrentMediaTime();
-
 	// scan backward to see how many frames were drawn in the last second
 	int frameCount = 0;
-	int pos = _historyPos;
+	int pos = (_historyPos + FRAME_COUNT - 1) % FRAME_COUNT;
+	CFTimeInterval last = _history[ pos ];
 	CFTimeInterval prev = 0.0;
 	do {
 		if ( --pos < 0 )
 			pos = FRAME_COUNT - 1;
 		prev = _history[pos];
 		++frameCount;
-		if ( now - prev >= 1.0 )
+		if ( last - prev >= 1.0 )
 			break;
 	} while ( pos != _historyPos );
 
-	CFTimeInterval average = frameCount / (now - prev);
+	CFTimeInterval average = frameCount / (last - prev);
 	if ( average >= 10.0 )
 		self.text = [NSString stringWithFormat:@"%.1f FPS", average];
 	else
 		self.text = [NSString stringWithFormat:@"%.2f FPS", average];
+	if ( average < 4.0 ) {
+		NSLog(@"frame");
+	}
 }
 
 - (void)frameUpdated
@@ -90,7 +98,7 @@ const int FRAME_COUNT = 60;
 	if ( _historyPos >= FRAME_COUNT )
 		_historyPos = 0;
 
-	[self updateText];
+//	[self updateText];
 #endif
 }
 
