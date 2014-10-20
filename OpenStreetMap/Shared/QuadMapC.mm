@@ -143,6 +143,9 @@ public:
 		assert(_parent);
 		if ( _parent->_whole ) {
 			// parent was made whole (somehow) before we completed, so nothing to do
+			if ( this->countBusy() == 0 ) {
+				delete this;
+			}
 			return;
 		}
 
@@ -161,7 +164,9 @@ public:
 			_whole = YES;
 			_busy = NO;
 			for ( int child = 0; child <= QUAD_LAST; ++child ) {
-				delete _children[child];
+				if ( _children[child] && _children[child]->countBusy() == 0 ) {
+					delete _children[child];
+				}
 				_children[child] = nil;
 			}
 			if ( _parent ) {
@@ -320,6 +325,8 @@ public:
 		_isSplit		= [coder decodeBoolForKey:@"split"];
 		_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
 		_parent			= NULL;
+		_busy			= false;
+		_owner			= NULL;
 		//		_parent			= [coder decodeObjectForKey:@"parent"];
 		//		_members		= [coder decodeObjectForKey:@"members"];
 	}

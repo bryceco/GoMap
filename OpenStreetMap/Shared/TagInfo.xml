@@ -1797,7 +1797,7 @@
     <tag key="waterway" value="river" name="River" description="For narrow rivers which will be rendered as a line." lineColor="0000FF" lineWidth="2.000000"/>
     <tag key="waterway" value="riverbank" name="Riverbank" description="For tagging wide rivers which need to be defined by an area rather than just shown as a linear way." lineColor="0000CF" areaColor="0000CF" lineWidth="1.000000"/>
     <tag key="waterway" value="seaway" name="Seaway"/>
-    <tag key="waterway" value="stream" name="Stream" description="a naturally-forming waterway that is too thin to be classed as a river. Maybe you can just jump over it." lineColor="6600CC" lineWidth="1.000000"/>
+    <tag key="waterway" value="stream" name="Stream" description="a naturally-forming waterway that is too thin to be classed as a river. Maybe you can just jump over it." lineColor="9090FF" lineWidth="1.000000"/>
     <tag key="waterway" value="swept_area" name="Swept Area"/>
     <tag key="waterway" value="turning_point" name="Turning Point" description="A place to turn the driving direction for vessels, where the boats are longer than the river/canal is wide."/>
     <tag key="waterway" value="water_point" name="Water Point" description="A place to get fresh water e.g. for caravans."/>

@@ -2202,7 +2202,9 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		OSMPoint p1 = prevInside ? prev : cross[0];
 		OSMPoint p2 = inside	 ? pt   : cross[ crossCnt-1 ];
 
-		block( p1, p2, !prevInside, !inside );
+		BOOL proceed = block( p1, p2, !prevInside, !inside );
+		if ( !proceed )
+			break;;
 
 	next:
 		prev = pt;
