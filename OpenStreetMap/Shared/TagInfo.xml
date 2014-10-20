@@ -275,7 +275,7 @@
     <tag key="craft" value="stonemason" name="Stonemason" type="node;area" description="A place where rough pieces of rock are shaped into accurate geometrical shapes."/>
     <tag key="craft" value="sun_protection" name="Sun Protection" type="node;area" description="A place where sun protection is made, repaired, or delivered for assembly, especially awnings and shutters."/>
     <tag key="craft" value="sweep" name="Sweep" type="node;area" description="Workplace or office of a person who cleans chimneys for a living."/>
-    <tag key="craft" value="tailor" name="Tailor" type="node;area" description="A place where clothing is made, repaired, or altered professionally, especially suits and men's clothing."/>
+    <tag key="craft" value="tailor" name="Tailor" type="node;area" description="A place where clothing is made, repaired, or altered professionally, especially suits and men's clothing." iconName="poi/tailor-18.png"/>
     <tag key="craft" value="tiler" name="Tiler" type="node;area" description="Workplace or office of a person who lays tiles on floors, swimming pools and such."/>
     <tag key="craft" value="tinsmith" name="Tinsmith" type="node;area" description="A tinsmith, or tinner or tinker or tinplate worker. Workplace or office of a person who makes and repairs things made of light-coloured metal, particularly tinware."/>
     <tag key="craft" value="upholsterer" name="Upholsterer" type="node;area" description="A place where furniture, especially seats are provided with padding, springs, webbing, and fabric or leather covers."/>
@@ -423,6 +423,12 @@
     <tag key="emergency" value="water_tank" name="Water Tank" type="node;area"/>
     <tag key="emergency" value="yes" name="Yes"/>
 
+	<tag key="entrance" value="yes" name="Yes" type="node" description="An entrance exists at this position"/>
+	<tag key="entrance" value="main" name="Main" type="node" description="The main entrance of a building or enclosed area, where the shoppers or clients go inside. A shopping mall have often more than one main entrance."/>
+	<tag key="entrance" value="staircase" name="Staircase" type="node" description="Door to staircase."/>
+	<tag key="entrance" value="service" name="Service" type="node" description="A backdoor to a building or enclosed area often only for employees or for delivering."/>
+	<tag key="entrance" value="emergency" name="Emergency" type="node" description="An emergency exit is a one-way out of a building in case of fire. It is often combined with a fire alarm box."/>
+
 	<tag key="highway" value="Bus_guideway" name="Bus Guideway" type="way"/>
     <tag key="highway" value="bridleway" name="Bridleway" type="way" description="A way intended for use by equestrians." lineColor="C08000" lineWidth="1.000000"/>
     <tag key="highway" value="bus_guideway" name="Bus Guideway" type="way" description="A busway that is side guided &quot;rails like&quot;, not suitable for other traffic." lineColor="404040" lineWidth="1.000000"/>
@@ -470,7 +476,7 @@
     <tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps" lineColor="00FF00" lineWidth="1.000000"/>
     <tag key="highway" value="stile" name="Stile" type="way"/>
     <tag key="highway" value="stop" name="Stop" type="way" description="Used to mark stop signs" iconName="transport_stop"/>
-    <tag key="highway" value="street_lamp" name="Street Lamp" type="node" description="A single pole with one or more lights to illuminate the street."/>
+    <tag key="highway" value="street_lamp" name="Street Lamp" type="node" description="A single pole with one or more lights to illuminate the street." iconName="poi/street_lamp-18.png"/>
     <tag key="highway" value="tertiary" name="Tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary" lineColor="F7F496" lineWidth="2.000000"/>
     <tag key="highway" value="tertiary_link" name="Tertiary Link" type="way" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary_link" lineColor="F7F496" lineWidth="2.000000"/>
     <tag key="highway" value="toll_booth" name="Toll Booth" type="node"/>

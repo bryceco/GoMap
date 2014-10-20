@@ -374,7 +374,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 						@"highway", @"office", @"landmark", @"building", @"emergency",
 						@"man_made", @"military", @"natural", @"power", @"railway",
 						@"sport", @"waterway", @"aeroway", @"landuse", @"barrier", @"boundary",
-						@"seamark:type", @"traffic_calming"];
+						@"seamark:type", @"traffic_calming", @"entrance"];
 	}
 	return typeKeys;
 }

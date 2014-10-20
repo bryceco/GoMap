@@ -87,6 +87,7 @@
 		0277E29416A673CC00456BED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0277E29316A673CC00456BED /* OpenGLES.framework */; };
 		027A469B1673B251000BE55C /* OSM-Logo72.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469A1673B251000BE55C /* OSM-Logo72.png */; };
 		027A469E1673B257000BE55C /* OSM-Logo144.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469D1673B257000BE55C /* OSM-Logo144.png */; };
+		027AD5D019F5797400120654 /* poi in Resources */ = {isa = PBXBuildFile; fileRef = 027AD5CF19F5797400120654 /* poi */; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
 		0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB316A0BB67002C46A9 /* shrub.p.64.png */; };
 		028F504519B949780093C423 /* CommonTagList.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* CommonTagList.m */; };
@@ -580,6 +581,7 @@
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027A469A1673B251000BE55C /* OSM-Logo72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo72.png"; sourceTree = "<group>"; };
 		027A469D1673B257000BE55C /* OSM-Logo144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo144.png"; sourceTree = "<group>"; };
+		027AD5CF19F5797400120654 /* poi */ = {isa = PBXFileReference; lastKnownFileType = folder; name = poi; path = ../poi; sourceTree = "<group>"; };
 		0284FDB116A0B7DA002C46A9 /* tree.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.p.64.png; sourceTree = "<group>"; };
 		0284FDB316A0BB67002C46A9 /* shrub.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shrub.p.64.png; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; };
@@ -1273,6 +1275,7 @@
 		02ACBA8716713F2A00BB4414 /* png */ = {
 			isa = PBXGroup;
 			children = (
+				027AD5CF19F5797400120654 /* poi */,
 				0266D39016C02D9200AD9A83 /* seamark */,
 				02ACBA8816713F2A00BB4414 /* accommodation_alpinehut.p.64.png */,
 				02ACBA8916713F2A00BB4414 /* accommodation_bed_and_breakfast.p.64.png */,
@@ -2049,6 +2052,7 @@
 				02ACBCDE16713F2B00BB4414 /* transport_parking_bicycle.p.64.png in Resources */,
 				02ACBCDF16713F2B00BB4414 /* transport_parking_car.p.64.png in Resources */,
 				02ACBCE016713F2B00BB4414 /* transport_parking_car_paid.p.64.png in Resources */,
+				027AD5D019F5797400120654 /* poi in Resources */,
 				02ACBCE116713F2B00BB4414 /* transport_parking_disabled.p.64.png in Resources */,
 				02ACBCE216713F2B00BB4414 /* transport_parking_private.p.64.png in Resources */,
 				02ACBCE316713F2B00BB4414 /* transport_parking_private2.p.64.png in Resources */,

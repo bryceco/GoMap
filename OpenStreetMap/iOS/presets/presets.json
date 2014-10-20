@@ -2202,6 +2202,9 @@
     },
     "building/entrance": {
         "icon": "entrance",
+		"fields" : [
+			"address"
+		],
         "geometry": [
             "vertex"
         ],
