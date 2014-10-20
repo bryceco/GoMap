@@ -45,7 +45,7 @@
 }
 
 @property (assign,nonatomic)	MapView				*	mapView;
-@property (strong,nonatomic)	NSColor				*	textColor;
+@property (assign,nonatomic)	BOOL					whiteText;
 @property (strong,nonatomic)	OsmNode				*	selectedNode;
 @property (strong,nonatomic)	OsmWay				*	selectedWay;
 @property (strong,nonatomic)	OsmRelation			*	selectedRelation;

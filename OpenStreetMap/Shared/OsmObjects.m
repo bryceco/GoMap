@@ -973,7 +973,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 -(OSMPoint)centerPointWithArea:(double *)area
 {
 	// compute centroid
-	if ( _nodes.count > 2)  {
+	NSInteger nodeCount = _nodes[0]==_nodes.lastObject ? _nodes.count-1 : _nodes.count;
+
+	if ( nodeCount > 2)  {
 		CGFloat sum = 0;
 		CGFloat sumX = 0;
 		CGFloat sumY = 0;
@@ -1001,12 +1003,12 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		point.x += offset.x;
 		point.y += offset.y;
 		return point;
-	} else if ( _nodes.count == 2 ) {
+	} else if ( nodeCount == 2 ) {
 		*area = 0;
 		OsmNode * n1 = _nodes[0];
 		OsmNode * n2 = _nodes[1];
 		return OSMPointMake( (n1.lon+n2.lon)/2, (n1.lat+n2.lat)/2);
-	} else if ( _nodes.count == 1 ) {
+	} else if ( nodeCount == 1 ) {
 		*area = 0;
 		OsmNode * node = _nodes.lastObject;
 		return OSMPointMake(node.lon, node.lat);

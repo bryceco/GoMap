@@ -161,14 +161,18 @@ public:
 			_whole = YES;
 			_busy = NO;
 			for ( int child = 0; child <= QUAD_LAST; ++child ) {
+				delete _children[child];
 				_children[child] = nil;
 			}
-			for ( int child = 0; child <= QUAD_LAST; ++child ) {
-				QuadBoxCC * c = _parent->_children[child];
-				if ( c == nil || !c->_whole )
-					return;
+			if ( _parent ) {
+				// if all children of parent exist and are whole then parent is whole as well
+				for ( int child = 0; child <= QUAD_LAST; ++child ) {
+					QuadBoxCC * c = _parent->_children[child];
+					if ( c == nil || !c->_whole )
+						return;
+				}
+				_parent->makeWhole(success);
 			}
-			_parent->makeWhole(success);
 		} else {
 			_busy = NO;
 		}
@@ -183,6 +187,17 @@ public:
 				q->enumerateWithBlock(block);
 			}
 		}
+	}
+
+	NSInteger countBusy() const
+	{
+		NSInteger c = _busy ? 1 : 0;
+		for ( int i = 0; i < 4; ++i ) {
+			QuadBoxCC * child = _children[i];
+			if ( child )
+				c += child->countBusy();
+		}
+		return c;
 	}
 
 	static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;

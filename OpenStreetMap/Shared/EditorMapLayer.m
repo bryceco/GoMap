@@ -61,7 +61,7 @@ enum {
 @implementation EditorMapLayer
 
 @synthesize mapView				= _mapView;
-@synthesize textColor			= _textColor;
+@synthesize whiteText			= _whiteText;
 @synthesize selectedNode		= _selectedNode;
 @synthesize selectedWay			= _selectedWay;
 @synthesize selectedRelation	= _selectedRelation;
@@ -78,7 +78,7 @@ const CGFloat WayHighlightRadius = 6.0;
 	if ( self ) {
 		_mapView = mapView;
 
-		self.textColor = NSColor.whiteColor;
+		self.whiteText = YES;
 
 		_fadingOutSet = [NSMutableSet new];
 
@@ -123,6 +123,7 @@ const CGFloat WayHighlightRadius = 6.0;
 						  @"bounds"		: [NSNull null],
 						  @"position"	: [NSNull null],
 						  @"transform"	: [NSNull null],
+						  @"lineWidth"	: [NSNull null],
 		};
 	}
 	return self;
@@ -1465,8 +1466,7 @@ enum {
 			NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( object.tags ) : nil;
 			if ( houseNumber ) {
 
-				UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-				CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber width:0 font:nil color:self.textColor shadowColor:shadowColor];
+				CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_NODE;
@@ -1528,7 +1528,7 @@ enum {
 		}
 	}
 
-	// way
+	// way (also provides an outline for areas)
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 		CGPoint refPoint = { 0, 0 };
 		CGPathRef path = [self pathForObject:object refPoint:&refPoint];
@@ -1625,6 +1625,7 @@ enum {
 			BOOL isHighway = object.isWay && !object.isWay.isArea;
 			if ( isHighway ) {
 
+				// These are drawn dynamically
 #if 0
 				double length = 0.0;
 				CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
@@ -1641,9 +1642,7 @@ enum {
 				OSMPoint point = object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
 				OSMPoint pt = [MapView mapPointForLatitude:point.y longitude:point.x];
 
-				UIFont * font = [UIFont systemFontOfSize:11];
-				UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-				CALayer * layer = [CurvedTextLayer.shared layerWithString:name width:0 font:font color:self.textColor shadowColor:shadowColor];
+				CALayer * layer = [CurvedTextLayer.shared layerWithString:name whiteOnBlock:self.whiteText];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
@@ -1811,7 +1810,7 @@ enum {
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						double offset = (length - name.length * Pixels_Per_Character) / 2;	// center along way
 						if ( offset >= 0 ) {
-							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor)];
+							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path offset:offset whiteOnBlock:self.whiteText];
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;
@@ -2167,7 +2166,8 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		OSMPoint point = [way centerPoint];
 		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
 
-		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:0 font:nil color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
+		UIColor * textColor2 = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
+		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:0 font:nil color:textColor2 shadowColor:ShadowColorForColor2(textColor2) context:ctx];
 	}
 }
 
@@ -2307,7 +2307,8 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			CGPathRelease( path );
 			return NO;
 		}
-		[CurvedTextLayer.shared drawString:name alongPath:path offset:offset color:self.textColor shadowColor:ShadowColorForColor2(self.textColor) context:ctx];
+		UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
+		[CurvedTextLayer.shared drawString:name alongPath:path offset:offset color:textColor shadowColor:ShadowColorForColor2(textColor) context:ctx];
 		CGPathRelease(path);
 
 	} else {
@@ -2323,8 +2324,9 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		OSMPoint point = way ? way.centerPoint : relation.centerPoint;
 		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
 		UIFont * font = [UIFont systemFontOfSize:11];
-		UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:self.textColor shadowColor:shadowColor context:ctx];
+		UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
+		UIColor * shadowColor = ShadowColorForColor2(textColor);
+		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:textColor shadowColor:shadowColor context:ctx];
 	}
 	return YES;
 }
@@ -2421,8 +2423,9 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 		NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( node.tags ) : nil;
 		if ( houseNumber ) {
 
-			UIColor * shadowColor = ShadowColorForColor2(self.textColor);
-			[CurvedTextLayer.shared drawString:houseNumber	centeredOnPoint:pt width:0 font:nil color:self.textColor shadowColor:shadowColor context:ctx];
+			UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
+			UIColor * shadowColor = ShadowColorForColor2(textColor);
+			[CurvedTextLayer.shared drawString:houseNumber	centeredOnPoint:pt width:0 font:nil color:textColor shadowColor:shadowColor context:ctx];
 
 		} else {
 
@@ -2658,6 +2661,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 #else
 	NSInteger objectLimit = 500;
 #endif
+#if USE_SHAPELAYERS
+	objectLimit *= 3;
+#endif
 
 	double metersPerPixel = [_mapView metersPerPixel];
 	if ( metersPerPixel < 0.05 ) {
@@ -2786,8 +2792,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	for ( OsmBaseObject * object in _shownObjects ) {
 
-		// NSLog(@"%@",obj);
-
 		NSArray * layers = [self getShapeLayersForObject:object];
 
 		for ( CALayer * layer in layers ) {
@@ -2805,7 +2809,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				t = CGAffineTransformRotate( t, tRotation );
 				layer.affineTransform = t;
 
-				layer.bounds = CGRectMake(0, 0, round(256/tScale), round(256/tScale));
+				layer.bounds = CGRectMake(0, 0, ceil(256/tScale), ceil(256/tScale));
 
 				if ( [layer isKindOfClass:[CAShapeLayer class]] ) {
 					CAShapeLayer * shape = (id)layer;
@@ -3562,24 +3566,10 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	}
 }
 
--(NSColor *)textColor
+-(void)setWhiteText:(BOOL)whiteText
 {
-	return _textColor;
-}
--(void)setTextColor:(NSColor *)textColor
-{
-	if ( ! [_textColor isEqual:textColor] ) {
-#if TARGET_OS_IPHONE
-		CGFloat r,g,b,a;
-		if ( ![textColor getRed:&r green:&g blue:&b alpha:&a] ) {
-			if ( [textColor getWhite:&r alpha:&a] ) {
-				g = b = r;
-			}
-		}
-		_textColor = [UIColor colorWithRed:r green:g blue:b alpha:a];
-#else
-		_textColor = [textColor colorUsingColorSpaceName:NSDeviceRGBColorSpace];
-#endif
+	if ( _whiteText != whiteText ) {
+		_whiteText = whiteText;
 #if USE_SHAPELAYERS
 		// need to refresh all text objects
 		[_mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {

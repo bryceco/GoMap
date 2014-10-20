@@ -43,11 +43,12 @@ const int FRAME_COUNT = 60;
 		dispatch_resume(_timer);
 	}
 	self.layer.shadowColor		= UIColor.whiteColor.CGColor;
-	self.layer.shadowPath		= CGPathCreateWithRect(self.bounds, NULL);
+	CGPathRef path				= CGPathCreateWithRect(self.bounds, NULL);
+	self.layer.shadowPath		= path;
 	self.layer.shadowOpacity	= 0.3;
 	self.layer.shadowRadius		= 0;
 	self.layer.shadowOffset		= CGSizeMake(0, 0);
-
+	CGPathRelease(path);
 #else
 	self.text = nil;
 	self.hidden = YES;
@@ -84,7 +85,7 @@ const int FRAME_COUNT = 60;
 		self.text = [NSString stringWithFormat:@"%.1f FPS", average];
 	else
 		self.text = [NSString stringWithFormat:@"%.2f FPS", average];
-	if ( average < 4.0 ) {
+	if ( average < 1.0 ) {
 		NSLog(@"frame");
 	}
 }
@@ -97,8 +98,6 @@ const int FRAME_COUNT = 60;
 	_history[_historyPos++] = now;
 	if ( _historyPos >= FRAME_COUNT )
 		_historyPos = 0;
-
-//	[self updateText];
 #endif
 }
 

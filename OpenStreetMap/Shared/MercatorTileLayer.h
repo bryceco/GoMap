@@ -15,7 +15,7 @@
 
 @interface MercatorTileLayer : CALayer <NSCacheDelegate>
 {
-	NSString						*	_tileCacheDirectory;
+	NSString						*	_tileCacheDirectory;	// location of tile files
 	NSCache							*	_memoryTileCache;		// cache of tiles kept in memory
 	NSString						*	_logoUrl;
 

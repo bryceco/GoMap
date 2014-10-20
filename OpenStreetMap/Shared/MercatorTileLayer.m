@@ -385,6 +385,7 @@ typedef enum {
 
 			// image is in disk cache
 			dispatch_async(dispatch_get_main_queue(), ^(void) {
+				[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
 				if ( layer.superlayer ) {
 #if TARGET_OS_IPHONE
 					layer.contents = (__bridge id)fileImage.CGImage;
@@ -392,9 +393,8 @@ typedef enum {
 					layer.contents = image;
 #endif
 					layer.hidden = NO;
-					[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
 #if CUSTOM_TRANSFORM
-					[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
+					[self setSublayerPositions:@{ tileKey : layer }];
 #else
 					OSMRect rc = [_mapView boundingMapRectForScreen];
 					[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
@@ -426,6 +426,7 @@ typedef enum {
 				if ( image ) {
 
 					dispatch_sync(dispatch_get_main_queue(), ^(void){
+						[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
 						if ( layer.superlayer ) {
 #if TARGET_OS_IPHONE
 							layer.contents = (__bridge id) image.CGImage;
@@ -433,9 +434,8 @@ typedef enum {
 							layer.contents = image;
 #endif
 							layer.hidden = NO;
-							[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
 #if CUSTOM_TRANSFORM
-							[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
+							[self setSublayerPositions:@{ tileKey : layer }];
 #else
 							OSMRect rc = [_mapView boundingMapRectForScreen];
 							[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
@@ -502,11 +502,34 @@ typedef enum {
 	[super setNeedsLayout];
 }
 
+
+#if CUSTOM_TRANSFORM
+-(void)setSublayerPositions:(NSDictionary *)layerDict
+{
+	// update locations of tiles
+	double tRotation	= OSMTransformRotation( _mapView.screenFromMapTransform );
+	double tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
+
+	[layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * tileKey, CALayer * layer, BOOL *stop) {
+		int32_t tileZ, tileX, tileY;
+		sscanf( tileKey.UTF8String, "%d,%d,%d", &tileZ, &tileX, &tileY );
+
+		double scale = 256.0 / (1 << tileZ);
+		OSMPoint pt = { tileX * scale, tileY * scale };
+		pt = [_mapView screenPointFromMapPoint:pt];
+		layer.position		= CGPointFromOSMPoint( pt );
+		layer.bounds		= CGRectMake( 0, 0, 256, 256 );
+		layer.anchorPoint	= CGPointMake(0, 0);
+
+		scale *= tScale / 256;
+		CGAffineTransform t	= CGAffineTransformScale( CGAffineTransformMakeRotation( tRotation), scale, scale );
+		layer.affineTransform = t;
+	}];
+}
+#endif
+
 -(void)layoutSublayersSafe
 {
-	if ( self.hidden )
-		return;
-
 	OSMRect	rect		= [_mapView boundingMapRectForScreen];
 	int32_t	zoomLevel	= [self zoomLevel];
 
@@ -546,37 +569,20 @@ typedef enum {
 
 #if CUSTOM_TRANSFORM
 	// update locations of tiles
-	double tRotation	= OSMTransformRotation( _mapView.screenFromMapTransform );
-	double tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
-
-	[_layerDict enumerateKeysAndObjectsUsingBlock:^(NSString * tileKey, CALayer * layer, BOOL *stop) {
-		int32_t tileZ, tileX, tileY;
-		sscanf( tileKey.UTF8String, "%d,%d,%d", &tileZ, &tileX, &tileY );
-
-		double scale = 256.0 / (1 << tileZ);
-		OSMPoint pt = { tileX * scale, tileY * scale };
-		pt = [_mapView screenPointFromMapPoint:pt];
-		layer.position		= CGPointFromOSMPoint( pt );
-		layer.bounds		= CGRectMake( 0, 0, 256, 256 );
-		layer.anchorPoint	= CGPointMake(0, 0);
-
-		scale *= tScale / 256;
-		CGAffineTransform t	= CGAffineTransformScale( CGAffineTransformMakeRotation( tRotation), scale, scale );
-		layer.affineTransform = t;
-	}];
-
+	[self setSublayerPositions:_layerDict];
 	[self removeUnneededTilesForRect:OSMRectFromCGRect(self.bounds) zoomLevel:zoomLevel];
 #else
 	OSMRect rc = [_mapView boundingMapRectForScreen];
 	[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
 #endif
 
-
 	[_mapView progressAnimate];
 }
 
 -(void)layoutSublayers
 {
+	if ( self.hidden )
+		return;
 	OSAtomicIncrement32( &_isPerformingLayout );
 	[self layoutSublayersSafe];
 	OSAtomicDecrement32( &_isPerformingLayout );

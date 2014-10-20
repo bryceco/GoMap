@@ -22,9 +22,15 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	self = [super init];
 	if ( self ) {
 #if USE_CURVEDLAYER_CACHE
-		_layerCache			= [NSCache new];
-		_framesetterCache	= [NSCache new];
-		_framesetterCache.delegate = self;
+		_layerCache					= [NSCache new];
+		_layerCache.countLimit		= 100;
+
+		_framesetterCache			= [NSCache new];
+		_framesetterCache.delegate	= self;
+		_framesetterCache.countLimit = 100;
+
+		_textSizeCache				= [NSCache new];
+		_textSizeCache.countLimit	= 100;
 #endif
 	}
 	return self;
@@ -204,68 +210,40 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
 }
 
--(CTFramesetterRef)getFramesetterForString:(NSAttributedString *)attrString
+-(CALayer *)layerWithString:(NSString *)string whiteOnBlock:(BOOL)whiteOnBlack
 {
-	CTFramesetterRef framesetter = (__bridge CTFramesetterRef)[_framesetterCache objectForKey:attrString.string];
-	if ( framesetter == NULL ) {
-		framesetter = CTFramesetterCreateWithAttributedString( (__bridge CFAttributedStringRef)attrString );
-		[_framesetterCache setObject:(__bridge id)framesetter forKey:attrString.string];
-		CFRelease( framesetter );
-	}
-	return framesetter;
-}
+	CGFloat MAX_TEXT_WIDTH	= 70.0;
 
--(CGSize)sizeOfText:(NSAttributedString *)string
-{
-	CTFramesetterRef framesetter = [self getFramesetterForString:string];
-	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), NULL, CGSizeMake(70, CGFLOAT_MAX), NULL);
-	return suggestedSize;
-}
+	// Don't cache these here because they are cached by the objects they are attached to
+	CATextLayer * layer = [CATextLayer new];
 
--(id)getCachedLayerForString:(NSString *)string color:(UIColor *)color
-{
-	if ( ![color isEqual:_cachedColor] ) {
-		[_layerCache removeAllObjects];
-		_cachedColor = color;
-		return nil;
-	}
-	return [_layerCache objectForKey:string];
-}
+	UIFont * font = [UIFont systemFontOfSize:11];
+	//	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+	UIColor * textColor   = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
+	UIColor * shadowColor = whiteOnBlack ? UIColor.blackColor : UIColor.whiteColor;
+	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)textColor.CGColor, NSFontAttributeName : font }];
 
--(CALayer *)layerWithString:(NSString *)string width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor
-{
-	CATextLayer * layer = [self getCachedLayerForString:string color:color];
+	CGRect bounds = { 0 };
+	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( (__bridge CFAttributedStringRef)attrString );
+	bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), NULL, CGSizeMake(MAX_TEXT_WIDTH, CGFLOAT_MAX), NULL);
+	CFRelease( framesetter );
+	bounds = CGRectInset( bounds, -3, -1 );
+	bounds.size.width  = 2 * ceil( bounds.size.width/2 );	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
+	bounds.size.height = 2 * ceil( bounds.size.height/2 );
+	layer.bounds = bounds;
 
-	if ( layer == nil ) {
+	layer.string			= attrString;
+	layer.truncationMode	= kCATruncationNone;
+	layer.wrapped			= YES;
+	layer.alignmentMode		= kCAAlignmentCenter;
 
-		layer = [CATextLayer new];
-
-		if ( font == nil )
-			font = [UIFont systemFontOfSize:10];
-		NSAttributedString * s = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor, NSFontAttributeName : font }];
-
-		CGRect bounds = { 0 };
-		bounds.size = [self sizeOfText:s];
-		bounds = CGRectInset( bounds, -3, -1 );
-		bounds.size.width  = 2 * ceil( bounds.size.width/2 );	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
-		bounds.size.height = 2 * ceil( bounds.size.height/2 );
-		layer.bounds = bounds;
-
-		layer.string			= s;
-		layer.truncationMode	= kCATruncationNone;
-		layer.wrapped			= YES;
-		layer.alignmentMode		= kCAAlignmentCenter;
-
-		CGPathRef shadowPath	= CGPathCreateWithRect(bounds, NULL);
-		layer.shadowPath		= shadowPath;
-		layer.shadowColor		= shadowColor.CGColor;
-		layer.shadowRadius		= 0.0;
-		layer.shadowOffset		= CGSizeMake(0,0);
-		layer.shadowOpacity		= 0.3;
-		CGPathRelease(shadowPath);
-
-		[_layerCache setObject:layer forKey:string];
-	}
+	CGPathRef shadowPath	= CGPathCreateWithRect(bounds, NULL);
+	layer.shadowPath		= shadowPath;
+	layer.shadowColor		= shadowColor.CGColor;
+	layer.shadowRadius		= 0.0;
+	layer.shadowOffset		= CGSizeMake(0,0);
+	layer.shadowOpacity		= 0.3;
+	CGPathRelease(shadowPath);
 
 	return layer;
 }
@@ -340,7 +318,43 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 	return NO;
 }
 
--(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(UIColor *)shadowColor
+
+-(CTFramesetterRef)framesetterForString:(NSAttributedString *)attrString CF_RETURNS_RETAINED
+{
+	CTFramesetterRef framesetter = (__bridge CTFramesetterRef)[_framesetterCache objectForKey:attrString.string];
+	if ( framesetter == NULL ) {
+		framesetter = CTFramesetterCreateWithAttributedString( (__bridge CFAttributedStringRef)attrString );
+		[_framesetterCache setObject:(__bridge id)framesetter forKey:attrString.string];
+		return framesetter;
+	}
+	return CFRetain( framesetter );
+}
+
+-(CGSize)sizeOfText:(NSAttributedString *)string
+{
+	NSValue * size = [_textSizeCache objectForKey:string];
+	if ( size ) {
+		return size.CGSizeValue;
+	}
+
+	CTFramesetterRef framesetter = [self framesetterForString:string];
+	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), NULL, CGSizeMake(70, CGFLOAT_MAX), NULL);
+	CFRelease( framesetter );
+	[_textSizeCache setObject:[NSValue valueWithCGSize:suggestedSize] forKey:string];
+	return suggestedSize;
+}
+
+-(id)getCachedLayerForString:(NSString *)string whiteOnBlack:(BOOL)whiteOnBlack
+{
+	if ( _cachedColorIsWhiteOnBlack != whiteOnBlack ) {
+		[_layerCache removeAllObjects];
+		_cachedColorIsWhiteOnBlack = whiteOnBlack;
+		return nil;
+	}
+	return [_layerCache objectForKey:string];
+}
+
+-(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset whiteOnBlock:(BOOL)whiteOnBlack
 {
 	static CTFontRef ctFont = NULL;
 	static dispatch_once_t onceToken;
@@ -358,11 +372,12 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 	if ( pathPointCount < 2 )
 		return nil;
 
+	UIColor * textColor = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
 																		 attributes:@{
 																					  (NSString *)kCTFontAttributeName : (__bridge id)ctFont,
-																					  (NSString *)kCTForegroundColorAttributeName : (id)color.CGColor }];
-	CTFramesetterRef framesetter = [self getFramesetterForString:attrString];
+																					  (NSString *)kCTForegroundColorAttributeName : (id)textColor.CGColor }];
+	CTFramesetterRef framesetter = [self framesetterForString:attrString];
 	NSInteger charCount = string.length;
 	CTTypesetterRef typesetter = CTFramesetterGetTypesetter( framesetter );
 
@@ -378,7 +393,7 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 		CFIndex count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, length );
 #if USE_CURVEDLAYER_CACHE
 		NSString * cacheKey = [NSString stringWithFormat:@"%@:%f",[string substringWithRange:NSMakeRange(currentCharacter, count)],angle];
-		CATextLayer * layer = [self getCachedLayerForString:cacheKey color:color];
+		CATextLayer * layer = [self getCachedLayerForString:cacheKey whiteOnBlack:whiteOnBlack];
 #else
 		CATextLayer * layer = nil;
 #endif
@@ -403,7 +418,7 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 			layer.contentsScale		= [[UIScreen mainScreen] scale];
 
 			CGPathRef	shadowPath	= CGPathCreateWithRect(bounds, NULL);
-			layer.shadowColor		= shadowColor.CGColor;
+			layer.shadowColor		= whiteOnBlack ? UIColor.blackColor.CGColor : UIColor.whiteColor.CGColor;
 			layer.shadowRadius		= 0.0;
 			layer.shadowOffset		= CGSizeMake(0, 0);
 			layer.shadowOpacity		= 0.3;
@@ -426,9 +441,7 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 		if ( [string characterAtIndex:currentCharacter-1] == ' ' )
 			currentPixelOffset += 8;	// add room for space which is not included in framesetter size
 	}
-#if !USE_CURVEDLAYER_CACHE
 	CFRelease(framesetter);
-#endif
 	return layers;
 }
 

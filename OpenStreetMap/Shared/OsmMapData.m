@@ -602,17 +602,18 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	OSMRect			rect;
 	for ( QuadBox * q in quadList ) {
 		if ( query  &&  q.rect.origin.y == rect.origin.y  &&  q.rect.origin.x == rect.origin.x+rect.size.width  &&  q.rect.size.height == rect.size.height ) {
+			// combine with previous quad(s)
 			[query.quadList	addObject:q];
 			rect.size.width += q.rect.size.width;
 			query.rect = rect;
-			continue;
+		} else {
+			// create new query for quad
+			rect = q.rect;
+			query = [ServerQuery new];
+			query.quadList = [NSMutableArray arrayWithObject:q];
+			query.rect = rect;
+			[queries addObject:query];
 		}
-
-		rect = q.rect;
-		query = [ServerQuery new];
-		query.quadList = [NSMutableArray arrayWithObject:q];
-		query.rect = rect;
-		[queries addObject:query];
 	}
 
 	// any items that didn't get grouped get put back on the list
@@ -651,10 +652,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[queries addObject:query];
 	}
 
-#if 0
+#if 1
 	DLog(@"\nquery list:");
 	for ( ServerQuery * q in queries )
-		DLog(@"  %@", NSStringFromRect(q.rect));
+		DLog(@"  %@", NSStringFromCGRect(CGRectFromOSMRect(q.rect)));
 #endif
 
 	return queries;

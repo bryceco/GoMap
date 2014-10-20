@@ -40,7 +40,7 @@
 #endif
 
 
-#define FRAMERATE_TEST 1
+#define FRAMERATE_TEST 0
 
 
 static const CGFloat Z_AERIAL		= -100;
@@ -289,7 +289,7 @@ CGSize SizeForImage( NSImage * image )
 	[self.window setAcceptsMouseMovedEvents:YES];
 #endif
 
-	_editorLayer.textColor = _aerialLayer.hidden ? NSColor.blackColor : NSColor.whiteColor;
+	_editorLayer.whiteText = !_aerialLayer.hidden;
 }
 
 -(void)viewDidAppear
@@ -415,14 +415,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	switch (newState) {
 		case MAPVIEW_EDITOR:
-			_editorLayer.textColor = NSColor.blackColor;
+			_editorLayer.whiteText = NO;
 			_editorLayer.hidden = NO;
 			_aerialLayer.hidden = YES;
 			_mapnikLayer.hidden = YES;
 			_zoomToEditLabel.hidden = YES;
 			break;
 		case MAPVIEW_EDITORAERIAL:
-			_editorLayer.textColor = NSColor.whiteColor;
+			_editorLayer.whiteText = YES;
 			_aerialLayer.aerialService = _customAerials.currentAerial;
 			_editorLayer.hidden = NO;
 			_aerialLayer.hidden = NO;
@@ -1022,7 +1022,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	double scale = 360/(widthDegrees / 2);
 	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
-	return;
 }
 
 #pragma mark Progress indicator
@@ -1072,13 +1071,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( gpsState != _gpsState ) {
 		if ( _gpsState == GPS_STATE_HEADING ) {
 			// orient toward north
-			CGPoint center;
-			if ( _locationBallLayer ) {
-				center = _locationBallLayer.position;
-			} else {
-				CGRect rc = self.bounds;
-				center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2);
-			}
+			CGRect rc = self.bounds;
+			CGPoint center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
 			double rotation = OSMTransformRotation( _screenFromMapTransform );
 			[self animateRotationBy:-rotation aroundPoint:center];
 		}
@@ -1204,6 +1198,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			if ( elapsedTime >= duration ) {
 				[displayLink removeName:DisplayLinkHeading];
 			} else {
+				// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
 				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
 				double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
 					t /= d/2;

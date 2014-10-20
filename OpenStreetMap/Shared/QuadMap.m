@@ -127,12 +127,15 @@ static inline OSMRect ChildRect( QUAD_ENUM child, OSMRect parent )
 		for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
 			_children[child] = nil;
 		}
-		for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
-			QuadBox * c = _parent->_children[child];
-			if ( c == nil || !c->_whole )
-				return;
+		if ( _parent ) {
+			// if all children of parent exist and are whole then parent is whole as well
+			for ( QUAD_ENUM child = 0; child <= QUAD_LAST; ++child ) {
+				QuadBox * c = _parent->_children[child];
+				if ( c == nil || !c->_whole )
+					return;
+			}
+			[_parent makeWhole:success];
 		}
-		[_parent makeWhole:success];
 	} else {
 		_busy = NO;
 	}
