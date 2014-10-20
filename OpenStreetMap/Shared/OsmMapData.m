@@ -652,7 +652,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[queries addObject:query];
 	}
 
-#if 1
+#if 0
 	DLog(@"\nquery list:");
 	for ( ServerQuery * q in queries )
 		DLog(@"  %@", NSStringFromCGRect(CGRectFromOSMRect(q.rect)));
