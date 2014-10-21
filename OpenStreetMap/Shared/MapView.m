@@ -2407,6 +2407,18 @@ drop_pin:
 
 static NSString * const DisplayLinkPanning	= @"Panning";
 
+// disable gestures inside toolbar buttons
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+	// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
+
+	if ( [touch.view isKindOfClass:[UIControl class]] || [touch.view isKindOfClass:[UIToolbar class]] ) {
+		// we touched a button, slider, or other UIControl
+		return NO; // ignore the touch
+	}
+	return YES; // handle the touch
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
 	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
@@ -2415,6 +2427,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		return NO;
 	return YES;
 }
+
 - (void)panInertia:(NSTimer *)timer
 {
 	void (^inertiaBlock)() = (void (^)())timer.userInfo;

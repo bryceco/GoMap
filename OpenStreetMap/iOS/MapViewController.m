@@ -182,7 +182,6 @@
 	self.mapView.frame = rc;
 }
 
-
 // disable gestures inside toolbar buttons
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {

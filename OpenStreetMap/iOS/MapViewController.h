@@ -12,7 +12,7 @@
 
 @class MapView;
 
-@interface MapViewController : UIViewController <UIActionSheetDelegate>
+@interface MapViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate>
 {
 	IBOutlet UIToolbar		*	_toolbar;
 	IBOutlet UIBarButtonItem *	_trashcanButton;
