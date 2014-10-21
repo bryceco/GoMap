@@ -59,8 +59,6 @@
 		025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 025224E716D7292E00B6FD53 /* RotatingNavigationController.m */; };
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
-		025B841419DCF4350053C637 /* BuildingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 025B841319DCF4350053C637 /* BuildingsView.m */; };
-		025B841719DCF55C0053C637 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025B841619DCF55C0053C637 /* SceneKit.framework */; };
 		0260484219E66C8700415CB1 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0260484119E66C8700415CB1 /* DisplayLink.m */; };
 		0266D3A516C02D9200AD9A83 /* seamark_anchor_berth.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */; };
 		0266D3A616C02D9200AD9A83 /* seamark_anchorage.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */; };
@@ -1033,7 +1031,6 @@
 			files = (
 				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
-				025B841719DCF55C0053C637 /* SceneKit.framework in Frameworks */,
 				02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */,
 				02E6267219973A0700565D62 /* Security.framework in Frameworks */,
 				02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */,
@@ -2224,7 +2221,6 @@
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
 				024ADF3616AE44CB00875658 /* CoreData.xcdatamodeld in Sources */,
 				028F504519B949780093C423 /* CommonTagList.m in Sources */,
-				025B841419DCF4350053C637 /* BuildingsView.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
 				0260484219E66C8700415CB1 /* DisplayLink.m in Sources */,
