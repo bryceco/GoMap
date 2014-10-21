@@ -88,6 +88,7 @@
 		027A469B1673B251000BE55C /* OSM-Logo72.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469A1673B251000BE55C /* OSM-Logo72.png */; };
 		027A469E1673B257000BE55C /* OSM-Logo144.png in Resources */ = {isa = PBXBuildFile; fileRef = 027A469D1673B257000BE55C /* OSM-Logo144.png */; };
 		027AD5D019F5797400120654 /* poi in Resources */ = {isa = PBXBuildFile; fileRef = 027AD5CF19F5797400120654 /* poi */; };
+		027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AD5D119F5A18700120654 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
 		0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB316A0BB67002C46A9 /* shrub.p.64.png */; };
 		028F504519B949780093C423 /* CommonTagList.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* CommonTagList.m */; };
@@ -582,6 +583,8 @@
 		027A469A1673B251000BE55C /* OSM-Logo72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo72.png"; sourceTree = "<group>"; };
 		027A469D1673B257000BE55C /* OSM-Logo144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo144.png"; sourceTree = "<group>"; };
 		027AD5CF19F5797400120654 /* poi */ = {isa = PBXFileReference; lastKnownFileType = folder; name = poi; path = ../poi; sourceTree = "<group>"; };
+		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
 		0284FDB116A0B7DA002C46A9 /* tree.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.p.64.png; sourceTree = "<group>"; };
 		0284FDB316A0BB67002C46A9 /* shrub.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shrub.p.64.png; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; };
@@ -1028,6 +1031,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
+				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
 				025B841719DCF55C0053C637 /* SceneKit.framework in Frameworks */,
 				02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */,
 				02E6267219973A0700565D62 /* Security.framework in Frameworks */,
@@ -1040,7 +1045,6 @@
 				02DC59811671B79100213558 /* CoreText.framework in Frameworks */,
 				02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */,
 				02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */,
-				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1157,6 +1161,8 @@
 		02ACBA3216713CCB00BB4414 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				027AD5D319F5EA7D00120654 /* libobjc.A.dylib */,
+				027AD5D119F5A18700120654 /* CoreFoundation.framework */,
 				025B841619DCF55C0053C637 /* SceneKit.framework */,
 				02A194B119C6A432002338DA /* libsqlite3.0.dylib */,
 				02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */,
