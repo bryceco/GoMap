@@ -335,32 +335,6 @@ static BOOL IsClockwisePolygon( NSArray * points )
 	return area >= 0;
 }
 
-static BOOL IsClockwiseWay( OsmWay * way )
-{
-	if ( !way.isClosed )
-		return NO;
-	if ( way.nodes.count < 4 )
-		return NO;
-	CGFloat sum = 0;
-	BOOL first = YES;
-	OSMPoint offset;
-	OSMPoint previous;
-	for ( OsmNode * node in way.nodes )  {
-		OSMPoint point = node.location;
-		if ( first ) {
-			offset = point;
-			previous.x = previous.y = 0;
-			first = NO;
-		} else {
-			OSMPoint current = { point.x - offset.x, point.y - offset.y };
-			sum += previous.x*current.y - previous.y*current.x;
-			previous = current;
-		}
-	}
-	return sum >= 0;
-}
-
-
 
 static BOOL RotateLoop( NSMutableArray * loop, OSMRect viewRect )
 {

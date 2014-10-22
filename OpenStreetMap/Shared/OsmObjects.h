@@ -142,8 +142,9 @@ typedef enum {
 -(ONEWAY)computeIsOneWay;
 -(BOOL)isArea;
 -(BOOL)isClosed;
--(BOOL)isSimpleMultipolygonOuterMember;
+-(BOOL)isClockwise;
 -(double)wayArea;
+-(BOOL)isSimpleMultipolygonOuterMember;
 -(OSMPoint)pointOnWayForPoint:(OSMPoint)point;
 
 @end

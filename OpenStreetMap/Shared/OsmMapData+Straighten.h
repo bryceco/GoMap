@@ -19,5 +19,6 @@
 - (BOOL)disconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;
 - (BOOL)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;
 - (BOOL)joinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode;
+- (BOOL)circularizeWay:(OsmWay *)way;
 
 @end

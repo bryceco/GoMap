@@ -970,8 +970,12 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		_boundingBox = OSMRectMake(minX, minY, maxX-minX, maxY-minY);
 	}
 }
--(OSMPoint)centerPointWithArea:(double *)area
+-(OSMPoint)centerPointWithArea:(double *)pArea
 {
+	double dummy;
+	if ( pArea == NULL )
+		pArea = &dummy;
+
 	// compute centroid
 	NSInteger nodeCount = _nodes[0]==_nodes.lastObject ? _nodes.count-1 : _nodes.count;
 
@@ -998,32 +1002,58 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 				previous = current;
 			}
 		}
-		*area = sum/2;
-		OSMPoint point = { sumX/6/ *area, sumY/6/ *area };
+		*pArea = sum/2;
+		OSMPoint point = { sumX/6/ *pArea, sumY/6/ *pArea };
 		point.x += offset.x;
 		point.y += offset.y;
 		return point;
 	} else if ( nodeCount == 2 ) {
-		*area = 0;
+		*pArea = 0;
 		OsmNode * n1 = _nodes[0];
 		OsmNode * n2 = _nodes[1];
 		return OSMPointMake( (n1.lon+n2.lon)/2, (n1.lat+n2.lat)/2);
 	} else if ( nodeCount == 1 ) {
-		*area = 0;
+		*pArea = 0;
 		OsmNode * node = _nodes.lastObject;
 		return OSMPointMake(node.lon, node.lat);
 	} else {
-		*area = 0;
+		*pArea = 0;
 		OSMPoint pt = { 0, 0 };
 		return pt;
 	}
 }
+
 -(OSMPoint)centerPoint
 {
-	double area;
-	return [self centerPointWithArea:&area];
+	return [self centerPointWithArea:NULL];
 }
 
+-(BOOL)isClockwise
+{
+	if ( !self.isClosed )
+		return NO;
+	if ( self.nodes.count < 4 )
+		return NO;
+	double area = 0;
+	[self centerPointWithArea:&area];
+	CGFloat sum = 0;
+	BOOL first = YES;
+	OSMPoint offset;
+	OSMPoint previous;
+	for ( OsmNode * node in self.nodes )  {
+		OSMPoint point = node.location;
+		if ( first ) {
+			offset = point;
+			previous.x = previous.y = 0;
+			first = NO;
+		} else {
+			OSMPoint current = { point.x - offset.x, point.y - offset.y };
+			sum += previous.x*current.y - previous.y*current.x;
+			previous = current;
+		}
+	}
+	return sum >= 0;
+}
 
 -(id)initWithCoder:(NSCoder *)coder
 {

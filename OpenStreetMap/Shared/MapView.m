@@ -1579,12 +1579,13 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 typedef enum {
 	// used for extended edit actions:
 	ACTION_SPLIT,
-	ACTION_RECT,
+	ACTION_RECTANGULARIZE,
 	ACTION_STRAIGHTEN,
 	ACTION_REVERSE,
 	ACTION_DUPLICATE,
 	ACTION_JOIN,
 	ACTION_DISCONNECT,
+	ACTION_CIRCULARIZE,
 	ACTION_COPYTAGS,
 	ACTION_PASTETAGS,
 	// used by edit control:
@@ -1595,18 +1596,19 @@ typedef enum {
 NSString * ActionTitle( NSInteger action )
 {
 	switch (action) {
-		case ACTION_SPLIT:		return NSLocalizedString(@"Split",nil);
-		case ACTION_RECT:		return NSLocalizedString(@"Make Rectangular",nil);
-		case ACTION_STRAIGHTEN:	return NSLocalizedString(@"Straighten",nil);
-		case ACTION_REVERSE:	return NSLocalizedString(@"Reverse",nil);
-		case ACTION_DUPLICATE:	return NSLocalizedString(@"Duplicate",nil);
-		case ACTION_JOIN:		return NSLocalizedString(@"Join",nil);
-		case ACTION_DISCONNECT:	return NSLocalizedString(@"Disconnect",nil);
-		case ACTION_COPYTAGS:	return NSLocalizedString(@"Copy Tags",nil);
-		case ACTION_PASTETAGS:	return NSLocalizedString(@"Paste",nil);
-		case ACTION_EDITTAGS:	return NSLocalizedString(@"Tags", nil);
-		case ACTION_DELETE:		return NSLocalizedString(@"Delete",nil);
-		case ACTION_MORE:		return NSLocalizedString(@"More...",nil);
+		case ACTION_SPLIT:			return NSLocalizedString(@"Split",nil);
+		case ACTION_RECTANGULARIZE:	return NSLocalizedString(@"Make Rectangular",nil);
+		case ACTION_STRAIGHTEN:		return NSLocalizedString(@"Straighten",nil);
+		case ACTION_REVERSE:		return NSLocalizedString(@"Reverse",nil);
+		case ACTION_DUPLICATE:		return NSLocalizedString(@"Duplicate",nil);
+		case ACTION_CIRCULARIZE:	return NSLocalizedString(@"Make Circular",nil);
+		case ACTION_JOIN:			return NSLocalizedString(@"Join",nil);
+		case ACTION_DISCONNECT:		return NSLocalizedString(@"Disconnect",nil);
+		case ACTION_COPYTAGS:		return NSLocalizedString(@"Copy Tags",nil);
+		case ACTION_PASTETAGS:		return NSLocalizedString(@"Paste",nil);
+		case ACTION_EDITTAGS:		return NSLocalizedString(@"Tags", nil);
+		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
+		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
 	};
 	return nil;
 }
@@ -1636,7 +1638,7 @@ NSString * ActionTitle( NSInteger action )
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RECT) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
 			} else {
 				// line
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
@@ -1683,7 +1685,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_DUPLICATE:
 			error = NSLocalizedString(@"Not implemented",nil);
 			break;
-		case ACTION_RECT:
+		case ACTION_RECTANGULARIZE:
 			if ( !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) )
 				error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
 			else if ( ! [_editorLayer.mapData orthogonalizeWay:_editorLayer.selectedWay] )
@@ -1710,6 +1712,10 @@ NSString * ActionTitle( NSInteger action )
 				error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
 			else if ( ! [_editorLayer.mapData straightenWay:_editorLayer.selectedWay] )
 				error = NSLocalizedString(@"The way is not sufficiently straight",nil);
+			break;
+		case ACTION_CIRCULARIZE:
+			if ( ! [_editorLayer.mapData circularizeWay:_editorLayer.selectedWay] )
+				error = NSLocalizedString(@"The way cannot be made circular",nil);
 			break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
