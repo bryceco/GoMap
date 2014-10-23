@@ -30,6 +30,12 @@ typedef enum {
 	ONEWAY_FORWARD	= 1,
 } ONEWAY;
 
+typedef enum {
+	TRISTATE_UNKNOWN,
+	TRISTATE_YES,
+	TRISTATE_NO
+} TRISTATE;
+
 @interface OsmBaseObject : NSObject <NSCoding,NSCopying>
 {
 @protected
@@ -64,6 +70,7 @@ typedef enum {
 @property (assign,nonatomic)	OSMRect				boundingBox;
 @property (strong,nonatomic)	NSArray			*	shapeLayers;
 @property (readonly,nonatomic)	ONEWAY				isOneWay;
+@property (assign,nonatomic)	TRISTATE			isShown;
 
 +(NSArray *)typeKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;

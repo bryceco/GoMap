@@ -932,7 +932,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 								@"x86_64"    :	@4000,				// Simulator
 								@"i386"      :	@4000,				// Simulator
 
-								@"iPad5,4"	 :	@"",				// iPad Air 2
+								@"iPad5,4"	 :	@0,					// iPad Air 2
 								@"iPad4,5"   :	@2493,				// iPad Mini (2nd Generation iPad Mini - Cellular)
 								@"iPad4,4"   :	@2493,				// iPad Mini (2nd Generation iPad Mini - Wifi)
 								@"iPad4,2"   :	@2664,				// iPad Air 5th Generation iPad (iPad Air) - Cellular
@@ -1650,6 +1650,7 @@ enum {
 					  @"position"			: [NSNull null],
 					  @"transform"			: [NSNull null],
 					  @"affineTransform"	: [NSNull null],
+					  @"lineWidth"			: [NSNull null],
 #if FADE_INOUT
 #else
 					  @"hidden"				: [NSNull null],
@@ -2503,36 +2504,31 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 	return tagCount > 0;
 }
 
+
 -(NSMutableArray *)getVisibleObjects
 {
 	OSMRect box = [_mapView screenLongitudeLatitude];
 	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_mapData.wayCount];
-	NSMutableSet * relations = [NSMutableSet new];
 	[_mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
-		if ( !obj.deleted ) {
-			if ( obj.relations ) {
-				[relations addObjectsFromArray:obj.relations];
-			}
-			if ( obj.isNode ) {
-				if ( ((OsmNode *)obj).wayCount == 0 ) {
-					[a addObject:obj];
-				}
-			} else if ( obj.isWay ) {
-				[a addObject:obj];
-				for ( OsmNode * node in ((OsmWay *)obj).nodes ) {
-					if ( [node overlapsBox:box] && ShouldDisplayNodeInWay( node.tags ) ) {
-						[a addObject:node];
+		TRISTATE show = obj.isShown;
+		if ( show == TRISTATE_UNKNOWN ) {
+			if ( !obj.deleted ) {
+				if ( obj.isNode ) {
+					if ( ((OsmNode *)obj).wayCount == 0 || ShouldDisplayNodeInWay( obj.tags ) ) {
+						show = TRISTATE_YES;
 					}
+				} else if ( obj.isWay ) {
+					show = TRISTATE_YES;
+				} else if ( obj.isRelation ) {
+					show = TRISTATE_YES;
 				}
-			} else if ( obj.isRelation ) {
-				[relations addObject:obj];
 			}
+			obj.isShown = show == TRISTATE_YES ? TRISTATE_YES : TRISTATE_NO;
+		}
+		if ( show == TRISTATE_YES ) {
+			[a addObject:obj];
 		}
 	}];
-
-	for ( OsmRelation * r in relations ) {
-		[a addObject:r];
-	}
 	return a;
 }
 
