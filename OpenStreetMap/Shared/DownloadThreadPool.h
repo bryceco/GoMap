@@ -36,5 +36,6 @@
 -(void)dataForUrl:(NSString *)url partialCallback:(void(^)(NSData *))partialCallback completion:(void(^)(NSURLResponse * response, NSError * error))completion;
 -(void)streamForUrl:(NSString *)url callback:(void(^)(DownloadAgent *))callback;
 -(void)cancelAllDownloads;
+-(NSInteger)downloadsInProgress;
 
 @end

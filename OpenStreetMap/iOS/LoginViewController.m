@@ -88,14 +88,12 @@
 {
 	[super viewWillDisappear:animated];
 
-	if ( [self isMovingFromParentViewController] ) {
-		AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
-		appDelegate.userName		= [_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		appDelegate.userPassword	= [_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
+	appDelegate.userName		= [_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	appDelegate.userPassword	= [_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-		[KeyChain setString:appDelegate.userName forIdentifier:@"username"];
-		[KeyChain setString:appDelegate.userPassword forIdentifier:@"password"];
-	}
+	[KeyChain setString:appDelegate.userName forIdentifier:@"username"];
+	[KeyChain setString:appDelegate.userPassword forIdentifier:@"password"];
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

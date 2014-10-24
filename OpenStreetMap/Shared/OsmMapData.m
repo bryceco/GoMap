@@ -466,8 +466,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	for ( NSInteger i = 0; i < parents.count; ++i ) {
 		OsmBaseObject * parent = parents[i];
 		OSMRectBoxed * box = parentBoxes[i];
-		[self incrementModifyCount:parent];
-//		[self clearCachedProperties:parent undo:_undoManager];
+		[self clearCachedProperties:parent undo:_undoManager];
 		[parent computeBoundingBox];
 		[_spatial updateMember:parent fromBox:box.rect undo:_undoManager];
 	}
@@ -734,8 +733,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// get list of new quads to fetch
 		newQuads = [_region newQuadsForRect:box];
 	} else {
-		error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Edit download region is too large",nil) }];
-		[[DownloadThreadPool osmPool] cancelAllDownloads];
+		if ( [[DownloadThreadPool osmPool] downloadsInProgress] > 0 ) {
+			error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Edit download region is too large",nil) }];
+			[[DownloadThreadPool osmPool] cancelAllDownloads];
+		}
 	}
 #else
 	NSArray * newQuads = [_region newQuadsForRect:box];
@@ -993,7 +994,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void) updateObjectDictionary:(NSMutableDictionary *)dictionary oldId:(OsmIdentifier)oldId  newId:(OsmIdentifier)newId version:(NSInteger)newVersion changeset:(OsmIdentifier)changeset sqlUpdate:(NSMutableDictionary *)sqlUpdate
 {
 	OsmBaseObject * object = [dictionary objectForKey:@(oldId)];
-	assert( object && object.ident.longLongValue == oldId );
+	if ( object == nil ) {
+		// this can happen if they edited the upload XML and included an object that is not downloaded.
+		return;
+	}
+	assert( object.ident.longLongValue == oldId );
 	if ( newVersion == 0 && newId == 0 ) {
 		// Delete object for real
 		// When a way is deleted we delete the nodes also, but they aren't marked as deleted in the graph.
@@ -1391,7 +1396,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					char type[256] = "";
 					if ( sscanf( response.UTF8String, "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld", &localVersion, &serverVersion, type, &objId ) == 4 ) {
 						type[0] = _tolower( type[0] );
-						NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/%s/%lld", type, objId];
+						NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/%s/%lld/full", type, objId];
 
 						[OsmMapData osmDataForUrl:url3 quads:nil completion:^(ServerQuery *quads, OsmMapData * mapData, NSError *error) {
 							[self merge:mapData fromDownload:YES quadList:nil success:YES];

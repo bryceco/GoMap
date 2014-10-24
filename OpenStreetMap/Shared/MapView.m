@@ -787,6 +787,15 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	OSMPoint point = { x * 256, y * 256 };
 	return point;
 }
++(OSMRect)mapRectForLatLonRect:(OSMRect)latLon
+{
+	OSMRect rc = latLon;
+	OSMPoint p1 = [MapView mapPointForLatitude:rc.origin.y+rc.size.height longitude:rc.origin.x];	// latitude increases opposite of map
+	OSMPoint p2 = [MapView mapPointForLatitude:rc.origin.y longitude:rc.origin.x+rc.size.width];
+	rc = OSMRectMake( p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);	// map size
+	return rc;
+}
+
 
 -(OSMTransform)screenFromMapTransform
 {

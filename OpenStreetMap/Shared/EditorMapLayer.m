@@ -2815,12 +2815,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 						// its a node with text, such as an address node
 					} else {
 						// its a label on a building or polygon
-						OSMRect rc = object.boundingBox;
-						OSMPoint p1 = [MapView mapPointForLatitude:rc.origin.y+rc.size.height longitude:rc.origin.x];	// latitude increases opposite of map
-						OSMPoint p2 = [MapView mapPointForLatitude:rc.origin.y longitude:rc.origin.x+rc.size.width];
-						rc = OSMRectMake( p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);	// map size
-						rc = [_mapView boundingScreenRectForMapRect:rc];
-						if ( layer.bounds.size.width >= 1.1*rc.size.width ) {
+						OSMRect rcMap = [MapView mapRectForLatLonRect:object.boundingBox];
+						OSMRect	rcScreen = [_mapView boundingScreenRectForMapRect:rcMap];
+						if ( layer.bounds.size.width >= 1.1*rcScreen.size.width ) {
 							// text label is too big so hide it
 							[layer removeFromSuperlayer];
 							continue;

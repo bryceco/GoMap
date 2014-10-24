@@ -391,4 +391,13 @@ typedef void (^dequeueBlock)(void);
 	}
 }
 
+-(NSInteger)downloadsInProgress
+{
+	NSInteger count = 0;
+	@synchronized(_cancelFlags) {
+		count = [_cancelFlags count];
+	}
+	return count;
+}
+
 @end
