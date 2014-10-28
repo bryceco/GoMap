@@ -13,6 +13,7 @@
 #import "AerialList.h"
 #import "BingMapsGeometry.h"
 #import "BuildingsView.h"
+#import "BuildingsLayer.h"
 #import "DisplayLink.h"
 #import "DLog.h"
 #import "DownloadThreadPool.h"
@@ -40,7 +41,8 @@
 #endif
 
 
-#define FRAMERATE_TEST 0
+#define FRAMERATE_TEST	0
+#define SHOW_3D			1
 
 
 static const CGFloat Z_AERIAL		= -100;
@@ -50,7 +52,8 @@ static const CGFloat Z_GPSTRACE		= -40;
 //static const CGFloat Z_GPX		= -30;
 static const CGFloat Z_EDITOR		= -20;
 //static const CGFloat Z_EDITOR_GL	= -19;
-static const CGFloat Z_RULER		= -5;	// ruler is being buttons
+static const CGFloat Z_BUILDINGS	= -18;
+static const CGFloat Z_RULER		= -5;	// ruler is below buttons
 //static const CGFloat Z_BING_LOGO	= 2;
 static const CGFloat Z_BLINK		= 4;
 static const CGFloat Z_BALLOON		= 5;
@@ -151,7 +154,11 @@ CGSize SizeForImage( NSImage * image )
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
 		_editorLayer.zPosition = Z_EDITOR;
 		[bg addObject:_editorLayer];
-
+		
+		_buildingsLayer = [[BuildingsLayer alloc] initWithMapView:self];
+		_buildingsLayer.zPosition = Z_BUILDINGS;
+		[bg addObject:_buildingsLayer];
+		
 #if 0
 		_buildingsLayer = [[BuildingsView alloc] initWithMapView:self];
 		[self addSubview:_buildingsLayer];
@@ -264,7 +271,7 @@ CGSize SizeForImage( NSImage * image )
 	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f] }
 									   forState:UIControlStateNormal];
 
-#if DEBUG && 0
+#if DEBUG && SHOW_3D
 	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerPanGesture:)];
 	panGestureRecognizer.minimumNumberOfTouches = 2;
 	panGestureRecognizer.maximumNumberOfTouches = 2;
@@ -507,6 +514,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[_editorLayer save];
 }
 
+
 -(void)setFrame:(CGRect)rect
 {
 	[super setFrame:rect];
@@ -519,7 +527,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_rulerLayer.frame = CGRectMake(10, rect.size.height - 40, 150, 30);
 #endif
 
-	_buildingsLayer.frame = rect;
+//	_buildingsLayer.frame = rect;
 
 	CGSize oldSize = _editorLayer.bounds.size;
 	if ( oldSize.width ) {
@@ -2548,10 +2556,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 #endif
 	} else {
 		CGPoint centerPoint = [rotationGesture locationInView:self];
-		CGFloat angle = rotationGesture.rotation - _rotationCurrent;
+		CGFloat angle = rotationGesture.rotation;
 		[self rotateBy:angle aroundScreenPoint:centerPoint];
+		rotationGesture.rotation = 0.0;
 	}
-	_rotationCurrent = rotationGesture.rotation;
 }
 
 

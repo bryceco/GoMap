@@ -10,7 +10,7 @@
 #define Rocket_VectorMath_h
 
 
-#define TRANSFORM_3D 0
+#define TRANSFORM_3D 1
 
 
 typedef struct _OSMPoint {

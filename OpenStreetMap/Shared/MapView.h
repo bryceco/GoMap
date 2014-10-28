@@ -19,6 +19,7 @@
 @class CAShapeLayer;
 @class AerialList;
 @class AerialService;
+@class BuildingsLayer;
 @class BuildingsView;
 @class DisplayLink;
 @class EditorLayerGL;
@@ -117,7 +118,6 @@ typedef enum {
 	CLLocationManager				*	_locationManager;
 	CLLocation						*	_currentLocation;
 
-	CGFloat								_rotationCurrent;
 	CGFloat								_birdsEyeRotation;
 }
 
@@ -144,7 +144,7 @@ typedef enum {
 // overlays
 @property (readonly,nonatomic)	MercatorTileLayer	*	locatorLayer;
 @property (readonly,nonatomic)	MercatorTileLayer	*	gpsTraceLayer;
-@property (readonly,nonatomic)	BuildingsView		*	buildingsLayer;
+@property (readonly,nonatomic)	BuildingsLayer		*	buildingsLayer;
 @property (readonly,nonatomic)	NSArray				*	backgroundLayers;	// list of all layers that need to be resized, etc.
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;

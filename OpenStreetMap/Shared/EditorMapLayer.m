@@ -30,7 +30,7 @@
 #import "VectorMath.h"
 
 
-#define USE_SHAPELAYERS 1
+#define USE_SHAPELAYERS 0
 #define FADE_INOUT		0
 
 
@@ -566,7 +566,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 					isEntry = YES;
 				} else {
 					// if previous and current are both outside maybe we intersected
-					if ( LineSegmentIntersectsRectangle( prevPoint, pt, viewRect ) ) {
+					if ( LineSegmentIntersectsRectangle( prevPoint, pt, viewRect ) && !isinf(pt.x) && !isinf(prevPoint.x) ) {
 						isEntry = YES;
 						isExit = YES;
 					} else {
@@ -2906,7 +2906,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		return;
 	}
 
-	NSInteger nameLimit	= [self hasFastGraphics] ? 10 : 5;
+	NSInteger nameLimit	= [self geekbenchScore] >= 2000 ? 10 : 5;
 
 	CFTimeInterval totalTime = CACurrentMediaTime();
 

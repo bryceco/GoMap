@@ -21,7 +21,7 @@
 #import "MercatorTileLayer.h"
 
 
-#define CUSTOM_TRANSFORM 1
+#define CUSTOM_TRANSFORM 0
 
 
 extern CGSize SizeForImage(NSImage * image);
