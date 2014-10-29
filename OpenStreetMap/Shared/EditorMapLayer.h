@@ -21,7 +21,7 @@
 @class QuadMap;
 @class SpeechBalloonLayer;
 
-@interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>
+@interface EditorMapLayer : CATransformLayer<UIActionSheetDelegate,NSCoding>
 {
 	CGSize					_iconSize;
 	double					_highwayScale;

@@ -21,7 +21,7 @@
 #import "MercatorTileLayer.h"
 
 
-#define CUSTOM_TRANSFORM 0
+#define CUSTOM_TRANSFORM 1
 
 
 extern CGSize SizeForImage(NSImage * image);
@@ -516,7 +516,7 @@ typedef enum {
 
 		double scale = 256.0 / (1 << tileZ);
 		OSMPoint pt = { tileX * scale, tileY * scale };
-		pt = [_mapView screenPointFromMapPoint:pt];
+		pt = [_mapView screenPointFromMapPoint:pt birdsEye:NO];
 		layer.position		= CGPointFromOSMPoint( pt );
 		layer.bounds		= CGRectMake( 0, 0, 256, 256 );
 		layer.anchorPoint	= CGPointMake(0, 0);

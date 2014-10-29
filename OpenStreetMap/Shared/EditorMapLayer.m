@@ -30,11 +30,13 @@
 #import "VectorMath.h"
 
 
-#define USE_SHAPELAYERS 0
+#define USE_SHAPELAYERS 1
 #define FADE_INOUT		0
 
 
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
+
+const static CGFloat BuildingLevelHeight = 50;
 
 
 #define DEFAULT_LINECAP		kCALineCapSquare
@@ -55,6 +57,27 @@ enum {
 @property (assign,nonatomic)	CGFloat				zIndex;
 @end
 @implementation ObjectSubpart
+@end
+
+
+@interface LayerProperties : NSObject
+{
+@public
+	OSMPoint		position;
+	double			lineWidth;
+	CATransform3D	transform;
+	BOOL			is3D;
+}
+@end
+@implementation LayerProperties
+-(instancetype)init
+{
+	self = [super init];
+	if ( self ) {
+		transform = CATransform3DIdentity;
+	}
+	return self;
+}
 @end
 
 
@@ -489,7 +512,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	return newList;
 }
 
--(void)convertNodesToPoints:(NSMutableArray *)nodeList
+-(void)convertNodesToScreenPoints:(NSMutableArray *)nodeList
 {
 	if ( nodeList.count == 0 )
 		return;
@@ -504,7 +527,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 }
-+(void)convertNodesToPoints:(NSMutableArray *)nodeList
++(void)convertNodesToMapPoints:(NSMutableArray *)nodeList
 {
 	if ( nodeList.count == 0 )
 		return;
@@ -693,9 +716,9 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 	// convert lists of nodes to screen points
 	for ( NSMutableArray * a in outerSegments )
-		[self convertNodesToPoints:a];
+		[self convertNodesToScreenPoints:a];
 	for ( NSMutableArray * a in innerSegments )
-		[self convertNodesToPoints:a];
+		[self convertNodesToScreenPoints:a];
 
 	CGRect cgViewRect = self.bounds;
 	OSMRect viewRect = { cgViewRect.origin.x, cgViewRect.origin.y, cgViewRect.size.width, cgViewRect.size.height };
@@ -1344,9 +1367,11 @@ enum {
 	Z_LINE				= Z_BASE + 4,
 	Z_NODE				= Z_BASE + 5,
 	Z_TEXT				= Z_BASE + 6,
-	Z_HIGHLIGHT_WAY		= Z_BASE + 7,
-	Z_HIGHLIGHT_NODE	= Z_BASE + 8,
-	Z_ARROWS			= Z_BASE + 9,
+	Z_BUILDING_WALL		= Z_BASE + 7,
+	Z_BUILDING_ROOF		= Z_BASE + 8,
+	Z_HIGHLIGHT_WAY		= Z_BASE + 9,
+	Z_HIGHLIGHT_NODE	= Z_BASE + 10,
+	Z_ARROWS			= Z_BASE + 11,
 };
 
 -(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(CGPoint *)refPoint CF_RETURNS_RETAINED
@@ -1382,6 +1407,46 @@ enum {
 		}
 	}
 	return path;
+}
+
+-(CAShapeLayer *)wallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2
+{
+	OSMPoint dir = Sub( p2, p1 );
+	double length = Mag( dir );
+	double angle = atan2( dir.y, dir.x );
+
+	CAShapeLayer * wall = [CAShapeLayer new];
+	wall.anchorPoint = CGPointMake(0, 0);
+	wall.position	= CGPointMake( p1.x, p1.y );
+
+	CGFloat levels = 1;
+	CGPathRef wallPath	= CGPathCreateWithRect(CGRectMake(0, 0, length*PATH_SCALING, BuildingLevelHeight*levels), NULL);
+
+	double intensity = angle/M_PI + 1;
+	UIColor	* color = [UIColor colorWithHue:37/360.0 saturation:0.61 brightness:0.5+intensity/2 alpha:1.0];
+
+	wall.path			= wallPath;
+	wall.fillColor		= color.CGColor;
+	wall.lineCap		= DEFAULT_LINECAP;
+	wall.lineJoin		= DEFAULT_LINEJOIN;
+	wall.zPosition		= Z_BUILDING_WALL;
+
+	dir.x /= length;
+	dir.y /= length;
+
+	CATransform3D t1 = CATransform3DMakeRotation( M_PI/2, dir.x, dir.y, 0);
+	CATransform3D t2 = CATransform3DMakeRotation( angle, 0, 0, 1 );
+	CATransform3D t = CATransform3DConcat( t2, t1 );
+	wall.transform = t;
+
+	LayerProperties * props = [LayerProperties new];
+	[wall setValue:props forKey:@"properties"];
+	props->transform	= t;
+	props->position		= p1;
+	props->is3D			= YES;
+
+	CGPathRelease( wallPath );
+	return wall;
 }
 
 -(NSArray *)getShapeLayersForObject:(OsmBaseObject *)object
@@ -1442,8 +1507,9 @@ enum {
 			layer.shadowOpacity	= 0.25;
 			layer.zPosition		= Z_NODE;
 
-			[layer setValue:@(pt.x) forKey:@"_position_x"];
-			[layer setValue:@(pt.y) forKey:@"_position_y"];
+			LayerProperties * props = [LayerProperties new];
+			[layer setValue:props forKey:@"properties"];
+			props->position = pt;
 			[layers addObject:layer];
 
 		} else {
@@ -1458,8 +1524,10 @@ enum {
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_NODE;
-				[layer setValue:@(pt.x) forKey:@"_position_x"];
-				[layer setValue:@(pt.y) forKey:@"_position_y"];
+				LayerProperties * props = [LayerProperties new];
+				[layer setValue:props forKey:@"properties"];
+				props->position = pt;
+
 				[layers addObject:layer];
 
 			} else {
@@ -1483,8 +1551,10 @@ enum {
 				layer.shadowOpacity	= 0.25;
 				layer.zPosition		= Z_NODE;
 
-				[layer setValue:@(pt.x) forKey:@"_position_x"];
-				[layer setValue:@(pt.y) forKey:@"_position_y"];
+				LayerProperties * props = [LayerProperties new];
+				[layer setValue:props forKey:@"properties"];
+				props->position = pt;
+
 				[layers addObject:layer];
 				CGPathRelease(path);
 			}
@@ -1507,9 +1577,11 @@ enum {
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_CASING;
-				[layer setValue:@(refPoint.x) forKey:@"_position_x"];
-				[layer setValue:@(refPoint.y) forKey:@"_position_y"];
-				[layer setValue:@(layer.lineWidth) forKey:@"_lineWidth"];
+				LayerProperties * props = [LayerProperties new];
+				[layer setValue:props forKey:@"properties"];
+				props->position = OSMPointFromCGPoint( refPoint );
+				props->lineWidth = layer.lineWidth;
+
 				[layers addObject:layer];
 				CGPathRelease(path);
 			}
@@ -1538,9 +1610,12 @@ enum {
 			layer.lineCap		= DEFAULT_LINECAP;
 			layer.lineJoin		= DEFAULT_LINEJOIN;
 			layer.zPosition		= Z_LINE;
-			[layer setValue:@(refPoint.x) forKey:@"_position_x"];
-			[layer setValue:@(refPoint.y) forKey:@"_position_y"];
-			[layer setValue:@(layer.lineWidth) forKey:@"_lineWidth"];
+
+			LayerProperties * props = [LayerProperties new];
+			[layer setValue:props forKey:@"properties"];
+			props->position		= OSMPointFromCGPoint( refPoint );
+			props->lineWidth	= layer.lineWidth;
+
 			CGPathRelease(path);
 			[layers addObject:layer];
 		}
@@ -1569,9 +1644,9 @@ enum {
 			if ( outer.count > 0 ) {
 				// convert from nodes to screen points
 				for ( NSMutableArray * a in outer )
-					[EditorMapLayer convertNodesToPoints:a];
+					[EditorMapLayer convertNodesToMapPoints:a];
 				for ( NSMutableArray * a in inner )
-					[EditorMapLayer convertNodesToPoints:a];
+					[EditorMapLayer convertNodesToMapPoints:a];
 
 				// draw
 				CGMutablePathRef path = CGPathCreateMutable();
@@ -1592,9 +1667,57 @@ enum {
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
-				[layer setValue:@(refPoint.x) forKey:@"_position_x"];
-				[layer setValue:@(refPoint.y) forKey:@"_position_y"];
+				LayerProperties * props = [LayerProperties new];
+				[layer setValue:props forKey:@"properties"];
+				props->position = OSMPointFromCGPoint( refPoint );
+
 				[layers addObject:layer];
+
+				// if its a building then add walls for 3D
+				if ( object.tags[@"building"] != nil ) {
+
+					double height = [object.tags[ @"height" ] doubleValue];
+					if ( height ) {	// height in meters
+						height *= BuildingLevelHeight / 3.0;
+					} else {
+						height = [object.tags[ @"building:levels" ] doubleValue];
+						if ( height == 0 )
+							height = 1;
+						height *= BuildingLevelHeight;
+					}
+
+					// get walls
+					for ( NSArray * w in outer ) {
+						for ( NSInteger i = 0; i < w.count-1; ++i ) {
+							OSMPointBoxed * pp1 = w[i];
+							OSMPointBoxed * pp2 = w[i+1];
+							CAShapeLayer * wall = [self wallLayerForPoint:pp1.point point:pp2.point];
+							[layers addObject:wall];
+						}
+					}
+
+					// get roof
+					UIColor	* color = [UIColor lightGrayColor];
+					CAShapeLayer * roof = [CAShapeLayer new];
+					roof.anchorPoint = CGPointMake(0, 0);
+					roof.position		= refPoint;
+					roof.path			= path;
+					roof.fillColor		= color.CGColor;
+					roof.lineCap		= DEFAULT_LINECAP;
+					roof.lineJoin		= DEFAULT_LINEJOIN;
+					roof.zPosition		= Z_BUILDING_ROOF;
+					CATransform3D t = CATransform3DMakeTranslation( 0, 0, height );
+
+					props = [LayerProperties new];
+					[roof setValue:props forKey:@"properties"];
+					props->position		= OSMPointFromCGPoint( refPoint );
+					props->transform	= t;
+					props->is3D			= YES;
+					roof.transform = t;
+
+					[layers addObject:roof];
+				}
+
 				CGPathRelease(path);
 			}
 		}
@@ -1634,8 +1757,11 @@ enum {
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
-				[layer setValue:@(pt.x) forKey:@"_position_x"];
-				[layer setValue:@(pt.y) forKey:@"_position_y"];
+
+				LayerProperties * props = [LayerProperties new];
+				[layer setValue:props forKey:@"properties"];
+				props->position = pt;
+
 				[layers addObject:layer];
 			}
 		}
@@ -1689,8 +1815,9 @@ enum {
 	if ( _highlightObject ) {
 		[highlights addObject:_highlightObject];
 	}
+
 	for ( OsmBaseObject * object in highlights ) {
-		BOOL selected = object == _selectedNode || object == _selectedWay || [self.extraSelections containsObject:object];
+		BOOL selected = object == _selectedNode || object == _selectedWay || [_extraSelections containsObject:object];
 
 		if ( object.isWay ) {
 			CGFloat		lineWidth	= MaxSubpartWidthForWay( object.isWay, @(zoom) );
@@ -1707,8 +1834,12 @@ enum {
 			layer.path			= path;
 			layer.fillColor		= UIColor.clearColor.CGColor;
 			layer.zPosition		= Z_HIGHLIGHT_WAY;
+
+			LayerProperties * props = [LayerProperties new];
+			[layer setValue:props forKey:@"properties"];
+			props->lineWidth = layer.lineWidth;
+
 			[layers addObject:layer];
-			[layer setValue:@(layer.lineWidth) forKey:@"_lineWidth"];
 			CGPathRelease(path);
 
 			// draw nodes of way
@@ -1908,9 +2039,9 @@ enum {
 
 	// convert from nodes to screen points
 	for ( NSMutableArray * a in outer )
-		[self convertNodesToPoints:a];
+		[self convertNodesToScreenPoints:a];
 	for ( NSMutableArray * a in inner )
-		[self convertNodesToPoints:a];
+		[self convertNodesToScreenPoints:a];
 
 	// draw
 	CGMutablePathRef path = CGPathCreateMutable();
@@ -2727,6 +2858,14 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 #if USE_SHAPELAYERS
 - (void)layoutSublayersSafe
 {
+	if ( _mapView.birdsEyeRotation ) {
+		CATransform3D t = CATransform3DMakeRotation( _mapView.birdsEyeRotation, 1.0, 0, 0);
+		t.m34 = 1.0/_mapView.birdsEyeDistance;
+		self.sublayerTransform = t;
+	} else {
+		self.sublayerTransform = CATransform3DIdentity;
+	}
+
 	NSArray * previousObjects = _shownObjects;
 
 	_shownObjects = [self getObjectsToDisplay];
@@ -2785,24 +2924,35 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		for ( CALayer * layer in layers ) {
 
 			// configure the layer for presentation
-
-			OSMPoint pt = { [[layer valueForKey:@"_position_x"] doubleValue], [[layer valueForKey:@"_position_y"] doubleValue] };
-			OSMPoint pt2 = OSMPointApplyTransform( pt, _mapView.screenFromMapTransform );
+			LayerProperties * props = [layer valueForKey:@"properties"];
+			OSMPoint pt = props->position;
+			OSMPoint pt2 = [_mapView screenPointFromMapPoint:pt birdsEye:NO];
 
 			if ( [layer isKindOfClass:[CAShapeLayer class]] && !object.isNode ) {
 
 				// way or area -- need to rotate and scale
-				CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
-				t = CGAffineTransformScale( t, pScale, pScale );
-				t = CGAffineTransformRotate( t, tRotation );
-				layer.affineTransform = t;
+				if ( props->is3D ) {
+					if ( _mapView.birdsEyeRotation == 0.0 ) {
+						[layer removeFromSuperlayer];
+						continue;
+					}
+					CATransform3D t = CATransform3DMakeTranslation( pt2.x-pt.x, pt2.y-pt.y, 0 );
+					t = CATransform3DScale( t, pScale, pScale, 1 );
+					t = CATransform3DRotate( t, tRotation, 0, 0, 1 );
+					t = CATransform3DConcat( props->transform, t );
+					layer.transform = t;
+				} else {
+					CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
+					t = CGAffineTransformScale( t, pScale, pScale );
+					t = CGAffineTransformRotate( t, tRotation );
+					layer.affineTransform = t;
+				}
 
 				layer.bounds = CGRectMake(0, 0, ceil(256/tScale), ceil(256/tScale));
 
 				if ( [layer isKindOfClass:[CAShapeLayer class]] ) {
 					CAShapeLayer * shape = (id)layer;
-					NSNumber * lineWidth = [shape valueForKey:@"_lineWidth"];
-					shape.lineWidth = lineWidth.doubleValue / pScale;
+					shape.lineWidth = props->lineWidth / pScale;
 				}
 
 			} else {

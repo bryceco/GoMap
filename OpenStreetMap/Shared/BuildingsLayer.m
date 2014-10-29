@@ -61,7 +61,7 @@
 
 -(NSArray *)layersForWay:(OsmWay *)way
 {
-
+	return nil;
 }
 
 -(void)layoutSublayers

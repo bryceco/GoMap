@@ -18,7 +18,6 @@
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
-#import "EditorLayerGL.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
 #import "MapView.h"
@@ -51,8 +50,7 @@ static const CGFloat Z_LOCATOR		= -50;
 static const CGFloat Z_GPSTRACE		= -40;
 //static const CGFloat Z_GPX		= -30;
 static const CGFloat Z_EDITOR		= -20;
-//static const CGFloat Z_EDITOR_GL	= -19;
-static const CGFloat Z_BUILDINGS	= -18;
+//static const CGFloat Z_BUILDINGS	= -18;
 static const CGFloat Z_RULER		= -5;	// ruler is below buttons
 //static const CGFloat Z_BING_LOGO	= 2;
 static const CGFloat Z_BLINK		= 4;
@@ -118,6 +116,7 @@ CGSize SizeForImage( NSImage * image )
 		self.backgroundColor = UIColor.whiteColor;
 
 		_screenFromMapTransform = OSMTransformIdentity();
+		_birdsEyeDistance = 1000.0;
 
 		// get aerial database
 		self.customAerials = [AerialList new];
@@ -154,20 +153,11 @@ CGSize SizeForImage( NSImage * image )
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
 		_editorLayer.zPosition = Z_EDITOR;
 		[bg addObject:_editorLayer];
-		
+
+#if 0 && SHOW_3D
 		_buildingsLayer = [[BuildingsLayer alloc] initWithMapView:self];
 		_buildingsLayer.zPosition = Z_BUILDINGS;
 		[bg addObject:_buildingsLayer];
-		
-#if 0
-		_buildingsLayer = [[BuildingsView alloc] initWithMapView:self];
-		[self addSubview:_buildingsLayer];
-#endif
-
-#if 0
-		_editorLayerGL = [[EditorLayerGL alloc] initWithMapView:self];
-		_editorLayerGL.zPosition = Z_EDITOR_GL;
-		[bg addObject:_editorLayerGL];
 #endif
 
 #if 0 // support gpx traces
@@ -496,7 +486,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	// save defaults first
 	CGRect rc = self.layer.bounds;
 	OSMPoint center = { rc.origin.x + rc.size.width/2, rc.origin.y + rc.size.height/2 };
-	center = [self mapPointFromScreenPoint:center];
+	center = [self mapPointFromScreenPoint:center birdsEye:NO];
 	center = [MapView longitudeLatitudeFromMapPoint:center];
 	double scale = OSMTransformScaleX(self.screenFromMapTransform);
 	[[NSUserDefaults standardUserDefaults] setDouble:scale		forKey:@"view.scale"];
@@ -814,11 +804,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return OSMTransformInvert( _screenFromMapTransform );
 }
 
--(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point
+-(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye
 {
-	if ( _birdsEyeRotation ) {
+	if ( _birdsEyeRotation && birdsEye ) {
 		// narrow things toward top of screen
-		double D = 1000.0;	// distance from eye to center of screen
+		double D = _birdsEyeDistance;	// distance from eye to center of screen
 		CGRect rc = self.layer.bounds;
 		CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
 
@@ -837,12 +827,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return OSMPointApplyTransform( point, self.mapFromScreenTransform );
 }
 
--(OSMPoint)screenPointFromMapPoint:(OSMPoint)point
+-(OSMPoint)screenPointFromMapPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye
 {
 	point = OSMPointApplyTransform( point, _screenFromMapTransform );
-	if ( _birdsEyeRotation ) {
+	if ( _birdsEyeRotation && birdsEye ) {
 		// narrow things toward top of screen
-		double D = 1000.0;	// distance from eye to center of screen
+		double D = _birdsEyeDistance;	// distance from eye to center of screen
 		CGRect rc = self.layer.bounds;
 		CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
 		point.x -= center.x;
@@ -899,7 +889,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point
 {
-	OSMPoint mapPoint = [self mapPointFromScreenPoint:OSMPointMake(point.x, point.y)];
+	OSMPoint mapPoint = [self mapPointFromScreenPoint:OSMPointMake(point.x, point.y) birdsEye:NO];
 	OSMPoint coord = [MapView longitudeLatitudeFromMapPoint:mapPoint];
 	CLLocationCoordinate2D loc = { coord.y, coord.x };
 	return loc;
@@ -933,7 +923,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		rc.origin.x, rc.origin.y + rc.size.height
 	};
 	for ( int i = 0; i < 4; ++i ) {
-		corners[i] = [self screenPointFromMapPoint:corners[i]];
+		corners[i] = [self screenPointFromMapPoint:corners[i] birdsEye:NO];
 	}
 	double minX = corners[0].x;
 	double minY = corners[0].y;
@@ -959,7 +949,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		rc.origin.x, rc.origin.y + rc.size.height
 	};
 	for ( int i = 0; i < 4; ++i ) {
-		corners[i] = [self mapPointFromScreenPoint:corners[i]];
+		corners[i] = [self mapPointFromScreenPoint:corners[i] birdsEye:NO];
 	}
 	double minX = corners[0].x;
 	double minY = corners[0].y;
@@ -1004,7 +994,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude
 {
 	OSMPoint pt = [MapView mapPointForLatitude:latitude longitude:longitude];
-	pt = [self screenPointFromMapPoint:pt];
+	pt = [self screenPointFromMapPoint:pt birdsEye:NO];
 	return CGPointFromOSMPoint(pt);
 }
 
@@ -1452,7 +1442,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 -(void)setMapCenter:(OSMPoint)mapCenter scale:(double)newScale
 {
 	// translate
-	OSMPoint point = [self screenPointFromMapPoint:mapCenter];
+	OSMPoint point = [self screenPointFromMapPoint:mapCenter birdsEye:NO];
 	CGRect rc = self.layer.bounds;
 	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
 	CGPoint delta = { center.x - point.x, center.y - point.y };
@@ -1485,7 +1475,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		ratio = maxZoomIn / scale;
 	}
 
-	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter)];
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
 	t = OSMTransformTranslate( t, offset.x, offset.y );
 	t = OSMTransformScale( t, ratio );
@@ -1498,7 +1488,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( angle == 0.0 )
 		return;
 
-	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter)];
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
 	t = OSMTransformTranslate( t, offset.x, offset.y );
 	t = OSMTransformRotate( t, angle );
@@ -2583,7 +2573,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 	CGRect rc = self.bounds;
 	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
-	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center)];
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center) birdsEye:NO];
 
 	//	t.m34 = 1.0 / -2000;
 	t = OSMTransformTranslate( t, offset.x, offset.y );

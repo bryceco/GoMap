@@ -22,7 +22,6 @@
 @class BuildingsLayer;
 @class BuildingsView;
 @class DisplayLink;
-@class EditorLayerGL;
 @class EditorMapLayer;
 @class GpxLayer;
 @class HtmlErrorWindow;
@@ -117,8 +116,6 @@ typedef enum {
 
 	CLLocationManager				*	_locationManager;
 	CLLocation						*	_currentLocation;
-
-	CGFloat								_birdsEyeRotation;
 }
 
 #if TARGET_OS_IPHONE
@@ -139,7 +136,6 @@ typedef enum {
 @property (readonly,nonatomic)	MercatorTileLayer	*	aerialLayer;
 @property (readonly,nonatomic)	MercatorTileLayer	*	mapnikLayer;
 @property (readonly,nonatomic)	EditorMapLayer		*	editorLayer;
-@property (readonly,nonatomic)	EditorLayerGL		*	editorLayerGL;
 @property (readonly,nonatomic)	GpxLayer			*	gpxLayer;
 // overlays
 @property (readonly,nonatomic)	MercatorTileLayer	*	locatorLayer;
@@ -158,6 +154,10 @@ typedef enum {
 
 @property (strong,nonatomic)	AerialList					*	customAerials;
 
+@property (assign,readonly)		CGFloat							birdsEyeRotation;
+@property (assign,readonly)		CGFloat							birdsEyeDistance;
+
+
 
 -(void)updateBingButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
@@ -172,8 +172,8 @@ typedef enum {
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude;
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point;
 
--(OSMPoint)screenPointFromMapPoint:(OSMPoint)point;
--(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point;
+-(OSMPoint)screenPointFromMapPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye;
+-(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye;
 
 //-(OSMRect)mapRectFromScreenRect:(OSMRect)rect;
 //-(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
