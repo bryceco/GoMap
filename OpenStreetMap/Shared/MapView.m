@@ -12,8 +12,6 @@
 
 #import "AerialList.h"
 #import "BingMapsGeometry.h"
-#import "BuildingsView.h"
-#import "BuildingsLayer.h"
 #import "DisplayLink.h"
 #import "DLog.h"
 #import "DownloadThreadPool.h"
