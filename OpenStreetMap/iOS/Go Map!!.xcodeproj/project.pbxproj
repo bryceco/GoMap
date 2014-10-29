@@ -51,7 +51,6 @@
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
-		023F3D0E19FF5539007E8D82 /* BuildingsLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 023F3D0D19FF5539007E8D82 /* BuildingsLayer.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
 		0242331316750C81008A3B6A /* ArrowBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0242331216750C81008A3B6A /* ArrowBlue.png */; };
 		024ADF3616AE44CB00875658 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */; };
@@ -538,8 +537,6 @@
 		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
-		023F3D0C19FF5539007E8D82 /* BuildingsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildingsLayer.h; path = ../Shared/BuildingsLayer.h; sourceTree = "<group>"; };
-		023F3D0D19FF5539007E8D82 /* BuildingsLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuildingsLayer.m; path = ../Shared/BuildingsLayer.m; sourceTree = "<group>"; };
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../Shared/VectorMath.m; sourceTree = "<group>"; };
 		0242331216750C81008A3B6A /* ArrowBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlue.png; sourceTree = "<group>"; };
 		024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
@@ -551,8 +548,6 @@
 		025224E716D7292E00B6FD53 /* RotatingNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotatingNavigationController.m; sourceTree = "<group>"; };
 		025A1CFA1690B96E002B60CB /* OSM-Logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo57.png"; sourceTree = "<group>"; };
 		025A1CFB1690B96E002B60CB /* OSM-Logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo114.png"; sourceTree = "<group>"; };
-		025B841319DCF4350053C637 /* BuildingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuildingsView.m; path = ../Shared/BuildingsView.m; sourceTree = "<group>"; };
-		025B841519DCF4480053C637 /* BuildingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildingsView.h; path = ../Shared/BuildingsView.h; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		0260484019E66C8700415CB1 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; };
 		0260484119E66C8700415CB1 /* DisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplayLink.m; path = ../Shared/DisplayLink.m; sourceTree = "<group>"; };
@@ -1592,10 +1587,6 @@
 				02C3C73819A6DCEA003B6783 /* AerialList.h */,
 				02C3C73919A6DCEA003B6783 /* AerialList.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
-				023F3D0C19FF5539007E8D82 /* BuildingsLayer.h */,
-				023F3D0D19FF5539007E8D82 /* BuildingsLayer.m */,
-				025B841519DCF4480053C637 /* BuildingsView.h */,
-				025B841319DCF4350053C637 /* BuildingsView.m */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				028F504319B949780093C423 /* CommonTagList.h */,
 				028F504419B949780093C423 /* CommonTagList.m */,
@@ -2179,7 +2170,6 @@
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
 				02ACBCFE16713F2B00BB4414 /* UndoManagerDump.m in Sources */,
 				02ACBD131671730000BB4414 /* DDXMLElementAdditions.m in Sources */,
-				023F3D0E19FF5539007E8D82 /* BuildingsLayer.m in Sources */,
 				024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */,
 				02ACBD141671730000BB4414 /* NSString+DDXML.m in Sources */,
 				021B30C71973AA4400B36EFF /* OsmMapData+Orthogonalize.m in Sources */,
