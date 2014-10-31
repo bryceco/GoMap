@@ -36,7 +36,7 @@
 
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
 
-const static CGFloat BuildingLevelHeight = 50;
+const static CGFloat BuildingHeightPerMeter = 1.0;
 
 
 #define DEFAULT_LINECAP		kCALineCapSquare
@@ -138,6 +138,7 @@ const CGFloat WayHighlightRadius = 6.0;
 		}];
 
 		if ( YES ) {
+			// implement crosshairs
 			_crossHairs = [CAShapeLayer new];
 			UIBezierPath * path = [UIBezierPath bezierPath];
 			[path moveToPoint:CGPointMake(-10, 0)];
@@ -1374,21 +1375,20 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 }
 
 #if USE_SHAPELAYERS
-enum {
-	Z_BASE				= -20,
-	Z_OCEAN				= Z_BASE + 1,
-	Z_AREA				= Z_BASE + 2,
-	Z_CASING			= Z_BASE + 3,
-	Z_LINE				= Z_BASE + 4,
-	Z_NODE				= Z_BASE + 5,
-	Z_TEXT				= Z_BASE + 6,
-	Z_BUILDING_WALL		= Z_BASE + 7,
-	Z_BUILDING_ROOF		= Z_BASE + 8,
-	Z_HIGHLIGHT_WAY		= Z_BASE + 9,
-	Z_HIGHLIGHT_NODE	= Z_BASE + 10,
-	Z_ARROWS			= Z_BASE + 11,
-	Z_CROSSHAIRS		= Z_BASE + 12,
-};
+#define ZSCALE 0.001
+const static CGFloat Z_BASE				= -1;
+const static CGFloat Z_OCEAN			= Z_BASE + 1 * ZSCALE;
+const static CGFloat Z_AREA				= Z_BASE + 2 * ZSCALE;
+const static CGFloat Z_CASING			= Z_BASE + 3 * ZSCALE;
+const static CGFloat Z_LINE				= Z_BASE + 4 * ZSCALE;
+const static CGFloat Z_NODE				= Z_BASE + 5 * ZSCALE;
+const static CGFloat Z_TEXT				= Z_BASE + 6 * ZSCALE;
+const static CGFloat Z_BUILDING_WALL	= Z_BASE + 7 * ZSCALE;
+//const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 8 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 9 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 10 * ZSCALE;
+const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
+const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 
 -(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(CGPoint *)refPoint CF_RETURNS_RETAINED
 {
@@ -1425,33 +1425,25 @@ enum {
 	return path;
 }
 
--(CALayer *)wallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2 height:(double)height
+-(CALayer *)buildingWallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2 height:(double)height hue:(double)hue
 {
 	OSMPoint dir = Sub( p2, p1 );
 	double length = Mag( dir );
 	double angle = atan2( dir.y, dir.x );
 
-	CALayer * wall = [CALayer new];
-	wall.anchorPoint = CGPointMake(0, 0);
-	wall.position	= CGPointMake( p1.x, p1.y );
-
-	CGPathRef wallPath	= CGPathCreateWithRect(CGRectMake(0, 0, length*PATH_SCALING, height), NULL);
-
 	double intensity = angle/M_PI;
 	if ( intensity < 0 )
 		++intensity;
-	UIColor	* color = [UIColor colorWithHue:37/360.0 saturation:0.61 brightness:0.5+intensity/2 alpha:1.0];
-//	UIColor	* color = [UIColor colorWithHue:intensity saturation:0.61 brightness:1.0 alpha:1.0];
+	UIColor	* color = [UIColor colorWithHue:(37+hue)/360.0 saturation:0.61 brightness:0.5+intensity/2 alpha:1.0];
 
-//	wall.path			= wallPath;
-//	wall.fillColor		= color.CGColor;
-//	wall.lineCap		= DEFAULT_LINECAP;
-//	wall.lineJoin		= DEFAULT_LINEJOIN;
+	CALayer * wall = [CALayer new];
+	wall.anchorPoint	= CGPointMake(0, 0);
 	wall.zPosition		= Z_BUILDING_WALL;
 	wall.doubleSided	= YES;
 	wall.opaque			= YES;
-	wall.bounds			= CGRectMake(0, 0, length*PATH_SCALING, height);
+	wall.frame			= CGRectMake(0, 0, length*PATH_SCALING, height);
 	wall.backgroundColor= color.CGColor;
+	wall.position	= CGPointMake( p1.x, p1.y );
 
 	CATransform3D t1 = CATransform3DMakeRotation( M_PI/2, dir.x, dir.y, 0);
 	CATransform3D t2 = CATransform3DMakeRotation( angle, 0, 0, 1 );
@@ -1464,7 +1456,6 @@ enum {
 	props->position		= p1;
 	props->is3D			= YES;
 
-	CGPathRelease( wallPath );
 	return wall;
 }
 
@@ -1697,28 +1688,31 @@ enum {
 
 					double height = [object.tags[ @"height" ] doubleValue];
 					if ( height ) {	// height in meters
-						height *= BuildingLevelHeight / 3.0;
+						height *= BuildingHeightPerMeter;
 					} else {
 						height = [object.tags[ @"building:levels" ] doubleValue];
 						if ( height == 0 )
 							height = 1;
-						height *= BuildingLevelHeight;
+						height *= 4*BuildingHeightPerMeter;
 					}
 
 					// get walls
+					double hue = drand48()*20-10;
 					for ( NSArray * w in outer ) {
 						for ( NSInteger i = 0; i < w.count-1; ++i ) {
 							OSMPointBoxed * pp1 = w[i];
 							OSMPointBoxed * pp2 = w[i+1];
-							CALayer * wall = [self wallLayerForPoint:pp1.point point:pp2.point height:height];
+							CALayer * wall = [self buildingWallLayerForPoint:pp1.point point:pp2.point height:height hue:hue];
 							[layers addObject:wall];
 						}
 					}
 
+#if 0
 					// get roof
 					UIColor	* color = [UIColor lightGrayColor];
 					CAShapeLayer * roof = [CAShapeLayer new];
-					roof.anchorPoint = CGPointMake(0, 0);
+					roof.anchorPoint	= CGPointMake(0, 0);
+					roof.frame			= CGPathGetPathBoundingBox( path );
 					roof.position		= refPoint;
 					roof.path			= path;
 					roof.fillColor		= color.CGColor;
@@ -1726,7 +1720,6 @@ enum {
 					roof.lineJoin		= DEFAULT_LINEJOIN;
 					roof.zPosition		= Z_BUILDING_ROOF;
 					roof.doubleSided	= YES;
-					roof.bounds			= CGRectMake(0, 0, 500, 500);
 					CATransform3D t = CATransform3DMakeTranslation( 0, 0, height );
 
 					props = [LayerProperties new];
@@ -1737,6 +1730,7 @@ enum {
 					roof.transform = t;
 
 					[layers addObject:roof];
+#endif
 				}
 
 				CGPathRelease(path);
@@ -2880,11 +2874,13 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 - (void)layoutSublayersSafe
 {
 	if ( _mapView.birdsEyeRotation ) {
-		CATransform3D t = CATransform3DMakeRotation( _mapView.birdsEyeRotation, 1.0, 0, 0);
+		CATransform3D t = CATransform3DIdentity;
 		t.m34 = -1.0/_mapView.birdsEyeDistance;
+		t = CATransform3DRotate( t, _mapView.birdsEyeRotation, 1.0, 0, 0);
 		self.sublayerTransform = t;
 	} else {
-		self.sublayerTransform = CATransform3DIdentity;
+		self.sublayerTransform	= CATransform3DIdentity;
+		self.transform			= CATransform3DIdentity;
 	}
 
 	NSArray * previousObjects = _shownObjects;
@@ -2945,12 +2941,12 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		for ( CALayer * layer in layers ) {
 
 			// configure the layer for presentation
+			BOOL isShapeLayer = [layer isKindOfClass:[CAShapeLayer class]];
 			LayerProperties * props = [layer valueForKey:@"properties"];
 			OSMPoint pt = props->position;
 			OSMPoint pt2 = [_mapView screenPointFromMapPoint:pt birdsEye:NO];
-			BOOL isShape = [layer isKindOfClass:[CAShapeLayer class]];
 
-			if ( props->is3D || (isShape && !object.isNode) ) {
+			if ( props->is3D || (isShapeLayer && !object.isNode) ) {
 
 				// way or area -- need to rotate and scale
 				if ( props->is3D ) {
@@ -2958,11 +2954,8 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 						[layer removeFromSuperlayer];
 						continue;
 					}
-					if ( !isShape ) {
-						NSLog(@"wall");
-					}
 					CATransform3D t = CATransform3DMakeTranslation( pt2.x-pt.x, pt2.y-pt.y, 0 );
-					t = CATransform3DScale( t, pScale, pScale, 1 );
+					t = CATransform3DScale( t, pScale, pScale, pScale );
 					t = CATransform3DRotate( t, tRotation, 0, 0, 1 );
 					t = CATransform3DConcat( props->transform, t );
 					layer.transform = t;
@@ -2973,13 +2966,13 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 					layer.affineTransform = t;
 				}
 
-				if ( isShape ) {
+				if ( isShapeLayer ) {
 					layer.bounds = CGRectMake(0, 0, ceil(256/tScale), ceil(256/tScale));
 				} else {
 					// its a wall, so bounds are already height/length of wall
 				}
 
-				if ( [layer isKindOfClass:[CAShapeLayer class]] ) {
+				if ( isShapeLayer ) {
 					CAShapeLayer * shape = (id)layer;
 					shape.lineWidth = props->lineWidth / pScale;
 				}
@@ -3238,7 +3231,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 + (void)osmHitTestEnumerate:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
-	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point];
+	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OSMRect viewCoord = [mapView screenLongitudeLatitude];
 	OSMSize pixelsPerDegree = { mapView.bounds.size.width / viewCoord.size.width, mapView.bounds.size.height / viewCoord.size.height };
 
@@ -3426,7 +3419,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
 	pt.x += delta.x;
 	pt.y -= delta.y;
-	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt];
+	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt birdsEye:YES];
 	[_mapData setLongitude:loc.longitude latitude:loc.latitude forNode:node inWay:_selectedWay];
 
 #if USE_SHAPELAYERS
@@ -3441,7 +3434,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	[self saveSelection];
 
-	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:point];
+	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OsmNode * node = [_mapData createNodeAtLocation:loc];
 #if USE_SHAPELAYERS
 	[self setNeedsLayout];
@@ -3571,30 +3564,10 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 -(void)setNeedsDisplayForObject:(OsmBaseObject *)object
 {
-#if 1
 #if USE_SHAPELAYERS
 	[self setNeedsLayout];
 #else
 	[self setNeedsDisplay];
-#endif
-#else
-	if ( object == nil ) {
-		[self setNeedsDisplay];
-		return;
-	}
-	if ( object.isWay ) {
-		OSMRect box = [((OsmWay *)object) boundingBox];
-		OSMPoint pt1 = [_mapView viewPointForLatitude:box.origin.y longitude:box.origin.x];
-		OSMPoint pt2 = [_mapView viewPointForLatitude:box.origin.y+box.size.height longitude:box.origin.x+box.size.width];
-		box.origin = pt1;
-		box.size.width = pt2.x - pt1.x;
-		box.size.height = pt1.y - pt2.y;
-		box = NSInsetRect(box, -10, -10);
-		box = NSOffsetRect(box, self.bounds.origin.x, self.bounds.origin.y);
-		[self setNeedsDisplayInRect:box];
-	} else {
-		[self setNeedsDisplay];
-	}
 #endif
 }
 

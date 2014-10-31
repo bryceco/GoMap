@@ -52,8 +52,9 @@ static const CGFloat Z_EDITOR		= -20;
 static const CGFloat Z_RULER		= -5;	// ruler is below buttons
 //static const CGFloat Z_BING_LOGO	= 2;
 static const CGFloat Z_BLINK		= 4;
-static const CGFloat Z_BALLOON		= 5;
+static const CGFloat Z_BALL			= 5;
 static const CGFloat Z_FLASH		= 6;
+static const CGFloat Z_PUSHPIN		= 7;
 
 
 CGSize SizeForImage( NSImage * image )
@@ -699,7 +700,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	// save pushpinView coordinates
 	CLLocationCoordinate2D pp = { 0 };
 	if ( _pushpinView ) {
-		pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint];
+		pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:NO];
 	}
 #endif
 
@@ -822,7 +823,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		point.x += center.x;
 		point.y += center.y;
 	}
-	return OSMPointApplyTransform( point, self.mapFromScreenTransform );
+	point = OSMPointApplyTransform( point, self.mapFromScreenTransform );
+	return point;
 }
 
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye
@@ -885,9 +887,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return OSMRectApplyTransform(rect, self.screenFromMapTransform);
 }
 
--(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point
+-(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point birdsEye:(BOOL)birdsEye
 {
-	OSMPoint mapPoint = [self mapPointFromScreenPoint:OSMPointMake(point.x, point.y) birdsEye:NO];
+	OSMPoint mapPoint = [self mapPointFromScreenPoint:OSMPointMake(point.x, point.y) birdsEye:birdsEye];
 	OSMPoint coord = [MapView longitudeLatitudeFromMapPoint:mapPoint];
 	CLLocationCoordinate2D loc = { coord.y, coord.x };
 	return loc;
@@ -1288,7 +1290,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
 
 #if TARGET_OS_IPHONE
-	CLLocationCoordinate2D pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint];
+	CLLocationCoordinate2D pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:NO];
 #endif
 
 	if ( !_userOverrodeLocationPosition ) {
@@ -1306,7 +1308,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	if ( _locationBallLayer == nil ) {
 		_locationBallLayer = [LocationBallLayer new];
-		_locationBallLayer.zPosition = Z_BALLOON;
+		_locationBallLayer.zPosition = Z_BALL;
 		_locationBallLayer.heading = 0.0;
 		_locationBallLayer.showHeading = YES;
 		[self.layer addSublayer:_locationBallLayer];
@@ -1869,7 +1871,7 @@ NSString * ActionTitle( NSInteger action )
 
 	_pushpinView = [PushPinView new];
 	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
-	_pushpinView.layer.zPosition = Z_BALLOON;
+	_pushpinView.layer.zPosition = Z_PUSHPIN;
 
 	_pushpinView.arrowPoint = point;
 
@@ -2732,7 +2734,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				OsmNode * node = (id)_editorLayer.selectedPrimary;
 				point = [self screenPointForLatitude:node.lat longitude:node.lon];
 			} else if ( _editorLayer.selectedPrimary.isWay ) {
-				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point];
+				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
 				OSMPoint pt = { latLon.longitude, latLon.latitude };
 				pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
 				point = [self screenPointForLatitude:pt.y longitude:pt.x];

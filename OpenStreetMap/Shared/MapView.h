@@ -167,7 +167,7 @@ typedef enum {
 
 -(OSMRect)screenLongitudeLatitude;
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude;
--(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point;
+-(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point birdsEye:(BOOL)birdsEye;
 
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye;
 -(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye;
