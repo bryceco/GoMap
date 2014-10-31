@@ -2058,63 +2058,70 @@ NSString * ActionTitle( NSInteger action )
 			++nextIndex;
 		// add new node at point
 		CGPoint newPoint;
-		if ( way.nodes.count < 2 ) {
-			// create 2nd point in the direction of the center of the screen
-			CGPoint centerPoint = self.center;
-			BOOL vert = fabs(prevPoint.x - centerPoint.x) < fabs(prevPoint.y - centerPoint.y);
-			if ( vert ) {
-				newPoint.x = prevPoint.x;
-				newPoint.y = fabs(centerPoint.y-prevPoint.y) < 30 ? prevPoint.y + 60 : 2*centerPoint.y - prevPoint.y;
-			} else {
-				newPoint.x = fabs(centerPoint.x-prevPoint.x) < 30 ? prevPoint.x + 60 : 2*centerPoint.x - prevPoint.x;
-				newPoint.y = prevPoint.y;
-			}
-		} else if ( way.nodes.count == 2 ) {
-			// create 3rd point 90 degrees from first 2
-			OsmNode * n1 = way.nodes[1-prevIndex];
-			CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon];
-			CGPoint delta = { p1.x - prevPoint.x, p1.y - prevPoint.y };
-			double len = hypot( delta.x, delta.y );
-			if ( len > 100 ) {
-				delta.x *= 100/len;
-				delta.y *= 100/len;
-			}
-			OSMPoint centerPoint = { self.center.x, self.center.y };
-			OSMPoint np1 = { prevPoint.x - delta.y, prevPoint.y + delta.x };
-			OSMPoint np2 = { prevPoint.x + delta.y, prevPoint.y - delta.x };
-			if ( DistanceFromPointToPoint(np1, centerPoint) < DistanceFromPointToPoint(np2, centerPoint) )
-				newPoint = CGPointMake(np1.x,np1.y);
-			else
-				newPoint = CGPointMake(np2.x, np2.y);
+		if ( _editorLayer.crossHairs && hypot( prevPoint.x-self.center.x, prevPoint.y-self.center.y) > 10.0 ) {
+
+			newPoint = self.center;
+
 		} else {
-			// create 4th point and beyond following angle of previous 3
-			OsmNode * n1 = prevIndex == 0 ? way.nodes[1] : way.nodes[prevIndex-1];
-			OsmNode * n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex-2];
-			CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon];
-			CGPoint p2 = [self screenPointForLatitude:n2.lat longitude:n2.lon];
-			OSMPoint d1 = { prevPoint.x - p1.x, prevPoint.y - p1.y };
-			OSMPoint d2 = { p1.x - p2.x, p1.y - p2.y };
-			double a1 = atan2( d1.y, d1.x );
-			double a2 = atan2( d2.y, d2.x );
-			double dist = hypot( d1.x, d1.y );
-			// if previous angle was 90 degrees then match length of first leg to make a rectangle
-			if ( (way.nodes.count == 3 || way.nodes.count == 4) && fabs(fmod(fabs(a1-a2),M_PI)-M_PI/2) < 0.1 ) {
-				dist = hypot(d2.x, d2.y);
-			} else if ( dist > 100 )
-				dist = 100;
-			a1 += a1 - a2;
-			newPoint = CGPointMake( prevPoint.x + dist*cos(a1), prevPoint.y + dist*sin(a1) );
+
+			if ( way.nodes.count < 2 ) {
+				// create 2nd point in the direction of the center of the screen
+				CGPoint centerPoint = self.center;
+				BOOL vert = fabs(prevPoint.x - centerPoint.x) < fabs(prevPoint.y - centerPoint.y);
+				if ( vert ) {
+					newPoint.x = prevPoint.x;
+					newPoint.y = fabs(centerPoint.y-prevPoint.y) < 30 ? prevPoint.y + 60 : 2*centerPoint.y - prevPoint.y;
+				} else {
+					newPoint.x = fabs(centerPoint.x-prevPoint.x) < 30 ? prevPoint.x + 60 : 2*centerPoint.x - prevPoint.x;
+					newPoint.y = prevPoint.y;
+				}
+			} else if ( way.nodes.count == 2 ) {
+				// create 3rd point 90 degrees from first 2
+				OsmNode * n1 = way.nodes[1-prevIndex];
+				CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon];
+				CGPoint delta = { p1.x - prevPoint.x, p1.y - prevPoint.y };
+				double len = hypot( delta.x, delta.y );
+				if ( len > 100 ) {
+					delta.x *= 100/len;
+					delta.y *= 100/len;
+				}
+				OSMPoint centerPoint = { self.center.x, self.center.y };
+				OSMPoint np1 = { prevPoint.x - delta.y, prevPoint.y + delta.x };
+				OSMPoint np2 = { prevPoint.x + delta.y, prevPoint.y - delta.x };
+				if ( DistanceFromPointToPoint(np1, centerPoint) < DistanceFromPointToPoint(np2, centerPoint) )
+					newPoint = CGPointMake(np1.x,np1.y);
+				else
+					newPoint = CGPointMake(np2.x, np2.y);
+			} else {
+				// create 4th point and beyond following angle of previous 3
+				OsmNode * n1 = prevIndex == 0 ? way.nodes[1] : way.nodes[prevIndex-1];
+				OsmNode * n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex-2];
+				CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon];
+				CGPoint p2 = [self screenPointForLatitude:n2.lat longitude:n2.lon];
+				OSMPoint d1 = { prevPoint.x - p1.x, prevPoint.y - p1.y };
+				OSMPoint d2 = { p1.x - p2.x, p1.y - p2.y };
+				double a1 = atan2( d1.y, d1.x );
+				double a2 = atan2( d2.y, d2.x );
+				double dist = hypot( d1.x, d1.y );
+				// if previous angle was 90 degrees then match length of first leg to make a rectangle
+				if ( (way.nodes.count == 3 || way.nodes.count == 4) && fabs(fmod(fabs(a1-a2),M_PI)-M_PI/2) < 0.1 ) {
+					dist = hypot(d2.x, d2.y);
+				} else if ( dist > 100 )
+					dist = 100;
+				a1 += a1 - a2;
+				newPoint = CGPointMake( prevPoint.x + dist*cos(a1), prevPoint.y + dist*sin(a1) );
+			}
+			// make sure selected point is on-screen
+			CGRect rc = self.bounds;
+			rc.origin.x += 20;
+			rc.origin.y += 20;
+			rc.size.width -= 40;
+			rc.size.height -= 190+20;
+			newPoint.x = MAX( newPoint.x, rc.origin.x );
+			newPoint.x = MIN( newPoint.x, rc.origin.x+rc.size.width);
+			newPoint.y = MAX( newPoint.y, rc.origin.y );
+			newPoint.y = MIN( newPoint.y, rc.origin.y+rc.size.height);
 		}
-		// make sure selected point is on-screen
-		CGRect rc = self.bounds;
-		rc.origin.x += 20;
-		rc.origin.y += 20;
-		rc.size.width -= 40;
-		rc.size.height -= 190+20;
-		newPoint.x = MAX( newPoint.x, rc.origin.x );
-		newPoint.x = MIN( newPoint.x, rc.origin.x+rc.size.width);
-		newPoint.y = MAX( newPoint.y, rc.origin.y );
-		newPoint.y = MIN( newPoint.y, rc.origin.y+rc.size.height);
 
 		if ( way.nodes.count >= 2 ) {
 			OsmNode * start = prevIndex == 0 ? way.nodes.lastObject : way.nodes[0];

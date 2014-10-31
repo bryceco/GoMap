@@ -54,6 +54,7 @@
 @property (assign,nonatomic)	BOOL					addNodeInProgress;
 @property (assign,nonatomic)	BOOL					addWayInProgress;
 @property (assign,nonatomic)	BOOL					enableMapCss;
+@property (readonly,nonatomic)	CAShapeLayer		*	crossHairs;
 
 - (id)initWithMapView:(MapView *)mapView;
 - (void)didReceiveMemoryWarning;

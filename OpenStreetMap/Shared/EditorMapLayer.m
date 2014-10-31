@@ -137,6 +137,21 @@ const CGFloat WayHighlightRadius = 6.0;
 			return data;
 		}];
 
+		if ( YES ) {
+			_crossHairs = [CAShapeLayer new];
+			UIBezierPath * path = [UIBezierPath bezierPath];
+			[path moveToPoint:CGPointMake(-10, 0)];
+			[path addLineToPoint:CGPointMake(10, 0)];
+			[path moveToPoint:CGPointMake(0, -10)];
+			[path addLineToPoint:CGPointMake(0, 10)];
+			_crossHairs.anchorPoint	= CGPointMake(0.5, 0.5);
+			_crossHairs.path		= path.CGPath;
+			_crossHairs.strokeColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1.0].CGColor;
+			_crossHairs.bounds		= CGRectMake(-10, -10, 20, 20);
+			_crossHairs.lineWidth	= 2.0;
+			_crossHairs.zPosition	= Z_CROSSHAIRS;
+		}
+
 		self.actions = @{
 //						  @"onOrderIn"	: [NSNull null],
 //						  @"onOrderOut" : [NSNull null],
@@ -1360,7 +1375,7 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 
 #if USE_SHAPELAYERS
 enum {
-	Z_BASE				= -10,
+	Z_BASE				= -20,
 	Z_OCEAN				= Z_BASE + 1,
 	Z_AREA				= Z_BASE + 2,
 	Z_CASING			= Z_BASE + 3,
@@ -1372,6 +1387,7 @@ enum {
 	Z_HIGHLIGHT_WAY		= Z_BASE + 9,
 	Z_HIGHLIGHT_NODE	= Z_BASE + 10,
 	Z_ARROWS			= Z_BASE + 11,
+	Z_CROSSHAIRS		= Z_BASE + 12,
 };
 
 -(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(CGPoint *)refPoint CF_RETURNS_RETAINED
@@ -1409,30 +1425,33 @@ enum {
 	return path;
 }
 
--(CAShapeLayer *)wallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2
+-(CALayer *)wallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2 height:(double)height
 {
 	OSMPoint dir = Sub( p2, p1 );
 	double length = Mag( dir );
 	double angle = atan2( dir.y, dir.x );
 
-	CAShapeLayer * wall = [CAShapeLayer new];
+	CALayer * wall = [CALayer new];
 	wall.anchorPoint = CGPointMake(0, 0);
 	wall.position	= CGPointMake( p1.x, p1.y );
 
-	CGFloat levels = 1;
-	CGPathRef wallPath	= CGPathCreateWithRect(CGRectMake(0, 0, length*PATH_SCALING, BuildingLevelHeight*levels), NULL);
+	CGPathRef wallPath	= CGPathCreateWithRect(CGRectMake(0, 0, length*PATH_SCALING, height), NULL);
 
-	double intensity = angle/M_PI + 1;
+	double intensity = angle/M_PI;
+	if ( intensity < 0 )
+		++intensity;
 	UIColor	* color = [UIColor colorWithHue:37/360.0 saturation:0.61 brightness:0.5+intensity/2 alpha:1.0];
+//	UIColor	* color = [UIColor colorWithHue:intensity saturation:0.61 brightness:1.0 alpha:1.0];
 
-	wall.path			= wallPath;
-	wall.fillColor		= color.CGColor;
-	wall.lineCap		= DEFAULT_LINECAP;
-	wall.lineJoin		= DEFAULT_LINEJOIN;
+//	wall.path			= wallPath;
+//	wall.fillColor		= color.CGColor;
+//	wall.lineCap		= DEFAULT_LINECAP;
+//	wall.lineJoin		= DEFAULT_LINEJOIN;
 	wall.zPosition		= Z_BUILDING_WALL;
-
-	dir.x /= length;
-	dir.y /= length;
+	wall.doubleSided	= YES;
+	wall.opaque			= YES;
+	wall.bounds			= CGRectMake(0, 0, length*PATH_SCALING, height);
+	wall.backgroundColor= color.CGColor;
 
 	CATransform3D t1 = CATransform3DMakeRotation( M_PI/2, dir.x, dir.y, 0);
 	CATransform3D t2 = CATransform3DMakeRotation( angle, 0, 0, 1 );
@@ -1691,7 +1710,7 @@ enum {
 						for ( NSInteger i = 0; i < w.count-1; ++i ) {
 							OSMPointBoxed * pp1 = w[i];
 							OSMPointBoxed * pp2 = w[i+1];
-							CAShapeLayer * wall = [self wallLayerForPoint:pp1.point point:pp2.point];
+							CALayer * wall = [self wallLayerForPoint:pp1.point point:pp2.point height:height];
 							[layers addObject:wall];
 						}
 					}
@@ -1706,6 +1725,8 @@ enum {
 					roof.lineCap		= DEFAULT_LINECAP;
 					roof.lineJoin		= DEFAULT_LINEJOIN;
 					roof.zPosition		= Z_BUILDING_ROOF;
+					roof.doubleSided	= YES;
+					roof.bounds			= CGRectMake(0, 0, 500, 500);
 					CATransform3D t = CATransform3DMakeTranslation( 0, 0, height );
 
 					props = [LayerProperties new];
@@ -2860,7 +2881,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
 	if ( _mapView.birdsEyeRotation ) {
 		CATransform3D t = CATransform3DMakeRotation( _mapView.birdsEyeRotation, 1.0, 0, 0);
-		t.m34 = 1.0/_mapView.birdsEyeDistance;
+		t.m34 = -1.0/_mapView.birdsEyeDistance;
 		self.sublayerTransform = t;
 	} else {
 		self.sublayerTransform = CATransform3DIdentity;
@@ -2927,14 +2948,18 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 			LayerProperties * props = [layer valueForKey:@"properties"];
 			OSMPoint pt = props->position;
 			OSMPoint pt2 = [_mapView screenPointFromMapPoint:pt birdsEye:NO];
+			BOOL isShape = [layer isKindOfClass:[CAShapeLayer class]];
 
-			if ( [layer isKindOfClass:[CAShapeLayer class]] && !object.isNode ) {
+			if ( props->is3D || (isShape && !object.isNode) ) {
 
 				// way or area -- need to rotate and scale
 				if ( props->is3D ) {
 					if ( _mapView.birdsEyeRotation == 0.0 ) {
 						[layer removeFromSuperlayer];
 						continue;
+					}
+					if ( !isShape ) {
+						NSLog(@"wall");
 					}
 					CATransform3D t = CATransform3DMakeTranslation( pt2.x-pt.x, pt2.y-pt.y, 0 );
 					t = CATransform3DScale( t, pScale, pScale, 1 );
@@ -2948,7 +2973,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 					layer.affineTransform = t;
 				}
 
-				layer.bounds = CGRectMake(0, 0, ceil(256/tScale), ceil(256/tScale));
+				if ( isShape ) {
+					layer.bounds = CGRectMake(0, 0, ceil(256/tScale), ceil(256/tScale));
+				} else {
+					// its a wall, so bounds are already height/length of wall
+				}
 
 				if ( [layer isKindOfClass:[CAShapeLayer class]] ) {
 					CAShapeLayer * shape = (id)layer;
@@ -3021,6 +3050,12 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( CALayer * layer in _highlightLayers ) {
 		// add new highlights
 		[self addSublayer:layer];
+	}
+
+	if ( _crossHairs ) {
+		CGRect rc = self.bounds;
+		_crossHairs.position = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
+		[self addSublayer:_crossHairs];
 	}
 
 	// NSLog(@"%ld layers", (long)self.sublayers.count);
