@@ -114,17 +114,14 @@ extern CGSize SizeForImage(NSImage * image);
 #if !CUSTOM_TRANSFORM
 		self.affineTransform = CGAffineTransformFromOSMTransform( _mapView.screenFromMapTransform );
 #endif
+		CATransform3D t = CATransform3DIdentity;
+		t.m34 = -1/_mapView.birdsEyeDistance;
+		t = CATransform3DRotate( t, _mapView.birdsEyeRotation, 1, 0, 0);
+		self.sublayerTransform = t;
+
 		[self setNeedsLayout];
 	}
 }
-
-#if !CUSTOM_TRANSFORM
--(void)setFrame:(CGRect)frame
-{
-	[super setFrame:frame];
-	assert(NO);	// since we are transformed we should set bounds and position instead
-}
-#endif
 
 
 -(int32_t)zoomLevel
@@ -206,6 +203,26 @@ extern CGSize SizeForImage(NSImage * image);
 }
 
 
+-(BOOL)layerOverlapsScreen:(CALayer *)layer
+{
+	CGRect rc = layer.frame;
+	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	OSMPoint p1 = { rc.origin.x, rc.origin.y };
+	OSMPoint p2 = { rc.origin.x, rc.origin.y+rc.size.height };
+	OSMPoint p3 = { rc.origin.x+rc.size.width, rc.origin.y+rc.size.height };
+	OSMPoint p4 = { rc.origin.x+rc.size.width, rc.origin.y };
+	p1 = ToBirdsEye( p1, center, _mapView.birdsEyeDistance, _mapView.birdsEyeRotation );
+	p2 = ToBirdsEye( p2, center, _mapView.birdsEyeDistance, _mapView.birdsEyeRotation );
+	p3 = ToBirdsEye( p3, center, _mapView.birdsEyeDistance, _mapView.birdsEyeRotation );
+	p4 = ToBirdsEye( p4, center, _mapView.birdsEyeDistance, _mapView.birdsEyeRotation );
+
+	OSMRect rect = OSMRectFromCGRect(rc);
+	return	OSMRectContainsPoint(rect, p1) ||
+			OSMRectContainsPoint(rect, p2) ||
+			OSMRectContainsPoint(rect, p3) ||
+			OSMRectContainsPoint(rect, p4);
+}
+
 -(void)removeUnneededTilesForRect:(OSMRect)rect zoomLevel:(NSInteger)zoomLevel
 {
 	const int MAX_ZOOM = 30;
@@ -214,8 +231,7 @@ extern CGSize SizeForImage(NSImage * image);
 
 	// remove any tiles that don't intersect the current view
 	for ( CALayer * layer in self.sublayers ) {
-		OSMRect layerFrame = OSMRectFromCGRect( layer.frame );
-		if ( ! OSMRectIntersectsRect( rect, layerFrame ) ) {
+		if ( ! [self layerOverlapsScreen:layer] ) {
 			[removeList addObject:layer];
 		}
 	}
@@ -545,7 +561,7 @@ typedef enum {
 	int32_t tileSouth	= ceil( (rect.origin.y + rect.size.height) * zoom );
 	int32_t tileEast	= ceil( (rect.origin.x + rect.size.width ) * zoom );
 
-	if ( (tileEast-tileWest)*(tileSouth-tileNorth) > 100 ) {
+	if ( (tileEast-tileWest)*(tileSouth-tileNorth) > 1000 ) {
 		DLog(@"Bad tile transform");
 		return;	// something is wrong
 	}

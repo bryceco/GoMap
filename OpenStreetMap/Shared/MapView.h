@@ -151,8 +151,8 @@ typedef enum {
 
 @property (strong,nonatomic)	AerialList					*	customAerials;
 
-@property (assign,readonly)		CGFloat							birdsEyeRotation;
-@property (assign,readonly)		CGFloat							birdsEyeDistance;
+@property (readonly,nonatomic)	CGFloat							birdsEyeRotation;
+@property (readonly,nonatomic)	CGFloat							birdsEyeDistance;
 
 
 
@@ -166,7 +166,7 @@ typedef enum {
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 
 -(OSMRect)screenLongitudeLatitude;
--(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude;
+-(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude birdsEye:(BOOL)birdsEye;
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point birdsEye:(BOOL)birdsEye;
 
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye;

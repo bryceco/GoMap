@@ -262,7 +262,7 @@ static double distance( double lat1, double lon1, double lat2, double lon2 )
 	CGMutablePathRef	path = CGPathCreateMutable();
 	NSInteger			count = 0;
 	for ( GpxPoint * point in self.activeTrack.points ) {
-		CGPoint pt = [_mapView screenPointForLatitude:point.latitude longitude:point.longitude];
+		CGPoint pt = [_mapView screenPointForLatitude:point.latitude longitude:point.longitude birdsEye:YES];
 		if ( count == 0 ) {
 			CGPathMoveToPoint(path, NULL, pt.x, pt.y );
 		} else {

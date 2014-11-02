@@ -538,7 +538,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			nodeList[index] = nodeList[0];
 		} else {
 			OsmNode * node = nodeList[index];
-			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 			nodeList[index] = [OSMPointBoxed pointWithPoint:OSMPointFromCGPoint(pt)];
 		}
 	}
@@ -1046,7 +1046,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	CGMutablePathRef path = CGPathCreateMutable();
 	BOOL first = YES;
 	for ( OsmNode * node in way.nodes ) {
-		CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+		CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 		if ( isinf(pt.x) )
 			break;
 		if ( first ) {
@@ -1443,7 +1443,9 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 	wall.opaque			= YES;
 	wall.frame			= CGRectMake(0, 0, length*PATH_SCALING, height);
 	wall.backgroundColor= color.CGColor;
-	wall.position	= CGPointMake( p1.x, p1.y );
+	wall.position		= CGPointMake( p1.x, p1.y );
+	wall.borderWidth	= 1.0;
+	wall.borderColor	= [UIColor blackColor].CGColor;
 
 	CATransform3D t1 = CATransform3DMakeRotation( M_PI/2, dir.x, dir.y, 0);
 	CATransform3D t2 = CATransform3DMakeRotation( angle, 0, 0, 1 );
@@ -1454,6 +1456,7 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 	[wall setValue:props forKey:@"properties"];
 	props->transform	= t;
 	props->position		= p1;
+	props->lineWidth	= 1.0;
 	props->is3D			= YES;
 
 	return wall;
@@ -1697,7 +1700,7 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 					}
 
 					// get walls
-					double hue = drand48()*20-10;
+					double hue = object.ident.longLongValue % 20 - 10;
 					for ( NSArray * w in outer ) {
 						for ( NSInteger i = 0; i < w.count-1; ++i ) {
 							OSMPointBoxed * pp1 = w[i];
@@ -1792,6 +1795,7 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 					  @"transform"			: [NSNull null],
 					  @"affineTransform"	: [NSNull null],
 					  @"lineWidth"			: [NSNull null],
+					  @"borderWidth"		: [NSNull null],
 #if FADE_INOUT
 #else
 					  @"hidden"				: [NSNull null],
@@ -1862,7 +1866,7 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 			for ( OsmNode * node in nodes ) {
 				layer				= [CAShapeLayer new];
 				CGRect		rect	= CGRectMake(-WayHighlightRadius, -WayHighlightRadius, 2*WayHighlightRadius, 2*WayHighlightRadius);
-				layer.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+				layer.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 				layer.strokeColor	= node == _selectedNode ? UIColor.redColor.CGColor : UIColor.greenColor.CGColor;
 				layer.fillColor		= UIColor.clearColor.CGColor;
 				layer.lineWidth		= 2.0;
@@ -1876,7 +1880,7 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 		} else if ( object.isNode ) {
 
 			OsmNode * node = (id)object;
-			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 
 			CAShapeLayer * layer = [CAShapeLayer new];
 			CGRect rect = CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2, MinIconSizeInPixels, MinIconSizeInPixels);
@@ -2131,7 +2135,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 
 	// draw nodes of way
 	for ( OsmNode * node in nodes ) {
-		CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+		CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 		if ( node == _selectedNode ) {
 			CGContextSetRGBStrokeColor(ctx, 1,0,0, 1);	// red
 		} else {
@@ -2300,7 +2304,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 	} else {
 		// it is a node or area
 		OSMPoint point = [way centerPoint];
-		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
+		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x birdsEye:NO];
 
 		UIColor * textColor2 = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
 		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:0 font:nil color:textColor2 shadowColor:ShadowColorForColor2(textColor2) context:ctx];
@@ -2318,7 +2322,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 
 	for ( OsmNode * node in way.nodes ) {
 
-		OSMPoint pt = OSMPointFromCGPoint( [_mapView screenPointForLatitude:node.lat longitude:node.lon] );
+		OSMPoint pt = OSMPointFromCGPoint( [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO] );
 		BOOL inside = OSMRectContainsPoint( viewRect, pt );
 
 		if ( first ) {
@@ -2460,7 +2464,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			return NO;
 		
 		OSMPoint point = way ? way.centerPoint : relation.centerPoint;
-		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x];
+		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x birdsEye:NO];
 		UIFont * font = [UIFont systemFontOfSize:11];
 		UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
 		UIColor * shadowColor = ShadowColorForColor2(textColor);
@@ -2487,11 +2491,11 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 
 	CGPoint pt;
 	if ( node.isNode ) {
-		pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+		pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 	} else if ( node.isWay ) {
 		// this path is taken when MapCSS is drawing an icon in the center of an area, such as a parking lot
 		OSMPoint latLon = [node.isWay centerPoint];
-		pt = [_mapView screenPointForLatitude:latLon.y longitude:latLon.x];
+		pt = [_mapView screenPointForLatitude:latLon.y longitude:latLon.x birdsEye:NO];
 	} else {
 		assert(NO);
 		return NO;
@@ -2623,7 +2627,7 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 			CGPathRelease(path);
 		} else if ( object.isNode ) {
 			OsmNode * node = (id)object;
-			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 
 			CGContextBeginPath(ctx);
 			if ( selected )
@@ -2934,6 +2938,8 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	const double	tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
 	const double	pScale		= tScale / PATH_SCALING;
 
+	const double pixelsPerMeter = 1.0 / [_mapView metersPerPixel];
+
 	for ( OsmBaseObject * object in _shownObjects ) {
 
 		NSArray * layers = [self getShapeLayersForObject:object];
@@ -2955,10 +2961,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 						continue;
 					}
 					CATransform3D t = CATransform3DMakeTranslation( pt2.x-pt.x, pt2.y-pt.y, 0 );
-					t = CATransform3DScale( t, pScale, pScale, pScale );
+					t = CATransform3DScale( t, pScale, pScale, pixelsPerMeter );
 					t = CATransform3DRotate( t, tRotation, 0, 0, 1 );
 					t = CATransform3DConcat( props->transform, t );
 					layer.transform = t;
+					layer.borderWidth = props->lineWidth / pScale;
 				} else {
 					CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
 					t = CGAffineTransformScale( t, pScale, pScale );
@@ -3004,11 +3011,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				pt2.x = round(pt2.x);
 				pt2.y = round(pt2.y);
 				layer.position = CGPointFromOSMPoint(pt2);
-#if 0
-				if ( [layer isKindOfClass:[CATextLayer class]] ) {
-					NSLog(@"text layer = %@", NSStringFromCGRect(layer.frame));
-				}
-#endif
 			}
 
 			// add the layer if not already present
@@ -3416,7 +3418,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	[self saveSelection];
 
-	CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+	CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
 	pt.x += delta.x;
 	pt.y -= delta.y;
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt birdsEye:YES];
@@ -3681,7 +3683,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		}
 		if ( _highlightObject.isNode ) {
 			OsmNode * node = (id)_highlightObject;
-			mousePoint = [_mapView screenPointForLatitude:node.lat longitude:node.lon];
+			mousePoint = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 		} else {
 			mousePoint = [self convertPoint:mousePoint fromLayer:_mapView.layer];
 		}

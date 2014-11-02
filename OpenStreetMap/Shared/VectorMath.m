@@ -73,6 +73,45 @@ OSMTransform OSMTransformInvert( const OSMTransform t )
 #endif
 }
 
+OSMPoint FromBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDistance, double birdsEyeRotation )
+{
+	double D = birdsEyeDistance;	// distance from eye to center of screen
+	double r = birdsEyeRotation;
+
+	point.x -= center.x;
+	point.y -= center.y;
+
+	point.y *= D / (D * cos(r) + point.y * sin(r));
+	point.x -= point.x * point.y * sin(r) / D;
+
+	point.x += center.x;
+	point.y += center.y;
+
+	return point;
+}
+
+OSMPoint ToBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDistance, double birdsEyeRotation )
+{
+	// narrow things toward top of screen
+	double D = birdsEyeDistance;	// distance from eye to center of screen
+	point.x -= center.x;
+	point.y -= center.y;
+
+	double z = point.y * -sin( birdsEyeRotation );	// rotation around x axis gives a z value from y offset
+	double scale = D / (D + z);
+	if ( scale < 0 )
+		scale = 1.0/0.0;
+	point.x *= scale;
+	point.y *= scale * cos( birdsEyeRotation );
+
+	point.x += center.x;
+	point.y += center.y;
+
+	return point;
+}
+
+
+
 OSMPoint ClosestPointOnLineToPoint( OSMPoint a, OSMPoint b, OSMPoint p )
 {
 	OSMPoint ap = Sub(p,a);

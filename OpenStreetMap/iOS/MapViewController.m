@@ -140,6 +140,8 @@
 	self.mapView.frame = rc;
 	[self.mapView viewDidAppear];
 	[self installLongPressGestureRecognizer:YES];
+
+	_toolbar.layer.zPosition = 9000;
 }
 
 -(IBAction)toggleLocation:(id)sender

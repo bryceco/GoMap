@@ -160,9 +160,9 @@ static inline OSMRect OSMRectFromCGRect( CGRect cg )
 static inline BOOL OSMRectContainsPoint( OSMRect rc, OSMPoint pt )
 {
 	return	pt.x >= rc.origin.x &&
-	pt.x <= rc.origin.x + rc.size.width &&
-	pt.y >= rc.origin.y &&
-	pt.y <= rc.origin.y + rc.size.height;
+			pt.x <= rc.origin.x + rc.size.width &&
+			pt.y >= rc.origin.y &&
+			pt.y <= rc.origin.y + rc.size.height;
 }
 static inline BOOL OSMRectIntersectsRect( OSMRect a, OSMRect b )
 {
@@ -201,6 +201,10 @@ static inline BOOL OSMRectContainsRect( OSMRect a, OSMRect b )
 #pragma mark Transform
 
 OSMTransform OSMTransformInvert( OSMTransform t );
+
+
+extern OSMPoint FromBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDistance, double birdsEyeRotation );
+extern OSMPoint ToBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDistance, double birdsEyeRotation );
 
 
 static inline CGAffineTransform CGAffineTransformFromOSMTransform( OSMTransform transform )
