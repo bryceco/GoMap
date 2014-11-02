@@ -137,6 +137,9 @@ const CGFloat WayHighlightRadius = 6.0;
 			return data;
 		}];
 
+		_baseLayer = [CATransformLayer new];
+		[self addSublayer:_baseLayer];
+
 		if ( YES ) {
 			// implement crosshairs
 			_crossHairs = [CAShapeLayer new];
@@ -154,8 +157,8 @@ const CGFloat WayHighlightRadius = 6.0;
 		}
 
 		self.actions = @{
-//						  @"onOrderIn"	: [NSNull null],
-//						  @"onOrderOut" : [NSNull null],
+						  @"onOrderIn"	: [NSNull null],
+						  @"onOrderOut" : [NSNull null],
 						  @"hidden"		: [NSNull null],
 						  @"sublayers"	: [NSNull null],
 						  @"contents"	: [NSNull null],
@@ -164,23 +167,10 @@ const CGFloat WayHighlightRadius = 6.0;
 						  @"transform"	: [NSNull null],
 						  @"lineWidth"	: [NSNull null],
 		};
+		_baseLayer.actions = self.actions;
 	}
 	return self;
 }
-
-#if 0
-- (id < CAAction >)actionForKey:(NSString *)key
-{
-	if ( [key isEqualToString:@"transform"] )
-		return nil;
-	if ( [key isEqualToString:@"bounds"] )
-		return nil;
-	if ( [key isEqualToString:@"position"] )
-		return nil;
-	DLog(@"actionForKey: %@",key);
-	return [super actionForKey:key];
-}
-#endif
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -194,6 +184,7 @@ const CGFloat WayHighlightRadius = 6.0;
 -(void)setBounds:(CGRect)bounds
 {
 	[super setBounds:bounds];
+	_baseLayer.frame = bounds;
 	[self updateMapLocation];
 }
 
@@ -553,7 +544,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			nodeList[index] = nodeList[0];
 		} else {
 			OsmNode * node = nodeList[index];
-			OSMPoint pt = [MapView mapPointForLatitude:node.lat longitude:node.lon];
+			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
 			nodeList[index] = [OSMPointBoxed pointWithPoint:pt];
 		}
 	}
@@ -1388,7 +1379,7 @@ const static CGFloat Z_BUILDING_WALL	= Z_BASE + 7 * ZSCALE;
 const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 9 * ZSCALE;
 const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 10 * ZSCALE;
 const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
-const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
+const static CGFloat Z_CROSSHAIRS		= 10000;
 
 -(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(CGPoint *)refPoint CF_RETURNS_RETAINED
 {
@@ -1402,7 +1393,9 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 
 		BOOL first = YES;
 		for ( OsmNode * node in way.nodes ) {
-			OSMPoint pt = [MapView mapPointForLatitude:node.lat longitude:node.lon];
+			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
+			if ( isinf(pt.x) )
+				break;
 			if ( refPoint ) {
 				initial = CGPointMake(pt.x, pt.y);
 				*refPoint = initial;
@@ -1412,8 +1405,6 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 			pt.y -= initial.y;
 			pt.x *= PATH_SCALING;
 			pt.y *= PATH_SCALING;
-			if ( isinf(pt.x) )
-				break;
 			if ( first ) {
 				CGPathMoveToPoint(path, NULL, pt.x, pt.y);
 				first = NO;
@@ -1489,11 +1480,11 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 
 		OSMPoint pt;
 		if ( object.isNode ) {
-			pt = [MapView mapPointForLatitude:object.isNode.lat longitude:object.isNode.lon];
+			pt = MapPointForLatitudeLongitude( object.isNode.lat, object.isNode.lon );
 		} else if ( object.isWay ) {
 			// this path is taken when MapCSS is drawing an icon in the center of an area, such as a parking lot
 			OSMPoint latLon = [object.isWay centerPoint];
-			pt = [MapView mapPointForLatitude:latLon.y longitude:latLon.x];
+			pt = MapPointForLatitudeLongitude( latLon.y, latLon.x );
 		} else {
 			assert(NO);
 		}
@@ -1769,7 +1760,7 @@ const static CGFloat Z_CROSSHAIRS		= Z_BASE + 12 * ZSCALE;
 			} else {
 
 				OSMPoint point = object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
-				OSMPoint pt = [MapView mapPointForLatitude:point.y longitude:point.x];
+				OSMPoint pt = MapPointForLatitudeLongitude( point.y, point.x );
 
 				CALayer * layer = [CurvedTextLayer.shared layerWithString:name whiteOnBlock:self.whiteText];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
@@ -2881,10 +2872,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		CATransform3D t = CATransform3DIdentity;
 		t.m34 = -1.0/_mapView.birdsEyeDistance;
 		t = CATransform3DRotate( t, _mapView.birdsEyeRotation, 1.0, 0, 0);
-		self.sublayerTransform = t;
+		_baseLayer.sublayerTransform = t;
 	} else {
-		self.sublayerTransform	= CATransform3DIdentity;
-		self.transform			= CATransform3DIdentity;
+		_baseLayer.sublayerTransform	= CATransform3DIdentity;
 	}
 
 	NSArray * previousObjects = _shownObjects;
@@ -3019,7 +3009,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				[layer removeAllAnimations];
 				layer.opacity = 1.0;
 #endif
-				[self addSublayer:layer];
+				[_baseLayer addSublayer:layer];
 			}
 		}
 	}
@@ -3044,7 +3034,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 	for ( CALayer * layer in _highlightLayers ) {
 		// add new highlights
-		[self addSublayer:layer];
+		[_baseLayer addSublayer:layer];
 	}
 
 	if ( _crossHairs ) {
@@ -3720,7 +3710,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		[_mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
 			obj.shapeLayers = nil;
 		}];
-		self.sublayers = nil;
+		_baseLayer.sublayers = nil;
 #endif
 #if USE_SHAPELAYERS
 		[self setNeedsLayout];

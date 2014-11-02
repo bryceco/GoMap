@@ -161,8 +161,8 @@ typedef enum {
 
 -(void)viewDidAppear;
 
-+(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
-+(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
+//+(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
+//+(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 
 -(OSMRect)screenLongitudeLatitude;

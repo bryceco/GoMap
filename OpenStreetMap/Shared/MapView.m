@@ -153,12 +153,6 @@ CGSize SizeForImage( NSImage * image )
 		_editorLayer.zPosition = Z_EDITOR;
 		[bg addObject:_editorLayer];
 
-#if 0 && SHOW_3D
-		_buildingsLayer = [[BuildingsLayer alloc] initWithMapView:self];
-		_buildingsLayer.zPosition = Z_BUILDINGS;
-		[bg addObject:_buildingsLayer];
-#endif
-
 #if 0 // support gpx traces
 		_gpxLayer = [[GpxLayer alloc] initWithMapView:self];
 		_gpxLayer.zPosition = Z_GPX;
@@ -487,7 +481,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	CGRect rc = self.layer.bounds;
 	OSMPoint center = { rc.origin.x + rc.size.width/2, rc.origin.y + rc.size.height/2 };
 	center = [self mapPointFromScreenPoint:center birdsEye:NO];
-	center = [MapView longitudeLatitudeFromMapPoint:center];
+	center = LongitudeLatitudeFromMapPoint( center );
 	double scale = OSMTransformScaleX(self.screenFromMapTransform);
 	[[NSUserDefaults standardUserDefaults] setDouble:scale		forKey:@"view.scale"];
 	[[NSUserDefaults standardUserDefaults] setDouble:center.y	forKey:@"view.latitude"];
@@ -761,34 +755,22 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 }
 
+#if 0
 // point is 0..256
 +(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point
 {
-	double x = point.x / 256;
-	double y = point.y / 256;
-	x = x - floor(x);	// modulus
-	y = y - floor(y);
-	x = x - 0.5;
-	y = y - 0.5;
-
-	OSMPoint loc;
-	loc.y = 90 - 360 * atan(exp(y * 2 * M_PI)) / M_PI;
-	loc.x = 360 * x;
-	return loc;
+	return LongitudeLatitudeFromMapPoint( point );
 }
 +(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
 {
-	double x = (longitude + 180) / 360;
-	double sinLatitude = sin(latitude * M_PI / 180);
-	double y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * M_PI);
-	OSMPoint point = { x * 256, y * 256 };
-	return point;
+	return MapPointForLatitudeLongitude( latitude, longitude);
 }
+#endif
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon
 {
 	OSMRect rc = latLon;
-	OSMPoint p1 = [MapView mapPointForLatitude:rc.origin.y+rc.size.height longitude:rc.origin.x];	// latitude increases opposite of map
-	OSMPoint p2 = [MapView mapPointForLatitude:rc.origin.y longitude:rc.origin.x+rc.size.width];
+	OSMPoint p1 = MapPointForLatitudeLongitude( rc.origin.y+rc.size.height, rc.origin.x );	// latitude increases opposite of map
+	OSMPoint p2 = MapPointForLatitudeLongitude( rc.origin.y, rc.origin.x+rc.size.width );
 	rc = OSMRectMake( p1.x, p1.y, p2.x-p1.x, p2.y-p1.y);	// map size
 	return rc;
 }
@@ -865,7 +847,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point birdsEye:(BOOL)birdsEye
 {
 	OSMPoint mapPoint = [self mapPointFromScreenPoint:OSMPointMake(point.x, point.y) birdsEye:birdsEye];
-	OSMPoint coord = [MapView longitudeLatitudeFromMapPoint:mapPoint];
+	OSMPoint coord = LongitudeLatitudeFromMapPoint(mapPoint);
 	CLLocationCoordinate2D loc = { coord.y, coord.x };
 	return loc;
 }
@@ -876,8 +858,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	OSMRect rc = [self mapRectFromScreenRect:screenRect];
 	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
 	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
-	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
-	northeast = [MapView longitudeLatitudeFromMapPoint:northeast];
+	southwest = LongitudeLatitudeFromMapPoint(southwest);
+	northeast = LongitudeLatitudeFromMapPoint(northeast);
 	OSMRect latLon = { southwest.x*M_PI/180, southwest.y*M_PI/180, (northeast.x - southwest.x)*M_PI/180, (northeast.y - southwest.y)*M_PI/180 };
 	if ( latLon.size.width < 0 ) // crossed 180 degrees longitude
 		latLon.size.width += 2*M_PI;
@@ -955,8 +937,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
 	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
-	southwest = [MapView longitudeLatitudeFromMapPoint:southwest];
-	northeast = [MapView longitudeLatitudeFromMapPoint:northeast];
+	southwest = LongitudeLatitudeFromMapPoint(southwest);
+	northeast = LongitudeLatitudeFromMapPoint(northeast);
 	rc.origin.x = southwest.x;
 	rc.origin.y = southwest.y;
 	rc.size.width = northeast.x - southwest.x;
@@ -968,7 +950,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude birdsEye:(BOOL)birdsEye
 {
-	OSMPoint pt = [MapView mapPointForLatitude:latitude longitude:longitude];
+	OSMPoint pt = MapPointForLatitudeLongitude( latitude, longitude );
 	pt = [self screenPointFromMapPoint:pt birdsEye:birdsEye];
 	return CGPointFromOSMPoint(pt);
 }
@@ -976,7 +958,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude scale:(double)scale
 {
 #if 1
-	OSMPoint center = [MapView mapPointForLatitude:latitude longitude:longitude];
+	OSMPoint center = MapPointForLatitudeLongitude( latitude, longitude );
 	[self setMapCenter:center scale:scale];
 #else
 	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude];

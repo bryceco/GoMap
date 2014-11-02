@@ -206,6 +206,29 @@ OSMTransform OSMTransformInvert( OSMTransform t );
 extern OSMPoint FromBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDistance, double birdsEyeRotation );
 extern OSMPoint ToBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDistance, double birdsEyeRotation );
 
+// point is 0..256
+static OSMPoint LongitudeLatitudeFromMapPoint(OSMPoint point)
+{
+	double x = point.x / 256;
+	double y = point.y / 256;
+	x = x - floor(x);	// modulus
+	y = y - floor(y);
+	x = x - 0.5;
+	y = y - 0.5;
+
+	OSMPoint loc;
+	loc.y = 90 - 360 * atan(exp(y * 2 * M_PI)) / M_PI;
+	loc.x = 360 * x;
+	return loc;
+}
+static OSMPoint MapPointForLatitudeLongitude(double latitude, double longitude)
+{
+	double x = (longitude + 180) / 360;
+	double sinLatitude = sin(latitude * M_PI / 180);
+	double y = 0.5 - log((1 + sinLatitude) / (1 - sinLatitude)) / (4 * M_PI);
+	OSMPoint point = { x * 256, y * 256 };
+	return point;
+}
 
 static inline CGAffineTransform CGAffineTransformFromOSMTransform( OSMTransform transform )
 {
