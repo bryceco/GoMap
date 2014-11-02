@@ -360,7 +360,7 @@ typedef enum {
 	// create layer
 	layer = [CALayer layer];
 	layer.actions = self.actions;
-	layer.zPosition = zoomLevel;
+	layer.zPosition = zoomLevel * 0.01 - 0.25;
 	layer.edgeAntialiasingMask = 0;	// don't AA edges of tiles or there will be a seam visible
 	layer.opaque = YES;
 	layer.hidden = YES;

@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "DLog.h"
 #import "PushPinView.h"
 
 @implementation PushPinView
@@ -79,6 +80,10 @@
 }
 -(void)setArrowPoint:(CGPoint)arrowPoint
 {
+	if ( isnan(arrowPoint.x) || isnan(arrowPoint.y) ) {
+		DbgAssert(NO);
+		return;
+	}
 	_arrowPoint = arrowPoint;
 	[self setNeedsLayout];
 }

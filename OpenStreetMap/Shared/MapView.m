@@ -1330,6 +1330,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	[_editorLayer.mapData undo];
 	[_editorLayer setNeedsDisplay];
+	[_editorLayer setNeedsLayout];
 
 	[self placePushpinForSelection];
 }
@@ -1346,6 +1347,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	[_editorLayer.mapData redo];
 	[_editorLayer setNeedsDisplay];
+	[_editorLayer setNeedsLayout];
 
 	[self placePushpinForSelection];
 }
@@ -1496,6 +1498,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			[_editorLayer.mapData undo];
 			[_editorLayer.mapData removeMostRecentRedo];
 			[_editorLayer setNeedsDisplay];
+			[_editorLayer setNeedsLayout];
 			[self removePin];
 		} else {
 			// okay
@@ -1700,6 +1703,7 @@ NSString * ActionTitle( NSInteger action )
 	}
 
 	[self.editorLayer setNeedsDisplay];
+	[self.editorLayer setNeedsLayout];
 	[self refreshPushpinText];
 }
 
@@ -2166,6 +2170,7 @@ drop_pin:
 		[self refreshPushpinText];
 	}
 	[_editorLayer setNeedsDisplay];
+	[_editorLayer setNeedsLayout];
 #endif
 }
 

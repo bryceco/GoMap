@@ -76,6 +76,14 @@
 	return YES;
 }
 
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if ( buttonIndex != alertView.cancelButtonIndex ) {
+		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userDidPreviousUpload"];
+		[self commit:nil];
+	}
+}
+
 - (IBAction)commit:(id)sender
 {
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
@@ -87,15 +95,12 @@
 	}
 
 	if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"userDidPreviousUpload"] ) {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." preferredStyle:UIAlertControllerStyleAlert];
-		UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-		UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Commit", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-			[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userDidPreviousUpload"];
-			[self commit:nil];
-		}];
-		[alert addAction:cancelAction];
-		[alert addAction:okAction];
-		[self presentViewController:alert animated:YES completion:nil];
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Warning"
+													 message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel."
+													delegate:self
+										   cancelButtonTitle:@"Cancel"
+										   otherButtonTitles:@"Commit",nil];
+		[alert show];
 		return;
 	}
 
