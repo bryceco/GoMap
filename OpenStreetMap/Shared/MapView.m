@@ -255,7 +255,7 @@ CGSize SizeForImage( NSImage * image )
 									   forState:UIControlStateNormal];
 	_editControl.layer.zPosition = Z_TOOLBAR;
 
-#if DEBUG && SHOW_3D
+#if SHOW_3D
 	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerPanGesture:)];
 	panGestureRecognizer.minimumNumberOfTouches = 2;
 	panGestureRecognizer.maximumNumberOfTouches = 2;

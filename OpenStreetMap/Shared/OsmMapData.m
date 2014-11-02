@@ -24,9 +24,8 @@
 #import "UndoManager.h"
 #import "VectorMath.h"
 
-#if 1 || DEBUG
 #define USE_SQL 1
-#endif
+
 
 #if USE_SQL
 #import "Database.h"
