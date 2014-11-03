@@ -39,7 +39,6 @@
 
 
 #define FRAMERATE_TEST	0
-#define SHOW_3D			1
 
 
 static const CGFloat Z_AERIAL		= -100;

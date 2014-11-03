@@ -21,6 +21,9 @@
 @class QuadMap;
 @class SpeechBalloonLayer;
 
+#define SHOW_3D	0
+
+
 @interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>
 {
 	CGSize					_iconSize;

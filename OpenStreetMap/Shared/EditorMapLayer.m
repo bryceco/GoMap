@@ -144,15 +144,16 @@ const CGFloat WayHighlightRadius = 6.0;
 			// implement crosshairs
 			_crossHairs = [CAShapeLayer new];
 			UIBezierPath * path = [UIBezierPath bezierPath];
-			[path moveToPoint:CGPointMake(-10, 0)];
-			[path addLineToPoint:CGPointMake(10, 0)];
-			[path moveToPoint:CGPointMake(0, -10)];
-			[path addLineToPoint:CGPointMake(0, 10)];
+			CGFloat radius = 8;
+			[path moveToPoint:CGPointMake(-radius, 0)];
+			[path addLineToPoint:CGPointMake(radius, 0)];
+			[path moveToPoint:CGPointMake(0, -radius)];
+			[path addLineToPoint:CGPointMake(0, radius)];
 			_crossHairs.anchorPoint	= CGPointMake(0.5, 0.5);
 			_crossHairs.path		= path.CGPath;
 			_crossHairs.strokeColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1.0].CGColor;
-			_crossHairs.bounds		= CGRectMake(-10, -10, 20, 20);
-			_crossHairs.lineWidth	= 2.0;
+			_crossHairs.bounds		= CGRectMake(-radius, -radius, 2*radius, 2*radius);
+			_crossHairs.lineWidth	= 1.0;
 			_crossHairs.zPosition	= Z_CROSSHAIRS;
 		}
 
@@ -1690,6 +1691,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 						height *= 4*BuildingHeightPerMeter;
 					}
 
+#if SHOW_3D
 					// get walls
 					double hue = object.ident.longLongValue % 20 - 10;
 					for ( NSArray * w in outer ) {
@@ -1700,7 +1702,6 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 							[layers addObject:wall];
 						}
 					}
-
 #if 0
 					// get roof
 					UIColor	* color = [UIColor lightGrayColor];
@@ -1724,6 +1725,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 					roof.transform = t;
 
 					[layers addObject:roof];
+#endif
 #endif
 				}
 
