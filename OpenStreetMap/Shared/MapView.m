@@ -267,7 +267,12 @@ CGSize SizeForImage( NSImage * image )
 	rotationGesture.delegate = self;
 	[self addGestureRecognizer:rotationGesture];
 
+#if USE_NOTES
 	_notes = [Notes new];
+	_notesQueue = [NSOperationQueue new];
+	_notesQueue.maxConcurrentOperationCount = 1;
+	_noteViews	= [NSMutableSet new];
+#endif
 
 	// make help button have rounded corners
 	_helpButton.layer.cornerRadius = 10.0;
@@ -315,6 +320,10 @@ CGSize SizeForImage( NSImage * image )
 		[self locateMe:nil];
 	}
 #endif
+
+	// get notes
+	[self updateNotes];
+
 
 #if FRAMERATE_TEST
 	// automaatically scroll view for frame rate testing
@@ -726,25 +735,17 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_screenFromMapTransform = t;
 
 	// determine if we've zoomed out enough to disable editing
-	double metersPerPixel = [self metersPerPixel];
-	const CGRect rc = self.layer.bounds;
-	double area = rc.size.height * rc.size.width * metersPerPixel * metersPerPixel;
-	self.viewStateOverride = area > 10.0*1000*1000;
+	CGPoint center = CGRectCenter(self.bounds);
+	CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:center birdsEye:YES];
+	double area = MetersPerDegree( latLon.latitude );
+	OSMRect rcMap = [self boundingMapRectForScreen];
+	area = area*area * rcMap.size.width * rcMap.size.height;
+	NSLog(@"area = %f", area);
+	self.viewStateOverride = area > 4.0*1000*1000;
 
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator];
-
-#if DEBUG && 0
-	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
-	CLLocationCoordinate2D loc = [self longitudeLatitudeForScreenPoint:center];
-	NSLog( @"center = %f, %f", loc.longitude, loc.latitude);
-	static CLLocationCoordinate2D prev = { 0, 0 };
-	if ( prev.latitude && fabs(prev.longitude-loc.longitude)+fabs(prev.latitude-loc.latitude) > 1 ) {
-		NSLog(@"big");
-	}
-	prev = loc;
-#endif
 
 #if TARGET_OS_IPHONE
 	// update pushpin location
@@ -754,17 +755,18 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 }
 
-#if 0
-// point is 0..256
-+(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point
+-(void)noteButtonPress:(id)sender
 {
-	return LongitudeLatitudeFromMapPoint( point );
+	UIButton * button = sender;
+	if ( button.tag >= _notes.list.count )
+		return;
+	OsmNote * note = _notes.list[ button.tag ];
+	NSLog( @"Note: %@", note );
+	NSLog( @"Comments: %@", note.comments );
+
+	[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
 }
-+(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
-{
-	return MapPointForLatitudeLongitude( latitude, longitude);
-}
-#endif
+
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon
 {
 	OSMRect rc = latLon;
@@ -1415,6 +1417,13 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( delta.x == 0.0 && delta.y == 0.0 )
 		return;
 
+	for ( UIButton * button in _noteViews ) {
+		CGPoint pt = button.center;
+		pt.x += delta.x;
+		pt.y += delta.y;
+		button.center = pt;
+	}
+
 	OSMTransform o = OSMTransformMakeTranslation(delta.x, delta.y);
 	OSMTransform t = OSMTransformConcat( _screenFromMapTransform, o );
 	self.screenFromMapTransform = t;
@@ -1433,6 +1442,17 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		ratio = maxZoomIn / scale;
 	}
 
+	for ( UIButton * button in _noteViews ) {
+		CGPoint pt = button.center;
+		pt.x -= zoomCenter.x;
+		pt.y -= zoomCenter.y;
+		pt.x *= ratio;
+		pt.y *= ratio;
+		pt.x += zoomCenter.x;
+		pt.y += zoomCenter.y;
+		button.center = pt;
+	}
+
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
 	t = OSMTransformTranslate( t, offset.x, offset.y );
@@ -1445,6 +1465,17 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 {
 	if ( angle == 0.0 )
 		return;
+
+	for ( UIButton * button in _noteViews ) {
+		CGPoint pt = button.center;
+		pt.x -= zoomCenter.x;
+		pt.y -= zoomCenter.y;
+		CGPoint p2 = { pt.x*cos(angle)-pt.y*sin(angle), pt.x*sin(angle)+pt.y*cos(angle) };
+		pt = p2;
+		pt.x += zoomCenter.x;
+		pt.y += zoomCenter.y;
+		button.center = pt;
+	}
 
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
@@ -2380,6 +2411,51 @@ drop_pin:
 #endif
 }
 
+#pragma mark Notes
+
+-(void)updateNotes
+{
+	if ( _notes ) {
+		NSBlockOperation * op1 = [NSBlockOperation blockOperationWithBlock:^{
+			usleep(0.25);
+		}];
+		NSBlockOperation * op2 = [NSBlockOperation blockOperationWithBlock:^{
+			OSMRect rc = [self boundingMapRectForScreen];
+			OSMPoint p1 = LongitudeLatitudeFromMapPoint(rc.origin);
+			OSMPoint p2 = LongitudeLatitudeFromMapPoint(OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height));
+			OSMRect rc2 = { p1.x, p2.y, p2.x-p1.x, p1.y-p2.y };
+			[_notes updateForRegion:rc2 completion:^{
+				for ( UIButton * button in _noteViews ) {
+					[button removeFromSuperview];
+				}
+				[_noteViews removeAllObjects];
+				NSInteger index = 0;
+				for ( OsmNote * note in _notes.list ) {
+					UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+					[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+					button.bounds					= CGRectMake(0, 0, 20, 20);
+					button.layer.cornerRadius		= 5;
+					button.layer.masksToBounds		= YES;
+					button.layer.backgroundColor	= UIColor.blueColor.CGColor;
+					button.layer.borderColor		= UIColor.whiteColor.CGColor;
+					button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
+					button.titleLabel.textColor		= UIColor.whiteColor;
+//					button.titleLabel.hidden		= NO;
+					button.titleLabel.textAlignment	= NSTextAlignmentCenter;
+					[button setTitle:@"N" forState:UIControlStateNormal];
+					button.tag = index++;
+					CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
+					button.center = pos;
+					[self addSubview:button];
+					[_noteViews addObject:button];
+				}
+			}];
+		}];
+		[_notesQueue cancelAllOperations];
+		[_notesQueue addOperation:op1];
+		[_notesQueue addOperation:op2];
+	}
+}
 
 #pragma mark Gestures
 
@@ -2428,7 +2504,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self adjustOriginBy:translation];
 		[pan setTranslation:CGPointMake(0,0) inView:self];
 	} else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ) {	// cancelled occurs when we throw an error dialog
-		// finish pan
+		// finish pan with inertia
 		CGPoint initialVelecity = [pan velocityInView:self];
 		CFTimeInterval startTime = CACurrentMediaTime();
 		double duration = 0.5;
@@ -2450,6 +2526,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				}
 			}
 		}];
+		[self updateNotes];
 	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
 		DLog( @"pan gesture failed" );
 	} else {
@@ -2458,18 +2535,20 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 }
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
-	if ( pinch.state != UIGestureRecognizerStateChanged )
-		return;
+	if ( pinch.state == UIGestureRecognizerStateChanged ) {
 
-	_userOverrodeLocationZoom = YES;
+		_userOverrodeLocationZoom = YES;
 
-	DisplayLink * displayLink = [DisplayLink shared];
-	[displayLink removeName:DisplayLinkPanning];
+		DisplayLink * displayLink = [DisplayLink shared];
+		[displayLink removeName:DisplayLinkPanning];
 
-	CGPoint zoomCenter = [pinch locationInView:self];
-	[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];
+		CGPoint zoomCenter = [pinch locationInView:self];
+		[self adjustZoomBy:pinch.scale aroundScreenPoint:zoomCenter];
 
-	[pinch setScale:1.0];
+		[pinch setScale:1.0];
+	} else if ( pinch.state == UIGestureRecognizerStateEnded ) {
+		[self updateNotes];
+	}
 }
 - (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap
 {
@@ -2512,11 +2591,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		DisplayLink * displayLink = [DisplayLink shared];
 		[displayLink removeName:@"autoScroll"];
 #endif
-	} else {
+	} else if ( rotationGesture.state == UIGestureRecognizerStateChanged ) {
 		CGPoint centerPoint = [rotationGesture locationInView:self];
 		CGFloat angle = rotationGesture.rotation;
 		[self rotateBy:angle aroundScreenPoint:centerPoint];
 		rotationGesture.rotation = 0.0;
+	} else if ( rotationGesture.state == UIGestureRecognizerStateEnded ) {
+		[self updateNotes];
 	}
 }
 

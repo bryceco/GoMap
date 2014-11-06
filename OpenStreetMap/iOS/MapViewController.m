@@ -11,6 +11,8 @@
 #import "EditorMapLayer.h"
 #import "MapViewController.h"
 #import "MapView.h"
+#import "Notes.h"
+#import "NotesTableViewController.h"
 #import "OsmMapData.h"
 #import "PushPinView.h"
 
@@ -194,6 +196,16 @@
 		return NO; // ignore the touch
 	}
     return YES; // handle the touch
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ( [sender isKindOfClass:[OsmNote class]] ) {
+		NotesTableViewController * con = segue.destinationViewController;
+		if ( [con isKindOfClass:[NotesTableViewController class]] ) {
+			con.note = sender;
+		}
+	}
 }
 
 @end

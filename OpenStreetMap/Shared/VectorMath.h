@@ -127,6 +127,12 @@ double SurfaceArea( OSMRect latLon );
 
 #pragma mark Rect
 
+static inline CGPoint CGRectCenter( CGRect rc )
+{
+	CGPoint c = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	return c;
+}
+
 static inline OSMRect OSMRectMake(double x, double y, double w, double h)
 {
 	OSMRect rc = { x, y, w, h };

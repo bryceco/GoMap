@@ -27,7 +27,7 @@
 			} else if ( [child.name isEqualToString:@"action"] ) {
 				_action = child.stringValue;
 			} else if ( [child.name isEqualToString:@"text"] ) {
-				_text = child.stringValue;
+				_text = [child.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			}
 		}
 	}
@@ -124,5 +124,29 @@
 	}
 	return text;;
 }
+
+-(void)updateNote:(OsmNote *)note comment:(NSString *)comment resolve:(BOOL)resolve completion:(void(^)(void))completion
+{
+	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/#id/comment?text=%@", comment];
+	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:YES completion:^(NSData *data, NSError *error) {
+		if ( data && error == nil ) {
+			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
+			NSString * text = [xmlDoc XMLStringWithOptions:(DDXMLNodePrettyPrint | DDXMLNodeCompactEmptyElement)];
+			NSLog( @"%@", text);
+
+			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
+				OsmNote * note = [[OsmNote alloc] initWithXml:noteElement];
+				if ( note ) {
+					[_list addObject:note];
+				}
+			}
+		}
+		NSLog(@"Notes:\n%@",self);
+		completion();
+	}];
+}
+
+
 
 @end

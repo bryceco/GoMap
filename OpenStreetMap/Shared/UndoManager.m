@@ -209,6 +209,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 {
 	action.group = _groupingStack.count ? [_groupingStack.lastObject integerValue] : self.runLoopCounter;
 
+#if 0 // broken because when calling setLongitude:latitude:undo: we drop undoing the modify count
 	// ask delegate if we can ignore this undo action because it is redundant
 	if ( !_isUndoing && !_isRedoing && [self.delegate respondsToSelector:@selector(undoAction:duplicatesPreviousAction:)] ) {
 		NSArray * stack = _undoStack;
@@ -232,6 +233,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 			}
 		}
 	}
+#endif
 
 	[self willChangeValueForKey:@"canUndo"];
 	[self willChangeValueForKey:@"canRedo"];

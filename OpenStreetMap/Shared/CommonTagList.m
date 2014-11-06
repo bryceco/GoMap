@@ -317,9 +317,9 @@ static NSString * prettyTag( NSString * tag )
 
 		// no presets
 		if ( [type isEqualToString:@"number"] )
-			keyboard = keyboard; // UIKeyboardTypeDecimalPad doesn't have Done button
+			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypeDecimalPad doesn't have Done button
 		else if ( [type isEqualToString:@"tel"] )
-			keyboard = keyboard; // UIKeyboardTypePhonePad doesn't have Done Button
+			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypePhonePad doesn't have Done Button
 		else if ( [type isEqualToString:@"url"] || [type isEqualToString:@"wikipedia"] )
 			keyboard = UIKeyboardTypeURL;
 		else if ( [type isEqualToString:@"textarea"] )

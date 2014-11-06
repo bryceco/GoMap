@@ -117,28 +117,30 @@ typedef enum {
 }
 
 #if TARGET_OS_IPHONE
-@property (assign,nonatomic)	MapViewController	*	viewController;
-@property (assign,nonatomic)	IBOutlet FpsLabel	*	fpsLabel;
-@property (assign,nonatomic)	IBOutlet UILabel	*	zoomToEditLabel;
+@property (assign,nonatomic)	MapViewController			*	viewController;
+@property (assign,nonatomic)	IBOutlet FpsLabel			*	fpsLabel;
+@property (assign,nonatomic)	IBOutlet UILabel			*	zoomToEditLabel;
 #endif
 
-@property (assign,nonatomic)	MapViewState			viewState;			// layer currently displayed
-@property (assign,nonatomic)	BOOL					viewStateOverride;	// override layer because we're zoomed out
-@property (assign,nonatomic)	ViewOverlayMask			viewOverlayMask;
+@property (assign,nonatomic)	MapViewState					viewState;			// layer currently displayed
+@property (assign,nonatomic)	BOOL							viewStateOverride;	// override layer because we're zoomed out
+@property (assign,nonatomic)	ViewOverlayMask					viewOverlayMask;
 
 @property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
 @property (strong,nonatomic)	NSArray						*	editControlActions;
 
-@property (readonly,nonatomic)	Notes				*	notes;
+@property (readonly,nonatomic)	NSOperationQueue			*	notesQueue;
+@property (readonly,nonatomic)	Notes						*	notes;
+@property (readonly,nonatomic)	NSMutableSet				*	noteViews;
 
-@property (readonly,nonatomic)	MercatorTileLayer	*	aerialLayer;
-@property (readonly,nonatomic)	MercatorTileLayer	*	mapnikLayer;
-@property (readonly,nonatomic)	EditorMapLayer		*	editorLayer;
-@property (readonly,nonatomic)	GpxLayer			*	gpxLayer;
+@property (readonly,nonatomic)	MercatorTileLayer			*	aerialLayer;
+@property (readonly,nonatomic)	MercatorTileLayer			*	mapnikLayer;
+@property (readonly,nonatomic)	EditorMapLayer				*	editorLayer;
+@property (readonly,nonatomic)	GpxLayer					*	gpxLayer;
 // overlays
-@property (readonly,nonatomic)	MercatorTileLayer	*	locatorLayer;
-@property (readonly,nonatomic)	MercatorTileLayer	*	gpsTraceLayer;
-@property (readonly,nonatomic)	NSArray				*	backgroundLayers;	// list of all layers that need to be resized, etc.
+@property (readonly,nonatomic)	MercatorTileLayer			*	locatorLayer;
+@property (readonly,nonatomic)	MercatorTileLayer			*	gpsTraceLayer;
+@property (readonly,nonatomic)	NSArray						*	backgroundLayers;	// list of all layers that need to be resized, etc.
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
 @property (readonly,nonatomic)	CGFloat							mouseLongitude;
