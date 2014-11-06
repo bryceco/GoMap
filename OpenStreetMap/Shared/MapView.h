@@ -163,8 +163,6 @@ typedef enum {
 
 -(void)viewDidAppear;
 
-//+(OSMPoint)mapPointForLatitude:(double)latitude longitude:(double)longitude;
-//+(OSMPoint)longitudeLatitudeFromMapPoint:(OSMPoint)point;
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 
 -(OSMRect)screenLongitudeLatitude;
@@ -174,8 +172,6 @@ typedef enum {
 -(OSMPoint)screenPointFromMapPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye;
 -(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye;
 
-//-(OSMRect)mapRectFromScreenRect:(OSMRect)rect;
-//-(OSMRect)screenRectFromMapRect:(OSMRect)mapRect;
 -(OSMRect)boundingScreenRectForMapRect:(OSMRect)mapRect;
 -(OSMRect)boundingMapRectForScreenRect:(OSMRect)screenRect;
 -(OSMRect)boundingMapRectForScreen;
@@ -211,5 +207,7 @@ typedef enum {
 
 - (void)setTagsForCurrentObject:(NSDictionary *)tags;
 #endif
+
+-(void)refreshNoteButtonsFromList;
 
 @end

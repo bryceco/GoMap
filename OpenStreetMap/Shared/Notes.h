@@ -10,6 +10,8 @@
 
 #import "VectorMath.h"
 
+@class OsmMapData;
+
 @interface OsmNoteComment : NSObject
 @property (readonly,nonatomic)	NSString	*	date;
 @property (readonly,nonatomic)	NSString	*	action;
@@ -25,13 +27,19 @@
 @property (readonly,nonatomic)	NSString		*	created;
 @property (readonly,nonatomic)	NSString		*	status;
 @property (readonly,nonatomic)	NSMutableArray	*	comments;
+
+-(instancetype)initWithLat:(double)lat lon:(double)lon;
 @end
 
 
 
 @interface Notes : NSObject
-@property (strong,nonatomic)	NSMutableArray * list;
+@property (strong,nonatomic)	NSMutableArray	*	list;
+@property (weak,nonatomic)		OsmMapData		*	mapData;
 
 -(void)updateForRegion:(OSMRect)bbox completion:(void(^)(void))completion;
--(NSArray *)notesInRegion:(OSMRect)bbox;
+
+//-(OsmNote *)createNoteWithLat:(double)lat Lon:(double)lon comment:(NSString *)comment;
+-(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion;
+
 @end

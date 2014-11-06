@@ -8,6 +8,7 @@
 
 #import <MapKit/MapKit.h>
 
+#import "MapView.h"
 #import "Notes.h"
 #import "NotesTableViewController.h"
 
@@ -46,12 +47,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+	return self.note.comments ? 2 : 1;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	if ( section == 0 )
+	if ( self.note.comments && section == 0 )
 		return @"Note History";
 	else
 		return @"Update";
@@ -59,12 +60,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return section == 0 ? self.note.comments.count : 2;
+	return self.note.comments && section == 0 ? self.note.comments.count : 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == 0 ) {
+	if ( self.note.comments && indexPath.section == 0 ) {
 		NotesCommentCell *cell = (id) [tableView dequeueReusableCellWithIdentifier:@"noteCommentCell" forIndexPath:indexPath];
 		OsmNoteComment * comment = self.note.comments[ indexPath.row ];
 		cell.date.text		= comment.date;
@@ -73,13 +74,13 @@
 			cell.commentBackground.hidden	= YES;
 			cell.comment.text				= nil;
 		} else {
-			cell.commentBackground.hidden = NO;
+			cell.commentBackground.hidden					= NO;
 			cell.commentBackground.layer.cornerRadius		= 5;
 			cell.commentBackground.layer.backgroundColor	= [UIColor colorWithRed:0.9 green:0.9 blue:1.0 alpha:1.0].CGColor;
 			cell.commentBackground.layer.borderColor		= UIColor.blackColor.CGColor;
 			cell.commentBackground.layer.borderWidth		= 1.0;
 			cell.commentBackground.layer.masksToBounds		= YES;
-			cell.comment.text	= comment.text;
+			cell.comment.text								= comment.text;
 		}
 		return cell;
 	} else if ( indexPath.row == 0 ) {
@@ -90,6 +91,7 @@
 		cell.text.delegate				= self;
 		cell.text.text					= _newComment;
 		cell.commentButton.enabled		= NO;
+		cell.resolveButton.enabled		= self.note.comments != nil;
 		return cell;
 	} else {
 		UITableViewCell *cell = (id) [tableView dequeueReusableCellWithIdentifier:@"noteDirectionsCell" forIndexPath:indexPath];
@@ -101,7 +103,9 @@
 {
 	[self.view endEditing:YES];
 
-	if ( indexPath.section == 1 && indexPath.row == 1 ) {
+	if ( self.note.comments && indexPath.section == 0 ) {
+		// ignore
+	} else if ( indexPath.row == 1 ) {
 		// get directions
 		CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(self.note.lat, self.note.lon);
 		MKPlacemark * placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
@@ -116,12 +120,27 @@
 
 -(void)commentAndResolve:(BOOL)resolve sender:(id)sender
 {
+	[self.view endEditing:YES];
+
 	NotesResolveCell * cell = (id)[sender superview];
 	while ( cell && ![cell isKindOfClass:[NotesResolveCell class]] )
 		cell = (id) [cell superview];
 	if ( cell ) {
 		NSString * s = [cell.text.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		
+		_alert = [[UIAlertView alloc] initWithTitle:@"Updating Note..." message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+		[_alert show];
+		[self.mapView.notes updateNote:self.note close:resolve comment:s completion:^(OsmNote * newNote, NSString *errorMessage) {
+			[_alert dismissWithClickedButtonIndex:0 animated:YES];
+			_alert = nil;
+			if ( newNote ) {
+				self.note = newNote;
+				[self done:nil];
+				[self.mapView refreshNoteButtonsFromList];
+			} else {
+				UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:NULL];
+				[alert show];
+			}
+		}];
 	}
 }
 
@@ -149,7 +168,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == 0 ) {
+	if ( self.note.comments && indexPath.section == 0 ) {
 		OsmNoteComment * comment = self.note.comments[ indexPath.row ];
 
 		if ( comment.text.length > 0 ) {

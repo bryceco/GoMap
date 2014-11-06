@@ -39,6 +39,7 @@
 
 
 #define FRAMERATE_TEST	0
+#define USE_NOTES		1
 
 
 static const CGFloat Z_AERIAL		= -100;
@@ -269,6 +270,7 @@ CGSize SizeForImage( NSImage * image )
 
 #if USE_NOTES
 	_notes = [Notes new];
+	_notes.mapData = _editorLayer.mapData;
 	_notesQueue = [NSOperationQueue new];
 	_notesQueue.maxConcurrentOperationCount = 1;
 	_noteViews	= [NSMutableSet new];
@@ -740,8 +742,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	double area = MetersPerDegree( latLon.latitude );
 	OSMRect rcMap = [self boundingMapRectForScreen];
 	area = area*area * rcMap.size.width * rcMap.size.height;
-	NSLog(@"area = %f", area);
-	self.viewStateOverride = area > 4.0*1000*1000;
+	self.viewStateOverride = area > 2.0*1000*1000;
 
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
@@ -761,9 +762,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( button.tag >= _notes.list.count )
 		return;
 	OsmNote * note = _notes.list[ button.tag ];
-	NSLog( @"Note: %@", note );
-	NSLog( @"Comments: %@", note.comments );
-
 	[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
 }
 
@@ -1587,6 +1585,7 @@ typedef enum {
 	ACTION_PASTETAGS,
 	// used by edit control:
 	ACTION_EDITTAGS,
+	ACTION_ADDNOTE,
 	ACTION_DELETE,
 	ACTION_MORE,
 } EDIT_ACTION;
@@ -1604,6 +1603,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_COPYTAGS:		return NSLocalizedString(@"Copy Tags",nil);
 		case ACTION_PASTETAGS:		return NSLocalizedString(@"Paste",nil);
 		case ACTION_EDITTAGS:		return NSLocalizedString(@"Tags", nil);
+		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", nil);
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
 	};
@@ -1717,6 +1717,13 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
 			break;
+		case ACTION_ADDNOTE: {
+				CLLocationCoordinate2D pos = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:YES];
+				OsmNote * note = [[OsmNote alloc] initWithLat:pos.latitude lon:pos.longitude];
+				[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
+				[self removePin];
+			}
+			break;
 		case ACTION_DELETE:
 			[self delete:nil];
 			break;
@@ -1794,9 +1801,9 @@ NSString * ActionTitle( NSInteger action )
 		if ( _editorLayer.selectedPrimary == nil ) {
 			// brand new node
 			if ( _editorLayer.canPasteTags )
-				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
+				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE), @(ACTION_PASTETAGS) ];
 			else
-				self.editControlActions = @[ @(ACTION_EDITTAGS) ];
+				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE) ];
 		} else {
 			if ( _editorLayer.selectedPrimary.isRelation )
 				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
@@ -2413,6 +2420,34 @@ drop_pin:
 
 #pragma mark Notes
 
+-(void)refreshNoteButtonsFromList
+{
+	for ( UIButton * button in _noteViews ) {
+		[button removeFromSuperview];
+	}
+	[_noteViews removeAllObjects];
+	NSInteger index = 0;
+	for ( OsmNote * note in _notes.list ) {
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+		button.bounds					= CGRectMake(0, 0, 20, 20);
+		button.layer.cornerRadius		= 5;
+		button.layer.masksToBounds		= YES;
+		button.layer.backgroundColor	= UIColor.blueColor.CGColor;
+		button.layer.borderColor		= UIColor.whiteColor.CGColor;
+		button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
+		button.titleLabel.textColor		= UIColor.whiteColor;
+		//					button.titleLabel.hidden		= NO;
+		button.titleLabel.textAlignment	= NSTextAlignmentCenter;
+		[button setTitle:@"N" forState:UIControlStateNormal];
+		button.tag = index++;
+		CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
+		button.center = pos;
+		[self addSubview:button];
+		[_noteViews addObject:button];
+	}
+}
+
 -(void)updateNotes
 {
 	if ( _notes ) {
@@ -2425,30 +2460,8 @@ drop_pin:
 			OSMPoint p2 = LongitudeLatitudeFromMapPoint(OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height));
 			OSMRect rc2 = { p1.x, p2.y, p2.x-p1.x, p1.y-p2.y };
 			[_notes updateForRegion:rc2 completion:^{
-				for ( UIButton * button in _noteViews ) {
-					[button removeFromSuperview];
-				}
-				[_noteViews removeAllObjects];
-				NSInteger index = 0;
-				for ( OsmNote * note in _notes.list ) {
-					UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-					[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-					button.bounds					= CGRectMake(0, 0, 20, 20);
-					button.layer.cornerRadius		= 5;
-					button.layer.masksToBounds		= YES;
-					button.layer.backgroundColor	= UIColor.blueColor.CGColor;
-					button.layer.borderColor		= UIColor.whiteColor.CGColor;
-					button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
-					button.titleLabel.textColor		= UIColor.whiteColor;
-//					button.titleLabel.hidden		= NO;
-					button.titleLabel.textAlignment	= NSTextAlignmentCenter;
-					[button setTitle:@"N" forState:UIControlStateNormal];
-					button.tag = index++;
-					CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
-					button.center = pos;
-					[self addSubview:button];
-					[_noteViews addObject:button];
-				}
+				NSLog(@"refresh note buttons");
+				[self refreshNoteButtonsFromList];
 			}];
 		}];
 		[_notesQueue cancelAllOperations];

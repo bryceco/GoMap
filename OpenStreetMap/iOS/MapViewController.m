@@ -204,6 +204,7 @@
 		NotesTableViewController * con = segue.destinationViewController;
 		if ( [con isKindOfClass:[NotesTableViewController class]] ) {
 			con.note = sender;
+			con.mapView = _mapView;
 		}
 	}
 }

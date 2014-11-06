@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class OsmNote;
-
+@class MapView;
 
 @interface NotesTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 {
-	NSString	*	_newComment;
+	NSString		*	_newComment;
+	UIAlertView		*	_alert;
 }
 @property (strong,nonatomic)	OsmNote	* note;
+@property (strong,nonatomic)	MapView	* mapView;
 @end

@@ -15,7 +15,7 @@
 
 #define DoAssert(condition)	\
 if (!(condition)) {		\
-[[NSAssertionHandler currentHandler] handleFailureInMethod:_cmd object:self file:[NSString stringWithUTF8String:__FILE__] lineNumber:__LINE__ description:@"SQL Error"]; \
+[[NSAssertionHandler currentHandler] handleFailureInMethod:_cmd object:self file:[NSString stringWithUTF8String:__FILE__] lineNumber:__LINE__ description:@"SQL error: %s",sqlite3_errmsg(_db)]; \
 } else (void)0
 
 #define SqlCheck(e)	DoAssert((rc=(e)) == SQLITE_OK)

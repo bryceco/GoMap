@@ -130,6 +130,9 @@ const CGFloat WayHighlightRadius = 6.0;
 			[_mapData purgeHard];	// force database to get reset
 		}
 
+		_mapData.credentialsUserName = appDelegate.userName;
+		_mapData.credentialsPassword = appDelegate.userPassword;
+
 		__weak EditorMapLayer * weakSelf = self;
 		[_mapData setUndoLocationCallback:^NSData *{
 			OSMTransform trans = [weakSelf.mapView screenFromMapTransform];

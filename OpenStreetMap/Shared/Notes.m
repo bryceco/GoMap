@@ -41,6 +41,15 @@
 
 
 @implementation OsmNote
+-(instancetype)initWithLat:(double)lat lon:(double)lon
+{
+	self = [super init];
+	if ( self ) {
+		_lat		= lat;
+		_lon		= lon;
+	}
+	return self;
+}
 -(instancetype)initWithXml:(NSXMLElement *)noteElement
 {
 	self = [super init];
@@ -96,9 +105,6 @@
 		if ( data && error == nil ) {
 			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
-			NSString * text = [xmlDoc XMLStringWithOptions:(DDXMLNodePrettyPrint | DDXMLNodeCompactEmptyElement)];
-			NSLog( @"%@", text);
-
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
 				OsmNote * note = [[OsmNote alloc] initWithXml:noteElement];
 				if ( note ) {
@@ -106,14 +112,8 @@
 				}
 			}
 		}
-		NSLog(@"Notes:\n%@",self);
 		completion();
 	}];
-}
-
--(NSArray *)notesInRegion:(OSMRect)box
-{
-	return nil;
 }
 
 -(NSString *)description
@@ -125,28 +125,50 @@
 	return text;;
 }
 
--(void)updateNote:(OsmNote *)note comment:(NSString *)comment resolve:(BOOL)resolve completion:(void(^)(void))completion
+-(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion
 {
-	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/#id/comment?text=%@", comment];
-	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:YES completion:^(NSData *data, NSError *error) {
-		if ( data && error == nil ) {
-			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
-			NSString * text = [xmlDoc XMLStringWithOptions:(DDXMLNodePrettyPrint | DDXMLNodeCompactEmptyElement)];
-			NSLog( @"%@", text);
+	CFStringRef eStr = CFURLCreateStringByAddingPercentEscapes(
+															   kCFAllocatorDefault,
+															   (CFStringRef)comment,
+															   NULL,
+															   CFSTR("!'\"/%&=?$#+-~@<>|\\*;:,.()[]{}^! "),
+															   kCFStringEncodingUTF8
+															   );
+	comment = (__bridge NSString *)eStr;
+	CFRelease(eStr);
 
+	NSString * url;
+	if ( note.comments == nil ) {
+		// brand new note
+		url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?lat=%f&lon=%f&text=%@", note.lat, note.lon, comment];
+	} else {
+		// existing note
+		if ( close ) {
+			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%ld/close?text=%@", (long)note.ident, comment];
+		} else {
+			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%ld/comment?text=%@", (long)note.ident, comment];
+		}
+	}
+
+	[_mapData putRequest:url method:@"POST" xml:nil completion:^(NSData *postData,NSString * postErrorMessage) {
+		OsmNote * newNote = nil;
+		if ( postData && postErrorMessage == nil ) {
+			NSString * xmlText = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+			NSError * error = nil;
+			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
-				OsmNote * note = [[OsmNote alloc] initWithXml:noteElement];
-				if ( note ) {
-					[_list addObject:note];
+				newNote = [[OsmNote alloc] initWithXml:noteElement];
+				if ( newNote ) {
+					[_list removeObject:note];
+					if ( ![newNote.status isEqualToString:@"closed"] ) {
+						[_list addObject:newNote];
+					}
 				}
 			}
 		}
-		NSLog(@"Notes:\n%@",self);
-		completion();
+		completion( newNote, postErrorMessage ?: @"Update Error" );
 	}];
 }
-
 
 
 @end
