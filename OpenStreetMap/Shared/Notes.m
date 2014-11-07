@@ -134,8 +134,7 @@
 															   CFSTR("!'\"/%&=?$#+-~@<>|\\*;:,.()[]{}^! "),
 															   kCFStringEncodingUTF8
 															   );
-	comment = (__bridge NSString *)eStr;
-	CFRelease(eStr);
+	comment = (__bridge_transfer NSString *)eStr;
 
 	NSString * url;
 	if ( note.comments == nil ) {

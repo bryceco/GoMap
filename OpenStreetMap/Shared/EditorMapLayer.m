@@ -36,8 +36,6 @@
 
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
 
-const static CGFloat BuildingHeightPerMeter = 1.0;
-
 
 #define DEFAULT_LINECAP		kCALineCapSquare
 #define DEFAULT_LINEJOIN	kCALineJoinMiter
@@ -1681,8 +1679,10 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 
 				[layers addObject:layer];
 
+#if SHOW_3D
 				// if its a building then add walls for 3D
 				if ( object.tags[@"building"] != nil ) {
+					const CGFloat BuildingHeightPerMeter = 1.0;
 
 					double height = [object.tags[ @"height" ] doubleValue];
 					if ( height ) {	// height in meters
@@ -1694,7 +1694,6 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 						height *= 4*BuildingHeightPerMeter;
 					}
 
-#if SHOW_3D
 					// get walls
 					double hue = object.ident.longLongValue % 20 - 10;
 					for ( NSArray * w in outer ) {
@@ -1728,9 +1727,9 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 					roof.transform = t;
 
 					[layers addObject:roof];
-#endif
-#endif
+#endif	// roof
 				}
+#endif	// SHOW_3D
 
 				CGPathRelease(path);
 			}

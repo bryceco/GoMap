@@ -1300,7 +1300,7 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Note" id="qIZ-iS-gwF">
-                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="uMQ-Rj-wEm">
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="cancel" id="uMQ-Rj-wEm">
                                             <connections>
                                                 <action selector="done:" destination="S30-cU-QcE" id="85d-qs-S5A"/>
                                             </connections>

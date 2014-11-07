@@ -2460,7 +2460,6 @@ drop_pin:
 			OSMPoint p2 = LongitudeLatitudeFromMapPoint(OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height));
 			OSMRect rc2 = { p1.x, p2.y, p2.x-p1.x, p1.y-p2.y };
 			[_notes updateForRegion:rc2 completion:^{
-				NSLog(@"refresh note buttons");
 				[self refreshNoteButtonsFromList];
 			}];
 		}];
