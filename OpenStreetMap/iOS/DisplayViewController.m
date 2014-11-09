@@ -23,8 +23,9 @@ static const NSInteger BACKGROUND_SECTION	= 0;
 static const NSInteger OVERLAY_SECTION		= 1;
 static const NSInteger CACHE_SECTION		= 2;
 
-static const NSInteger OVERLAY_LOCATOR_ROW = 0;
-static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
+static const NSInteger OVERLAY_NOTES_ROW	= 0;
+static const NSInteger OVERLAY_LOCATOR_ROW	= 1;
+static const NSInteger OVERLAY_GPSTRACE_ROW	= 2;
 
 
 @interface CustomBackgroundCell : UITableViewCell
@@ -54,10 +55,13 @@ static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
 
 		[self setCustomAerialCellTitle];
 
+		NSIndexPath * notesPath = [NSIndexPath indexPathForRow:OVERLAY_NOTES_ROW inSection:OVERLAY_SECTION];
 		NSIndexPath * locatorPath = [NSIndexPath indexPathForRow:OVERLAY_LOCATOR_ROW inSection:OVERLAY_SECTION];
 		NSIndexPath * gpsTracePath = [NSIndexPath indexPathForRow:OVERLAY_GPSTRACE_ROW inSection:OVERLAY_SECTION];
+		UITableViewCell * notesCell = [self.tableView cellForRowAtIndexPath:notesPath];
 		UITableViewCell * locatorCell = [self.tableView cellForRowAtIndexPath:locatorPath];
 		UITableViewCell * gpsTraceCell = [self.tableView cellForRowAtIndexPath:gpsTracePath];
+		notesCell.accessoryType  = (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES)==0 ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
 		locatorCell.accessoryType  = mapView.locatorLayer.hidden  ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
 		gpsTraceCell.accessoryType = mapView.gpsTraceLayer.hidden ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
 
@@ -91,11 +95,14 @@ static const NSInteger OVERLAY_GPSTRACE_ROW = 1;
 			break;
 		}
 	}
+	NSIndexPath * notesPath = [NSIndexPath indexPathForRow:OVERLAY_NOTES_ROW inSection:OVERLAY_SECTION];
 	NSIndexPath * locatorPath = [NSIndexPath indexPathForRow:OVERLAY_LOCATOR_ROW inSection:OVERLAY_SECTION];
 	NSIndexPath * gpsTracePath = [NSIndexPath indexPathForRow:OVERLAY_GPSTRACE_ROW inSection:OVERLAY_SECTION];
+	UITableViewCell * notesCell = [self.tableView cellForRowAtIndexPath:notesPath];
 	UITableViewCell * locatorCell = [self.tableView cellForRowAtIndexPath:locatorPath];
 	UITableViewCell * gpsTraceCell = [self.tableView cellForRowAtIndexPath:gpsTracePath];
 	ViewOverlayMask mask = 0;
+	mask |= notesCell.accessoryType	   == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_NOTES    : 0;
 	mask |= locatorCell.accessoryType  == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_LOCATOR  : 0;
 	mask |= gpsTraceCell.accessoryType == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_GPSTRACE : 0;
 	mapView.viewOverlayMask = mask;

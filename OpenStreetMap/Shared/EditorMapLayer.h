@@ -21,7 +21,7 @@
 @class QuadMap;
 @class SpeechBalloonLayer;
 
-#define SHOW_3D	0
+#define SHOW_3D	1
 
 
 @interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>

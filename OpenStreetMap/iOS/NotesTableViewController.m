@@ -9,14 +9,14 @@
 #import <MapKit/MapKit.h>
 
 #import "MapView.h"
-#import "Notes.h"
+#import "OsmNotesDatabase.h"
 #import "NotesTableViewController.h"
 
 
 @interface NotesCommentCell : UITableViewCell
 @property (strong,nonatomic)	IBOutlet	UILabel		*	date;
 @property (strong,nonatomic)	IBOutlet	UILabel		*	user;
-@property (strong,nonatomic)	IBOutlet	UILabel		*	comment;
+@property (strong,nonatomic)	IBOutlet	UITextView	*	comment;
 @property (strong,nonatomic)	IBOutlet	UIView		*	commentBackground;
 @end
 @implementation NotesCommentCell
@@ -137,13 +137,13 @@
 		NSString * s = [cell.text.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		_alert = [[UIAlertView alloc] initWithTitle:@"Updating Note..." message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
 		[_alert show];
-		[self.mapView.notes updateNote:self.note close:resolve comment:s completion:^(OsmNote * newNote, NSString *errorMessage) {
+		[self.mapView.notesDatabase updateNote:self.note close:resolve comment:s completion:^(OsmNote * newNote, NSString *errorMessage) {
 			[_alert dismissWithClickedButtonIndex:0 animated:YES];
 			_alert = nil;
 			if ( newNote ) {
 				self.note = newNote;
 				[self done:nil];
-				[self.mapView refreshNoteButtonsFromList];
+				[self.mapView refreshNoteButtonsFromDatabase];
 			} else {
 				UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:NULL];
 				[alert show];
@@ -182,13 +182,13 @@
 		if ( comment.text.length > 0 ) {
 			NSMutableParagraphStyle * paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 			[paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
-
 			NSDictionary * attrs = @{
 									 NSFontAttributeName : [UIFont systemFontOfSize:17],
 									 NSParagraphStyleAttributeName : paragraphStyle
 									 };
-			CGRect rc = [comment.text boundingRectWithSize:CGSizeMake(self.view.bounds.size.width-60, 5000) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attrs context:nil];
-			return ceil(rc.size.height) + 75;
+			
+			CGRect rc = [comment.text boundingRectWithSize:CGSizeMake(self.view.bounds.size.width-60-20, 5000) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attrs context:nil];
+			return ceil(rc.size.height) + 85;
 		} else {
 			return 55;
 		}

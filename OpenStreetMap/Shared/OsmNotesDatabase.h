@@ -33,13 +33,14 @@
 
 
 
-@interface Notes : NSObject
+@interface OsmNotesDatabase : NSObject
+{
+	NSOperationQueue	*	_workQueue;
+}
 @property (strong,nonatomic)	NSMutableDictionary	*	dict;
 @property (weak,nonatomic)		OsmMapData			*	mapData;
 
--(void)updateForRegion:(OSMRect)bbox completion:(void(^)(void))completion;
-
-//-(OsmNote *)createNoteWithLat:(double)lat Lon:(double)lon comment:(NSString *)comment;
+-(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay completion:(void(^)(void))completion;
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion;
-
+-(void)reset;
 @end

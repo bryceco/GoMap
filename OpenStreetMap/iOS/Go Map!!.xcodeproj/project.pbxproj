@@ -463,7 +463,7 @@
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
 		02E626701997168800565D62 /* KeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E6266F1997168800565D62 /* KeyChain.m */; };
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
-		02E8436519B39FAD0044AC1D /* Notes.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* Notes.m */; };
+		02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */; };
 		02E8436F19B407C40044AC1D /* WebPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E8436E19B407C40044AC1D /* WebPageView.xib */; };
 		02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02E8437E19B4DE510044AC1D /* Localizable.strings */; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
@@ -1005,8 +1005,8 @@
 		02E6266F1997168800565D62 /* KeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChain.m; path = ../Shared/KeyChain.m; sourceTree = "<group>"; };
 		02E6267119973A0700565D62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
-		02E8436319B39FAD0044AC1D /* Notes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notes.h; path = ../Shared/Notes.h; sourceTree = "<group>"; };
-		02E8436419B39FAD0044AC1D /* Notes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notes.m; path = ../Shared/Notes.m; sourceTree = "<group>"; };
+		02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OsmNotesDatabase.h; path = ../Shared/OsmNotesDatabase.h; sourceTree = "<group>"; };
+		02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OsmNotesDatabase.m; path = ../Shared/OsmNotesDatabase.m; sourceTree = "<group>"; };
 		02E8436E19B407C40044AC1D /* WebPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPageView.xib; sourceTree = "<group>"; };
 		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		02E8438219B4DF960044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1622,8 +1622,6 @@
 				02ACBA8016713F2A00BB4414 /* MapView.m */,
 				02ACBA8116713F2A00BB4414 /* MercatorTileLayer.h */,
 				02ACBA8216713F2A00BB4414 /* MercatorTileLayer.m */,
-				02E8436319B39FAD0044AC1D /* Notes.h */,
-				02E8436419B39FAD0044AC1D /* Notes.m */,
 				02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */,
 				02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */,
 				02ACBA8316713F2A00BB4414 /* OsmMapData.h */,
@@ -1632,6 +1630,8 @@
 				021B30C41973AA4400B36EFF /* OsmMapData+Orthogonalize.m */,
 				021B30C51973AA4400B36EFF /* OsmMapData+Straighten.h */,
 				021B30C61973AA4400B36EFF /* OsmMapData+Straighten.m */,
+				02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */,
+				02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */,
 				02ACBA8516713F2A00BB4414 /* OsmObjects.h */,
 				02ACBA8616713F2A00BB4414 /* OsmObjects.m */,
 				024ADF3A16B1B38A00875658 /* PathUtil.h */,
@@ -2200,7 +2200,7 @@
 				02F9B89819B58A440008E0FE /* MapCSS.l in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
-				02E8436519B39FAD0044AC1D /* Notes.m in Sources */,
+				02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
 				020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */,

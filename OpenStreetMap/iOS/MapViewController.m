@@ -11,7 +11,7 @@
 #import "EditorMapLayer.h"
 #import "MapViewController.h"
 #import "MapView.h"
-#import "Notes.h"
+#import "OsmNotesDatabase.h"
 #import "NotesTableViewController.h"
 #import "OsmMapData.h"
 #import "PushPinView.h"

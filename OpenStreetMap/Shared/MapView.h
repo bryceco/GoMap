@@ -26,7 +26,7 @@
 @class LocationBallLayer;
 @class MapViewController;
 @class MercatorTileLayer;
-@class Notes;
+@class OsmNotesDatabase;
 @class OsmBaseObject;
 @class PushPinView;
 @class RulerLayer;
@@ -51,6 +51,7 @@ typedef enum _MapViewState {
 typedef enum _ViewOverlayMask {
 	VIEW_OVERLAY_LOCATOR	= 1 << 0,
 	VIEW_OVERLAY_GPSTRACE	= 1 << 1,
+	VIEW_OVERLAY_NOTES		= 1 << 2,
 } ViewOverlayMask;
 
 typedef enum {
@@ -129,9 +130,8 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
 @property (strong,nonatomic)	NSArray						*	editControlActions;
 
-@property (readonly,nonatomic)	NSOperationQueue			*	notesQueue;
-@property (readonly,nonatomic)	Notes						*	notes;
-@property (readonly,nonatomic)	NSMutableDictionary			*	noteViewDict;
+@property (readonly,nonatomic)	OsmNotesDatabase			*	notesDatabase;
+@property (readonly,nonatomic)	NSMutableDictionary			*	notesViewDict;
 
 @property (readonly,nonatomic)	MercatorTileLayer			*	aerialLayer;
 @property (readonly,nonatomic)	MercatorTileLayer			*	mapnikLayer;
@@ -208,6 +208,6 @@ typedef enum {
 - (void)setTagsForCurrentObject:(NSDictionary *)tags;
 #endif
 
--(void)refreshNoteButtonsFromList;
+-(void)refreshNoteButtonsFromDatabase;
 
 @end

@@ -11,7 +11,7 @@
 #endif
 
 #import "DownloadThreadPool.h"
-#import "Notes.h"
+#import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 
 @implementation OsmNoteComment
@@ -78,7 +78,7 @@
 }
 -(NSString *)description
 {
-	NSMutableString * text = [NSMutableString stringWithFormat:@"Note %ld - %@:\n", (long)_ident,_status];
+	NSMutableString * text = [NSMutableString stringWithFormat:@"Note %@ - %@:\n", _ident,_status];
 	for ( OsmNoteComment * comment in _comments ) {
 		[text appendString:[NSString stringWithFormat:@"  %@\n",comment.description]];
 	}
@@ -87,15 +87,23 @@
 @end
 
 
-@implementation Notes
+@implementation OsmNotesDatabase
 
 -(instancetype)init
 {
 	self = [super init];
 	if ( self ) {
 		_dict = [NSMutableDictionary new];
+		_workQueue = [NSOperationQueue new];
+		_workQueue.maxConcurrentOperationCount = 1;
 	}
 	return self;
+}
+
+-(void)reset
+{
+	[_workQueue cancelAllOperations];
+	[_dict removeAllObjects];
 }
 
 -(void)updateForRegion:(OSMRect)box completion:(void(^)(void))completion
@@ -121,6 +129,19 @@
 		});
 	}];
 }
+
+-(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay completion:(void(^)(void))completion;
+{
+	[_workQueue cancelAllOperations];
+	[_workQueue addOperationWithBlock:^{
+		usleep( 1000*(delay + 0.25) );
+	}];
+	[_workQueue addOperationWithBlock:^{
+		[self updateForRegion:bbox completion:completion];
+	}];
+}
+
+
 
 -(NSString *)description
 {
@@ -164,10 +185,7 @@
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
 				newNote = [[OsmNote alloc] initWithXml:noteElement];
 				if ( newNote ) {
-					[_dict removeObjectForKey:note.ident];
-					if ( ![newNote.status isEqualToString:@"closed"] ) {
-						[_dict setObject:newNote forKey:newNote.ident];
-					}
+					[_dict setObject:newNote forKey:newNote.ident];
 				}
 			}
 		}

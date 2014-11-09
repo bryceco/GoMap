@@ -20,7 +20,7 @@
 #import "GpxLayer.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
-#import "Notes.h"
+#import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Orthogonalize.h"
 #import "OsmMapData+Straighten.h"
@@ -39,7 +39,6 @@
 
 
 #define FRAMERATE_TEST	0
-#define USE_NOTES		1
 
 
 static const CGFloat Z_AERIAL		= -100;
@@ -268,13 +267,9 @@ CGSize SizeForImage( NSImage * image )
 	rotationGesture.delegate = self;
 	[self addGestureRecognizer:rotationGesture];
 
-#if USE_NOTES
-	_notes = [Notes new];
-	_notes.mapData = _editorLayer.mapData;
-	_notesQueue = [NSOperationQueue new];
-	_notesQueue.maxConcurrentOperationCount = 1;
-	_noteViewDict	= [NSMutableDictionary new];
-#endif
+	_notesDatabase			= [OsmNotesDatabase new];
+	_notesDatabase.mapData	= _editorLayer.mapData;
+	_notesViewDict			= [NSMutableDictionary new];
 
 	// make help button have rounded corners
 	_helpButton.layer.cornerRadius = 10.0;
@@ -359,108 +354,6 @@ CGSize SizeForImage( NSImage * image )
 #endif
 }
 
-
-
--(void)setViewStateOverride:(BOOL)override
-{
-	[self setViewState:_viewState overlays:_viewOverlayMask override:override];
-}
--(void)setViewState:(MapViewState)state
-{
-	[self setViewState:state overlays:_viewOverlayMask override:_viewStateOverride];
-}
--(void)setViewOverlayMask:(ViewOverlayMask)mask
-{
-	[self setViewState:_viewState overlays:mask override:_viewStateOverride];
-}
-
-static inline MapViewState StateFor(MapViewState state, BOOL override)
-{
-	if ( override && state == MAPVIEW_EDITOR )
-		return MAPVIEW_MAPNIK;
-	if ( override && state == MAPVIEW_EDITORAERIAL )
-		return MAPVIEW_AERIAL;
-	return state;
-}
-static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask mask, BOOL override)
-{
-	if ( override && state == MAPVIEW_EDITORAERIAL )
-		return mask | VIEW_OVERLAY_LOCATOR;
-	return mask;
-}
-
--(void)setViewState:(MapViewState)state overlays:(ViewOverlayMask)overlays override:(BOOL)override
-{
-	if ( _viewState == state && _viewOverlayMask == overlays && _viewStateOverride == override )
-		return;
-
-	MapViewState oldState = StateFor(_viewState,_viewStateOverride);
-	MapViewState newState = StateFor( state, override );
-	ViewOverlayMask oldOverlays = OverlaysFor(_viewState, _viewOverlayMask, _viewStateOverride);
-	ViewOverlayMask newOverlays = OverlaysFor(state, overlays, override);
-	_viewState = state;
-	_viewOverlayMask = overlays;
-	_viewStateOverride = override;
-	if ( newState == oldState && newOverlays == oldOverlays )
-		return;
-
-	// enable/disable editing buttons based on visibility
-	[_viewController updateDeleteButtonState];
-	[_viewController updateUndoRedoButtonState];
-
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:0.5];
-
-	_locatorLayer.hidden  = (newOverlays & VIEW_OVERLAY_LOCATOR) == 0;
-	_gpsTraceLayer.hidden = (newOverlays & VIEW_OVERLAY_GPSTRACE) == 0;
-
-	switch (newState) {
-		case MAPVIEW_EDITOR:
-			_editorLayer.whiteText = NO;
-			_editorLayer.hidden = NO;
-			_aerialLayer.hidden = YES;
-			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
-			break;
-		case MAPVIEW_EDITORAERIAL:
-			_editorLayer.whiteText = YES;
-			_aerialLayer.aerialService = _customAerials.currentAerial;
-			_editorLayer.hidden = NO;
-			_aerialLayer.hidden = NO;
-			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
-			_aerialLayer.opacity = 0.75;
-			break;
-		case MAPVIEW_AERIAL:
-			_aerialLayer.aerialService = _customAerials.currentAerial;
-			_editorLayer.hidden = YES;
-			_aerialLayer.hidden = NO;
-			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
-			_aerialLayer.opacity = 1.0;
-			break;
-		case MAPVIEW_MAPNIK:
-			_editorLayer.hidden = YES;
-			_aerialLayer.hidden = YES;
-			_mapnikLayer.hidden = NO;
-			_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
-			break;
-		case MAPVIEW_NONE:
-			// shouldn't occur
-			_editorLayer.hidden = YES;
-			_aerialLayer.hidden = YES;
-			_mapnikLayer.hidden = YES;
-			break;
-	}
-	[CATransaction commit];
-
-	[self updateBingButton];
-}
--(MapViewState)viewState
-{
-	return _viewState;
-}
-
 - (BOOL)acceptsFirstResponder
 {
 	return YES;
@@ -498,7 +391,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[[NSUserDefaults standardUserDefaults] setDouble:center.x	forKey:@"view.longitude"];
 
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState		forKey:@"mapViewState"];
-	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask	forKey:@"mapViewOverlaysa"];
+	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask	forKey:@"mapViewOverlays"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -691,6 +584,111 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 
 
+#pragma mark View State
+
+-(void)setViewStateOverride:(BOOL)override
+{
+	[self setViewState:_viewState overlays:_viewOverlayMask override:override];
+}
+-(void)setViewState:(MapViewState)state
+{
+	[self setViewState:state overlays:_viewOverlayMask override:_viewStateOverride];
+}
+-(void)setViewOverlayMask:(ViewOverlayMask)mask
+{
+	[self setViewState:_viewState overlays:mask override:_viewStateOverride];
+}
+
+static inline MapViewState StateFor(MapViewState state, BOOL override)
+{
+	if ( override && state == MAPVIEW_EDITOR )
+		return MAPVIEW_MAPNIK;
+	if ( override && state == MAPVIEW_EDITORAERIAL )
+		return MAPVIEW_AERIAL;
+	return state;
+}
+static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask mask, BOOL override)
+{
+	if ( override && state == MAPVIEW_EDITORAERIAL )
+		return mask | VIEW_OVERLAY_LOCATOR;
+	return mask;
+}
+
+-(void)setViewState:(MapViewState)state overlays:(ViewOverlayMask)overlays override:(BOOL)override
+{
+	if ( _viewState == state && _viewOverlayMask == overlays && _viewStateOverride == override )
+		return;
+
+	MapViewState oldState = StateFor(_viewState,_viewStateOverride);
+	MapViewState newState = StateFor( state, override );
+	ViewOverlayMask oldOverlays = OverlaysFor(_viewState, _viewOverlayMask, _viewStateOverride);
+	ViewOverlayMask newOverlays = OverlaysFor(state, overlays, override);
+	_viewState = state;
+	_viewOverlayMask = overlays;
+	_viewStateOverride = override;
+	if ( newState == oldState && newOverlays == oldOverlays )
+		return;
+
+	// enable/disable editing buttons based on visibility
+	[_viewController updateDeleteButtonState];
+	[_viewController updateUndoRedoButtonState];
+
+	[CATransaction begin];
+	[CATransaction setAnimationDuration:0.5];
+
+	_locatorLayer.hidden  = (newOverlays & VIEW_OVERLAY_LOCATOR) == 0;
+	_gpsTraceLayer.hidden = (newOverlays & VIEW_OVERLAY_GPSTRACE) == 0;
+
+	switch (newState) {
+		case MAPVIEW_EDITOR:
+			_editorLayer.whiteText = NO;
+			_editorLayer.hidden = NO;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			break;
+		case MAPVIEW_EDITORAERIAL:
+			_editorLayer.whiteText = YES;
+			_aerialLayer.aerialService = _customAerials.currentAerial;
+			_editorLayer.hidden = NO;
+			_aerialLayer.hidden = NO;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			_aerialLayer.opacity = 0.75;
+			break;
+		case MAPVIEW_AERIAL:
+			_aerialLayer.aerialService = _customAerials.currentAerial;
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = NO;
+			_mapnikLayer.hidden = YES;
+			_zoomToEditLabel.hidden = YES;
+			_aerialLayer.opacity = 1.0;
+			break;
+		case MAPVIEW_MAPNIK:
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = NO;
+			_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
+			break;
+		case MAPVIEW_NONE:
+			// shouldn't occur
+			_editorLayer.hidden = YES;
+			_aerialLayer.hidden = YES;
+			_mapnikLayer.hidden = YES;
+			break;
+	}
+	[self updateNotesWithDelay:0];
+
+	[CATransaction commit];
+
+	[self updateBingButton];
+}
+-(MapViewState)viewState
+{
+	return _viewState;
+}
+
+
 #pragma mark Coordinate Transforms
 
 
@@ -759,7 +757,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)noteButtonPress:(id)sender
 {
 	UIButton * button = sender;
-	OsmNote * note = _notes.dict[ @(button.tag) ];
+	OsmNote * note = _notesDatabase.dict[ @(button.tag) ];
 	if ( note == nil )
 		return;
 	[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
@@ -1415,12 +1413,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( delta.x == 0.0 && delta.y == 0.0 )
 		return;
 
-	[_noteViewDict enumerateKeysAndObjectsUsingBlock:^(id key, UIButton * button, BOOL *stop) {
-		CGPoint pt = button.center;
-		pt.x += delta.x;
-		pt.y += delta.y;
-		button.center = pt;
-	}];
+	[self refreshNoteButtonsFromDatabase];
 
 	OSMTransform o = OSMTransformMakeTranslation(delta.x, delta.y);
 	OSMTransform t = OSMTransformConcat( _screenFromMapTransform, o );
@@ -1440,16 +1433,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		ratio = maxZoomIn / scale;
 	}
 
-	[_noteViewDict enumerateKeysAndObjectsUsingBlock:^(id key, UIButton * button, BOOL *stop) {
-		CGPoint pt = button.center;
-		pt.x -= zoomCenter.x;
-		pt.y -= zoomCenter.y;
-		pt.x *= ratio;
-		pt.y *= ratio;
-		pt.x += zoomCenter.x;
-		pt.y += zoomCenter.y;
-		button.center = pt;
-	}];
+	[self refreshNoteButtonsFromDatabase];
 
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
@@ -1464,16 +1448,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( angle == 0.0 )
 		return;
 
-	[_noteViewDict enumerateKeysAndObjectsUsingBlock:^(id key, UIButton * button, BOOL *stop) {
-		CGPoint pt = button.center;
-		pt.x -= zoomCenter.x;
-		pt.y -= zoomCenter.y;
-		CGPoint p2 = { pt.x*cos(angle)-pt.y*sin(angle), pt.x*sin(angle)+pt.y*cos(angle) };
-		pt = p2;
-		pt.x += zoomCenter.x;
-		pt.y += zoomCenter.y;
-		button.center = pt;
-	}];
+	[self refreshNoteButtonsFromDatabase];
 
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
@@ -2421,54 +2396,67 @@ drop_pin:
 
 #pragma mark Notes
 
--(void)refreshNoteButtonsFromList
-{
-	[_notes.dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
-		UIButton * button = _noteViewDict[ note.ident ];
-		if ( button == nil ) {
-			button = [UIButton buttonWithType:UIButtonTypeCustom];
-			[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-			button.bounds					= CGRectMake(0, 0, 20, 20);
-			button.layer.cornerRadius		= 5;
-			button.layer.backgroundColor	= UIColor.blueColor.CGColor;
-			button.layer.borderColor		= UIColor.whiteColor.CGColor;
-			button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
-			button.titleLabel.textColor		= UIColor.whiteColor;
-			button.titleLabel.textAlignment	= NSTextAlignmentCenter;
-			[button setTitle:@"N" forState:UIControlStateNormal];
-			button.tag = note.ident.integerValue;
-			[self addSubview:button];
-			[_noteViewDict setObject:button forKey:note.ident];
-		}
-
-		if ( [note.status isEqualToString:@"closed"] ) {
-			[button removeFromSuperview];
-		} else {
-			CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
-			button.center = pos;
-		}
-	}];
-}
-
 -(void)updateNotesWithDelay:(CGFloat)delay
 {
-	if ( _notes ) {
-		NSBlockOperation * op1 = [NSBlockOperation blockOperationWithBlock:^{
-			usleep( delay + 0.25 );
+	if ( _viewOverlayMask & VIEW_OVERLAY_NOTES ) {
+		OSMRect rc = [self boundingMapRectForScreen];
+		OSMPoint p1 = LongitudeLatitudeFromMapPoint(rc.origin);
+		OSMPoint p2 = LongitudeLatitudeFromMapPoint(OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height));
+		OSMRect rc2 = { p1.x, p2.y, p2.x-p1.x, p1.y-p2.y };
+		[_notesDatabase updateRegion:rc2 withDelay:delay completion:^{
+			[self refreshNoteButtonsFromDatabase];
 		}];
-		NSBlockOperation * op2 = [NSBlockOperation blockOperationWithBlock:^{
-			OSMRect rc = [self boundingMapRectForScreen];
-			OSMPoint p1 = LongitudeLatitudeFromMapPoint(rc.origin);
-			OSMPoint p2 = LongitudeLatitudeFromMapPoint(OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height));
-			OSMRect rc2 = { p1.x, p2.y, p2.x-p1.x, p1.y-p2.y };
-			[_notes updateForRegion:rc2 completion:^{
-				[self refreshNoteButtonsFromList];
+	} else {
+		[self refreshNoteButtonsFromDatabase];
+	}
+}
+
+-(void)refreshNoteButtonsFromDatabase
+{
+	dispatch_async(dispatch_get_main_queue(), ^{	// need this to disable implicit animation
+
+		[UIView performWithoutAnimation:^{
+			[_notesDatabase.dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
+				UIButton * button = _notesViewDict[ note.ident ];
+				if ( _viewOverlayMask & VIEW_OVERLAY_NOTES ) {
+					if ( button == nil ) {
+						button = [UIButton buttonWithType:UIButtonTypeCustom];
+						[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+						button.bounds					= CGRectMake(0, 0, 20, 20);
+						button.layer.cornerRadius		= 5;
+						button.layer.backgroundColor	= UIColor.blueColor.CGColor;
+						button.layer.borderColor		= UIColor.whiteColor.CGColor;
+						button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
+						button.titleLabel.textColor		= UIColor.whiteColor;
+						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
+						[button setTitle:@"N" forState:UIControlStateNormal];
+						button.tag = note.ident.integerValue;
+						[self addSubview:button];
+						[_notesViewDict setObject:button forKey:note.ident];
+					}
+
+					if ( [note.status isEqualToString:@"closed"] ) {
+						[button removeFromSuperview];
+					} else {
+						CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
+						if ( isinf(pos.x) || isinf(pos.y) )
+							return;
+
+						CGRect rc = button.bounds;
+						rc = CGRectOffset( rc, pos.x-rc.size.width/2, pos.y-rc.size.height/2 );
+						button.frame = rc;
+					}
+				} else {
+					[button removeFromSuperview];
+					[_notesViewDict removeObjectForKey:note.ident];
+				}
 			}];
 		}];
-		[_notesQueue cancelAllOperations];
-		[_notesQueue addOperation:op1];
-		[_notesQueue addOperation:op2];
-	}
+
+		if ( (_viewOverlayMask & VIEW_OVERLAY_NOTES) == 0 ) {
+			[_notesDatabase reset];
+		}
+	});
 }
 
 #pragma mark Gestures
