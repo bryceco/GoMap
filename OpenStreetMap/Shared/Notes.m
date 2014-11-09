@@ -58,7 +58,7 @@
 		_lon	= [noteElement attributeForName:@"lon"].stringValue.doubleValue;
 		for ( NSXMLElement * child in noteElement.children ) {
 			if ( [child.name isEqualToString:@"id"] ) {
-				_ident = child.stringValue.integerValue;
+				_ident = @(child.stringValue.integerValue);
 			} else if ( [child.name isEqualToString:@"date_created"] ) {
 				_created = child.stringValue;
 			} else if ( [child.name isEqualToString:@"status"] ) {
@@ -93,7 +93,7 @@
 {
 	self = [super init];
 	if ( self ) {
-		_list = [NSMutableArray new];
+		_dict = [NSMutableDictionary new];
 	}
 	return self;
 }
@@ -101,27 +101,33 @@
 -(void)updateForRegion:(OSMRect)box completion:(void(^)(void))completion
 {
 	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?closed=0&bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
-	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:YES completion:^(NSData *data, NSError *error) {
+	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
+		NSMutableArray * newNotes = [NSMutableArray new];
 		if ( data && error == nil ) {
 			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
 				OsmNote * note = [[OsmNote alloc] initWithXml:noteElement];
 				if ( note ) {
-					[_list addObject:note];
+					[newNotes addObject:note];
 				}
 			}
 		}
-		completion();
+		dispatch_async(dispatch_get_main_queue(), ^{
+			for ( OsmNote * n in newNotes ) {
+				[_dict setObject:n forKey:n.ident];
+			}
+			completion();
+		});
 	}];
 }
 
 -(NSString *)description
 {
-	NSMutableString * text = [NSMutableString new];
-	for ( OsmNote * note in _list ) {
+	__block NSMutableString * text = [NSMutableString new];
+	[_dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
 		[text appendString:[note description]];
-	}
+	}];
 	return text;;
 }
 
@@ -143,9 +149,9 @@
 	} else {
 		// existing note
 		if ( close ) {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%ld/close?text=%@", (long)note.ident, comment];
+			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/close?text=%@", note.ident, comment];
 		} else {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%ld/comment?text=%@", (long)note.ident, comment];
+			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/comment?text=%@", note.ident, comment];
 		}
 	}
 
@@ -158,9 +164,9 @@
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
 				newNote = [[OsmNote alloc] initWithXml:noteElement];
 				if ( newNote ) {
-					[_list removeObject:note];
+					[_dict removeObjectForKey:note.ident];
 					if ( ![newNote.status isEqualToString:@"closed"] ) {
-						[_list addObject:newNote];
+						[_dict setObject:newNote forKey:newNote.ident];
 					}
 				}
 			}

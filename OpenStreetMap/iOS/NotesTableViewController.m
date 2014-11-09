@@ -58,6 +58,14 @@
 		return @"Update";
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if ( section == 1 ) {
+		return @"\n\n\n\n\n\n\n\n\n";
+	}
+	return nil;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	return self.note.comments && section == 0 ? self.note.comments.count : 2;

@@ -273,7 +273,7 @@ CGSize SizeForImage( NSImage * image )
 	_notes.mapData = _editorLayer.mapData;
 	_notesQueue = [NSOperationQueue new];
 	_notesQueue.maxConcurrentOperationCount = 1;
-	_noteViews	= [NSMutableSet new];
+	_noteViewDict	= [NSMutableDictionary new];
 #endif
 
 	// make help button have rounded corners
@@ -324,7 +324,7 @@ CGSize SizeForImage( NSImage * image )
 #endif
 
 	// get notes
-	[self updateNotes];
+	[self updateNotesWithDelay:0];
 
 
 #if FRAMERATE_TEST
@@ -759,9 +759,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)noteButtonPress:(id)sender
 {
 	UIButton * button = sender;
-	if ( button.tag >= _notes.list.count )
+	OsmNote * note = _notes.dict[ @(button.tag) ];
+	if ( note == nil )
 		return;
-	OsmNote * note = _notes.list[ button.tag ];
 	[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
 }
 
@@ -1415,12 +1415,12 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( delta.x == 0.0 && delta.y == 0.0 )
 		return;
 
-	for ( UIButton * button in _noteViews ) {
+	[_noteViewDict enumerateKeysAndObjectsUsingBlock:^(id key, UIButton * button, BOOL *stop) {
 		CGPoint pt = button.center;
 		pt.x += delta.x;
 		pt.y += delta.y;
 		button.center = pt;
-	}
+	}];
 
 	OSMTransform o = OSMTransformMakeTranslation(delta.x, delta.y);
 	OSMTransform t = OSMTransformConcat( _screenFromMapTransform, o );
@@ -1440,7 +1440,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		ratio = maxZoomIn / scale;
 	}
 
-	for ( UIButton * button in _noteViews ) {
+	[_noteViewDict enumerateKeysAndObjectsUsingBlock:^(id key, UIButton * button, BOOL *stop) {
 		CGPoint pt = button.center;
 		pt.x -= zoomCenter.x;
 		pt.y -= zoomCenter.y;
@@ -1449,7 +1449,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		pt.x += zoomCenter.x;
 		pt.y += zoomCenter.y;
 		button.center = pt;
-	}
+	}];
 
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
@@ -1464,7 +1464,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( angle == 0.0 )
 		return;
 
-	for ( UIButton * button in _noteViews ) {
+	[_noteViewDict enumerateKeysAndObjectsUsingBlock:^(id key, UIButton * button, BOOL *stop) {
 		CGPoint pt = button.center;
 		pt.x -= zoomCenter.x;
 		pt.y -= zoomCenter.y;
@@ -1473,7 +1473,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		pt.x += zoomCenter.x;
 		pt.y += zoomCenter.y;
 		button.center = pt;
-	}
+	}];
 
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
@@ -2418,41 +2418,43 @@ drop_pin:
 #endif
 }
 
+
 #pragma mark Notes
 
 -(void)refreshNoteButtonsFromList
 {
-	for ( UIButton * button in _noteViews ) {
-		[button removeFromSuperview];
-	}
-	[_noteViews removeAllObjects];
-	NSInteger index = 0;
-	for ( OsmNote * note in _notes.list ) {
-		UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-		[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-		button.bounds					= CGRectMake(0, 0, 20, 20);
-		button.layer.cornerRadius		= 5;
-		button.layer.masksToBounds		= YES;
-		button.layer.backgroundColor	= UIColor.blueColor.CGColor;
-		button.layer.borderColor		= UIColor.whiteColor.CGColor;
-		button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
-		button.titleLabel.textColor		= UIColor.whiteColor;
-		//					button.titleLabel.hidden		= NO;
-		button.titleLabel.textAlignment	= NSTextAlignmentCenter;
-		[button setTitle:@"N" forState:UIControlStateNormal];
-		button.tag = index++;
-		CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
-		button.center = pos;
-		[self addSubview:button];
-		[_noteViews addObject:button];
-	}
+	[_notes.dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
+		UIButton * button = _noteViewDict[ note.ident ];
+		if ( button == nil ) {
+			button = [UIButton buttonWithType:UIButtonTypeCustom];
+			[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+			button.bounds					= CGRectMake(0, 0, 20, 20);
+			button.layer.cornerRadius		= 5;
+			button.layer.backgroundColor	= UIColor.blueColor.CGColor;
+			button.layer.borderColor		= UIColor.whiteColor.CGColor;
+			button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
+			button.titleLabel.textColor		= UIColor.whiteColor;
+			button.titleLabel.textAlignment	= NSTextAlignmentCenter;
+			[button setTitle:@"N" forState:UIControlStateNormal];
+			button.tag = note.ident.integerValue;
+			[self addSubview:button];
+			[_noteViewDict setObject:button forKey:note.ident];
+		}
+
+		if ( [note.status isEqualToString:@"closed"] ) {
+			[button removeFromSuperview];
+		} else {
+			CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
+			button.center = pos;
+		}
+	}];
 }
 
--(void)updateNotes
+-(void)updateNotesWithDelay:(CGFloat)delay
 {
 	if ( _notes ) {
 		NSBlockOperation * op1 = [NSBlockOperation blockOperationWithBlock:^{
-			usleep(0.25);
+			usleep( delay + 0.25 );
 		}];
 		NSBlockOperation * op2 = [NSBlockOperation blockOperationWithBlock:^{
 			OSMRect rc = [self boundingMapRectForScreen];
@@ -2538,7 +2540,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				}
 			}
 		}];
-		[self updateNotes];
+		[self updateNotesWithDelay:duration];
 	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
 		DLog( @"pan gesture failed" );
 	} else {
@@ -2559,7 +2561,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 		[pinch setScale:1.0];
 	} else if ( pinch.state == UIGestureRecognizerStateEnded ) {
-		[self updateNotes];
+		[self updateNotesWithDelay:0];
 	}
 }
 - (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap
@@ -2609,7 +2611,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self rotateBy:angle aroundScreenPoint:centerPoint];
 		rotationGesture.rotation = 0.0;
 	} else if ( rotationGesture.state == UIGestureRecognizerStateEnded ) {
-		[self updateNotes];
+		[self updateNotesWithDelay:0];
 	}
 }
 

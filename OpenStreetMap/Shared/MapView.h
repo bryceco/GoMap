@@ -131,7 +131,7 @@ typedef enum {
 
 @property (readonly,nonatomic)	NSOperationQueue			*	notesQueue;
 @property (readonly,nonatomic)	Notes						*	notes;
-@property (readonly,nonatomic)	NSMutableSet				*	noteViews;
+@property (readonly,nonatomic)	NSMutableDictionary			*	noteViewDict;
 
 @property (readonly,nonatomic)	MercatorTileLayer			*	aerialLayer;
 @property (readonly,nonatomic)	MercatorTileLayer			*	mapnikLayer;
