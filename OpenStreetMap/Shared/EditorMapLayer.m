@@ -1684,8 +1684,25 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 				if ( object.tags[@"building"] != nil ) {
 					const CGFloat BuildingHeightPerMeter = 1.0;
 
-					double height = [object.tags[ @"height" ] doubleValue];
-					if ( height ) {	// height in meters
+					NSString * value = object.tags[ @"height" ];
+					double height = [value doubleValue];
+					if ( height ) {	// height in meters?
+						double v1 = 0;
+						double v2 = 0;
+						NSScanner * scanner = [[NSScanner alloc] initWithString:value];
+						if ( [scanner scanDouble:&v1] ) {
+							if ( [scanner scanString:@"'" intoString:nil] ) {
+								// feet
+								if ( [scanner scanDouble:&v2] ) {
+									if ( [scanner scanString:@"\"" intoString:nil] ) {
+										// inches
+									} else {
+										// malformed
+									}
+								}
+								height = (v1 * 12 + v2) * 0.0254;
+							}
+						}
 						height *= BuildingHeightPerMeter;
 					} else {
 						height = [object.tags[ @"building:levels" ] doubleValue];

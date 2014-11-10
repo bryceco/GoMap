@@ -28,6 +28,9 @@
 		self.navigationItem.title = self.title;
 	}
 
+	UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonSystemItemDone target:self action:@selector(backButton:)];
+	self.navigationItem.leftBarButtonItems = @[ leftButton ];
+
 	if ( self.url ) {
 		NSString * escape = [self.url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 		NSURL * url = [NSURL URLWithString:escape];
@@ -59,6 +62,14 @@
 	[alert show];
 }
 
+- (void)backButton:(id)sender
+{
+	if ( _webView.canGoBack ) {
+		[_webView goBack];
+	} else {
+		[self cancel:sender];
+	}
+}
 
 // Called when a button is clicked. The view will be automatically dismissed after this call returns
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
