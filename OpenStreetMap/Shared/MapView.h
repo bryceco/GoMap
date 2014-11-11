@@ -115,6 +115,8 @@ typedef enum {
 
 	CLLocationManager				*	_locationManager;
 	CLLocation						*	_currentLocation;
+
+	dispatch_source_t					_mailTimer;
 }
 
 #if TARGET_OS_IPHONE
