@@ -30,9 +30,9 @@
 #import "VectorMath.h"
 
 
-#define USE_SHAPELAYERS 1
-#define FADE_INOUT		0
-
+#define USE_SHAPELAYERS		1
+#define FADE_INOUT			0
+#define SINGLE_SIDED_WALLS	1
 
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
 
@@ -170,9 +170,11 @@ const CGFloat WayHighlightRadius = 6.0;
 						  @"lineWidth"	: [NSNull null],
 		};
 		_baseLayer.actions = self.actions;
+		_crossHairs.actions = self.actions;
 	}
 	return self;
 }
+
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -657,7 +659,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 }
-+(void)addBoxedPointList:(NSArray *)list toPath:(CGMutablePathRef)path refPoint:(CGPoint)refPoint
++(void)addBoxedPointList:(NSArray *)list toPath:(CGMutablePathRef)path refPoint:(OSMPoint)refPoint
 {
 	OSMPointBoxed * first = nil;
 	for ( OSMPointBoxed * point in list ) {
@@ -1377,20 +1379,22 @@ const static CGFloat Z_LINE				= Z_BASE + 4 * ZSCALE;
 const static CGFloat Z_NODE				= Z_BASE + 5 * ZSCALE;
 const static CGFloat Z_TEXT				= Z_BASE + 6 * ZSCALE;
 const static CGFloat Z_BUILDING_WALL	= Z_BASE + 7 * ZSCALE;
-//const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 8 * ZSCALE;
+const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 8 * ZSCALE;
 const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 9 * ZSCALE;
 const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 10 * ZSCALE;
 const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 const static CGFloat Z_CROSSHAIRS		= 10000;
 
--(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(CGPoint *)refPoint CF_RETURNS_RETAINED
+-(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(OSMPoint *)refPoint CF_RETURNS_RETAINED
 {
 	NSArray * wayList = object.isWay ? @[ object ] : object.isRelation ? [self wayListForMultipolygonRelation:object.isRelation] : nil;
 	if ( wayList == nil )
 		return nil;
 
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPoint initial = { 0, 0 };
+	CGMutablePathRef	path		= CGPathCreateMutable();
+	OSMPoint			initial		= { 0, 0 };
+	BOOL				haveInitial	= NO;
+
 	for ( OsmWay * way in wayList ) {
 
 		BOOL first = YES;
@@ -1398,10 +1402,9 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
 			if ( isinf(pt.x) )
 				break;
-			if ( refPoint ) {
-				initial = CGPointMake(pt.x, pt.y);
-				*refPoint = initial;
-				refPoint = NULL;
+			if ( !haveInitial ) {
+				initial = pt;
+				haveInitial = YES;
 			}
 			pt.x -= initial.x;
 			pt.y -= initial.y;
@@ -1415,6 +1418,17 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 			}
 		}
 	}
+
+	if ( refPoint ) {
+		// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
+		CGRect bbox	= CGPathGetPathBoundingBox( path );
+		CGAffineTransform tran = CGAffineTransformMakeTranslation( -bbox.origin.x, -bbox.origin.y );
+		CGPathRef path2 = CGPathCreateCopyByTransformingPath( path, &tran );
+		CGPathRelease( path );
+		path = (CGMutablePathRef)path2;
+		*refPoint = OSMPointMake( initial.x + (double)bbox.origin.x/PATH_SCALING, initial.y + (double)bbox.origin.y/PATH_SCALING );
+	}
+
 	return path;
 }
 
@@ -1432,7 +1446,11 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 	CALayer * wall = [CALayer new];
 	wall.anchorPoint	= CGPointMake(0, 0);
 	wall.zPosition		= Z_BUILDING_WALL;
+#if SINGLE_SIDED_WALLS
+	wall.doubleSided	= NO;
+#else
 	wall.doubleSided	= YES;
+#endif
 	wall.opaque			= YES;
 	wall.frame			= CGRectMake(0, 0, length*PATH_SCALING, height);
 	wall.backgroundColor= color.CGColor;
@@ -1551,7 +1569,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 				layer.lineWidth		= 2.0;
 
 				layer.shadowPath	= CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
-				layer.shadowColor	= UIColor.whiteColor.CGColor; // ShadowColorForColor(red, green, blue).CGColor;
+				layer.shadowColor	= UIColor.whiteColor.CGColor;
 				layer.shadowRadius	= 0.0;
 				layer.shadowOffset	= CGSizeMake(0,0);
 				layer.shadowOpacity	= 0.25;
@@ -1570,12 +1588,12 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 	// casing
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 		if ( tagInfo.lineWidth && !object.isWay.isArea ) {
-			CGPoint refPoint;
+			OSMPoint refPoint;
 			CGPathRef path = [self pathForObject:object refPoint:&refPoint];
 			if ( path ) {
 				CAShapeLayer * layer = [CAShapeLayer new];
 				layer.anchorPoint	= CGPointMake(0, 0);
-				layer.position		= refPoint;
+				layer.position		= CGPointFromOSMPoint( refPoint );
 				layer.path			= path;
 				layer.strokeColor	= [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
 				layer.fillColor		= nil;
@@ -1585,7 +1603,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 				layer.zPosition		= Z_CASING;
 				LayerProperties * props = [LayerProperties new];
 				[layer setValue:props forKey:@"properties"];
-				props->position = OSMPointFromCGPoint( refPoint );
+				props->position = refPoint;
 				props->lineWidth = layer.lineWidth;
 
 				[layers addObject:layer];
@@ -1596,7 +1614,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 
 	// way (also provides an outline for areas)
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
-		CGPoint refPoint = { 0, 0 };
+		OSMPoint refPoint = { 0, 0 };
 		CGPathRef path = [self pathForObject:object refPoint:&refPoint];
 
 		if ( path ) {
@@ -1608,7 +1626,9 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 
 			CAShapeLayer * layer = [CAShapeLayer new];
 			layer.anchorPoint	= CGPointMake(0, 0);
-			layer.position		= refPoint;
+			CGRect bbox			= CGPathGetPathBoundingBox( path );
+			layer.bounds		= CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
+			layer.position		= CGPointFromOSMPoint( refPoint );
 			layer.path			= path;
 			layer.strokeColor	= [UIColor colorWithRed:red green:green blue:blue alpha:alpha].CGColor;
 			layer.fillColor		= nil;
@@ -1619,7 +1639,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 
 			LayerProperties * props = [LayerProperties new];
 			[layer setValue:props forKey:@"properties"];
-			props->position		= OSMPointFromCGPoint( refPoint );
+			props->position		= refPoint;
 			props->lineWidth	= layer.lineWidth;
 
 			CGPathRelease(path);
@@ -1656,7 +1676,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 
 				// draw
 				CGMutablePathRef path = CGPathCreateMutable();
-				CGPoint refPoint = CGPointFromOSMPoint( ((OSMPointBoxed *)outer[0][0]).point );
+				OSMPoint refPoint = ((OSMPointBoxed *)outer[0][0]).point;
 				for ( NSArray * w in outer ) {
 					[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
 				}
@@ -1667,15 +1687,15 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 				[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
 				CAShapeLayer * layer = [CAShapeLayer new];
 				layer.anchorPoint	= CGPointMake(0,0);
-				layer.position		= refPoint;
 				layer.path			= path;
+				layer.position		= CGPointFromOSMPoint(refPoint);
 				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:0.25].CGColor;
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
 				LayerProperties * props = [LayerProperties new];
 				[layer setValue:props forKey:@"properties"];
-				props->position = OSMPointFromCGPoint( refPoint );
+				props->position = refPoint;
 
 				[layers addObject:layer];
 
@@ -1713,38 +1733,49 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 
 					// get walls
 					double hue = object.ident.longLongValue % 20 - 10;
-					for ( NSArray * w in outer ) {
-						for ( NSInteger i = 0; i < w.count-1; ++i ) {
-							OSMPointBoxed * pp1 = w[i];
-							OSMPointBoxed * pp2 = w[i+1];
-							CALayer * wall = [self buildingWallLayerForPoint:pp1.point point:pp2.point height:height hue:hue];
-							[layers addObject:wall];
+					for ( int isInner = 0; isInner < 2; ++isInner ) {
+						for ( NSArray * w in isInner ? inner : outer ) {
+#if SINGLE_SIDED_WALLS
+							BOOL clockwise = [OsmWay isClockwiseArrayOfPoints:w] ^ isInner;
+#else
+							BOOL clockwise = YES;
+#endif
+							for ( NSInteger i = 0; i < w.count-1; ++i ) {
+								OSMPointBoxed * pp1 = w[i+!clockwise];
+								OSMPointBoxed * pp2 = w[i+clockwise];
+								CALayer * wall = [self buildingWallLayerForPoint:pp1.point point:pp2.point height:height hue:hue];
+								[layers addObject:wall];
+							}
 						}
 					}
-#if 0
-					// get roof
-					UIColor	* color = [UIColor lightGrayColor];
-					CAShapeLayer * roof = [CAShapeLayer new];
-					roof.anchorPoint	= CGPointMake(0, 0);
-					roof.frame			= CGPathGetPathBoundingBox( path );
-					roof.position		= refPoint;
-					roof.path			= path;
-					roof.fillColor		= color.CGColor;
-					roof.lineCap		= DEFAULT_LINECAP;
-					roof.lineJoin		= DEFAULT_LINEJOIN;
-					roof.zPosition		= Z_BUILDING_ROOF;
-					roof.doubleSided	= YES;
-					CATransform3D t = CATransform3DMakeTranslation( 0, 0, height );
 
-					props = [LayerProperties new];
-					[roof setValue:props forKey:@"properties"];
-					props->position		= OSMPointFromCGPoint( refPoint );
-					props->transform	= t;
-					props->is3D			= YES;
-					roof.transform = t;
+					if ( YES ) {
+						// get roof
+						UIColor	* color = [UIColor colorWithHue:0 saturation:0.05 brightness:0.75+hue/100 alpha:1.0];
+						CAShapeLayer * roof = [CAShapeLayer new];
+						roof.anchorPoint	= CGPointMake(0, 0);
+						CGRect bbox			= CGPathGetPathBoundingBox( path );
+						roof.bounds			= CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
+						roof.position		= CGPointFromOSMPoint( refPoint );
+						roof.path			= path;
+						roof.fillColor		= color.CGColor;
+						roof.strokeColor	= UIColor.blackColor.CGColor;
+						roof.lineWidth		= 1.0;
+						roof.lineCap		= DEFAULT_LINECAP;
+						roof.lineJoin		= DEFAULT_LINEJOIN;
+						roof.zPosition		= Z_BUILDING_ROOF;
+						roof.doubleSided	= YES;
 
-					[layers addObject:roof];
-#endif	// roof
+						CATransform3D t = CATransform3DMakeTranslation( 0, 0, height );
+						props = [LayerProperties new];
+						[roof setValue:props forKey:@"properties"];
+						props->position		= refPoint;
+						props->transform	= t;
+						props->is3D			= YES;
+						props->lineWidth	= 1.0;
+						roof.transform = t;
+						[layers addObject:roof];
+					}
 				}
 #endif	// SHOW_3D
 
@@ -1797,7 +1828,9 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 		}
 	}
 	
-	NSDictionary * actions = @{
+	static NSDictionary * actions = nil;
+	if ( actions == nil )  {
+		actions = @{
 					  @"onOrderIn"			: [NSNull null],
 					  @"onOrderOut"			: [NSNull null],
 					  @"sublayers"			: [NSNull null],
@@ -1814,6 +1847,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 					  @"opacity"			: [NSNull null],
 #endif
 					  };
+	}
 	for ( CALayer * layer in layers ) {
 		layer.actions = actions;
 	}
@@ -2976,7 +3010,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 					t = CATransform3DRotate( t, tRotation, 0, 0, 1 );
 					t = CATransform3DConcat( props->transform, t );
 					layer.transform = t;
-					layer.borderWidth = props->lineWidth / pScale;
+					if ( !isShapeLayer ) {
+						layer.borderWidth = props->lineWidth / pScale;	// wall
+					}
 				} else {
 					CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
 					t = CGAffineTransformScale( t, pScale, pScale );
@@ -2985,7 +3021,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				}
 
 				if ( isShapeLayer ) {
-					layer.bounds = CGRectMake(0, 0, ceil(256/tScale), ceil(256/tScale));
 				} else {
 					// its a wall, so bounds are already height/length of wall
 				}
@@ -3061,7 +3096,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	if ( _crossHairs ) {
 		CGRect rc = self.bounds;
 		_crossHairs.position = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
-		[self addSublayer:_crossHairs];
+		if ( _crossHairs.superlayer == nil ) {
+			[self addSublayer:_crossHairs];
+		}
 	}
 
 	// NSLog(@"%ld layers", (long)self.sublayers.count);

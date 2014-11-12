@@ -153,6 +153,7 @@ typedef enum {
 -(double)wayArea;
 -(BOOL)isSimpleMultipolygonOuterMember;
 -(OSMPoint)pointOnWayForPoint:(OSMPoint)point;
++(BOOL)isClockwiseArrayOfPoints:(NSArray *)a;
 
 @end
 

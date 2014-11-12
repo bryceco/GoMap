@@ -1035,8 +1035,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		return NO;
 	if ( self.nodes.count < 4 )
 		return NO;
-	double area = 0;
-	[self centerPointWithArea:&area];
 	CGFloat sum = 0;
 	BOOL first = YES;
 	OSMPoint offset;
@@ -1055,6 +1053,33 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 	return sum >= 0;
 }
+
+
++(BOOL)isClockwiseArrayOfPoints:(NSArray *)a
+{
+	if ( a[0] != a.lastObject )
+		return NO;
+	if ( a.count < 4 )
+		return NO;
+	CGFloat sum = 0;
+	BOOL first = YES;
+	OSMPoint offset;
+	OSMPoint previous;
+	for ( OSMPointBoxed * p in a )  {
+		OSMPoint point = p.point;
+		if ( first ) {
+			offset = point;
+			previous.x = previous.y = 0;
+			first = NO;
+		} else {
+			OSMPoint current = { point.x - offset.x, point.y - offset.y };
+			sum += previous.x*current.y - previous.y*current.x;
+			previous = current;
+		}
+	}
+	return sum >= 0;
+}
+
 
 -(id)initWithCoder:(NSCoder *)coder
 {
