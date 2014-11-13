@@ -19,13 +19,14 @@
 #import "UITableViewCell+FixConstraints.h"
 
 
-static const NSInteger BACKGROUND_SECTION	= 0;
-static const NSInteger OVERLAY_SECTION		= 1;
-static const NSInteger CACHE_SECTION		= 2;
+static const NSInteger BACKGROUND_SECTION		= 0;
+//static const NSInteger INTERACTION_SECTION		= 1;
+static const NSInteger OVERLAY_SECTION			= 2;
+static const NSInteger CACHE_SECTION			= 3;
 
-static const NSInteger OVERLAY_NOTES_ROW	= 0;
-static const NSInteger OVERLAY_LOCATOR_ROW	= 1;
-static const NSInteger OVERLAY_GPSTRACE_ROW	= 2;
+static const NSInteger OVERLAY_NOTES_ROW		= 0;
+static const NSInteger OVERLAY_LOCATOR_ROW		= 1;
+static const NSInteger OVERLAY_GPSTRACE_ROW		= 2;
 
 
 @interface CustomBackgroundCell : UITableViewCell
@@ -65,6 +66,9 @@ static const NSInteger OVERLAY_GPSTRACE_ROW	= 2;
 		locatorCell.accessoryType  = mapView.locatorLayer.hidden  ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
 		gpsTraceCell.accessoryType = mapView.gpsTraceLayer.hidden ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
 
+		_birdsEyeSwitch.on = mapView.enableBirdsEye;
+		_rotationSwitch.on = mapView.enableRotation;
+
 	} else {
 
 		// returning from child view
@@ -95,9 +99,9 @@ static const NSInteger OVERLAY_GPSTRACE_ROW	= 2;
 			break;
 		}
 	}
-	NSIndexPath * notesPath = [NSIndexPath indexPathForRow:OVERLAY_NOTES_ROW inSection:OVERLAY_SECTION];
-	NSIndexPath * locatorPath = [NSIndexPath indexPathForRow:OVERLAY_LOCATOR_ROW inSection:OVERLAY_SECTION];
-	NSIndexPath * gpsTracePath = [NSIndexPath indexPathForRow:OVERLAY_GPSTRACE_ROW inSection:OVERLAY_SECTION];
+	NSIndexPath * notesPath		= [NSIndexPath indexPathForRow:OVERLAY_NOTES_ROW	inSection:OVERLAY_SECTION];
+	NSIndexPath * locatorPath	= [NSIndexPath indexPathForRow:OVERLAY_LOCATOR_ROW	inSection:OVERLAY_SECTION];
+	NSIndexPath * gpsTracePath	= [NSIndexPath indexPathForRow:OVERLAY_GPSTRACE_ROW inSection:OVERLAY_SECTION];
 	UITableViewCell * notesCell = [self.tableView cellForRowAtIndexPath:notesPath];
 	UITableViewCell * locatorCell = [self.tableView cellForRowAtIndexPath:locatorPath];
 	UITableViewCell * gpsTraceCell = [self.tableView cellForRowAtIndexPath:gpsTracePath];
@@ -106,6 +110,9 @@ static const NSInteger OVERLAY_GPSTRACE_ROW	= 2;
 	mask |= locatorCell.accessoryType  == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_LOCATOR  : 0;
 	mask |= gpsTraceCell.accessoryType == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_GPSTRACE : 0;
 	mapView.viewOverlayMask = mask;
+
+	mapView.enableBirdsEye = _birdsEyeSwitch.on;
+	mapView.enableRotation = _rotationSwitch.on;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

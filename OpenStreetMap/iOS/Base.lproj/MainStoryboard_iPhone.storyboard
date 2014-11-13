@@ -3862,6 +3862,62 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Interactions" id="RJU-Z2-QFh">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IqK-Jw-3YY">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IqK-Jw-3YY" id="5R9-J2-ycr">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Rotation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUR-wT-knn">
+                                                    <rect key="frame" x="15" y="11" width="237" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H71-wV-6i5">
+                                                    <rect key="frame" x="253" y="6" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="H71-wV-6i5" firstAttribute="centerY" secondItem="5R9-J2-ycr" secondAttribute="centerY" id="GXX-zi-7Vu"/>
+                                                <constraint firstItem="H71-wV-6i5" firstAttribute="leading" secondItem="VUR-wT-knn" secondAttribute="trailing" constant="1" id="O6m-Ly-dHT"/>
+                                                <constraint firstItem="VUR-wT-knn" firstAttribute="leading" secondItem="5R9-J2-ycr" secondAttribute="leading" constant="15" id="TD9-8E-l7W"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="H71-wV-6i5" secondAttribute="trailing" constant="10" id="b1X-xz-Mvy"/>
+                                                <constraint firstItem="H71-wV-6i5" firstAttribute="centerY" secondItem="VUR-wT-knn" secondAttribute="centerY" id="vzn-Fg-euc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gt5-e4-ICw">
+                                        <rect key="frame" x="0.0" y="119" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gt5-e4-ICw" id="sug-RD-ipO">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable 3-D Effects" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luT-Tw-T3x">
+                                                    <rect key="frame" x="15" y="11" width="237" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IuS-7H-TV3">
+                                                    <rect key="frame" x="253" y="6" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="luT-Tw-T3x" firstAttribute="leading" secondItem="sug-RD-ipO" secondAttribute="leading" constant="15" id="85K-7O-gKl"/>
+                                                <constraint firstItem="IuS-7H-TV3" firstAttribute="leading" secondItem="luT-Tw-T3x" secondAttribute="trailing" constant="1" id="D1J-HJ-Eve"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="IuS-7H-TV3" secondAttribute="trailing" constant="10" id="Dzl-eP-aZD"/>
+                                                <constraint firstItem="IuS-7H-TV3" firstAttribute="centerY" secondItem="sug-RD-ipO" secondAttribute="centerY" id="Z2v-Bk-58F"/>
+                                                <constraint firstItem="IuS-7H-TV3" firstAttribute="centerY" secondItem="luT-Tw-T3x" secondAttribute="centerY" id="hrj-pt-t3m"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Overlays" id="8es-4f-sj3">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="7Qg-V3-v5t" style="IBUITableViewCellStyleDefault" id="e3e-74-Kz6">
@@ -3938,6 +3994,10 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                     </tableView>
                     <navigationItem key="navigationItem" title="Display" id="186-0W-Nrr"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="_birdsEyeSwitch" destination="IuS-7H-TV3" id="qn2-l1-Fvx"/>
+                        <outlet property="_rotationSwitch" destination="H71-wV-6i5" id="ayi-ju-aO9"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qfn-yi-XU8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

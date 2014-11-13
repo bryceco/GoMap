@@ -38,6 +38,13 @@ NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] )
 	return index;
 }
 
+void CGPathDump( CGPathRef path )
+{
+	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint *points) {
+		NSLog(@"%f,%f", points->x, points->y );
+	});
+}
+
 void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(OSMPoint pt, OSMPoint direction) )
 {
 	__block CGFloat offset = initialOffset;

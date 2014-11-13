@@ -14,7 +14,7 @@
 #import "mach/mach.h"
 
 #define DLog(...)		NSLog( __VA_ARGS__ )
-#define DbgAssert(x)	NSAssert((x),@"unspecified")
+#define DbgAssert(x)	NSCAssert((x),@"unspecified")
 
 static double MemoryUsedMB(void)
 {

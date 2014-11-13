@@ -81,7 +81,7 @@
 -(void)setArrowPoint:(CGPoint)arrowPoint
 {
 	if ( isnan(arrowPoint.x) || isnan(arrowPoint.y) ) {
-		DbgAssert(NO);
+		DLog(@"bad arrow location");
 		return;
 	}
 	_arrowPoint = arrowPoint;

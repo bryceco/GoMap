@@ -158,6 +158,8 @@ typedef enum {
 @property (readonly,nonatomic)	CGFloat							birdsEyeRotation;
 @property (readonly,nonatomic)	CGFloat							birdsEyeDistance;
 
+@property (assign,nonatomic)	BOOL							enableBirdsEye;
+@property (assign,nonatomic)	BOOL							enableRotation;
 
 
 -(void)updateBingButton;

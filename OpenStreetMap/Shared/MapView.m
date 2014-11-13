@@ -319,17 +319,20 @@ CGSize SizeForImage( NSImage * image )
 	first = NO;
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
-															  @"view.scale"		: @(nan("")),
-															  @"view.latitude"	: @(nan("")),
-															  @"view.longitude"	: @(nan("")),
-															  @"mapViewState"	: @(MAPVIEW_EDITORAERIAL),
+															  @"view.scale"				: @(nan("")),
+															  @"view.latitude"			: @(nan("")),
+															  @"view.longitude"			: @(nan("")),
+															  @"mapViewState"			: @(MAPVIEW_EDITORAERIAL),
+															  @"mapViewEnableBirdsEye"	: @(YES),
+															  @"mapViewEnableRotation"	: @(YES),
 															  }];
 
-	self.viewState		 = (MapViewState) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
+	self.viewState		 = (MapViewState)	 [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
 	self.viewOverlayMask = (ViewOverlayMask) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewOverlays"];
 
-	[self updateBingButton];
-	
+	self.enableRotation	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableRotation"];
+	self.enableBirdsEye	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBirdsEye"];
+
 	// get current location
 	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
 	double latitude		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.latitude"];
@@ -348,6 +351,7 @@ CGSize SizeForImage( NSImage * image )
 	// get notes
 	[self updateNotesWithDelay:0];
 
+	[self updateBingButton];
 
 #if FRAMERATE_TEST
 	// automaatically scroll view for frame rate testing
@@ -413,12 +417,15 @@ CGSize SizeForImage( NSImage * image )
 	center = [self mapPointFromScreenPoint:center birdsEye:NO];
 	center = LongitudeLatitudeFromMapPoint( center );
 	double scale = OSMTransformScaleX(self.screenFromMapTransform);
-	[[NSUserDefaults standardUserDefaults] setDouble:scale		forKey:@"view.scale"];
-	[[NSUserDefaults standardUserDefaults] setDouble:center.y	forKey:@"view.latitude"];
-	[[NSUserDefaults standardUserDefaults] setDouble:center.x	forKey:@"view.longitude"];
+	[[NSUserDefaults standardUserDefaults] setDouble:scale					forKey:@"view.scale"];
+	[[NSUserDefaults standardUserDefaults] setDouble:center.y				forKey:@"view.latitude"];
+	[[NSUserDefaults standardUserDefaults] setDouble:center.x				forKey:@"view.longitude"];
 
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState		forKey:@"mapViewState"];
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask	forKey:@"mapViewOverlays"];
+
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableRotation		forKey:@"mapViewEnableRotation"];
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableBirdsEye		forKey:@"mapViewEnableBirdsEye"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -715,6 +722,29 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return _viewState;
 }
 
+-(void)setEnableBirdsEye:(BOOL)enableBirdsEye
+{
+	if ( _enableBirdsEye != enableBirdsEye ) {
+		_enableBirdsEye = enableBirdsEye;
+		if ( !enableBirdsEye ) {
+			// remove birdsEye
+			[self rotateBirdsEyeBy:-_birdsEyeRotation];
+		}
+	}
+}
+-(void)setEnableRotation:(BOOL)enableRotation
+{
+	if ( _enableRotation != enableRotation ) {
+		_enableRotation = enableRotation;
+		if ( !enableRotation ) {
+			// remove rotation
+			CGPoint centerPoint = CGRectCenter(self.bounds);
+			CGFloat angle = OSMTransformRotation( _screenFromMapTransform );
+			[self rotateBy:-angle aroundScreenPoint:centerPoint];
+		}
+	}
+}
+
 
 #pragma mark Coordinate Transforms
 
@@ -890,7 +920,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	const double earthRadius = 6378137.0; // meters
 	double a = pow(sin(latLon.size.height/2),2) + cos(latLon.origin.y) * cos(latLon.origin.y+latLon.size.height) * pow(sin(latLon.size.width/2),2);
 	double meters = earthRadius * 2 * atan2(sqrt(a), sqrt(1-a));
-	double pixels = hypot(self.bounds.size.width,self.bounds.size.height);
+	double pixels = hypot(screenRect.size.width,screenRect.size.height);
 	return meters/pixels;
 }
 
@@ -1059,8 +1089,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( gpsState != _gpsState ) {
 		if ( _gpsState == GPS_STATE_HEADING ) {
 			// orient toward north
-			CGRect rc = self.bounds;
-			CGPoint center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
+			CGPoint center = CGRectCenter(self.bounds);
 			double rotation = OSMTransformRotation( _screenFromMapTransform );
 			[self animateRotationBy:-rotation aroundPoint:center];
 		}
@@ -1165,14 +1194,14 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 - (void)animateRotationBy:(double)deltaHeading aroundPoint:(CGPoint)center
 {
-	if ( fabs(deltaHeading) < 0.00001 )
-		return;
-
 	// don't rotate the long way around
 	while ( deltaHeading < -M_PI )
 		deltaHeading += 2*M_PI;
 	while ( deltaHeading > M_PI )
 		deltaHeading -= 2*M_PI;
+
+	if ( fabs(deltaHeading) < 0.00001 )
+		return;
 
 	CFTimeInterval startTime = CACurrentMediaTime();
 	double duration = 0.4;
@@ -1183,21 +1212,23 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		MapView * myself = weakSelf;
 		if ( myself ) {
 			CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+			if ( elapsedTime > duration ) {
+				elapsedTime = duration;	// don't want to over-rotate
+			}
+			// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
+			// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
+			double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
+				t /= d/2;
+				if (t < 1) return c/2*t*t + b;
+				t--;
+				return -c/2 * (t*(t-2) - 1) + b;
+			};
+			double miniHeading = easeInOutQuad( elapsedTime, 0, deltaHeading, duration);
+			[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
+			myself->_locationBallLayer.heading	= M_PI*3/2;
+			prevHeading = miniHeading;
 			if ( elapsedTime >= duration ) {
 				[displayLink removeName:DisplayLinkHeading];
-			} else {
-				// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
-				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
-				double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
-					t /= d/2;
-					if (t < 1) return c/2*t*t + b;
-					t--;
-					return -c/2 * (t*(t-2) - 1) + b;
-				};
-				double miniHeading = easeInOutQuad( elapsedTime, 0, deltaHeading, duration);
-				[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
-				myself->_locationBallLayer.heading	= M_PI*3/2;
-				prevHeading = miniHeading;
 			}
 		}
 	}];
@@ -1484,8 +1515,43 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	t = OSMTransformTranslate( t, -offset.x, -offset.y );
 	self.screenFromMapTransform = t;
 
+	NSLog(@"rot = %f", OSMTransformRotation(_screenFromMapTransform));
+
 	if ( _locationBallLayer ) {
 		_locationBallLayer.heading = _locationBallLayer.heading + angle;
+	}
+}
+
+-(void)rotateBirdsEyeBy:(CGFloat)angle
+{
+	// limit maximum rotation
+	OSMTransform t = _screenFromMapTransform;
+	double maxRotation = 65 * (M_PI/180);
+#if TRANSFORM_3D
+	double currentRotation = atan2( t.m23, t.m22 );
+#else
+	double currentRotation = _birdsEyeRotation;
+#endif
+	if ( currentRotation+angle > maxRotation )
+		angle = maxRotation - currentRotation;
+	if ( currentRotation+angle < 0 )
+		angle = -currentRotation;
+
+	CGRect rc = self.bounds;
+	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center) birdsEye:NO];
+
+	t = OSMTransformTranslate( t, offset.x, offset.y );
+#if TRANSFORM_3D
+	t = CATransform3DRotate(t, delta, 1.0, 0.0, 0.0);
+#else
+	_birdsEyeRotation += angle;
+#endif
+	t = OSMTransformTranslate( t, -offset.x, -offset.y );
+	self.screenFromMapTransform = t;
+
+	if ( _locationBallLayer ) {
+		[self updateUserLocationIndicator];
 	}
 }
 
@@ -2608,6 +2674,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (IBAction)handleRotationGesture:(UIRotationGestureRecognizer *)rotationGesture
 {
+	if ( !self.enableRotation )
+		return;
+
 	if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
 		// ignore
 #if FRAMERATE_TEST
@@ -2627,39 +2696,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
 {
+	if ( !self.enableBirdsEye )
+		return;
+
 	CGPoint translation = [pan translationInView:self];
-	double delta = -translation.y/20 / 180 * M_PI;
+	double delta = -translation.y/40 / 180 * M_PI;
 
-	// limit maximum rotation
-	OSMTransform t = _screenFromMapTransform;
-	double maxRotation = 65 * (M_PI/180);
-#if TRANSFORM_3D
-	double currentRotation = atan2( t.m23, t.m22 );
-#else
-	double currentRotation = _birdsEyeRotation;
-#endif
-	if ( currentRotation+delta > maxRotation )
-		delta = maxRotation - currentRotation;
-	if ( currentRotation+delta < 0 )
-		delta = -currentRotation;
-
-	CGRect rc = self.bounds;
-	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
-	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center) birdsEye:NO];
-
-	t = OSMTransformTranslate( t, offset.x, offset.y );
-#if TRANSFORM_3D
-	t = CATransform3DRotate(t, delta, 1.0, 0.0, 0.0);
-#else
-//	t = OSMTransformScaleXY( t, 1.0, cos(_birdsEyeRotation+delta)/cos(_birdsEyeRotation) );
-	_birdsEyeRotation += delta;
-#endif
-	t = OSMTransformTranslate( t, -offset.x, -offset.y );
-	self.screenFromMapTransform = t;
-
-	if ( _locationBallLayer ) {
-		[self updateUserLocationIndicator];
-	}
+	[self rotateBirdsEyeBy:delta];
 }
 
 - (void)updateSpeechBalloonPosition

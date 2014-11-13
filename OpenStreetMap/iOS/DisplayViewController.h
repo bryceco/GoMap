@@ -13,6 +13,8 @@
 
 @interface DisplayViewController : UITableViewController
 {
+	IBOutlet UISwitch *	_birdsEyeSwitch;
+	IBOutlet UISwitch *	_rotationSwitch;
 }
 
 -(void)applyChanges;

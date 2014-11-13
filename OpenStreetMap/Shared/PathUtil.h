@@ -19,5 +19,6 @@ CGMutablePathRef PathReversed( CGPathRef path ) CF_RETURNS_RETAINED;
 void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength );
 NSInteger CGPathPointCount( CGPathRef path );
 NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] );
+void CGPathDump( CGPathRef path );
 
 #endif

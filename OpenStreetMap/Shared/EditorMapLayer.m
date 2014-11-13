@@ -347,8 +347,14 @@ static SIDE WallForPoint( OSMPoint pt, OSMRect rect )
 
 static BOOL IsClockwisePolygon( NSArray * points )
 {
-	assert( points[0] == points.lastObject );
-	assert( points.count >= 4 );	// first and last repeat
+	if ( points[0] != points.lastObject ) {
+		DLog(@"bad polygon");
+		return NO;
+	}
+	if ( points.count < 4 ) {	// first and last repeat
+		DLog(@"bad polygon");
+		return NO;
+	}
 	double area = 0;
 	BOOL first = YES;
 	OSMPoint offset;
@@ -372,8 +378,14 @@ static BOOL IsClockwisePolygon( NSArray * points )
 
 static BOOL RotateLoop( NSMutableArray * loop, OSMRect viewRect )
 {
-	assert( loop[0] == loop.lastObject );
-	assert( loop.count >= 4 );
+	if ( loop[0] != loop.lastObject ) {
+		DLog(@"bad loop");
+		return NO;
+	}
+	if ( loop.count < 4 ) {
+		DLog(@"bad loop");
+		return NO;
+	}
 	[loop removeLastObject];
 	NSInteger index = 0;
 	for ( OSMPointBoxed * value in loop ) {
@@ -719,8 +731,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	if ( outerSegments.count == 0 )
 		return NO;
 
-
-
 	// connect ways together forming congiguous runs
 	outerSegments = [self joinConnectedWays:outerSegments];
 	innerSegments = [self joinConnectedWays:innerSegments];
@@ -730,6 +740,15 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		[self convertNodesToScreenPoints:a];
 	for ( NSMutableArray * a in innerSegments )
 		[self convertNodesToScreenPoints:a];
+
+	// Delete loops with a degenerate number of nodes. These are typically data errors:
+	[outerSegments filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * array, NSDictionary *bindings) {
+		return array[0] != array.lastObject || array.count >= 4;
+	}]];
+	[innerSegments filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * array, NSDictionary *bindings) {
+		return array[0] != array.lastObject || array.count >= 4;
+	}]];
+
 
 	CGRect cgViewRect = self.bounds;
 	OSMRect viewRect = { cgViewRect.origin.x, cgViewRect.origin.y, cgViewRect.size.width, cgViewRect.size.height };
@@ -1419,14 +1438,21 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 		}
 	}
 
-	if ( refPoint ) {
+	if ( refPoint && haveInitial ) {
 		// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
 		CGRect bbox	= CGPathGetPathBoundingBox( path );
-		CGAffineTransform tran = CGAffineTransformMakeTranslation( -bbox.origin.x, -bbox.origin.y );
-		CGPathRef path2 = CGPathCreateCopyByTransformingPath( path, &tran );
-		CGPathRelease( path );
-		path = (CGMutablePathRef)path2;
-		*refPoint = OSMPointMake( initial.x + (double)bbox.origin.x/PATH_SCALING, initial.y + (double)bbox.origin.y/PATH_SCALING );
+		if ( !isinf(bbox.origin.x) ) {
+			CGAffineTransform tran = CGAffineTransformMakeTranslation( -bbox.origin.x, -bbox.origin.y );
+			CGPathRef path2 = CGPathCreateCopyByTransformingPath( path, &tran );
+			CGPathRelease( path );
+			path = (CGMutablePathRef)path2;
+			*refPoint = OSMPointMake( initial.x + (double)bbox.origin.x/PATH_SCALING, initial.y + (double)bbox.origin.y/PATH_SCALING );
+		} else {
+#if DEBUG
+			DLog(@"bad path: %@", object);
+			CGPathDump(path);
+#endif
+		}
 	}
 
 	return path;
@@ -1702,8 +1728,8 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 #if SHOW_3D
 				// if its a building then add walls for 3D
 				if ( object.tags[@"building"] != nil ) {
-					const CGFloat BuildingHeightPerMeter = 1.0;
 
+					// calculate height in meters
 					NSString * value = object.tags[ @"height" ];
 					double height = [value doubleValue];
 					if ( height ) {	// height in meters?
@@ -1723,12 +1749,20 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 								height = (v1 * 12 + v2) * 0.0254;
 							}
 						}
-						height *= BuildingHeightPerMeter;
 					} else {
 						height = [object.tags[ @"building:levels" ] doubleValue];
-						if ( height == 0 )
+#if DEBUG
+						if ( height == 0 ) {
+							NSString * layerNum = object.tags[ @"layer" ];
+							if ( layerNum ) {
+								height = layerNum.doubleValue + 1;
+							}
+						}
+#endif
+						if ( height == 0 ) {
 							height = 1;
-						height *= 4*BuildingHeightPerMeter;
+						}
+						height *= 3;
 					}
 
 					// get walls
@@ -2979,11 +3013,10 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	[CATransaction setAnimationDuration:1.0];
 #endif
 
-	const double	tRotation	= OSMTransformRotation( _mapView.screenFromMapTransform );
-	const double	tScale		= OSMTransformScaleX( _mapView.screenFromMapTransform );
-	const double	pScale		= tScale / PATH_SCALING;
-
-	const double pixelsPerMeter = 1.0 / [_mapView metersPerPixel];
+	const double	tRotation		= OSMTransformRotation( _mapView.screenFromMapTransform );
+	const double	tScale			= OSMTransformScaleX( _mapView.screenFromMapTransform );
+	const double	pScale			= tScale / PATH_SCALING;
+	const double	pixelsPerMeter	= 0.8 * 1.0 / [_mapView metersPerPixel];
 
 	for ( OsmBaseObject * object in _shownObjects ) {
 
