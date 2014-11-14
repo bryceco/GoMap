@@ -1464,6 +1464,9 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 	double length = Mag( dir );
 	double angle = atan2( dir.y, dir.x );
 
+	dir.x /= length;
+	dir.y /= length;
+
 	double intensity = angle/M_PI;
 	if ( intensity < 0 )
 		++intensity;
