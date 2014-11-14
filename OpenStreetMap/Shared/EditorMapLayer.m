@@ -1737,16 +1737,21 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 						double v2 = 0;
 						NSScanner * scanner = [[NSScanner alloc] initWithString:value];
 						if ( [scanner scanDouble:&v1] ) {
+							[scanner scanCharactersFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] intoString:NULL];
 							if ( [scanner scanString:@"'" intoString:nil] ) {
 								// feet
 								if ( [scanner scanDouble:&v2] ) {
-									if ( [scanner scanString:@"\"" intoString:nil] ) {
+									if ( [scanner scanString:@"\"" intoString:NULL] ) {
 										// inches
 									} else {
 										// malformed
 									}
 								}
 								height = (v1 * 12 + v2) * 0.0254;
+							} else if ( [scanner scanString:@"ft" intoString:NULL] ) {
+								height *= 0.3048;
+							} else if ( [scanner scanString:@"yd" intoString:NULL] ) {
+								height *= 0.9144;
 							}
 						}
 					} else {

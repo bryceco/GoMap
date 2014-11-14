@@ -1515,8 +1515,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	t = OSMTransformTranslate( t, -offset.x, -offset.y );
 	self.screenFromMapTransform = t;
 
-	NSLog(@"rot = %f", OSMTransformRotation(_screenFromMapTransform));
-
 	if ( _locationBallLayer ) {
 		_locationBallLayer.heading = _locationBallLayer.heading + angle;
 	}
