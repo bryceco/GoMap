@@ -54,7 +54,7 @@
 		[self updateUndoRedoButtonState];
 	}];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:NULL];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -158,12 +158,13 @@
 	[self installLongPressGestureRecognizer:YES];
 }
 
--(void)applicationWillResignActive:(id)sender
+-(void)applicationDidEnterBackground:(id)sender
 {
 	while ( self.mapView.gpsState != GPS_STATE_NONE ) {
 		[self toggleLocation:nil];
 	}
 }
+
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {

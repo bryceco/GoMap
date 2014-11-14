@@ -206,7 +206,8 @@ extern CGSize SizeForImage(NSImage * image);
 -(BOOL)layerOverlapsScreen:(CALayer *)layer
 {
 	CGRect rc = layer.frame;
-	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	CGPoint center = CGRectCenter( rc );
+
 	OSMPoint p1 = { rc.origin.x, rc.origin.y };
 	OSMPoint p2 = { rc.origin.x, rc.origin.y+rc.size.height };
 	OSMPoint p3 = { rc.origin.x+rc.size.width, rc.origin.y+rc.size.height };

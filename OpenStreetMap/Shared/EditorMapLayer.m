@@ -752,7 +752,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 	CGRect cgViewRect = self.bounds;
 	OSMRect viewRect = { cgViewRect.origin.x, cgViewRect.origin.y, cgViewRect.size.width, cgViewRect.size.height };
-	CGPoint viewCenter = { viewRect.origin.x+viewRect.size.width/2, viewRect.origin.y+viewRect.size.height/2 };
+	CGPoint viewCenter = CGRectCenter(cgViewRect);
 
 #if 0
 	// discard any segments that begin or end inside the view rectangle
@@ -3135,8 +3135,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	if ( _crossHairs ) {
-		CGRect rc = self.bounds;
-		_crossHairs.position = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
+		_crossHairs.position = CGRectCenter( self.bounds );
 		if ( _crossHairs.superlayer == nil ) {
 			[self addSublayer:_crossHairs];
 		}

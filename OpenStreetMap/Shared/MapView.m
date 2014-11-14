@@ -343,8 +343,8 @@ CGSize SizeForImage( NSImage * image )
 	} else {
 		OSMRect rc = OSMRectFromCGRect( self.layer.frame );
 		self.screenFromMapTransform = OSMTransformMakeTranslation( rc.origin.x+rc.size.width/2 - 128, rc.origin.y+rc.size.height/2 - 128);
-
-		[self locateMe:nil];
+		// turn on GPS which will move us to current location
+		self.gpsState = GPS_STATE_LOCATION;
 	}
 #endif
 
@@ -842,8 +842,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(OSMPoint)mapPointFromScreenPoint:(OSMPoint)point birdsEye:(BOOL)birdsEye
 {
 	if ( _birdsEyeRotation && birdsEye ) {
-		CGRect rc = self.layer.bounds;
-		CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+		CGPoint center = CGRectCenter(self.layer.bounds);
 		point = FromBirdsEye( point, center, _birdsEyeDistance, _birdsEyeRotation );
 	}
 	point = OSMPointApplyTransform( point, self.mapFromScreenTransform );
@@ -855,8 +854,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	point = OSMPointApplyTransform( point, _screenFromMapTransform );
 	if ( _birdsEyeRotation && birdsEye ) {
-		CGRect rc = self.layer.bounds;
-		CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+		CGPoint center = CGRectCenter( self.layer.bounds );
 		point = ToBirdsEye( point, center, _birdsEyeDistance, _birdsEyeRotation );
 	}
 	return point;
@@ -1016,8 +1014,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[self setMapCenter:center scale:scale];
 #else
 	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude];
-	CGRect rc = self.layer.bounds;
-	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	CGPoint center = CGRectCenter( self.layer.bounds );
 
 	CGPoint delta = { center.x - point.x, center.y - point.y };
 	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
@@ -1030,8 +1027,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
 {
 	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude birdsEye:NO];
-	CGRect rc = self.layer.bounds;
-	OSMPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	CGPoint center = CGRectCenter( self.layer.bounds );
 	CGPoint delta = { center.x - point.x, center.y - point.y };
 	[self adjustOriginBy:delta];
 }
@@ -1265,8 +1261,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			if ( CGRectContainsPoint( self.bounds, _locationBallLayer.position ) ) {
 				center = _locationBallLayer.position;
 			} else {
-				CGRect rc = self.bounds;
-				center = CGPointMake( rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 );
+				center = CGRectCenter( self.bounds );
 			}
 
 			double delta = -(heading + screenAngle);
@@ -1457,8 +1452,8 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 {
 	// translate
 	OSMPoint point = [self screenPointFromMapPoint:mapCenter birdsEye:NO];
-	CGRect rc = self.layer.bounds;
-	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	CGPoint center = CGRectCenter( self.layer.bounds );
+
 	CGPoint delta = { center.x - point.x, center.y - point.y };
 	[self adjustOriginBy:delta];
 
@@ -1535,8 +1530,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( currentRotation+angle < 0 )
 		angle = -currentRotation;
 
-	CGRect rc = self.bounds;
-	CGPoint center = { rc.origin.x+rc.size.width/2, rc.origin.y+rc.size.height/2 };
+	CGPoint center = CGRectCenter( self.bounds );
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(center) birdsEye:NO];
 
 	t = OSMTransformTranslate( t, offset.x, offset.y );
@@ -2887,8 +2881,7 @@ checkGrab:
 	} else {
 
 		// zoom in on point
-		CGRect bounds = self.bounds;
-		CGPoint center = CGPointMake(bounds.origin.x + bounds.size.width/2, bounds.origin.y + bounds.size.height/2);
+		CGPoint center = CGRectCenter( self.bounds );
 		point.x = center.x - point.x;
 		point.y = center.y - point.y;
 		[self adjustOriginBy:point];
@@ -3021,8 +3014,7 @@ checkGrab:
 		{
 			// center zoom on mouse position
 			CGPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-			CGRect bounds = self.bounds;
-			CGPoint center = CGPointMake(bounds.origin.x + bounds.size.width/2, bounds.origin.y + bounds.size.height/2);
+			CGPoint center = CGRectCenter( self.bounds );
 			CGPoint delta = { center.x - point.x, center.y - point.y };
 			delta.x *= ratio - 1;
 			delta.y *= ratio - 1;
