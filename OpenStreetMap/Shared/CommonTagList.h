@@ -24,6 +24,7 @@
 +(instancetype)presetWithName:(NSString *)name tagValue:(NSString *)value;
 @end
 
+
 @interface CommonTag : NSObject
 @property (readonly,nonatomic) NSString					*	name;
 @property (readonly,nonatomic) NSString					*	tagKey;
@@ -42,11 +43,14 @@
 -(void)encodeWithCoder:(NSCoder *)enCoder;
 @end
 
+
 @interface CommonGroup : NSObject
 @property (readonly,nonatomic) NSString	*	name;
 @property (readonly,nonatomic) NSArray *	tags;	// array of CommonTag
 +(instancetype)groupWithName:(NSString *)name tags:(NSArray *)tags;
 @end
+
+
 
 @interface CommonTagList : NSObject
 {
@@ -55,7 +59,6 @@
 }
 
 +(instancetype)sharedList;
-
 -(void)setPresetsForDict:(NSDictionary *)dict geometry:(NSString *)geometry  update:(void (^)(void))update;
 
 -(NSString *)featureName;
@@ -71,7 +74,6 @@
 @property NSString	*	appliesToKey;
 @property NSString	*	appliesToValue;
 -(instancetype)initWithCoder:(NSCoder *)coder;
-
 @end
 
 
@@ -89,5 +91,31 @@
 -(CustomPreset *)presetAtIndex:(NSUInteger)index;
 -(void)addPreset:(CustomPreset *)preset atIndex:(NSInteger)index;
 -(void)removePresetAtIndex:(NSInteger)index;
+@end
 
+
+
+
+@interface PrimaryTag : NSObject
+@property (readonly,nonatomic)	NSString	*	key;
+@property (readonly,nonatomic)	NSString	*	value;
+@property (readonly,nonatomic)	NSString	*	friendlyName;
+@property (readonly,nonatomic)	NSString	*	summary;
+@property (readonly,nonatomic)	UIImage		*	icon;
+@property (readonly,nonatomic)	NSArray		*	terms;
+@property (readonly,nonatomic)	NSArray		*	geometry;
+@property (readonly,nonatomic)	NSArray		*	members;
+-(instancetype)initWithKeyValue:(NSString *)keyValue;
+@end
+
+
+
+@interface PrimaryTagDatabase : NSObject
+{
+	NSMutableDictionary	*	_primaryKeyValueDict;
+}
++(instancetype)shared;
+-(NSArray *)primaryTagsForGeometry:(NSString *)geometry;
+-(PrimaryTag *)primaryTagForKey:(NSString *)key value:(NSString *)value;
+-(NSMutableArray *)primaryTagsForCategory:(PrimaryTag *)category matching:(NSString *)searchText;
 @end

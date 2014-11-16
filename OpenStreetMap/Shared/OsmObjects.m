@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "iosapi.h"
+#import "CommonTagList.h"
 #import "CurvedTextLayer.h"
 #import "DLog.h"
 #import "OsmObjects.h"
@@ -537,6 +538,28 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 }
 
+
+
+-(NSString *)geometryName
+{
+	if ( self.isWay ) {
+		if ( self.isWay.isArea )
+			return GEOMETRY_AREA;
+		else
+			return GEOMETRY_WAY;
+	} else if ( self.isNode ) {
+		if ( self.isNode.wayCount > 0 )
+			return GEOMETRY_VERTEX;
+		else
+			return GEOMETRY_NODE;
+	} else if ( self.isRelation ) {
+		if ( self.isRelation.isMultipolygon )
+			return GEOMETRY_AREA;
+		else
+			return GEOMETRY_WAY;
+	}
+	return @"unkown";
+}
 
 @end
 

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class PrimaryTag;
+
 @interface POITypeViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
 {
 	NSArray					*	_typeArray;
@@ -18,7 +20,7 @@
 	IBOutlet UISearchBar    *	_searchBar;
 	BOOL						_isTopLevel;
 }
-@property (copy,nonatomic) NSString *	parentName;
+@property (strong,nonatomic) PrimaryTag *	parentCategory;
 
 -(IBAction)back:(id)sender;
 -(IBAction)configure:(id)sender;

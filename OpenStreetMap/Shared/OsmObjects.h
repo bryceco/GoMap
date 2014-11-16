@@ -106,6 +106,8 @@ typedef enum {
 -(OSMRect)boundingBox;
 -(NSString *)friendlyDescription;
 
+-(NSString *)geometryName;
+
 -(BOOL)hasInterestingTags;
 
 -(BOOL)isCoastline;

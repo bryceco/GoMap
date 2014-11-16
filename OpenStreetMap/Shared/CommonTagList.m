@@ -11,6 +11,11 @@
 #import "DLog.h"
 #import "TagInfo.h"
 
+static NSDictionary * g_defaultsDict;
+static NSDictionary * g_categoriesDict;
+static NSDictionary * g_presetsDict;
+static NSDictionary * g_fieldsDict;
+
 
 static NSString * prettyTag( NSString * tag )
 {
@@ -159,9 +164,35 @@ static NSString * prettyTag( NSString * tag )
 	static dispatch_once_t onceToken;
 	static CommonTagList * list = nil;
 	dispatch_once(&onceToken, ^{
+		[CommonTagList initializeDictionaries];
 		list = [CommonTagList new];
 	});
 	return list;
+}
+
++(NSDictionary *)dictionaryForFileFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2)
+{
+	va_list args;
+	va_start(args, format);
+	NSString * fileName = [[NSString alloc] initWithFormat:format arguments:args];
+	va_end(args);
+
+	NSString * rootDir = [[NSBundle mainBundle] resourcePath];
+	NSString * rootPresetPath = [NSString stringWithFormat:@"%@/presets/%@",rootDir,fileName];
+	NSData * rootPresetData = [NSData dataWithContentsOfFile:rootPresetPath];
+	NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:rootPresetData options:0 error:NULL];
+	DbgAssert(dict);
+	return dict;
+}
+
++(void)initializeDictionaries
+{
+	if ( g_presetsDict == nil ) {
+		g_presetsDict		= [CommonTagList dictionaryForFileFormat:@"presets.json"];;
+		g_defaultsDict		= [CommonTagList dictionaryForFileFormat:@"defaults.json"];
+		g_categoriesDict	= [CommonTagList dictionaryForFileFormat:@"categories.json"];
+		g_fieldsDict		= [CommonTagList dictionaryForFileFormat:@"presets.json"];;
+	}
 }
 
 -(NSString *)featureName
@@ -180,10 +211,7 @@ static NSString * prettyTag( NSString * tag )
 
 	NSDictionary * dict = fieldsCache[ fieldName ];
 	if ( dict == nil ) {
-		NSString * root = [[NSBundle mainBundle] resourcePath];
-		NSString * path = [NSString stringWithFormat:@"%@/presets/fields/%@.json",root,fieldName];
-		NSData * data = [NSData dataWithContentsOfFile:path];
-		dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+		dict = [CommonTagList dictionaryForFileFormat:@"fields/%@.json",fieldName];
 		if ( dict == nil )
 			dict = [NSDictionary new];
 		fieldsCache[ fieldName ] = dict;
@@ -361,17 +389,10 @@ static NSString * prettyTag( NSString * tag )
 
 -(void)setPresetsForDict:(NSDictionary *)tagDict geometry:(NSString *)geometry update:(void (^)(void))update
 {
-	static NSDictionary * presetDict = nil;
-	if ( presetDict == nil ) {
-		NSString * rootDir = [[NSBundle mainBundle] resourcePath];
-		NSString * rootPresetPath = [NSString stringWithFormat:@"%@/presets/presets.json",rootDir];
-		NSData * rootPresetData = [NSData dataWithContentsOfFile:rootPresetPath];
-		presetDict = [NSJSONSerialization JSONObjectWithData:rootPresetData options:0 error:NULL];
-	}
 	__block double bestMatchScore = 0.0;
 	__block NSDictionary * bestMatchDict = nil;
 
-	[presetDict enumerateKeysAndObjectsUsingBlock:^(NSString * fieldName, NSDictionary * dict, BOOL * stop) {
+	[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * fieldName, NSDictionary * dict, BOOL * stop) {
 
 		__block BOOL match = NO;
 		id suggestion = dict[@"suggestion"];
@@ -600,5 +621,162 @@ static NSString * prettyTag( NSString * tag )
 {
 	[_list removeObjectAtIndex:index];
 }
+
+@end
+
+
+
+
+
+@implementation PrimaryTag
+
++(UIImage *)iconForName:(NSString *)name
+{
+	if ( name == nil )
+		return nil;
+	NSString * path = [NSString stringWithFormat:@"poi/%@-24", name];
+	UIImage * icon = [UIImage imageNamed:path];
+	return icon;
+}
+
+-(instancetype)initWithKeyValue:(NSString *)keyValue
+{
+	self = [super init];
+	if ( self ) {
+		NSDictionary * dict;
+		BOOL isCategory = [keyValue hasPrefix:@"category-"];
+		if ( isCategory ) {
+			dict = g_categoriesDict[ keyValue ];
+		} else {
+			dict = g_presetsDict[ keyValue ];
+		}
+
+		_friendlyName = dict[ @"name" ];
+		_summary	= nil;
+		NSArray * a = [keyValue componentsSeparatedByString:@"/"];
+		_key		= isCategory ? nil : a[0];
+		_value		= isCategory ? nil : a.count > 1 ? a[1] : nil;
+		_terms		= dict[ @"terms" ];
+		_geometry	= dict[ @"geometry" ];
+
+
+		TagInfo * tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForKey:_key value:_value];
+		_icon = tagInfo.icon;
+		if ( _icon == nil ) {
+			_icon = [PrimaryTag iconForName:dict[ @"icon" ]];
+		}
+
+
+		if ( isCategory ) {
+			NSArray * m = dict[ @"members" ];
+			NSMutableArray * m2 = [NSMutableArray new];
+			for ( NSString * kv in m ) {
+				PrimaryTag * t = [[PrimaryTag alloc] initWithKeyValue:kv];
+				[m2 addObject:t];
+			}
+			_members = m2;
+		}
+	}
+	return self;
+}
+
+@end
+
+
+
+@implementation PrimaryTagDatabase
+
++(instancetype)shared
+{
+	static PrimaryTagDatabase * g_shared = nil;
+	if ( g_shared == nil ) {
+		g_shared = [PrimaryTagDatabase new];
+	}
+	return g_shared;
+}
+
+-(instancetype)init
+{
+	self = [super init];
+	if ( self ) {
+		[CommonTagList initializeDictionaries];
+
+		_primaryKeyValueDict = [NSMutableDictionary new];
+	}
+	return self;
+}
+
+-(NSArray *)primaryTagsForMemberList:(NSArray *)nameList
+{
+	NSMutableArray * list = [NSMutableArray new];
+	for ( NSString * name in nameList ) {
+		PrimaryTag * tag = _primaryKeyValueDict[ name ];
+		if ( tag == nil ) {
+			tag = [[PrimaryTag alloc] initWithKeyValue:name];
+			[_primaryKeyValueDict setObject:tag forKey:name];
+		}
+		DbgAssert( tag );
+		[list addObject:tag];
+	}
+	return list;
+}
+
+-(NSArray *)primaryTagsForGeometry:(NSString *)geometry
+{
+	NSArray * list = g_defaultsDict[geometry];
+	list = [self primaryTagsForMemberList:list];
+	return list;
+}
+
+-(NSMutableArray *)primaryTagsForCategory:(PrimaryTag *)category matching:(NSString *)searchText;
+{
+	NSMutableArray * list = [NSMutableArray new];
+	if ( category ) {
+		for ( PrimaryTag * tag in category.members ) {
+			BOOL add = NO;
+			if ( [tag.friendlyName rangeOfString:searchText].length > 0 ) {
+				add = YES;
+			} else {
+				for ( NSString * term in tag.terms ) {
+					if ( [term rangeOfString:searchText].length > 0 ) {
+						add = YES;
+						break;
+					}
+				}
+			}
+			if ( add ) {
+				[list addObject:tag];
+			}
+		}
+	} else {
+		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+			BOOL add = NO;
+			if ( [name rangeOfString:searchText].length > 0 ) {
+				add = YES;
+			} else {
+				for ( NSString * term in dict[ @"terms" ] ) {
+					if ( [term rangeOfString:searchText].length > 0 ) {
+						add = YES;
+						break;
+					}
+				}
+			}
+			if ( add ) {
+				if ( dict[@"suggestion"] == nil ) {
+					[list addObject:[[PrimaryTag alloc] initWithKeyValue:name]];
+				}
+			}
+		}];
+	}
+	return list;
+}
+
+-(PrimaryTag *)primaryTagForKey:(NSString *)key value:(NSString *)value
+{
+	NSString * kv = [NSString stringWithFormat:@"%@/%@",key,value];
+	PrimaryTag * best = [[PrimaryTag alloc] initWithKeyValue:kv];
+	return best;
+}
+
 
 @end
