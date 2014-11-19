@@ -17,7 +17,7 @@
 @property (strong,nonatomic)	NSArray				*	relationList;
 @property (assign,nonatomic)	OsmBaseObject		*	selection;
 
-- (void)setType:(NSString *)key value:(NSString *)value byUser:(BOOL)byUser;
+- (void)setFeatureKey:(NSString *)key value:(NSString *)value;
 
 - (void)commitChanges;
 - (BOOL)isTagDictChanged;

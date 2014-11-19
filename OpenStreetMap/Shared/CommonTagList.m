@@ -563,9 +563,9 @@ static NSString * PrettyTag( NSString * tag )
 	return bestMatchName;
 }
 
--(void)setPresetsForDict:(NSDictionary *)tagDict geometry:(NSString *)geometry update:(void (^)(void))update
+-(void)setPresetsForDict:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
 {
-	NSString * featureName = [CommonTagList featureNameForObjectDict:tagDict geometry:geometry];
+	NSString * featureName = [CommonTagList featureNameForObjectDict:objectTags geometry:geometry];
 	NSDictionary * featureDict = g_presetsDict[ featureName ];
 
 	_featureName = featureDict[ @"name" ];
@@ -580,7 +580,7 @@ static NSString * PrettyTag( NSString * tag )
 	NSMutableArray * customGroup = [NSMutableArray new];
 	for ( CustomPreset * custom in [CustomPresetList shared] ) {
 		if ( custom.appliesToKey.length ) {
-			NSString * v = tagDict[ custom.appliesToKey ];
+			NSString * v = objectTags[ custom.appliesToKey ];
 			if ( v && (custom.appliesToValue.length == 0 || [v isEqualToString:custom.appliesToValue]) ) {
 				// accept
 			} else {

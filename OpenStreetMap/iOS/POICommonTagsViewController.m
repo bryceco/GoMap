@@ -125,20 +125,21 @@
 
 	// remove previous feature tags
 	[oldFeature.removeTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-		[tabController setType:key value:nil byUser:NO];
+		[tabController setFeatureKey:key value:nil];
 	}];
 
 	// add new feature tags
-	NSDictionary * addTags = feature.addTags;
 	NSDictionary * defaults = [feature defaultValuesForGeometry:geometry];
-	for ( NSString * key in defaults.allKeys ) {
-		addTags = [addTags mutableCopy];
-		[(NSMutableDictionary *)addTags setObject:defaults[key] forKey:key];
-	}
+	[defaults enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+		if ( tabController.keyValueDict[key] == nil ) {
+			[tabController setFeatureKey:key value:value];
+		}
+	}];
+	NSDictionary * addTags = feature.addTags;
 	[addTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 		if ( [value isEqualToString:@"*"] )
 			value = @"yes";
-		[tabController setType:key value:value byUser:NO];
+		[tabController setFeatureKey:key value:value];
 	}];
 }
 
