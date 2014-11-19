@@ -180,6 +180,11 @@ static NSString * PrettyTag( NSString * tag )
 
 @implementation CommonTagList
 
++(void)initialize
+{
+	InitializeDictionaries();
+}
+
 +(instancetype)sharedList
 {
 	static dispatch_once_t onceToken;

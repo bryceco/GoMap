@@ -383,44 +383,19 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(NSString *)friendlyDescription
 {
-	NSArray * typeList = [OsmBaseObject typeKeys];
-
 	NSString * name = [_tags objectForKey:@"name"];
 	if ( name.length )
 		return name;
 
-	for ( NSString * type in typeList ) {
-		name = [_tags objectForKey:type];
-		if ( name.length ) {
-			NSString * type2 = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-			if ( [name isEqualToString:@"yes"] ) {
-				return type2;
-			}
-			if ( [name isEqualToString:@"pitch"] && [type isEqualToString:@"leisure"] ) {
-				NSString * sport = [_tags objectForKey:@"sport"];
-				if ( sport.length ) {
-					return [NSString stringWithFormat:@"%@ %@ (leisure)", sport, name];
-				}
-			}
-			return [NSString stringWithFormat:@"%@ (%@)", type2, name];
-		}
+	NSString * featureName = [CommonTagList featureNameForObjectDict:self.tags geometry:self.geometryName];
+	if ( featureName ) {
+		CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+		name = feature.friendlyName;
+		if ( name.length > 0 )
+			return name;
 	}
 
-	if ( [[_tags objectForKey:@"sidewalk"] isEqualToString:@"yes"] )
-		return @"sidewalk";
-
-	name = [_tags objectForKey:@"addr:housenumber"];
-	if ( name ) {
-		NSString * street = [_tags objectForKey:@"addr:street"];
-		NSString * unit = [_tags objectForKey:@"addr:unit"];
-		if ( unit )
-			name = [NSString stringWithFormat:@"%@ %@",name, unit];
-		if ( street )
-			name = [NSString stringWithFormat:@"%@ %@",name, street];
-		return name;
-	}
-
-	if ( self.isNode && ((OsmNode *)self).wayCount > 0 )
+	if ( self.isNode && self.isNode.wayCount > 0 )
 		return NSLocalizedString(@"(node in way)",nil);
 
 	if ( self.isNode )
@@ -430,7 +405,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		return NSLocalizedString(@"(way)",nil);
 
 	if ( self.isRelation ) {
-		OsmRelation * relation = (id)self;
+		OsmRelation * relation = self.isRelation;
 		NSString * type = relation.tags[@"type"];
 		if ( type.length ) {
 			name = relation.tags[type];
