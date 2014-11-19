@@ -409,7 +409,7 @@ CGSize SizeForImage( NSImage * image )
 	}
 }
 
--(void)applicationWillTerminate :(NSNotification *)notification
+-(void)save
 {
 	// save defaults first
 	CGRect rc = self.layer.bounds;
@@ -434,7 +434,10 @@ CGSize SizeForImage( NSImage * image )
 	// then save data
 	[_editorLayer save];
 }
-
+-(void)applicationWillTerminate :(NSNotification *)notification
+{
+	[self save];
+}
 
 -(void)setFrame:(CGRect)rect
 {
@@ -663,10 +666,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( newState == oldState && newOverlays == oldOverlays )
 		return;
 
-	// enable/disable editing buttons based on visibility
-	[_viewController updateDeleteButtonState];
-	[_viewController updateUndoRedoButtonState];
-
 	[CATransaction begin];
 	[CATransaction setAnimationDuration:0.5];
 
@@ -715,6 +714,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	[CATransaction commit];
 
+	// enable/disable editing buttons based on visibility
+	[_viewController updateDeleteButtonState];
+	[_viewController updateUndoRedoButtonState];
 	[self updateBingButton];
 }
 -(MapViewState)viewState

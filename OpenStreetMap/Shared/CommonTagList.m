@@ -16,15 +16,10 @@ static NSDictionary * g_categoriesDict;
 static NSDictionary * g_presetsDict;
 static NSDictionary * g_fieldsDict;
 
-static NSDictionary * DictionaryForFileFormat( NSString * format, ... )
+static NSDictionary * DictionaryForFile( NSString * file )
 {
-	va_list args;
-	va_start(args, format);
-	NSString * fileName = [[NSString alloc] initWithFormat:format arguments:args];
-	va_end(args);
-
 	NSString * rootDir = [[NSBundle mainBundle] resourcePath];
-	NSString * rootPresetPath = [NSString stringWithFormat:@"%@/presets/%@",rootDir,fileName];
+	NSString * rootPresetPath = [NSString stringWithFormat:@"%@/presets/%@",rootDir,file];
 	NSData * rootPresetData = [NSData dataWithContentsOfFile:rootPresetPath];
 	NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:rootPresetData options:0 error:NULL];
 	DbgAssert(dict);
@@ -34,10 +29,10 @@ static NSDictionary * DictionaryForFileFormat( NSString * format, ... )
 static void InitializeDictionaries()
 {
 	if ( g_presetsDict == nil ) {
-		g_presetsDict		= DictionaryForFileFormat(@"presets.json");
-		g_defaultsDict		= DictionaryForFileFormat(@"defaults.json");
-		g_categoriesDict	= DictionaryForFileFormat(@"categories.json");
-		g_fieldsDict		= DictionaryForFileFormat(@"fields.json");
+		g_defaultsDict		= DictionaryForFile(@"defaults.json");
+		g_categoriesDict	= DictionaryForFile(@"categories.json");
+		g_presetsDict		= DictionaryForFile(@"presets.json");
+		g_fieldsDict		= DictionaryForFile(@"fields.json");
 	}
 }
 

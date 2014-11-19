@@ -48,8 +48,8 @@
 	}];
 
 	// undo/redo buttons
-	_undoButton.enabled = self.mapView.editorLayer.mapData.canUndo;
-	_redoButton.enabled = self.mapView.editorLayer.mapData.canRedo;
+	[self updateUndoRedoButtonState];
+
 	[self.mapView.editorLayer.mapData addChangeCallback:^{
 		[self updateUndoRedoButtonState];
 	}];

@@ -166,6 +166,7 @@ typedef enum {
 -(void)updateEditControl;				// show/hide edit control based on selection
 
 -(void)viewDidAppear;
+-(void)save;
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 

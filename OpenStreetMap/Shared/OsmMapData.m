@@ -109,7 +109,8 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 -(void)periodicSave:(NSTimer *)timer
 {
-	[self save];	// this will also set the timer to nil
+	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	[appDelegate.mapView save];	// this will also invalidate the timer
 }
 
 
