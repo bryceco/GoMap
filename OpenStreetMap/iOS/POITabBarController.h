@@ -12,14 +12,12 @@
 
 @interface POITabBarController : UITabBarController
 {
-	NSString		*	_typeTag;
-	NSString		*	_typeValue;
 }
 @property (strong,nonatomic)	NSMutableDictionary *	keyValueDict;
 @property (strong,nonatomic)	NSArray				*	relationList;
 @property (assign,nonatomic)	OsmBaseObject		*	selection;
 
-- (void)setType:(NSString *)tag value:(NSString *)value byUser:(BOOL)byUser;
+- (void)setType:(NSString *)key value:(NSString *)value byUser:(BOOL)byUser;
 
 - (void)commitChanges;
 - (BOOL)isTagDictChanged;

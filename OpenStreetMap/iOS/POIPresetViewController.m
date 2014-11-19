@@ -67,7 +67,7 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-	CommonPreset * preset = _valueDefinitions[ indexPath.row ];
+	CommonTagValue * preset = _valueDefinitions[ indexPath.row ];
 	if ( preset.name ) {
 		cell.textLabel.text = preset.name;
 	} else {
@@ -85,7 +85,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	CommonPreset * preset = _valueDefinitions[ indexPath.row ];
+	CommonTagValue * preset = _valueDefinitions[ indexPath.row ];
 	POITabBarController * tab = (id)self.tabBarController;
 	[tab.keyValueDict setObject:preset.tagValue forKey:self.tag];
 

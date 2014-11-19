@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "POITypeViewController.h"
 
 @class OsmBaseObject;
 @class CommonTagList;
 
-@interface POICommonTagsViewController : UITableViewController<UITextFieldDelegate>
+@interface POICommonTagsViewController : UITableViewController<UITextFieldDelegate,POITypeViewControllerDelegate>
 {
 	CommonTagList				*	_tags;
 	IBOutlet UIBarButtonItem	*	_saveButton;

@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class PrimaryTag;
+@class CommonTagCategory;
+@class CommonTagFeature;
+@class POITypeViewController;
+
+@protocol POITypeViewControllerDelegate <NSObject>
+-(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonTagFeature *)feature;
+@end
 
 @interface POITypeViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
 {
@@ -20,7 +26,8 @@
 	IBOutlet UISearchBar    *	_searchBar;
 	BOOL						_isTopLevel;
 }
-@property (strong,nonatomic) PrimaryTag *	parentCategory;
+@property (strong,nonatomic) CommonTagCategory					*	parentCategory;
+@property (assign,nonatomic) id<POITypeViewControllerDelegate>		delegate;
 
 -(IBAction)back:(id)sender;
 -(IBAction)configure:(id)sender;

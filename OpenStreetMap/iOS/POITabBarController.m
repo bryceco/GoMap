@@ -45,24 +45,25 @@
 }
 
 
-- (void)setType:(NSString *)tag value:(NSString *)value byUser:(BOOL)byUser
+- (void)setType:(NSString *)key value:(NSString *)value byUser:(BOOL)byUser
 {
 	if ( byUser ) {
 		// remove conflicting tags
 		for ( NSString * tag2 in [OsmBaseObject typeKeys] ) {
 			if ( [tag2 isEqualToString:@"building"] ) {
 				// don't remove building attribute if it already exists
-				if ( [tag isEqualToString:@"amenity"] || [tag isEqualToString:@"shop"] )
+				if ( [key isEqualToString:@"amenity"] || [key isEqualToString:@"shop"] )
 					continue;
 			}
 			[_keyValueDict removeObjectForKey:tag2];
 		}
 	}
 
-	_typeTag = tag;
-	_typeValue = value;
-
-	[_keyValueDict setObject:_typeValue forKey:_typeTag];
+	if ( value ) {
+		[_keyValueDict setObject:value forKey:key];
+	} else {
+		[_keyValueDict removeObjectForKey:key];
+	}
 }
 
 - (void)commitChanges

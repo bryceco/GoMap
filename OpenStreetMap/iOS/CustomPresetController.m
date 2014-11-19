@@ -32,7 +32,7 @@
 	for ( UITextField * textField in _valueFieldList ) {
 		if ( idx >= _customPreset.presetList.count )
 			break;
-		CommonPreset * preset = _customPreset.presetList[ idx ];
+		CommonTagValue * preset = _customPreset.presetList[ idx ];
 		textField.text = preset.tagValue;
 		++idx;
 	}
@@ -58,14 +58,14 @@
 	for ( UITextField * field in _valueFieldList ) {
 		NSString * value = [field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if ( value.length ) {
-			CommonPreset * preset = [CommonPreset presetWithName:nil tagValue:value];
+			CommonTagValue * preset = [CommonTagValue presetWithName:nil tagValue:value];
 			[presets addObject:preset];
 		}
 	}
 	UIKeyboardType keyboard = UIKeyboardTypeDefault;
 	UITextAutocapitalizationType capitalize = UITextAutocapitalizationTypeNone;
 	
-	_customPreset = [CustomPreset tagWithName:name tagKey:key placeholder:nil keyboard:keyboard capitalize:capitalize presets:presets];
+	_customPreset = [CustomPreset tagWithName:name tagKey:key defaultValue:nil placeholder:nil keyboard:keyboard capitalize:capitalize presets:presets];
 	_customPreset.appliesToKey = appliesToKey;
 	_customPreset.appliesToValue = appliesToVal;
 	if ( _completion ) {

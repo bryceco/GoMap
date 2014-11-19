@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
+#import "CommonTagList.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
@@ -270,7 +271,7 @@
 		if ( isValue ) {
 			// get list of values for current key
 			NSString * key = kv[0];
-			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
+			NSSet * set = [CommonTagList allTagValuesForKey:key];
 			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 			NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
@@ -278,7 +279,7 @@
 			[(AutocompleteTextField *)textField setCompletions:list];
 		} else {
 			// get list of keys
-			NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagKeys];
+			NSSet * set = [CommonTagList allTagKeys];
 			NSArray * list = [set allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
 		}

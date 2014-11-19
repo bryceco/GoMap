@@ -2118,15 +2118,23 @@ NSString * ActionTitle( NSInteger action )
 			++nextIndex;
 		// add new node at point
 		CGPoint newPoint;
-		if ( _editorLayer.crossHairs && hypot( prevPoint.x-self.center.x, prevPoint.y-self.center.y) > 10.0 ) {
+		OSMPoint centerPoint = OSMPointFromCGPoint( self.center );
+		OsmNode * prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count-2] : nil;
+		CGPoint prevPrevPoint = prevPrevNode ? [self screenPointForLatitude:prevPrevNode.lat longitude:prevPrevNode.lon birdsEye:YES] : CGPointMake(0,0);
 
+		if ( _editorLayer.crossHairs &&
+			 hypot( prevPoint.x-centerPoint.x, prevPoint.y-centerPoint.y) > 10.0 &&
+			(prevPrevNode==nil || hypot( prevPrevPoint.x-centerPoint.x, prevPrevPoint.y-centerPoint.y) > 10.0 ) )
+		{
+
+			// place new point at crosshairs
 			newPoint = self.center;
 
 		} else {
 
+			// compute a good p;ace for next point
 			if ( way.nodes.count < 2 ) {
 				// create 2nd point in the direction of the center of the screen
-				CGPoint centerPoint = self.center;
 				BOOL vert = fabs(prevPoint.x - centerPoint.x) < fabs(prevPoint.y - centerPoint.y);
 				if ( vert ) {
 					newPoint.x = prevPoint.x;
@@ -2145,7 +2153,6 @@ NSString * ActionTitle( NSInteger action )
 					delta.x *= 100/len;
 					delta.y *= 100/len;
 				}
-				OSMPoint centerPoint = { self.center.x, self.center.y };
 				OSMPoint np1 = { prevPoint.x - delta.y, prevPoint.y + delta.x };
 				OSMPoint np2 = { prevPoint.x + delta.y, prevPoint.y - delta.x };
 				if ( DistanceFromPointToPoint(np1, centerPoint) < DistanceFromPointToPoint(np2, centerPoint) )

@@ -18,6 +18,7 @@
 #import "POIPresetViewController.h"
 #import "POITabBarController.h"
 #import "POITabBarController.h"
+#import "POITypeViewController.h"
 #import "TagInfo.h"
 #import "UITableViewCell+FixConstraints.h"
 
@@ -27,8 +28,8 @@
 @property (assign,nonatomic)	IBOutlet	UILabel					*	nameLabel2;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField	*	valueField;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField	*	valueField2;
-@property (strong,nonatomic)				CommonTag				*	commonTag;
-@property (strong,nonatomic)				CommonTag				*	commonTag2;
+@property (strong,nonatomic)				CommonTagKey				*	commonTag;
+@property (strong,nonatomic)				CommonTagKey				*	commonTag2;
 @end
 
 @implementation CommonTagCell
@@ -82,12 +83,8 @@
 
 
 	OsmBaseObject * object = tabController.selection;
-	NSString * geometry = object == nil ? GEOMETRY_NODE :
-							object.isWay ? object.isWay.isArea ? GEOMETRY_AREA : GEOMETRY_WAY :
-							object.isNode ? object.isNode.wayCount > 0 ? GEOMETRY_VERTEX : GEOMETRY_NODE :
-							object.isRelation ? object.isRelation.isMultipolygon ? GEOMETRY_AREA : GEOMETRY_WAY :
-							@"unkown";
-
+	NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
+ 
 	__weak POICommonTagsViewController * weakSelf = self;
 	__weak CommonTagList * weakTags = _tags;
 	[_tags setPresetsForDict:dict geometry:geometry update:^{
@@ -95,7 +92,7 @@
 		POICommonTagsViewController * mySelf = weakSelf;
 		if ( mySelf && !mySelf->_keyboardShowing ) {
 			[weakTags setPresetsForDict:dict geometry:geometry update:nil];
-			[weakSelf.tableView reloadData];
+			[mySelf.tableView reloadData];
 		}
 	}];
 	[self.tableView reloadData];
@@ -117,6 +114,32 @@
 {
 	[self resignAll];
 	[super viewWillDisappear:animated];
+}
+
+-(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonTagFeature *)feature
+{
+	POITabBarController * tabController = (id) self.tabBarController;
+	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
+	NSString * oldFeatureName = [CommonTagList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+	CommonTagFeature * oldFeature = [CommonTagFeature commonTagFeatureWithName:oldFeatureName];
+
+	// remove previous feature tags
+	[oldFeature.removeTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+		[tabController setType:key value:nil byUser:NO];
+	}];
+
+	// add new feature tags
+	NSDictionary * addTags = feature.addTags;
+	NSDictionary * defaults = [feature defaultValuesForGeometry:geometry];
+	for ( NSString * key in defaults.allKeys ) {
+		addTags = [addTags mutableCopy];
+		[(NSMutableDictionary *)addTags setObject:defaults[key] forKey:key];
+	}
+	[addTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+		if ( [value isEqualToString:@"*"] )
+			value = @"yes";
+		[tabController setType:key value:value byUser:NO];
+	}];
 }
 
 - (NSString *)typeKeyForDict:(NSDictionary *)dict
@@ -167,7 +190,7 @@
 		return nil;
 	if ( section > _tags.sectionCount )
 		return nil;
-	CommonGroup * group = [_tags groupAtIndex:section];
+	CommonTagGroup * group = [_tags groupAtIndex:section];
 	return group.name;
 }
 
@@ -195,7 +218,7 @@
 		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";
 
 		CommonTagCell * cell = [tableView dequeueReusableCellWithIdentifier:cellName forIndexPath:indexPath];
-		CommonTag * commonTag = [_tags tagAtIndexPath:indexPath];
+		CommonTagKey * commonTag = [_tags tagAtIndexPath:indexPath];
 		cell.nameLabel.text = commonTag.name;
 		cell.valueField.placeholder = commonTag.placeholder;
 		cell.valueField.delegate = self;
@@ -213,18 +236,20 @@
 		cell.accessoryType = commonTag.presetList.count ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 
 		POITabBarController	* tabController = (id)self.tabBarController;
-		NSDictionary * dict = tabController.keyValueDict;
+		NSDictionary * objectDict = tabController.keyValueDict;
 
 		if ( indexPath.section == 0 && indexPath.row == 0 ) {
 			// Type cell
 			NSString * text = [_tags featureName];
 			if ( text == nil )
-				text = [self typeStringForDict:dict];
+				text = [self typeStringForDict:objectDict];
 			cell.valueField.text = text;
 			cell.valueField.enabled = NO;
 		} else {
 			// Regular cell
-			cell.valueField.text = dict[ commonTag.tagKey ];
+			NSString * value = objectDict[ commonTag.tagKey ];
+			value = [CommonTagList friendlyValueNameForKey:commonTag.tagKey value:value geometry:nil];
+			cell.valueField.text = value;
 			cell.valueField.enabled = YES;
 		}
 
@@ -256,6 +281,9 @@
 		preset.tag = cell.commonTag.tagKey;
 		preset.valueDefinitions = cell.commonTag.presetList;
 		preset.navigationItem.title = cell.commonTag.name;
+	} else if ( [segue.destinationViewController isKindOfClass:[POITypeViewController class]] ) {
+		POITypeViewController * dest = (id)segue.destinationViewController;
+		dest.delegate = self;
 	}
 }
 
@@ -308,7 +336,7 @@
 		NSString * key = cell.commonTag.tagKey;
 		if ( key == nil )
 			return;	// should never happen
-		NSSet * set = [[TagInfoDatabase sharedTagInfoDatabase] allTagValuesForKey:key];
+		NSSet * set = [CommonTagList allTagValuesForKey:key];
 		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 		NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];

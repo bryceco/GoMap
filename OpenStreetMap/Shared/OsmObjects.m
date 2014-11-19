@@ -543,7 +543,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 -(NSString *)geometryName
 {
 	if ( self.isWay ) {
-		if ( self.isWay.isArea )
+		if ( self.isWay.isClosed )
 			return GEOMETRY_AREA;
 		else
 			return GEOMETRY_WAY;
