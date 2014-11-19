@@ -217,6 +217,7 @@
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
                         <segue destination="56N-ha-lzj" kind="modal" identifier="locationSegue" modalTransitionStyle="coverVertical" id="5LN-lZ-C2T"/>
                         <segue destination="S30-cU-QcE" kind="modal" identifier="NotesSegue" id="gMc-ga-KGQ"/>
+                        <segue destination="Fhw-zr-ueA" kind="modal" identifier="CalculateHeightSegue" id="Tzh-5J-H7G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -2296,6 +2297,44 @@ http://glyphish.com
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u0l-Qk-PMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="55" y="1122"/>
+        </scene>
+        <!--Height View Controller-->
+        <scene sceneID="wYa-FF-TAZ">
+            <objects>
+                <viewController id="Fhw-zr-ueA" customClass="HeightViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VPB-D4-MfQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="eq3-Er-HaA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uz5-Hx-Irk">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZK-2k-kEa">
+                                <rect key="frame" x="258" y="28" width="46" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="0Oi-VB-Kaa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="Fhw-zr-ueA" eventType="touchUpInside" id="dxu-Ek-Arj"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QZK-2k-kEa" firstAttribute="top" secondItem="VPB-D4-MfQ" secondAttribute="bottom" constant="8" symbolic="YES" id="EzS-gR-lWf"/>
+                            <constraint firstItem="QZK-2k-kEa" firstAttribute="trailing" secondItem="uz5-Hx-Irk" secondAttribute="trailingMargin" id="bsI-EQ-d0B"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mMW-XQ-UjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1400" y="-1001"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="ViH-as-IQq">

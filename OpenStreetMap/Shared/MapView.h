@@ -114,7 +114,6 @@ typedef enum {
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
 
 	CLLocationManager				*	_locationManager;
-	CLLocation						*	_currentLocation;
 
 	dispatch_source_t					_mailTimer;
 }
@@ -124,6 +123,8 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet FpsLabel			*	fpsLabel;
 @property (assign,nonatomic)	IBOutlet UILabel			*	zoomToEditLabel;
 #endif
+
+@property (readonly,nonatomic)	CLLocation					*	currentLocation;
 
 @property (assign,nonatomic)	MapViewState					viewState;			// layer currently displayed
 @property (assign,nonatomic)	BOOL							viewStateOverride;	// override layer because we're zoomed out
@@ -145,8 +146,6 @@ typedef enum {
 @property (readonly,nonatomic)	NSArray						*	backgroundLayers;	// list of all layers that need to be resized, etc.
 
 @property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
-@property (readonly,nonatomic)	CGFloat							mouseLongitude;
-@property (readonly,nonatomic)	CGFloat							mouseLatitude;
 @property (assign,nonatomic)	OSMTransform					screenFromMapTransform;
 @property (readonly,nonatomic)	OSMTransform					mapFromScreenTransform;
 

@@ -124,6 +124,7 @@ CGFloat DistanceFromLineToPoint( OSMPoint lineStart, OSMPoint lineDirection, OSM
 OSMPoint IntersectionOfTwoVectors( OSMPoint p1, OSMPoint v1, OSMPoint p2, OSMPoint v2 );
 BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect );
 double SurfaceArea( OSMRect latLon );
+double GreatCircleDistance( OSMPoint p1, OSMPoint p2 );
 
 #pragma mark Rect
 

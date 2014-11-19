@@ -906,6 +906,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return loc;
 }
 
+
 -(double)metersPerPixel
 {
 	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
@@ -914,12 +915,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
 	southwest = LongitudeLatitudeFromMapPoint(southwest);
 	northeast = LongitudeLatitudeFromMapPoint(northeast);
-	OSMRect latLon = { southwest.x*M_PI/180, southwest.y*M_PI/180, (northeast.x - southwest.x)*M_PI/180, (northeast.y - southwest.y)*M_PI/180 };
-	if ( latLon.size.width < 0 ) // crossed 180 degrees longitude
-		latLon.size.width += 2*M_PI;
-	const double earthRadius = 6378137.0; // meters
-	double a = pow(sin(latLon.size.height/2),2) + cos(latLon.origin.y) * cos(latLon.origin.y+latLon.size.height) * pow(sin(latLon.size.width/2),2);
-	double meters = earthRadius * 2 * atan2(sqrt(a), sqrt(1-a));
+
+	double meters = GreatCircleDistance( southwest, northeast );
 	double pixels = hypot(screenRect.size.width,screenRect.size.height);
 	return meters/pixels;
 }
@@ -1425,29 +1422,9 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	return !OSMTransformEqual( _screenFromMapTransform, OSMTransformIdentity() );
 }
 
--(void)setMousePoint:(CGPoint)point
-{
-#if !TARGET_OS_IPHONE
-	// update longitude/latitude property
-	CLLocationCoordinate2D loc = [self longitudeLatitudeForViewPoint:point];
-
-	[self willChangeValueForKey:@"mouseLongitude"];
-	[self willChangeValueForKey:@"mouseLatitude"];
-	_mouseLongitude = loc.longitude;
-	_mouseLatitude  = loc.latitude;
-	[self didChangeValueForKey:@"mouseLongitude"];
-	[self didChangeValueForKey:@"mouseLatitude"];
-#endif
-}
 
 -(void)updateMouseCoordinates
 {
-#if !TARGET_OS_IPHONE
-	CGPoint point = [NSEvent mouseLocation];
-	point = [self.window convertScreenToBase:point];
-	point = [self convertPoint:point fromView:nil];
-	[self setMousePoint:point];
-#endif
 }
 
 -(void)setMapCenter:(OSMPoint)mapCenter scale:(double)newScale
@@ -1650,6 +1627,7 @@ typedef enum {
 	ACTION_ADDNOTE,
 	ACTION_DELETE,
 	ACTION_MORE,
+	ACTION_HEIGHT,
 } EDIT_ACTION;
 NSString * ActionTitle( NSInteger action )
 {
@@ -1668,6 +1646,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", nil);
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
+		case ACTION_HEIGHT:			return NSLocalizedString(@"Compute Height", nil);
 	};
 	return nil;
 }
@@ -1697,7 +1676,7 @@ NSString * ActionTitle( NSInteger action )
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
 			} else {
 				// line
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
@@ -1775,6 +1754,13 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_CIRCULARIZE:
 			if ( ! [_editorLayer.mapData circularizeWay:_editorLayer.selectedWay] )
 				error = NSLocalizedString(@"The way cannot be made circular",nil);
+			break;
+		case ACTION_HEIGHT:
+			if ( self.gpsState != GPS_STATE_NONE ) {
+				[self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
+			} else {
+				error = NSLocalizedString(@"This action requires GPS to be turned on",nil);
+			}
 			break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];

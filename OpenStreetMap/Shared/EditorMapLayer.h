@@ -93,13 +93,13 @@
 -(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
 -(void)deleteSelectedObject;
 -(void)cancelOperation;
+-(void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
 
 - (BOOL)copyTags:(OsmBaseObject *)object;
 - (BOOL)pasteTags:(OsmBaseObject *)object;
 - (BOOL)canPasteTags;
 
 
-- (void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
 - (void)save;
 
 @end

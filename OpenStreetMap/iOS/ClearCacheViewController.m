@@ -31,41 +31,25 @@
 	NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
 	_osmDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
 
-	// aerial
-	_aerialDetail.text = NSLocalizedString(@"computing size...",nil);
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSInteger size = [appDelegate.mapView.aerialLayer diskCacheSize];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			_aerialDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
-		});
-	});
+	NSArray * layers = @[
+						 @[ _aerialDetail, appDelegate.mapView.aerialLayer ],
+						 @[ _mapnikDetail, appDelegate.mapView.mapnikLayer ],
+						 @[ _locatorDetail, appDelegate.mapView.locatorLayer ],
+						 @[ _gpsTraceDetail, appDelegate.mapView.gpsTraceLayer ]
+					];
 
-	// mapnik
-	_mapnikDetail.text = NSLocalizedString(@"computing size...",nil);
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSInteger size = [appDelegate.mapView.mapnikLayer diskCacheSize];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			_mapnikDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
+	for ( NSArray * a in layers ) {
+		UILabel				*	label = a[0];
+		MercatorTileLayer	*	layer = a[1];
+		label.text = NSLocalizedString(@"computing size...",nil);
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			NSInteger size, count;
+			[layer diskCacheSize:&size count:&count];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				label.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %d files",nil), (double)size/(1024*1024), count];
+			});
 		});
-	});
-
-	// locator overlay
-	_locatorDetail.text = NSLocalizedString(@"computing size...",nil);
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSInteger size = [appDelegate.mapView.locatorLayer diskCacheSize];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			_locatorDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
-		});
-	});
-
-	// gps overlay
-	_gpsTraceDetail.text = NSLocalizedString(@"computing size...",nil);
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		NSInteger size = [appDelegate.mapView.gpsTraceLayer diskCacheSize];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			_gpsTraceDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB",nil), (double)size/(1024*1024)];
-		});
-	});
+	}
 }
 
 #pragma mark - Table view delegate

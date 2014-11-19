@@ -460,6 +460,7 @@
 		02C43C8A19B6F6C70037A298 /* 103-map.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C43C8819B6F6C70037A298 /* 103-map.png */; };
 		02C43C8B19B6F6C70037A298 /* 103-map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C43C8919B6F6C70037A298 /* 103-map@2x.png */; };
 		02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */; };
+		02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DBB4441A1C884F00732D53 /* HeightViewController.m */; };
 		02DC59811671B79100213558 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02DC59801671B79100213558 /* CoreText.framework */; };
 		02E626701997168800565D62 /* KeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E6266F1997168800565D62 /* KeyChain.m */; };
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
@@ -1000,6 +1001,8 @@
 		02C43C8919B6F6C70037A298 /* 103-map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103-map@2x.png"; sourceTree = "<group>"; };
 		02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutocompleteTextField.h; sourceTree = "<group>"; };
 		02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutocompleteTextField.m; sourceTree = "<group>"; };
+		02DBB4431A1C884F00732D53 /* HeightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeightViewController.h; sourceTree = "<group>"; };
+		02DBB4441A1C884F00732D53 /* HeightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeightViewController.m; sourceTree = "<group>"; };
 		02DC59801671B79100213558 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		02E6266E1997168800565D62 /* KeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyChain.h; path = ../Shared/KeyChain.h; sourceTree = "<group>"; };
 		02E6266F1997168800565D62 /* KeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChain.m; path = ../Shared/KeyChain.m; sourceTree = "<group>"; };
@@ -1206,6 +1209,8 @@
 				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
+				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
+				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
 				02F371B216A4F3E6003E9548 /* HelpViewController.h */,
 				02F371B316A4F3E6003E9548 /* HelpViewController.m */,
 				025A1D001690DC32002B60CB /* Images */,
@@ -2205,6 +2210,7 @@
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
 				020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
+				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
 				02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,

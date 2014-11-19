@@ -189,7 +189,7 @@ extern CGSize SizeForImage(NSImage * image);
 	});
 }
 
--(NSInteger)diskCacheSize
+-(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
 	NSInteger size = 0;
 	NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_tileCacheDirectory error:NULL];
@@ -199,7 +199,8 @@ extern CGSize SizeForImage(NSImage * image);
 		stat( path.fileSystemRepresentation, &status );
 		size += (status.st_size + 511) & -512;
 	}
-	return size;
+	*pSize  = size;
+	*pCount = files.count;
 }
 
 
