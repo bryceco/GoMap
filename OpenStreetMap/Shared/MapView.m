@@ -1646,7 +1646,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", nil);
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
-		case ACTION_HEIGHT:			return NSLocalizedString(@"Compute Height", nil);
+		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
 	};
 	return nil;
 }
@@ -1665,7 +1665,7 @@ NSString * ActionTitle( NSInteger action )
 			BOOL disconnect = parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
 			BOOL split = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
 			BOOL join = parentWays.count > 1;
-			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_PASTETAGS), nil];
+			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), nil];
 			if ( disconnect )
 				[a addObject:@(ACTION_DISCONNECT)];
 			if ( split )
@@ -1679,12 +1679,12 @@ NSString * ActionTitle( NSInteger action )
 				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
 			} else {
 				// line
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT) ];
 	} else {
 		// nothing selected
 		return;

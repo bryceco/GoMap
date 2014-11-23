@@ -7,6 +7,8 @@
 //
 
 #import <sys/utsname.h>
+#import <CoreMotion/CoreMotion.h>
+
 
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
@@ -24,12 +26,70 @@
 
 - (void)viewDidLoad
 {
+	_rulerViews = [NSMutableArray new];
+	_rulerLayers = [NSMutableArray new];
+
 	[self startCameraPreview];
-	[self addRulerLabels];
+
+	_coreMotion = [CMMotionManager new];
+	[_coreMotion setDeviceMotionUpdateInterval:1.0/30];
+	NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
+	__weak HeightViewController * weakSelf = self;
+	[_coreMotion startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXTrueNorthZVertical
+														toQueue:currentQueue
+													withHandler:^(CMDeviceMotion *motion, NSError *error) {
+														[weakSelf refreshRulerLabels:motion];
+													}];
+
+	_doneButton.layer.cornerRadius	= 5;
+	_doneButton.layer.borderColor	= [UIColor blueColor].CGColor;
+	_doneButton.layer.borderWidth	= 2.0;
+
+	_distanceLabel.backgroundColor			= nil;
+	_distanceLabel.layer.cornerRadius		= 5;
+	_distanceLabel.layer.backgroundColor	= [UIColor colorWithRed:0.6 green:0.6 blue:1.0 alpha:0.5].CGColor;
+
+	UIGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+	[self.view addGestureRecognizer:tap];
+
+	UIGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
+	[self.view addGestureRecognizer:pan];
+}
+
+-(void)didTap:(UITapGestureRecognizer *)tap
+{
+	CGPoint pos = [tap locationInView:self.view];
+	AVCaptureDeviceInput * input = _captureSession.inputs.lastObject;
+	NSError * error = nil;
+	[input.device lockForConfiguration:&error];
+	if ( error == nil ) {
+		CGRect rc = self.view.bounds;
+		pos.x = (pos.x - rc.origin.x) / rc.size.width;
+		pos.y = (pos.y - rc.origin.y) / rc.size.height;
+		input.device.exposurePointOfInterest = pos;
+		[input.device unlockForConfiguration];
+	}
+}
+
+-(void)didPan:(UIPanGestureRecognizer *)pan
+{
+	CGFloat DELTA = 40;
+	CGPoint delta = [pan translationInView:self.view];
+	NSLog(@"pan = %@",NSStringFromCGPoint(delta));
+
+	if ( delta.y > DELTA ) {
+		delta.y -= DELTA;
+		[pan setTranslation:delta inView:self.view];
+		_zeroOffset++;
+	} else if ( delta.y < -DELTA ) {
+		delta.y += DELTA;
+		[pan setTranslation:delta inView:self.view];
+		_zeroOffset--;
+	}
 }
 
 
--(double)cameraDegrees
+-(double)cameraFOV
 {
 	static double cameraAngle = 0;
 	static dispatch_once_t onceToken;
@@ -46,7 +106,7 @@
 		} ModelList[] = {
 			// http://caramba-apps.com/blog/files/field-of-view-angles-ipad-iphone.html
 
-			{ "iPad5,4",	0, 3.3, 0 },					// iPad Air 2
+			{ "iPad5,4",	0, 3.3, 0 },		// iPad Air 2
 			{ "iPad4,5",	0 },				// iPad Mini (2nd Generation iPad Mini - Cellular)
 			{ "iPad4,4",	0 },				// iPad Mini (2nd Generation iPad Mini - Wifi)
 			{ "iPad4,2",	0 },				// iPad Air 5th Generation iPad (iPad Air) - Cellular
@@ -59,7 +119,7 @@
 			{ "iPad3,1",	0 },				// iPad 3 (3rd Generation)
 			{ "iPad2,7",	0 },				// iPad Mini (Original)
 			{ "iPad2,6",	0 },				// iPad Mini (Original)
-			{ "iPad2,5",	0 },				// iPad Mini (Original)
+			{ "iPad2,5",	0, 3.3, 0 },				// iPad Mini (Original)
 			{ "iPad2,4",	43.47 },				// iPad 2
 			{ "iPad2,3",	43.47 },				// iPad 2
 			{ "iPad2,2",	43.47 },				// iPad 2
@@ -102,55 +162,145 @@
 	return cameraAngle;
 }
 
--(double)distanceToObject
+
+-(double)distanceToObject:(double *)error direction:(double *)pDirection
 {
-	AppDelegate * delegate = [[UIApplication sharedApplication] delegate];
-	CLLocationCoordinate2D userLoc = delegate.mapView.currentLocation.coordinate;
-	OsmBaseObject * object = delegate.mapView.editorLayer.selectedPrimary;
-	OSMPoint userPt = { userLoc.longitude, userLoc.latitude };
+	AppDelegate			*	delegate = [[UIApplication sharedApplication] delegate];
+	CLLocation			*	location = delegate.mapView.currentLocation;
+	CLLocationCoordinate2D	userLoc = location.coordinate;
+	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
+	OSMPoint				userPt	= { userLoc.longitude, userLoc.latitude };
 
 	double dist = MAXFLOAT;
+	double bearing = 0;
 	for ( OsmNode * node in object.nodeSet ) {
 		OSMPoint nodePt = { node.lon, node.lat };
 		double d = GreatCircleDistance( userPt, nodePt );
-		if ( d < dist )
+		if ( d < dist ) {
 			dist = d;
+			OSMPoint dir = { lat2latp(nodePt.y) - lat2latp(userPt.y), nodePt.x - userPt.x };
+			dir = UnitVector(dir);
+			bearing = atan2( dir.y, dir.x );
+		}
 	}
+	*error		= location.horizontalAccuracy;
+	*pDirection	= bearing;
+
 	return dist;
 }
 
--(void)addRulerLabels
+-(NSString *)distanceStringForFloat:(double)num
 {
-	double dist = [self distanceToObject];
-	double cameraAngle = [self cameraDegrees];
+	if ( num < 10 )
+		return [NSString stringWithFormat:@"%.1f",num];
+	else
+		return [NSString stringWithFormat:@"%.0f",num];
+}
+
+
+-(void)refreshRulerLabels:(CMDeviceMotion *)motion
+{
+	if ( _isExiting )
+		return;
+
+	// compute location
+	const CGFloat labelBorderWidth = 5;
+	double distError = 0;
+	double direction = 0;
+	double dist = [self distanceToObject:&distError direction:&direction];
+
+	// get camera tilt
+	double pitch = motion.attitude.pitch;
+	double yaw	 = motion.attitude.yaw;
+	if ( fabs(yaw - direction) < M_PI/2 ) {
+		pitch = M_PI/2 - pitch;
+	} else {
+		pitch = pitch - M_PI/2;
+	}
+
+	double userHeight = tan( _cameraFOV/2 - pitch ) * dist;
+
+	// update distance label
+	_distanceLabel.text = [NSString stringWithFormat:@"Distance: %@ m ± %@", [self distanceStringForFloat:dist], [self distanceStringForFloat:distError]];
+	CGPoint pos = _distanceLabel.center;
+	[_distanceLabel sizeToFit];
+	_distanceLabel.bounds = CGRectInset( _distanceLabel.bounds, -labelBorderWidth, 0);
+	_distanceLabel.center = pos;
+
+	// get number of labels to display
+	double maxHeight = dist*tan( _cameraFOV/2 + pitch ) + dist*tan( _cameraFOV/2 - pitch );
+	double increment = 0.1;
+	int scale = 1;
+	while ( maxHeight / increment > 10 ) {
+		if ( scale == 1 ) {
+			scale = 2;
+			increment *= 2;
+		} else if ( scale == 2 ) {
+			scale = 5;
+			increment *= 2.5;
+		} else {
+			scale = 1;
+			increment *= 2;
+		}
+	}
 
 	CGRect rc = self.view.bounds;
+	double dist2 = (rc.size.height/2) / tan(_cameraFOV/2);
 
-	int DivCount = 10;
-	for ( int div = 0; div <= DivCount; ++div ) {
-		double angle = cameraAngle * div / DivCount;
-		double s = sin( angle * M_PI/180 );
-		double height = s * dist;
-		double pixels = round( (1-s) * rc.size.height );
+	for ( NSInteger div = 0; div < 30; ++div ) {
+		double height = div * increment * 0.5;
 
-		UILabel * label = [[UILabel alloc] init];
-		label.layer.anchorPoint = CGPointMake(0, 1);
-		label.text = [NSString stringWithFormat:@"%.1f meters", height];
-		label.font = [UIFont systemFontOfSize:16];
-		label.backgroundColor	= UIColor.whiteColor;
-		label.textColor			= [UIColor blackColor];
-		[label sizeToFit];
-		label.center			= CGPointMake( 5, pixels );
-		[self.view addSubview:label];
+		double angleRelativeToGround = atan2( height - userHeight, dist );
+		double centerAngleOffset = angleRelativeToGround - pitch;
 
-		CAShapeLayer * layer = [[CAShapeLayer alloc] init];
-		UIBezierPath * path = [[UIBezierPath alloc] init];
-		[path moveToPoint:CGPointMake(0, pixels)];
-		[path addLineToPoint:CGPointMake(rc.size.width, pixels)];
-		layer.path = path.CGPath;
-		layer.strokeColor = [UIColor whiteColor].CGColor;
-		layer.frame = self.view.bounds;
-		[self.view.layer addSublayer:layer];
+		double delta = tan(centerAngleOffset) * dist2;
+		double pixels = round( rc.size.height/2 - delta );
+
+		CGFloat labelWidth = 0;
+		if ( div % 2 == 0 ) {
+			if ( div/2 >= _rulerViews.count ){
+				[_rulerViews addObject:[[UILabel alloc] init]];
+			}
+			UILabel * label = _rulerViews[div/2];
+			if ( pixels > rc.size.height ) {
+				[label removeFromSuperview];
+			} else {
+				label.layer.anchorPoint = div == 0 ? CGPointMake(0, 1) : CGPointMake(0, 0.5);
+				label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height + _zeroOffset*increment]];
+				label.font				= [UIFont systemFontOfSize:16];
+				label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
+				label.textColor			= [UIColor blackColor];
+				label.textAlignment		= NSTextAlignmentCenter;
+				[label sizeToFit];
+				label.bounds			= CGRectInset( label.bounds, -labelBorderWidth, 0);
+				label.center			= CGPointMake( 0, pixels );
+				labelWidth				= label.bounds.size.width;
+				if ( label.superview == nil )
+					[self.view addSubview:label];
+				}
+		}
+
+		if ( div >= _rulerLayers.count ) {
+			[_rulerLayers addObject:[CAShapeLayer new]];
+		}
+		CAShapeLayer * layer = _rulerLayers[div];
+		if ( pixels > rc.size.height ) {
+			[layer removeFromSuperlayer];
+		} else {
+			UIBezierPath * path = [[UIBezierPath alloc] init];
+			BOOL isZero = div+2*_zeroOffset == 0;
+			[path moveToPoint:CGPointMake( labelWidth, pixels)];
+			[path addLineToPoint:CGPointMake(rc.size.width, pixels)];
+			layer.path = path.CGPath;
+			layer.strokeColor = isZero ? [UIColor greenColor].CGColor : [UIColor whiteColor].CGColor;
+			layer.lineWidth = isZero ? 2 : 1;
+			layer.frame = self.view.bounds;
+			if ( div % 2 == 1 ) {
+				layer.lineDashPattern = @[ @5, @4 ];
+			}
+			if ( layer.superlayer == nil )
+				[self.view.layer addSublayer:layer];
+		}
 	}
 }
 
@@ -169,6 +319,15 @@
 		return NO;
 	[_captureSession addInput:videoIn];
 
+
+	// get FOV
+	_cameraFOV = videoDevice.activeFormat.videoFieldOfView;
+	if ( _cameraFOV == 0 ) {
+		_cameraFOV = [self cameraFOV];
+	}
+	_cameraFOV *= M_PI/180;
+
+
 	_previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
 	_previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
@@ -184,6 +343,15 @@
 
 -(IBAction)done:(id)sender
 {
+	_isExiting = YES;
+	[_captureSession stopRunning];
+	[_coreMotion stopDeviceMotionUpdates];
+
+	for ( UIView * v in [self.view.subviews copy] ) {
+		[v removeFromSuperview];
+	}
+	self.view.layer.sublayers = nil;
+
 	[self dismissViewControllerAnimated:YES completion:^{
 	}];
 }
