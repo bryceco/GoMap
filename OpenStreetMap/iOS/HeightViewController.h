@@ -17,15 +17,16 @@
 {
 	AVCaptureSession			*	_captureSession;
 	AVCaptureVideoPreviewLayer	*	_previewLayer;
+	CMMotionManager				*	_coreMotion;
 	double							_cameraFOV;
 
 	IBOutlet UILabel			*	_distanceLabel;
 	IBOutlet UIButton			*	_doneButton;
-	NSMutableArray				*	_rulerViews;
-	NSMutableArray				*	_rulerLayers;
-	CMMotionManager				*	_coreMotion;
-	NSInteger						_zeroOffset;
+
+	NSMutableDictionary			*	_rulerViews;
+	NSMutableDictionary			*	_rulerLayers;
 	BOOL							_isExiting;
+	CGFloat							_scrollPosition;
 }
 
 

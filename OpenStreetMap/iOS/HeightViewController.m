@@ -26,8 +26,8 @@
 
 - (void)viewDidLoad
 {
-	_rulerViews = [NSMutableArray new];
-	_rulerLayers = [NSMutableArray new];
+	_rulerViews	 = [NSMutableDictionary new];
+	_rulerLayers = [NSMutableDictionary new];
 
 	[self startCameraPreview];
 
@@ -49,11 +49,52 @@
 	_distanceLabel.layer.cornerRadius		= 5;
 	_distanceLabel.layer.backgroundColor	= [UIColor colorWithRed:0.6 green:0.6 blue:1.0 alpha:0.5].CGColor;
 
+	_scrollPosition = 20;
+	
 	UIGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
 	[self.view addGestureRecognizer:tap];
 
 	UIGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
 	[self.view addGestureRecognizer:pan];
+}
+
+
+
+-(BOOL)startCameraPreview
+{
+	_captureSession = [[AVCaptureSession alloc] init];
+
+	AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	if ( videoDevice == nil )
+		return NO;
+	NSError *error;
+	AVCaptureDeviceInput * videoIn = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+	if ( error )
+		return NO;
+	if ( ![_captureSession canAddInput:videoIn] )
+		return NO;
+	[_captureSession addInput:videoIn];
+
+
+	// get FOV
+	_cameraFOV = videoDevice.activeFormat.videoFieldOfView;
+	if ( _cameraFOV == 0 ) {
+		_cameraFOV = [self cameraFOV];
+	}
+	_cameraFOV *= M_PI/180;
+
+
+	_previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
+	_previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+
+	_previewLayer.bounds = self.view.layer.bounds;
+	_previewLayer.position = CGRectCenter(self.view.layer.bounds);
+	_previewLayer.zPosition = -1;	// buttons and labels need to be above video
+	[self.view.layer addSublayer:_previewLayer];
+
+	[_captureSession startRunning];
+
+	return YES;
 }
 
 -(void)didTap:(UITapGestureRecognizer *)tap
@@ -73,21 +114,19 @@
 
 -(void)didPan:(UIPanGestureRecognizer *)pan
 {
-	CGFloat DELTA = 40;
 	CGPoint delta = [pan translationInView:self.view];
-	NSLog(@"pan = %@",NSStringFromCGPoint(delta));
-
-	if ( delta.y > DELTA ) {
-		delta.y -= DELTA;
-		[pan setTranslation:delta inView:self.view];
-		_zeroOffset++;
-	} else if ( delta.y < -DELTA ) {
-		delta.y += DELTA;
-		[pan setTranslation:delta inView:self.view];
-		_zeroOffset--;
-	}
+	_scrollPosition -= delta.y;
+	[pan setTranslation:CGPointMake(0,0) inView:self.view];
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+	return UIInterfaceOrientationMaskPortrait;
+}
+-(BOOL)shouldAutorotate
+{
+	return NO;
+}
 
 -(double)cameraFOV
 {
@@ -244,11 +283,15 @@
 		}
 	}
 
+
 	CGRect rc = self.view.bounds;
 	double dist2 = (rc.size.height/2) / tan(_cameraFOV/2);
 
-	for ( NSInteger div = 0; div < 30; ++div ) {
-		double height = div * increment * 0.5;
+	double scrollHeight = _scrollPosition * dist/dist2;
+
+	for ( NSInteger div = -20; div < 30; ++div ) {
+		double labelHeight = div * increment * 0.5;
+		double height = labelHeight + scrollHeight;
 
 		double angleRelativeToGround = atan2( height - userHeight, dist );
 		double centerAngleOffset = angleRelativeToGround - pitch;
@@ -258,15 +301,16 @@
 
 		CGFloat labelWidth = 0;
 		if ( div % 2 == 0 ) {
-			if ( div/2 >= _rulerViews.count ){
-				[_rulerViews addObject:[[UILabel alloc] init]];
+			UILabel * label = _rulerViews[ @(div) ];
+			if ( label == nil ) {
+				label = [[UILabel alloc] init];
+				[_rulerViews setObject:label forKey:@(div)];
 			}
-			UILabel * label = _rulerViews[div/2];
-			if ( pixels > rc.size.height ) {
+			if ( pixels > rc.size.height || pixels < 0 ) {
 				[label removeFromSuperview];
 			} else {
-				label.layer.anchorPoint = div == 0 ? CGPointMake(0, 1) : CGPointMake(0, 0.5);
-				label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height + _zeroOffset*increment]];
+				label.layer.anchorPoint = CGPointMake(0, 0.5);
+				label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height-scrollHeight]];
 				label.font				= [UIFont systemFontOfSize:16];
 				label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
 				label.textColor			= [UIColor blackColor];
@@ -280,15 +324,16 @@
 				}
 		}
 
-		if ( div >= _rulerLayers.count ) {
-			[_rulerLayers addObject:[CAShapeLayer new]];
+		CAShapeLayer * layer = _rulerLayers[ @(div) ];
+		if ( layer == nil ) {
+			layer = [CAShapeLayer new];
+			[_rulerLayers setObject:layer forKey:@(div)];
 		}
-		CAShapeLayer * layer = _rulerLayers[div];
-		if ( pixels > rc.size.height ) {
+		if ( pixels > rc.size.height || pixels < 0 ) {
 			[layer removeFromSuperlayer];
 		} else {
 			UIBezierPath * path = [[UIBezierPath alloc] init];
-			BOOL isZero = div+2*_zeroOffset == 0;
+			BOOL isZero = div == 0;
 			[path moveToPoint:CGPointMake( labelWidth, pixels)];
 			[path addLineToPoint:CGPointMake(rc.size.width, pixels)];
 			layer.path = path.CGPath;
@@ -304,42 +349,6 @@
 	}
 }
 
--(BOOL)startCameraPreview
-{
-	_captureSession = [[AVCaptureSession alloc] init];
-
-	AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-	if ( videoDevice == nil )
-		return NO;
-	NSError *error;
-	AVCaptureDeviceInput * videoIn = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
-	if ( error )
-		return NO;
-	if ( ![_captureSession canAddInput:videoIn] )
-		return NO;
-	[_captureSession addInput:videoIn];
-
-
-	// get FOV
-	_cameraFOV = videoDevice.activeFormat.videoFieldOfView;
-	if ( _cameraFOV == 0 ) {
-		_cameraFOV = [self cameraFOV];
-	}
-	_cameraFOV *= M_PI/180;
-
-
-	_previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
-	_previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-
-	_previewLayer.bounds = self.view.layer.bounds;
-	_previewLayer.position = CGRectCenter(self.view.layer.bounds);
-	_previewLayer.zPosition = -1;	// buttons and labels need to be above video
-	[self.view.layer addSublayer:_previewLayer];
-
-	[_captureSession startRunning];
-
-	return YES;
-}
 
 -(IBAction)done:(id)sender
 {
