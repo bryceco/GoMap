@@ -177,6 +177,12 @@
 		cell.text2.enabled = YES;
 		cell.text1.text = kv[0];
 		cell.text2.text = kv[1];
+#if 0
+		if ( [kv[0] length] == 0 && [kv[1] length] == 0 ) {
+			// empty key/value so set keyboard focus to it
+			[cell.text1 becomeFirstResponder];
+		}
+#endif
 		return cell;
 
 	} else if ( indexPath.section == 1 ) {
@@ -385,6 +391,10 @@
 		return;
 	}
 	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+
+	// set new cell to show keyboard
+	TextPair * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+	[newCell.text1 becomeFirstResponder];
 }
 
 -(IBAction)cancel:(id)sender

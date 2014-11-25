@@ -142,7 +142,7 @@ static const CGFloat InsetPercent = 0.15;
 	}
 
 	// can camera zoom?
-	_canZoom = NO; // 	videoDevice.activeFormat.videoMaxZoomFactor >= 10.0;
+	_canZoom = videoDevice.activeFormat.videoMaxZoomFactor >= 10.0;
 
 	// get FOV
 	_cameraFOV = videoDevice.activeFormat.videoFieldOfView;
