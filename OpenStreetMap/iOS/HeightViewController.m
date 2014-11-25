@@ -18,9 +18,9 @@
 #import "VectorMath.h"
 
 
-@interface HeightViewController ()
-@end
 
+
+static const CGFloat InsetPercent = 0.15;
 
 @implementation HeightViewController
 
@@ -29,8 +29,45 @@
 	_rulerViews	 = [NSMutableDictionary new];
 	_rulerLayers = [NSMutableDictionary new];
 
-	[self startCameraPreview];
+	self.view.backgroundColor			= [UIColor blackColor];
 
+	_applyButton.layer.cornerRadius		= 5;
+	_applyButton.layer.backgroundColor	= [UIColor blackColor].CGColor;
+	_applyButton.layer.borderColor		= [UIColor whiteColor].CGColor;
+	_applyButton.layer.borderWidth		= 1.0;
+	_applyButton.layer.zPosition		= 1;
+
+	_cancelButton.layer.cornerRadius	= 5;
+	_cancelButton.layer.backgroundColor	= [UIColor blackColor].CGColor;
+	_cancelButton.layer.borderColor		= [UIColor whiteColor].CGColor;
+	_cancelButton.layer.borderWidth		= 1.0;
+	_cancelButton.layer.zPosition		= 1;
+
+	_distanceLabel.backgroundColor			= nil;
+	_distanceLabel.layer.cornerRadius		= 5;
+	_distanceLabel.layer.backgroundColor	= [UIColor colorWithRed:0.4 green:0.4 blue:1.0 alpha:0.75].CGColor;
+	_distanceLabel.layer.zPosition			= 1;
+
+	_heightLabel.backgroundColor			= nil;
+	_heightLabel.layer.cornerRadius			= 5;
+	_heightLabel.layer.backgroundColor		= [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.75].CGColor;
+	_heightLabel.layer.zPosition			= 1;
+
+	_totalZoom		= 1.0;
+	_scrollPosition = 20;
+
+	UIGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+	[self.view addGestureRecognizer:tap];
+
+	UIGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
+	[self.view addGestureRecognizer:pan];
+
+	UIGestureRecognizer * pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinch:)];
+	[self.view addGestureRecognizer:pinch];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
 	_coreMotion = [CMMotionManager new];
 	[_coreMotion setDeviceMotionUpdateInterval:1.0/30];
 	NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
@@ -41,32 +78,50 @@
 														[weakSelf refreshRulerLabels:motion];
 													}];
 
-	_doneButton.layer.cornerRadius	= 5;
-	_doneButton.layer.borderColor	= [UIColor blueColor].CGColor;
-	_doneButton.layer.borderWidth	= 2.0;
+	[self startCameraPreview];
 
-	_distanceLabel.backgroundColor			= nil;
-	_distanceLabel.layer.cornerRadius		= 5;
-	_distanceLabel.layer.backgroundColor	= [UIColor colorWithRed:0.6 green:0.6 blue:1.0 alpha:0.5].CGColor;
+	if ( _canZoom ) {
+		CGRect rc = self.view.bounds;
+		CGFloat lineMargin = 30;
+		CGFloat arrowWidth = 10;
+		CGFloat arrowLength = 20;
+		CAShapeLayer * layer = [CAShapeLayer new];
+		UIBezierPath * path = [UIBezierPath new];
+		CGFloat inset = ceil( rc.size.height * InsetPercent );
+		// lower line
+		[path moveToPoint:CGPointMake( 0, inset)];
+		[path addLineToPoint:CGPointMake(rc.size.width, inset)];
+		// upper line
+		[path moveToPoint:CGPointMake( 0, rc.size.height-inset)];
+		[path addLineToPoint:CGPointMake(rc.size.width, rc.size.height-inset)];
+		// vertical
+		[path moveToPoint:CGPointMake(lineMargin, inset)];
+		[path addLineToPoint:CGPointMake(lineMargin, rc.size.height-inset)];
+		// top arrow
+		[path moveToPoint:CGPointMake(lineMargin-arrowWidth, inset+arrowLength)];
+		[path addLineToPoint:CGPointMake(lineMargin, inset)];
+		[path addLineToPoint:CGPointMake(lineMargin+arrowWidth, inset+arrowLength)];
+		// bottom arrow
+		[path moveToPoint:CGPointMake(lineMargin-arrowWidth, rc.size.height-inset-arrowLength)];
+		[path addLineToPoint:CGPointMake(lineMargin, rc.size.height-inset)];
+		[path addLineToPoint:CGPointMake(lineMargin+arrowWidth, rc.size.height-inset-arrowLength)];
 
-	_scrollPosition = 20;
-	
-	UIGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
-	[self.view addGestureRecognizer:tap];
-
-	UIGestureRecognizer * pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
-	[self.view addGestureRecognizer:pan];
+		layer.path = path.CGPath;
+		layer.strokeColor = [UIColor greenColor].CGColor;
+		layer.lineWidth = 2;
+		layer.frame = self.view.bounds;
+		[self.view.layer addSublayer:layer];
+	}
 }
-
-
 
 -(BOOL)startCameraPreview
 {
 	_captureSession = [[AVCaptureSession alloc] init];
 
-	AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	AVCaptureDevice * videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 	if ( videoDevice == nil )
 		return NO;
+
 	NSError *error;
 	AVCaptureDeviceInput * videoIn = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
 	if ( error )
@@ -75,6 +130,19 @@
 		return NO;
 	[_captureSession addInput:videoIn];
 
+	for ( AVCaptureDeviceFormat * format in [videoDevice.formats reverseObjectEnumerator] ) {
+		if ( format.videoMaxZoomFactor > 10 ) {
+			[videoDevice lockForConfiguration:&error];
+			if ( error == nil ) {
+				videoDevice.activeFormat = format;
+				[videoDevice unlockForConfiguration];
+				break;
+			}
+		}
+	}
+
+	// can camera zoom?
+	_canZoom = NO; // 	videoDevice.activeFormat.videoMaxZoomFactor >= 10.0;
 
 	// get FOV
 	_cameraFOV = videoDevice.activeFormat.videoFieldOfView;
@@ -82,7 +150,6 @@
 		_cameraFOV = [self cameraFOV];
 	}
 	_cameraFOV *= M_PI/180;
-
 
 	_previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
 	_previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
@@ -117,6 +184,29 @@
 	CGPoint delta = [pan translationInView:self.view];
 	_scrollPosition -= delta.y;
 	[pan setTranslation:CGPointMake(0,0) inView:self.view];
+}
+
+-(void)didPinch:(UIPinchGestureRecognizer *)pinch
+{
+	if ( _canZoom ) {
+		AVCaptureDeviceInput * input = _captureSession.inputs.lastObject;
+		AVCaptureDevice * device = input.device;
+		NSError * error = nil;
+
+		CGFloat maxZoom = device.activeFormat.videoMaxZoomFactor;
+		_totalZoom *= [pinch scale];
+		if ( _totalZoom < 1.0 )
+			_totalZoom = 1.0;
+		else if ( _totalZoom > maxZoom )
+			_totalZoom = maxZoom;
+
+		[device lockForConfiguration:&error];
+		if ( error == nil ) {
+			device.videoZoomFactor = _totalZoom;
+			[device unlockForConfiguration];
+		}
+		[pinch setScale:1.0];
+	}
 }
 
 - (NSUInteger)supportedInterfaceOrientations
@@ -230,12 +320,11 @@
 
 -(NSString *)distanceStringForFloat:(double)num
 {
-	if ( num < 10 )
+	if ( fabs(num) < 10 )
 		return [NSString stringWithFormat:@"%.1f",num];
 	else
 		return [NSString stringWithFormat:@"%.0f",num];
 }
-
 
 -(void)refreshRulerLabels:(CMDeviceMotion *)motion
 {
@@ -243,7 +332,6 @@
 		return;
 
 	// compute location
-	const CGFloat labelBorderWidth = 5;
 	double distError = 0;
 	double direction = 0;
 	double dist = [self distanceToObject:&distError direction:&direction];
@@ -257,100 +345,113 @@
 		pitch = pitch - M_PI/2;
 	}
 
-	double userHeight = tan( _cameraFOV/2 - pitch ) * dist;
-
 	// update distance label
-	_distanceLabel.text = [NSString stringWithFormat:@"Distance: %@ m ± %@", [self distanceStringForFloat:dist], [self distanceStringForFloat:distError]];
-	CGPoint pos = _distanceLabel.center;
-	[_distanceLabel sizeToFit];
-	_distanceLabel.bounds = CGRectInset( _distanceLabel.bounds, -labelBorderWidth, 0);
-	_distanceLabel.center = pos;
-
-	// get number of labels to display
-	double maxHeight = dist*tan( _cameraFOV/2 + pitch ) + dist*tan( _cameraFOV/2 - pitch );
-	double increment = 0.1;
-	int scale = 1;
-	while ( maxHeight / increment > 10 ) {
-		if ( scale == 1 ) {
-			scale = 2;
-			increment *= 2;
-		} else if ( scale == 2 ) {
-			scale = 5;
-			increment *= 2.5;
-		} else {
-			scale = 1;
-			increment *= 2;
-		}
-	}
-
+	NSString * distText = [NSString stringWithFormat:@"Distance: %@ ± %@ meters", [self distanceStringForFloat:dist], [self distanceStringForFloat:distError]];
+	[UIView performWithoutAnimation:^{
+		[_distanceLabel setTitle:distText forState:UIControlStateNormal];
+		[_distanceLabel layoutIfNeeded];
+	}];
 
 	CGRect rc = self.view.bounds;
 	double dist2 = (rc.size.height/2) / tan(_cameraFOV/2);
 
-	double scrollHeight = _scrollPosition * dist/dist2;
+	if ( _canZoom ) {
 
-	for ( NSInteger div = -20; div < 30; ++div ) {
-		double labelHeight = div * increment * 0.5;
-		double height = labelHeight + scrollHeight;
+		double height1 = dist * tan( pitch - atan2( rc.size.height/2 * (1-InsetPercent) / _totalZoom, dist2 ) );
+		double height2 = dist * tan( pitch + atan2( rc.size.height/2 * (1-InsetPercent) / _totalZoom, dist2 ) );
+		double height = height2 - height1;
+		double heightError =  height * distError / dist;
+		_currentHeight = [self distanceStringForFloat:height];
+		NSString * text = [NSString stringWithFormat:@"Height: %@ ± %@ meters", _currentHeight, [self distanceStringForFloat:heightError]];
+		[UIView performWithoutAnimation:^{
+			[_heightLabel setTitle:text forState:UIControlStateNormal];
+			[_heightLabel layoutIfNeeded];
+		}];
+	} else {
+		double userHeight = tan( _cameraFOV/2 - pitch ) * dist;
 
-		double angleRelativeToGround = atan2( height - userHeight, dist );
-		double centerAngleOffset = angleRelativeToGround - pitch;
+		// get number of labels to display
+		double maxHeight = dist*tan( _cameraFOV/2 + pitch ) + dist*tan( _cameraFOV/2 - pitch );
+		double increment = 0.1;
+		int scale = 1;
+		while ( maxHeight / increment > 10 ) {
+			if ( scale == 1 ) {
+				scale = 2;
+				increment *= 2;
+			} else if ( scale == 2 ) {
+				scale = 5;
+				increment *= 2.5;
+			} else {
+				scale = 1;
+				increment *= 2;
+			}
+		}
 
-		double delta = tan(centerAngleOffset) * dist2;
-		double pixels = round( rc.size.height/2 - delta );
+		double scrollHeight = _scrollPosition * dist/dist2;
 
-		CGFloat labelWidth = 0;
-		if ( div % 2 == 0 ) {
-			UILabel * label = _rulerViews[ @(div) ];
-			if ( label == nil ) {
-				label = [[UILabel alloc] init];
-				[_rulerViews setObject:label forKey:@(div)];
+		for ( NSInteger div = -20; div < 30; ++div ) {
+			CGFloat labelBorderWidth = 5;
+			double labelHeight = div * increment * 0.5;
+			double height = labelHeight + scrollHeight;
+
+			double angleRelativeToGround = atan2( height - userHeight, dist );
+			double centerAngleOffset = angleRelativeToGround - pitch;
+
+			double delta = tan(centerAngleOffset) * dist2;
+			double pixels = round( rc.size.height/2 - delta );
+
+			CGFloat labelWidth = 0;
+			if ( div % 2 == 0 ) {
+				UILabel * label = _rulerViews[ @(div) ];
+				if ( label == nil ) {
+					label = [[UILabel alloc] init];
+					[_rulerViews setObject:label forKey:@(div)];
+				}
+				if ( pixels > rc.size.height || pixels < 0 ) {
+					[label removeFromSuperview];
+				} else {
+					label.layer.anchorPoint = CGPointMake(0, 0.5);
+					label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height-scrollHeight]];
+					label.font				= [UIFont systemFontOfSize:16];
+					label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
+					label.textColor			= [UIColor blackColor];
+					label.textAlignment		= NSTextAlignmentCenter;
+					[label sizeToFit];
+					label.bounds			= CGRectInset( label.bounds, -labelBorderWidth, 0);
+					label.center			= CGPointMake( 0, pixels );
+					labelWidth				= label.bounds.size.width;
+					if ( label.superview == nil )
+						[self.view addSubview:label];
+					}
+			}
+
+			CAShapeLayer * layer = _rulerLayers[ @(div) ];
+			if ( layer == nil ) {
+				layer = [CAShapeLayer new];
+				[_rulerLayers setObject:layer forKey:@(div)];
 			}
 			if ( pixels > rc.size.height || pixels < 0 ) {
-				[label removeFromSuperview];
+				[layer removeFromSuperlayer];
 			} else {
-				label.layer.anchorPoint = CGPointMake(0, 0.5);
-				label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height-scrollHeight]];
-				label.font				= [UIFont systemFontOfSize:16];
-				label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
-				label.textColor			= [UIColor blackColor];
-				label.textAlignment		= NSTextAlignmentCenter;
-				[label sizeToFit];
-				label.bounds			= CGRectInset( label.bounds, -labelBorderWidth, 0);
-				label.center			= CGPointMake( 0, pixels );
-				labelWidth				= label.bounds.size.width;
-				if ( label.superview == nil )
-					[self.view addSubview:label];
+				UIBezierPath * path = [[UIBezierPath alloc] init];
+				BOOL isZero = div == 0;
+				[path moveToPoint:CGPointMake( labelWidth, pixels)];
+				[path addLineToPoint:CGPointMake(rc.size.width, pixels)];
+				layer.path = path.CGPath;
+				layer.strokeColor = isZero ? [UIColor greenColor].CGColor : [UIColor whiteColor].CGColor;
+				layer.lineWidth = isZero ? 2 : 1;
+				layer.frame = self.view.bounds;
+				if ( div % 2 == 1 ) {
+					layer.lineDashPattern = @[ @5, @4 ];
 				}
-		}
-
-		CAShapeLayer * layer = _rulerLayers[ @(div) ];
-		if ( layer == nil ) {
-			layer = [CAShapeLayer new];
-			[_rulerLayers setObject:layer forKey:@(div)];
-		}
-		if ( pixels > rc.size.height || pixels < 0 ) {
-			[layer removeFromSuperlayer];
-		} else {
-			UIBezierPath * path = [[UIBezierPath alloc] init];
-			BOOL isZero = div == 0;
-			[path moveToPoint:CGPointMake( labelWidth, pixels)];
-			[path addLineToPoint:CGPointMake(rc.size.width, pixels)];
-			layer.path = path.CGPath;
-			layer.strokeColor = isZero ? [UIColor greenColor].CGColor : [UIColor whiteColor].CGColor;
-			layer.lineWidth = isZero ? 2 : 1;
-			layer.frame = self.view.bounds;
-			if ( div % 2 == 1 ) {
-				layer.lineDashPattern = @[ @5, @4 ];
+				if ( layer.superlayer == nil )
+					[self.view.layer addSublayer:layer];
 			}
-			if ( layer.superlayer == nil )
-				[self.view.layer addSublayer:layer];
 		}
 	}
 }
 
-
--(IBAction)done:(id)sender
+-(IBAction)cancel:(id)sender
 {
 	_isExiting = YES;
 	[_captureSession stopRunning];
@@ -363,6 +464,60 @@
 
 	[self dismissViewControllerAnimated:YES completion:^{
 	}];
+}
+
+-(IBAction)apply:(id)sender
+{
+	if ( _canZoom ) {
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Set Height Tag" message:[NSString stringWithFormat:@"Set height to %@ meters?",_currentHeight] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
+		_alertHeight = _currentHeight;
+		[alert show];
+	} else {
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Set Height Tag" message:@"meters" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
+		alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+		UITextField	* textField = [alert textFieldAtIndex:0];
+		textField.keyboardType	= UIKeyboardTypeNumbersAndPunctuation;
+		[alert show];
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if ( buttonIndex == alertView.cancelButtonIndex )
+		return;
+
+	NSString * text = nil;
+	if ( _canZoom ) {
+		text = _alertHeight;
+	} else {
+		UITextField	* textField = [alertView textFieldAtIndex:0];
+		if ( textField == nil )
+			return;
+		text = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	}
+
+	AppDelegate			*	delegate = [[UIApplication sharedApplication] delegate];
+	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
+
+	// change selection to parent object
+	if ( object.tags.count == 0 && delegate.mapView.editorLayer.selectedRelation ) {
+		object = delegate.mapView.editorLayer.selectedRelation;
+		delegate.mapView.editorLayer.selectedNode = nil;
+		delegate.mapView.editorLayer.selectedWay = nil;
+	} else if ( object.tags.count == 0 && delegate.mapView.editorLayer.selectedWay ) {
+		object = delegate.mapView.editorLayer.selectedWay;
+		delegate.mapView.editorLayer.selectedNode = nil;
+	}
+
+	NSMutableDictionary *	tags = [object.tags mutableCopy];
+	if ( text.length > 0 ) {
+		[tags setObject:text forKey:@"height"];
+	} else {
+		[tags removeObjectForKey:@"height"];
+	}
+	[delegate.mapView setTagsForCurrentObject:tags];
+
+	[self cancel:nil];
 }
 
 @end

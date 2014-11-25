@@ -247,8 +247,8 @@ double GreatCircleDistance( OSMPoint p1, OSMPoint p2 )
 	// haversine formula
 	double dlon = (p2.x - p1.x) * M_PI/180;
 	double dlat = (p2.y - p1.y) * M_PI/180;
-	double a = pow(sin(dlat / 2), 2) + cos(p1.y * M_PI/180) * cos(p2.y * M_PI/180) * pow(sin(dlon / 2), 2);
-	double c = atan2(sqrt(a), sqrt(1 - a));
+	double a = pow(sin(dlat/2),2) + cos(p1.y * M_PI/180) * cos(p2.y * M_PI/180) * pow(sin(dlon/2),2);
+	double c = 2 * atan2( sqrt(a), sqrt(1 - a) );
 	double meters = earthRadius * c;
 	return meters;
 }

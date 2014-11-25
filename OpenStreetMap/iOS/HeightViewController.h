@@ -13,20 +13,27 @@
 @class CLLocation;
 
 
-@interface HeightViewController : UIViewController
+@interface HeightViewController : UIViewController <UIAlertViewDelegate>
 {
 	AVCaptureSession			*	_captureSession;
 	AVCaptureVideoPreviewLayer	*	_previewLayer;
 	CMMotionManager				*	_coreMotion;
 	double							_cameraFOV;
+	BOOL							_canZoom;
 
-	IBOutlet UILabel			*	_distanceLabel;
-	IBOutlet UIButton			*	_doneButton;
+	IBOutlet UIButton			*	_distanceLabel;
+	IBOutlet UIButton			*	_heightLabel;
+	IBOutlet UIButton			*	_applyButton;
+	IBOutlet UIButton			*	_cancelButton;
 
 	NSMutableDictionary			*	_rulerViews;
 	NSMutableDictionary			*	_rulerLayers;
 	BOOL							_isExiting;
 	CGFloat							_scrollPosition;
+	double							_totalZoom;
+
+	NSString					*	_currentHeight;
+	NSString					*	_alertHeight;
 }
 
 

@@ -1793,7 +1793,7 @@ NSString * ActionTitle( NSInteger action )
 }
 
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	// processing for selecting one of multipe objects
 	if ( actionSheet == _multiSelectSheet ) {

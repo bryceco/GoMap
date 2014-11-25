@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Fx1-V2-8uJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -2310,44 +2310,75 @@ http://glyphish.com
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZK-2k-kEa">
-                                <rect key="frame" x="258" y="28" width="46" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="46" id="0Oi-VB-Kaa"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5O-tO-QFr">
+                                <rect key="frame" x="152" y="432" width="59" height="28"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Done">
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="done:" destination="Fhw-zr-ueA" eventType="touchUpInside" id="dxu-Ek-Arj"/>
+                                    <action selector="cancel:" destination="Fhw-zr-ueA" eventType="touchUpInside" id="CaW-Y4-fdC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 1234m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10R-af-Uav">
-                                <rect key="frame" x="95" y="439" width="130" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZK-2k-kEa">
+                                <rect key="frame" x="220" y="432" width="84" height="28"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" title="Set Height">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="apply:" destination="Fhw-zr-ueA" eventType="touchUpInside" id="adc-Uk-KbR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SdH-uy-BuK">
+                                <rect key="frame" x="122" y="20" width="77" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="Distance">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juy-LX-vDs">
+                                <rect key="frame" x="129" y="48" width="62" height="21"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="Height">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="10R-af-Uav" secondAttribute="centerX" id="6pR-37-QfE"/>
-                            <constraint firstItem="QZK-2k-kEa" firstAttribute="top" secondItem="VPB-D4-MfQ" secondAttribute="bottom" constant="8" symbolic="YES" id="EzS-gR-lWf"/>
-                            <constraint firstItem="eq3-Er-HaA" firstAttribute="top" secondItem="10R-af-Uav" secondAttribute="bottom" constant="20" id="Pao-UG-Xs5"/>
+                            <constraint firstItem="eq3-Er-HaA" firstAttribute="top" secondItem="QZK-2k-kEa" secondAttribute="bottom" constant="20" id="2jQ-eZ-Mfs"/>
+                            <constraint firstItem="eq3-Er-HaA" firstAttribute="top" secondItem="l5O-tO-QFr" secondAttribute="bottom" constant="20" id="TqY-pW-y80"/>
                             <constraint firstItem="QZK-2k-kEa" firstAttribute="trailing" secondItem="uz5-Hx-Irk" secondAttribute="trailingMargin" id="bsI-EQ-d0B"/>
+                            <constraint firstItem="SdH-uy-BuK" firstAttribute="top" secondItem="VPB-D4-MfQ" secondAttribute="bottom" id="cX0-1x-udZ"/>
+                            <constraint firstItem="QZK-2k-kEa" firstAttribute="leading" secondItem="l5O-tO-QFr" secondAttribute="trailing" constant="9" id="dAk-e6-sey"/>
+                            <constraint firstAttribute="centerX" secondItem="juy-LX-vDs" secondAttribute="centerX" id="mRX-wm-J15"/>
+                            <constraint firstItem="juy-LX-vDs" firstAttribute="top" secondItem="VPB-D4-MfQ" secondAttribute="bottom" constant="28" id="tUQ-9D-CgT"/>
+                            <constraint firstAttribute="centerX" secondItem="SdH-uy-BuK" secondAttribute="centerX" id="tf0-ur-oZx"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="_distanceLabel" destination="10R-af-Uav" id="CE5-bb-fpH"/>
-                        <outlet property="_doneButton" destination="QZK-2k-kEa" id="4VG-a5-XaF"/>
+                        <outlet property="_applyButton" destination="QZK-2k-kEa" id="S9q-Rs-tFe"/>
+                        <outlet property="_cancelButton" destination="l5O-tO-QFr" id="1Le-gp-TMF"/>
+                        <outlet property="_distanceLabel" destination="SdH-uy-BuK" id="PjD-X8-hhk"/>
+                        <outlet property="_heightLabel" destination="juy-LX-vDs" id="TRf-vg-uAb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mMW-XQ-UjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1355" y="-1001"/>
+            <point key="canvasLocation" x="-1251" y="-1000"/>
         </scene>
         <!--Help View Controller-->
         <scene sceneID="ViH-as-IQq">
