@@ -2012,6 +2012,7 @@
         "fields": [
             "building",
             "levels",
+            "height",
             "address"
         ],
         "geometry": [
@@ -2027,7 +2028,8 @@
         "icon": "commercial",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2043,7 +2045,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2058,7 +2061,8 @@
     "building/bunker": {
         "fields": [
             "address",
-            "levels"
+			"levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2075,7 +2079,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2091,7 +2096,8 @@
         "icon": "place-of-worship",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2107,7 +2113,8 @@
         "icon": "place-of-worship",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2123,7 +2130,8 @@
         "icon": "place-of-worship",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2139,7 +2147,9 @@
         "icon": "commercial",
         "fields": [
             "address",
-            "smoking"
+            "smoking",
+		    "levels",
+		    "height"
         ],
         "geometry": [
             "point",
@@ -2155,7 +2165,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+		    "height"
         ],
         "geometry": [
             "point",
@@ -2171,7 +2182,9 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
+
         ],
         "geometry": [
             "point",
@@ -2188,6 +2201,7 @@
         "fields": [
             "address",
             "levels",
+			"height",
             "smoking"
         ],
         "geometry": [
@@ -2216,7 +2230,9 @@
     },
     "building/garage": {
         "fields": [
-            "capacity"
+            "capacity",
+			"levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2232,7 +2248,9 @@
     "building/garages": {
         "icon": "warehouse",
         "fields": [
-            "capacity"
+            "capacity",
+		    "levels",
+		    "height"
         ],
         "geometry": [
             "point",
@@ -2248,7 +2266,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2264,7 +2283,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2281,6 +2301,7 @@
         "fields": [
             "address",
             "levels",
+			"height",
             "smoking"
         ],
         "geometry": [
@@ -2297,7 +2318,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2323,7 +2345,8 @@
         "icon": "industrial",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2340,6 +2363,7 @@
         "fields": [
             "address",
             "levels",
+			"height",
             "smoking"
         ],
         "geometry": [
@@ -2356,7 +2380,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2373,6 +2398,7 @@
         "fields": [
             "address",
             "levels",
+			"height",
             "smoking"
         ],
         "geometry": [
@@ -2389,7 +2415,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2405,7 +2432,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2421,7 +2449,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2437,7 +2466,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2453,7 +2483,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2469,7 +2500,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2485,7 +2517,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2502,7 +2535,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -2518,7 +2552,8 @@
         "icon": "building",
         "fields": [
             "address",
-            "levels"
+            "levels",
+			"height"
         ],
         "geometry": [
             "point",
@@ -5615,7 +5650,8 @@
     "natural/tree": {
         "fields": [
             "tree_type",
-            "denotation"
+            "denotation",
+            "height"
         ],
         "icon": "park",
         "geometry": [
