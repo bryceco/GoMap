@@ -95,21 +95,22 @@ static const CGFloat InsetPercent = 0.15;
 		[path moveToPoint:CGPointMake( 0, rc.size.height-inset)];
 		[path addLineToPoint:CGPointMake(rc.size.width, rc.size.height-inset)];
 		// vertical
-		[path moveToPoint:CGPointMake(lineMargin, inset)];
-		[path addLineToPoint:CGPointMake(lineMargin, rc.size.height-inset)];
+		[path moveToPoint:CGPointMake(lineMargin, inset+2)];
+		[path addLineToPoint:CGPointMake(lineMargin, rc.size.height-inset-2)];
 		// top arrow
 		[path moveToPoint:CGPointMake(lineMargin-arrowWidth, inset+arrowLength)];
-		[path addLineToPoint:CGPointMake(lineMargin, inset)];
+		[path addLineToPoint:CGPointMake(lineMargin, inset+2)];
 		[path addLineToPoint:CGPointMake(lineMargin+arrowWidth, inset+arrowLength)];
 		// bottom arrow
 		[path moveToPoint:CGPointMake(lineMargin-arrowWidth, rc.size.height-inset-arrowLength)];
-		[path addLineToPoint:CGPointMake(lineMargin, rc.size.height-inset)];
+		[path addLineToPoint:CGPointMake(lineMargin, rc.size.height-inset-2)];
 		[path addLineToPoint:CGPointMake(lineMargin+arrowWidth, rc.size.height-inset-arrowLength)];
 
-		layer.path = path.CGPath;
-		layer.strokeColor = [UIColor greenColor].CGColor;
-		layer.lineWidth = 2;
-		layer.frame = self.view.bounds;
+		layer.path			= path.CGPath;
+		layer.strokeColor	= [UIColor greenColor].CGColor;
+		layer.fillColor		= nil;
+		layer.lineWidth		= 2;
+		layer.frame			= self.view.bounds;
 		[self.view.layer addSublayer:layer];
 	}
 }
@@ -469,7 +470,7 @@ static const CGFloat InsetPercent = 0.15;
 -(IBAction)apply:(id)sender
 {
 	if ( _canZoom ) {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Set Height Tag" message:[NSString stringWithFormat:@"Set height to %@ meters?",_currentHeight] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Height = %@ meters",_currentHeight] message:@"Set height tag?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
 		_alertHeight = _currentHeight;
 		[alert show];
 	} else {
