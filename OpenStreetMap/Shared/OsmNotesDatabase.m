@@ -87,7 +87,6 @@
 			}
 		}
 	}
-	NSLog(@"note %@",_ident);
 	return self;
 }
 -(instancetype)initWithFixmeObject:(OsmBaseObject *)object
@@ -96,7 +95,6 @@
 	if ( self ) {
 		OSMPoint center = object.isNode ? OSMPointMake(object.isNode.lon, object.isNode.lat) : object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
 		_ident	= @(object.extendedIdentifier);
-		NSLog(@"fixme %@",_ident);
 		_lat	= center.y;
 		_lon	= center.x;
 		_created = object.timestamp;
