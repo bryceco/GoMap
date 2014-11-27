@@ -536,6 +536,23 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return @"unkown";
 }
 
+-(OSM_TYPE)extendedType
+{
+	return self.isNode ? OSM_TYPE_NODE : self.isWay ? OSM_TYPE_WAY : OSM_TYPE_RELATION;
+}
+
+-(OsmIdentifier)extendedIdentifier
+{
+	OSM_TYPE type = self.extendedType;
+	return _ident.longLongValue | ((uint64_t)type << 62);
+}
+
++(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *)pType ident:(OsmIdentifier *)pIdent
+{
+	*pType  = extendedIdentifier >> 62 & 3;
+	*pIdent = extendedIdentifier & (((uint64_t)1 << 62)-1);
+}
+
 @end
 
 #pragma mark OsmNode
@@ -975,37 +992,50 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	if ( pArea == NULL )
 		pArea = &dummy;
 
-	// compute centroid
-	NSInteger nodeCount = _nodes[0]==_nodes.lastObject ? _nodes.count-1 : _nodes.count;
+	BOOL isClosed = self.isClosed;
+
+	NSInteger nodeCount = isClosed ? _nodes.count-1 : _nodes.count;
 
 	if ( nodeCount > 2)  {
-		CGFloat sum = 0;
-		CGFloat sumX = 0;
-		CGFloat sumY = 0;
-		BOOL first = YES;
-		OSMPoint offset = { 0, 0 };
-		OSMPoint previous;
-		for ( OsmNode * node in _nodes )  {
-			if ( first ) {
-				offset.x = node.lon;
-				offset.y = node.lat;
-				previous.x = 0;
-				previous.y = 0;
-				first = NO;
-			} else {
-				OSMPoint current = { node.lon - offset.x, node.lat - offset.y };
-				CGFloat partialSum = previous.x*current.y - previous.y*current.x;
-				sum += partialSum;
-				sumX += (previous.x + current.x) * partialSum;
-				sumY += (previous.y + current.y) * partialSum;
-				previous = current;
+		if ( isClosed ) {
+			// compute centroid
+			double sum = 0;
+			double sumX = 0;
+			double sumY = 0;
+			BOOL first = YES;
+			OSMPoint offset = { 0, 0 };
+			OSMPoint previous;
+			for ( OsmNode * node in _nodes )  {
+				if ( first ) {
+					offset.x = node.lon;
+					offset.y = node.lat;
+					previous.x = 0;
+					previous.y = 0;
+					first = NO;
+				} else {
+					OSMPoint current = { node.lon - offset.x, node.lat - offset.y };
+					CGFloat partialSum = previous.x*current.y - previous.y*current.x;
+					sum += partialSum;
+					sumX += (previous.x + current.x) * partialSum;
+					sumY += (previous.y + current.y) * partialSum;
+					previous = current;
+				}
 			}
+			*pArea = sum/2;
+			OSMPoint point = { sumX/6/ *pArea, sumY/6/ *pArea };
+			point.x += offset.x;
+			point.y += offset.y;
+			return point;
+		} else {
+			// compute average
+			double sumX = 0, sumY = 0;
+			for ( OsmNode * node in _nodes ) {
+				sumX += node.lon;
+				sumY += node.lat;
+			}
+			OSMPoint point = { sumX/nodeCount, sumY/nodeCount };
+			return point;
 		}
-		*pArea = sum/2;
-		OSMPoint point = { sumX/6/ *pArea, sumY/6/ *pArea };
-		point.x += offset.x;
-		point.y += offset.y;
-		return point;
 	} else if ( nodeCount == 2 ) {
 		*pArea = 0;
 		OsmNode * n1 = _nodes[0];

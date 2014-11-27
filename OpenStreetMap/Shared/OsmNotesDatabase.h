@@ -27,6 +27,7 @@
 @property (readonly,nonatomic)	NSString		*	created;
 @property (readonly,nonatomic)	NSString		*	status;
 @property (readonly,nonatomic)	NSMutableArray	*	comments;
+@property (readonly,nonatomic)	BOOL				isFixme;
 
 -(instancetype)initWithLat:(double)lat lon:(double)lon;
 @end
@@ -40,7 +41,7 @@
 @property (strong,nonatomic)	NSMutableDictionary	*	dict;
 @property (weak,nonatomic)		OsmMapData			*	mapData;
 
--(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay completion:(void(^)(void))completion;
+-(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion;
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion;
 -(void)reset;
 @end

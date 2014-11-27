@@ -170,6 +170,23 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	return [_relations objectForKey:ref];
 }
 
+- (OsmBaseObject *)objectWithExtendedIdentifier:(NSNumber *)extendedIdentifier
+{
+	OsmIdentifier	ident;
+	OSM_TYPE		type;
+	[OsmBaseObject decomposeExtendedIdentifier:extendedIdentifier.longLongValue type:&type ident:&ident];
+	switch ( type ) {
+		case OSM_TYPE_NODE:
+			return _nodes[ @(ident) ];
+		case OSM_TYPE_WAY:
+			return _ways[ @(ident) ];
+		case OSM_TYPE_RELATION:
+			return _relations[ @(ident) ];
+		default:
+			return nil;
+	}
+}
+
 -(NSArray *)waysContainingNode:(OsmNode *)node
 {
 	__block NSMutableArray * a = [NSMutableArray new];

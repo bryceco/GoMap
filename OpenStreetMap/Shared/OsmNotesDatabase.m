@@ -13,6 +13,8 @@
 #import "DownloadThreadPool.h"
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
+#import "OsmObjects.h"
+
 
 @implementation OsmNoteComment
 -(instancetype)initWithXml:(NSXMLElement *)noteElement
@@ -30,6 +32,17 @@
 				_text = [child.stringValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			}
 		}
+	}
+	return self;
+}
+-(instancetype)initWithFixmeObject:(OsmBaseObject *)object
+{
+	self = [super init];
+	if ( self ) {
+		_date = object.timestamp;
+		_user = object.user;
+		_action = @"fixme";
+		_text = [NSString stringWithFormat:@"%@ (%@ %@): %@", object.friendlyDescription, object.isNode?@"node":object.isWay?@"way":object.isRelation?@"relation":@"", object.ident, object.tags[@"fixme"]];
 	}
 	return self;
 }
@@ -74,7 +87,28 @@
 			}
 		}
 	}
+	NSLog(@"note %@",_ident);
 	return self;
+}
+-(instancetype)initWithFixmeObject:(OsmBaseObject *)object
+{
+	self = [super init];
+	if ( self ) {
+		OSMPoint center = object.isNode ? OSMPointMake(object.isNode.lon, object.isNode.lat) : object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
+		_ident	= @(object.extendedIdentifier);
+		NSLog(@"fixme %@",_ident);
+		_lat	= center.y;
+		_lon	= center.x;
+		_created = object.timestamp;
+		_status = @"fixme";
+		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithFixmeObject:object];
+		_comments = [NSMutableArray arrayWithObject:comment];
+	}
+	return self;
+}
+-(BOOL)isFixme
+{
+	return [_status isEqualToString:@"fixme"];
 }
 -(NSString *)description
 {
@@ -106,7 +140,7 @@
 	[_dict removeAllObjects];
 }
 
--(void)updateForRegion:(OSMRect)box completion:(void(^)(void))completion
+-(void)updateForRegion:(OSMRect)box fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion
 {
 	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?closed=0&bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
 	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
@@ -121,7 +155,18 @@
 				}
 			}
 		}
+
 		dispatch_async(dispatch_get_main_queue(), ^{
+			// add FIXMEs
+			[mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
+				NSString * fixme = obj.tags[@"fixme"];
+				if ( fixme.length > 0 ) {
+					OsmNote * note = [[OsmNote alloc] initWithFixmeObject:obj];
+					[newNotes addObject:note];
+				}
+			}];
+
+			// create dictionary
 			for ( OsmNote * n in newNotes ) {
 				[_dict setObject:n forKey:n.ident];
 			}
@@ -130,14 +175,14 @@
 	}];
 }
 
--(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay completion:(void(^)(void))completion;
+-(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion;
 {
 	[_workQueue cancelAllOperations];
 	[_workQueue addOperationWithBlock:^{
 		usleep( 1000*(delay + 0.25) );
 	}];
 	[_workQueue addOperationWithBlock:^{
-		[self updateForRegion:bbox completion:completion];
+		[self updateForRegion:bbox fixmeData:mapData completion:completion];
 	}];
 }
 

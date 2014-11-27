@@ -819,7 +819,16 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	OsmNote * note = _notesDatabase.dict[ @(button.tag) ];
 	if ( note == nil )
 		return;
-	[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
+
+	if ( note.isFixme ) {
+		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.ident];
+		_editorLayer.selectedNode		= object.isNode;
+		_editorLayer.selectedWay		= object.isWay;
+		_editorLayer.selectedRelation	= object.isRelation;
+		[self presentTagEditor:nil];
+	} else {
+		[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
+	}
 }
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon
@@ -2479,11 +2488,8 @@ drop_pin:
 -(void)updateNotesWithDelay:(CGFloat)delay
 {
 	if ( _viewOverlayMask & VIEW_OVERLAY_NOTES ) {
-		OSMRect rc = [self boundingMapRectForScreen];
-		OSMPoint p1 = LongitudeLatitudeFromMapPoint(rc.origin);
-		OSMPoint p2 = LongitudeLatitudeFromMapPoint(OSMPointMake(rc.origin.x+rc.size.width, rc.origin.y+rc.size.height));
-		OSMRect rc2 = { p1.x, p2.y, p2.x-p1.x, p1.y-p2.y };
-		[_notesDatabase updateRegion:rc2 withDelay:delay completion:^{
+		OSMRect rc = [self screenLongitudeLatitude];
+		[_notesDatabase updateRegion:rc withDelay:delay fixmeData:self.editorLayer.mapData completion:^{
 			[self refreshNoteButtonsFromDatabase];
 		}];
 	} else {
@@ -2509,13 +2515,15 @@ drop_pin:
 						button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
 						button.titleLabel.textColor		= UIColor.whiteColor;
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
-						[button setTitle:@"N" forState:UIControlStateNormal];
+						[button setTitle:note.isFixme ? @"F" : @"N" forState:UIControlStateNormal];
 						button.tag = note.ident.integerValue;
 						[self addSubview:button];
 						[_notesViewDict setObject:button forKey:note.ident];
 					}
 
 					if ( [note.status isEqualToString:@"closed"] ) {
+						[button removeFromSuperview];
+					} else if ( note.isFixme && [self.editorLayer.mapData objectWithExtendedIdentifier:note.ident].tags[@"fixme"] == nil ) {
 						[button removeFromSuperview];
 					} else {
 						CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];

@@ -25,6 +25,12 @@
 NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 
 typedef enum {
+	OSM_TYPE_NODE		= 1,
+	OSM_TYPE_WAY		= 2,
+	OSM_TYPE_RELATION	= 3
+} OSM_TYPE;
+
+typedef enum {
 	ONEWAY_BACKWARD	= -1,
 	ONEWAY_NONE		= 0,
 	ONEWAY_FORWARD	= 1,
@@ -55,6 +61,11 @@ typedef enum {
 @property (strong,nonatomic)	TagInfo				*	tagInfo;
 @property (readonly,nonatomic)	int32_t					modifyCount;
 @property (readonly,nonatomic)	NSArray				*	relations;
+@property (readonly,nonatomic)	OsmIdentifier			extendedIdentifier;
+@property (readonly,nonatomic)	OSM_TYPE				extendedType;
+
++(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *)pType ident:(OsmIdentifier *)pIdent;
+
 
 // attributes
 @property (readonly,nonatomic)	NSDictionary	*	tags;

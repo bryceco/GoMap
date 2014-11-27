@@ -28,35 +28,6 @@ if (!(condition)) {		\
 #define USE_RTREE	0
 #endif
 
-#if USE_RTREE
-typedef enum {
-	OSM_TYPE_NODE		= 1,
-	OSM_TYPE_WAY		= 2,
-	OSM_TYPE_RELATION	= 3
-} OSM_TYPE;
-static inline OSM_TYPE TypeForObject( OsmBaseObject * object )
-{
-	return object.isNode ? OSM_TYPE_NODE : object.isWay ? OSM_TYPE_WAY : OSM_TYPE_RELATION;
-}
-static inline OsmIdentifier TaggedIdent( OsmIdentifier ident, OSM_TYPE type )
-{
-	return ident | ((uint64_t)type << 62);
-}
-static inline OsmIdentifier TaggedObjectIdent( OsmBaseObject * object )
-{
-	return TaggedIdent( object.ident.longLongValue, TypeForObject(object) );
-}
-static inline OsmIdentifier UntaggedIdent( OsmIdentifier ident )
-{
-	return ident & 0x3FFFFFFFFFFFFFFF;
-}
-static inline OSM_TYPE TypeForIdent( OsmIdentifier ident )
-{
-	return (OSM_TYPE)((ident >> 62) & 3);
-}
-#endif
-
-
 
 @implementation Database
 
