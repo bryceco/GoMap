@@ -48,6 +48,7 @@
 		022B09AA19BE9A3B0041687B /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A919BE9A3B0041687B /* CoreData.m */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02329DB716D33FB100D20646 /* FuturePlist.txt */; };
+		02391FBB1A28033300EFD286 /* presets_zh_TW.json in Resources */ = {isa = PBXBuildFile; fileRef = 02391FBA1A28033300EFD286 /* presets_zh_TW.json */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
@@ -535,6 +536,7 @@
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPresetController.h; sourceTree = "<group>"; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPresetController.m; sourceTree = "<group>"; };
 		02329DB716D33FB100D20646 /* FuturePlist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FuturePlist.txt; sourceTree = "<group>"; };
+		02391FBA1A28033300EFD286 /* presets_zh_TW.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = presets_zh_TW.json; path = ../presets/presets_zh_TW.json; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Go Map!!/Images.xcassets"; sourceTree = "<group>"; };
 		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
@@ -1142,6 +1144,7 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
+				02391FBA1A28033300EFD286 /* presets_zh_TW.json */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
 				02ACBA3216713CCB00BB4414 /* Frameworks */,
 				02ACBA3016713CCB00BB4414 /* Products */,
@@ -1992,6 +1995,7 @@
 				02ACBCA016713F2B00BB4414 /* sport_skiing_crosscountry.p.64.png in Resources */,
 				02ACBCA116713F2B00BB4414 /* sport_skiing_downhill.p.64.png in Resources */,
 				02ACBCA216713F2B00BB4414 /* sport_snooker.p.64.png in Resources */,
+				02391FBB1A28033300EFD286 /* presets_zh_TW.json in Resources */,
 				02ACBCA316713F2B00BB4414 /* sport_soccer.p.64.png in Resources */,
 				02ACBCA416713F2B00BB4414 /* sport_stadium.p.64.png in Resources */,
 				02ACBCA516713F2B00BB4414 /* sport_swimming_indoor.p.64.png in Resources */,

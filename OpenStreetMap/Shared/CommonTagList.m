@@ -15,15 +15,56 @@ static NSDictionary * g_defaultsDict;
 static NSDictionary * g_categoriesDict;
 static NSDictionary * g_presetsDict;
 static NSDictionary * g_fieldsDict;
+static NSDictionary * g_translationDict;
 
 static NSDictionary * DictionaryForFile( NSString * file )
 {
 	NSString * rootDir = [[NSBundle mainBundle] resourcePath];
 	NSString * rootPresetPath = [NSString stringWithFormat:@"%@/presets/%@",rootDir,file];
 	NSData * rootPresetData = [NSData dataWithContentsOfFile:rootPresetPath];
+	if ( rootPresetData == nil )
+		return nil;
 	NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:rootPresetData options:0 error:NULL];
 	DbgAssert(dict);
 	return dict;
+}
+
+static id Translate( id orig, id translation )
+{
+	if ( translation == nil )
+		return orig;
+	if ( [orig isKindOfClass:[NSString class]] && [translation isKindOfClass:[NSString class]] ) {
+		return translation;
+	}
+	if ( [orig isKindOfClass:[NSArray class]] ) {
+		if ( [translation isKindOfClass:[NSDictionary class]] ) {
+			NSArray			* origArray = orig;
+			NSMutableArray	* newArray = [NSMutableArray arrayWithCapacity:origArray.count];
+			for ( NSInteger i = 0; i < origArray.count; ++i ) {
+				id o = [translation objectForKey:@(i)] ?: origArray[ i ];
+				[newArray addObject:o];
+			}
+			return newArray;
+		} else if ( [translation isKindOfClass:[NSString class]] ) {
+			NSArray * a = [translation componentsSeparatedByString:@","];
+			return a;
+		} else {
+			return orig;
+		}
+	}
+	if ( [orig isKindOfClass:[NSDictionary class]] && [translation isKindOfClass:[NSDictionary class]] ) {
+		NSMutableDictionary * newDict = [ NSMutableDictionary new];
+		[orig enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			if ( [key isEqualToString:@"strings"] ) {
+				// for "strings" the translation skips a level
+				newDict[key] = Translate( obj, translation );
+			} else {
+				newDict[key] = Translate( obj, translation[key] );
+			}
+		}];
+		return newDict;
+	}
+	return orig;
 }
 
 static void InitializeDictionaries()
@@ -33,9 +74,19 @@ static void InitializeDictionaries()
 		g_categoriesDict	= DictionaryForFile(@"categories.json");
 		g_presetsDict		= DictionaryForFile(@"presets.json");
 		g_fieldsDict		= DictionaryForFile(@"fields.json");
+
+		NSLocale * currentLocale = [NSLocale autoupdatingCurrentLocale];
+		NSString * ident = currentLocale.localeIdentifier;
+//		ident = @"zh_TW";
+		NSString * file = [NSString stringWithFormat:@"presets_%@.json",ident];
+		g_translationDict	= DictionaryForFile(file);
+
+		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[ident][@"presets"][@"defaults"] );
+		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[ident][@"presets"][@"categories"] );
+		g_presetsDict		= Translate( g_presetsDict,		g_translationDict[ident][@"presets"][@"presets"] );
+		g_fieldsDict		= Translate( g_fieldsDict,		g_translationDict[ident][@"presets"][@"fields"] );
 	}
 }
-
 
 static NSString * PrettyTag( NSString * tag )
 {
