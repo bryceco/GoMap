@@ -8,6 +8,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
+#import "MapView.h"
 
 
 @class MapView;
@@ -25,6 +26,7 @@
 @property (assign,nonatomic) IBOutlet UIBarButtonItem * locationButton;
 
 -(IBAction)toggleLocation:(id)sender;
+-(void)setGpsState:(GPS_STATE)state;
 
 - (void)updateDeleteButtonState;
 - (void)updateUndoRedoButtonState;

@@ -99,7 +99,7 @@
 +(instancetype)sharedList;
 +(NSString *)featureNameForObjectDict:(NSDictionary *)tagDict geometry:(NSString *)geometry;
 +(NSArray *)featuresForGeometry:(NSString *)geometry;
-+(NSMutableArray *)featuresInCategory:(CommonTagCategory *)category matching:(NSString *)searchText;
++(NSArray *)featuresInCategory:(CommonTagCategory *)category matching:(NSString *)searchText;
 +(NSSet *)allTagKeys;
 +(NSSet *)allTagValuesForKey:(NSString *)key;
 +(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry;

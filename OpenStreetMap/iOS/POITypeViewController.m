@@ -177,7 +177,8 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		if ( [entry isKindOfClass:[CommonTagCategory class]] ) {
 			CommonTagCategory * category = entry;
 			POITypeViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiTypeViewController"];
-			sub.parentCategory = category;
+			sub.parentCategory	= category;
+			sub.delegate		= self.delegate;
 			[_searchBar resignFirstResponder];
 			[self.navigationController pushViewController:sub animated:YES];
 		} else {
@@ -198,7 +199,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		[_searchBar performSelector:@selector(resignFirstResponder) withObject:nil afterDelay:0.1];
 	} else {
 		// searching
-		_searchArrayAll = [CommonTagList featuresInCategory:_parentCategory matching:searchText];
+		_searchArrayAll = [[CommonTagList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
 		_searchArrayAll = [_searchArrayAll sortedArrayUsingComparator:^NSComparisonResult(CommonTagFeature * t1, CommonTagFeature * t2) {
 			BOOL p1 = [t1.friendlyName hasPrefix:searchText];
 			BOOL p2 = [t2.friendlyName hasPrefix:searchText];

@@ -343,7 +343,7 @@ static NSString * PrettyTag( NSString * tag )
 	return featureList;
 }
 
-+(NSMutableArray *)featuresInCategory:(CommonTagCategory *)category matching:(NSString *)searchText;
++(NSArray *)featuresInCategory:(CommonTagCategory *)category matching:(NSString *)searchText;
 {
 	NSMutableArray * list = [NSMutableArray new];
 	if ( category ) {
@@ -355,6 +355,9 @@ static NSString * PrettyTag( NSString * tag )
 	} else {
 		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
 			if ( dict[@"suggestion"] )
+				return;
+			id searchable = dict[@"searchable"];
+			if ( searchable && [searchable boolValue] == NO )
 				return;
 
 			BOOL add = NO;
@@ -412,7 +415,7 @@ static NSString * PrettyTag( NSString * tag )
 	NSArray		*	optionArray			= dict[ @"options" ];
 	NSString	*	defaultValue		= dict[ @"default" ];
 	UIKeyboardType					keyboard = UIKeyboardTypeDefault;
-	UITextAutocapitalizationType	capitalize = UITextAutocapitalizationTypeNone;
+	UITextAutocapitalizationType	capitalize = [key hasPrefix:@"name:"] ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
 
 
 //r	DLog(@"%@",dict);

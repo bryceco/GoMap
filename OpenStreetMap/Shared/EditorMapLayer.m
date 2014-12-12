@@ -156,6 +156,18 @@ const CGFloat WayHighlightRadius = 6.0;
 			_crossHairs.bounds		= CGRectMake(-radius, -radius, 2*radius, 2*radius);
 			_crossHairs.lineWidth	= 1.0;
 			_crossHairs.zPosition	= Z_CROSSHAIRS;
+
+			path = [UIBezierPath new];
+			CGFloat shadowWidth = 1.0;
+			UIBezierPath * p1 = [UIBezierPath bezierPathWithRect:CGRectMake(-(radius+shadowWidth), -shadowWidth, 2*(radius+shadowWidth), 2*shadowWidth)];
+			UIBezierPath * p2 = [UIBezierPath bezierPathWithRect:CGRectMake(-shadowWidth, -(radius+shadowWidth), 2*shadowWidth, 2*(radius+shadowWidth))];
+			[path appendPath:p1];
+			[path appendPath:p2];
+			_crossHairs.shadowColor		= [UIColor blackColor].CGColor;
+			_crossHairs.shadowOpacity	= 1.0;
+			_crossHairs.shadowPath		= path.CGPath;
+			_crossHairs.shadowRadius	= 0;
+			_crossHairs.shadowOffset	= CGSizeMake(0,0);
 		}
 
 		self.actions = @{

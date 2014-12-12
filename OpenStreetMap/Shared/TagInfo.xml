@@ -202,7 +202,8 @@
     <tag key="building" value="greenhouse" name="Greenhouse" type="node;area" />
     <tag key="building" value="ground_station" name="Ground Station" type="node;area" />
     <tag key="building" value="hangar" name="Hangar" type="node;area" />
-    <tag key="building" value="hospital" name="Hospital" type="node;area" />
+	<tag key="building" value="hospital" name="Hospital" type="node;area" />
+	<tag key="building" value="hotel" name="Hotel" type="node;area" />
     <tag key="building" value="house" name="House" type="node;area" />
     <tag key="building" value="hut" name="Hut" type="node;area" />
     <tag key="building" value="industrial" name="Industrial" type="node;area" />
@@ -1527,7 +1528,7 @@
     <tag key="shop" value="seafood" name="Seafood" type="node;area" description="A shop selling fish/seafood." areaColor="00005F"/>
     <tag key="shop" value="second_hand" name="Second Hand" type="node;area" description="A shop selling second hand goods" areaColor="00005F"/>
     <tag key="shop" value="ship_chandler" name="Ship Chandler" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="shoes" name="Shoes" type="node;area" description="Selling shoes." areaColor="00005F"/>
+    <tag key="shop" value="shoes" name="Shoes" type="node;area" description="Selling shoes." iconName="shopping_clothes" areaColor="00005F" />
     <tag key="shop" value="sports" name="Sports" type="node;area" areaColor="00005F"/>
     <tag key="shop" value="stationery" name="Stationery" type="node;area" description="A shop selling office supplies" areaColor="00005F"/>
     <tag key="shop" value="supermarket" name="Supermarket" type="node;area" description="A large store for groceries and other goods." iconName="shopping_supermarket" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:shop%3Dsupermarket" areaColor="00005F"/>

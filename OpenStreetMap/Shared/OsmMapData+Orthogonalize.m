@@ -68,6 +68,12 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 	p = UnitVector(p);
 	q = UnitVector(q);
 
+	if ( isnan(p.x) || isnan(q.x) ) {
+		if ( pDotp )
+			*pDotp = 1.0;
+		return OSMPointMake(0, 0);
+	}
+
 	double dotp = filterDotProduct( Dot(p,q) );
 
 	// nasty hack to deal with almost-straight segments (angle is closer to 180 than to 90/270).
@@ -79,7 +85,7 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 		// for triangles save the best corner
 		if (dotp && pDotp && fabs(dotp) < *pDotp) {
 			*pCorner = i;
-			*pDotp = abs(dotp);
+			*pDotp = fabs( dotp );
 		}
 	}
 
@@ -151,9 +157,11 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 			OSMPoint motions[ count ];
 			for ( NSInteger i = 0; i < count; ++i ) {
 				motions[i] = calcMotion(points[i],i,points,count,NULL,NULL);
+				NSLog(@"motion[%ld] = %f,%f", i, motions[i].x, motions[i].y );
 			}
 			for ( NSInteger i = 0; i < count; i++) {
 				points[i] = Add( points[i], motions[i] );
+				NSLog(@"points[%ld] = %f,%f", i, points[i].x, points[i].y );
 			}
 			double newScore = squareness(points,count);
 			if (newScore < score) {

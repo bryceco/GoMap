@@ -1575,7 +1575,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)updateString:(NSMutableAttributedString *)string withWay:(NSXMLElement *)way
 {
 	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
-	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"\tWay %@ (%d entries)\n",nil),
+	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"\tWay %@ (%d nodes)\n",nil),
 					   [way attributeForName:@"id"].stringValue,
 					   (int)way.childCount];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];

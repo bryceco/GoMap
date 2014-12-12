@@ -134,35 +134,50 @@
 	_toolbar.layer.zPosition = 9000;
 }
 
+-(void)setGpsState:(GPS_STATE)state
+{
+	if ( self.mapView.gpsState != state ) {
+		switch (self.mapView.gpsState) {
+			case GPS_STATE_NONE:
+				self.mapView.gpsState = GPS_STATE_LOCATION;
+				break;
+			case GPS_STATE_LOCATION:
+				self.mapView.gpsState = GPS_STATE_HEADING;
+				break;
+			default:
+				self.mapView.gpsState = GPS_STATE_NONE;
+				break;
+		}
+
+		if ( self.mapView.gpsState != GPS_STATE_NONE ) {
+			self.locationButton.tintColor = UIColor.whiteColor;
+		} else {
+			self.locationButton.tintColor = nil;
+		}
+
+		// changing the button tint changes the view, so we have to install longpress again
+		[self installLongPressGestureRecognizer:YES];
+	}
+}
+
 -(IBAction)toggleLocation:(id)sender
 {
 	switch (self.mapView.gpsState) {
 		case GPS_STATE_NONE:
-			self.mapView.gpsState = GPS_STATE_LOCATION;
+			[self setGpsState:GPS_STATE_LOCATION];
 			break;
 		case GPS_STATE_LOCATION:
-			self.mapView.gpsState = GPS_STATE_HEADING;
+			[self setGpsState:GPS_STATE_HEADING];
 			break;
 		default:
-			self.mapView.gpsState = GPS_STATE_NONE;
+			[self setGpsState:GPS_STATE_NONE];
 			break;
 	}
-
-	if ( self.mapView.gpsState != GPS_STATE_NONE ) {
-		self.locationButton.tintColor = UIColor.whiteColor;
-	} else {
-		self.locationButton.tintColor = nil;
-	}
-	
-	// changing the button tint changes the view, so we have to install longpress again
-	[self installLongPressGestureRecognizer:YES];
 }
 
 -(void)applicationDidEnterBackground:(id)sender
 {
-	while ( self.mapView.gpsState != GPS_STATE_NONE ) {
-		[self toggleLocation:nil];
-	}
+	[self setGpsState:GPS_STATE_NONE];
 }
 
 
