@@ -137,23 +137,8 @@
 -(void)setGpsState:(GPS_STATE)state
 {
 	if ( self.mapView.gpsState != state ) {
-		switch (self.mapView.gpsState) {
-			case GPS_STATE_NONE:
-				self.mapView.gpsState = GPS_STATE_LOCATION;
-				break;
-			case GPS_STATE_LOCATION:
-				self.mapView.gpsState = GPS_STATE_HEADING;
-				break;
-			default:
-				self.mapView.gpsState = GPS_STATE_NONE;
-				break;
-		}
-
-		if ( self.mapView.gpsState != GPS_STATE_NONE ) {
-			self.locationButton.tintColor = UIColor.whiteColor;
-		} else {
-			self.locationButton.tintColor = nil;
-		}
+		self.mapView.gpsState = state;
+		self.locationButton.tintColor = state != GPS_STATE_NONE ? UIColor.whiteColor : nil;
 
 		// changing the button tint changes the view, so we have to install longpress again
 		[self installLongPressGestureRecognizer:YES];

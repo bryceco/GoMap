@@ -1143,7 +1143,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)locationUpdateFailed:(NSError *)error
 {
-	self.gpsState = GPS_STATE_NONE;
+	MapViewController * controller = self.viewController;
+	[controller setGpsState:GPS_STATE_NONE];
 
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
 
