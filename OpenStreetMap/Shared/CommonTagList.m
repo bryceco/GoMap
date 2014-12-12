@@ -512,6 +512,7 @@ static NSString * PrettyTag( NSString * tag )
 			NSString * name = [k substringFromIndex:ref.length+1];
 			placeholder = placeholders[name];
 			name = PrettyTag( name );
+			keyboard = [k isEqualToString:@"addr:housenumber"] || [k isEqualToString:@"addr:postcode"] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
 			CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 			[addrs addObject:tag];
 		}
