@@ -307,13 +307,18 @@
 	} else {
 		dX = newCoord.x - _panCoord.x;
 		dY = newCoord.y - _panCoord.y;
-
 		_arrowPoint = CGPointMake( _arrowPoint.x + dX, _arrowPoint.y + dY );
 		gesture.view.frame = CGRectOffset( gesture.view.frame, dX, dY );
 	}
 
 	if ( _dragCallback ) {
+#if 0
+		CGPoint delta = [gesture translationInView:gesture.view.superview];
+		NSLog(@"dx,dy = %f,%f",delta.x,delta.y);
+		_dragCallback( gesture.state, delta.x, delta.y );
+#else
 		_dragCallback( gesture.state, dX, dY );
+#endif
 	}
 }
 

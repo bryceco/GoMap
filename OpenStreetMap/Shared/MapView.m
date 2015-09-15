@@ -1989,6 +1989,14 @@ NSString * ActionTitle( NSInteger action )
 					break;
 					
 				case UIGestureRecognizerStateChanged:
+#if 0	// don't accumulate undo moves
+					{
+						[weakSelf.editorLayer.mapData endUndoGrouping];
+						[weakSelf.editorLayer.mapData undo];
+						[weakSelf.editorLayer.mapData beginUndoGrouping];
+					}
+#endif
+					NSLog(@"%f,%f",dx,dy);
 					for ( OsmNode * node in object.nodeSet ) {
 						CGPoint delta = { dx, -dy };
 						[weakSelf.editorLayer adjustNode:node byDistance:delta];

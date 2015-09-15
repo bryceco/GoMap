@@ -2518,6 +2518,11 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 {
 	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
+	if ( houseNumber ) {
+		NSString * unitNumber = [tags objectForKey:@"addr:unit"];
+		if ( unitNumber )
+			return [NSString stringWithFormat:@"%@/%@",houseNumber,unitNumber];
+	}
 	return houseNumber;
 }
 

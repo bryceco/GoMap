@@ -157,11 +157,11 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 			OSMPoint motions[ count ];
 			for ( NSInteger i = 0; i < count; ++i ) {
 				motions[i] = calcMotion(points[i],i,points,count,NULL,NULL);
-				NSLog(@"motion[%ld] = %f,%f", i, motions[i].x, motions[i].y );
+//				NSLog(@"motion[%ld] = %f,%f", i, motions[i].x, motions[i].y );
 			}
 			for ( NSInteger i = 0; i < count; i++) {
 				points[i] = Add( points[i], motions[i] );
-				NSLog(@"points[%ld] = %f,%f", i, points[i].x, points[i].y );
+//				NSLog(@"points[%ld] = %f,%f", i, points[i].x, points[i].y );
 			}
 			double newScore = squareness(points,count);
 			if (newScore < score) {
