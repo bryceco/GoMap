@@ -442,7 +442,7 @@
     <tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway" lineColor="B100FF" lineWidth="1.000000"/>
     <tag key="highway" value="elevator" name="Elevator" type="node" description="A elevator (or lift) is used to travel vertically, providing passenger and freight access between pathways at different floor levels."/>
     <tag key="highway" value="emergency_access_point" name="Emergency Access Point" type="node" description="Sign number which can be used to define you current position in case of an emergency" areaColor="C0C0C0"/>
-    <tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="00FF00" lineWidth="1.000000"/>
+    <tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="00FF00" areaColor="00FF00" lineWidth="1.000000"/>
     <tag key="highway" value="ford" name="Ford" type="way" description="A point where a path or road crosses a river or stream which is at times covered by shallow water." iconName="transport_ford" lineColor="FF0000" lineWidth="2.000000"/>
     <tag key="highway" value="gate" name="Gate" type="node"/>
     <tag key="highway" value="give_way" name="Give Way" type="node" description="Used to mark give way signs"/>
