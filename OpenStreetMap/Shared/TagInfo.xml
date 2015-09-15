@@ -474,7 +474,7 @@
     <tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dservice" lineColor="809BC0" lineWidth="1.000000"/>
     <tag key="highway" value="services" name="Services" type="way" description="Place where drivers can leave a road to refuel, rest, or take refreshments." areaColor="C0C0C0"/>
     <tag key="highway" value="speed_camera" name="Speed Camera" type="node_in_way" description="A fixed road-side or overhead speed camera"/>
-    <tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps" lineColor="00FF00" lineWidth="1.000000"/>
+    <tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps" lineColor="00FF00" lineWidth="1.75000"/>
     <tag key="highway" value="stile" name="Stile" type="way"/>
     <tag key="highway" value="stop" name="Stop" type="way" description="Used to mark stop signs" iconName="transport_stop"/>
     <tag key="highway" value="street_lamp" name="Street Lamp" type="node" description="A single pole with one or more lights to illuminate the street." iconName="poi/street_lamp-24.png"/>
@@ -991,7 +991,7 @@
     <tag key="power" value="cable_distribution_cabinet" name="Cable Distribution Cabinet" type="node" description="Cable distribution cabinet"/>
     <tag key="power" value="generator" name="Generator" type="node" description="A Place where power is generated." iconName="power_station_gas" areaColor="EEEEEE"/>
     <tag key="power" value="heliostat" name="Heliostat" type="node" description="A heliostat at the THÉMIS experimental station in France."/>
-    <tag key="power" value="line" name="Line" type="way" description="A way following the path of power cables." lineColor="EEEEEE" lineWidth="1.000000"/>
+    <tag key="power" value="line" name="Line" type="way" description="A way following the path of power cables." lineColor="FFAC26" lineWidth="1.000000"/>
     <tag key="power" value="minor_line" name="Minor Line" type="way" description="Minor power cables, supported by poles and not towers/pylons." iconName="power_low" lineColor="EEEEEE" lineWidth="1.000000"/>
     <tag key="power" value="pole" name="Pole" type="node" description="Power line pole or small mast" iconName="power_tower_low"/>
     <tag key="power" value="station" name="Station" type="node;area" description="Forest Hill Substation" iconName="power_substation" areaColor="EEEEEE"/>

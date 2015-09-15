@@ -88,6 +88,27 @@
 
 @synthesize iconName = _iconName;
 
+
+
+-(TagInfo *)copy
+{
+	TagInfo * copy = [TagInfo new];
+	copy.key			= self.key;
+	copy.value			= self.value;
+	copy.friendlyName	= self.friendlyName;
+	copy.type			= self.type;
+	copy.belongsTo		= self.belongsTo;
+	copy.iconName		= self.iconName;
+	copy.summary		= self.summary;
+	copy.wikiPage		= self.wikiPage;
+	copy.lineColor		= self.lineColor;
+	copy.lineWidth		= self.lineWidth;
+	copy.lineColorText	= self.lineColorText;
+	copy.areaColor		= self.areaColor;
+	copy.areaColorText	= self.areaColorText;
+	return copy;
+}
+
 -(NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _type];
@@ -584,8 +605,23 @@ static TagInfo * g_DefaultRender = nil;
 			*stop = YES;
 		}
 	}];
-	if ( best )
+	if ( best ) {
+
+		// make footway bridges wider
+		NSString * bridge = object.tags[ @"bridge" ];
+		if ( bridge ) {
+			extern BOOL IsOsmBooleanTrue( NSString * value );
+			if ( IsOsmBooleanTrue(bridge) ) {
+				if ( object.tags[@"highway"] ) {
+					TagInfo * copy = [best copy];
+					copy.lineWidth += copy.lineWidth < 2 ? 0.75 : 1.5;
+					return copy;
+				}
+			}
+		}
+
 		return best;
+	}
 
 	if ( g_DefaultRender == nil ) {
 		g_DefaultRender = [TagInfo new];
