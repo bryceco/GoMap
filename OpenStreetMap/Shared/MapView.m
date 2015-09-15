@@ -1190,10 +1190,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
+#if 0
 - (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager
 {
 	return YES;
 }
+#endif
 
 static NSString * const DisplayLinkHeading	= @"Heading";
 

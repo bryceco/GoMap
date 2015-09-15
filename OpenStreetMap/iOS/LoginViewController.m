@@ -58,6 +58,12 @@
 	[appDelegate.mapView.editorLayer.mapData verifyUserCredentialsWithCompletion:^(NSString * errorMessage){
 		[_activityIndicator stopAnimating];
 		if ( errorMessage ) {
+
+			// warn that email addresses don't work
+			if ( [appDelegate.userName containsString:@"@"] ) {
+				errorMessage = @"You must provide your OSM user name, not an email address.";
+			}
+
 			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Bad login",nil) message:errorMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alertView show];
 		} else {
