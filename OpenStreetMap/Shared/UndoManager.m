@@ -396,9 +396,10 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 		_redoStack = [coder decodeObjectForKey:@"redoStack"];
 		_runLoopCounter = [coder decodeIntegerForKey:@"runLoopCounter"];
 	} else {
+		NSUInteger len;
 		_undoStack = [coder decodeObject];
 		_redoStack = [coder decodeObject];
-		_runLoopCounter = *(NSInteger *)[coder decodeBytesWithReturnedLength:NULL];
+		_runLoopCounter = *(NSInteger *)[coder decodeBytesWithReturnedLength:&len];
 	}
     return self;
 }

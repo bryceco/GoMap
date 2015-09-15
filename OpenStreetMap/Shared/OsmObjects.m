@@ -613,9 +613,10 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			_lon		= [coder decodeDoubleForKey:@"lon"];
 			_wayCount	= [coder decodeIntegerForKey:@"wayCount"];
 		} else {
-			_lat		= *(double		*)[coder decodeBytesWithReturnedLength:NULL];
-			_lon		= *(double		*)[coder decodeBytesWithReturnedLength:NULL];
-			_wayCount	= *(NSInteger	*)[coder decodeBytesWithReturnedLength:NULL];
+			NSUInteger len;
+			_lat		= *(double		*)[coder decodeBytesWithReturnedLength:&len];
+			_lon		= *(double		*)[coder decodeBytesWithReturnedLength:&len];
+			_wayCount	= *(NSInteger	*)[coder decodeBytesWithReturnedLength:&len];
 		}
 		_constructed = YES;
 	}

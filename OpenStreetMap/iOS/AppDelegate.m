@@ -62,7 +62,7 @@
 	NSURL * url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
 	if ( url ) {
 		// somebody handed us a URL to open
-		return [self application:application openURL:url sourceApplication:@"" annotation:nil];
+		return [self application:application openURL:url options:@{}];
 	}
 
 	return YES;

@@ -26,6 +26,8 @@ static const CGFloat InsetPercent = 0.15;
 
 - (void)viewDidLoad
 {
+	[super viewDidLoad];
+
 	_rulerViews	 = [NSMutableDictionary new];
 	_rulerLayers = [NSMutableDictionary new];
 
@@ -68,6 +70,8 @@ static const CGFloat InsetPercent = 0.15;
 
 -(void)viewDidAppear:(BOOL)animated
 {
+	[super viewDidAppear:animated];
+
 	_coreMotion = [CMMotionManager new];
 	[_coreMotion setDeviceMotionUpdateInterval:1.0/30];
 	NSOperationQueue *currentQueue = [NSOperationQueue currentQueue];
@@ -210,7 +214,7 @@ static const CGFloat InsetPercent = 0.15;
 	}
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
 	return UIInterfaceOrientationMaskPortrait;
 }
