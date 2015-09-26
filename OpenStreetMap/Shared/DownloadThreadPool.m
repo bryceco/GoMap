@@ -112,6 +112,7 @@ typedef void (^dequeueBlock)(void);
 		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 		[request setHTTPMethod:@"GET"];
 		[request addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
+		[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 
 		if ( g_UserAgent ) {
 			[request setValue:g_UserAgent forHTTPHeaderField:@"User-Agent"];

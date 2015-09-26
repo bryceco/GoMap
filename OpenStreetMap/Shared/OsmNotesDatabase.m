@@ -35,14 +35,14 @@
 	}
 	return self;
 }
--(instancetype)initWithFixmeObject:(OsmBaseObject *)object
+-(instancetype)initWithFixmeObject:(OsmBaseObject *)object fixmeKey:(NSString *)fixme
 {
 	self = [super init];
 	if ( self ) {
 		_date = object.timestamp;
 		_user = object.user;
 		_action = @"fixme";
-		_text = [NSString stringWithFormat:@"%@ (%@ %@): %@", object.friendlyDescription, object.isNode?@"node":object.isWay?@"way":object.isRelation?@"relation":@"", object.ident, object.tags[@"fixme"]];
+		_text = [NSString stringWithFormat:@"%@ (%@ %@): %@", object.friendlyDescription, object.isNode?@"node":object.isWay?@"way":object.isRelation?@"relation":@"", object.ident, object.tags[fixme]];
 	}
 	return self;
 }
@@ -89,7 +89,7 @@
 	}
 	return self;
 }
--(instancetype)initWithFixmeObject:(OsmBaseObject *)object
+-(instancetype)initWithFixmeObject:(OsmBaseObject *)object fixmeKey:(NSString *)fixme
 {
 	self = [super init];
 	if ( self ) {
@@ -99,7 +99,7 @@
 		_lon	= center.x;
 		_created = object.timestamp;
 		_status = @"fixme";
-		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithFixmeObject:object];
+		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithFixmeObject:object fixmeKey:fixme];
 		_comments = [NSMutableArray arrayWithObject:comment];
 	}
 	return self;
@@ -154,13 +154,16 @@
 			}
 		}
 
+		NSArray * FixMeList = @[ @"fixme", @"FIXME" ];	// there are many others but not frequently used
 		dispatch_async(dispatch_get_main_queue(), ^{
 			// add FIXMEs
 			[mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
-				NSString * fixme = obj.tags[@"fixme"];
-				if ( fixme.length > 0 ) {
-					OsmNote * note = [[OsmNote alloc] initWithFixmeObject:obj];
-					[newNotes addObject:note];
+				for ( NSString * key in FixMeList ) {
+					NSString * fixme = obj.tags[key];
+					if ( fixme.length > 0 ) {
+						OsmNote * note = [[OsmNote alloc] initWithFixmeObject:obj fixmeKey:key];
+						[newNotes addObject:note];
+					}
 				}
 			}];
 

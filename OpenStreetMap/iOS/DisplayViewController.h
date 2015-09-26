@@ -15,6 +15,10 @@
 {
 	IBOutlet UISwitch *	_birdsEyeSwitch;
 	IBOutlet UISwitch *	_rotationSwitch;
+	IBOutlet UISwitch *	_notesSwitch;
+	IBOutlet UISwitch *	_gpsTraceSwitch;
+	IBOutlet UISwitch *	_unnamedRoadSwitch;
+	IBOutlet UISwitch *	_breadCrumbSwitch;
 }
 
 -(void)applyChanges;

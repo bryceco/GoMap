@@ -63,7 +63,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		service = [AerialService aerialWithName:@"MapnikTiles"
 										   url:@"http://{t}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 									subdomains:@[ @"a", @"b", @"c" ]
-									   maxZoom:18
+									   maxZoom:19
 										roundUp:NO];
 	});
 	return service;

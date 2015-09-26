@@ -110,6 +110,8 @@ extern NSString * OsmValueForBoolean( BOOL b );
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 - (OsmBaseObject *)objectWithExtendedIdentifier:(NSNumber *)extendedIdentifier;
 
+- (void)clearCachedProperties;
+
 -(NSMutableSet *)tagValuesForKey:(NSString *)key;
 
 // editing

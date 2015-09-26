@@ -172,3 +172,45 @@ CGMutablePathRef PathReversed( CGPathRef path )
 	}];
 	return newPath;
 }
+
+
+
+static CGPoint * DouglasPeuckerCore( CGPoint points[], NSInteger first, NSInteger last, double epsilon, CGPoint * result )
+{
+	// Find the point with the maximum distance
+	double dmax = 0.0;
+	NSInteger index = 0;
+	OSMPoint end1 = OSMPointFromCGPoint( points[first] );
+	OSMPoint end2 = OSMPointFromCGPoint( points[last] );
+	for ( NSInteger i = first+1; i < last; ++i ) {
+		OSMPoint p = OSMPointFromCGPoint( points[i] );
+		CGFloat d = DistanceFromPointToLineSegment( p, end1, end2 );
+		if ( d > dmax ) {
+			index = i;
+			dmax = d;
+		}
+	}
+	// If max distance is greater than epsilon, recursively simplify
+	if ( dmax > epsilon ) {
+		// Recursive call
+		result = DouglasPeuckerCore( points, first, index, epsilon, result );
+		result = DouglasPeuckerCore( points, index, last, epsilon, result-1 );
+	} else {
+		*result++ = CGPointFromOSMPoint( end1 );
+		*result++ = CGPointFromOSMPoint( end2 );
+	}
+	return result;
+}
+
+CGMutablePathRef PathWithReducePoints( CGPathRef path, double epsilon )
+{
+	NSInteger count = CGPathPointCount( path );
+	CGPoint points[ count ];
+	CGPathGetPoints( path, points );
+	CGPoint result[ count ];
+	CGPoint * resultLast = DouglasPeuckerCore( points, 0, count-1, epsilon, result );
+	NSInteger resultCount = resultLast - result;
+	CGMutablePathRef newPath = CGPathCreateMutable();
+	CGPathAddLines( newPath, NULL, result, resultCount );
+	return newPath;
+}

@@ -300,6 +300,8 @@ const double MinIconSizeInMeters = 2.0;
 	[self save];
 }
 
+
+
 #pragma mark Draw Ocean
 
 static void AppendNodes( NSMutableArray * list, OsmWay * way, BOOL addToBack, BOOL reverseNodes )
@@ -1405,6 +1407,7 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 const static CGFloat Z_BASE				= -1;
 const static CGFloat Z_OCEAN			= Z_BASE + 1 * ZSCALE;
 const static CGFloat Z_AREA				= Z_BASE + 2 * ZSCALE;
+const static CGFloat Z_HALO				= Z_BASE + 2.5 * ZSCALE;
 const static CGFloat Z_CASING			= Z_BASE + 3 * ZSCALE;
 const static CGFloat Z_LINE				= Z_BASE + 4 * ZSCALE;
 const static CGFloat Z_NODE				= Z_BASE + 5 * ZSCALE;
@@ -1632,22 +1635,55 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 			OSMPoint refPoint;
 			CGPathRef path = [self pathForObject:object refPoint:&refPoint];
 			if ( path ) {
-				CAShapeLayer * layer = [CAShapeLayer new];
-				layer.anchorPoint	= CGPointMake(0, 0);
-				layer.position		= CGPointFromOSMPoint( refPoint );
-				layer.path			= path;
-				layer.strokeColor	= [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
-				layer.fillColor		= nil;
-				layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
-				layer.lineCap		= DEFAULT_LINECAP;
-				layer.lineJoin		= DEFAULT_LINEJOIN;
-				layer.zPosition		= Z_CASING;
-				LayerProperties * props = [LayerProperties new];
-				[layer setValue:props forKey:@"properties"];
-				props->position = refPoint;
-				props->lineWidth = layer.lineWidth;
 
-				[layers addObject:layer];
+				{
+					CAShapeLayer * layer = [CAShapeLayer new];
+					layer.anchorPoint	= CGPointMake(0, 0);
+					layer.position		= CGPointFromOSMPoint( refPoint );
+					layer.path			= path;
+					layer.strokeColor	= [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
+					layer.fillColor		= nil;
+					layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
+					layer.lineCap		= DEFAULT_LINECAP;
+					layer.lineJoin		= DEFAULT_LINEJOIN;
+					layer.zPosition		= Z_CASING;
+					LayerProperties * props = [LayerProperties new];
+					[layer setValue:props forKey:@"properties"];
+					props->position = refPoint;
+					props->lineWidth = layer.lineWidth;
+
+					[layers addObject:layer];
+				}
+
+#if 1
+				// provide a halo for streets that don't have a name
+				if ( _mapView.enableUnnamedRoadHalo ) {
+					if ( object.tags[@"name"] == nil ) {
+						static NSDictionary * highwayTypes = nil;
+						if ( highwayTypes == nil )
+							highwayTypes = @{ @"motorway":@1, @"trunk":@1, @"primary":@1, @"secondary":@1, @"tertiary":@1, @"unclassified":@1, @"residential":@1, @"road":@1 };
+						NSString * highway = object.tags[@"highway"];
+						if ( highway && highwayTypes[highway] != nil ) {
+							CAShapeLayer * haloLayer = [CAShapeLayer new];
+							haloLayer.anchorPoint	= CGPointMake(0, 0);
+							haloLayer.position		= CGPointFromOSMPoint( refPoint );
+							haloLayer.path			= path;
+							haloLayer.strokeColor	= [UIColor colorWithRed:1.0 green:0 blue:0 alpha:1.0].CGColor;
+							haloLayer.fillColor		= nil;
+							haloLayer.lineWidth		= (2+tagInfo.lineWidth)*_highwayScale;
+							haloLayer.lineCap		= DEFAULT_LINECAP;
+							haloLayer.lineJoin		= DEFAULT_LINEJOIN;
+							haloLayer.zPosition		= Z_HALO;
+							LayerProperties * haloProps = [LayerProperties new];
+							[haloLayer setValue:haloProps forKey:@"properties"];
+							haloProps->position = refPoint;
+							haloProps->lineWidth = haloLayer.lineWidth;
+
+							[layers addObject:haloLayer];
+						}
+					}
+				}
+#endif
 				CGPathRelease(path);
 			}
 		}

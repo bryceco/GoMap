@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ClearCacheViewController.h"
 #import "EditorMapLayer.h"
+#import "GpxLayer.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "OsmMapData.h"
@@ -34,6 +35,7 @@
 	NSArray * layers = @[
 						 @[ _aerialDetail, appDelegate.mapView.aerialLayer ],
 						 @[ _mapnikDetail, appDelegate.mapView.mapnikLayer ],
+						 @[ _breadcrumbDetail, appDelegate.mapView.gpxLayer ],
 						 @[ _locatorDetail, appDelegate.mapView.locatorLayer ],
 						 @[ _gpsTraceDetail, appDelegate.mapView.gpsTraceLayer ]
 					];
@@ -78,16 +80,19 @@
 			[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
 			[appDelegate.mapView removePin];
 			break;
-		case 1:	// Bing
-			[appDelegate.mapView.aerialLayer purgeTileCache];
-			break;
-		case 2:	// Mapnik
+		case 1:	// Mapnik
 			[appDelegate.mapView.mapnikLayer purgeTileCache];
 			break;
-		case 3:	// Locator Overlay
+		case 2:	// Breadcrumb
+			[appDelegate.mapView.gpxLayer purgeTileCache];
+			break;
+		case 3:	// Bing
+			[appDelegate.mapView.aerialLayer purgeTileCache];
+			break;
+		case 4:	// Locator Overlay
 			[appDelegate.mapView.locatorLayer purgeTileCache];
 			break;
-		case 4:	// GPS Overlay
+		case 5:	// GPS Overlay
 			[appDelegate.mapView.gpsTraceLayer purgeTileCache];
 			break;
 	}

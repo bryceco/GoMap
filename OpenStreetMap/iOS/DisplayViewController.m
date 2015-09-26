@@ -20,13 +20,9 @@
 
 
 static const NSInteger BACKGROUND_SECTION		= 0;
-//static const NSInteger INTERACTION_SECTION		= 1;
+//static const NSInteger INTERACTION_SECTION	= 1;
 static const NSInteger OVERLAY_SECTION			= 2;
 static const NSInteger CACHE_SECTION			= 3;
-
-static const NSInteger OVERLAY_NOTES_ROW		= 0;
-static const NSInteger OVERLAY_LOCATOR_ROW		= 1;
-static const NSInteger OVERLAY_GPSTRACE_ROW		= 2;
 
 
 @interface CustomBackgroundCell : UITableViewCell
@@ -56,18 +52,13 @@ static const NSInteger OVERLAY_GPSTRACE_ROW		= 2;
 
 		[self setCustomAerialCellTitle];
 
-		NSIndexPath * notesPath = [NSIndexPath indexPathForRow:OVERLAY_NOTES_ROW inSection:OVERLAY_SECTION];
-		NSIndexPath * locatorPath = [NSIndexPath indexPathForRow:OVERLAY_LOCATOR_ROW inSection:OVERLAY_SECTION];
-		NSIndexPath * gpsTracePath = [NSIndexPath indexPathForRow:OVERLAY_GPSTRACE_ROW inSection:OVERLAY_SECTION];
-		UITableViewCell * notesCell = [self.tableView cellForRowAtIndexPath:notesPath];
-		UITableViewCell * locatorCell = [self.tableView cellForRowAtIndexPath:locatorPath];
-		UITableViewCell * gpsTraceCell = [self.tableView cellForRowAtIndexPath:gpsTracePath];
-		notesCell.accessoryType  = (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES)==0 ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
-		locatorCell.accessoryType  = mapView.locatorLayer.hidden  ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
-		gpsTraceCell.accessoryType = mapView.gpsTraceLayer.hidden ? UITableViewCellAccessoryNone : UITableViewCellAccessoryCheckmark;
+		_notesSwitch.on		= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
+		_gpsTraceSwitch.on	= !mapView.gpsTraceLayer.hidden;
 
-		_birdsEyeSwitch.on = mapView.enableBirdsEye;
-		_rotationSwitch.on = mapView.enableRotation;
+		_birdsEyeSwitch.on	= mapView.enableBirdsEye;
+		_rotationSwitch.on	= mapView.enableRotation;
+		_unnamedRoadSwitch.on	= mapView.enableUnnamedRoadHalo;
+		_breadCrumbSwitch.on	= mapView.enableBreadCrumb;
 
 	} else {
 
@@ -99,20 +90,15 @@ static const NSInteger OVERLAY_GPSTRACE_ROW		= 2;
 			break;
 		}
 	}
-	NSIndexPath * notesPath		= [NSIndexPath indexPathForRow:OVERLAY_NOTES_ROW	inSection:OVERLAY_SECTION];
-	NSIndexPath * locatorPath	= [NSIndexPath indexPathForRow:OVERLAY_LOCATOR_ROW	inSection:OVERLAY_SECTION];
-	NSIndexPath * gpsTracePath	= [NSIndexPath indexPathForRow:OVERLAY_GPSTRACE_ROW inSection:OVERLAY_SECTION];
-	UITableViewCell * notesCell = [self.tableView cellForRowAtIndexPath:notesPath];
-	UITableViewCell * locatorCell = [self.tableView cellForRowAtIndexPath:locatorPath];
-	UITableViewCell * gpsTraceCell = [self.tableView cellForRowAtIndexPath:gpsTracePath];
 	ViewOverlayMask mask = 0;
-	mask |= notesCell.accessoryType	   == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_NOTES    : 0;
-	mask |= locatorCell.accessoryType  == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_LOCATOR  : 0;
-	mask |= gpsTraceCell.accessoryType == UITableViewCellAccessoryCheckmark ? VIEW_OVERLAY_GPSTRACE : 0;
+	mask |= _notesSwitch.on		? VIEW_OVERLAY_NOTES    : 0;
+	mask |= _gpsTraceSwitch.on	? VIEW_OVERLAY_GPSTRACE : 0;
 	mapView.viewOverlayMask = mask;
 
-	mapView.enableBirdsEye = _birdsEyeSwitch.on;
-	mapView.enableRotation = _rotationSwitch.on;
+	mapView.enableBirdsEye			= _birdsEyeSwitch.on;
+	mapView.enableRotation			= _rotationSwitch.on;
+	mapView.enableUnnamedRoadHalo	= _unnamedRoadSwitch.on;
+	mapView.enableBreadCrumb		= _breadCrumbSwitch.on;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -152,19 +138,13 @@ static const NSInteger OVERLAY_GPSTRACE_ROW		= 2;
 
 	} else if ( indexPath.section == OVERLAY_SECTION ) {
 
-		// toggle checkmark
-		if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
-			cell.accessoryType = UITableViewCellAccessoryNone;
-		} else {
-			cell.accessoryType = UITableViewCellAccessoryCheckmark;
-		}
 	} else if ( indexPath.section == CACHE_SECTION ) {
 
 	}
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	// automatically dismiss settings when a new background is selected
-	if ( indexPath.section == BACKGROUND_SECTION || indexPath.section == OVERLAY_SECTION ) {
+	if ( indexPath.section == BACKGROUND_SECTION ) {
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	}
 }

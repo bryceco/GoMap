@@ -20,5 +20,6 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double b
 NSInteger CGPathPointCount( CGPathRef path );
 NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] );
 void CGPathDump( CGPathRef path );
+CGMutablePathRef PathWithReducePoints( CGPathRef path, double epsilon ) CF_RETURNS_RETAINED;
 
 #endif

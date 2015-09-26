@@ -308,6 +308,14 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	return [dict allValues];
 }
 
+- (void)clearCachedProperties
+{
+	[self enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
+		[obj clearCachedProperties];
+	}];
+}
+
+
 
 #pragma mark Editing
 
@@ -1092,7 +1100,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[request setHTTPBody:data];
 		[request setValue:@"application/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 	}
-	[request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
+	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 	// request.timeoutInterval = 15*60;
 
 	NSString * auth = [NSString stringWithFormat:@"%@:%@", _credentialsUserName, _credentialsPassword];

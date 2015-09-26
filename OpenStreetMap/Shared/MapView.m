@@ -46,8 +46,8 @@ static const CGFloat Z_AERIAL		= -100;
 static const CGFloat Z_MAPNIK		= -99;
 static const CGFloat Z_LOCATOR		= -50;
 static const CGFloat Z_GPSTRACE		= -40;
-//static const CGFloat Z_GPX		= -30;
 static const CGFloat Z_EDITOR		= -20;
+static const CGFloat Z_GPX			= -15;
 //static const CGFloat Z_BUILDINGS	= -18;
 static const CGFloat Z_RULER		= -5;	// ruler is below buttons
 //static const CGFloat Z_BING_LOGO	= 2;
@@ -153,11 +153,10 @@ CGSize SizeForImage( NSImage * image )
 		_editorLayer.zPosition = Z_EDITOR;
 		[bg addObject:_editorLayer];
 
-#if 0 // support gpx traces
 		_gpxLayer = [[GpxLayer alloc] initWithMapView:self];
 		_gpxLayer.zPosition = Z_GPX;
-		[self.layer addSublayer:_gpxLayer];
-#endif
+		_gpxLayer.hidden = YES;
+		[bg addObject:_gpxLayer];
 
 		_backgroundLayers = [NSArray arrayWithArray:bg];
 		for ( CALayer * layer in _backgroundLayers ) {
@@ -323,15 +322,17 @@ CGSize SizeForImage( NSImage * image )
 															  @"view.latitude"			: @(nan("")),
 															  @"view.longitude"			: @(nan("")),
 															  @"mapViewState"			: @(MAPVIEW_EDITORAERIAL),
-															  @"mapViewEnableBirdsEye"	: @(YES),
+															  @"mapViewEnableBirdsEye"	: @(NO),
 															  @"mapViewEnableRotation"	: @(YES),
 															  }];
 
 	self.viewState		 = (MapViewState)	 [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
 	self.viewOverlayMask = (ViewOverlayMask) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewOverlays"];
 
-	self.enableRotation	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableRotation"];
-	self.enableBirdsEye	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBirdsEye"];
+	self.enableRotation			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableRotation"];
+	self.enableBirdsEye			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBirdsEye"];
+	self.enableUnnamedRoadHalo	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableUnnamedRoadHalo"];
+	self.enableBreadCrumb		= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBreadCrumb"];
 
 	// get current location
 	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
@@ -424,12 +425,15 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewState		forKey:@"mapViewState"];
 	[[NSUserDefaults standardUserDefaults] setInteger:self.viewOverlayMask	forKey:@"mapViewOverlays"];
 
-	[[NSUserDefaults standardUserDefaults] setBool:self.enableRotation		forKey:@"mapViewEnableRotation"];
-	[[NSUserDefaults standardUserDefaults] setBool:self.enableBirdsEye		forKey:@"mapViewEnableBirdsEye"];
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableRotation			forKey:@"mapViewEnableRotation"];
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableBirdsEye			forKey:@"mapViewEnableBirdsEye"];
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableUnnamedRoadHalo	forKey:@"mapViewEnableUnnamedRoadHalo"];
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableBreadCrumb		forKey:@"mapViewEnableBreadCrumb"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
 	[self.customAerials save];
+	[self.gpxLayer saveActiveTrack];
 
 	// then save data
 	[_editorLayer save];
@@ -746,7 +750,23 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		}
 	}
 }
+-(void)setEnableUnnamedRoadHalo:(BOOL)enableUnnamedRoadHalo
+{
+	if ( _enableUnnamedRoadHalo != enableUnnamedRoadHalo ) {
+		_enableUnnamedRoadHalo = enableUnnamedRoadHalo;
+		[_editorLayer.mapData clearCachedProperties];	// reset layers associated with objects
+		[_editorLayer setNeedsDisplay];
+		[_editorLayer setNeedsLayout];
+	}
+}
+-(void)setEnableBreadCrumb:(BOOL)enableBreadCrumb
+{
+	if ( _enableBreadCrumb != enableBreadCrumb ) {
+		_enableBreadCrumb = enableBreadCrumb;
 
+		_gpxLayer.hidden = !self.enableBreadCrumb;
+	}
+}
 
 #pragma mark Coordinate Transforms
 
@@ -1091,6 +1111,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 - (void)setGpsState:(GPS_STATE)gpsState
 {
 	if ( gpsState != _gpsState ) {
+		// update collection of GPX points
+		if ( _gpsState == GPS_STATE_NONE && gpsState != GPS_STATE_NONE ) {
+			[_gpxLayer startNewTrack];
+		} else if ( gpsState == GPS_STATE_NONE ) {
+			[_gpxLayer endActiveTrack];
+		}
+
 		if ( _gpsState == GPS_STATE_HEADING ) {
 			// orient toward north
 			CGPoint center = CGRectCenter(self.bounds);

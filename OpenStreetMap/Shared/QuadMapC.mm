@@ -253,9 +253,12 @@ public:
 		}
 		// find a child member could fit into
 		for ( int child = 0; child <= QUAD_LAST; ++child ) {
+			QuadBoxCC * c = _children[child];
+			if ( c == NULL )
+				continue;
 			OSMRect rc = ChildRect( (QUAD_ENUM)child, _rect );
 			if ( OSMRectIntersectsRect( bbox, rc ) ) {
-				if ( _children[child]->removeMember( member, bbox) )
+				if ( c->removeMember( member, bbox) )
 					return YES;
 			}
 		}

@@ -12,20 +12,22 @@
 @class MapView;
 
 
-@interface GpxPoint : NSObject
+@interface GpxPoint : NSObject <NSCoding>
 @property (assign,nonatomic)	double		longitude;
 @property (assign,nonatomic)	double		latitude;
+@property (assign,nonatomic)	double		accuracy;
 @property (assign,nonatomic)	double		elevation;
 @property (strong,nonatomic)	NSDate *	timestamp;
 @end
 
-@interface GpxTrack : NSObject
+@interface GpxTrack : NSObject <NSCoding>
 {
 	BOOL	_recording;
 	double	_distance;
 }
-@property (strong,nonatomic)	NSString	*	name;
-@property (readonly,nonatomic)	NSArray		*	points;
+@property (strong,nonatomic)	NSString		*	name;
+@property (readonly,nonatomic)	NSArray			*	points;
+@property (strong,nonatomic)	CAShapeLayer	*	shapeLayer;
 
 -(BOOL)saveXmlFile:(NSString * )path;
 -(id)initWithXmlFile:(NSString * )path;
@@ -39,6 +41,7 @@
 @interface GpxLayer : CALayer
 {
 	MapView			*	_mapView;
+	NSInteger			_stabilizingCount;
 }
 @property (readonly,nonatomic)	GpxTrack		*	activeTrack;
 @property (strong,nonatomic)	NSMutableArray	*	previousTracks;
@@ -48,5 +51,9 @@
 
 -(void)startNewTrack;
 -(void)endActiveTrack;
+-(void)saveActiveTrack;
+
+-(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount;
+-(void)purgeTileCache;
 
 @end
