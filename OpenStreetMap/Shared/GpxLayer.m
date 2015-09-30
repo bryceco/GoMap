@@ -8,6 +8,7 @@
 
 #import <sys/stat.h>
 
+#import "BingMapsGeometry.h"
 #import "DLog.h"
 #import "GpxLayer.h"
 #import "DDXML.h"
@@ -19,7 +20,7 @@
 
 
 static const NSInteger		MAX_POINTS	= 20000;	// takes about 1 second to save
-static const NSTimeInterval	MAX_AGE		= 3.0 * 24 * 60 * 60;
+static const NSTimeInterval	MAX_AGE		= 7.0 * 24 * 60 * 60;
 
 
 // Distance in meters
@@ -119,7 +120,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	_points = [NSArray arrayWithArray:_points];
 }
 
--(BOOL)saveXmlFile:(NSString * )path
+-(NSData *)gpxXmlData
 {
 	NSDateFormatter * dateFormatter = [OsmBaseObject rfc3339DateFormatter];
 
@@ -156,36 +157,67 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	}
 
 	NSData * data = [doc XMLData];
+	return data;
+}
+
+-(BOOL)saveXmlFile:(NSString * )path
+{
+	NSData * data = [self gpxXmlData];
 	return [data writeToFile:path atomically:YES];
 }
 
--(id)initWithXmlFile:(NSString * )path
+-(instancetype)initWithXmlData:(NSData *)data
 {
+	if ( data == nil || data.length == 0 )
+		return nil;
+
 	self = [self init];
 	if ( self ) {
-		NSData * data = [NSData dataWithContentsOfFile:path];
-		if ( data == nil )
-			return nil;
 		NSXMLDocument * doc = [[NSXMLDocument alloc] initWithData:data options:0 error:NULL];
 		if ( doc == nil )
 			return nil;
+
+		NSXMLElement * namespace1 = [NSXMLElement namespaceWithName:@"ns1" stringValue:@"http://www.topografix.com/GPX/1/0"];
+		NSXMLElement * namespace2 = [NSXMLElement namespaceWithName:@"ns2" stringValue:@"http://www.topografix.com/GPX/1/1"];
+		[doc.rootElement addNamespace:namespace1];
+		[doc.rootElement addNamespace:namespace2];
+
 		NSMutableArray * points = [NSMutableArray new];
 		NSDateFormatter * dateFormatter = [OsmBaseObject rfc3339DateFormatter];
-		NSArray * a = [doc nodesForXPath:@"./gpx/trk/trkseg/trkpt" error:nil];
+		NSArray * a = [doc nodesForXPath:@"./ns1:gpx/ns1:trk/ns1:trkseg/ns1:trkpt" error:nil];
+		if ( a.count == 0 )
+			a = [doc nodesForXPath:@"./ns2:gpx/ns2:trk/ns2:trkseg/ns2:trkpt" error:nil];
+		if ( a.count == 0 )
+			a = [doc nodesForXPath:@"./gpx/trk/trkseg/trkpt" error:nil];
+		if ( a.count == 0 )
+			return nil;
 		for ( NSXMLElement * pt in a ) {
 			GpxPoint * point = [GpxPoint new];
 			point.latitude  = [pt attributeForName:@"lat"].stringValue.doubleValue;
 			point.longitude = [pt attributeForName:@"lon"].stringValue.doubleValue;
 			NSArray * time = [pt elementsForName:@"time"];
-			if ( time.count )
-				point.timestamp = [dateFormatter dateFromString:time.lastObject];
+			if ( time.count ) {
+				NSString * s = [time.lastObject stringValue];
+				point.timestamp = [dateFormatter dateFromString:s];
+			}
 			NSArray * ele = [pt elementsForName:@"ele"];
 			if ( ele.count )
-				point.elevation = [ele.lastObject doubleValue];
+				point.elevation = [[ele.lastObject stringValue] doubleValue];
 			[points addObject:point];
 		}
+		if ( points.count < 2 )
+			return nil;
 		_points = [NSArray arrayWithArray:points];
 	}
+	return self;
+}
+
+-(instancetype)initWithXmlFile:(NSString * )path
+{
+	NSData * data = [NSData dataWithContentsOfFile:path];
+	if ( data == nil )
+		return nil;
+	self = [self initWithXmlData:data];
 	return self;
 }
 
@@ -247,6 +279,15 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 {
 	[aCoder encodeObject:_points forKey:@"points"];
 	[aCoder encodeObject:_name	 forKey:@"name"];
+}
+-(void)dealloc
+{
+	for ( NSInteger i = 0; i < sizeof(shapePaths)/sizeof(shapePaths[0]); ++i ) {
+		CGPathRef p = shapePaths[i];
+		if ( p ) {
+			CGPathRelease(p);
+		}
+	}
 }
 @end
 
@@ -329,6 +370,17 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	}
 }
 
+-(void)deleteTrack:(GpxTrack *)track
+{
+	NSString * path = [[self saveDirectory] stringByAppendingPathComponent:[track fileName]];
+	[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+	[_previousTracks removeObject:track];
+	[track.shapeLayer removeFromSuperlayer];
+	[self setNeedsDisplay];
+	[self setNeedsLayout];
+}
+
+
 -(void)trimOldTracks
 {
 	// trim off old tracks
@@ -338,12 +390,8 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		GpxTrack * track = _previousTracks[0];
 		GpxPoint * point = track.points[0];
 		if ( [[NSDate date] timeIntervalSinceDate:point.timestamp] > MAX_AGE ) {
-			NSString * path = [[self saveDirectory] stringByAppendingPathComponent:[track fileName]];
-			[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
-			[_previousTracks removeObjectAtIndex:0];
-			[track.shapeLayer removeFromSuperlayer];
-			[self setNeedsDisplay];
-			[self setNeedsLayout];
+			// delete oldest
+			[self deleteTrack:_previousTracks[0]];
 		} else {
 			break;
 		}
@@ -380,10 +428,12 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 		[self.activeTrack addPoint:location];
 
+#if 0
 		// don't accumulate too many points total
 		if ( _previousTracks.count > 0 && [self totalPointCount] > MAX_POINTS ) {
 			[_previousTracks removeObjectAtIndex:0];
 		}
+#endif
 
 		[self setNeedsDisplay];
 		[self setNeedsLayout];
@@ -444,6 +494,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 					NSString * path = [dir stringByAppendingPathComponent:file];
 					GpxTrack * track = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 					dispatch_sync(dispatch_get_main_queue(), ^{
+						DLog(@"track %@: %ld points\n",track.startDate, track.points.count);
 						[_previousTracks addObject:track];
 						[self setNeedsDisplay];
 						[self setNeedsLayout];
@@ -493,6 +544,32 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	}
 }
 
+-(void)centerOnTrack:(GpxTrack *)track
+{
+	// get midpoint
+	NSInteger mid = track.points.count / 2;
+	if ( mid >= track.points.count )
+		mid = 0;
+	GpxPoint * pt = track.points[ mid ];
+	double widthDegrees = 20.0 / EarthRadius * 360;
+	[_mapView setTransformForLatitude:pt.latitude longitude:pt.longitude width:widthDegrees];
+}
+
+-(BOOL)loadGPXData:(NSData *)data center:(BOOL)center
+{
+	GpxTrack * track = [[GpxTrack alloc] initWithXmlData:data];
+	if ( track == nil ) {
+		return NO;
+	}
+	if ( _previousTracks == nil ) {
+		[self loadTracksInBackground];
+	}
+	[_previousTracks addObject:track];
+	if ( center ) {
+		[self centerOnTrack:track];
+	}
+	return YES;
+}
 
 #pragma mark Drawing
 
@@ -576,15 +653,17 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	return path;
 }
 
--(CALayer *)getShapeLayerForTrack:(GpxTrack *)track
+-(CAShapeLayer *)getShapeLayerForTrack:(GpxTrack *)track
 {
 	if ( track.shapeLayer )
 		return track.shapeLayer;
 
-	OSMPoint refPoint;
+	OSMPoint refPoint = { 0, 0 };
 	CGPathRef path = [self pathForTrack:track refPoint:&refPoint];
 	if ( path == nil )
 		return nil;
+	track->shapePaths[0] = CGPathRetain( path );
+
 	CAShapeLayer * layer = [CAShapeLayer new];
 	layer.anchorPoint	= CGPointMake(0, 0);
 	layer.position		= CGPointFromOSMPoint( refPoint );
@@ -611,9 +690,21 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	const double	tScale			= OSMTransformScaleX( _mapView.screenFromMapTransform );
 	const double	pScale			= tScale / PATH_SCALING;
 
+	NSInteger scale = floor(-log(pScale));
+	DLog(@"gpx scale = %f, %ld",log(pScale),scale);
+	if ( scale < 0 )
+		scale = 0;
+
 	for ( GpxTrack * track in [self allTracks] ) {
 
-  		CALayer * layer = [self getShapeLayerForTrack:track];
+		CAShapeLayer * layer = [self getShapeLayerForTrack:track];
+
+		if ( track->shapePaths[scale] == NULL ) {
+			double epsilon = pow(10.0,scale) / 256.0;
+			track->shapePaths[scale] = PathWithReducePoints( track->shapePaths[0], epsilon );
+		}
+		DLog(@"reduce %ld to %ld\n",CGPathPointCount(track->shapePaths[0]),CGPathPointCount(track->shapePaths[scale]));
+		layer.path = track->shapePaths[scale];
 
 		// configure the layer for presentation
 		GpxLayerProperties * props = [layer valueForKey:@"properties"];

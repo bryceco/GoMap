@@ -205,6 +205,8 @@ static CGPoint * DouglasPeuckerCore( CGPoint points[], NSInteger first, NSIntege
 CGMutablePathRef PathWithReducePoints( CGPathRef path, double epsilon )
 {
 	NSInteger count = CGPathPointCount( path );
+	if ( count < 3 )
+		return CGPathCreateMutableCopy( path );
 	CGPoint points[ count ];
 	CGPathGetPoints( path, points );
 	CGPoint result[ count ];

@@ -10,12 +10,21 @@
 #import "MapView.h"
 #import "GpxLayer.h"
 #import "GpxViewController.h"
+#import "OsmMapData.h"
 
 
-@interface GpxEndTableViewCell : UITableViewCell
-@property (assign,nonatomic)	IBOutlet UILabel * label;
+@interface GpxTrackTableCell : UITableViewCell
+@property (assign,nonatomic)	IBOutlet	UILabel				*	startDate;
+@property (assign,nonatomic)	IBOutlet	UILabel				*	duration;
+@property (assign,nonatomic)	IBOutlet	UILabel				*	details;
+@property (strong,nonatomic)				GpxTrack			*	gpxTrack;
+@property (assign,nonatomic)				GpxViewController	*	tableView;
 @end
-@implementation GpxEndTableViewCell
+@implementation GpxTrackTableCell
+-(IBAction)doAction:(id)sender
+{
+	[self.tableView shareTrack:_gpxTrack];
+}
 @end
 
 
@@ -27,12 +36,7 @@
 	[super viewDidLoad];
 
 	_navigationBar.topItem.rightBarButtonItem = self.editButtonItem;
-
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-	NSDate * startDate = appDelegate.mapView.gpxLayer.activeTrack.startDate;
-	if ( startDate ) {
-		[self startTimerForStartDate:startDate];
-	}
+	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 -(void)startTimerForStartDate:(NSDate *)date
@@ -64,31 +68,6 @@
 {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
-
-#pragma mark - Start/End Track
-
--(IBAction)startTrack:(id)sender
-{
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-	[appDelegate.mapView.gpxLayer startNewTrack];
-	[self startTimerForStartDate:[NSDate date]];
-
-#if 1
-	[self.tableView reloadData];
-#else
-	[self dismissViewControllerAnimated:YES completion:nil];
-#endif
-}
-
--(IBAction)endTrack:(id)sender
-{
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-	[appDelegate.mapView.gpxLayer endActiveTrack];
-
-	self.editButtonItem.enabled = appDelegate.mapView.gpxLayer.previousTracks.count > 0;
-	[self.tableView reloadData];
-}
-
 
 #pragma mark - Table view data source
 
@@ -125,32 +104,28 @@
 {
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 
-	if ( indexPath.section == 0 ) {
-		if ( appDelegate.mapView.gpxLayer.activeTrack ) {
-			// recording
-			GpxEndTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StopCell" forIndexPath:indexPath];
-			GpxTrack * track = appDelegate.mapView.gpxLayer.activeTrack;
-			NSInteger	duration = track.duration;
-			NSString * text = [NSString stringWithFormat:@"%d:%02d:%02d, %ld meters",
-							   (int)(duration/3600), (int)(duration/60%60), (int)(duration%60), (long)track.distance];
-			cell.label.text = text;
-			return cell;
-		} else {
-			// not recording
-			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StartCell" forIndexPath:indexPath];
-			return cell;
-		}
+	if ( indexPath.section == 0 && appDelegate.mapView.gpxLayer.activeTrack == nil ) {
+		// no active track
+		GpxTrackTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
+		cell.startDate.text = @"No active track";
+		cell.duration.text = nil;
+		cell.details.text = nil;
+		cell.gpxTrack = nil;
+		cell.tableView = self;
+		return cell;
 	}
 
-	GpxTrack *	track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
-	NSInteger	duration = track.duration;
-	NSString * start = [NSDateFormatter localizedStringFromDate:track.startDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
-	NSString * text = [NSString stringWithFormat:@"%@, %d:%02d:%02d, %ld meters",
-					   start, (int)(duration/3600), (int)(duration/60%60), (int)(duration%60), (long)track.distance];
-
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"Track %ld", (long)indexPath.row];
-	cell.detailTextLabel.text = text;
+	GpxTrack *	track = indexPath.section == 0 ? appDelegate.mapView.gpxLayer.activeTrack : appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
+	NSInteger	dur = track.duration;
+	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.startDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
+	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
+	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (NSInteger)track.distance, track.points.count];
+	GpxTrackTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
+	cell.startDate.text = startDate;
+	cell.duration.text = duration;
+	cell.details.text = meters;
+	cell.gpxTrack = track;
+	cell.tableView = self;
 	return cell;
 }
 
@@ -166,9 +141,10 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
 		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-		[appDelegate.mapView.gpxLayer.previousTracks removeObjectAtIndex:indexPath.row];
+		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
+		[appDelegate.mapView.gpxLayer deleteTrack:track];
 
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
@@ -193,15 +169,70 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+	if ( indexPath.section == 0 ) {
+
+	} else if ( indexPath.section == 1 ) {
+		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
+		[appDelegate.mapView.gpxLayer centerOnTrack:track];
+		[self.navigationController popToRootViewControllerAnimated:YES];
+	}
+}
+
+-(void)shareTrack:(GpxTrack *)track
+{
+	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+
+	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/gpx/create"];
+
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+	NSString * boundary = @"boundary=----------------------------d10f7aa230e8";
+	[request setHTTPMethod:@"POST"];
+	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+	NSString * contentType = [NSString stringWithFormat:@"multipart/form-data;boundary=%@",boundary];
+	[request setValue:contentType forKey:@"Content-Type"];
+
+	NSMutableData * body = [NSMutableData new];
+	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"file\"; filename=\"file.gpx\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[@"Content-Type: application/octet-stream\n\n" dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:track.gpxXmlData];
+
+	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[@"GoMap!! GPX upload" dataUsingEncoding:NSUTF8StringEncoding]];
+
+	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[@"GoMap!!" dataUsingEncoding:NSUTF8StringEncoding]];
+
+	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"visibility\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[@"public" dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	[body appendData:[[NSString stringWithFormat:@"\n--%@--\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	[request setHTTPBody:body];
+
+	NSString * auth = [NSString stringWithFormat:@"%@:%@", appDelegate.userName, appDelegate.userPassword];
+	auth = [OsmMapData encodeBase64:auth];
+	auth = [NSString stringWithFormat:@"Basic %@", auth];
+	[request setValue:auth forHTTPHeaderField:@"Authorization"];
+
+	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * response, NSData * data, NSError * error) {
+		if ( data && error == nil ) {
+			// ok
+		} else {
+			NSString * errorMessage;
+			if ( data.length > 0 ) {
+				errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+			} else {
+				errorMessage = error.localizedDescription;
+			}
+			// failure
+		}
+	}];
 }
 
 @end

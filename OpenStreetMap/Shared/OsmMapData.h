@@ -143,6 +143,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 - (void)uploadChangesetWithComment:(NSString *)comment completion:(void(^)(NSString * error))completion;
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion;
 - (void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion;
++(NSString *)encodeBase64:(NSString *)plainText;
 
 -(NSArray *)userStatisticsForRegion:(OSMRect)rect;
 -(OSMRect)rootRect;

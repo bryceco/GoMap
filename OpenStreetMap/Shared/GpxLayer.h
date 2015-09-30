@@ -22,15 +22,19 @@
 
 @interface GpxTrack : NSObject <NSCoding>
 {
-	BOOL	_recording;
-	double	_distance;
+	BOOL		_recording;
+	double		_distance;
+@public
+	CGPathRef	shapePaths[20];
 }
 @property (strong,nonatomic)	NSString		*	name;
 @property (readonly,nonatomic)	NSArray			*	points;
 @property (strong,nonatomic)	CAShapeLayer	*	shapeLayer;
 
 -(BOOL)saveXmlFile:(NSString * )path;
--(id)initWithXmlFile:(NSString * )path;
+-(NSData *)gpxXmlData;
+-(instancetype)initWithXmlData:(NSData *)data;
+-(instancetype)initWithXmlFile:(NSString * )path;
 
 - (NSDate *)startDate;
 - (NSTimeInterval)duration;
@@ -46,14 +50,19 @@
 @property (readonly,nonatomic)	GpxTrack		*	activeTrack;
 @property (strong,nonatomic)	NSMutableArray	*	previousTracks;
 
--(id)initWithMapView:(MapView *)mapView;
+-(instancetype)initWithMapView:(MapView *)mapView;
 -(void)addPoint:(CLLocation *)location;
 
 -(void)startNewTrack;
 -(void)endActiveTrack;
 -(void)saveActiveTrack;
+-(void)deleteTrack:(GpxTrack *)track;
+
+-(void)centerOnTrack:(GpxTrack *)track;
 
 -(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount;
 -(void)purgeTileCache;
+
+-(BOOL)loadGPXData:(NSData *)data center:(BOOL)center;
 
 @end

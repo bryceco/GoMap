@@ -215,7 +215,6 @@
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
                         <segue destination="siu-I6-IEp" kind="modal" identifier="searchSegue" id="iXU-B0-fRW"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
-                        <segue destination="56N-ha-lzj" kind="modal" identifier="locationSegue" modalTransitionStyle="coverVertical" id="5LN-lZ-C2T"/>
                         <segue destination="S30-cU-QcE" kind="modal" identifier="NotesSegue" id="gMc-ga-KGQ"/>
                         <segue destination="Fhw-zr-ueA" kind="modal" identifier="CalculateHeightSegue" id="Tzh-5J-H7G"/>
                     </connections>
@@ -1483,118 +1482,53 @@
             </objects>
             <point key="canvasLocation" x="-1798" y="453"/>
         </scene>
-        <!--Gpx View Controller-->
+        <!--GPX Tracks-->
         <scene sceneID="Vlb-u7-FZh">
             <objects>
                 <tableViewController id="56N-ha-lzj" customClass="GpxViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="1PI-ej-JPh">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="1PI-ej-JPh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="euH-YH-d1l">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <items>
-                                <navigationItem title="GPX Tracks" id="ipW-jS-JAm">
-                                    <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="2bp-34-D7T">
-                                        <connections>
-                                            <action selector="cancel:" destination="56N-ha-lzj" id="mtT-aA-tyi"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </navigationItem>
-                            </items>
-                        </navigationBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="t6B-F2-ILt" detailTextLabel="g90-AY-aOz" style="IBUITableViewCellStyleSubtitle" id="AeJ-SF-hUI">
-                                <rect key="frame" x="0.0" y="94" width="320" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GpxTrackTableCell" id="u32-zl-4Xr" customClass="GpxTrackTableCell">
+                                <rect key="frame" x="0.0" y="114" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AeJ-SF-hUI" id="Mgs-bb-10C">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u32-zl-4Xr" id="GKM-Tu-fW7">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Track 001" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t6B-F2-ILt">
-                                            <rect key="frame" x="15" y="2" width="86" height="22"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12/22/20, 7:55 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-g5-fka">
+                                            <rect key="frame" x="17" y="0.0" width="173" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g90-AY-aOz">
-                                            <rect key="frame" x="15" y="24" width="50" height="17"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1O-06-ApF">
+                                            <rect key="frame" x="17" y="22" width="239" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StartCell" id="9lI-aY-JcN">
-                                <rect key="frame" x="0.0" y="138" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9lI-aY-JcN" id="xzp-PV-eK0">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLL-gJ-ZN9">
-                                            <rect key="frame" x="87" y="7" width="147" height="29"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="147" id="mG0-e0-PA4"/>
-                                                <constraint firstAttribute="height" constant="29" id="rvp-2n-Mhm"/>
-                                            </constraints>
-                                            <state key="normal" title="Begin New Track">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEr-ao-8x1">
+                                            <rect key="frame" x="284" y="6" width="32" height="32"/>
+                                            <state key="normal" title="Button" image="Upload.png"/>
                                             <connections>
-                                                <action selector="startTrack:" destination="56N-ha-lzj" eventType="touchUpInside" id="thP-g0-T8v"/>
+                                                <action selector="doAction:" destination="u32-zl-4Xr" eventType="touchUpInside" id="NBF-z5-nqC"/>
                                             </connections>
                                         </button>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <constraints>
-                                    <constraint firstItem="VLL-gJ-ZN9" firstAttribute="centerX" secondItem="9lI-aY-JcN" secondAttribute="centerX" id="5Pa-An-izH"/>
-                                    <constraint firstItem="VLL-gJ-ZN9" firstAttribute="top" secondItem="9lI-aY-JcN" secondAttribute="top" constant="7" id="xnV-s6-COD"/>
-                                </constraints>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StopCell" id="cv5-GN-rTk" customClass="GpxEndTableViewCell">
-                                <rect key="frame" x="0.0" y="182" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cv5-GN-rTk" id="fbh-Tj-FIA">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gFs-sX-dEO">
-                                            <rect key="frame" x="240" y="6" width="59" height="29"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="29" id="PHm-It-xb5"/>
-                                                <constraint firstAttribute="width" constant="59" id="oc5-qd-iZc"/>
-                                            </constraints>
-                                            <state key="normal" title="End">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="endTrack:" destination="56N-ha-lzj" eventType="touchUpInside" id="Lfi-aC-tku"/>
-                                            </connections>
-                                        </button>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Start Time &amp; Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gvf-Bh-UaY">
-                                            <rect key="frame" x="20" y="2" width="167" height="34"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="167" id="m0T-k5-nuL"/>
-                                                <constraint firstAttribute="height" constant="34" id="xNi-kc-Ka6"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-L5-Hcz">
+                                            <rect key="frame" x="194" y="0.0" width="90" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="gFs-sX-dEO" secondAttribute="trailing" constant="21" id="0jD-Ew-hnT"/>
-                                    <constraint firstItem="gFs-sX-dEO" firstAttribute="top" secondItem="cv5-GN-rTk" secondAttribute="top" constant="6" id="MXg-bw-EUt"/>
-                                    <constraint firstItem="Gvf-Bh-UaY" firstAttribute="top" secondItem="cv5-GN-rTk" secondAttribute="top" constant="2" id="fRR-ZD-j3j"/>
-                                    <constraint firstItem="Gvf-Bh-UaY" firstAttribute="leading" secondItem="cv5-GN-rTk" secondAttribute="leading" constant="20" id="s0I-aF-mJq"/>
-                                </constraints>
                                 <connections>
-                                    <outlet property="label" destination="Gvf-Bh-UaY" id="jO0-kM-8FI"/>
+                                    <outlet property="details" destination="h1O-06-ApF" id="dru-3F-5j2"/>
+                                    <outlet property="duration" destination="EHa-L5-Hcz" id="FAx-mQ-aho"/>
+                                    <outlet property="startDate" destination="v6h-g5-fka" id="jwm-cN-wh6"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1604,13 +1538,14 @@
                             <outlet property="delegate" destination="56N-ha-lzj" id="ZkQ-hB-Pzr"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="_navigationBar" destination="euH-YH-d1l" id="yuh-aY-iW0"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="GPX Tracks" id="Z8C-Ef-iJE">
+                        <barButtonItem key="backBarButtonItem" title="Cancel" id="dci-gg-ddc"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="EsF-1R-d4T"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BoP-nI-DeC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1460" y="797"/>
+            <point key="canvasLocation" x="396" y="599"/>
         </scene>
         <!--Upload Table View Controller-->
         <scene sceneID="oQU-hH-L4s">
@@ -1871,7 +1806,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fez-n8-rk1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-45" y="553"/>
+            <point key="canvasLocation" x="-43" y="465"/>
         </scene>
         <!--Credits-->
         <scene sceneID="ouR-J9-98f">
@@ -4023,6 +3958,13 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
+                                                    <rect key="frame" x="185" y="11" width="53" height="22"/>
+                                                    <state key="normal" title="Details"/>
+                                                    <connections>
+                                                        <segue destination="56N-ha-lzj" kind="push" id="B8X-vg-T4B"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="1jq-Mx-hmn" firstAttribute="centerY" secondItem="1f0-8q-yCi" secondAttribute="centerY" id="1MO-KK-Qyq"/>

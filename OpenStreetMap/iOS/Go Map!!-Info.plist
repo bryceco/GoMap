@@ -90,5 +90,51 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.topografix.gpx</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.mime-type</key>
+				<string>application/gpx+xml</string>
+				<key>public.filename-extension</key>
+				<string>gpx</string>
+			</dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.xml</string>
+				<string>public.content</string>
+				<string>public.item</string>
+				<string>public.data</string>
+				<string>public.text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>GPS Exchange Format (GPX)</string>
+		</dict>
+	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>GPS Exchange Format (GPX)</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>CFBundleTypeIconFile</key>
+			<string>question.png</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.gnu.gnu-zip-archive</string>
+				<string>com.topografix.gpx</string>
+			</array>
+		</dict>
+	</array>
+
+
+
 </dict>
 </plist>

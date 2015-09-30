@@ -20,6 +20,16 @@
 @implementation ClearCacheViewController
 
 
+enum {
+	ROW_OSM_DATA	= 0,
+	ROW_MAPNIK		= 1,
+	ROW_BREADCRUMB	= 2,
+	ROW_AERIAL		= 3,
+	ROW_LOCATOR		= 4,
+	ROW_GPS			= 5
+};
+
+
 #pragma mark - Table view data source
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,7 +81,7 @@
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 
 	switch ( indexPath.row ) {
-		case 0:	// OSM
+		case ROW_OSM_DATA:	// OSM
 			if ( [appDelegate.mapView.editorLayer.mapData changesetAsXml] ) {
 				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning",nil) message:NSLocalizedString(@"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"Purge",nil), nil];
 				[alertView show];
@@ -80,19 +90,19 @@
 			[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
 			[appDelegate.mapView removePin];
 			break;
-		case 1:	// Mapnik
+		case ROW_MAPNIK:	// Mapnik
 			[appDelegate.mapView.mapnikLayer purgeTileCache];
 			break;
-		case 2:	// Breadcrumb
+		case ROW_BREADCRUMB:	// Breadcrumb
 			[appDelegate.mapView.gpxLayer purgeTileCache];
 			break;
-		case 3:	// Bing
+		case ROW_AERIAL:	// Bing
 			[appDelegate.mapView.aerialLayer purgeTileCache];
 			break;
-		case 4:	// Locator Overlay
+		case ROW_LOCATOR:	// Locator Overlay
 			[appDelegate.mapView.locatorLayer purgeTileCache];
 			break;
-		case 5:	// GPS Overlay
+		case ROW_GPS:	// GPS Overlay
 			[appDelegate.mapView.gpsTraceLayer purgeTileCache];
 			break;
 	}

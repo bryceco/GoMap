@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "DownloadThreadPool.h"
+#import "GpxLayer.h"
 #import "KeyChain.h"
 #import "MapView.h"
 
@@ -140,23 +141,25 @@
 		}
 	}
 
-#if 0 // GPX support
+	// GPX support
 	if ( url.isFileURL && [url.pathExtension isEqualToString:@"gpx"] ) {
 
 		// Process the URL
-		NSData * data = [NSData dataWithContentsOfURL:url];
 
-		double delayInSeconds = 0.1;
+		double delayInSeconds = 1.0;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL",nil) message:NSLocalizedString(@"Sorry, importing GPX isn't implemented yet",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			[alertView show];
+			NSData * data = [NSData dataWithContentsOfURL:url];
+			BOOL ok = [_mapView.gpxLayer loadGPXData:data center:YES];
+			if ( !ok ) {
+				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL",nil) message:NSLocalizedString(@"Sorry, an error occurred while loading the GPX file",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
+				[alertView show];
+			}
 		});
 
 		// Indicate that we have successfully opened the URL
 		return YES;
 	}
-#endif
 	return NO;
 }
 
