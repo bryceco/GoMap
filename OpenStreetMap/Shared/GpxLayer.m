@@ -19,7 +19,6 @@
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
 
 
-static const NSInteger		MAX_POINTS	= 20000;	// takes about 1 second to save
 static const NSTimeInterval	MAX_AGE		= 7.0 * 24 * 60 * 60;
 
 
@@ -120,7 +119,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	_points = [NSArray arrayWithArray:_points];
 }
 
--(NSData *)gpxXmlData
+-(NSString *)gpxXmlString
 {
 	NSDateFormatter * dateFormatter = [OsmBaseObject rfc3339DateFormatter];
 
@@ -156,10 +155,14 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		[root addChild:eleElement];
 	}
 
-	NSData * data = [doc XMLData];
+	NSString * string = [doc XMLString];
+	return string;
+}
+-(NSData *)gpxXmlData
+{
+	NSData * data = [[self gpxXmlString] dataUsingEncoding:NSUTF8StringEncoding];
 	return data;
 }
-
 -(BOOL)saveXmlFile:(NSString * )path
 {
 	NSData * data = [self gpxXmlData];
@@ -691,7 +694,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	const double	pScale			= tScale / PATH_SCALING;
 
 	NSInteger scale = floor(-log(pScale));
-	DLog(@"gpx scale = %f, %ld",log(pScale),scale);
+//	DLog(@"gpx scale = %f, %ld",log(pScale),scale);
 	if ( scale < 0 )
 		scale = 0;
 
@@ -703,7 +706,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			double epsilon = pow(10.0,scale) / 256.0;
 			track->shapePaths[scale] = PathWithReducePoints( track->shapePaths[0], epsilon );
 		}
-		DLog(@"reduce %ld to %ld\n",CGPathPointCount(track->shapePaths[0]),CGPathPointCount(track->shapePaths[scale]));
+//		DLog(@"reduce %ld to %ld\n",CGPathPointCount(track->shapePaths[0]),CGPathPointCount(track->shapePaths[scale]));
 		layer.path = track->shapePaths[scale];
 
 		// configure the layer for presentation

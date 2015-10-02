@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "DLog.h"
 #import "MapView.h"
 #import "GpxLayer.h"
 #import "GpxViewController.h"
@@ -119,7 +120,7 @@
 	NSInteger	dur = track.duration;
 	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.startDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
-	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (NSInteger)track.distance, track.points.count];
+	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (long)track.distance, (long)track.points.count];
 	GpxTrackTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
 	cell.startDate.text = startDate;
 	cell.duration.text = duration;
@@ -188,11 +189,11 @@
 	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/gpx/create"];
 
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-	NSString * boundary = @"boundary=----------------------------d10f7aa230e8";
+	NSString * boundary = @"----------------------------d10f7aa230e8";
 	[request setHTTPMethod:@"POST"];
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 	NSString * contentType = [NSString stringWithFormat:@"multipart/form-data;boundary=%@",boundary];
-	[request setValue:contentType forKey:@"Content-Type"];
+	[request setValue:contentType forHTTPHeaderField:@"Content-Type"];
 
 	NSMutableData * body = [NSMutableData new];
 	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
@@ -201,24 +202,32 @@
 	[body appendData:track.gpxXmlData];
 
 	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"GoMap!! GPX upload" dataUsingEncoding:NSUTF8StringEncoding]];
 
 	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"GoMap!!" dataUsingEncoding:NSUTF8StringEncoding]];
 
 	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"visibility\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"public\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[@"1" dataUsingEncoding:NSUTF8StringEncoding]];
+
+	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"visibility\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"public" dataUsingEncoding:NSUTF8StringEncoding]];
-	
+
 	[body appendData:[[NSString stringWithFormat:@"\n--%@--\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 	[request setHTTPBody:body];
+
+	[request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
 
 	NSString * auth = [NSString stringWithFormat:@"%@:%@", appDelegate.userName, appDelegate.userPassword];
 	auth = [OsmMapData encodeBase64:auth];
 	auth = [NSString stringWithFormat:@"Basic %@", auth];
 	[request setValue:auth forHTTPHeaderField:@"Authorization"];
+
+	DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
 
 	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * response, NSData * data, NSError * error) {
 		if ( data && error == nil ) {
