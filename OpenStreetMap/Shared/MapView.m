@@ -1967,10 +1967,14 @@ NSString * ActionTitle( NSInteger action )
 				case UIGestureRecognizerStateBegan:
 					[weakSelf.editorLayer.mapData beginUndoGrouping];
 					break;
-					
+
+				case UIGestureRecognizerStateCancelled:
+				case UIGestureRecognizerStateFailed:
+					DLog(@"Gesture ended with cancel/fail\n");
+					// fall through so we properly terminate gesture
 				case UIGestureRecognizerStateEnded:
 					[weakSelf.editorLayer.mapData endUndoGrouping];
-					
+
 					[weakSelf unblinkObject];
 					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
 						// dragging a node that is part of a way
