@@ -74,7 +74,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( self.note.comments && indexPath.section == 0 ) {
-		NotesCommentCell *cell = (id) [tableView dequeueReusableCellWithIdentifier:@"noteCommentCell" forIndexPath:indexPath];
+		NotesCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noteCommentCell" forIndexPath:indexPath];
 		OsmNoteComment * comment = self.note.comments[ indexPath.row ];
 		cell.date.text		= comment.date;
 		cell.user.text		= [NSString stringWithFormat:@"%@ - %@", comment.user ?: @"anonymous", comment.action];
