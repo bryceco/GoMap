@@ -497,7 +497,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 					NSString * path = [dir stringByAppendingPathComponent:file];
 					GpxTrack * track = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 					dispatch_sync(dispatch_get_main_queue(), ^{
-						DLog(@"track %@: %ld points\n",track.startDate, track.points.count);
+						DLog(@"track %@: %ld points\n",track.startDate, (long)track.points.count);
 						[_previousTracks addObject:track];
 						[self setNeedsDisplay];
 						[self setNeedsLayout];
@@ -571,6 +571,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( center ) {
 		[self centerOnTrack:track];
 	}
+	[self saveToDisk:track];
 	return YES;
 }
 
