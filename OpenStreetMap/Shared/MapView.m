@@ -2029,7 +2029,7 @@ NSString * ActionTitle( NSInteger action )
 						[weakSelf.editorLayer.mapData beginUndoGrouping];
 					}
 #endif
-					NSLog(@"%f,%f",dx,dy);
+					DLog(@"%f,%f",dx,dy);
 					for ( OsmNode * node in object.nodeSet ) {
 						CGPoint delta = { dx, -dy };
 						[weakSelf.editorLayer adjustNode:node byDistance:delta];

@@ -1421,7 +1421,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					char type[256] = "";
 					if ( sscanf( response.UTF8String, "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld", &localVersion, &serverVersion, type, &objId ) == 4 ) {
 						type[0] = _tolower( type[0] );
-						NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/%s/%lld/full", type, objId];
+						NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/%s/%lld", type, objId];
+						if ( strcmp(type,"way")==0 || strcmp(type,"relation")==0 ) {
+							url3 = [url3 stringByAppendingString:@"/full"];
+						}
 
 						[OsmMapData osmDataForUrl:url3 quads:nil completion:^(ServerQuery *quads, OsmMapData * mapData, NSError *error) {
 							[self merge:mapData fromDownload:YES quadList:nil success:YES];
