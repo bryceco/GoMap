@@ -302,6 +302,10 @@ static NSString * PrettyTag( NSString * tag )
 		if ( key ) {
 			[set addObject:key];
 		}
+		NSDictionary * keys = dict[ @"keys" ];
+		for ( key in keys ) {
+			[set addObject:key];
+		}
 	}];
 	[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSDictionary * dict2 = dict[ @"tags" ];

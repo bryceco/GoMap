@@ -145,7 +145,7 @@ const CGFloat WayHighlightRadius = 6.0;
 			// implement crosshairs
 			_crossHairs = [CAShapeLayer new];
 			UIBezierPath * path = [UIBezierPath bezierPath];
-			CGFloat radius = 8;
+			CGFloat radius = 10;
 			[path moveToPoint:CGPointMake(-radius, 0)];
 			[path addLineToPoint:CGPointMake(radius, 0)];
 			[path moveToPoint:CGPointMake(0, -radius)];
@@ -154,7 +154,7 @@ const CGFloat WayHighlightRadius = 6.0;
 			_crossHairs.path		= path.CGPath;
 			_crossHairs.strokeColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1.0].CGColor;
 			_crossHairs.bounds		= CGRectMake(-radius, -radius, 2*radius, 2*radius);
-			_crossHairs.lineWidth	= 1.0;
+			_crossHairs.lineWidth	= 2.0;
 			_crossHairs.zPosition	= Z_CROSSHAIRS;
 
 			path = [UIBezierPath new];
