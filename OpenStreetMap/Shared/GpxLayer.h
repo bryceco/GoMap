@@ -54,6 +54,8 @@
 -(instancetype)initWithMapView:(MapView *)mapView;
 -(void)addPoint:(CLLocation *)location;
 
+-(void)loadTracksInBackgroundWithProgress:(void(^)(void))progressCallback;
+
 -(void)startNewTrack;
 -(void)endActiveTrack;
 -(void)saveActiveTrack;

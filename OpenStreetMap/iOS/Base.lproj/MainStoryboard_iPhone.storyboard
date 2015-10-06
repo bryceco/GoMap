@@ -200,7 +200,6 @@
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="0bZ-QH-3ce" appends="YES" id="qRj-Ec-HPc"/>
-                            <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="MWm-hl-ZTF"/>
                             <outletCollection property="gestureRecognizers" destination="OlO-FJ-kfn" appends="YES" id="9QG-zF-58T"/>
                         </connections>
                     </view>
@@ -1703,8 +1702,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear Breadcrumb Trail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9aN-lr-L6e">
-                                                    <rect key="frame" x="15" y="2" width="199" height="22"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear GPX Tracks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9aN-lr-L6e">
+                                                    <rect key="frame" x="15" y="2" width="150" height="22"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1823,7 +1822,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHr-ta-k6F">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <mutableString key="text">Copyright © 2012-2015 Bryce Cogswell. 
+                                <string key="text">Copyright © 2012-2015 Bryce Cogswell. 
 All rights reserved.
 
 OpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):
@@ -1842,7 +1841,7 @@ http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
-</mutableString>
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -2310,7 +2309,7 @@ http://glyphish.com
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SdH-uy-BuK">
-                                <rect key="frame" x="122" y="20" width="77" height="21"/>
+                                <rect key="frame" x="20" y="20" width="280" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
@@ -2319,8 +2318,8 @@ http://glyphish.com
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juy-LX-vDs">
-                                <rect key="frame" x="128" y="49" width="65" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juy-LX-vDs">
+                                <rect key="frame" x="20" y="49" width="280" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
@@ -2333,11 +2332,15 @@ http://glyphish.com
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eq3-Er-HaA" firstAttribute="top" secondItem="QZK-2k-kEa" secondAttribute="bottom" constant="20" id="2jQ-eZ-Mfs"/>
+                            <constraint firstItem="juy-LX-vDs" firstAttribute="leading" secondItem="uz5-Hx-Irk" secondAttribute="leadingMargin" constant="4" id="DE0-vY-6Um"/>
+                            <constraint firstItem="juy-LX-vDs" firstAttribute="leading" secondItem="SdH-uy-BuK" secondAttribute="leading" id="LWK-i4-Qkd"/>
                             <constraint firstItem="eq3-Er-HaA" firstAttribute="top" secondItem="l5O-tO-QFr" secondAttribute="bottom" constant="20" id="TqY-pW-y80"/>
                             <constraint firstItem="QZK-2k-kEa" firstAttribute="trailing" secondItem="uz5-Hx-Irk" secondAttribute="trailingMargin" constant="6" id="bsI-EQ-d0B"/>
                             <constraint firstItem="SdH-uy-BuK" firstAttribute="top" secondItem="VPB-D4-MfQ" secondAttribute="bottom" id="cX0-1x-udZ"/>
                             <constraint firstItem="QZK-2k-kEa" firstAttribute="leading" secondItem="l5O-tO-QFr" secondAttribute="trailing" constant="8" id="dAk-e6-sey"/>
+                            <constraint firstItem="juy-LX-vDs" firstAttribute="trailing" secondItem="SdH-uy-BuK" secondAttribute="trailing" id="eik-4G-mda"/>
                             <constraint firstItem="SdH-uy-BuK" firstAttribute="centerX" secondItem="uz5-Hx-Irk" secondAttribute="centerX" id="kgk-xS-8n9"/>
+                            <constraint firstItem="juy-LX-vDs" firstAttribute="top" secondItem="SdH-uy-BuK" secondAttribute="bottom" constant="8" symbolic="YES" id="tnF-iK-WV7"/>
                         </constraints>
                     </view>
                     <connections>
@@ -3858,7 +3861,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aerial only -" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOd-BB-zEq">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aerial only" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOd-BB-zEq">
                                                     <rect key="frame" x="16" y="11" width="99" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="99" id="JRx-Vd-fai"/>
@@ -3867,34 +3870,23 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eac-Db-EaW">
-                                                    <rect key="frame" x="282" y="11" width="22" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="5qA-V7-Yst"/>
-                                                    </constraints>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eac-Db-EaW">
+                                                    <rect key="frame" x="273" y="7" width="31" height="30"/>
+                                                    <state key="normal" title="Bing"/>
                                                     <connections>
                                                         <segue destination="kDI-TR-PJA" kind="push" id="Oq8-XI-nsT"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ce4-9Y-AKQ">
-                                                    <rect key="frame" x="114" y="11" width="162" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerY" secondItem="uOd-BB-zEq" secondAttribute="centerY" id="049-lj-RDB"/>
                                                 <constraint firstAttribute="trailing" secondItem="eac-Db-EaW" secondAttribute="trailing" constant="16" id="8TY-1X-a7V"/>
-                                                <constraint firstAttribute="centerY" secondItem="Ce4-9Y-AKQ" secondAttribute="centerY" id="HmE-Ic-Bn4"/>
                                                 <constraint firstAttribute="centerY" secondItem="eac-Db-EaW" secondAttribute="centerY" id="gFh-Pr-m0V"/>
-                                                <constraint firstItem="eac-Db-EaW" firstAttribute="leading" secondItem="Ce4-9Y-AKQ" secondAttribute="trailing" constant="6" id="jrr-be-Ebd"/>
-                                                <constraint firstItem="Ce4-9Y-AKQ" firstAttribute="leading" secondItem="uOd-BB-zEq" secondAttribute="trailing" constant="-1" id="mOk-IF-oov"/>
                                                 <constraint firstItem="uOd-BB-zEq" firstAttribute="leading" secondItem="Xmp-oM-reK" secondAttribute="leading" constant="16" id="nWT-IX-qiE"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="title" destination="Ce4-9Y-AKQ" id="MvT-ST-zRJ"/>
+                                            <outlet property="button" destination="eac-Db-EaW" id="Txv-j0-qpA"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="9L3-JO-Whj" style="IBUITableViewCellStyleDefault" id="Dck-eH-FTh">
@@ -3949,18 +3941,18 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jq-Mx-hmn">
-                                                    <rect key="frame" x="253" y="6" width="51" height="31"/>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bread Crumb Trail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1f0-8q-yCi">
-                                                    <rect key="frame" x="15" y="11" width="237" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1f0-8q-yCi">
+                                                    <rect key="frame" x="15" y="11" width="94" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
-                                                    <rect key="frame" x="185" y="11" width="53" height="22"/>
-                                                    <state key="normal" title="Details"/>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jq-Mx-hmn">
+                                                    <rect key="frame" x="253" y="6" width="51" height="31"/>
+                                                </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
+                                                    <rect key="frame" x="215" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="List"/>
                                                     <connections>
                                                         <segue destination="56N-ha-lzj" kind="push" id="B8X-vg-T4B"/>
                                                     </connections>
@@ -3970,8 +3962,10 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <constraint firstItem="1jq-Mx-hmn" firstAttribute="centerY" secondItem="1f0-8q-yCi" secondAttribute="centerY" id="1MO-KK-Qyq"/>
                                                 <constraint firstItem="1jq-Mx-hmn" firstAttribute="centerY" secondItem="cgo-vx-DaW" secondAttribute="centerY" id="TwA-1a-sTg"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="1jq-Mx-hmn" secondAttribute="trailing" constant="10" id="dQ2-Xl-i2a"/>
-                                                <constraint firstItem="1jq-Mx-hmn" firstAttribute="leading" secondItem="1f0-8q-yCi" secondAttribute="trailing" constant="1" id="onf-Mw-C6M"/>
+                                                <constraint firstItem="1jq-Mx-hmn" firstAttribute="leading" secondItem="8S7-Kw-QHF" secondAttribute="trailing" constant="8" id="gJF-JO-lOm"/>
+                                                <constraint firstItem="1jq-Mx-hmn" firstAttribute="leading" secondItem="1f0-8q-yCi" secondAttribute="trailing" constant="144" id="onf-Mw-C6M"/>
                                                 <constraint firstItem="1f0-8q-yCi" firstAttribute="leading" secondItem="cgo-vx-DaW" secondAttribute="leading" constant="15" id="rXH-bN-Xb6"/>
+                                                <constraint firstItem="8S7-Kw-QHF" firstAttribute="centerY" secondItem="cgo-vx-DaW" secondAttribute="centerY" id="zeB-6r-9od"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

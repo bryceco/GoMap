@@ -26,7 +26,7 @@ static const NSInteger CACHE_SECTION			= 3;
 
 
 @interface CustomBackgroundCell : UITableViewCell
-@property IBOutlet UILabel * title;
+@property IBOutlet UIButton * button;
 @end
 @implementation CustomBackgroundCell
 @end
@@ -115,9 +115,10 @@ static const NSInteger CACHE_SECTION			= 3;
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 	AerialList * aerials = appDelegate.mapView.customAerials;
 	NSIndexPath * path = [NSIndexPath indexPathForRow:2 inSection:BACKGROUND_SECTION];
-	CustomBackgroundCell * cell = (id)[self.tableView cellForRowAtIndexPath:path];
+	CustomBackgroundCell * cell = [self.tableView cellForRowAtIndexPath:path];
 	if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
-		cell.title.text = aerials.currentAerial.name;
+		[cell.button setTitle:aerials.currentAerial.name forState:UIControlStateNormal];
+		[cell.button sizeToFit];
 	}
 }
 

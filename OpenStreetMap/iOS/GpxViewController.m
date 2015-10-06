@@ -38,6 +38,12 @@
 
 	_navigationBar.topItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+
+	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	[appDelegate.mapView.gpxLayer loadTracksInBackgroundWithProgress:^{
+		[self.tableView reloadData];
+	}];
 }
 
 -(void)startTimerForStartDate:(NSDate *)date
@@ -192,32 +198,37 @@
 	NSString * boundary = @"----------------------------d10f7aa230e8";
 	[request setHTTPMethod:@"POST"];
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-	NSString * contentType = [NSString stringWithFormat:@"multipart/form-data;boundary=%@",boundary];
-	[request setValue:contentType forHTTPHeaderField:@"Content-Type"];
+	NSString * contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+	[request setValue:contentType	forHTTPHeaderField:@"Content-Type"];
+	[request setValue:@"close"		forHTTPHeaderField:@"Connection"];
+
+	[request setValue:@"ISO-8859-2, utf-8"	forHTTPHeaderField:@"Accept-Charset"];
+	[request setValue:@"gzip,deflate"		forHTTPHeaderField:@"Accept-Encoding"];
+	[request setValue:@"Locus/2.5.6 (Linux; U; Android; en-us)"	forHTTPHeaderField:@"User-Agent"];
 
 	NSMutableData * body = [NSMutableData new];
-	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"file\"; filename=\"file.gpx\"\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"file\"; filename=\"file.gpx\"\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"Content-Type: application/octet-stream\n\n" dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:track.gpxXmlData];
 
-	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"GoMap!! GPX upload" dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"GoMap!!" dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"public\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"public\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"1" dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[body appendData:[[NSString stringWithFormat:@"\n--%@\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"visibility\"\n\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"visibility\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[@"public" dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[body appendData:[[NSString stringWithFormat:@"\n--%@--\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 	[request setHTTPBody:body];
 
 	[request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];

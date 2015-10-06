@@ -362,7 +362,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		NSString * path = [dir stringByAppendingPathComponent:[track fileName]];
 		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 		BOOL ok = [NSKeyedArchiver archiveRootObject:track toFile:path];
-		NSLog(@"save = %d",ok);
+		DLog(@"GPX track save = %d",ok);
 	}
 }
 
@@ -485,7 +485,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 
 // load data if not already loaded
--(void)loadTracksInBackground
+-(void)loadTracksInBackgroundWithProgress:(void(^)(void))progressCallback
 {
 	if ( _previousTracks == nil ) {
 		_previousTracks = [NSMutableArray new];
@@ -497,10 +497,13 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 					NSString * path = [dir stringByAppendingPathComponent:file];
 					GpxTrack * track = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 					dispatch_sync(dispatch_get_main_queue(), ^{
-						DLog(@"track %@: %ld points\n",track.startDate, (long)track.points.count);
+						//DLog(@"track %@: %ld points\n",track.startDate, (long)track.points.count);
 						[_previousTracks addObject:track];
 						[self setNeedsDisplay];
 						[self setNeedsLayout];
+						if ( progressCallback ) {
+							progressCallback();
+						}
 					});
 				}
 			}
@@ -560,18 +563,18 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 -(BOOL)loadGPXData:(NSData *)data center:(BOOL)center
 {
-	GpxTrack * track = [[GpxTrack alloc] initWithXmlData:data];
-	if ( track == nil ) {
+	GpxTrack * newTrack = [[GpxTrack alloc] initWithXmlData:data];
+	if ( newTrack == nil ) {
 		return NO;
 	}
 	if ( _previousTracks == nil ) {
-		[self loadTracksInBackground];
+		[self loadTracksInBackgroundWithProgress:nil];
 	}
-	[_previousTracks addObject:track];
+	[_previousTracks addObject:newTrack];
 	if ( center ) {
-		[self centerOnTrack:track];
+		[self centerOnTrack:newTrack];
 	}
-	[self saveToDisk:track];
+	[self saveToDisk:newTrack];
 	return YES;
 }
 
@@ -746,7 +749,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 	if ( wasHidden && !hidden ) {
 
-		[self loadTracksInBackground];
+		[self loadTracksInBackgroundWithProgress:nil];
 		[self setNeedsDisplay];
 		[self setNeedsLayout];
 	}

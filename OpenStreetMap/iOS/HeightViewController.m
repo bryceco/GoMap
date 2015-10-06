@@ -300,10 +300,16 @@ static const CGFloat InsetPercent = 0.15;
 -(double)distanceToObject:(double *)error direction:(double *)pDirection
 {
 	AppDelegate			*	delegate = [[UIApplication sharedApplication] delegate];
+	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
+	if ( object == nil ) {
+		*error = nan("");
+		*pDirection = 0;
+		return nan("");
+	}
 	CLLocation			*	location = delegate.mapView.currentLocation;
 	CLLocationCoordinate2D	userLoc = location.coordinate;
-	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
 	OSMPoint				userPt	= { userLoc.longitude, userLoc.latitude };
+
 
 	double dist = MAXFLOAT;
 	double bearing = 0;
@@ -340,6 +346,10 @@ static const CGFloat InsetPercent = 0.15;
 	double distError = 0;
 	double direction = 0;
 	double dist = [self distanceToObject:&distError direction:&direction];
+	if ( isnan(dist) ) {
+		[self cancel:self];
+		return;
+	}
 
 	// get camera tilt
 	double pitch = motion.attitude.pitch;

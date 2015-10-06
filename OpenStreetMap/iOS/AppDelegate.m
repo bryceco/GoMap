@@ -70,7 +70,7 @@
 }
 
 
--(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
 	// open to longitude/latitude
 	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] ) {
