@@ -470,6 +470,7 @@
 		02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02E8437E19B4DE510044AC1D /* Localizable.strings */; };
 		02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
+		02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */; settings = {ASSET_TAGS = (); }; };
 		02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F371B316A4F3E6003E9548 /* HelpViewController.m */; };
 		02F373F916822C2C004614D4 /* UploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F373F816822C2C004614D4 /* UploadViewController.m */; };
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
@@ -1018,6 +1019,8 @@
 		02E8438219B4DF960044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpxConfigureViewController.h; sourceTree = "<group>"; };
+		02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GpxConfigureViewController.m; sourceTree = "<group>"; };
 		02F371B216A4F3E6003E9548 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		02F371B316A4F3E6003E9548 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		02F373F716822C2C004614D4 /* UploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadViewController.h; sourceTree = "<group>"; };
@@ -1214,6 +1217,8 @@
 				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
+				02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */,
+				02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */,
 				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
 				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
 				02F371B216A4F3E6003E9548 /* HelpViewController.h */,
@@ -2233,6 +2238,7 @@
 				028F504519B949780093C423 /* CommonTagList.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
+				02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */,
 				0260484219E66C8700415CB1 /* DisplayLink.m in Sources */,
 				025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */,
 				0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */,

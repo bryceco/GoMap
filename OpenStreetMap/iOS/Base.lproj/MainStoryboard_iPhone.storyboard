@@ -1497,14 +1497,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12/22/20, 7:55 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-g5-fka">
-                                            <rect key="frame" x="17" y="0.0" width="173" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1O-06-ApF">
-                                            <rect key="frame" x="17" y="22" width="239" height="21"/>
+                                            <rect key="frame" x="15" y="22" width="239" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1517,7 +1511,13 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-L5-Hcz">
-                                            <rect key="frame" x="194" y="0.0" width="90" height="21"/>
+                                            <rect key="frame" x="194" y="0.0" width="82" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12/22/20, 7:55 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-g5-fka">
+                                            <rect key="frame" x="15" y="0.0" width="173" height="21"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1528,6 +1528,32 @@
                                     <outlet property="details" destination="h1O-06-ApF" id="dru-3F-5j2"/>
                                     <outlet property="duration" destination="EHa-L5-Hcz" id="FAx-mQ-aho"/>
                                     <outlet property="startDate" destination="v6h-g5-fka" id="jwm-cN-wh6"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GpxTrackExpirationCell" id="7Mm-nQ-f8R" customClass="GpxTrackExpirationCell">
+                                <rect key="frame" x="0.0" y="158" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Mm-nQ-f8R" id="pdO-s8-VPO">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4s8-Bj-JOX">
+                                            <rect key="frame" x="236" y="5" width="68" height="34"/>
+                                            <state key="normal" title="99 Days"/>
+                                            <connections>
+                                                <segue destination="Nkd-2e-8Au" kind="modal" id="ubS-cl-jpK"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Delete tracks after:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnI-tY-WWa">
+                                            <rect key="frame" x="14" y="11" width="158" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="expirationButton" destination="4s8-Bj-JOX" id="C6g-tO-HXS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1544,7 +1570,71 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BoP-nI-DeC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="396" y="599"/>
+            <point key="canvasLocation" x="306" y="588"/>
+        </scene>
+        <!--Gpx Configure View Controller-->
+        <scene sceneID="WrE-xc-SFD">
+            <objects>
+                <viewController id="Nkd-2e-8Au" customClass="GpxConfigureViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DSV-mv-5vr"/>
+                        <viewControllerLayoutGuide type="bottom" id="IyK-Cr-Q3a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kkY-2X-K4y">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks you record or download will be automatically deleted after:" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="MeQ-4N-FqC">
+                                <rect key="frame" x="20" y="80" width="280" height="40"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dWF-I1-mgM">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Configure GPX Tracks" id="oSD-0y-Vt0">
+                                        <barButtonItem key="backBarButtonItem" title="Cancel" id="1SY-O5-qJR"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="uxa-9t-jwG">
+                                            <connections>
+                                                <action selector="cancel:" destination="Nkd-2e-8Au" id="Dip-qC-lNb"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="yxT-d6-2pL">
+                                            <connections>
+                                                <action selector="done:" destination="Nkd-2e-8Au" id="fHA-vp-BLI"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PK9-1m-unf">
+                                <rect key="frame" x="20" y="128" width="280" height="241"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="241" id="HoR-7j-PwO"/>
+                                </constraints>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dWF-I1-mgM" secondAttribute="trailing" id="7Rd-eV-6in"/>
+                            <constraint firstItem="PK9-1m-unf" firstAttribute="leading" secondItem="kkY-2X-K4y" secondAttribute="leading" constant="20" id="Egi-t4-gQv"/>
+                            <constraint firstAttribute="trailing" secondItem="PK9-1m-unf" secondAttribute="trailing" constant="20" id="JpW-MT-A9P"/>
+                            <constraint firstItem="dWF-I1-mgM" firstAttribute="leading" secondItem="kkY-2X-K4y" secondAttribute="leading" id="Qur-RJ-Ubv"/>
+                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="leading" secondItem="kkY-2X-K4y" secondAttribute="leading" constant="20" id="YFD-xP-ujo"/>
+                            <constraint firstItem="PK9-1m-unf" firstAttribute="top" secondItem="MeQ-4N-FqC" secondAttribute="bottom" constant="8" id="ifT-Ak-FTa"/>
+                            <constraint firstItem="dWF-I1-mgM" firstAttribute="top" secondItem="kkY-2X-K4y" secondAttribute="topMargin" constant="20" id="q4Y-gT-acF"/>
+                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="kkY-2X-K4y" secondAttribute="topMargin" constant="80" id="qf3-vW-INh"/>
+                            <constraint firstAttribute="trailing" secondItem="MeQ-4N-FqC" secondAttribute="trailing" constant="20" id="r2C-Ap-5CU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pickerView" destination="PK9-1m-unf" id="UuT-ev-pHW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tka-X9-BRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="656" y="588"/>
         </scene>
         <!--Upload Table View Controller-->
         <scene sceneID="oQU-hH-L4s">
@@ -3951,8 +4041,8 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <rect key="frame" x="253" y="6" width="51" height="31"/>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
-                                                    <rect key="frame" x="215" y="7" width="30" height="30"/>
-                                                    <state key="normal" title="List"/>
+                                                    <rect key="frame" x="198" y="7" width="47" height="30"/>
+                                                    <state key="normal" title="Details"/>
                                                     <connections>
                                                         <segue destination="56N-ha-lzj" kind="push" id="B8X-vg-T4B"/>
                                                     </connections>
@@ -4005,7 +4095,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hvT-hi-s8k">
                                                     <rect key="frame" x="253" y="6" width="51" height="31"/>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploaded GPS Traces" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMJ-yP-XJe">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenStreetMap GPS Traces" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMJ-yP-XJe">
                                                     <rect key="frame" x="15" y="11" width="237" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

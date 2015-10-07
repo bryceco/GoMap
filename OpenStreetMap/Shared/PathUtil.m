@@ -207,12 +207,14 @@ CGMutablePathRef PathWithReducePoints( CGPathRef path, double epsilon )
 	NSInteger count = CGPathPointCount( path );
 	if ( count < 3 )
 		return CGPathCreateMutableCopy( path );
-	CGPoint points[ count ];
+	CGPoint * points = (CGPoint *)malloc( count * sizeof(points[0]));
+	CGPoint * result = (CGPoint *)malloc( count * sizeof(result[0]));
 	CGPathGetPoints( path, points );
-	CGPoint result[ count ];
 	CGPoint * resultLast = DouglasPeuckerCore( points, 0, count-1, epsilon, result );
 	NSInteger resultCount = resultLast - result;
 	CGMutablePathRef newPath = CGPathCreateMutable();
 	CGPathAddLines( newPath, NULL, result, resultCount );
+	free( points );
+	free( result );
 	return newPath;
 }

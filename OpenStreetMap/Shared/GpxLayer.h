@@ -8,6 +8,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#define USER_DEFAULTS_GPX_EXPIRATIION_KEY @"GpxTrackExpirationDays"
+
+
 @class CLLocation;
 @class MapView;
 
@@ -28,6 +31,7 @@
 	CGPathRef	shapePaths[20];
 }
 @property (strong,nonatomic)	NSString		*	name;
+@property (strong,nonatomic)	NSDate			*	creationDate;	// when trace was recorded or downloaded
 @property (readonly,nonatomic)	NSArray			*	points;
 @property (strong,nonatomic)	CAShapeLayer	*	shapeLayer;
 
@@ -37,7 +41,6 @@
 -(instancetype)initWithXmlData:(NSData *)data;
 -(instancetype)initWithXmlFile:(NSString * )path;
 
-- (NSDate *)startDate;
 - (NSTimeInterval)duration;
 - (double)distance;
 
@@ -60,6 +63,8 @@
 -(void)endActiveTrack;
 -(void)saveActiveTrack;
 -(void)deleteTrack:(GpxTrack *)track;
+
+-(void)trimTracksOlderThan:(NSDate *)date;
 
 -(void)centerOnTrack:(GpxTrack *)track;
 

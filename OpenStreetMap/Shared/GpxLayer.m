@@ -19,7 +19,7 @@
 #define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
 
 
-static const NSTimeInterval	MAX_AGE		= 7.0 * 24 * 60 * 60;
+//static const NSTimeInterval	MAX_AGE		= 7.0 * 24 * 60 * 60;
 
 
 // Distance in meters
@@ -107,10 +107,11 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 	if ( _points == nil ) {
 		_points = [NSMutableArray new];
+		_creationDate = [NSDate date];
 	}
 	[(NSMutableArray *)_points addObject:pt];
 
-	DLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
+//	DLog( @"%f,%f (%f): %lu gpx points", coordinate.longitude, coordinate.latitude, location.horizontalAccuracy, (unsigned long)_points.count );
 }
 
 -(void)finishTrack
@@ -148,11 +149,11 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 		NSXMLElement * timeElement = [NSXMLNode elementWithName:@"time"];
 		timeElement.stringValue = [dateFormatter stringFromDate:pt.timestamp];
-		[root addChild:timeElement];
+		[ptElement addChild:timeElement];
 
 		NSXMLElement * eleElement = [NSXMLNode elementWithName:@"ele"];
 		eleElement.stringValue = [NSString stringWithFormat:@"%f", pt.elevation];
-		[root addChild:eleElement];
+		[ptElement addChild:eleElement];
 	}
 
 	NSString * string = [doc XMLString];
@@ -211,7 +212,10 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		if ( points.count < 2 )
 			return nil;
 		_points = [NSArray arrayWithArray:points];
+
+		self.creationDate = [NSDate date];
 	}
+
 	return self;
 }
 
@@ -239,18 +243,9 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	return _distance;
 }
 
--(NSDate *)startDate
-{
-	if ( _points.count ) {
-		GpxPoint * pt = _points[0];
-		return pt.timestamp;
-	}
-	return nil;
-}
-
 -(NSString *)fileName
 {
-	return [NSString stringWithFormat:@"%.3f.track", self.startDate.timeIntervalSince1970];
+	return [NSString stringWithFormat:@"%.3f.track", self.creationDate.timeIntervalSince1970];
 }
 
 
@@ -259,29 +254,26 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( _points.count == 0 )
 		return 0.0;
 
-	NSDate * finishDate;
-	if ( _recording ) {
-		finishDate = [NSDate date];
-	} else {
-		GpxPoint * pt = _points.lastObject;
-		finishDate = pt.timestamp;
-	}
-	return [finishDate timeIntervalSinceDate:[self startDate]];
+	GpxPoint * start = _points[0];
+	GpxPoint * finish = _points.lastObject;
+	return [finish.timestamp timeIntervalSinceDate:start.timestamp];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	self = [super init];
 	if ( self ) {
-		_points = [aDecoder decodeObjectForKey:@"points"];
-		_name	= [aDecoder decodeObjectForKey:@"name"];
+		_points			= [aDecoder decodeObjectForKey:@"points"];
+		_name			= [aDecoder decodeObjectForKey:@"name"];
+		_creationDate	= [aDecoder decodeObjectForKey:@"creationDate"];
 	}
 	return self;
 }
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:_points forKey:@"points"];
-	[aCoder encodeObject:_name	 forKey:@"name"];
+	[aCoder encodeObject:_points			forKey:@"points"];
+	[aCoder encodeObject:_name				forKey:@"name"];
+	[aCoder encodeObject:_creationDate		forKey:@"creationDate"];
 }
 -(void)dealloc
 {
@@ -305,6 +297,8 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	self = [super init];
 	if ( self ) {
 		_mapView = mapView;
+
+		[[NSUserDefaults standardUserDefaults] registerDefaults:@{ USER_DEFAULTS_GPX_EXPIRATIION_KEY : @(7) }];
 
 		self.actions = @{
 						 @"onOrderIn"	: [NSNull null],
@@ -358,11 +352,13 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 {
 	if ( track.points.count >= 2 ) {
 		// make sure save directory exists
+		NSTimeInterval time = CACurrentMediaTime();
 		NSString * dir = [self saveDirectory];
 		NSString * path = [dir stringByAppendingPathComponent:[track fileName]];
 		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
-		BOOL ok = [NSKeyedArchiver archiveRootObject:track toFile:path];
-		DLog(@"GPX track save = %d",ok);
+		[NSKeyedArchiver archiveRootObject:track toFile:path];
+		time = CACurrentMediaTime() - time;
+		DLog(@"GPX track save time = %f\n", time);
 	}
 }
 
@@ -384,7 +380,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 }
 
 
--(void)trimOldTracks
+-(void)trimTracksOlderThan:(NSDate *)date
 {
 	// trim off old tracks
 	for (;;) {
@@ -392,7 +388,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			break;
 		GpxTrack * track = _previousTracks[0];
 		GpxPoint * point = track.points[0];
-		if ( [[NSDate date] timeIntervalSinceDate:point.timestamp] > MAX_AGE ) {
+		if ( [date timeIntervalSinceDate:point.timestamp] > 0 ) {
 			// delete oldest
 			[self deleteTrack:_previousTracks[0]];
 		} else {
@@ -429,14 +425,19 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			return;
 		}
 
-		[self.activeTrack addPoint:location];
-
 #if 0
-		// don't accumulate too many points total
-		if ( _previousTracks.count > 0 && [self totalPointCount] > MAX_POINTS ) {
-			[_previousTracks removeObjectAtIndex:0];
+		for ( NSInteger i = 0; i < 1000; ++i ) {
+			CLLocation * loc = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(location.coordinate.latitude+i/1000000.0, location.coordinate.longitude) altitude:location.altitude horizontalAccuracy:location.horizontalAccuracy verticalAccuracy:location.verticalAccuracy course:location.course speed:location.speed timestamp:location.timestamp];
+			[self.activeTrack addPoint:loc];
 		}
+#else
+		[self.activeTrack addPoint:location];
 #endif
+
+		// automatically save periodically
+		if ( self.activeTrack.points.count % 10 == 0 ) {
+			[self saveActiveTrack];
+		}
 
 		[self setNeedsDisplay];
 		[self setNeedsLayout];
@@ -489,6 +490,10 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 {
 	if ( _previousTracks == nil ) {
 		_previousTracks = [NSMutableArray new];
+
+		NSNumber * expiration = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
+		NSDate * cutoff = [NSDate dateWithTimeIntervalSinceNow:-expiration.doubleValue*24*60*60];
+
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
 			NSString * dir = [self saveDirectory];
 			NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
@@ -496,6 +501,13 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 				if ( [file hasSuffix:@".track"] ) {
 					NSString * path = [dir stringByAppendingPathComponent:file];
 					GpxTrack * track = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+					if ( [track.creationDate timeIntervalSinceDate:cutoff] < 0 ) {
+						// skip because its too old
+						dispatch_sync(dispatch_get_main_queue(), ^{
+							[self deleteTrack:track];
+						});
+						continue;
+					}
 					dispatch_sync(dispatch_get_main_queue(), ^{
 						//DLog(@"track %@: %ld points\n",track.startDate, (long)track.points.count);
 						[_previousTracks addObject:track];
@@ -504,6 +516,13 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 						if ( progressCallback ) {
 							progressCallback();
 						}
+#if 1
+						if ( track.creationDate == nil ) {
+							GpxPoint * first = track.points[0];
+							track.creationDate = first.timestamp;
+							[self saveToDisk:track];
+						}
+#endif
 					});
 				}
 			}

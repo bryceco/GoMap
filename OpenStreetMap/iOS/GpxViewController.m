@@ -6,15 +6,19 @@
 //  Copyright (c) 2013 Bryce. All rights reserved.
 //
 
+#import <MessageUI/MessageUI.h>
+
 #import "AppDelegate.h"
 #import "DLog.h"
 #import "MapView.h"
+#import "GpxConfigureViewController.h"
 #import "GpxLayer.h"
 #import "GpxViewController.h"
 #import "OsmMapData.h"
 
 
-@interface GpxTrackTableCell : UITableViewCell
+
+@interface GpxTrackTableCell : UITableViewCell <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 @property (assign,nonatomic)	IBOutlet	UILabel				*	startDate;
 @property (assign,nonatomic)	IBOutlet	UILabel				*	duration;
 @property (assign,nonatomic)	IBOutlet	UILabel				*	details;
@@ -24,10 +28,44 @@
 @implementation GpxTrackTableCell
 -(IBAction)doAction:(id)sender
 {
-	[self.tableView shareTrack:_gpxTrack];
+	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Share",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Upload to OSM",nil), NSLocalizedString(@"Mail",nil), nil];
+	[sheet showInView:self];
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	if ( buttonIndex == actionSheet.cancelButtonIndex ) {
+		return;
+	}
+	if ( buttonIndex == 0 ) {
+		// upload
+		[self.tableView shareTrack:_gpxTrack];
+	} else if ( buttonIndex == 1 ) {
+		// mail
+		if ( [MFMailComposeViewController canSendMail] ) {
+			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
+			mail.mailComposeDelegate = self;
+			[mail setSubject:[NSString stringWithFormat:@"%@ GPX file: %@", appDelegate.appName, self.gpxTrack.creationDate]];
+			[mail addAttachmentData:self.gpxTrack.gpxXmlData mimeType:@"application/gpx+xml" fileName:[NSString stringWithFormat:@"%@.gpx", self.gpxTrack.creationDate]];
+			[self.tableView presentViewController:mail animated:YES completion:nil];
+		} else {
+			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
+			[alert show];
+		}
+	}
+}
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+	[controller dismissViewControllerAnimated:YES completion:nil];
 }
 @end
 
+
+@interface GpxTrackExpirationCell : UITableViewCell
+@property (assign,nonatomic)	IBOutlet	UIButton *	expirationButton;
+@end
+@implementation GpxTrackExpirationCell
+@end
 
 
 @implementation GpxViewController
@@ -38,7 +76,6 @@
 
 	_navigationBar.topItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
 
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 	[appDelegate.mapView.gpxLayer loadTracksInBackgroundWithProgress:^{
@@ -80,22 +117,35 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 2;
+	return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	if ( section == 0 ) {
 		return 1;
-	} else {
+	} else if ( section == 1 ) {
 		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 		return appDelegate.mapView.gpxLayer.previousTracks.count;
+	} else if ( section == 2 ) {
+		return 1;
+	} else {
+		return 0;
 	}
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return section == 0 ? @"Current Track" : @"Previous Tracks";
+	switch (section) {
+		case 0:
+			return @"Current Track";
+		case 1:
+			return @"Previous Tracks";
+		case 2:
+			return @"Configure";
+		default:
+			return nil;
+	}
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
@@ -121,10 +171,19 @@
 		cell.tableView = self;
 		return cell;
 	}
+	if ( indexPath.section == 2 ) {
+		GpxTrackExpirationCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackExpirationCell" forIndexPath:indexPath];
+		NSNumber * expirationDays = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
+		NSInteger expiration = [expirationDays integerValue];
+		NSString * title = expiration <= 0 ? @"Never" : [NSString stringWithFormat:@"%ld Days",expiration];
+		[cell.expirationButton setTitle:title forState:UIControlStateNormal];
+		[cell.expirationButton sizeToFit];
+		return cell;
+	}
 
 	GpxTrack *	track = indexPath.section == 0 ? appDelegate.mapView.gpxLayer.activeTrack : appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
 	NSInteger	dur = track.duration;
-	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.startDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
+	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
 	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (long)track.distance, (long)track.points.count];
 	GpxTrackTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
@@ -139,7 +198,7 @@
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section > 0;
+    return indexPath.section == 1;
 }
 
 // Override to support editing the table view.
@@ -179,7 +238,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
-
+		// active track
+	} else if ( indexPath.section == 2 ) {
+		// configuration
 	} else if ( indexPath.section == 1 ) {
 		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
@@ -190,69 +251,106 @@
 
 -(void)shareTrack:(GpxTrack *)track
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	UIAlertView * progress = [[UIAlertView alloc] initWithTitle:@"Uploading GPX..." message:@"Please wait" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+	[progress show];
 
-	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/gpx/create"];
+	// let progress window display before we submit work
+	dispatch_async(dispatch_get_main_queue(), ^{
+		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 
-	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-	NSString * boundary = @"----------------------------d10f7aa230e8";
-	[request setHTTPMethod:@"POST"];
-	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-	NSString * contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-	[request setValue:contentType	forHTTPHeaderField:@"Content-Type"];
-	[request setValue:@"close"		forHTTPHeaderField:@"Connection"];
+		NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/gpx/create"];
 
-	[request setValue:@"ISO-8859-2, utf-8"	forHTTPHeaderField:@"Accept-Charset"];
-	[request setValue:@"gzip,deflate"		forHTTPHeaderField:@"Accept-Encoding"];
-	[request setValue:@"Locus/2.5.6 (Linux; U; Android; en-us)"	forHTTPHeaderField:@"User-Agent"];
+		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+		NSString * boundary = @"----------------------------d10f7aa230e8";
+		[request setHTTPMethod:@"POST"];
+		NSString * contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+		[request setValue:contentType	forHTTPHeaderField:@"Content-Type"];
+		[request setValue:@"close"		forHTTPHeaderField:@"Connection"];
 
-	NSMutableData * body = [NSMutableData new];
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"file\"; filename=\"file.gpx\"\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[@"Content-Type: application/octet-stream\n\n" dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:track.gpxXmlData];
+		NSDateFormatter * dateFormatter = [NSDateFormatter new];
+		[dateFormatter setDateFormat:@"yyyy_MM_dd__HH_mm_ss"];
+		NSString * startDateFile = [dateFormatter stringFromDate:track.creationDate];
+		NSString * startDateFriendly = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
 
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[@"GoMap!! GPX upload" dataUsingEncoding:NSUTF8StringEncoding]];
+		NSMutableData * body = [NSMutableData new];
+		[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"file\"; filename=\"GoMap__%@.gpx\"\r\n",startDateFile]] dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:track.gpxXmlData];
 
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[@"GoMap!!" dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithFormat:@"Go Map!! %@",startDateFriendly] dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"public\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[@"1" dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[@"GoMap" dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"visibility\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[@"public" dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"public\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[@"1" dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	[request setHTTPBody:body];
+		[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"visibility\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[@"public" dataUsingEncoding:NSUTF8StringEncoding]];
 
-	[request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
+		[body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+		[request setHTTPBody:body];
 
-	NSString * auth = [NSString stringWithFormat:@"%@:%@", appDelegate.userName, appDelegate.userPassword];
-	auth = [OsmMapData encodeBase64:auth];
-	auth = [NSString stringWithFormat:@"Basic %@", auth];
-	[request setValue:auth forHTTPHeaderField:@"Authorization"];
+		[request setValue:[NSString stringWithFormat:@"%ld", (long)body.length] forHTTPHeaderField:@"Content-Length"];
 
-	DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
+		NSString * auth = [NSString stringWithFormat:@"%@:%@", appDelegate.userName, appDelegate.userPassword];
+		auth = [OsmMapData encodeBase64:auth];
+		auth = [NSString stringWithFormat:@"Basic %@", auth];
+		[request setValue:auth forHTTPHeaderField:@"Authorization"];
 
-	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * response, NSData * data, NSError * error) {
-		if ( data && error == nil ) {
-			// ok
-		} else {
-			NSString * errorMessage;
-			if ( data.length > 0 ) {
-				errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+//		DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
+
+		[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * response, NSData * data, NSError * error) {
+			[progress dismissWithClickedButtonIndex:0 animated:YES];
+
+			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
+			if ( httpResponse.statusCode == 200 ) {
+				// ok
+				UIAlertView * success = [[UIAlertView alloc] initWithTitle:@"GPX Upload Complete" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[success show];
 			} else {
-				errorMessage = error.localizedDescription;
+				DLog(@"response = %@\n",response);
+				DLog(@"data = %s", (char *)data.bytes);
+				NSString * errorMessage = nil;
+				if ( data.length > 0 ) {
+					errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+				} else {
+					errorMessage = error.localizedDescription;
+				}
+				// failure
+				UIAlertView * failure = [[UIAlertView alloc] initWithTitle:@"GPX Upload Failed" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[failure show];
 			}
-			// failure
-		}
-	}];
+		}];
+	});
+}
+
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ( [segue.destinationViewController isKindOfClass:[GpxConfigureViewController class]] ) {
+		GpxConfigureViewController * dest = segue.destinationViewController;
+		dest.expirationValue = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
+		dest.completion = ^(NSNumber * pick){
+			[[NSUserDefaults standardUserDefaults] setObject:pick forKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
+
+			if ( pick.doubleValue > 0 ) {
+				AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+				NSDate * cutoff = [NSDate dateWithTimeIntervalSinceNow:-pick.doubleValue*24*60*60];
+				[appDelegate.mapView.gpxLayer trimTracksOlderThan:cutoff];
+			}
+			[self.tableView reloadData];
+		};
+	}
 }
 
 @end
