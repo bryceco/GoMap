@@ -2695,8 +2695,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		NSArray * objects = [self.editorLayer osmHitTestMultiple:point];
 		if ( objects.count < 2 )
 			return;
-		if ( objects.count > 5 )
-			objects = [objects subarrayWithRange:NSMakeRange(0, 5)];
 		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 		_multiSelectObjects = objects;
 		for ( OsmBaseObject * obj in objects ) {
