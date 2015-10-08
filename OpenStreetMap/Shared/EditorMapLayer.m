@@ -3386,7 +3386,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	OSMSize pixelsPerDegree = { mapView.bounds.size.width / viewCoord.size.width, mapView.bounds.size.height / viewCoord.size.height };
 
 	OSMSize maxDegrees = { WayHitTestRadius / pixelsPerDegree.width, WayHitTestRadius / pixelsPerDegree.height };
-	const double NODE_BIAS = 0.8;	// make nodes appear closer so they can be selected
+	const double NODE_BIAS = 0.5;	// make nodes appear closer so they can be selected
 
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.deleted )

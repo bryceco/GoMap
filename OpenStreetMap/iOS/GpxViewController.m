@@ -175,7 +175,7 @@
 		GpxTrackExpirationCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackExpirationCell" forIndexPath:indexPath];
 		NSNumber * expirationDays = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
 		NSInteger expiration = [expirationDays integerValue];
-		NSString * title = expiration <= 0 ? @"Never" : [NSString stringWithFormat:@"%ld Days",expiration];
+		NSString * title = expiration <= 0 ? @"Never" : [NSString stringWithFormat:@"%ld Days",(long)expiration];
 		[cell.expirationButton setTitle:title forState:UIControlStateNormal];
 		[cell.expirationButton sizeToFit];
 		return cell;

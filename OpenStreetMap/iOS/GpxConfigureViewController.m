@@ -25,7 +25,7 @@
 		return @"Never";
 	if ( row == 1 )
 		return @"1 Day";
-	return [NSString stringWithFormat:@"%ld Days",row];
+	return [NSString stringWithFormat:@"%ld Days",(long)row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
