@@ -25,7 +25,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="20" y="180" width="560" height="43"/>
+                                <rect key="frame" x="20" y="120" width="560" height="43"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Go Map!!">
                                         <attributes>
@@ -38,16 +38,31 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OSM-Logo256.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Nv-ci-hNo">
+                                <rect key="frame" x="172" y="216" width="256" height="256"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="256" id="IXy-gi-0zi"/>
+                                    <constraint firstAttribute="width" constant="256" id="POc-un-Wi3"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.78823529410000004" green="0.90980392160000001" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="4Nv-ci-hNo" firstAttribute="top" secondItem="GJd-Yh-RWb" secondAttribute="bottom" constant="53" id="2Cc-er-moP"/>
                             <constraint firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
+                            <constraint firstItem="4Nv-ci-hNo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Mu2-og-Go1"/>
                             <constraint firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="Q3B-4B-g5h"/>
                             <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" symbolic="YES" id="SfN-ll-jLj"/>
                             <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="1" id="moa-c2-u7t"/>
+                            <constraint firstItem="4Nv-ci-hNo" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="iwW-Wv-L1L"/>
+                            <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="-58" id="moa-c2-u7t"/>
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" symbolic="YES" id="x7j-FC-K8j"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Mu2-og-Go1"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -55,4 +70,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="OSM-Logo256.png" width="256" height="256"/>
+    </resources>
 </document>
