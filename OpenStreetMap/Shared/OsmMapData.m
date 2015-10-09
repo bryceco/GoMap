@@ -582,6 +582,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	_undoManager.locationCallback = callback;
 }
 
+-(NSString *)undoManagerDescription
+{
+	return [_undoManager description];
+}
+
 -(BOOL)undoAction:(UndoAction *)newAction duplicatesPreviousAction:(UndoAction *)prevAction
 {
 	if ( newAction.target != prevAction.target )

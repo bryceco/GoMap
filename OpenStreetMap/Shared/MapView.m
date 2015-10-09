@@ -1954,8 +1954,6 @@ NSString * ActionTitle( NSInteger action )
 	// drop in center of screen
 	[self removePin];
 
-	static CGPoint totalMove;
-
 	_pushpinView = [PushPinView new];
 	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
 	_pushpinView.layer.zPosition = Z_PUSHPIN;
@@ -1968,7 +1966,8 @@ NSString * ActionTitle( NSInteger action )
 			switch ( state ) {
 				case UIGestureRecognizerStateBegan:
 					[weakSelf.editorLayer.mapData beginUndoGrouping];
-					totalMove.x = totalMove.y = 0.0;
+					_pushpinDragTotalMove.x = _pushpinDragTotalMove.y = 0.0;
+					_pushpinDragDidMove		= NO;
 					break;
 
 				case UIGestureRecognizerStateCancelled:
@@ -1977,6 +1976,8 @@ NSString * ActionTitle( NSInteger action )
 					// fall through so we properly terminate gesture
 				case UIGestureRecognizerStateEnded:
 					[weakSelf.editorLayer.mapData endUndoGrouping];
+DLog(@"end drag\n");
+DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 
 					[weakSelf unblinkObject];
 					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
@@ -2025,15 +2026,22 @@ NSString * ActionTitle( NSInteger action )
 					break;
 					
 				case UIGestureRecognizerStateChanged:
-#if 0	// don't accumulate undo moves
+#if 1	// don't accumulate undo moves
 					{
-						totalMove.x += dx;
-						totalMove.y += dy;
-						[weakSelf.editorLayer.mapData endUndoGrouping];
-						[weakSelf.editorLayer.mapData undo];
-						[weakSelf.editorLayer.mapData beginUndoGrouping];
-						dx = totalMove.x;
-						dy = totalMove.y;
+						_pushpinDragTotalMove.x += dx;
+						_pushpinDragTotalMove.y += dy;
+						if ( _pushpinDragDidMove ) {
+							DLog(@"\ndrag node\n");
+							[weakSelf.editorLayer.mapData endUndoGrouping];
+							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+							[weakSelf.editorLayer.mapData undo];
+							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+							[weakSelf.editorLayer.mapData beginUndoGrouping];
+							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+						}
+						_pushpinDragDidMove = YES;
+						dx = _pushpinDragTotalMove.x;
+						dy = _pushpinDragTotalMove.y;
 					}
 #endif
 					for ( OsmNode * node in object.nodeSet ) {

@@ -160,6 +160,18 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	}
 }
 
+-(NSString *)description
+{
+	NSMutableString * text = [NSMutableString new];
+	[text appendFormat:@"undo stack:\n"];
+	[text appendFormat:@"   run loop = %ld\n", (long)_runLoopCounter];
+	[text appendFormat:@"   group = %@\n", _groupingStack.count ? _groupingStack.lastObject : @"none"];
+	for ( UndoAction * action in _undoStack ) {
+		[text appendFormat:@"   %ld: %@\n", (long)action.group, action.selector];
+	}
+	return text;
+}
+
 -(BOOL) canUndo
 {
 	return _undoStack.count > 0;

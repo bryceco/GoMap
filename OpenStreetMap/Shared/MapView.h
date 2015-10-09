@@ -116,6 +116,9 @@ typedef enum {
 	CLLocationManager				*	_locationManager;
 
 	dispatch_source_t					_mailTimer;
+
+	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
+	BOOL								_pushpinDragDidMove;	// to maintain undo stack
 }
 
 #if TARGET_OS_IPHONE

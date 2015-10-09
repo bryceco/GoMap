@@ -87,7 +87,7 @@ extern NSString * OsmValueForBoolean( BOOL b );
 -(void)endUndoGrouping;
 -(void)removeMostRecentRedo;
 -(void)setUndoLocationCallback:(NSData * (^)(void))callback;
-
+-(NSString *)undoManagerDescription;
 
 -(void)addChangeCallback:(void(^)(void))callback;
 -(void)clearUndoStack;
