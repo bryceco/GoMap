@@ -58,7 +58,7 @@
 	for ( UITextField * field in _valueFieldList ) {
 		NSString * value = [field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if ( value.length ) {
-			CommonTagValue * preset = [CommonTagValue presetWithName:nil tagValue:value];
+			CommonTagValue * preset = [CommonTagValue presetWithName:nil details:nil tagValue:value];
 			[presets addObject:preset];
 		}
 	}

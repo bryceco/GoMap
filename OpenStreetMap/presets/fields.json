@@ -81,18 +81,9 @@
 		"keys": [
 				 "addr:housename",
 				 "addr:housenumber",
-				 "addr:conscriptionnumber",
 				 "addr:street",
 				 "addr:city",
-				 "addr:postcode",
-				 "addr:place",
-				 "addr:hamlet",
-				 "addr:suburb",
-				 "addr:subdistrict",
-				 "addr:district",
-				 "addr:province",
-				 "addr:state",
-				 "addr:country"
+				 "addr:postcode"
 				 ],
 		"reference": {
 			"key": "addr"

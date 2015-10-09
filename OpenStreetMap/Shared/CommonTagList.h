@@ -20,9 +20,10 @@
 // A possible value for a tag
 @interface CommonTagValue : NSObject
 @property (readonly,nonatomic) NSString	*	name;
+@property (readonly,nonatomic) NSString *	details;
 @property (readonly,nonatomic) NSString	*	tagValue;
--(instancetype)initWithName:(NSString *)name tagValue:(NSString *)value;
-+(instancetype)presetWithName:(NSString *)name tagValue:(NSString *)value;
+-(instancetype)initWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value;
++(instancetype)presetWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value;
 @end
 
 

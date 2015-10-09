@@ -98,22 +98,24 @@ static NSString * PrettyTag( NSString * tag )
 
 
 @implementation CommonTagValue
--(instancetype)initWithName:(NSString *)name tagValue:(NSString *)value
+-(instancetype)initWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value
 {
 	self = [super init];
 	if ( self ) {
 		_name = name ?: PrettyTag(value);
+		_details = details;
 		_tagValue = value;
 	}
 	return self;
 }
-+(instancetype)presetWithName:(NSString *)name tagValue:(NSString *)value
++(instancetype)presetWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value
 {
-	return [[CommonTagValue alloc] initWithName:name tagValue:value];
+	return [[CommonTagValue alloc] initWithName:name details:details tagValue:value];
 }
 -(void)encodeWithCoder:(NSCoder *)coder
 {
 	[coder encodeObject:_name forKey:@"name"];
+	[coder encodeObject:_details forKey:@"details"];
 	[coder encodeObject:_tagValue forKey:@"tagValue"];
 }
 
@@ -122,6 +124,7 @@ static NSString * PrettyTag( NSString * tag )
 	self = [super init];
 	if ( self ) {
 		_name = [coder decodeObjectForKey:@"name"];
+		_details = [coder decodeObjectForKey:@"details"];
 		_tagValue = [coder decodeObjectForKey:@"tagValue"];
 	}
 	return self;
@@ -427,7 +430,8 @@ static NSString * PrettyTag( NSString * tag )
 
 	if ( [type isEqualToString:@"defaultcheck"] || [type isEqualToString:@"check"] ) {
 
-		NSArray * presets = @[ [CommonTagValue presetWithName:@"Yes" tagValue:@"yes"], [CommonTagValue presetWithName:@"No" tagValue:@"no"] ];
+		NSArray * presets = @[ [CommonTagValue presetWithName:@"Yes" details:nil tagValue:@"yes"],
+							   [CommonTagValue presetWithName:@"No"  details:nil tagValue:@"no"] ];
 		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 		return group;
@@ -438,11 +442,11 @@ static NSString * PrettyTag( NSString * tag )
 		if ( keyArray ) {
 			for ( NSString * k in keyArray ) {
 				NSString * label = optionStringsDict[ k ];
-				[presets addObject:[CommonTagValue presetWithName:label tagValue:k]];
+				[presets addObject:[CommonTagValue presetWithName:label details:nil tagValue:k]];
 			}
 		} else if ( optionArray ) {
 			for ( NSString * v in optionArray ) {
-				[presets addObject:[CommonTagValue presetWithName:nil tagValue:v]];
+				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:v]];
 			}
 		} else {
 #if DEBUG
@@ -460,7 +464,7 @@ static NSString * PrettyTag( NSString * tag )
 		if ( optionStringsDict ) {
 
 			[optionStringsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
-				[presets addObject:[CommonTagValue presetWithName:v tagValue:k]];
+				[presets addObject:[CommonTagValue presetWithName:v details:nil tagValue:k]];
 			}];
 			[presets sortUsingComparator:^NSComparisonResult(CommonTagValue * obj1, CommonTagValue * obj2) {
 				return [obj1.name compare:obj2.name];
@@ -469,7 +473,7 @@ static NSString * PrettyTag( NSString * tag )
 		} else if ( optionArray ) {
 
 			for ( NSString * v in optionArray ) {
-				[presets addObject:[CommonTagValue presetWithName:nil tagValue:v]];
+				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:v]];
 			}
 
 		} else {
@@ -491,7 +495,7 @@ static NSString * PrettyTag( NSString * tag )
 							if ( [v[@"fraction"] doubleValue] < 0.01 )
 								continue;
 							NSString * val = v[@"value"];
-							[presets2 addObject:[CommonTagValue presetWithName:nil tagValue:val]];
+							[presets2 addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
 						}
 						dispatch_async(dispatch_get_main_queue(), ^{
 							[taginfoCache setObject:presets2 forKey:fieldName];
@@ -517,12 +521,9 @@ static NSString * PrettyTag( NSString * tag )
 			NSMutableArray * presets = [NSMutableArray new];
 			[optionStringsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * v, BOOL *stop) {
 				NSString * n = v[@"title"];
-				[presets addObject:[CommonTagValue presetWithName:n tagValue:k]];
+				NSString * d = v[@"description"];
+				[presets addObject:[CommonTagValue presetWithName:n details:d tagValue:k]];
 			}];
-//			[presets sortUsingComparator:^NSComparisonResult(CommonTagValue * obj1, CommonTagValue * obj2) {
-//				return [obj1.name compare:obj2.name];
-//			}];
-
 			CommonTagKey * tag = [CommonTagKey tagWithName:typesDict[key] tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			[tagList addObject:tag];
 		}

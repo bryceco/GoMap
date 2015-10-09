@@ -65,15 +65,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+	UITableViewCell *cell;
 	CommonTagValue * preset = _valueDefinitions[ indexPath.row ];
+
+	if ( preset.details )
+		cell = [tableView dequeueReusableCellWithIdentifier:@"SubtitleCell" forIndexPath:indexPath];
+	else
+		cell = [tableView dequeueReusableCellWithIdentifier:@"BasicCell" forIndexPath:indexPath];
+
 	if ( preset.name ) {
 		cell.textLabel.text = preset.name;
+		cell.detailTextLabel.text = preset.details;
 	} else {
 		NSString * text = [preset.tagValue stringByReplacingOccurrencesOfString:@"_" withString:@" "];
 		text = [text capitalizedString];
 		cell.textLabel.text = text;
+		cell.detailTextLabel.text = nil;
 	}
 
 	POITabBarController * tabController = (id)self.tabBarController;
