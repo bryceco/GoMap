@@ -416,6 +416,7 @@ static NSString * PrettyTag( NSString * tag )
 	NSString	*	givenName			= dict[ @"label" ];
 	NSString	*	placeholder			= dict[ @"placeholder" ];
 	NSDictionary *	optionStringsDict	= dict[ @"strings" ][ @"options" ];
+	NSDictionary*	typesDict			= dict[ @"strings" ][ @"types" ];
 	NSArray		*	optionArray			= dict[ @"options" ];
 	NSString	*	defaultValue		= dict[ @"default" ];
 	UIKeyboardType					keyboard = UIKeyboardTypeDefault;
@@ -452,7 +453,7 @@ static NSString * PrettyTag( NSString * tag )
 		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 		return group;
-
+		
 	} else if ( [type isEqualToString:@"combo"] ) {
 
 		NSMutableArray * presets = [NSMutableArray new];
@@ -505,6 +506,28 @@ static NSString * PrettyTag( NSString * tag )
 
 		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
+		return group;
+
+	} else if ( [type isEqualToString:@"cycleway"] ) {
+
+		NSMutableArray * tagList = [NSMutableArray new];
+
+		for ( key in keyArray ) {
+
+			NSMutableArray * presets = [NSMutableArray new];
+			[optionStringsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * v, BOOL *stop) {
+				NSString * n = v[@"title"];
+				[presets addObject:[CommonTagValue presetWithName:n tagValue:k]];
+			}];
+//			[presets sortUsingComparator:^NSComparisonResult(CommonTagValue * obj1, CommonTagValue * obj2) {
+//				return [obj1.name compare:obj2.name];
+//			}];
+
+			CommonTagKey * tag = [CommonTagKey tagWithName:typesDict[key] tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			[tagList addObject:tag];
+		}
+
+		CommonTagGroup * group = [CommonTagGroup groupWithName:givenName tags:tagList];
 		return group;
 
 	} else if ( [type isEqualToString:@"address"] ) {

@@ -1954,6 +1954,8 @@ NSString * ActionTitle( NSInteger action )
 	// drop in center of screen
 	[self removePin];
 
+	static CGPoint totalMove;
+
 	_pushpinView = [PushPinView new];
 	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
 	_pushpinView.layer.zPosition = Z_PUSHPIN;
@@ -1966,6 +1968,7 @@ NSString * ActionTitle( NSInteger action )
 			switch ( state ) {
 				case UIGestureRecognizerStateBegan:
 					[weakSelf.editorLayer.mapData beginUndoGrouping];
+					totalMove.x = totalMove.y = 0.0;
 					break;
 
 				case UIGestureRecognizerStateCancelled:
@@ -2024,12 +2027,15 @@ NSString * ActionTitle( NSInteger action )
 				case UIGestureRecognizerStateChanged:
 #if 0	// don't accumulate undo moves
 					{
+						totalMove.x += dx;
+						totalMove.y += dy;
 						[weakSelf.editorLayer.mapData endUndoGrouping];
 						[weakSelf.editorLayer.mapData undo];
 						[weakSelf.editorLayer.mapData beginUndoGrouping];
+						dx = totalMove.x;
+						dy = totalMove.y;
 					}
 #endif
-					DLog(@"%f,%f",dx,dy);
 					for ( OsmNode * node in object.nodeSet ) {
 						CGPoint delta = { dx, -dy };
 						[weakSelf.editorLayer adjustNode:node byDistance:delta];
