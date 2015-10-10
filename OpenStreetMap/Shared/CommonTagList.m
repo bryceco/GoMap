@@ -590,8 +590,19 @@ static NSString * PrettyTag( NSString * tag )
 	} else if ( [type isEqualToString:@"access"] ) {
 
 		// special case
-		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
-		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[tag]];
+		NSMutableArray * presets = [NSMutableArray new];
+		[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * info, BOOL * stop) {
+			CommonTagValue * v = [CommonTagValue presetWithName:info[@"name"] details:info[@"description"] tagValue:k];
+			[presets addObject:v];
+		}];
+
+		NSMutableArray * tags = [NSMutableArray new];
+		for ( NSString * k in keysArray ) {
+			NSString * name = stringsTypesDict[ k ];
+			CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
+			[tags addObject:tag];
+		}
+		CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:tags];
 		return group;
 
 	} else if ( [type isEqualToString:@"typeCombo"] ) {
