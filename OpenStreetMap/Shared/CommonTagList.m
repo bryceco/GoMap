@@ -415,12 +415,12 @@ static NSString * PrettyTag( NSString * tag )
 
 	NSString	*	key					= dict[ @"key" ] ?: fieldName;
 	NSString	*	type				= dict[ @"type" ];
-	NSArray		*	keyArray			= dict[ @"keys" ];
-	NSString	*	givenName			= dict[ @"label" ];
+	NSArray		*	keysArray			= dict[ @"keys" ];
+	NSString	*	label				= dict[ @"label" ];
 	NSString	*	placeholder			= dict[ @"placeholder" ];
-	NSDictionary *	optionStringsDict	= dict[ @"strings" ][ @"options" ];
-	NSDictionary*	typesDict			= dict[ @"strings" ][ @"types" ];
-	NSArray		*	optionArray			= dict[ @"options" ];
+	NSDictionary *	stringsOptionsDict	= dict[ @"strings" ][ @"options" ];
+	NSDictionary*	stringsTypesDict	= dict[ @"strings" ][ @"types" ];
+	NSArray		*	optionsArray		= dict[ @"options" ];
 	NSString	*	defaultValue		= dict[ @"default" ];
 	UIKeyboardType					keyboard = UIKeyboardTypeDefault;
 	UITextAutocapitalizationType	capitalize = [key hasPrefix:@"name:"] ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
@@ -432,47 +432,59 @@ static NSString * PrettyTag( NSString * tag )
 
 		NSArray * presets = @[ [CommonTagValue presetWithName:@"Yes" details:nil tagValue:@"yes"],
 							   [CommonTagValue presetWithName:@"No"  details:nil tagValue:@"no"] ];
-		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 		return group;
 
 	} else if ( [type isEqualToString:@"radio"] ) {
 
-		NSMutableArray * presets = [NSMutableArray new];
-		if ( keyArray ) {
-			for ( NSString * k in keyArray ) {
-				NSString * label = optionStringsDict[ k ];
-				[presets addObject:[CommonTagValue presetWithName:label details:nil tagValue:k]];
+		if ( keysArray ) {
+
+			// a list of booleans
+			NSMutableArray * tags = [NSMutableArray new];
+			NSArray * presets = @[ [CommonTagValue presetWithName:@"Yes" details:nil tagValue:@"yes"],
+								   [CommonTagValue presetWithName:@"No"  details:nil tagValue:@"no"] ];
+			for ( NSString * k in keysArray ) {
+				NSString * name = stringsOptionsDict[ k ];
+				CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+				[tags addObject:tag];
 			}
-		} else if ( optionArray ) {
-			for ( NSString * v in optionArray ) {
+			CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:tags];
+			return group;
+
+		} else if ( optionsArray ) {
+
+			// a multiple selection
+			NSMutableArray * presets = [NSMutableArray new];
+			for ( NSString * v in optionsArray ) {
 				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:v]];
 			}
+			CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
+			return group;
+
 		} else {
 #if DEBUG
 			assert(NO);
 #endif
+			return nil;
 		}
 
-		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
-		return group;
-		
 	} else if ( [type isEqualToString:@"combo"] ) {
 
 		NSMutableArray * presets = [NSMutableArray new];
-		if ( optionStringsDict ) {
+		if ( stringsOptionsDict ) {
 
-			[optionStringsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
+			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
 				[presets addObject:[CommonTagValue presetWithName:v details:nil tagValue:k]];
 			}];
 			[presets sortUsingComparator:^NSComparisonResult(CommonTagValue * obj1, CommonTagValue * obj2) {
 				return [obj1.name compare:obj2.name];
 			}];
 
-		} else if ( optionArray ) {
+		} else if ( optionsArray ) {
 
-			for ( NSString * v in optionArray ) {
+			for ( NSString * v in optionsArray ) {
 				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:v]];
 			}
 
@@ -508,7 +520,7 @@ static NSString * PrettyTag( NSString * tag )
 			}
 		}
 
-		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 		return group;
 
@@ -516,19 +528,19 @@ static NSString * PrettyTag( NSString * tag )
 
 		NSMutableArray * tagList = [NSMutableArray new];
 
-		for ( key in keyArray ) {
+		for ( key in keysArray ) {
 
 			NSMutableArray * presets = [NSMutableArray new];
-			[optionStringsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * v, BOOL *stop) {
+			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * v, BOOL *stop) {
 				NSString * n = v[@"title"];
 				NSString * d = v[@"description"];
 				[presets addObject:[CommonTagValue presetWithName:n details:d tagValue:k]];
 			}];
-			CommonTagKey * tag = [CommonTagKey tagWithName:typesDict[key] tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonTagKey * tag = [CommonTagKey tagWithName:stringsTypesDict[key] tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			[tagList addObject:tag];
 		}
 
-		CommonTagGroup * group = [CommonTagGroup groupWithName:givenName tags:tagList];
+		CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:tagList];
 		return group;
 
 	} else if ( [type isEqualToString:@"address"] ) {
@@ -544,7 +556,7 @@ static NSString * PrettyTag( NSString * tag )
 			CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 			[addrs addObject:tag];
 		}
-		CommonTagGroup * group = [CommonTagGroup groupWithName:givenName tags:addrs];
+		CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:addrs];
 		return group;
 
 	} else if ( [type isEqualToString:@"text"] ||
@@ -564,21 +576,21 @@ static NSString * PrettyTag( NSString * tag )
 			keyboard = UIKeyboardTypeURL;
 		else if ( [type isEqualToString:@"textarea"] )
 			capitalize = UITextAutocapitalizationTypeSentences;
-		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[tag]];
 		return group;
 
 	} else if ( [type isEqualToString:@"maxspeed"] ) {
 
 		// special case
-		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[tag]];
 		return group;
 
 	} else if ( [type isEqualToString:@"access"] ) {
 
 		// special case
-		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[tag]];
 		return group;
 
@@ -592,7 +604,7 @@ static NSString * PrettyTag( NSString * tag )
 #if DEBUG
 		assert(NO);
 #endif
-		CommonTagKey * tag = [CommonTagKey tagWithName:givenName tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[tag]];
 		return group;
 
