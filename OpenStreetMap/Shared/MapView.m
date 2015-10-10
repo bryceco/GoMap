@@ -1976,8 +1976,8 @@ NSString * ActionTitle( NSInteger action )
 					// fall through so we properly terminate gesture
 				case UIGestureRecognizerStateEnded:
 					[weakSelf.editorLayer.mapData endUndoGrouping];
-DLog(@"end drag\n");
-DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+//DLog(@"end drag\n");
+//DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 
 					[weakSelf unblinkObject];
 					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
@@ -2028,20 +2028,21 @@ DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 				case UIGestureRecognizerStateChanged:
 #if 1	// don't accumulate undo moves
 					{
-						_pushpinDragTotalMove.x += dx;
-						_pushpinDragTotalMove.y += dy;
-						if ( _pushpinDragDidMove ) {
-							DLog(@"\ndrag node\n");
-							[weakSelf.editorLayer.mapData endUndoGrouping];
+						MapView * strongSelf = weakSelf;
+						strongSelf->_pushpinDragTotalMove.x += dx;
+						strongSelf->_pushpinDragTotalMove.y += dy;
+						if ( strongSelf->_pushpinDragDidMove ) {
+							// DLog(@"\ndrag node\n");
+							[strongSelf.editorLayer.mapData endUndoGrouping];
 							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
-							[weakSelf.editorLayer.mapData undo];
+							[strongSelf.editorLayer.mapData undo];
 							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
-							[weakSelf.editorLayer.mapData beginUndoGrouping];
+							[strongSelf.editorLayer.mapData beginUndoGrouping];
 							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 						}
-						_pushpinDragDidMove = YES;
-						dx = _pushpinDragTotalMove.x;
-						dy = _pushpinDragTotalMove.y;
+						strongSelf->_pushpinDragDidMove = YES;
+						dx = strongSelf->_pushpinDragTotalMove.x;
+						dy = strongSelf->_pushpinDragTotalMove.y;
 					}
 #endif
 					for ( OsmNode * node in object.nodeSet ) {
