@@ -79,9 +79,9 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 }
 -(void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeDouble:_latitude forKey:@"lat"];
+	[aCoder encodeDouble:_latitude	forKey:@"lat"];
 	[aCoder encodeDouble:_longitude forKey:@"lon"];
-	[aCoder encodeDouble:_accuracy forKey:@"acc"];
+	[aCoder encodeDouble:_accuracy	forKey:@"acc"];
 	[aCoder encodeDouble:_elevation forKey:@"ele"];
 	[aCoder encodeObject:_timestamp forKey:@"time"];
 }

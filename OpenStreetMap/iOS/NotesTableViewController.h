@@ -16,6 +16,7 @@
 	NSString		*	_newComment;
 	UIAlertView		*	_alert;
 }
+@property (assign,nonatomic)	IBOutlet UITableView	*	tableView;
 @property (strong,nonatomic)	OsmNote	* note;
 @property (strong,nonatomic)	MapView	* mapView;
 @end

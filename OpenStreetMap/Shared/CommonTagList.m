@@ -9,6 +9,7 @@
 #import "iosapi.h"
 #import "CommonTagList.h"
 #import "DLog.h"
+#import "OsmObjects.h"
 #import "TagInfo.h"
 
 static NSDictionary * g_defaultsDict;
@@ -673,6 +674,75 @@ static NSString * PrettyTag( NSString * tag )
 	}];
 	return bestMatchName;
 }
+
+
+
++(BOOL)isArea:(OsmWay *)way
+{
+	static NSDictionary * areaTags = nil;
+	if ( areaTags == nil ) {
+
+		// make a list of items that can/cannot be areas
+		NSMutableDictionary * areaKeys = [NSMutableDictionary new];
+		NSArray * ignore = @[ @"barrier", @"highway", @"footway", @"railway", @"type" ];
+
+		// whitelist
+		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
+			if ( dict[@"suggestion"] )
+				return;
+			NSArray * geom = dict[@"geometry"];
+			if ( ![geom containsObject:@"area"] )
+				return;
+			NSDictionary * tags = dict[@"tags"];
+			if ( tags.count > 1 )
+				return;	// very specific tags aren't suitable for whitelist, since we don't know which key is primary (in iD the JSON order is preserved and it would be the first key)
+			for ( NSString * key in tags ) {
+				if ( [ignore containsObject:key] )
+					return;
+				[areaKeys setObject:[NSMutableDictionary new] forKey:key];
+			}
+		}];
+
+		// blacklist
+		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
+			if ( dict[@"suggestion"] )
+				return;
+			NSArray * geom = dict[ @"geometry"];
+			if ( [geom containsObject:@"area"] )
+				return;
+			NSDictionary * tags = dict[@"tags"];
+			for ( NSString * key in tags ) {
+				if ( [ignore containsObject:key] )
+					return;
+				NSString * value = tags[key];
+				if ( areaKeys[key] != nil  &&  ![value isEqualToString:@"*"] ) {
+					NSMutableDictionary * d = areaKeys[key];
+					d[value] = @true;
+				}
+			}
+		}];
+
+		areaTags = areaKeys;
+	}
+	
+	NSString * value = way.tags[@"area"];
+	if ( value && IsOsmBooleanTrue(value) )
+		return YES;
+	if ( !way.isClosed )
+		return NO;
+	if ( value && IsOsmBooleanFalse(value) )
+		return NO;
+	__block BOOL area = NO;
+	[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * val, BOOL *stop) {
+		NSDictionary * exclusions = areaTags[key];
+		if ( exclusions && !exclusions[val] ) {
+			area = YES;
+			*stop = YES;
+		}
+	}];
+	return area;
+}
+
 
 -(void)setPresetsForDict:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
 {

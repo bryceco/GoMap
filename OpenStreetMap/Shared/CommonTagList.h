@@ -15,6 +15,7 @@
 #define GEOMETRY_VERTEX	@"vertex"
 
 @class TagInfo;
+@class OsmWay;
 
 
 // A possible value for a tag
@@ -113,6 +114,8 @@
 -(CommonTagGroup *)groupAtIndex:(NSInteger)index;
 -(CommonTagKey *)tagAtSection:(NSInteger)section row:(NSInteger)row;
 -(CommonTagKey *)tagAtIndexPath:(NSIndexPath *)indexPath;
+
++(BOOL)isArea:(OsmWay *)way;
 @end
 
 

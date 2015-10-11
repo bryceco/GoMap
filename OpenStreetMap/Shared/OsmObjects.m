@@ -518,7 +518,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 -(NSString *)geometryName
 {
 	if ( self.isWay ) {
-		if ( self.isWay.isClosed )
+		if ( self.isWay.isArea )
 			return GEOMETRY_AREA;
 		else
 			return GEOMETRY_WAY;
@@ -533,7 +533,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		else
 			return GEOMETRY_WAY;
 	}
-	return @"unkown";
+	return @"unknown";
 }
 
 -(OSM_TYPE)extendedType
@@ -729,116 +729,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(BOOL)isArea
 {
-	static NSDictionary * exclusions = nil;
-	if ( exclusions == nil ) {
-		exclusions = @{
-			@"aeroway": @{
-				@"gate": @true,
-				@"taxiway": @true
-			},
-			@"amenity": @{
-				@"atm": @true,
-				@"bbq": @true,
-				@"bench": @true,
-				@"clock": @true,
-				@"drinking_water": @true,
-				@"parking_entrance": @true,
-				@"post_box": @true,
-				@"telephone": @true,
-				@"vending_machine": @true,
-				@"waste_basket": @true
-			},
-			@"area": @{},
-			@"barrier": @{
-				@"block": @true,
-				@"bollard": @true,
-				@"cattle_grid": @true,
-				@"cycle_barrier": @true,
-				@"entrance": @true,
-				@"fence": @true,
-				@"gate": @true,
-				@"hedge": @true,
-				@"kissing_gate": @true,
-				@"lift_gate": @true,
-				@"stile": @true,
-				@"toll_booth": @true
-			},
-			@"building": @{
-				@"entrance": @true
-			},
-			@"craft": @{},
-			@"emergency": @{
-				@"fire_hydrant": @true,
-				@"phone": @true
-			},
-			@"golf": @{
-				@"hole": @true
-			},
-			@"historic": @{
-				@"boundary_stone": @true
-			},
-			@"landuse": @{},
-			@"leisure": @{
-				@"picnic_table": @true,
-				@"slipway": @true
-			},
-			@"man_made": @{
-				@"cutline": @true,
-				@"embankment": @true,
-				@"flagpole": @true,
-				@"pipeline": @true,
-				@"survey_point": @true
-			},
-			@"military": @{},
-			@"natural": @{
-				@"coastline": @true,
-				@"peak": @true,
-				@"spring": @true,
-				@"tree": @true
-			},
-			@"office": @{},
-			@"piste:type": @{},
-			@"place": @{},
-			@"power": @{
-				@"line": @true,
-				@"minor_line": @true,
-				@"pole": @true,
-				@"tower": @true
-			},
-			@"public_transport": @{
-				@"stop_position": @true
-			},
-			@"shop": @{},
-			@"tourism": @{
-				@"viewpoint": @true
-			},
-			@"waterway": @{
-				@"canal": @true,
-				@"ditch": @true,
-				@"drain": @true,
-				@"river": @true,
-				@"stream": @true,
-				@"weir": @true
-			}
-		};
-	}
-
-	NSString * value = _tags[@"area"];
-	if ( value && IsOsmBooleanTrue(value) )
-		return YES;
-	if ( !self.isClosed )
-		return NO;
-	if ( value && IsOsmBooleanFalse(value) )
-		return NO;
-	__block BOOL area = NO;
-	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * val, BOOL *stop) {
-		NSDictionary * exclude = exclusions[key];
-		if ( exclude && !exclude[val] ) {
-			area = YES;
-			*stop = YES;
-		}
-	}];
-	return area;
+	return [CommonTagList isArea:self];
 }
 
 -(BOOL)isClosed

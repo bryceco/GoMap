@@ -36,6 +36,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+	// add extra space at bottom so keyboard doesn't cover elements
+	UIEdgeInsets rc = self.tableView.contentInset;
+	rc.bottom += 70;
+	self.tableView.contentInset = rc;
 }
 
 - (void)viewWillAppear:(BOOL)animated

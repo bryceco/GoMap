@@ -24,6 +24,12 @@
 
 NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
 
+
+BOOL IsOsmBooleanTrue( NSString * value );
+BOOL IsOsmBooleanFalse( NSString * value );
+
+
+
 typedef enum {
 	OSM_TYPE_NODE		= 1,
 	OSM_TYPE_WAY		= 2,
