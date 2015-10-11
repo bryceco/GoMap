@@ -196,7 +196,9 @@ CGSize SizeForImage( NSImage * image )
 #endif
 
 #if TARGET_OS_IPHONE
-		_editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSArray * comments){
+		_editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSArray * comments) {
+			if ( self.silentUndo )
+				return;
 			NSString * title = undo ? NSLocalizedString(@"Undo",nil) : NSLocalizedString(@"Redo",nil);
 			NSArray * comment = comments.count == 0 ? nil : undo ? comments.lastObject : comments[0];
 			NSString * action = comment[0];
@@ -1871,8 +1873,15 @@ NSString * ActionTitle( NSInteger action )
 
 -(IBAction)editControlAction:(id)sender
 {
+	// get the selected button: has to be done before modifying the node/way selection
 	UISegmentedControl * segmentedControl = (UISegmentedControl *) sender;
 	NSInteger segment = segmentedControl.selectedSegmentIndex;
+
+	if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
+		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+		self.editorLayer.selectedNode = nil;
+		[self refreshPushpinText];
+	}
 	if ( segment < _editControlActions.count ) {
 		NSNumber * action = _editControlActions[ segment ];
 		[self performEditAction:action.integerValue];
@@ -2035,7 +2044,9 @@ NSString * ActionTitle( NSInteger action )
 							// DLog(@"\ndrag node\n");
 							[strongSelf.editorLayer.mapData endUndoGrouping];
 							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+							weakSelf.silentUndo = YES;
 							[strongSelf.editorLayer.mapData undo];
+							weakSelf.silentUndo = NO;
 							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 							[strongSelf.editorLayer.mapData beginUndoGrouping];
 							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );

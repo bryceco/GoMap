@@ -154,6 +154,7 @@ typedef enum {
 
 @property (assign,nonatomic)	GPS_STATE						gpsState;
 @property (readonly,nonatomic)	PushPinView					*	pushpinView;
+@property (assign,nonatomic)	BOOL							silentUndo;	// don't flash message about undo
 
 @property (strong,nonatomic)	AerialList					*	customAerials;
 

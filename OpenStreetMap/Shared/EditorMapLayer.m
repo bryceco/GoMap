@@ -2022,6 +2022,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 
 		} else if ( object.isNode ) {
 
+#if 0 // draw square around selected node
 			OsmNode * node = (id)object;
 			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 
@@ -2048,6 +2049,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 			[layers addObject:layer];
 			CGPathRelease(path);
 			CGPathRelease(shadowPath);
+#endif
 		}
 	}
 
