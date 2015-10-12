@@ -56,6 +56,9 @@ static const CGFloat Z_BALL			= 5;
 static const CGFloat Z_FLASH		= 6;
 static const CGFloat Z_TOOLBAR		= 9000;
 static const CGFloat Z_PUSHPIN		= 9001;
+const static CGFloat Z_CROSSHAIRS	= 10000;
+
+
 
 CGSize SizeForImage( NSImage * image )
 {
@@ -183,6 +186,40 @@ CGSize SizeForImage( NSImage * image )
 		_rulerLayer.mapView = self;
 		_rulerLayer.zPosition = Z_RULER;
 		[self.layer addSublayer:_rulerLayer];
+
+
+		if ( YES ) {
+			// implement crosshairs
+			_crossHairs = [CAShapeLayer new];
+			UIBezierPath * path = [UIBezierPath bezierPath];
+			CGFloat radius = 10;
+			[path moveToPoint:CGPointMake(-radius, 0)];
+			[path addLineToPoint:CGPointMake(radius, 0)];
+			[path moveToPoint:CGPointMake(0, -radius)];
+			[path addLineToPoint:CGPointMake(0, radius)];
+			_crossHairs.anchorPoint	= CGPointMake(0.5, 0.5);
+			_crossHairs.path		= path.CGPath;
+			_crossHairs.strokeColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1.0].CGColor;
+			_crossHairs.bounds		= CGRectMake(-radius, -radius, 2*radius, 2*radius);
+			_crossHairs.lineWidth	= 2.0;
+			_crossHairs.zPosition	= Z_CROSSHAIRS;
+
+			path = [UIBezierPath new];
+			CGFloat shadowWidth = 1.0;
+			UIBezierPath * p1 = [UIBezierPath bezierPathWithRect:CGRectMake(-(radius+shadowWidth), -shadowWidth, 2*(radius+shadowWidth), 2*shadowWidth)];
+			UIBezierPath * p2 = [UIBezierPath bezierPathWithRect:CGRectMake(-shadowWidth, -(radius+shadowWidth), 2*shadowWidth, 2*(radius+shadowWidth))];
+			[path appendPath:p1];
+			[path appendPath:p2];
+			_crossHairs.shadowColor		= [UIColor blackColor].CGColor;
+			_crossHairs.shadowOpacity	= 1.0;
+			_crossHairs.shadowPath		= path.CGPath;
+			_crossHairs.shadowRadius	= 0;
+			_crossHairs.shadowOffset	= CGSizeMake(0,0);
+
+			_crossHairs.position = CGRectCenter( self.bounds );
+			[self.layer addSublayer:_crossHairs];
+		}
+		
 
 #if 0	// no evidence this help things
 		for ( CALayer * layer in _backgroundLayers ) {
@@ -475,6 +512,7 @@ CGSize SizeForImage( NSImage * image )
 			layer.bounds = self.layer.bounds;
 		}
 	}
+	_crossHairs.position = CGRectCenter( rect );
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
 
@@ -2195,7 +2233,7 @@ NSString * ActionTitle( NSInteger action )
 		OsmNode * prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count-2] : nil;
 		CGPoint prevPrevPoint = prevPrevNode ? [self screenPointForLatitude:prevPrevNode.lat longitude:prevPrevNode.lon birdsEye:YES] : CGPointMake(0,0);
 
-		if ( _editorLayer.crossHairs &&
+		if ( _crossHairs &&
 			 hypot( prevPoint.x-centerPoint.x, prevPoint.y-centerPoint.y) > 10.0 &&
 			(prevPrevNode==nil || hypot( prevPrevPoint.x-centerPoint.x, prevPrevPoint.y-centerPoint.y) > 10.0 ) )
 		{

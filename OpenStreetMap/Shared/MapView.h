@@ -167,6 +167,7 @@ typedef enum {
 @property (assign,nonatomic)	BOOL							enableUnnamedRoadHalo;
 @property (assign,nonatomic)	BOOL							enableBreadCrumb;
 
+@property (readonly,nonatomic)	CAShapeLayer				*	crossHairs;
 
 
 -(void)updateBingButton;

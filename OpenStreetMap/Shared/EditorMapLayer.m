@@ -141,35 +141,6 @@ const CGFloat WayHighlightRadius = 6.0;
 		_baseLayer = [CATransformLayer new];
 		[self addSublayer:_baseLayer];
 
-		if ( YES ) {
-			// implement crosshairs
-			_crossHairs = [CAShapeLayer new];
-			UIBezierPath * path = [UIBezierPath bezierPath];
-			CGFloat radius = 10;
-			[path moveToPoint:CGPointMake(-radius, 0)];
-			[path addLineToPoint:CGPointMake(radius, 0)];
-			[path moveToPoint:CGPointMake(0, -radius)];
-			[path addLineToPoint:CGPointMake(0, radius)];
-			_crossHairs.anchorPoint	= CGPointMake(0.5, 0.5);
-			_crossHairs.path		= path.CGPath;
-			_crossHairs.strokeColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.5 alpha:1.0].CGColor;
-			_crossHairs.bounds		= CGRectMake(-radius, -radius, 2*radius, 2*radius);
-			_crossHairs.lineWidth	= 2.0;
-			_crossHairs.zPosition	= Z_CROSSHAIRS;
-
-			path = [UIBezierPath new];
-			CGFloat shadowWidth = 1.0;
-			UIBezierPath * p1 = [UIBezierPath bezierPathWithRect:CGRectMake(-(radius+shadowWidth), -shadowWidth, 2*(radius+shadowWidth), 2*shadowWidth)];
-			UIBezierPath * p2 = [UIBezierPath bezierPathWithRect:CGRectMake(-shadowWidth, -(radius+shadowWidth), 2*shadowWidth, 2*(radius+shadowWidth))];
-			[path appendPath:p1];
-			[path appendPath:p2];
-			_crossHairs.shadowColor		= [UIColor blackColor].CGColor;
-			_crossHairs.shadowOpacity	= 1.0;
-			_crossHairs.shadowPath		= path.CGPath;
-			_crossHairs.shadowRadius	= 0;
-			_crossHairs.shadowOffset	= CGSizeMake(0,0);
-		}
-
 		self.actions = @{
 						  @"onOrderIn"	: [NSNull null],
 						  @"onOrderOut" : [NSNull null],
@@ -182,7 +153,6 @@ const CGFloat WayHighlightRadius = 6.0;
 						  @"lineWidth"	: [NSNull null],
 		};
 		_baseLayer.actions = self.actions;
-		_crossHairs.actions = self.actions;
 	}
 	return self;
 }
@@ -1417,7 +1387,6 @@ const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 8 * ZSCALE;
 const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 9 * ZSCALE;
 const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 10 * ZSCALE;
 const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
-const static CGFloat Z_CROSSHAIRS		= 10000;
 
 -(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(OSMPoint *)refPoint CF_RETURNS_RETAINED
 {
@@ -3194,13 +3163,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( CALayer * layer in _highlightLayers ) {
 		// add new highlights
 		[_baseLayer addSublayer:layer];
-	}
-
-	if ( _crossHairs ) {
-		_crossHairs.position = CGRectCenter( self.bounds );
-		if ( _crossHairs.superlayer == nil ) {
-			[self addSublayer:_crossHairs];
-		}
 	}
 
 	// NSLog(@"%ld layers", (long)self.sublayers.count);
