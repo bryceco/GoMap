@@ -102,6 +102,7 @@ typedef enum {
 	UIAlertView						*	_alertGps;
 	UIActionSheet					*	_multiSelectSheet;
 	NSArray							*	_multiSelectObjects;
+	CGPoint								_multiSelectPoint;
 	UILabel							*	_flashLabel;
 
 	UIActionSheet					*	_actionSheet;

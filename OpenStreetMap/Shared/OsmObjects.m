@@ -832,7 +832,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		case 0:
 			return point;
 		case 1:
-			return [((OsmNode *)_nodes.lastObject) location];
+			return ((OsmNode *)_nodes.lastObject).location;
 	}
 	OSMPoint	bestPoint = { 0, 0 };
 	double		bestDist = 360 * 360;

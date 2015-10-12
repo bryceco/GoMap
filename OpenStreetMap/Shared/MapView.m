@@ -1836,15 +1836,28 @@ NSString * ActionTitle( NSInteger action )
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	// processing for selecting one of multipe objects
 	if ( actionSheet == _multiSelectSheet ) {
+		// processing for selecting one of multipe objects
 		if ( buttonIndex < _multiSelectObjects.count ) {
 			OsmBaseObject * object = _multiSelectObjects[ buttonIndex ];
 			if ( object.isNode ) {
+				for ( OsmBaseObject * obj in _multiSelectObjects ) {
+					if ( obj.isWay && [obj.isWay.nodes containsObject:object] ) {
+						[_editorLayer setSelectedWay:obj.isWay];
+						break;
+					}
+				}
 				[_editorLayer setSelectedNode:object.isNode];
+				CGPoint pos = [self screenPointForLatitude:object.isNode.lat longitude:object.isNode.lon birdsEye:YES];
+				[self placePushpinAtPoint:pos object:object];
 			} else if ( object.isWay ) {
 				[_editorLayer setSelectedWay:object.isWay];
+				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:_multiSelectPoint birdsEye:YES];
+				OSMPoint latLon2 = [object.isWay pointOnWayForPoint:OSMPointMake(latLon.longitude,latLon.latitude)];
+				CGPoint pos = [self screenPointForLatitude:latLon2.y longitude:latLon2.x birdsEye:YES];
+				[self placePushpinAtPoint:pos object:object];
 			}
+
 		} else {
 			// Cancel button pressed
 		}
@@ -2718,6 +2731,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			return;
 		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 		_multiSelectObjects = objects;
+		_multiSelectPoint = point;
 		for ( OsmBaseObject * obj in objects ) {
 			NSString * title = obj.friendlyDescription;
 			[_multiSelectSheet addButtonWithTitle:title];
