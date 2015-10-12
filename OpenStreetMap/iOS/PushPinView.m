@@ -317,7 +317,7 @@
 		NSLog(@"dx,dy = %f,%f",delta.x,delta.y);
 		_dragCallback( gesture.state, delta.x, delta.y );
 #else
-		_dragCallback( gesture.state, dX, dY );
+		_dragCallback( gesture.state, dX, dY, gesture );
 #endif
 	}
 }

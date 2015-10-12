@@ -2017,7 +2017,7 @@ NSString * ActionTitle( NSInteger action )
 
 	__weak MapView * weakSelf = self;
 	if ( object ) {
-		_pushpinView.dragCallback = ^(UIGestureRecognizerState state, CGFloat dx, CGFloat dy) {
+		_pushpinView.dragCallback = ^(UIGestureRecognizerState state, CGFloat dx, CGFloat dy, UIGestureRecognizer * gesture ) {
 			switch ( state ) {
 				case UIGestureRecognizerStateBegan:
 					[weakSelf.editorLayer.mapData beginUndoGrouping];
@@ -2081,6 +2081,43 @@ NSString * ActionTitle( NSInteger action )
 					break;
 					
 				case UIGestureRecognizerStateChanged:
+#if 1
+					{
+						// scroll screen if too close to edge
+						const CGFloat MinDistanceSide = 40.0;
+						const CGFloat MinDistanceTop = MinDistanceSide + 10.0;
+						const CGFloat MinDistanceBottom = MinDistanceSide + 120.0;
+						CGPoint arrow = weakSelf.pushpinView.arrowPoint; // [gesture locationInView:weakSelf];
+						CGRect screen = weakSelf.bounds;
+						CGFloat delta;
+						const CGFloat scroll = 4.0;
+						delta = screen.origin.x + MinDistanceSide - arrow.x;
+						if ( delta > 0 ) {
+							[weakSelf adjustOriginBy:CGPointMake(scroll,0)];
+							dx = -scroll;
+							weakSelf.pushpinView.arrowPoint = CGPointMake(screen.origin.x+MinDistanceSide, weakSelf.pushpinView.arrowPoint.y);
+						}
+						delta = screen.origin.x + screen.size.width - MinDistanceSide - arrow.x;
+						if ( delta < 0 ) {
+							[weakSelf adjustOriginBy:CGPointMake(-scroll,0)];
+							dx = scroll;
+							weakSelf.pushpinView.arrowPoint = CGPointMake(screen.origin.x+screen.size.width-MinDistanceSide, weakSelf.pushpinView.arrowPoint.y);
+						}
+						delta = screen.origin.y + MinDistanceTop - arrow.y;
+						if ( delta > 0 ) {
+							[weakSelf adjustOriginBy:CGPointMake(0,scroll)];
+							dy = -scroll;
+							weakSelf.pushpinView.arrowPoint = CGPointMake(weakSelf.pushpinView.arrowPoint.x, screen.origin.y+MinDistanceTop);
+						}
+						delta = screen.origin.y + screen.size.height - MinDistanceBottom - arrow.y;
+						if ( delta < 0 ) {
+							[weakSelf adjustOriginBy:CGPointMake(0,-scroll)];
+							dy = scroll;
+							weakSelf.pushpinView.arrowPoint = CGPointMake(weakSelf.pushpinView.arrowPoint.x, screen.origin.y+screen.size.height-MinDistanceBottom);
+						}
+					}
+#endif
+
 #if 1	// don't accumulate undo moves
 					{
 						MapView * strongSelf = weakSelf;
@@ -2102,6 +2139,7 @@ NSString * ActionTitle( NSInteger action )
 						dy = strongSelf->_pushpinDragTotalMove.y;
 					}
 #endif
+
 					for ( OsmNode * node in object.nodeSet ) {
 						CGPoint delta = { dx, -dy };
 						[weakSelf.editorLayer adjustNode:node byDistance:delta];

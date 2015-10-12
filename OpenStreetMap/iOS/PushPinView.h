@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^	PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat dx, CGFloat dy);
+typedef void (^	PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat dx, CGFloat dy, UIGestureRecognizer * gesture );
 
 @interface PushPinView : UIButton
 {
