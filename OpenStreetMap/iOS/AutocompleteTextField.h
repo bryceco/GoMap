@@ -24,6 +24,7 @@
 }
 
 @property (copy,nonatomic)	NSArray * completions;
+@property (copy,nonatomic)	void (^didSelect)(void);
 
 -(void)clearFilteredCompletionsInternal;
 

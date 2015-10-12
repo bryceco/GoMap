@@ -165,11 +165,13 @@
 
 		// Tags
 		if ( indexPath.row == _tags.count ) {
+			// Add new tag
 			AddNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
 			[cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
 			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
 			return cell;
 		}
+
 		TextPair * cell = [tableView dequeueReusableCellWithIdentifier:@"TagCell" forIndexPath:indexPath];
 		NSArray * kv = _tags[ indexPath.row ];
 		// assign text contents of fields
@@ -177,6 +179,10 @@
 		cell.text2.enabled = YES;
 		cell.text1.text = kv[0];
 		cell.text2.text = kv[1];
+
+		cell.text1.didSelect = ^{ [cell.text2 becomeFirstResponder]; };
+		cell.text2.didSelect = ^{};
+
 #if 0
 		if ( [kv[0] length] == 0 && [kv[1] length] == 0 ) {
 			// empty key/value so set keyboard focus to it

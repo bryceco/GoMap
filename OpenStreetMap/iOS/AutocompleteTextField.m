@@ -32,6 +32,9 @@
 {
 	if ( [_realDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)])
 		[_realDelegate textFieldDidBeginEditing:textField];
+#if 0
+	[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:self.owner.text];
+#endif
 }
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
@@ -90,7 +93,7 @@ static const CGFloat GradientHeight = 20.0;
 	_myDelegate = [AutocompleteTextFieldDelegate new];
 	_myDelegate.owner = self;
 	super.delegate = _myDelegate;
-	
+
 	return self;
 }
 
@@ -164,6 +167,7 @@ static const CGFloat GradientHeight = 20.0;
 	});
 #endif
 }
+
 - (void) keyboardWillChange:(NSNotification *)nsNotification
 {
 	_keyboardSize = [self keyboardSizeFromNotification:nsNotification];
@@ -187,6 +191,28 @@ static const CGFloat GradientHeight = 20.0;
 
 -(CGRect)frameForCompletionTableView
 {
+#if 1
+	UITableViewCell * cell = (id)self.superview;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
+		cell = (id)cell.superview;
+	UITableView * tableView = (id)cell.superview;
+	while ( tableView && ![tableView isKindOfClass:[UITableView class]] ) {
+		tableView = (id)tableView.superview;
+	}
+	UIWindow * window = (id)tableView.superview;
+	while ( window && ![window isKindOfClass:[UIWindow class]] )
+		window = (id)window.superview;
+
+	CGRect cellRC = [self convertRect:self.frame toView:tableView];
+	CGRect tableRC = [tableView convertRect:tableView.frame toView:nil];
+
+	CGRect rect;
+	rect.origin.x = 0;
+	rect.origin.y = cellRC.origin.y + cellRC.size.height;
+	rect.size.width = tableView.frame.size.width;
+	rect.size.height = tableView.frame.size.height - cellRC.origin.y - tableView.frame.origin.y - _keyboardSize.height;
+	rect.size.height = window.frame.size.height - tableRC.origin.y - _keyboardSize.height - cell.frame.size.height;
+#else
 	UITableViewCell * cell = (id)[self.superview superview];
 	UITableView * tableView = (id)[cell superview];
 	if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
@@ -202,6 +228,8 @@ static const CGFloat GradientHeight = 20.0;
 	rect.origin.y = cell.frame.origin.y + cell.frame.size.height;
 	rect.size.width = cell.frame.size.width;
 	rect.size.height = view.frame.size.height - _keyboardSize.height - cell.frame.size.height;
+	return rect;
+#endif
 	return rect;
 }
 
@@ -240,11 +268,21 @@ static const CGFloat GradientHeight = 20.0;
 			[tableView.layer addSublayer:_gradientLayer];
 
 			// scroll cell to top
+#if 1
+			NSIndexPath * p = [tableView indexPathForCell:cell];
+			[tableView scrollToRowAtIndexPath:p atScrollPosition:UITableViewScrollPositionTop animated:NO];
+#else
 			CGRect cellFrame = cell.frame;
+			cellFrame = [cell.superview convertRect:cellFrame toView:tableView];
 			if ( iOS7 ) {
-				cellFrame.origin.y -= 45 + 20;
+#if 0
+				cellFrame.origin.y += tableView.contentOffset.y;
+#else
+				cellFrame.origin.y -= 45 + 20;	// cell height + status bar height?
+#endif
 			}
 			[tableView setContentOffset:CGPointMake(0,cellFrame.origin.y) animated:YES];
+#endif
 			tableView.scrollEnabled = NO;
 		}
 		[_completionTableView reloadData];
@@ -277,6 +315,10 @@ static const CGFloat GradientHeight = 20.0;
 
 	[self sendActionsForControlEvents:UIControlEventEditingChanged];
 	// [[NSNotificationCenter defaultCenter] postNotificationName:UITextFieldTextDidChangeNotification object:self userInfo:nil];
+
+	if ( self.didSelect ) {
+		self.didSelect();
+	}
 
 	// hide completion table view
 	_filteredCompletions = nil;

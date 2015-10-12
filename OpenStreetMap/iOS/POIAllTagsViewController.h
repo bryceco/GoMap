@@ -13,8 +13,8 @@
 	IBOutlet UIView				*	_fixContstraintView;
 	IBOutlet NSLayoutConstraint *	_fixConstraint;
 }
-@property (assign,nonatomic) IBOutlet	UITextField *	text1;
-@property (assign,nonatomic) IBOutlet	UITextField *	text2;
+@property (assign,nonatomic) IBOutlet	AutocompleteTextField *	text1;
+@property (assign,nonatomic) IBOutlet	AutocompleteTextField *	text2;
 @end
 
 

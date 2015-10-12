@@ -295,6 +295,7 @@ static NSString * PrettyTag( NSString * tag )
 			[set addObject:value];
 		}
 	}];
+	[set removeObject:@"*"];
 	return set;
 }
 
