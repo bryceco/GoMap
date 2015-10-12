@@ -110,7 +110,8 @@
 	[_progressView startAnimating];
 	[_commitButton setEnabled:NO];
 	[_cancelButton setEnabled:NO];
-
+	[_sendMailButton setEnabled:NO];
+	[_editXmlButton setEnabled:NO];
 
 	NSString * comment = _commentTextView.text;
 	comment = [comment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -122,6 +123,10 @@
 		if ( error ) {
 			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Unable to upload changes",nil) message:error delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
 			[alert show];
+			if ( !_xmlTextView.editable ) {
+				[_sendMailButton setEnabled:YES];
+				[_editXmlButton setEnabled:YES];
+			}
 		} else {
 			[self dismissViewControllerAnimated:YES completion:nil];
 
