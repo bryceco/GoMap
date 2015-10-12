@@ -2015,7 +2015,7 @@ const static CGFloat Z_CROSSHAIRS		= 10000;
 				layer.lineWidth		= 2.0;
 				path = [node hasInterestingTags] ? CGPathCreateWithRect(rect, NULL) : CGPathCreateWithEllipseInRect(rect, NULL);
 				layer.path			= path;
-				layer.zPosition		= Z_HIGHLIGHT_NODE;
+				layer.zPosition		= Z_HIGHLIGHT_NODE + (node == _selectedNode ? 0.1*ZSCALE : 0);
 				[layers addObject:layer];
 				CGPathRelease(path);
 			}
