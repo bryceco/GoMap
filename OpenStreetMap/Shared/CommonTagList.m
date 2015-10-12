@@ -733,6 +733,8 @@ static NSString * PrettyTag( NSString * tag )
 		return NO;
 	if ( value && IsOsmBooleanFalse(value) )
 		return NO;
+	if ( way.tags.count == 0 )
+		return YES;	// newly created closed way
 	__block BOOL area = NO;
 	[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * val, BOOL *stop) {
 		NSDictionary * exclusions = areaTags[key];

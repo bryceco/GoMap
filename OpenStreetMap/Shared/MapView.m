@@ -1923,14 +1923,27 @@ NSString * ActionTitle( NSInteger action )
 	UISegmentedControl * segmentedControl = (UISegmentedControl *) sender;
 	NSInteger segment = segmentedControl.selectedSegmentIndex;
 
-	if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
-		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-		self.editorLayer.selectedNode = nil;
-		[self refreshPushpinText];
-	}
 	if ( segment < _editControlActions.count ) {
-		NSNumber * action = _editControlActions[ segment ];
-		[self performEditAction:action.integerValue];
+		NSNumber * actionNum = _editControlActions[ segment ];
+		NSInteger action = actionNum.integerValue;
+
+		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+		switch ( action ) {
+			case ACTION_RECTANGULARIZE:
+			case ACTION_STRAIGHTEN:
+			case ACTION_REVERSE:
+			case ACTION_DUPLICATE:
+			case ACTION_CIRCULARIZE:
+			case ACTION_COPYTAGS:
+			case ACTION_PASTETAGS:
+			case ACTION_EDITTAGS:
+				if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
+					self.editorLayer.selectedNode = nil;
+					[self refreshPushpinText];
+				}
+		}
+
+		[self performEditAction:action];
 	}
 	segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
 }
