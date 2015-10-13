@@ -16,6 +16,9 @@
 #import "OsmObjects.h"
 
 
+static NSArray * FixMeList = nil;
+
+
 @implementation OsmNoteComment
 -(instancetype)initWithXml:(NSXMLElement *)noteElement
 {
@@ -128,6 +131,8 @@
 		_dict = [NSMutableDictionary new];
 		_workQueue = [NSOperationQueue new];
 		_workQueue.maxConcurrentOperationCount = 1;
+
+		FixMeList = @[ @"fixme", @"FIXME" ];	// there are many others but not frequently used
 	}
 	return self;
 }
@@ -137,6 +142,23 @@
 	[_workQueue cancelAllOperations];
 	[_dict removeAllObjects];
 }
+
+#if 0
+-(void)updateObject:(OsmBaseObject *)object
+{
+	NSNumber * ident = @(object.extendedIdentifier);
+	[_dict removeObjectForKey:ident];
+
+	for ( NSString * key in FixMeList ) {
+		NSString * fixme = object.tags[key];
+		if ( fixme.length > 0 ) {
+			OsmNote * note = [[OsmNote alloc] initWithFixmeObject:object fixmeKey:key];
+			[_dict setObject:note forKey:note.ident];
+			break;
+		}
+	}
+}
+#endif
 
 -(void)updateForRegion:(OSMRect)box fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion
 {
@@ -154,23 +176,24 @@
 			}
 		}
 
-		NSArray * FixMeList = @[ @"fixme", @"FIXME" ];	// there are many others but not frequently used
 		dispatch_async(dispatch_get_main_queue(), ^{
+			// add downloaded notes
+			for ( OsmNote * note in newNotes ) {
+				[_dict setObject:note forKey:note.ident];
+			}
+
 			// add FIXMEs
 			[mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
 				for ( NSString * key in FixMeList ) {
 					NSString * fixme = obj.tags[key];
 					if ( fixme.length > 0 ) {
 						OsmNote * note = [[OsmNote alloc] initWithFixmeObject:obj fixmeKey:key];
-						[newNotes addObject:note];
+						[_dict setObject:note forKey:note.ident];
+						break;
 					}
 				}
 			}];
 
-			// create dictionary
-			for ( OsmNote * n in newNotes ) {
-				[_dict setObject:n forKey:n.ident];
-			}
 			completion();
 		});
 	}];

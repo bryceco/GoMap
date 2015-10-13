@@ -162,6 +162,14 @@
                                         <color key="textColor" red="1" green="0.28449999999999998" blue="0.19" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo4-Nq-pAz">
+                                        <rect key="frame" x="9" y="355" width="47" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Center"/>
+                                        <connections>
+                                            <action selector="centerOnGPS:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="5qr-EW-Due"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -175,10 +183,12 @@
                                     <constraint firstItem="9t5-wq-j1u" firstAttribute="centerX" secondItem="GTv-eT-l7q" secondAttribute="centerX" constant="7.5" id="MKk-qF-9MP"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="centerX" secondItem="Zh9-uC-62t" secondAttribute="centerX" id="Oun-QH-4xK"/>
                                     <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="26" id="PTj-zH-igC"/>
+                                    <constraint firstAttribute="bottom" secondItem="Fo4-Nq-pAz" secondAttribute="bottom" constant="95" id="SQO-T3-EmO"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="trailing" secondItem="GTv-eT-l7q" secondAttribute="trailing" id="T60-8I-jog"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="11" id="VKx-lR-ejS"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="9t5-wq-j1u" secondAttribute="bottom" constant="55" id="WDm-wY-ec4"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" id="cAR-iT-KBF"/>
+                                    <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="fUu-P0-xQ0"/>
                                     <constraint firstAttribute="trailing" secondItem="TnL-YC-BCg" secondAttribute="trailing" constant="12" id="hAx-Am-c4P"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="trailing" secondItem="fss-Ag-fKJ" secondAttribute="trailing" id="lPN-o8-UjX"/>
                                     <constraint firstAttribute="centerX" secondItem="zrW-uc-hfQ" secondAttribute="centerX" constant="-12.5" id="oyJ-uQ-7Yp"/>
@@ -186,11 +196,12 @@
                                     <constraint firstAttribute="centerX" secondItem="N5Q-nV-TPG" secondAttribute="centerX" id="uqA-n8-R0J"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="_bingMapsLogo" destination="2Ka-IT-DQC" id="y5a-cy-cWA"/>
-                                    <outlet property="_helpButton" destination="TnL-YC-BCg" id="vNu-fI-eYS"/>
-                                    <outlet property="_progressIndicator" destination="Zh9-uC-62t" id="ITW-gB-RtP"/>
+                                    <outlet property="bingMapsLogo" destination="2Ka-IT-DQC" id="KDN-9Z-L5e"/>
+                                    <outlet property="centerOnGPSButton" destination="Fo4-Nq-pAz" id="EWp-gg-bm2"/>
                                     <outlet property="editControl" destination="zrW-uc-hfQ" id="0UY-5Y-O1k"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
+                                    <outlet property="helpButton" destination="TnL-YC-BCg" id="hR9-Za-lMp"/>
+                                    <outlet property="progressIndicator" destination="Zh9-uC-62t" id="GOZ-5L-yvO"/>
                                     <outlet property="statusBarBackground" destination="g4c-aL-FjW" id="YBa-Op-9me"/>
                                     <outlet property="zoomToEditLabel" destination="N5Q-nV-TPG" id="Sfg-zh-7aq"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
@@ -3657,7 +3668,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             <tableViewSection id="Jj3-DP-Kv0">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="h9U-Vj-X5o">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h9U-Vj-X5o" id="3eE-LA-ydc">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -3699,7 +3710,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="BzN-Jf-Fhy">
-                                        <rect key="frame" x="0.0" y="79" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BzN-Jf-Fhy" id="JIQ-9E-Zpf">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -3738,7 +3749,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RVH-Gr-ovV">
-                                        <rect key="frame" x="0.0" y="123" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="187" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RVH-Gr-ovV" id="zpM-TU-9KE">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -3774,7 +3785,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="7VN-hq-A1f">
-                                        <rect key="frame" x="0.0" y="167" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="231" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7VN-hq-A1f" id="gpI-iQ-qxN">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -3810,7 +3821,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </constraints>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hB9-Su-J7c">
-                                        <rect key="frame" x="0.0" y="211" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="275" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hB9-Su-J7c" id="Ebw-ze-qOw">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -3849,7 +3860,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="o6b-b2-gKO">
-                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="319" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o6b-b2-gKO" id="kkR-ez-8Ef">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -3892,7 +3903,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             <tableViewSection id="zAV-j7-YOT">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="FSJ-Kj-hi2" customClass="AttributeCustomCell">
-                                        <rect key="frame" x="0.0" y="319" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="383" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FSJ-Kj-hi2" id="317-Eo-cbb">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -3932,7 +3943,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="KfW-UU-ugN" customClass="AttributeCustomCell">
-                                        <rect key="frame" x="0.0" y="363" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="427" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KfW-UU-ugN" id="NLf-Cq-Zkf">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -5396,10 +5407,10 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="DvT-fe-8IR"/>
-        <segue reference="KuK-gp-RBs"/>
-        <segue reference="ZKT-be-rhK"/>
-        <segue reference="g2g-Jn-Tdv"/>
+        <segue reference="OEI-9h-7td"/>
         <segue reference="222-H0-L76"/>
+        <segue reference="g2g-Jn-Tdv"/>
+        <segue reference="KuK-gp-RBs"/>
+        <segue reference="DvT-fe-8IR"/>
     </inferredMetricsTieBreakers>
 </document>

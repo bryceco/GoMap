@@ -278,6 +278,16 @@ static TagInfo * g_DefaultRender = nil;
 		return _renderSize = 1250;
 	}
 
+	BOOL isAddress = object.tags.count > 0;
+	for ( NSString * key in object.tags ) {
+		if ( ![key hasPrefix:@"addr:"] ) {
+			isAddress = NO;
+			break;
+		}
+	}
+	if ( isAddress )
+		return 40;	// lower priority than default
+
 	// get a default value
 	_renderSize = 50;
 	return [self renderSize:object];

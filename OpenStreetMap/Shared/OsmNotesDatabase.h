@@ -11,6 +11,8 @@
 #import "VectorMath.h"
 
 @class OsmMapData;
+@class OsmBaseObject;
+
 
 @interface OsmNoteComment : NSObject
 @property (readonly,nonatomic)	NSString	*	date;

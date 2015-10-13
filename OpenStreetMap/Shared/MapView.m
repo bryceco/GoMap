@@ -322,6 +322,11 @@ CGSize SizeForImage( NSImage * image )
 
 	_editorLayer.whiteText = !_aerialLayer.hidden;
 
+	// center button
+	_centerOnGPSButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
+	_centerOnGPSButton.layer.cornerRadius = 10;
+	_centerOnGPSButton.hidden = YES;
+
 #if 0
 	// check for mail periodically and update application badge
 	_mailTimer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue() );
@@ -1165,6 +1170,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			[self animateRotationBy:-rotation aroundPoint:center];
 		}
 
+		if ( gpsState == GPS_STATE_NONE )
+			_centerOnGPSButton.hidden = YES;
+
 		_gpsState = gpsState;
 		if ( _gpsState != GPS_STATE_NONE ) {
 			[self locateMe:nil];
@@ -1206,6 +1214,17 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #else
 	[self performSelector:@selector(locationUpdateFailed:) withObject:nil afterDelay:5.0];
 #endif
+}
+
+-(IBAction)centerOnGPS:(id)sender
+{
+	if ( _gpsState == GPS_STATE_NONE )
+		return;
+
+	_userOverrodeLocationPosition = NO;
+	CLLocation * location = _locationManager.location;
+	[self setTransformForLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
+	_centerOnGPSButton.hidden = YES;
 }
 
 -(void)locationUpdateFailed:(NSError *)error
@@ -2105,25 +2124,26 @@ NSString * ActionTitle( NSInteger action )
 						CGFloat delta;
 						const CGFloat scroll = 4.0;
 						delta = screen.origin.x + MinDistanceSide - arrow.x;
-						if ( delta > 0 ) {
+						NSLog(@"delta = %f\n",delta);
+						if ( delta >= 0 ) {
 							[weakSelf adjustOriginBy:CGPointMake(scroll,0)];
 							dx = -scroll;
 							weakSelf.pushpinView.arrowPoint = CGPointMake(screen.origin.x+MinDistanceSide, weakSelf.pushpinView.arrowPoint.y);
 						}
 						delta = screen.origin.x + screen.size.width - MinDistanceSide - arrow.x;
-						if ( delta < 0 ) {
+						if ( delta <= 0 ) {
 							[weakSelf adjustOriginBy:CGPointMake(-scroll,0)];
 							dx = scroll;
 							weakSelf.pushpinView.arrowPoint = CGPointMake(screen.origin.x+screen.size.width-MinDistanceSide, weakSelf.pushpinView.arrowPoint.y);
 						}
 						delta = screen.origin.y + MinDistanceTop - arrow.y;
-						if ( delta > 0 ) {
+						if ( delta >= 0 ) {
 							[weakSelf adjustOriginBy:CGPointMake(0,scroll)];
 							dy = -scroll;
 							weakSelf.pushpinView.arrowPoint = CGPointMake(weakSelf.pushpinView.arrowPoint.x, screen.origin.y+MinDistanceTop);
 						}
 						delta = screen.origin.y + screen.size.height - MinDistanceBottom - arrow.y;
-						if ( delta < 0 ) {
+						if ( delta <= 0 ) {
 							[weakSelf adjustOriginBy:CGPointMake(0,-scroll)];
 							dy = scroll;
 							weakSelf.pushpinView.arrowPoint = CGPointMake(weakSelf.pushpinView.arrowPoint.x, screen.origin.y+screen.size.height-MinDistanceBottom);
@@ -2432,8 +2452,10 @@ drop_pin:
 		[self placePushpinAtPoint:point object:node];
 	} else {
 		// update current object
-		[_editorLayer.mapData setTags:tags forObject:_editorLayer.selectedPrimary];
+		OsmBaseObject * object = _editorLayer.selectedPrimary;
+		[_editorLayer.mapData setTags:tags forObject:object];
 		[self refreshPushpinText];
+		[self refreshNoteButtonsFromDatabase];
 	}
 	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
@@ -2743,6 +2765,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan
 {
 	_userOverrodeLocationPosition = YES;
+	_centerOnGPSButton.hidden = _gpsState == GPS_STATE_NONE;
 
 	if ( pan.state == UIGestureRecognizerStateBegan ) {
 		// start pan

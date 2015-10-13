@@ -67,8 +67,6 @@ typedef enum {
 #endif
 {
 #if TARGET_OS_IPHONE
-	IBOutlet UIButton				*	_bingMapsLogo;
-	IBOutlet UIButton				*	_helpButton;
 #else
 	CALayer							*	_bingMapsLogo;
 #endif
@@ -76,7 +74,6 @@ typedef enum {
 
 	CGPoint								_lastMouseDragPos;
 
-	IBOutlet NSProgressIndicator	*	_progressIndicator;
 	NSInteger							_progressActive;
 
 	OsmBaseObject					*	_grabbedObject;
@@ -126,7 +123,13 @@ typedef enum {
 @property (assign,nonatomic)	MapViewController			*	viewController;
 @property (assign,nonatomic)	IBOutlet FpsLabel			*	fpsLabel;
 @property (assign,nonatomic)	IBOutlet UILabel			*	zoomToEditLabel;
+
+@property (assign,nonatomic)	IBOutlet UIButton			*	bingMapsLogo;
+@property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;
+@property (assign,nonatomic)	IBOutlet UIButton			*	centerOnGPSButton;
 #endif
+@property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
+
 
 @property (readonly,nonatomic)	CLLocation					*	currentLocation;
 
@@ -203,6 +206,7 @@ typedef enum {
 -(BOOL)isLocationSpecified;
 
 -(IBAction)locateMe:(id)sender;
+-(IBAction)centerOnGPS:(id)sender;
 -(IBAction)duplicateSelectedObject:(id)sender;
 -(IBAction)dropPin:(id)sender;
 -(void)removePin;
