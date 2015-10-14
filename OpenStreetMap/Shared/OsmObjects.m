@@ -1111,10 +1111,10 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	OsmMember * member = _members[index];
 	[self incrementModifyCount:undo];
 	[undo registerUndoWithTarget:self selector:@selector(addMember:atIndex:undo:) objects:@[member,@(index),undo]];
-	[_members removeObject:member];
+	[_members removeObjectAtIndex:index];
 	OsmBaseObject * obj = member.ref;
 	if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
-		[obj removeRelation:self undo:undo];
+		[obj removeRelation:self undo:nil];
 	}
 }
 -(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo
@@ -1127,10 +1127,10 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	if ( _members == nil ) {
 		_members = [NSMutableArray new];
 	}
-	[_members addObject:member];
+	[_members insertObject:member atIndex:index];
 	OsmBaseObject * obj = member.ref;
 	if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
-		[obj addRelation:self undo:undo];
+		[obj addRelation:self undo:nil];
 	}
 }
 
