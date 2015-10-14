@@ -325,10 +325,13 @@ CGSize SizeForImage( NSImage * image )
 
 	// center button
 	_centerOnGPSButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
-	_centerOnGPSButton.layer.cornerRadius = 10;
+	_centerOnGPSButton.layer.cornerRadius = 5;
+	_centerOnGPSButton.layer.borderWidth = 1.0;
+	_centerOnGPSButton.layer.borderColor = [UIColor blueColor].CGColor;
 	_centerOnGPSButton.hidden = YES;
 
 	_tapAndDragGesture = [[TapAndDragGesture alloc] initWithTarget:self action:@selector(handleTapAndDragGesture:)];
+	_tapAndDragGesture.delegate = self;
 	[self addGestureRecognizer:_tapAndDragGesture];
 
 #if 0
@@ -2812,8 +2815,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
 	if ( pinch.state == UIGestureRecognizerStateChanged ) {
-
 		_userOverrodeLocationZoom = YES;
+		_centerOnGPSButton.hidden = _gpsState == GPS_STATE_NONE;
 
 		DisplayLink * displayLink = [DisplayLink shared];
 		[displayLink removeName:DisplayLinkPanning];
@@ -2829,14 +2832,14 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (void)handleTapAndDragGesture:(TapAndDragGesture *)tapAndDrag
 {
 	if ( tapAndDrag.state == UIGestureRecognizerStateChanged ) {
-		CGPoint delta = [tapAndDrag translationInView:self];
-		double scale = 1 + delta.y * 0.01;
-
 		_userOverrodeLocationZoom = YES;
+		_centerOnGPSButton.hidden = _gpsState == GPS_STATE_NONE;
 
 		DisplayLink * displayLink = [DisplayLink shared];
 		[displayLink removeName:DisplayLinkPanning];
 
+		CGPoint delta = [tapAndDrag translationInView:self];
+		double scale = 1 + delta.y * 0.01;
 		CGPoint zoomCenter = CGRectCenter( [self bounds] );
 		[self adjustZoomBy:scale aroundScreenPoint:zoomCenter];
 

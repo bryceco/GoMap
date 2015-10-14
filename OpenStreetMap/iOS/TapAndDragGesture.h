@@ -15,7 +15,10 @@
 {
 	NSInteger		_tapState;
 	CGPoint			_tapPoint;
-	UITouch		*	_lastTouch;
+
+	CGPoint			_lastTouchLocation;
+	CGPoint			_lastTouchTranslation;
+	NSTimeInterval	_lastTouchTimestamp;
 }
 - (void)reset;
 - (void)touchesBegan:( NSSet * _Nonnull )touches withEvent:( UIEvent * _Nonnull )event;

@@ -163,8 +163,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo4-Nq-pAz">
-                                        <rect key="frame" x="9" y="355" width="47" height="30"/>
+                                        <rect key="frame" x="9" y="355" width="60" height="30"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="3Xk-mG-nXw"/>
+                                        </constraints>
                                         <state key="normal" title="Center"/>
                                         <connections>
                                             <action selector="centerOnGPS:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="5qr-EW-Due"/>

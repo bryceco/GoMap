@@ -26,14 +26,24 @@ static const NSTimeInterval DoubleTapTime = 0.5;
 	}
 
 	if ( _tapState == NEED_SECOND_TAP  &&  self.state == UIGestureRecognizerStatePossible ) {
-		if ( [NSProcessInfo processInfo].systemUptime - _lastTouch.timestamp < DoubleTapTime ) {
+		UITouch * touch = touches.anyObject;
+		CGPoint loc = [touch locationInView:self.view];
+		if ( [NSProcessInfo processInfo].systemUptime - _lastTouchTimestamp < DoubleTapTime  &&  fabs(_lastTouchLocation.x - loc.x) < 20 && fabs(_lastTouchLocation.y - loc.y) < 20 ) {
 			_tapState = NEED_DRAG;
 		} else {
 			_tapState = NEED_FIRST_TAP;
+			_lastTouchLocation = [touch locationInView:self.view];
 		}
 	}
 }
 
+static CGPoint TouchTranslation( UITouch * touch, UIView * view )
+{
+	CGPoint newPoint  = [touch locationInView:view];
+	CGPoint prevPoint = [touch previousLocationInView:view];
+	CGPoint delta = { newPoint.x - prevPoint.x, newPoint.y - prevPoint.y };
+	return delta;
+}
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -50,10 +60,10 @@ static const NSTimeInterval DoubleTapTime = 0.5;
 		self.state = UIGestureRecognizerStateEnded;
 		return;
 	}
-	NSLog(@"%f - %f\n", [NSProcessInfo processInfo].systemUptime, _lastTouch.timestamp );
 	if ( _tapState == NEED_FIRST_TAP ) {
 		_tapState = NEED_SECOND_TAP;
-		_lastTouch = touches.anyObject;
+		UITouch * touch = touches.anyObject;
+		_lastTouchTimestamp = touch.timestamp;
 	}
 }
 
@@ -62,9 +72,7 @@ static const NSTimeInterval DoubleTapTime = 0.5;
 	[super touchesMoved:touches withEvent:event];
 
 	UITouch * touch = touches.anyObject;
-	CGPoint newPoint  = [touch locationInView:self.view];
-	CGPoint prevPoint = [touch previousLocationInView:self.view];
-	CGPoint delta = { newPoint.x - prevPoint.x, newPoint.y - prevPoint.y };
+	CGPoint delta = TouchTranslation(touch,self.view);
 	if ( delta.x == 0 && delta.y == 0 )
 		return;
 
@@ -74,12 +82,12 @@ static const NSTimeInterval DoubleTapTime = 0.5;
 	}
 	if ( _tapState == NEED_DRAG ) {
 		_tapState = IS_DRAGGING;
-		_lastTouch = touches.anyObject;
 		self.state = UIGestureRecognizerStateBegan;
 	} else {
-		_lastTouch = touches.anyObject;
 		self.state = UIGestureRecognizerStateChanged;
 	}
+	_lastTouchTimestamp = touch.timestamp;
+	_lastTouchTranslation = delta;
 }
 
 
@@ -95,16 +103,11 @@ static const NSTimeInterval DoubleTapTime = 0.5;
 {
 	[super reset];
 	_tapState = NEED_FIRST_TAP;
-	_lastTouch = nil;
-	NSLog(@"reset\n");
 }
 
 - (CGPoint)translationInView:(UIView *)view
 {
-	CGPoint newPoint  = [_lastTouch locationInView:view];
-	CGPoint prevPoint = [_lastTouch previousLocationInView:view];
-	CGPoint delta = { newPoint.x - prevPoint.x, newPoint.y - prevPoint.y };
-	return delta;
+	return _lastTouchTranslation;
 }
 
 @end
