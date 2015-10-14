@@ -2126,10 +2126,11 @@ NSString * ActionTitle( NSInteger action )
 						const CGFloat MinDistanceSide = 40.0;
 						const CGFloat MinDistanceTop = MinDistanceSide + 10.0;
 						const CGFloat MinDistanceBottom = MinDistanceSide + 120.0;
-						CGPoint arrow = weakSelf.pushpinView.arrowPoint; // [gesture locationInView:weakSelf];
+						CGPoint arrow = weakSelf.pushpinView.arrowPoint;
 						CGRect screen = weakSelf.bounds;
 						CGFloat delta;
 						const CGFloat scroll = 4.0;
+
 						delta = screen.origin.x + MinDistanceSide - arrow.x;
 						NSLog(@"delta = %f\n",delta);
 						if ( delta >= 0 ) {

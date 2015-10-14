@@ -268,6 +268,10 @@ public:
 	void findObjectsInArea( const OSMRect & bbox, void (^block)(OsmBaseObject *) ) const
 	{
 		for ( const auto & obj : _members ) {
+			// need to do this because we aren't using the accessor (for perf reasons) which would do it for us
+			if ( obj->_boundingBox.origin.x == 0 && obj->_boundingBox.origin.y == 0 && obj->_boundingBox.size.width == 0 && obj->_boundingBox.size.height == 0 )
+				[obj computeBoundingBox];
+
 			if ( OSMRectIntersectsRect( obj->_boundingBox, bbox ) ) {
 				block( obj );
 			}

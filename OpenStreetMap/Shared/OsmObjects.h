@@ -84,7 +84,7 @@ typedef enum {
 @property (readonly,nonatomic)	BOOL				visible;
 
 // extra stuff
-@property (assign,nonatomic)	OSMRect				boundingBox;
+@property (readonly,nonatomic)	OSMRect				boundingBox;
 @property (strong,nonatomic)	NSArray			*	shapeLayers;
 @property (readonly,nonatomic)	ONEWAY				isOneWay;
 @property (assign,nonatomic)	TRISTATE			isShown;
