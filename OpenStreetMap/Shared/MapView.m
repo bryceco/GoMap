@@ -27,6 +27,7 @@
 #import "OsmObjects.h"
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
+#import "TapAndDragGesture.h"
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
@@ -326,6 +327,9 @@ CGSize SizeForImage( NSImage * image )
 	_centerOnGPSButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
 	_centerOnGPSButton.layer.cornerRadius = 10;
 	_centerOnGPSButton.hidden = YES;
+
+	_tapAndDragGesture = [[TapAndDragGesture alloc] initWithTarget:self action:@selector(handleTapAndDragGesture:)];
+	[self addGestureRecognizer:_tapAndDragGesture];
 
 #if 0
 	// check for mail periodically and update application badge
@@ -2819,6 +2823,24 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 		[pinch setScale:1.0];
 	} else if ( pinch.state == UIGestureRecognizerStateEnded ) {
+		[self updateNotesWithDelay:0];
+	}
+}
+- (void)handleTapAndDragGesture:(TapAndDragGesture *)tapAndDrag
+{
+	if ( tapAndDrag.state == UIGestureRecognizerStateChanged ) {
+		CGPoint delta = [tapAndDrag translationInView:self];
+		double scale = 1 + delta.y * 0.01;
+
+		_userOverrodeLocationZoom = YES;
+
+		DisplayLink * displayLink = [DisplayLink shared];
+		[displayLink removeName:DisplayLinkPanning];
+
+		CGPoint zoomCenter = CGRectCenter( [self bounds] );
+		[self adjustZoomBy:scale aroundScreenPoint:zoomCenter];
+
+	} else if ( tapAndDrag.state == UIGestureRecognizerStateEnded ) {
 		[self updateNotesWithDelay:0];
 	}
 }

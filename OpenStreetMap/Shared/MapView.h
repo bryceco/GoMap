@@ -32,6 +32,7 @@
 @class RulerLayer;
 @class SpeechBalloonView;
 @class FpsLabel;
+@class TapAndDragGesture;
 
 
 @protocol MapViewDelegate <NSObject>
@@ -114,6 +115,8 @@ typedef enum {
 	CLLocationManager				*	_locationManager;
 
 	dispatch_source_t					_mailTimer;
+
+	TapAndDragGesture				*	_tapAndDragGesture;
 
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
 	BOOL								_pushpinDragDidMove;	// to maintain undo stack
