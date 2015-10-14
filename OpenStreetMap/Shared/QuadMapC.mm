@@ -268,8 +268,9 @@ public:
 	void findObjectsInArea( const OSMRect & bbox, void (^block)(OsmBaseObject *) ) const
 	{
 		for ( const auto & obj : _members ) {
-			if ( OSMRectIntersectsRect( obj->_boundingBox, bbox ) )
+			if ( OSMRectIntersectsRect( obj->_boundingBox, bbox ) ) {
 				block( obj );
+			}
 		}
 		for ( int c = 0; c <= QUAD_LAST; ++c ) {
 			QuadBoxCC * child = _children[ c ];

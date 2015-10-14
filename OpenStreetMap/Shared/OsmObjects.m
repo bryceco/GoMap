@@ -258,6 +258,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	renderPriorityCached	= 0;
 	_isOneWay				= nil;
 	_isShown				= TRISTATE_UNKNOWN;
+	_boundingBox			= OSMRectZero();
 
 	for ( CALayer * layer in _shapeLayers ) {
 		[layer removeFromSuperlayer];
