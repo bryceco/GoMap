@@ -223,7 +223,7 @@
     <tag key="building" value="warehouse" name="Warehouse" type="node;area" />
     <tag key="building" value="yes" name="Building" type="node;area" />
 
-	<tag key="boundary" value="administrative" name="Administrative Boundary" type="way" description="An administrative boundary" iconName="poi_boundary_administrative" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=administrative" lineColor="FF6600" lineWidth="1.000000"/>
+	<tag key="boundary" value="administrative" name="Administrative Boundary" type="way" description="An administrative boundary" iconName="poi_boundary_administrative" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=administrative" lineColor="B100FF" lineWidth="1.000000"/>
     <tag key="boundary" value="national_park" type="way" description="Used for boundaries of national parks" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=national_park" lineColor="FF6600" lineWidth="1.000000"/>
     <tag key="boundary" value="protected_area" description="Used to  mark the boundaries of protected areas including national parks, marine protection areas, heritage sites and indigenous areas" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
     <tag key="boundary" value="town" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
@@ -439,7 +439,7 @@
     <tag key="highway" value="construction" name="Construction" type="way" lineColor="FFFF00" lineWidth="2.000000"/>
     <tag key="highway" value="conveyor" name="Conveyor" type="way"/>
     <tag key="highway" value="crossing" name="Crossing" type="node" description="Pedestrians can cross a street here - e.g. zebra crossing" iconName="transport_zebra_crossing"/>
-    <tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway" lineColor="B100FF" lineWidth="1.000000"/>
+    <tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway" lineColor="00C0A7" lineWidth="1.000000"/>
     <tag key="highway" value="elevator" name="Elevator" type="node" description="A elevator (or lift) is used to travel vertically, providing passenger and freight access between pathways at different floor levels."/>
     <tag key="highway" value="emergency_access_point" name="Emergency Access Point" type="node" description="Sign number which can be used to define you current position in case of an emergency" areaColor="C0C0C0"/>
     <tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="00FF00" areaColor="00FF00" lineWidth="1.000000"/>

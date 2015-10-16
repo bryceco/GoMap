@@ -2198,43 +2198,6 @@ NSString * ActionTitle( NSInteger action )
 
 	[self updateEditControl];
 
-#if 0
-	UIButton * button1 = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-	button1.backgroundColor = [UIColor whiteColor]; // don't want transparent background for ios 7
-	button1.layer.cornerRadius = 10.0;
-	[_pushpinView addButton:button1 callback:^{
-		[weakSelf editTags:nil];
-	}];
-
-	if ( YES ) {
-		UIButton * button2 = [UIButton buttonWithType:UIButtonTypeContactAdd];
-		__weak MapView * weakSelf = self;
-		[_pushpinView addButton:button2 callback:^{
-			[weakSelf interactiveExtendSelectedWay:nil];
-		}];
-	}
-#endif
-
-#if 0
-	UIButton * button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-	button2.frame = CGRectMake( 0, 0, 29, 29 );
-	[button2 setBackgroundImage:[UIImage imageNamed:@"move2.png"] forState:UIControlStateNormal];
-	[_pushpinView addButton:button2 callback:^{
-		[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
-	}];
-
-	UIButton * button3 = [UIButton buttonWithType:UIButtonTypeCustom];
-	button3.frame = CGRectMake( 0, 0, 26, 26 );
-	[button3 setBackgroundImage:[UIImage imageNamed:@"wrench.png"] forState:UIControlStateNormal];
-	[button3 setBackgroundColor:[UIColor colorWithRed:0.4 green:0.4 blue:1.0 alpha:1.0]];
-	button3.layer.cornerRadius = button3.frame.size.width / 2;
-	button3.layer.borderColor = UIColor.whiteColor.CGColor;
-	button3.layer.borderWidth = 2.0;
-	[_pushpinView addButton:button3 callback:^{
-		[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
-	}];
-#endif
-	
 	if ( object == nil ) {
 		_pushpinView.placeholderImage = [UIImage imageNamed:@"question.png"];
 	}
