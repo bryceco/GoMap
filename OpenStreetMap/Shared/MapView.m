@@ -330,9 +330,12 @@ CGSize SizeForImage( NSImage * image )
 	_centerOnGPSButton.layer.borderColor = [UIColor blueColor].CGColor;
 	_centerOnGPSButton.hidden = YES;
 
+#if 0
+	// Support zoom via tap and drag
 	_tapAndDragGesture = [[TapAndDragGesture alloc] initWithTarget:self action:@selector(handleTapAndDragGesture:)];
 	_tapAndDragGesture.delegate = self;
 	[self addGestureRecognizer:_tapAndDragGesture];
+#endif
 
 #if 0
 	// check for mail periodically and update application badge
@@ -2072,9 +2075,6 @@ NSString * ActionTitle( NSInteger action )
 					[weakSelf.editorLayer.mapData endUndoGrouping];
 					[[DisplayLink shared] removeName:@"dragScroll"];
 
-//DLog(@"end drag\n");
-//DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
-
 					[weakSelf unblinkObject];
 					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
 						// dragging a node that is part of a way
@@ -2156,7 +2156,7 @@ NSString * ActionTitle( NSInteger action )
 						};
 
 						// scroll screen if too close to edge
-						const CGFloat MinDistanceSide = 80.0;
+						const CGFloat MinDistanceSide = 40.0;
 						const CGFloat MinDistanceTop = MinDistanceSide + 10.0;
 						const CGFloat MinDistanceBottom = MinDistanceSide + 120.0;
 						CGPoint arrow = weakSelf.pushpinView.arrowPoint;
@@ -2174,12 +2174,19 @@ NSString * ActionTitle( NSInteger action )
 							scrolly = SCROLL_SPEED;
 
 						if ( scrollx || scrolly ) {
-							[[DisplayLink shared] addName:@"dragScroll" block:^{
-								[weakSelf adjustOriginBy:CGPointMake(-scrollx,-scrolly)];
-								dragObject( scrollx, scrolly );
+							DisplayLink * displayLink = [DisplayLink shared];
+							__block NSTimeInterval prevTime = CACurrentMediaTime();
+							[displayLink addName:@"dragScroll" block:^{
+								NSTimeInterval now = CACurrentMediaTime();
+								NSTimeInterval duration = now - prevTime;
+								prevTime = now;
+								CGFloat sx = scrollx * duration * 60.0;	// scale to 60 FPS assumption, need to move farther if framerate is slow
+								CGFloat sy = scrolly * duration * 60.0;
+								[weakSelf adjustOriginBy:CGPointMake(-sx,-sy)];
+								dragObject( sx, sy );
 								CGPoint pt = weakSelf.pushpinView.arrowPoint;
-								pt.x += scrollx;
-								pt.y += scrolly;
+								pt.x += sx;
+								pt.y += sy;
 								weakSelf.pushpinView.arrowPoint = pt;
 							}];
 						} else {
