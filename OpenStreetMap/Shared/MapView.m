@@ -2129,24 +2129,21 @@ NSString * ActionTitle( NSInteger action )
 							strongSelf->_pushpinDragTotalMove.x += dragx;
 							strongSelf->_pushpinDragTotalMove.y += dragy;
 							if ( strongSelf->_pushpinDragDidMove ) {
-								// DLog(@"\ndrag node\n");
 								[strongSelf.editorLayer.mapData endUndoGrouping];
-								// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 								strongSelf.silentUndo = YES;
 								[strongSelf.editorLayer.mapData undo];
 								strongSelf.silentUndo = NO;
-								// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 								[strongSelf.editorLayer.mapData beginUndoGrouping];
-								// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 							}
 							strongSelf->_pushpinDragDidMove = YES;
-							dragx = strongSelf->_pushpinDragTotalMove.x;
-							dragy = strongSelf->_pushpinDragTotalMove.y;
 
+							// move all dragged nodes
+							CGPoint delta = { strongSelf->_pushpinDragTotalMove.x, -strongSelf->_pushpinDragTotalMove.y };
 							for ( OsmNode * node in object.nodeSet ) {
-								CGPoint delta = { dragx, -dragy };
 								[strongSelf.editorLayer adjustNode:node byDistance:delta];
 							}
+
+							// do hit testing for connecting to other objects
 							if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
 								NSInteger segment;
 								OsmBaseObject * hit = [strongSelf dragConnectionForNode:(id)object segment:&segment];
@@ -2188,6 +2185,8 @@ NSString * ActionTitle( NSInteger action )
 						} else {
 							[[DisplayLink shared] removeName:@"dragScroll"];
 						}
+
+						// move the object
 						dragObject( dx, dy );
 					}
 					break;
