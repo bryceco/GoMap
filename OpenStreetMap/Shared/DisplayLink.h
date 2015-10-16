@@ -16,6 +16,7 @@
 +(instancetype)shared;
 -(void)addName:(NSString *)name block:(void(^)(void))block;
 -(void)removeName:(NSString *)name;
+-(BOOL)hasName:(NSString *)name;
 -(CFTimeInterval)duration;
 -(CFTimeInterval)timestamp;
 @end

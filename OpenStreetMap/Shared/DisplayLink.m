@@ -55,6 +55,11 @@
 	_displayLink.paused = NO;
 }
 
+-(BOOL)hasName:(NSString *)name
+{
+	return _blockDict[ name ] != nil;
+}
+
 -(void)removeName:(NSString *)name;
 {
 	[_blockDict removeObjectForKey:name];

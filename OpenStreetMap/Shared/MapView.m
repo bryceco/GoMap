@@ -2070,6 +2070,8 @@ NSString * ActionTitle( NSInteger action )
 					// fall through so we properly terminate gesture
 				case UIGestureRecognizerStateEnded:
 					[weakSelf.editorLayer.mapData endUndoGrouping];
+					[[DisplayLink shared] removeName:@"dragScroll"];
+
 //DLog(@"end drag\n");
 //DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
 
@@ -2120,79 +2122,73 @@ NSString * ActionTitle( NSInteger action )
 					break;
 					
 				case UIGestureRecognizerStateChanged:
-#if 1
 					{
+						void (^dragObject)(CGFloat dragx, CGFloat dragy) = ^(CGFloat dragx, CGFloat dragy) {
+							// don't accumulate undo moves
+							MapView * strongSelf = weakSelf;
+							strongSelf->_pushpinDragTotalMove.x += dragx;
+							strongSelf->_pushpinDragTotalMove.y += dragy;
+							if ( strongSelf->_pushpinDragDidMove ) {
+								// DLog(@"\ndrag node\n");
+								[strongSelf.editorLayer.mapData endUndoGrouping];
+								// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+								strongSelf.silentUndo = YES;
+								[strongSelf.editorLayer.mapData undo];
+								strongSelf.silentUndo = NO;
+								// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+								[strongSelf.editorLayer.mapData beginUndoGrouping];
+								// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
+							}
+							strongSelf->_pushpinDragDidMove = YES;
+							dragx = strongSelf->_pushpinDragTotalMove.x;
+							dragy = strongSelf->_pushpinDragTotalMove.y;
+
+							for ( OsmNode * node in object.nodeSet ) {
+								CGPoint delta = { dragx, -dragy };
+								[strongSelf.editorLayer adjustNode:node byDistance:delta];
+							}
+							if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
+								NSInteger segment;
+								OsmBaseObject * hit = [strongSelf dragConnectionForNode:(id)object segment:&segment];
+								if ( hit ) {
+									[strongSelf blinkObject:hit segment:segment];
+								} else {
+									[strongSelf unblinkObject];
+								}
+							}
+						};
+
 						// scroll screen if too close to edge
-						const CGFloat MinDistanceSide = 40.0;
+						const CGFloat MinDistanceSide = 80.0;
 						const CGFloat MinDistanceTop = MinDistanceSide + 10.0;
 						const CGFloat MinDistanceBottom = MinDistanceSide + 120.0;
 						CGPoint arrow = weakSelf.pushpinView.arrowPoint;
 						CGRect screen = weakSelf.bounds;
-						CGFloat delta;
-						const CGFloat scroll = 4.0;
+						const CGFloat SCROLL_SPEED = 2.0;
+						CGFloat scrollx = 0, scrolly = 0;
 
-						delta = screen.origin.x + MinDistanceSide - arrow.x;
-						NSLog(@"delta = %f\n",delta);
-						if ( delta >= 0 ) {
-							[weakSelf adjustOriginBy:CGPointMake(scroll,0)];
-							dx = -scroll;
-							weakSelf.pushpinView.arrowPoint = CGPointMake(screen.origin.x+MinDistanceSide, weakSelf.pushpinView.arrowPoint.y);
-						}
-						delta = screen.origin.x + screen.size.width - MinDistanceSide - arrow.x;
-						if ( delta <= 0 ) {
-							[weakSelf adjustOriginBy:CGPointMake(-scroll,0)];
-							dx = scroll;
-							weakSelf.pushpinView.arrowPoint = CGPointMake(screen.origin.x+screen.size.width-MinDistanceSide, weakSelf.pushpinView.arrowPoint.y);
-						}
-						delta = screen.origin.y + MinDistanceTop - arrow.y;
-						if ( delta >= 0 ) {
-							[weakSelf adjustOriginBy:CGPointMake(0,scroll)];
-							dy = -scroll;
-							weakSelf.pushpinView.arrowPoint = CGPointMake(weakSelf.pushpinView.arrowPoint.x, screen.origin.y+MinDistanceTop);
-						}
-						delta = screen.origin.y + screen.size.height - MinDistanceBottom - arrow.y;
-						if ( delta <= 0 ) {
-							[weakSelf adjustOriginBy:CGPointMake(0,-scroll)];
-							dy = scroll;
-							weakSelf.pushpinView.arrowPoint = CGPointMake(weakSelf.pushpinView.arrowPoint.x, screen.origin.y+screen.size.height-MinDistanceBottom);
-						}
-					}
-#endif
+						if ( arrow.x < screen.origin.x + MinDistanceSide )
+							scrollx = -SCROLL_SPEED;
+						else if ( arrow.x > screen.origin.x + screen.size.width - MinDistanceSide )
+							scrollx = SCROLL_SPEED;
+						if ( arrow.y < screen.origin.y + MinDistanceTop )
+							scrolly = -SCROLL_SPEED;
+						else if ( arrow.y > screen.origin.y + screen.size.height - MinDistanceBottom )
+							scrolly = SCROLL_SPEED;
 
-#if 1	// don't accumulate undo moves
-					{
-						MapView * strongSelf = weakSelf;
-						strongSelf->_pushpinDragTotalMove.x += dx;
-						strongSelf->_pushpinDragTotalMove.y += dy;
-						if ( strongSelf->_pushpinDragDidMove ) {
-							// DLog(@"\ndrag node\n");
-							[strongSelf.editorLayer.mapData endUndoGrouping];
-							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
-							weakSelf.silentUndo = YES;
-							[strongSelf.editorLayer.mapData undo];
-							weakSelf.silentUndo = NO;
-							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
-							[strongSelf.editorLayer.mapData beginUndoGrouping];
-							// DLog( @"%@\n", [weakSelf.editorLayer.mapData undoManagerDescription] );
-						}
-						strongSelf->_pushpinDragDidMove = YES;
-						dx = strongSelf->_pushpinDragTotalMove.x;
-						dy = strongSelf->_pushpinDragTotalMove.y;
-					}
-#endif
-
-					for ( OsmNode * node in object.nodeSet ) {
-						CGPoint delta = { dx, -dy };
-						[weakSelf.editorLayer adjustNode:node byDistance:delta];
-					}
-					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
-						NSInteger segment;
-						OsmBaseObject * hit = [weakSelf dragConnectionForNode:(id)object segment:&segment];
-						if ( hit ) {
-							[weakSelf blinkObject:hit segment:segment];
+						if ( scrollx || scrolly ) {
+							[[DisplayLink shared] addName:@"dragScroll" block:^{
+								[weakSelf adjustOriginBy:CGPointMake(-scrollx,-scrolly)];
+								dragObject( scrollx, scrolly );
+								CGPoint pt = weakSelf.pushpinView.arrowPoint;
+								pt.x += scrollx;
+								pt.y += scrolly;
+								weakSelf.pushpinView.arrowPoint = pt;
+							}];
 						} else {
-							[weakSelf unblinkObject];
+							[[DisplayLink shared] removeName:@"dragScroll"];
 						}
+						dragObject( dx, dy );
 					}
 					break;
 				default:
