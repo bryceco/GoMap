@@ -84,7 +84,15 @@
 
 	OsmBaseObject * object = tabController.selection;
 	NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
- 
+
+	// update most recent feature
+	NSString * featureName = [CommonTagList featureNameForObjectDict:dict geometry:geometry];
+	if ( featureName ) {
+		CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+		[POITypeViewController loadMostRecentForGeometry:geometry];
+		[POITypeViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
+	}
+	
 	__weak POICommonTagsViewController * weakSelf = self;
 	__weak CommonTagList * weakTags = _tags;
 	[_tags setPresetsForDict:dict geometry:geometry update:^{

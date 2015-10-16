@@ -18,6 +18,26 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 @implementation POITypeViewController
 
+static NSMutableArray	*	mostRecentArray;
+static NSInteger			mostRecentMaximum;
+
+
++(void)loadMostRecentForGeometry:(NSString *)geometry
+{
+	NSNumber * max = [[NSUserDefaults standardUserDefaults] objectForKey:@"mostRecentTypesMaximum"];
+	mostRecentMaximum = max ? max.integerValue : MOST_RECENT_DEFAULT_COUNT;
+
+	NSString * defaults = [NSString stringWithFormat:@"mostRecentTypes.%@", geometry];
+	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
+	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
+	for ( NSString * featureName in a ) {
+		CommonTagFeature * tagInfo = [CommonTagFeature commonTagFeatureWithName:featureName];
+		if ( tagInfo ) {
+			[mostRecentArray addObject:tagInfo];
+		}
+	}
+}
+
 -(NSString *)currentSelectionGeometry
 {
 	POITabBarController * tabController = (id)self.tabBarController;
@@ -37,24 +57,13 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	if ( geometry == nil )
 		geometry = GEOMETRY_NODE;	// a brand new node
 
+	[self.class loadMostRecentForGeometry:geometry];
+
 	if ( _parentCategory == nil ) {
 		_isTopLevel = YES;
 		_typeArray = [CommonTagList featuresForGeometry:geometry];
 	} else {
 		_typeArray = _parentCategory.members;
-	}
-
-	NSNumber * max = [[NSUserDefaults standardUserDefaults] objectForKey:@"mostRecentTypesMaximum"];
-	_mostRecentMaximum = max ? max.integerValue : MOST_RECENT_DEFAULT_COUNT;
-
-	NSString * defaults = [NSString stringWithFormat:@"mostRecentTypes.%@", geometry];
-	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
-	_mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
-	for ( NSString * featureName in a ) {
-		CommonTagFeature * tagInfo = [CommonTagFeature commonTagFeatureWithName:featureName];
-		if ( tagInfo ) {
-			[_mostRecentArray addObject:tagInfo];
-		}
 	}
 }
 
@@ -79,8 +88,8 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 		return section == 0 ? _searchArrayRecent.count : _searchArrayAll.count;
 	} else {
 		if ( _isTopLevel && section == 0 ) {
-			NSInteger count = _mostRecentArray.count;
-			return count < _mostRecentMaximum ? count : _mostRecentMaximum;
+			NSInteger count = mostRecentArray.count;
+			return count < mostRecentMaximum ? count : mostRecentMaximum;
 		} else {
 			return _typeArray.count;
 		}
@@ -101,7 +110,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-		CommonTagFeature * feature = _mostRecentArray[ indexPath.row ];
+		CommonTagFeature * feature = mostRecentArray[ indexPath.row ];
 		cell.textLabel.text			= feature.friendlyName;
 		cell.imageView.image		= feature.icon;
 		cell.detailTextLabel.text	= feature.summary;
@@ -132,20 +141,19 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	}
 }
 
--(void)updateMostRecentArrayWithSelection:(CommonTagFeature *)tagInfo
++(void)updateMostRecentArrayWithSelection:(CommonTagFeature *)feature geometry:(NSString *)geometry
 {
-	[_mostRecentArray removeObject:tagInfo];
-	[_mostRecentArray insertObject:tagInfo atIndex:0];
-	if ( _mostRecentArray.count > MOST_RECENT_SAVED_MAXIMUM ) {
-		[_mostRecentArray removeLastObject];
+	[mostRecentArray removeObject:feature];
+	[mostRecentArray insertObject:feature atIndex:0];
+	if ( mostRecentArray.count > MOST_RECENT_SAVED_MAXIMUM ) {
+		[mostRecentArray removeLastObject];
 	}
 
-	NSMutableArray * a = [[NSMutableArray alloc] initWithCapacity:_mostRecentArray.count];
-	for ( CommonTagFeature * feature in _mostRecentArray ) {
-		[a addObject:feature.featureName];
+	NSMutableArray * a = [[NSMutableArray alloc] initWithCapacity:mostRecentArray.count];
+	for ( CommonTagFeature * f in mostRecentArray ) {
+		[a addObject:f.featureName];
 	}
 
-	NSString * geometry = [self currentSelectionGeometry];
 	NSString * defaults = [NSString stringWithFormat:@"mostRecentTypes.%@", geometry];
 	[[NSUserDefaults standardUserDefaults] setObject:a forKey:defaults];
 }
@@ -153,8 +161,9 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 -(void)updateTagsWithFeature:(CommonTagFeature *)feature
 {
+	NSString * geometry = [self currentSelectionGeometry];
 	[self.delegate typeViewController:self didChangeFeatureTo:feature];
-	[self updateMostRecentArrayWithSelection:feature];
+	[self.class updateMostRecentArrayWithSelection:feature geometry:geometry];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,7 +177,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 	if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
-		CommonTagFeature * tagInfo = _mostRecentArray[ indexPath.row ];
+		CommonTagFeature * tagInfo = mostRecentArray[ indexPath.row ];
 		[self updateTagsWithFeature:tagInfo];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else {
@@ -208,7 +217,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 			return [t1.friendlyName compare:t2.friendlyName];
 		}];
 
-		_searchArrayRecent = [_mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonTagFeature * tagInfo, NSDictionary *bindings) {
+		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonTagFeature * tagInfo, NSDictionary *bindings) {
 			return [tagInfo matchesSearchText:searchText];
 		}]];
 	}
@@ -224,8 +233,8 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 			count = 0;
 		else if ( count > 99 )
 			count = 99;
-		_mostRecentMaximum = count;
-		[[NSUserDefaults standardUserDefaults] setInteger:_mostRecentMaximum forKey:@"mostRecentTypesMaximum"];
+		mostRecentMaximum = count;
+		[[NSUserDefaults standardUserDefaults] setInteger:mostRecentMaximum forKey:@"mostRecentTypesMaximum"];
 	}
 }
 
@@ -235,7 +244,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
 	UITextField * textField = [alert textFieldAtIndex:0];
 	[textField setKeyboardType:UIKeyboardTypeNumberPad];
-	textField.text = [NSString stringWithFormat:@"%ld",(long)_mostRecentMaximum];
+	textField.text = [NSString stringWithFormat:@"%ld",(long)mostRecentMaximum];
 	[alert show];
 }
 

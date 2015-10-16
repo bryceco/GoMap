@@ -21,8 +21,6 @@
 	NSArray					*	_typeArray;
 	NSArray					*	_searchArrayRecent;
 	NSArray					*	_searchArrayAll;
-	NSMutableArray			*	_mostRecentArray;
-	NSInteger					_mostRecentMaximum;
 	IBOutlet UISearchBar    *	_searchBar;
 	BOOL						_isTopLevel;
 }
@@ -31,5 +29,9 @@
 
 -(IBAction)back:(id)sender;
 -(IBAction)configure:(id)sender;
+
+
++(void)loadMostRecentForGeometry:(NSString *)geometry;
++(void)updateMostRecentArrayWithSelection:(CommonTagFeature *)feature geometry:(NSString *)geometry;
 
 @end
