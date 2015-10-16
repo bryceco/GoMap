@@ -2174,9 +2174,11 @@ NSString * ActionTitle( NSInteger action )
 							scrolly = SCROLL_SPEED;
 
 						if ( scrollx || scrolly ) {
+							// scroll the screen to keep pushpin centered
 							DisplayLink * displayLink = [DisplayLink shared];
 							__block NSTimeInterval prevTime = CACurrentMediaTime();
 							[displayLink addName:@"dragScroll" block:^{
+								MapView * strongSelf = weakSelf;
 								NSTimeInterval now = CACurrentMediaTime();
 								NSTimeInterval duration = now - prevTime;
 								prevTime = now;
@@ -2184,10 +2186,16 @@ NSString * ActionTitle( NSInteger action )
 								CGFloat sy = scrolly * duration * 60.0;
 								[weakSelf adjustOriginBy:CGPointMake(-sx,-sy)];
 								dragObject( sx, sy );
+								// update position of pushpin
 								CGPoint pt = weakSelf.pushpinView.arrowPoint;
 								pt.x += sx;
 								pt.y += sy;
-								weakSelf.pushpinView.arrowPoint = pt;
+								strongSelf.pushpinView.arrowPoint = pt;
+								// update position of blink layer
+								pt = _blinkLayer.position;
+								pt.x -= sx;
+								pt.y -= sy;
+								strongSelf->_blinkLayer.position = pt;
 							}];
 						} else {
 							[[DisplayLink shared] removeName:@"dragScroll"];
@@ -2485,7 +2493,7 @@ drop_pin:
 	dashAnimation.fromValue	= @(0.0);
 	dashAnimation.toValue	= @(10.0);
 	dashAnimation.duration	= 0.20;
-	dashAnimation.repeatCount = 10000;
+	dashAnimation.repeatCount = 100000;
 	[_blinkLayer addAnimation:dashAnimation forKey:@"linePhase"];
 	CGPathRelease(path);
 }
