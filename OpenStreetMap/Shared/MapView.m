@@ -2123,6 +2123,7 @@ NSString * ActionTitle( NSInteger action )
 					
 				case UIGestureRecognizerStateChanged:
 					{
+						// define the drag function
 						void (^dragObject)(CGFloat dragx, CGFloat dragy) = ^(CGFloat dragx, CGFloat dragy) {
 							// don't accumulate undo moves
 							MapView * strongSelf = weakSelf;
@@ -2161,7 +2162,7 @@ NSString * ActionTitle( NSInteger action )
 						const CGFloat MinDistanceBottom = MinDistanceSide + 120.0;
 						CGPoint arrow = weakSelf.pushpinView.arrowPoint;
 						CGRect screen = weakSelf.bounds;
-						const CGFloat SCROLL_SPEED = 2.0;
+						const CGFloat SCROLL_SPEED = 10.0;
 						CGFloat scrollx = 0, scrolly = 0;
 
 						if ( arrow.x < screen.origin.x + MinDistanceSide )
@@ -2186,15 +2187,12 @@ NSString * ActionTitle( NSInteger action )
 								CGFloat sy = scrolly * duration * 60.0;
 								[weakSelf adjustOriginBy:CGPointMake(-sx,-sy)];
 								dragObject( sx, sy );
+					NSLog(@"scroll %f, %f\n",sx,sy);
 								// update position of pushpin
-								CGPoint pt = weakSelf.pushpinView.arrowPoint;
-								pt.x += sx;
-								pt.y += sy;
+								CGPoint pt = CGPointWithOffset( weakSelf.pushpinView.arrowPoint, sx, sy );
 								strongSelf.pushpinView.arrowPoint = pt;
 								// update position of blink layer
-								pt = _blinkLayer.position;
-								pt.x -= sx;
-								pt.y -= sy;
+								pt = CGPointWithOffset( _blinkLayer.position, -sx, -sy );
 								strongSelf->_blinkLayer.position = pt;
 							}];
 						} else {

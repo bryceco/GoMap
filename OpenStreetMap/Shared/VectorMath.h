@@ -50,6 +50,11 @@ typedef struct _OSMTransform {
 
 #pragma mark Point
 
+static inline CGPoint CGPointWithOffset( CGPoint pt, CGFloat dx, CGFloat dy )
+{
+	return CGPointMake( pt.x+dx, pt.y+dy );
+}
+
 static inline OSMPoint OSMPointMake(double x, double y)
 {
 	OSMPoint pt = { x, y };
