@@ -81,6 +81,11 @@
 	[appDelegate.mapView.gpxLayer loadTracksInBackgroundWithProgress:^{
 		[self.tableView reloadData];
 	}];
+
+
+	if ( appDelegate.mapView.gpxLayer.activeTrack ) {
+		[self startTimerForStartDate:appDelegate.mapView.gpxLayer.activeTrack.creationDate];
+	}
 }
 
 -(void)startTimerForStartDate:(NSDate *)date
@@ -163,12 +168,8 @@
 
 	if ( indexPath.section == 0 && appDelegate.mapView.gpxLayer.activeTrack == nil ) {
 		// no active track
-		GpxTrackTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
-		cell.startDate.text = @"No active track";
-		cell.duration.text = nil;
-		cell.details.text = nil;
-		cell.gpxTrack = nil;
-		cell.tableView = self;
+		UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+		cell.textLabel.text = @"No active track";
 		return cell;
 	}
 	if ( indexPath.section == 2 ) {
