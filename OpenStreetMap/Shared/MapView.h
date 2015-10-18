@@ -130,6 +130,8 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet UIButton			*	bingMapsLogo;
 @property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;
 @property (assign,nonatomic)	IBOutlet UIButton			*	centerOnGPSButton;
+
+@property (assign,nonatomic)	IBOutlet UIToolbar			*	toolbar;
 #endif
 @property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
 

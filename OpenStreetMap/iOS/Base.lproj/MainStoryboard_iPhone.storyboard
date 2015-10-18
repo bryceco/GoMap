@@ -26,11 +26,11 @@
                                         <animations/>
                                         <gestureRecognizers/>
                                     </activityIndicatorView>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="GTv-eT-l7q">
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTv-eT-l7q">
                                         <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                         <animations/>
                                         <items>
-                                            <barButtonItem image="location3.png" style="plain" id="e2S-h3-y7k">
+                                            <barButtonItem image="845-location-target-toolbar.png" style="plain" id="e2S-h3-y7k">
                                                 <connections>
                                                     <action selector="toggleLocation:" destination="2" id="CZC-r2-umP"/>
                                                 </connections>
@@ -53,19 +53,19 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="mpB-2g-Apf"/>
-                                            <barButtonItem image="Settings.png" style="plain" id="npa-P4-nL0">
+                                            <barButtonItem image="1200-file-type-settings-toolbar.png" style="plain" id="npa-P4-nL0">
                                                 <connections>
                                                     <segue destination="dn9-E8-wB3" kind="push" id="9Q1-CD-DXg"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="gKC-Gr-cf8"/>
-                                            <barButtonItem image="Upload.png" style="plain" id="ma4-oI-tBL">
+                                            <barButtonItem image="732-cloud-upload-toolbar.png" style="plain" id="ma4-oI-tBL">
                                                 <connections>
                                                     <segue destination="Dby-IV-exS" kind="modal" id="KUj-9f-Rfl"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem systemItem="flexibleSpace" id="4kg-8e-lu7"/>
-                                            <barButtonItem image="103-map.png" style="plain" id="43k-EH-kfB">
+                                            <barButtonItem image="852-map-toolbar.png" style="plain" id="43k-EH-kfB">
                                                 <connections>
                                                     <segue destination="UfZ-fJ-hyB" kind="push" id="YAs-Pe-6oG"/>
                                                 </connections>
@@ -206,6 +206,7 @@
                                     <outlet property="helpButton" destination="TnL-YC-BCg" id="hR9-Za-lMp"/>
                                     <outlet property="progressIndicator" destination="Zh9-uC-62t" id="GOZ-5L-yvO"/>
                                     <outlet property="statusBarBackground" destination="g4c-aL-FjW" id="YBa-Op-9me"/>
+                                    <outlet property="toolbar" destination="GTv-eT-l7q" id="2gi-OG-uWq"/>
                                     <outlet property="zoomToEditLabel" destination="N5Q-nV-TPG" id="Sfg-zh-7aq"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
                                 </connections>
@@ -1670,14 +1671,6 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEr-ao-8x1">
-                                            <rect key="frame" x="284" y="6" width="32" height="32"/>
-                                            <animations/>
-                                            <state key="normal" title="Button" image="Upload.png"/>
-                                            <connections>
-                                                <action selector="doAction:" destination="u32-zl-4Xr" eventType="touchUpInside" id="NBF-z5-nqC"/>
-                                            </connections>
-                                        </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-L5-Hcz">
                                             <rect key="frame" x="194" y="0.0" width="82" height="21"/>
                                             <animations/>
@@ -1692,8 +1685,24 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEr-ao-8x1">
+                                            <rect key="frame" x="286" y="9" width="26" height="26"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="26" id="OCa-Ve-Avy"/>
+                                                <constraint firstAttribute="height" constant="26" id="g0U-1H-4Oc"/>
+                                            </constraints>
+                                            <state key="normal" title="Button" image="702-share.png"/>
+                                            <connections>
+                                                <action selector="doAction:" destination="u32-zl-4Xr" eventType="touchUpInside" id="NBF-z5-nqC"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <animations/>
+                                    <constraints>
+                                        <constraint firstItem="EEr-ao-8x1" firstAttribute="centerY" secondItem="GKM-Tu-fW7" secondAttribute="centerY" id="0jA-bB-ISY"/>
+                                        <constraint firstAttribute="trailing" secondItem="EEr-ao-8x1" secondAttribute="trailing" constant="8" id="FV0-lI-RUc"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <animations/>
                                 <connections>
@@ -4025,7 +4034,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <scene sceneID="l4j-z4-dwi">
             <objects>
                 <navigationController definesPresentationContext="YES" id="FlW-lL-gMm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Attributes" image="eye.png" id="2cB-FV-ozw"/>
+                    <tabBarItem key="tabBarItem" title="Attributes" image="751-eye-toolbar.png" id="2cB-FV-ozw"/>
                     <navigationItem key="navigationItem" id="cqT-tG-52T"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="67Q-Qp-h2y">
                         <autoresizingMask key="autoresizingMask"/>
@@ -4147,7 +4156,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <scene sceneID="tzU-uW-JLs">
             <objects>
                 <navigationController id="zi5-R9-6sw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Common Tags" image="PoiSimple.png" id="lPv-s6-uEz"/>
+                    <tabBarItem key="tabBarItem" title="Common Tags" image="982-food-toolbar.png" id="lPv-s6-uEz"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mfX-v7-In3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -4167,7 +4176,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <scene sceneID="11t-cg-Ot4">
             <objects>
                 <navigationController id="FaM-5m-E92" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All Tags" image="PoiAdvanced.png" id="19J-sp-UTX"/>
+                    <tabBarItem key="tabBarItem" title="All Tags" image="710-folder.png" id="19J-sp-UTX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="itI-bf-xph">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -5392,15 +5401,16 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         </scene>
     </scenes>
     <resources>
-        <image name="103-map.png" width="26" height="21"/>
+        <image name="1200-file-type-settings-toolbar.png" width="16" height="22"/>
+        <image name="702-share.png" width="21" height="28"/>
+        <image name="710-folder.png" width="28" height="24"/>
+        <image name="732-cloud-upload-toolbar.png" width="22" height="22"/>
+        <image name="751-eye-toolbar.png" width="22" height="12"/>
+        <image name="845-location-target-toolbar.png" width="22" height="22"/>
+        <image name="852-map-toolbar.png" width="22" height="18"/>
+        <image name="982-food-toolbar.png" width="22" height="18"/>
         <image name="BingLogo.png" width="93" height="29"/>
-        <image name="PoiAdvanced.png" width="26" height="18"/>
-        <image name="PoiSimple.png" width="29" height="23"/>
-        <image name="Settings.png" width="26" height="26"/>
-        <image name="Upload.png" width="24" height="16"/>
         <image name="bing_rgb.png" width="408" height="144"/>
-        <image name="eye.png" width="24" height="16"/>
-        <image name="location3.png" width="20" height="20"/>
         <image name="redo32.png" width="32" height="32"/>
         <image name="undo32.png" width="32" height="32"/>
     </resources>

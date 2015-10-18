@@ -2187,7 +2187,6 @@ NSString * ActionTitle( NSInteger action )
 								CGFloat sy = scrolly * duration * 60.0;
 								[weakSelf adjustOriginBy:CGPointMake(-sx,-sy)];
 								dragObject( sx, sy );
-					NSLog(@"scroll %f, %f\n",sx,sy);
 								// update position of pushpin
 								CGPoint pt = CGPointWithOffset( weakSelf.pushpinView.arrowPoint, sx, sy );
 								strongSelf.pushpinView.arrowPoint = pt;
