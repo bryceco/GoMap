@@ -391,6 +391,23 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 		CGFloat angle = 0, length = 0;
 		PositionAndAngleForOffset( pathPointCount, pathPoints, currentPixelOffset, lineHeight, &pos, &angle, &length );
 		CFIndex count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, length );
+
+#if 0
+		// RTL languages don't break correctly because we are breaking on line boundaries, and RTL languages split across lines LTR not RTL?
+		CTLineRef line = CTTypesetterCreateLine( typesetter, CFRangeMake(currentCharacter,count));
+		CFRange stringRange = CTLineGetStringRange ( line );
+		NSString * substring = [string substringWithRange:NSMakeRange(stringRange.location, stringRange.length)];
+		NSLog(@"%@", substring);
+
+		CFArrayRef runs = CTLineGetGlyphRuns(line);
+		for(NSInteger j = 0; j < CFArrayGetCount(runs); j++) {
+			CTRunRef run = CFArrayGetValueAtIndex(runs, j);
+			CFRange runRange = CTRunGetStringRange(run);
+			CTRunStatus status = CTRunGetStatus(run);
+			NSLog(@"run = %@, %@", [string substringWithRange:NSMakeRange(runRange.location, runRange.length)], (status & kCTRunStatusRightToLeft) ? @"rtl" : @"ltr");
+		}
+#endif
+
 #if USE_CURVEDLAYER_CACHE
 		NSString * cacheKey = [NSString stringWithFormat:@"%@:%f",[string substringWithRange:NSMakeRange(currentCharacter, count)],angle];
 		CATextLayer * layer = [self getCachedLayerForString:cacheKey whiteOnBlack:whiteOnBlack];

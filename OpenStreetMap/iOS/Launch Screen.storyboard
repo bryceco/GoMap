@@ -18,13 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright © 2015 Bryce Cogswell. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="obG-Y5-kRd">
-                                <rect key="frame" x="20" y="559" width="560" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OSM-Logo144.png" translatesAutoresizingMaskIntoConstraints="NO" id="LGc-Lj-kcs">
+                                <rect key="frame" x="228" y="242" width="144" height="144"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
                                 <rect key="frame" x="20" y="120" width="560" height="43"/>
                                 <animations/>
@@ -41,7 +38,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OSM-Logo256.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Nv-ci-hNo">
-                                <rect key="frame" x="172" y="216" width="256" height="256"/>
+                                <rect key="frame" x="177" y="216" width="256" height="256"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="256" id="IXy-gi-0zi"/>
@@ -53,12 +50,11 @@
                         <color key="backgroundColor" red="0.78823529410000004" green="0.90980392160000001" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4Nv-ci-hNo" firstAttribute="top" secondItem="GJd-Yh-RWb" secondAttribute="bottom" constant="53" id="2Cc-er-moP"/>
-                            <constraint firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
                             <constraint firstItem="4Nv-ci-hNo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Mu2-og-Go1"/>
                             <constraint firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="Q3B-4B-g5h"/>
-                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" symbolic="YES" id="SfN-ll-jLj"/>
-                            <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="4Nv-ci-hNo" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="iwW-Wv-L1L"/>
+                            <constraint firstItem="LGc-Lj-kcs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ZmL-yu-0Sj"/>
+                            <constraint firstItem="LGc-Lj-kcs" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="14" id="f3u-tn-Xej"/>
+                            <constraint firstItem="4Nv-ci-hNo" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="5" id="iwW-Wv-L1L"/>
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="-58" id="moa-c2-u7t"/>
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" symbolic="YES" id="x7j-FC-K8j"/>
                         </constraints>
@@ -75,6 +71,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="OSM-Logo144.png" width="144" height="144"/>
         <image name="OSM-Logo256.png" width="256" height="256"/>
     </resources>
 </document>
