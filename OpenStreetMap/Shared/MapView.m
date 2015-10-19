@@ -1465,7 +1465,9 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 // delegate for iIOS 6 and later
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-	[self locationUpdatedTo:locations.lastObject];
+	for ( CLLocation * location in locations ) {
+		[self locationUpdatedTo:location];
+	}
 }
 
 // delegate for iIOS 5 and earlier
