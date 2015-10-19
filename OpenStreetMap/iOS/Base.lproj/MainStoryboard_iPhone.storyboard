@@ -30,10 +30,16 @@
                                         <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                         <animations/>
                                         <items>
-                                            <barButtonItem image="845-location-target-toolbar.png" style="plain" id="e2S-h3-y7k">
-                                                <connections>
-                                                    <action selector="toggleLocation:" destination="2" id="CZC-r2-umP"/>
-                                                </connections>
+                                            <barButtonItem style="plain" id="e3U-Im-GKP" userLabel="Location Button">
+                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Af5-y9-yOe">
+                                                    <rect key="frame" x="16" y="11" width="22" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <state key="normal" image="723-location-arrow-toolbar.png"/>
+                                                    <connections>
+                                                        <action selector="toggleLocation:" destination="2" eventType="touchUpInside" id="WWX-Tw-6Tj"/>
+                                                    </connections>
+                                                </button>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="3ck-vf-cka"/>
                                             <barButtonItem enabled="NO" image="undo32.png" style="plain" id="in0-IO-OB6">
@@ -236,7 +242,7 @@
                         <outlet property="_toolbar" destination="GTv-eT-l7q" id="sfg-93-w4E"/>
                         <outlet property="_undoButton" destination="in0-IO-OB6" id="zx7-uA-FJ2"/>
                         <outlet property="_uploadButton" destination="ma4-oI-tBL" id="wVI-LB-h9R"/>
-                        <outlet property="locationButton" destination="e2S-h3-y7k" id="BWd-6m-zga"/>
+                        <outlet property="locationButton" destination="e3U-Im-GKP" id="LSh-pS-Mw5"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
                         <segue destination="siu-I6-IEp" kind="modal" identifier="searchSegue" id="iXU-B0-fRW"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
@@ -5408,9 +5414,9 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <image name="1200-file-type-settings-toolbar.png" width="16" height="22"/>
         <image name="702-share.png" width="21" height="28"/>
         <image name="710-folder.png" width="28" height="24"/>
+        <image name="723-location-arrow-toolbar.png" width="22" height="22"/>
         <image name="732-cloud-upload-toolbar.png" width="22" height="22"/>
         <image name="751-eye-toolbar.png" width="22" height="12"/>
-        <image name="845-location-target-toolbar.png" width="22" height="22"/>
         <image name="852-map-toolbar.png" width="22" height="18"/>
         <image name="982-food-toolbar.png" width="22" height="18"/>
         <image name="BingLogo.png" width="93" height="29"/>

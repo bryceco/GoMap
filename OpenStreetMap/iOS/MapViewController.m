@@ -138,7 +138,18 @@
 {
 	if ( self.mapView.gpsState != state ) {
 		self.mapView.gpsState = state;
-		self.locationButton.tintColor = state != GPS_STATE_NONE ? UIColor.grayColor : nil;
+
+	//	self.locationButton.tintColor = state != GPS_STATE_NONE ? [UIColor colorWithRed:0.6 green:0.3 blue:0.9 alpha:1] : nil;
+
+		if ( state == GPS_STATE_NONE ) {
+			UIImage * image = [UIImage imageNamed:@"723-location-arrow-toolbar"];
+			UIButton * button = self.locationButton.customView;
+			[button setImage:image forState:UIControlStateNormal];
+		} else {
+			UIImage * image = [UIImage imageNamed:@"723-location-arrow-toolbar-selected"];
+			UIButton * button = self.locationButton.customView;
+			[button setImage:image forState:UIControlStateNormal];
+		}
 
 		// changing the button tint changes the view, so we have to install longpress again
 		[self installLongPressGestureRecognizer:YES];

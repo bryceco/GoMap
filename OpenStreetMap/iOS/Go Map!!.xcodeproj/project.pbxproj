@@ -33,6 +33,12 @@
 		02072AD31BD454E800F1CAB4 /* 751-eye-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD01BD454E800F1CAB4 /* 751-eye-toolbar@2x.png */; settings = {ASSET_TAGS = (); }; };
 		02072AD41BD454E800F1CAB4 /* 751-eye-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD11BD454E800F1CAB4 /* 751-eye-toolbar@3x.png */; settings = {ASSET_TAGS = (); }; };
 		02072AD61BD46B1700F1CAB4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02072AD51BD46B1700F1CAB4 /* StoreKit.framework */; };
+		02072ADD1BD543AC00F1CAB4 /* 723-location-arrow-toolbar-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD71BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected.png */; settings = {ASSET_TAGS = (); }; };
+		02072ADE1BD543AC00F1CAB4 /* 723-location-arrow-toolbar-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD81BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected@2x.png */; settings = {ASSET_TAGS = (); }; };
+		02072ADF1BD543AC00F1CAB4 /* 723-location-arrow-toolbar-selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD91BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected@3x.png */; settings = {ASSET_TAGS = (); }; };
+		02072AE01BD543AC00F1CAB4 /* 723-location-arrow-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ADA1BD543AB00F1CAB4 /* 723-location-arrow-toolbar.png */; settings = {ASSET_TAGS = (); }; };
+		02072AE11BD543AC00F1CAB4 /* 723-location-arrow-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ADB1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@2x.png */; settings = {ASSET_TAGS = (); }; };
+		02072AE21BD543AC00F1CAB4 /* 723-location-arrow-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ADC1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@3x.png */; settings = {ASSET_TAGS = (); }; };
 		020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */; };
 		020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8F168A7688003F2C2A /* CreditsViewController.m */; };
 		020CD975169D4B5A00BF3AAF /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD974169D4B5A00BF3AAF /* Default-Portrait~ipad.png */; };
@@ -510,6 +516,12 @@
 		02072AD01BD454E800F1CAB4 /* 751-eye-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "751-eye-toolbar@2x.png"; sourceTree = "<group>"; };
 		02072AD11BD454E800F1CAB4 /* 751-eye-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "751-eye-toolbar@3x.png"; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		02072AD71BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar-selected.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Selected/723-location-arrow-toolbar-selected.png"; sourceTree = "<group>"; };
+		02072AD81BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar-selected@2x.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Selected/723-location-arrow-toolbar-selected@2x.png"; sourceTree = "<group>"; };
+		02072AD91BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar-selected@3x.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Selected/723-location-arrow-toolbar-selected@3x.png"; sourceTree = "<group>"; };
+		02072ADA1BD543AB00F1CAB4 /* 723-location-arrow-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Normal/723-location-arrow-toolbar.png"; sourceTree = "<group>"; };
+		02072ADB1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar@2x.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Normal/723-location-arrow-toolbar@2x.png"; sourceTree = "<group>"; };
+		02072ADC1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar@3x.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Normal/723-location-arrow-toolbar@3x.png"; sourceTree = "<group>"; };
 		020C2A89168A6DF3003F2C2A /* UITableViewCell+FixConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+FixConstraints.h"; sourceTree = "<group>"; };
 		020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FixConstraints.m"; sourceTree = "<group>"; };
 		020C2A8E168A7688003F2C2A /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
@@ -1071,6 +1083,12 @@
 				02072AC91BD4546E00F1CAB4 /* 710-folder.png */,
 				02072ACA1BD4546F00F1CAB4 /* 710-folder@2x.png */,
 				02072ACB1BD4546F00F1CAB4 /* 710-folder@3x.png */,
+				02072AD71BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected.png */,
+				02072AD81BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected@2x.png */,
+				02072AD91BD543AB00F1CAB4 /* 723-location-arrow-toolbar-selected@3x.png */,
+				02072ADA1BD543AB00F1CAB4 /* 723-location-arrow-toolbar.png */,
+				02072ADB1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@2x.png */,
+				02072ADC1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@3x.png */,
 				02072AB71BD4497500F1CAB4 /* 732-cloud-upload-toolbar.png */,
 				02072AB81BD4497500F1CAB4 /* 732-cloud-upload-toolbar@2x.png */,
 				02072AB91BD4497500F1CAB4 /* 732-cloud-upload-toolbar@3x.png */,
@@ -1807,6 +1825,7 @@
 				02ACBBD116713F2B00BB4414 /* accommodation_camping.p.64.png in Resources */,
 				02ACBBD216713F2B00BB4414 /* accommodation_caravan_park.p.64.png in Resources */,
 				02ACBBD316713F2B00BB4414 /* accommodation_chalet.p.64.png in Resources */,
+				02072ADF1BD543AC00F1CAB4 /* 723-location-arrow-toolbar-selected@3x.png in Resources */,
 				02ACBBD416713F2B00BB4414 /* accommodation_chalet2.p.64.png in Resources */,
 				02ACBBD516713F2B00BB4414 /* accommodation_hostel.p.64.png in Resources */,
 				02ACBBD616713F2B00BB4414 /* accommodation_hotel.p.64.png in Resources */,
@@ -1819,6 +1838,7 @@
 				02ACBBDD16713F2B00BB4414 /* amenity_court.p.64.png in Resources */,
 				02ACBBDE16713F2B00BB4414 /* amenity_firestation.p.64.png in Resources */,
 				02ACBBDF16713F2B00BB4414 /* amenity_firestation2.p.64.png in Resources */,
+				02072ADD1BD543AC00F1CAB4 /* 723-location-arrow-toolbar-selected.png in Resources */,
 				02ACBBE016713F2B00BB4414 /* amenity_firestation3.p.64.png in Resources */,
 				02ACBBE116713F2B00BB4414 /* amenity_fountain.p.64.png in Resources */,
 				02ACBBE216713F2B00BB4414 /* amenity_fountain2.p.64.png in Resources */,
@@ -1905,6 +1925,7 @@
 				02ACBC2F16713F2B00BB4414 /* place_of_worship_bahai3.p.64.png in Resources */,
 				02ACBC3016713F2B00BB4414 /* place_of_worship_buddhist.p.64.png in Resources */,
 				02ACBC3116713F2B00BB4414 /* place_of_worship_buddhist3.p.64.png in Resources */,
+				02072AE11BD543AC00F1CAB4 /* 723-location-arrow-toolbar@2x.png in Resources */,
 				02ACBC3216713F2B00BB4414 /* place_of_worship_christian.p.64.png in Resources */,
 				02ACBC3316713F2B00BB4414 /* place_of_worship_christian3.p.64.png in Resources */,
 				02ACBC3416713F2B00BB4414 /* place_of_worship_hindu.p.64.png in Resources */,
@@ -2054,6 +2075,7 @@
 				02ACBCB416713F2B00BB4414 /* tourist_cinema2.p.64.png in Resources */,
 				02ACBCB516713F2B00BB4414 /* tourist_clock.p.64.png in Resources */,
 				02ACBCB616713F2B00BB4414 /* tourist_fountain.p.64.png in Resources */,
+				02072AE21BD543AC00F1CAB4 /* 723-location-arrow-toolbar@3x.png in Resources */,
 				02ACBCB716713F2B00BB4414 /* tourist_guidepost.p.64.png in Resources */,
 				02ACBCB816713F2B00BB4414 /* tourist_information.p.64.png in Resources */,
 				02ACBCB916713F2B00BB4414 /* tourist_map.p.64.png in Resources */,
@@ -2092,6 +2114,7 @@
 				02ACBCD816713F2B00BB4414 /* transport_helicopter_pad.p.64.png in Resources */,
 				02ACBCD916713F2B00BB4414 /* transport_lighthouse.p.64.png in Resources */,
 				02ACBCDA16713F2B00BB4414 /* transport_marina.p.64.png in Resources */,
+				02072ADE1BD543AC00F1CAB4 /* 723-location-arrow-toolbar-selected@2x.png in Resources */,
 				02ACBCDB16713F2B00BB4414 /* transport_miniroundabout_anticlockwise.p.64.png in Resources */,
 				02ACBCDC16713F2B00BB4414 /* transport_miniroundabout_clockwise.p.64.png in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
@@ -2114,6 +2137,7 @@
 				02ACBCEB16713F2B00BB4414 /* transport_speedbump.p.64.png in Resources */,
 				02ACBCEC16713F2B00BB4414 /* transport_subway.p.64.png in Resources */,
 				02ACBCED16713F2B00BB4414 /* transport_taxi_rank.p.64.png in Resources */,
+				02072AE01BD543AC00F1CAB4 /* 723-location-arrow-toolbar.png in Resources */,
 				02ACBCEE16713F2B00BB4414 /* transport_traffic_lights.p.64.png in Resources */,
 				02ACBCEF16713F2B00BB4414 /* transport_train_station.p.64.png in Resources */,
 				02ACBCF016713F2B00BB4414 /* transport_train_station2.p.64.png in Resources */,
