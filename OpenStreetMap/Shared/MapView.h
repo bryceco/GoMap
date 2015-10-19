@@ -9,9 +9,11 @@
 #if TARGET_OS_IPHONE
 #import "iosapi.h"
 #import <Foundation/Foundation.h>
+#import <StoreKit/StoreKit.h>
 #else
 #import <Cocoa/Cocoa.h>
 #endif
+
 
 #import <CoreLocation/CoreLocation.h>
 #import "VectorMath.h"
@@ -62,7 +64,7 @@ typedef enum {
 } GPS_STATE;
 
 #if TARGET_OS_IPHONE
-@interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate>
+@interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate,SKStoreProductViewControllerDelegate>
 #else
 @interface MapView : NSView <CLLocationManagerDelegate>
 #endif
@@ -98,6 +100,7 @@ typedef enum {
 	UIAlertView						*	_alertMove;
 	UIAlertView						*	_alertUndo;
 	UIAlertView						*	_alertGps;
+	UIAlertView						*	_alertViewRateApp;
 	UIActionSheet					*	_multiSelectSheet;
 	NSArray							*	_multiSelectObjects;
 	CGPoint								_multiSelectPoint;
@@ -231,5 +234,7 @@ typedef enum {
 #endif
 
 -(void)refreshNoteButtonsFromDatabase;
+
+-(void)askToRate:(NSInteger)uploadCount;
 
 @end

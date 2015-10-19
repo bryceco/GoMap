@@ -170,7 +170,7 @@
 
 - (NSString *)appVersion
 {
-	return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

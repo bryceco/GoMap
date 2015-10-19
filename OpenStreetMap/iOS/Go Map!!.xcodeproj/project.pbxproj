@@ -32,6 +32,7 @@
 		02072AD21BD454E800F1CAB4 /* 751-eye-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ACF1BD454E800F1CAB4 /* 751-eye-toolbar.png */; settings = {ASSET_TAGS = (); }; };
 		02072AD31BD454E800F1CAB4 /* 751-eye-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD01BD454E800F1CAB4 /* 751-eye-toolbar@2x.png */; settings = {ASSET_TAGS = (); }; };
 		02072AD41BD454E800F1CAB4 /* 751-eye-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD11BD454E800F1CAB4 /* 751-eye-toolbar@3x.png */; settings = {ASSET_TAGS = (); }; };
+		02072AD61BD46B1700F1CAB4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02072AD51BD46B1700F1CAB4 /* StoreKit.framework */; };
 		020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */; };
 		020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8F168A7688003F2C2A /* CreditsViewController.m */; };
 		020CD975169D4B5A00BF3AAF /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD974169D4B5A00BF3AAF /* Default-Portrait~ipad.png */; };
@@ -508,6 +509,7 @@
 		02072ACF1BD454E800F1CAB4 /* 751-eye-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "751-eye-toolbar.png"; sourceTree = "<group>"; };
 		02072AD01BD454E800F1CAB4 /* 751-eye-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "751-eye-toolbar@2x.png"; sourceTree = "<group>"; };
 		02072AD11BD454E800F1CAB4 /* 751-eye-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "751-eye-toolbar@3x.png"; sourceTree = "<group>"; };
+		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		020C2A89168A6DF3003F2C2A /* UITableViewCell+FixConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+FixConstraints.h"; sourceTree = "<group>"; };
 		020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FixConstraints.m"; sourceTree = "<group>"; };
 		020C2A8E168A7688003F2C2A /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
@@ -1043,6 +1045,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02072AD61BD46B1700F1CAB4 /* StoreKit.framework in Frameworks */,
 				02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
@@ -1172,6 +1175,7 @@
 		02ACBA3216713CCB00BB4414 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02072AD51BD46B1700F1CAB4 /* StoreKit.framework */,
 				027AD5D319F5EA7D00120654 /* libobjc.A.dylib */,
 				027AD5D119F5A18700120654 /* CoreFoundation.framework */,
 				025B841619DCF55C0053C637 /* SceneKit.framework */,

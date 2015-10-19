@@ -78,9 +78,11 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-	if ( buttonIndex != alertView.cancelButtonIndex ) {
-		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userDidPreviousUpload"];
-		[self commit:nil];
+	if ( alertView == _alertViewConfirm ) {
+		if ( buttonIndex != alertView.cancelButtonIndex ) {
+			[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userDidPreviousUpload"];
+			[self commit:nil];
+		}
 	}
 }
 
@@ -95,12 +97,12 @@
 	}
 
 	if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"userDidPreviousUpload"] ) {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Warning"
+		_alertViewConfirm = [[UIAlertView alloc] initWithTitle:@"Warning"
 													 message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel."
 													delegate:self
 										   cancelButtonTitle:@"Cancel"
 										   otherButtonTitles:@"Commit",nil];
-		[alert show];
+		[_alertViewConfirm show];
 		return;
 	}
 
@@ -128,12 +130,20 @@
 				[_editXmlButton setEnabled:YES];
 			}
 		} else {
+
 			[self dismissViewControllerAnimated:YES completion:nil];
 
 			// flash success message
 			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC));
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 				[appDelegate.mapView flashMessage:NSLocalizedString(@"Upload complete!",nil) duration:1.5];
+
+				// record number of uploads
+				NSString * uploadKey = [NSString stringWithFormat:@"uploadCount-%@", appDelegate.appVersion];
+				NSInteger editCount = [[NSUserDefaults standardUserDefaults] integerForKey:uploadKey];
+				++editCount;
+				[[NSUserDefaults standardUserDefaults] setInteger:editCount forKey:uploadKey];
+				[appDelegate.mapView askToRate:editCount];
 			});
 		}
 	};

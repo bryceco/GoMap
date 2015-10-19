@@ -20,6 +20,8 @@
 	IBOutlet UIActivityIndicatorView	*	_progressView;
 	IBOutlet UIButton					*	_sendMailButton;
 	IBOutlet UIButton					*	_editXmlButton;
+
+	UIAlertView							*	_alertViewConfirm;
 }
 -(IBAction)editXml:(id)sender;
 -(IBAction)sendMail:(id)sender;

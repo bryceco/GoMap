@@ -679,6 +679,38 @@ CGSize SizeForImage( NSImage * image )
 }
 
 
+-(void)askToRate:(NSInteger)uploadCount
+{
+	double countLog10 = log10(uploadCount);
+	if ( uploadCount > 1 && countLog10 == floor(countLog10) ) {
+		NSString * title = [NSString stringWithFormat:@"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?", (long)uploadCount];
+		_alertViewRateApp = [[UIAlertView alloc] initWithTitle:title message:@"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." delegate:self cancelButtonTitle:@"Maybe later..." otherButtonTitles:@"I'll do it!", nil];
+		[_alertViewRateApp show];
+	}
+}
+-(void)showInAppStore
+{
+#if 1
+	NSString * urlText = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @592990211];
+	NSURL * url = [NSURL URLWithString:urlText];
+	[[UIApplication sharedApplication] openURL:url];
+#else
+	SKStoreProductViewController * spvc = [SKStoreProductViewController new];
+	spvc.delegate = self; //self is the view controller to present spvc
+	[spvc loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier:@592990211}
+					completionBlock:^(BOOL result, NSError * error){
+						if (result) {
+							[self.viewController presentViewController:spvc animated:YES completion:nil];
+						}
+					}];
+#endif
+}
+-(void)productViewControllerDidFinish:(SKStoreProductViewController*)viewController
+{
+	[(UIViewController*)viewController.delegate dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 
 #pragma mark View State
 
@@ -1679,6 +1711,12 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			// okay
 		}
 		_alertMove = nil;
+	}
+	if ( alertView == _alertViewRateApp ) {
+		if ( buttonIndex != alertView.cancelButtonIndex ) {
+			[self showInAppStore];
+		}
+		_alertViewRateApp = nil;
 	}
 }
 #endif
