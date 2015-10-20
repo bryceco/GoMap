@@ -123,6 +123,8 @@ typedef enum {
 
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
 	BOOL								_pushpinDragDidMove;	// to maintain undo stack
+
+	BOOL								_addNodeButtonIsPressed;
 }
 
 #if TARGET_OS_IPHONE
@@ -135,6 +137,7 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet UIButton			*	centerOnGPSButton;
 
 @property (assign,nonatomic)	IBOutlet UIToolbar			*	toolbar;
+@property (assign,nonatomic)	IBOutlet UIButton			*	addNodeButton;
 #endif
 @property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
 

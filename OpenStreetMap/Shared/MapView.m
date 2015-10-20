@@ -303,9 +303,14 @@ CGSize SizeForImage( NSImage * image )
 
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
 	[self addGestureRecognizer:longPress];
+
 	UIRotationGestureRecognizer * rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotationGesture:)];
 	rotationGesture.delegate = self;
 	[self addGestureRecognizer:rotationGesture];
+
+	UILongPressGestureRecognizer *	addButtonLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(addNodeButtonLongPressHandler:)];
+	addButtonLongPressGestureRecognizer.minimumPressDuration = 0.1;
+	[self.addNodeButton addGestureRecognizer:addButtonLongPressGestureRecognizer];
 
 	_notesDatabase			= [OsmNotesDatabase new];
 	_notesDatabase.mapData	= _editorLayer.mapData;
@@ -2269,7 +2274,7 @@ NSString * ActionTitle( NSInteger action )
 	_pushpinView.text = text;
 }
 
--(IBAction)interactiveExtendSelectedWay:(id)sender
+-(void)interactiveExtendSelectedWayToPoint:(CGPoint)newPoint userSpecified:(BOOL)userSpecified
 {
 	if ( !_pushpinView )
 		return;
@@ -2317,22 +2322,19 @@ NSString * ActionTitle( NSInteger action )
 		if ( nextIndex == way.nodes.count - 1 )
 			++nextIndex;
 		// add new node at point
-		CGPoint newPoint;
 		OSMPoint centerPoint = OSMPointFromCGPoint( self.center );
 		OsmNode * prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count-2] : nil;
 		CGPoint prevPrevPoint = prevPrevNode ? [self screenPointForLatitude:prevPrevNode.lat longitude:prevPrevNode.lon birdsEye:YES] : CGPointMake(0,0);
 
-		if ( _crossHairs &&
-			 hypot( prevPoint.x-centerPoint.x, prevPoint.y-centerPoint.y) > 10.0 &&
+		if ( userSpecified ) {
+			// just use the supplied point
+		} else if ( hypot( prevPoint.x-centerPoint.x, prevPoint.y-centerPoint.y) > 10.0 &&
 			(prevPrevNode==nil || hypot( prevPrevPoint.x-centerPoint.x, prevPrevPoint.y-centerPoint.y) > 10.0 ) )
 		{
-
-			// place new point at crosshairs
-			newPoint = self.center;
-
+			// it's far enough from previous point to use
 		} else {
 
-			// compute a good p;ace for next point
+			// compute a good place for next point
 			if ( way.nodes.count < 2 ) {
 				// create 2nd point in the direction of the center of the screen
 				BOOL vert = fabs(prevPoint.x - centerPoint.x) < fabs(prevPoint.y - centerPoint.y);
@@ -2412,8 +2414,7 @@ NSString * ActionTitle( NSInteger action )
 }
 #endif
 
-
--(IBAction)dropPin:(id)sender
+-(void)dropPinAtPoint:(CGPoint)dropPoint userSpecified:(BOOL)userSpecified
 {
 #if TARGET_OS_IPHONE
 	if ( _editorLayer.hidden ) {
@@ -2427,33 +2428,35 @@ NSString * ActionTitle( NSInteger action )
 			[self flashMessage:NSLocalizedString(@"Selected object is off screen",nil)];
 		} else if ( _editorLayer.selectedWay && _editorLayer.selectedNode ) {
 			// already editing a way so try to extend it
-			[self interactiveExtendSelectedWay:nil];
+			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified ];
 		} else if ( _editorLayer.selectedPrimary == nil && _pushpinView ) {
 			// just dropped a pin, so convert it into a way
-			[self interactiveExtendSelectedWay:nil];
+			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified];
 		} else if ( _editorLayer.selectedWay && _editorLayer.selectedNode == nil ) {
 			// add a new node to a way
-			[self interactiveExtendSelectedWay:nil];
+			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified];
 		} else if ( _editorLayer.selectedPrimary.isNode ) {
 			// nothing selected, or just a single node selected, so drop pin
 			goto drop_pin;
 		}
-		
+
 	} else {
 
-drop_pin:
+	drop_pin:
 		// drop a new pin
 
 		// remove current selection
 		_editorLayer.selectedNode = nil;
 		_editorLayer.selectedWay = nil;
 
-		CGRect rc = self.bounds;
-		CGPoint point = CGPointMake( rc.origin.x + rc.size.width / 2,
-									 rc.origin.y + rc.size.height / 2 );
-		[self placePushpinAtPoint:point object:nil];
+		[self placePushpinAtPoint:dropPoint object:nil];
 	}
 #endif
+}
+-(IBAction)dropPin:(id)sender
+{
+	CGPoint point = CGRectCenter( self.bounds );
+	[self dropPinAtPoint:point userSpecified:NO];
 }
 
 - (void)setTagsForCurrentObject:(NSDictionary *)tags
@@ -2864,8 +2867,29 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		CGPoint point = [tap locationInView:self];
 		BOOL extendedCommand = NO;
 		if ( tap.numberOfTapsRequired == 1 ) {
-			[self singleClick:point extendedCommand:extendedCommand];
+
+			if ( _addNodeButtonIsPressed ) {
+				[self dropPinAtPoint:point userSpecified:YES];
+			} else {
+				[self singleClick:point extendedCommand:extendedCommand];
+			}
 		}
+	}
+}
+
+-(void)addNodeButtonLongPressHandler:(UILongPressGestureRecognizer *)recognizer
+{
+	switch ( recognizer.state ) {
+		case UIGestureRecognizerStateBegan:
+			_addNodeButtonIsPressed = YES;
+			break;
+		case UIGestureRecognizerStateEnded:
+		case UIGestureRecognizerStateCancelled:
+		case UIGestureRecognizerStateFailed:
+			_addNodeButtonIsPressed = NO;
+			break;
+		default:
+			break;
 	}
 }
 

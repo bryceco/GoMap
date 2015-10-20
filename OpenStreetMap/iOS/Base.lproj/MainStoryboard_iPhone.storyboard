@@ -32,7 +32,7 @@
                                         <items>
                                             <barButtonItem style="plain" id="e3U-Im-GKP" userLabel="Location Button">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Af5-y9-yOe">
-                                                    <rect key="frame" x="16" y="11" width="22" height="22"/>
+                                                    <rect key="frame" x="16" y="0.0" width="22" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <state key="normal" image="723-location-arrow-toolbar.png"/>
@@ -53,13 +53,20 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="9sY-7x-Af0"/>
-                                            <barButtonItem style="plain" systemItem="add" id="KCa-jd-MRI">
-                                                <connections>
-                                                    <action selector="dropPin:" destination="fss-Ag-fKJ" id="WlT-89-drg"/>
-                                                </connections>
+                                            <barButtonItem title="Item" style="plain" id="Ceq-eN-yV5" userLabel="Add Button">
+                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uWA-Q5-QJr">
+                                                    <rect key="frame" x="147" y="0.0" width="44" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <gestureRecognizers/>
+                                                    <state key="normal" image="709-plus-toolbar.png"/>
+                                                    <connections>
+                                                        <action selector="dropPin:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="6KB-oO-iMa"/>
+                                                    </connections>
+                                                </button>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="mpB-2g-Apf"/>
-                                            <barButtonItem image="1200-file-type-settings-toolbar.png" style="plain" id="npa-P4-nL0">
+                                            <barButtonItem image="1200-file-type-settings-toolbar.png" style="plain" id="npa-P4-nL0" userLabel="Settings Button">
                                                 <connections>
                                                     <segue destination="dn9-E8-wB3" kind="push" id="9Q1-CD-DXg"/>
                                                 </connections>
@@ -71,7 +78,7 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem systemItem="flexibleSpace" id="4kg-8e-lu7"/>
-                                            <barButtonItem image="852-map-toolbar.png" style="plain" id="43k-EH-kfB">
+                                            <barButtonItem image="852-map-toolbar.png" style="plain" id="43k-EH-kfB" userLabel="Display Button">
                                                 <connections>
                                                     <segue destination="UfZ-fJ-hyB" kind="push" id="YAs-Pe-6oG"/>
                                                 </connections>
@@ -205,6 +212,7 @@
                                     <constraint firstAttribute="centerX" secondItem="N5Q-nV-TPG" secondAttribute="centerX" id="uqA-n8-R0J"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="addNodeButton" destination="uWA-Q5-QJr" id="KZK-QF-Qu1"/>
                                     <outlet property="bingMapsLogo" destination="2Ka-IT-DQC" id="KDN-9Z-L5e"/>
                                     <outlet property="centerOnGPSButton" destination="Fo4-Nq-pAz" id="EWp-gg-bm2"/>
                                     <outlet property="editControl" destination="zrW-uc-hfQ" id="0UY-5Y-O1k"/>
@@ -5413,6 +5421,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
     <resources>
         <image name="1200-file-type-settings-toolbar.png" width="16" height="22"/>
         <image name="702-share.png" width="21" height="28"/>
+        <image name="709-plus-toolbar.png" width="22" height="22"/>
         <image name="710-folder.png" width="28" height="24"/>
         <image name="723-location-arrow-toolbar.png" width="22" height="22"/>
         <image name="732-cloud-upload-toolbar.png" width="22" height="22"/>

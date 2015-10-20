@@ -39,6 +39,9 @@
 		02072AE01BD543AC00F1CAB4 /* 723-location-arrow-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ADA1BD543AB00F1CAB4 /* 723-location-arrow-toolbar.png */; settings = {ASSET_TAGS = (); }; };
 		02072AE11BD543AC00F1CAB4 /* 723-location-arrow-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ADB1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@2x.png */; settings = {ASSET_TAGS = (); }; };
 		02072AE21BD543AC00F1CAB4 /* 723-location-arrow-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ADC1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@3x.png */; settings = {ASSET_TAGS = (); }; };
+		02072AE61BD5E99B00F1CAB4 /* 709-plus-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AE31BD5E99B00F1CAB4 /* 709-plus-toolbar.png */; settings = {ASSET_TAGS = (); }; };
+		02072AE71BD5E99B00F1CAB4 /* 709-plus-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AE41BD5E99B00F1CAB4 /* 709-plus-toolbar@2x.png */; settings = {ASSET_TAGS = (); }; };
+		02072AE81BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AE51BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png */; settings = {ASSET_TAGS = (); }; };
 		020C2A8B168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */; };
 		020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8F168A7688003F2C2A /* CreditsViewController.m */; };
 		020CD975169D4B5A00BF3AAF /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD974169D4B5A00BF3AAF /* Default-Portrait~ipad.png */; };
@@ -522,6 +525,9 @@
 		02072ADA1BD543AB00F1CAB4 /* 723-location-arrow-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Normal/723-location-arrow-toolbar.png"; sourceTree = "<group>"; };
 		02072ADB1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar@2x.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Normal/723-location-arrow-toolbar@2x.png"; sourceTree = "<group>"; };
 		02072ADC1BD543AB00F1CAB4 /* 723-location-arrow-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "723-location-arrow-toolbar@3x.png"; path = "../../../../../Downloads/Glyphish Bundle/Glyphish 6/Glyphish 6 Icons (PNG)/Small (toolbar)/Normal/723-location-arrow-toolbar@3x.png"; sourceTree = "<group>"; };
+		02072AE31BD5E99B00F1CAB4 /* 709-plus-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "709-plus-toolbar.png"; sourceTree = "<group>"; };
+		02072AE41BD5E99B00F1CAB4 /* 709-plus-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "709-plus-toolbar@2x.png"; sourceTree = "<group>"; };
+		02072AE51BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "709-plus-toolbar@3x.png"; sourceTree = "<group>"; };
 		020C2A89168A6DF3003F2C2A /* UITableViewCell+FixConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+FixConstraints.h"; sourceTree = "<group>"; };
 		020C2A8A168A6DF3003F2C2A /* UITableViewCell+FixConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FixConstraints.m"; sourceTree = "<group>"; };
 		020C2A8E168A7688003F2C2A /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
@@ -1080,6 +1086,9 @@
 		025A1D001690DC32002B60CB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				02072AE31BD5E99B00F1CAB4 /* 709-plus-toolbar.png */,
+				02072AE41BD5E99B00F1CAB4 /* 709-plus-toolbar@2x.png */,
+				02072AE51BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png */,
 				02072AC91BD4546E00F1CAB4 /* 710-folder.png */,
 				02072ACA1BD4546F00F1CAB4 /* 710-folder@2x.png */,
 				02072ACB1BD4546F00F1CAB4 /* 710-folder@3x.png */,
@@ -1819,6 +1828,7 @@
 				02ACBBC016713F2B00BB4414 /* BlueBall.png in Resources */,
 				02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */,
 				02ACBBC816713F2B00BB4414 /* mapnik.mapcss in Resources */,
+				02072AE81BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png in Resources */,
 				02ACBBCE16713F2B00BB4414 /* accommodation_alpinehut.p.64.png in Resources */,
 				02ACBBCF16713F2B00BB4414 /* accommodation_bed_and_breakfast.p.64.png in Resources */,
 				02ACBBD016713F2B00BB4414 /* accommodation_bed_and_breakfast2.p.64.png in Resources */,
@@ -1937,6 +1947,7 @@
 				02ACBC3916713F2B00BB4414 /* place_of_worship_jain3.p.64.png in Resources */,
 				02ACBC3A16713F2B00BB4414 /* place_of_worship_jewish.p.64.png in Resources */,
 				02ACBC3B16713F2B00BB4414 /* place_of_worship_jewish3.p.64.png in Resources */,
+				02072AE71BD5E99B00F1CAB4 /* 709-plus-toolbar@2x.png in Resources */,
 				02ACBC3C16713F2B00BB4414 /* place_of_worship_shinto.p.64.png in Resources */,
 				02ACBC3D16713F2B00BB4414 /* place_of_worship_shinto3.p.64.png in Resources */,
 				02ACBC3E16713F2B00BB4414 /* place_of_worship_sikh.p.64.png in Resources */,
@@ -2033,6 +2044,7 @@
 				02ACBC8E16713F2B00BB4414 /* sport_baseball.p.64.png in Resources */,
 				02ACBC8F16713F2B00BB4414 /* sport_canoe.p.64.png in Resources */,
 				02072AC01BD44B2800F1CAB4 /* 1200-file-type-settings-toolbar.png in Resources */,
+				02072AE61BD5E99B00F1CAB4 /* 709-plus-toolbar.png in Resources */,
 				02ACBC9016713F2B00BB4414 /* sport_cricket.p.64.png in Resources */,
 				02ACBC9116713F2B00BB4414 /* sport_diving.p.64.png in Resources */,
 				02ACBC9216713F2B00BB4414 /* sport_golf.p.64.png in Resources */,
