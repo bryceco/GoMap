@@ -302,15 +302,17 @@ CGSize SizeForImage( NSImage * image )
 #endif
 
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+	longPress.delegate = self;
 	[self addGestureRecognizer:longPress];
 
 	UIRotationGestureRecognizer * rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotationGesture:)];
 	rotationGesture.delegate = self;
 	[self addGestureRecognizer:rotationGesture];
 
-	UILongPressGestureRecognizer *	addButtonLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(addNodeButtonLongPressHandler:)];
-	addButtonLongPressGestureRecognizer.minimumPressDuration = 0.1;
-	[self.addNodeButton addGestureRecognizer:addButtonLongPressGestureRecognizer];
+	_addNodeButtonLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(addNodeButtonLongPressHandler:)];
+	_addNodeButtonLongPressGestureRecognizer.minimumPressDuration = 0.001;
+	_addNodeButtonLongPressGestureRecognizer.delegate = self;
+	[self.addNodeButton addGestureRecognizer:_addNodeButtonLongPressGestureRecognizer];
 
 	_notesDatabase			= [OsmNotesDatabase new];
 	_notesDatabase.mapData	= _editorLayer.mapData;
@@ -2766,19 +2768,22 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
 	// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
-
 	if ( [touch.view isKindOfClass:[UIControl class]] || [touch.view isKindOfClass:[UIToolbar class]] ) {
 		// we touched a button, slider, or other UIControl
+		if ( gestureRecognizer == _addNodeButtonLongPressGestureRecognizer ) {
+			return YES;
+		}
 		return NO; // ignore the touch
 	}
+
 	return YES; // handle the touch
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
+	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && otherGestureRecognizer != _addNodeButtonLongPressGestureRecognizer )
 		return NO;
-	if ( [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] )
+	if ( [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && gestureRecognizer != _addNodeButtonLongPressGestureRecognizer )
 		return NO;
 	return YES;
 }
@@ -2845,6 +2850,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 }
 - (void)handleTapAndDragGesture:(TapAndDragGesture *)tapAndDrag
 {
+	// do single-finger zooming
 	if ( tapAndDrag.state == UIGestureRecognizerStateChanged ) {
 		_userOverrodeLocationZoom = YES;
 		_centerOnGPSButton.hidden = _gpsState == GPS_STATE_NONE;
@@ -2868,7 +2874,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		BOOL extendedCommand = NO;
 		if ( tap.numberOfTapsRequired == 1 ) {
 
-			if ( _addNodeButtonIsPressed ) {
+			if ( _addNodeButtonPressed ) {
+				if ( _addNodeButtonPressed )
+					_addNodeButtonPressed -= 1.0;	// ensure tap event doesn't trigger
 				[self dropPinAtPoint:point userSpecified:YES];
 			} else {
 				[self singleClick:point extendedCommand:extendedCommand];
@@ -2881,12 +2889,18 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 {
 	switch ( recognizer.state ) {
 		case UIGestureRecognizerStateBegan:
-			_addNodeButtonIsPressed = YES;
+			_addNodeButtonPressed = CACurrentMediaTime();
 			break;
 		case UIGestureRecognizerStateEnded:
+			if ( CACurrentMediaTime() - _addNodeButtonPressed < 0.5 ) {
+				// treat as tap
+				[self dropPin:self];
+			}
+			_addNodeButtonPressed = 0.0;
+			break;
 		case UIGestureRecognizerStateCancelled:
 		case UIGestureRecognizerStateFailed:
-			_addNodeButtonIsPressed = NO;
+			_addNodeButtonPressed = 0.0;
 			break;
 		default:
 			break;
@@ -2910,7 +2924,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		}
 		_multiSelectSheet.cancelButtonIndex = [_multiSelectSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
 		[_multiSelectSheet showInView:self];
-
 	}
 }
 

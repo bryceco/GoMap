@@ -124,7 +124,8 @@ typedef enum {
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
 	BOOL								_pushpinDragDidMove;	// to maintain undo stack
 
-	BOOL								_addNodeButtonIsPressed;
+	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
+	NSTimeInterval						_addNodeButtonPressed;
 }
 
 #if TARGET_OS_IPHONE

@@ -60,9 +60,6 @@
                                                     <animations/>
                                                     <gestureRecognizers/>
                                                     <state key="normal" image="709-plus-toolbar.png"/>
-                                                    <connections>
-                                                        <action selector="dropPin:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="6KB-oO-iMa"/>
-                                                    </connections>
                                                 </button>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="mpB-2g-Apf"/>
