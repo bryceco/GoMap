@@ -917,7 +917,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
-	[self updateUserLocationIndicator];
+	[self updateUserLocationIndicator:nil];
 
 #if TARGET_OS_IPHONE
 	// update pushpin location
@@ -1307,11 +1307,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[self presentError:error flash:NO];
 }
 
-- (void)updateUserLocationIndicator
+- (void)updateUserLocationIndicator:(CLLocation *)location
 {
 	if ( _locationBallLayer ) {
 		// set new position
-		CLLocationCoordinate2D coord = _locationManager.location.coordinate;
+		CLLocationCoordinate2D coord = location ? location.coordinate : _locationManager.location.coordinate;
 		CGPoint point = [self screenPointForLatitude:coord.latitude longitude:coord.longitude birdsEye:YES];
 		point = [self wrapScreenPoint:point];
 		_locationBallLayer.position = point;
@@ -1466,7 +1466,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		_locationBallLayer.showHeading = YES;
 		[self.layer addSublayer:_locationBallLayer];
 	}
-	[self updateUserLocationIndicator];
+	[self updateUserLocationIndicator:newLocation];
 }
 
 // delegate for iIOS 6 and later
@@ -1671,7 +1671,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	self.screenFromMapTransform = t;
 
 	if ( _locationBallLayer ) {
-		[self updateUserLocationIndicator];
+		[self updateUserLocationIndicator:nil];
 	}
 }
 
