@@ -183,7 +183,7 @@
 	}
 
 	GpxTrack *	track = indexPath.section == 0 ? appDelegate.mapView.gpxLayer.activeTrack : appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
-	NSInteger	dur = track.duration;
+	NSInteger	dur = (NSInteger)round(track.duration);
 	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
 	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (long)track.distance, (long)track.points.count];
