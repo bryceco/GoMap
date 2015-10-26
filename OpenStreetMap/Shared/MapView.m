@@ -1426,6 +1426,11 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		return;
 	}
 
+	if ( [newLocation.timestamp compare:[NSDate dateWithTimeIntervalSinceNow:-10.0]] < 0 ) {
+		// its old data
+		return;
+	}
+
 	// check if we moved an appreciable distance
 	double delta = hypot( newLocation.coordinate.latitude - _currentLocation.coordinate.latitude, newLocation.coordinate.longitude - _currentLocation.coordinate.longitude);
 	delta *= MetersPerDegree( newLocation.coordinate.latitude );
