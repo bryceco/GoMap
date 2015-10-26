@@ -40,7 +40,7 @@ static const CGFloat TOUCH_RADIUS = 22;
 			_touches[@((long)touch)] = @{ @"win" : win, @"start" : @(touch.timestamp) };
 			win.windowLevel = UIWindowLevelStatusBar;
 			win.hidden = NO;
-			win.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:1.0 alpha:0.8];
+			win.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:1.0 alpha:1.0];
 			win.layer.cornerRadius = TOUCH_RADIUS;
 			win.layer.opacity = 0.85;
 		} else if ( touch.phase == UITouchPhaseMoved ) {
