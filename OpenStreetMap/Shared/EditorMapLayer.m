@@ -1738,11 +1738,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				}
 				RGBAColor	fillColor;
 				[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
+				fillColor.alpha = object.tags[@"landuse"] ? 0.15 : 0.25;
 				CAShapeLayer * layer = [CAShapeLayer new];
 				layer.anchorPoint	= CGPointMake(0,0);
 				layer.path			= path;
 				layer.position		= CGPointFromOSMPoint(refPoint);
-				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:0.25].CGColor;
+				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:fillColor.alpha].CGColor;
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
