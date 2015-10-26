@@ -31,6 +31,7 @@
 
 
 #define USE_SHAPELAYERS		1
+#define USE_CGCONTEXT		0
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
 
@@ -48,7 +49,7 @@ enum {
 	SUBPART_WAY = 2,
 };
 
-@interface ObjectSubpart : NSObject
+@interface ObjectSubpart : NSObject	// Used for CSS drawing only
 @property (strong,nonatomic)	OsmBaseObject	*	object;
 @property (strong,nonatomic)	NSString		*	subpart;
 @property (strong,nonatomic)	NSDictionary	*	properties;
@@ -1953,7 +1954,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 #pragma mark CGContext based drawing
 
-#if 0
+#if USE_CGCONTEXT
 
 -(BOOL)drawArea:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
@@ -3066,7 +3067,7 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 }
 #endif
 
-#endif // CGContext drawing
+#endif // USE_CGCONTEXT CGContext drawing
 
 
 #pragma mark Select objects and draw
