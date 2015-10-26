@@ -40,7 +40,7 @@
 #define DEFAULT_LINECAP		kCALineCapSquare
 #define DEFAULT_LINEJOIN	kCALineJoinMiter
 
-const CGFloat Pixels_Per_Character = 8.0;
+static const CGFloat Pixels_Per_Character = 8.0;
 
 
 enum {
@@ -955,7 +955,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 #endif
 }
 
-#pragma mark Drawing
+#pragma mark Common Drawing
 
 -(double)geekbenchScore
 {
@@ -1062,282 +1062,15 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	return (NSInteger)floor( log2( OSMTransformScaleX(_mapView.screenFromMapTransform) ) );
 }
 
+
 typedef struct RGBAColor {
 	CGFloat	red;
 	CGFloat	green;
 	CGFloat	blue;
 	CGFloat	alpha;
 } RGBAColor;
-static const RGBAColor RGBAColorBlack		= { 0, 0, 0, 1 };
-static const RGBAColor RGBAColorTransparent = { 0, 0, 0, 0 };
 
-static inline uint8_t CharHexValue( char ch )
-{
-	if ( ch >= '0' && ch <= '9' )
-		return ch -= '0';
-	if ( ch >= 'A' && ch <= 'F' )
-		return ch - ('A' - 10);
-	if ( ch >= 'a' && ch <= 'f' )
-		return ch - ('a' - 10);
-	assert(NO);
-	return 0;
-}
-static RGBAColor RGBFromString( NSString * text )
-{
-	if ( [text characterAtIndex:0] == '#' ) {
-		CFStringEncoding encoding = CFStringGetFastestEncoding( (__bridge CFStringRef)text );
-		if ( encoding != kCFStringEncodingMacRoman && encoding != kCFStringEncodingUTF8 )
-			encoding = kCFStringEncodingMacRoman;
-		UInt8 buffer[ 6 ] = { 0 };
-		CFRange range = { 1, sizeof buffer };
-		CFStringGetBytes( (__bridge CFStringRef)text, range, encoding, '?', NO, buffer, sizeof buffer, NULL );
-		RGBAColor color;
-		color.red	= (16 * CharHexValue( buffer[0] ) + CharHexValue( buffer[1] )) / 255.0;
-		color.green = (16 * CharHexValue( buffer[2] ) + CharHexValue( buffer[3] )) / 255.0;
-		color.blue	= (16 * CharHexValue( buffer[4] ) + CharHexValue( buffer[5] )) / 255.0;
-		color.alpha = 1.0;
-		return color;
-	} else {
-		static struct {
-			RGBAColor		color;
-			const char	*	name;
-		} ColorList[] = {
-			240/255.0, 248/255.0, 255/255.0, 1.0f, "aliceblue"           ,
-			250/255.0, 235/255.0, 215/255.0, 1.0f, "antiquewhite"        ,
-			  0/255.0, 255/255.0, 255/255.0, 1.0f, "aqua"                ,
-			127/255.0, 255/255.0, 212/255.0, 1.0f, "aquamarine"          ,
-			240/255.0, 255/255.0, 255/255.0, 1.0f, "azure"               ,
-			245/255.0, 245/255.0, 220/255.0, 1.0f, "beige"               ,
-			255/255.0, 228/255.0, 196/255.0, 1.0f, "bisque"              ,
-			  0/255.0,   0/255.0,   0/255.0, 1.0f, "black"               ,
-			255/255.0, 235/255.0, 205/255.0, 1.0f, "blanchedalmond"      ,
-			  0/255.0,   0/255.0, 255/255.0, 1.0f, "blue"                ,
-			138/255.0,  43/255.0, 226/255.0, 1.0f, "blueviolet"          ,
-			165/255.0,  42/255.0,  42/255.0, 1.0f, "brown"               ,
-			222/255.0, 184/255.0, 135/255.0, 1.0f, "burlywood"           ,
-			 95/255.0, 158/255.0, 160/255.0, 1.0f, "cadetblue"           ,
-			127/255.0, 255/255.0,   0/255.0, 1.0f, "chartreuse"          ,
-			210/255.0, 105/255.0,  30/255.0, 1.0f, "chocolate"           ,
-			255/255.0, 127/255.0,  80/255.0, 1.0f, "coral"               ,
-			100/255.0, 149/255.0, 237/255.0, 1.0f, "cornflowerblue"      ,
-			255/255.0, 248/255.0, 220/255.0, 1.0f, "cornsilk"            ,
-			220/255.0,  20/255.0,  60/255.0, 1.0f, "crimson"             ,
-			  0/255.0, 255/255.0, 255/255.0, 1.0f, "cyan"                ,
-			  0/255.0,   0/255.0, 139/255.0, 1.0f, "darkblue"            ,
-			  0/255.0, 139/255.0, 139/255.0, 1.0f, "darkcyan"            ,
-			184/255.0, 134/255.0,  11/255.0, 1.0f, "darkgoldenrod"       ,
-			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgray"            ,
-			  0/255.0, 100/255.0,   0/255.0, 1.0f, "darkgreen"           ,
-			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgrey"            ,
-			189/255.0, 183/255.0, 107/255.0, 1.0f, "darkkhaki"           ,
-			139/255.0,   0/255.0, 139/255.0, 1.0f, "darkmagenta"         ,
-			 85/255.0, 107/255.0,  47/255.0, 1.0f, "darkolivegreen"      ,
-			255/255.0, 140/255.0,   0/255.0, 1.0f, "darkorange"          ,
-			153/255.0,  50/255.0, 204/255.0, 1.0f, "darkorchid"          ,
-			139/255.0,   0/255.0,   0/255.0, 1.0f, "darkred"             ,
-			233/255.0, 150/255.0, 122/255.0, 1.0f, "darksalmon"          ,
-			143/255.0, 188/255.0, 143/255.0, 1.0f, "darkseagreen"        ,
-			 72/255.0,  61/255.0, 139/255.0, 1.0f, "darkslateblue"       ,
-			 47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategray"       ,
-			 47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategrey"       ,
-			  0/255.0, 206/255.0, 209/255.0, 1.0f, "darkturquoise"       ,
-			148/255.0,   0/255.0, 211/255.0, 1.0f, "darkviolet"          ,
-			255/255.0,  20/255.0, 147/255.0, 1.0f, "deeppink"            ,
-			  0/255.0, 191/255.0, 255/255.0, 1.0f, "deepskyblue"         ,
-			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgray"             ,
-			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgrey"             ,
-			 30/255.0, 144/255.0, 255/255.0, 1.0f, "dodgerblue"          ,
-			178/255.0,  34/255.0,  34/255.0, 1.0f, "firebrick"           ,
-			255/255.0, 250/255.0, 240/255.0, 1.0f, "floralwhite"         ,
-			 34/255.0, 139/255.0,  34/255.0, 1.0f, "forestgreen"         ,
-			255/255.0,   0/255.0, 255/255.0, 1.0f, "fuchsia"             ,
-			220/255.0, 220/255.0, 220/255.0, 1.0f, "gainsboro"           ,
-			248/255.0, 248/255.0, 255/255.0, 1.0f, "ghostwhite"          ,
-			255/255.0, 215/255.0,   0/255.0, 1.0f, "gold"                ,
-			218/255.0, 165/255.0,  32/255.0, 1.0f, "goldenrod"           ,
-			128/255.0, 128/255.0, 128/255.0, 1.0f, "gray"                ,
-			  0/255.0, 128/255.0,   0/255.0, 1.0f, "green"               ,
-			173/255.0, 255/255.0,  47/255.0, 1.0f, "greenyellow"         ,
-			128/255.0, 128/255.0, 128/255.0, 1.0f, "grey"                ,
-			240/255.0, 255/255.0, 240/255.0, 1.0f, "honeydew"            ,
-			255/255.0, 105/255.0, 180/255.0, 1.0f, "hotpink"             ,
-			205/255.0,  92/255.0,  92/255.0, 1.0f, "indianred"           ,
-			 75/255.0,   0/255.0, 130/255.0, 1.0f, "indigo"              ,
-			255/255.0, 255/255.0, 240/255.0, 1.0f, "ivory"               ,
-			240/255.0, 230/255.0, 140/255.0, 1.0f, "khaki"               ,
-			230/255.0, 230/255.0, 250/255.0, 1.0f, "lavender"            ,
-			255/255.0, 240/255.0, 245/255.0, 1.0f, "lavenderblush"       ,
-			124/255.0, 252/255.0,   0/255.0, 1.0f, "lawngreen"           ,
-			255/255.0, 250/255.0, 205/255.0, 1.0f, "lemonchiffon"        ,
-			173/255.0, 216/255.0, 230/255.0, 1.0f, "lightblue"           ,
-			240/255.0, 128/255.0, 128/255.0, 1.0f, "lightcyan"           ,
-			224/255.0, 255/255.0, 255/255.0, 1.0f, "lightcoral"          ,
-			250/255.0, 250/255.0, 210/255.0, 1.0f, "lightgoldenrodyellow",
-			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgray"           ,
-			144/255.0, 238/255.0, 144/255.0, 1.0f, "lightgreen"          ,
-			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgrey"           ,
-			255/255.0, 182/255.0, 193/255.0, 1.0f, "lightpink"           ,
-			255/255.0, 160/255.0, 122/255.0, 1.0f, "lightsalmon"         ,
-			 32/255.0, 178/255.0, 170/255.0, 1.0f, "lightseagreen"       ,
-			135/255.0, 206/255.0, 250/255.0, 1.0f, "lightskyblue"        ,
-			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategray"      ,
-			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategrey"      ,
-			176/255.0, 196/255.0, 222/255.0, 1.0f, "lightsteelblue"      ,
-			255/255.0, 255/255.0, 224/255.0, 1.0f, "lightyellow"         ,
-			  0/255.0, 255/255.0,   0/255.0, 1.0f, "lime"                ,
-			 50/255.0, 205/255.0,  50/255.0, 1.0f, "limegreen"           ,
-			250/255.0, 240/255.0, 230/255.0, 1.0f, "linen"               ,
-			255/255.0,   0/255.0, 255/255.0, 1.0f, "magenta"             ,
-			128/255.0,   0/255.0,   0/255.0, 1.0f, "maroon"              ,
-			102/255.0, 205/255.0, 170/255.0, 1.0f, "mediumaquamarine"    ,
-			  0/255.0,   0/255.0, 205/255.0, 1.0f, "mediumblue"          ,
-			186/255.0,  85/255.0, 211/255.0, 1.0f, "mediumorchid"        ,
-			147/255.0, 112/255.0, 219/255.0, 1.0f, "mediumpurple"        ,
-			 60/255.0, 179/255.0, 113/255.0, 1.0f, "mediumseagreen"      ,
-			123/255.0, 104/255.0, 238/255.0, 1.0f, "mediumslateblue"     ,
-			  0/255.0, 250/255.0, 154/255.0, 1.0f, "mediumspringgreen"   ,
-			 72/255.0, 209/255.0, 204/255.0, 1.0f, "mediumturquoise"     ,
-			199/255.0,  21/255.0, 133/255.0, 1.0f, "mediumvioletred"     ,
-			 25/255.0,  25/255.0, 112/255.0, 1.0f, "midnightblue"        ,
-			245/255.0, 255/255.0, 250/255.0, 1.0f, "mintcream"           ,
-			255/255.0, 228/255.0, 225/255.0, 1.0f, "mistyrose"           ,
-			255/255.0, 228/255.0, 181/255.0, 1.0f, "moccasin"            ,
-			255/255.0, 222/255.0, 173/255.0, 1.0f, "navajowhite"         ,
-			  0/255.0,   0/255.0, 128/255.0, 1.0f, "navy"                ,
-			253/255.0, 245/255.0, 230/255.0, 1.0f, "oldlace"             ,
-			128/255.0, 128/255.0,   0/255.0, 1.0f, "olive"               ,
-			107/255.0, 142/255.0,  35/255.0, 1.0f, "olivedrab"           ,
-			255/255.0, 165/255.0,   0/255.0, 1.0f, "orange"              ,
-			255/255.0,  69/255.0,   0/255.0, 1.0f, "orangered"           ,
-			218/255.0, 112/255.0, 214/255.0, 1.0f, "orchid"              ,
-			238/255.0, 232/255.0, 170/255.0, 1.0f, "palegoldenrod"       ,
-			152/255.0, 251/255.0, 152/255.0, 1.0f, "palegreen"           ,
-			175/255.0, 238/255.0, 238/255.0, 1.0f, "paleturquoise"       ,
-			219/255.0, 112/255.0, 147/255.0, 1.0f, "palevioletred"       ,
-			255/255.0, 239/255.0, 213/255.0, 1.0f, "papayawhip"          ,
-			255/255.0, 218/255.0, 185/255.0, 1.0f, "peachpuff"           ,
-			205/255.0, 133/255.0,  63/255.0, 1.0f, "peru"                ,
-			255/255.0, 192/255.0, 203/255.0, 1.0f, "pink"                ,
-			221/255.0, 160/255.0, 221/255.0, 1.0f, "plum"                ,
-			176/255.0, 224/255.0, 230/255.0, 1.0f, "powderblue"          ,
-			128/255.0,   0/255.0, 128/255.0, 1.0f, "purple"              ,
-			255/255.0,   0/255.0,   0/255.0, 1.0f, "red"                 ,
-			188/255.0, 143/255.0, 143/255.0, 1.0f, "rosybrown"           ,
-			 65/255.0, 105/255.0, 225/255.0, 1.0f, "royalblue"           ,
-			139/255.0,  69/255.0,  19/255.0, 1.0f, "saddlebrown"         ,
-			250/255.0, 128/255.0, 114/255.0, 1.0f, "salmon"              ,
-			244/255.0, 164/255.0,  96/255.0, 1.0f, "sandybrown"          ,
-			 46/255.0, 139/255.0,  87/255.0, 1.0f, "seagreen"            ,
-			255/255.0, 245/255.0, 238/255.0, 1.0f, "seashell"            ,
-			160/255.0,  82/255.0,  45/255.0, 1.0f, "sienna"              ,
-			192/255.0, 192/255.0, 192/255.0, 1.0f, "silver"              ,
-			135/255.0, 206/255.0, 235/255.0, 1.0f, "skyblue"             ,
-			106/255.0,  90/255.0, 205/255.0, 1.0f, "slateblue"           ,
-			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategray"           ,
-			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategrey"           ,
-			255/255.0, 250/255.0, 250/255.0, 1.0f, "snow"                ,
-			  0/255.0, 255/255.0, 127/255.0, 1.0f, "springgreen"         ,
-			 70/255.0, 130/255.0, 180/255.0, 1.0f, "steelblue"           ,
-			210/255.0, 180/255.0, 140/255.0, 1.0f, "tan"                 ,
-			  0/255.0, 128/255.0, 128/255.0, 1.0f, "teal"                ,
-			216/255.0, 191/255.0, 216/255.0, 1.0f, "thistle"             ,
-			255/255.0,  99/255.0,  71/255.0, 1.0f, "tomato"              ,
-			 64/255.0, 224/255.0, 208/255.0, 1.0f, "turquoise"           ,
-			238/255.0, 130/255.0, 238/255.0, 1.0f, "violet"              ,
-			245/255.0, 222/255.0, 179/255.0, 1.0f, "wheat"               ,
-			255/255.0, 255/255.0, 255/255.0, 1.0f, "white"               ,
-			245/255.0, 245/255.0, 245/255.0, 1.0f, "whitesmoke"          ,
-			255/255.0, 255/255.0,   0/255.0, 1.0f, "yellow"              ,
-			154/255.0, 205/255.0,  50/255.0, 1.0f, "yellowgreen"         ,
-		};
-		static NSDictionary * colorDict = nil;
-		if ( colorDict == nil ) {
-			NSMutableDictionary * dict = [NSMutableDictionary new];
-			for ( int i = 0; i < sizeof ColorList/sizeof ColorList[0]; ++i ) {
-				[dict setObject:@(i) forKey:@(ColorList[i].name)];
-			}
-			colorDict = [NSDictionary dictionaryWithDictionary:dict];
-		}
-		NSNumber * index = [colorDict objectForKey:text];
-		if ( index ) {
-			return ColorList[ index.integerValue ].color;
-		}
-		assert(NO);
-		return RGBAColorTransparent;
-	}
-}
-static BOOL DictRGB( NSDictionary * dict, RGBAColor * color, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	*color = RGBFromString(text);
-	return YES;
-}
-static BOOL DictFloat( NSDictionary * dict, CGFloat * value, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	*value = text.doubleValue;
-	return YES;
-}
-static BOOL DictLineCap( NSDictionary * dict, CGLineCap * lineCap, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	if ( [text isEqualToString:@"round"] ) {
-		*lineCap = kCGLineCapRound;
-		return YES;
-	}
-	if ( [text isEqualToString:@"square"] ) {
-		*lineCap = kCGLineCapSquare;
-		return YES;
-	}
-	if ( [text isEqualToString:@"none"] ) {
-		*lineCap = kCGLineCapButt;
-		return YES;
-	}
-	assert(NO);
-	return NO;
-}
-static BOOL DictLineJoin( NSDictionary * dict, CGLineJoin * lineJoin, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	if ( [text isEqualToString:@"round"] ) {
-		*lineJoin = kCGLineJoinRound;
-		return YES;
-	}
-	if ( [text isEqualToString:@"miter"] ) {
-		*lineJoin = kCGLineJoinMiter;
-		return YES;
-	}
-	if ( [text isEqualToString:@"bevel"] ) {
-		*lineJoin = kCGLineJoinBevel;
-		return YES;
-	}
-	assert(NO);
-	return NO;
-}
-static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString * key )
-{
-	NSString * dashes = [dict objectForKey:@"dashes"];
-	if ( dashes == nil ) {
-		return 0;
-	}
-	NSArray * a = [dashes componentsSeparatedByString:@","];
-	assert( a.count > 0 && a.count % 2 == 0 );
-	*dashList = malloc( a.count * sizeof dashList[0][0] );
-	NSInteger index = 0;
-	for ( NSString * s in a ) {
-		(*dashList)[index] = [s doubleValue];
-		++index;
-	}
-	return a.count;
-}
+
 
 -(RGBAColor)defaultColorForObject:(OsmBaseObject *)object
 {
@@ -1371,6 +1104,124 @@ static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString 
 	}
 	return c;
 }
+
+static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
+{
+	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
+	if ( houseNumber ) {
+		NSString * unitNumber = [tags objectForKey:@"addr:unit"];
+		if ( unitNumber )
+			return [NSString stringWithFormat:@"%@/%@",houseNumber,unitNumber];
+	}
+	return houseNumber;
+}
+
+
+
+-(void)invokeAlongScreenClippedWay:(OsmWay *)way block:(BOOL(^)(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit))block
+{
+	OSMRect				viewRect = OSMRectFromCGRect( self.bounds );
+	BOOL				prevInside;
+	OSMPoint			prev = { 0 };
+	BOOL				first = YES;
+
+	for ( OsmNode * node in way.nodes ) {
+
+		OSMPoint pt = OSMPointFromCGPoint( [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO] );
+		BOOL inside = OSMRectContainsPoint( viewRect, pt );
+
+		if ( first ) {
+			first = NO;
+			goto next;
+		}
+		OSMPoint cross[ 2 ];
+		NSInteger crossCnt = 0;
+		if ( !(prevInside && inside) ) {
+			crossCnt = ClipLineToRect( prev, pt, viewRect, cross );
+			if ( crossCnt == 0 ) {
+				// both are outside and didn't cross
+				goto next;
+			}
+		}
+
+		OSMPoint p1 = prevInside ? prev : cross[0];
+		OSMPoint p2 = inside	 ? pt   : cross[ crossCnt-1 ];
+
+		BOOL proceed = block( p1, p2, !prevInside, !inside );
+		if ( !proceed )
+			break;;
+
+	next:
+		prev = pt;
+		prevInside = inside;
+	}
+}
+
+
+-(void)invokeAlongScreenClippedWay:(OsmWay *)way offset:(double)initialOffset interval:(double)interval block:(void(^)(OSMPoint pt, OSMPoint direction))block
+{
+	__block double offset = initialOffset;
+	[self invokeAlongScreenClippedWay:way block:^BOOL(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit) {
+		if ( isEntry )
+			offset = initialOffset;
+		double dx = p2.x - p1.x;
+		double dy = p2.y - p1.y;
+		double len = hypot( dx, dy );
+		dx /= len;
+		dy /= len;
+		while ( offset < len ) {
+			// found it
+			OSMPoint pos = { p1.x + offset * dx, p1.y + offset * dy };
+			OSMPoint dir = { dx, dy };
+			block( pos, dir );
+			offset += interval;
+		}
+		offset -= len;
+		return YES;
+	}];
+}
+
+
+// clip a way to the path inside the viewable rect so we can draw a name on it
+-(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength CF_RETURNS_RETAINED
+{
+	__block CGMutablePathRef	path = NULL;
+	__block	double				length = 0.0;
+	__block	OSMPoint			firstPoint = { 0 };
+	__block	OSMPoint			lastPoint = { 0 };
+
+	[self invokeAlongScreenClippedWay:way block:^(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit ){
+		if ( path == NULL ) {
+			path = CGPathCreateMutable();
+			CGPathMoveToPoint( path, NULL, p1.x, p1.y );
+			firstPoint = p1;
+		}
+		CGPathAddLineToPoint( path, NULL, p2.x, p2.y );
+		lastPoint = p2;
+		length += hypot( p1.x - p2.x, p1.y - p2.y );
+		if ( isExit )
+			return NO;
+		return YES;
+	}];
+	if ( path ) {
+		// orient path so text draws right-side up
+		double dx = lastPoint.x - firstPoint.x;
+		if ( dx < 0 ) {
+			// reverse path
+			CGMutablePathRef path2 = PathReversed( path );
+			CGPathRelease(path);
+			path = path2;
+		}
+	}
+	if ( pLength )
+		*pLength = length;
+
+	return path;
+}
+
+
+
+#pragma mark CAShapeLayer drawing
 
 #if USE_SHAPELAYERS
 #define ZSCALE 0.001
@@ -1932,7 +1783,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	NSMutableArray	*	layers		= [NSMutableArray new];
 
 	// highlighting
-	NSInteger zoom = [self zoomLevel];
 	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
 	if ( _selectedNode ) {
 		[highlights addObject:_selectedNode];
@@ -1952,7 +1802,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 		BOOL selected = object == _selectedNode || object == _selectedWay || [_extraSelections containsObject:object];
 
 		if ( object.isWay ) {
-			CGFloat		lineWidth	= MaxSubpartWidthForWay( object.isWay, @(zoom) );
+			CGFloat		lineWidth	= 1.0;
 			CGPathRef	path		= [self pathForWay:object.isWay];
 			RGBAColor	wayColor	= { 1, 1, !selected, 1 };
 
@@ -2087,44 +1937,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 
 
--(void)drawMapCssCoastline:(ObjectSubpart *)subpart context:(CGContextRef)ctx
-{
-	if ( subpart.object.isCoastline && subpart.object.isWay) {
-		RGBAColor	lineColor = { 0, 0, 1, 1.0 };
-		CGContextSetLineCap(ctx, kCGLineCapRound);
-		CGContextSetLineJoin(ctx, kCGLineJoinRound);
-		CGPathRef path = [self pathForWay:((OsmWay *)subpart.object)];
-		CGContextBeginPath(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetRGBStrokeColor( ctx, lineColor.red, lineColor.green, lineColor.blue, lineColor.alpha);
-		CGContextSetLineWidth( ctx, 2.0 );
-		CGContextStrokePath(ctx);
-		CGPathRelease(path);
-	}
-}
-
--(BOOL)drawMapCssArea:(ObjectSubpart *)subpart context:(CGContextRef)ctx
-{
-	if ( !subpart.object.isWay )
-		return NO;
-	OsmWay * way = (id)subpart.object;
-	if ( !way.isArea )
-		return NO;
-
-	NSDictionary * cssDict	= subpart.properties;
-	RGBAColor	fillColor;
-	BOOL fill = DictRGB( cssDict, &fillColor,	@"fill-color" );
-	if ( !fill )
-		return NO;
-	DictFloat( cssDict, &fillColor.alpha,	@"fill-opacity" );
-	CGPathRef path = [self pathForWay:way];
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, fillColor.alpha);
-	CGContextFillPath(ctx);
-	CGPathRelease(path);
-	return YES;
-}
 
 -(NSArray *)wayListForMultipolygonRelation:(OsmRelation *)relation
 {
@@ -2138,6 +1950,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	}
 	return a;
 }
+
+#pragma mark CGContext based drawing
+
+#if 0
 
 -(BOOL)drawArea:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
@@ -2427,121 +2243,6 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 }
 
 
-
--(void)invokeAlongScreenClippedWay:(OsmWay *)way block:(BOOL(^)(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit))block
-{
-	OSMRect				viewRect = OSMRectFromCGRect( self.bounds );
-	BOOL				prevInside;
-	OSMPoint			prev = { 0 };
-	BOOL				first = YES;
-
-	for ( OsmNode * node in way.nodes ) {
-
-		OSMPoint pt = OSMPointFromCGPoint( [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO] );
-		BOOL inside = OSMRectContainsPoint( viewRect, pt );
-
-		if ( first ) {
-			first = NO;
-			goto next;
-		}
-		OSMPoint cross[ 2 ];
-		NSInteger crossCnt = 0;
-		if ( !(prevInside && inside) ) {
-			crossCnt = ClipLineToRect( prev, pt, viewRect, cross );
-			if ( crossCnt == 0 ) {
-				// both are outside and didn't cross
-				goto next;
-			}
-		}
-
-		OSMPoint p1 = prevInside ? prev : cross[0];
-		OSMPoint p2 = inside	 ? pt   : cross[ crossCnt-1 ];
-
-		BOOL proceed = block( p1, p2, !prevInside, !inside );
-		if ( !proceed )
-			break;;
-
-	next:
-		prev = pt;
-		prevInside = inside;
-	}
-}
-
-
--(void)invokeAlongScreenClippedWay:(OsmWay *)way offset:(double)initialOffset interval:(double)interval block:(void(^)(OSMPoint pt, OSMPoint direction))block
-{
-	__block double offset = initialOffset;
-	[self invokeAlongScreenClippedWay:way block:^BOOL(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit) {
-		if ( isEntry )
-			offset = initialOffset;
-		double dx = p2.x - p1.x;
-		double dy = p2.y - p1.y;
-		double len = hypot( dx, dy );
-		dx /= len;
-		dy /= len;
-		while ( offset < len ) {
-			// found it
-			OSMPoint pos = { p1.x + offset * dx, p1.y + offset * dy };
-			OSMPoint dir = { dx, dy };
-			block( pos, dir );
-			offset += interval;
-		}
-		offset -= len;
-		return YES;
-	}];
-}
-
-
-// clip a way to the path inside the viewable rect so we can draw a name on it
--(CGPathRef)pathClippedToViewRect:(OsmWay *)way length:(double *)pLength CF_RETURNS_RETAINED
-{
-	__block CGMutablePathRef	path = NULL;
-	__block	double				length = 0.0;
-	__block	OSMPoint			firstPoint = { 0 };
-	__block	OSMPoint			lastPoint = { 0 };
-
-	[self invokeAlongScreenClippedWay:way block:^(OSMPoint p1, OSMPoint p2, BOOL isEntry, BOOL isExit ){
-		if ( path == NULL ) {
-			path = CGPathCreateMutable();
-			CGPathMoveToPoint( path, NULL, p1.x, p1.y );
-			firstPoint = p1;
-		}
-		CGPathAddLineToPoint( path, NULL, p2.x, p2.y );
-		lastPoint = p2;
-		length += hypot( p1.x - p2.x, p1.y - p2.y );
-		if ( isExit )
-			return NO;
-		return YES;
-	}];
-	if ( path ) {
-		// orient path so text draws right-side up
-		double dx = lastPoint.x - firstPoint.x;
-		if ( dx < 0 ) {
-			// reverse path
-			CGMutablePathRef path2 = PathReversed( path );
-			CGPathRelease(path);
-			path = path2;
-		}
-	}
-	if ( pLength )
-		*pLength = length;
-
-	return path;
-}
-
-
-static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
-{
-	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
-	if ( houseNumber ) {
-		NSString * unitNumber = [tags objectForKey:@"addr:unit"];
-		if ( unitNumber )
-			return [NSString stringWithFormat:@"%@/%@",houseNumber,unitNumber];
-	}
-	return houseNumber;
-}
-
-
 -(BOOL)drawWayName:(OsmBaseObject *)object context:(CGContextRef)ctx
 {
 	// add street names
@@ -2763,6 +2464,612 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 	}
 }
 
+#pragma mark CGContext (CSS) drawing
+
+
+#if 0
+static const RGBAColor RGBAColorBlack		= { 0, 0, 0, 1 };
+static const RGBAColor RGBAColorTransparent = { 0, 0, 0, 0 };
+
+static inline uint8_t CharHexValue( char ch )
+{
+	if ( ch >= '0' && ch <= '9' )
+		return ch -= '0';
+	if ( ch >= 'A' && ch <= 'F' )
+		return ch - ('A' - 10);
+	if ( ch >= 'a' && ch <= 'f' )
+		return ch - ('a' - 10);
+	assert(NO);
+	return 0;
+}
+static RGBAColor RGBFromString( NSString * text )
+{
+	if ( [text characterAtIndex:0] == '#' ) {
+		CFStringEncoding encoding = CFStringGetFastestEncoding( (__bridge CFStringRef)text );
+		if ( encoding != kCFStringEncodingMacRoman && encoding != kCFStringEncodingUTF8 )
+			encoding = kCFStringEncodingMacRoman;
+		UInt8 buffer[ 6 ] = { 0 };
+		CFRange range = { 1, sizeof buffer };
+		CFStringGetBytes( (__bridge CFStringRef)text, range, encoding, '?', NO, buffer, sizeof buffer, NULL );
+		RGBAColor color;
+		color.red	= (16 * CharHexValue( buffer[0] ) + CharHexValue( buffer[1] )) / 255.0;
+		color.green = (16 * CharHexValue( buffer[2] ) + CharHexValue( buffer[3] )) / 255.0;
+		color.blue	= (16 * CharHexValue( buffer[4] ) + CharHexValue( buffer[5] )) / 255.0;
+		color.alpha = 1.0;
+		return color;
+	} else {
+		static struct {
+			RGBAColor		color;
+			const char	*	name;
+		} ColorList[] = {
+			240/255.0, 248/255.0, 255/255.0, 1.0f, "aliceblue"           ,
+			250/255.0, 235/255.0, 215/255.0, 1.0f, "antiquewhite"        ,
+			0/255.0, 255/255.0, 255/255.0, 1.0f, "aqua"                ,
+			127/255.0, 255/255.0, 212/255.0, 1.0f, "aquamarine"          ,
+			240/255.0, 255/255.0, 255/255.0, 1.0f, "azure"               ,
+			245/255.0, 245/255.0, 220/255.0, 1.0f, "beige"               ,
+			255/255.0, 228/255.0, 196/255.0, 1.0f, "bisque"              ,
+			0/255.0,   0/255.0,   0/255.0, 1.0f, "black"               ,
+			255/255.0, 235/255.0, 205/255.0, 1.0f, "blanchedalmond"      ,
+			0/255.0,   0/255.0, 255/255.0, 1.0f, "blue"                ,
+			138/255.0,  43/255.0, 226/255.0, 1.0f, "blueviolet"          ,
+			165/255.0,  42/255.0,  42/255.0, 1.0f, "brown"               ,
+			222/255.0, 184/255.0, 135/255.0, 1.0f, "burlywood"           ,
+			95/255.0, 158/255.0, 160/255.0, 1.0f, "cadetblue"           ,
+			127/255.0, 255/255.0,   0/255.0, 1.0f, "chartreuse"          ,
+			210/255.0, 105/255.0,  30/255.0, 1.0f, "chocolate"           ,
+			255/255.0, 127/255.0,  80/255.0, 1.0f, "coral"               ,
+			100/255.0, 149/255.0, 237/255.0, 1.0f, "cornflowerblue"      ,
+			255/255.0, 248/255.0, 220/255.0, 1.0f, "cornsilk"            ,
+			220/255.0,  20/255.0,  60/255.0, 1.0f, "crimson"             ,
+			0/255.0, 255/255.0, 255/255.0, 1.0f, "cyan"                ,
+			0/255.0,   0/255.0, 139/255.0, 1.0f, "darkblue"            ,
+			0/255.0, 139/255.0, 139/255.0, 1.0f, "darkcyan"            ,
+			184/255.0, 134/255.0,  11/255.0, 1.0f, "darkgoldenrod"       ,
+			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgray"            ,
+			0/255.0, 100/255.0,   0/255.0, 1.0f, "darkgreen"           ,
+			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgrey"            ,
+			189/255.0, 183/255.0, 107/255.0, 1.0f, "darkkhaki"           ,
+			139/255.0,   0/255.0, 139/255.0, 1.0f, "darkmagenta"         ,
+			85/255.0, 107/255.0,  47/255.0, 1.0f, "darkolivegreen"      ,
+			255/255.0, 140/255.0,   0/255.0, 1.0f, "darkorange"          ,
+			153/255.0,  50/255.0, 204/255.0, 1.0f, "darkorchid"          ,
+			139/255.0,   0/255.0,   0/255.0, 1.0f, "darkred"             ,
+			233/255.0, 150/255.0, 122/255.0, 1.0f, "darksalmon"          ,
+			143/255.0, 188/255.0, 143/255.0, 1.0f, "darkseagreen"        ,
+			72/255.0,  61/255.0, 139/255.0, 1.0f, "darkslateblue"       ,
+			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategray"       ,
+			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategrey"       ,
+			0/255.0, 206/255.0, 209/255.0, 1.0f, "darkturquoise"       ,
+			148/255.0,   0/255.0, 211/255.0, 1.0f, "darkviolet"          ,
+			255/255.0,  20/255.0, 147/255.0, 1.0f, "deeppink"            ,
+			0/255.0, 191/255.0, 255/255.0, 1.0f, "deepskyblue"         ,
+			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgray"             ,
+			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgrey"             ,
+			30/255.0, 144/255.0, 255/255.0, 1.0f, "dodgerblue"          ,
+			178/255.0,  34/255.0,  34/255.0, 1.0f, "firebrick"           ,
+			255/255.0, 250/255.0, 240/255.0, 1.0f, "floralwhite"         ,
+			34/255.0, 139/255.0,  34/255.0, 1.0f, "forestgreen"         ,
+			255/255.0,   0/255.0, 255/255.0, 1.0f, "fuchsia"             ,
+			220/255.0, 220/255.0, 220/255.0, 1.0f, "gainsboro"           ,
+			248/255.0, 248/255.0, 255/255.0, 1.0f, "ghostwhite"          ,
+			255/255.0, 215/255.0,   0/255.0, 1.0f, "gold"                ,
+			218/255.0, 165/255.0,  32/255.0, 1.0f, "goldenrod"           ,
+			128/255.0, 128/255.0, 128/255.0, 1.0f, "gray"                ,
+			0/255.0, 128/255.0,   0/255.0, 1.0f, "green"               ,
+			173/255.0, 255/255.0,  47/255.0, 1.0f, "greenyellow"         ,
+			128/255.0, 128/255.0, 128/255.0, 1.0f, "grey"                ,
+			240/255.0, 255/255.0, 240/255.0, 1.0f, "honeydew"            ,
+			255/255.0, 105/255.0, 180/255.0, 1.0f, "hotpink"             ,
+			205/255.0,  92/255.0,  92/255.0, 1.0f, "indianred"           ,
+			75/255.0,   0/255.0, 130/255.0, 1.0f, "indigo"              ,
+			255/255.0, 255/255.0, 240/255.0, 1.0f, "ivory"               ,
+			240/255.0, 230/255.0, 140/255.0, 1.0f, "khaki"               ,
+			230/255.0, 230/255.0, 250/255.0, 1.0f, "lavender"            ,
+			255/255.0, 240/255.0, 245/255.0, 1.0f, "lavenderblush"       ,
+			124/255.0, 252/255.0,   0/255.0, 1.0f, "lawngreen"           ,
+			255/255.0, 250/255.0, 205/255.0, 1.0f, "lemonchiffon"        ,
+			173/255.0, 216/255.0, 230/255.0, 1.0f, "lightblue"           ,
+			240/255.0, 128/255.0, 128/255.0, 1.0f, "lightcyan"           ,
+			224/255.0, 255/255.0, 255/255.0, 1.0f, "lightcoral"          ,
+			250/255.0, 250/255.0, 210/255.0, 1.0f, "lightgoldenrodyellow",
+			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgray"           ,
+			144/255.0, 238/255.0, 144/255.0, 1.0f, "lightgreen"          ,
+			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgrey"           ,
+			255/255.0, 182/255.0, 193/255.0, 1.0f, "lightpink"           ,
+			255/255.0, 160/255.0, 122/255.0, 1.0f, "lightsalmon"         ,
+			32/255.0, 178/255.0, 170/255.0, 1.0f, "lightseagreen"       ,
+			135/255.0, 206/255.0, 250/255.0, 1.0f, "lightskyblue"        ,
+			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategray"      ,
+			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategrey"      ,
+			176/255.0, 196/255.0, 222/255.0, 1.0f, "lightsteelblue"      ,
+			255/255.0, 255/255.0, 224/255.0, 1.0f, "lightyellow"         ,
+			0/255.0, 255/255.0,   0/255.0, 1.0f, "lime"                ,
+			50/255.0, 205/255.0,  50/255.0, 1.0f, "limegreen"           ,
+			250/255.0, 240/255.0, 230/255.0, 1.0f, "linen"               ,
+			255/255.0,   0/255.0, 255/255.0, 1.0f, "magenta"             ,
+			128/255.0,   0/255.0,   0/255.0, 1.0f, "maroon"              ,
+			102/255.0, 205/255.0, 170/255.0, 1.0f, "mediumaquamarine"    ,
+			0/255.0,   0/255.0, 205/255.0, 1.0f, "mediumblue"          ,
+			186/255.0,  85/255.0, 211/255.0, 1.0f, "mediumorchid"        ,
+			147/255.0, 112/255.0, 219/255.0, 1.0f, "mediumpurple"        ,
+			60/255.0, 179/255.0, 113/255.0, 1.0f, "mediumseagreen"      ,
+			123/255.0, 104/255.0, 238/255.0, 1.0f, "mediumslateblue"     ,
+			0/255.0, 250/255.0, 154/255.0, 1.0f, "mediumspringgreen"   ,
+			72/255.0, 209/255.0, 204/255.0, 1.0f, "mediumturquoise"     ,
+			199/255.0,  21/255.0, 133/255.0, 1.0f, "mediumvioletred"     ,
+			25/255.0,  25/255.0, 112/255.0, 1.0f, "midnightblue"        ,
+			245/255.0, 255/255.0, 250/255.0, 1.0f, "mintcream"           ,
+			255/255.0, 228/255.0, 225/255.0, 1.0f, "mistyrose"           ,
+			255/255.0, 228/255.0, 181/255.0, 1.0f, "moccasin"            ,
+			255/255.0, 222/255.0, 173/255.0, 1.0f, "navajowhite"         ,
+			0/255.0,   0/255.0, 128/255.0, 1.0f, "navy"                ,
+			253/255.0, 245/255.0, 230/255.0, 1.0f, "oldlace"             ,
+			128/255.0, 128/255.0,   0/255.0, 1.0f, "olive"               ,
+			107/255.0, 142/255.0,  35/255.0, 1.0f, "olivedrab"           ,
+			255/255.0, 165/255.0,   0/255.0, 1.0f, "orange"              ,
+			255/255.0,  69/255.0,   0/255.0, 1.0f, "orangered"           ,
+			218/255.0, 112/255.0, 214/255.0, 1.0f, "orchid"              ,
+			238/255.0, 232/255.0, 170/255.0, 1.0f, "palegoldenrod"       ,
+			152/255.0, 251/255.0, 152/255.0, 1.0f, "palegreen"           ,
+			175/255.0, 238/255.0, 238/255.0, 1.0f, "paleturquoise"       ,
+			219/255.0, 112/255.0, 147/255.0, 1.0f, "palevioletred"       ,
+			255/255.0, 239/255.0, 213/255.0, 1.0f, "papayawhip"          ,
+			255/255.0, 218/255.0, 185/255.0, 1.0f, "peachpuff"           ,
+			205/255.0, 133/255.0,  63/255.0, 1.0f, "peru"                ,
+			255/255.0, 192/255.0, 203/255.0, 1.0f, "pink"                ,
+			221/255.0, 160/255.0, 221/255.0, 1.0f, "plum"                ,
+			176/255.0, 224/255.0, 230/255.0, 1.0f, "powderblue"          ,
+			128/255.0,   0/255.0, 128/255.0, 1.0f, "purple"              ,
+			255/255.0,   0/255.0,   0/255.0, 1.0f, "red"                 ,
+			188/255.0, 143/255.0, 143/255.0, 1.0f, "rosybrown"           ,
+			65/255.0, 105/255.0, 225/255.0, 1.0f, "royalblue"           ,
+			139/255.0,  69/255.0,  19/255.0, 1.0f, "saddlebrown"         ,
+			250/255.0, 128/255.0, 114/255.0, 1.0f, "salmon"              ,
+			244/255.0, 164/255.0,  96/255.0, 1.0f, "sandybrown"          ,
+			46/255.0, 139/255.0,  87/255.0, 1.0f, "seagreen"            ,
+			255/255.0, 245/255.0, 238/255.0, 1.0f, "seashell"            ,
+			160/255.0,  82/255.0,  45/255.0, 1.0f, "sienna"              ,
+			192/255.0, 192/255.0, 192/255.0, 1.0f, "silver"              ,
+			135/255.0, 206/255.0, 235/255.0, 1.0f, "skyblue"             ,
+			106/255.0,  90/255.0, 205/255.0, 1.0f, "slateblue"           ,
+			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategray"           ,
+			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategrey"           ,
+			255/255.0, 250/255.0, 250/255.0, 1.0f, "snow"                ,
+			0/255.0, 255/255.0, 127/255.0, 1.0f, "springgreen"         ,
+			70/255.0, 130/255.0, 180/255.0, 1.0f, "steelblue"           ,
+			210/255.0, 180/255.0, 140/255.0, 1.0f, "tan"                 ,
+			0/255.0, 128/255.0, 128/255.0, 1.0f, "teal"                ,
+			216/255.0, 191/255.0, 216/255.0, 1.0f, "thistle"             ,
+			255/255.0,  99/255.0,  71/255.0, 1.0f, "tomato"              ,
+			64/255.0, 224/255.0, 208/255.0, 1.0f, "turquoise"           ,
+			238/255.0, 130/255.0, 238/255.0, 1.0f, "violet"              ,
+			245/255.0, 222/255.0, 179/255.0, 1.0f, "wheat"               ,
+			255/255.0, 255/255.0, 255/255.0, 1.0f, "white"               ,
+			245/255.0, 245/255.0, 245/255.0, 1.0f, "whitesmoke"          ,
+			255/255.0, 255/255.0,   0/255.0, 1.0f, "yellow"              ,
+			154/255.0, 205/255.0,  50/255.0, 1.0f, "yellowgreen"         ,
+		};
+		static NSDictionary * colorDict = nil;
+		if ( colorDict == nil ) {
+			NSMutableDictionary * dict = [NSMutableDictionary new];
+			for ( int i = 0; i < sizeof ColorList/sizeof ColorList[0]; ++i ) {
+				[dict setObject:@(i) forKey:@(ColorList[i].name)];
+			}
+			colorDict = [NSDictionary dictionaryWithDictionary:dict];
+		}
+		NSNumber * index = [colorDict objectForKey:text];
+		if ( index ) {
+			return ColorList[ index.integerValue ].color;
+		}
+		assert(NO);
+		return RGBAColorTransparent;
+	}
+}
+static BOOL DictRGB( NSDictionary * dict, RGBAColor * color, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	*color = RGBFromString(text);
+	return YES;
+}
+static BOOL DictFloat( NSDictionary * dict, CGFloat * value, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	*value = text.doubleValue;
+	return YES;
+}
+static BOOL DictLineCap( NSDictionary * dict, CGLineCap * lineCap, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	if ( [text isEqualToString:@"round"] ) {
+		*lineCap = kCGLineCapRound;
+		return YES;
+	}
+	if ( [text isEqualToString:@"square"] ) {
+		*lineCap = kCGLineCapSquare;
+		return YES;
+	}
+	if ( [text isEqualToString:@"none"] ) {
+		*lineCap = kCGLineCapButt;
+		return YES;
+	}
+	assert(NO);
+	return NO;
+}
+static BOOL DictLineJoin( NSDictionary * dict, CGLineJoin * lineJoin, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	if ( [text isEqualToString:@"round"] ) {
+		*lineJoin = kCGLineJoinRound;
+		return YES;
+	}
+	if ( [text isEqualToString:@"miter"] ) {
+		*lineJoin = kCGLineJoinMiter;
+		return YES;
+	}
+	if ( [text isEqualToString:@"bevel"] ) {
+		*lineJoin = kCGLineJoinBevel;
+		return YES;
+	}
+	assert(NO);
+	return NO;
+}
+static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString * key )
+{
+	NSString * dashes = [dict objectForKey:@"dashes"];
+	if ( dashes == nil ) {
+		return 0;
+	}
+	NSArray * a = [dashes componentsSeparatedByString:@","];
+	assert( a.count > 0 && a.count % 2 == 0 );
+	*dashList = malloc( a.count * sizeof dashList[0][0] );
+	NSInteger index = 0;
+	for ( NSString * s in a ) {
+		(*dashList)[index] = [s doubleValue];
+		++index;
+	}
+	return a.count;
+}
+
+-(void)drawMapCssCoastline:(ObjectSubpart *)subpart context:(CGContextRef)ctx
+{
+	if ( subpart.object.isCoastline && subpart.object.isWay) {
+		RGBAColor	lineColor = { 0, 0, 1, 1.0 };
+		CGContextSetLineCap(ctx, kCGLineCapRound);
+		CGContextSetLineJoin(ctx, kCGLineJoinRound);
+		CGPathRef path = [self pathForWay:((OsmWay *)subpart.object)];
+		CGContextBeginPath(ctx);
+		CGContextAddPath(ctx, path);
+		CGContextSetRGBStrokeColor( ctx, lineColor.red, lineColor.green, lineColor.blue, lineColor.alpha);
+		CGContextSetLineWidth( ctx, 2.0 );
+		CGContextStrokePath(ctx);
+		CGPathRelease(path);
+	}
+}
+
+-(BOOL)drawMapCssArea:(ObjectSubpart *)subpart context:(CGContextRef)ctx
+{
+	if ( !subpart.object.isWay )
+		return NO;
+	OsmWay * way = (id)subpart.object;
+	if ( !way.isArea )
+		return NO;
+
+	NSDictionary * cssDict	= subpart.properties;
+	RGBAColor	fillColor;
+	BOOL fill = DictRGB( cssDict, &fillColor,	@"fill-color" );
+	if ( !fill )
+		return NO;
+	DictFloat( cssDict, &fillColor.alpha,	@"fill-opacity" );
+	CGPathRef path = [self pathForWay:way];
+	CGContextBeginPath(ctx);
+	CGContextAddPath(ctx, path);
+	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, fillColor.alpha);
+	CGContextFillPath(ctx);
+	CGPathRelease(path);
+	return YES;
+}
+
+
+static CGFloat MaxSubpartWidthForWay( OsmWay * way, NSNumber * zoom )
+{
+	CGFloat width = 1.0;
+	NSMutableDictionary * zoomDict = way.cssRenderPropertiesForZoom;
+	NSArray * objectSubparts = [zoomDict objectForKey:zoom];
+	for ( ObjectSubpart * subpart in objectSubparts ) {
+		NSDictionary * cssDict	= subpart.properties;
+		CGFloat	w;
+		if ( DictFloat( cssDict, &w, @"width" ) && w > width )
+			width = w;
+	}
+	return width;
+}
+#endif // CSS drawing
+#if 0
+static const RGBAColor RGBAColorBlack		= { 0, 0, 0, 1 };
+static const RGBAColor RGBAColorTransparent = { 0, 0, 0, 0 };
+
+static inline uint8_t CharHexValue( char ch )
+{
+	if ( ch >= '0' && ch <= '9' )
+		return ch -= '0';
+	if ( ch >= 'A' && ch <= 'F' )
+		return ch - ('A' - 10);
+	if ( ch >= 'a' && ch <= 'f' )
+		return ch - ('a' - 10);
+	assert(NO);
+	return 0;
+}
+static RGBAColor RGBFromString( NSString * text )
+{
+	if ( [text characterAtIndex:0] == '#' ) {
+		CFStringEncoding encoding = CFStringGetFastestEncoding( (__bridge CFStringRef)text );
+		if ( encoding != kCFStringEncodingMacRoman && encoding != kCFStringEncodingUTF8 )
+			encoding = kCFStringEncodingMacRoman;
+		UInt8 buffer[ 6 ] = { 0 };
+		CFRange range = { 1, sizeof buffer };
+		CFStringGetBytes( (__bridge CFStringRef)text, range, encoding, '?', NO, buffer, sizeof buffer, NULL );
+		RGBAColor color;
+		color.red	= (16 * CharHexValue( buffer[0] ) + CharHexValue( buffer[1] )) / 255.0;
+		color.green = (16 * CharHexValue( buffer[2] ) + CharHexValue( buffer[3] )) / 255.0;
+		color.blue	= (16 * CharHexValue( buffer[4] ) + CharHexValue( buffer[5] )) / 255.0;
+		color.alpha = 1.0;
+		return color;
+	} else {
+		static struct {
+			RGBAColor		color;
+			const char	*	name;
+		} ColorList[] = {
+			240/255.0, 248/255.0, 255/255.0, 1.0f, "aliceblue"           ,
+			250/255.0, 235/255.0, 215/255.0, 1.0f, "antiquewhite"        ,
+			0/255.0, 255/255.0, 255/255.0, 1.0f, "aqua"                ,
+			127/255.0, 255/255.0, 212/255.0, 1.0f, "aquamarine"          ,
+			240/255.0, 255/255.0, 255/255.0, 1.0f, "azure"               ,
+			245/255.0, 245/255.0, 220/255.0, 1.0f, "beige"               ,
+			255/255.0, 228/255.0, 196/255.0, 1.0f, "bisque"              ,
+			0/255.0,   0/255.0,   0/255.0, 1.0f, "black"               ,
+			255/255.0, 235/255.0, 205/255.0, 1.0f, "blanchedalmond"      ,
+			0/255.0,   0/255.0, 255/255.0, 1.0f, "blue"                ,
+			138/255.0,  43/255.0, 226/255.0, 1.0f, "blueviolet"          ,
+			165/255.0,  42/255.0,  42/255.0, 1.0f, "brown"               ,
+			222/255.0, 184/255.0, 135/255.0, 1.0f, "burlywood"           ,
+			95/255.0, 158/255.0, 160/255.0, 1.0f, "cadetblue"           ,
+			127/255.0, 255/255.0,   0/255.0, 1.0f, "chartreuse"          ,
+			210/255.0, 105/255.0,  30/255.0, 1.0f, "chocolate"           ,
+			255/255.0, 127/255.0,  80/255.0, 1.0f, "coral"               ,
+			100/255.0, 149/255.0, 237/255.0, 1.0f, "cornflowerblue"      ,
+			255/255.0, 248/255.0, 220/255.0, 1.0f, "cornsilk"            ,
+			220/255.0,  20/255.0,  60/255.0, 1.0f, "crimson"             ,
+			0/255.0, 255/255.0, 255/255.0, 1.0f, "cyan"                ,
+			0/255.0,   0/255.0, 139/255.0, 1.0f, "darkblue"            ,
+			0/255.0, 139/255.0, 139/255.0, 1.0f, "darkcyan"            ,
+			184/255.0, 134/255.0,  11/255.0, 1.0f, "darkgoldenrod"       ,
+			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgray"            ,
+			0/255.0, 100/255.0,   0/255.0, 1.0f, "darkgreen"           ,
+			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgrey"            ,
+			189/255.0, 183/255.0, 107/255.0, 1.0f, "darkkhaki"           ,
+			139/255.0,   0/255.0, 139/255.0, 1.0f, "darkmagenta"         ,
+			85/255.0, 107/255.0,  47/255.0, 1.0f, "darkolivegreen"      ,
+			255/255.0, 140/255.0,   0/255.0, 1.0f, "darkorange"          ,
+			153/255.0,  50/255.0, 204/255.0, 1.0f, "darkorchid"          ,
+			139/255.0,   0/255.0,   0/255.0, 1.0f, "darkred"             ,
+			233/255.0, 150/255.0, 122/255.0, 1.0f, "darksalmon"          ,
+			143/255.0, 188/255.0, 143/255.0, 1.0f, "darkseagreen"        ,
+			72/255.0,  61/255.0, 139/255.0, 1.0f, "darkslateblue"       ,
+			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategray"       ,
+			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategrey"       ,
+			0/255.0, 206/255.0, 209/255.0, 1.0f, "darkturquoise"       ,
+			148/255.0,   0/255.0, 211/255.0, 1.0f, "darkviolet"          ,
+			255/255.0,  20/255.0, 147/255.0, 1.0f, "deeppink"            ,
+			0/255.0, 191/255.0, 255/255.0, 1.0f, "deepskyblue"         ,
+			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgray"             ,
+			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgrey"             ,
+			30/255.0, 144/255.0, 255/255.0, 1.0f, "dodgerblue"          ,
+			178/255.0,  34/255.0,  34/255.0, 1.0f, "firebrick"           ,
+			255/255.0, 250/255.0, 240/255.0, 1.0f, "floralwhite"         ,
+			34/255.0, 139/255.0,  34/255.0, 1.0f, "forestgreen"         ,
+			255/255.0,   0/255.0, 255/255.0, 1.0f, "fuchsia"             ,
+			220/255.0, 220/255.0, 220/255.0, 1.0f, "gainsboro"           ,
+			248/255.0, 248/255.0, 255/255.0, 1.0f, "ghostwhite"          ,
+			255/255.0, 215/255.0,   0/255.0, 1.0f, "gold"                ,
+			218/255.0, 165/255.0,  32/255.0, 1.0f, "goldenrod"           ,
+			128/255.0, 128/255.0, 128/255.0, 1.0f, "gray"                ,
+			0/255.0, 128/255.0,   0/255.0, 1.0f, "green"               ,
+			173/255.0, 255/255.0,  47/255.0, 1.0f, "greenyellow"         ,
+			128/255.0, 128/255.0, 128/255.0, 1.0f, "grey"                ,
+			240/255.0, 255/255.0, 240/255.0, 1.0f, "honeydew"            ,
+			255/255.0, 105/255.0, 180/255.0, 1.0f, "hotpink"             ,
+			205/255.0,  92/255.0,  92/255.0, 1.0f, "indianred"           ,
+			75/255.0,   0/255.0, 130/255.0, 1.0f, "indigo"              ,
+			255/255.0, 255/255.0, 240/255.0, 1.0f, "ivory"               ,
+			240/255.0, 230/255.0, 140/255.0, 1.0f, "khaki"               ,
+			230/255.0, 230/255.0, 250/255.0, 1.0f, "lavender"            ,
+			255/255.0, 240/255.0, 245/255.0, 1.0f, "lavenderblush"       ,
+			124/255.0, 252/255.0,   0/255.0, 1.0f, "lawngreen"           ,
+			255/255.0, 250/255.0, 205/255.0, 1.0f, "lemonchiffon"        ,
+			173/255.0, 216/255.0, 230/255.0, 1.0f, "lightblue"           ,
+			240/255.0, 128/255.0, 128/255.0, 1.0f, "lightcyan"           ,
+			224/255.0, 255/255.0, 255/255.0, 1.0f, "lightcoral"          ,
+			250/255.0, 250/255.0, 210/255.0, 1.0f, "lightgoldenrodyellow",
+			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgray"           ,
+			144/255.0, 238/255.0, 144/255.0, 1.0f, "lightgreen"          ,
+			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgrey"           ,
+			255/255.0, 182/255.0, 193/255.0, 1.0f, "lightpink"           ,
+			255/255.0, 160/255.0, 122/255.0, 1.0f, "lightsalmon"         ,
+			32/255.0, 178/255.0, 170/255.0, 1.0f, "lightseagreen"       ,
+			135/255.0, 206/255.0, 250/255.0, 1.0f, "lightskyblue"        ,
+			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategray"      ,
+			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategrey"      ,
+			176/255.0, 196/255.0, 222/255.0, 1.0f, "lightsteelblue"      ,
+			255/255.0, 255/255.0, 224/255.0, 1.0f, "lightyellow"         ,
+			0/255.0, 255/255.0,   0/255.0, 1.0f, "lime"                ,
+			50/255.0, 205/255.0,  50/255.0, 1.0f, "limegreen"           ,
+			250/255.0, 240/255.0, 230/255.0, 1.0f, "linen"               ,
+			255/255.0,   0/255.0, 255/255.0, 1.0f, "magenta"             ,
+			128/255.0,   0/255.0,   0/255.0, 1.0f, "maroon"              ,
+			102/255.0, 205/255.0, 170/255.0, 1.0f, "mediumaquamarine"    ,
+			0/255.0,   0/255.0, 205/255.0, 1.0f, "mediumblue"          ,
+			186/255.0,  85/255.0, 211/255.0, 1.0f, "mediumorchid"        ,
+			147/255.0, 112/255.0, 219/255.0, 1.0f, "mediumpurple"        ,
+			60/255.0, 179/255.0, 113/255.0, 1.0f, "mediumseagreen"      ,
+			123/255.0, 104/255.0, 238/255.0, 1.0f, "mediumslateblue"     ,
+			0/255.0, 250/255.0, 154/255.0, 1.0f, "mediumspringgreen"   ,
+			72/255.0, 209/255.0, 204/255.0, 1.0f, "mediumturquoise"     ,
+			199/255.0,  21/255.0, 133/255.0, 1.0f, "mediumvioletred"     ,
+			25/255.0,  25/255.0, 112/255.0, 1.0f, "midnightblue"        ,
+			245/255.0, 255/255.0, 250/255.0, 1.0f, "mintcream"           ,
+			255/255.0, 228/255.0, 225/255.0, 1.0f, "mistyrose"           ,
+			255/255.0, 228/255.0, 181/255.0, 1.0f, "moccasin"            ,
+			255/255.0, 222/255.0, 173/255.0, 1.0f, "navajowhite"         ,
+			0/255.0,   0/255.0, 128/255.0, 1.0f, "navy"                ,
+			253/255.0, 245/255.0, 230/255.0, 1.0f, "oldlace"             ,
+			128/255.0, 128/255.0,   0/255.0, 1.0f, "olive"               ,
+			107/255.0, 142/255.0,  35/255.0, 1.0f, "olivedrab"           ,
+			255/255.0, 165/255.0,   0/255.0, 1.0f, "orange"              ,
+			255/255.0,  69/255.0,   0/255.0, 1.0f, "orangered"           ,
+			218/255.0, 112/255.0, 214/255.0, 1.0f, "orchid"              ,
+			238/255.0, 232/255.0, 170/255.0, 1.0f, "palegoldenrod"       ,
+			152/255.0, 251/255.0, 152/255.0, 1.0f, "palegreen"           ,
+			175/255.0, 238/255.0, 238/255.0, 1.0f, "paleturquoise"       ,
+			219/255.0, 112/255.0, 147/255.0, 1.0f, "palevioletred"       ,
+			255/255.0, 239/255.0, 213/255.0, 1.0f, "papayawhip"          ,
+			255/255.0, 218/255.0, 185/255.0, 1.0f, "peachpuff"           ,
+			205/255.0, 133/255.0,  63/255.0, 1.0f, "peru"                ,
+			255/255.0, 192/255.0, 203/255.0, 1.0f, "pink"                ,
+			221/255.0, 160/255.0, 221/255.0, 1.0f, "plum"                ,
+			176/255.0, 224/255.0, 230/255.0, 1.0f, "powderblue"          ,
+			128/255.0,   0/255.0, 128/255.0, 1.0f, "purple"              ,
+			255/255.0,   0/255.0,   0/255.0, 1.0f, "red"                 ,
+			188/255.0, 143/255.0, 143/255.0, 1.0f, "rosybrown"           ,
+			65/255.0, 105/255.0, 225/255.0, 1.0f, "royalblue"           ,
+			139/255.0,  69/255.0,  19/255.0, 1.0f, "saddlebrown"         ,
+			250/255.0, 128/255.0, 114/255.0, 1.0f, "salmon"              ,
+			244/255.0, 164/255.0,  96/255.0, 1.0f, "sandybrown"          ,
+			46/255.0, 139/255.0,  87/255.0, 1.0f, "seagreen"            ,
+			255/255.0, 245/255.0, 238/255.0, 1.0f, "seashell"            ,
+			160/255.0,  82/255.0,  45/255.0, 1.0f, "sienna"              ,
+			192/255.0, 192/255.0, 192/255.0, 1.0f, "silver"              ,
+			135/255.0, 206/255.0, 235/255.0, 1.0f, "skyblue"             ,
+			106/255.0,  90/255.0, 205/255.0, 1.0f, "slateblue"           ,
+			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategray"           ,
+			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategrey"           ,
+			255/255.0, 250/255.0, 250/255.0, 1.0f, "snow"                ,
+			0/255.0, 255/255.0, 127/255.0, 1.0f, "springgreen"         ,
+			70/255.0, 130/255.0, 180/255.0, 1.0f, "steelblue"           ,
+			210/255.0, 180/255.0, 140/255.0, 1.0f, "tan"                 ,
+			0/255.0, 128/255.0, 128/255.0, 1.0f, "teal"                ,
+			216/255.0, 191/255.0, 216/255.0, 1.0f, "thistle"             ,
+			255/255.0,  99/255.0,  71/255.0, 1.0f, "tomato"              ,
+			64/255.0, 224/255.0, 208/255.0, 1.0f, "turquoise"           ,
+			238/255.0, 130/255.0, 238/255.0, 1.0f, "violet"              ,
+			245/255.0, 222/255.0, 179/255.0, 1.0f, "wheat"               ,
+			255/255.0, 255/255.0, 255/255.0, 1.0f, "white"               ,
+			245/255.0, 245/255.0, 245/255.0, 1.0f, "whitesmoke"          ,
+			255/255.0, 255/255.0,   0/255.0, 1.0f, "yellow"              ,
+			154/255.0, 205/255.0,  50/255.0, 1.0f, "yellowgreen"         ,
+		};
+		static NSDictionary * colorDict = nil;
+		if ( colorDict == nil ) {
+			NSMutableDictionary * dict = [NSMutableDictionary new];
+			for ( int i = 0; i < sizeof ColorList/sizeof ColorList[0]; ++i ) {
+				[dict setObject:@(i) forKey:@(ColorList[i].name)];
+			}
+			colorDict = [NSDictionary dictionaryWithDictionary:dict];
+		}
+		NSNumber * index = [colorDict objectForKey:text];
+		if ( index ) {
+			return ColorList[ index.integerValue ].color;
+		}
+		assert(NO);
+		return RGBAColorTransparent;
+	}
+}
+static BOOL DictRGB( NSDictionary * dict, RGBAColor * color, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	*color = RGBFromString(text);
+	return YES;
+}
+static BOOL DictFloat( NSDictionary * dict, CGFloat * value, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	*value = text.doubleValue;
+	return YES;
+}
+static BOOL DictLineCap( NSDictionary * dict, CGLineCap * lineCap, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	if ( [text isEqualToString:@"round"] ) {
+		*lineCap = kCGLineCapRound;
+		return YES;
+	}
+	if ( [text isEqualToString:@"square"] ) {
+		*lineCap = kCGLineCapSquare;
+		return YES;
+	}
+	if ( [text isEqualToString:@"none"] ) {
+		*lineCap = kCGLineCapButt;
+		return YES;
+	}
+	assert(NO);
+	return NO;
+}
+static BOOL DictLineJoin( NSDictionary * dict, CGLineJoin * lineJoin, NSString * key )
+{
+	NSString * text = [dict objectForKey:key];
+	if ( text == nil )
+		return NO;
+	if ( [text isEqualToString:@"round"] ) {
+		*lineJoin = kCGLineJoinRound;
+		return YES;
+	}
+	if ( [text isEqualToString:@"miter"] ) {
+		*lineJoin = kCGLineJoinMiter;
+		return YES;
+	}
+	if ( [text isEqualToString:@"bevel"] ) {
+		*lineJoin = kCGLineJoinBevel;
+		return YES;
+	}
+	assert(NO);
+	return NO;
+}
+static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString * key )
+{
+	NSString * dashes = [dict objectForKey:@"dashes"];
+	if ( dashes == nil ) {
+		return 0;
+	}
+	NSArray * a = [dashes componentsSeparatedByString:@","];
+	assert( a.count > 0 && a.count % 2 == 0 );
+	*dashList = malloc( a.count * sizeof dashList[0][0] );
+	NSInteger index = 0;
+	for ( NSString * s in a ) {
+		(*dashList)[index] = [s doubleValue];
+		++index;
+	}
+	return a.count;
+}
+#endif
+
+#endif // CGContext drawing
+
+
+#pragma mark Select objects and draw
 
 static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 {
@@ -2800,99 +3107,6 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 		}
 	}];
 	return a;
-}
-
-static CGFloat MaxSubpartWidthForWay( OsmWay * way, NSNumber * zoom )
-{
-	CGFloat width = 1.0;
-	NSMutableDictionary * zoomDict = way.renderProperties;
-	NSArray * objectSubparts = [zoomDict objectForKey:zoom];
-	for ( ObjectSubpart * subpart in objectSubparts ) {
-		NSDictionary * cssDict	= subpart.properties;
-		CGFloat	w;
-		if ( DictFloat( cssDict, &w, @"width" ) && w > width )
-			width = w;
-	}
-	return width;
-}
-/*
-To render OSM nicely using Painter's algorithm you need to:
-- render background
-- render coaslines as polygons
-- render all the backgrounds (like forests, grass, different kinds of landuse=, ...)
-- render hillshading (optionally, of course)
-
-then, for each layer= tag in order from lowest to highest:
-- render casings in order of z-index-es
-- render *both* polygons and lines that represent foreground features (buildings, roads) in order of z-indexes
-
-then, render icons and labels in order that is backward for z-indexes (if renderer can detect collisions) 
-or in order of z-indexes (if renderer can detect collisions).
-*/
-- (void) drawMapCssInContext:(CGContextRef)ctx
-{
-	_shownObjects = [self getVisibleObjects];
-	
-	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_shownObjects.count];
-	NSNumber * zoom = @( [self zoomLevel] );
-	for ( OsmBaseObject * object in _shownObjects ) {
-		// maps subpart ID to propery dictionary for this object
-		NSMutableDictionary * zoomDict = object.renderProperties;
-		if ( zoomDict == nil ) {
-			zoomDict = [NSMutableDictionary new];
-			object.renderProperties = zoomDict;
-		}
-		NSArray * subparts = [zoomDict objectForKey:zoom];
-		if ( subparts == nil ) {
-			NSDictionary * dict = [_mapCss matchObject:object zoom:zoom.integerValue];
-			NSMutableArray * subs = [NSMutableArray arrayWithCapacity:dict.count];
-			[dict enumerateKeysAndObjectsUsingBlock:^(NSString * subpartID, NSDictionary * props, BOOL *stop) {
-				ObjectSubpart * subpart = [ObjectSubpart new];
-				subpart.object		= object;
-				subpart.subpart		= subpartID;
-				subpart.properties	= props;
-				subpart.zIndex		= [[props objectForKey:@"z-index"] doubleValue];
-				[subs addObject:subpart];
-			}];
-			subparts = subs;
-			[zoomDict setObject:subparts forKey:zoom];
-		}
-		[a addObjectsFromArray:subparts];
-	}
-	[a sortUsingComparator:^NSComparisonResult(ObjectSubpart * obj1, ObjectSubpart * obj2) {
-		CGFloat z1 = obj1.zIndex;
-		CGFloat z2 = obj2.zIndex;
-		NSComparisonResult result = z1 < z2 ? NSOrderedAscending : z1 > z2 ? NSOrderedDescending : NSOrderedSame;
-		return result;
-	}];
-
-	_shownObjects = a;
-
-	// draw coastline
-#if !USE_SHAPELAYERS
-	[self drawOceans:a context:ctx];
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssCoastline:obj context:ctx];
-	}
-#endif
-	// draw areas
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssArea:obj context:ctx];
-	}
-	// draw ways
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssWay:obj context:ctx];
-	}
-	// draw nodes
-	for ( ObjectSubpart * obj in a ) {
-		[self drawNode:(OsmNode *)obj context:ctx];
-	}
-	// draw names
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssName:obj context:ctx];
-	}
-	// draw highlights
-	[self drawHighlighedObjects:ctx];
 }
 
 
@@ -3286,6 +3500,86 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		 nodeCount, nodeTime*1000,
 		 nameCount, nameTime*1000 );
 #endif
+}
+
+/*
+ To render OSM nicely using Painter's algorithm you need to:
+ - render background
+ - render coaslines as polygons
+ - render all the backgrounds (like forests, grass, different kinds of landuse=, ...)
+ - render hillshading (optionally, of course)
+
+ then, for each layer= tag in order from lowest to highest:
+ - render casings in order of z-index-es
+ - render *both* polygons and lines that represent foreground features (buildings, roads) in order of z-indexes
+
+ then, render icons and labels in order that is backward for z-indexes (if renderer can detect collisions)
+ or in order of z-indexes (if renderer can detect collisions).
+ */
+- (void) drawMapCssInContext:(CGContextRef)ctx
+{
+	_shownObjects = [self getVisibleObjects];
+
+	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_shownObjects.count];
+	NSNumber * zoom = @( [self zoomLevel] );
+	for ( OsmBaseObject * object in _shownObjects ) {
+		// maps subpart ID to propery dictionary for this object
+		NSMutableDictionary * zoomDict = object.cssRenderPropertiesForZoom;
+		if ( zoomDict == nil ) {
+			zoomDict = [NSMutableDictionary new];
+			object.cssRenderPropertiesForZoom = zoomDict;
+		}
+		NSArray * subparts = [zoomDict objectForKey:zoom];
+		if ( subparts == nil ) {
+			NSDictionary * dict = [_mapCss matchObject:object zoom:zoom.integerValue];
+			NSMutableArray * subs = [NSMutableArray arrayWithCapacity:dict.count];
+			[dict enumerateKeysAndObjectsUsingBlock:^(NSString * subpartID, NSDictionary * props, BOOL *stop) {
+				ObjectSubpart * subpart = [ObjectSubpart new];
+				subpart.object		= object;
+				subpart.subpart		= subpartID;
+				subpart.properties	= props;
+				subpart.zIndex		= [[props objectForKey:@"z-index"] doubleValue];
+				[subs addObject:subpart];
+			}];
+			subparts = subs;
+			[zoomDict setObject:subparts forKey:zoom];
+		}
+		[a addObjectsFromArray:subparts];
+	}
+	[a sortUsingComparator:^NSComparisonResult(ObjectSubpart * obj1, ObjectSubpart * obj2) {
+		CGFloat z1 = obj1.zIndex;
+		CGFloat z2 = obj2.zIndex;
+		NSComparisonResult result = z1 < z2 ? NSOrderedAscending : z1 > z2 ? NSOrderedDescending : NSOrderedSame;
+		return result;
+	}];
+
+	_shownObjects = a;
+
+	// draw coastline
+#if !USE_SHAPELAYERS
+	[self drawOceans:a context:ctx];
+	for ( ObjectSubpart * obj in a ) {
+		[self drawMapCssCoastline:obj context:ctx];
+	}
+#endif
+	// draw areas
+	for ( ObjectSubpart * obj in a ) {
+		[self drawMapCssArea:obj context:ctx];
+	}
+	// draw ways
+	for ( ObjectSubpart * obj in a ) {
+		[self drawMapCssWay:obj context:ctx];
+	}
+	// draw nodes
+	for ( ObjectSubpart * obj in a ) {
+		[self drawNode:(OsmNode *)obj context:ctx];
+	}
+	// draw names
+	for ( ObjectSubpart * obj in a ) {
+		[self drawMapCssName:obj context:ctx];
+	}
+	// draw highlights
+	[self drawHighlighedObjects:ctx];
 }
 #endif
 

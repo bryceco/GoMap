@@ -253,12 +253,12 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(void)clearCachedProperties
 {
-	_renderProperties		= nil;
-	_tagInfo				= nil;
-	renderPriorityCached	= 0;
-	_isOneWay				= nil;
-	_isShown				= TRISTATE_UNKNOWN;
-	_boundingBox			= OSMRectZero();
+	_cssRenderPropertiesForZoom	= nil;
+	_tagInfo					= nil;
+	renderPriorityCached		= 0;
+	_isOneWay					= nil;
+	_isShown					= TRISTATE_UNKNOWN;
+	_boundingBox				= OSMRectZero();
 
 	for ( CALayer * layer in _shapeLayers ) {
 		[layer removeFromSuperlayer];
