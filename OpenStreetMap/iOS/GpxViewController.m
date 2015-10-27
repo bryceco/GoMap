@@ -81,11 +81,21 @@
 	[appDelegate.mapView.gpxLayer loadTracksInBackgroundWithProgress:^{
 		[self.tableView reloadData];
 	}];
+}
 
 
+-(void)viewWillAppear:(BOOL)animated
+{
+	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 	if ( appDelegate.mapView.gpxLayer.activeTrack ) {
 		[self startTimerForStartDate:appDelegate.mapView.gpxLayer.activeTrack.creationDate];
 	}
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+	[_timer invalidate];
+	_timer = nil;
 }
 
 -(void)startTimerForStartDate:(NSDate *)date

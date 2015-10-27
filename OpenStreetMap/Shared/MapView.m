@@ -1428,6 +1428,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	if ( [newLocation.timestamp compare:[NSDate dateWithTimeIntervalSinceNow:-10.0]] < 0 ) {
 		// its old data
+		DLog(@"discard old GPS data: %@, %@\n",newLocation.timestamp, [NSDate date]);
 		return;
 	}
 

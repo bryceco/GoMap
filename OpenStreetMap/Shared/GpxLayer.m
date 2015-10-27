@@ -98,6 +98,11 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( prev && prev.latitude == coordinate.latitude && prev.longitude == coordinate.longitude )
 		return;
 
+	if ( prev ) {
+		double d = metersApart( coordinate.latitude, coordinate.longitude, prev.latitude, prev.longitude );
+		_distance += d;
+	}
+
 	GpxPoint * pt = [GpxPoint new];
 	pt.latitude		= coordinate.latitude;
 	pt.longitude	= coordinate.longitude;
