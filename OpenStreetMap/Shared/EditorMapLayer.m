@@ -64,6 +64,7 @@ enum {
 @public
 	OSMPoint		position;
 	double			lineWidth;
+	NSArray		*	lineDashes;
 	CATransform3D	transform;
 	BOOL			is3D;
 }
@@ -1462,7 +1463,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 					layer.anchorPoint	= CGPointMake(0, 0);
 					layer.position		= CGPointFromOSMPoint( refPoint );
 					layer.path			= path;
-					layer.strokeColor	= [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
+					layer.strokeColor	= [UIColor blackColor].CGColor; // [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
 					layer.fillColor		= nil;
 					layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
 					layer.lineCap		= DEFAULT_LINECAP;
@@ -1472,6 +1473,16 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 					[layer setValue:props forKey:@"properties"];
 					props->position = refPoint;
 					props->lineWidth = layer.lineWidth;
+					NSString * bridge = object.tags[@"bridge"];
+					if ( bridge && !IsOsmBooleanFalse(bridge) ) {
+						props->lineWidth += 4;
+					}
+					NSString * tunnel = object.tags[@"tunnel"];
+					if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
+						// props->lineDashes = @[@(6), @(3)];					// doesn't work because dashes get rounded off due to path scaling
+						props->lineWidth += 2;
+						layer.strokeColor = [UIColor brownColor].CGColor;
+					}
 
 					[layers addObject:layer];
 				}
@@ -3316,6 +3327,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				if ( isShapeLayer ) {
 					CAShapeLayer * shape = (id)layer;
 					shape.lineWidth = props->lineWidth / pScale;
+					shape.lineDashPattern = props->lineDashes ? @[ @([props->lineDashes[0] doubleValue]/pScale), @([props->lineDashes[1] doubleValue]/pScale) ] : nil;
 				}
 
 			} else {

@@ -616,20 +616,6 @@ static TagInfo * g_DefaultRender = nil;
 		}
 	}];
 	if ( best ) {
-
-		// make footway bridges wider
-		NSString * bridge = object.tags[ @"bridge" ];
-		if ( bridge ) {
-			extern BOOL IsOsmBooleanTrue( NSString * value );
-			if ( IsOsmBooleanTrue(bridge) ) {
-				if ( object.tags[@"highway"] ) {
-					TagInfo * copy = [best copy];
-					copy.lineWidth += copy.lineWidth < 2 ? 0.75 : 1.5;
-					return copy;
-				}
-			}
-		}
-
 		return best;
 	}
 
