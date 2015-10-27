@@ -442,7 +442,7 @@
     <tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway" lineColor="00C0A7" lineWidth="1.000000"/>
     <tag key="highway" value="elevator" name="Elevator" type="node" description="A elevator (or lift) is used to travel vertically, providing passenger and freight access between pathways at different floor levels."/>
     <tag key="highway" value="emergency_access_point" name="Emergency Access Point" type="node" description="Sign number which can be used to define you current position in case of an emergency" areaColor="C0C0C0"/>
-    <tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="00FF00" areaColor="00FF00" lineWidth="1.000000"/>
+    <tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="00FF00" areaColor="00FF00" lineWidth="0.5"/>
     <tag key="highway" value="ford" name="Ford" type="way" description="A point where a path or road crosses a river or stream which is at times covered by shallow water." iconName="transport_ford" lineColor="FF0000" lineWidth="2.000000"/>
     <tag key="highway" value="gate" name="Gate" type="node"/>
     <tag key="highway" value="give_way" name="Give Way" type="node" description="Used to mark give way signs"/>
@@ -458,7 +458,7 @@
     <tag key="highway" value="motorway_link" name="Motorway Link" type="way" description="The link roads (sliproads / ramps) leading to and from a motorway." lineColor="809BC0" lineWidth="3.000000"/>
     <tag key="highway" value="moving_walkway" name="Moving Walkway" type="way"/>
     <tag key="highway" value="passing_place" name="Passing Place" type="way" description="A passing place on a single track road."/>
-    <tag key="highway" value="path" name="Path" type="way" description="A generic path" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dpath" lineColor="00FF00" lineWidth="1.000000"/>
+    <tag key="highway" value="path" name="Path" type="way" description="A generic path" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dpath" lineColor="00FF00" lineWidth="0.5"/>
     <tag key="highway" value="pedestrian" name="Pedestrian" type="way" description="For Roads , i.e. mainly / exclusively for pedestrians (often Shopping Areas)." lineColor="008000" areaColor="a0a0a0" lineWidth="2.000000"/>
     <tag key="highway" value="piste" name="Piste" type="way"/>
     <tag key="highway" value="platform" name="Platform" type="node;area" description="A platform of a bus station." lineColor="C0C0C0" areaColor="C0C0C0" lineWidth="2.000000"/>

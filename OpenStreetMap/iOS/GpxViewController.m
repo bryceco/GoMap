@@ -192,7 +192,8 @@
 		return cell;
 	}
 
-	GpxTrack *	track = indexPath.section == 0 ? appDelegate.mapView.gpxLayer.activeTrack : appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
+	NSArray * prevTracks = appDelegate.mapView.gpxLayer.previousTracks;
+	GpxTrack *	track = indexPath.section == 0 ? appDelegate.mapView.gpxLayer.activeTrack : prevTracks[ prevTracks.count - indexPath.row - 1 ];
 	NSInteger	dur = (NSInteger)round(track.duration);
 	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
