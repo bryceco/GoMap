@@ -34,8 +34,28 @@ static const CGFloat TOUCH_RADIUS = 22;
 
 #if ENABLE_TOUCH_CIRCLES
 	for ( UITouch * touch in event.allTouches ) {
+		CGPoint pos2 = [touch locationInView:nil];
+		CGPoint pos = pos2;
+		CGRect bounds = [[UIScreen mainScreen] bounds];
+
+		switch ( [[UIDevice currentDevice] orientation] ) {
+			case UIDeviceOrientationPortraitUpsideDown:
+				pos.x = bounds.size.width  - pos2.x - 1;
+				pos.y = bounds.size.height - pos2.y - 1;
+				break;
+			case UIDeviceOrientationLandscapeLeft:
+				pos.x = bounds.size.height - pos2.y - 1;
+				pos.y = pos2.x;
+				break;
+			case UIDeviceOrientationLandscapeRight:
+				pos.x = pos2.y;
+				pos.y = bounds.size.width - pos2.x - 1;
+				break;
+			default:
+				break;
+		}
+
 		if ( touch.phase == UITouchPhaseBegan ) {
-			CGPoint pos = [touch locationInView:nil];
 			UIWindow * win = [[UIWindow alloc] initWithFrame:CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS)];
 			_touches[@((long)touch)] = @{ @"win" : win, @"start" : @(touch.timestamp) };
 			win.windowLevel = UIWindowLevelStatusBar;
@@ -46,7 +66,6 @@ static const CGFloat TOUCH_RADIUS = 22;
 		} else if ( touch.phase == UITouchPhaseMoved ) {
 			NSDictionary * dict = _touches[ @((long)touch) ];
 			UIWindow * win = dict[ @"win" ];
-			CGPoint pos = [touch locationInView:nil];
 			win.frame = CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS);
 		} else if ( touch.phase == UITouchPhaseStationary ) {
 			// ignore

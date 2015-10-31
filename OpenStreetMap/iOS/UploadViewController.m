@@ -97,7 +97,7 @@
 	}
 
 	if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"userDidPreviousUpload"] ) {
-		_alertViewConfirm = [[UIAlertView alloc] initWithTitle:@"Warning"
+		_alertViewConfirm = [[UIAlertView alloc] initWithTitle:@"Attention"
 													 message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel."
 													delegate:self
 										   cancelButtonTitle:@"Cancel"
