@@ -115,6 +115,9 @@
 	[_sendMailButton setEnabled:NO];
 	[_editXmlButton setEnabled:NO];
 
+	[_commentTextView resignFirstResponder];
+	[_xmlTextView resignFirstResponder];
+
 	NSString * comment = _commentTextView.text;
 	comment = [comment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
