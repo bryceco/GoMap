@@ -10,7 +10,7 @@
 
 @class AerialService;
 
-@interface AerialEditViewController : UITableViewController <UITextFieldDelegate>
+@interface AerialEditViewController : UITableViewController
 {
 	IBOutlet UITextField *	nameField;
 	IBOutlet UITextField *	urlField;
