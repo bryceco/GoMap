@@ -35,6 +35,7 @@
 @class SpeechBalloonView;
 @class FpsLabel;
 @class TapAndDragGesture;
+@class VoiceAnnouncement;
 
 
 @protocol MapViewDelegate <NSObject>
@@ -118,6 +119,7 @@ typedef enum {
 	CLLocationManager				*	_locationManager;
 
 	dispatch_source_t					_mailTimer;
+	VoiceAnnouncement				*	_voiceAnnouncement;
 
 	TapAndDragGesture				*	_tapAndDragGesture;
 

@@ -126,6 +126,7 @@ static inline OSMPoint OffsetPoint( OSMPoint p, double dx, double dy )
 OSMPoint ClosestPointOnLineToPoint( OSMPoint a, OSMPoint b, OSMPoint p );
 CGFloat DistanceFromPointToLineSegment( OSMPoint point, OSMPoint line1, OSMPoint line2 );
 CGFloat DistanceFromLineToPoint( OSMPoint lineStart, OSMPoint lineDirection, OSMPoint point );
+BOOL LineSegmentsIntersect( OSMPoint p0, OSMPoint p1, OSMPoint p2, OSMPoint p3 );
 OSMPoint IntersectionOfTwoVectors( OSMPoint p1, OSMPoint v1, OSMPoint p2, OSMPoint v2 );
 BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect );
 double SurfaceArea( OSMRect latLon );

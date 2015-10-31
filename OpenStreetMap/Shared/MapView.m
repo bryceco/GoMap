@@ -28,6 +28,7 @@
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
 #import "TapAndDragGesture.h"
+#import "VoiceAnnouncement.h"
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
@@ -220,6 +221,10 @@ CGSize SizeForImage( NSImage * image )
 			_crossHairs.position = CGRectCenter( self.bounds );
 			[self.layer addSublayer:_crossHairs];
 		}
+
+		_voiceAnnouncement = [VoiceAnnouncement new];
+		_voiceAnnouncement.mapView = self;
+		_voiceAnnouncement.radius = 30;	// meters
 		
 
 #if 0	// no evidence this help things
@@ -1438,6 +1443,10 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( _locationBallLayer && delta < 0.1 && fabs(newLocation.horizontalAccuracy - _currentLocation.horizontalAccuracy) < 1.0 )
 		return;
 	_currentLocation = [newLocation copy];
+
+	if ( _voiceAnnouncement && !_editorLayer.hidden ) {
+		[_voiceAnnouncement announceForLocation:newLocation.coordinate];
+	}
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];

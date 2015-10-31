@@ -121,6 +121,7 @@ typedef enum {
 -(void)computeBoundingBox;
 -(BOOL)overlapsBox:(OSMRect)box;
 -(OSMRect)boundingBox;
+-(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2;
 -(NSString *)friendlyDescription;
 
 -(NSString *)geometryName;

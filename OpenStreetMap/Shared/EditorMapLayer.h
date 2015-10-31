@@ -71,6 +71,7 @@
 + (OsmBaseObject *)osmHitTest:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)segment;
 - (NSArray *)osmHitTestMultiple:(CGPoint)point;
+- (void)osmObjectsNearby:(CGPoint)point radius:(double)radius block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block;
 
 
 -(NSArray *)shownObjects;

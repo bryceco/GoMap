@@ -3650,14 +3650,14 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // distance is in units of the hit test radius (WayHitTestRadius)
-+ (void)osmHitTestEnumerate:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
++ (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
 	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OSMRect viewCoord = [mapView screenLongitudeLatitude];
 	OSMSize pixelsPerDegree = { mapView.bounds.size.width / viewCoord.size.width, mapView.bounds.size.height / viewCoord.size.height };
 
-	OSMSize maxDegrees = { WayHitTestRadius / pixelsPerDegree.width, WayHitTestRadius / pixelsPerDegree.height };
+	OSMSize maxDegrees = { radius / pixelsPerDegree.width, radius / pixelsPerDegree.height };
 	const double NODE_BIAS = 0.5;	// make nodes appear closer so they can be selected
 
 	for ( OsmBaseObject * object in objects ) {
@@ -3704,7 +3704,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	__block __unsafe_unretained id hit = nil;
 	__block NSInteger hitSegment = 0;
 	__block CGFloat bestDist = 1000000;
-	[EditorMapLayer osmHitTestEnumerate:point mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
+	[EditorMapLayer osmHitTestEnumerate:point radius:WayHitTestRadius mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
 		if ( dist < bestDist ) {
 			bestDist = dist;
 			hit = obj;
@@ -3738,11 +3738,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return [self osmHitTest:point segment:NULL ignoreList:nil];
 }
 
-// return close objects sorted by distance
+// return close objects
 - (NSArray *)osmHitTestMultiple:(CGPoint)point
 {
 	NSMutableSet * objectSet = [NSMutableSet new];
-	[EditorMapLayer osmHitTestEnumerate:point mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
+	[EditorMapLayer osmHitTestEnumerate:point radius:WayHitTestRadius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
 		[objectSet addObject:obj];
 	}];
 	NSMutableArray * objects = [objectSet.allObjects mutableCopy];
@@ -3754,6 +3754,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		return diff2 < 0 ? NSOrderedAscending : diff2 > 0 ? NSOrderedDescending : NSOrderedSame;
 	}];
 	return objects;
+}
+
+- (void)osmObjectsNearby:(CGPoint)point radius:(double)radius block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
+{
+	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:block];
 }
 
 

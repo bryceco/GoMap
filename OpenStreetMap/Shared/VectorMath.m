@@ -162,6 +162,21 @@ OSMPoint IntersectionOfTwoVectors( OSMPoint p1, OSMPoint v1, OSMPoint p2, OSMPoi
 	return pt;
 }
 
+
+BOOL LineSegmentsIntersect( OSMPoint p0, OSMPoint p1, OSMPoint p2, OSMPoint p3 )
+{
+	OSMPoint s1 = Sub( p1, p0 );
+	OSMPoint s2 = Sub( p3, p2 );
+
+	double s = (-s1.y * (p0.x - p2.x) + s1.x * (p0.y - p2.y)) / (-s2.x * s1.y + s1.x * s2.y);
+	double t = ( s2.x * (p0.y - p2.y) - s2.y * (p0.x - p2.x)) / (-s2.x * s1.y + s1.x * s2.y);
+
+	if ( s >= 0 && s <= 1 && t >= 0 && t <= 1) {
+		return YES;
+	}
+	return NO;
+}
+
 BOOL LineSegmentIntersectsRectangle( OSMPoint p1, OSMPoint p2, OSMRect rect )
 {
 	double a_rectangleMinX = rect.origin.x;

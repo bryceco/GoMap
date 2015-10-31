@@ -425,8 +425,7 @@ static NSString * PrettyTag( NSString * tag )
 	NSArray		*	optionsArray		= dict[ @"options" ];
 	NSString	*	defaultValue		= dict[ @"default" ];
 	UIKeyboardType					keyboard = UIKeyboardTypeDefault;
-	UITextAutocapitalizationType	capitalize = [key hasPrefix:@"name:"] ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
-
+	UITextAutocapitalizationType	capitalize = [key hasPrefix:@"name:"] || [key isEqualToString:@"operator"] ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
 
 //r	DLog(@"%@",dict);
 

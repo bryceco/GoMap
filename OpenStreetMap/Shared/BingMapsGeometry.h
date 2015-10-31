@@ -72,6 +72,17 @@ static int MinimumLevelOfDetail(double latitude, double metersPerPixel)
 }
 
 
+static double MetersPerDegreeLatitude( double latitude )
+{
+	latitude *= M_PI / 180;
+	return 111132.954 - 559.822 * cos( 2 * latitude ) + 1.175 * cos( 4 * latitude );
+}
+static double MetersPerDegreeLongitude( double latitude )
+{
+	latitude *= M_PI / 180;
+	return 111132.954 * cos ( latitude );
+}
+
 
 
 /// <summary>

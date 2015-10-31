@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "iosapi.h"
+#import "BingMapsGeometry.h"
 #import "CommonTagList.h"
 #import "CurvedTextLayer.h"
 #import "DLog.h"
@@ -132,6 +133,11 @@ NSString * OsmValueForBoolean( BOOL b )
 	_boundingBox = OSMRectMake(0, 0, 0, 0);
 }
 
+-(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2
+{
+	assert(NO);
+	return 1000000.0;
+}
 
 static NSInteger _nextUnusedIdentifier = 0;
 
@@ -589,6 +595,17 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	_boundingBox = rc;
 }
 
+-(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2
+{
+	OSMPoint metersPerDegree = { MetersPerDegreeLongitude(_lat), MetersPerDegreeLatitude(_lat) };
+	point1.x = (point1.x - _lon) * metersPerDegree.x;
+	point1.y = (point1.y - _lat) * metersPerDegree.y;
+	point2.x = (point2.x - _lon) * metersPerDegree.x;
+	point2.y = (point2.y - _lat) * metersPerDegree.y;
+	double dist = DistanceFromPointToLineSegment(OSMPointMake(0,0), point1, point2 );
+	return dist;
+}
+
 -(void)setLongitude:(double)longitude latitude:(double)latitude undo:(UndoManager *)undo
 {
 	if ( _constructed ) {
@@ -850,6 +867,26 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		}
 	}
 	return bestPoint;
+}
+
+-(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2
+{
+	if ( _nodes.count == 1 ) {
+		return [_nodes.lastObject distanceToLineSegment:point1 point:point2];
+	}
+	double dist = 1000000.0;
+	OsmNode * prevNode = nil;
+	for ( OsmNode * node in _nodes ) {
+		if ( prevNode && LineSegmentsIntersect( prevNode.location, node.location, point1, point2 )) {
+			return 0.0;
+		}
+		double d = [node distanceToLineSegment:point1 point:point2];
+		if ( d < dist ) {
+			dist = d;
+		}
+		prevNode = node;
+	}
+	return dist;
 }
 
 
@@ -1228,6 +1265,21 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		OSMRect rc = self.boundingBox;
 		return OSMPointMake( rc.origin.x + rc.size.width/2, rc.origin.y+rc.size.height);
 	}
+}
+
+-(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2
+{
+	double dist = 1000000.0;
+	for ( OsmMember * member in _members ) {
+		OsmBaseObject * object = member.ref;
+		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
+			double d = [object distanceToLineSegment:point1 point:point2];
+			if ( d < dist ) {
+				dist = d;
+			}
+		}
+	}
+	return dist;
 }
 
 -(BOOL)containsObject:(OsmBaseObject *)object
