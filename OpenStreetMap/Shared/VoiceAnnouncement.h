@@ -7,19 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
-@class AVSpeechSynthesizer;
 @class MapView;
 
 
-@interface VoiceAnnouncement : NSObject
+@interface VoiceAnnouncement : NSObject <AVSpeechSynthesizerDelegate>
 {
 	AVSpeechSynthesizer *	_synthesizer;
 	NSMutableDictionary *	_previousObjects;
 	CLLocationCoordinate2D	_previousCoord;
 	OsmWay				*	_currentHighway;
 	OsmWay				*	_previousClosestHighway;
+	NSMapTable			*	_utteranceMap;
 
+	BOOL					_isNewUpdate;
 }
 
 @property (assign,nonatomic)	MapView *	mapView;

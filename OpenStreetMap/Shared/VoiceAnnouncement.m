@@ -29,6 +29,8 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 {
 	self = [super init];
 	if ( self ) {
+		_utteranceMap = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsOpaquePersonality valueOptions:NSPointerFunctionsOpaquePersonality];
+
 		_buildings			= NO;
 		_addresses			= NO;
 		_streets			= YES;
@@ -39,21 +41,43 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 	return self;
 }
 
--(void)say:(NSString *)text
+-(void)say:(NSString *)text forObject:(OsmBaseObject *)object
 {
 	if ( _synthesizer == nil ) {
 		_synthesizer = [[AVSpeechSynthesizer alloc] init];
+		_synthesizer.delegate = self;
 	}
+
+	if ( object && _isNewUpdate ) {
+		_isNewUpdate = NO;
+		[self say:@"update" forObject:nil];
+	}
+
 	AVSpeechUtterance * utterance = [AVSpeechUtterance speechUtteranceWithString:text];
 	[_synthesizer speakUtterance:utterance];
+
+	[_utteranceMap setObject:object forKey:utterance];
 }
 
+
+-(void)setEnabled:(BOOL)enabled
+{
+	if ( enabled != _enabled ) {
+		_enabled = enabled;
+		if ( !enabled ) {
+			[_synthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+			[_utteranceMap removeAllObjects];
+		}
+	}
+}
 
 
 -(void)announceForLocation:(CLLocationCoordinate2D)coord
 {
 	if ( !self.enabled )
 		return;
+
+	_isNewUpdate = YES;
 
 	NSMutableArray * a = [NSMutableArray arrayWithCapacity:100];
 
@@ -63,7 +87,7 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 	OSMRect box = { MIN(_previousCoord.longitude,coord.longitude), MIN(_previousCoord.latitude,coord.latitude), fabs(_previousCoord.longitude-coord.longitude), fabs(_previousCoord.latitude-coord.latitude) };
 	box.origin.x -= _radius/metersPerDegree.x;
 	box.origin.y -= _radius/metersPerDegree.y;
-	box.size.width += 2*_radius/metersPerDegree.x;
+	box.size.width  += 2*_radius/metersPerDegree.x;
 	box.size.height += 2*_radius/metersPerDegree.y;
 
 	[self.mapView.editorLayer.mapData enumerateObjectsInRegion:box block:^(OsmBaseObject *obj) {
@@ -124,14 +148,14 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 			if ( [building isEqualToString:@"yes"] )
 				building = @"";
 			NSString * text = [NSString stringWithFormat:@"building %@",building];
-			[self say:text];
+			[self say:text forObject:object];
 		}
 
 		if ( _addresses && object.tags[@"addr:housenumber"] ) {
 			NSString * number = object.tags[@"addr:housenumber"];
 			NSString * street = object.tags[@"addr:street"];
 			NSString * text = [NSString stringWithFormat:@"%@ number %@",street, number];
-			[self say:text];
+			[self say:text forObject:object];
 		}
 		
 		if ( _streets && object.isWay && object.tags[@"highway"] ) {
@@ -145,14 +169,14 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 				NSString * text = name ?: type;
 				if ( object == newCurrentHighway )
 					text = [NSString stringWithFormat:@"Now following %@",text];
-				[self say:text];
+				[self say:text forObject:object];
 			}
 		}
 	
 		if ( _shopsAndAmenities ) {
 			if ( object.tags[@"shop"] || object.tags[@"amenity"] ) {
 				NSString * text = object.friendlyDescription;
-				[self say:text];
+				[self say:text forObject:object];
 			}
 		}
 	}
@@ -160,5 +184,29 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 	_previousObjects = currentObjects;
 	_previousCoord	= coord;
 }
+
+#pragma mark delegate
+
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance
+{
+	OsmBaseObject * object = [_utteranceMap objectForKey:utterance];
+	_mapView.editorLayer.selectedNode		= object.isNode;
+	_mapView.editorLayer.selectedWay		= object.isWay;
+	_mapView.editorLayer.selectedRelation	= object.isRelation;
+	[_utteranceMap removeObjectForKey:utterance];
+}
+
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance
+{
+	_mapView.editorLayer.selectedNode		= nil;
+	_mapView.editorLayer.selectedWay		= nil;
+	_mapView.editorLayer.selectedRelation	= nil;
+}
+
+- (void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didCancelSpeechUtterance:(AVSpeechUtterance *)utterance
+{
+	[self speechSynthesizer:synthesizer didFinishSpeechUtterance:utterance];
+}
+
 
 @end
