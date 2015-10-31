@@ -23,6 +23,8 @@
 	urlField.text = self.url;
 	tileServersField.text = self.tileServers;
 	zoomField.text = [self.zoom stringValue];
+
+	urlField.delegate = self;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -39,9 +41,13 @@
 	for ( NSInteger i = 0; i < subdomains.count; ++i ) {
 		subdomains[i] = [subdomains[i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
+	NSString * url = [urlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	url = [url stringByReplacingOccurrencesOfString:@"%7B" withString:@"{"];
+	url = [url stringByReplacingOccurrencesOfString:@"%7D" withString:@"}"];
+	url = [url stringByReplacingOccurrencesOfString:@"{zoom}" withString:@"{z}"];
 
 	AerialService * service = [AerialService aerialWithName:[nameField.text	stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-																	url:[urlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+																	url:url
 																subdomains:subdomains
 																maxZoom:[zoomField.text integerValue]
 																roundUp:YES];
@@ -69,5 +75,11 @@
 	}
 }
 
+#pragma mark delegate
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+
+}
 
 @end
