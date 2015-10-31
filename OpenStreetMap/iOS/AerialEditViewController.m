@@ -23,8 +23,6 @@
 	urlField.text = self.url;
 	tileServersField.text = self.tileServers;
 	zoomField.text = [self.zoom stringValue];
-
-	urlField.delegate = self;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,13 +71,6 @@
 	} else {
 		self.navigationItem.rightBarButtonItem.enabled = NO;
 	}
-}
-
-#pragma mark delegate
-
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-
 }
 
 @end
