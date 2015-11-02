@@ -319,6 +319,23 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 }
 
 
+static BOOL IsRTL( CTTypesetterRef typesetter )
+{
+	BOOL isRTL = NO;
+	CTLineRef fullLine = CTTypesetterCreateLine( typesetter, CFRangeMake(0,0) );
+	NSArray * runs = (NSArray *)CTLineGetGlyphRuns( fullLine );
+	if ( runs.count > 0 ) {
+		CTRunRef run = CFBridgingRetain( runs[0] );
+		CTRunStatus status = CTRunGetStatus(run);
+		if ( status & kCTRunStatusRightToLeft ) {
+			isRTL = YES;
+		}
+		CFRelease( run );
+	}
+	CFRelease( fullLine );
+	return isRTL;
+}
+
 -(CTFramesetterRef)framesetterForString:(NSAttributedString *)attrString CF_RETURNS_RETAINED
 {
 	CTFramesetterRef framesetter = (__bridge CTFramesetterRef)[_framesetterCache objectForKey:attrString.string];
@@ -362,16 +379,6 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 		ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
 	});
 
-	NSMutableArray * layers = [NSMutableArray new];
-
-	// get line segments
-	NSInteger pathPointCount = CGPathPointCount( path );
-	CGPoint pathPoints[ pathPointCount ];
-	CGPathGetPoints( path, pathPoints );
-	pathPointCount = EliminatePointsOnStraightSegments( pathPointCount, pathPoints );
-	if ( pathPointCount < 2 )
-		return nil;
-
 	UIColor * textColor = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
 																		 attributes:@{
@@ -380,6 +387,28 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 	CTFramesetterRef framesetter = [self framesetterForString:attrString];
 	NSInteger charCount = string.length;
 	CTTypesetterRef typesetter = CTFramesetterGetTypesetter( framesetter );
+	CGPathRef reversePath = nil;
+
+	BOOL isRTL = IsRTL( typesetter );
+	if ( isRTL ) {
+		reversePath = PathReversed(path);
+		path = reversePath;
+	}
+
+	NSLog(@"\"%@\"",string);
+
+	NSMutableArray * layers = [NSMutableArray new];
+
+	// get line segments
+	NSInteger pathPointCount = CGPathPointCount( path );
+	CGPoint pathPoints[ pathPointCount ];
+	CGPathGetPoints( path, pathPoints );
+	pathPointCount = EliminatePointsOnStraightSegments( pathPointCount, pathPoints );
+	if ( pathPointCount < 2 ) {
+		if ( reversePath ) CFRelease( reversePath );
+		CFRelease( framesetter );
+		return nil;
+	}
 
 	double lineHeight = 16.0; // CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0,attrString.length), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL).height;
 	CFIndex currentCharacter = 0;
@@ -391,22 +420,6 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 		CGFloat angle = 0, length = 0;
 		PositionAndAngleForOffset( pathPointCount, pathPoints, currentPixelOffset, lineHeight, &pos, &angle, &length );
 		CFIndex count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, length );
-
-#if 0
-		// RTL languages don't break correctly because we are breaking on line boundaries, and RTL languages split across lines LTR not RTL?
-		CTLineRef line = CTTypesetterCreateLine( typesetter, CFRangeMake(currentCharacter,count));
-		CFRange stringRange = CTLineGetStringRange ( line );
-		NSString * substring = [string substringWithRange:NSMakeRange(stringRange.location, stringRange.length)];
-		NSLog(@"%@", substring);
-
-		CFArrayRef runs = CTLineGetGlyphRuns(line);
-		for(NSInteger j = 0; j < CFArrayGetCount(runs); j++) {
-			CTRunRef run = CFArrayGetValueAtIndex(runs, j);
-			CFRange runRange = CTRunGetStringRange(run);
-			CTRunStatus status = CTRunGetStatus(run);
-			NSLog(@"run = %@, %@", [string substringWithRange:NSMakeRange(runRange.location, runRange.length)], (status & kCTRunStatusRightToLeft) ? @"rtl" : @"ltr");
-		}
-#endif
 
 #if USE_CURVEDLAYER_CACHE
 		NSString * cacheKey = [NSString stringWithFormat:@"%@:%f",[string substringWithRange:NSMakeRange(currentCharacter, count)],angle];
@@ -424,6 +437,13 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 			bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(currentCharacter,count), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL);
 			pixelLength = bounds.size.width;
 			layer.bounds			= bounds;
+			if ( isRTL ) {
+				pos.x += cos(angle)*pixelLength;
+				pos.y += sin(angle)*pixelLength;
+				pos.x -= sin(angle)*2*lineHeight;
+				pos.y += cos(angle)*2*lineHeight;
+				angle -= M_PI;
+			}
 			layer.affineTransform	= CGAffineTransformMakeRotation( angle );
 			layer.position			= pos;
 			layer.anchorPoint		= CGPointMake(0,0);
@@ -446,9 +466,18 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 			[_layerCache setObject:layer forKey:cacheKey];
 #endif
 		} else {
-			layer.position			= pos;
-			pixelLength				= layer.bounds.size.width;
+			pixelLength	= layer.bounds.size.width;
+			if ( isRTL ) {
+				pos.x += cos(angle)*pixelLength;
+				pos.y += sin(angle)*pixelLength;
+				pos.x -= sin(angle)*2*lineHeight;
+				pos.y += cos(angle)*2*lineHeight;
+				angle -= M_PI;
+			}
+			layer.position	= pos;
 		}
+
+		NSLog(@"-> \"%@\"",[layer.string string]);
 
 		[layers addObject:layer];
 
@@ -459,6 +488,7 @@ static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint point
 			currentPixelOffset += 8;	// add room for space which is not included in framesetter size
 	}
 	CFRelease(framesetter);
+	if ( reversePath ) CFRelease( reversePath );
 	return layers;
 }
 

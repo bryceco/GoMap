@@ -86,6 +86,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+	[super viewWillAppear:animated];
+
 	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
 	if ( appDelegate.mapView.gpxLayer.activeTrack ) {
 		[self startTimerForStartDate:appDelegate.mapView.gpxLayer.activeTrack.creationDate];
@@ -94,6 +96,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
+	
 	[_timer invalidate];
 	_timer = nil;
 }

@@ -242,10 +242,8 @@ static const CGFloat GradientHeight = 20.0;
 			while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
 				cell = (id)cell.superview;
 			UITableView * tableView = (id)cell.superview;
-			BOOL iOS7 = NO;
 			while ( tableView && ![tableView isKindOfClass:[UITableView class]] ) {
 				// iOS 7
-				iOS7 = YES;
 				tableView = (id)tableView.superview;
 			}
 
