@@ -387,17 +387,8 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 	CTFramesetterRef framesetter = [self framesetterForString:attrString];
 	NSInteger charCount = string.length;
 	CTTypesetterRef typesetter = CTFramesetterGetTypesetter( framesetter );
-	CGPathRef reversePath = nil;
 
-	BOOL isRTL = IsRTL( typesetter );
-	if ( isRTL ) {
-		reversePath = PathReversed(path);
-		path = reversePath;
-	}
-
-	NSLog(@"\"%@\"",string);
-
-	NSMutableArray * layers = [NSMutableArray new];
+//	NSLog(@"\"%@\"",string);
 
 	// get line segments
 	NSInteger pathPointCount = CGPathPointCount( path );
@@ -405,10 +396,21 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 	CGPathGetPoints( path, pathPoints );
 	pathPointCount = EliminatePointsOnStraightSegments( pathPointCount, pathPoints );
 	if ( pathPointCount < 2 ) {
-		if ( reversePath ) CFRelease( reversePath );
 		CFRelease( framesetter );
 		return nil;
 	}
+
+	BOOL isRTL = IsRTL( typesetter );
+	if ( isRTL ) {
+		// reverse points
+		for ( NSInteger i = 0; i < pathPointCount/2; ++i ) {
+			CGPoint p = pathPoints[i];
+			pathPoints[i] = pathPoints[pathPointCount-1-i];
+			pathPoints[pathPointCount-1-i] = p;
+		}
+	}
+
+	NSMutableArray * layers = [NSMutableArray new];
 
 	double lineHeight = 16.0; // CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0,attrString.length), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL).height;
 	CFIndex currentCharacter = 0;
@@ -477,7 +479,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 			layer.position	= pos;
 		}
 
-		NSLog(@"-> \"%@\"",[layer.string string]);
+//		NSLog(@"-> \"%@\"",[layer.string string]);
 
 		[layers addObject:layer];
 
@@ -488,7 +490,6 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 			currentPixelOffset += 8;	// add room for space which is not included in framesetter size
 	}
 	CFRelease(framesetter);
-	if ( reversePath ) CFRelease( reversePath );
 	return layers;
 }
 
