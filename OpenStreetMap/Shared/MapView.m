@@ -222,10 +222,11 @@ CGSize SizeForImage( NSImage * image )
 			[self.layer addSublayer:_crossHairs];
 		}
 
+#if 0
 		_voiceAnnouncement = [VoiceAnnouncement new];
 		_voiceAnnouncement.mapView = self;
 		_voiceAnnouncement.radius = 30;	// meters
-		
+#endif
 
 #if 0	// no evidence this help things
 		for ( CALayer * layer in _backgroundLayers ) {
@@ -1224,8 +1225,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			[self animateRotationBy:-rotation aroundPoint:center];
 		}
 
-		if ( gpsState == GPS_STATE_NONE )
+		if ( gpsState == GPS_STATE_NONE ) {
 			_centerOnGPSButton.hidden = YES;
+			_voiceAnnouncement.enabled = NO;
+		} else {
+			_voiceAnnouncement.enabled = YES;
+		}
 
 		_gpsState = gpsState;
 		if ( _gpsState != GPS_STATE_NONE ) {
