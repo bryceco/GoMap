@@ -1747,9 +1747,12 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			// cancel move
 			[_editorLayer.mapData undo];
 			[_editorLayer.mapData removeMostRecentRedo];
+			_editorLayer.selectedNode = nil;
+			_editorLayer.selectedWay = nil;
+			_editorLayer.selectedRelation = nil;
+			[self removePin];
 			[_editorLayer setNeedsDisplay];
 			[_editorLayer setNeedsLayout];
-			[self removePin];
 		} else {
 			// okay
 		}
@@ -1914,17 +1917,31 @@ NSString * ActionTitle( NSInteger action )
 			break;
 		case ACTION_DUPLICATE:
 			{
-				OsmWay * way = [_editorLayer.mapData duplicateWay:_editorLayer.selectedWay];
-				_editorLayer.selectedNode = nil;
-				_editorLayer.selectedRelation = nil;
-				_editorLayer.selectedWay = way;
-				OSMPoint pt = [way centerPoint];
-				CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
-				[self placePushpinAtPoint:point object:way];
+				if ( !_editorLayer.selectedPrimary.isWay ) {
+					error = NSLocalizedString(@"Only ways can be duplicated",nil);
+				} else {
+					OsmWay * way = [_editorLayer.mapData duplicateWay:_editorLayer.selectedWay];
+					if ( way == nil ) {
+						error = NSLocalizedString(@"Could not duplicate object",nil);
+					} else {
+						_editorLayer.selectedNode = nil;
+						_editorLayer.selectedRelation = nil;
+						_editorLayer.selectedWay = way;
+						OSMPoint pt = [way centerPoint];
+						CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+						[self placePushpinAtPoint:point object:way];
+					}
+				}
 			}
 			break;
 		case ACTION_ROTATE:
-			error = NSLocalizedString(@"Not implemented",nil);
+			if ( _editorLayer.selectedWay == nil || _editorLayer.selectedRelation ) {
+				error = NSLocalizedString(@"Only ways can be rotated", nil);
+			} else {
+				_isRotateObjectMode = YES;
+				OSMPoint center = _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
+				_rotateObjectCenter	= [self screenPointForLatitude:center.y longitude:center.x birdsEye:YES];
+			}
 			break;
 		case ACTION_RECTANGULARIZE:
 			if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) )
@@ -2168,52 +2185,58 @@ NSString * ActionTitle( NSInteger action )
 					DLog(@"Gesture ended with cancel/fail\n");
 					// fall through so we properly terminate gesture
 				case UIGestureRecognizerStateEnded:
-					[weakSelf.editorLayer.mapData endUndoGrouping];
-					[[DisplayLink shared] removeName:@"dragScroll"];
-
-					[weakSelf unblinkObject];
-					if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
-						// dragging a node that is part of a way
-						OsmNode * dragNode = (id)object;
-						OsmWay * way = weakSelf.editorLayer.selectedWay;
-						NSInteger segment;
-						OsmBaseObject * hit = [weakSelf dragConnectionForNode:dragNode segment:&segment];
-						if ( hit.isNode ) {
-							// replace dragged node with hit node
-							OsmNode * hitNode = (id)hit;
-							NSInteger index = [way.nodes indexOfObject:object];
-							[weakSelf.editorLayer deleteNode:dragNode fromWay:way allowDegenerate:YES];
-							[weakSelf.editorLayer addNode:hitNode toWay:way atIndex:index];
-							if ( way.isArea ) {
-								weakSelf.editorLayer.selectedNode = nil;
-								OSMPoint center = way.centerPoint;
-								CGPoint centerPoint = [weakSelf screenPointForLatitude:center.y longitude:center.x birdsEye:YES];
-								[weakSelf placePushpinAtPoint:centerPoint object:way];
-							} else {
-								CGPoint newPoint = [weakSelf screenPointForLatitude:hitNode.lat longitude:hitNode.lon birdsEye:YES];
-								weakSelf.editorLayer.selectedNode = (id)hit;
-								[weakSelf placePushpinAtPoint:newPoint object:hitNode];
-							}
-						}
-						if ( hit.isWay ) {
-							// add new node to hit way
-							OsmWay * hitWay = (id)hit;
-							OSMPoint pt = [dragNode location];
-							pt = [hitWay pointOnWayForPoint:pt];
-							[weakSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode inWay:weakSelf.editorLayer.selectedWay];
-							[weakSelf.editorLayer addNode:dragNode toWay:hitWay atIndex:segment+1];
-						}
-						return;
-					}
-					if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedWay.tags.count == 0 && weakSelf.editorLayer.selectedWay.relations.count == 0 )
-						break;
-					if ( weakSelf.editorLayer.selectedWay && weakSelf.editorLayer.selectedNode )
-						break;
 					{
-						MapView * mySelf = weakSelf;
-						mySelf->_alertMove = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil)
-																delegate:weakSelf cancelButtonTitle:NSLocalizedString(@"Undo",nil) otherButtonTitles:NSLocalizedString(@"Move",nil), nil];
-						[mySelf->_alertMove show];
+						MapView * strongSelf = weakSelf;
+
+						[strongSelf.editorLayer.mapData endUndoGrouping];
+						[[DisplayLink shared] removeName:@"dragScroll"];
+
+						BOOL isRotate = strongSelf->_isRotateObjectMode;
+						strongSelf->_isRotateObjectMode = NO;
+
+						[strongSelf unblinkObject];
+						if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
+							// dragging a node that is part of a way
+							OsmNode * dragNode = (id)object;
+							OsmWay * way = weakSelf.editorLayer.selectedWay;
+							NSInteger segment;
+							OsmBaseObject * hit = [strongSelf dragConnectionForNode:dragNode segment:&segment];
+							if ( hit.isNode ) {
+								// replace dragged node with hit node
+								OsmNode * hitNode = (id)hit;
+								NSInteger index = [way.nodes indexOfObject:object];
+								[strongSelf.editorLayer deleteNode:dragNode fromWay:way allowDegenerate:YES];
+								[strongSelf.editorLayer addNode:hitNode toWay:way atIndex:index];
+								if ( way.isArea ) {
+									strongSelf.editorLayer.selectedNode = nil;
+									OSMPoint center = way.centerPoint;
+									CGPoint centerPoint = [strongSelf screenPointForLatitude:center.y longitude:center.x birdsEye:YES];
+									[strongSelf placePushpinAtPoint:centerPoint object:way];
+								} else {
+									CGPoint newPoint = [strongSelf screenPointForLatitude:hitNode.lat longitude:hitNode.lon birdsEye:YES];
+									strongSelf.editorLayer.selectedNode = (id)hit;
+									[strongSelf placePushpinAtPoint:newPoint object:hitNode];
+								}
+							}
+							if ( hit.isWay ) {
+								// add new node to hit way
+								OsmWay * hitWay = (id)hit;
+								OSMPoint pt = [dragNode location];
+								pt = [hitWay pointOnWayForPoint:pt];
+								[strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode inWay:weakSelf.editorLayer.selectedWay];
+								[strongSelf.editorLayer addNode:dragNode toWay:hitWay atIndex:segment+1];
+							}
+							return;
+						}
+						if ( isRotate )
+							break;
+						if ( strongSelf.editorLayer.selectedWay && strongSelf.editorLayer.selectedWay.tags.count == 0 && strongSelf.editorLayer.selectedWay.relations.count == 0 )
+							break;
+						if ( strongSelf.editorLayer.selectedWay && strongSelf.editorLayer.selectedNode )
+							break;
+						strongSelf->_alertMove = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil)
+																delegate:strongSelf cancelButtonTitle:NSLocalizedString(@"Undo",nil) otherButtonTitles:NSLocalizedString(@"Move",nil), nil];
+						[strongSelf->_alertMove show];
 					}
 					break;
 					
@@ -2235,9 +2258,34 @@ NSString * ActionTitle( NSInteger action )
 							strongSelf->_pushpinDragDidMove = YES;
 
 							// move all dragged nodes
-							CGPoint delta = { strongSelf->_pushpinDragTotalMove.x, -strongSelf->_pushpinDragTotalMove.y };
-							for ( OsmNode * node in object.nodeSet ) {
-								[strongSelf.editorLayer adjustNode:node byDistance:delta];
+							if ( strongSelf->_isRotateObjectMode ) {
+								// rotate object
+#if 0
+								OSMPoint arrowOffset = { strongSelf.pushpinView.arrowPoint.x - strongSelf->_rotateObjectCenter.x,  strongSelf.pushpinView.arrowPoint.y - strongSelf->_rotateObjectCenter.y };
+								double angArrow1 = atan2( arrowOffset.y, arrowOffset.x );
+								arrowOffset = Add( arrowOffset, OSMPointFromCGPoint(strongSelf->_pushpinDragTotalMove) );
+								double angArrow2 = atan2( arrowOffset.y, arrowOffset.x );
+								double delta = angArrow2 - angArrow1;
+#else
+								double delta = (strongSelf->_pushpinDragTotalMove.x + strongSelf->_pushpinDragTotalMove.y) / 100;
+#endif
+								for ( OsmNode * node in object.isNode ? strongSelf.editorLayer.selectedWay.nodeSet : object.nodeSet ) {
+									CGPoint pt = [strongSelf screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
+									OSMPoint diff = { pt.x - strongSelf->_rotateObjectCenter.x, pt.y - strongSelf->_rotateObjectCenter.y };
+									double radius = hypot( diff.x, diff.y );
+									double angle = atan2( diff.y, diff.x );
+									angle += delta;
+									OSMPoint new = { strongSelf->_rotateObjectCenter.x + radius * cos(angle), strongSelf->_rotateObjectCenter.y + radius * sin(angle) };
+									CGPoint dist = { new.x - pt.x, -(new.y - pt.y) };
+									[strongSelf.editorLayer adjustNode:node byDistance:dist];
+								}
+
+							} else {
+								// drag object
+								CGPoint delta = { strongSelf->_pushpinDragTotalMove.x, -strongSelf->_pushpinDragTotalMove.y };
+								for ( OsmNode * node in object.nodeSet ) {
+									[strongSelf.editorLayer adjustNode:node byDistance:delta];
+								}
 							}
 
 							// do hit testing for connecting to other objects

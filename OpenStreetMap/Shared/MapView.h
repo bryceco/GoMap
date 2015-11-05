@@ -92,7 +92,9 @@ typedef enum {
 	NSInteger							_blinkSegment;
 	CAShapeLayer					*	_blinkLayer;
 
-	BOOL								_isZoomScroll;
+	BOOL								_isZoomScroll;	// Command-scroll zooms instead of scrolling (desktop only)
+	BOOL								_isRotateObjectMode;
+	CGPoint								_rotateObjectCenter;
 
 #if TARGET_OS_IPHONE
 	PushPinView						*	_pushpinView;
