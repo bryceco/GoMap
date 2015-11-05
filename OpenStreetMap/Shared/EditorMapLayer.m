@@ -3401,6 +3401,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	if ( self.hidden )
 		return;
 
+	if ( _highwayScale == 0.0 ) {
+		// Make sure stuff is initialized for current view. This is only necessary because layout code is called before bounds are set
+		[self updateIconSize];
+	}
+
 	_isPerformingLayout = YES;
 	[self layoutSublayersSafe];
 	_isPerformingLayout = NO;

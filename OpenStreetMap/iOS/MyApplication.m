@@ -9,7 +9,7 @@
 #import "MyApplication.h"
 
 #if DEBUG
-#define ENABLE_TOUCH_CIRCLES 1
+#define ENABLE_TOUCH_CIRCLES 0
 #else
 #define ENABLE_TOUCH_CIRCLES 0
 #endif
