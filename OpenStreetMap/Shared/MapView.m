@@ -1806,6 +1806,7 @@ typedef enum {
 	ACTION_STRAIGHTEN,
 	ACTION_REVERSE,
 	ACTION_DUPLICATE,
+	ACTION_ROTATE,
 	ACTION_JOIN,
 	ACTION_DISCONNECT,
 	ACTION_CIRCULARIZE,
@@ -1826,6 +1827,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_STRAIGHTEN:		return NSLocalizedString(@"Straighten",nil);
 		case ACTION_REVERSE:		return NSLocalizedString(@"Reverse",nil);
 		case ACTION_DUPLICATE:		return NSLocalizedString(@"Duplicate",nil);
+		case ACTION_ROTATE:			return NSLocalizedString(@"Rotate",nil);
 		case ACTION_CIRCULARIZE:	return NSLocalizedString(@"Make Circular",nil);
 		case ACTION_JOIN:			return NSLocalizedString(@"Join",nil);
 		case ACTION_DISCONNECT:		return NSLocalizedString(@"Disconnect",nil);
@@ -1861,14 +1863,15 @@ NSString * ActionTitle( NSInteger action )
 				[a addObject:@(ACTION_SPLIT)];
 			if ( join )
 				[a addObject:@(ACTION_JOIN)];
+			[a addObject:@(ACTION_ROTATE)];
 			_actionList = [NSArray arrayWithArray:a];
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
 			} else {
 				// line
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
@@ -1910,6 +1913,17 @@ NSString * ActionTitle( NSInteger action )
 				error = NSLocalizedString(@"No tags to paste",nil);
 			break;
 		case ACTION_DUPLICATE:
+			{
+				OsmWay * way = [_editorLayer.mapData duplicateWay:_editorLayer.selectedWay];
+				_editorLayer.selectedNode = nil;
+				_editorLayer.selectedRelation = nil;
+				_editorLayer.selectedWay = way;
+				OSMPoint pt = [way centerPoint];
+				CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+				[self placePushpinAtPoint:point object:way];
+			}
+			break;
+		case ACTION_ROTATE:
 			error = NSLocalizedString(@"Not implemented",nil);
 			break;
 		case ACTION_RECTANGULARIZE:
@@ -2043,6 +2057,7 @@ NSString * ActionTitle( NSInteger action )
 			case ACTION_STRAIGHTEN:
 			case ACTION_REVERSE:
 			case ACTION_DUPLICATE:
+			case ACTION_ROTATE:
 			case ACTION_CIRCULARIZE:
 			case ACTION_COPYTAGS:
 			case ACTION_PASTETAGS:

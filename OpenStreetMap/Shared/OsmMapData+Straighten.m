@@ -529,4 +529,23 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 	return YES;
 }
 
+#pragma mark Duplicate
+
+-(OsmWay *)duplicateWay:(OsmWay *)way
+{
+	double offsetLat = -0.0001;
+	double offsetLon = 0.0001;
+	OsmWay * newWay = [self createWay];
+	NSUInteger index = 0;
+	for ( OsmNode * node in way.nodes ) {
+		CLLocationCoordinate2D loc = { node.lat + offsetLat, node.lon + offsetLon };
+		// check if node is a duplicate of previous node
+		NSInteger prev = [way.nodes indexOfObject:node];
+		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self createNodeAtLocation:loc];
+		[self addNode:newNode toWay:newWay atIndex:index++];
+	}
+	[self setTags:way.tags forObject:newWay];
+	return newWay;
+}
+
 @end
