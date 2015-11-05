@@ -35,4 +35,6 @@
 @property (assign,nonatomic)	BOOL		enabled;
 
 -(void)announceForLocation:(CLLocationCoordinate2D)coord;
+-(void)removeAll;
+
 @end

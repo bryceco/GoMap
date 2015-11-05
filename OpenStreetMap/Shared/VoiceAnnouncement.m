@@ -60,13 +60,18 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 }
 
 
+-(void)removeAll
+{
+	[_synthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
+	[_utteranceMap removeAllObjects];
+}
+
 -(void)setEnabled:(BOOL)enabled
 {
 	if ( enabled != _enabled ) {
 		_enabled = enabled;
 		if ( !enabled ) {
-			[_synthesizer stopSpeakingAtBoundary:AVSpeechBoundaryWord];
-			[_utteranceMap removeAllObjects];
+			[self removeAll];
 		}
 	}
 }
