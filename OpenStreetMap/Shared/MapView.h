@@ -135,7 +135,7 @@ typedef enum {
 #if TARGET_OS_IPHONE
 @property (assign,nonatomic)	MapViewController			*	viewController;
 @property (assign,nonatomic)	IBOutlet FpsLabel			*	fpsLabel;
-@property (assign,nonatomic)	IBOutlet UILabel			*	zoomToEditLabel;
+@property (assign,nonatomic)	IBOutlet UILabel			*	userInstructionLabel;
 
 @property (assign,nonatomic)	IBOutlet UIButton			*	bingMapsLogo;
 @property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;

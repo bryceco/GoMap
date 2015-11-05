@@ -272,11 +272,11 @@ CGSize SizeForImage( NSImage * image )
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarChange:) name:UIApplicationWillChangeStatusBarFrameNotification object:[UIApplication sharedApplication]];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarChange:) name:UIApplicationDidChangeStatusBarFrameNotification object:[UIApplication sharedApplication]];
 
-	_zoomToEditLabel.layer.cornerRadius = 5;
-	_zoomToEditLabel.layer.masksToBounds = YES;
-	_zoomToEditLabel.backgroundColor = [UIColor whiteColor];
-	_zoomToEditLabel.alpha = 0.5;
-	_zoomToEditLabel.hidden = YES;
+	_userInstructionLabel.layer.cornerRadius	= 5;
+	_userInstructionLabel.layer.masksToBounds	= YES;
+	_userInstructionLabel.backgroundColor		= [UIColor colorWithWhite:0.0 alpha:0.3];
+	_userInstructionLabel.textColor				= [UIColor whiteColor];
+	_userInstructionLabel.hidden = YES;
 
 #if TARGET_OS_IPHONE
 	_progressIndicator.color = NSColor.greenColor;
@@ -796,7 +796,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			_editorLayer.hidden = NO;
 			_aerialLayer.hidden = YES;
 			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
+			_userInstructionLabel.hidden = YES;
 			break;
 		case MAPVIEW_EDITORAERIAL:
 			_editorLayer.whiteText = YES;
@@ -804,7 +804,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			_editorLayer.hidden = NO;
 			_aerialLayer.hidden = NO;
 			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
+			_userInstructionLabel.hidden = YES;
 			_aerialLayer.opacity = 0.75;
 			break;
 		case MAPVIEW_AERIAL:
@@ -812,14 +812,16 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			_editorLayer.hidden = YES;
 			_aerialLayer.hidden = NO;
 			_mapnikLayer.hidden = YES;
-			_zoomToEditLabel.hidden = YES;
+			_userInstructionLabel.hidden = YES;
 			_aerialLayer.opacity = 1.0;
 			break;
 		case MAPVIEW_MAPNIK:
 			_editorLayer.hidden = YES;
 			_aerialLayer.hidden = YES;
 			_mapnikLayer.hidden = NO;
-			_zoomToEditLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
+			_userInstructionLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
+			if ( !_userInstructionLabel.hidden )
+				_userInstructionLabel.text = @"Zoom to Edit";
 			break;
 		case MAPVIEW_NONE:
 			// shouldn't occur
@@ -1941,6 +1943,8 @@ NSString * ActionTitle( NSInteger action )
 				_isRotateObjectMode = YES;
 				OSMPoint center = _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
 				_rotateObjectCenter	= [self screenPointForLatitude:center.y longitude:center.x birdsEye:YES];
+				_userInstructionLabel.text = @"Drag to rotate";
+				_userInstructionLabel.hidden = NO;
 			}
 			break;
 		case ACTION_RECTANGULARIZE:
@@ -2193,6 +2197,7 @@ NSString * ActionTitle( NSInteger action )
 
 						BOOL isRotate = strongSelf->_isRotateObjectMode;
 						strongSelf->_isRotateObjectMode = NO;
+						strongSelf.userInstructionLabel.hidden = YES;
 
 						[strongSelf unblinkObject];
 						if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
@@ -3069,6 +3074,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 {
 	OsmBaseObject * hit = nil;
 	_grabbedObject = nil;
+
+	// disable rotation if in action
+	if ( _isRotateObjectMode ) {
+		_isRotateObjectMode = NO;
+		_userInstructionLabel.hidden = YES;
+	}
 
 	if ( _editorLayer.addNodeInProgress || _editorLayer.addWayInProgress ) {
 
