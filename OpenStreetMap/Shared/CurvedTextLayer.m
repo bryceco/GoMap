@@ -417,6 +417,12 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 	double currentPixelOffset = offset;
 	while ( currentCharacter < charCount ) {
 
+		if ( currentCharacter > 0 && isRTL ) {
+			// doesn't fit on one segment so give up
+			layers = nil;
+			goto abort;
+		}
+
 		// get the number of characters that fit in the current path segment and create a text layer for it
 		CGPoint pos = { 0, 0 };
 		CGFloat angle = 0, length = 0;
@@ -489,6 +495,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 		if ( [string characterAtIndex:currentCharacter-1] == ' ' )
 			currentPixelOffset += 8;	// add room for space which is not included in framesetter size
 	}
+abort:
 	CFRelease(framesetter);
 	return layers;
 }

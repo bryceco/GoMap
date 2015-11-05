@@ -246,6 +246,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		length += DistanceFromPointToPoint(n1.location,n2.location);
 		lengths[i] = length;
 	}
+	lengths[idxA] = 0.0;	// never used, but need it to convince static analyzer that it isn't an unitialized variable
 	length = 0;
 	for (NSInteger i = (idxA-1+count)%count; i != idxA; i = (i-1+count)%count) {
 		OsmNode * n1 = nodes[i];
