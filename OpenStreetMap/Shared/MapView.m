@@ -2819,7 +2819,8 @@ NSString * ActionTitle( NSInteger action )
 						button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
 						button.titleLabel.textColor		= UIColor.whiteColor;
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
-						[button setTitle:note.isFixme ? @"F" : @"N" forState:UIControlStateNormal];
+						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : @"N";
+						[button setTitle:title forState:UIControlStateNormal];
 						button.tag = note.ident.integerValue;
 						[self addSubview:button];
 						[_notesViewDict setObject:button forKey:note.ident];

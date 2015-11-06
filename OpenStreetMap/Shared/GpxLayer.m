@@ -130,7 +130,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	NSDateFormatter * dateFormatter = [OsmBaseObject rfc3339DateFormatter];
 
 #if TARGET_OS_IPHONE
-	NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:@"<gpx creator=\"Go Map!!\" version=\"1.1\"></gpx>" options:0 error:NULL];
+	NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:@"<gpx creator=\"Go Map!!\" version=\"1.4\"></gpx>" options:0 error:NULL];
 	NSXMLElement * root = [doc rootElement];
 #else
 	NSXMLElement * root = (NSXMLElement *)[NSXMLNode elementWithName:@"gpx"];

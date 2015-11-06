@@ -20,7 +20,7 @@ static NSArray * FixMeList = nil;
 
 
 @implementation OsmNoteComment
--(instancetype)initWithXml:(NSXMLElement *)noteElement
+-(instancetype)initWithNoteXml:(NSXMLElement *)noteElement
 {
 	self = [super init];
 	if ( self ) {
@@ -49,6 +49,17 @@ static NSArray * FixMeList = nil;
 	}
 	return self;
 }
+-(instancetype)initWithGpxWaypointObject:(OsmBaseObject *)object description:(NSString *)description
+{
+	self = [super init];
+	if ( self ) {
+		_date = object.timestamp;
+		_user = object.user;
+		_action = @"waypoint";
+		_text = [NSString stringWithFormat:@"%@ (%@ %@): %@", object.friendlyDescription, object.isNode?@"node":object.isWay?@"way":object.isRelation?@"relation":@"", object.ident, description];
+	}
+	return self;
+}
 -(NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ %@ %@: %@",_date,_user?:@"",_action,_text];
@@ -66,7 +77,7 @@ static NSArray * FixMeList = nil;
 	}
 	return self;
 }
--(instancetype)initWithXml:(NSXMLElement *)noteElement
+-(instancetype)initWithNoteXml:(NSXMLElement *)noteElement
 {
 	self = [super init];
 	if ( self ) {
@@ -82,12 +93,74 @@ static NSArray * FixMeList = nil;
 			} else if ( [child.name isEqualToString:@"comments"] ) {
 				_comments = [NSMutableArray new];
 				for ( NSXMLElement * commentElement in child.children ) {
-					OsmNoteComment * comment = [[OsmNoteComment alloc] initWithXml:commentElement];
+					OsmNoteComment * comment = [[OsmNoteComment alloc] initWithNoteXml:commentElement];
 					if ( comment ) {
 						[_comments addObject:comment];
 					}
 				}
 			}
+		}
+	}
+	return self;
+}
+-(instancetype)initWithGpxWaypointXml:(NSXMLElement *)waypointElement namespace:(NSString *)ns mapData:(OsmMapData *)mapData
+{
+	self = [super init];
+	if ( self ) {
+//		<wpt lon="-122.2009985" lat="47.6753189">
+//		<name><![CDATA[website, http error]]></name>
+//		<desc><![CDATA[The URL (<a target="_blank" href="http://www.stjamesespresso.com/">http://www.stjamesespresso.com/</a>) cannot be opened (HTTP status code 301)]]></desc>
+//		<extensions>
+//								<schema>21</schema>
+//								<id>78427597</id>
+//								<error_type>411</error_type>
+//								<object_type>node</object_type>
+//								<object_id>2627663149</object_id>
+//		</extensions></wpt>
+
+		_lon	= [waypointElement attributeForName:@"lon"].stringValue.doubleValue;
+		_lat	= [waypointElement attributeForName:@"lat"].stringValue.doubleValue;
+		_status = @"waypoint";
+
+		NSString * description = nil;
+		OsmIdentifier osmIdent = -1;
+		NSString * osmType = nil;
+
+		for ( NSXMLElement * child in waypointElement.children ) {
+			if ( [child.name isEqualToString:@"name"] ) {
+				// ignore for now
+			} else if ( [child.name isEqualToString:@"desc"] ) {
+				description = [child stringValue];
+			} else if ( [child.name isEqualToString:@"extensions"] ) {
+				for ( NSXMLElement * child2 in child.children ) {
+					if ( [child2.name isEqualToString:@"id"] ) {
+						_ident = @( [[child2 stringValue] integerValue] );
+					} else if ( [child2.name isEqualToString:@"object_id"] ) {
+						osmIdent = [[child2 stringValue] longLongValue];
+					} else if ( [child2.name isEqualToString:@"object_type"] ) {
+						osmType = [child2 stringValue];
+					}
+				}
+			}
+		}
+
+		OsmBaseObject * object = nil;
+		if ( description && osmIdent && osmType ) {
+			if ( [osmType isEqualToString:@"node"] ) {
+				object = [mapData nodeForRef:@(osmIdent)];
+			} else if ( [osmType isEqualToString:@"way"] ) {
+				object = [mapData wayForRef:@(osmIdent)];
+			} else if ( [osmType isEqualToString:@"relation"] ) {
+				object = [mapData relationForRef:@(osmIdent)];
+			}
+		}
+
+		if ( object == nil )
+			return nil;
+
+		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithGpxWaypointObject:object description:description];
+		if ( comment ) {
+			_comments = [NSMutableArray arrayWithObjects:comment,nil];
 		}
 	}
 	return self;
@@ -110,6 +183,10 @@ static NSArray * FixMeList = nil;
 -(BOOL)isFixme
 {
 	return [_status isEqualToString:@"fixme"];
+}
+-(BOOL)isWaypoint
+{
+	return [_status isEqualToString:@"waypoint"];
 }
 -(NSString *)description
 {
@@ -160,7 +237,8 @@ static NSArray * FixMeList = nil;
 }
 #endif
 
--(void)updateForRegion:(OSMRect)box fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion
+
+-(void)updateNotesForRegion:(OSMRect)box fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion
 {
 	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?closed=0&bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
 	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
@@ -169,7 +247,7 @@ static NSArray * FixMeList = nil;
 			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
-				OsmNote * note = [[OsmNote alloc] initWithXml:noteElement];
+				OsmNote * note = [[OsmNote alloc] initWithNoteXml:noteElement];
 				if ( note ) {
 					[newNotes addObject:note];
 				}
@@ -199,6 +277,45 @@ static NSArray * FixMeList = nil;
 	}];
 }
 
+-(void)updateKeepRightForRegion:(OSMRect)box mapData:(OsmMapData *)mapData completion:(void(^)(void))completion
+{
+	NSString * template = @"http://keepright.ipax.at/export.php?format=gpx&ch=0,30,40,50,70,90,100,110,120,130,150,160,170,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f";
+	NSString * url = [NSString stringWithFormat:template, box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height ];
+	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
+		NSMutableArray * newNotes = [NSMutableArray new];
+		if ( data && error == nil ) {
+			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
+
+			NSXMLElement * namespace1 = [NSXMLElement namespaceWithName:@"ns1" stringValue:@"http://www.topografix.com/GPX/1/0"];
+			NSXMLElement * namespace2 = [NSXMLElement namespaceWithName:@"ns2" stringValue:@"http://www.topografix.com/GPX/1/1"];
+			[xmlDoc.rootElement addNamespace:namespace1];
+			[xmlDoc.rootElement addNamespace:namespace2];
+
+			for ( NSString * ns in @[ @"ns1:", @"ns2:", @"" ] ) {
+				NSString * path = [NSString stringWithFormat:@"./%@gpx/%@wpt",ns,ns];
+				NSArray * a = [xmlDoc nodesForXPath:path error:nil];
+				for ( NSXMLElement * waypointElement in a ) {
+					OsmNote * note = [[OsmNote alloc] initWithGpxWaypointXml:waypointElement namespace:ns mapData:mapData];
+					if ( note ) {
+						[newNotes addObject:note];
+					}
+				}
+			}
+		}
+
+		dispatch_async(dispatch_get_main_queue(), ^{
+			// add downloaded notes
+			for ( OsmNote * note in newNotes ) {
+				[_dict setObject:note forKey:note.ident];
+			}
+			completion();
+		});
+	}];
+}
+
+
+
 -(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion;
 {
 	[_workQueue cancelAllOperations];
@@ -206,7 +323,8 @@ static NSArray * FixMeList = nil;
 		usleep( 1000*(delay + 0.25) );
 	}];
 	[_workQueue addOperationWithBlock:^{
-		[self updateForRegion:bbox fixmeData:mapData completion:completion];
+		[self updateNotesForRegion:bbox fixmeData:mapData completion:completion];
+		[self updateKeepRightForRegion:bbox mapData:mapData completion:completion];
 	}];
 }
 
@@ -252,7 +370,7 @@ static NSArray * FixMeList = nil;
 			NSError * error = nil;
 			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
-				newNote = [[OsmNote alloc] initWithXml:noteElement];
+				newNote = [[OsmNote alloc] initWithNoteXml:noteElement];
 				if ( newNote ) {
 					[_dict setObject:newNote forKey:newNote.ident];
 				}
