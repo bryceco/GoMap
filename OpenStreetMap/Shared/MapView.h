@@ -94,7 +94,7 @@ typedef enum {
 
 	BOOL								_isZoomScroll;	// Command-scroll zooms instead of scrolling (desktop only)
 	BOOL								_isRotateObjectMode;
-	CGPoint								_rotateObjectCenter;
+	OSMPoint							_rotateObjectCenter;
 
 #if TARGET_OS_IPHONE
 	PushPinView						*	_pushpinView;
@@ -126,7 +126,7 @@ typedef enum {
 	TapAndDragGesture				*	_tapAndDragGesture;
 
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
-	BOOL								_pushpinDragDidMove;	// to maintain undo stack
+	BOOL								_gestureDidMove;		// to maintain undo stack
 
 	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
 	NSTimeInterval						_addNodeButtonPressed;

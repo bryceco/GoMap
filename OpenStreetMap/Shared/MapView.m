@@ -1941,9 +1941,8 @@ NSString * ActionTitle( NSInteger action )
 				error = NSLocalizedString(@"Only ways can be rotated", nil);
 			} else {
 				_isRotateObjectMode = YES;
-				OSMPoint center = _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
-				_rotateObjectCenter	= [self screenPointForLatitude:center.y longitude:center.x birdsEye:YES];
-				_userInstructionLabel.text = @"Drag to rotate";
+				_rotateObjectCenter = _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
+				_userInstructionLabel.text = @"Rotate Way";
 				_userInstructionLabel.hidden = NO;
 			}
 			break;
@@ -2181,7 +2180,7 @@ NSString * ActionTitle( NSInteger action )
 				case UIGestureRecognizerStateBegan:
 					[weakSelf.editorLayer.mapData beginUndoGrouping];
 					_pushpinDragTotalMove.x = _pushpinDragTotalMove.y = 0.0;
-					_pushpinDragDidMove		= NO;
+					_gestureDidMove		= NO;
 					break;
 
 				case UIGestureRecognizerStateCancelled:
@@ -2253,34 +2252,27 @@ NSString * ActionTitle( NSInteger action )
 							MapView * strongSelf = weakSelf;
 							strongSelf->_pushpinDragTotalMove.x += dragx;
 							strongSelf->_pushpinDragTotalMove.y += dragy;
-							if ( strongSelf->_pushpinDragDidMove ) {
+							if ( strongSelf->_gestureDidMove ) {
 								[strongSelf.editorLayer.mapData endUndoGrouping];
 								strongSelf.silentUndo = YES;
 								[strongSelf.editorLayer.mapData undo];
 								strongSelf.silentUndo = NO;
 								[strongSelf.editorLayer.mapData beginUndoGrouping];
 							}
-							strongSelf->_pushpinDragDidMove = YES;
+							strongSelf->_gestureDidMove = YES;
 
 							// move all dragged nodes
 							if ( strongSelf->_isRotateObjectMode ) {
 								// rotate object
-#if 0
-								OSMPoint arrowOffset = { strongSelf.pushpinView.arrowPoint.x - strongSelf->_rotateObjectCenter.x,  strongSelf.pushpinView.arrowPoint.y - strongSelf->_rotateObjectCenter.y };
-								double angArrow1 = atan2( arrowOffset.y, arrowOffset.x );
-								arrowOffset = Add( arrowOffset, OSMPointFromCGPoint(strongSelf->_pushpinDragTotalMove) );
-								double angArrow2 = atan2( arrowOffset.y, arrowOffset.x );
-								double delta = angArrow2 - angArrow1;
-#else
 								double delta = (strongSelf->_pushpinDragTotalMove.x + strongSelf->_pushpinDragTotalMove.y) / 100;
-#endif
+								CGPoint axis = [strongSelf screenPointForLatitude:strongSelf->_rotateObjectCenter.y longitude:strongSelf->_rotateObjectCenter.x birdsEye:YES];
 								for ( OsmNode * node in object.isNode ? strongSelf.editorLayer.selectedWay.nodeSet : object.nodeSet ) {
 									CGPoint pt = [strongSelf screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
-									OSMPoint diff = { pt.x - strongSelf->_rotateObjectCenter.x, pt.y - strongSelf->_rotateObjectCenter.y };
+									OSMPoint diff = { pt.x - axis.x, pt.y - axis.y };
 									double radius = hypot( diff.x, diff.y );
 									double angle = atan2( diff.y, diff.x );
 									angle += delta;
-									OSMPoint new = { strongSelf->_rotateObjectCenter.x + radius * cos(angle), strongSelf->_rotateObjectCenter.y + radius * sin(angle) };
+									OSMPoint new = { axis.x + radius * cos(angle), axis.y + radius * sin(angle) };
 									CGPoint dist = { new.x - pt.x, -(new.y - pt.y) };
 									[strongSelf.editorLayer adjustNode:node byDistance:dist];
 								}
@@ -3031,22 +3023,60 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (IBAction)handleRotationGesture:(UIRotationGestureRecognizer *)rotationGesture
 {
-	if ( !self.enableRotation )
-		return;
+	// Rotate object on screen
+	if ( _isRotateObjectMode ) {
+		if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
+			[_editorLayer.mapData beginUndoGrouping];
+			_gestureDidMove = NO;
+		} else if ( rotationGesture.state == UIGestureRecognizerStateChanged ) {
+			if ( _gestureDidMove ) {
+				// don't allows undo list to accumulate
+				[_editorLayer.mapData endUndoGrouping];
+				self.silentUndo = YES;
+				[_editorLayer.mapData undo];
+				self.silentUndo = NO;
+				[_editorLayer.mapData beginUndoGrouping];
+			}
+			_gestureDidMove = YES;
 
-	if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
-		// ignore
+			CGFloat delta = rotationGesture.rotation;
+			CGPoint	axis = [self screenPointForLatitude:_rotateObjectCenter.y longitude:_rotateObjectCenter.x birdsEye:YES];
+			for ( OsmNode * node in _editorLayer.selectedWay.nodeSet ) {
+				CGPoint pt = [self screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
+				OSMPoint diff = { pt.x - axis.x, pt.y - axis.y };
+				double radius = hypot( diff.x, diff.y );
+				double angle = atan2( diff.y, diff.x );
+				angle += delta;
+				OSMPoint new = { axis.x + radius * cos(angle), axis.y + radius * sin(angle) };
+				CGPoint dist = { new.x - pt.x, -(new.y - pt.y) };
+				[_editorLayer adjustNode:node byDistance:dist];
+			}
+//			rotationGesture.rotation = 0.0;
+		} else {
+			// ended
+			_isRotateObjectMode = NO;
+			_userInstructionLabel.hidden = YES;
+			[_editorLayer.mapData endUndoGrouping];
+		}
+		return;
+	}
+
+	// Rotate screen
+	if ( self.enableRotation ) {
+		if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
+			// ignore
 #if FRAMERATE_TEST
-		DisplayLink * displayLink = [DisplayLink shared];
-		[displayLink removeName:@"autoScroll"];
+			DisplayLink * displayLink = [DisplayLink shared];
+			[displayLink removeName:@"autoScroll"];
 #endif
-	} else if ( rotationGesture.state == UIGestureRecognizerStateChanged ) {
-		CGPoint centerPoint = [rotationGesture locationInView:self];
-		CGFloat angle = rotationGesture.rotation;
-		[self rotateBy:angle aroundScreenPoint:centerPoint];
-		rotationGesture.rotation = 0.0;
-	} else if ( rotationGesture.state == UIGestureRecognizerStateEnded ) {
-		[self updateNotesWithDelay:0];
+		} else if ( rotationGesture.state == UIGestureRecognizerStateChanged ) {
+			CGPoint centerPoint = [rotationGesture locationInView:self];
+			CGFloat angle = rotationGesture.rotation;
+			[self rotateBy:angle aroundScreenPoint:centerPoint];
+			rotationGesture.rotation = 0.0;
+		} else if ( rotationGesture.state == UIGestureRecognizerStateEnded ) {
+			[self updateNotesWithDelay:0];
+		}
 	}
 }
 
