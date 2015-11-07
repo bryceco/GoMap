@@ -30,6 +30,7 @@
 @property (readonly,nonatomic)	NSString		*	status;
 @property (readonly,nonatomic)	NSMutableArray	*	comments;
 @property (readonly,nonatomic)	BOOL				isFixme;
+@property (readonly,nonatomic)	BOOL				isKeepRight;
 @property (readonly,nonatomic)	BOOL				isWaypoint;
 
 -(instancetype)initWithLat:(double)lat lon:(double)lon;

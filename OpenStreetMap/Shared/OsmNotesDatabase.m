@@ -19,6 +19,11 @@
 static NSArray * FixMeList = nil;
 
 
+#define STATUS_FIXME		@"fixme"
+#define STATUS_KEEPRIGHT	@"keepright"
+#define STATUS_WAYPOINT		@"waypoint"
+
+
 @implementation OsmNoteComment
 -(instancetype)initWithNoteXml:(NSXMLElement *)noteElement
 {
@@ -103,7 +108,7 @@ static NSArray * FixMeList = nil;
 	}
 	return self;
 }
--(instancetype)initWithGpxWaypointXml:(NSXMLElement *)waypointElement namespace:(NSString *)ns mapData:(OsmMapData *)mapData
+-(instancetype)initWithGpxWaypointXml:(NSXMLElement *)waypointElement status:(NSString *)status namespace:(NSString *)ns mapData:(OsmMapData *)mapData
 {
 	self = [super init];
 	if ( self ) {
@@ -120,7 +125,7 @@ static NSArray * FixMeList = nil;
 
 		_lon	= [waypointElement attributeForName:@"lon"].stringValue.doubleValue;
 		_lat	= [waypointElement attributeForName:@"lat"].stringValue.doubleValue;
-		_status = @"waypoint";
+		_status = status;
 
 		NSString * description = nil;
 		OsmIdentifier osmIdent = -1;
@@ -134,7 +139,7 @@ static NSArray * FixMeList = nil;
 			} else if ( [child.name isEqualToString:@"extensions"] ) {
 				for ( NSXMLElement * child2 in child.children ) {
 					if ( [child2.name isEqualToString:@"id"] ) {
-						_ident = @( [[child2 stringValue] integerValue] );
+						// _ident = @( [[child2 stringValue] integerValue] );
 					} else if ( [child2.name isEqualToString:@"object_id"] ) {
 						osmIdent = [[child2 stringValue] longLongValue];
 					} else if ( [child2.name isEqualToString:@"object_type"] ) {
@@ -158,6 +163,7 @@ static NSArray * FixMeList = nil;
 		if ( object == nil )
 			return nil;
 
+		_ident	= @(object.extendedIdentifier);
 		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithGpxWaypointObject:object description:description];
 		if ( comment ) {
 			_comments = [NSMutableArray arrayWithObjects:comment,nil];
@@ -174,7 +180,7 @@ static NSArray * FixMeList = nil;
 		_lat	= center.y;
 		_lon	= center.x;
 		_created = object.timestamp;
-		_status = @"fixme";
+		_status = STATUS_FIXME;
 		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithFixmeObject:object fixmeKey:fixme];
 		_comments = [NSMutableArray arrayWithObject:comment];
 	}
@@ -182,11 +188,15 @@ static NSArray * FixMeList = nil;
 }
 -(BOOL)isFixme
 {
-	return [_status isEqualToString:@"fixme"];
+	return [_status isEqualToString:STATUS_FIXME];
+}
+-(BOOL)isKeepRight
+{
+	return [_status isEqualToString:STATUS_KEEPRIGHT];
 }
 -(BOOL)isWaypoint
 {
-	return [_status isEqualToString:@"waypoint"];
+	return [_status isEqualToString:STATUS_WAYPOINT];
 }
 -(NSString *)description
 {
@@ -277,43 +287,44 @@ static NSArray * FixMeList = nil;
 	}];
 }
 
--(void)updateKeepRightForRegion:(OSMRect)box mapData:(OsmMapData *)mapData completion:(void(^)(void))completion
+
+-(void)updateWithGpxWaypoints:(NSString *)xmlText mapData:(OsmMapData *)mapData completion:(void(^)(void))completion
 {
-	NSString * template = @"http://keepright.ipax.at/export.php?format=gpx&ch=0,30,40,50,70,90,100,110,120,130,150,160,170,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f";
-	NSString * url = [NSString stringWithFormat:template, box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height ];
-	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
-		NSMutableArray * newNotes = [NSMutableArray new];
-		if ( data && error == nil ) {
-			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-			NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
+	NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:NULL];
 
-			NSXMLElement * namespace1 = [NSXMLElement namespaceWithName:@"ns1" stringValue:@"http://www.topografix.com/GPX/1/0"];
-			NSXMLElement * namespace2 = [NSXMLElement namespaceWithName:@"ns2" stringValue:@"http://www.topografix.com/GPX/1/1"];
-			[xmlDoc.rootElement addNamespace:namespace1];
-			[xmlDoc.rootElement addNamespace:namespace2];
+	dispatch_async(dispatch_get_main_queue(), ^{
 
-			for ( NSString * ns in @[ @"ns1:", @"ns2:", @"" ] ) {
-				NSString * path = [NSString stringWithFormat:@"./%@gpx/%@wpt",ns,ns];
-				NSArray * a = [xmlDoc nodesForXPath:path error:nil];
-				for ( NSXMLElement * waypointElement in a ) {
-					OsmNote * note = [[OsmNote alloc] initWithGpxWaypointXml:waypointElement namespace:ns mapData:mapData];
-					if ( note ) {
-						[newNotes addObject:note];
-					}
+		NSXMLElement * namespace1 = [NSXMLElement namespaceWithName:@"ns1" stringValue:@"http://www.topografix.com/GPX/1/0"];
+		NSXMLElement * namespace2 = [NSXMLElement namespaceWithName:@"ns2" stringValue:@"http://www.topografix.com/GPX/1/1"];
+		[xmlDoc.rootElement addNamespace:namespace1];
+		[xmlDoc.rootElement addNamespace:namespace2];
+
+		for ( NSString * ns in @[ @"ns1:", @"ns2:", @"" ] ) {
+			NSString * path = [NSString stringWithFormat:@"./%@gpx/%@wpt",ns,ns];
+			NSArray * a = [xmlDoc nodesForXPath:path error:nil];
+			for ( NSXMLElement * waypointElement in a ) {
+				OsmNote * note = [[OsmNote alloc] initWithGpxWaypointXml:waypointElement status:STATUS_KEEPRIGHT namespace:ns mapData:mapData];
+				if ( note ) {
+					[_dict setObject:note forKey:note.ident];
 				}
 			}
 		}
-
-		dispatch_async(dispatch_get_main_queue(), ^{
-			// add downloaded notes
-			for ( OsmNote * note in newNotes ) {
-				[_dict setObject:note forKey:note.ident];
-			}
-			completion();
-		});
-	}];
+		completion();
+	});
 }
 
+
+-(void)updateKeepRightForRegion:(OSMRect)box mapData:(OsmMapData *)mapData completion:(void(^)(void))completion
+{
+	NSString * template = @"http://keepright.at/export.php?format=gpx&ch=0,30,40,50,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f";
+	NSString * url = [NSString stringWithFormat:template, box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height ];
+	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
+		if ( data && error == nil ) {
+			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			[self updateWithGpxWaypoints:xmlText mapData:mapData completion:completion];
+		}
+	}];
+}
 
 
 -(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion;

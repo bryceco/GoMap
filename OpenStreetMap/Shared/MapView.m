@@ -956,7 +956,21 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( note == nil )
 		return;
 
-	if ( note.isFixme ) {
+	if ( note.isWaypoint || note.isKeepRight ) {
+		if ( !_editorLayer.isHidden ) {
+			OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.ident];
+			if ( object ) {
+				_editorLayer.selectedNode		= object.isNode;
+				_editorLayer.selectedWay		= object.isWay;
+				_editorLayer.selectedRelation	= object.isRelation;
+				[self placePushpinForSelection];
+			}
+		}
+		OsmNoteComment * comment = note.comments.lastObject;
+		NSString * title = note.isWaypoint ? @"Waypoint" : @"Keep Right";
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title message:comment.text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+	} else if ( note.isFixme ) {
 		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.ident];
 		_editorLayer.selectedNode		= object.isNode;
 		_editorLayer.selectedWay		= object.isWay;
@@ -1929,9 +1943,7 @@ NSString * ActionTitle( NSInteger action )
 						_editorLayer.selectedNode = nil;
 						_editorLayer.selectedRelation = nil;
 						_editorLayer.selectedWay = way;
-						OSMPoint pt = [way centerPoint];
-						CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
-						[self placePushpinAtPoint:point object:way];
+						[self placePushpinForSelection];
 					}
 				}
 			}
@@ -2030,8 +2042,7 @@ NSString * ActionTitle( NSInteger action )
 					}
 				}
 				[_editorLayer setSelectedNode:object.isNode];
-				CGPoint pos = [self screenPointForLatitude:object.isNode.lat longitude:object.isNode.lon birdsEye:YES];
-				[self placePushpinAtPoint:pos object:object];
+				[self placePushpinForSelection];
 			} else if ( object.isWay ) {
 				[_editorLayer setSelectedWay:object.isWay];
 				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:_multiSelectPoint birdsEye:YES];
@@ -2202,33 +2213,27 @@ NSString * ActionTitle( NSInteger action )
 						if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
 							// dragging a node that is part of a way
 							OsmNode * dragNode = (id)object;
-							OsmWay * way = weakSelf.editorLayer.selectedWay;
+							OsmWay * way = strongSelf.editorLayer.selectedWay;
 							NSInteger segment;
 							OsmBaseObject * hit = [strongSelf dragConnectionForNode:dragNode segment:&segment];
 							if ( hit.isNode ) {
 								// replace dragged node with hit node
-								OsmNode * hitNode = (id)hit;
 								NSInteger index = [way.nodes indexOfObject:object];
 								[strongSelf.editorLayer deleteNode:dragNode fromWay:way allowDegenerate:YES];
-								[strongSelf.editorLayer addNode:hitNode toWay:way atIndex:index];
+								[strongSelf.editorLayer addNode:hit.isNode toWay:way atIndex:index];
 								if ( way.isArea ) {
 									strongSelf.editorLayer.selectedNode = nil;
-									OSMPoint center = way.centerPoint;
-									CGPoint centerPoint = [strongSelf screenPointForLatitude:center.y longitude:center.x birdsEye:YES];
-									[strongSelf placePushpinAtPoint:centerPoint object:way];
+									[strongSelf placePushpinForSelection];
 								} else {
-									CGPoint newPoint = [strongSelf screenPointForLatitude:hitNode.lat longitude:hitNode.lon birdsEye:YES];
-									strongSelf.editorLayer.selectedNode = (id)hit;
-									[strongSelf placePushpinAtPoint:newPoint object:hitNode];
+									strongSelf.editorLayer.selectedNode = hit.isNode;
+									[strongSelf placePushpinForSelection];
 								}
 							}
 							if ( hit.isWay ) {
 								// add new node to hit way
-								OsmWay * hitWay = (id)hit;
-								OSMPoint pt = [dragNode location];
-								pt = [hitWay pointOnWayForPoint:pt];
+								OSMPoint pt = [hit.isWay pointOnWayForPoint:dragNode.location];
 								[strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode inWay:weakSelf.editorLayer.selectedWay];
-								[strongSelf.editorLayer addNode:dragNode toWay:hitWay atIndex:segment+1];
+								[strongSelf.editorLayer addNode:dragNode toWay:hit.isWay atIndex:segment+1];
 							}
 							return;
 						}
@@ -2394,7 +2399,7 @@ NSString * ActionTitle( NSInteger action )
 		OsmNode * newNode = [_editorLayer createNodeAtPoint:prevPoint];
 		[_editorLayer.mapData addNode:newNode toWay:way atIndex:segment+1];
 		_editorLayer.selectedNode = newNode;
-		[self placePushpinAtPoint:prevPoint object:newNode];
+		[self placePushpinForSelection];
 
 	} else {
 
@@ -2505,7 +2510,7 @@ NSString * ActionTitle( NSInteger action )
 		[_editorLayer addNode:node2 toWay:way atIndex:nextIndex];
 		_editorLayer.selectedWay = way;
 		_editorLayer.selectedNode = node2;
-		[self placePushpinAtPoint:newPoint object:node2];
+		[self placePushpinForSelection];
 	}
 }
 #endif
@@ -2566,7 +2571,7 @@ NSString * ActionTitle( NSInteger action )
 		[_editorLayer.mapData setTags:tags forObject:node];
 		_editorLayer.selectedNode = node;
 		// create new pushpin for new object
-		[self placePushpinAtPoint:point object:node];
+		[self placePushpinForSelection];
 	} else {
 		// update current object
 		OsmBaseObject * object = _editorLayer.selectedPrimary;
@@ -2819,7 +2824,7 @@ NSString * ActionTitle( NSInteger action )
 						button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
 						button.titleLabel.textColor		= UIColor.whiteColor;
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
-						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : @"N";
+						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : note.isKeepRight ? @"K" : @"N";
 						[button setTitle:title forState:UIControlStateNormal];
 						button.tag = note.ident.integerValue;
 						[self addSubview:button];
@@ -3239,6 +3244,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				OsmNode * node = (id)_editorLayer.selectedPrimary;
 				point = [self screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
 			} else if ( _editorLayer.selectedPrimary.isWay ) {
+				// when tapping a way select the point on the way closest to the tap
 				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
 				OSMPoint pt = { latLon.longitude, latLon.latitude };
 				pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
