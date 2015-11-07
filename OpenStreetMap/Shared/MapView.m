@@ -2139,21 +2139,26 @@ NSString * ActionTitle( NSInteger action )
 	assert( _editorLayer.selectedWay );
 
 	OsmWay * way = _editorLayer.selectedWay;
+
+#if 0
+	// only do this checks if we want to be extra cautious
 	if ( node != way.nodes[0] && node != way.nodes.lastObject )
 		return nil;
 	if ( node.wayCount > 1 )
 		return nil;
+#endif
 
 	NSArray * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
-	if ( way.nodes.count < 4 ) {
-		ignoreList = [way.nodes arrayByAddingObject:way];
-	} else if ( index == 0 ) {
+	if ( index == 0 ) {
+		// if end-node then okay to connect to self-nodes except for adjacent
 		ignoreList = @[ way, way.nodes[0], way.nodes[1], way.nodes[2] ];
 	} else if ( index == way.nodes.count-1 ) {
+		// if end-node then okay to connect to self-nodes except for adjacent
 		ignoreList = @[ way, way.nodes[index], way.nodes[index-1], way.nodes[index-2] ];
 	} else {
-		assert(NO);
+		// if middle node then never connect to self
+		ignoreList = [way.nodes arrayByAddingObject:way];
 	}
 	OsmBaseObject * hit = [EditorMapLayer osmHitTest:_pushpinView.arrowPoint
 											 mapView:self
