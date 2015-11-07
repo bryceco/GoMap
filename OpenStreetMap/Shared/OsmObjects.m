@@ -817,6 +817,21 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return oneWay;
 }
 
+-(BOOL)isConnectedToWay:(OsmWay *)way
+{
+	if ( _nodes.count * way.nodes.count < 100 ) {
+		for ( OsmNode * n in way.nodes ) {
+			if ( [_nodes containsObject:n] )
+				return YES;
+		}
+		return NO;
+	} else {
+		NSSet * set1 = [NSSet setWithArray:way.nodes];
+		NSSet * set2 = [NSSet setWithArray:_nodes];
+		return [set1 intersectsSet:set2];
+	}
+}
+
 -(BOOL)isSimpleMultipolygonOuterMember
 {
 	NSArray * parents = self.relations;

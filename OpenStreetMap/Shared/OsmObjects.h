@@ -167,6 +167,7 @@ typedef enum {
 -(OSMPoint)centerPoint;
 -(OSMPoint)centerPointWithArea:(double *)area;
 -(ONEWAY)computeIsOneWay;
+-(BOOL)isConnectedToWay:(OsmWay *)way;
 -(BOOL)isArea;
 -(BOOL)isClosed;
 -(BOOL)isClockwise;

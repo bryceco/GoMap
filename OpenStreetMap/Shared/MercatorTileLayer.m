@@ -658,7 +658,8 @@ typedef enum {
 		for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {
 			for ( int32_t tileY = tileNorth; tileY < tileSouth; ++tileY ) {
 				NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileX tileY:tileY];
-				if ( [currentSet containsObject:cacheKey] ) {
+				NSString * file = [cacheKey stringByAppendingString:@".jpg"];
+				if ( [currentSet containsObject:file] ) {
 					// already have it
 				} else {
 					[neededTiles addObject:cacheKey];

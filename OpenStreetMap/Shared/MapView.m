@@ -2150,15 +2150,16 @@ NSString * ActionTitle( NSInteger action )
 
 	NSArray * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
+	NSArray * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
 	if ( index == 0 ) {
 		// if end-node then okay to connect to self-nodes except for adjacent
-		ignoreList = @[ way, way.nodes[0], way.nodes[1], way.nodes[2] ];
+		ignoreList = [parentWays arrayByAddingObjectsFromArray:@[ way.nodes[0], way.nodes[1], way.nodes[2] ]];
 	} else if ( index == way.nodes.count-1 ) {
 		// if end-node then okay to connect to self-nodes except for adjacent
-		ignoreList = @[ way, way.nodes[index], way.nodes[index-1], way.nodes[index-2] ];
+		ignoreList = [parentWays arrayByAddingObjectsFromArray:@[ way.nodes[index], way.nodes[index-1], way.nodes[index-2] ]];
 	} else {
 		// if middle node then never connect to self
-		ignoreList = [way.nodes arrayByAddingObject:way];
+		ignoreList = [way.nodes arrayByAddingObjectsFromArray:parentWays];
 	}
 	OsmBaseObject * hit = [EditorMapLayer osmHitTest:_pushpinView.arrowPoint
 											 mapView:self
@@ -2829,7 +2830,7 @@ NSString * ActionTitle( NSInteger action )
 						button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
 						button.titleLabel.textColor		= UIColor.whiteColor;
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
-						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : note.isKeepRight ? @"K" : @"N";
+						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : note.isKeepRight ? @"R" : @"N";
 						[button setTitle:title forState:UIControlStateNormal];
 						button.tag = note.ident.integerValue;
 						[self addSubview:button];
@@ -3018,7 +3019,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		CGPoint point = [longPress locationInView:self];
 
 		NSArray * objects = [self.editorLayer osmHitTestMultiple:point];
-		if ( objects.count < 2 )
+		if ( objects.count == 0 )
 			return;
 		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 		_multiSelectObjects = objects;
