@@ -1243,8 +1243,12 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 -(BOOL)isRestriction
 {
 	NSString * type = self.tags[ @"type" ];
-	if ( type && [type hasPrefix:@"restriction:"] )
-		return YES;
+	if ( type ) {
+		if ( [type isEqualToString:@"restriction"] )
+			return YES;
+		if ( [type hasPrefix:@"restriction:"] )
+			return YES;
+	}
 	return NO;
 }
 

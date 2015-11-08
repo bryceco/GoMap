@@ -338,7 +338,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 					NSInteger index = [relation.members indexOfObject:member];
 
 					OsmMember * via = [relation memberByRole:@"via"];
-					if (via && [wayB.nodes indexOfObject:via.ref] != NSNotFound) {
+					if (via && [wayB.nodes containsObject:via.ref] ) {
 						// replace reference to wayA with wayB in relation
 						OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:member.role];
 						[self addMember:memberB toRelation:relation atIndex:index+1];
@@ -354,7 +354,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 					OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
 					[self addMember:newMember toRelation:relation atIndex:relation.members.count];
 				}
-
 			}
 		}
 	}

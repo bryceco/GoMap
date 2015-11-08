@@ -91,8 +91,8 @@ enum {
 @synthesize mapData				= _mapData;
 
 
-const CGFloat WayHitTestRadius   = 10.0;
-const CGFloat WayHighlightRadius = 6.0;
+const CGFloat WayHitTestRadius   = 6.0;	// how close to a way we have to drag a node to indicate a hit
+const CGFloat WayHighlightRadius = 6.0;	// the radius of the circles indicating nodes in a way
 
 
 -(id)initWithMapView:(MapView *)mapView

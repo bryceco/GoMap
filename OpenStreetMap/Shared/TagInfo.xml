@@ -1423,127 +1423,127 @@
     <tag key="shelter_type" value="basic_hut" name="Basic Hut" description="A basic hut is a small building intended to provide basic shelter and sleeping accommodation."/>
     <tag key="shelter_type" value="lean_to" name="Lean To" description="A lean-to is a shed with typically three walls located in the countryside intended to provide shelter."/>
 
-	<tag key="shop" value="Alko" name="Alko" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="SpotColor" name="Spotcolor" type="node;area" description="Una Tienda de Impresiones" areaColor="00005F"/>
-    <tag key="shop" value="alcohol" name="Alcohol" type="node;area" description="Government owned or licensed shop selling alcohol." iconName="shopping_alcohol" areaColor="00005F"/>
-    <tag key="shop" value="anime" name="Anime" type="node;area" description="A shop anime stuff" areaColor="00005F"/>
-    <tag key="shop" value="antiques" name="Antiques" type="node;area" description="A shop, where you can buy antiques" areaColor="00005F"/>
-    <tag key="shop" value="appliance" name="Appliance" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="art" name="Art" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="audiologist" name="Audiologist" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="auto_parts" name="Auto Parts" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="baby_goods" name="Baby Goods" type="node;area" description="A shop where you can buy objects for babies, like clothes, prams, cots or baby's baths" areaColor="00005F"/>
-    <tag key="shop" value="bag" name="Bag" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="bakery" name="Bakery" type="node;area" description="A shop selling bread." iconName="shopping_bakery" areaColor="00005F"/>
-    <tag key="shop" value="bathroom_furnishing" name="Bathroom Furnishing" type="node;area" description="A shop selling bathroom furnishings" areaColor="00005F"/>
-    <tag key="shop" value="beauty" name="Beauty" type="node;area" description="A non-hairdresser beauty shop, spa, nail salon, etc." iconName="shopping_hairdresser" areaColor="00005F"/>
-    <tag key="shop" value="bed" name="Bed" type="node;area" description="A shop that specalises in selling mattresses and other bedding products." areaColor="00005F"/>
-    <tag key="shop" value="beverages" name="Beverages" type="node;area" description="Shop focused on selling alcoholic and non-alcoholic beverages." areaColor="00005F"/>
-    <tag key="shop" value="bicycle" name="Bicycle" type="node;area" description="A store where you can buy and/or repair your bike and buy accessories." iconName="shopping_bicycle" areaColor="00005F"/>
-    <tag key="shop" value="books" name="Books" type="node;area" description="A shop selling books" iconName="shopping_book" areaColor="00005F"/>
-    <tag key="shop" value="boutique" name="Boutique" type="node;area" description="a small shopping outlet, especially one that specializes in elite and fashionable items" areaColor="00005F"/>
-    <tag key="shop" value="butcher" name="Butcher" type="node;area" description="Used to mark a butcher." iconName="shopping_butcher" areaColor="00005F"/>
-    <tag key="shop" value="camera" name="Camera" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="canoe_hire" name="Canoe Hire" type="node;area" description="Place where you can rent kajaks, qayaks or canoes. Not always all of them." areaColor="00005F"/>
-    <tag key="shop" value="car" name="Car" type="node;area" description="A shop for cars" iconName="shopping_car" areaColor="00005F"/>
-    <tag key="shop" value="car_bodyshop" name="Car Bodyshop" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="car_parts" name="Car Parts" type="node;area" description="Shop for auto parts, auto accessories, motor oil, car chemicals, etc." areaColor="00005F"/>
-    <tag key="shop" value="car_repair" name="Car Repair" type="node;area" description="Business where cars are repaired." iconName="shopping_car_repair" areaColor="00005F"/>
-    <tag key="shop" value="carpet" name="Carpet" type="node;area" description="A shop selling carpet." areaColor="00005F"/>
-    <tag key="shop" value="chandler" name="Chandler" type="node;area" description="A chandler, or also ship chandler are shops or agents specialized in offering a wide range of services towards ships" areaColor="00005F"/>
-    <tag key="shop" value="charity" name="Charity" type="node;area" description="Shop operated by a charity" areaColor="00005F"/>
-    <tag key="shop" value="chemist" name="Chemist" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="clothes" name="Clothes" type="node;area" description="A shop to get clothes" iconName="shopping_clothes" areaColor="00005F"/>
-    <tag key="shop" value="communication" name="Communication" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="computer" name="Computer" type="node;area" description="A shop selling computers, peripherals, software, ..." iconName="shopping_computer" areaColor="00005F"/>
-    <tag key="shop" value="confectionery" name="Confectionery" type="node;area" description="Confectionery. A shop selling sweets and pastry" iconName="shopping_confectionery" areaColor="00005F"/>
-    <tag key="shop" value="convenience" name="Convenience" type="node;area" description="A convenience store. A small local shop carrying a small subset of the items you would find in a supermarket" iconName="shopping_convenience" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:shop%3Dconvenience" areaColor="00005F"/>
-    <tag key="shop" value="copyshop" name="Copyshop" type="node;area" description="A shop that offers photocopying and printing services." iconName="shopping_copyshop" areaColor="00005F"/>
-    <tag key="shop" value="curtain" name="Curtain" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="deli" name="Deli" type="node;area" description="Used to mark a delicatessen store." areaColor="00005F"/>
-    <tag key="shop" value="delicatessen" name="Delicatessen" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="department_store" name="Department Store" type="node;area" description="A large store with multiple clothing and other general merchandise departments." iconName="shopping_department_store" areaColor="00005F"/>
-    <tag key="shop" value="dive" name="Dive" type="node;area" description="a shop selling diving equipment." areaColor="00005F"/>
-    <tag key="shop" value="doityourself" name="Doityourself" type="node;area" description="A ''Do-it-Yourself''-store offers supplies for doing things yourself - household repairs and improvements, making things from wood and other materials." iconName="shopping_diy" areaColor="00005F"/>
-    <tag key="shop" value="dry_cleaning" name="Dry Cleaning" type="node;area" description="A shop or kiosk offering a clothes dry cleaning service." areaColor="00005F"/>
-    <tag key="shop" value="electronics" name="Electronics" type="node;area" description="Shop selling consumer electronics (TV, radio, fridge)" areaColor="00005F"/>
-    <tag key="shop" value="erotic" name="Erotic" type="node;area" description="a sex shop." areaColor="00005F"/>
-    <tag key="shop" value="fabric" name="Fabric" type="node;area" description="A shop that sell fabric" areaColor="00005F"/>
-    <tag key="shop" value="fabrics" name="Fabrics" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="farm" name="Farm" type="node;area" description="A shop at a farm that sells the farm produce." areaColor="00005F"/>
+	<tag key="shop" value="Alko" name="Alko" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="SpotColor" name="Spotcolor" type="node;area" description="Una Tienda de Impresiones" areaColor="7D81FF"/>
+    <tag key="shop" value="alcohol" name="Alcohol" type="node;area" description="Government owned or licensed shop selling alcohol." iconName="shopping_alcohol" areaColor="7D81FF"/>
+    <tag key="shop" value="anime" name="Anime" type="node;area" description="A shop anime stuff" areaColor="7D81FF"/>
+    <tag key="shop" value="antiques" name="Antiques" type="node;area" description="A shop, where you can buy antiques" areaColor="7D81FF"/>
+    <tag key="shop" value="appliance" name="Appliance" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="art" name="Art" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="audiologist" name="Audiologist" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="auto_parts" name="Auto Parts" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="baby_goods" name="Baby Goods" type="node;area" description="A shop where you can buy objects for babies, like clothes, prams, cots or baby's baths" areaColor="7D81FF"/>
+    <tag key="shop" value="bag" name="Bag" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="bakery" name="Bakery" type="node;area" description="A shop selling bread." iconName="shopping_bakery" areaColor="7D81FF"/>
+    <tag key="shop" value="bathroom_furnishing" name="Bathroom Furnishing" type="node;area" description="A shop selling bathroom furnishings" areaColor="7D81FF"/>
+    <tag key="shop" value="beauty" name="Beauty" type="node;area" description="A non-hairdresser beauty shop, spa, nail salon, etc." iconName="shopping_hairdresser" areaColor="7D81FF"/>
+    <tag key="shop" value="bed" name="Bed" type="node;area" description="A shop that specalises in selling mattresses and other bedding products." areaColor="7D81FF"/>
+    <tag key="shop" value="beverages" name="Beverages" type="node;area" description="Shop focused on selling alcoholic and non-alcoholic beverages." areaColor="7D81FF"/>
+    <tag key="shop" value="bicycle" name="Bicycle" type="node;area" description="A store where you can buy and/or repair your bike and buy accessories." iconName="shopping_bicycle" areaColor="7D81FF"/>
+    <tag key="shop" value="books" name="Books" type="node;area" description="A shop selling books" iconName="shopping_book" areaColor="7D81FF"/>
+    <tag key="shop" value="boutique" name="Boutique" type="node;area" description="a small shopping outlet, especially one that specializes in elite and fashionable items" areaColor="7D81FF"/>
+    <tag key="shop" value="butcher" name="Butcher" type="node;area" description="Used to mark a butcher." iconName="shopping_butcher" areaColor="7D81FF"/>
+    <tag key="shop" value="camera" name="Camera" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="canoe_hire" name="Canoe Hire" type="node;area" description="Place where you can rent kajaks, qayaks or canoes. Not always all of them." areaColor="7D81FF"/>
+    <tag key="shop" value="car" name="Car" type="node;area" description="A shop for cars" iconName="shopping_car" areaColor="7D81FF"/>
+    <tag key="shop" value="car_bodyshop" name="Car Bodyshop" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="car_parts" name="Car Parts" type="node;area" description="Shop for auto parts, auto accessories, motor oil, car chemicals, etc." areaColor="7D81FF"/>
+    <tag key="shop" value="car_repair" name="Car Repair" type="node;area" description="Business where cars are repaired." iconName="shopping_car_repair" areaColor="7D81FF"/>
+    <tag key="shop" value="carpet" name="Carpet" type="node;area" description="A shop selling carpet." areaColor="7D81FF"/>
+    <tag key="shop" value="chandler" name="Chandler" type="node;area" description="A chandler, or also ship chandler are shops or agents specialized in offering a wide range of services towards ships" areaColor="7D81FF"/>
+    <tag key="shop" value="charity" name="Charity" type="node;area" description="Shop operated by a charity" areaColor="7D81FF"/>
+    <tag key="shop" value="chemist" name="Chemist" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="clothes" name="Clothes" type="node;area" description="A shop to get clothes" iconName="shopping_clothes" areaColor="7D81FF"/>
+    <tag key="shop" value="communication" name="Communication" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="computer" name="Computer" type="node;area" description="A shop selling computers, peripherals, software, ..." iconName="shopping_computer" areaColor="7D81FF"/>
+    <tag key="shop" value="confectionery" name="Confectionery" type="node;area" description="Confectionery. A shop selling sweets and pastry" iconName="shopping_confectionery" areaColor="7D81FF"/>
+    <tag key="shop" value="convenience" name="Convenience" type="node;area" description="A convenience store. A small local shop carrying a small subset of the items you would find in a supermarket" iconName="shopping_convenience" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:shop%3Dconvenience" areaColor="7D81FF"/>
+    <tag key="shop" value="copyshop" name="Copyshop" type="node;area" description="A shop that offers photocopying and printing services." iconName="shopping_copyshop" areaColor="7D81FF"/>
+    <tag key="shop" value="curtain" name="Curtain" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="deli" name="Deli" type="node;area" description="Used to mark a delicatessen store." areaColor="7D81FF"/>
+    <tag key="shop" value="delicatessen" name="Delicatessen" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="department_store" name="Department Store" type="node;area" description="A large store with multiple clothing and other general merchandise departments." iconName="shopping_department_store" areaColor="7D81FF"/>
+    <tag key="shop" value="dive" name="Dive" type="node;area" description="a shop selling diving equipment." areaColor="7D81FF"/>
+    <tag key="shop" value="doityourself" name="Doityourself" type="node;area" description="A ''Do-it-Yourself''-store offers supplies for doing things yourself - household repairs and improvements, making things from wood and other materials." iconName="shopping_diy" areaColor="7D81FF"/>
+    <tag key="shop" value="dry_cleaning" name="Dry Cleaning" type="node;area" description="A shop or kiosk offering a clothes dry cleaning service." areaColor="7D81FF"/>
+    <tag key="shop" value="electronics" name="Electronics" type="node;area" description="Shop selling consumer electronics (TV, radio, fridge)" areaColor="7D81FF"/>
+    <tag key="shop" value="erotic" name="Erotic" type="node;area" description="a sex shop." areaColor="7D81FF"/>
+    <tag key="shop" value="fabric" name="Fabric" type="node;area" description="A shop that sell fabric" areaColor="7D81FF"/>
+    <tag key="shop" value="fabrics" name="Fabrics" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="farm" name="Farm" type="node;area" description="A shop at a farm that sells the farm produce." areaColor="7D81FF"/>
 	<tag key="shop" value="fishmonger" name="Fish Monger shop" iconName="shopping_fish"/>
-    <tag key="shop" value="florist" name="Florist" type="node;area" description="Shop selling bouquets of flowers" iconName="shopping_florist" areaColor="00005F"/>
-    <tag key="shop" value="flower" name="Flower" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="food" name="Food" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="frame" name="Frame" type="node;area" description="A shop where you can buy frames." areaColor="00005F"/>
-    <tag key="shop" value="funeral_directors" name="Funeral Directors" type="node;area" description="Providing services related to funeral arrangements, may also be known as a &quot;funeral parlour&quot; or &quot;undertakers&quot;." areaColor="00005F"/>
-    <tag key="shop" value="furnace" name="Furnace" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="furniture" name="Furniture" type="node;area" description="A shop to buy furniture" areaColor="00005F"/>
-    <tag key="shop" value="garden_centre" name="Garden Centre" type="node;area" description="Shop selling potted flowers, maybe even trees." iconName="shopping_garden_centre" areaColor="00005F"/>
-    <tag key="shop" value="gas" name="Gas" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="general" name="General" type="node;area" description="A general store. Selling various things." areaColor="00005F"/>
-    <tag key="shop" value="general_store" name="General Store" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="general_stores" name="General Stores" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="gift" name="Gift" type="node;area" description="Shop selling gifts, greeting cards, or tourist gifts (souvenirs)." iconName="shopping_gift" areaColor="00005F"/>
-    <tag key="shop" value="glaziery" name="Glaziery" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="greengrocer" name="Greengrocer" type="node;area" description="A shop which sells fruits and vegetables" iconName="shopping_greengrocer" areaColor="00005F"/>
-    <tag key="shop" value="haberdashery" name="Haberdashery" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="hairdresser" name="Hairdresser" type="node;area" description="A hairdressers shop where you can get your hair cut (barber)" iconName="shopping_hairdresser" areaColor="00005F"/>
-    <tag key="shop" value="hairdresser_supply" name="Hairdresser Supply" type="node;area" description="A shop, where you can buy hairdressing supplies" areaColor="00005F"/>
-    <tag key="shop" value="hardware" name="Hardware" type="node;area" description="A shop which sells timber, tools and other building products" areaColor="00005F"/>
-    <tag key="shop" value="hearing_aid_dispenser" name="Hearing Aid Dispenser" type="node;area" iconName="shopping_hearing_aids" areaColor="00005F"/>
-    <tag key="shop" value="hearing_aids" name="Hearing Aids" type="node;area" description="A shop specialized in selling hearing aids devices" iconName="shopping_hearing_aids" areaColor="00005F"/>
-    <tag key="shop" value="herbalist" name="Herbalist" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="hifi" name="Hifi" type="node;area" description="Shop selling high fidelity audio components (music players, amplifiers, speakers, cables)" iconName="shopping_hifi" areaColor="00005F"/>
-    <tag key="shop" value="houseware" name="Houseware" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="hunting" name="Hunting" type="node;area" description="Shop where you can buy gun and hunting equipment." areaColor="00005F"/>
-    <tag key="shop" value="ice_cream" name="Ice Cream" type="node;area" iconName="food_ice_cream" areaColor="00005F"/>
-    <tag key="shop" value="insurance" name="Insurance" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="interior_decoration" name="Interior Decoration" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="jewelry" name="Jewelry" type="node;area" iconName="shopping_jewelry" areaColor="00005F"/>
-    <tag key="shop" value="kiosk" name="Kiosk" type="node;area" description="A small shop on the pavement that sells magazines, tobacco, newspapers, sweets and stamps." iconName="shopping_kiosk" areaColor="00005F"/>
-    <tag key="shop" value="kitchen" name="Kitchen" type="node;area" description="A shop where you can plan and buy your kitchen." areaColor="00005F"/>
-    <tag key="shop" value="laundromat" name="Laundromat" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="laundry" name="Laundry" type="node;area" description="A shop to get your normal clothes washed." iconName="shopping_laundrette" areaColor="00005F"/>
-    <tag key="shop" value="locksmith" name="Locksmith" type="node;area" description="A shop where you can get keys cut" areaColor="00005F"/>
-    <tag key="shop" value="mall" name="Mall" type="node;area" description="A group of stores, typically associated with a single building structure." areaColor="00005F"/>
-    <tag key="shop" value="massage" name="Massage" type="node;area" description="Massage shop" areaColor="00005F"/>
-    <tag key="shop" value="medical_supply" name="Medical Supply" type="node;area" description="A store where you can buy medical equipment for private persons." areaColor="00005F"/>
-    <tag key="shop" value="mobile_phone" name="Mobile Phone" type="node;area" iconName="shopping_mobile_phone" areaColor="00005F"/>
-    <tag key="shop" value="money_lender" name="Money Lender" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="motorcycle" name="Motorcycle" type="node;area" iconName="shopping_motorcycle" areaColor="00005F"/>
-    <tag key="shop" value="motorcycle_repair" name="Motorcycle Repair" type="node;area" description="A place where you can get your motorcycles repaired" areaColor="00005F"/>
-    <tag key="shop" value="music" name="Music" type="node;area" iconName="shopping_music" areaColor="00005F"/>
-    <tag key="shop" value="musical_instrument" name="Musical Instrument" type="node;area" description="Shop selling musical instruments, lyrics, scores." areaColor="00005F"/>
-    <tag key="shop" value="newsagent" name="Newsagent" type="node;area" description="Shop selling newspapers, cigarettes, other goods" areaColor="00005F"/>
-    <tag key="shop" value="optician" name="Optician" type="node;area" description="A shop that sells, fits, and repairs prescription eyeglasses and contact lenses." iconName="health_opticians" areaColor="00005F"/>
-    <tag key="shop" value="organic" name="Organic" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="outdoor" name="Outdoor" type="node;area" description="Shop selling trekking, climbing, camping equipment (and GPSes)." areaColor="00005F"/>
-    <tag key="shop" value="paint" name="Paint" type="node;area" description="A shop where you can buy paints." areaColor="00005F"/>
-    <tag key="shop" value="pawnbroker" name="Pawnbroker" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="pet" name="Pet" type="node;area" iconName="shopping_pet2" areaColor="00005F"/>
-    <tag key="shop" value="photo" name="Photo" type="node;area" description="A shop dealing with photos or video in any way." iconName="shopping_photo" areaColor="00005F"/>
-    <tag key="shop" value="photo_studio" name="Photo Studio" type="node;area" iconName="shopping_photo" areaColor="00005F"/>
-    <tag key="shop" value="radiotechnics" name="Radiotechnics" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="seafood" name="Seafood" type="node;area" description="A shop selling fish/seafood." areaColor="00005F"/>
-    <tag key="shop" value="second_hand" name="Second Hand" type="node;area" description="A shop selling second hand goods" areaColor="00005F"/>
-    <tag key="shop" value="ship_chandler" name="Ship Chandler" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="shoes" name="Shoes" type="node;area" description="Selling shoes." iconName="shopping_clothes" areaColor="00005F" />
-    <tag key="shop" value="sports" name="Sports" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="stationery" name="Stationery" type="node;area" description="A shop selling office supplies" areaColor="00005F"/>
-    <tag key="shop" value="supermarket" name="Supermarket" type="node;area" description="A large store for groceries and other goods." iconName="shopping_supermarket" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:shop%3Dsupermarket" areaColor="00005F"/>
-    <tag key="shop" value="systembolaget" name="Systembolaget" type="node;area" description="The only stores in Sweden allowed to sell alcohol." areaColor="00005F"/>
-    <tag key="shop" value="tattoo" name="Tattoo" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="ticket" name="Ticket" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="tobacco" name="Tobacco" type="node;area" description="Tabaccaio" iconName="shopping_tobacco" areaColor="00005F"/>
-    <tag key="shop" value="toys" name="Toys" type="node;area" description="A toy store." iconName="shopping_toys" areaColor="00005F"/>
-    <tag key="shop" value="trade" name="Trade" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="travel_agency" name="Travel Agency" type="node;area" description="A shop selling travel related products and services" areaColor="00005F"/>
-    <tag key="shop" value="vacant" name="Vacant" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="vacuum_cleaner" name="Vacuum Cleaner" type="node;area" areaColor="00005F"/>
-    <tag key="shop" value="variety_store" name="Variety Store" type="node;area" description="A en=variety store or price-point retailer is a retail store that sells inexpensive items" areaColor="00005F"/>
-    <tag key="shop" value="video" name="Video" type="node;area" description="A shop that sells or rents out videos/DVDs" iconName="shopping_video_rental" areaColor="00005F"/>
-    <tag key="shop" value="window_blind" name="Window Blind" type="node;area" description="A shop that sells window blinds." areaColor="00005F"/>
+    <tag key="shop" value="florist" name="Florist" type="node;area" description="Shop selling bouquets of flowers" iconName="shopping_florist" areaColor="7D81FF"/>
+    <tag key="shop" value="flower" name="Flower" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="food" name="Food" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="frame" name="Frame" type="node;area" description="A shop where you can buy frames." areaColor="7D81FF"/>
+    <tag key="shop" value="funeral_directors" name="Funeral Directors" type="node;area" description="Providing services related to funeral arrangements, may also be known as a &quot;funeral parlour&quot; or &quot;undertakers&quot;." areaColor="7D81FF"/>
+    <tag key="shop" value="furnace" name="Furnace" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="furniture" name="Furniture" type="node;area" description="A shop to buy furniture" areaColor="7D81FF"/>
+    <tag key="shop" value="garden_centre" name="Garden Centre" type="node;area" description="Shop selling potted flowers, maybe even trees." iconName="shopping_garden_centre" areaColor="7D81FF"/>
+    <tag key="shop" value="gas" name="Gas" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="general" name="General" type="node;area" description="A general store. Selling various things." areaColor="7D81FF"/>
+    <tag key="shop" value="general_store" name="General Store" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="general_stores" name="General Stores" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="gift" name="Gift" type="node;area" description="Shop selling gifts, greeting cards, or tourist gifts (souvenirs)." iconName="shopping_gift" areaColor="7D81FF"/>
+    <tag key="shop" value="glaziery" name="Glaziery" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="greengrocer" name="Greengrocer" type="node;area" description="A shop which sells fruits and vegetables" iconName="shopping_greengrocer" areaColor="7D81FF"/>
+    <tag key="shop" value="haberdashery" name="Haberdashery" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="hairdresser" name="Hairdresser" type="node;area" description="A hairdressers shop where you can get your hair cut (barber)" iconName="shopping_hairdresser" areaColor="7D81FF"/>
+    <tag key="shop" value="hairdresser_supply" name="Hairdresser Supply" type="node;area" description="A shop, where you can buy hairdressing supplies" areaColor="7D81FF"/>
+    <tag key="shop" value="hardware" name="Hardware" type="node;area" description="A shop which sells timber, tools and other building products" areaColor="7D81FF"/>
+    <tag key="shop" value="hearing_aid_dispenser" name="Hearing Aid Dispenser" type="node;area" iconName="shopping_hearing_aids" areaColor="7D81FF"/>
+    <tag key="shop" value="hearing_aids" name="Hearing Aids" type="node;area" description="A shop specialized in selling hearing aids devices" iconName="shopping_hearing_aids" areaColor="7D81FF"/>
+    <tag key="shop" value="herbalist" name="Herbalist" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="hifi" name="Hifi" type="node;area" description="Shop selling high fidelity audio components (music players, amplifiers, speakers, cables)" iconName="shopping_hifi" areaColor="7D81FF"/>
+    <tag key="shop" value="houseware" name="Houseware" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="hunting" name="Hunting" type="node;area" description="Shop where you can buy gun and hunting equipment." areaColor="7D81FF"/>
+    <tag key="shop" value="ice_cream" name="Ice Cream" type="node;area" iconName="food_ice_cream" areaColor="7D81FF"/>
+    <tag key="shop" value="insurance" name="Insurance" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="interior_decoration" name="Interior Decoration" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="jewelry" name="Jewelry" type="node;area" iconName="shopping_jewelry" areaColor="7D81FF"/>
+    <tag key="shop" value="kiosk" name="Kiosk" type="node;area" description="A small shop on the pavement that sells magazines, tobacco, newspapers, sweets and stamps." iconName="shopping_kiosk" areaColor="7D81FF"/>
+    <tag key="shop" value="kitchen" name="Kitchen" type="node;area" description="A shop where you can plan and buy your kitchen." areaColor="7D81FF"/>
+    <tag key="shop" value="laundromat" name="Laundromat" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="laundry" name="Laundry" type="node;area" description="A shop to get your normal clothes washed." iconName="shopping_laundrette" areaColor="7D81FF"/>
+    <tag key="shop" value="locksmith" name="Locksmith" type="node;area" description="A shop where you can get keys cut" areaColor="7D81FF"/>
+    <tag key="shop" value="mall" name="Mall" type="node;area" description="A group of stores, typically associated with a single building structure." areaColor="7D81FF"/>
+    <tag key="shop" value="massage" name="Massage" type="node;area" description="Massage shop" areaColor="7D81FF"/>
+    <tag key="shop" value="medical_supply" name="Medical Supply" type="node;area" description="A store where you can buy medical equipment for private persons." areaColor="7D81FF"/>
+    <tag key="shop" value="mobile_phone" name="Mobile Phone" type="node;area" iconName="shopping_mobile_phone" areaColor="7D81FF"/>
+    <tag key="shop" value="money_lender" name="Money Lender" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="motorcycle" name="Motorcycle" type="node;area" iconName="shopping_motorcycle" areaColor="7D81FF"/>
+    <tag key="shop" value="motorcycle_repair" name="Motorcycle Repair" type="node;area" description="A place where you can get your motorcycles repaired" areaColor="7D81FF"/>
+    <tag key="shop" value="music" name="Music" type="node;area" iconName="shopping_music" areaColor="7D81FF"/>
+    <tag key="shop" value="musical_instrument" name="Musical Instrument" type="node;area" description="Shop selling musical instruments, lyrics, scores." areaColor="7D81FF"/>
+    <tag key="shop" value="newsagent" name="Newsagent" type="node;area" description="Shop selling newspapers, cigarettes, other goods" areaColor="7D81FF"/>
+    <tag key="shop" value="optician" name="Optician" type="node;area" description="A shop that sells, fits, and repairs prescription eyeglasses and contact lenses." iconName="health_opticians" areaColor="7D81FF"/>
+    <tag key="shop" value="organic" name="Organic" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="outdoor" name="Outdoor" type="node;area" description="Shop selling trekking, climbing, camping equipment (and GPSes)." areaColor="7D81FF"/>
+    <tag key="shop" value="paint" name="Paint" type="node;area" description="A shop where you can buy paints." areaColor="7D81FF"/>
+    <tag key="shop" value="pawnbroker" name="Pawnbroker" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="pet" name="Pet" type="node;area" iconName="shopping_pet2" areaColor="7D81FF"/>
+    <tag key="shop" value="photo" name="Photo" type="node;area" description="A shop dealing with photos or video in any way." iconName="shopping_photo" areaColor="7D81FF"/>
+    <tag key="shop" value="photo_studio" name="Photo Studio" type="node;area" iconName="shopping_photo" areaColor="7D81FF"/>
+    <tag key="shop" value="radiotechnics" name="Radiotechnics" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="seafood" name="Seafood" type="node;area" description="A shop selling fish/seafood." areaColor="7D81FF"/>
+    <tag key="shop" value="second_hand" name="Second Hand" type="node;area" description="A shop selling second hand goods" areaColor="7D81FF"/>
+    <tag key="shop" value="ship_chandler" name="Ship Chandler" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="shoes" name="Shoes" type="node;area" description="Selling shoes." iconName="shopping_clothes" areaColor="7D81FF" />
+    <tag key="shop" value="sports" name="Sports" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="stationery" name="Stationery" type="node;area" description="A shop selling office supplies" areaColor="7D81FF"/>
+    <tag key="shop" value="supermarket" name="Supermarket" type="node;area" description="A large store for groceries and other goods." iconName="shopping_supermarket" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:shop%3Dsupermarket" areaColor="7D81FF"/>
+    <tag key="shop" value="systembolaget" name="Systembolaget" type="node;area" description="The only stores in Sweden allowed to sell alcohol." areaColor="7D81FF"/>
+    <tag key="shop" value="tattoo" name="Tattoo" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="ticket" name="Ticket" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="tobacco" name="Tobacco" type="node;area" description="Tabaccaio" iconName="shopping_tobacco" areaColor="7D81FF"/>
+    <tag key="shop" value="toys" name="Toys" type="node;area" description="A toy store." iconName="shopping_toys" areaColor="7D81FF"/>
+    <tag key="shop" value="trade" name="Trade" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="travel_agency" name="Travel Agency" type="node;area" description="A shop selling travel related products and services" areaColor="7D81FF"/>
+    <tag key="shop" value="vacant" name="Vacant" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="vacuum_cleaner" name="Vacuum Cleaner" type="node;area" areaColor="7D81FF"/>
+    <tag key="shop" value="variety_store" name="Variety Store" type="node;area" description="A en=variety store or price-point retailer is a retail store that sells inexpensive items" areaColor="7D81FF"/>
+    <tag key="shop" value="video" name="Video" type="node;area" description="A shop that sells or rents out videos/DVDs" iconName="shopping_video_rental" areaColor="7D81FF"/>
+    <tag key="shop" value="window_blind" name="Window Blind" type="node;area" description="A shop that sells window blinds." areaColor="7D81FF"/>
 
 	<tag key="sign" value="no" name="No"/>
     <tag key="sign" value="yes" name="Yes"/>

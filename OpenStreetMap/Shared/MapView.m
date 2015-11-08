@@ -2151,7 +2151,9 @@ NSString * ActionTitle( NSInteger action )
 	NSArray * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
 	NSArray * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
-	if ( index == 0 ) {
+	if ( way.nodes.count < 3 ) {
+		ignoreList = [parentWays arrayByAddingObjectsFromArray:way.nodes];
+	} else if ( index == 0 ) {
 		// if end-node then okay to connect to self-nodes except for adjacent
 		ignoreList = [parentWays arrayByAddingObjectsFromArray:@[ way.nodes[0], way.nodes[1], way.nodes[2] ]];
 	} else if ( index == way.nodes.count-1 ) {
