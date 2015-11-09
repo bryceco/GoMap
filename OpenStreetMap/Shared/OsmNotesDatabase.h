@@ -25,7 +25,7 @@
 @interface OsmNote : NSObject
 @property (readonly,nonatomic)	double				lat;
 @property (readonly,nonatomic)	double				lon;
-@property (readonly,nonatomic)	NSNumber		*	ident;
+@property (readonly,nonatomic)	NSNumber		*	noteId;	// for Notes this is the note ID, for fixme or Keep Right it is the OSM object ID
 @property (readonly,nonatomic)	NSString		*	created;
 @property (readonly,nonatomic)	NSString		*	status;
 @property (readonly,nonatomic)	NSMutableArray	*	comments;

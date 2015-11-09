@@ -28,6 +28,7 @@
 @class LocationBallLayer;
 @class MapViewController;
 @class MercatorTileLayer;
+@class OsmNote;
 @class OsmNotesDatabase;
 @class OsmBaseObject;
 @class PushPinView;
@@ -104,6 +105,7 @@ typedef enum {
 	UIAlertView						*	_alertUndo;
 	UIAlertView						*	_alertGps;
 	UIAlertView						*	_alertViewRateApp;
+	UIAlertView						*	_alertKeepRight;
 	UIActionSheet					*	_multiSelectSheet;
 	NSArray							*	_multiSelectObjects;
 	CGPoint								_multiSelectPoint;
@@ -130,6 +132,9 @@ typedef enum {
 
 	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
 	NSTimeInterval						_addNodeButtonPressed;
+
+	OsmNote							*	_keepRightCurrentNote;
+	NSMutableDictionary				*	_keepRightIgnoreList;
 }
 
 #if TARGET_OS_IPHONE

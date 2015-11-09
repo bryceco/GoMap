@@ -90,7 +90,7 @@ static NSArray * FixMeList = nil;
 		_lon	= [noteElement attributeForName:@"lon"].stringValue.doubleValue;
 		for ( NSXMLElement * child in noteElement.children ) {
 			if ( [child.name isEqualToString:@"id"] ) {
-				_ident = @(child.stringValue.integerValue);
+				_noteId = @(child.stringValue.integerValue);
 			} else if ( [child.name isEqualToString:@"date_created"] ) {
 				_created = child.stringValue;
 			} else if ( [child.name isEqualToString:@"status"] ) {
@@ -139,7 +139,7 @@ static NSArray * FixMeList = nil;
 			} else if ( [child.name isEqualToString:@"extensions"] ) {
 				for ( NSXMLElement * child2 in child.children ) {
 					if ( [child2.name isEqualToString:@"id"] ) {
-						// _ident = @( [[child2 stringValue] integerValue] );
+						_noteId = @( [[child2 stringValue] integerValue] );
 					} else if ( [child2.name isEqualToString:@"object_id"] ) {
 						osmIdent = [[child2 stringValue] longLongValue];
 					} else if ( [child2.name isEqualToString:@"object_type"] ) {
@@ -163,7 +163,7 @@ static NSArray * FixMeList = nil;
 		if ( object == nil )
 			return nil;
 
-		_ident	= @(object.extendedIdentifier);
+		_noteId	= @(object.extendedIdentifier);
 		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithGpxWaypointObject:object description:description];
 		if ( comment ) {
 			_comments = [NSMutableArray arrayWithObjects:comment,nil];
@@ -176,11 +176,11 @@ static NSArray * FixMeList = nil;
 	self = [super init];
 	if ( self ) {
 		OSMPoint center = object.isNode ? OSMPointMake(object.isNode.lon, object.isNode.lat) : object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
-		_ident	= @(object.extendedIdentifier);
-		_lat	= center.y;
-		_lon	= center.x;
-		_created = object.timestamp;
-		_status = STATUS_FIXME;
+		_noteId		= @(object.extendedIdentifier);
+		_lat		= center.y;
+		_lon		= center.x;
+		_created	= object.timestamp;
+		_status		= STATUS_FIXME;
 		OsmNoteComment * comment = [[OsmNoteComment alloc] initWithFixmeObject:object fixmeKey:fixme];
 		_comments = [NSMutableArray arrayWithObject:comment];
 	}
@@ -200,7 +200,7 @@ static NSArray * FixMeList = nil;
 }
 -(NSString *)description
 {
-	NSMutableString * text = [NSMutableString stringWithFormat:@"Note %@ - %@:\n", _ident,_status];
+	NSMutableString * text = [NSMutableString stringWithFormat:@"Note %@ - %@:\n", _noteId, _status];
 	for ( OsmNoteComment * comment in _comments ) {
 		[text appendString:[NSString stringWithFormat:@"  %@\n",comment.description]];
 	}
@@ -267,7 +267,7 @@ static NSArray * FixMeList = nil;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			// add downloaded notes
 			for ( OsmNote * note in newNotes ) {
-				[_dict setObject:note forKey:note.ident];
+				[_dict setObject:note forKey:note.noteId];
 			}
 
 			// add FIXMEs
@@ -276,7 +276,7 @@ static NSArray * FixMeList = nil;
 					NSString * fixme = obj.tags[key];
 					if ( fixme.length > 0 ) {
 						OsmNote * note = [[OsmNote alloc] initWithFixmeObject:obj fixmeKey:key];
-						[_dict setObject:note forKey:note.ident];
+						[_dict setObject:note forKey:note.noteId];
 						break;
 					}
 				}
@@ -305,7 +305,7 @@ static NSArray * FixMeList = nil;
 			for ( NSXMLElement * waypointElement in a ) {
 				OsmNote * note = [[OsmNote alloc] initWithGpxWaypointXml:waypointElement status:STATUS_KEEPRIGHT namespace:ns mapData:mapData];
 				if ( note ) {
-					[_dict setObject:note forKey:note.ident];
+					[_dict setObject:note forKey:note.noteId];
 				}
 			}
 		}
@@ -368,9 +368,9 @@ static NSArray * FixMeList = nil;
 	} else {
 		// existing note
 		if ( close ) {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/close?text=%@", note.ident, comment];
+			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/close?text=%@", note.noteId, comment];
 		} else {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/comment?text=%@", note.ident, comment];
+			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/comment?text=%@", note.noteId, comment];
 		}
 	}
 
@@ -383,7 +383,7 @@ static NSArray * FixMeList = nil;
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
 				newNote = [[OsmNote alloc] initWithNoteXml:noteElement];
 				if ( newNote ) {
-					[_dict setObject:newNote forKey:newNote.ident];
+					[_dict setObject:newNote forKey:newNote.noteId];
 				}
 			}
 		}

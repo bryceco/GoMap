@@ -422,6 +422,14 @@ CGSize SizeForImage( NSImage * image )
 	// get notes
 	[self updateNotesWithDelay:0];
 
+	{
+		// keep right ignore list
+		NSString * path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"keepRightIgnoreList"];
+		_keepRightIgnoreList = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+		if ( _keepRightIgnoreList == nil )
+			_keepRightIgnoreList = [NSMutableDictionary new];
+	}
+
 	[self updateBingButton];
 
 #if FRAMERATE_TEST
@@ -958,7 +966,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	if ( note.isWaypoint || note.isKeepRight ) {
 		if ( !_editorLayer.isHidden ) {
-			OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.ident];
+			OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
 			if ( object ) {
 				_editorLayer.selectedNode		= object.isNode;
 				_editorLayer.selectedWay		= object.isWay;
@@ -968,10 +976,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		}
 		OsmNoteComment * comment = note.comments.lastObject;
 		NSString * title = note.isWaypoint ? @"Waypoint" : @"Keep Right";
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title message:comment.text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
+		_alertKeepRight = [[UIAlertView alloc] initWithTitle:title message:comment.text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:@"Ignore",nil];
+		_alertKeepRight.delegate = self;
+		_keepRightCurrentNote = note;
+		[_alertKeepRight show];
 	} else if ( note.isFixme ) {
-		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.ident];
+		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
 		_editorLayer.selectedNode		= object.isNode;
 		_editorLayer.selectedWay		= object.isWay;
 		_editorLayer.selectedRelation	= object.isRelation;
@@ -1779,6 +1789,17 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			[self showInAppStore];
 		}
 		_alertViewRateApp = nil;
+	}
+	if ( alertView == _alertKeepRight ) {
+		if ( buttonIndex != alertView.cancelButtonIndex ) {
+			// they want to hide this button from now on
+			[_keepRightIgnoreList setObject:@YES forKey:_keepRightCurrentNote.noteId];
+			[self refreshNoteButtonsFromDatabase];
+
+			NSString * path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"keepRightIgnoreList"];
+			[NSKeyedArchiver archiveRootObject:_keepRightIgnoreList toFile:path];
+		}
+		_alertKeepRight = nil;
 	}
 }
 #endif
@@ -2817,8 +2838,15 @@ NSString * ActionTitle( NSInteger action )
 
 		[UIView performWithoutAnimation:^{
 			[_notesDatabase.dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
-				UIButton * button = _notesViewDict[ note.ident ];
+				UIButton * button = _notesViewDict[ note.noteId ];
 				if ( _viewOverlayMask & VIEW_OVERLAY_NOTES ) {
+
+					// hide unwanted keep right buttons
+					if ( button && note.isKeepRight && _keepRightIgnoreList[note.noteId] ) {
+						[button removeFromSuperview];
+						return;
+					}
+
 					if ( button == nil ) {
 						button = [UIButton buttonWithType:UIButtonTypeCustom];
 						[button addTarget:self action:@selector(noteButtonPress:) forControlEvents:UIControlEventTouchUpInside];
@@ -2831,14 +2859,14 @@ NSString * ActionTitle( NSInteger action )
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
 						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : note.isKeepRight ? @"R" : @"N";
 						[button setTitle:title forState:UIControlStateNormal];
-						button.tag = note.ident.integerValue;
+						button.tag = note.noteId.integerValue;
 						[self addSubview:button];
-						[_notesViewDict setObject:button forKey:note.ident];
+						[_notesViewDict setObject:button forKey:note.noteId?:note.noteId];
 					}
 
 					if ( [note.status isEqualToString:@"closed"] ) {
 						[button removeFromSuperview];
-					} else if ( note.isFixme && [self.editorLayer.mapData objectWithExtendedIdentifier:note.ident].tags[@"fixme"] == nil ) {
+					} else if ( note.isFixme && [self.editorLayer.mapData objectWithExtendedIdentifier:note.noteId].tags[@"fixme"] == nil ) {
 						[button removeFromSuperview];
 					} else {
 						double offsetX = note.isKeepRight ? 0.00001 : 0.0;
@@ -2852,7 +2880,7 @@ NSString * ActionTitle( NSInteger action )
 					}
 				} else {
 					[button removeFromSuperview];
-					[_notesViewDict removeObjectForKey:note.ident];
+					[_notesViewDict removeObjectForKey:note.noteId?:note.noteId];
 				}
 			}];
 		}];
