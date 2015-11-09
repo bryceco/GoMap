@@ -531,21 +531,40 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 
 #pragma mark Duplicate
 
+-(OsmNode *)duplicateNode:(OsmNode *)node
+{
+	double offsetLat = -0.00005;
+	double offsetLon = 0.00005;
+	CLLocationCoordinate2D loc = { node.lat + offsetLat, node.lon + offsetLon };
+	OsmNode * newNode = [self createNodeAtLocation:loc];
+	[self setTags:node.tags forObject:newNode];
+	return newNode;
+}
+
 -(OsmWay *)duplicateWay:(OsmWay *)way
 {
-	double offsetLat = -0.0001;
-	double offsetLon = 0.0001;
 	OsmWay * newWay = [self createWay];
 	NSUInteger index = 0;
 	for ( OsmNode * node in way.nodes ) {
-		CLLocationCoordinate2D loc = { node.lat + offsetLat, node.lon + offsetLon };
 		// check if node is a duplicate of previous node
 		NSInteger prev = [way.nodes indexOfObject:node];
-		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self createNodeAtLocation:loc];
+		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self duplicateNode:node];
 		[self addNode:newNode toWay:newWay atIndex:index++];
 	}
 	[self setTags:way.tags forObject:newWay];
 	return newWay;
 }
 
+- (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
+{
+	if ( object.isNode ) {
+		[_undoManager registerUndoComment:NSLocalizedString(@"duplicate",nil)];
+		return [self duplicateNode:object.isNode];
+	}
+	if ( object.isWay ) {
+		[_undoManager registerUndoComment:NSLocalizedString(@"duplicate",nil)];
+		return [self duplicateWay:object.isWay];
+	}
+	return nil;
+}
 @end

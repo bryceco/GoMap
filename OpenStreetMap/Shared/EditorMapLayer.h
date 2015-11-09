@@ -24,6 +24,10 @@
 #define SHOW_3D	1
 
 
+static const CGFloat DefaultHitTestRadius = 10.0;	// how close to an object do we need to tap to select it
+static const CGFloat DragConnectHitTestRadius = DefaultHitTestRadius * 0.6;	// how close to an object do we need to drag a node to connect to it
+
+
 @interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>
 {
 	CGSize					_iconSize;
@@ -63,14 +67,14 @@
 - (id)initWithMapView:(MapView *)mapView;
 - (void)didReceiveMemoryWarning;
 
-- (OsmNode *)osmHitTestNodeInSelection:(CGPoint)point;
-- (OsmBaseObject *)osmHitTest:(CGPoint)point;
-- (OsmBaseObject *)osmHitTest:(CGPoint)point segment:(NSInteger *)segment ignoreList:(NSArray *)ignoreList;
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point;
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point segment:(NSInteger *)segment;
-+ (OsmBaseObject *)osmHitTest:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
+- (OsmNode *)osmHitTestNodeInSelection:(CGPoint)point radius:(CGFloat)radius ;
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius ;
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment ignoreList:(NSArray *)ignoreList;
+- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius ;
+- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment;
++ (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)segment;
-- (NSArray *)osmHitTestMultiple:(CGPoint)point;
+- (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius ;
 - (void)osmObjectsNearby:(CGPoint)point radius:(double)radius block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block;
 
 
@@ -94,6 +98,8 @@
 -(void)deleteSelectedObject;
 -(void)cancelOperation;
 -(void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
+-(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;
+
 
 - (BOOL)copyTags:(OsmBaseObject *)object;
 - (BOOL)pasteTags:(OsmBaseObject *)object;

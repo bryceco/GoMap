@@ -1875,7 +1875,7 @@ NSString * ActionTitle( NSInteger action )
 			BOOL disconnect = parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
 			BOOL split = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
 			BOOL join = parentWays.count > 1;
-			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), nil];
+			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_HEIGHT), nil];
 			if ( disconnect )
 				[a addObject:@(ACTION_DISCONNECT)];
 			if ( split )
@@ -1887,15 +1887,15 @@ NSString * ActionTitle( NSInteger action )
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
 			} else {
 				// line
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
+				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_HEIGHT) ];
+		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
 	} else {
 		// nothing selected
 		return;
@@ -1933,18 +1933,14 @@ NSString * ActionTitle( NSInteger action )
 			break;
 		case ACTION_DUPLICATE:
 			{
-				if ( !_editorLayer.selectedPrimary.isWay ) {
-					error = NSLocalizedString(@"Only ways can be duplicated",nil);
+				OsmBaseObject * newObject = [_editorLayer duplicateObject:_editorLayer.selectedPrimary];
+				if ( newObject == nil ) {
+					error = NSLocalizedString(@"Could not duplicate object",nil);
 				} else {
-					OsmWay * way = [_editorLayer.mapData duplicateWay:_editorLayer.selectedWay];
-					if ( way == nil ) {
-						error = NSLocalizedString(@"Could not duplicate object",nil);
-					} else {
-						_editorLayer.selectedNode = nil;
-						_editorLayer.selectedRelation = nil;
-						_editorLayer.selectedWay = way;
-						[self placePushpinForSelection];
-					}
+					_editorLayer.selectedNode		= newObject.isNode;
+					_editorLayer.selectedWay		= newObject.isWay;
+					_editorLayer.selectedRelation	= newObject.isRelation;
+					[self placePushpinForSelection];
 				}
 			}
 			break;
@@ -2164,6 +2160,7 @@ NSString * ActionTitle( NSInteger action )
 		ignoreList = [way.nodes arrayByAddingObjectsFromArray:parentWays];
 	}
 	OsmBaseObject * hit = [EditorMapLayer osmHitTest:_pushpinView.arrowPoint
+											  radius:DragConnectHitTestRadius
 											 mapView:self
 											 objects:_editorLayer.shownObjects
 										   testNodes:YES
@@ -2394,7 +2391,7 @@ NSString * ActionTitle( NSInteger action )
 	if ( way && !node ) {
 		// add new node at point
 		NSInteger segment;
-		OsmBaseObject * object = [_editorLayer osmHitTestSelection:prevPoint segment:&segment];
+		OsmBaseObject * object = [_editorLayer osmHitTestSelection:prevPoint radius:DefaultHitTestRadius segment:&segment];
 		if ( object == nil ) {
 			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Select location",nil)
 															 message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)
@@ -3021,7 +3018,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
 		CGPoint point = [longPress locationInView:self];
 
-		NSArray * objects = [self.editorLayer osmHitTestMultiple:point];
+		NSArray * objects = [self.editorLayer osmHitTestMultiple:point radius:DefaultHitTestRadius];
 		if ( objects.count == 0 )
 			return;
 		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
@@ -3133,7 +3130,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 			// check if connecting to existing way
 			NSInteger segment;
-			hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:nil];
+			hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius segment:&segment ignoreList:nil];
 
 			// create node
 			_editorLayer.addNodeInProgress = NO;
@@ -3152,7 +3149,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 			// check if connecting to existing way
 			NSInteger segment;
-			hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:nil];
+			hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius segment:&segment ignoreList:nil];
 			OsmNode * node = nil;
 			if ( hit && hit.isNode ) {
 
@@ -3203,7 +3200,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 		if ( _editorLayer.selectedWay && !isAddedSelection ) {
 			// check for selecting node inside way
-			hit = [_editorLayer osmHitTestNodeInSelection:point];
+			hit = [_editorLayer osmHitTestNodeInSelection:point radius:DefaultHitTestRadius];
 		}
 		if ( hit ) {
 			_editorLayer.selectedNode = (id)hit;
@@ -3213,7 +3210,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		} else {
 
 			// hit test anything
-			hit = [_editorLayer osmHitTest:point];
+			hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius];
 
 			if ( isAddedSelection ) {
 				if ( hit ) {

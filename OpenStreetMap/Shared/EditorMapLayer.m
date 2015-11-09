@@ -91,9 +91,7 @@ enum {
 @synthesize mapData				= _mapData;
 
 
-const CGFloat WayHitTestRadius   = 6.0;	// how close to a way we have to drag a node to indicate a hit
-const CGFloat WayHighlightRadius = 6.0;	// the radius of the circles indicating nodes in a way
-
+static const CGFloat NodeHighlightRadius = 6.0;
 
 -(id)initWithMapView:(MapView *)mapView
 {
@@ -1840,7 +1838,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			NSSet * nodes = object == _selectedWay ? object.nodeSet : nil;
 			for ( OsmNode * node in nodes ) {
 				layer				= [CAShapeLayer new];
-				CGRect		rect	= CGRectMake(-WayHighlightRadius, -WayHighlightRadius, 2*WayHighlightRadius, 2*WayHighlightRadius);
+				CGRect		rect	= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
 				layer.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 				layer.strokeColor	= node == _selectedNode ? UIColor.redColor.CGColor : UIColor.greenColor.CGColor;
 				layer.fillColor		= UIColor.clearColor.CGColor;
@@ -3703,13 +3701,13 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	}
 }
 
-+ (OsmBaseObject *)osmHitTest:(CGPoint)point mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
++ (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
 				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
 {
 	__block __unsafe_unretained id hit = nil;
 	__block NSInteger hitSegment = 0;
 	__block CGFloat bestDist = 1000000;
-	[EditorMapLayer osmHitTestEnumerate:point radius:WayHitTestRadius mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
+	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
 		if ( dist < bestDist ) {
 			bestDist = dist;
 			hit = obj;
@@ -3730,24 +3728,24 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return _shownObjects;
 }
 
-- (OsmBaseObject *)osmHitTest:(CGPoint)point segment:(NSInteger *)segment ignoreList:(NSArray *)ignoreList
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment ignoreList:(NSArray *)ignoreList
 {
 	if ( self.hidden )
 		return nil;
 
-	OsmBaseObject * hit = [EditorMapLayer osmHitTest:point mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList segment:segment];
+	OsmBaseObject * hit = [EditorMapLayer osmHitTest:point radius:(CGFloat)radius mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList segment:segment];
 	return hit;
 }
-- (OsmBaseObject *)osmHitTest:(CGPoint)point
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius 
 {
-	return [self osmHitTest:point segment:NULL ignoreList:nil];
+	return [self osmHitTest:point radius:radius segment:NULL ignoreList:nil];
 }
 
 // return close objects
-- (NSArray *)osmHitTestMultiple:(CGPoint)point
+- (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
 {
 	NSMutableSet * objectSet = [NSMutableSet new];
-	[EditorMapLayer osmHitTestEnumerate:point radius:WayHitTestRadius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
+	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
 		[objectSet addObject:obj];
 	}];
 	NSMutableArray * objects = [objectSet.allObjects mutableCopy];
@@ -3767,26 +3765,25 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point segment:(NSInteger *)segment
+- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment
 {
 	if ( self.hidden )
 		return nil;
 	if ( _selectedWay ) {
-		return [EditorMapLayer osmHitTest:point mapView:_mapView objects:@[_selectedWay] testNodes:NO ignoreList:nil segment:segment];
+		return [EditorMapLayer osmHitTest:point radius:radius mapView:_mapView objects:@[_selectedWay] testNodes:NO ignoreList:nil segment:segment];
 	}
 	if ( _selectedNode ) {
-		return [EditorMapLayer osmHitTest:point mapView:_mapView objects:@[_selectedNode] testNodes:YES ignoreList:nil segment:segment];
+		return [EditorMapLayer osmHitTest:point radius:radius mapView:_mapView objects:@[_selectedNode] testNodes:YES ignoreList:nil segment:segment];
 	}
 	return nil;
 }
 
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point
+- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius
 {
-	return [self osmHitTestSelection:point segment:NULL];
-
+	return [self osmHitTestSelection:point radius:radius segment:NULL];
 }
 
--(OsmNode *)osmHitTestNodeInSelection:(CGPoint)point
+-(OsmNode *)osmHitTestNodeInSelection:(CGPoint)point radius:(CGFloat)radius
 {
 	if ( _selectedWay == nil && _selectedNode == nil )
 		return nil;
@@ -3798,7 +3795,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		[list addObject:_selectedNode];
 	}
 	NSInteger segment;
-	return (id) [EditorMapLayer osmHitTest:point mapView:_mapView objects:list testNodes:YES ignoreList:nil segment:&segment];
+	return (id) [EditorMapLayer osmHitTest:point radius:radius mapView:_mapView objects:list testNodes:YES ignoreList:nil segment:&segment];
 }
 
 #pragma mark Copy/Paste
@@ -3861,6 +3858,17 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 #endif
 }
 
+-(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
+{
+	[self saveSelection];
+	OsmBaseObject * newObject = [_mapData duplicateObject:object];
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
+	[self setNeedsDisplay];
+#endif
+	return newObject;
+}
 
 -(OsmNode *)createNodeAtPoint:(CGPoint)point
 {

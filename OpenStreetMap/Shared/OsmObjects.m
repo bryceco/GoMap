@@ -404,6 +404,17 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			return name;
 	}
 
+#if DEBUG
+	NSString * indoor = self.tags[ @"indoor" ];
+	if ( indoor ) {
+		NSString * text = [NSString stringWithFormat:@"Indoor %@",indoor];
+		NSString * level = self.tags[ @"level" ];
+		if ( level )
+			text = [text stringByAppendingFormat:@", level %@",level];
+		return text;
+	}
+#endif
+
 	if ( self.isNode && self.isNode.wayCount > 0 )
 		return NSLocalizedString(@"(node in way)",nil);
 
