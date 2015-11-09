@@ -2844,7 +2844,8 @@ NSString * ActionTitle( NSInteger action )
 					} else if ( note.isFixme && [self.editorLayer.mapData objectWithExtendedIdentifier:note.ident].tags[@"fixme"] == nil ) {
 						[button removeFromSuperview];
 					} else {
-						CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon birdsEye:YES];
+						double offsetX = note.isKeepRight ? 0.00001 : 0.0;
+						CGPoint pos = [self screenPointForLatitude:note.lat longitude:note.lon+offsetX birdsEye:YES];
 						if ( isinf(pos.x) || isinf(pos.y) )
 							return;
 
