@@ -18,6 +18,7 @@
 #import "EditorMapLayer.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
+#import "HtmlAlertViewController.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "OsmNotesDatabase.h"
@@ -58,7 +59,8 @@ static const CGFloat Z_BALL			= 5;
 static const CGFloat Z_FLASH		= 6;
 static const CGFloat Z_TOOLBAR		= 9000;
 static const CGFloat Z_PUSHPIN		= 9001;
-const static CGFloat Z_CROSSHAIRS	= 10000;
+static const CGFloat Z_CROSSHAIRS	= 10000;
+
 
 
 
@@ -422,14 +424,6 @@ CGSize SizeForImage( NSImage * image )
 	// get notes
 	[self updateNotesWithDelay:0];
 
-	{
-		// keep right ignore list
-		NSString * path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"keepRightIgnoreList"];
-		_keepRightIgnoreList = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-		if ( _keepRightIgnoreList == nil )
-			_keepRightIgnoreList = [NSMutableDictionary new];
-	}
-
 	[self updateBingButton];
 
 #if FRAMERATE_TEST
@@ -479,6 +473,7 @@ CGSize SizeForImage( NSImage * image )
 		if ( hidden ) {
 			_editorLayer.selectedNode = nil;
 			_editorLayer.selectedWay = nil;
+			_editorLayer.selectedRelation = nil;
 #if TARGET_OS_IPHONE
 			[self removePin];
 #endif
@@ -955,40 +950,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		_pushpinView.arrowPoint = [self screenPointForLatitude:pp.latitude longitude:pp.longitude birdsEye:YES];
 	}
 #endif
-}
-
--(void)noteButtonPress:(id)sender
-{
-	UIButton * button = sender;
-	OsmNote * note = _notesDatabase.dict[ @(button.tag) ];
-	if ( note == nil )
-		return;
-
-	if ( note.isWaypoint || note.isKeepRight ) {
-		if ( !_editorLayer.isHidden ) {
-			OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
-			if ( object ) {
-				_editorLayer.selectedNode		= object.isNode;
-				_editorLayer.selectedWay		= object.isWay;
-				_editorLayer.selectedRelation	= object.isRelation;
-				[self placePushpinForSelection];
-			}
-		}
-		OsmNoteComment * comment = note.comments.lastObject;
-		NSString * title = note.isWaypoint ? @"Waypoint" : @"Keep Right";
-		_alertKeepRight = [[UIAlertView alloc] initWithTitle:title message:comment.text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:@"Ignore",nil];
-		_alertKeepRight.delegate = self;
-		_keepRightCurrentNote = note;
-		[_alertKeepRight show];
-	} else if ( note.isFixme ) {
-		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
-		_editorLayer.selectedNode		= object.isNode;
-		_editorLayer.selectedWay		= object.isWay;
-		_editorLayer.selectedRelation	= object.isRelation;
-		[self presentTagEditor:nil];
-	} else {
-		[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
-	}
 }
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon
@@ -1793,11 +1754,12 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( alertView == _alertKeepRight ) {
 		if ( buttonIndex != alertView.cancelButtonIndex ) {
 			// they want to hide this button from now on
-			[_keepRightIgnoreList setObject:@YES forKey:_keepRightCurrentNote.noteId];
+			[_notesDatabase ignoreNote:_currentNote];
 			[self refreshNoteButtonsFromDatabase];
-
-			NSString * path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"keepRightIgnoreList"];
-			[NSKeyedArchiver archiveRootObject:_keepRightIgnoreList toFile:path];
+			_editorLayer.selectedNode = nil;
+			_editorLayer.selectedWay = nil;
+			_editorLayer.selectedRelation = nil;
+			[self removePin];
 		}
 		_alertKeepRight = nil;
 	}
@@ -2838,11 +2800,11 @@ NSString * ActionTitle( NSInteger action )
 
 		[UIView performWithoutAnimation:^{
 			[_notesDatabase.dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
-				UIButton * button = _notesViewDict[ note.noteId ];
+				UIButton * button = _notesViewDict[ note.uid ];
 				if ( _viewOverlayMask & VIEW_OVERLAY_NOTES ) {
 
 					// hide unwanted keep right buttons
-					if ( button && note.isKeepRight && _keepRightIgnoreList[note.noteId] ) {
+					if ( note.isKeepRight && [_notesDatabase isIgnored:note] ) {
 						[button removeFromSuperview];
 						return;
 					}
@@ -2859,9 +2821,9 @@ NSString * ActionTitle( NSInteger action )
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
 						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : note.isKeepRight ? @"R" : @"N";
 						[button setTitle:title forState:UIControlStateNormal];
-						button.tag = note.noteId.integerValue;
+						button.tag = note.uid.integerValue;
 						[self addSubview:button];
-						[_notesViewDict setObject:button forKey:note.noteId?:note.noteId];
+						[_notesViewDict setObject:button forKey:note.uid];
 					}
 
 					if ( [note.status isEqualToString:@"closed"] ) {
@@ -2880,7 +2842,7 @@ NSString * ActionTitle( NSInteger action )
 					}
 				} else {
 					[button removeFromSuperview];
-					[_notesViewDict removeObjectForKey:note.noteId?:note.noteId];
+					[_notesViewDict removeObjectForKey:note.uid];
 				}
 			}];
 		}];
@@ -2889,6 +2851,79 @@ NSString * ActionTitle( NSInteger action )
 			[_notesDatabase reset];
 		}
 	});
+}
+
+-(void)noteButtonPress:(id)sender
+{
+	UIButton * button = sender;
+	OsmNote * note = _notesDatabase.dict[ @(button.tag) ];
+	if ( note == nil )
+		return;
+
+	if ( note.isWaypoint || note.isKeepRight ) {
+		if ( !_editorLayer.hidden ) {
+			OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
+			if ( object ) {
+				_editorLayer.selectedNode		= object.isNode;
+				_editorLayer.selectedWay		= object.isWay;
+				_editorLayer.selectedRelation	= object.isRelation;
+				[self placePushpinForSelection];
+			}
+		}
+		OsmNoteComment * comment = note.comments.lastObject;
+		NSString * title = note.isWaypoint ? @"Waypoint" : @"Keep Right";
+
+#if 0
+		// use our custom alertview
+		HtmlAlertViewController * alert = [self.viewController.storyboard instantiateViewControllerWithIdentifier:@"HtmlAlert"];
+		[self.window addSubview:alert.view];
+		alert.heading.text			= title;
+		alert.htmlText				= comment.text;
+		_alertKeepRight = (id)alert;	// so we don't get deallocated
+		__weak HtmlAlertViewController * weakAlert = alert;
+		[alert addButton:@"OK" callback:^{
+			[weakAlert.view removeFromSuperview];
+			_alertKeepRight = nil;
+		}];
+		[alert addButton:@"Ignore" callback:^{
+			// they want to hide this button from now on
+			[_notesDatabase ignoreNote:_currentNote];
+			[self refreshNoteButtonsFromDatabase];
+			_editorLayer.selectedNode = nil;
+			_editorLayer.selectedWay = nil;
+			_editorLayer.selectedRelation = nil;
+			[self removePin];
+			[weakAlert.view removeFromSuperview];
+			_alertKeepRight = nil;
+		}];
+		_currentNote = note;
+#else
+		// use regular alertview
+		NSString * text = comment.text;
+		NSRange r1 = [text rangeOfString:@"<a "];
+		if ( r1.length > 0 ) {
+			NSRange r2 = [text rangeOfString:@"\">"];
+			if ( r2.length > 0 ) {
+				text = [text stringByReplacingCharactersInRange:NSMakeRange(r1.location,r2.location+r2.length-r1.location) withString:@""];
+				text = [text stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
+			}
+		}
+		text = [text stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+
+		_alertKeepRight = [[UIAlertView alloc] initWithTitle:title message:text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:@"Ignore",nil];
+		_alertKeepRight.delegate = self;
+		_currentNote = note;
+		[_alertKeepRight show];
+#endif
+	} else if ( note.isFixme ) {
+		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
+		_editorLayer.selectedNode		= object.isNode;
+		_editorLayer.selectedWay		= object.isWay;
+		_editorLayer.selectedRelation	= object.isRelation;
+		[self presentTagEditor:nil];
+	} else {
+		[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
+	}
 }
 
 #pragma mark Gestures

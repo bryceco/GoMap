@@ -70,6 +70,7 @@ typedef enum {
 @property (readonly,nonatomic)	OsmIdentifier			extendedIdentifier;
 @property (readonly,nonatomic)	OSM_TYPE				extendedType;
 
++(OsmIdentifier)extendedIdentifierForType:(OSM_TYPE)type identifier:(OsmIdentifier)identifier;
 +(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *)pType ident:(OsmIdentifier *)pIdent;
 
 

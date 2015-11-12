@@ -561,6 +561,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return self.isNode ? OSM_TYPE_NODE : self.isWay ? OSM_TYPE_WAY : OSM_TYPE_RELATION;
 }
 
++(OsmIdentifier)extendedIdentifierForType:(OSM_TYPE)type identifier:(OsmIdentifier)identifier
+{
+	return identifier | ((uint64_t)type << 62);
+}
+
 -(OsmIdentifier)extendedIdentifier
 {
 	OSM_TYPE type = self.extendedType;

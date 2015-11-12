@@ -23,6 +23,7 @@
 
 
 @interface OsmNote : NSObject
+@property (readonly,nonatomic)	NSNumber		*	uid;	// a unique value we assign to track notes
 @property (readonly,nonatomic)	double				lat;
 @property (readonly,nonatomic)	double				lon;
 @property (readonly,nonatomic)	NSNumber		*	noteId;	// for Notes this is the note ID, for fixme or Keep Right it is the OSM object ID
@@ -41,6 +42,7 @@
 @interface OsmNotesDatabase : NSObject
 {
 	NSOperationQueue	*	_workQueue;
+	NSMutableDictionary	*	_keepRightIgnoreList;
 }
 @property (strong,nonatomic)	NSMutableDictionary	*	dict;
 @property (weak,nonatomic)		OsmMapData			*	mapData;
@@ -48,4 +50,7 @@
 -(void)updateRegion:(OSMRect)bbox withDelay:(CGFloat)delay fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion;
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion;
 -(void)reset;
+
+-(void)ignoreNote:(OsmNote *)note;
+-(BOOL)isIgnored:(OsmNote *)note;
 @end

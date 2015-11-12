@@ -463,6 +463,7 @@
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
 		02ACBD2416717D7000BB4414 /* TagInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBD2316717D7000BB4414 /* TagInfo.m */; };
+		02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */; };
 		02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED989168B6F2F00357B94 /* WebPageViewController.m */; };
 		02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED98D168BF87200357B94 /* NearbyMappersViewController.m */; };
 		02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99B168CBC5400357B94 /* LocationBallLayer.m */; };
@@ -1012,6 +1013,8 @@
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02ACBD2216717D6F00BB4414 /* TagInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagInfo.h; path = ../Shared/TagInfo.h; sourceTree = "<group>"; };
 		02ACBD2316717D7000BB4414 /* TagInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagInfo.m; path = ../Shared/TagInfo.m; sourceTree = "<group>"; };
+		02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HtmlAlertViewController.h; sourceTree = "<group>"; };
+		02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HtmlAlertViewController.m; sourceTree = "<group>"; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02BED988168B6F2F00357B94 /* WebPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPageViewController.h; sourceTree = "<group>"; };
 		02BED989168B6F2F00357B94 /* WebPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPageViewController.m; sourceTree = "<group>"; };
@@ -1262,6 +1265,8 @@
 				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
 				02F371B216A4F3E6003E9548 /* HelpViewController.h */,
 				02F371B316A4F3E6003E9548 /* HelpViewController.m */,
+				02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */,
+				02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */,
 				025A1D001690DC32002B60CB /* Images */,
 				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				02ACBD031671730000BB4414 /* KissXML */,
@@ -2266,6 +2271,7 @@
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
+				02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */,
 				022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */,
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,

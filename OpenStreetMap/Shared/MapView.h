@@ -133,8 +133,7 @@ typedef enum {
 	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
 	NSTimeInterval						_addNodeButtonPressed;
 
-	OsmNote							*	_keepRightCurrentNote;
-	NSMutableDictionary				*	_keepRightIgnoreList;
+	OsmNote							*	_currentNote;			// set during period a note button is pressed so we can ignore it if chosen by user
 }
 
 #if TARGET_OS_IPHONE
