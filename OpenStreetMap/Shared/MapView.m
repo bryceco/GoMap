@@ -1521,6 +1521,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		[self placePushpinAtPoint:point object:_editorLayer.selectedNode];
 	} else if ( _editorLayer.selectedWay ) {
 		OSMPoint pt = [_editorLayer.selectedWay centerPoint];
+		pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
 		CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	} else if (_editorLayer.selectedRelation ) {
@@ -2867,7 +2868,15 @@ NSString * ActionTitle( NSInteger action )
 				_editorLayer.selectedNode		= object.isNode;
 				_editorLayer.selectedWay		= object.isWay;
 				_editorLayer.selectedRelation	= object.isRelation;
-				[self placePushpinForSelection];
+
+				if ( object.isWay ) {
+					OSMPoint pt = { note.lon, note.lat };
+					pt = [object.isWay pointOnWayForPoint:pt];
+					CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+					[self placePushpinAtPoint:point object:object];
+				} else {
+					[self placePushpinForSelection];
+				}
 			}
 		}
 		OsmNoteComment * comment = note.comments.lastObject;

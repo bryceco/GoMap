@@ -4404,6 +4404,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <constraint firstAttribute="centerY" secondItem="uOd-BB-zEq" secondAttribute="centerY" id="049-lj-RDB"/>
                                                 <constraint firstAttribute="trailing" secondItem="eac-Db-EaW" secondAttribute="trailing" constant="16" id="8TY-1X-a7V"/>
                                                 <constraint firstAttribute="centerY" secondItem="eac-Db-EaW" secondAttribute="centerY" id="gFh-Pr-m0V"/>
+                                                <constraint firstItem="eac-Db-EaW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uOd-BB-zEq" secondAttribute="trailing" constant="5" id="jp7-Uj-gW9"/>
                                                 <constraint firstItem="uOd-BB-zEq" firstAttribute="leading" secondItem="Xmp-oM-reK" secondAttribute="leading" constant="16" id="nWT-IX-qiE"/>
                                             </constraints>
                                         </tableViewCellContentView>

@@ -1852,7 +1852,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 		} else if ( object.isNode ) {
 
-#if 0 // draw square around selected node
+#if 1 // draw square around selected node
 			OsmNode * node = (id)object;
 			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 
