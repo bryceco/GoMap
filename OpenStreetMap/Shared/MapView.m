@@ -45,21 +45,22 @@
 #define FRAMERATE_TEST	0
 
 
-static const CGFloat Z_AERIAL		= -100;
-static const CGFloat Z_MAPNIK		= -99;
-static const CGFloat Z_LOCATOR		= -50;
-static const CGFloat Z_GPSTRACE		= -40;
-static const CGFloat Z_EDITOR		= -20;
-static const CGFloat Z_GPX			= -15;
-//static const CGFloat Z_BUILDINGS	= -18;
-static const CGFloat Z_RULER		= -5;	// ruler is below buttons
-//static const CGFloat Z_BING_LOGO	= 2;
-static const CGFloat Z_BLINK		= 4;
-static const CGFloat Z_BALL			= 5;
-static const CGFloat Z_FLASH		= 6;
-static const CGFloat Z_TOOLBAR		= 9000;
-static const CGFloat Z_PUSHPIN		= 9001;
-static const CGFloat Z_CROSSHAIRS	= 10000;
+static const CGFloat Z_AERIAL			= -100;
+static const CGFloat Z_MAPNIK			= -99;
+static const CGFloat Z_LOCATOR			= -50;
+static const CGFloat Z_GPSTRACE			= -40;
+static const CGFloat Z_ROTATEGRAPHIC	= -35;
+static const CGFloat Z_EDITOR			= -20;
+static const CGFloat Z_GPX				= -15;
+//static const CGFloat Z_BUILDINGS		= -18;
+static const CGFloat Z_RULER			= -5;	// ruler is below buttons
+//static const CGFloat Z_BING_LOGO		= 2;
+static const CGFloat Z_BLINK			= 4;
+static const CGFloat Z_BALL				= 5;
+static const CGFloat Z_FLASH			= 6;
+static const CGFloat Z_TOOLBAR			= 9000;
+static const CGFloat Z_PUSHPIN			= 9001;
+static const CGFloat Z_CROSSHAIRS		= 10000;
 
 
 
@@ -740,7 +741,36 @@ CGSize SizeForImage( NSImage * image )
 	[(UIViewController*)viewController.delegate dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark Rotate object
 
+-(void)startObjectRotation
+{
+	_isRotateObjectMode				= YES;
+	_rotateObjectCenter				= _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
+	[self removePin];
+	_rotateObjectOverlay = [[CAShapeLayer alloc] init];
+	CGFloat radiusInner = 70;
+	CGFloat radiusOuter = 90;
+	CGFloat arrowWidth = 60;
+	CGPoint center = [self screenPointForLatitude:_rotateObjectCenter.y longitude:_rotateObjectCenter.x birdsEye:YES]; // CGRectCenter(self.bounds);
+	UIBezierPath * path = [UIBezierPath bezierPathWithArcCenter:center radius:radiusInner startAngle:M_PI/2 endAngle:M_PI clockwise:NO];
+	[path addLineToPoint:CGPointMake(center.x-(radiusOuter+radiusInner)/2+arrowWidth/2,center.y)];
+	[path addLineToPoint:CGPointMake(center.x-(radiusOuter+radiusInner)/2, center.y+arrowWidth/sqrt(2.0))];
+	[path addLineToPoint:CGPointMake(center.x-(radiusOuter+radiusInner)/2-arrowWidth/2,center.y)];
+	[path addArcWithCenter:center radius:radiusOuter startAngle:M_PI endAngle:M_PI/2 clockwise:YES];
+	[path closePath];
+	_rotateObjectOverlay.path = path.CGPath;
+	_rotateObjectOverlay.fillColor = [UIColor colorWithRed:0.0 green:1.0 blue:1.0 alpha:0.4].CGColor;
+	_rotateObjectOverlay.zPosition = Z_ROTATEGRAPHIC;
+	[self.layer addSublayer:_rotateObjectOverlay];
+}
+-(void)endObjectRotation
+{
+	_isRotateObjectMode = NO;
+	[_rotateObjectOverlay removeFromSuperlayer];
+	_rotateObjectOverlay = nil;
+	[self placePushpinForSelection];
+}
 
 #pragma mark View State
 
@@ -1932,10 +1962,7 @@ NSString * ActionTitle( NSInteger action )
 			if ( _editorLayer.selectedWay == nil || _editorLayer.selectedRelation ) {
 				error = NSLocalizedString(@"Only ways can be rotated", nil);
 			} else {
-				_isRotateObjectMode = YES;
-				_rotateObjectCenter = _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
-				_userInstructionLabel.text = @"Rotate Way";
-				_userInstructionLabel.hidden = NO;
+				[self startObjectRotation];
 			}
 			break;
 		case ACTION_RECTANGULARIZE:
@@ -2195,8 +2222,7 @@ NSString * ActionTitle( NSInteger action )
 						[[DisplayLink shared] removeName:@"dragScroll"];
 
 						BOOL isRotate = strongSelf->_isRotateObjectMode;
-						strongSelf->_isRotateObjectMode = NO;
-						strongSelf.userInstructionLabel.hidden = YES;
+						[strongSelf endObjectRotation];
 
 						[strongSelf unblinkObject];
 						if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
@@ -3138,8 +3164,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 //			rotationGesture.rotation = 0.0;
 		} else {
 			// ended
-			_isRotateObjectMode = NO;
-			_userInstructionLabel.hidden = YES;
+			[self endObjectRotation];
 			[_editorLayer.mapData endUndoGrouping];
 		}
 		return;
@@ -3191,8 +3216,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 	// disable rotation if in action
 	if ( _isRotateObjectMode ) {
-		_isRotateObjectMode = NO;
-		_userInstructionLabel.hidden = YES;
+		[self endObjectRotation];
 	}
 
 	if ( _editorLayer.addNodeInProgress || _editorLayer.addWayInProgress ) {

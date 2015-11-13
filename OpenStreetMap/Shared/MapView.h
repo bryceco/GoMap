@@ -95,6 +95,7 @@ typedef enum {
 
 	BOOL								_isZoomScroll;	// Command-scroll zooms instead of scrolling (desktop only)
 	BOOL								_isRotateObjectMode;
+	CAShapeLayer					*	_rotateObjectOverlay;
 	OSMPoint							_rotateObjectCenter;
 
 #if TARGET_OS_IPHONE
