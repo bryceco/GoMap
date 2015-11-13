@@ -76,16 +76,18 @@ static void InitializeDictionaries()
 		g_presetsDict		= DictionaryForFile(@"presets.json");
 		g_fieldsDict		= DictionaryForFile(@"fields.json");
 
-		NSLocale * currentLocale = [NSLocale autoupdatingCurrentLocale];
-		NSString * ident = currentLocale.localeIdentifier;
-//		ident = @"zh_TW";
-		NSString * file = [NSString stringWithFormat:@"presets_%@.json",ident];
+		NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
+		if ( code == nil ) {
+			NSArray * langList = [NSLocale preferredLanguages];
+			code = langList.count > 0 ? langList[0] : @"en";
+		}
+		NSString * file = [NSString stringWithFormat:@"translations/%@.json",code];
 		g_translationDict	= DictionaryForFile(file);
 
-		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[ident][@"presets"][@"defaults"] );
-		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[ident][@"presets"][@"categories"] );
-		g_presetsDict		= Translate( g_presetsDict,		g_translationDict[ident][@"presets"][@"presets"] );
-		g_fieldsDict		= Translate( g_fieldsDict,		g_translationDict[ident][@"presets"][@"fields"] );
+		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[@"presets"][@"defaults"] );
+		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[@"presets"][@"categories"] );
+		g_presetsDict		= Translate( g_presetsDict,		g_translationDict[@"presets"][@"presets"] );
+		g_fieldsDict		= Translate( g_fieldsDict,		g_translationDict[@"presets"][@"fields"] );
 	}
 }
 
@@ -237,6 +239,7 @@ static NSString * PrettyTag( NSString * tag )
 
 +(void)initialize
 {
+	g_presetsDict = nil;
 	InitializeDictionaries();
 }
 

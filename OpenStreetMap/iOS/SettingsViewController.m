@@ -34,6 +34,15 @@
 		// becoming visible the first time
 		self.navigationController.navigationBarHidden = NO;
 	}
+
+
+	NSString * preferredLanguage = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
+	if ( preferredLanguage == nil ) {
+		preferredLanguage = @"en";
+	}
+	NSLocale * locale =  [NSLocale localeWithLocaleIdentifier:preferredLanguage];
+	preferredLanguage = [locale displayNameForKey:NSLocaleIdentifier value:preferredLanguage];
+	_language.text = preferredLanguage;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

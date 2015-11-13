@@ -1186,6 +1186,7 @@
 				   "access_simple",
 				   "supervised",
 				   "park_ride",
+				   "surface",
 				   "address"
 				   ],
 		"geometry": [
@@ -3773,6 +3774,7 @@
 		"name": "Pedestrian Crosswalk"
 	},
 	"footway/sidewalk": {
+		"icon": "highway-footway",
 		"fields": [
 				   "surface",
 				   "lit",
@@ -5400,6 +5402,40 @@
 		"terms": [],
 		"name": "Basketball Court"
 	},
+	"leisure/pitch/rugby_league": {
+		"icon": "america-football",
+		"fields": [
+				   "surface",
+				   "lit"
+				   ],
+		"geometry": [
+					 "point",
+					 "area"
+					 ],
+		"tags": {
+			"leisure": "pitch",
+			"sport": "rugby_league"
+		},
+		"terms": [],
+		"name": "Rugby League Field"
+	},
+	"leisure/pitch/rugby_union": {
+		"icon": "america-football",
+		"fields": [
+				   "surface",
+				   "lit"
+				   ],
+		"geometry": [
+					 "point",
+					 "area"
+					 ],
+		"tags": {
+			"leisure": "pitch",
+			"sport": "rugby_union"
+		},
+		"terms": [],
+		"name": "Rugby Union Field"
+	},
 	"leisure/pitch/skateboard": {
 		"icon": "pitch",
 		"fields": [
@@ -5747,7 +5783,7 @@
 		"name": "Pier"
 	},
 	"man_made/pipeline": {
-		"icon": "pipeline",
+		"icon": "pipeline-line",
 		"fields": [
 				   "location",
 				   "operator"
@@ -5925,6 +5961,54 @@
 		},
 		"name": "Bunker"
 	},
+	"military/checkpoint": {
+		"geometry": [
+					 "point",
+					 "vertex",
+					 "area"
+					 ],
+		"terms": [],
+		"tags": {
+			"military": "checkpoint"
+		},
+		"name": "Checkpoint"
+	},
+	"military/danger_area": {
+		"geometry": [
+					 "point",
+					 "vertex",
+					 "area"
+					 ],
+		"terms": [],
+		"tags": {
+			"military": "danger_area"
+		},
+		"name": "Danger Area"
+	},
+	"military/naval_base": {
+		"geometry": [
+					 "point",
+					 "vertex",
+					 "area"
+					 ],
+		"terms": [],
+		"tags": {
+			"military": "naval_base"
+		},
+		"name": "Naval Base"
+	},
+	"military/obstacle_course": {
+		"geometry": [
+					 "point",
+					 "vertex",
+					 "area"
+					 ],
+		"terms": [],
+		"tags": {
+			"military": "obstacle_course"
+		},
+		"name": "Obstacle Course"
+	},
 	"military/range": {
 		"geometry": [
 					 "point",
@@ -5936,6 +6020,18 @@
 			"military": "range"
 		},
 		"name": "Military Range"
+	},
+	"military/training_area": {
+		"geometry": [
+					 "point",
+					 "vertex",
+					 "area"
+					 ],
+		"terms": [],
+		"tags": {
+			"military": "training_area"
+		},
+		"name": "Training area"
 	},
 	"natural": {
 		"fields": [
@@ -7278,7 +7374,7 @@
 		"searchable": false
 	},
 	"route/ferry": {
-		"icon": "ferry",
+		"icon": "ferry-line",
 		"geometry": [
 					 "line"
 					 ],
