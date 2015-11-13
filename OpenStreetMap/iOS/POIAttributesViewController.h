@@ -11,23 +11,8 @@
 @class AttributeCustomCell;
 
 
-@interface POIAttributesViewController : UITableViewController
+@interface POIAttributesViewController : UITableViewController <UITableViewDataSource,UITableViewDelegate>
 {
 	IBOutlet UIBarButtonItem	*	_saveButton;
-
-	IBOutlet UITableViewCell	*	_identCell;
-	IBOutlet UITableViewCell	*	_userCell;
-	IBOutlet UITableViewCell	*	_versionCell;
-	IBOutlet UITableViewCell	*	_changesetCell;
-
-	IBOutlet AttributeCustomCell	*	_extraCell1;
-	IBOutlet AttributeCustomCell	*	_extraCell2;
-
-	IBOutlet UILabel *	_identLabel;
-	IBOutlet UILabel *	_userLabel;
-	IBOutlet UILabel *	_uidLabel;
-	IBOutlet UILabel *	_dateLabel;
-	IBOutlet UILabel *	_versionLabel;
-	IBOutlet UILabel *	_changesetLabel;
 }
 @end
