@@ -98,6 +98,8 @@ typedef enum {
 	CAShapeLayer					*	_rotateObjectOverlay;
 	OSMPoint							_rotateObjectCenter;
 
+	BOOL								_confirmDrag;	// should we confirm that the user wanted to drag the selected object? Only if they haven't modified it since selecting it
+
 #if TARGET_OS_IPHONE
 	PushPinView						*	_pushpinView;
 	UIAlertView						*	_alertDelete;

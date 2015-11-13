@@ -770,6 +770,7 @@ CGSize SizeForImage( NSImage * image )
 	[_rotateObjectOverlay removeFromSuperlayer];
 	_rotateObjectOverlay = nil;
 	[self placePushpinForSelection];
+	_confirmDrag = NO;
 }
 
 #pragma mark View State
@@ -1655,6 +1656,9 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 -(void)adjustZoomBy:(CGFloat)ratio aroundScreenPoint:(CGPoint)zoomCenter
 {
+	if ( _isRotateObjectMode )
+		return;
+
 	const double maxZoomIn = 1 << 30;
 	if ( ratio == 1.0 )
 		return;
@@ -2222,7 +2226,9 @@ NSString * ActionTitle( NSInteger action )
 						[[DisplayLink shared] removeName:@"dragScroll"];
 
 						BOOL isRotate = strongSelf->_isRotateObjectMode;
-						[strongSelf endObjectRotation];
+						if ( isRotate ) {
+							[strongSelf endObjectRotation];
+						}
 
 						[strongSelf unblinkObject];
 						if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
@@ -2258,9 +2264,12 @@ NSString * ActionTitle( NSInteger action )
 							break;
 						if ( strongSelf.editorLayer.selectedWay && strongSelf.editorLayer.selectedNode )
 							break;
-						strongSelf->_alertMove = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil)
-																delegate:strongSelf cancelButtonTitle:NSLocalizedString(@"Undo",nil) otherButtonTitles:NSLocalizedString(@"Move",nil), nil];
-						[strongSelf->_alertMove show];
+						if ( strongSelf->_confirmDrag ) {
+							strongSelf->_confirmDrag = NO;
+							strongSelf->_alertMove = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil)
+																	delegate:strongSelf cancelButtonTitle:NSLocalizedString(@"Undo",nil) otherButtonTitles:NSLocalizedString(@"Move",nil), nil];
+							[strongSelf->_alertMove show];
+						}
 					}
 					break;
 					
@@ -2596,6 +2605,7 @@ NSString * ActionTitle( NSInteger action )
 	}
 	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
+	_confirmDrag = NO;
 #endif
 }
 
@@ -3351,6 +3361,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				OSMPoint pt = { latLon.longitude, latLon.latitude };
 				pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
 				point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);	// if they later try to drag this way ask them if they really wanted to
 			}
 			[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 		}
