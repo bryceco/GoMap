@@ -17,6 +17,8 @@ static NSDictionary * g_categoriesDict;
 static NSDictionary * g_presetsDict;
 static NSDictionary * g_fieldsDict;
 static NSDictionary * g_translationDict;
+static NSMutableDictionary * g_taginfoCache;
+static NSMutableDictionary * g_FeatureRepository;
 
 static NSDictionary * DictionaryForFile( NSString * file )
 {
@@ -239,7 +241,9 @@ static NSString * PrettyTag( NSString * tag )
 
 +(void)initialize
 {
-	g_presetsDict = nil;
+	g_presetsDict		= nil;
+	g_taginfoCache		= nil;
+	g_FeatureRepository	= nil;
 	InitializeDictionaries();
 }
 
@@ -396,6 +400,20 @@ static NSString * PrettyTag( NSString * tag )
 	return list;
 }
 
++(NSString *)yesForLocale
+{
+	NSString * text = g_translationDict[ @"inspector" ][ @"check" ][ @"yes" ];
+	if ( text == nil )
+		text = @"Yes";
+	return text;
+}
++(NSString *)noForLocale
+{
+	NSString * text = g_translationDict[ @"inspector" ][ @"check" ][ @"no" ];
+	if ( text == nil )
+		text = @"No";
+	return text;
+}
 
 -(NSString *)featureName
 {
@@ -404,9 +422,8 @@ static NSString * PrettyTag( NSString * tag )
 
 -(CommonTagGroup *)groupForField:(NSString *)fieldName geometry:(NSString *)geometry update:(void (^)(void))update
 {
-	static NSMutableDictionary * taginfoCache = nil;
-	if ( taginfoCache == nil ) {
-		taginfoCache = [NSMutableDictionary new];
+	if ( g_taginfoCache == nil ) {
+		g_taginfoCache = [NSMutableDictionary new];
 	}
 
 	NSDictionary * dict = g_fieldsDict[ fieldName ];
@@ -434,8 +451,8 @@ static NSString * PrettyTag( NSString * tag )
 
 	if ( [type isEqualToString:@"defaultcheck"] || [type isEqualToString:@"check"] ) {
 
-		NSArray * presets = @[ [CommonTagValue presetWithName:@"Yes" details:nil tagValue:@"yes"],
-							   [CommonTagValue presetWithName:@"No"  details:nil tagValue:@"no"] ];
+		NSArray * presets = @[ [CommonTagValue presetWithName:[CommonTagList yesForLocale] details:nil tagValue:@"yes"],
+							   [CommonTagValue presetWithName:[CommonTagList noForLocale]  details:nil tagValue:@"no"] ];
 		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 		return group;
@@ -446,8 +463,8 @@ static NSString * PrettyTag( NSString * tag )
 
 			// a list of booleans
 			NSMutableArray * tags = [NSMutableArray new];
-			NSArray * presets = @[ [CommonTagValue presetWithName:@"Yes" details:nil tagValue:@"yes"],
-								   [CommonTagValue presetWithName:@"No"  details:nil tagValue:@"no"] ];
+			NSArray * presets = @[ [CommonTagValue presetWithName:[CommonTagList yesForLocale] details:nil tagValue:@"yes"],
+								   [CommonTagValue presetWithName:[CommonTagList noForLocale]  details:nil tagValue:@"no"] ];
 			for ( NSString * k in keysArray ) {
 				NSString * name = stringsOptionsDict[ k ];
 				CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
@@ -495,9 +512,9 @@ static NSString * PrettyTag( NSString * tag )
 		} else {
 
 			// check tagInfo
-			if ( taginfoCache[fieldName] ) {
+			if ( g_taginfoCache[fieldName] ) {
 				// already got them once
-				presets = taginfoCache[fieldName];
+				presets = g_taginfoCache[fieldName];
 			} else if ( update ) {
 				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
 					NSString * urlText = [NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/key/values?key=%@&page=1&rp=25&sortname=count_all&sortorder=desc",key];
@@ -514,7 +531,7 @@ static NSString * PrettyTag( NSString * tag )
 							[presets2 addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
 						}
 						dispatch_async(dispatch_get_main_queue(), ^{
-							[taginfoCache setObject:presets2 forKey:fieldName];
+							[g_taginfoCache setObject:presets2 forKey:fieldName];
 							update();
 						});
 					}
@@ -556,6 +573,8 @@ static NSString * PrettyTag( NSString * tag )
 			NSString * name = [k substringFromIndex:ref.length+1];
 			placeholder = placeholders[name];
 			name = PrettyTag( name );
+			if ( ![placeholder isEqualToString:@"123"] )
+				name = placeholder;
 			keyboard = [k isEqualToString:@"addr:housenumber"] || [k isEqualToString:@"addr:postcode"] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
 			CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 			[addrs addObject:tag];
@@ -758,7 +777,7 @@ static NSString * PrettyTag( NSString * tag )
 
 	// Always start with Type and Name
 	CommonTagKey * typeTag = [CommonTagKey tagWithName:@"Type" tagKey:nil defaultValue:nil placeholder:@"" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeNone presets:@[@"",@""]];
-	CommonTagKey * nameTag = [CommonTagKey tagWithName:@"Name" tagKey:@"name" defaultValue:nil placeholder:@"common name" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeWords presets:nil];
+	CommonTagKey * nameTag = [CommonTagKey tagWithName:g_fieldsDict[@"name"][@"label"] tagKey:@"name" defaultValue:nil placeholder:g_fieldsDict[@"name"][@"placeholder"] keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeWords presets:nil];
 	CommonTagGroup * typeGroup = [CommonTagGroup groupWithName:@"Type" tags:@[ typeTag, nameTag ] ];
 	_sectionList = [NSMutableArray arrayWithArray:@[ typeGroup ]];
 
@@ -986,7 +1005,6 @@ static NSString * PrettyTag( NSString * tag )
 	if ( name == nil )
 		return nil;
 	// all tags are single-instanced, so we can easily compare them
-	static NSMutableDictionary * g_FeatureRepository = nil;
 	if ( g_FeatureRepository == nil ) {
 		g_FeatureRepository = [NSMutableDictionary new];
 	}
