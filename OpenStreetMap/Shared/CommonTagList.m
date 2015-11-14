@@ -80,8 +80,7 @@ static void InitializeDictionaries()
 
 		NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
 		if ( code == nil ) {
-			NSArray * langList = [NSLocale preferredLanguages];
-			code = langList.count > 0 ? langList[0] : @"en";
+			code = @"en";
 		}
 		NSString * file = [NSString stringWithFormat:@"translations/%@.json",code];
 		g_translationDict	= DictionaryForFile(file);
@@ -615,7 +614,7 @@ static NSString * PrettyTag( NSString * tag )
 		// special case
 		NSMutableArray * presets = [NSMutableArray new];
 		[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * info, BOOL * stop) {
-			CommonTagValue * v = [CommonTagValue presetWithName:info[@"name"] details:info[@"description"] tagValue:k];
+			CommonTagValue * v = [CommonTagValue presetWithName:info[@"title"] details:info[@"description"] tagValue:k];
 			[presets addObject:v];
 		}];
 
