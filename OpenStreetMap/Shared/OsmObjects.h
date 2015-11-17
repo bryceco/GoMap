@@ -149,6 +149,7 @@ typedef enum {
 -(void)setWayCount:(NSInteger)wayCount undo:(UndoManager *)undo;
 
 -(OSMPoint)location;
+-(BOOL)isBetterToKeepThan:(OsmNode *)node;
 @end
 
 
@@ -176,7 +177,7 @@ typedef enum {
 -(BOOL)isSimpleMultipolygonOuterMember;
 -(OSMPoint)pointOnWayForPoint:(OSMPoint)point;
 +(BOOL)isClockwiseArrayOfPoints:(NSArray *)a;
-
+-(BOOL)hasDuplicatedNode;
 @end
 
 

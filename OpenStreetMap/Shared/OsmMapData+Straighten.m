@@ -413,24 +413,33 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 #endif
 
 	// join nodes, preserving selected way
+	NSInteger index = 0;
 	if ( selectedWay.nodes.lastObject == otherWay.nodes[0] ) {
 		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in otherWay.nodes ) {
+			if ( index++ == 0 )
+				continue;
 			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
 		}
 	} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
 		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
+			if ( index++ == 0 )
+				continue;
 			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
 		}
 	} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
 		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in otherWay.nodes ) {
+			if ( index++ == 0 )
+				continue;
 			[self addNode:n toWay:selectedWay atIndex:0];
 		}
 	} else if ( selectedWay.nodes[0] == otherWay.nodes.lastObject ) {
 		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
 		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
+			if ( index++ == 0 )
+				continue;
 			[self addNode:n toWay:selectedWay atIndex:0];
 		}
 	} else {

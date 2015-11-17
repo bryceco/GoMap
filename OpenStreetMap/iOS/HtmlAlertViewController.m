@@ -56,6 +56,7 @@
 		}
 	}
 	text = [text stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+	text = [text stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
 
 	self.text.text = text;
 

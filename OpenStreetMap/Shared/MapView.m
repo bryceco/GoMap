@@ -2140,6 +2140,28 @@ NSString * ActionTitle( NSInteger action )
 	}
 }
 
+- (void)deleteDuplicateNodes
+{
+	[_editorLayer.mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
+		OsmWay * way = obj.isWay;
+		if ( way ) {
+		retry:
+			if ( way.hasDuplicatedNode ) {
+				NSLog(@"way %@ has duplicate nodes",way.ident);
+				OsmNode * prev = nil;
+				NSInteger index = 0;
+				for ( OsmNode * node in way.nodes ) {
+					if ( node == prev ) {
+						[_editorLayer.mapData deleteNodeInWay:way index:index];
+						goto retry;
+					}
+					prev = node;
+					++index;
+				}
+			}
+		}
+	}];
+}
 #pragma mark PushPin
 
 
@@ -2233,16 +2255,18 @@ NSString * ActionTitle( NSInteger action )
 						[strongSelf unblinkObject];
 						if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
 							// dragging a node that is part of a way
-							OsmNode * dragNode = (id)object;
-							OsmWay * way = strongSelf.editorLayer.selectedWay;
+							OsmNode * dragNode = object.isNode;
+							OsmWay  * dragWay = strongSelf.editorLayer.selectedWay;
 							NSInteger segment;
 							OsmBaseObject * hit = [strongSelf dragConnectionForNode:dragNode segment:&segment];
 							if ( hit.isNode ) {
 								// replace dragged node with hit node
-								NSInteger index = [way.nodes indexOfObject:object];
-								[strongSelf.editorLayer deleteNode:dragNode fromWay:way allowDegenerate:YES];
-								[strongSelf.editorLayer addNode:hit.isNode toWay:way atIndex:index];
-								if ( way.isArea ) {
+								NSDictionary * mergedTags = MergeTags(hit.tags,dragNode.tags);
+								NSInteger index = [dragWay.nodes indexOfObject:dragNode];
+								[strongSelf.editorLayer deleteNode:dragNode fromWay:dragWay allowDegenerate:YES];
+								[strongSelf.editorLayer addNode:hit.isNode toWay:dragWay atIndex:index];
+								[strongSelf.editorLayer.mapData setTags:mergedTags forObject:hit];
+								if ( dragWay.isArea ) {
 									strongSelf.editorLayer.selectedNode = nil;
 									[strongSelf placePushpinForSelection];
 								} else {

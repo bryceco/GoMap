@@ -42,7 +42,7 @@ if (!(condition)) {		\
 							stringByAppendingPathComponent:bundleName]
 						   stringByAppendingPathComponent:@"data.sqlite3"];
 		[[NSFileManager defaultManager] createDirectoryAtPath:path.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:NULL error:NULL];
-		DLog(@"sql = %@",path);
+//		DLog(@"sql = %@",path);
 		return path;
 	}
 	return nil;

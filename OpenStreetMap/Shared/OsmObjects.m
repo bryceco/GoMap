@@ -174,7 +174,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			merged[k] = [m componentsJoinedByString:@";"];
 		}
 	}
-	return changed ? [NSDictionary dictionaryWithDictionary:merged] : this;
+	return changed ? [NSDictionary dictionaryWithDictionary:merged] : [this copy];
 }
 
 #pragma mark Construction
@@ -601,6 +601,17 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	return OSMPointMake(_lon, _lat);
 }
+
+-(BOOL)isBetterToKeepThan:(OsmNode *)node
+{
+	if ( (self.ident.longLongValue > 0) == (node.ident.longLongValue > 0) ) {
+		// both are new or both are old, so take whichever has more tags
+		return _tags.count > node.tags.count;
+	}
+	// take the previously existing one
+	return self.ident.longLongValue > 0;
+}
+
 -(NSSet *)nodeSet
 {
 	return [NSSet setWithObject:self];
@@ -1071,6 +1082,16 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return sum >= 0;
 }
 
+-(BOOL)hasDuplicatedNode
+{
+	OsmNode * prev = nil;
+	for ( OsmNode * node in _nodes ) {
+		if ( node == prev )
+			return YES;
+		prev = node;
+	}
+	return NO;
+}
 
 -(id)initWithCoder:(NSCoder *)coder
 {
