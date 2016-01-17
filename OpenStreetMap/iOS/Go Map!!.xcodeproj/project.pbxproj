@@ -32,7 +32,6 @@
 		02072AD21BD454E800F1CAB4 /* 751-eye-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072ACF1BD454E800F1CAB4 /* 751-eye-toolbar.png */; };
 		02072AD31BD454E800F1CAB4 /* 751-eye-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD01BD454E800F1CAB4 /* 751-eye-toolbar@2x.png */; };
 		02072AD41BD454E800F1CAB4 /* 751-eye-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AD11BD454E800F1CAB4 /* 751-eye-toolbar@3x.png */; };
-		02072AD61BD46B1700F1CAB4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02072AD51BD46B1700F1CAB4 /* StoreKit.framework */; };
 		02072AE61BD5E99B00F1CAB4 /* 709-plus-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AE31BD5E99B00F1CAB4 /* 709-plus-toolbar.png */; };
 		02072AE71BD5E99B00F1CAB4 /* 709-plus-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AE41BD5E99B00F1CAB4 /* 709-plus-toolbar@2x.png */; };
 		02072AE81BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02072AE51BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png */; };
@@ -1070,7 +1069,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02072AD61BD46B1700F1CAB4 /* StoreKit.framework in Frameworks */,
 				02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
