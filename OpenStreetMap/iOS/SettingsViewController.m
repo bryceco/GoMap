@@ -61,7 +61,7 @@
 
 	if ( cell == _sendMailCell ) {
 		if ( [MFMailComposeViewController canSendMail] ) {
-			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 			mail.mailComposeDelegate = self;
 			[mail setSubject:[NSString stringWithFormat:@"%@ %@ feedback", appDelegate.appName, appDelegate.appVersion]];

@@ -42,7 +42,7 @@
 	} else if ( buttonIndex == 1 ) {
 		// mail
 		if ( [MFMailComposeViewController canSendMail] ) {
-			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 			mail.mailComposeDelegate = self;
 			[mail setSubject:[NSString stringWithFormat:@"%@ GPX file: %@", appDelegate.appName, self.gpxTrack.creationDate]];
@@ -77,7 +77,7 @@
 	_navigationBar.topItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	[appDelegate.mapView.gpxLayer loadTracksInBackgroundWithProgress:^{
 		[self.tableView reloadData];
 	}];
@@ -88,7 +88,7 @@
 {
 	[super viewWillAppear:animated];
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	if ( appDelegate.mapView.gpxLayer.activeTrack ) {
 		[self startTimerForStartDate:appDelegate.mapView.gpxLayer.activeTrack.creationDate];
 	}
@@ -116,7 +116,7 @@
 
 -(void)timerFired:(NSTimer *)timer
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	GpxTrack * track = appDelegate.mapView.gpxLayer.activeTrack;
 	if ( track ) {
 		NSIndexPath * index = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -144,7 +144,7 @@
 	if ( section == 0 ) {
 		return 1;
 	} else if ( section == 1 ) {
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		return appDelegate.mapView.gpxLayer.previousTracks.count;
 	} else if ( section == 2 ) {
 		return 1;
@@ -178,7 +178,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
 	if ( indexPath.section == 0 && appDelegate.mapView.gpxLayer.activeTrack == nil ) {
 		// no active track
@@ -199,7 +199,7 @@
 	NSArray * prevTracks = appDelegate.mapView.gpxLayer.previousTracks;
 	GpxTrack *	track = indexPath.section == 0 ? appDelegate.mapView.gpxLayer.activeTrack : prevTracks[ prevTracks.count - indexPath.row - 1 ];
 	NSInteger	dur = (NSInteger)round(track.duration);
-	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
+	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
 	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (long)track.distance, (long)track.points.count];
 	GpxTrackTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
@@ -222,7 +222,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
 		[appDelegate.mapView.gpxLayer deleteTrack:track];
 
@@ -258,7 +258,7 @@
 	} else if ( indexPath.section == 2 ) {
 		// configuration
 	} else if ( indexPath.section == 1 ) {
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
 		[appDelegate.mapView.gpxLayer centerOnTrack:track];
 		[self.navigationController popToRootViewControllerAnimated:YES];
@@ -272,7 +272,7 @@
 
 	// let progress window display before we submit work
 	dispatch_async(dispatch_get_main_queue(), ^{
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
 		NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/gpx/create"];
 
@@ -286,7 +286,7 @@
 		NSDateFormatter * dateFormatter = [NSDateFormatter new];
 		[dateFormatter setDateFormat:@"yyyy_MM_dd__HH_mm_ss"];
 		NSString * startDateFile = [dateFormatter stringFromDate:track.creationDate];
-		NSString * startDateFriendly = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:kCFDateFormatterShortStyle timeStyle:kCFDateFormatterShortStyle];
+		NSString * startDateFriendly = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
 
 		NSMutableData * body = [NSMutableData new];
 		[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
@@ -360,7 +360,7 @@
 			[[NSUserDefaults standardUserDefaults] setObject:pick forKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
 
 			if ( pick.doubleValue > 0 ) {
-				AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+				AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 				NSDate * cutoff = [NSDate dateWithTimeIntervalSinceNow:-pick.doubleValue*24*60*60];
 				[appDelegate.mapView.gpxLayer trimTracksOlderThan:cutoff];
 			}

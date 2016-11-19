@@ -109,7 +109,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 -(void)periodicSave:(NSTimer *)timer
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	[appDelegate.mapView save];	// this will also invalidate the timer
 }
 
@@ -1270,7 +1270,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 
 #if TARGET_OS_IPHONE
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	NSString * text = [NSString stringWithFormat:@"<?xml version=\"1.0\"?>"
 												@"<osmChange generator=\"%@ %@\" version=\"0.6\"></osmChange>",
 												appDelegate.appName, appDelegate.appVersion];
@@ -1391,7 +1391,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 - (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment retry:(BOOL)retry completion:(void(^)(NSString * errorMessage))completion
 {
 #if TARGET_OS_IPHONE
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 #else
 	AppDelegate * appDelegate = [[NSApplication sharedApplication] delegate];
 #endif
@@ -1510,11 +1510,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion
 {
-#if TARGET_OS_IPHONE
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
-#else
-	AppDelegate * appDelegate = [[NSApplication sharedApplication] delegate];
-#endif
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
 	self.credentialsUserName = appDelegate.userName;
 	self.credentialsPassword = appDelegate.userPassword;

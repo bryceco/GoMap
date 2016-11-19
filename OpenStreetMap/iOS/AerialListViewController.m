@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	_aerials = appDelegate.mapView.customAerials;
 
 	[super viewDidLoad];
@@ -33,7 +33,7 @@
 	[super viewWillDisappear:animated];
 
 	if ( [self isMovingFromParentViewController] ) {
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		MapView * mapView = appDelegate.mapView;
 		mapView.aerialLayer.aerialService = _aerials.currentAerial;
 	}
@@ -137,7 +137,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	MapView * mapView = appDelegate.mapView;
 
 	_aerials.currentIndex = indexPath.row;

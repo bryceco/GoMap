@@ -23,7 +23,7 @@
 
 	[self.activityIndicator startAnimating];
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OSMRect viewRect = [appDelegate.mapView screenLongitudeLatitude];
 	NSInteger zoomLevel = [appDelegate.mapView.aerialLayer zoomLevel];
 	if ( zoomLevel > 21 )

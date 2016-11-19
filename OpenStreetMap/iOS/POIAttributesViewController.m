@@ -39,7 +39,7 @@ enum {
 {
     [super viewDidLoad];
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 	if ( object ) {
 		self.title				= [NSString stringWithFormat:NSLocalizedString(@"%@ Attributes",nil), object.isNode ? NSLocalizedString(@"Node",nil) : object.isWay ? NSLocalizedString(@"Way",nil) : object.isRelation ? NSLocalizedString(@"Relation",nil) : @""];
@@ -63,7 +63,7 @@ enum {
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 	return object.isNode || object.isWay ? 2 : 1;
 }
@@ -73,7 +73,7 @@ enum {
 	if ( section == 0 )
 		return 6;
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 	if ( object.isNode )
 		return 2;	// longitude/latitude
@@ -86,7 +86,7 @@ enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 
 	AttributeCustomCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -111,7 +111,7 @@ enum {
 				break;
 			case ROW_MODIFIED:
 				cell.title.text = @"Modified";
-				cell.value.text = [NSDateFormatter localizedStringFromDate:object.dateForTimestamp dateStyle:kCFDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle];
+				cell.value.text = [NSDateFormatter localizedStringFromDate:object.dateForTimestamp dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle];
 				break;
 			case ROW_VERSION:
 				cell.title.text = @"Version";
@@ -178,7 +178,7 @@ enum {
 		
 		WebPageViewController * web = segue.destinationViewController;
 
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 		if ( object == nil ) {
 			web.url = nil;

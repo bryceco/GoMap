@@ -21,7 +21,7 @@
 {
     [super viewDidLoad];
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
 	OSMRect rect = [appDelegate.mapView screenLongitudeLatitude];
 	_mappers = [appDelegate.mapView.editorLayer.mapData userStatisticsForRegion:rect];
@@ -50,7 +50,7 @@
 
 	OsmUserStatistics * stats = _mappers[ indexPath.row ];
 	cell.textLabel.text = stats.user;
-	NSString * date = [NSDateFormatter localizedStringFromDate:stats.lastEdit dateStyle:NSDateFormatterMediumStyle timeStyle:kCFDateFormatterNoStyle];
+	NSString * date = [NSDateFormatter localizedStringFromDate:stats.lastEdit dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
 	cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld edits, last active %@",nil), (long)stats.editCount, date];
 
     return cell;

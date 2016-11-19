@@ -40,7 +40,7 @@
 
 	self.mapView.viewController = self;
 
-	AppDelegate * delegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * delegate = [AppDelegate getAppDelegate];
 	delegate.mapView = self.mapView;
 
 	[self.mapView.editorLayer setSelectionChangeCallback:^{

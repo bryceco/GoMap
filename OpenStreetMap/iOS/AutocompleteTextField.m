@@ -51,7 +51,7 @@
 }
 - (BOOL)textFieldShouldClear:(UITextField *)textField
 {
-	BOOL result = [_realDelegate respondsToSelector:@selector(textField:textFieldShouldClear:)] ? [_realDelegate textFieldShouldClear:textField] : YES;
+	BOOL result = [_realDelegate respondsToSelector:@selector(textFieldShouldClear:)] ? [_realDelegate textFieldShouldClear:textField] : YES;
 	if ( result ) {
 		[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:@""];
 	}

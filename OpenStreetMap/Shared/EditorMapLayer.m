@@ -108,7 +108,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 
 		[OsmMapData setEditorMapLayerForArchive:self];
 
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		if ( !appDelegate.isAppUpgrade ) {
 			CFTimeInterval t = CACurrentMediaTime();
 			_mapData = [[OsmMapData alloc] initWithCachedData];
@@ -713,7 +713,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 	if ( outerSegments.count == 0 )
-		return NO;
+		return nil;
 
 	// connect ways together forming congiguous runs
 	outerSegments = [self joinConnectedWays:outerSegments];
@@ -784,7 +784,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 	if ( visibleSegments.count == 0 ) {
 		// nothing is on screen
-		return NO;
+		return nil;
 	}
 
 	// pull islands into a separate list
@@ -860,7 +860,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			}
 			if ( nextOutline == nil ) {
 				CGPathRelease(path);
-				return NO;
+				return nil;
 			}
 			OSMPointBoxed * entry = nextOutline[0];
 
@@ -903,7 +903,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			}
 			if ( ![visibleSegments containsObject:nextOutline] ) {
 				CGPathRelease(path);
-				return NO;
+				return nil;
 			}
 			for ( OSMPointBoxed * value in nextOutline ) {
 				OSMPoint pt = value.point;
@@ -3119,7 +3119,7 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 	return a;
 }
 
-
+#if 0
 static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
 	NSInteger diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
@@ -3132,7 +3132,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		diff = obj1.ident.longLongValue - obj2.ident.longLongValue;	// older objects are bigger
 	return diff > 0;	// sort descending
 }
-
+#endif
 
 
 - (NSMutableArray *)getObjectsToDisplay

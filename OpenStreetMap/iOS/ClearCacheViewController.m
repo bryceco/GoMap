@@ -36,7 +36,7 @@ enum {
 {
 	[super viewWillAppear:animated];
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
@@ -70,7 +70,7 @@ enum {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	if ( buttonIndex == 1 ) {
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
 	}
 	[self.navigationController popViewControllerAnimated:YES];
@@ -78,7 +78,7 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
 	switch ( indexPath.row ) {
 		case ROW_OSM_DATA:	// OSM

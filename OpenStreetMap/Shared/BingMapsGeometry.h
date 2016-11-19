@@ -59,12 +59,12 @@ static double GroundResolution(double latitude, NSInteger levelOfDetail)
 	return cos(latitude * M_PI / 180) * 2 * M_PI * EarthRadius / MapSize(levelOfDetail);
 }
 
-static double MetersPerDegree( double latitude )
+inline static double MetersPerDegree( double latitude )
 {
 	return cos(latitude * M_PI / 180) * 2 * M_PI * EarthRadius / 360;
 }
 
-static int MinimumLevelOfDetail(double latitude, double metersPerPixel)
+inline static int MinimumLevelOfDetail(double latitude, double metersPerPixel)
 {
 	double res = GroundResolution(latitude, 0);
 	int levelOfDetail = (int)ceil( log2( res / metersPerPixel ) );
@@ -72,12 +72,12 @@ static int MinimumLevelOfDetail(double latitude, double metersPerPixel)
 }
 
 
-static double MetersPerDegreeLatitude( double latitude )
+inline static double MetersPerDegreeLatitude( double latitude )
 {
 	latitude *= M_PI / 180;
 	return 111132.954 - 559.822 * cos( 2 * latitude ) + 1.175 * cos( 4 * latitude );
 }
-static double MetersPerDegreeLongitude( double latitude )
+inline static double MetersPerDegreeLongitude( double latitude )
 {
 	latitude *= M_PI / 180;
 	return 111132.954 * cos ( latitude );
@@ -95,7 +95,7 @@ static double MetersPerDegreeLongitude( double latitude )
 /// to 23 (highest detail).</param>
 /// <param name="pixelX">Output parameter receiving the X coordinate in pixels.</param>
 /// <param name="pixelY">Output parameter receiving the Y coordinate in pixels.</param>
-static void LatLongToPixelXY(double latitude, double longitude, NSInteger levelOfDetail, NSInteger * pixelX, NSInteger * pixelY)
+inline static void LatLongToPixelXY(double latitude, double longitude, NSInteger levelOfDetail, NSInteger * pixelX, NSInteger * pixelY)
 {
 	latitude = Clip(latitude, MinLatitude, MaxLatitude);
 	longitude = Clip(longitude, MinLongitude, MaxLongitude);
@@ -121,7 +121,7 @@ static void LatLongToPixelXY(double latitude, double longitude, NSInteger levelO
 /// to 23 (highest detail).</param>
 /// <param name="latitude">Output parameter receiving the latitude in degrees.</param>
 /// <param name="longitude">Output parameter receiving the longitude in degrees.</param>
-static void PixelXYToLatLong(int pixelX, int pixelY, int levelOfDetail, double * latitude, double * longitude)
+inline static void PixelXYToLatLong(int pixelX, int pixelY, int levelOfDetail, double * latitude, double * longitude)
 {
 	double mapSize = MapSize(levelOfDetail);
 	double x = (Clip(pixelX, 0, mapSize - 1) / mapSize) - 0.5;
@@ -141,7 +141,7 @@ static void PixelXYToLatLong(int pixelX, int pixelY, int levelOfDetail, double *
 /// <param name="pixelY">Pixel Y coordinate.</param>
 /// <param name="tileX">Output parameter receiving the tile X coordinate.</param>
 /// <param name="tileY">Output parameter receiving the tile Y coordinate.</param>
-static void PixelXYToTileXY(long pixelX, long pixelY, long * tileX, long * tileY)
+inline static void PixelXYToTileXY(long pixelX, long pixelY, long * tileX, long * tileY)
 {
 	*tileX = pixelX / 256;
 	*tileY = pixelY / 256;
@@ -157,7 +157,7 @@ static void PixelXYToTileXY(long pixelX, long pixelY, long * tileX, long * tileY
 /// <param name="tileY">Tile Y coordinate.</param>
 /// <param name="pixelX">Output parameter receiving the pixel X coordinate.</param>
 /// <param name="pixelY">Output parameter receiving the pixel Y coordinate.</param>
-static void TileXYToPixelXY(int tileX, int tileY, int * pixelX, int * pixelY)
+inline static void TileXYToPixelXY(int tileX, int tileY, int * pixelX, int * pixelY)
 {
 	*pixelX = tileX * 256;
 	*pixelY = tileY * 256;
@@ -173,7 +173,7 @@ static void TileXYToPixelXY(int tileX, int tileY, int * pixelX, int * pixelY)
 /// <param name="levelOfDetail">Level of detail, from 1 (lowest detail)
 /// to 23 (highest detail).</param>
 /// <returns>A string containing the QuadKey.</returns>
-static NSString * TileXYToQuadKey(long tileX, long tileY, long levelOfDetail)
+inline static NSString * TileXYToQuadKey(long tileX, long tileY, long levelOfDetail)
 {
 	NSMutableString * quadKey = [NSMutableString string];
 	for (long i = levelOfDetail; i > 0; i--)
@@ -195,7 +195,7 @@ static NSString * TileXYToQuadKey(long tileX, long tileY, long levelOfDetail)
 }
 
 
-static NSString * TileXYToQuadKey2(long tileX, long tileY, int levelOfDetail)
+inline static NSString * TileXYToQuadKey2(long tileX, long tileY, int levelOfDetail)
 {
 	NSMutableString * quadKey = [NSMutableString stringWithCapacity:levelOfDetail];
 	for (int i = levelOfDetail; i > 0; i--)
@@ -226,7 +226,7 @@ static NSString * TileXYToQuadKey2(long tileX, long tileY, int levelOfDetail)
 /// <param name="tileX">Output parameter receiving the tile X coordinate.</param>
 /// <param name="tileY">Output parameter receiving the tile Y coordinate.</param>
 /// <param name="levelOfDetail">Output parameter receiving the level of detail.</param>
-static void QuadKeyToTileXY(NSString * quadKey, int * tileX, int * tileY, int * levelOfDetail)
+inline static void QuadKeyToTileXY(NSString * quadKey, int * tileX, int * tileY, int * levelOfDetail)
 {
 	*tileX = *tileY = 0;
 	*levelOfDetail = (int)quadKey.length;

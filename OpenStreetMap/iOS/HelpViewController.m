@@ -17,7 +17,7 @@
 {
     [super viewDidLoad];
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
 	NSAttributedString * s = _textView.attributedText;
 	NSMutableAttributedString * m = [s mutableCopy];

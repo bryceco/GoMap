@@ -266,6 +266,8 @@ CGSize SizeForImage( NSImage * image )
 
 -(void)awakeFromNib
 {
+	[super awakeFromNib];
+
 #if TARGET_OS_IPHONE
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:UIApplicationWillResignActiveNotification object:NULL];
 #else

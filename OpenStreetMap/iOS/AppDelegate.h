@@ -24,4 +24,5 @@
 -(NSString *)appName;
 -(NSString *)appVersion;
 
++(AppDelegate *) getAppDelegate;
 @end

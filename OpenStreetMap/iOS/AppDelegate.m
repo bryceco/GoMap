@@ -17,6 +17,11 @@
 
 @implementation AppDelegate
 
++ (AppDelegate *)getAppDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	NSURL * url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];

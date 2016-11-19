@@ -27,5 +27,6 @@
 @property (copy,nonatomic)	void (^didSelect)(void);
 
 -(void)clearFilteredCompletionsInternal;
+-(void)updateAutocompleteForString:(NSString *)text;
 
 @end

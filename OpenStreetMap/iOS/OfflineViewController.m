@@ -24,7 +24,7 @@
 {
     [super viewDidLoad];
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
 	_aerialCell.tileLayer 	= appDelegate.mapView.aerialLayer;
 	_mapnikCell.tileLayer	= appDelegate.mapView.mapnikLayer;

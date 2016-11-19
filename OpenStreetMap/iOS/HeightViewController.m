@@ -299,7 +299,7 @@ static const CGFloat InsetPercent = 0.15;
 
 -(double)distanceToObject:(double *)error direction:(double *)pDirection
 {
-	AppDelegate			*	delegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate			*	delegate = [AppDelegate getAppDelegate];
 	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
 	if ( object == nil ) {
 		*error = nan("");
@@ -511,7 +511,7 @@ static const CGFloat InsetPercent = 0.15;
 		text = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	}
 
-	AppDelegate			*	delegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate			*	delegate = [AppDelegate getAppDelegate];
 	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
 
 	// change selection to parent object

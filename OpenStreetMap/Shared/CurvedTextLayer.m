@@ -271,6 +271,7 @@ static NSInteger EliminatePointsOnStraightSegments( NSInteger pointCount, CGPoin
 	return dst+1;
 }
 
+#if 0
 static NSInteger LongestStraightSegment( NSInteger pathPointCount, const CGPoint pathPoints[] )
 {
 	CGFloat longest = 0;
@@ -287,7 +288,7 @@ static NSInteger LongestStraightSegment( NSInteger pathPointCount, const CGPoint
 	}
 	return longestIndex;
 }
-
+#endif
 
 static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint points[], double offset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
 {

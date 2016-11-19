@@ -285,7 +285,7 @@
 			// get list of values for current key
 			NSString * key = kv[0];
 			NSSet * set = [CommonTagList allTagValuesForKey:key];
-			AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 			NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
 			NSArray * list = [values allObjects];
@@ -438,7 +438,7 @@
 
 	// change the selected object in the editor to the relation
 	OsmRelation	* relation = _relations[ indexPath.row ];
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	[appDelegate.mapView.editorLayer setSelectedNode:nil];
 	[appDelegate.mapView.editorLayer setSelectedWay:nil];
 	[appDelegate.mapView.editorLayer setSelectedRelation:relation];

@@ -220,7 +220,7 @@ extern OSMPoint FromBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDist
 extern OSMPoint ToBirdsEye(OSMPoint point, CGPoint center, double birdsEyeDistance, double birdsEyeRotation );
 
 // point is 0..256
-static OSMPoint LongitudeLatitudeFromMapPoint(OSMPoint point)
+inline static OSMPoint LongitudeLatitudeFromMapPoint(OSMPoint point)
 {
 	double x = point.x / 256;
 	double y = point.y / 256;
@@ -234,7 +234,7 @@ static OSMPoint LongitudeLatitudeFromMapPoint(OSMPoint point)
 	loc.x = 360 * x;
 	return loc;
 }
-static OSMPoint MapPointForLatitudeLongitude(double latitude, double longitude)
+inline static OSMPoint MapPointForLatitudeLongitude(double latitude, double longitude)
 {
 	double x = (longitude + 180) / 360;
 	double sinLatitude = sin(latitude * M_PI / 180);

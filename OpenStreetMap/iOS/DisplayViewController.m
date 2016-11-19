@@ -112,7 +112,7 @@ static const NSInteger CACHE_SECTION			= 3;
 
 -(void)setCustomAerialCellTitle
 {
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	AerialList * aerials = appDelegate.mapView.customAerials;
 	NSIndexPath * path = [NSIndexPath indexPathForRow:2 inSection:BACKGROUND_SECTION];
 	CustomBackgroundCell * cell = [self.tableView cellForRowAtIndexPath:path];

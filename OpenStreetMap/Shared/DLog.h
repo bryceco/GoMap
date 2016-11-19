@@ -16,7 +16,7 @@
 #define DLog(...)		NSLog( __VA_ARGS__ )
 #define DbgAssert(x)	NSCAssert((x),@"unspecified")
 
-static double MemoryUsedMB(void)
+inline static double MemoryUsedMB(void)
 {
 	struct task_basic_info info;
 	mach_msg_type_number_t size = sizeof(info);

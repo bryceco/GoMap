@@ -4,6 +4,8 @@
 
 %option prefix="MapCSS_"
 %option noyywrap
+%option nounput
+%option noinput
 
 %s IN_COMMENT
 

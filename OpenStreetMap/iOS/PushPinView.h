@@ -10,7 +10,7 @@
 
 typedef void (^	PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat dx, CGFloat dy, UIGestureRecognizer * gesture );
 
-@interface PushPinView : UIButton
+@interface PushPinView : UIButton<CAAnimationDelegate>
 {
 	CGPoint					_panCoord;
 	UIGestureRecognizer	*	_panRecognizer;

@@ -266,8 +266,8 @@
 
 	} else {
 
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDouble" forIndexPath:indexPath];
-		return cell;
+//		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDouble" forIndexPath:indexPath];
+//		return cell;
 	}
 }
 
@@ -346,7 +346,7 @@
 		if ( key == nil )
 			return;	// should never happen
 		NSSet * set = [CommonTagList allTagValuesForKey:key];
-		AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];
 		NSArray * list = [values allObjects];

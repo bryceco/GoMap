@@ -92,7 +92,7 @@
 	lat1 = (lat1+lat2)/2;
 	lon1 = (lon1+lon2)/2;
 
-	AppDelegate * appDelegate = [[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	double metersPerDegree = MetersPerDegree( lat1 );
 	double minMeters = 50;
 	double widthDegrees = widthDegrees = minMeters / metersPerDegree;
