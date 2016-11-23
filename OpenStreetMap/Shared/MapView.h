@@ -204,6 +204,8 @@ typedef enum {
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 
+- (void)locationUpdatedTo:(CLLocation *)newLocation;
+
 -(OSMRect)screenLongitudeLatitude;
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude birdsEye:(BOOL)birdsEye;
 -(CLLocationCoordinate2D)longitudeLatitudeForScreenPoint:(CGPoint)point birdsEye:(BOOL)birdsEye;

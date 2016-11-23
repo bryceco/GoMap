@@ -55,11 +55,16 @@
 	[super viewWillDisappear:animated];
 }
 
+-(void)accessoryDidConnect:(id)sender
+{
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
 
 	if ( cell == _sendMailCell ) {
+
 		if ( [MFMailComposeViewController canSendMail] ) {
 			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];

@@ -1527,6 +1527,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
 	for ( CLLocation * location in locations ) {
+		DLog(@"loc man = %@",location);
 		[self locationUpdatedTo:location];
 	}
 }

@@ -66,6 +66,8 @@
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
+		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
+		02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02401F381DE1369E00F32AF5 /* ExternalGPS.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
 		0242331316750C81008A3B6A /* ArrowBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0242331216750C81008A3B6A /* ArrowBlue.png */; };
 		024ADF3616AE44CB00875658 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */; };
@@ -572,6 +574,10 @@
 		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
+		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		02401F371DE1369E00F32AF5 /* ExternalGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExternalGPS.h; path = ../Shared/ExternalGPS.h; sourceTree = "<group>"; };
+		02401F381DE1369E00F32AF5 /* ExternalGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExternalGPS.m; path = ../Shared/ExternalGPS.m; sourceTree = "<group>"; };
+		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../Shared/VectorMath.m; sourceTree = "<group>"; };
 		0242331216750C81008A3B6A /* ArrowBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlue.png; sourceTree = "<group>"; };
 		024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
@@ -1069,6 +1075,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */,
 				02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
@@ -1206,6 +1213,8 @@
 		02ACBA3216713CCB00BB4414 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */,
+				02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */,
 				02072AD51BD46B1700F1CAB4 /* StoreKit.framework */,
 				027AD5D319F5EA7D00120654 /* libobjc.A.dylib */,
 				027AD5D119F5A18700120654 /* CoreFoundation.framework */,
@@ -1667,6 +1676,8 @@
 				02ACBA7416713F2A00BB4414 /* DownloadThreadPool.m */,
 				02ACBA7516713F2A00BB4414 /* EditorMapLayer.h */,
 				02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */,
+				02401F371DE1369E00F32AF5 /* ExternalGPS.h */,
+				02401F381DE1369E00F32AF5 /* ExternalGPS.m */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				0228442A16D8870C00A1C051 /* GpxLayer.h */,
 				0228442B16D8870C00A1C051 /* GpxLayer.m */,
@@ -2293,6 +2304,7 @@
 				02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */,
 				02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
+				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
 				0259E4081BCAEC88006C354C /* MyApplication.m in Sources */,

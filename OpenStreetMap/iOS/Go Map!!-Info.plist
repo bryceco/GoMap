@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UISupportedExternalAccessoryProtocols</key>
+	<array>
+		<string>com.bad-elf.gps</string>
+		<string>com.dualav.xgps150</string>
+		<string>com.dualav.xgps160</string>
+	</array>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Connect to external Bluetooth GPS devices</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -76,7 +84,7 @@
 	<key>UIFileSharingEnabled</key>
 	<false/>
 	<key>UIInterfaceOrientation</key>
-	<string>UIInterfaceOrientationPortrait</string>
+	<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>
