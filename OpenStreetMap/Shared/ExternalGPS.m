@@ -138,7 +138,7 @@
 		if ( pos >= data.length )
 			return;
 		NSString * line = [[NSString alloc] initWithBytes:str length:pos+1 encoding:NSUTF8StringEncoding];
-		DLog(@"%@",line);
+//		DLog(@"%@",line);
 		[data replaceBytesInRange:NSMakeRange(0,pos+1) withBytes:nil length:0];
 
 		if ( [line hasPrefix:@"PGLL"] ) {
