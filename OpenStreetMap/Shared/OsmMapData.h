@@ -31,7 +31,8 @@ extern NSString * OsmValueForBoolean( BOOL b );
 
 
 #if 1
-#define OSM_API_URL	@"http://api.openstreetmap.org/"
+//#define OSM_API_URL	@"http://api.openstreetmap.org/"
+extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
 //#define OSM_API_URL	@"http://api.openstreetmap.fr/"	// faster: 4.62 seconds compared to 7.4 for .org server
 #elif 1
 #define OSM_API_URL	@"http://api.hosm.gwhat.org/"
@@ -74,6 +75,9 @@ extern NSString * OsmValueForBoolean( BOOL b );
 
 -(id)initWithCachedData;
 -(void)save;
+
+-(NSString *)getServer;
+-(void)setServer:(NSString *)hostname;
 
 -(void)purgeHard;
 -(void)purgeSoft;

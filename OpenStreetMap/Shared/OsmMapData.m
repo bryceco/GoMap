@@ -32,8 +32,9 @@
 #import "EditorMapLayer.h"
 #endif
 
+#define OSM_SERVER_KEY	@"OSM Server"
 
-
+NSString * OSM_API_URL;
 
 @implementation OsmUserStatistics
 @synthesize changeSetsCount = _changeSetsCount;
@@ -85,6 +86,11 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 		_undoManager.delegate = self;
 
+
+		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+		[defaults registerDefaults:@{ OSM_SERVER_KEY : @"http://api.openstreetmap.org/" }];
+		OSM_API_URL = [defaults objectForKey:OSM_SERVER_KEY];
+
 		[self setupPeriodicSaveTimer];
 	}
 	return self;
@@ -93,6 +99,41 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 -(void)dealloc
 {
 	[_periodicSaveTimer invalidate];
+}
+
+-(void)setServer:(NSString *)hostname
+{
+	hostname = [hostname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+	if ( hostname.length == 0 )
+		hostname = @"api.openstreetmap.org";
+
+	if ( [hostname hasPrefix:@"http://"] || [hostname hasPrefix:@"https://"] ) {
+		// great
+	} else {
+		hostname = [@"http://" stringByAppendingString:hostname];
+	}
+	if ( [hostname hasSuffix:@"/"] ) {
+		// great
+	} else {
+		hostname = [hostname stringByAppendingString:@"//"];
+	}
+
+	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:hostname forKey:OSM_SERVER_KEY];
+	OSM_API_URL = hostname;
+
+	[self purgeSoft];
+}
+
+-(NSString *)getServer
+{
+	NSString * s = OSM_API_URL;
+	if ( [s hasPrefix:@"http://"] )
+		s = [s substringFromIndex:7];
+	if ( [s hasSuffix:@"/"] )
+		s = [s substringToIndex:s.length-1];
+	return s;
 }
 
 -(void)setupPeriodicSaveTimer
