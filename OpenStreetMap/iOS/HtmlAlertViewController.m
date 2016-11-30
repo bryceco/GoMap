@@ -2,8 +2,8 @@
 //  HtmlAlertViewController.m
 //  Go Map!!
 //
-//  Created by Bryce on 11/11/15.
-//  Copyright © 2015 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 11/11/15.
+//  Copyright © 2015 Bryce Cogswell. All rights reserved.
 //
 
 #import "HtmlAlertViewController.h"

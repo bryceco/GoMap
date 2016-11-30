@@ -2,8 +2,8 @@
 //  ExternalGPS.h
 //  Go Map!!
 //
-//  Created by Bryce on 11/19/16.
-//  Copyright © 2016 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 11/19/16.
+//  Copyright © 2016 Bryce Cogswell. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

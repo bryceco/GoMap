@@ -2,8 +2,8 @@
 //  MyApplication.h
 //  Go Map!!
 //
-//  Created by Bryce on 10/11/15.
-//  Copyright © 2015 Bryce. All rights reserved.
+//  Created by Bryce Cogswell on 10/11/15.
+//  Copyright © 2015 Bryce Cogswell. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
