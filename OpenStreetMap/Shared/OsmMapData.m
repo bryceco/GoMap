@@ -88,7 +88,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 
 		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-		[defaults registerDefaults:@{ OSM_SERVER_KEY : @"http://api.openstreetmap.org/" }];
+		[defaults registerDefaults:@{ OSM_SERVER_KEY : @"https://api.openstreetmap.org/" }];
 		OSM_API_URL = [defaults objectForKey:OSM_SERVER_KEY];
 
 		[self setupPeriodicSaveTimer];
@@ -111,7 +111,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	if ( [hostname hasPrefix:@"http://"] || [hostname hasPrefix:@"https://"] ) {
 		// great
 	} else {
-		hostname = [@"http://" stringByAppendingString:hostname];
+		hostname = [@"https://" stringByAppendingString:hostname];
 	}
 	if ( [hostname hasSuffix:@"/"] ) {
 		// great

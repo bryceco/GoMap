@@ -16,7 +16,7 @@
 #define yylex_destroy	MapCSS_lex_destroy
 #define yylineno		MapCSS_lineno
 
-extern int		yylex();
+extern int		yylex(void);
 extern char	*	yytext;
 extern int		yylineno;
 extern FILE *	yyin;

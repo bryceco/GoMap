@@ -45,7 +45,7 @@ typedef void(^UndoManagerChangeCallback)(void);
 }
 
 @property (strong,nonatomic) void (^commentCallback)(BOOL undo,NSArray * comments);
-@property (strong,nonatomic) NSData * (^locationCallback)();
+@property (strong,nonatomic) NSData * (^locationCallback)(void);
 @property (weak,nonatomic)	id<UndoManagerDelegate> delegate;
 
 @property (readonly,nonatomic) BOOL			isUndoing;

@@ -115,7 +115,9 @@ typedef void (^dequeueBlock)(void);
 		[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 
 		if ( g_UserAgent ) {
+#if 0 // don't set user agent because it causes some tile servers to reject us:
 			[request setValue:g_UserAgent forHTTPHeaderField:@"User-Agent"];
+#endif
 		}
 
 		_connection	= [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];

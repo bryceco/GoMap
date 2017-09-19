@@ -4013,7 +4013,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 -(void)doSelectionChangeCallbacks
 {
-	for ( void (^callback)() in _selectionChangeCallbacks ) {
+	for ( void (^callback)(void) in _selectionChangeCallbacks ) {
 		callback();
 	}
 }
