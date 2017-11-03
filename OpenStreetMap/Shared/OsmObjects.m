@@ -449,17 +449,17 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
-	[coder encodeObject:_ident				forKey:@"ident"];
-	[coder encodeObject:_user				forKey:@"user"];
-	[coder encodeObject:_timestamp			forKey:@"timestamp"];
-	[coder encodeInteger:_version			forKey:@"version"];
-	[coder encodeInteger:_changeset			forKey:@"changeset"];
-	[coder encodeInteger:_uid				forKey:@"uid"];
-	[coder encodeBool:_visible				forKey:@"visible"];
-	[coder encodeObject:_tags				forKey:@"tags"];
-	[coder encodeBool:_deleted				forKey:@"deleted"];
-	[coder encodeInt32:_modifyCount			forKey:@"modified"];
-	[coder encodeObject:_relations			forKey:@"relations"];
+	[coder encodeObject:_ident					forKey:@"ident"];
+	[coder encodeObject:_user					forKey:@"user"];
+	[coder encodeObject:_timestamp				forKey:@"timestamp"];
+	[coder encodeInteger:_version				forKey:@"version"];
+	[coder encodeInteger:(NSInteger)_changeset	forKey:@"changeset"];
+	[coder encodeInteger:_uid					forKey:@"uid"];
+	[coder encodeBool:_visible					forKey:@"visible"];
+	[coder encodeObject:_tags					forKey:@"tags"];
+	[coder encodeBool:_deleted					forKey:@"deleted"];
+	[coder encodeInt32:_modifyCount				forKey:@"modified"];
+	[coder encodeObject:_relations				forKey:@"relations"];
 }
 -(id)initWithCoder:(NSCoder *)coder
 {

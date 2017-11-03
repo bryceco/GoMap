@@ -2764,7 +2764,7 @@ NSString * ActionTitle( NSInteger action )
 	if ( hit == nil )
 		return NO;
 	if ( _editorLayer.addNodeInProgress ) {
-		return hit.isWay;
+		return hit.isWay != NULL;
 	}
 	if ( _editorLayer.addWayInProgress ) {
 		if ( hit.isWay ) {

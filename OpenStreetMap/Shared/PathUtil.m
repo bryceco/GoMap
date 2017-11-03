@@ -15,7 +15,7 @@ static void InvokeBlockAlongPathCallback2( void * info, const CGPathElement * el
 	block( element->type, element->points );
 }
 
-void CGPathApplyBlock( CGPathRef path, ApplyPathCallback block )
+void CGPathApplyBlockEx( CGPathRef path, ApplyPathCallback block )
 {
 	CGPathApply(path, (__bridge void *)block, InvokeBlockAlongPathCallback2);
 }
@@ -23,7 +23,7 @@ void CGPathApplyBlock( CGPathRef path, ApplyPathCallback block )
 NSInteger CGPathPointCount( CGPathRef path )
 {
 	__block NSInteger count = 0;
-	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint *points) {
+	CGPathApplyBlockEx( path, ^(CGPathElementType type, CGPoint *points) {
 		++count;
 	});
 	return count;
@@ -32,7 +32,7 @@ NSInteger CGPathPointCount( CGPathRef path )
 NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] )
 {
 	__block NSInteger index = 0;
-	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint *points) {
+	CGPathApplyBlockEx( path, ^(CGPathElementType type, CGPoint *points) {
 		pointList[ index++ ] = points[0];
 	});
 	return index;
@@ -40,7 +40,7 @@ NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] )
 
 void CGPathDump( CGPathRef path )
 {
-	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint *points) {
+	CGPathApplyBlockEx( path, ^(CGPathElementType type, CGPoint *points) {
 		NSLog(@"%f,%f", points->x, points->y );
 	});
 }
@@ -86,7 +86,7 @@ void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval
 				break;
 		}
 	};
-	CGPathApplyBlock( path, block );
+	CGPathApplyBlockEx( path, block );
 }
 
 void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
@@ -96,7 +96,7 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double b
 	__block CGPoint	previous = { 0 };
 	__block CGFloat	offset = startOffset;
 
-	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint * points) {
+	CGPathApplyBlockEx( path, ^(CGPathElementType type, CGPoint * points) {
 		if ( quit )
 			return;
 		switch ( type ) {
@@ -152,7 +152,7 @@ void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double b
 CGMutablePathRef PathReversed( CGPathRef path )
 {
 	NSMutableArray * a = [NSMutableArray new];
-	CGPathApplyBlock( path, ^(CGPathElementType type, CGPoint * points){
+	CGPathApplyBlockEx( path, ^(CGPathElementType type, CGPoint * points){
 		if ( type == kCGPathElementMoveToPoint || type == kCGPathElementAddLineToPoint ) {
 			CGPoint cgPoint = points[0];
 			OSMPoint pt = { cgPoint.x, cgPoint.y };

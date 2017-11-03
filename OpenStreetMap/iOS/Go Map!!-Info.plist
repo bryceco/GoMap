@@ -119,6 +119,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is used to measure heights of buildings or objects</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>

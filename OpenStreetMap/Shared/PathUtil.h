@@ -13,7 +13,7 @@
 
 typedef void (^ApplyPathCallback)(CGPathElementType type, CGPoint * points);
 
-void CGPathApplyBlock( CGPathRef path, ApplyPathCallback block );
+void CGPathApplyBlockEx( CGPathRef path, ApplyPathCallback block );
 void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(OSMPoint pt, OSMPoint direction) );
 CGMutablePathRef PathReversed( CGPathRef path ) CF_RETURNS_RETAINED;
 void PathPositionAndAngleForOffset( CGPathRef path, double startOffset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength );
