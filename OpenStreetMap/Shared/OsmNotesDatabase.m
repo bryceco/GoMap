@@ -345,7 +345,9 @@ static NSInteger g_nextUID = 1;
 	}];
 	[_workQueue addOperationWithBlock:^{
 		[self updateNotesForRegion:bbox fixmeData:mapData completion:completion];
+#if 0 // don't do keepright stuff any more
 		[self updateKeepRightForRegion:bbox mapData:mapData completion:completion];
+#endif
 	}];
 }
 
