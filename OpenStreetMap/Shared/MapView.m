@@ -553,6 +553,7 @@ CGSize SizeForImage( NSImage * image )
 	_crossHairs.position = CGRectCenter( rect );
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
+	_statusBarBackground.frame = [UIApplication sharedApplication].statusBarFrame;
 
 	[CATransaction commit];
 }
