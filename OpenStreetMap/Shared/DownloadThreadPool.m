@@ -367,7 +367,7 @@ typedef void (^dequeueBlock)(void);
 			DLog(@"HTTP error %ld: %@", (long)httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode] );
 			DLog(@"URL: %@", url );
 			NSString * text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-			error = [NSError errorWithDomain:@"HTTP" code:httpResponse.statusCode userInfo:@{ NSLocalizedDescriptionKey:text}];
+			error = [NSError errorWithDomain:@"HTTP" code:httpResponse.statusCode userInfo:@{ NSLocalizedDescriptionKey:text?:@""}];
 			data = nil;
 		}
 
