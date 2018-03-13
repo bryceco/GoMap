@@ -1429,7 +1429,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}
 }
 
-- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment retry:(BOOL)retry completion:(void(^)(NSString * errorMessage))completion
+- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment retries:(NSInteger)retries completion:(void(^)(NSString * errorMessage))completion
 {
 #if TARGET_OS_IPHONE
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
@@ -1458,7 +1458,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[self putRequest:url2 method:@"POST" xml:xmlChanges completion:^(NSData *postData,NSString * postErrorMessage) {
 				NSString * response = [[NSString alloc] initWithBytes:postData.bytes length:postData.length encoding:NSUTF8StringEncoding];
 
-				if ( retry && [response hasPrefix:@"Version mismatch"] ) {
+				if ( retries > 0 && [response hasPrefix:@"Version mismatch"] ) {
 
 					// update the bad element and retry
 					DLog( @"Upload error: %@", response);
@@ -1475,7 +1475,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 						[OsmMapData osmDataForUrl:url3 quads:nil completion:^(ServerQuery *quads, OsmMapData * mapData, NSError *error) {
 							[self merge:mapData fromDownload:YES quadList:nil success:YES];
 							// try again:
-							[self uploadChangesetWithComment:comment completion:completion];
+							[self uploadChangesetWithComment:comment retries:retries-1 completion:completion];
 						}];
 						return;
 					}
@@ -1539,15 +1539,21 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 }
 
-- (void)uploadChangesetWithComment:(NSString *)comment completion:(void(^)(NSString * errorMessage))completion
+- (void)uploadChangesetWithComment:(NSString *)comment retries:(NSInteger)retries completion:(void(^)(NSString * errorMessage))completion
 {
 	NSXMLDocument * xmlChanges = [self createXml];
 	if ( xmlChanges == nil ) {
 		completion( @"No changes to apply" );
 		return;
 	}
-	[self uploadChangeset:xmlChanges comment:comment retry:YES completion:completion];
+	[self uploadChangeset:xmlChanges comment:comment retries:retries completion:completion];
 }
+
+- (void)uploadChangesetWithComment:(NSString *)comment completion:(void(^)(NSString * errorMessage))completion
+{
+	[self uploadChangesetWithComment:comment retries:20 completion:completion];
+}
+
 
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion
 {
