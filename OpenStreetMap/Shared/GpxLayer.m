@@ -363,7 +363,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 		[NSKeyedArchiver archiveRootObject:track toFile:path];
 		time = CACurrentMediaTime() - time;
-		DLog(@"GPX track save time = %f\n", time);
+		DLog(@"GPX track %d points, save time = %f\n", (int)track.points.count, time);
 	}
 }
 
@@ -430,18 +430,25 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			return;
 		}
 
-#if 0
+#if 1
+		[self.activeTrack addPoint:location];
+#else
+		// for debugging only: magnify number of GPS points to test performance
 		for ( NSInteger i = 0; i < 1000; ++i ) {
 			CLLocation * loc = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(location.coordinate.latitude+i/1000000.0, location.coordinate.longitude) altitude:location.altitude horizontalAccuracy:location.horizontalAccuracy verticalAccuracy:location.verticalAccuracy course:location.course speed:location.speed timestamp:location.timestamp];
 			[self.activeTrack addPoint:loc];
 		}
-#else
-		[self.activeTrack addPoint:location];
 #endif
 
 		// automatically save periodically
 		if ( self.activeTrack.points.count % 10 == 0 ) {
 			[self saveActiveTrack];
+		}
+
+		// if the number of points is too large then the periodic save will begin taking too long, and drawing performance will degrade, so start a new track every hour
+		if ( self.activeTrack.points.count >= 3600 ) {
+			[self endActiveTrack];
+			[self startNewTrack];
 		}
 
 		[self setNeedsDisplay];
@@ -585,6 +592,8 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[_mapView setTransformForLatitude:pt.latitude longitude:pt.longitude width:widthDegrees];
 }
 
+
+// Load a GPX trace from an external source
 -(BOOL)loadGPXData:(NSData *)data center:(BOOL)center
 {
 	GpxTrack * newTrack = [[GpxTrack alloc] initWithXmlData:data];
@@ -605,35 +614,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 #pragma mark Drawing
 
 
--(void)drawTrack:(NSArray *)way context:(CGContextRef)ctx
-{
-	CGMutablePathRef	path = CGPathCreateMutable();
-	NSInteger			count = 0;
-	for ( GpxPoint * point in way ) {
-		CGPoint pt = [_mapView screenPointForLatitude:point.latitude longitude:point.longitude birdsEye:YES];
-		if ( count == 0 ) {
-			CGPathMoveToPoint(path, NULL, pt.x, pt.y );
-		} else {
-			CGPathAddLineToPoint(path, NULL, pt.x, pt.y );
-		}
-		++count;
-	}
-
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
-
-//	CGFloat red = 0.5, green = 0.5, blue = 1.0, alpha = 1;	// blue
-	CGFloat red = 1.0, green = 99/255.0, blue = 249/255.0, alpha = 1;	// pink
-	CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
-	CGFloat lineWidth = 2;
-	CGContextSetLineWidth(ctx, lineWidth);
-	CGContextStrokePath(ctx);
-
-	CGPathRelease(path);
-}
-
-
-
 -(void)setBounds:(CGRect)bounds
 {
 	[super setBounds:bounds];
@@ -641,6 +621,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[self setNeedsLayout];
 }
 
+// Convert the track to a CGPath so we can draw it
 -(CGPathRef)pathForTrack:(GpxTrack *)track refPoint:(OSMPoint *)refPoint CF_RETURNS_RETAINED
 {
 	CGMutablePathRef	path		= CGPathCreateMutable();
