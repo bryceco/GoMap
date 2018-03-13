@@ -1633,11 +1633,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)updateString:(NSMutableAttributedString *)string withWay:(NSXMLElement *)way
 {
+	int nodeCount = 0;
+	for ( NSXMLElement * tag in way.children ) {
+		if ( [tag.name isEqualToString:@"nd"] ) {
+			nodeCount++;
+		}
+	}
+
 	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
 	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"\tWay %@ (%d nodes)\n",nil),
 					   [way attributeForName:@"id"].stringValue,
-					   (int)way.childCount];
+					   nodeCount];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+
 	for ( NSXMLElement * tag in way.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
 			[self updateString:string withTag:(NSXMLElement *)tag];
