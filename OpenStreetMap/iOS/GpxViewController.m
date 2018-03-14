@@ -223,7 +223,8 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
+		NSArray * prevTracks = appDelegate.mapView.gpxLayer.previousTracks;
+		GpxTrack * track = prevTracks[ prevTracks.count - indexPath.row - 1 ];
 		[appDelegate.mapView.gpxLayer deleteTrack:track];
 
 		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
