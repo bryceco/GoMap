@@ -288,7 +288,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3A-5n-1Iq">
-                                            <rect key="frame" x="15" y="10" width="40.5" height="21"/>
+                                            <rect key="frame" x="15" y="10" width="88.5" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="XdU-Zg-9HJ"/>
                                             </constraints>
@@ -297,7 +297,7 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mickey D's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7" customClass="AutocompleteTextField">
-                                            <rect key="frame" x="72" y="7" width="214" height="30"/>
+                                            <rect key="frame" x="120" y="7" width="166" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="aI3-W4-aeV"/>
                                             </constraints>
@@ -306,11 +306,11 @@
                                         </textField>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="pxY-di-zg7" firstAttribute="leading" secondItem="5MU-Jz-yPQ" secondAttribute="leading" constant="120" id="6kO-cF-6B5"/>
                                         <constraint firstItem="pxY-di-zg7" firstAttribute="leading" secondItem="P3A-5n-1Iq" secondAttribute="trailing" constant="16.5" id="7uA-46-IKR"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="pxY-di-zg7" firstAttribute="leading" secondItem="l7g-Wi-ks5" secondAttribute="leading" constant="72" id="6wN-Aq-qMg"/>
                                     <constraint firstItem="pxY-di-zg7" firstAttribute="centerY" secondItem="l7g-Wi-ks5" secondAttribute="centerY" id="7b4-m2-euq"/>
                                     <constraint firstAttribute="trailing" secondItem="pxY-di-zg7" secondAttribute="trailing" constant="34" id="KA0-g1-46V"/>
                                     <constraint firstItem="P3A-5n-1Iq" firstAttribute="baseline" secondItem="pxY-di-zg7" secondAttribute="baseline" constant="-1" id="hNs-Ia-tl6"/>
