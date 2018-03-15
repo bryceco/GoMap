@@ -8,7 +8,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#define USER_DEFAULTS_GPX_EXPIRATIION_KEY @"GpxTrackExpirationDays"
+#define USER_DEFAULTS_GPX_EXPIRATIION_KEY		 @"GpxTrackExpirationDays"
+#define USER_DEFAULTS_GPX_BACKGROUND_TRACKING	 @"GpxTrackBackgroundTracking"
 
 
 @class CLLocation;
@@ -22,6 +23,7 @@
 @property (assign,nonatomic)	double		elevation;
 @property (strong,nonatomic)	NSDate *	timestamp;
 @end
+
 
 @interface GpxTrack : NSObject <NSCoding>
 {
@@ -45,6 +47,7 @@
 - (double)distance;
 
 @end
+
 
 @interface GpxLayer : CALayer
 {

@@ -17,6 +17,11 @@
 #import "OsmMapData.h"
 
 
+#define SECTION_CONFIGURE			0
+#define SECTION_ACTIVE_TRACK 		1
+#define SECTION_PREVIOUS_TRACKS		2
+
+
 
 @interface GpxTrackTableCell : UITableViewCell <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 @property (assign,nonatomic)	IBOutlet	UILabel				*	startDate;
@@ -57,6 +62,18 @@
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
 	[controller dismissViewControllerAnimated:YES completion:nil];
+}
+@end
+
+@interface GpxTrackBackgroundCollection : UITableViewCell
+@property (assign,nonatomic)	IBOutlet	UISwitch	*	enableBackground;
+@end
+@implementation GpxTrackBackgroundCollection
+-(IBAction)enableBackground:(id)sender
+{
+	UISwitch * toggle = sender;
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	appDelegate.mapView.gpsInBackground = [toggle isOn];
 }
 @end
 
@@ -119,7 +136,7 @@
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	GpxTrack * track = appDelegate.mapView.gpxLayer.activeTrack;
 	if ( track ) {
-		NSIndexPath * index = [NSIndexPath indexPathForRow:0 inSection:0];
+		NSIndexPath * index = [NSIndexPath indexPathForRow:0 inSection:SECTION_ACTIVE_TRACK];
 		[self.tableView reloadRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationNone];
 	} else {
 		[_timer invalidate];
@@ -141,13 +158,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if ( section == 0 ) {
+	if ( section == SECTION_ACTIVE_TRACK ) {
+		// active track
 		return 1;
-	} else if ( section == 1 ) {
+	} else if ( section == SECTION_PREVIOUS_TRACKS ) {
+		// previous tracks
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		return appDelegate.mapView.gpxLayer.previousTracks.count;
-	} else if ( section == 2 ) {
-		return 1;
+	} else if ( section == SECTION_CONFIGURE ) {
+		// configuration
+		return 2;
 	} else {
 		return 0;
 	}
@@ -156,11 +176,11 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	switch (section) {
-		case 0:
+		case SECTION_ACTIVE_TRACK:
 			return @"Current Track";
-		case 1:
+		case SECTION_PREVIOUS_TRACKS:
 			return @"Previous Tracks";
-		case 2:
+		case SECTION_CONFIGURE:
 			return @"Configure";
 		default:
 			return nil;
@@ -169,7 +189,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
-	if ( section == 0 ) {
+	if ( section == SECTION_ACTIVE_TRACK ) {
 		return @"A GPX Track records your path as you travel along a road or trail";
 	}
 	return nil;
@@ -180,24 +200,34 @@
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
-	if ( indexPath.section == 0 && appDelegate.mapView.gpxLayer.activeTrack == nil ) {
+	if ( indexPath.section == SECTION_ACTIVE_TRACK && appDelegate.mapView.gpxLayer.activeTrack == nil ) {
 		// no active track
 		UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
 		cell.textLabel.text = @"No active track";
 		return cell;
 	}
-	if ( indexPath.section == 2 ) {
-		GpxTrackExpirationCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackExpirationCell" forIndexPath:indexPath];
-		NSNumber * expirationDays = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
-		NSInteger expiration = [expirationDays integerValue];
-		NSString * title = expiration <= 0 ? @"Never" : [NSString stringWithFormat:@"%ld Days",(long)expiration];
-		[cell.expirationButton setTitle:title forState:UIControlStateNormal];
-		[cell.expirationButton sizeToFit];
-		return cell;
+	if ( indexPath.section == SECTION_CONFIGURE ) {
+		// configuration section
+		if ( indexPath.row == 0 ) {
+			// days before deleting
+			GpxTrackExpirationCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackExpirationCell" forIndexPath:indexPath];
+			NSNumber * expirationDays = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
+			NSInteger expiration = [expirationDays integerValue];
+			NSString * title = expiration <= 0 ? @"Never" : [NSString stringWithFormat:@"%ld Days",(long)expiration];
+			[cell.expirationButton setTitle:title forState:UIControlStateNormal];
+			[cell.expirationButton sizeToFit];
+			return cell;
+		} else {
+			// enable background use
+			GpxTrackBackgroundCollection * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackBackgroundCollection" forIndexPath:indexPath];
+			[cell.enableBackground setOn:appDelegate.mapView.gpsInBackground];
+			return cell;
+		}
 	}
 
+	// active track or previous tracks
 	NSArray * prevTracks = appDelegate.mapView.gpxLayer.previousTracks;
-	GpxTrack *	track = indexPath.section == 0 ? appDelegate.mapView.gpxLayer.activeTrack : prevTracks[ prevTracks.count - indexPath.row - 1 ];
+	GpxTrack *	track = indexPath.section == SECTION_ACTIVE_TRACK ? appDelegate.mapView.gpxLayer.activeTrack : prevTracks[ prevTracks.count - indexPath.row - 1 ];
 	NSInteger	dur = (NSInteger)round(track.duration);
 	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
@@ -214,7 +244,7 @@
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section == 1;
+    return indexPath.section == SECTION_PREVIOUS_TRACKS;
 }
 
 // Override to support editing the table view.
@@ -254,11 +284,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == 0 ) {
+	if ( indexPath.section == SECTION_ACTIVE_TRACK ) {
 		// active track
-	} else if ( indexPath.section == 2 ) {
+	} else if ( indexPath.section == SECTION_CONFIGURE ) {
 		// configuration
-	} else if ( indexPath.section == 1 ) {
+	} else if ( indexPath.section == SECTION_PREVIOUS_TRACKS ) {
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
 		[appDelegate.mapView.gpxLayer centerOnTrack:track];

@@ -180,6 +180,7 @@ typedef enum {
 @property (readonly,nonatomic)	OSMTransform					mapFromScreenTransform;
 
 @property (assign,nonatomic)	GPS_STATE						gpsState;
+@property (assign,nonatomic)	BOOL							gpsInBackground;
 @property (readonly,nonatomic)	PushPinView					*	pushpinView;
 @property (assign,nonatomic)	BOOL							silentUndo;	// don't flash message about undo
 

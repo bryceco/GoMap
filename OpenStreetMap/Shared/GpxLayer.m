@@ -303,7 +303,10 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( self ) {
 		_mapView = mapView;
 
-		[[NSUserDefaults standardUserDefaults] registerDefaults:@{ USER_DEFAULTS_GPX_EXPIRATIION_KEY : @(7) }];
+		[[NSUserDefaults standardUserDefaults] registerDefaults:@{
+																  USER_DEFAULTS_GPX_EXPIRATIION_KEY : @(7),
+																  USER_DEFAULTS_GPX_BACKGROUND_TRACKING : @(NO)
+																  }];
 
 		self.actions = @{
 						 @"onOrderIn"	: [NSNull null],
@@ -759,6 +762,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		[self setNeedsLayout];
 	}
 }
+
 
 
 @end

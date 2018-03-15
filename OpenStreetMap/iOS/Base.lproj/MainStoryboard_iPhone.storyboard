@@ -1645,7 +1645,7 @@
                                                 <constraint firstAttribute="width" constant="21" id="OCa-Ve-Avy"/>
                                                 <constraint firstAttribute="height" constant="28" id="g0U-1H-4Oc"/>
                                             </constraints>
-                                            <state key="normal" title="Button" image="702-share.png"/>
+                                            <state key="normal" image="702-share.png"/>
                                             <connections>
                                                 <action selector="doAction:" destination="u32-zl-4Xr" eventType="touchUpInside" id="NBF-z5-nqC"/>
                                             </connections>
@@ -1670,15 +1670,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4s8-Bj-JOX">
-                                            <rect key="frame" x="247" y="7" width="57" height="30"/>
+                                            <rect key="frame" x="182" y="7" width="122" height="30"/>
                                             <state key="normal" title="99 Days"/>
                                             <connections>
                                                 <segue destination="Nkd-2e-8Au" kind="modal" id="ubS-cl-jpK"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Delete tracks after:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnI-tY-WWa">
-                                            <rect key="frame" x="14" y="11" width="158" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete tracks after:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnI-tY-WWa">
+                                            <rect key="frame" x="16" y="11" width="158" height="21"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1686,11 +1685,48 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="4s8-Bj-JOX" firstAttribute="centerY" secondItem="pdO-s8-VPO" secondAttribute="centerY" id="7Gc-so-mhd"/>
+                                        <constraint firstItem="4s8-Bj-JOX" firstAttribute="leading" secondItem="WnI-tY-WWa" secondAttribute="trailing" constant="8" id="KT8-iN-Y8X"/>
+                                        <constraint firstItem="WnI-tY-WWa" firstAttribute="centerY" secondItem="pdO-s8-VPO" secondAttribute="centerY" id="Q8C-yK-nGq"/>
+                                        <constraint firstItem="WnI-tY-WWa" firstAttribute="leading" secondItem="pdO-s8-VPO" secondAttribute="leading" constant="16" id="RyY-sL-vt5"/>
                                         <constraint firstAttribute="trailing" secondItem="4s8-Bj-JOX" secondAttribute="trailing" constant="16" id="pyG-4K-Q4n"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="expirationButton" destination="4s8-Bj-JOX" id="C6g-tO-HXS"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GpxTrackBackgroundCollection" id="c6i-wc-YwL" customClass="GpxTrackBackgroundCollection">
+                                <rect key="frame" x="0.0" y="143.5" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="c6i-wc-YwL" id="g37-Zh-mr8">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collect in background:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-dW-3Fh">
+                                            <rect key="frame" x="16" y="11" width="231" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Izg-nL-n1B">
+                                            <rect key="frame" x="255" y="6" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="enableBackground:" destination="c6i-wc-YwL" eventType="valueChanged" id="td2-Oj-PnD"/>
+                                            </connections>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="DmO-dW-3Fh" firstAttribute="leading" secondItem="g37-Zh-mr8" secondAttribute="leading" constant="16" id="4zI-5e-tWr"/>
+                                        <constraint firstItem="Izg-nL-n1B" firstAttribute="leading" secondItem="DmO-dW-3Fh" secondAttribute="trailing" constant="8" id="TXH-0Q-PfC"/>
+                                        <constraint firstAttribute="trailing" secondItem="Izg-nL-n1B" secondAttribute="trailing" constant="16" id="u4J-Rw-lck"/>
+                                        <constraint firstItem="Izg-nL-n1B" firstAttribute="centerY" secondItem="g37-Zh-mr8" secondAttribute="centerY" id="z6h-yo-17I"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstItem="DmO-dW-3Fh" firstAttribute="centerY" secondItem="c6i-wc-YwL" secondAttribute="centerY" id="Fpe-eX-y2J"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="enableBackground" destination="Izg-nL-n1B" id="a2O-FY-LS2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

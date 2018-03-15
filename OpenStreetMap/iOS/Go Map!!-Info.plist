@@ -81,6 +81,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location will be displayed and followed on the map.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Always on location tracking allows the app to record GPX files when inactive.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location will be displayed and followed on the map.</string>
 	<key>UIFileSharingEnabled</key>
 	<false/>
 	<key>UIInterfaceOrientation</key>
@@ -144,6 +148,10 @@
 				<string>application/gpx+xml</string>
 			</dict>
 		</dict>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
 	</array>
 </dict>
 </plist>

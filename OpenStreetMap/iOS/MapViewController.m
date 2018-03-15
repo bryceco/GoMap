@@ -173,7 +173,12 @@
 
 -(void)applicationDidEnterBackground:(id)sender
 {
-	[self setGpsState:GPS_STATE_NONE];
+	if ( [AppDelegate getAppDelegate].mapView.gpsInBackground ) {
+		// nothing
+	} else {
+		// turn of GPS tracking
+		[self setGpsState:GPS_STATE_NONE];
+	}
 }
 
 

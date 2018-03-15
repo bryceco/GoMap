@@ -292,7 +292,11 @@ CGSize SizeForImage( NSImage * image )
 		_locationManager.delegate = self;
 #if TARGET_OS_IPHONE
 		_locationManager.pausesLocationUpdatesAutomatically = YES;
-		_locationManager.activityType = CLActivityTypeFitness;
+		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground;
+		if (@available(iOS 11.0, *)) {
+			_locationManager.showsBackgroundLocationIndicator = YES;
+		}
+		_locationManager.activityType = CLActivityTypeOther;
 #endif
 	}
 
@@ -1282,6 +1286,23 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
+-(BOOL)gpsInBackground
+{
+	return [[NSUserDefaults standardUserDefaults] boolForKey:USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
+}
+-(void)setGpsInBackground:(BOOL)gpsInBackground
+{
+	[[NSUserDefaults standardUserDefaults] setBool:gpsInBackground forKey:USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
+
+	_locationManager.allowsBackgroundLocationUpdates = gpsInBackground;
+
+	if ( gpsInBackground ) {
+		// ios 8 and later:
+		if ( [_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)] ) {
+			[_locationManager  requestAlwaysAuthorization];
+		}
+	}
+}
 
 -(IBAction)locateMe:(id)sender
 {
@@ -1490,6 +1511,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
+		// DLog( @"gps point %d", (int)_gpxLayer.activeTrack.points.count );
 	}
 
 	if ( self.gpsState == GPS_STATE_NONE ) {
