@@ -801,13 +801,19 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 							   },
 					   @"highway" : @{
 							   @"motorway" : @YES,
-							   @"motorway_link" : @YES
+							   @"motorway_link" : @YES,
+							   @"steps" : @YES
 							   },
 					   @"junction": @{
 							   @"roundabout" : @YES
 							   },
 					   @"man_made": @{
-							   @"piste:halfpipe" : @YES
+							   @"piste:halfpipe" : @YES,
+							   @"embankment" : @YES
+							   },
+					   @"natural" : @{
+							   @"cliff" : @YES,
+							   @"coastline" : @YES
 							   },
 					   @"piste:type": @{
 							   @"downhill" : @YES,
@@ -815,8 +821,14 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 							   @"yes" : @YES
 							   },
 					   @"waterway": @{
+							   @"brook" : @YES,
+							   @"canal" : @YES,
+							   @"ditch" : @YES,
+							   @"drain" : @YES,
+							   @"fairway" : @YES,
 							   @"river" : @YES,
-							   @"stream" : @YES
+							   @"stream" : @YES,
+							   @"weir" : @YES
 							   }
 					   };
 	}
