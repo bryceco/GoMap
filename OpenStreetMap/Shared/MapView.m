@@ -292,7 +292,7 @@ CGSize SizeForImage( NSImage * image )
 		_locationManager.delegate = self;
 #if TARGET_OS_IPHONE
 		_locationManager.pausesLocationUpdatesAutomatically = YES;
-		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground;
+		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableBreadCrumb;
 		if (@available(iOS 11.0, *)) {
 			_locationManager.showsBackgroundLocationIndicator = YES;
 		}
@@ -922,6 +922,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		_enableBreadCrumb = enableBreadCrumb;
 
 		_gpxLayer.hidden = !self.enableBreadCrumb;
+
+		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableBreadCrumb;
 	}
 }
 
@@ -1294,7 +1296,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	[[NSUserDefaults standardUserDefaults] setBool:gpsInBackground forKey:USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
 
-	_locationManager.allowsBackgroundLocationUpdates = gpsInBackground;
+	_locationManager.allowsBackgroundLocationUpdates = gpsInBackground && self.enableBreadCrumb;
 
 	if ( gpsInBackground ) {
 		// ios 8 and later:

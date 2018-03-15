@@ -173,10 +173,11 @@
 
 -(void)applicationDidEnterBackground:(id)sender
 {
-	if ( [AppDelegate getAppDelegate].mapView.gpsInBackground ) {
-		// nothing
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	if ( appDelegate.mapView.gpsInBackground && appDelegate.mapView.enableBreadCrumb ) {
+		// allow GPS collection in background
 	} else {
-		// turn of GPS tracking
+		// turn off GPS tracking
 		[self setGpsState:GPS_STATE_NONE];
 	}
 }
