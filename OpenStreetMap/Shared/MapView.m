@@ -470,6 +470,7 @@ CGSize SizeForImage( NSImage * image )
 	return YES;
 }
 
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ( object == _aerialLayer && [keyPath isEqualToString:@"hidden"] ) {
