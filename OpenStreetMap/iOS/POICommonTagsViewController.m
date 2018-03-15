@@ -24,10 +24,10 @@
 
 
 @interface CommonTagCell : UITableViewCell
-@property (assign,nonatomic)	IBOutlet	UILabel					*	nameLabel;
-@property (assign,nonatomic)	IBOutlet	UILabel					*	nameLabel2;
-@property (assign,nonatomic)	IBOutlet	AutocompleteTextField	*	valueField;
-@property (assign,nonatomic)	IBOutlet	AutocompleteTextField	*	valueField2;
+@property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel;
+@property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel2;
+@property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
+@property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField2;
 @property (strong,nonatomic)				CommonTagKey				*	commonTag;
 @property (strong,nonatomic)				CommonTagKey				*	commonTag2;
 @end
