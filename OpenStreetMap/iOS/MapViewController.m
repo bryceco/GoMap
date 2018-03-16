@@ -64,12 +64,6 @@
 }
 
 
--(BOOL)prefersHomeIndicatorAutoHidden
-{
-	// this fades out the home indicator on iPhone X after a few seconds, so it doesn't interfere with the toolbar.
-	return YES;
-}
-
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	if ( buttonIndex == actionSheet.cancelButtonIndex ) {
