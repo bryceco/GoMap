@@ -102,9 +102,6 @@ typedef enum {
 
 #if TARGET_OS_IPHONE
 	PushPinView						*	_pushpinView;
-	UIAlertView						*	_alertDelete;
-	UIAlertView						*	_alertError;
-	UIAlertView						*	_alertMove;
 	UIAlertView						*	_alertUndo;
 	UIAlertView						*	_alertGps;
 	UIAlertView						*	_alertViewRateApp;

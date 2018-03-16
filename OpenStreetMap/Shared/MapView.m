@@ -558,7 +558,6 @@ CGSize SizeForImage( NSImage * image )
 	_crossHairs.position = CGRectCenter( rect );
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
-	_statusBarBackground.frame = [UIApplication sharedApplication].statusBarFrame;
 
 	[CATransaction commit];
 }
@@ -699,8 +698,13 @@ CGSize SizeForImage( NSImage * image )
 		if ( flash ) {
 			[self flashMessage:text duration:0.9];
 		} else {
-			_alertError = [[UIAlertView alloc] initWithTitle:title message:text delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:ignoreButton, nil];
-			[_alertError show];
+			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:UIAlertControllerStyleAlert];
+			[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+			[alertError addAction:[UIAlertAction actionWithTitle:ignoreButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+				// ignore network errors for a while
+				_ignoreNetworkErrorsUntilDate = [[NSDate date] dateByAddingTimeInterval:5*60.0];
+			}]];
+			[self.viewController presentViewController:alertError animated:YES completion:nil];
 		}
 #else
 		if ( [text.uppercaseString hasPrefix:@"<!DOCTYPE HTML"] ) {
@@ -1778,36 +1782,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 #if TARGET_OS_IPHONE
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	if ( alertView == _alertDelete ) {
-		if ( buttonIndex == 1 ) {
-			[_editorLayer deleteSelectedObject];
-			[self removePin];
-		}
-		_alertDelete = nil;
-	}
-	if ( alertView == _alertError ) {
-		if ( buttonIndex == 1 ) {
-			// ignore network errors for a while
-			_ignoreNetworkErrorsUntilDate = [[NSDate date] dateByAddingTimeInterval:5*60.0];
-		}
-		_alertError = nil;
-	}
-	if ( alertView == _alertMove ) {
-		if ( buttonIndex == 0 ) {
-			// cancel move
-			[_editorLayer.mapData undo];
-			[_editorLayer.mapData removeMostRecentRedo];
-			_editorLayer.selectedNode = nil;
-			_editorLayer.selectedWay = nil;
-			_editorLayer.selectedRelation = nil;
-			[self removePin];
-			[_editorLayer setNeedsDisplay];
-			[_editorLayer setNeedsLayout];
-		} else {
-			// okay
-		}
-		_alertMove = nil;
-	}
+
 	if ( alertView == _alertViewRateApp ) {
 		if ( buttonIndex != alertView.cancelButtonIndex ) {
 			[self showInAppStore];
@@ -1832,8 +1807,13 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 -(IBAction)delete:(id)sender
 {
 #if TARGET_OS_IPHONE
-	_alertDelete = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"Delete",nil), nil];
-	[_alertDelete show];
+	UIAlertController *	alertDelete = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) preferredStyle:UIAlertControllerStyleAlert];
+	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+		[_editorLayer deleteSelectedObject];
+		[self removePin];
+	}]];
+	[self.viewController presentViewController:alertDelete animated:YES completion:nil];
 #else
 	[_editorLayer deleteSelectedObject];
 #endif
@@ -2318,9 +2298,23 @@ NSString * ActionTitle( NSInteger action )
 							break;
 						if ( strongSelf->_confirmDrag ) {
 							strongSelf->_confirmDrag = NO;
-							strongSelf->_alertMove = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil)
-																	delegate:strongSelf cancelButtonTitle:NSLocalizedString(@"Undo",nil) otherButtonTitles:NSLocalizedString(@"Move",nil), nil];
-							[strongSelf->_alertMove show];
+
+							UIAlertController *	alertMove = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil) preferredStyle:UIAlertControllerStyleAlert];
+							[alertMove addAction:[UIAlertAction actionWithTitle:@"Undo" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+								// cancel move
+								[strongSelf->_editorLayer.mapData undo];
+								[strongSelf->_editorLayer.mapData removeMostRecentRedo];
+								strongSelf->_editorLayer.selectedNode = nil;
+								strongSelf->_editorLayer.selectedWay = nil;
+								strongSelf->_editorLayer.selectedRelation = nil;
+								[strongSelf removePin];
+								[strongSelf->_editorLayer setNeedsDisplay];
+								[strongSelf->_editorLayer setNeedsLayout];
+							}]];
+							[alertMove addAction:[UIAlertAction actionWithTitle:@"Move" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+								// okay
+							}]];
+							[strongSelf.viewController presentViewController:alertMove animated:YES completion:nil];
 						}
 					}
 					break;
