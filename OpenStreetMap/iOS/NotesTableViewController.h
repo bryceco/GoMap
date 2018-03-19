@@ -14,7 +14,6 @@
 @interface NotesTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 {
 	NSString		*	_newComment;
-	UIAlertView		*	_alert;
 }
 @property (assign,nonatomic)	IBOutlet UITableView	*	tableView;
 @property (strong,nonatomic)	OsmNote	* note;

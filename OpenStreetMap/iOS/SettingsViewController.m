@@ -80,8 +80,11 @@
 			[mail setMessageBody:body isHTML:NO];
 			[self.navigationController presentViewController:mail animated:YES completion:nil];
 		} else {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			[alert show];
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cannot compose message",nil)
+																			message:NSLocalizedString(@"Mail delivery is not available on this device",nil)
+																	 preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self presentViewController:alert animated:YES completion:nil];
 		}
 	}
 

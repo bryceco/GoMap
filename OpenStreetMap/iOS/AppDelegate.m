@@ -13,6 +13,7 @@
 #import "GpxLayer.h"
 #import "KeyChain.h"
 #import "MapView.h"
+#import "MapViewController.h"
 
 
 @implementation AppDelegate
@@ -168,8 +169,9 @@
 		if ( hasCenter ) {
 			[self setMapLatitude:lat longitude:lon zoom:(hasZoom?zoom:0) view:view];
 		} else {
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			[alertView show];
+			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
+			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
 		}
 	}
 

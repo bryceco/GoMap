@@ -140,18 +140,21 @@
 		cell = (id) [cell superview];
 	if ( cell ) {
 		NSString * s = [cell.text.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		_alert = [[UIAlertView alloc] initWithTitle:@"Updating Note..." message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-		[_alert show];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Updating Note..." message:nil preferredStyle:UIAlertControllerStyleAlert];
+		[self presentViewController:alert animated:YES completion:nil];
+
 		[self.mapView.notesDatabase updateNote:self.note close:resolve comment:s completion:^(OsmNote * newNote, NSString *errorMessage) {
-			[_alert dismissWithClickedButtonIndex:0 animated:YES];
-			_alert = nil;
+			[alert dismissViewControllerAnimated:YES completion:nil];
 			if ( newNote ) {
 				self.note = newNote;
-				[self done:nil];
-				[self.mapView refreshNoteButtonsFromDatabase];
+				dispatch_after(dispatch_time(DISPATCH_TIME_NOW,0), dispatch_get_main_queue(), ^{
+					[self done:nil];
+					[self.mapView refreshNoteButtonsFromDatabase];
+				});
 			} else {
-				UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:NULL];
-				[alert show];
+				UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Error" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+				[alert2 addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil]];
+				[self presentViewController:alert2 animated:YES completion:nil];
 			}
 		}];
 	}

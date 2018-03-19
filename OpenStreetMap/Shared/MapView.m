@@ -727,8 +727,13 @@ CGSize SizeForImage( NSImage * image )
 	double countLog10 = log10(uploadCount);
 	if ( uploadCount > 1 && countLog10 == floor(countLog10) ) {
 		NSString * title = [NSString stringWithFormat:@"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?", (long)uploadCount];
-		_alertViewRateApp = [[UIAlertView alloc] initWithTitle:title message:@"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." delegate:self cancelButtonTitle:@"Maybe later..." otherButtonTitles:@"I'll do it!", nil];
-		[_alertViewRateApp show];
+        UIAlertController * alertViewRateApp = [UIAlertController alertControllerWithTitle:title message:@"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." preferredStyle:UIAlertControllerStyleAlert];
+        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Maybe later...",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"I'll do it!",nil)    style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+			[self showInAppStore];
+        }]];
+        [self.viewController presentViewController:alertViewRateApp animated:YES completion:nil];
+
 	}
 }
 -(void)showInAppStore
@@ -1317,8 +1322,10 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
 		NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-		_alertGps = [[UIAlertView alloc] initWithTitle:title message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-		[_alertGps show];
+        UIAlertController * alertGps = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertGps addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+        [self.viewController presentViewController:alertGps animated:YES completion:nil];
+
 		self.gpsState = GPS_STATE_NONE;
 		return;
 	}
@@ -1778,32 +1785,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 #endif
 }
 
-
-#if TARGET_OS_IPHONE
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-
-	if ( alertView == _alertViewRateApp ) {
-		if ( buttonIndex != alertView.cancelButtonIndex ) {
-			[self showInAppStore];
-		}
-		_alertViewRateApp = nil;
-	}
-	if ( alertView == _alertKeepRight ) {
-		if ( buttonIndex != alertView.cancelButtonIndex ) {
-			// they want to hide this button from now on
-			[_notesDatabase ignoreNote:_currentNote];
-			[self refreshNoteButtonsFromDatabase];
-			_editorLayer.selectedNode = nil;
-			_editorLayer.selectedWay = nil;
-			_editorLayer.selectedRelation = nil;
-			[self removePin];
-		}
-		_alertKeepRight = nil;
-	}
-}
-#endif
-
 -(IBAction)delete:(id)sender
 {
 #if TARGET_OS_IPHONE
@@ -1889,11 +1870,10 @@ NSString * ActionTitle( NSInteger action )
 
 - (void)presentEditActionSheet:(id)sender
 {
-	_actionSheet = nil;
-	_actionList = nil;
+	NSArray * actionList = nil;
 	if ( _editorLayer.selectedRelation ) {
 		// relation
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
+		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
 	} else if ( _editorLayer.selectedWay ) {
 		if ( _editorLayer.selectedNode ) {
 			// node in way
@@ -1909,31 +1889,32 @@ NSString * ActionTitle( NSInteger action )
 			if ( join )
 				[a addObject:@(ACTION_JOIN)];
 			[a addObject:@(ACTION_ROTATE)];
-			_actionList = [NSArray arrayWithArray:a];
+			actionList = [NSArray arrayWithArray:a];
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
 			} else {
 				// line
-				_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		_actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
 	} else {
 		// nothing selected
 		return;
 	}
-	_actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Perform Action",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-	for ( NSNumber * value in _actionList ) {
+	UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Perform Action",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+	for ( NSNumber * value in actionList ) {
 		NSString * title = ActionTitle( value.integerValue );
-		[_actionSheet addButtonWithTitle:title];
+		[actionSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+			[self performEditAction:value.integerValue];
+		}]];
 	}
-	_actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
-
-	[_actionSheet showFromRect:_editControl.frame inView:self animated:YES];
+	[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+	[self.viewController presentViewController:actionSheet animated:YES completion:nil];
 }
 
 -(void)performEditAction:(NSInteger)action
@@ -2044,46 +2025,6 @@ NSString * ActionTitle( NSInteger action )
 	[self.editorLayer setNeedsDisplay];
 	[self.editorLayer setNeedsLayout];
 	[self refreshPushpinText];
-}
-
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-	if ( actionSheet == _multiSelectSheet ) {
-		// processing for selecting one of multipe objects
-		if ( buttonIndex < _multiSelectObjects.count ) {
-			OsmBaseObject * object = _multiSelectObjects[ buttonIndex ];
-			if ( object.isNode ) {
-				for ( OsmBaseObject * obj in _multiSelectObjects ) {
-					if ( obj.isWay && [obj.isWay.nodes containsObject:object] ) {
-						[_editorLayer setSelectedWay:obj.isWay];
-						break;
-					}
-				}
-				[_editorLayer setSelectedNode:object.isNode];
-				[self placePushpinForSelection];
-			} else if ( object.isWay ) {
-				[_editorLayer setSelectedWay:object.isWay];
-				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:_multiSelectPoint birdsEye:YES];
-				OSMPoint latLon2 = [object.isWay pointOnWayForPoint:OSMPointMake(latLon.longitude,latLon.latitude)];
-				CGPoint pos = [self screenPointForLatitude:latLon2.y longitude:latLon2.x birdsEye:YES];
-				[self placePushpinAtPoint:pos object:object];
-			}
-
-		} else {
-			// Cancel button pressed
-		}
-		return;
-	}
-
-	if ( actionSheet == _actionSheet ) {
-		if ( _actionList == nil || buttonIndex >= _actionList.count )
-			return;
-		NSInteger action = [_actionList[ buttonIndex ] integerValue];
-		[self performEditAction:action];
-		_actionSheet = nil;
-		_actionList = nil;
-	}
 }
 
 -(IBAction)presentTagEditor:(id)sender
@@ -2987,7 +2928,6 @@ NSString * ActionTitle( NSInteger action )
 			[weakAlert.view removeFromSuperview];
 			_alertKeepRight = nil;
 		}];
-		_currentNote = note;
 #else
 		// use regular alertview
 		NSString * text = comment.text;
@@ -3001,10 +2941,18 @@ NSString * ActionTitle( NSInteger action )
 		}
 		text = [text stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
 
-		_alertKeepRight = [[UIAlertView alloc] initWithTitle:title message:text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:@"Ignore",nil];
-		_alertKeepRight.delegate = self;
-		_currentNote = note;
-		[_alertKeepRight show];
+		UIAlertController * alertKeepRight = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:UIAlertControllerStyleAlert];
+		[alertKeepRight addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)	  style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+		[alertKeepRight addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Ignore",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+			// they want to hide this button from now on
+			[_notesDatabase ignoreNote:note];
+			[self refreshNoteButtonsFromDatabase];
+			_editorLayer.selectedNode = nil;
+			_editorLayer.selectedWay = nil;
+			_editorLayer.selectedRelation = nil;
+			[self removePin];
+ 		}]];
+		[self.viewController presentViewController:alertKeepRight animated:YES completion:nil];
 #endif
 	} else if ( note.isFixme ) {
 		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
@@ -3175,15 +3123,32 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		NSArray * objects = [self.editorLayer osmHitTestMultiple:point radius:DefaultHitTestRadius];
 		if ( objects.count == 0 )
 			return;
-		_multiSelectSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Object",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-		_multiSelectObjects = objects;
-		_multiSelectPoint = point;
-		for ( OsmBaseObject * obj in objects ) {
-			NSString * title = obj.friendlyDescription;
-			[_multiSelectSheet addButtonWithTitle:title];
+		UIAlertController * multiSelectSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select Object",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+		for ( OsmBaseObject * object in objects ) {
+			NSString * title = object.friendlyDescription;
+			[multiSelectSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				// processing for selecting one of multipe objects
+				if ( object.isNode ) {
+					for ( OsmBaseObject * obj in objects ) {
+						if ( obj.isWay && [obj.isWay.nodes containsObject:object] ) {
+							// select the way containing the node, then select the node in the way
+							[_editorLayer setSelectedWay:obj.isWay];
+							break;
+						}
+					}
+					[_editorLayer setSelectedNode:object.isNode];
+					[self placePushpinForSelection];
+				} else if ( object.isWay ) {
+					[_editorLayer setSelectedWay:object.isWay];
+					CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
+					OSMPoint latLon2 = [object.isWay pointOnWayForPoint:OSMPointMake(latLon.longitude,latLon.latitude)];
+					CGPoint pos = [self screenPointForLatitude:latLon2.y longitude:latLon2.x birdsEye:YES];
+					[self placePushpinAtPoint:pos object:object];
+				}
+			}]];
 		}
-		_multiSelectSheet.cancelButtonIndex = [_multiSelectSheet addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
-		[_multiSelectSheet showInView:self];
+		[multiSelectSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[self.viewController presentViewController:multiSelectSheet animated:YES completion:nil];
 	}
 }
 

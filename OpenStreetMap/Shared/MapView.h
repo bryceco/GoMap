@@ -102,17 +102,7 @@ typedef enum {
 
 #if TARGET_OS_IPHONE
 	PushPinView						*	_pushpinView;
-	UIAlertView						*	_alertUndo;
-	UIAlertView						*	_alertGps;
-	UIAlertView						*	_alertViewRateApp;
-	UIAlertView						*	_alertKeepRight;
-	UIActionSheet					*	_multiSelectSheet;
-	NSArray							*	_multiSelectObjects;
-	CGPoint								_multiSelectPoint;
 	UILabel							*	_flashLabel;
-
-	UIActionSheet					*	_actionSheet;
-	NSArray							*	_actionList;	// storer mapping of action menu items to actions
 #else
 	HtmlErrorWindow					*	_htmlErrorWindow;
 #endif
@@ -132,8 +122,6 @@ typedef enum {
 
 	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
 	NSTimeInterval						_addNodeButtonPressed;
-
-	OsmNote							*	_currentNote;			// set during period a note button is pressed so we can ignore it if chosen by user
 }
 
 #if TARGET_OS_IPHONE
