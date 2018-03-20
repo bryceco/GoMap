@@ -37,12 +37,6 @@
 }
 
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-	[self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-
 - (IBAction)verifyAccount:(id)sender
 {
 	if ( _activityIndicator.isAnimating )
@@ -63,18 +57,21 @@
 			if ( [appDelegate.userName containsString:@"@"] ) {
 				errorMessage = @"You must provide your OSM user name, not an email address.";
 			}
-
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Bad login",nil) message:errorMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			[alertView show];
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Bad login",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self presentViewController:alert animated:YES completion:nil];
 		} else {
 			// verifying credentials may update the appDelegate values when we subsitute name for correct case:
 			_username.text	= appDelegate.userName;
 			_password.text	= appDelegate.userPassword;
 			[_username resignFirstResponder];
 			[_password resignFirstResponder];
-			UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login successful",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			alertView.delegate = self;
-			[alertView show];
+
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Login successful",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+				[self.navigationController popToRootViewControllerAnimated:YES];
+			}]];
+			[self presentViewController:alert animated:YES completion:nil];
 		}
 	}];
 }

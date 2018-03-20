@@ -484,36 +484,35 @@ static const CGFloat InsetPercent = 0.15;
 -(IBAction)apply:(id)sender
 {
 	if ( _canZoom ) {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Height = %@ meters",_currentHeight] message:@"Set height tag?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
-		_alertHeight = _currentHeight;
-		[alert show];
+		NSString * height = _currentHeight;
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Height = %@ meters",_currentHeight]
+																		message:@"Set height tag?"
+																 preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Set",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+			[self setHeight:height];
+		}]];
+		[self presentViewController:alert animated:YES completion:nil];
 	} else {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Set Height Tag" message:@"meters" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
-		alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-		UITextField	* textField = [alert textFieldAtIndex:0];
-		textField.keyboardType	= UIKeyboardTypeNumbersAndPunctuation;
-		[alert show];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Set Height Tag" message:@"meters" preferredStyle:UIAlertControllerStyleAlert];
+		[alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+			textField.keyboardType	= UIKeyboardTypeNumbersAndPunctuation;
+		}];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Set",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+			UITextField	* textField = alert.textFields[0];
+			NSString * text = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+			[self setHeight:text];
+		}]];
+		[self presentViewController:alert animated:YES completion:nil];
 	}
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void)setHeight:(NSString *)height
 {
-	if ( buttonIndex == alertView.cancelButtonIndex )
-		return;
-
-	NSString * text = nil;
-	if ( _canZoom ) {
-		text = _alertHeight;
-	} else {
-		UITextField	* textField = [alertView textFieldAtIndex:0];
-		if ( textField == nil )
-			return;
-		text = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	}
-
 	AppDelegate			*	delegate = [AppDelegate getAppDelegate];
 	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
-
+	
 	// change selection to parent object
 	if ( object.tags.count == 0 && delegate.mapView.editorLayer.selectedRelation ) {
 		object = delegate.mapView.editorLayer.selectedRelation;
@@ -523,16 +522,17 @@ static const CGFloat InsetPercent = 0.15;
 		object = delegate.mapView.editorLayer.selectedWay;
 		delegate.mapView.editorLayer.selectedNode = nil;
 	}
-
+	
 	NSMutableDictionary *	tags = [object.tags mutableCopy];
-	if ( text.length > 0 ) {
-		[tags setObject:text forKey:@"height"];
+	if ( height.length > 0 ) {
+		[tags setObject:height forKey:@"height"];
 	} else {
 		[tags removeObjectForKey:@"height"];
 	}
 	[delegate.mapView setTagsForCurrentObject:tags];
-
+	
 	[self cancel:nil];
 }
+
 
 @end

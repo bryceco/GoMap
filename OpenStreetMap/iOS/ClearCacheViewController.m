@@ -66,16 +66,6 @@ enum {
 
 #pragma mark - Table view delegate
 
-// called if attempting to clear dirty editor data
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if ( buttonIndex == 1 ) {
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
-	}
-	[self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
@@ -83,8 +73,17 @@ enum {
 	switch ( indexPath.row ) {
 		case ROW_OSM_DATA:	// OSM
 			if ( [appDelegate.mapView.editorLayer.mapData changesetAsXml] ) {
-				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Warning",nil) message:NSLocalizedString(@"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"Purge",nil), nil];
-				[alertView show];
+				UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Warning",nil)
+																				message:NSLocalizedString(@"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.",nil)
+																		 preferredStyle:UIAlertControllerStyleAlert];
+				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+					[self.navigationController popViewControllerAnimated:YES];
+				}]];
+				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Purge",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+					[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
+					[self.navigationController popViewControllerAnimated:YES];
+				}]];
+				[self presentViewController:alert animated:YES completion:nil];
 				return;
 			}
 			[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];

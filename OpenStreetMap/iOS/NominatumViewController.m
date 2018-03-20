@@ -127,7 +127,7 @@
 		// searching
 		[_activityIndicator startAnimating];
 		DownloadThreadPool * pool = [DownloadThreadPool generalPool];
-		NSString * text = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		NSString * text = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 		NSString * url = [NSString stringWithFormat:@"http://nominatim.openstreetmap.org/search?q=%@&format=json",text];
 		[pool dataForUrl:url completion:^(NSData * data,NSError * error){
 			[_activityIndicator stopAnimating];
@@ -167,8 +167,9 @@
 			}
 
 			if ( _resultsArray.count == 0 ) {
-				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No results found",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-				[alertView show];
+				UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"No results found",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+				[self presentViewController:alert animated:YES completion:nil];
 			}
 
 		}];

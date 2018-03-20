@@ -364,14 +364,7 @@ static NSInteger g_nextUID = 1;
 
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion
 {
-	CFStringRef eStr = CFURLCreateStringByAddingPercentEscapes(
-															   kCFAllocatorDefault,
-															   (CFStringRef)comment,
-															   NULL,
-															   CFSTR("!'\"/%&=?$#+-~@<>|\\*;:,.()[]{}^! "),
-															   kCFStringEncodingUTF8
-															   );
-	comment = (__bridge_transfer NSString *)eStr;
+	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 
 	NSString * url;
 	if ( note.comments == nil ) {

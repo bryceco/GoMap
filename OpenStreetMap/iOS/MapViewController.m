@@ -64,35 +64,10 @@
 }
 
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-	if ( buttonIndex == actionSheet.cancelButtonIndex ) {
-		return;
-	}
-	switch ( buttonIndex ) {
-		case 0:
-			[self performSegueWithIdentifier:@"searchSegue" sender:self];
-			break;
-		case 1:
-			[self performSegueWithIdentifier:@"locationSegue" sender:self];
-			break;
-	}
-}
-
 -(void)search:(UILongPressGestureRecognizer *)recognizer
 {
 	[self installLongPressGestureRecognizer:NO];	// remove so we don't trigger twice during a long press
-#if 0 // enable GPX view
-	UIView * view = recognizer.view;
-	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"GPS Action",nil)
-														delegate:self
-											   cancelButtonTitle:NSLocalizedString(@"Cancel",nil)
-										  destructiveButtonTitle:nil
-											   otherButtonTitles:NSLocalizedString(@"Search for Location",nil), NSLocalizedString(@"Manage GPX Tracks",nil), nil];
-	[sheet showInView:view];
-#else
 	[self performSegueWithIdentifier:@"searchSegue" sender:recognizer];
-#endif
 	[self installLongPressGestureRecognizer:YES];
 }
 

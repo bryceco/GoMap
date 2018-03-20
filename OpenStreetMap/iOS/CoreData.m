@@ -99,7 +99,7 @@
 	if (_managedObjectContext == nil) {
 		if ( self.persistentStoreCoordinator == nil )
 			return nil;
-		_managedObjectContext = [NSManagedObjectContext new];
+		_managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
 		[_managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
 	}
 	return _managedObjectContext;

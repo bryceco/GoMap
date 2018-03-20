@@ -32,7 +32,7 @@
 	self.navigationItem.leftBarButtonItems = @[ leftButton ];
 
 	if ( self.url ) {
-		NSString * escape = [self.url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		NSString * escape = [self.url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 		NSURL * url = [NSURL URLWithString:escape];
 		NSURLRequest * request = [NSURLRequest requestWithURL:url];
 		[_webView loadRequest:request];
@@ -58,8 +58,12 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
 	[_activityIndicator stopAnimating];
-	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error loading web page",nil) message:error.localizedDescription delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-	[alert show];
+	
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error loading web page",nil)
+																	message:error.localizedDescription
+															 preferredStyle:UIAlertControllerStyleAlert];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+	[self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)backButton:(id)sender
@@ -71,34 +75,6 @@
 	}
 }
 
-// Called when a button is clicked. The view will be automatically dismissed after this call returns
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	switch ( buttonIndex ) {
-		case 0:
-			if ( [MFMailComposeViewController canSendMail] ) {
-				MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
-				mail.mailComposeDelegate = self;
-				[mail setSubject:self.title];
-				[mail setMessageBody:self.url isHTML:NO];
-				[self.navigationController presentViewController:mail animated:YES completion:nil];
-			} else {
-				UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-				[alert show];
-			}
-			break;
-		case 1:
-			{
-				NSString * escape = [self.url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-				NSURL * url = [NSURL URLWithString:escape];
-				[[UIApplication sharedApplication] openURL:url];
-			}
-			break;
-		default:
-			break;
-	}
-}
-
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
 	[self dismissViewControllerAnimated:YES completion:nil];
@@ -107,8 +83,29 @@
 
 - (IBAction)doAction:(id)sender
 {
-	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Action",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Mail",nil), NSLocalizedString(@"Open in Safari",nil), nil];
-	[sheet showFromBarButtonItem:_actionButton animated:YES];
+	UIAlertController * sheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Action",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+	[sheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+	[sheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Mail",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		if ( [MFMailComposeViewController canSendMail] ) {
+			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
+			mail.mailComposeDelegate = self;
+			[mail setSubject:self.title];
+			[mail setMessageBody:self.url isHTML:NO];
+			[self.navigationController presentViewController:mail animated:YES completion:nil];
+		} else {
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cannot compose message",nil)
+																			message:NSLocalizedString(@"Mail delivery is not available on this device",nil)
+																	 preferredStyle:UIAlertControllerStyleAlert];
+			[sheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.navigationController presentViewController:alert animated:YES completion:nil];
+		}
+	}]];
+	[sheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Open in Safari",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		NSString * escape = [self.url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+		NSURL * url = [NSURL URLWithString:escape];
+		[[UIApplication sharedApplication] openURL:url];
+	}]];
+	[self presentViewController:sheet animated:YES completion:nil];
 }
 
 #pragma mark Generic page controls

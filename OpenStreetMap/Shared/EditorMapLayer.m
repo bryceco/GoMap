@@ -19,6 +19,7 @@
 #import "EditorMapLayer.h"
 #import "MapCSS.h"
 #import "MapView.h"
+#import "MapViewController.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Orthogonalize.h"
 #import "OsmMapData+Straighten.h"
@@ -116,8 +117,9 @@ static const CGFloat NodeHighlightRadius = 6.0;
 #if TARGET_OS_IPHONE
 			if ( _mapData && t > 6.0 ) {
 				NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times. You may want to clear the cache (under Display settings) to improve performance.",nil);
-				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-				[alertView show];
+				UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text preferredStyle:UIAlertControllerStyleAlert];
+				[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+				[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
 			}
 #endif
 		} else {

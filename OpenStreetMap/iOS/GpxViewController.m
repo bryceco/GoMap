@@ -33,19 +33,12 @@
 @implementation GpxTrackTableCell
 -(IBAction)doAction:(id)sender
 {
-	UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Share",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Upload to OSM",nil), NSLocalizedString(@"Mail",nil), nil];
-	[sheet showInView:self];
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-	if ( buttonIndex == actionSheet.cancelButtonIndex ) {
-		return;
-	}
-	if ( buttonIndex == 0 ) {
-		// upload
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Upload to OSM",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		[self.tableView shareTrack:_gpxTrack];
-	} else if ( buttonIndex == 1 ) {
-		// mail
+	}]];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Mail",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		if ( [MFMailComposeViewController canSendMail] ) {
 			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
@@ -54,10 +47,14 @@
 			[mail addAttachmentData:self.gpxTrack.gpxXmlData mimeType:@"application/gpx+xml" fileName:[NSString stringWithFormat:@"%@.gpx", self.gpxTrack.creationDate]];
 			[self.tableView presentViewController:mail animated:YES completion:nil];
 		} else {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			[alert show];
+			UIAlertController * error = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cannot compose message",nil)
+																			message:NSLocalizedString(@"Mail delivery is not available on this device",nil)
+																	 preferredStyle:UIAlertControllerStyleAlert];
+			[error addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.tableView presentViewController:error animated:YES completion:nil];
 		}
-	}
+	}]];
+	[self.tableView presentViewController:alert animated:YES completion:nil];
 }
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
@@ -298,8 +295,10 @@
 
 -(void)shareTrack:(GpxTrack *)track
 {
-	UIAlertView * progress = [[UIAlertView alloc] initWithTitle:@"Uploading GPX..." message:@"Please wait" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
-	[progress show];
+	UIAlertController * progress = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Uploading GPX...",nil)
+																	message:NSLocalizedString(@"Please wait",nil)
+															 preferredStyle:UIAlertControllerStyleAlert];
+	[self presentViewController:progress animated:YES completion:nil];
 
 	// let progress window display before we submit work
 	dispatch_async(dispatch_get_main_queue(), ^{
@@ -354,13 +353,14 @@
 //		DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
 
 		[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * response, NSData * data, NSError * error) {
-			[progress dismissWithClickedButtonIndex:0 animated:YES];
+			[progress dismissViewControllerAnimated:YES completion:nil];
 
 			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
 			if ( httpResponse.statusCode == 200 ) {
 				// ok
-				UIAlertView * success = [[UIAlertView alloc] initWithTitle:@"GPX Upload Complete" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[success show];
+				UIAlertController * success = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Complete",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+				[success addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+				[self presentViewController:success animated:YES completion:nil];
 			} else {
 				DLog(@"response = %@\n",response);
 				DLog(@"data = %s", (char *)data.bytes);
@@ -371,8 +371,9 @@
 					errorMessage = error.localizedDescription;
 				}
 				// failure
-				UIAlertView * failure = [[UIAlertView alloc] initWithTitle:@"GPX Upload Failed" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[failure show];
+				UIAlertController * failure = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Failed",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+				[failure addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+				[self presentViewController:failure animated:YES completion:nil];
 			}
 		}];
 	});

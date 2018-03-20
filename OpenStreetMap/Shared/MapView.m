@@ -2018,8 +2018,9 @@ NSString * ActionTitle( NSInteger action )
 			break;
 	}
 	if ( error ) {
-		UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:error message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil, nil];
-		[alertView show];
+		UIAlertController * alertError = [UIAlertController alertControllerWithTitle:error message:nil preferredStyle:UIAlertControllerStyleAlert];
+		[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[self.viewController presentViewController:alertError animated:YES completion:nil];
 	}
 
 	[self.editorLayer setNeedsDisplay];
@@ -2399,12 +2400,11 @@ NSString * ActionTitle( NSInteger action )
 		NSInteger segment;
 		OsmBaseObject * object = [_editorLayer osmHitTestSelection:prevPoint radius:DefaultHitTestRadius segment:&segment];
 		if ( object == nil ) {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Select location",nil)
-															 message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)
-															delegate:nil
-												   cancelButtonTitle:NSLocalizedString(@"OK",nil)
-												   otherButtonTitles:nil];
-			[alert show];
+			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select location",nil)
+																				 message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)
+																		  preferredStyle:UIAlertControllerStyleAlert];
+			[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.viewController presentViewController:alertError animated:YES completion:nil];
 			return;
 		}
 		OsmNode * newNode = [_editorLayer createNodeAtPoint:prevPoint];

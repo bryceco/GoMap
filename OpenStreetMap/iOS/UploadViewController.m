@@ -76,15 +76,6 @@
 	return YES;
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if ( alertView == _alertViewConfirm ) {
-		if ( buttonIndex != alertView.cancelButtonIndex ) {
-			[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userDidPreviousUpload"];
-			[self commit:nil];
-		}
-	}
-}
 
 - (IBAction)commit:(id)sender
 {
@@ -97,12 +88,15 @@
 	}
 
 	if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"userDidPreviousUpload"] ) {
-		_alertViewConfirm = [[UIAlertView alloc] initWithTitle:@"Attention"
-													 message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel."
-													delegate:self
-										   cancelButtonTitle:@"Cancel"
-										   otherButtonTitles:@"Commit",nil];
-		[_alertViewConfirm show];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Attention"
+																		message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel."
+																 preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Commit",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+			[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"userDidPreviousUpload"];
+			[self commit:nil];
+		}]];
+		[self presentViewController:alert animated:YES completion:nil];
 		return;
 	}
 
@@ -126,8 +120,12 @@
 		[_commitButton setEnabled:YES];
 		[_cancelButton setEnabled:YES];
 		if ( error ) {
-			UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Unable to upload changes",nil) message:error delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-			[alert show];
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Unable to upload changes",nil)
+																			message:error
+																	 preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self presentViewController:alert animated:YES completion:nil];
+
 			if ( !_xmlTextView.editable ) {
 				[_sendMailButton setEnabled:YES];
 				[_editXmlButton setEnabled:YES];
@@ -184,8 +182,11 @@
 	_sendMailButton.enabled = NO;
 	_editXmlButton.enabled = NO;
 
-	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Edit XML",nil) message:NSLocalizedString(@"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-	[alert show];
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Edit XML",nil)
+																	message:NSLocalizedString(@"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.",nil)
+															 preferredStyle:UIAlertControllerStyleAlert];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+	[self presentViewController:alert animated:YES completion:nil];
 }
 
 -(IBAction)sendMail:(id)sender
@@ -200,8 +201,11 @@
 		[mail addAttachmentData:[xml dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"application/xml" fileName:@"osmChange.osc"];
 		[self presentViewController:mail animated:YES completion:nil];
 	} else {
-		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot compose message",nil) message:NSLocalizedString(@"Mail delivery is not available on this device",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-		[alert show];
+		UIAlertController * error = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cannot compose message",nil)
+																		message:NSLocalizedString(@"Mail delivery is not available on this device",nil)
+																 preferredStyle:UIAlertControllerStyleAlert];
+		[error addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[self presentViewController:error animated:YES completion:nil];
 	}
 }
 

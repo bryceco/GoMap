@@ -186,8 +186,11 @@
 			NSData * data = [NSData dataWithContentsOfURL:url];
 			BOOL ok = [_mapView.gpxLayer loadGPXData:data center:YES];
 			if ( !ok ) {
-				UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Open URL",nil) message:NSLocalizedString(@"Sorry, an error occurred while loading the GPX file",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-				[alertView show];
+				UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Open URL",nil)
+																				message:NSLocalizedString(@"Sorry, an error occurred while loading the GPX file",nil)
+																		 preferredStyle:UIAlertControllerStyleAlert];
+				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+				[self.mapView.viewController presentViewController:alert animated:YES completion:nil];
 			}
 		});
 

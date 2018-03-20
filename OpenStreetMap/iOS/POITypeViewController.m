@@ -224,10 +224,15 @@ static NSInteger			mostRecentMaximum;
 	[self.tableView reloadData];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+-(IBAction)configure:(id)sender
 {
-	if ( buttonIndex == 1 ) {
-		UITextField * textField = [alertView textFieldAtIndex:0];
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Show Recent Items",nil) message:NSLocalizedString(@"Number of recent items to display",nil) preferredStyle:UIAlertControllerStyleAlert];
+	[alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+		[textField setKeyboardType:UIKeyboardTypeNumberPad];
+		textField.text = [NSString stringWithFormat:@"%ld",(long)mostRecentMaximum];
+	}];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		UITextField * textField = alert.textFields[0];
 		NSInteger count = [textField.text integerValue];
 		if ( count < 0 )
 			count = 0;
@@ -235,17 +240,9 @@ static NSInteger			mostRecentMaximum;
 			count = 99;
 		mostRecentMaximum = count;
 		[[NSUserDefaults standardUserDefaults] setInteger:mostRecentMaximum forKey:@"mostRecentTypesMaximum"];
-	}
-}
-
--(IBAction)configure:(id)sender
-{
-	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Show Recent Items",nil) message:NSLocalizedString(@"Number of recent items to display",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"OK",nil), nil];
-	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-	UITextField * textField = [alert textFieldAtIndex:0];
-	[textField setKeyboardType:UIKeyboardTypeNumberPad];
-	textField.text = [NSString stringWithFormat:@"%ld",(long)mostRecentMaximum];
-	[alert show];
+	}]];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+	[self presentViewController:alert animated:YES completion:nil];
 }
 
 
