@@ -532,7 +532,11 @@ CGSize SizeForImage( NSImage * image )
 	[CATransaction begin];
 	[CATransaction setAnimationDuration:0.0];
 #if TARGET_OS_IPHONE
-	_rulerLayer.frame = CGRectMake(10, rect.size.height - 80, 150, 30);
+	CGRect rc = CGRectMake(10, rect.size.height - 80, 150, 30);
+	if (@available(iOS 11.0, *)) {
+		rc.origin.y -= self.safeAreaInsets.bottom;
+	}
+	_rulerLayer.frame = rc;
 #else
 	_rulerLayer.frame = CGRectMake(10, rect.size.height - 40, 150, 30);
 #endif
