@@ -272,6 +272,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	return idxB;
 }
 
+
+
 -(BOOL)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
 	BOOL createRelations = NO;
@@ -331,12 +333,11 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	// fix parent relations
 	for ( OsmRelation * relation in wayA.relations ) {
-		for ( OsmMember * member in [relation.members copy] ) {
+		for ( NSInteger index = 0; index < relation.members.count; ++index ) {
+			OsmMember * member = relation.members[index];
 			if ( member.ref == wayA ) {
 
 				if (relation.isRestriction) {
-					NSInteger index = [relation.members indexOfObject:member];
-
 					OsmMember * via = [relation memberByRole:@"via"];
 					if (via && [wayB.nodes containsObject:via.ref] ) {
 						// replace reference to wayA with wayB in relation
@@ -351,8 +352,23 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 						[self setTags:nil forObject:wayA];
 						[self setTags:nil forObject:wayB];
 					}
+					
+					// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
+					BOOL insertAfter = YES;
+					OsmMember * prevMem = index > 1 ? relation.members[index-1] : nil;
+					OsmWay * prevWay = prevMem && [prevMem.ref isKindOfClass:[OsmWay class]] ? prevMem.ref : nil;
+					if ( prevWay.nodes.count > 0 ) {
+						if ( prevWay.nodes[0] == wayB.nodes[0] ||
+							prevWay.nodes[0] == wayB.nodes.lastObject ||
+							prevWay.nodes.lastObject == wayB.nodes[0] ||
+							prevWay.nodes.lastObject == wayB.nodes.lastObject )
+						{
+							insertAfter = NO;
+						}
+					}
 					OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
-					[self addMember:newMember toRelation:relation atIndex:relation.members.count];
+					[self addMember:newMember toRelation:relation atIndex:insertAfter?index+1:index];
+					++index;
 				}
 			}
 		}
@@ -423,14 +439,16 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		}
 	} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
 		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
-		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
+		[self reverseWay:otherWay];	// reverse the tags on other way
+		for ( OsmNode * n in otherWay.nodes ) {
 			if ( index++ == 0 )
 				continue;
 			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
 		}
 	} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
 		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
-		for ( OsmNode * n in otherWay.nodes ) {
+		[self reverseWay:otherWay];	// reverse the tags on other way
+		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
 			if ( index++ == 0 )
 				continue;
 			[self addNode:n toWay:selectedWay atIndex:0];
