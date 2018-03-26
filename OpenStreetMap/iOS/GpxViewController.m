@@ -55,6 +55,10 @@
 		}
 	}]];
 	[self.tableView presentViewController:alert animated:YES completion:nil];
+	// set location of popup
+	UIButton * button = sender;
+	alert.popoverPresentationController.sourceView = button;
+	alert.popoverPresentationController.sourceRect = button.bounds;
 }
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {

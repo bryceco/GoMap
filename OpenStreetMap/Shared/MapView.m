@@ -1919,6 +1919,14 @@ NSString * ActionTitle( NSInteger action )
 	}
 	[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
 	[self.viewController presentViewController:actionSheet animated:YES completion:nil];
+	// compute location for action sheet to originate
+	CGRect button = self.editControl.bounds;
+	CGFloat segmentWidth = button.size.width / self.editControl.numberOfSegments;	// hack because we can't get the frame for an individual segment
+	button.origin.x += button.size.width - segmentWidth;
+	button.size.width = segmentWidth;
+	actionSheet.popoverPresentationController.sourceView = self.editControl;
+	actionSheet.popoverPresentationController.sourceRect = button;
+
 }
 
 -(void)performEditAction:(NSInteger)action
@@ -3153,6 +3161,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		}
 		[multiSelectSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[self.viewController presentViewController:multiSelectSheet animated:YES completion:nil];
+		// set position
+		CGRect rc = { point.x, point.y, 0, 0 };
+		multiSelectSheet.popoverPresentationController.sourceView = self;
+		multiSelectSheet.popoverPresentationController.sourceRect = rc;
 	}
 }
 

@@ -106,6 +106,8 @@
 		[[UIApplication sharedApplication] openURL:url];
 	}]];
 	[self presentViewController:sheet animated:YES completion:nil];
+	// set location
+	sheet.popoverPresentationController.barButtonItem = sender;
 }
 
 #pragma mark Generic page controls
