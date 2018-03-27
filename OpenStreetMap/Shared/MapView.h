@@ -128,6 +128,7 @@ typedef enum {
 @property (assign,nonatomic)	MapViewController			*	viewController;
 @property (assign,nonatomic)	IBOutlet FpsLabel			*	fpsLabel;
 @property (assign,nonatomic)	IBOutlet UILabel			*	userInstructionLabel;
+@property (assign,nonatomic)	IBOutlet UIButton			*	compassButton;
 
 @property (assign,nonatomic)	IBOutlet UIButton			*	bingMapsLogo;
 @property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;
@@ -218,6 +219,7 @@ typedef enum {
 
 -(IBAction)locateMe:(id)sender;
 -(IBAction)centerOnGPS:(id)sender;
+-(IBAction)rotateToNorth:(id)sender;
 -(IBAction)duplicateSelectedObject:(id)sender;
 -(IBAction)dropPin:(id)sender;
 -(void)removePin;

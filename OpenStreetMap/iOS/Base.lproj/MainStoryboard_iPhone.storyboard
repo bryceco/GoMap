@@ -164,6 +164,17 @@
                                             <action selector="centerOnGPS:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="5qr-EW-Due"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
+                                        <rect key="frame" x="281" y="70" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="Umo-8r-F7i"/>
+                                            <constraint firstAttribute="height" constant="32" id="rLd-DR-Gbp"/>
+                                        </constraints>
+                                        <state key="normal" image="compass.png"/>
+                                        <connections>
+                                            <action selector="rotateToNorth:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="j6f-G1-Ixj"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
@@ -172,6 +183,8 @@
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="0BL-mM-7or"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" id="3Ky-eD-XUk"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="bottom" secondItem="4gw-jH-T1o" secondAttribute="bottom" id="9Hd-Fq-OZd"/>
+                                    <constraint firstItem="E22-sL-sNt" firstAttribute="top" secondItem="TnL-YC-BCg" secondAttribute="bottom" constant="20" id="Ehg-gk-Zac"/>
+                                    <constraint firstItem="E22-sL-sNt" firstAttribute="centerX" secondItem="TnL-YC-BCg" secondAttribute="centerX" id="Gub-GY-j0P"/>
                                     <constraint firstItem="9t5-wq-j1u" firstAttribute="centerX" secondItem="GTv-eT-l7q" secondAttribute="centerX" constant="7.5" id="MKk-qF-9MP"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="bottom" secondItem="4gw-jH-T1o" secondAttribute="top" id="N4A-fY-zCd"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="centerX" secondItem="Zh9-uC-62t" secondAttribute="centerX" id="Oun-QH-4xK"/>
@@ -193,6 +206,7 @@
                                     <outlet property="addNodeButton" destination="uWA-Q5-QJr" id="KZK-QF-Qu1"/>
                                     <outlet property="bingMapsLogo" destination="2Ka-IT-DQC" id="KDN-9Z-L5e"/>
                                     <outlet property="centerOnGPSButton" destination="Fo4-Nq-pAz" id="EWp-gg-bm2"/>
+                                    <outlet property="compassButton" destination="E22-sL-sNt" id="aGc-Fs-I8q"/>
                                     <outlet property="editControl" destination="zrW-uc-hfQ" id="0UY-5Y-O1k"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
                                     <outlet property="helpButton" destination="TnL-YC-BCg" id="hR9-Za-lMp"/>
@@ -4958,6 +4972,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <image name="982-food-toolbar.png" width="22" height="18"/>
         <image name="BingLogo.png" width="93" height="29"/>
         <image name="bing_rgb.png" width="408" height="144"/>
+        <image name="compass.png" width="100" height="100"/>
         <image name="redo32.png" width="32" height="26"/>
         <image name="undo32.png" width="32" height="26"/>
     </resources>

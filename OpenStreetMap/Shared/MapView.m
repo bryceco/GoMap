@@ -355,6 +355,11 @@ CGSize SizeForImage( NSImage * image )
 	_centerOnGPSButton.layer.borderColor = [UIColor blueColor].CGColor;
 	_centerOnGPSButton.hidden = YES;
 
+	// compass button
+	//self.compassButton.hidden = YES;
+	self.compassButton.clipsToBounds = NO;
+	self.compassButton.contentMode = UIViewContentModeCenter;
+
 #if 0
 	// Support zoom via tap and drag
 	_tapAndDragGesture = [[TapAndDragGesture alloc] initWithTarget:self action:@selector(handleTapAndDragGesture:)];
@@ -1360,6 +1365,20 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_centerOnGPSButton.hidden = YES;
 }
 
+-(IBAction)rotateToNorth:(id)sender
+{
+	switch ( self.gpsState ) {
+		case GPS_STATE_HEADING:
+			self.gpsState = GPS_STATE_LOCATION;
+			break;
+		case GPS_STATE_LOCATION:
+			self.gpsState = GPS_STATE_HEADING;
+		case GPS_STATE_NONE:
+			// nothing
+			break;
+	}
+}
+
 -(void)locationUpdateFailed:(NSError *)error
 {
 	MapViewController * controller = self.viewController;
@@ -1739,6 +1758,11 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	if ( _locationBallLayer ) {
 		_locationBallLayer.heading = _locationBallLayer.heading + angle;
+	}
+	if ( !_compassButton.hidden ) {
+		double screenAngle = OSMTransformRotation( _screenFromMapTransform );
+//		_compassButton.imageView.layer.transform = CATransform3DMakeAffineTransform( CGAffineTransformMakeRotation(screenAngle) );
+		_compassButton.transform = CGAffineTransformMakeRotation(screenAngle);
 	}
 }
 
