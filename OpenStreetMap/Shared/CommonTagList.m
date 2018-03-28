@@ -37,6 +37,8 @@ static id Translate( id orig, id translation )
 	if ( translation == nil )
 		return orig;
 	if ( [orig isKindOfClass:[NSString class]] && [translation isKindOfClass:[NSString class]] ) {
+		if ( [translation hasPrefix:@"<"] )
+			return orig; // meta content
 		return translation;
 	}
 	if ( [orig isKindOfClass:[NSArray class]] ) {
@@ -84,11 +86,12 @@ static void InitializeDictionaries()
 		}
 		NSString * file = [NSString stringWithFormat:@"translations/%@.json",code];
 		g_translationDict	= DictionaryForFile(file);
+		g_translationDict	= g_translationDict[ code ][ @"presets" ];
 
-		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[@"presets"][@"defaults"] );
-		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[@"presets"][@"categories"] );
-		g_presetsDict		= Translate( g_presetsDict,		g_translationDict[@"presets"][@"presets"] );
-		g_fieldsDict		= Translate( g_fieldsDict,		g_translationDict[@"presets"][@"fields"] );
+		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[@"defaults"] );
+		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[@"categories"] );
+		g_presetsDict		= Translate( g_presetsDict,		g_translationDict[@"presets"] );
+		g_fieldsDict		= Translate( g_fieldsDict,		g_translationDict[@"fields"] );
 	}
 }
 
