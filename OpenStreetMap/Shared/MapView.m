@@ -2090,7 +2090,13 @@ NSString * ActionTitle( NSInteger action )
 			case ACTION_COPYTAGS:
 			case ACTION_PASTETAGS:
 			case ACTION_EDITTAGS:
-				if ( self.editorLayer.selectedWay && self.editorLayer.selectedNode && self.editorLayer.selectedWay.tags.count == 0 ) {
+				if ( self.editorLayer.selectedWay &&
+					self.editorLayer.selectedNode &&
+					self.editorLayer.selectedNode.tags.count == 0 &&
+					self.editorLayer.selectedWay.tags.count == 0 &&
+					!self.editorLayer.selectedWay.isMultipolygonMember )
+				{
+					// promote the selection to the way
 					self.editorLayer.selectedNode = nil;
 					[self refreshPushpinText];
 				}
@@ -2722,7 +2728,7 @@ NSString * ActionTitle( NSInteger action )
 -(IBAction)duplicateSelectedObject:(id)sender
 {
 	if ( _editorLayer.selectedPrimary.isNode ) {
-		OsmNode * origNode = (id)_editorLayer.selectedPrimary;
+		OsmNode * origNode = _editorLayer.selectedPrimary.isNode;
 		CGPoint pt = [self screenPointForLatitude:origNode.lat longitude:origNode.lon birdsEye:YES];
 		pt.x += 20;
 		pt.y += 20;
@@ -2732,7 +2738,7 @@ NSString * ActionTitle( NSInteger action )
 		return;
 	}
 	if ( _editorLayer.selectedPrimary.isWay ) {
-		OsmWay * origWay = (id)_editorLayer.selectedPrimary;
+		OsmWay * origWay = _editorLayer.selectedPrimary.isWay;
 		OsmWay * newWay = nil;
 		NSInteger last = origWay.nodes.lastObject == origWay.nodes[0] ? origWay.nodes.count : -1;
 		for ( OsmNode * origNode in origWay.nodes ) {

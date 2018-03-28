@@ -871,6 +871,16 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 }
 
+
+-(BOOL)isMultipolygonMember
+{
+	for ( OsmRelation * parent in self.relations ) {
+		if ( parent.isMultipolygon && parent.tags.count > 0 )
+			return YES;
+	}
+	return NO;
+}
+
 -(BOOL)isSimpleMultipolygonOuterMember
 {
 	NSArray * parents = self.relations;
@@ -891,7 +901,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		}
 	}
 	return YES;
-};
+}
 
 -(double)wayArea
 {
