@@ -92,9 +92,10 @@ static void InitializeDictionaries()
 		if ( code == nil ) {
 			code = @"en";
 		}
+		NSString * code2 = [code stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
 		NSString * file = [NSString stringWithFormat:@"translations/%@.json",code];
 		g_translationDict	= DictionaryForFile(file);
-		g_translationDict	= g_translationDict[ code ][ @"presets" ];
+		g_translationDict	= g_translationDict[ code2 ][ @"presets" ];
 
 		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[@"defaults"] );
 		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[@"categories"] );
@@ -459,7 +460,7 @@ static NSString * PrettyTag( NSString * tag )
 
 //r	DLog(@"%@",dict);
 
-	if ( [type isEqualToString:@"defaultcheck"] || [type isEqualToString:@"check"] ) {
+	if ( [type isEqualToString:@"defaultcheck"] || [type isEqualToString:@"check"] || [type isEqualToString:@"onewayCheck"] ) {
 
 		NSArray * presets = @[ [CommonTagValue presetWithName:[CommonTagList yesForLocale] details:nil tagValue:@"yes"],
 							   [CommonTagValue presetWithName:[CommonTagList noForLocale]  details:nil tagValue:@"no"] ];
@@ -467,7 +468,7 @@ static NSString * PrettyTag( NSString * tag )
 		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 		return group;
 
-	} else if ( [type isEqualToString:@"radio"] ) {
+	} else if ( [type isEqualToString:@"radio"] || [type isEqualToString:@"structureRadio"] ) {
 
 		if ( keysArray ) {
 
@@ -494,6 +495,40 @@ static NSString * PrettyTag( NSString * tag )
 			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 			return group;
 
+		} else {
+#if DEBUG
+			assert(NO);
+#endif
+			return nil;
+		}
+
+	} else if ( [type isEqualToString:@"radio"] || [type isEqualToString:@"structureRadio"] ) {
+		
+		if ( keysArray ) {
+			
+			// a list of booleans
+			NSMutableArray * tags = [NSMutableArray new];
+			NSArray * presets = @[ [CommonTagValue presetWithName:[CommonTagList yesForLocale] details:nil tagValue:@"yes"],
+								   [CommonTagValue presetWithName:[CommonTagList noForLocale]  details:nil tagValue:@"no"] ];
+			for ( NSString * k in keysArray ) {
+				NSString * name = stringsOptionsDict[ k ];
+				CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+				[tags addObject:tag];
+			}
+			CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:tags];
+			return group;
+			
+		} else if ( optionsArray ) {
+			
+			// a multiple selection
+			NSMutableArray * presets = [NSMutableArray new];
+			for ( NSString * v in optionsArray ) {
+				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:v]];
+			}
+			CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
+			return group;
+			
 		} else {
 #if DEBUG
 			assert(NO);
@@ -536,7 +571,7 @@ static NSString * PrettyTag( NSString * tag )
 						NSArray * values = dict2[@"data"];
 						for ( NSDictionary * v in values ) {
 							if ( [v[@"fraction"] doubleValue] < 0.01 )
-								continue;
+								continue; // it's a very uncommon value, so ignore it
 							NSString * val = v[@"value"];
 							[presets2 addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
 						}
@@ -576,8 +611,18 @@ static NSString * PrettyTag( NSString * tag )
 
 	} else if ( [type isEqualToString:@"address"] ) {
 
+		NSArray * numericFields = @[
+									@"addr:block_number",
+									@"addr:conscriptionnumber",
+									@"addr:floor",
+									@"addr:housenumber",
+									@"addr:postcode",
+									@"addr:unit"
+									];
+
+		NSString * countryCode = @"us";	// replace with country code for current country
+
 		NSArray * keys = nil;
-		NSString * countryCode = @"us";
 		for ( NSDictionary * localeDict in g_addressFormatsDict[ @"dataAddressFormats" ] ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
 			if ( countryCodeList == nil ) {
@@ -599,7 +644,7 @@ static NSString * PrettyTag( NSString * tag )
 				name = PrettyTag( name );
 				if ( ![placeholder isEqualToString:@"123"] )
 					name = placeholder;
-				keyboard = [k isEqualToString:@"addr:housenumber"] || [k isEqualToString:@"addr:postcode"] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
+				keyboard = [numericFields containsObject:k] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
 				CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 				[addrs addObject:tag];
 			}
