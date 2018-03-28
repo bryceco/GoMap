@@ -12,6 +12,7 @@
 #import "OsmObjects.h"
 #import "TagInfo.h"
 
+static NSDictionary * g_addressFormatsDict;
 static NSDictionary * g_defaultsDict;
 static NSDictionary * g_categoriesDict;
 static NSDictionary * g_presetsDict;
@@ -75,10 +76,17 @@ static id Translate( id orig, id translation )
 static void InitializeDictionaries()
 {
 	if ( g_presetsDict == nil ) {
+		g_addressFormatsDict = DictionaryForFile(@"address-formats.json");
+
 		g_defaultsDict		= DictionaryForFile(@"defaults.json");
 		g_categoriesDict	= DictionaryForFile(@"categories.json");
 		g_presetsDict		= DictionaryForFile(@"presets.json");
 		g_fieldsDict		= DictionaryForFile(@"fields.json");
+
+		g_defaultsDict		= g_defaultsDict[@"defaults"];
+		g_categoriesDict	= g_categoriesDict[@"categories"];
+		g_presetsDict		= g_presetsDict[@"presets"];
+		g_fieldsDict		= g_fieldsDict[@"fields"];
 
 		NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
 		if ( code == nil ) {
@@ -568,18 +576,33 @@ static NSString * PrettyTag( NSString * tag )
 
 	} else if ( [type isEqualToString:@"address"] ) {
 
-		NSString * ref = dict[@"reference"][@"key"];
+		NSArray * keys = nil;
+		NSString * countryCode = @"us";
+		for ( NSDictionary * localeDict in g_addressFormatsDict[ @"dataAddressFormats" ] ) {
+			NSArray * countryCodeList = localeDict[@"countryCodes"];
+			if ( countryCodeList == nil ) {
+				// default
+				keys = localeDict[ @"format" ];
+			} else if ( [countryCodeList containsObject:countryCode] ) {
+				// country specific format
+				keys = localeDict[ @"format" ];
+				break;
+			}
+		}
+
 		NSDictionary * placeholders = dict[ @"strings" ][ @"placeholders" ];
 		NSMutableArray * addrs = [NSMutableArray new];
-		for ( NSString * k in dict[@"keys"] ) {
-			NSString * name = [k substringFromIndex:ref.length+1];
-			placeholder = placeholders[name];
-			name = PrettyTag( name );
-			if ( ![placeholder isEqualToString:@"123"] )
-				name = placeholder;
-			keyboard = [k isEqualToString:@"addr:housenumber"] || [k isEqualToString:@"addr:postcode"] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
-			CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
-			[addrs addObject:tag];
+		for ( NSArray * row in keys ) {
+			for ( NSString * k in row ) {
+				NSString * name = k;
+				placeholder = placeholders[name];
+				name = PrettyTag( name );
+				if ( ![placeholder isEqualToString:@"123"] )
+					name = placeholder;
+				keyboard = [k isEqualToString:@"addr:housenumber"] || [k isEqualToString:@"addr:postcode"] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
+				CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
+				[addrs addObject:tag];
+			}
 		}
 		CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:addrs];
 		return group;
@@ -633,6 +656,11 @@ static NSString * PrettyTag( NSString * tag )
 	} else if ( [type isEqualToString:@"typeCombo"] ) {
 
 		// skip since this is for selecting generic objects
+		return nil;
+
+	} else if ( [type isEqualToString:@"localized"] ) {
+
+		// not implemented
 		return nil;
 
 	} else {
