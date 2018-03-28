@@ -12,6 +12,7 @@
 #import "AerialList.h"
 #import "AerialListViewController.h"
 #import "EditorMapLayer.h"
+#import "OsmMapData.h"
 #import "MapView.h"
 #import "MapViewController.h"
 #import "MercatorTileLayer.h"
@@ -35,7 +36,6 @@
 		self.navigationController.navigationBarHidden = NO;
 	}
 
-
 	NSString * preferredLanguage = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
 	if ( preferredLanguage == nil ) {
 		preferredLanguage = @"en";
@@ -43,6 +43,21 @@
 	NSLocale * locale =  [NSLocale localeWithLocaleIdentifier:preferredLanguage];
 	preferredLanguage = [locale displayNameForKey:NSLocaleIdentifier value:preferredLanguage];
 	_language.text = preferredLanguage;
+
+	// set username, but then validate it
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+
+	_username.text = @"";
+	if ( appDelegate.userName.length > 0 ) {
+		[appDelegate.mapView.editorLayer.mapData verifyUserCredentialsWithCompletion:^(NSString * errorMessage) {
+			if ( errorMessage ) {
+				_username.text = @"<invalid>";
+			} else {
+				_username.text = appDelegate.userName;
+			}
+			[self.tableView reloadData];
+		}];
+	}
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
