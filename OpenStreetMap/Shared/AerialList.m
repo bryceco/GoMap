@@ -179,12 +179,13 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 									  subdomains:@[@"a", @"b", @"c"]
 										 maxZoom:19
 								   roundUp:YES],
-
+#if 0
 			 [AerialService aerialWithName:@"MapQuest Open Aerial"
 											 url:@"http://otile{t}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
 									  subdomains:@[ @"1", @"2", @"3", @"4" ]
 										 maxZoom:20
 									roundUp:YES],
+#endif
 			 ];
 }
 
