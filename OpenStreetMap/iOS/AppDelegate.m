@@ -224,10 +224,12 @@
 	[defaults setObject:self.userName		forKey:@"username"];
 	[defaults setObject:self.userPassword	forKey:@"password"];
 
-	UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
-	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 
 	NSInteger pendingEdits = [self.mapView.editorLayer.mapData modificationCount];
+	if ( pendingEdits ) {
+		UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
+		[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+	}
 	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:pendingEdits];
 }
 
