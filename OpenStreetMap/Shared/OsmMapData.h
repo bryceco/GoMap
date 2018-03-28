@@ -97,6 +97,7 @@ extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
 -(void)clearUndoStack;
 -(void)setConstructed:(OsmBaseObject *)object;
 
+-(NSInteger)modificationCount;
 -(OsmMapData *)modifiedObjects;
 
 -(int32_t)wayCount;

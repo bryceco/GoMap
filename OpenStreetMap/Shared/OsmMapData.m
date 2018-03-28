@@ -357,6 +357,21 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 
+-(NSInteger)modificationCount
+{
+	__block NSInteger count = 0;
+	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmNode * node, BOOL *stop) {
+		count += node.deleted ? node.ident.longLongValue > 0 : node.isModified;
+	}];
+	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
+		count += way.deleted ? way.ident.longLongValue > 0 : way.isModified;
+	}];
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
+		count += relation.deleted ? relation.ident.longLongValue > 0 : relation.isModified;
+	}];
+	return count;
+}
+
 
 #pragma mark Editing
 

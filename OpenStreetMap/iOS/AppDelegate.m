@@ -10,8 +10,10 @@
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "DownloadThreadPool.h"
+#import "EditorMapLayer.h"
 #import "GpxLayer.h"
 #import "KeyChain.h"
+#import "OsmMapData.h"
 #import "MapView.h"
 #import "MapViewController.h"
 
@@ -221,6 +223,12 @@
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:self.userName		forKey:@"username"];
 	[defaults setObject:self.userPassword	forKey:@"password"];
+
+	UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
+	[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+
+	NSInteger pendingEdits = [self.mapView.editorLayer.mapData modificationCount];
+	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:pendingEdits];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
