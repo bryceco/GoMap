@@ -324,16 +324,32 @@ static inline int32_t modulus( int32_t a, int32_t n)
 -(NSString *)urlForZoom:(int32_t)zoom tileX:(int32_t)tileX tileY:(int32_t)tileY
 {
 	NSMutableString * url = [self.aerialService.url mutableCopy];
-	NSString * t = self.aerialService.subdomains.count ? [self.aerialService.subdomains objectAtIndex:(tileX+tileY)%self.aerialService.subdomains.count] : @"{t}";
+
+	// handle switch in URL
+	NSRange start = [url rangeOfString:@"{switch:"];
+	if ( start.location != NSNotFound ) {
+		NSRange subs = { start.location+start.length, url.length-start.location-start.length };
+		NSRange end = [url rangeOfString:@"}" options:0 range:subs];
+		if ( end.location != NSNotFound ) {
+			subs.length = end.location - subs.location;
+			NSString * subdomains = [url substringWithRange:subs];
+			NSArray * a = [subdomains componentsSeparatedByString:@","];
+			if ( a.count ) {
+				NSString * t = [a objectAtIndex:(tileX+tileY) % a.count];
+				start.length = end.location - start.location + 1;
+				[url replaceCharactersInRange:start withString:t];
+			}
+		}
+	}
+
 	NSString * u = [self quadKeyForZoom:zoom tileX:tileX tileY:tileY];
 	NSString * x = [NSString stringWithFormat:@"%d",tileX];
 	NSString * y = [NSString stringWithFormat:@"%d",tileY];
 	NSString * z = [NSString stringWithFormat:@"%d",zoom];
 	[url replaceOccurrencesOfString:@"{u}" withString:u options:0 range:NSMakeRange(0,url.length)];
-	[url replaceOccurrencesOfString:@"{t}" withString:t options:0 range:NSMakeRange(0,url.length)];
 	[url replaceOccurrencesOfString:@"{x}" withString:x options:0 range:NSMakeRange(0,url.length)];
 	[url replaceOccurrencesOfString:@"{y}" withString:y options:0 range:NSMakeRange(0,url.length)];
-	[url replaceOccurrencesOfString:@"{z}" withString:z options:0 range:NSMakeRange(0,url.length)];
+	[url replaceOccurrencesOfString:@"{zoom}" withString:z options:0 range:NSMakeRange(0,url.length)];
 	return url;
 }
 

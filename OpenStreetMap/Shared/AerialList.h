@@ -14,17 +14,17 @@
 @interface AerialService : NSObject
 @property (readonly) NSString	*	name;
 @property (readonly) NSString	*	url;
-@property (readonly) NSArray	*	subdomains;
 @property (readonly) int32_t		maxZoom;
 @property (readonly) NSString	*	cacheName;
 @property (readonly) NSString	*	metadataUrl;
 @property (readonly) NSData		*	placeholderImage;
+@property (readonly) CGPathRef 	*	polygon;
 @property (readonly) BOOL			roundZoomUp;
 
 -(BOOL)isBingAerial;
 
--(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp;
-+(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp;
+-(instancetype)initWithName:(NSString *)name url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon;
++(instancetype)aerialWithName:(NSString *)name url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon;
 +(instancetype)mapnik;
 +(instancetype)gpsTrace;
 +(instancetype)mapboxLocator;

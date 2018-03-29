@@ -14,29 +14,26 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 @implementation AerialService
 
--(instancetype)initWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
+-(instancetype)initWithName:(NSString *)name url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon
 {
 	self = [super init];
 	if ( self ) {
 		_name		= name ?: @"";
 		_url		= url ?: @"";
-		_subdomains = subdomains;
 		_maxZoom	= (int32_t)maxZoom ?: 21;
 		_roundZoomUp = roundUp;
 	}
 	return self;
 }
 
-+(instancetype)aerialWithName:(NSString *)name url:(NSString *)url subdomains:(NSArray *)subdomains maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
++(instancetype)aerialWithName:(NSString *)name url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon
 {
-	return [[AerialService alloc] initWithName:name url:url subdomains:subdomains maxZoom:maxZoom roundUp:roundUp];
+	return [[AerialService alloc] initWithName:name url:url maxZoom:maxZoom roundUp:roundUp polygon:polygon];
 }
 
 -(BOOL)isBingAerial
 {
-	if ( [self.url hasPrefix:@"http://ecn.{t}.tiles.virtualearth.net"] )
-		return YES;
-	if ( [self.url hasPrefix:@"https://ecn.{t}.tiles.virtualearth.net"] )
+	if ( [self.url containsString:@"tiles.virtualearth.net"] )
 		return YES;
 	return NO;
 }
@@ -47,10 +44,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		bing = [AerialService aerialWithName:@"Bing Aerial"
-										 url:@"http://ecn.{t}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
-								  subdomains:@[@"t0", @"t1", @"t2", @"t3"]
+										 url:@"http://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
 									 maxZoom:21
-									 roundUp:YES];
+									 roundUp:YES
+									 polygon:NULL];
 	});
 	return bing;
 }
@@ -61,10 +58,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		service = [AerialService aerialWithName:@"MapnikTiles"
-										   url:@"http://{t}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-									subdomains:@[ @"a", @"b", @"c" ]
+											url:@"http://{switch:a,b,c}.tile.openstreetmap.org/{zoom}/{x}/{y}.png"
 									   maxZoom:19
-										roundUp:NO];
+										roundUp:NO
+										polygon:NULL];
 	});
 	return service;
 }
@@ -74,10 +71,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		service = [AerialService aerialWithName:@"OSM GPS Traces"
-								  url:@"https://gps-{t}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png"
-									 subdomains:@[ @"a", @"b", @"c" ]
+											url:@"https://gps-{switch:a,b,c}.tile.openstreetmap.org/lines/{zoom}/{x}/{y}.png"
 										maxZoom:20
-										roundUp:NO];
+										roundUp:NO
+										polygon:NULL];
 	});
 	return service;
 }
@@ -87,10 +84,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		service = [AerialService aerialWithName:@"Mapbox Locator"
-											url:@"http://{t}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
-									 subdomains:@[ @"a", @"b", @"c" ]
+											url:@"http://{switch:a,b,c}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{zoom}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
 										maxZoom:20
-										roundUp:NO];
+										roundUp:NO
+										polygon:NULL];
 	});
 	return service;
 }
@@ -101,14 +98,25 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	return @{ @"name" : _name,
 			  @"url" : _url,
-			  @"subdomains" : _subdomains,
 			  @"zoom" : @(_maxZoom),
 			  @"roundUp" : @(_roundZoomUp)
 			  };
 }
 -(instancetype)initWithDictionary:(NSDictionary *)dict
 {
-	return [self initWithName:dict[@"name"] url:dict[@"url"] subdomains:dict[@"subdomains"] maxZoom:[dict[@"zoom"] integerValue] roundUp:[dict[@"roundUp"] boolValue]];
+	NSString * url = dict[@"url"];
+
+	// convert a saved aerial that uses a subdomain list to the new format
+	NSArray * subdomains = dict[@"subdomains"];
+	if ( subdomains.count > 0 ) {
+		NSString * s = [subdomains componentsJoinedByString:@","];
+		s = [NSString stringWithFormat:@"{switch:%@}",s];
+		url = [url stringByReplacingOccurrencesOfString:@"{t}" withString:s];
+	}
+	// convert {z} to {zoom}
+	url = [url stringByReplacingOccurrencesOfString:@"{z}" withString:@"{zoom}"];
+
+	return [self initWithName:dict[@"name"] url:url maxZoom:[dict[@"zoom"] integerValue] roundUp:[dict[@"roundUp"] boolValue] polygon:NULL];
 }
 
 
@@ -159,6 +167,9 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	self = [super init];
 	if ( self ) {
 		[self load];
+		[self fetchOsmLabAerials:^{
+
+		}];
 	}
 	return self;
 }
@@ -175,18 +186,72 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			 [AerialService defaultBingAerial],
 
 			 [AerialService aerialWithName:@"MapBox Aerial"
-											 url:@"http://{t}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
-									  subdomains:@[@"a", @"b", @"c"]
-										 maxZoom:19
-								   roundUp:YES],
+									   url:@"http://{switch:a,b,c}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{zoom}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
+								   	maxZoom:19
+								   roundUp:YES
+								   polygon:NULL],
 #if 0
 			 [AerialService aerialWithName:@"MapQuest Open Aerial"
-											 url:@"http://otile{t}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
-									  subdomains:@[ @"1", @"2", @"3", @"4" ]
-										 maxZoom:20
-									roundUp:YES],
+									   url:@"http://otile{switch:1,2,3,4}.mqcdn.com/tiles/1.0.0/sat/{zoom}/{x}/{y}.png"
+								   maxZoom:20
+								   roundUp:YES
+								   polygon:NULL],
 #endif
 			 ];
+}
+
+-(void)fetchOsmLabAerials:(void (^)(void))completion
+{
+	NSString * urlString = @"https://raw.githubusercontent.com/osmlab/editor-layer-index/gh-pages/imagery.json";
+	NSURL * downloadUrl = [NSURL URLWithString:urlString];
+	NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+		id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+		if ( json ) {
+			NSMutableArray * externalAerials = [NSMutableArray new];
+			for ( NSDictionary * entry in json ) {
+				if ( [entry[@"overlay"] integerValue] ) {
+					// we don't support overlays yet
+					continue;
+				}
+
+				CGPathRef polygon = NULL;
+				NSArray * polygonPoints = entry[@"extent"][@"polygon"];
+				if ( polygonPoints ) {
+					CGMutablePathRef	path		= CGPathCreateMutable();
+
+					for ( NSArray * loop in polygonPoints ) {
+						BOOL	first		= YES;
+						for ( NSArray * pt in loop ) {
+							double lon = [pt[0] doubleValue];
+							double lat = [pt[1] doubleValue];
+							if ( first ) {
+								CGPathMoveToPoint(path, NULL, lon, lat);
+								first = NO;
+							} else {
+								CGPathAddLineToPoint(path, NULL, lon, lat);
+							}
+						}
+						CGPathCloseSubpath( path );
+					}
+					polygon = CGPathCreateCopy( path );
+					CGPathRelease( path );
+				}
+				NSString * name = entry[@"name"];
+				NSString * url = entry[@"url"];
+				NSInteger maxZoom = [entry[@"extent"][@"max_zoom"] integerValue];
+				AerialService * service = [AerialService aerialWithName:name url:url maxZoom:maxZoom roundUp:YES polygon:polygon];
+				[externalAerials addObject:service];
+			}
+			[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {
+				return [obj1.name caseInsensitiveCompare:obj2.name];
+			}];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[_list addObjectsFromArray:externalAerials];
+			});
+
+		}
+  	}];
+	[downloadTask resume];
 }
 
 -(void)load

@@ -174,7 +174,6 @@
 			AerialService * service = [_aerials serviceAtIndex:row];
 			c.name = service.name;
 			c.url = service.url;
-			c.tileServers = [service.subdomains componentsJoinedByString:@","];
 			c.zoom = @(service.maxZoom);
 		}
 

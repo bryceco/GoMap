@@ -14,13 +14,11 @@
 {
 	IBOutlet UITextField *	nameField;
 	IBOutlet UITextField *	urlField;
-	IBOutlet UITextField *	tileServersField;
 	IBOutlet UITextField *	zoomField;
 }
 
 @property NSString * name;
 @property NSString * url;
-@property NSString * tileServers;
 @property NSNumber * zoom;
 
 @property (copy) void (^completion)(AerialService * service);

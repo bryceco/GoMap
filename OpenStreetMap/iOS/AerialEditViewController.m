@@ -21,7 +21,6 @@
 
 	nameField.text = self.name;
 	urlField.text = self.url;
-	tileServersField.text = self.tileServers;
 	zoomField.text = [self.zoom stringValue];
 }
 
@@ -35,20 +34,15 @@
 -(IBAction)done:(id)sender
 {
 	// remove white space from subdomain list
-	NSMutableArray * subdomains = [[tileServersField.text componentsSeparatedByString:@","] mutableCopy];
-	for ( NSInteger i = 0; i < subdomains.count; ++i ) {
-		subdomains[i] = [subdomains[i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	}
 	NSString * url = [urlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	url = [url stringByReplacingOccurrencesOfString:@"%7B" withString:@"{"];
 	url = [url stringByReplacingOccurrencesOfString:@"%7D" withString:@"}"];
-	url = [url stringByReplacingOccurrencesOfString:@"{zoom}" withString:@"{z}"];
 
 	AerialService * service = [AerialService aerialWithName:[nameField.text	stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 																	url:url
-																subdomains:subdomains
 																maxZoom:[zoomField.text integerValue]
-																roundUp:YES];
+																roundUp:YES
+																polygon:NULL];
 	self.completion(service);
 
 	[self.navigationController popViewControllerAnimated:YES];

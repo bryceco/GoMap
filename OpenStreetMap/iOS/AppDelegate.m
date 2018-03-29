@@ -224,7 +224,7 @@
 	[defaults setObject:self.userName		forKey:@"username"];
 	[defaults setObject:self.userPassword	forKey:@"password"];
 
-
+	// set app badge if edits are pending
 	NSInteger pendingEdits = [self.mapView.editorLayer.mapData modificationCount];
 	if ( pendingEdits ) {
 		UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
