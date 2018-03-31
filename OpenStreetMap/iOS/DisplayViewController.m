@@ -63,10 +63,6 @@ static const NSInteger CACHE_SECTION			= 3;
 	} else {
 
 		// returning from child view
-		if ( mapView.customAerials.count == 0 ) {
-			[mapView.customAerials reset];
-		}
-
 		[self setCustomAerialCellTitle];
 	}
 }

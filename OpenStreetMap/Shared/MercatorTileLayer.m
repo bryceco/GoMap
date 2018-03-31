@@ -345,10 +345,12 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	NSString * u = [self quadKeyForZoom:zoom tileX:tileX tileY:tileY];
 	NSString * x = [NSString stringWithFormat:@"%d",tileX];
 	NSString * y = [NSString stringWithFormat:@"%d",tileY];
+	NSString * negY = [NSString stringWithFormat:@"%d",(1<<zoom)-tileY-1];
 	NSString * z = [NSString stringWithFormat:@"%d",zoom];
 	[url replaceOccurrencesOfString:@"{u}" withString:u options:0 range:NSMakeRange(0,url.length)];
 	[url replaceOccurrencesOfString:@"{x}" withString:x options:0 range:NSMakeRange(0,url.length)];
 	[url replaceOccurrencesOfString:@"{y}" withString:y options:0 range:NSMakeRange(0,url.length)];
+	[url replaceOccurrencesOfString:@"{-y}" withString:negY options:0 range:NSMakeRange(0,url.length)];
 	[url replaceOccurrencesOfString:@"{zoom}" withString:z options:0 range:NSMakeRange(0,url.length)];
 	return url;
 }

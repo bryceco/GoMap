@@ -186,7 +186,7 @@
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 			NSData * data = [NSData dataWithContentsOfURL:url];
-			BOOL ok = [_mapView.gpxLayer loadGPXData:data center:YES];
+			BOOL ok = [self.mapView.gpxLayer loadGPXData:data center:YES];
 			if ( !ok ) {
 				UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Open URL",nil)
 																				message:NSLocalizedString(@"Sorry, an error occurred while loading the GPX file",nil)

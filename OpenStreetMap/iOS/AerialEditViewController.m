@@ -38,7 +38,10 @@
 	url = [url stringByReplacingOccurrencesOfString:@"%7B" withString:@"{"];
 	url = [url stringByReplacingOccurrencesOfString:@"%7D" withString:@"}"];
 
+	NSString * identifier = url;
+
 	AerialService * service = [AerialService aerialWithName:[nameField.text	stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+												 			identifier:identifier
 																	url:url
 																maxZoom:[zoomField.text integerValue]
 																roundUp:YES

@@ -16,12 +16,20 @@
 #import "UITableViewCell+FixConstraints.h"
 
 
+#define SECTION_BUILTIN 	0
+#define SECTION_USER		1
+#define SECTION_EXTERNAL	2
+
+
 @implementation AerialListViewController
 
 - (void)viewDidLoad
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	_aerials = appDelegate.mapView.customAerials;
+
+	OSMRect viewport = [appDelegate.mapView screenLongitudeLatitude];
+	_imageryForRegion = [_aerials servicesForRegion:viewport];
 
 	[super viewDidLoad];
 
@@ -53,50 +61,66 @@
 
 #pragma mark - Table view data source
 
+-(NSArray *)aerialListForSection:(NSInteger)section
+{
+	if ( section == SECTION_BUILTIN )
+		return _aerials.builtinServices;
+	if ( section == SECTION_USER )
+		return _aerials.userDefinedServices;
+	if ( section == SECTION_EXTERNAL )
+		return _imageryForRegion;
+	return nil;
+}
+
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return NSLocalizedString(@"You can define your own aerial background layers here",nil);
+	if ( section == SECTION_BUILTIN )
+		return NSLocalizedString(@"Standard imagery",nil);
+	if ( section == SECTION_USER )
+		return NSLocalizedString(@"User-defined imagery",nil);
+	if ( section == SECTION_EXTERNAL )
+		return NSLocalizedString(@"Additional imagery sources",nil);
+	return nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 1;
+	return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if ( section != 0 )
-		return 0;
-	return _aerials.count + 1;
+	NSArray * a = [self aerialListForSection:section];
+	return a.count + (section == SECTION_USER);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section != 0 )
-		return nil;
-
-	if ( indexPath.row < _aerials.count ) {
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"backgroundCell" forIndexPath:indexPath];
-		AerialService * aerial = [_aerials serviceAtIndex:indexPath.row];
-
-
-		// set selection
-		NSString * title = aerial.name;
-		if ( indexPath.row == _aerials.currentIndex ) {
-			title = [@"\u2714 " stringByAppendingString:title];	// add checkmark
-		}
-		cell.textLabel.text = title;
-		cell.detailTextLabel.text = aerial.url;
-		return cell;
-	} else {
+	if ( indexPath.section == SECTION_USER && indexPath.row == _aerials.userDefinedServices.count ) {
 		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"addNewCell" forIndexPath:indexPath];
 		return cell;
 	}
+
+	NSArray * list = [self aerialListForSection:indexPath.section];
+	if ( list == nil )
+		return nil;
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"backgroundCell" forIndexPath:indexPath];
+	AerialService * aerial = list[ indexPath.row ];
+
+	// set selection
+	NSString * title = aerial.name;
+	if ( aerial == _aerials.currentAerial ) {
+		title = [@"\u2714 " stringByAppendingString:title];	// add checkmark
+	}
+	cell.textLabel.text = title;
+	cell.detailTextLabel.text = aerial.url;
+	return cell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == 0 && indexPath.row < _aerials.count )
+	if ( indexPath.section == SECTION_USER && indexPath.row < _aerials.userDefinedServices.count )
 		return YES;
 	return NO;
 }
@@ -105,13 +129,8 @@
 {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		// Delete the row from the data source
-		[_aerials removeServiceAtIndex:indexPath.row];
+		[_aerials removeUserDefinedServiceAtIndex:indexPath.row];
 		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-		if ( indexPath.row == _aerials.currentIndex ) {
-			_aerials.currentIndex = 0;
-		} else if ( indexPath.row < _aerials.currentIndex ) {
-			--_aerials.currentIndex;
-		}
 	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
 		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 	}
@@ -119,14 +138,14 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-	AerialService * service = [_aerials serviceAtIndex:fromIndexPath.row];
-	[_aerials removeServiceAtIndex:fromIndexPath.row];
-	[_aerials addService:service atIndex:toIndexPath.row];
+	AerialService * service = _aerials.userDefinedServices[ fromIndexPath.row];
+	[_aerials removeUserDefinedServiceAtIndex:fromIndexPath.row];
+	[_aerials addUserDefinedService:service atIndex:toIndexPath.row];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == 0 && indexPath.row < _aerials.count )
+	if ( indexPath.section == SECTION_USER && indexPath.row < _aerials.userDefinedServices.count )
 		return YES;
 	return NO;
 }
@@ -135,54 +154,70 @@
 #pragma mark - Navigation
 
 
+- (NSIndexPath *) tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// don't allow selection the Add button
+	if ( indexPath.section == SECTION_USER && indexPath.row == _aerials.userDefinedServices.count )
+		return nil;
+	return indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	MapView * mapView = appDelegate.mapView;
 
-	_aerials.currentIndex = indexPath.row;
+	NSArray * list = [self aerialListForSection:indexPath.section];
+	AerialService * service = indexPath.row < list.count ? list[ indexPath.row ] : nil;
+	if ( service == nil )
+		return;
+	_aerials.currentAerial = service;
+
 	mapView.aerialLayer.aerialService = _aerials.currentAerial;
 
-#if 0
-	[self.navigationController popViewControllerAnimated:YES];
-#else
 	// if popping all the way up we need to tell Settings to save changes
 	[self.displayViewController applyChanges];
 	[self.navigationController popToRootViewControllerAnimated:YES];
-#endif
 }
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	UITableViewController * controller = [segue destinationViewController];
+	NSIndexPath * editRow = nil;
 	if ( [controller isKindOfClass:[AerialEditViewController class]] ) {
 		AerialEditViewController * c = (id)controller;
-		NSInteger row;
 		if ( [sender isKindOfClass:[UIButton class]] ) {
 			// add new
-			row = _aerials.count;
+			editRow = [NSIndexPath indexPathForRow:_aerials.userDefinedServices.count inSection:SECTION_USER];
 		} else {
-			// edit existing
+			// edit existing service
 			UITableViewCell * cell = sender;
 			while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
 				cell = (id)[cell superview];
 			NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-			if ( indexPath == nil || indexPath.row >= _aerials.count )
+			if ( indexPath == nil )
 				return;
-			row = indexPath.row;
-			AerialService * service = [_aerials serviceAtIndex:row];
+			NSArray * a = [self aerialListForSection:indexPath.section];
+			AerialService * service = indexPath.row < a.count ? a[indexPath.row] : nil;
+			if ( service == nil )
+				return;
+			if ( indexPath.section == SECTION_USER ) {
+				editRow = indexPath;
+			}
 			c.name = service.name;
 			c.url = service.url;
 			c.zoom = @(service.maxZoom);
 		}
 
 		c.completion = ^(AerialService * service) {
-			if ( row >= _aerials.count ) {
-				[_aerials addService:service atIndex:_aerials.count];
-			} else {
-				[_aerials removeServiceAtIndex:row];
-				[_aerials addService:service atIndex:row];
+			if ( editRow == nil )
+				return;
+			if ( editRow.row == _aerials.userDefinedServices.count ) {
+				[_aerials addUserDefinedService:service atIndex:_aerials.userDefinedServices.count];
+			} else if ( editRow >= 0 ) {
+				[_aerials removeUserDefinedServiceAtIndex:editRow.row];
+				[_aerials addUserDefinedService:service atIndex:editRow.row];
 			}
 			[self.tableView reloadData];
 		};

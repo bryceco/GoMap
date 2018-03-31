@@ -536,7 +536,7 @@ static NSString * PrettyTag( NSString * tag )
 			return nil;
 		}
 
-	} else if ( [type isEqualToString:@"combo"] ) {
+	} else if ( [type isEqualToString:@"combo"] || [type isEqualToString:@"semiCombo"] ) {	// semiCombo is for setting semicolor delimited lists of values, which we don't support
 
 		NSMutableArray * presets = [NSMutableArray new];
 		if ( stringsOptionsDict ) {
