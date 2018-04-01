@@ -86,7 +86,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Bing attribution" image="BingLogo.png">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <state key="highlighted">
@@ -3498,6 +3498,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="o07-MJ-im6" secondAttribute="bottom" constant="6" id="GOW-bt-J4u"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="trailing" secondItem="peH-96-gWt" secondAttribute="trailing" constant="20" id="Gbj-CW-o1z"/>
                             <constraint firstItem="peH-96-gWt" firstAttribute="top" secondItem="UQm-nn-P6E" secondAttribute="bottom" constant="10" id="LDs-I1-aby"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="bottom" secondItem="peH-96-gWt" secondAttribute="bottom" constant="20" id="MBt-TZ-IJx"/>
@@ -3506,10 +3507,9 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             <constraint firstItem="o07-MJ-im6" firstAttribute="trailing" secondItem="A8k-Ic-iRd" secondAttribute="trailing" id="S1t-Oe-Q2A"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="centerY" secondItem="UQm-nn-P6E" secondAttribute="centerY" id="UMF-Ru-SZ8"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="126" id="XXx-3q-VEr"/>
-                            <constraint firstItem="o07-MJ-im6" firstAttribute="top" secondItem="SRh-fQ-dAA" secondAttribute="top" constant="20" id="lP4-2E-6YN"/>
+                            <constraint firstItem="o07-MJ-im6" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" id="lP4-2E-6YN"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="UQm-nn-P6E" secondAttribute="trailing" constant="2" id="mBW-14-KcJ"/>
                             <constraint firstItem="UQm-nn-P6E" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="qzq-UY-gsf"/>
-                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="SRh-fQ-dAA" secondAttribute="top" constant="70" id="tLu-Dp-3yg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="A8k-Ic-iRd"/>
                     </view>
@@ -3697,7 +3697,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="L7s-F4-sIf"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="top" secondItem="jyC-G0-Vbc" secondAttribute="bottom" id="MW5-hy-CGk"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="SBf-Qz-WXs"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" constant="20" id="XOx-7Z-PXh"/>
+                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="top" secondItem="JYP-Gu-HBL" secondAttribute="top" id="XOx-7Z-PXh"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="Z07-2o-YAz"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="imf-Fu-CBo"/>
                             <constraint firstItem="jyC-G0-Vbc" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="jrd-cT-OYe"/>

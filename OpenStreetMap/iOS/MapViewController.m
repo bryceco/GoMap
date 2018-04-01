@@ -66,13 +66,13 @@
 
 -(void)search:(UILongPressGestureRecognizer *)recognizer
 {
-	[self installLongPressGestureRecognizer:NO];	// remove so we don't trigger twice during a long press
-	[self performSegueWithIdentifier:@"searchSegue" sender:recognizer];
-	[self installLongPressGestureRecognizer:YES];
+	if ( recognizer.state == UIGestureRecognizerStateBegan ) {
+		[self performSegueWithIdentifier:@"searchSegue" sender:recognizer];
+	}
 }
 
 
-- (void)installLongPressGestureRecognizer:(BOOL)install
+- (void)installLocationLongPressGestureRecognizer:(BOOL)install
 {
 	if ( [self.locationButton respondsToSelector:@selector(view)] ) {
 		UIView * view = [(id)self.locationButton view];
@@ -104,7 +104,7 @@
 	CGRect rc = self.view.bounds;
 	self.mapView.frame = rc;
 	[self.mapView viewDidAppear];
-	[self installLongPressGestureRecognizer:YES];
+	[self installLocationLongPressGestureRecognizer:YES];
 
 	_toolbar.layer.zPosition = 9000;
 }
@@ -127,7 +127,7 @@
 		}
 
 		// changing the button tint changes the view, so we have to install longpress again
-		[self installLongPressGestureRecognizer:YES];
+		[self installLocationLongPressGestureRecognizer:YES];
 	}
 }
 
