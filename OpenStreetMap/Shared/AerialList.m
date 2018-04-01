@@ -21,28 +21,31 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 @implementation AerialService
 
--(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon
+-(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
 	self = [super init];
 	if ( self ) {
-		_name		= name ?: @"";
-		_identifier	= identifier;
-		_url		= url ?: @"";
-		_maxZoom	= (int32_t)maxZoom ?: 21;
-		_roundZoomUp = roundUp;
-		_polygon	= polygon;
+		_name				= name ?: @"";
+		_identifier			= identifier;
+		_url				= url ?: @"";
+		_maxZoom			= (int32_t)maxZoom ?: 21;
+		_roundZoomUp 		= roundUp;
+		_polygon			= polygon;
+		_attributionString 	= attribString;
+		_attributionIcon	= attribIcon;
+		_attributionUrl		= attribUrl;
 	}
 	return self;
 }
 
-+(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon
++(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
-	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp polygon:polygon];
+	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 }
 
 -(BOOL)isBingAerial
 {
-	if ( [self.url containsString:@"tiles.virtualearth.net"] )
+	if ( [self.identifier isEqualToString:BING_IDENTIFIER] )
 		return YES;
 	return NO;
 }
@@ -57,7 +60,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 										 url:@"http://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
 									 maxZoom:21
 									 roundUp:YES
-									 polygon:NULL];
+									 polygon:NULL
+								attribString:@""
+								  attribIcon:[UIImage imageNamed:@"BingLogo.png"]
+								   attribUrl:nil];
 	});
 	return bing;
 }
@@ -72,7 +78,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"http://{switch:a,b,c}.tile.openstreetmap.org/{zoom}/{x}/{y}.png"
 									   maxZoom:19
 										roundUp:NO
-										polygon:NULL];
+										polygon:NULL
+								   attribString:nil
+									 attribIcon:nil
+									  attribUrl:nil];
 	});
 	return service;
 }
@@ -86,7 +95,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"https://gps-{switch:a,b,c}.tile.openstreetmap.org/lines/{zoom}/{x}/{y}.png"
 										maxZoom:20
 										roundUp:NO
-										polygon:NULL];
+										polygon:NULL
+								   attribString:nil
+									 attribIcon:nil
+									  attribUrl:nil];
 	});
 	return service;
 }
@@ -100,7 +112,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"http://{switch:a,b,c}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{zoom}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
 										maxZoom:20
 										roundUp:NO
-										polygon:NULL];
+										polygon:NULL
+								   attribString:nil
+									 attribIcon:nil
+									  attribUrl:nil];
 	});
 	return service;
 }
@@ -129,7 +144,15 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	// convert {z} to {zoom}
 	url = [url stringByReplacingOccurrencesOfString:@"{z}" withString:@"{zoom}"];
 
-	return [self initWithName:dict[@"name"] identifier:url url:url maxZoom:[dict[@"zoom"] integerValue] roundUp:[dict[@"roundUp"] boolValue] polygon:NULL];
+	return [self initWithName:dict[@"name"]
+				   identifier:url
+						  url:url
+					  maxZoom:[dict[@"zoom"] integerValue]
+					  roundUp:[dict[@"roundUp"] boolValue]
+					  polygon:NULL
+				 attribString:nil
+				   attribIcon:nil
+					attribUrl:nil];
 }
 
 
@@ -164,6 +187,16 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return nil;
 }
 
+-(void)scaleAttributionIconToHeight:(CGFloat)height
+{
+	if ( _attributionIcon && fabs(_attributionIcon.size.height - height) > 0.1 ) {
+		CGFloat scale = _attributionIcon.size.height / height;
+		_attributionIcon = [[UIImage alloc] initWithCGImage:_attributionIcon.CGImage scale:scale orientation:_attributionIcon.imageOrientation];
+	}
+}
+
+
+
 -(NSString *)description
 {
 	return self.name;
@@ -189,23 +222,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 -(NSArray *)builtinServices
 {
 	return @[
-
 			 [AerialService defaultBingAerial],
-
-#if 0
-			 [AerialService aerialWithName:@"MapBox Aerial"
-									   url:@"http://{switch:a,b,c}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{zoom}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
-								   	maxZoom:19
-								   roundUp:YES
-								   polygon:NULL],
-
-			 [AerialService aerialWithName:@"MapQuest Open Aerial"
-									   url:@"http://otile{switch:1,2,3,4}.mqcdn.com/tiles/1.0.0/sat/{zoom}/{x}/{y}.png"
-								   maxZoom:20
-								   roundUp:YES
-								   polygon:NULL],
-#endif
-			 ];
+		 ];
 }
 
 -(NSArray *)userDefinedServices
@@ -246,11 +264,15 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				NSString * name	 = entry[@"name"];
 				NSString * identifier = entry[@"id"];
 				NSInteger maxZoom = [entry[@"extent"][@"max_zoom"] integerValue];
+				NSString * attribIconString = entry[@"icon"];
+				NSString * attribString = entry[@"attribution"][@"text"];
+				NSString * attribUrl = entry[@"attribution"][@"url"];
 
+#if 0
 				if ( [url containsString:@"{-y}"] ) {
 					NSLog(@"%@ %@ %@\n",name,url,entry[@"extent"][@"polygon"] );
 				}
-
+#endif
 				NSString * type = entry[@"type"];
 				if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
 					NSLog(@"unsupported %@\n",type);
@@ -288,7 +310,32 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 					polygon = CGPathCreateCopy( path );
 					CGPathRelease( path );
 				}
-				AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES polygon:polygon];
+
+				UIImage * attribIcon = nil;
+				if ( attribIconString.length > 0 ) {
+					NSArray * prefixList = @[ @"data:image/png;base64,",
+											  @"data:image/png:base64,",
+											  @"png:base64," ];
+					for ( NSString * prefix in prefixList ) {
+						if ( [attribIconString hasPrefix:prefix] ) {
+							attribIconString = [attribIconString substringFromIndex:prefix.length];
+							NSData * decodedData = [[NSData alloc] initWithBase64EncodedString:attribIconString options:0];
+							attribIcon = [UIImage imageWithData:decodedData];
+							if ( attribIcon == nil ) {
+								NSLog(@"bad icon decode: %@\n",attribIconString);
+							}
+							break;
+						}
+					}
+					if ( attribIcon == nil ) {
+						if ( [attribIconString hasPrefix:@"http"] ) {
+							// unsupported
+						} else {
+							NSLog(@"unsupported icon format: %@\n",attribIconString);
+						}
+					}
+				}
+				AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 				[externalAerials addObject:service];
 			}
 			[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {

@@ -147,14 +147,14 @@ CGSize SizeForImage( NSImage * image )
 		_aerialLayer.opacity = 0.75;
 		_aerialLayer.aerialService = self.customAerials.currentAerial;
 		_aerialLayer.hidden = YES;
-		_aerialLayer.backgroundColor = [UIColor darkGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
+		_aerialLayer.backgroundColor = [UIColor lightGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_aerialLayer];
 
 		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_mapnikLayer.aerialService = [AerialService mapnik];
 		_mapnikLayer.zPosition = Z_MAPNIK;
 		_mapnikLayer.hidden = YES;
-		_aerialLayer.backgroundColor = [UIColor lightGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
+		_mapnikLayer.backgroundColor = [UIColor lightGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_mapnikLayer];
 
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
@@ -480,7 +480,7 @@ CGSize SizeForImage( NSImage * image )
 {
 	if ( object == _aerialLayer && [keyPath isEqualToString:@"hidden"] ) {
 		BOOL hidden = [[change valueForKey:NSKeyValueChangeNewKey] boolValue];
-		_bingMapsLogo.hidden = hidden;
+		_aerialServiceLogo.hidden = hidden;
 	} else if ( object == _editorLayer && [keyPath isEqualToString:@"hidden"] ) {
 		BOOL hidden = [[change valueForKey:NSKeyValueChangeNewKey] boolValue];
 		if ( hidden ) {
@@ -590,7 +590,13 @@ CGSize SizeForImage( NSImage * image )
 
 -(void)updateBingButton
 {
-	_bingMapsLogo.hidden = self.aerialLayer.hidden || !self.aerialLayer.aerialService.isBingAerial;
+	AerialService * service = self.aerialLayer.aerialService;
+	_aerialServiceLogo.hidden = self.aerialLayer.hidden || (service.attributionString.length == 0 && service.attributionIcon == nil);
+	if ( !_aerialServiceLogo.hidden ) {
+		[service scaleAttributionIconToHeight:_aerialServiceLogo.frame.size.height];
+		[_aerialServiceLogo setImage:service.attributionIcon forState:UIControlStateNormal];
+		[_aerialServiceLogo setTitle:service.attributionString forState:UIControlStateNormal];
+	}
 }
 
 
@@ -767,6 +773,21 @@ CGSize SizeForImage( NSImage * image )
 	[(UIViewController*)viewController.delegate dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(IBAction)requestAerialServiceAttribution:(id)sender
+{
+	AerialService * aerial = self.aerialLayer.aerialService;
+	if ( aerial.isBingAerial ) {
+		// present bing metadata
+		[self.viewController performSegueWithIdentifier:@"BingMetadataSegue" sender:self];
+	} else if ( aerial.attributionUrl.length > 0 ) {
+		// open the attribution url
+		WebPageViewController * webController = [[WebPageViewController alloc] initWithNibName:@"WebPageView" bundle:nil];
+		webController.url = aerial.attributionUrl;
+		webController.title = NSLocalizedString(@"Imagery Attribution",nil);
+		[self.viewController presentViewController:webController animated:YES completion:nil];
+	}
+}
+
 #pragma mark Rotate object
 
 -(void)startObjectRotation
@@ -902,6 +923,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(MapViewState)viewState
 {
 	return _viewState;
+}
+
+-(void)setAerialTileService:(AerialService *)service
+{
+	_aerialLayer.aerialService = service;
+	[self updateBingButton];
 }
 
 -(void)setEnableBirdsEye:(BOOL)enableBirdsEye

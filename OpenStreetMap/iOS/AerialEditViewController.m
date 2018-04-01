@@ -45,7 +45,10 @@
 																	url:url
 																maxZoom:[zoomField.text integerValue]
 																roundUp:YES
-																polygon:NULL];
+																polygon:NULL
+											   				attribString:nil
+												 			attribIcon:nil
+												  			 attribUrl:nil];
 	self.completion(service);
 
 	[self.navigationController popViewControllerAnimated:YES];

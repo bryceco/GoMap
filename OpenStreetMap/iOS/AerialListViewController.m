@@ -43,7 +43,7 @@
 	if ( [self isMovingFromParentViewController] ) {
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		MapView * mapView = appDelegate.mapView;
-		mapView.aerialLayer.aerialService = _aerials.currentAerial;
+		[mapView setAerialTileService:_aerials.currentAerial];
 	}
 }
 
@@ -173,7 +173,7 @@
 		return;
 	_aerials.currentAerial = service;
 
-	mapView.aerialLayer.aerialService = _aerials.currentAerial;
+	[mapView setAerialTileService:_aerials.currentAerial];
 
 	// if popping all the way up we need to tell Settings to save changes
 	[self.displayViewController applyChanges];

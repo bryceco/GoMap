@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
+#import "AerialList.h"
 #import "AppDelegate.h"
 #import "MapView.h"
 #import "BingMetadataViewController.h"
@@ -26,8 +27,9 @@
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OSMRect viewRect = [appDelegate.mapView screenLongitudeLatitude];
 	NSInteger zoomLevel = [appDelegate.mapView.aerialLayer zoomLevel];
-	if ( zoomLevel > 21 )
-		zoomLevel = 21;
+	AerialService * aerialService = appDelegate.mapView.aerialLayer.aerialService;
+	if ( zoomLevel > aerialService.maxZoom )
+		zoomLevel = aerialService.maxZoom;
 
 	[appDelegate.mapView.aerialLayer metadata:^(NSData * data, NSError * error){
 		[self.activityIndicator stopAnimating];

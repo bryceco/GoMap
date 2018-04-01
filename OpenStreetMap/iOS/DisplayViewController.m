@@ -82,7 +82,7 @@ static const NSInteger CACHE_SECTION			= 3;
 		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
 		if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
 			mapView.viewState = (MapViewState)row;
-			mapView.aerialLayer.aerialService = mapView.customAerials.currentAerial;
+			[mapView setAerialTileService:mapView.customAerials.currentAerial];
 			break;
 		}
 	}

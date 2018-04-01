@@ -130,7 +130,7 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet UILabel			*	userInstructionLabel;
 @property (assign,nonatomic)	IBOutlet UIButton			*	compassButton;
 
-@property (assign,nonatomic)	IBOutlet UIButton			*	bingMapsLogo;
+@property (assign,nonatomic)	IBOutlet UIButton			*	aerialServiceLogo;
 @property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;
 @property (assign,nonatomic)	IBOutlet UIButton			*	centerOnGPSButton;
 
@@ -215,8 +215,11 @@ typedef enum {
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration;
 -(void)presentError:(NSError *)error flash:(BOOL)flash;
 
+-(void)setAerialTileService:(AerialService *)service;
+
 -(BOOL)isLocationSpecified;
 
+-(IBAction)requestAerialServiceAttribution:(id)sender;
 -(IBAction)locateMe:(id)sender;
 -(IBAction)centerOnGPS:(id)sender;
 -(IBAction)rotateToNorth:(id)sender;

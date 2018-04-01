@@ -26,6 +26,11 @@
 
 	if ( self.title.length ) {
 		self.navigationItem.title = self.title;
+
+		if ( _navBar.items.count > 0 ) {
+			UINavigationItem * nav = self.navBar.items[0];
+			nav.title = self.title;
+		}
 	}
 
 	UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButton:)];
@@ -53,6 +58,7 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
 	[_activityIndicator stopAnimating];
+	_activityIndicator.hidden = YES;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
