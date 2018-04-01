@@ -1618,13 +1618,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	}
 }
 
-// delegate for iIOS 5 and earlier
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-	[self locationUpdatedTo:newLocation];
-}
-
-
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
 	[self locationUpdateFailed:error];

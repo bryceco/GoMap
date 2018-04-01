@@ -157,14 +157,14 @@
 	}
 }
 
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-}
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	CGRect rc = self.view.superview.bounds;
-	self.mapView.frame = rc;
+	[coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+		CGRect rc = self.mapView.frame;
+		rc.size = size;
+		self.mapView.frame = rc;
+	} completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+	}];
 }
 
 // disable gestures inside toolbar buttons
