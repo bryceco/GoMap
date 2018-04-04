@@ -346,11 +346,11 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 -(void)fetchOsmLabAerials:(void (^)(void))completion
 {
 	// get cached data
-	NSData * data = [NSData dataWithContentsOfFile:[self pathToExternalAerialsCache]];
+	NSData * cachedData = [NSData dataWithContentsOfFile:[self pathToExternalAerialsCache]];
 
 	NSDate * now = [NSDate date];
 	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
-	if ( data == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
+	if ( cachedData == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
 		// download newer version periodically
 		NSString * urlString = @"https://raw.githubusercontent.com/osmlab/editor-layer-index/gh-pages/imagery.json";
 		NSURL * downloadUrl = [NSURL URLWithString:urlString];
@@ -371,7 +371,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	}
 
    	// read cached version
-	NSArray * externalAerials = [self processOsmLabAerialsData:data];
+	NSArray * externalAerials = [self processOsmLabAerialsData:cachedData];
 	self->_downloadedList = externalAerials;
 	completion();
 }
