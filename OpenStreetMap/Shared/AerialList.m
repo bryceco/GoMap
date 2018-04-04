@@ -216,7 +216,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			// if a non-builtin aerial service is current then we need to select it once the list is loaded
 			[self load];
 		}];
-		[self load];
 	}
 	return self;
 }
@@ -233,124 +232,151 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return _userDefinedList;
 }
 
+
+-(NSString *)pathToExternalAerialsCache
+{
+	// get tile cache folder
+	NSArray *paths = NSSearchPathForDirectoriesInDomains( NSCachesDirectory, NSUserDomainMask, YES );
+	if ( paths.count ) {
+		NSString * bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+		NSString * path = [[paths[0]
+							stringByAppendingPathComponent:bundleName]
+						   stringByAppendingPathComponent:@"OSM Aerial Providers.json"];
+		[[NSFileManager defaultManager] createDirectoryAtPath:path.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:NULL error:NULL];
+		return path;
+	}
+	return nil;
+}
+
+
+-(NSArray *)processOsmLabAerialsData:(NSData *)data
+{
+	if ( data == nil || data.length == 0 )
+		return nil;
+	id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+	if ( json == nil )
+		return nil;
+
+	NSMutableArray * externalAerials = [NSMutableArray new];
+	for ( NSDictionary * entry in json ) {
+		NSString * url = entry[@"url"];
+		NSString * name	 = entry[@"name"];
+		NSString * identifier = entry[@"id"];
+		NSInteger maxZoom = [entry[@"extent"][@"max_zoom"] integerValue];
+		NSString * attribIconString = entry[@"icon"];
+		NSString * attribString = entry[@"attribution"][@"text"];
+		NSString * attribUrl = entry[@"attribution"][@"url"];
+
+#if 0
+		if ( [url containsString:@"{-y}"] ) {
+			NSLog(@"%@ %@ %@\n",name,url,entry[@"extent"][@"polygon"] );
+		}
+#endif
+		NSString * type = entry[@"type"];
+		if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
+			NSLog(@"unsupported %@\n",type);
+			continue;
+		}
+		if ( [entry[@"overlay"] integerValue] ) {
+			// we don't support overlays yet
+			continue;
+		}
+		if ( !( [url hasPrefix:@"http:"] || [url hasPrefix:@"https:"]) ) {
+			// invalid url
+			NSLog(@"skip url = %@\n",url);
+			continue;
+		}
+
+		CGPathRef polygon = NULL;
+		NSArray * polygonPoints = entry[@"extent"][@"polygon"];
+		if ( polygonPoints ) {
+			CGMutablePathRef	path		= CGPathCreateMutable();
+
+			for ( NSArray * loop in polygonPoints ) {
+				BOOL	first		= YES;
+				for ( NSArray * pt in loop ) {
+					double lon = [pt[0] doubleValue];
+					double lat = [pt[1] doubleValue];
+					if ( first ) {
+						CGPathMoveToPoint(path, NULL, lon, lat);
+						first = NO;
+					} else {
+						CGPathAddLineToPoint(path, NULL, lon, lat);
+					}
+				}
+				CGPathCloseSubpath( path );
+			}
+			polygon = CGPathCreateCopy( path );
+			CGPathRelease( path );
+		}
+
+		UIImage * attribIcon = nil;
+		if ( attribIconString.length > 0 ) {
+			NSArray * prefixList = @[ @"data:image/png;base64,",
+									  @"data:image/png:base64,",
+									  @"png:base64," ];
+			for ( NSString * prefix in prefixList ) {
+				if ( [attribIconString hasPrefix:prefix] ) {
+					attribIconString = [attribIconString substringFromIndex:prefix.length];
+					NSData * decodedData = [[NSData alloc] initWithBase64EncodedString:attribIconString options:0];
+					attribIcon = [UIImage imageWithData:decodedData];
+					if ( attribIcon == nil ) {
+						NSLog(@"bad icon decode: %@\n",attribIconString);
+					}
+					break;
+				}
+			}
+			if ( attribIcon == nil ) {
+				if ( [attribIconString hasPrefix:@"http"] ) {
+					// unsupported
+				} else {
+					NSLog(@"unsupported icon format: %@\n",attribIconString);
+				}
+			}
+		}
+		AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
+		[externalAerials addObject:service];
+	}
+	[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {
+		return [obj1.name caseInsensitiveCompare:obj2.name];
+	}];
+	return [NSArray arrayWithArray:externalAerials];	// return immutable copy
+}
+
 -(void)fetchOsmLabAerials:(void (^)(void))completion
 {
-	NSString * urlString = @"https://raw.githubusercontent.com/osmlab/editor-layer-index/gh-pages/imagery.json";
+	// get cached data
+	NSData * data = [NSData dataWithContentsOfFile:[self pathToExternalAerialsCache]];
 
 	NSDate * now = [NSDate date];
 	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
-	if ( lastDownload && [now timeIntervalSinceDate:lastDownload] < 60*60*24*7 ) {
-		// intentionally fail so we get cached version
-		urlString = @"";
+	if ( data == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
+		// download newer version periodically
+		NSString * urlString = @"https://raw.githubusercontent.com/osmlab/editor-layer-index/gh-pages/imagery.json";
+		NSURL * downloadUrl = [NSURL URLWithString:urlString];
+		NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+			NSArray * externalAerials = [self processOsmLabAerialsData:data];
+			if ( externalAerials ) {
+				// cache download for next time
+				[[NSUserDefaults standardUserDefaults] setObject:now  forKey:@"lastImageryDownloadDate"];
+				[data writeToFile:[self pathToExternalAerialsCache] options:NSDataWritingAtomic error:NULL];
+				// notify caller of update
+				dispatch_async(dispatch_get_main_queue(), ^{
+					self->_downloadedList = externalAerials;
+					completion();
+				});
+			}
+		}];
+	   	[downloadTask resume];
 	}
 
-	NSURL * downloadUrl = [NSURL URLWithString:urlString];
-	NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-		if ( error )
-			data = nil;
-		id json = data.length ? [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL] : nil;
-		if ( json == nil ) {
-			// read cached version
-			NSData * data2 = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadData"];
-			json = [NSJSONSerialization JSONObjectWithData:data2 options:0 error:NULL];
-		} else {
-			// cache download for next time
-			[[NSUserDefaults standardUserDefaults] setObject:now  forKey:@"lastImageryDownloadDate"];
-			[[NSUserDefaults standardUserDefaults] setObject:data forKey:@"lastImageryDownloadData"];
-		}
-
-		if ( json ) {
-			NSMutableArray * externalAerials = [NSMutableArray new];
-			for ( NSDictionary * entry in json ) {
-				NSString * url = entry[@"url"];
-				NSString * name	 = entry[@"name"];
-				NSString * identifier = entry[@"id"];
-				NSInteger maxZoom = [entry[@"extent"][@"max_zoom"] integerValue];
-				NSString * attribIconString = entry[@"icon"];
-				NSString * attribString = entry[@"attribution"][@"text"];
-				NSString * attribUrl = entry[@"attribution"][@"url"];
-
-#if 0
-				if ( [url containsString:@"{-y}"] ) {
-					NSLog(@"%@ %@ %@\n",name,url,entry[@"extent"][@"polygon"] );
-				}
-#endif
-				NSString * type = entry[@"type"];
-				if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
-					NSLog(@"unsupported %@\n",type);
-					continue;
-				}
-				if ( [entry[@"overlay"] integerValue] ) {
-					// we don't support overlays yet
-					continue;
-				}
-				if ( !( [url hasPrefix:@"http:"] || [url hasPrefix:@"https:"]) ) {
-					// invalid url
-					NSLog(@"skip url = %@\n",urlString);
-					continue;
-				}
-
-				CGPathRef polygon = NULL;
-				NSArray * polygonPoints = entry[@"extent"][@"polygon"];
-				if ( polygonPoints ) {
-					CGMutablePathRef	path		= CGPathCreateMutable();
-
-					for ( NSArray * loop in polygonPoints ) {
-						BOOL	first		= YES;
-						for ( NSArray * pt in loop ) {
-							double lon = [pt[0] doubleValue];
-							double lat = [pt[1] doubleValue];
-							if ( first ) {
-								CGPathMoveToPoint(path, NULL, lon, lat);
-								first = NO;
-							} else {
-								CGPathAddLineToPoint(path, NULL, lon, lat);
-							}
-						}
-						CGPathCloseSubpath( path );
-					}
-					polygon = CGPathCreateCopy( path );
-					CGPathRelease( path );
-				}
-
-				UIImage * attribIcon = nil;
-				if ( attribIconString.length > 0 ) {
-					NSArray * prefixList = @[ @"data:image/png;base64,",
-											  @"data:image/png:base64,",
-											  @"png:base64," ];
-					for ( NSString * prefix in prefixList ) {
-						if ( [attribIconString hasPrefix:prefix] ) {
-							attribIconString = [attribIconString substringFromIndex:prefix.length];
-							NSData * decodedData = [[NSData alloc] initWithBase64EncodedString:attribIconString options:0];
-							attribIcon = [UIImage imageWithData:decodedData];
-							if ( attribIcon == nil ) {
-								NSLog(@"bad icon decode: %@\n",attribIconString);
-							}
-							break;
-						}
-					}
-					if ( attribIcon == nil ) {
-						if ( [attribIconString hasPrefix:@"http"] ) {
-							// unsupported
-						} else {
-							NSLog(@"unsupported icon format: %@\n",attribIconString);
-						}
-					}
-				}
-				AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
-				[externalAerials addObject:service];
-			}
-			[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {
-				return [obj1.name caseInsensitiveCompare:obj2.name];
-			}];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				self->_downloadedList = [NSArray arrayWithArray:externalAerials];
-				completion();
-			});
-		}
-  	}];
-	[downloadTask resume];
+   	// read cached version
+	NSArray * externalAerials = [self processOsmLabAerialsData:data];
+	self->_downloadedList = externalAerials;
+	completion();
 }
+
+
 
 -(void)load
 {
