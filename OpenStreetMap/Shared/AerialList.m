@@ -212,9 +212,11 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	self = [super init];
 	if ( self ) {
-		[self load];
 		[self fetchOsmLabAerials:^{
+			// if a non-builtin aerial service is current then we need to select it once the list is loaded
+			[self load];
 		}];
+		[self load];
 	}
 	return self;
 }
@@ -343,6 +345,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			}];
 			dispatch_async(dispatch_get_main_queue(), ^{
 				self->_downloadedList = [NSArray arrayWithArray:externalAerials];
+				completion();
 			});
 		}
   	}];
@@ -364,7 +367,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	if ( currentIdentifier == nil || [currentIdentifier isKindOfClass:[NSNumber class]] ) {
 		currentIdentifier = BING_IDENTIFIER;
 	}
-	NSArray * a = [[self.builtinServices arrayByAddingObjectsFromArray:self.userDefinedServices] arrayByAddingObjectsFromArray:_userDefinedList];
+	NSArray * a = [[self.builtinServices arrayByAddingObjectsFromArray:self.userDefinedServices] arrayByAddingObjectsFromArray:_downloadedList];
 	for ( AerialService * service in a ) {
 		if ( [currentIdentifier isEqualToString:service.identifier] ) {
 			_currentAerial = service;
