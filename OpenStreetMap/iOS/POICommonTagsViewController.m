@@ -49,6 +49,12 @@
 
 	_tags = [CommonTagList sharedList];
 
+	if ( _drillDownGroup ) {
+		self.navigationItem.leftItemsSupplementBackButton = YES;
+		self.navigationItem.leftBarButtonItem = nil;
+		self.navigationItem.title = _drillDownGroup.name;
+	}
+
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
 	[center addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardWillHideNotification object:nil];
@@ -79,30 +85,32 @@
 
 	_saveButton.enabled = [tabController isTagDictChanged];
 
-	NSDictionary * dict = tabController.keyValueDict;
+	if ( _drillDownGroup == nil ) {
 
+		NSDictionary * dict = tabController.keyValueDict;
+		OsmBaseObject * object = tabController.selection;
+		NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
 
-	OsmBaseObject * object = tabController.selection;
-	NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
-
-	// update most recent feature
-	NSString * featureName = [CommonTagList featureNameForObjectDict:dict geometry:geometry];
-	if ( featureName ) {
-		CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
-		[POITypeViewController loadMostRecentForGeometry:geometry];
-		[POITypeViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
-	}
-	
-	__weak POICommonTagsViewController * weakSelf = self;
-	__weak CommonTagList * weakTags = _tags;
-	[_tags setPresetsForDict:dict geometry:geometry update:^{
-		// this may complete much later, even after we've been dismissed
-		POICommonTagsViewController * mySelf = weakSelf;
-		if ( mySelf && !mySelf->_keyboardShowing ) {
-			[weakTags setPresetsForDict:dict geometry:geometry update:nil];
-			[mySelf.tableView reloadData];
+		// update most recent feature
+		NSString * featureName = [CommonTagList featureNameForObjectDict:dict geometry:geometry];
+		if ( featureName ) {
+			CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+			[POITypeViewController loadMostRecentForGeometry:geometry];
+			[POITypeViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
 		}
-	}];
+
+		__weak POICommonTagsViewController * weakSelf = self;
+		__weak CommonTagList * weakTags = _tags;
+		[_tags setPresetsForDict:dict geometry:geometry update:^{
+			// this may complete much later, even after we've been dismissed
+			POICommonTagsViewController * mySelf = weakSelf;
+			if ( mySelf && !mySelf->_keyboardShowing ) {
+				[weakTags setPresetsForDict:dict geometry:geometry update:nil];
+				[mySelf.tableView reloadData];
+			}
+		}];
+	}
+
 	[self.tableView reloadData];
 }
 
@@ -190,11 +198,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return _tags.sectionCount + 1;
+	return _drillDownGroup ? 1 : _tags.sectionCount + 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+	if ( _drillDownGroup )
+		return _drillDownGroup.name;
 	if ( section == _tags.sectionCount )
 		return nil;
 	if ( section > _tags.sectionCount )
@@ -205,6 +215,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+	if ( _drillDownGroup )
+		return _drillDownGroup.tags.count;
 	if ( section == _tags.sectionCount )
 		return 1;
 	if ( section > _tags.sectionCount )
@@ -214,20 +226,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( YES ) {
-
+	if ( _drillDownGroup == nil ) {
 		if ( indexPath.section == _tags.sectionCount ) {
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CustomizePresets" forIndexPath:indexPath];
 			return cell;
 		}
 		if ( indexPath.section > _tags.sectionCount )
 			return nil;
+	}
 
-		NSString * key = [_tags tagAtIndexPath:indexPath].tagKey;
+	id rowObject = _drillDownGroup ? _drillDownGroup.tags[ indexPath.row ] : [_tags tagAtIndexPath:indexPath];
+	if ( [rowObject isKindOfClass:[CommonTagKey class]] ) {
+
+		CommonTagKey 	* commonTag	= rowObject;
+		NSString * key = commonTag.tagKey;
 		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";
 
 		CommonTagCell * cell = [tableView dequeueReusableCellWithIdentifier:cellName forIndexPath:indexPath];
-		CommonTagKey * commonTag = [_tags tagAtIndexPath:indexPath];
 		cell.nameLabel.text = commonTag.name;
 		cell.valueField.placeholder = commonTag.placeholder;
 		cell.valueField.delegate = self;
@@ -247,7 +262,7 @@
 		POITabBarController	* tabController = (id)self.tabBarController;
 		NSDictionary * objectDict = tabController.keyValueDict;
 
-		if ( indexPath.section == 0 && indexPath.row == 0 ) {
+		if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 			// Type cell
 			NSString * text = [_tags featureName];
 			if ( text == nil )
@@ -266,8 +281,14 @@
 
 	} else {
 
-//		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDouble" forIndexPath:indexPath];
-//		return cell;
+		// drill down cell
+		CommonTagGroup * drillDownGroup = rowObject;
+		CommonTagCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
+		cell.nameLabel.text = drillDownGroup.name;
+		cell.commonTag = (id)drillDownGroup;
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+		return cell;
 	}
 }
 
@@ -276,8 +297,15 @@
 	CommonTagCell * cell = (id) [tableView cellForRowAtIndexPath:indexPath];
 	if ( cell.accessoryType == UITableViewCellAccessoryNone )
 		return;
-	if ( indexPath.section == 0 && indexPath.row == 0 ) {
+
+	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
+	} else if ( [cell.commonTag isKindOfClass:[CommonTagGroup class]] ) {
+		// special case for drill down
+		CommonTagGroup * group = (id)cell.commonTag;
+		POICommonTagsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
+		sub.drillDownGroup = group;
+		[self.navigationController pushViewController:sub animated:YES];
 	} else {
 		[self performSegueWithIdentifier:@"POIPresetSegue" sender:cell];
 	}

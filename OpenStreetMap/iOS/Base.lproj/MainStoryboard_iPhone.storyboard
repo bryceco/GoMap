@@ -267,7 +267,7 @@
         <!--Common Tags-->
         <scene sceneID="gM4-dB-RnE">
             <objects>
-                <tableViewController title="Point of Interest" modalTransitionStyle="crossDissolve" id="6VA-gm-L0S" userLabel="Common Tags" customClass="POICommonTagsViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PoiCommonTagsViewController" title="Point of Interest" modalTransitionStyle="crossDissolve" id="6VA-gm-L0S" userLabel="Common Tags" customClass="POICommonTagsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="VZH-ZU-gFu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -356,8 +356,36 @@
                                     <outlet property="valueField" destination="9Nw-ha-JK5" id="NIc-ST-cSI"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomizePresets" id="KRC-uX-zBr" customClass="CommonTagCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagDrillDown" id="Sat-gu-Feq" customClass="CommonTagCell">
                                 <rect key="frame" x="0.0" y="143.5" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sat-gu-Feq" id="6SI-QG-CUE">
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPF-m9-RtO">
+                                            <rect key="frame" x="15" y="11.5" width="72" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="sP9-O5-qpG"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="tPF-m9-RtO" firstAttribute="centerY" secondItem="6SI-QG-CUE" secondAttribute="centerY" id="Nqy-vf-q1I"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstItem="tPF-m9-RtO" firstAttribute="leading" secondItem="Sat-gu-Feq" secondAttribute="leading" constant="15" id="i11-Rz-DGd"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="nameLabel" destination="tPF-m9-RtO" id="CjK-mm-LkQ"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomizePresets" id="KRC-uX-zBr" customClass="CommonTagCell">
+                                <rect key="frame" x="0.0" y="187.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KRC-uX-zBr" id="IcA-4t-XoH">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>

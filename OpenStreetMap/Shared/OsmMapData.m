@@ -1169,7 +1169,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	auth = [NSString stringWithFormat:@"Basic %@", auth];
 	[request setValue:auth forHTTPHeaderField:@"Authorization"];
 
-	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * response, NSData * data, NSError * error) {
+
+	[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		if ( data && error == nil ) {
 			completion(data,nil);
 		} else {

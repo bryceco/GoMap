@@ -51,8 +51,9 @@
 
 // A group of related tags, such as address tags, organized for display purposes
 @interface CommonTagGroup : NSObject
-@property (readonly,nonatomic) NSString	*	name;
-@property (readonly,nonatomic) NSArray *	tags;	// array of CommonTag
+@property (readonly,nonatomic) 	NSString	*	name;
+@property (readonly,nonatomic) 	NSArray		*	tags;	// array of CommonTagKey
+@property (assign,nonatomic)	BOOL			isDrillDown;
 +(instancetype)groupWithName:(NSString *)name tags:(NSArray *)tags;
 @end
 
@@ -95,7 +96,7 @@
 @interface CommonTagList : NSObject
 {
 	NSString		*	_featureName;
-	NSMutableArray	*	_sectionList;	// array of CommonGroup
+	NSMutableArray	*	_sectionList;	// array of CommonTagGroup
 }
 
 +(instancetype)sharedList;

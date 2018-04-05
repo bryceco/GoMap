@@ -156,7 +156,8 @@ static NSString * PrettyTag( NSString * tag )
 	self = [super init];
 	if ( self ) {
 #if DEBUG
-		if ( tags.count )	assert( [tags.lastObject isKindOfClass:[CommonTagKey class]] );
+		if ( tags.count )	assert( [tags.lastObject isKindOfClass:[CommonTagKey class]] ||
+								   [tags.lastObject isKindOfClass:[CommonTagGroup class]] );	// second case for drill down group
 #endif
 		_name = name;
 		_tags = tags;
@@ -413,14 +414,16 @@ static NSString * PrettyTag( NSString * tag )
 
 +(NSString *)yesForLocale
 {
-	NSString * text = g_translationDict[ @"inspector" ][ @"check" ][ @"yes" ];
+	NSDictionary * dict = g_translationDict[@"fields"][@"internet_access"][@"options"];
+	NSString * text = dict[ @"yes" ];
 	if ( text == nil )
 		text = @"Yes";
 	return text;
 }
 +(NSString *)noForLocale
 {
-	NSString * text = g_translationDict[ @"inspector" ][ @"check" ][ @"no" ];
+	NSDictionary * dict = g_translationDict[@"fields"][@"internet_access"][@"options"];
+	NSString * text = dict[ @"no" ];
 	if ( text == nil )
 		text = @"No";
 	return text;
@@ -536,8 +539,11 @@ static NSString * PrettyTag( NSString * tag )
 			return nil;
 		}
 
-	} else if ( [type isEqualToString:@"combo"] || [type isEqualToString:@"semiCombo"] ) {	// semiCombo is for setting semicolor delimited lists of values, which we don't support
+	} else if ( [type isEqualToString:@"combo"] || [type isEqualToString:@"semiCombo"] || [type isEqualToString:@"multiCombo"] ) {	// semiCombo is for setting semicolor delimited lists of values, which we don't support
 
+		BOOL isMulti = [type isEqualToString:@"multiCombo"];
+		if ( isMulti && ![key hasSuffix:@":"] )
+			key = [key stringByAppendingString:@":"];
 		NSMutableArray * presets = [NSMutableArray new];
 		if ( stringsOptionsDict ) {
 
@@ -560,20 +566,49 @@ static NSString * PrettyTag( NSString * tag )
 			if ( g_taginfoCache[fieldName] ) {
 				// already got them once
 				presets = g_taginfoCache[fieldName];
+				if ( [presets isKindOfClass:[CommonTagGroup class]] ) {
+					return (CommonTagGroup *)presets;	// hack for multi-combo: we already created the group and stashed it in presets
+				}
 			} else if ( update ) {
 				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-					NSString * urlText = [NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/key/values?key=%@&page=1&rp=25&sortname=count_all&sortorder=desc",key];
+					NSString * cleanKey = isMulti ? [key stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]] : key;
+					NSString * urlText = isMulti ?
+						[NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/keys/all?query=%@&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc", cleanKey] :
+						[NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/key/values?key=%@&page=1&rp=25&sortname=count_all&sortorder=desc", key];
 					NSURL * url = [NSURL URLWithString:urlText];
 					NSData * data = [NSData dataWithContentsOfURL:url];
 					if ( data ) {
 						NSMutableArray * presets2 = [NSMutableArray new];
 						NSDictionary * dict2 = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
 						NSArray * values = dict2[@"data"];
-						for ( NSDictionary * v in values ) {
-							if ( [v[@"fraction"] doubleValue] < 0.01 )
-								continue; // it's a very uncommon value, so ignore it
-							NSString * val = v[@"value"];
-							[presets2 addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
+						if ( isMulti ) {
+							// a list of booleans
+							NSMutableArray * tags = [NSMutableArray new];
+							NSArray * yesNo = @[ [CommonTagValue presetWithName:[CommonTagList yesForLocale] details:nil tagValue:@"yes"],
+											     [CommonTagValue presetWithName:[CommonTagList noForLocale]  details:nil tagValue:@"no"] ];
+							for ( NSDictionary * v in values ) {
+								if ( [v[@"count_all"] integerValue] < 1000 )
+									continue; // it's a very uncommon value, so ignore it
+								NSString * k = v[@"key"];
+								NSString * name = k;
+								k = [key stringByAppendingString:k];
+								CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:yesNo];
+								[tags addObject:tag];
+							}
+							CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:tags];
+							CommonTagGroup * group2 = [CommonTagGroup groupWithName:nil tags:@[group]];
+							group.isDrillDown = YES;
+							group2.isDrillDown = YES;
+							presets2 = (id)group2;
+
+						} else {
+
+							for ( NSDictionary * v in values ) {
+								if ( [v[@"fraction"] doubleValue] < 0.01 )
+									continue; // it's a very uncommon value, so ignore it
+								NSString * val = v[@"value"];
+								[presets2 addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
+							}
 						}
 						dispatch_async(dispatch_get_main_queue(), ^{
 							[g_taginfoCache setObject:presets2 forKey:fieldName];
@@ -586,9 +621,17 @@ static NSString * PrettyTag( NSString * tag )
 			}
 		}
 
-		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-		CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
-		return group;
+		if ( isMulti ) {
+			CommonTagGroup * group = [CommonTagGroup groupWithName:label tags:@[]];
+			CommonTagGroup * group2 = [CommonTagGroup groupWithName:nil tags:@[group]];
+			group.isDrillDown = YES;
+			group2.isDrillDown = YES;
+			return group2;
+		} else {
+			CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
+			return group;
+		}
 
 	} else if ( [type isEqualToString:@"cycleway"] ) {
 
@@ -886,7 +929,7 @@ static NSString * PrettyTag( NSString * tag )
 		if ( group == nil )
 			continue;
 		// if both this group and the previous don't have a name then merge them
-		if ( group.name == nil && _sectionList.count > 1 ) {
+		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
 			CommonTagGroup * prev = _sectionList.lastObject;
 			if ( prev.name == nil ) {
 				[prev mergeTagsFromGroup:group];

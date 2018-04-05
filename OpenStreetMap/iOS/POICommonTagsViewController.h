@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonTagList.h"
 #import "POITypeViewController.h"
 
 @class OsmBaseObject;
@@ -18,6 +19,7 @@
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	BOOL							_keyboardShowing;
 }
+@property (nonatomic) 	CommonTagGroup	*	drillDownGroup;
 
 - (IBAction)textFieldReturn:(id)sender;
 
