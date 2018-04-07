@@ -291,7 +291,7 @@ CGSize SizeForImage( NSImage * image )
 		_locationManager = [[CLLocationManager alloc] init];
 		_locationManager.delegate = self;
 #if TARGET_OS_IPHONE
-		_locationManager.pausesLocationUpdatesAutomatically = YES;
+		_locationManager.pausesLocationUpdatesAutomatically = NO;
 		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableBreadCrumb;
 		if (@available(iOS 11.0, *)) {
 			_locationManager.showsBackgroundLocationIndicator = YES;
@@ -1616,6 +1616,11 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	for ( CLLocation * location in locations ) {
 		[self locationUpdatedTo:location];
 	}
+}
+
+-(void)locationManagerDidPauseLocationUpdates:(CLLocationManager *)manager
+{
+	NSLog(@"GPS paused by iOS\n");
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
