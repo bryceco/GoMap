@@ -1169,8 +1169,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	auth = [NSString stringWithFormat:@"Basic %@", auth];
 	[request setValue:auth forHTTPHeaderField:@"Authorization"];
 
-
-	[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		if ( data && error == nil ) {
 			completion(data,nil);
 		} else {
@@ -1183,7 +1182,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			completion(nil,errorMessage);
 		}
 	}];
-
+	[task resume];
 }
 
 

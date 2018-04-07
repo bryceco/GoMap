@@ -52,13 +52,14 @@ static const NSInteger CACHE_SECTION			= 3;
 
 		[self setCustomAerialCellTitle];
 
-		_notesSwitch.on		= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
-		_gpsTraceSwitch.on	= !mapView.gpsTraceLayer.hidden;
+		_notesSwitch.on				= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
+		_gpsTraceSwitch.on			= !mapView.gpsTraceLayer.hidden;
 
-		_birdsEyeSwitch.on	= mapView.enableBirdsEye;
-		_rotationSwitch.on	= mapView.enableRotation;
-		_unnamedRoadSwitch.on	= mapView.enableUnnamedRoadHalo;
-		_breadCrumbSwitch.on	= mapView.enableBreadCrumb;
+		_birdsEyeSwitch.on			= mapView.enableBirdsEye;
+		_rotationSwitch.on			= mapView.enableRotation;
+		_unnamedRoadSwitch.on		= mapView.enableUnnamedRoadHalo;
+		_breadCrumbSwitch.on		= mapView.enableBreadCrumb;
+		_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
 
 	} else {
 
@@ -95,6 +96,7 @@ static const NSInteger CACHE_SECTION			= 3;
 	mapView.enableRotation			= _rotationSwitch.on;
 	mapView.enableUnnamedRoadHalo	= _unnamedRoadSwitch.on;
 	mapView.enableBreadCrumb		= _breadCrumbSwitch.on;
+	mapView.enableTurnRestriction	= _turnRestrictionSwitch.on;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

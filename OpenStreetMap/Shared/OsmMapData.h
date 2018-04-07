@@ -128,6 +128,8 @@ extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
 -(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
 -(void)deleteNodeInWay:(OsmWay *)way index:(NSInteger)index;
 
+-(void)deleteRelation:(OsmRelation *)relation;
+
 -(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index;
 -(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index;
 

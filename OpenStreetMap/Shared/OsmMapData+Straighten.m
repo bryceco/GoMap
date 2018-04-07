@@ -273,8 +273,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 }
 
 
-
--(BOOL)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
+-(OsmWay *)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
 	BOOL createRelations = NO;
 
@@ -331,16 +330,24 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	}
 
+	// get a unique set of parent relations (de-duplicate)
+	NSMutableArray * relations = [wayA.relations mutableCopy];
+	NSInteger idx = [relations count] - 1;
+	for ( OsmRelation * relation in [relations reverseObjectEnumerator] ) {
+		if ( [wayA.relations indexOfObject:relation inRange:NSMakeRange(0, idx)] != NSNotFound )
+			[relations removeObjectAtIndex:idx];
+		idx--;
+	}
+
 	// fix parent relations
-	for ( OsmRelation * relation in wayA.relations ) {
+	for ( OsmRelation * relation in relations ) {
 		for ( NSInteger index = 0; index < relation.members.count; ++index ) {
 			OsmMember * member = relation.members[index];
 			if ( member.ref == wayA ) {
 
 				if (relation.isRestriction) {
 					OsmMember * via = [relation memberByRole:@"via"];
-					if (via && [wayB.nodes containsObject:via.ref] ) {
-						// replace reference to wayA with wayB in relation
+					if (via && ([wayB.nodes containsObject:via.ref] || (via.isWay && wayA == [relation memberByRole:@"from"].ref))) {                        // replace reference to wayA with wayB in relation
 						OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:member.role];
 						[self addMember:memberB toRelation:relation atIndex:index+1];
 						[self deleteMemberInRelation:relation index:index];
@@ -352,7 +359,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 						[self setTags:nil forObject:wayA];
 						[self setTags:nil forObject:wayB];
 					}
-					
+
 					// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
 					BOOL insertAfter = YES;
 					OsmMember * prevMem = index > 1 ? relation.members[index-1] : nil;
@@ -369,6 +376,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 					OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
 					[self addMember:newMember toRelation:relation atIndex:insertAfter?index+1:index];
 					++index;
+					//                    index++;
 				}
 			}
 		}
@@ -390,8 +398,36 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		}
 	}
 
-	return YES;
+	return wayB;
 }
+
+
+#pragma mark Turn-restriction relations
+
+-(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)vieNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn
+{
+	NSMutableDictionary * tags = [NSMutableDictionary new];
+	[tags setValue:@"restriction" forKey:@"type"];
+	[tags setValue:strTurn forKey:@"restriction"];
+	[self setTags:tags forObject:restriction];
+
+	OsmMember * fromM = [[OsmMember alloc] initWithRef:fromWay role:@"from"];
+	OsmMember * viaM = [[OsmMember alloc] initWithRef:vieNode role:@"via"];
+	OsmMember * toM = [[OsmMember alloc] initWithRef:toWay role:@"to"];
+
+	[self addMember:fromM toRelation:restriction atIndex:0];
+	[self addMember:viaM toRelation:restriction atIndex:1];
+	[self addMember:toM toRelation:restriction atIndex:2];
+
+	return restriction;
+}
+
+-(OsmRelation *)createTurnRestrictionRelation:(OsmNode *)vieNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn
+{
+	OsmRelation * restriction = [self createRelation];
+	return [self updateTurnRestrictionRelation:restriction viaNode:vieNode fromWay:fromWay toWay:toWay turn:strTurn];
+}
+
 
 #pragma mark Join
 

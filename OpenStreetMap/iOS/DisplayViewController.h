@@ -19,6 +19,7 @@
 	IBOutlet UISwitch *	_gpsTraceSwitch;
 	IBOutlet UISwitch *	_unnamedRoadSwitch;
 	IBOutlet UISwitch *	_breadCrumbSwitch;
+	IBOutlet UISwitch * _turnRestrictionSwitch;
 }
 
 -(void)applyChanges;

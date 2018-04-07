@@ -179,7 +179,7 @@
                                     <constraint firstItem="9t5-wq-j1u" firstAttribute="centerX" secondItem="GTv-eT-l7q" secondAttribute="centerX" constant="7.5" id="MKk-qF-9MP"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="bottom" secondItem="4gw-jH-T1o" secondAttribute="top" id="N4A-fY-zCd"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="centerX" secondItem="Zh9-uC-62t" secondAttribute="centerX" id="Oun-QH-4xK"/>
-                                    <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" constant="26" id="PTj-zH-igC"/>
+                                    <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="4gw-jH-T1o" secondAttribute="top" constant="6" id="PTj-zH-igC"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="trailing" secondItem="fss-Ag-fKJ" secondAttribute="trailing" id="T60-8I-jog"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="11" id="VKx-lR-ejS"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="9t5-wq-j1u" secondAttribute="bottom" constant="55" id="WDm-wY-ec4"/>
@@ -4037,8 +4037,34 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="8y9-up-ght">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="iJ9-QG-aZS">
                                         <rect key="frame" x="0.0" y="503.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iJ9-QG-aZS" id="TJc-OL-gWP">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CPE-7e-MTX">
+                                                    <rect key="frame" x="253" y="6" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn Restrictions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6a-cT-Ufa">
+                                                    <rect key="frame" x="15" y="11" width="237" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="CPE-7e-MTX" firstAttribute="centerY" secondItem="TJc-OL-gWP" secondAttribute="centerY" id="8ks-dL-I7P"/>
+                                                <constraint firstItem="r6a-cT-Ufa" firstAttribute="leading" secondItem="TJc-OL-gWP" secondAttribute="leading" constant="15" id="8qM-Rl-vP4"/>
+                                                <constraint firstItem="CPE-7e-MTX" firstAttribute="leading" secondItem="r6a-cT-Ufa" secondAttribute="trailing" constant="1" id="R4D-WZ-Oic"/>
+                                                <constraint firstItem="CPE-7e-MTX" firstAttribute="centerY" secondItem="r6a-cT-Ufa" secondAttribute="centerY" id="Uc0-af-OaM"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="CPE-7e-MTX" secondAttribute="trailing" constant="10" id="rB1-d3-hGA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="8y9-up-ght">
+                                        <rect key="frame" x="0.0" y="547.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8y9-up-ght" id="42b-hz-6KV">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -4068,7 +4094,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             <tableViewSection headerTitle="Interactions" id="RJU-Z2-QFh">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IqK-Jw-3YY">
-                                        <rect key="frame" x="0.0" y="595.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="639.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IqK-Jw-3YY" id="5R9-J2-ycr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -4094,7 +4120,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gt5-e4-ICw">
-                                        <rect key="frame" x="0.0" y="639.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="683.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gt5-e4-ICw" id="sug-RD-ipO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -4135,6 +4161,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <outlet property="_gpsTraceSwitch" destination="hvT-hi-s8k" id="aav-pU-882"/>
                         <outlet property="_notesSwitch" destination="fC8-R7-fUP" id="1ot-P9-Y8q"/>
                         <outlet property="_rotationSwitch" destination="H71-wV-6i5" id="ayi-ju-aO9"/>
+                        <outlet property="_turnRestrictionSwitch" destination="CPE-7e-MTX" id="OYA-e4-dd9"/>
                         <outlet property="_unnamedRoadSwitch" destination="CUT-E6-72l" id="BE3-wk-4oS"/>
                     </connections>
                 </tableViewController>
@@ -4945,6 +4972,90 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HSE-dn-0YR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2199" y="1257"/>
+        </scene>
+        <!--Turn Restrict Controller-->
+        <scene sceneID="VIa-pl-iqR">
+            <objects>
+                <viewController storyboardIdentifier="MapCropController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fZc-hX-GbL" customClass="TurnRestrictController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m2Y-tI-zmZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tr4-0w-82f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fg1-MM-IyW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0as-7d-L0W">
+                                <rect key="frame" x="40" y="123" width="240" height="250"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tXI-Zn-Vth">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap way for restrictions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Qe6-FZ-UwH">
+                                                <rect key="frame" x="10" y="4" width="220" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZl-cN-OyK">
+                                                <rect key="frame" x="0.0" y="29" width="240" height="1"/>
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="r1a-Pm-JEm"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.96572738889999998" green="0.96304351089999995" blue="0.96583777670000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Qe6-FZ-UwH" firstAttribute="top" secondItem="tXI-Zn-Vth" secondAttribute="top" constant="4" id="5ZQ-DD-oUE"/>
+                                            <constraint firstItem="Qe6-FZ-UwH" firstAttribute="leading" secondItem="tXI-Zn-Vth" secondAttribute="leading" constant="10" id="7Mw-Cn-qz0"/>
+                                            <constraint firstAttribute="trailing" secondItem="Qe6-FZ-UwH" secondAttribute="trailing" constant="10" id="HTt-NS-OlT"/>
+                                            <constraint firstAttribute="trailing" secondItem="bZl-cN-OyK" secondAttribute="trailing" id="R8a-Ce-aPc"/>
+                                            <constraint firstAttribute="height" constant="30" id="kwe-mH-KWn"/>
+                                            <constraint firstItem="bZl-cN-OyK" firstAttribute="leading" secondItem="tXI-Zn-Vth" secondAttribute="leading" id="m6P-dE-Vuw"/>
+                                            <constraint firstAttribute="bottom" secondItem="bZl-cN-OyK" secondAttribute="bottom" id="n9e-DA-NfF"/>
+                                            <constraint firstAttribute="bottom" secondItem="Qe6-FZ-UwH" secondAttribute="bottom" constant="4" id="yHn-rk-pJp"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APA-kz-Xeq">
+                                        <rect key="frame" x="0.0" y="30" width="240" height="220"/>
+                                        <color key="backgroundColor" red="0.84806272559999996" green="0.84806272559999996" blue="0.84806272559999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.176844419" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="tXI-Zn-Vth" firstAttribute="top" secondItem="0as-7d-L0W" secondAttribute="top" id="36P-Bk-hhI"/>
+                                    <constraint firstAttribute="trailing" secondItem="tXI-Zn-Vth" secondAttribute="trailing" id="6td-1O-U01"/>
+                                    <constraint firstItem="APA-kz-Xeq" firstAttribute="leading" secondItem="0as-7d-L0W" secondAttribute="leading" id="8vZ-5j-fWC"/>
+                                    <constraint firstAttribute="height" constant="250" id="E17-9f-JNv"/>
+                                    <constraint firstAttribute="bottom" secondItem="APA-kz-Xeq" secondAttribute="bottom" id="SPs-Ep-eVk"/>
+                                    <constraint firstItem="tXI-Zn-Vth" firstAttribute="leading" secondItem="0as-7d-L0W" secondAttribute="leading" id="bQ1-SO-nZQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="APA-kz-Xeq" secondAttribute="trailing" id="eVf-Mx-92e"/>
+                                    <constraint firstItem="APA-kz-Xeq" firstAttribute="top" secondItem="tXI-Zn-Vth" secondAttribute="bottom" id="gHQ-ux-TB2"/>
+                                    <constraint firstAttribute="width" constant="240" id="h4s-IN-JTq"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0as-7d-L0W" firstAttribute="centerX" secondItem="fg1-MM-IyW" secondAttribute="centerX" id="SuY-tC-4hp"/>
+                            <constraint firstItem="Tr4-0w-82f" firstAttribute="top" secondItem="0as-7d-L0W" secondAttribute="bottom" constant="107" id="XT2-Cq-fUX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Mms-6q-xZ5"/>
+                    </view>
+                    <connections>
+                        <outlet property="constraintContainerViewHeight" destination="E17-9f-JNv" id="ISe-k6-Fbb"/>
+                        <outlet property="constraintContainerViewWidth" destination="h4s-IN-JTq" id="agl-qv-wyl"/>
+                        <outlet property="containerView" destination="0as-7d-L0W" id="eAO-Ve-v3A"/>
+                        <outlet property="viewWindowContainer" destination="APA-kz-Xeq" id="xpB-fg-j4c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QOY-V7-23X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1839" y="-877"/>
         </scene>
     </scenes>
     <resources>

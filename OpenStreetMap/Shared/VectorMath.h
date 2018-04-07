@@ -55,6 +55,12 @@ static inline CGPoint CGPointWithOffset( CGPoint pt, CGFloat dx, CGFloat dy )
 	return CGPointMake( pt.x+dx, pt.y+dy );
 }
 
+static inline CGPoint CGPointSubtract( CGPoint a, CGPoint b )
+{
+	CGPoint pt = { a.x - b.x, a.y - b.y };
+	return pt;
+}
+
 static inline OSMPoint OSMPointMake(double x, double y)
 {
 	OSMPoint pt = { x, y };

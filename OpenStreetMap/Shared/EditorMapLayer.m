@@ -1233,6 +1233,7 @@ const static CGFloat Z_AREA				= Z_BASE + 2 * ZSCALE;
 const static CGFloat Z_HALO				= Z_BASE + 2.5 * ZSCALE;
 const static CGFloat Z_CASING			= Z_BASE + 3 * ZSCALE;
 const static CGFloat Z_LINE				= Z_BASE + 4 * ZSCALE;
+const static CGFloat Z_TURN             = Z_BASE + 4.5 * ZSCALE;
 const static CGFloat Z_NODE				= Z_BASE + 5 * ZSCALE;
 const static CGFloat Z_TEXT				= Z_BASE + 6 * ZSCALE;
 const static CGFloat Z_BUILDING_WALL	= Z_BASE + 7 * ZSCALE;
@@ -1757,6 +1758,93 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			}
 		}
 	}
+
+	// Turn Restrictions
+	if ( _mapView.enableTurnRestriction ) {
+		//        if ( object.relations.count > 0 ) {
+		//            for ( OsmRelation * relation in object.relations ) {
+		//                if ( relation.isRestriction ) {
+
+		//                }
+		//            }
+		//        }
+		if ( object.isRelation.isRestriction ) {
+
+			OsmMember * viaMember = [ object.isRelation memberByRole:@"via" ];
+			if ( ![viaMember.ref isKindOfClass:[NSNumber class]] ){
+				OSMPoint latLon = viaMember.isWay ? [ (OsmWay*)viaMember.ref centerPoint ] : [ (OsmNode*)viaMember.ref location ];
+				//            if ( viaMember.isNode ) {
+				//            OSMPoint latLon = [(OsmNode*)viaMember.ref location];
+
+				OSMPoint pt;
+				pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
+
+				CALayer * restrictionLayerIcon = [CALayer new];
+				restrictionLayerIcon.bounds = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+				restrictionLayerIcon.anchorPoint = CGPointMake(0.5,0.5);
+				restrictionLayerIcon.position = CGPointMake(pt.x, pt.y);
+				if ( viaMember.isWay && [object.tags[@"restriction"] isEqualToString:@"no_u_turn"] ) {
+					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
+				}
+				else {
+					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
+				}
+
+				//            if ( viaMember.isNode ) {
+				//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
+				//                //                        OsmMember * fromMember = [ relation memberByRole:@"from" ];
+				//                OsmWay * fromWay = fromMember.ref;
+				//                OsmNode * lastNode = fromWay.nodes.firstObject;
+				//                OSMPoint point = [ lastNode location ];
+				//                CGPoint loc = CGPointFromOSMPoint(latLon);
+				//                CGPoint pnt = CGPointFromOSMPoint(point);
+				//
+				////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
+				////                NSLog(@"\n\nANGLE: %f\n", angle);
+				//                //                restrictionLayerIcon.transform = CATransform3DMakeRotation(angle, 0, 0, 0.5);
+				//            }
+				//            if ( viaMember.isWay ) {
+				//                restrictionLayerIcon.anchorPoint = CGPointMake(0.5, -0.25);
+				//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
+				//                //                        OsmMember * fromMember = [ relation memberByRole:@"from" ];
+				//                OsmWay * fromWay = fromMember.ref;
+				//                OsmNode * lastNode = fromWay.nodes.firstObject;
+				//                OSMPoint point = [ lastNode location ];
+				//                CGPoint loc = CGPointFromOSMPoint(latLon);
+				//                CGPoint pnt = CGPointFromOSMPoint(point);
+				//
+				////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
+				////                NSLog(@"\n\nANGLE: %f\n", angle);
+				//                //                restrictionLayerIcon.transform = CATransform3DMakeRotation(angle, 0, 0, 0.5);
+				//            }
+				//            restrictionLayerIcon.transform = CATransform3DMakeRotation(15, 0, 0, 0.5);
+				//            restrictionLayerIcon.shadowColor = NSColor.whiteColor.CGColor;
+				//            restrictionLayerIcon.shadowPath = CGPathCreateWithRect(restrictionLayerIcon.bounds, NULL);
+				//            restrictionLayerIcon.shadowRadius = 0.0;
+				//            restrictionLayerIcon.shadowOffset = CGSizeMake(0, 0);
+				//            restrictionLayerIcon.shadowOpacity = 0.25;
+				restrictionLayerIcon.zPosition = Z_TURN;
+
+				//            NSString * restriction = object.tags[@"restriction"];
+				//                    NSString * restriction = relation.tags[@"restriction"];
+
+
+				//            if ( [restriction isEqualToString:@"no_left_turn"] )
+				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_left_turn"].CGImage;
+				//            else if ( [restriction isEqualToString:@"no_right_turn"] )
+				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_right_turn"].CGImage;
+				//            else if ( [restriction isEqualToString:@"no_u_turn"] )
+				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
+
+				LayerProperties * restrictionIconProps = [ LayerProperties new ];
+				[restrictionLayerIcon setValue:restrictionIconProps forKey:@"properties"];
+				restrictionIconProps->position = pt;
+
+				[layers addObject:restrictionLayerIcon];
+			}
+			//            }
+		}
+	}
 	
 	static NSDictionary * actions = nil;
 	if ( actions == nil )  {
@@ -1835,6 +1923,45 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 			[layers addObject:layer];
 			CGPathRelease(path);
+
+			// Turn Restrictions
+			if ( _mapView.enableTurnRestriction ) {
+				if ( object.relations.count > 0 ) {
+					for ( OsmRelation * relation in object.relations ) {
+						if ( relation.isRestriction && [relation memberByRole:@"from"].ref == object  ) {
+							for ( OsmMember * member in relation.members ) {
+								if ( member.isWay ) {
+									CGPathRef turnPath = [self pathForWay:member.ref];
+									CAShapeLayer * haloLayer = [CAShapeLayer new];
+									haloLayer.anchorPoint    = CGPointMake(0, 0);
+									haloLayer.path            = turnPath;
+									if ( member.ref == object && ![member.role isEqualToString:@"to"] )
+										haloLayer.strokeColor    = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75].CGColor;
+									else if ( [relation.tags[@"restriction"] containsString:@"only_"])
+										haloLayer.strokeColor    = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.75].CGColor;
+									else
+										haloLayer.strokeColor    = [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.75].CGColor;
+									haloLayer.fillColor        = nil;
+									haloLayer.lineWidth        = 10 * _highwayScale;
+									haloLayer.lineCap        = kCALineCapRound;
+									haloLayer.lineJoin        = kCALineJoinRound;
+									haloLayer.zPosition        = Z_HALO;
+									LayerProperties * haloProps = [LayerProperties new];
+									[haloLayer setValue:haloProps forKey:@"properties"];
+									haloProps->lineWidth = haloLayer.lineWidth;
+
+									if ( ([member.role isEqualToString:@"to"] && member.ref == object) || ([member.role isEqualToString:@"via"] && member.isWay) ) {
+										haloLayer.lineDashPattern = @[@(10 * _highwayScale), @(10 * _highwayScale)];
+									}
+
+									[layers addObject:haloLayer];
+									CGPathRelease(turnPath);
+								}
+							}
+						}
+					}
+				}
+			}
 
 			// draw nodes of way
 			NSSet * nodes = object == _selectedWay ? object.nodeSet : nil;

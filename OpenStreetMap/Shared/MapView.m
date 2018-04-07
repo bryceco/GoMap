@@ -29,6 +29,7 @@
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
 #import "TapAndDragGesture.h"
+#import "TurnRestrictController.h"
 #import "VoiceAnnouncement.h"
 
 #if TARGET_OS_IPHONE
@@ -417,6 +418,7 @@ CGSize SizeForImage( NSImage * image )
 	self.enableBirdsEye			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBirdsEye"];
 	self.enableUnnamedRoadHalo	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableUnnamedRoadHalo"];
 	self.enableBreadCrumb		= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBreadCrumb"];
+	self.enableTurnRestriction	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableTurnRestriction"];
 
 	// get current location
 	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
@@ -515,6 +517,7 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableBirdsEye			forKey:@"mapViewEnableBirdsEye"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableUnnamedRoadHalo	forKey:@"mapViewEnableUnnamedRoadHalo"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableBreadCrumb		forKey:@"mapViewEnableBreadCrumb"];
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableTurnRestriction	forKey:@"mapViewEnableTurnRestriction"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -973,6 +976,15 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
+-(void)setEnableTurnRestriction:(BOOL)enableTurnRestriction
+{
+	if ( _enableTurnRestriction != enableTurnRestriction ) {
+		_enableTurnRestriction = enableTurnRestriction;
+		[_editorLayer.mapData clearCachedProperties];    // reset layers associated with objects
+		[_editorLayer setNeedsDisplay];
+		[_editorLayer setNeedsLayout];
+	}
+}
 #pragma mark Coordinate Transforms
 
 
@@ -1897,6 +1909,7 @@ typedef enum {
 	ACTION_DELETE,
 	ACTION_MORE,
 	ACTION_HEIGHT,
+	ACTION_RESTRICT,
 } EDIT_ACTION;
 NSString * ActionTitle( NSInteger action )
 {
@@ -1917,6 +1930,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
 		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
+		case ACTION_RESTRICT:		return NSLocalizedString(@"Restrict", nil);
 	};
 	return nil;
 }
@@ -2074,6 +2088,9 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_MORE:
 			[self presentEditActionSheet:nil];
 			break;
+		case ACTION_RESTRICT:
+			[self restrictOptionSelected];
+			break;
 		default:
 			error = NSLocalizedString(@"Not implemented",nil);
 			break;
@@ -2146,6 +2163,8 @@ NSString * ActionTitle( NSInteger action )
 		} else {
 			if ( _editorLayer.selectedPrimary.isRelation )
 				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
+			else if ( _enableTurnRestriction && _editorLayer.selectedPrimary.isNode && [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode].count > 1 )
+				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_RESTRICT), @(ACTION_MORE) ];
 			else
 				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
 		}
@@ -2157,6 +2176,61 @@ NSString * ActionTitle( NSInteger action )
 	}
 }
 
+
+// MARK: Open Restrict popup window
+-(void)restrictOptionSelected
+{
+#if 0
+	rotationGesture.rotation = 0.00001;
+	CGPoint centerPoint = [rotationGesture locationInView:self];
+	CGFloat angle = rotationGesture.rotation;
+	[self rotateBy:angle aroundScreenPoint:centerPoint];
+	rotationGesture.rotation = 0.0;
+#endif
+
+	//    rotationGesture.rotation = -0.00001;
+	//    CGPoint centerPoint2 = [rotationGesture locationInView:self];
+	//    CGFloat angle2 = rotationGesture.rotation;
+	//    [self rotateBy:angle2 aroundScreenPoint:centerPoint2];
+	//    rotationGesture.rotation = 0.0;
+
+
+
+	[self updateNotesWithDelay:0];
+
+	//    [self startObjectRotation];
+	//    rotationGesture.state = UIGestureRecognizerStateBegan;
+	//    [self handleRotationGesture:rotationGesture];
+	//
+	//    rotationGesture.state = UIGestureRecognizerStateChanged;
+	//    [self handleRotationGesture:rotationGesture];
+	//
+	//    rotationGesture.state = UIGestureRecognizerStateEnded;
+	//    [self handleRotationGesture:rotationGesture];
+	//    [self endObjectRotation];
+
+	NSMutableArray *parents = [[_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode] mutableCopy];
+	for ( OsmWay * way in [parents copy] ) {
+		if ( [way.tags objectForKey:@"highway"] == nil )
+			[parents removeObject:way];
+	}
+	NSArray *parentWays = parents;
+	OsmNode *seletedNode = self.editorLayer.selectedNode;
+
+	TurnRestrictController *myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"MapCropController"];
+	myVc.parentWays   = [NSMutableArray arrayWithArray:parentWays];
+	myVc.selectedNode = seletedNode;
+
+	CGPoint center = CGRectCenter(self.layer.bounds);
+
+	myVc.mapCenter = center;
+	myVc.birdsEyeRotation = _birdsEyeRotation;
+	myVc.birdsEyeDistance = _birdsEyeDistance;
+	myVc.screenFromMapTransform = _screenFromMapTransform;
+
+	myVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+	[_viewController presentViewController:myVc animated:true completion:nil];
+}
 - (void)deleteDuplicateNodes
 {
 	[_editorLayer.mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
