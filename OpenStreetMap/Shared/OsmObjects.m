@@ -415,6 +415,18 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 #endif
 
+	// if the object has any tags that aren't throw-away tags then use one of them
+	NSSet * ignoreTags = [OsmMapData tagsToAutomaticallyStrip];
+	__block NSString * tagDescription = nil;
+	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
+		if ( ![ignoreTags containsObject:key] ) {
+			*stop = YES;
+			tagDescription = [NSString stringWithFormat:@"%@ = %@",key,value];
+		}
+	}];
+	if ( tagDescription )
+		return tagDescription;
+
 	if ( self.isNode && self.isNode.wayCount > 0 )
 		return NSLocalizedString(@"(node in way)",nil);
 

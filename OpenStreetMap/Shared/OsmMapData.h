@@ -120,6 +120,7 @@ extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
 -(NSMutableSet *)tagValuesForKey:(NSString *)key;
 
 // editing
++(NSSet *)tagsToAutomaticallyStrip;
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
 -(OsmWay *)createWay;
 -(OsmRelation *)createRelation;

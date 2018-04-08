@@ -162,14 +162,19 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 
--(NSSet *)tagsToAutomaticallyStrip
++(NSSet *)tagsToAutomaticallyStrip
 {
-	return [NSSet setWithObjects:
+	static dispatch_once_t onceToken;
+	static NSSet * s_ignoreSet = nil;
+	dispatch_once(&onceToken, ^{
+		s_ignoreSet = [NSSet setWithObjects:
 				@"tiger:upload_uuid", @"tiger:tlid", @"tiger:source", @"tiger:separated",
 				@"geobase:datasetName", @"geobase:uuid", @"sub_sea:type", @"odbl", @"odbl:note",
 				@"yh:LINE_NAME", @"yh:LINE_NUM", @"yh:STRUCTURE", @"yh:TOTYUMONO", @"yh:TYPE", @"yh:WIDTH_RANK",
-			nil];
-};
+				nil];
+	});
+	return s_ignoreSet;
+}
 
 
 -(void)setConstructed
