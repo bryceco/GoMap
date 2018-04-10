@@ -1175,17 +1175,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[request setValue:auth forHTTPHeaderField:@"Authorization"];
 
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-		if ( data && error == nil ) {
-			completion(data,nil);
-		} else {
-			NSString * errorMessage;
-			if ( data.length > 0 ) {
-				errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if ( data && error == nil ) {
+				completion(data,nil);
 			} else {
-				errorMessage = error.localizedDescription;
+				NSString * errorMessage;
+				if ( data.length > 0 ) {
+					errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+				} else {
+					errorMessage = error.localizedDescription;
+				}
+				completion(nil,errorMessage);
 			}
-			completion(nil,errorMessage);
-		}
+		});
 	}];
 	[task resume];
 }
