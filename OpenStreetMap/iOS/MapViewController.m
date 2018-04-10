@@ -34,6 +34,23 @@
 	_redoButton.enabled = self.mapView.editorLayer.mapData.canRedo && !self.mapView.editorLayer.hidden;
 }
 
+
+- (void)updateUploadButtonState
+{
+	const int yellowCount	= 25;
+	const int redCount		= 50;
+	NSInteger changeCount = [self.mapView.editorLayer.mapData modificationCount];
+	UIColor * color = nil;
+	if ( changeCount < yellowCount ) {
+		color = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];	// no color
+	} else if ( changeCount < redCount ) {
+		color = [UIColor colorWithRed:1.0 green:0.55 blue:0.0 alpha:1.0];	// yellow
+	} else {
+		color = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
+	}
+	_uploadButton.tintColor = color;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,9 +66,11 @@
 
 	// undo/redo buttons
 	[self updateUndoRedoButtonState];
+	[self updateUploadButtonState];
 
 	[self.mapView.editorLayer.mapData addChangeCallback:^{
 		[self updateUndoRedoButtonState];
+		[self updateUploadButtonState];
 	}];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];
