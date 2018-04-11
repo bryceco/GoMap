@@ -466,12 +466,6 @@
 		02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED98D168BF87200357B94 /* NearbyMappersViewController.m */; };
 		02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99B168CBC5400357B94 /* LocationBallLayer.m */; };
 		02BED99F168D102700357B94 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99E168D102600357B94 /* OfflineViewController.m */; };
-		02BF744920793ECA0028ED6A /* uTurnAllow.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BF744320793EC30028ED6A /* uTurnAllow.png */; };
-		02BF744A20793ECA0028ED6A /* restriction_sign.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BF744420793EC40028ED6A /* restriction_sign.png */; };
-		02BF744B20793ECA0028ED6A /* no_u_turn.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BF744520793EC50028ED6A /* no_u_turn.png */; };
-		02BF744C20793ECA0028ED6A /* arrowAllow.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BF744620793EC60028ED6A /* arrowAllow.png */; };
-		02BF744D20793ECA0028ED6A /* arrowRestrict.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BF744720793EC70028ED6A /* arrowRestrict.png */; };
-		02BF744E20793ECA0028ED6A /* uTurnRestrict.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BF744820793EC90028ED6A /* uTurnRestrict.png */; };
 		02BF745120793EE20028ED6A /* TurnRestrictHwyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BF745020793EE20028ED6A /* TurnRestrictHwyView.m */; };
 		02BF745420793F0A0028ED6A /* TurnRestrictController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BF745320793F0A0028ED6A /* TurnRestrictController.m */; };
 		02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C19B341699E8C000F75E3C /* BingMetadataViewController.m */; };
@@ -1041,12 +1035,6 @@
 		02BED99B168CBC5400357B94 /* LocationBallLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationBallLayer.m; path = ../Shared/LocationBallLayer.m; sourceTree = "<group>"; };
 		02BED99D168D102600357B94 /* OfflineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineViewController.h; sourceTree = "<group>"; };
 		02BED99E168D102600357B94 /* OfflineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineViewController.m; sourceTree = "<group>"; };
-		02BF744320793EC30028ED6A /* uTurnAllow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uTurnAllow.png; sourceTree = "<group>"; };
-		02BF744420793EC40028ED6A /* restriction_sign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restriction_sign.png; sourceTree = "<group>"; };
-		02BF744520793EC50028ED6A /* no_u_turn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_u_turn.png; sourceTree = "<group>"; };
-		02BF744620793EC60028ED6A /* arrowAllow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowAllow.png; sourceTree = "<group>"; };
-		02BF744720793EC70028ED6A /* arrowRestrict.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowRestrict.png; sourceTree = "<group>"; };
-		02BF744820793EC90028ED6A /* uTurnRestrict.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uTurnRestrict.png; sourceTree = "<group>"; };
 		02BF744F20793EE10028ED6A /* TurnRestrictHwyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurnRestrictHwyView.h; sourceTree = "<group>"; };
 		02BF745020793EE20028ED6A /* TurnRestrictHwyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurnRestrictHwyView.m; sourceTree = "<group>"; };
 		02BF745220793F0A0028ED6A /* TurnRestrictController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurnRestrictController.h; sourceTree = "<group>"; };
@@ -1125,12 +1113,6 @@
 		025A1D001690DC32002B60CB /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				02BF744620793EC60028ED6A /* arrowAllow.png */,
-				02BF744720793EC70028ED6A /* arrowRestrict.png */,
-				02BF744520793EC50028ED6A /* no_u_turn.png */,
-				02BF744420793EC40028ED6A /* restriction_sign.png */,
-				02BF744320793EC30028ED6A /* uTurnAllow.png */,
-				02BF744820793EC90028ED6A /* uTurnRestrict.png */,
 				02072AA51BD4465E00F1CAB4 /* 702-share.png */,
 				02072AA61BD4465E00F1CAB4 /* 702-share@2x.png */,
 				02072AA71BD4465E00F1CAB4 /* 702-share@3x.png */,
@@ -1889,7 +1871,6 @@
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
 				02ACBA4616713CCB00BB4414 /* Default.png in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
-				02BF744D20793ECA0028ED6A /* arrowRestrict.png in Resources */,
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02DAB7D71BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@3x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
@@ -2100,7 +2081,6 @@
 				02ACBC8116713F2B00BB4414 /* shopping_motorcycle.p.64.png in Resources */,
 				02ACBC8216713F2B00BB4414 /* shopping_music.p.64.png in Resources */,
 				02ACBC8316713F2B00BB4414 /* shopping_newspaper.p.64.png in Resources */,
-				02BF744920793ECA0028ED6A /* uTurnAllow.png in Resources */,
 				02ACBC8416713F2B00BB4414 /* shopping_pet.p.64.png in Resources */,
 				02ACBC8516713F2B00BB4414 /* shopping_pet2.p.64.png in Resources */,
 				02ACBC8616713F2B00BB4414 /* shopping_photo.p.64.png in Resources */,
@@ -2154,7 +2134,6 @@
 				02ACBCB016713F2B00BB4414 /* tourist_casino.p.64.png in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
 				02ACBCB116713F2B00BB4414 /* tourist_castle.p.64.png in Resources */,
-				02BF744C20793ECA0028ED6A /* arrowAllow.png in Resources */,
 				02ACBCB216713F2B00BB4414 /* tourist_castle2.p.64.png in Resources */,
 				02ACBCB316713F2B00BB4414 /* tourist_cinema.p.64.png in Resources */,
 				02ACBCB416713F2B00BB4414 /* tourist_cinema2.p.64.png in Resources */,
@@ -2216,7 +2195,6 @@
 				02ACBCE716713F2B00BB4414 /* transport_rental_car.p.64.png in Resources */,
 				02072ABC1BD4497500F1CAB4 /* 732-cloud-upload-toolbar@3x.png in Resources */,
 				02ACBCE816713F2B00BB4414 /* transport_roundabout_anticlockwise.p.64.png in Resources */,
-				02BF744E20793ECA0028ED6A /* uTurnRestrict.png in Resources */,
 				02ACBCE916713F2B00BB4414 /* transport_roundabout_clockwise.p.64.png in Resources */,
 				02ACBCEA16713F2B00BB4414 /* transport_slipway.p.64.png in Resources */,
 				02ACBCEB16713F2B00BB4414 /* transport_speedbump.p.64.png in Resources */,
@@ -2271,7 +2249,6 @@
 				0266D3AD16C02D9200AD9A83 /* seamark_buoy_isolated_danger.png in Resources */,
 				0266D3AE16C02D9200AD9A83 /* seamark_buoy_lateral.p.64.png in Resources */,
 				0266D3AF16C02D9200AD9A83 /* seamark_buoy_safe_water.p.64.png in Resources */,
-				02BF744B20793ECA0028ED6A /* no_u_turn.png in Resources */,
 				0266D3B016C02D9200AD9A83 /* seamark_buoy_special_purpose.p.64.png in Resources */,
 				0266D3B116C02D9200AD9A83 /* seamark_fog_signal.p.64.png in Resources */,
 				02DAB7DB1BFA4C3B00360AED /* 723-location-arrow-toolbar.png in Resources */,
@@ -2287,7 +2264,6 @@
 				02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */,
 				0228444716DD339300A1C051 /* redo32@2x.png in Resources */,
 				0228444816DD339300A1C051 /* undo32@2x.png in Resources */,
-				02BF744A20793ECA0028ED6A /* restriction_sign.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
