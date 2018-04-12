@@ -199,7 +199,7 @@
 //
     CAShapeLayer * arrow = [CAShapeLayer new];
     arrow.path = arrowPath;
-    arrow.lineWidth = 1;
+    arrow.lineWidth = 1.0;
     arrow.anchorPoint = CGPointMake(0.5, 0.5);
     
     CGFloat angle = isForward ? [TurnRestrictHwyView getAngle:location b:self.center] : [TurnRestrictHwyView getAngle:self.center b:location];
@@ -216,7 +216,7 @@
     [self.layer addSublayer:arrow];
     
     [self bringSubviewToFront:_layerButton];
-
+	CGPathRelease( arrowPath );
 }
 
 

@@ -30,7 +30,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		_url				= url ?: @"";
 		_maxZoom			= (int32_t)maxZoom ?: 21;
 		_roundZoomUp 		= roundUp;
-		_polygon			= polygon;
+		_polygon			= CGPathCreateCopy( polygon );
 		_attributionString 	= attribString;
 		_attributionIcon	= attribIcon;
 		_attributionUrl		= attribUrl;
@@ -336,6 +336,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		}
 		AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 		[externalAerials addObject:service];
+		CGPathRelease( polygon );
 	}
 	[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {
 		return [obj1.name caseInsensitiveCompare:obj2.name];
