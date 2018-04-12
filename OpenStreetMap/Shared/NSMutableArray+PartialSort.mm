@@ -63,7 +63,7 @@
 }
 
 
-
+// This code is duplicated from above so the comparison function can be inlined by the STL.
 static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 {
 	long long diff = obj1->renderPriorityCached - obj2->renderPriorityCached;

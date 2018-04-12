@@ -1567,6 +1567,13 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			props->position		= refPoint;
 			props->lineWidth	= layer.lineWidth;
 
+#if 0	// Enable to show motorway_link with dashed lines. Looks kind of ugly and reduces framerate by up to 30%f
+			BOOL link = [object.tags[@"highway"] hasSuffix:@"_link"];
+			if ( link ) {
+				props->lineDashes = @[@(10 * _highwayScale), @(10 * _highwayScale)];
+			}
+#endif
+
 			CGPathRelease(path);
 			[layers addObject:layer];
 		}
