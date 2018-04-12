@@ -1495,7 +1495,15 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 						static NSDictionary * highwayTypes = nil;
 						enum { USES_NAME = 1, USES_REF = 2 };
 						if ( highwayTypes == nil )
-							highwayTypes = @{ @"motorway":@(USES_REF), @"trunk":@(USES_REF), @"primary":@(USES_REF), @"secondary":@(USES_REF), @"tertiary":@(USES_NAME), @"unclassified":@(USES_NAME), @"residential":@(USES_NAME), @"road":@(USES_NAME) };
+							highwayTypes = @{ @"motorway":@(USES_REF),
+											  @"trunk":@(USES_REF),
+											  @"primary":@(USES_REF),
+											  @"secondary":@(USES_REF),
+											  @"tertiary":@(USES_NAME),
+											  @"unclassified":@(USES_NAME),
+											  @"residential":@(USES_NAME),
+											  @"road":@(USES_NAME),
+											  @"living_street":@(USES_NAME) };
 						NSString * highway = object.tags[@"highway"];
 						if ( highway ) {
 							// it is a highway
