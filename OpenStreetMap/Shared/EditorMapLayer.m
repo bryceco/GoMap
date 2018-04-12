@@ -1919,14 +1919,15 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 		if ( object.isWay ) {
 			CGFloat		lineWidth	= 1.0;
 			CGPathRef	path		= [self pathForWay:object.isWay];
-			RGBAColor	wayColor	= { 1, 1, !selected, 1 };
+//			UIColor	*	wayColor	= selected ? [UIColor colorWithRed:1 green:0 blue:1 alpha:1] : [UIColor whiteColor];
+			UIColor	*	wayColor	= selected ? UIColor.cyanColor : UIColor.whiteColor;
 
 			if ( lineWidth == 0 )
 				lineWidth = 1;
 			lineWidth += 2;	// since we're drawing highlight 2-wide we don't want it to intrude inward on way
 
 			CAShapeLayer * layer = [CAShapeLayer new];
-			layer.strokeColor	= [UIColor colorWithRed:wayColor.red green:wayColor.green blue:wayColor.blue alpha:wayColor.alpha].CGColor;
+			layer.strokeColor	= wayColor.CGColor;
 			layer.lineWidth		= lineWidth;
 			layer.path			= path;
 			layer.fillColor		= UIColor.clearColor.CGColor;
@@ -1947,21 +1948,21 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 							for ( OsmMember * member in relation.members ) {
 								if ( member.isWay ) {
 									CGPathRef turnPath = [self pathForWay:member.ref];
-									CAShapeLayer * haloLayer = [CAShapeLayer new];
-									haloLayer.anchorPoint    = CGPointMake(0, 0);
-									haloLayer.path            = turnPath;
+									CAShapeLayer * haloLayer	= [CAShapeLayer new];
+									haloLayer.anchorPoint    	= CGPointMake(0, 0);
+									haloLayer.path            	= turnPath;
 									if ( member.ref == object && ![member.role isEqualToString:@"to"] )
-										haloLayer.strokeColor    = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75].CGColor;
+										haloLayer.strokeColor 	= [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75].CGColor;
 									else if ( [relation.tags[@"restriction"] containsString:@"only_"])
-										haloLayer.strokeColor    = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.75].CGColor;
+										haloLayer.strokeColor   = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.75].CGColor;
 									else
-										haloLayer.strokeColor    = [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.75].CGColor;
-									haloLayer.fillColor        = nil;
-									haloLayer.lineWidth        = 10 * _highwayScale;
-									haloLayer.lineCap        = kCALineCapRound;
-									haloLayer.lineJoin        = kCALineJoinRound;
-									haloLayer.zPosition        = Z_HALO;
-									LayerProperties * haloProps = [LayerProperties new];
+										haloLayer.strokeColor  	= [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.75].CGColor;
+									haloLayer.fillColor        	= nil;
+									haloLayer.lineWidth        	= 10 * _highwayScale;
+									haloLayer.lineCap        	= kCALineCapRound;
+									haloLayer.lineJoin        	= kCALineJoinRound;
+									haloLayer.zPosition        	= Z_HALO;
+									LayerProperties * haloProps	= [LayerProperties new];
 									[haloLayer setValue:haloProps forKey:@"properties"];
 									haloProps->lineWidth = haloLayer.lineWidth;
 
@@ -1984,7 +1985,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				layer				= [CAShapeLayer new];
 				CGRect		rect	= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
 				layer.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-				layer.strokeColor	= node == _selectedNode ? UIColor.redColor.CGColor : UIColor.greenColor.CGColor;
+				layer.strokeColor	= node == _selectedNode ? UIColor.redColor.CGColor : UIColor.blueColor.CGColor;
 				layer.fillColor		= UIColor.clearColor.CGColor;
 				layer.lineWidth		= 2.0;
 				path = [node hasInterestingTags] ? CGPathCreateWithRect(rect, NULL) : CGPathCreateWithEllipseInRect(rect, NULL);
@@ -3824,7 +3825,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		} else if ( object.isWay ) {
 			OsmWay * way = (id)object;
 			if ( ![ignoreList containsObject:way] ) {
-				NSInteger seg;
+				NSInteger seg = 0;
 				CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
 				if ( dist <= 1.0 ) {
 					block( object, dist, seg );
