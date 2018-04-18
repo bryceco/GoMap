@@ -42,11 +42,11 @@
 	NSInteger changeCount = [self.mapView.editorLayer.mapData modificationCount];
 	UIColor * color = nil;
 	if ( changeCount < yellowCount ) {
-		color = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];	// no color
+		color = nil;														// default color
 	} else if ( changeCount < redCount ) {
 		color = [UIColor colorWithRed:1.0 green:0.55 blue:0.0 alpha:1.0];	// yellow
 	} else {
-		color = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
+		color = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];	// red
 	}
 	_uploadButton.tintColor = color;
 }
