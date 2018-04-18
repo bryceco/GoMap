@@ -86,8 +86,6 @@ typedef enum {
 
 	LocationBallLayer				*	_locationBallLayer;
 	CAShapeLayer					*	_addWayProgressLayer;
-	BOOL								_userOverrodeLocationPosition;
-	BOOL								_userOverrodeLocationZoom;
 
 	id									_blinkObject;	// used for creating a moving dots animation during selection
 	NSInteger							_blinkSegment;
@@ -141,6 +139,8 @@ typedef enum {
 
 
 @property (readonly,nonatomic)	CLLocation					*	currentLocation;
+@property (assign,nonatomic)	BOOL							userOverrodeLocationPosition;	// prevent gps updates from re-centering the view
+@property (assign,nonatomic)	BOOL							userOverrodeLocationZoom;		// prevent gps updates from changing the zoom level
 
 @property (assign,nonatomic)	MapViewState					viewState;			// layer currently displayed
 @property (assign,nonatomic)	BOOL							viewStateOverride;	// override layer because we're zoomed out
@@ -184,7 +184,7 @@ typedef enum {
 @property (readonly,nonatomic)	CAShapeLayer				*	crossHairs;
 
 
--(void)updateBingButton;
+-(void)updateAerialAttributionButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
 
 -(void)viewDidAppear;

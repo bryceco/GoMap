@@ -231,11 +231,16 @@
 		[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 	}
 	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:pendingEdits];
+	
+	// while in background don't update our location so we don't download tiles/OSM data when moving
+	self.mapView.userOverrodeLocationPosition = YES;
 }
 
+// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	// allow gps to update our location
+	self.mapView.userOverrodeLocationPosition = NO;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

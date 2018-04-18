@@ -438,7 +438,7 @@ CGSize SizeForImage( NSImage * image )
 	// get notes
 	[self updateNotesWithDelay:0];
 
-	[self updateBingButton];
+	[self updateAerialAttributionButton];
 
 #if FRAMERATE_TEST
 	// automaatically scroll view for frame rate testing
@@ -591,7 +591,7 @@ CGSize SizeForImage( NSImage * image )
 	return YES;
 }
 
--(void)updateBingButton
+-(void)updateAerialAttributionButton
 {
 	AerialService * service = self.aerialLayer.aerialService;
 	_aerialServiceLogo.hidden = self.aerialLayer.hidden || (service.attributionString.length == 0 && service.attributionIcon == nil);
@@ -921,7 +921,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	// enable/disable editing buttons based on visibility
 	[_viewController updateDeleteButtonState];
 	[_viewController updateUndoRedoButtonState];
-	[self updateBingButton];
+	[self updateAerialAttributionButton];
 }
 -(MapViewState)viewState
 {
@@ -931,7 +931,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)setAerialTileService:(AerialService *)service
 {
 	_aerialLayer.aerialService = service;
-	[self updateBingButton];
+	[self updateAerialAttributionButton];
 }
 
 -(void)setEnableBirdsEye:(BOOL)enableBirdsEye
@@ -1346,6 +1346,18 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
+-(void)setUserOverrodeLocationPosition:(BOOL)userOverrodeLocationPosition
+{
+	_userOverrodeLocationPosition 	= userOverrodeLocationPosition;
+	_centerOnGPSButton.hidden		= !userOverrodeLocationPosition || _gpsState == GPS_STATE_NONE;
+}
+-(void)setUserOverrodeLocationZoom:(BOOL)userOverrodeLocationZoom
+{
+	_userOverrodeLocationZoom = userOverrodeLocationZoom;
+	_centerOnGPSButton.hidden = !userOverrodeLocationZoom || _gpsState == GPS_STATE_NONE;
+}
+
+
 -(BOOL)gpsInBackground
 {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
@@ -1383,8 +1395,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationManager requestWhenInUseAuthorization];
 	}
 
-	_userOverrodeLocationPosition	= NO;
-	_userOverrodeLocationZoom		= NO;
+	self.userOverrodeLocationPosition	= NO;
+	self.userOverrodeLocationZoom		= NO;
 	[_locationManager startUpdatingLocation];
 #if TARGET_OS_IPHONE
 	[_locationManager startUpdatingHeading];
@@ -1398,10 +1410,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( _gpsState == GPS_STATE_NONE )
 		return;
 
-	_userOverrodeLocationPosition = NO;
+	self.userOverrodeLocationPosition = NO;
 	CLLocation * location = _locationManager.location;
 	[self setTransformForLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
-	_centerOnGPSButton.hidden = YES;
 }
 
 -(IBAction)rotateToNorth:(id)sender
@@ -3139,8 +3150,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan
 {
-	_userOverrodeLocationPosition = YES;
-	_centerOnGPSButton.hidden = _gpsState == GPS_STATE_NONE;
+	self.userOverrodeLocationPosition = YES;
 
 	if ( pan.state == UIGestureRecognizerStateBegan ) {
 		// start pan
@@ -3183,8 +3193,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
 	if ( pinch.state == UIGestureRecognizerStateChanged ) {
-		_userOverrodeLocationZoom = YES;
-		_centerOnGPSButton.hidden = _gpsState == GPS_STATE_NONE;
+		self.userOverrodeLocationZoom = YES;
 
 		DisplayLink * displayLink = [DisplayLink shared];
 		[displayLink removeName:DisplayLinkPanning];
@@ -3201,8 +3210,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 {
 	// do single-finger zooming
 	if ( tapAndDrag.state == UIGestureRecognizerStateChanged ) {
-		_userOverrodeLocationZoom = YES;
-		_centerOnGPSButton.hidden = _gpsState == GPS_STATE_NONE;
+		self.userOverrodeLocationZoom = YES;
 
 		DisplayLink * displayLink = [DisplayLink shared];
 		[displayLink removeName:DisplayLinkPanning];
