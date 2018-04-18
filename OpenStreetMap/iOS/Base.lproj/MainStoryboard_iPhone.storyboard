@@ -3965,6 +3965,9 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1jq-Mx-hmn">
                                                     <rect key="frame" x="245" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="gpsSwitchChanged:" destination="UfZ-fJ-hyB" eventType="valueChanged" id="akt-la-BJd"/>
+                                                    </connections>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
                                                     <rect key="frame" x="190" y="7" width="47" height="30"/>
@@ -4157,8 +4160,8 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="_birdsEyeSwitch" destination="IuS-7H-TV3" id="qn2-l1-Fvx"/>
-                        <outlet property="_breadCrumbSwitch" destination="1jq-Mx-hmn" id="deL-h4-QKC"/>
                         <outlet property="_gpsTraceSwitch" destination="hvT-hi-s8k" id="aav-pU-882"/>
+                        <outlet property="_gpxLoggingSwitch" destination="1jq-Mx-hmn" id="Xjp-YQ-1CM"/>
                         <outlet property="_notesSwitch" destination="fC8-R7-fUP" id="1ot-P9-Y8q"/>
                         <outlet property="_rotationSwitch" destination="H71-wV-6i5" id="ayi-ju-aO9"/>
                         <outlet property="_turnRestrictionSwitch" destination="CPE-7e-MTX" id="OYA-e4-dd9"/>

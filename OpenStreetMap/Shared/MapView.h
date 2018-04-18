@@ -178,7 +178,7 @@ typedef enum {
 @property (assign,nonatomic)	BOOL							enableBirdsEye;
 @property (assign,nonatomic)	BOOL							enableRotation;
 @property (assign,nonatomic)	BOOL							enableUnnamedRoadHalo;
-@property (assign,nonatomic)	BOOL							enableBreadCrumb;
+@property (assign,nonatomic)	BOOL							enableGpxLogging;
 @property (assign,nonatomic)	BOOL							enableTurnRestriction;
 
 @property (readonly,nonatomic)	CAShapeLayer				*	crossHairs;

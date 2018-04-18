@@ -36,6 +36,13 @@ static const NSInteger CACHE_SECTION			= 3;
 
 @implementation DisplayViewController
 
+-(IBAction)gpsSwitchChanged:(id)sender
+{
+	// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
+	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	mapView.enableGpxLogging = _gpxLoggingSwitch.on;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -58,7 +65,7 @@ static const NSInteger CACHE_SECTION			= 3;
 		_birdsEyeSwitch.on			= mapView.enableBirdsEye;
 		_rotationSwitch.on			= mapView.enableRotation;
 		_unnamedRoadSwitch.on		= mapView.enableUnnamedRoadHalo;
-		_breadCrumbSwitch.on		= mapView.enableBreadCrumb;
+		_gpxLoggingSwitch.on		= mapView.enableGpxLogging;
 		_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
 
 	} else {
@@ -75,7 +82,7 @@ static const NSInteger CACHE_SECTION			= 3;
 
 - (void)applyChanges
 {
-	MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
+	MapView * mapView = [AppDelegate getAppDelegate].mapView;
 
 	NSInteger maxRow = [self.tableView numberOfRowsInSection:BACKGROUND_SECTION];
 	for ( NSInteger row = 0; row < maxRow; ++row ) {
@@ -95,7 +102,7 @@ static const NSInteger CACHE_SECTION			= 3;
 	mapView.enableBirdsEye			= _birdsEyeSwitch.on;
 	mapView.enableRotation			= _rotationSwitch.on;
 	mapView.enableUnnamedRoadHalo	= _unnamedRoadSwitch.on;
-	mapView.enableBreadCrumb		= _breadCrumbSwitch.on;
+	mapView.enableGpxLogging		= _gpxLoggingSwitch.on;
 	mapView.enableTurnRestriction	= _turnRestrictionSwitch.on;
 }
 

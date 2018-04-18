@@ -293,7 +293,7 @@ CGSize SizeForImage( NSImage * image )
 		_locationManager.delegate = self;
 #if TARGET_OS_IPHONE
 		_locationManager.pausesLocationUpdatesAutomatically = NO;
-		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableBreadCrumb;
+		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableGpxLogging;
 		if (@available(iOS 11.0, *)) {
 			_locationManager.showsBackgroundLocationIndicator = YES;
 		}
@@ -417,7 +417,7 @@ CGSize SizeForImage( NSImage * image )
 	self.enableRotation			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableRotation"];
 	self.enableBirdsEye			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBirdsEye"];
 	self.enableUnnamedRoadHalo	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableUnnamedRoadHalo"];
-	self.enableBreadCrumb		= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBreadCrumb"];
+	self.enableGpxLogging		= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBreadCrumb"];
 	self.enableTurnRestriction	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableTurnRestriction"];
 
 	// get current location
@@ -516,7 +516,7 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableRotation			forKey:@"mapViewEnableRotation"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableBirdsEye			forKey:@"mapViewEnableBirdsEye"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableUnnamedRoadHalo	forKey:@"mapViewEnableUnnamedRoadHalo"];
-	[[NSUserDefaults standardUserDefaults] setBool:self.enableBreadCrumb		forKey:@"mapViewEnableBreadCrumb"];
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableGpxLogging		forKey:@"mapViewEnableBreadCrumb"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableTurnRestriction	forKey:@"mapViewEnableTurnRestriction"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
@@ -965,14 +965,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_editorLayer setNeedsLayout];
 	}
 }
--(void)setEnableBreadCrumb:(BOOL)enableBreadCrumb
+-(void)setEnableGpxLogging:(BOOL)enableBreadCrumb
 {
-	if ( _enableBreadCrumb != enableBreadCrumb ) {
-		_enableBreadCrumb = enableBreadCrumb;
+	if ( _enableGpxLogging != enableBreadCrumb ) {
+		_enableGpxLogging = enableBreadCrumb;
 
-		_gpxLayer.hidden = !self.enableBreadCrumb;
+		_gpxLayer.hidden = !self.enableGpxLogging;
 
-		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableBreadCrumb;
+		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableGpxLogging;
 	}
 }
 
@@ -1366,7 +1366,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	[[NSUserDefaults standardUserDefaults] setBool:gpsInBackground forKey:USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
 
-	_locationManager.allowsBackgroundLocationUpdates = gpsInBackground && self.enableBreadCrumb;
+	_locationManager.allowsBackgroundLocationUpdates = gpsInBackground && self.enableGpxLogging;
 
 	if ( gpsInBackground ) {
 		// ios 8 and later:

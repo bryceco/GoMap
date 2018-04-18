@@ -168,7 +168,7 @@
 -(void)applicationDidEnterBackground:(id)sender
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	if ( appDelegate.mapView.gpsInBackground && appDelegate.mapView.enableBreadCrumb ) {
+	if ( appDelegate.mapView.gpsInBackground && appDelegate.mapView.enableGpxLogging ) {
 		// allow GPS collection in background
 	} else {
 		// turn off GPS tracking
