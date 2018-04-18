@@ -159,9 +159,9 @@
 	}];
 }
 
-- (NSString *)typeKeyForDict:(NSDictionary *)dict
+- (NSString *)featureKeyForDict:(NSDictionary *)dict
 {
-	for ( NSString * tag in [OsmBaseObject typeKeys] ) {
+	for ( NSString * tag in [OsmBaseObject featureKeys] ) {
 		NSString * value = dict[ tag ];
 		if ( value.length ) {
 			return tag;
@@ -169,12 +169,12 @@
 	}
 	return nil;
 }
-- (NSString *)typeStringForDict:(NSDictionary *)dict
+- (NSString *)featureStringForDict:(NSDictionary *)dict
 {
-	NSString * tag = [self typeKeyForDict:dict];
-	NSString * value = dict[ tag ];
+	NSString * key = [self featureKeyForDict:dict];
+	NSString * value = dict[ key ];
 	if ( value.length ) {
-		NSString * text = [NSString stringWithFormat:@"%@ (%@)", value, tag];
+		NSString * text = [NSString stringWithFormat:@"%@ (%@)", value, key];
 		text = [text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
 		text = text.capitalizedString;
 		return text;
@@ -266,7 +266,7 @@
 			// Type cell
 			NSString * text = [_tags featureName];
 			if ( text == nil )
-				text = [self typeStringForDict:objectDict];
+				text = [self featureStringForDict:objectDict];
 			cell.valueField.text = text;
 			cell.valueField.enabled = NO;
 		} else {

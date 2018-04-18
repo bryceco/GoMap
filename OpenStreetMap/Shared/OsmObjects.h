@@ -90,7 +90,7 @@ typedef enum {
 @property (readonly,nonatomic)	ONEWAY				isOneWay;
 @property (assign,nonatomic)	TRISTATE			isShown;
 
-+(NSArray *)typeKeys;
++(NSDictionary *)featureKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;
 
 -(void)constructTag:(NSString *)tag value:(NSString *)value;

@@ -397,8 +397,9 @@ static TagInfo * g_DefaultRender = nil;
 		[set addObject:child.key];
 	}
 	NSArray * tags = [set allObjects];
+	NSDictionary * featureKeys = [OsmBaseObject featureKeys];
 	tags = [tags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * key, NSDictionary *bindings) {
-		return [[OsmBaseObject typeKeys] containsObject:key];
+		return featureKeys[ key ] != nil;
 	}]];
 
 	// get values for key (creates an array of TagInfo)

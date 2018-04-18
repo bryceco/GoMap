@@ -377,17 +377,56 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return OSMRectIntersectsRect( self.boundingBox, box );
 }
 
-+(NSArray *)typeKeys
++(NSDictionary *)featureKeys
 {
-	static NSArray * typeKeys = nil;
-	if ( typeKeys == nil ) {
-		typeKeys = @[	@"shop", @"amenity", @"leisure", @"tourism", @"craft",
-						@"highway", @"office", @"landmark", @"building", @"emergency",
-						@"man_made", @"military", @"natural", @"power", @"railway",
-						@"sport", @"waterway", @"aeroway", @"landuse", @"barrier", @"boundary",
-						@"seamark:type", @"traffic_calming", @"entrance"];
-	}
-	return typeKeys;
+	static NSDictionary * keyDict = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		keyDict = @{
+						@"building" : @YES,
+						@"landuse" : @YES,
+						@"highway" : @YES,
+						@"railway" : @YES,
+						@"amenity" : @YES,
+						@"shop" : @YES,
+						@"natural" : @YES,
+						@"waterway" : @YES,
+						@"power" : @YES,
+						@"barrier" : @YES,
+						@"leisure" : @YES,
+						@"man_made" : @YES,
+						@"tourism" : @YES,
+						@"boundary" : @YES,
+						@"public_transport" : @YES,
+						@"sport" : @YES,
+						@"emergency" : @YES,
+						@"historic" : @YES,
+						@"route" : @YES,
+						@"aeroway" : @YES,
+						@"place" : @YES,
+						@"craft" : @YES,
+						@"entrance" : @YES,
+						@"playground" : @YES,
+						@"aerialway" : @YES,
+						@"healthcare" : @YES,
+						@"military" : @YES,
+						@"building:part" : @YES,
+						@"training" : @YES,
+						@"traffic_sign" : @YES,
+						@"xmas:feature" : @YES,
+						@"seamark:type" : @YES,
+						@"waterway:sign" : @YES,
+						@"university" : @YES,
+						@"pipeline" : @YES,
+						@"club" : @YES,
+						@"golf" : @YES,
+						@"junction" : @YES,
+						@"office" : @YES,
+						@"piste:type" : @YES,
+						@"harbour" : @YES,
+						};
+	});
+	return keyDict;
 }
 
 -(NSString *)friendlyDescription
@@ -417,13 +456,25 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 	// if the object has any tags that aren't throw-away tags then use one of them
 	NSSet * ignoreTags = [OsmMapData tagsToAutomaticallyStrip];
+	
 	__block NSString * tagDescription = nil;
+	NSDictionary * featureKeys = [OsmBaseObject featureKeys];
+	// look for feature key
 	[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
-		if ( ![ignoreTags containsObject:key] ) {
+		if ( featureKeys[key] ) {
 			*stop = YES;
 			tagDescription = [NSString stringWithFormat:@"%@ = %@",key,value];
 		}
 	}];
+	if ( tagDescription == nil ) {
+		// any non-ignored key
+		[_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
+			if ( ![ignoreTags containsObject:key] ) {
+				*stop = YES;
+				tagDescription = [NSString stringWithFormat:@"%@ = %@",key,value];
+			}
+		}];
+	}
 	if ( tagDescription )
 		return tagDescription;
 
