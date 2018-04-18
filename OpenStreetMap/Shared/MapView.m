@@ -3366,13 +3366,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
 {
-	if ( !self.enableBirdsEye )
-		return;
-
-	CGPoint translation = [pan translationInView:self];
-	double delta = -translation.y/40 / 180 * M_PI;
-
-	[self rotateBirdsEyeBy:delta];
+	if ( self.enableBirdsEye ) {
+		CGPoint translation = [pan translationInView:self];
+		double delta = -translation.y/40 / 180 * M_PI;
+		[self rotateBirdsEyeBy:delta];
+	} else {
+		[self handlePanGesture:pan];
+	}
 }
 
 - (void)updateSpeechBalloonPosition
