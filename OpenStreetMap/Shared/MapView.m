@@ -1424,7 +1424,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		case GPS_STATE_LOCATION:
 			self.gpsState = GPS_STATE_HEADING;
 		case GPS_STATE_NONE:
-			// nothing
+			{
+				CGPoint center = CGRectCenter(self.bounds);
+				double rotation = OSMTransformRotation( _screenFromMapTransform );
+				[self animateRotationBy:-rotation aroundPoint:center];
+			}
 			break;
 	}
 }
