@@ -22,7 +22,8 @@
 - (BOOL)circularizeWay:(OsmWay *)way;
 - (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;
 
-
--(OsmRelation *)createTurnRestrictionRelation:(OsmNode *)vieNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn;
--(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)vieNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn;
+-(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)viaNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn
+									  newWays:(NSArray **)resultWays
+									willSplit:(BOOL(^)(NSArray * splitWays))requiresSplitting;
+-(void)deleteTurnRestrictionRelation:(OsmRelation *)restriction;
 @end

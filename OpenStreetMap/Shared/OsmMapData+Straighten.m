@@ -404,30 +404,66 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 #pragma mark Turn-restriction relations
 
--(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)vieNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn
+-(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)viaNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn
+									  newWays:(NSArray **)resultWays
+									willSplit:(BOOL(^)(NSArray * splitWays))requiresSplitting
 {
+	// find ways that need to be split
+	NSMutableArray * splits = [NSMutableArray new];
+	NSArray * list = (fromWay == toWay) ? @[ fromWay ] : @[ fromWay, toWay ];
+	for ( OsmWay * way in list ) {
+		BOOL split = NO;
+		if (way.isClosed) {
+			split = YES;
+		} else if ( way.nodes[0] != viaNode && way.nodes.lastObject != viaNode ) {
+			split = YES;
+		}
+		if ( split ) {
+			[splits addObject:way];
+		}
+	}
+	if ( requiresSplitting && splits.count > 0 && !requiresSplitting(splits) )
+		return nil;
+
+	[_undoManager registerUndoComment:NSLocalizedString(@"create turn restriction",nil)];
+
+	if ( restriction == nil ) {
+		restriction = [self createRelation];
+	}
+
+	NSMutableArray * newWays = [NSMutableArray new];
+	for ( OsmWay * way in splits ) {
+		OsmWay * newWay = [self splitWay:way atNode:viaNode];
+		[newWays addObject:newWay];
+	}
+	
 	NSMutableDictionary * tags = [NSMutableDictionary new];
 	[tags setValue:@"restriction" forKey:@"type"];
 	[tags setValue:strTurn forKey:@"restriction"];
 	[self setTags:tags forObject:restriction];
 
+	while ( restriction.members.count > 0 ) {
+		[self deleteMemberInRelation:restriction index:0];
+	}
 	OsmMember * fromM = [[OsmMember alloc] initWithRef:fromWay role:@"from"];
-	OsmMember * viaM = [[OsmMember alloc] initWithRef:vieNode role:@"via"];
+	OsmMember * viaM = [[OsmMember alloc] initWithRef:viaNode role:@"via"];
 	OsmMember * toM = [[OsmMember alloc] initWithRef:toWay role:@"to"];
 
 	[self addMember:fromM toRelation:restriction atIndex:0];
 	[self addMember:viaM toRelation:restriction atIndex:1];
 	[self addMember:toM toRelation:restriction atIndex:2];
 
+	if ( resultWays )
+		*resultWays = newWays;
+	
 	return restriction;
 }
 
--(OsmRelation *)createTurnRestrictionRelation:(OsmNode *)vieNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn
+-(void)deleteTurnRestrictionRelation:(OsmRelation *)restriction
 {
-	OsmRelation * restriction = [self createRelation];
-	return [self updateTurnRestrictionRelation:restriction viaNode:vieNode fromWay:fromWay toWay:toWay turn:strTurn];
+	[_undoManager registerUndoComment:NSLocalizedString(@"delete turn restriction",nil)];
+	[self deleteRelation:restriction];
 }
-
 
 #pragma mark Join
 

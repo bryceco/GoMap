@@ -20,11 +20,6 @@
 	return dist < 10.0;	// touch within 10 pixels
 }
 
--(NSString *)Id
-{
-	return _connectedNode.ident.stringValue;
-}
-
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 	if ( _lineSelectionCallback )  {
@@ -38,17 +33,17 @@
 	return p;
 }
 
--(void)createArrowButton
+-(void)createTurnRestrictionButton
 {
 	CGPoint location = [self midPointFrom:_centerPoint to:_endPoint];
 
-	_arrowButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+	_arrowButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 	[_arrowButton setImage:[UIImage imageNamed:@"arrowAllow"] forState:UIControlStateNormal];
 	[_arrowButton setImage:[UIImage imageNamed:@"arrowRestrict"] forState:UIControlStateSelected];
 
 	_arrowButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
 	_arrowButton.center = location;
-	CGFloat angle = [TurnRestrictHwyView getAngle:location b:self.center];
+	CGFloat angle = [TurnRestrictHwyView headingFromPoint:location toPoint:self.center];
 	_arrowButton.transform = CGAffineTransformMakeRotation(angle);
 	[_arrowButton addTarget:self action:@selector(restrictionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -65,13 +60,13 @@
 	BOOL forwardOneWay = (_wayObj.isOneWay == ONEWAY_FORWARD) == (otherIndex > centerIndex);
 
 	// create 3 arrows on highway
-	CGPoint location	= [self midPointFrom:_centerPoint to:_endPoint];
-	CGPoint locationA1 	= [self midPointFrom:_centerPoint to:location];
-	CGPoint locationA2 	= [self midPointFrom:location to:_endPoint];
+	CGPoint location1	= [self midPointFrom:_centerPoint to:_endPoint];
+	CGPoint location2 	= [self midPointFrom:location1 to:_centerPoint];
+	CGPoint location3 	= [self midPointFrom:location1 to:_endPoint];
 
-	[self createOneWayArrowAtPosition:location	 isDirection:forwardOneWay];
-	[self createOneWayArrowAtPosition:locationA1 isDirection:forwardOneWay];
-	[self createOneWayArrowAtPosition:locationA2 isDirection:forwardOneWay];
+	[self createOneWayArrowAtPosition:location1 isDirection:forwardOneWay];
+	[self createOneWayArrowAtPosition:location2	isDirection:forwardOneWay];
+	[self createOneWayArrowAtPosition:location3 isDirection:forwardOneWay];
 }
 
 -(void)createOneWayArrowAtPosition:(CGPoint)location isDirection:(BOOL)isForward
@@ -96,7 +91,7 @@
 	arrow.lineWidth = 1.0;
 	arrow.anchorPoint = CGPointMake(0.5, 0.5);
 
-	CGFloat angle = isForward ? [TurnRestrictHwyView getAngle:location b:self.center] : [TurnRestrictHwyView getAngle:self.center b:location];
+	CGFloat angle = isForward ? [TurnRestrictHwyView headingFromPoint:location toPoint:self.center] : [TurnRestrictHwyView headingFromPoint:self.center toPoint:location];
 	arrow.affineTransform = CGAffineTransformMakeRotation(angle);
 	arrow.position = location;
 
@@ -106,6 +101,31 @@
 	[self bringSubviewToFront:_arrowButton];
 }
 
+-(BOOL)isOneWayExitingCenter
+{
+	OsmWay * way = self.wayObj;
+	if ( way.isOneWay ) {
+		NSUInteger centerIndex = [way.nodes indexOfObject:_centerNode];
+		NSUInteger otherIndex = [way.nodes indexOfObject:_connectedNode];
+		if ( (otherIndex > centerIndex) == (way.isOneWay == ONEWAY_FORWARD) ) {
+			return YES;
+		}
+	}
+	return NO;
+}
+
+-(BOOL)isOneWayEnteringCenter
+{
+	OsmWay * way = self.wayObj;
+	if ( way.isOneWay ) {
+		NSUInteger centerIndex = [way.nodes indexOfObject:_centerNode];
+		NSUInteger otherIndex = [way.nodes indexOfObject:_connectedNode];
+		if ( (otherIndex < centerIndex) == (way.isOneWay == ONEWAY_FORWARD) ) {
+			return YES;
+		}
+	}
+	return NO;
+}
 
 -(void)restrictionButtonPressed:(UIButton *)sender
 {
@@ -116,8 +136,18 @@
 	}
 }
 
-//MARK: Get angle of line connecting two points
-+ (float) getAngle:(CGPoint)a b:(CGPoint)b
+-(double)turnAngleDegreesFromPoint:(CGPoint)fromPoint
+{
+	double fromAngle = atan2( _centerPoint.y - fromPoint.y, _centerPoint.x - fromPoint.x);
+	double toAngle   = atan2( _endPoint.y - _centerPoint.y, _endPoint.x - _centerPoint.x);
+	double angle     = (toAngle - fromAngle) * 180 / M_PI;
+	if ( angle > 180 )		angle -= 360;
+	if ( angle <= -180 )	angle += 360;
+	return angle;
+}
+
+// MARK: Get angle of line connecting two points
++ (float) headingFromPoint:(CGPoint)a toPoint:(CGPoint)b
 {
 	CGFloat dx = b.x - a.x;
 	CGFloat dy = b.y - a.y;
@@ -126,10 +156,9 @@
 }
 
 //MARK: Point Pair To Bearing Degree
-+ (CGFloat) pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint)endingPoint
++ (CGFloat) bearingDegreesFromPoint:(CGPoint)startingPoint toPoint:(CGPoint)endingPoint
 {
-	CGPoint originPoint = CGPointMake(endingPoint.x - startingPoint.x, endingPoint.y - startingPoint.y); // get origin point to origin by subtracting end from start
-	double bearingRadians = atan2(originPoint.y, originPoint.x); // get bearing in radians
+	double bearingRadians = atan2(endingPoint.y - startingPoint.y, endingPoint.x - startingPoint.x); // bearing in radians
 	double bearingDegrees = bearingRadians * (180.0 / M_PI); // convert to degrees
 	return bearingDegrees;
 }

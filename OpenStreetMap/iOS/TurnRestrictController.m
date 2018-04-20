@@ -23,7 +23,7 @@
 	NSMutableArray		*	_parentWays;
 	NSMutableArray		*	_highwayViewArray; //	Array of TurnRestrictHwyView to Store number of ways
 
-	TurnRestrictHwyView	*	_selectedHwy;
+	TurnRestrictHwyView	*	_selectedFromHwy;
 	UIButton			*   _uTurnButton;
 	OsmRelation 		*   _currentUTurnRelation;
 
@@ -123,23 +123,9 @@
 }
 
 
--(void)removeFromParentRelation:(OsmMapData *)mapData object:(OsmBaseObject *)object relation:(OsmRelation *)relation
-{
-	NSInteger memberIndex = 0;
-	while ( memberIndex < relation.members.count ) {
-		OsmMember * member = relation.members[memberIndex];
-		if ( member.ref == object ) {
-			[mapData deleteMemberInRelation:relation index:memberIndex];
-		} else {
-			++memberIndex;
-		}
-	}
-}
-
-
 
 //MARK: Create Path From Points
--(void)createHighwayViews:(NSArray*)nodesArray
+-(void)createHighwayViews:(NSArray *)adjacentNodesArray
 {
 	CGPoint	centerNodePos		= [self screenPointForLatitude:_centralNode.lat longitude:_centralNode.lon];
 	CGPoint detailViewCenter	= CGPointMake( _detailView.frame.size.width/2, _detailView.frame.size.height/2 );
@@ -157,7 +143,7 @@
 
 	// create highway views
 	_highwayViewArray = [NSMutableArray new];
-	for ( OsmNode * node in nodesArray )  {
+	for ( OsmNode * node in adjacentNodesArray )  {
 		// get location of node
 		CGPoint nodePoint = [self screenPointForLatitude:node.lat longitude:node.lon];
 		nodePoint = CGPointSubtract(nodePoint, positionOffset);
@@ -177,60 +163,56 @@
 		nodePoint = CGPointMake( detailViewCenter.x+best*direction.x, detailViewCenter.y+best*direction.y );
 		
 		// highway path
-		UIBezierPath *bPath = [UIBezierPath bezierPath];
-		[bPath moveToPoint:detailViewCenter];
-		[bPath addLineToPoint:nodePoint];
+		UIBezierPath * bezierPath = [UIBezierPath bezierPath];
+		[bezierPath moveToPoint:detailViewCenter];
+		[bezierPath addLineToPoint:nodePoint];
 		
 		// Highlight shape
 		CAShapeLayer * highlightLayer = [CAShapeLayer layer];
 		highlightLayer.lineWidth   	=  DEFAULT_POPUPLINEWIDTH + 6;
 		highlightLayer.strokeColor 	= [UIColor cyanColor].CGColor;
 		highlightLayer.lineCap 		= kCALineCapRound;
-		highlightLayer.path   		= bPath.CGPath;
+		highlightLayer.path   		= bezierPath.CGPath;
 		highlightLayer.bounds 		= _detailView.bounds;
-		highlightLayer.fillColor 	= [UIColor whiteColor].CGColor;
-		highlightLayer.position 	= CGPointMake(_detailView.bounds.size.width/2, _detailView.bounds.size.height/2);
+		highlightLayer.position 	= detailViewCenter;
 		highlightLayer.hidden		= YES;
 
 		// Highway shape
 		CAShapeLayer * highwayLayer = [CAShapeLayer layer];
 		highwayLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH;
 		highwayLayer.lineCap 		= kCALineCapRound;
-		highwayLayer.path 	  		= bPath.CGPath;
+		highwayLayer.path 	  		= bezierPath.CGPath;
 		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.tagInfo.lineColor.CGColor ?: [UIColor blackColor].CGColor;
 		highwayLayer.bounds 		= _detailView.bounds;
-		highwayLayer.position	 	= CGPointMake(_detailView.bounds.size.width/2, _detailView.bounds.size.height/2);
+		highwayLayer.position	 	= detailViewCenter;
 		highwayLayer.masksToBounds 	= NO;
 
 		// Highway view
-		TurnRestrictHwyView * viewLine = [[TurnRestrictHwyView alloc] initWithFrame:_detailView.bounds];
-		viewLine.wayObj 			= node.turnRestrictionParentWay;
-		viewLine.centerNode 		= _centralNode;
-		viewLine.connectedNode 		= node;
-		viewLine.centerPoint 		= detailViewCenter;
-		viewLine.endPoint 			= nodePoint;
-		viewLine.parentWaysArray 	= _parentWays;
+		TurnRestrictHwyView * hwyView = [[TurnRestrictHwyView alloc] initWithFrame:_detailView.bounds];
+		hwyView.wayObj 				= node.turnRestrictionParentWay;
+		hwyView.centerNode 			= _centralNode;
+		hwyView.connectedNode	 	= node;
+		hwyView.centerPoint 		= detailViewCenter;
+		hwyView.endPoint 			= nodePoint;
+		hwyView.parentWaysArray		= _parentWays;
+		hwyView.highwayLayer 		= highwayLayer;
+		hwyView.highlightLayer 		= highlightLayer;
+		hwyView.backgroundColor		= [UIColor clearColor];
 		
-		viewLine.highwayLayer 		= highwayLayer;
-		viewLine.highlightLayer 	= highlightLayer;
-		viewLine.backgroundColor 	= [UIColor clearColor];
-		
-		[viewLine.layer addSublayer:highwayLayer];
-		[viewLine.layer insertSublayer:highlightLayer below:highwayLayer];
+		[hwyView.layer addSublayer:highwayLayer];
+		[hwyView.layer insertSublayer:highlightLayer below:highwayLayer];
 
-		[viewLine createArrowButton];
-		[viewLine createOneWayArrowsForHighway];
+		[hwyView createTurnRestrictionButton];
+		[hwyView createOneWayArrowsForHighway];
+		hwyView.arrowButton.hidden = YES;
+		hwyView.lineButtonPressCallback = ^(TurnRestrictHwyView *objLine) { [self toggleTurnRestriction:objLine];	};
+		hwyView.lineSelectionCallback 	 = ^(TurnRestrictHwyView *objLine) { [self toggleHighwaySelection:objLine]; };
 
-		viewLine.arrowButton.hidden = YES;
-	
-		viewLine.lineButtonPressCallback = ^(TurnRestrictHwyView *objLine) { [self toggleTurnRestriction:objLine];	};
-		viewLine.lineSelectionCallback 	 = ^(TurnRestrictHwyView *objLine) { [self toggleHighwaySelection:objLine]; };
-
-		[_detailView addSubview:viewLine];
-		[_highwayViewArray addObject:viewLine];
+		[_detailView addSubview:hwyView];
+		[_highwayViewArray addObject:hwyView];
 	}
 	
-	// Center green circle in center
+	// Place green circle in center
 	UIView * centerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
 	centerView.backgroundColor = [UIColor greenColor];
 	centerView.layer.cornerRadius = centerView.frame.size.height/2;
@@ -240,52 +222,52 @@
 	
 	self.view.backgroundColor = [UIColor clearColor];
 
-	//Creating center restriction button and set the size of the icon e.g 30, 40,50
-	_uTurnButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
+	// Create U-Turn restriction button
+	_uTurnButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 	_uTurnButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
 	_uTurnButton.center = detailViewCenter;
 	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnAllow"]	 forState:UIControlStateNormal];
 	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnRestrict"] forState:UIControlStateSelected];
 	[_uTurnButton addTarget:self action:@selector(uTurnButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 	[_detailView addSubview:_uTurnButton];
-
 	_uTurnButton.hidden = true;
 }
 
+
+
+// Select a new "From" highway
 -(void)toggleHighwaySelection:(TurnRestrictHwyView *)selectedHwy
 {
+	_selectedFromHwy = selectedHwy;
+	
 	selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay;
-	[self rotateUTurnIconForHighway:selectedHwy.endPoint lineView:selectedHwy];
+	_uTurnButton.hidden = _selectedFromHwy.wayObj.isOneWay != ONEWAY_NONE;
 	
-	NSString * selectedId = selectedHwy.Id;
+	CGFloat angle = [TurnRestrictHwyView headingFromPoint:selectedHwy.endPoint toPoint:selectedHwy.centerPoint];
+	_uTurnButton.transform = CGAffineTransformMakeRotation(angle);
 	
+	_currentUTurnRelation = [self findRelation:_editedRelations
+										   from:_selectedFromHwy.wayObj
+											via:_centralNode
+											 to:_selectedFromHwy.wayObj];
+	_uTurnButton.selected = (_currentUTurnRelation != nil);
+
 	// highway exits center one-way
-	BOOL selectedHwyIsOneWayExit = NO;
-	if ( selectedHwy.wayObj.isOneWay ) {
-		NSUInteger centerIndex = [selectedHwy.wayObj.nodes indexOfObject:selectedHwy.centerNode];
-		NSUInteger otherIndex = [selectedHwy.wayObj.nodes indexOfObject:selectedHwy.connectedNode];
-		if ( (otherIndex > centerIndex) == (selectedHwy.wayObj.isOneWay == ONEWAY_FORWARD) ) {
-			selectedHwyIsOneWayExit = YES;	// means no turn restriction can apply, since we can't proceed through the intersection
-		}
-	}
+	BOOL selectedHwyIsOneWayExit = [selectedHwy isOneWayExitingCenter];
 	
 	for ( TurnRestrictHwyView * highway in _highwayViewArray ) {
 
 		selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay;
 		
-		if ( [highway.Id isEqualToString:selectedId] ) {
+		if ( highway == selectedHwy ) {
 			// highway is selected
 			highway.highlightLayer.hidden = NO;
 			highway.arrowButton.hidden = YES;
 		} else {
 			// highway is deselected, so display restrictions applied to it
 			highway.highlightLayer.hidden = YES;
-			highway.fromHwy = selectedHwy;
 			
-			OsmRelation * relation = [self getRelationFrom:_editedRelations
-													  fromId:selectedHwy.wayObj
-													   viaId:_centralNode
-														toId:highway.wayObj];
+			OsmRelation * relation = [self findRelation:_editedRelations from:selectedHwy.wayObj via:_centralNode to:highway.wayObj];
 			BOOL isSelected = (relation == nil);
 			
 			highway.objRel = relation;
@@ -294,38 +276,52 @@
 			
 			if ( selectedHwyIsOneWayExit ) {
 				highway.arrowButton.hidden = YES;
-			} else if ( highway.wayObj.isOneWay ) {
-				NSUInteger cIndex = [highway.wayObj.nodes indexOfObject:highway.connectedNode];
-				NSUInteger adIndex = [highway.wayObj.nodes indexOfObject:highway.centerNode];
-				
-				if ( (cIndex < adIndex) == (highway.wayObj.isOneWay == ONEWAY_FORWARD) ) {
-					highway.arrowButton.hidden = YES;	// highway is one way into intersection, so we can't turn onto it
-				}
+			} else if ( [highway isOneWayEnteringCenter] ) {
+				highway.arrowButton.hidden = YES;	// highway is one way into intersection, so we can't turn onto it
 			}
 		}
 	}
 }
 
--(void)toggleTurnRestriction:(TurnRestrictHwyView *)objLine
+-(OsmRelation *)applyTurnRestriction:(OsmMapData *)mapData from:(OsmWay *)fromWay to:(OsmWay *)toWay restriction:(NSString *)restriction
+{
+	OsmRelation * relation = [self findRelation:_allRelations from:fromWay via:_centralNode to:toWay];
+	NSArray		* newWays = nil;
+	relation = [mapData updateTurnRestrictionRelation:relation viaNode:_centralNode fromWay:fromWay toWay:toWay turn:restriction newWays:&newWays willSplit:nil];
+	if ( newWays.count ) {
+		// had to split some ways to create restriction, so process them
+		[_parentWays addObjectsFromArray:newWays];
+		[TurnRestrictController setAssociatedTurnRestrictionWays:_parentWays];
+		for ( TurnRestrictHwyView * hwy in _highwayViewArray )  {
+			hwy.wayObj = hwy.connectedNode.turnRestrictionParentWay;
+		}
+	}
+	if ( ! [_allRelations containsObject:relation] )
+		[_allRelations addObject:relation];
+	if ( ! [_editedRelations containsObject:relation] )
+		[_editedRelations addObject:relation];
+	
+	return relation;
+}
+-(void)removeTurnRestriction:(OsmMapData *)mapData relation:(OsmRelation *)relation
+{
+	[mapData deleteRelation:relation];
+}
+
+
+// Enable/disable a left/right/straight turn restriction
+-(void)toggleTurnRestriction:(TurnRestrictHwyView *)targetHwy
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 	
-	bool isRestricting = objLine.arrowButton.selected;
+	bool isRestricting = targetHwy.arrowButton.selected;
 	
 	if ( isRestricting )  {
-		CGPoint viaPt 	= objLine.centerPoint;
-		CGPoint toPt 	= objLine.endPoint;
-		CGPoint fromPt 	= objLine.fromHwy.endPoint;
 		
-		CGFloat fromAngle = [TurnRestrictHwyView pointPairToBearingDegrees:fromPt secondPoint:viaPt];
-		CGFloat toAngle   = [TurnRestrictHwyView pointPairToBearingDegrees:viaPt  secondPoint:toPt];
-		CGFloat angle     = toAngle - fromAngle;
-		if ( angle >= 180 ) angle -= 360;
-		if ( angle < -180 )	angle += 360;
-		
-		NSString *str = @"no_straight_on";
-		
+		double angle = [targetHwy turnAngleDegreesFromPoint:_selectedFromHwy.endPoint];
+				
+		NSString *str = nil;
 		if (ABS(angle) < 3)   {
 			str = @"no_straight_on";
 		} else if ( angle < 0 )   {
@@ -334,110 +330,22 @@
 			str = @"no_right_turn";
 		}
 		
-		TurnRestrictHwyView * fromLine = objLine;
-		TurnRestrictHwyView * toLine = objLine.fromHwy;
-		
-		OsmRelation *relation_Obj = [self getRelationFrom:_allRelations
-												   fromId:objLine.fromHwy.wayObj
-													viaId:_centralNode
-													 toId:objLine.wayObj];
-		if (relation_Obj == nil)   {
-			//Get closed
-			NSMutableArray *arraySplitWays = [NSMutableArray new];
-			if (fromLine.wayObj == toLine.wayObj)   {
-				NSUInteger indexfrom = [fromLine.wayObj.nodes indexOfObject:_centralNode];
-				
-				if (fromLine.wayObj.isClosed)  {
-					[arraySplitWays addObject:fromLine.wayObj];
-				} else if (indexfrom > 0 && indexfrom < fromLine.wayObj.nodes.count-1)  {
-					[arraySplitWays addObject:fromLine.wayObj];
-				}
-			} else {
-				NSUInteger indexfrom = [fromLine.wayObj.nodes indexOfObject:_centralNode];
-				
-				if (fromLine.wayObj.isClosed) {
-					[arraySplitWays addObject:fromLine.wayObj];
-				} else if (indexfrom > 0 && indexfrom < fromLine.wayObj.nodes.count-1) {
-					[arraySplitWays addObject:fromLine.wayObj];
-				}
-				
-				NSUInteger indexTo = [toLine.wayObj.nodes indexOfObject:_centralNode];
-				
-				if (toLine.wayObj.isClosed) {
-					[arraySplitWays addObject:toLine.wayObj];
-				} else if (indexTo > 0 && indexTo < toLine.wayObj.nodes.count-1) {
-					[arraySplitWays addObject:toLine.wayObj];
-				}
-			}
-			
-			// Split Way
-			for (OsmWay *objWay in arraySplitWays)  {
-				OsmWay *newWay = [mapData splitWay:objWay atNode:_centralNode];
-				[appDelegate.mapView.editorLayer setNeedsDisplay];
-				[appDelegate.mapView.editorLayer setNeedsLayout];
-				
-				[_parentWays addObject:newWay];
-			}
-			[TurnRestrictController setAssociatedTurnRestrictionWays:_parentWays];
-			
-			for (TurnRestrictHwyView *viewOj in _highwayViewArray)   {
-				viewOj.wayObj = viewOj.connectedNode.turnRestrictionParentWay;
-			}
-			
-			//Create New
-			relation_Obj = [mapData createTurnRestrictionRelation:_centralNode
-														  fromWay:objLine.fromHwy.wayObj
-															toWay:objLine.wayObj
-															 turn:str];
-			
-			[_allRelations addObject:relation_Obj];
-			
-		} else {
-			[mapData updateTurnRestrictionRelation:relation_Obj
-										   viaNode:_centralNode
-										   fromWay:objLine.fromHwy.wayObj
-											 toWay:objLine.wayObj
-											  turn:str];
-		}
-		[_editedRelations addObject:relation_Obj];
-		fromLine.objRel = relation_Obj;
-		
+		_selectedFromHwy.objRel = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj to:targetHwy.wayObj restriction:str];
+
+ 		[appDelegate.mapView.editorLayer setNeedsDisplay];
+		[appDelegate.mapView.editorLayer setNeedsLayout];
+
 	} else {
 		
-		//Remove Relation
-		if ( objLine.objRel )  {
-			NSLog(@"%@", objLine.objRel);
+		// Remove Relation
+		if ( targetHwy.objRel )  {
 
-			[self removeFromParentRelation:mapData object:objLine.fromHwy.wayObj relation:objLine.objRel];
-			[self removeFromParentRelation:mapData object:objLine.wayObj relation:objLine.objRel];
-			[self removeFromParentRelation:mapData object:_centralNode relation:objLine.objRel];
+			[self removeTurnRestriction:mapData relation:targetHwy.objRel];
+			[_editedRelations removeObject:targetHwy.objRel];
 			
-			[_editedRelations removeObject:objLine.objRel];
-			
-			objLine.objRel = nil;
+			targetHwy.objRel = nil;
 		}
 	}
-}
-
-
-// Getting the Angle between two points for rotate the icons
--(void)rotateUTurnIconForHighway:(CGPoint )location lineView:(TurnRestrictHwyView *)lineView
-{
-	_selectedHwy = lineView;
-
-	_uTurnButton.hidden = _selectedHwy.wayObj.isOneWay != ONEWAY_NONE;
-
-	CGFloat angle = [TurnRestrictHwyView getAngle:location b:_uTurnButton.center];
-	_uTurnButton.transform = CGAffineTransformMakeRotation(angle);
-
-	OsmRelation * relationObj = [self getRelationFrom:_editedRelations
-											  fromId:_selectedHwy.wayObj
-											   viaId:_centralNode
-												toId:_selectedHwy.wayObj];
-	_currentUTurnRelation = relationObj;
-
-	bool isSelected = (relationObj == nil);
-	_uTurnButton.selected = !isSelected;
 }
 
 // Use clicked the U-Turn button
@@ -445,90 +353,39 @@
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
-    OsmNode *seletedNode = _centralNode;
-    
-    sender.selected = !sender.selected;
-    
-    bool isRestricting = sender.selected;
-    TurnRestrictHwyView *fromLine = _selectedHwy;
-    
-    if (isRestricting)
-    {
-        NSString *str = @"no_u_turn";
-        
-        OsmRelation *relation_Obj = [self getRelationFrom:_allRelations
-                                                   fromId:fromLine.wayObj
-                                                    viaId:seletedNode
-                                                     toId:fromLine.wayObj];
-        
-        if (relation_Obj == nil)
-        {
-            NSMutableArray *arraySplitWays = [NSMutableArray new];
-            
-            NSUInteger indexfrom = [fromLine.wayObj.nodes indexOfObject:seletedNode];
-            
-            if ( fromLine.wayObj.isClosed )  {
-                [arraySplitWays addObject:fromLine.wayObj];
-            } else if (indexfrom > 0 && indexfrom < fromLine.wayObj.nodes.count-1) {
-                [arraySplitWays addObject:fromLine.wayObj];
-            }
-            
-            for (OsmWay *objWay in arraySplitWays)  {
-                OsmWay * newWay = [mapData splitWay:objWay atNode:seletedNode];
-                [appDelegate.mapView.editorLayer setNeedsDisplay];
-                [appDelegate.mapView.editorLayer setNeedsLayout];
 
-                [_parentWays addObject:newWay];
-            }
-			[TurnRestrictController setAssociatedTurnRestrictionWays:_parentWays];
-            
-            for ( TurnRestrictHwyView *viewOj in _highwayViewArray ) {
-                viewOj.wayObj = viewOj.connectedNode.turnRestrictionParentWay;
-            }
-            
-            //Create New
-            relation_Obj = [mapData createTurnRestrictionRelation:seletedNode
-														  fromWay:fromLine.wayObj
-															toWay:fromLine.wayObj
-															 turn:str];
-            
-            [_allRelations addObject:relation_Obj];
-        } else {
-            [mapData updateTurnRestrictionRelation:relation_Obj
-										   viaNode:seletedNode
-										   fromWay:fromLine.wayObj
-											 toWay:fromLine.wayObj
-											  turn:str];
-        }
-        [_editedRelations addObject:relation_Obj];
-        _currentUTurnRelation = relation_Obj;
-    } else {
-        if ( _currentUTurnRelation ) {
-            /*
-            [mapData removeFromParentRelations:fromLine.wayObj relation:seletedRelation];
-            [mapData removeFromParentRelations:seletedNode relation:seletedRelation];
-            seletedRelation = nil
-            */
-            
-            [mapData deleteRelation:_currentUTurnRelation];
-            [_editedRelations removeObject:_currentUTurnRelation];
-        }
-    }
+	sender.selected = !sender.selected;
+
+	BOOL isRestricting = sender.selected;
+
+	if ( isRestricting ) {
+		NSString *str = @"no_u_turn";
+		_currentUTurnRelation = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj to:_selectedFromHwy.wayObj restriction:str];
+		[appDelegate.mapView.editorLayer setNeedsDisplay];
+		[appDelegate.mapView.editorLayer setNeedsLayout];
+
+	} else {
+		if ( _currentUTurnRelation ) {
+			[self removeTurnRestriction:mapData relation:_currentUTurnRelation];
+			[_editedRelations removeObject:_currentUTurnRelation];
+			_currentUTurnRelation = nil;
+		}
+	}
 }
 
 
 // Getting restriction relation by From node, To node and Via node
--(OsmRelation *)getRelationFrom:(NSArray *)arrayRelation
-                         fromId:(OsmWay *)fromId
-                          viaId:(OsmNode *)viaId
-                           toId:(OsmWay *)toId
+-(OsmRelation *)findRelation:(NSArray *)relationList
+                         from:(OsmWay *)fromTarget
+                          via:(OsmNode *)viaTarget
+                           to:(OsmWay *)toTarget
 {
-	for ( OsmRelation *objRel in arrayRelation )  {
-		OsmWay 	*	fromWay = [objRel memberByRole:@"from"].ref;
-		OsmNode *	viaNode = [objRel memberByRole:@"via"].ref;
-		OsmWay 	*	toWay	= [objRel memberByRole:@"to"].ref;
-		if ( fromWay == fromId && viaNode == viaId && toWay == toId )
-			return objRel;
+	for ( OsmRelation * relation in relationList )  {
+		OsmWay 	*	fromWay = [relation memberByRole:@"from"].ref;
+		OsmNode *	viaNode = [relation memberByRole:@"via"].ref;
+		OsmWay 	*	toWay	= [relation memberByRole:@"to"].ref;
+		if ( fromWay == fromTarget && viaNode == viaTarget && toWay == toTarget )
+			return relation;
 	}
 	return nil;
 }

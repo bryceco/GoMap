@@ -18,7 +18,6 @@ typedef void(^BlockTurnRestrictHwyView)(TurnRestrictHwyView *objLine);
 
 @interface TurnRestrictHwyView : UIView
 
-@property (strong,nonatomic) TurnRestrictHwyView 	*	fromHwy;
 @property (strong,nonatomic) OsmRelation			*	objRel;		// associated relation
 @property (strong,nonatomic) OsmWay					*	wayObj;		// associated way
 @property (strong,nonatomic) OsmNode				*	centerNode;
@@ -30,19 +29,21 @@ typedef void(^BlockTurnRestrictHwyView)(TurnRestrictHwyView *objLine);
 @property (strong, nonatomic) CAShapeLayer			*	highlightLayer;
 @property (strong, nonatomic) CAShapeLayer 			*	highwayLayer;
 
-@property (readonly, nonatomic) NSString 			*	Id;
-
-
 @property (strong,nonatomic) BlockTurnRestrictHwyView	lineSelectionCallback;
 @property (strong,nonatomic) BlockTurnRestrictHwyView	lineButtonPressCallback;
 
 @property (strong,nonatomic) UIButton *                 arrowButton;
 @property (strong,nonatomic) NSArray *                  parentWaysArray;
 
--(void)createArrowButton;
+-(void)createTurnRestrictionButton;
 -(void)createOneWayArrowsForHighway;
 
-+ (float)getAngle:(CGPoint)a b:(CGPoint)b;
-+ (CGFloat)pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint)endingPoint;
+-(BOOL)isOneWayExitingCenter;
+-(BOOL)isOneWayEnteringCenter;
+
+-(double)turnAngleDegreesFromPoint:(CGPoint)fromPoint;
+
++ (float)headingFromPoint:(CGPoint)a toPoint:(CGPoint)b;
++ (CGFloat)bearingDegreesFromPoint:(CGPoint)startingPoint toPoint:(CGPoint)endingPoint;
 
 @end
