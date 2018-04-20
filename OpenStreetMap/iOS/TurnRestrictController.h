@@ -22,19 +22,15 @@
 
 @interface TurnRestrictController : UIViewController
 
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintContainerViewHeight;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintContainerViewWidth;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint 	*	constraintViewWithTitleHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint 	*	constraintViewWithTitleWidth;
+@property (strong, nonatomic) IBOutlet UIView 				* 	viewWithTitle;
+@property (strong, nonatomic) IBOutlet UIView 				*	detailView;
 
-@property (strong, nonatomic) IBOutlet UIView *     containerView;
-@property (strong, nonatomic) IBOutlet UIView *     viewWindowContainer;
+@property (strong,nonatomic)    OsmNode 		*	centralNode;	// the central node
 
-@property (strong,nonatomic)    UIBezierPath *      bNodesPath;
-@property (strong,nonatomic)    CAShapeLayer *      drawLayer;
-@property (strong,nonatomic)    OsmNode *           selectedNode;
-@property (strong,nonatomic)    NSMutableArray *    parentWays;
-@property (assign,nonatomic)    CGPoint             mapCenter;
-@property (assign,nonatomic)    CGFloat             birdsEyeRotation;
-@property (assign,nonatomic)    CGFloat             birdsEyeDistance;
-@property (assign,nonatomic)    OSMTransform        screenFromMapTransform;
+// these are used for screen calculations:
+@property (assign,nonatomic)    CGPoint            	parentViewCenter;
+@property (assign,nonatomic)    OSMTransform       	screenFromMapTransform;
 
 @end

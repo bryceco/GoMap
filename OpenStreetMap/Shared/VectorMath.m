@@ -155,10 +155,16 @@ CGFloat DistanceFromPointToLineSegment( OSMPoint point, OSMPoint line1, OSMPoint
 	return DistanceFromPointToPoint(point, projection);
 }
 
-OSMPoint IntersectionOfTwoVectors( OSMPoint p1, OSMPoint v1, OSMPoint p2, OSMPoint v2 )
+double DistanceToVector( OSMPoint pos1, OSMPoint dir1, OSMPoint pos2, OSMPoint dir2 )
 {
-	CGFloat a = CrossMag( Sub(p2, p1), v2 ) / CrossMag(v1, v2);
-	OSMPoint pt = Add( p1, Mult( v1, a ) );
+	// returned in terms of units of dir1
+	return CrossMag( Sub(pos2, pos1), dir2 ) / CrossMag(dir1, dir2);
+}
+
+OSMPoint IntersectionOfTwoVectors( OSMPoint pos1, OSMPoint dir1, OSMPoint pos2, OSMPoint dir2 )
+{
+	double a = CrossMag( Sub(pos2, pos1), dir2 ) / CrossMag(dir1, dir2);
+	OSMPoint pt = Add( pos1, Mult( dir1, a ) );
 	return pt;
 }
 

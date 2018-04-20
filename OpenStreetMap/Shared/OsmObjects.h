@@ -144,7 +144,7 @@ typedef enum {
 @property (readonly,nonatomic)	double		lat;
 @property (readonly,nonatomic)	double		lon;
 @property (readonly,nonatomic)	NSInteger	wayCount;
-@property (assign,nonatomic)	OsmWay	*	associatedTurnRestrictionWay;	// temporarily used during turn restriction processing
+@property (assign,nonatomic)	OsmWay	*	turnRestrictionParentWay;	// temporarily used during turn restriction processing
 
 -(void)setLongitude:(double)longitude latitude:(double)latitude undo:(UndoManager *)undo;
 -(void)setWayCount:(NSInteger)wayCount undo:(UndoManager *)undo;

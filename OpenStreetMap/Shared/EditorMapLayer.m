@@ -1776,23 +1776,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 	// Turn Restrictions
 	if ( _mapView.enableTurnRestriction ) {
-		//        if ( object.relations.count > 0 ) {
-		//            for ( OsmRelation * relation in object.relations ) {
-		//                if ( relation.isRestriction ) {
-
-		//                }
-		//            }
-		//        }
 		if ( object.isRelation.isRestriction ) {
-
-			OsmMember * viaMember = [ object.isRelation memberByRole:@"via" ];
-			if ( ![viaMember.ref isKindOfClass:[NSNumber class]] ){
-				OSMPoint latLon = viaMember.isWay ? [ (OsmWay*)viaMember.ref centerPoint ] : [ (OsmNode*)viaMember.ref location ];
-				//            if ( viaMember.isNode ) {
-				//            OSMPoint latLon = [(OsmNode*)viaMember.ref location];
-
-				OSMPoint pt;
-				pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
+			OsmMember * viaMember = [object.isRelation memberByRole:@"via" ];
+			OsmBaseObject * viaMemberObject = viaMember.ref;
+			if ( [viaMemberObject isKindOfClass:[OsmNode class]] ||
+				 [viaMemberObject isKindOfClass:[OsmWay class]] )
+			{
+				OSMPoint latLon = viaMemberObject.isNode ? viaMemberObject.isNode.location : viaMemberObject.isWay.centerPoint;
+				OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
 
 				CALayer * restrictionLayerIcon = [CALayer new];
 				restrictionLayerIcon.bounds = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
@@ -1800,14 +1791,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				restrictionLayerIcon.position = CGPointMake(pt.x, pt.y);
 				if ( viaMember.isWay && [object.tags[@"restriction"] isEqualToString:@"no_u_turn"] ) {
 					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
-				}
-				else {
+				} else {
 					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
 				}
 
 				//            if ( viaMember.isNode ) {
 				//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
-				//                //                        OsmMember * fromMember = [ relation memberByRole:@"from" ];
 				//                OsmWay * fromWay = fromMember.ref;
 				//                OsmNode * lastNode = fromWay.nodes.firstObject;
 				//                OSMPoint point = [ lastNode location ];
@@ -1816,7 +1805,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				//
 				////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
 				////                NSLog(@"\n\nANGLE: %f\n", angle);
-				//                //                restrictionLayerIcon.transform = CATransform3DMakeRotation(angle, 0, 0, 0.5);
 				//            }
 				//            if ( viaMember.isWay ) {
 				//                restrictionLayerIcon.anchorPoint = CGPointMake(0.5, -0.25);
@@ -1830,20 +1818,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				//
 				////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
 				////                NSLog(@"\n\nANGLE: %f\n", angle);
-				//                //                restrictionLayerIcon.transform = CATransform3DMakeRotation(angle, 0, 0, 0.5);
 				//            }
 				//            restrictionLayerIcon.transform = CATransform3DMakeRotation(15, 0, 0, 0.5);
-				//            restrictionLayerIcon.shadowColor = NSColor.whiteColor.CGColor;
-				//            restrictionLayerIcon.shadowPath = CGPathCreateWithRect(restrictionLayerIcon.bounds, NULL);
-				//            restrictionLayerIcon.shadowRadius = 0.0;
-				//            restrictionLayerIcon.shadowOffset = CGSizeMake(0, 0);
-				//            restrictionLayerIcon.shadowOpacity = 0.25;
 				restrictionLayerIcon.zPosition = Z_TURN;
 
 				//            NSString * restriction = object.tags[@"restriction"];
-				//                    NSString * restriction = relation.tags[@"restriction"];
-
-
 				//            if ( [restriction isEqualToString:@"no_left_turn"] )
 				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_left_turn"].CGImage;
 				//            else if ( [restriction isEqualToString:@"no_right_turn"] )
@@ -1857,7 +1836,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 				[layers addObject:restrictionLayerIcon];
 			}
-			//            }
 		}
 	}
 	

@@ -18,39 +18,31 @@ typedef void(^BlockTurnRestrictHwyView)(TurnRestrictHwyView *objLine);
 
 @interface TurnRestrictHwyView : UIView
 
-@property (strong,nonatomic) TurnRestrictHwyView *             fromLine;
-@property (strong,nonatomic) OsmRelation *              objRel;
-@property (strong,nonatomic) OsmWay	*                   wayObj;
-@property (strong,nonatomic) OsmNode	*               centerNode;
-@property (strong,nonatomic) OsmNode	*               connectedNode;
+@property (strong,nonatomic) TurnRestrictHwyView 	*	fromHwy;
+@property (strong,nonatomic) OsmRelation			*	objRel;		// associated relation
+@property (strong,nonatomic) OsmWay					*	wayObj;		// associated way
+@property (strong,nonatomic) OsmNode				*	centerNode;
+@property (strong,nonatomic) OsmNode				*	connectedNode;
 
-@property (strong,nonatomic)    UIColor *               wayColor;
-@property (assign, nonatomic)   CGPoint                 centerPoint;
-@property (assign, nonatomic)   CGPoint                 endPoint;
+@property (assign, nonatomic) CGPoint					centerPoint;
+@property (assign, nonatomic) CGPoint					endPoint;
 
-@property (strong, nonatomic) CAShapeLayer *            shadowLayer;
-@property (strong, nonatomic) CAShapeLayer *            sLayer;
-@property (strong, nonatomic) UIBezierPath *            bPath;
+@property (strong, nonatomic) CAShapeLayer			*	highlightLayer;
+@property (strong, nonatomic) CAShapeLayer 			*	highwayLayer;
 
-@property (strong, nonatomic) NSString *Id;
-
-//@property (assign, nonatomic) BOOL                      isSeleted;
+@property (readonly, nonatomic) NSString 			*	Id;
 
 
-@property (strong,nonatomic) BlockTurnRestrictHwyView          lineSelectionCallback;
-@property (strong,nonatomic) BlockTurnRestrictHwyView          lineButtonPressCallback;
+@property (strong,nonatomic) BlockTurnRestrictHwyView	lineSelectionCallback;
+@property (strong,nonatomic) BlockTurnRestrictHwyView	lineButtonPressCallback;
 
-@property (strong,nonatomic) UIButton *                 layerButton;
-
-
-
+@property (strong,nonatomic) UIButton *                 arrowButton;
 @property (strong,nonatomic) NSArray *                  parentWaysArray;
 
 -(void)createArrowButton;
--(void)createCenterPoint;
--(void)createArrows;
+-(void)createOneWayArrowsForHighway;
 
-+ (float) getAngle:(CGPoint)a b:(CGPoint)b;
-+ (CGFloat) pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint)endingPoint;
++ (float)getAngle:(CGPoint)a b:(CGPoint)b;
++ (CGFloat)pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint)endingPoint;
 
 @end

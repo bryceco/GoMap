@@ -2191,57 +2191,16 @@ NSString * ActionTitle( NSInteger action )
 // MARK: Open Restrict popup window
 -(void)restrictOptionSelected
 {
-#if 0
-	rotationGesture.rotation = 0.00001;
-	CGPoint centerPoint = [rotationGesture locationInView:self];
-	CGFloat angle = rotationGesture.rotation;
-	[self rotateBy:angle aroundScreenPoint:centerPoint];
-	rotationGesture.rotation = 0.0;
-#endif
-
-	//    rotationGesture.rotation = -0.00001;
-	//    CGPoint centerPoint2 = [rotationGesture locationInView:self];
-	//    CGFloat angle2 = rotationGesture.rotation;
-	//    [self rotateBy:angle2 aroundScreenPoint:centerPoint2];
-	//    rotationGesture.rotation = 0.0;
-
-
-
-	[self updateNotesWithDelay:0];
-
-	//    [self startObjectRotation];
-	//    rotationGesture.state = UIGestureRecognizerStateBegan;
-	//    [self handleRotationGesture:rotationGesture];
-	//
-	//    rotationGesture.state = UIGestureRecognizerStateChanged;
-	//    [self handleRotationGesture:rotationGesture];
-	//
-	//    rotationGesture.state = UIGestureRecognizerStateEnded;
-	//    [self handleRotationGesture:rotationGesture];
-	//    [self endObjectRotation];
-
-	NSMutableArray *parents = [[_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode] mutableCopy];
-	for ( OsmWay * way in [parents copy] ) {
-		if ( [way.tags objectForKey:@"highway"] == nil )
-			[parents removeObject:way];
-	}
-	NSArray *parentWays = parents;
-	OsmNode *seletedNode = self.editorLayer.selectedNode;
-
-	TurnRestrictController *myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"MapCropController"];
-	myVc.parentWays   = [NSMutableArray arrayWithArray:parentWays];
-	myVc.selectedNode = seletedNode;
-
-	CGPoint center = CGRectCenter(self.layer.bounds);
-
-	myVc.mapCenter = center;
-	myVc.birdsEyeRotation = _birdsEyeRotation;
-	myVc.birdsEyeDistance = _birdsEyeDistance;
+	TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
+	myVc.centralNode 		= self.editorLayer.selectedNode;
+	myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);
 	myVc.screenFromMapTransform = _screenFromMapTransform;
-
 	myVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
 	[_viewController presentViewController:myVc animated:true completion:nil];
 }
+
+
+#if 0 // Used to clean up data corruption bug: if a node appears in a way twice consequetively remove the 2nd instance
 - (void)deleteDuplicateNodes
 {
 	[_editorLayer.mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
@@ -2264,6 +2223,9 @@ NSString * ActionTitle( NSInteger action )
 		}
 	}];
 }
+#endif
+
+
 #pragma mark PushPin
 
 
