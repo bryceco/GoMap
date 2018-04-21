@@ -356,7 +356,7 @@
 
 //		DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
 
-		[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * response, NSData * data, NSError * error) {
+		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 			[progress dismissViewControllerAnimated:YES completion:nil];
 
 			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
@@ -380,6 +380,7 @@
 				[self presentViewController:failure animated:YES completion:nil];
 			}
 		}];
+		[task resume];
 	});
 }
 

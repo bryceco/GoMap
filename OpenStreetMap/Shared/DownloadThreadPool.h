@@ -10,19 +10,10 @@
 
 @class ConnectionState;
 
-@interface DownloadAgent : NSObject <NSURLConnectionDataDelegate, NSStreamDelegate>
--(NSInputStream *)stream;
--(NSURLResponse *)response;
--(NSData *)dataHeader;
--(void)cancel;
-@end
-
-@interface DownloadThreadPool : NSObject
+@interface DownloadThreadPool : NSObject <NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 {
-	NSInteger				_maxConnections;
-	dispatch_queue_t		_queue;
-	dispatch_semaphore_t	_connectionSemaphore;
-	NSMutableSet		*	_cancelFlags;
+	int32_t				_downloadCount;
+	NSURLSession	*	_urlSession;
 }
 
 
@@ -33,8 +24,8 @@
 
 -(void)dataForUrl:(NSString *)url completion:(void(^)(NSData * data,NSError * error))completion;
 -(void)dataForUrl:(NSString *)url completeOnMain:(BOOL)completeOnMain completion:(void(^)(NSData * data,NSError * error))completion;
--(void)dataForUrl:(NSString *)url partialCallback:(void(^)(NSData *))partialCallback completion:(void(^)(NSURLResponse * response, NSError * error))completion;
--(void)streamForUrl:(NSString *)url callback:(void(^)(DownloadAgent *))callback;
+-(void)streamForUrl:(NSString *)url callback:(void(^)(NSInputStream * stream,NSError * error))callback;
+
 -(void)cancelAllDownloads;
 -(NSInteger)downloadsInProgress;
 

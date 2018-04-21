@@ -754,27 +754,27 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 // http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
 + (void)osmDataForUrl:(NSString *)url quads:(ServerQuery *)quads completion:(void(^)(ServerQuery * quads,OsmMapData * data,NSError * error))completion
 {
-	[[DownloadThreadPool osmPool] streamForUrl:url callback:^(DownloadAgent * agent){
+	[[DownloadThreadPool osmPool] streamForUrl:url callback:^(NSInputStream * stream,NSError * error2){
 
-		if ( agent.stream.streamError ) {
+		if ( error2 || stream.streamError ) {
 
 			dispatch_async(dispatch_get_main_queue(), ^{
-				completion( quads, nil, agent.stream.streamError );
+				completion( quads, nil, stream.streamError ?: error2 );
 			});
 
 		} else {
 
 			OsmMapData * mapData = [[OsmMapData alloc] init];
 			NSError * error = nil;
-			BOOL ok = [mapData parseXmlStream:agent.stream error:&error];
+			BOOL ok = [mapData parseXmlStream:stream error:&error];
 			if ( !ok ) {
-				if ( agent.dataHeader.length ) {
+				if ( 0 /*agent.dataHeader.length*/ ) {
 					// probably some html-encoded error message from the server, or if cancelled then the leading portion of the xml download
 					//NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
 					//error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
 					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Data not available",nil) }];
-				} else if ( agent.stream.streamError ) {
-					error = agent.stream.streamError;
+				} else if ( stream.streamError ) {
+					error = stream.streamError;
 				} else if ( error ) {
 					// use the parser's reported error
 				} else {
