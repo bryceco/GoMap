@@ -9,7 +9,6 @@
 
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
-#import "DownloadThreadPool.h"
 #import "MapView.h"
 #import "MapViewController.h"
 #import "NominatumViewController.h"
@@ -126,53 +125,56 @@
 	} else {
 		// searching
 		[_activityIndicator startAnimating];
-		DownloadThreadPool * pool = [DownloadThreadPool generalPool];
+
 		NSString * text = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 		NSString * url = [NSString stringWithFormat:@"http://nominatim.openstreetmap.org/search?q=%@&format=json",text];
-		[pool dataForUrl:url completion:^(NSData * data,NSError * error){
-			[_activityIndicator stopAnimating];
-
-			if ( data && !error ) {
-
-				/*
-				 {
-				 "place_id":"5639098",
-				 "licence":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright",
-				 "osm_type":"node",
-				 "osm_id":"585214834",
-				 "boundingbox":["55.9587516784668","55.9587554931641","-3.20986247062683","-3.20986223220825"],
-				 "lat":"55.9587537","lon":"-3.2098624",
-				 "display_name":"Hectors, Deanhaugh Street, Stockbridge, Dean, Edinburgh, City of Edinburgh, Scotland, EH4 1NE, United Kingdom",
-				 "class":"amenity",
-				 "type":"pub",
-				 "icon":"http:\/\/nominatim.openstreetmap.org\/images\/mapicons\/food_pub.p.20.png"
-				 },
-				 */
-
-				id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-				_resultsArray = json;
-				[_tableView reloadData];
-
-				if ( _resultsArray.count > 0 ) {
-					NSMutableArray * a = _historyArray ? [_historyArray mutableCopy] : [NSMutableArray new];
-					[a removeObject:string];
-					[a insertObject:string atIndex:0];
-					while ( a.count > 20 )
-						[a removeLastObject];
-					_historyArray = a;
+		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				
+				[_activityIndicator stopAnimating];
+				
+				if ( data && !error ) {
+					
+					/*
+					 {
+					 "place_id":"5639098",
+					 "licence":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright",
+					 "osm_type":"node",
+					 "osm_id":"585214834",
+					 "boundingbox":["55.9587516784668","55.9587554931641","-3.20986247062683","-3.20986223220825"],
+					 "lat":"55.9587537","lon":"-3.2098624",
+					 "display_name":"Hectors, Deanhaugh Street, Stockbridge, Dean, Edinburgh, City of Edinburgh, Scotland, EH4 1NE, United Kingdom",
+					 "class":"amenity",
+					 "type":"pub",
+					 "icon":"http:\/\/nominatim.openstreetmap.org\/images\/mapicons\/food_pub.p.20.png"
+					 },
+					 */
+					
+					id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+					_resultsArray = json;
+					[_tableView reloadData];
+					
+					if ( _resultsArray.count > 0 ) {
+						NSMutableArray * a = _historyArray ? [_historyArray mutableCopy] : [NSMutableArray new];
+						[a removeObject:string];
+						[a insertObject:string atIndex:0];
+						while ( a.count > 20 )
+							[a removeLastObject];
+						_historyArray = a;
+					}
+					
+				} else {
+					// error fetching results
 				}
 				
-			} else {
-				// error fetching results
-			}
-
-			if ( _resultsArray.count == 0 ) {
-				UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"No results found",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self presentViewController:alert animated:YES completion:nil];
-			}
-
+				if ( _resultsArray.count == 0 ) {
+					UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"No results found",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+					[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+					[self presentViewController:alert animated:YES completion:nil];
+				}
+			});
 		}];
+		[task resume];
 	}
 	[_tableView reloadData];
 }

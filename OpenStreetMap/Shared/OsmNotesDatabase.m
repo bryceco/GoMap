@@ -10,7 +10,6 @@
 #import "DDXML.h"
 #endif
 
-#import "DownloadThreadPool.h"
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmObjects.h"
@@ -260,7 +259,7 @@ static NSInteger g_nextUID = 1;
 -(void)updateNotesForRegion:(OSMRect)box fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion
 {
 	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?closed=0&bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];
-	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
+	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		NSMutableArray * newNotes = [NSMutableArray new];
 		if ( data && error == nil ) {
 			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -294,6 +293,7 @@ static NSInteger g_nextUID = 1;
 			completion();
 		});
 	}];
+	[task resume];
 }
 
 
@@ -328,12 +328,14 @@ static NSInteger g_nextUID = 1;
 {
 	NSString * template = @"http://keepright.at/export.php?format=gpx&ch=0,30,40,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f";
 	NSString * url = [NSString stringWithFormat:template, box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height ];
-	[[DownloadThreadPool osmPool] dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
+	
+	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		if ( data && error == nil ) {
 			NSString * xmlText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			[self updateWithGpxWaypoints:xmlText mapData:mapData completion:completion];
 		}
 	}];
+	[task resume];
 }
 
 

@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "DownloadThreadPool.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "OfflineViewController.h"

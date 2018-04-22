@@ -14,7 +14,6 @@
 #import "BingMapsGeometry.h"
 #import "DisplayLink.h"
 #import "DLog.h"
-#import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
