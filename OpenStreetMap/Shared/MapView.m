@@ -1931,7 +1931,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
 		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
-		case ACTION_RESTRICT:		return NSLocalizedString(@"Add Turn Restriction", nil);
+		case ACTION_RESTRICT:		return NSLocalizedString(@"Turn Restrictions", nil);
 	};
 	return nil;
 }

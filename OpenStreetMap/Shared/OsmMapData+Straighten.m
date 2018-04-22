@@ -404,10 +404,24 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 #pragma mark Turn-restriction relations
 
--(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)viaNode fromWay:(OsmWay *)fromWay toWay:(OsmWay *)toWay turn:(NSString *)strTurn
+-(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)viaNode
+									  fromWay:(OsmWay *)fromWay
+								  fromWayNode:(OsmNode *)fromWayNode
+										toWay:(OsmWay *)toWay
+									toWayNode:(OsmNode *)toWayNode
+										 turn:(NSString *)strTurn
 									  newWays:(NSArray **)resultWays
 									willSplit:(BOOL(^)(NSArray * splitWays))requiresSplitting
 {
+	if ( ![fromWay.nodes containsObject:viaNode] ||
+		 ![fromWay.nodes containsObject:fromWayNode] ||
+		 ![toWay.nodes containsObject:viaNode] ||
+		 ![toWay.nodes containsObject:toWayNode] )
+	{
+		// error
+		return nil;
+	}
+	
 	// find ways that need to be split
 	NSMutableArray * splits = [NSMutableArray new];
 	NSArray * list = (fromWay == toWay) ? @[ fromWay ] : @[ fromWay, toWay ];
@@ -434,6 +448,10 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	NSMutableArray * newWays = [NSMutableArray new];
 	for ( OsmWay * way in splits ) {
 		OsmWay * newWay = [self splitWay:way atNode:viaNode];
+		if ( way == fromWay && [newWay.nodes containsObject:fromWayNode] )
+			fromWay = newWay;
+		if ( way == toWay && [newWay.nodes containsObject:toWayNode] )
+			toWay = newWay;
 		[newWays addObject:newWay];
 	}
 	

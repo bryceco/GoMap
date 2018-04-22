@@ -77,6 +77,26 @@
 	// Creating roads using adjacent connected nodes
 	NSArray * conectedNodes = [TurnRestrictController getAdjacentNodes:_centralNode ways:_parentWays];
 	[self createHighwayViews:conectedNodes];
+	
+	// if there is only one reasonable thing to highlight initially select it
+	OsmWay * fromWay = nil;
+	if ( _allRelations.count == 1 ) {
+		// only one relation, so select it
+		OsmRelation * relation = _allRelations.lastObject;
+		fromWay = [relation memberByRole:@"from"].ref;
+	} else {
+		// no relations or multiple relations, so select highway already selected by user
+		EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;
+		fromWay = editor.selectedWay;
+	}
+	if ( fromWay ) {
+		for ( TurnRestrictHwyView * hwy in _highwayViewArray ) {
+			if ( hwy.wayObj == fromWay ) {
+				[self toggleHighwaySelection:hwy];
+				break;
+			}
+		}
+	}
 }
 
 +(NSArray *)getAdjacentNodes:(OsmNode *)centerNode ways:(NSArray *)parentWays
@@ -281,11 +301,14 @@
 	}
 }
 
--(OsmRelation *)applyTurnRestriction:(OsmMapData *)mapData from:(OsmWay *)fromWay to:(OsmWay *)toWay restriction:(NSString *)restriction
+-(OsmRelation *)applyTurnRestriction:(OsmMapData *)mapData from:(OsmWay *)fromWay fromNode:(OsmNode *)fromNode to:(OsmWay *)toWay toNode:(OsmNode *)toNode restriction:(NSString *)restriction
 {
 	OsmRelation * relation = [self findRelation:_allRelations from:fromWay via:_centralNode to:toWay];
 	NSArray		* newWays = nil;
-	relation = [mapData updateTurnRestrictionRelation:relation viaNode:_centralNode fromWay:fromWay toWay:toWay turn:restriction newWays:&newWays willSplit:nil];
+	relation = [mapData updateTurnRestrictionRelation:relation viaNode:_centralNode
+											  fromWay:fromWay fromWayNode:fromNode
+												toWay:toWay toWayNode:toNode
+												 turn:restriction newWays:&newWays willSplit:nil];
 	if ( newWays.count ) {
 		// had to split some ways to create restriction, so process them
 		[_parentWays addObjectsFromArray:newWays];
@@ -328,10 +351,7 @@
 			str = @"no_right_turn";
 		}
 		
-		_selectedFromHwy.objRel = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj to:targetHwy.wayObj restriction:str];
-
- 		[appDelegate.mapView.editorLayer setNeedsDisplay];
-		[appDelegate.mapView.editorLayer setNeedsLayout];
+		targetHwy.objRel = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj fromNode:_selectedFromHwy.connectedNode to:targetHwy.wayObj toNode:targetHwy.connectedNode restriction:str];
 
 	} else {
 		
@@ -344,6 +364,9 @@
 			targetHwy.objRel = nil;
 		}
 	}
+
+	[appDelegate.mapView.editorLayer setNeedsDisplay];
+	[appDelegate.mapView.editorLayer setNeedsLayout];
 }
 
 // Use clicked the U-Turn button
@@ -358,7 +381,7 @@
 
 	if ( isRestricting ) {
 		NSString *str = @"no_u_turn";
-		_currentUTurnRelation = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj to:_selectedFromHwy.wayObj restriction:str];
+		_currentUTurnRelation = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj fromNode:_selectedFromHwy.connectedNode to:_selectedFromHwy.wayObj toNode:_selectedFromHwy.connectedNode restriction:str];
 		[appDelegate.mapView.editorLayer setNeedsDisplay];
 		[appDelegate.mapView.editorLayer setNeedsLayout];
 
