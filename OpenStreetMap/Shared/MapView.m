@@ -1918,13 +1918,13 @@ typedef enum {
 	ACTION_CIRCULARIZE,
 	ACTION_COPYTAGS,
 	ACTION_PASTETAGS,
+	ACTION_RESTRICT,
 	// used by edit control:
 	ACTION_EDITTAGS,
 	ACTION_ADDNOTE,
 	ACTION_DELETE,
 	ACTION_MORE,
 	ACTION_HEIGHT,
-	ACTION_RESTRICT,
 } EDIT_ACTION;
 NSString * ActionTitle( NSInteger action )
 {
@@ -1945,7 +1945,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
 		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
-		case ACTION_RESTRICT:		return NSLocalizedString(@"Restrict", nil);
+		case ACTION_RESTRICT:		return NSLocalizedString(@"Add Turn Restriction", nil);
 	};
 	return nil;
 }
@@ -1960,17 +1960,22 @@ NSString * ActionTitle( NSInteger action )
 		if ( _editorLayer.selectedNode ) {
 			// node in way
 			NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
-			BOOL disconnect = parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
-			BOOL split = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
-			BOOL join = parentWays.count > 1;
-			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_HEIGHT), nil];
+			BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
+			BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
+			BOOL join 			= parentWays.count > 1;
+			BOOL restriction	= _enableTurnRestriction && _editorLayer.selectedPrimary.isNode && [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode].count > 1;
+			
+			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), nil];
 			if ( disconnect )
 				[a addObject:@(ACTION_DISCONNECT)];
 			if ( split )
 				[a addObject:@(ACTION_SPLIT)];
 			if ( join )
 				[a addObject:@(ACTION_JOIN)];
+			if ( restriction )
+				[a addObject:@(ACTION_RESTRICT)];
 			[a addObject:@(ACTION_ROTATE)];
+			[a addObject:@(ACTION_HEIGHT)];
 			actionList = [NSArray arrayWithArray:a];
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
@@ -2178,8 +2183,6 @@ NSString * ActionTitle( NSInteger action )
 		} else {
 			if ( _editorLayer.selectedPrimary.isRelation )
 				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
-			else if ( _enableTurnRestriction && _editorLayer.selectedPrimary.isNode && [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode].count > 1 )
-				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_RESTRICT), @(ACTION_MORE) ];
 			else
 				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
 		}
