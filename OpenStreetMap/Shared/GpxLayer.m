@@ -741,6 +741,13 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			[self addSublayer:layer];
 		}
 	}
+	
+	if ( _mapView.birdsEyeRotation ) {
+		CATransform3D t = CATransform3DIdentity;
+		t.m34 = -1.0/_mapView.birdsEyeDistance;
+		t = CATransform3DRotate( t, _mapView.birdsEyeRotation, 1.0, 0, 0);
+		self.sublayerTransform = t;
+	}
 }
 
 -(void)layoutSublayers
