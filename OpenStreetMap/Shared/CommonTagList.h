@@ -93,6 +93,15 @@
 @end
 
 
+@interface PresetLanguages : NSObject
+@property (strong,nonatomic) NSString * preferredLanguageCode;	// default or user's preferred languange
+
+-(NSArray *)languageCodes;
+-(NSString *)languageNameForCode:(NSString *)code;
+-(NSString *)localLanguageNameForCode:(NSString *)code;
+@end
+
+
 @interface CommonTagList : NSObject
 {
 	NSString		*	_featureName;
@@ -106,6 +115,7 @@
 +(NSSet *)allTagKeys;
 +(NSSet *)allTagValuesForKey:(NSString *)key;
 +(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry;
+
 
 -(void)setPresetsForDict:(NSDictionary *)dict geometry:(NSString *)geometry  update:(void (^)(void))update;
 

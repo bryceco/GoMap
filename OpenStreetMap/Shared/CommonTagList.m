@@ -18,8 +18,8 @@ static NSDictionary * g_categoriesDict;
 static NSDictionary * g_presetsDict;
 static NSDictionary * g_fieldsDict;
 static NSDictionary * g_translationDict;
-static NSMutableDictionary * g_taginfoCache;
-static NSMutableDictionary * g_FeatureRepository;
+static NSMutableDictionary 	* g_taginfoCache;
+static NSMutableDictionary 	* g_FeatureRepository;
 
 static NSDictionary * DictionaryForFile( NSString * file )
 {
@@ -87,11 +87,9 @@ static void InitializeDictionaries()
 		g_categoriesDict	= g_categoriesDict[@"categories"];
 		g_presetsDict		= g_presetsDict[@"presets"];
 		g_fieldsDict		= g_fieldsDict[@"fields"];
-
-		NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
-		if ( code == nil ) {
-			code = @"en";
-		}
+		
+		PresetLanguages * presetLanguages = [PresetLanguages new];	// don't need to save this, it doesn't get used again unless user changes the language
+		NSString * code = presetLanguages.preferredLanguageCode;
 		NSString * code2 = [code stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
 		NSString * file = [NSString stringWithFormat:@"translations/%@.json",code];
 		g_translationDict	= DictionaryForFile(file);
@@ -1251,4 +1249,64 @@ static NSString * PrettyTag( NSString * tag )
 	return NO;
 }
 
+@end
+
+
+
+@implementation PresetLanguages
+{
+	NSMutableArray 		* _codeList;
+}
+-(instancetype)init
+{
+	self = [super init];
+	if ( self ) {
+		NSString * path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"presets/translations"];
+		NSArray * languageFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
+		languageFiles = [languageFiles arrayByAddingObject:@"en.json"];
+		
+		_codeList = [NSMutableArray new];
+		for ( NSString * file in languageFiles ) {
+			NSString * code = [file stringByReplacingOccurrencesOfString:@".json" withString:@""];
+			[_codeList addObject:code];
+		}
+		
+		[_codeList sortUsingComparator:^NSComparisonResult(NSString * code1, NSString * code2) {
+			NSString * s1 = [self localLanguageNameForCode:code1];
+			NSString * s2 = [self localLanguageNameForCode:code2];
+			return [s1 compare:s2 options:NSCaseInsensitiveSearch];
+		}];
+	}
+	return self;
+}
+-(NSString *)preferredLanguageCode
+{
+	NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
+	if ( code == nil ) {
+		NSArray * userPrefs = [NSLocale preferredLanguages];
+		NSArray * matches = [NSBundle preferredLocalizationsFromArray:_codeList forPreferences:userPrefs];
+		code = matches.count > 0 ? matches[0] : @"en";
+	}
+	return code;
+}
+-(void)setPreferredLanguageCode:(NSString *)code
+{
+	[[NSUserDefaults standardUserDefaults] setObject:code forKey:@"preferredLanguage"];
+}
+
+-(NSArray *)languageCodes
+{
+	return _codeList;
+}
+-(NSString *)languageNameForCode:(NSString *)code
+{
+	NSLocale * locale =  [NSLocale localeWithLocaleIdentifier:code];
+	NSString * name = [locale displayNameForKey:NSLocaleIdentifier value:code];
+	return name;
+}
+-(NSString *)localLanguageNameForCode:(NSString *)code
+{
+	NSString * name = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:code];
+	return name;
+}
 @end

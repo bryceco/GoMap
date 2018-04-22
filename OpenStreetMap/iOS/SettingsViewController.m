@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "AerialList.h"
 #import "AerialListViewController.h"
+#import "CommonTagList.h"
 #import "EditorMapLayer.h"
 #import "OsmMapData.h"
 #import "MapView.h"
@@ -36,12 +37,9 @@
 		self.navigationController.navigationBarHidden = NO;
 	}
 
-	NSString * preferredLanguage = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
-	if ( preferredLanguage == nil ) {
-		preferredLanguage = @"en";
-	}
-	NSLocale * locale =  [NSLocale localeWithLocaleIdentifier:preferredLanguage];
-	preferredLanguage = [locale displayNameForKey:NSLocaleIdentifier value:preferredLanguage];
+	PresetLanguages * presetLanguages = [PresetLanguages new];
+	NSString * preferredLanguageCode = presetLanguages.preferredLanguageCode;
+	NSString * preferredLanguage = [presetLanguages localLanguageNameForCode:preferredLanguageCode];
 	_language.text = preferredLanguage;
 
 	// set username, but then validate it

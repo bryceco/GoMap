@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonTagList.h"
 
 @interface LanguageTableViewController : UITableViewController <UITableViewDataSource,UITableViewDelegate>
 {
-	NSMutableArray *	_supportedLanguages;
+	PresetLanguages * _languages;
 }
 @end

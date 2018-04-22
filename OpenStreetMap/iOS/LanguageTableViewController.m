@@ -6,6 +6,8 @@
 //  Copyright © 2015 Bryce Cogswell. All rights reserved.
 //
 
+#import "AppDelegate.h"
+#import "MapView.h"
 #import "CommonTagList.h"
 #import "LanguageTableViewController.h"
 
@@ -13,29 +15,11 @@
 
 @implementation LanguageTableViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-	_supportedLanguages = [NSMutableArray new];
-	NSString * path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"presets/translations"];
-	NSArray * languageFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
-	languageFiles = [languageFiles arrayByAddingObject:@"en.json"];
-
-	for ( NSString * file in languageFiles ) {
-		NSString * code = [file stringByReplacingOccurrencesOfString:@".json" withString:@""];
-		NSLocale * locale =  [NSLocale localeWithLocaleIdentifier:code];
-		NSString * name = [locale displayNameForKey:NSLocaleIdentifier value:code];
-		NSString * name2 = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:code];
-
-		[_supportedLanguages addObject:@[ code, name, name2 ]];
-	}
-
-	[_supportedLanguages sortUsingComparator:^NSComparisonResult(NSArray * obj1, NSArray * obj2) {
-		NSString * s1 = obj1[1];
-		NSString * s2 = obj2[1];
-		return [s1 compare:s2 options:NSCaseInsensitiveSearch];
-	}];
+	_languages = [PresetLanguages new];
 }
 
 #pragma mark - Table view data source
@@ -56,37 +40,35 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return _supportedLanguages.count;
+	return _languages.languageCodes.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-	NSArray * item = _supportedLanguages[ indexPath.row ];
+
+	NSString * code = _languages.languageCodes[ indexPath.row ];
 
 	// name in native language
-	NSString * name = item[1];
-	cell.textLabel.text = name;
+	cell.textLabel.text = [_languages languageNameForCode:code];
 
 	// name in current language
-	cell.detailTextLabel.text = item[2];
+	cell.detailTextLabel.text = [_languages localLanguageNameForCode:code];
 
 	// accessory checkmark
-	NSString * code = item[0];
-	NSString * preferred = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
-	cell.accessoryType = [preferred isEqualToString:code] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.accessoryType = [code isEqualToString:_languages.preferredLanguageCode] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSArray * item = _supportedLanguages[ indexPath.row ];
-	NSString * code = item[0];
-	[[NSUserDefaults standardUserDefaults] setObject:code forKey:@"preferredLanguage"];
+	NSString * code = _languages.languageCodes[ indexPath.row ];
+	_languages.preferredLanguageCode = code;
 
 	[self.tableView reloadData];
 
 	[CommonTagList initialize];	// reset tags
+	[[AppDelegate getAppDelegate].mapView refreshPushpinText];
 }
 
 @end
