@@ -275,9 +275,6 @@ CGSize SizeForImage( NSImage * image )
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:[NSApplication sharedApplication]];
 #endif
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarChange:) name:UIApplicationWillChangeStatusBarFrameNotification object:[UIApplication sharedApplication]];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarChange:) name:UIApplicationDidChangeStatusBarFrameNotification object:[UIApplication sharedApplication]];
-
 	_userInstructionLabel.layer.cornerRadius	= 5;
 	_userInstructionLabel.layer.masksToBounds	= YES;
 	_userInstructionLabel.backgroundColor		= [UIColor colorWithWhite:0.0 alpha:0.3];
@@ -572,16 +569,6 @@ CGSize SizeForImage( NSImage * image )
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
 
 	[CATransaction commit];
-}
-
--(void)statusBarChange:(NSNotification *)notification
-{
-	NSDictionary * userInfo = notification.userInfo;
-	NSValue * value = userInfo[ UIApplicationStatusBarFrameUserInfoKey ];
-	if ( value ) {
-		CGRect rc = [value CGRectValue];
-		NSLog(@"bar = %@",NSStringFromCGRect(rc));
-	}
 }
 
 #pragma mark Utility
