@@ -21,7 +21,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 @implementation AerialService
 
--(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
+-(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon
+			   attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
 	self = [super init];
 	if ( self ) {
@@ -38,7 +39,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return self;
 }
 
-+(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
++(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp polygon:(CGPathRef)polygon
+				 attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
 	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 }
@@ -120,8 +122,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return service;
 }
 
-
-
 -(NSDictionary *)dictionary
 {
 	return @{ @"name" : _name,
@@ -195,7 +195,18 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	}
 }
 
-
+-(void)loadIconFromWeb:(NSString *)url
+{
+	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+		if ( data ) {
+			UIImage * image = [UIImage imageWithData:data];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				_attributionIcon = image;
+			});
+		}
+	}];
+	[task resume];
+}
 
 -(NSString *)description
 {
@@ -256,28 +267,28 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
 	if ( json == nil )
 		return nil;
-
+	
+	NSArray * knownUnsupported = @[ @"scanex", @"wms_endpoint", @"bing" ];
+	
 	NSMutableArray * externalAerials = [NSMutableArray new];
 	for ( NSDictionary * entry in json ) {
-		NSString * url = entry[@"url"];
-		NSString * name	 = entry[@"name"];
-		NSString * identifier = entry[@"id"];
-		NSInteger maxZoom = [entry[@"extent"][@"max_zoom"] integerValue];
-		NSString * attribIconString = entry[@"icon"];
-		NSString * attribString = entry[@"attribution"][@"text"];
-		NSString * attribUrl = entry[@"attribution"][@"url"];
+		NSString * 	name	 			= entry[@"name"];
+		NSString * 	type 				= entry[@"type"];
+		NSString * 	url 				= entry[@"url"];
+		NSString * 	identifier 			= entry[@"id"];
+		NSInteger 	maxZoom 			= [entry[@"extent"][@"max_zoom"] integerValue];
+		NSString * 	attribIconString	= entry[@"icon"];
+		NSString * 	attribString 		= entry[@"attribution"][@"text"];
+		NSString * 	attribUrl 			= entry[@"attribution"][@"url"];
+		NSInteger	overlay				= [entry[@"overlay"] integerValue];
+		NSArray * 	polygonPoints 		= entry[@"extent"][@"polygon"];
 
-#if 0
-		if ( [url containsString:@"{-y}"] ) {
-			NSLog(@"%@ %@ %@\n",name,url,entry[@"extent"][@"polygon"] );
-		}
-#endif
-		NSString * type = entry[@"type"];
 		if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
-			NSLog(@"unsupported %@\n",type);
+			if ( ![knownUnsupported containsObject:type] )
+				NSLog(@"unsupported %@\n",type);
 			continue;
 		}
-		if ( [entry[@"overlay"] integerValue] ) {
+		if ( overlay ) {
 			// we don't support overlays yet
 			continue;
 		}
@@ -288,10 +299,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		}
 
 		CGPathRef polygon = NULL;
-		NSArray * polygonPoints = entry[@"extent"][@"polygon"];
 		if ( polygonPoints ) {
-			CGMutablePathRef	path		= CGPathCreateMutable();
-
+			CGMutablePathRef path = CGPathCreateMutable();
 			for ( NSArray * loop in polygonPoints ) {
 				BOOL	first		= YES;
 				for ( NSArray * pt in loop ) {
@@ -311,6 +320,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		}
 
 		UIImage * attribIcon = nil;
+		BOOL httpIcon = NO;
 		if ( attribIconString.length > 0 ) {
 			NSArray * prefixList = @[ @"data:image/png;base64,",
 									  @"data:image/png:base64,",
@@ -328,7 +338,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			}
 			if ( attribIcon == nil ) {
 				if ( [attribIconString hasPrefix:@"http"] ) {
-					// unsupported
+					httpIcon = YES;
 				} else {
 					NSLog(@"unsupported icon format: %@\n",attribIconString);
 				}
@@ -337,12 +347,17 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 		[externalAerials addObject:service];
 		CGPathRelease( polygon );
+		
+		if ( httpIcon ) {
+			[service loadIconFromWeb:attribIconString];
+		}
 	}
 	[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {
 		return [obj1.name caseInsensitiveCompare:obj2.name];
 	}];
 	return [NSArray arrayWithArray:externalAerials];	// return immutable copy
 }
+
 
 -(void)fetchOsmLabAerials:(void (^)(void))completion
 {
