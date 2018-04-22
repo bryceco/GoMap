@@ -134,8 +134,12 @@ static NSString * g_UserAgent = nil;
 -(void)streamForUrl:(NSString *)url callback:(void(^)(NSInputStream * stream,NSError * error))callback
 {
 	[self dataForUrl:url completeOnMain:NO completion:^(NSData *data, NSError *error) {
-		NSInputStream * inputStream = [NSInputStream inputStreamWithData:data];
-		callback(inputStream,error);
+		if ( data && !error ) {
+			NSInputStream * inputStream = [NSInputStream inputStreamWithData:data];
+			callback(inputStream,error);
+		} else {
+			callback(nil,error);
+		}
 	}];
 }
 

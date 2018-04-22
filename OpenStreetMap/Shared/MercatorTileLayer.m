@@ -581,8 +581,8 @@ typedef enum {
 	int32_t tileSouth	= ceil( (rect.origin.y + rect.size.height) * zoom );
 	int32_t tileEast	= ceil( (rect.origin.x + rect.size.width ) * zoom );
 
-	if ( (tileEast-tileWest)*(tileSouth-tileNorth) > 1000 ) {
-		DLog(@"Bad tile transform");
+	if ( (tileEast-tileWest)*(tileSouth-tileNorth) > 4000 ) {
+		DLog(@"Bad tile transform: %f", ((double)tileEast-tileWest)*(tileSouth-tileNorth));
 		return;	// something is wrong
 	}
 
