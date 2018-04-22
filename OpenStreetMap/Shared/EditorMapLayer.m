@@ -1874,7 +1874,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	NSInteger			nameLimit	= 5 + (geekScore - 500) / 200;	// 500 -> 5, 2500 -> 10
 	NSMutableSet	*	nameSet		= [NSMutableSet new];
 	NSMutableArray	*	layers		= [NSMutableArray new];
-
+	
 	// highlighting
 	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
 	if ( _selectedNode ) {
@@ -1897,7 +1897,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 		if ( object.isWay ) {
 			CGFloat		lineWidth	= 1.0;
 			CGPathRef	path		= [self pathForWay:object.isWay];
-//			UIColor	*	wayColor	= selected ? [UIColor colorWithRed:1 green:0 blue:1 alpha:1] : [UIColor whiteColor];
 			UIColor	*	wayColor	= selected ? UIColor.cyanColor : UIColor.whiteColor;
 
 			if ( lineWidth == 0 )
@@ -1963,7 +1962,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				layer				= [CAShapeLayer new];
 				CGRect		rect	= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
 				layer.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-				layer.strokeColor	= node == _selectedNode ? UIColor.redColor.CGColor : UIColor.blueColor.CGColor;
+				layer.strokeColor	= node == _selectedNode ? UIColor.yellowColor.CGColor : UIColor.greenColor.CGColor;
 				layer.fillColor		= UIColor.clearColor.CGColor;
 				layer.lineWidth		= 2.0;
 				path = [node hasInterestingTags] ? CGPathCreateWithRect(rect, NULL) : CGPathCreateWithEllipseInRect(rect, NULL);
@@ -1987,7 +1986,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 			layer.anchorPoint	= CGPointMake(0, 0);
 			layer.position		= CGPointMake(pt.x,pt.y);
-			layer.strokeColor	= [UIColor colorWithRed:1.0 green:1.0 blue:selected?0.0:1.0 alpha:1.0].CGColor;
+			layer.strokeColor	= selected ? UIColor.greenColor.CGColor : UIColor.whiteColor.CGColor;
 			layer.fillColor		= [UIColor clearColor].CGColor;
 			layer.lineWidth		= 2.0;
 
