@@ -148,14 +148,14 @@ CGSize SizeForImage( NSImage * image )
 		_aerialLayer.opacity = 0.75;
 		_aerialLayer.aerialService = self.customAerials.currentAerial;
 		_aerialLayer.hidden = YES;
-		_aerialLayer.backgroundColor = [UIColor lightGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
+		_aerialLayer.backgroundColor = UIColor.lightGrayColor.CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_aerialLayer];
 
 		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_mapnikLayer.aerialService = [AerialService mapnik];
 		_mapnikLayer.zPosition = Z_MAPNIK;
 		_mapnikLayer.hidden = YES;
-		_mapnikLayer.backgroundColor = [UIColor lightGrayColor].CGColor;	// this color is displayed while waiting for tiles to download
+		_mapnikLayer.backgroundColor = UIColor.lightGrayColor.CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_mapnikLayer];
 
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
@@ -216,7 +216,7 @@ CGSize SizeForImage( NSImage * image )
 			UIBezierPath * p2 = [UIBezierPath bezierPathWithRect:CGRectMake(-shadowWidth, -(radius+shadowWidth), 2*shadowWidth, 2*(radius+shadowWidth))];
 			[path appendPath:p1];
 			[path appendPath:p2];
-			_crossHairs.shadowColor		= [UIColor blackColor].CGColor;
+			_crossHairs.shadowColor		= UIColor.blackColor.CGColor;
 			_crossHairs.shadowOpacity	= 1.0;
 			_crossHairs.shadowPath		= path.CGPath;
 			_crossHairs.shadowRadius	= 0;
@@ -281,7 +281,7 @@ CGSize SizeForImage( NSImage * image )
 	_userInstructionLabel.layer.cornerRadius	= 5;
 	_userInstructionLabel.layer.masksToBounds	= YES;
 	_userInstructionLabel.backgroundColor		= [UIColor colorWithWhite:0.0 alpha:0.3];
-	_userInstructionLabel.textColor				= [UIColor whiteColor];
+	_userInstructionLabel.textColor				= UIColor.whiteColor;
 	_userInstructionLabel.hidden = YES;
 
 #if TARGET_OS_IPHONE
@@ -353,7 +353,7 @@ CGSize SizeForImage( NSImage * image )
 	_centerOnGPSButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
 	_centerOnGPSButton.layer.cornerRadius = 5;
 	_centerOnGPSButton.layer.borderWidth = 1.0;
-	_centerOnGPSButton.layer.borderColor = [UIColor blueColor].CGColor;
+	_centerOnGPSButton.layer.borderColor = UIColor.blueColor.CGColor;
 	_centerOnGPSButton.hidden = YES;
 
 	// compass button

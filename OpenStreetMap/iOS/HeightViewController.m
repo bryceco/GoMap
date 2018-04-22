@@ -31,17 +31,17 @@ static const CGFloat InsetPercent = 0.15;
 	_rulerViews	 = [NSMutableDictionary new];
 	_rulerLayers = [NSMutableDictionary new];
 
-	self.view.backgroundColor			= [UIColor blackColor];
+	self.view.backgroundColor			= UIColor.blackColor;
 
 	_applyButton.layer.cornerRadius		= 5;
-	_applyButton.layer.backgroundColor	= [UIColor blackColor].CGColor;
-	_applyButton.layer.borderColor		= [UIColor whiteColor].CGColor;
+	_applyButton.layer.backgroundColor	= UIColor.blackColor.CGColor;
+	_applyButton.layer.borderColor		= UIColor.whiteColor.CGColor;
 	_applyButton.layer.borderWidth		= 1.0;
 	_applyButton.layer.zPosition		= 1;
 
 	_cancelButton.layer.cornerRadius	= 5;
-	_cancelButton.layer.backgroundColor	= [UIColor blackColor].CGColor;
-	_cancelButton.layer.borderColor		= [UIColor whiteColor].CGColor;
+	_cancelButton.layer.backgroundColor	= UIColor.blackColor.CGColor;
+	_cancelButton.layer.borderColor		= UIColor.whiteColor.CGColor;
 	_cancelButton.layer.borderWidth		= 1.0;
 	_cancelButton.layer.zPosition		= 1;
 
@@ -111,7 +111,7 @@ static const CGFloat InsetPercent = 0.15;
 		[path addLineToPoint:CGPointMake(lineMargin+arrowWidth, rc.size.height-inset-arrowLength)];
 
 		layer.path			= path.CGPath;
-		layer.strokeColor	= [UIColor greenColor].CGColor;
+		layer.strokeColor	= UIColor.greenColor.CGColor;
 		layer.fillColor		= nil;
 		layer.lineWidth		= 2;
 		layer.frame			= self.view.bounds;
@@ -429,7 +429,7 @@ static const CGFloat InsetPercent = 0.15;
 					label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height-scrollHeight]];
 					label.font				= [UIFont systemFontOfSize:16];
 					label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
-					label.textColor			= [UIColor blackColor];
+					label.textColor			= UIColor.blackColor;
 					label.textAlignment		= NSTextAlignmentCenter;
 					[label sizeToFit];
 					label.bounds			= CGRectInset( label.bounds, -labelBorderWidth, 0);
@@ -453,7 +453,7 @@ static const CGFloat InsetPercent = 0.15;
 				[path moveToPoint:CGPointMake( labelWidth, pixels)];
 				[path addLineToPoint:CGPointMake(rc.size.width, pixels)];
 				layer.path = path.CGPath;
-				layer.strokeColor = isZero ? [UIColor greenColor].CGColor : [UIColor whiteColor].CGColor;
+				layer.strokeColor = isZero ? UIColor.greenColor.CGColor : UIColor.whiteColor.CGColor;
 				layer.lineWidth = isZero ? 2 : 1;
 				layer.frame = self.view.bounds;
 				if ( div % 2 == 1 ) {

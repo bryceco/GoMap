@@ -1464,7 +1464,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 					layer.anchorPoint	= CGPointMake(0, 0);
 					layer.position		= CGPointFromOSMPoint( refPoint );
 					layer.path			= path;
-					layer.strokeColor	= [UIColor blackColor].CGColor; // [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
+					layer.strokeColor	= UIColor.blackColor.CGColor; // [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
 					layer.fillColor		= nil;
 					layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
 					layer.lineCap		= DEFAULT_LINECAP;
@@ -1482,7 +1482,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 					if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
 						// props->lineDashes = @[@(6), @(3)];					// doesn't work because dashes get rounded off due to path scaling
 						props->lineWidth += 2;
-						layer.strokeColor = [UIColor brownColor].CGColor;
+						layer.strokeColor = UIColor.brownColor.CGColor;
 					}
 
 					[layers addObject:layer];
@@ -1987,7 +1987,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			layer.anchorPoint	= CGPointMake(0, 0);
 			layer.position		= CGPointMake(pt.x,pt.y);
 			layer.strokeColor	= selected ? UIColor.greenColor.CGColor : UIColor.whiteColor.CGColor;
-			layer.fillColor		= [UIColor clearColor].CGColor;
+			layer.fillColor		= UIColor.clearColor.CGColor;
 			layer.lineWidth		= 2.0;
 
 			CGPathRef shadowPath = CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);

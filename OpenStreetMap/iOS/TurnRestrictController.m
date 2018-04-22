@@ -60,14 +60,12 @@
 
 	_detailView.clipsToBounds = true;
 
-	_viewWithTitle.clipsToBounds = true;
-	_viewWithTitle.alpha = 1;
-	_viewWithTitle.layer.borderColor = [UIColor grayColor].CGColor;
-	_viewWithTitle.layer.borderWidth = 1;
-	_viewWithTitle.layer.cornerRadius = 3;
+	_viewWithTitle.clipsToBounds		= true;
+	_viewWithTitle.alpha 				= 1;
+	_viewWithTitle.layer.borderColor 	= UIColor.grayColor.CGColor;
+	_viewWithTitle.layer.borderWidth 	= 1;
+	_viewWithTitle.layer.cornerRadius 	= 3;
 
-	// Getting collection node to center node
-	
 	// get highways that contain selection
 	OsmMapData * mapData = [AppDelegate getAppDelegate].mapView.editorLayer.mapData;
 	NSArray * parentWays = [mapData waysContainingNode:_centralNode];
@@ -170,7 +168,7 @@
 		// Highlight shape
 		CAShapeLayer * highlightLayer = [CAShapeLayer layer];
 		highlightLayer.lineWidth   	=  DEFAULT_POPUPLINEWIDTH + 6;
-		highlightLayer.strokeColor 	= [UIColor cyanColor].CGColor;
+		highlightLayer.strokeColor 	= UIColor.cyanColor.CGColor;
 		highlightLayer.lineCap 		= kCALineCapRound;
 		highlightLayer.path   		= bezierPath.CGPath;
 		highlightLayer.bounds 		= _detailView.bounds;
@@ -182,7 +180,7 @@
 		highwayLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH;
 		highwayLayer.lineCap 		= kCALineCapRound;
 		highwayLayer.path 	  		= bezierPath.CGPath;
-		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.tagInfo.lineColor.CGColor ?: [UIColor blackColor].CGColor;
+		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.tagInfo.lineColor.CGColor ?: UIColor.blackColor.CGColor;
 		highwayLayer.bounds 		= _detailView.bounds;
 		highwayLayer.position	 	= detailViewCenter;
 		highwayLayer.masksToBounds 	= NO;
@@ -197,16 +195,16 @@
 		hwyView.parentWaysArray		= _parentWays;
 		hwyView.highwayLayer 		= highwayLayer;
 		hwyView.highlightLayer 		= highlightLayer;
-		hwyView.backgroundColor		= [UIColor clearColor];
+		hwyView.backgroundColor		= UIColor.clearColor;
 		
 		[hwyView.layer addSublayer:highwayLayer];
 		[hwyView.layer insertSublayer:highlightLayer below:highwayLayer];
 
 		[hwyView createTurnRestrictionButton];
 		[hwyView createOneWayArrowsForHighway];
-		hwyView.arrowButton.hidden = YES;
-		hwyView.lineButtonPressCallback = ^(TurnRestrictHwyView *objLine) { [self toggleTurnRestriction:objLine];	};
-		hwyView.lineSelectionCallback 	 = ^(TurnRestrictHwyView *objLine) { [self toggleHighwaySelection:objLine]; };
+		hwyView.arrowButton.hidden 		= YES;
+		hwyView.lineButtonPressCallback = ^(TurnRestrictHwyView *objLine) { [self toggleTurnRestriction:objLine]; };
+		hwyView.lineSelectionCallback 	= ^(TurnRestrictHwyView *objLine) { [self toggleHighwaySelection:objLine]; };
 
 		[_detailView addSubview:hwyView];
 		[_highwayViewArray addObject:hwyView];
@@ -214,18 +212,18 @@
 	
 	// Place green circle in center
 	UIView * centerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-	centerView.backgroundColor = [UIColor greenColor];
-	centerView.layer.cornerRadius = centerView.frame.size.height/2;
-	centerView.center = detailViewCenter;
+	centerView.backgroundColor 		= UIColor.greenColor;
+	centerView.layer.cornerRadius 	= centerView.frame.size.height/2;
+	centerView.center 				= detailViewCenter;
 	[_detailView addSubview:centerView];
 	[_detailView bringSubviewToFront:centerView];
 	
-	self.view.backgroundColor = [UIColor clearColor];
+	self.view.backgroundColor = UIColor.clearColor;
 
 	// Create U-Turn restriction button
 	_uTurnButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-	_uTurnButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-	_uTurnButton.center = detailViewCenter;
+	_uTurnButton.imageView.contentMode	= UIViewContentModeScaleAspectFit;
+	_uTurnButton.center 				= detailViewCenter;
 	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnAllow"]	 forState:UIControlStateNormal];
 	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnRestrict"] forState:UIControlStateSelected];
 	[_uTurnButton addTarget:self action:@selector(uTurnButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
