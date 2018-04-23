@@ -247,7 +247,7 @@
 {
 	_selectedFromHwy = selectedHwy;
 
-	EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;	
+	EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;
 	editor.selectedWay = selectedHwy.wayObj;
 	
 	selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay;
@@ -356,6 +356,8 @@
 			targetHwy.objRel = nil;
 		}
 	}
+
+	appDelegate.mapView.editorLayer.selectedWay = _selectedFromHwy.wayObj;
 
 	[appDelegate.mapView.editorLayer setNeedsDisplay];
 	[appDelegate.mapView.editorLayer setNeedsLayout];
