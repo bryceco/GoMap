@@ -1779,21 +1779,20 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 		if ( object.isRelation.isRestriction ) {
 			OsmMember * viaMember = [object.isRelation memberByRole:@"via" ];
 			OsmBaseObject * viaMemberObject = viaMember.ref;
-			if ( [viaMemberObject isKindOfClass:[OsmNode class]] ||
-				 [viaMemberObject isKindOfClass:[OsmWay class]] )
-			{
-				OSMPoint latLon = viaMemberObject.isNode ? viaMemberObject.isNode.location : viaMemberObject.isWay.centerPoint;
+			if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
+				OSMPoint latLon = viaMemberObject.isNode ? viaMemberObject.isNode.location : viaMemberObject.isWay.midpointOfLine;
 				OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
 
-				CALayer * restrictionLayerIcon = [CALayer new];
-				restrictionLayerIcon.bounds = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+				CALayer * restrictionLayerIcon 	= [CALayer new];
+				restrictionLayerIcon.bounds 	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
 				restrictionLayerIcon.anchorPoint = CGPointMake(0.5,0.5);
-				restrictionLayerIcon.position = CGPointMake(pt.x, pt.y);
+				restrictionLayerIcon.position 	= CGPointMake(pt.x, pt.y);
 				if ( viaMember.isWay && [object.tags[@"restriction"] isEqualToString:@"no_u_turn"] ) {
 					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
 				} else {
 					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
 				}
+				restrictionLayerIcon.zPosition 	= Z_TURN;
 
 				//            if ( viaMember.isNode ) {
 				//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
@@ -1820,7 +1819,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				////                NSLog(@"\n\nANGLE: %f\n", angle);
 				//            }
 				//            restrictionLayerIcon.transform = CATransform3DMakeRotation(15, 0, 0, 0.5);
-				restrictionLayerIcon.zPosition = Z_TURN;
 
 				//            NSString * restriction = object.tags[@"restriction"];
 				//            if ( [restriction isEqualToString:@"no_left_turn"] )
@@ -1830,7 +1828,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 				//            else if ( [restriction isEqualToString:@"no_u_turn"] )
 				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
 
-				LayerProperties * restrictionIconProps = [ LayerProperties new ];
+				LayerProperties * restrictionIconProps = [LayerProperties new];
 				[restrictionLayerIcon setValue:restrictionIconProps forKey:@"properties"];
 				restrictionIconProps->position = pt;
 
@@ -1919,9 +1917,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 			// Turn Restrictions
 			if ( _mapView.enableTurnRestriction ) {
-				if ( object.relations.count > 0 ) {
-					for ( OsmRelation * relation in object.relations ) {
-						if ( relation.isRestriction && [relation memberByRole:@"from"].ref == object  ) {
+				for ( OsmRelation * relation in object.relations ) {
+					if ( relation.isRestriction && [relation memberByRole:@"from"].ref == object  ) {
+						// the From member of the turn restriction is the selected way
+						if ( _selectedNode == nil || [relation memberByRole:@"via"].ref == _selectedNode ) {	// highlight if no node, is selected, or the selected node is the via node
 							for ( OsmMember * member in relation.members ) {
 								if ( member.isWay ) {
 									CGPathRef turnPath = [self pathForWay:member.ref];
@@ -3931,7 +3930,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
 	return copyPasteTags.count > 0;
-
 }
 - (BOOL)pasteTags:(OsmBaseObject *)object
 {

@@ -1116,6 +1116,43 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return [self centerPointWithArea:NULL];
 }
 
+-(double)lengthInMeters
+{
+	BOOL first = YES;
+	double len = 0;
+	OSMPoint prev = { 0, 0 };
+	for ( OsmNode * node in _nodes ) {
+		OSMPoint pt = node.location;
+		if ( !first ) {
+			len += GreatCircleDistance( pt, prev );
+		}
+		first = NO;
+		prev = pt;
+	}
+	return len;
+}
+
+-(OSMPoint)midpointOfLine
+{
+	double dist = [self lengthInMeters] / 2;
+	BOOL first = YES;
+	OSMPoint prev = { 0, 0 };
+	for ( OsmNode * node in _nodes ) {
+		OSMPoint pt = node.location;
+		if ( !first ) {
+			double segment = GreatCircleDistance( pt, prev );
+			if ( segment >= dist ) {
+				OSMPoint pos = Add( prev, Mult( Sub(pt,prev), dist/segment) );
+				return pos;
+			}
+			dist -= segment;
+		}
+		first = NO;
+		prev = pt;
+	}
+	return prev; // dummy value, shouldn't ever happen
+}
+
 -(BOOL)isClockwise
 {
 	if ( !self.isClosed )

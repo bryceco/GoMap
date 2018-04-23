@@ -168,8 +168,10 @@ typedef enum {
 -(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo;
 
 -(void)resolveToMapData:(OsmMapData *)mapData;
+-(OSMPoint)midpointOfLine;
 -(OSMPoint)centerPoint;
 -(OSMPoint)centerPointWithArea:(double *)area;
+-(double)lengthInMeters;
 -(ONEWAY)computeIsOneWay;
 -(BOOL)isConnectedToWay:(OsmWay *)way;
 -(BOOL)isArea;

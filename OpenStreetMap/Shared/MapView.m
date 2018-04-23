@@ -1982,7 +1982,7 @@ NSString * ActionTitle( NSInteger action )
 			BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
 			BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
 			BOOL join 			= parentWays.count > 1;
-			BOOL restriction	= _enableTurnRestriction && _editorLayer.selectedPrimary.isNode && [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode].count > 1;
+			BOOL restriction	= _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
 			
 			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), nil];
 			if ( disconnect )
