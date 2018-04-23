@@ -183,6 +183,8 @@ typedef enum {
 
 @property (readonly,nonatomic)	CAShapeLayer				*	crossHairs;
 
+@property (readonly,nonatomic)	NSString					*	countryCodeForLocation;
+
 
 -(void)updateAerialAttributionButton;
 -(void)updateEditControl;				// show/hide edit control based on selection

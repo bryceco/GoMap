@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
+#import "AppDelegate.h"
+#import "MapView.h"
+
 #import "iosapi.h"
 #import "CommonTagList.h"
 #import "DLog.h"
@@ -661,8 +664,7 @@ static NSString * PrettyTag( NSString * tag )
 									@"addr:unit"
 									];
 
-		NSString * countryCode = @"us";	// replace with country code for current country
-
+		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
 		NSArray * keys = nil;
 		for ( NSDictionary * localeDict in g_addressFormatsDict[ @"dataAddressFormats" ] ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
@@ -686,7 +688,8 @@ static NSString * PrettyTag( NSString * tag )
 				if ( ![placeholder isEqualToString:@"123"] )
 					name = placeholder;
 				keyboard = [numericFields containsObject:k] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
-				CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
+				NSString * tagKey = [@"addr:" stringByAppendingString:k];
+				CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:tagKey defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 				[addrs addObject:tag];
 			}
 		}
@@ -1272,8 +1275,8 @@ static NSString * PrettyTag( NSString * tag )
 		}
 		
 		[_codeList sortUsingComparator:^NSComparisonResult(NSString * code1, NSString * code2) {
-			NSString * s1 = [self localLanguageNameForCode:code1];
-			NSString * s2 = [self localLanguageNameForCode:code2];
+			NSString * s1 = [self languageNameForCode:code1];
+			NSString * s2 = [self languageNameForCode:code2];
 			return [s1 compare:s2 options:NSCaseInsensitiveSearch];
 		}];
 	}

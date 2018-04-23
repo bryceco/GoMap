@@ -420,6 +420,9 @@ CGSize SizeForImage( NSImage * image )
 	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
 	double latitude		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.latitude"];
 	double longitude	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.longitude"];
+	
+	_countryCodeForLocation = [[NSUserDefaults standardUserDefaults] objectForKey:@"countryCodeForLocation"];
+
 #if 1
 	if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
 		[self setTransformForLatitude:latitude longitude:longitude scale:scale];
@@ -514,6 +517,8 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableUnnamedRoadHalo	forKey:@"mapViewEnableUnnamedRoadHalo"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableGpxLogging		forKey:@"mapViewEnableBreadCrumb"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableTurnRestriction	forKey:@"mapViewEnableTurnRestriction"];
+	
+	[[NSUserDefaults standardUserDefaults] setObject:_countryCodeForLocation 	forKey:@"countryCodeForLocation"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -776,6 +781,29 @@ CGSize SizeForImage( NSImage * image )
 		[self.viewController presentViewController:webController animated:YES completion:nil];
 	}
 }
+
+-(void)updateCountryCodeForLocation
+{
+	CLLocationCoordinate2D loc = [self longitudeLatitudeForScreenPoint:self.center birdsEye:YES];
+	NSString * url = [NSString stringWithFormat:@"https://nominatim.openstreetmap.org/reverse?zoom=13&addressdetails=1&format=json&lat=%f&lon=%f",loc.latitude,loc.longitude];
+	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+		if ( data.length ) {
+			id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+			if ( json ) {
+				NSString * code = json[ @"address" ][ @"country_code" ];
+				if ( code ) {
+					NSLog(@"country = %@\n",code);
+					dispatch_async(dispatch_get_main_queue(), ^{
+						_countryCodeForLocation = code;
+					});
+				}
+			}
+		}
+	}];
+	[task resume];
+}
+
+
 
 #pragma mark Rotate object
 
@@ -1772,6 +1800,11 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	[self refreshNoteButtonsFromDatabase];
 
+	if ( log2(scale) < 13 && log2(ratio*scale) >= 13 ) {
+		// we zoomed in, so fetch local country code
+		[self updateCountryCodeForLocation];
+	}
+	
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
 	t = OSMTransformTranslate( t, offset.x, offset.y );
@@ -2181,7 +2214,7 @@ NSString * ActionTitle( NSInteger action )
 }
 
 
-// MARK: Open Restrict popup window
+// Turn restriction panel
 -(void)restrictOptionSelected
 {
 	TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
