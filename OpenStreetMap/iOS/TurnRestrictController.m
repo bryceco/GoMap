@@ -38,24 +38,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _highwayViewArray = [[NSMutableArray alloc] init];
-    [self createMapWindow];
+    _highwayViewArray = [NSMutableArray new];
+	[self createMapWindow];
 }
 
 // To dray Popup window
 -(void)createMapWindow
 {
-	// Popup Window Size iPhone
-	CGSize size = { 240, 220 };
-	if ( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ) {
-		//Popup Window 2X Size iPad
-		size.width *= 2;
-		size.height *= 2;
-	}
-	size.height += 30;	// Popup Window Topbar height
-	_constraintViewWithTitleWidth.constant = size.width;
-	_constraintViewWithTitleHeight.constant = size.height;
-
 	[self.view layoutIfNeeded];
 
 	_detailView.clipsToBounds = true;
@@ -257,6 +246,9 @@
 -(void)toggleHighwaySelection:(TurnRestrictHwyView *)selectedHwy
 {
 	_selectedFromHwy = selectedHwy;
+
+	EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;	
+	editor.selectedWay = selectedHwy.wayObj;
 	
 	selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay;
 	_uTurnButton.hidden = _selectedFromHwy.wayObj.isOneWay != ONEWAY_NONE;

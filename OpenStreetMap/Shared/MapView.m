@@ -2185,11 +2185,18 @@ NSString * ActionTitle( NSInteger action )
 -(void)restrictOptionSelected
 {
 	TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
-	myVc.centralNode 		= self.editorLayer.selectedNode;
+	myVc.centralNode 			= self.editorLayer.selectedNode;
 	myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);
 	myVc.screenFromMapTransform = _screenFromMapTransform;
 	myVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-	[_viewController presentViewController:myVc animated:true completion:nil];
+	[_viewController presentViewController:myVc animated:YES completion:nil];
+	
+	// scroll view so intersection stays visible
+	CGRect rc = myVc.viewWithTitle.frame;
+	int mid = rc.origin.y/2;
+	CGPoint pt = self.pushpinView.arrowPoint;
+	CGPoint delta = { self.bounds.size.width/2 - pt.x, mid - pt.y };
+	[self adjustOriginBy:delta];
 }
 
 

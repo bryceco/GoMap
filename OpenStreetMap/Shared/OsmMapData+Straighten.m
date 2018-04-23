@@ -416,12 +416,14 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	if ( ![fromWay.nodes containsObject:viaNode] ||
 		 ![fromWay.nodes containsObject:fromWayNode] ||
 		 ![toWay.nodes containsObject:viaNode] ||
-		 ![toWay.nodes containsObject:toWayNode] )
+		 ![toWay.nodes containsObject:toWayNode] ||
+		 viaNode == fromWayNode ||
+		 viaNode == toWayNode )
 	{
 		// error
 		return nil;
 	}
-	
+
 	// find ways that need to be split
 	NSMutableArray * splits = [NSMutableArray new];
 	NSArray * list = (fromWay == toWay) ? @[ fromWay ] : @[ fromWay, toWay ];
@@ -443,6 +445,10 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	if ( restriction == nil ) {
 		restriction = [self createRelation];
+	} else {
+		while ( restriction.members.count > 0 ) {
+			[self deleteMemberInRelation:restriction index:0];
+		}
 	}
 
 	NSMutableArray * newWays = [NSMutableArray new];
@@ -460,9 +466,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	[tags setValue:strTurn forKey:@"restriction"];
 	[self setTags:tags forObject:restriction];
 
-	while ( restriction.members.count > 0 ) {
-		[self deleteMemberInRelation:restriction index:0];
-	}
 	OsmMember * fromM = [[OsmMember alloc] initWithRef:fromWay role:@"from"];
 	OsmMember * viaM = [[OsmMember alloc] initWithRef:viaNode role:@"via"];
 	OsmMember * toM = [[OsmMember alloc] initWithRef:toWay role:@"to"];
