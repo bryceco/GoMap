@@ -782,7 +782,7 @@ CGSize SizeForImage( NSImage * image )
 	}
 }
 
--(void)updateCountryCodeForLocation
+-(void)updateCountryCodeForLocationUsingNominatim
 {
 	CLLocationCoordinate2D loc = [self longitudeLatitudeForScreenPoint:self.center birdsEye:YES];
 	NSString * url = [NSString stringWithFormat:@"https://nominatim.openstreetmap.org/reverse?zoom=13&addressdetails=1&format=json&lat=%f&lon=%f",loc.latitude,loc.longitude];
@@ -1802,7 +1802,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	if ( log2(scale) < 13 && log2(ratio*scale) >= 13 ) {
 		// we zoomed in, so fetch local country code
-		[self updateCountryCodeForLocation];
+		[self updateCountryCodeForLocationUsingNominatim];
 	}
 	
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
