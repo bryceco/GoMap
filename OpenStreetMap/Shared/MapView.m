@@ -2217,6 +2217,9 @@ NSString * ActionTitle( NSInteger action )
 // Turn restriction panel
 -(void)restrictOptionSelected
 {
+	// if GPS is running don't keep moving around
+	self.userOverrodeLocationPosition = YES;
+	
 	TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
 	myVc.centralNode 			= self.editorLayer.selectedNode;
 	myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);

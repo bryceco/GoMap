@@ -176,7 +176,7 @@
 		
 		// Highlight shape
 		CAShapeLayer * highlightLayer = [CAShapeLayer layer];
-		highlightLayer.lineWidth   	=  DEFAULT_POPUPLINEWIDTH + 6;
+		highlightLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH + 8;
 		highlightLayer.strokeColor 	= UIColor.cyanColor.CGColor;
 		highlightLayer.lineCap 		= kCALineCapRound;
 		highlightLayer.path   		= bezierPath.CGPath;
@@ -376,8 +376,6 @@
 	if ( isRestricting ) {
 		NSString *str = @"no_u_turn";
 		_currentUTurnRelation = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj fromNode:_selectedFromHwy.connectedNode to:_selectedFromHwy.wayObj toNode:_selectedFromHwy.connectedNode restriction:str];
-		[appDelegate.mapView.editorLayer setNeedsDisplay];
-		[appDelegate.mapView.editorLayer setNeedsLayout];
 
 	} else {
 		if ( _currentUTurnRelation ) {
@@ -386,6 +384,9 @@
 			_currentUTurnRelation = nil;
 		}
 	}
+
+	[appDelegate.mapView.editorLayer setNeedsDisplay];
+	[appDelegate.mapView.editorLayer setNeedsLayout];
 }
 
 
