@@ -2,14 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UISupportedExternalAccessoryProtocols</key>
-	<array>
-		<string>com.bad-elf.gps</string>
-		<string>com.dualav.xgps150</string>
-		<string>com.dualav.xgps160</string>
-	</array>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Connect to external Bluetooth GPS devices</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -69,7 +61,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.5.0.8</string>
+	<string>1.5.0.10</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -79,12 +71,20 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location will be displayed and followed on the map.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Connect to external Bluetooth GPS devices</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is used to measure heights of buildings or objects</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Always on location tracking allows the app to record GPX files when inactive.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your location will be displayed and followed on the map.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location will be displayed and followed on the map.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 	<key>UIFileSharingEnabled</key>
 	<false/>
 	<key>UIInterfaceOrientation</key>
@@ -109,6 +109,12 @@
 			<false/>
 		</dict>
 	</dict>
+	<key>UISupportedExternalAccessoryProtocols</key>
+	<array>
+		<string>com.bad-elf.gps</string>
+		<string>com.dualav.xgps150</string>
+		<string>com.dualav.xgps160</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -123,8 +129,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>The camera is used to measure heights of buildings or objects</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -148,10 +152,6 @@
 				<string>application/gpx+xml</string>
 			</dict>
 		</dict>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
 	</array>
 </dict>
 </plist>
