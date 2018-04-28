@@ -1451,7 +1451,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}
 }
 
-- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment retries:(NSInteger)retries completion:(void(^)(NSString * errorMessage))completion
+- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment imagery:(NSString *)imagery retries:(NSInteger)retries completion:(void(^)(NSString * errorMessage))completion
 {
 #if TARGET_OS_IPHONE
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
@@ -1463,7 +1463,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	NSMutableDictionary * tags = [NSMutableDictionary dictionaryWithDictionary:@{ @"created_by" : creator }];
 	if ( comment.length )
-		[tags addEntriesFromDictionary:@{ @"comment" : comment }];
+		tags[@"comment"] = comment;
+	if ( imagery.length )
+		tags[@"imagery_used"] = imagery;
 	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:tags];
 	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/changeset/create"];
 
@@ -1497,7 +1499,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 						[OsmMapData osmDataForUrl:url3 quads:nil completion:^(ServerQuery *quads, OsmMapData * mapData, NSError *error) {
 							[self merge:mapData fromDownload:YES quadList:nil success:YES];
 							// try again:
-							[self uploadChangesetWithComment:comment retries:retries-1 completion:completion];
+							[self uploadChangesetWithComment:comment imagery:imagery retries:retries-1 completion:completion];
 						}];
 						return;
 					}
@@ -1561,19 +1563,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}];
 }
 
-- (void)uploadChangesetWithComment:(NSString *)comment retries:(NSInteger)retries completion:(void(^)(NSString * errorMessage))completion
+- (void)uploadChangesetWithComment:(NSString *)comment imagery:(NSString *)imagery retries:(NSInteger)retries completion:(void(^)(NSString * errorMessage))completion
 {
 	NSXMLDocument * xmlChanges = [self createXml];
 	if ( xmlChanges == nil ) {
 		completion( @"No changes to apply" );
 		return;
 	}
-	[self uploadChangeset:xmlChanges comment:comment retries:retries completion:completion];
+	[self uploadChangeset:xmlChanges comment:comment imagery:imagery retries:retries completion:completion];
 }
 
-- (void)uploadChangesetWithComment:(NSString *)comment completion:(void(^)(NSString * errorMessage))completion
+- (void)uploadChangesetWithComment:(NSString *)comment imagery:(NSString *)imagery completion:(void(^)(NSString * errorMessage))completion
 {
-	[self uploadChangesetWithComment:comment retries:20 completion:completion];
+	[self uploadChangesetWithComment:comment imagery:imagery retries:20 completion:completion];
 }
 
 

@@ -147,8 +147,8 @@ extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
 - (NSArray *)createChangeset;
 - (NSString *)changesetAsXml;
 - (NSString *)changesetAsHtml;
-- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment retries:(NSInteger)retries completion:(void(^)(NSString * error))completion;
-- (void)uploadChangesetWithComment:(NSString *)comment completion:(void(^)(NSString * error))completion;
+- (void)uploadChangeset:(NSXMLDocument *)xmlChanges comment:(NSString *)comment imagery:(NSString *)imagery retries:(NSInteger)retries completion:(void(^)(NSString * error))completion;
+- (void)uploadChangesetWithComment:(NSString *)comment imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion;
 - (void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion;
 +(NSString *)encodeBase64:(NSString *)plainText;
