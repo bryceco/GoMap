@@ -4994,6 +4994,15 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APA-kz-Xeq">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhx-8A-Atc">
+                                                <rect key="frame" x="290" y="8" width="22" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <action selector="infoButtonPressed:" destination="fZc-hX-GbL" eventType="touchUpInside" id="2xk-4I-CQf"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -5017,6 +5026,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                     </view>
                     <connections>
                         <outlet property="detailView" destination="APA-kz-Xeq" id="xpB-fg-j4c"/>
+                        <outlet property="infoButton" destination="mhx-8A-Atc" id="Va2-wJ-tx4"/>
                         <outlet property="viewWithTitle" destination="0as-7d-L0W" id="eAO-Ve-v3A"/>
                     </connections>
                 </viewController>

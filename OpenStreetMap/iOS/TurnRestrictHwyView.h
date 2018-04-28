@@ -42,6 +42,7 @@ typedef void(^BlockTurnRestrictHwyView)(TurnRestrictHwyView *objLine);
 -(BOOL)isOneWayEnteringCenter;
 
 -(double)turnAngleDegreesFromPoint:(CGPoint)fromPoint;
+-(void)rotateButtonForDirection;
 
 + (float)headingFromPoint:(CGPoint)a toPoint:(CGPoint)b;
 + (CGFloat)bearingDegreesFromPoint:(CGPoint)startingPoint toPoint:(CGPoint)endingPoint;

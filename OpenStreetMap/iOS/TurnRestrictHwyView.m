@@ -10,6 +10,12 @@
 #import "OsmObjects.h"
 #import "VectorMath.h"
 
+static CGPoint MidPointOf(CGPoint p1, CGPoint p2)
+{
+	CGPoint p = { (p1.x+p2.x)/2, (p1.y+p2.y)/2 };
+	return p;
+}
+
 
 @implementation TurnRestrictHwyView
 
@@ -27,15 +33,20 @@
 	}
 }
 
--(CGPoint)midPointFrom:(CGPoint)p1 to:(CGPoint)p2
+-(void)rotateButtonForDirection
 {
-	CGPoint p = { (p1.x+p2.x)/2, (p1.y+p2.y)/2 };
-	return p;
+	if ( !_arrowButton.isSelected ) {
+		CGFloat angle = [TurnRestrictHwyView headingFromPoint:_centerPoint toPoint:_endPoint];
+		_arrowButton.transform = CGAffineTransformMakeRotation(M_PI+angle);
+	} else {
+		_arrowButton.transform = CGAffineTransformIdentity;
+	}
 }
 
 -(void)createTurnRestrictionButton
 {
-	CGPoint location = [self midPointFrom:_centerPoint to:_endPoint];
+	CGFloat dist = 0.5;
+	CGPoint location = { _centerPoint.x + (_endPoint.x - _centerPoint.x)*dist, _centerPoint.y + (_endPoint.y - _centerPoint.y)*dist };
 
 	_arrowButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 	[_arrowButton setImage:[UIImage imageNamed:@"arrowAllow"] forState:UIControlStateNormal];
@@ -43,8 +54,10 @@
 
 	_arrowButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
 	_arrowButton.center = location;
-	CGFloat angle = [TurnRestrictHwyView headingFromPoint:location toPoint:self.center];
-	_arrowButton.transform = CGAffineTransformMakeRotation(angle);
+	_arrowButton.layer.borderWidth = 1.0;
+	_arrowButton.layer.cornerRadius = 2.0;
+	_arrowButton.layer.borderColor = UIColor.blackColor.CGColor;
+
 	[_arrowButton addTarget:self action:@selector(restrictionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 	[self addSubview:_arrowButton];
@@ -60,9 +73,9 @@
 	BOOL forwardOneWay = (_wayObj.isOneWay == ONEWAY_FORWARD) == (otherIndex > centerIndex);
 
 	// create 3 arrows on highway
-	CGPoint location1	= [self midPointFrom:_centerPoint to:_endPoint];
-	CGPoint location2 	= [self midPointFrom:location1 to:_centerPoint];
-	CGPoint location3 	= [self midPointFrom:location1 to:_endPoint];
+	CGPoint location1	= MidPointOf(_centerPoint,_endPoint);
+	CGPoint location2 	= MidPointOf(location1, _centerPoint);
+	CGPoint location3 	= MidPointOf(location1, _endPoint);
 
 	[self createOneWayArrowAtPosition:location1 isDirection:forwardOneWay];
 	[self createOneWayArrowAtPosition:location2	isDirection:forwardOneWay];

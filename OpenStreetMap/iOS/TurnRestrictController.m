@@ -18,6 +18,14 @@
 #import "OsmObjects.h"
 
 
+typedef enum TURN_ANGLE {
+	TURN_ANGLE_UTURN,
+	TURN_ANGLE_LEFT,
+	TURN_ANGLE_RIGHT,
+	TURN_ANGLE_STRAIGHT
+} TURN_ANGLE;
+
+
 @interface TurnRestrictController ()
 {
 	NSMutableArray		*	_parentWays;
@@ -40,6 +48,13 @@
     [super viewDidLoad];
     _highwayViewArray = [NSMutableArray new];
 	[self createMapWindow];
+
+	[[AppDelegate getAppDelegate].mapView.editorLayer.mapData beginUndoGrouping];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[[AppDelegate getAppDelegate].mapView.editorLayer.mapData endUndoGrouping];
 }
 
 // To dray Popup window
@@ -81,7 +96,7 @@
 	if ( fromWay ) {
 		for ( TurnRestrictHwyView * hwy in _highwayViewArray ) {
 			if ( hwy.wayObj == fromWay ) {
-				[self toggleHighwaySelection:hwy];
+				[self selectFromHighway:hwy];
 				break;
 			}
 		}
@@ -213,7 +228,7 @@
 		[hwyView createOneWayArrowsForHighway];
 		hwyView.arrowButton.hidden 		= YES;
 		hwyView.lineButtonPressCallback = ^(TurnRestrictHwyView *objLine) { [self toggleTurnRestriction:objLine]; };
-		hwyView.lineSelectionCallback 	= ^(TurnRestrictHwyView *objLine) { [self toggleHighwaySelection:objLine]; };
+		hwyView.lineSelectionCallback 	= ^(TurnRestrictHwyView *objLine) { [self selectFromHighway:objLine]; };
 
 		[_detailView addSubview:hwyView];
 		[_highwayViewArray addObject:hwyView];
@@ -233,6 +248,10 @@
 	_uTurnButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 	_uTurnButton.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 	_uTurnButton.center 				= detailViewCenter;
+	_uTurnButton.layer.borderWidth 		= 1.0;
+	_uTurnButton.layer.cornerRadius 	= 2.0;
+	_uTurnButton.layer.borderColor 		= UIColor.blackColor.CGColor;
+
 	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnAllow"]	 forState:UIControlStateNormal];
 	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnRestrict"] forState:UIControlStateSelected];
 	[_uTurnButton addTarget:self action:@selector(uTurnButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -240,10 +259,17 @@
 	_uTurnButton.hidden = true;
 }
 
-
+-(IBAction)infoButtonPressed:(id)sender
+{
+	NSString * message = @"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\n"
+						"Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.";
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Turn Restrictions" message:message preferredStyle:UIAlertControllerStyleAlert];
+	[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+	[self presentViewController:alert animated:YES completion:nil];
+}
 
 // Select a new "From" highway
--(void)toggleHighwaySelection:(TurnRestrictHwyView *)selectedHwy
+-(void)selectFromHighway:(TurnRestrictHwyView *)selectedHwy
 {
 	_selectedFromHwy = selectedHwy;
 
@@ -283,7 +309,13 @@
 			highway.objRel = relation;
 			highway.arrowButton.hidden = NO;
 			highway.arrowButton.selected = !isSelected;
-			
+
+			TURN_ANGLE turn = [TurnRestrictController turnTypeForIntersectionFrom:_selectedFromHwy to:highway];
+			NSString * turnName = [TurnRestrictController turnNameForAngle:turn];
+			turnName = [@"no_" stringByAppendingString:turnName];
+			[highway.arrowButton setImage:[UIImage imageNamed:turnName] forState:UIControlStateSelected];
+			[highway rotateButtonForDirection];
+
 			if ( selectedHwyIsOneWayExit ) {
 				highway.arrowButton.hidden = YES;
 			} else if ( [highway isOneWayEnteringCenter] ) {
@@ -291,6 +323,8 @@
 			}
 		}
 	}
+
+	[self.detailView bringSubviewToFront:_infoButton];
 }
 
 -(OsmRelation *)applyTurnRestriction:(OsmMapData *)mapData from:(OsmWay *)fromWay fromNode:(OsmNode *)fromNode to:(OsmWay *)toWay toNode:(OsmNode *)toNode restriction:(NSString *)restriction
@@ -318,28 +352,42 @@
 }
 -(void)removeTurnRestriction:(OsmMapData *)mapData relation:(OsmRelation *)relation
 {
-	[mapData deleteRelation:relation];
+	[mapData deleteTurnRestrictionRelation:relation];
 }
 
-+(NSString *)turnRestrictionTypeForIntersectionFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy
++(TURN_ANGLE)turnTypeForIntersectionFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy
 {
 	double angle = [toHwy turnAngleDegreesFromPoint:fromHwy.endPoint];	// -180..180
 
-	NSString *str = nil;
 	if (ABS(angle) < 22)  {
-		str = @"straight_on";
+		return TURN_ANGLE_STRAIGHT;
 	} else if ( toHwy.wayObj.isOneWay && fromHwy.wayObj.isOneWay && ABS(ABS(angle) - 180) < 40 ) {	// more likely a u-turn if both are one-way
-		str = @"u_turn";
+		return TURN_ANGLE_UTURN;
 	}  else if ( ABS(ABS(angle) - 180) < 23 ) {
-		str = @"u_turn";
+		return TURN_ANGLE_UTURN;
 	} else if ( angle < 0 )   {
-		str = @"left_turn";
+		return TURN_ANGLE_LEFT;
 	} else {
-		str = @"right_turn";
+		return TURN_ANGLE_RIGHT;
 	}
-	return str;
 }
 
+
++(NSString *)turnNameForAngle:(TURN_ANGLE)angle
+{
+	switch (angle) {
+		case TURN_ANGLE_RIGHT:
+			return @"right_turn";
+		case TURN_ANGLE_LEFT:
+			return @"left_turn";
+		case TURN_ANGLE_UTURN:
+			return @"u_turn";
+		case TURN_ANGLE_STRAIGHT:
+			return @"straight_on";
+		default:
+			return nil;
+	}
+}
 
 // Enable/disable a left/right/straight turn restriction
 -(void)toggleTurnRestriction:(TurnRestrictHwyView *)targetHwy
@@ -351,7 +399,8 @@
 	
 	if ( isRestricting )  {
 		
-		NSString * restrictionName = [TurnRestrictController turnRestrictionTypeForIntersectionFrom:_selectedFromHwy to:targetHwy];
+		TURN_ANGLE turnType = [TurnRestrictController turnTypeForIntersectionFrom:_selectedFromHwy to:targetHwy];
+		NSString * restrictionName = [TurnRestrictController turnNameForAngle:turnType];
 		restrictionName = [@"no_" stringByAppendingString:restrictionName];
 		targetHwy.objRel = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj fromNode:_selectedFromHwy.connectedNode to:targetHwy.wayObj toNode:targetHwy.connectedNode restriction:restrictionName];
 
@@ -366,6 +415,8 @@
 			targetHwy.objRel = nil;
 		}
 	}
+
+	[targetHwy rotateButtonForDirection];
 
 	appDelegate.mapView.editorLayer.selectedWay = _selectedFromHwy.wayObj;
 

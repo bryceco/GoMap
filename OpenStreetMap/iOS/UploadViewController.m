@@ -13,9 +13,11 @@
 #import "DDXML.h"
 #endif
 
+#import "AerialList.h"
 #import "AppDelegate.h"
 #import "MapView.h"
 #import "EditorMapLayer.h"
+#import "MercatorTileLayer.h"
 #import "OsmMapData.h"
 #import "UploadViewController.h"
 
@@ -149,6 +151,8 @@
 		}
 	};
 
+	NSString * imagery = appDelegate.mapView.aerialLayer.aerialService.name;
+
 	if ( _xmlTextView.editable ) {
 		
 		// upload user-edited text
@@ -159,11 +163,11 @@
 			completion( NSLocalizedString( @"The XML is improperly formed", nil ) );
 			return;
 		}
-		[_mapData uploadChangeset:xmlDoc comment:comment retries:0 completion:completion];
+		[_mapData uploadChangeset:xmlDoc comment:comment imagery:imagery retries:0 completion:completion];
 
 	} else {
 		// normal upload
-		[_mapData uploadChangesetWithComment:comment completion:completion];
+		[_mapData uploadChangesetWithComment:comment imagery:imagery completion:completion];
 	}
 }
 

@@ -26,6 +26,8 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint 	*	constraintViewWithTitleWidth;
 @property (strong, nonatomic) IBOutlet UIView 				* 	viewWithTitle;
 @property (strong, nonatomic) IBOutlet UIView 				*	detailView;
+@property (strong, nonatomic) IBOutlet UIButton 			*	infoButton;
+
 
 @property (strong,nonatomic)    OsmNode 		*	centralNode;	// the central node
 
