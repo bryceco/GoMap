@@ -46,9 +46,10 @@
 	} else if ( changeCount < redCount ) {
 		color = [UIColor colorWithRed:1.0 green:0.55 blue:0.0 alpha:1.0];	// yellow
 	} else {
-		color = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];	// red
+		color = UIColor.redColor;	// red
 	}
 	_uploadButton.tintColor = color;
+	_uploadButton.enabled = changeCount > 0;
 }
 
 - (void)viewDidLoad
