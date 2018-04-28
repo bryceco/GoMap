@@ -1779,60 +1779,62 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 		if ( object.isRelation.isRestriction ) {
 			OsmMember * viaMember = [object.isRelation memberByRole:@"via" ];
 			OsmBaseObject * viaMemberObject = viaMember.ref;
-			if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
-				OSMPoint latLon = viaMemberObject.isNode ? viaMemberObject.isNode.location : viaMemberObject.isWay.midpointOfLine;
-				OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
+			if ( [viaMemberObject isKindOfClass:[OsmBaseObject class]] ) {
+				if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
+					OSMPoint latLon = viaMemberObject.isNode ? viaMemberObject.isNode.location : viaMemberObject.isWay.midpointOfLine;
+					OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
 
-				CALayer * restrictionLayerIcon 	= [CALayer new];
-				restrictionLayerIcon.bounds 	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-				restrictionLayerIcon.anchorPoint = CGPointMake(0.5,0.5);
-				restrictionLayerIcon.position 	= CGPointMake(pt.x, pt.y);
-				if ( viaMember.isWay && [object.tags[@"restriction"] isEqualToString:@"no_u_turn"] ) {
-					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
-				} else {
-					restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
+					CALayer * restrictionLayerIcon 	= [CALayer new];
+					restrictionLayerIcon.bounds 	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+					restrictionLayerIcon.anchorPoint = CGPointMake(0.5,0.5);
+					restrictionLayerIcon.position 	= CGPointMake(pt.x, pt.y);
+					if ( viaMember.isWay && [object.tags[@"restriction"] isEqualToString:@"no_u_turn"] ) {
+						restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
+					} else {
+						restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
+					}
+					restrictionLayerIcon.zPosition 	= Z_TURN;
+
+					//            if ( viaMember.isNode ) {
+					//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
+					//                OsmWay * fromWay = fromMember.ref;
+					//                OsmNode * lastNode = fromWay.nodes.firstObject;
+					//                OSMPoint point = [ lastNode location ];
+					//                CGPoint loc = CGPointFromOSMPoint(latLon);
+					//                CGPoint pnt = CGPointFromOSMPoint(point);
+					//
+					////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
+					////                NSLog(@"\n\nANGLE: %f\n", angle);
+					//            }
+					//            if ( viaMember.isWay ) {
+					//                restrictionLayerIcon.anchorPoint = CGPointMake(0.5, -0.25);
+					//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
+					//                //                        OsmMember * fromMember = [ relation memberByRole:@"from" ];
+					//                OsmWay * fromWay = fromMember.ref;
+					//                OsmNode * lastNode = fromWay.nodes.firstObject;
+					//                OSMPoint point = [ lastNode location ];
+					//                CGPoint loc = CGPointFromOSMPoint(latLon);
+					//                CGPoint pnt = CGPointFromOSMPoint(point);
+					//
+					////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
+					////                NSLog(@"\n\nANGLE: %f\n", angle);
+					//            }
+					//            restrictionLayerIcon.transform = CATransform3DMakeRotation(15, 0, 0, 0.5);
+
+					//            NSString * restriction = object.tags[@"restriction"];
+					//            if ( [restriction isEqualToString:@"no_left_turn"] )
+					//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_left_turn"].CGImage;
+					//            else if ( [restriction isEqualToString:@"no_right_turn"] )
+					//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_right_turn"].CGImage;
+					//            else if ( [restriction isEqualToString:@"no_u_turn"] )
+					//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
+
+					LayerProperties * restrictionIconProps = [LayerProperties new];
+					[restrictionLayerIcon setValue:restrictionIconProps forKey:@"properties"];
+					restrictionIconProps->position = pt;
+
+					[layers addObject:restrictionLayerIcon];
 				}
-				restrictionLayerIcon.zPosition 	= Z_TURN;
-
-				//            if ( viaMember.isNode ) {
-				//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
-				//                OsmWay * fromWay = fromMember.ref;
-				//                OsmNode * lastNode = fromWay.nodes.firstObject;
-				//                OSMPoint point = [ lastNode location ];
-				//                CGPoint loc = CGPointFromOSMPoint(latLon);
-				//                CGPoint pnt = CGPointFromOSMPoint(point);
-				//
-				////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
-				////                NSLog(@"\n\nANGLE: %f\n", angle);
-				//            }
-				//            if ( viaMember.isWay ) {
-				//                restrictionLayerIcon.anchorPoint = CGPointMake(0.5, -0.25);
-				//                OsmMember * fromMember = [ object.isRelation memberByRole:@"from" ];
-				//                //                        OsmMember * fromMember = [ relation memberByRole:@"from" ];
-				//                OsmWay * fromWay = fromMember.ref;
-				//                OsmNode * lastNode = fromWay.nodes.firstObject;
-				//                OSMPoint point = [ lastNode location ];
-				//                CGPoint loc = CGPointFromOSMPoint(latLon);
-				//                CGPoint pnt = CGPointFromOSMPoint(point);
-				//
-				////                CGFloat angle = [TurnRestrictHwyView getAngle:loc b:pnt ];// * 300 / 3.14;
-				////                NSLog(@"\n\nANGLE: %f\n", angle);
-				//            }
-				//            restrictionLayerIcon.transform = CATransform3DMakeRotation(15, 0, 0, 0.5);
-
-				//            NSString * restriction = object.tags[@"restriction"];
-				//            if ( [restriction isEqualToString:@"no_left_turn"] )
-				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_left_turn"].CGImage;
-				//            else if ( [restriction isEqualToString:@"no_right_turn"] )
-				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_right_turn"].CGImage;
-				//            else if ( [restriction isEqualToString:@"no_u_turn"] )
-				//                restrictionLayerIcon.contents = (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
-
-				LayerProperties * restrictionIconProps = [LayerProperties new];
-				[restrictionLayerIcon setValue:restrictionIconProps forKey:@"properties"];
-				restrictionIconProps->position = pt;
-
-				[layers addObject:restrictionLayerIcon];
 			}
 		}
 	}
