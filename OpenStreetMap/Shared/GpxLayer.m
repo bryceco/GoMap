@@ -91,7 +91,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 -(void)addPoint:(CLLocation *)location
 {
 	_recording = YES;
-	 
+
 	CLLocationCoordinate2D coordinate = location.coordinate;
 
 	GpxPoint * prev = [_points lastObject];
@@ -342,6 +342,11 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 -(void)endActiveTrack
 {
 	if ( _activeTrack ) {
+
+		// redraw shape with archive color
+		[_activeTrack finishTrack];
+		[_activeTrack.shapeLayer removeFromSuperlayer];
+		_activeTrack.shapeLayer = nil;
 
 		// add to list of previous tracks
 		if ( _activeTrack.points.count > 1 ) {
@@ -680,11 +685,13 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		return nil;
 	track->shapePaths[0] = CGPathRetain( path );
 
+	UIColor * color = track == _activeTrack ? UIColor.redColor : [UIColor colorWithRed:1.0 green:99/255.0 blue:249/255.0 alpha:1.0];
+
 	CAShapeLayer * layer = [CAShapeLayer new];
 	layer.anchorPoint	= CGPointMake(0, 0);
 	layer.position		= CGPointFromOSMPoint( refPoint );
 	layer.path			= path;
-	layer.strokeColor	= [UIColor colorWithRed:1.0 green:99/255.0 blue:249/255.0 alpha:1.0].CGColor;
+	layer.strokeColor	= color.CGColor;
 	layer.fillColor		= nil;
 	layer.lineWidth		= 2.0;
 	layer.lineCap		= kCALineCapSquare;
