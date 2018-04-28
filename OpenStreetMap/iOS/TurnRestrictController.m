@@ -321,6 +321,25 @@
 	[mapData deleteRelation:relation];
 }
 
++(NSString *)turnRestrictionTypeForIntersectionFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy
+{
+	double angle = [toHwy turnAngleDegreesFromPoint:fromHwy.endPoint];	// -180..180
+
+	NSString *str = nil;
+	if (ABS(angle) < 22)  {
+		str = @"straight_on";
+	} else if ( toHwy.wayObj.isOneWay && fromHwy.wayObj.isOneWay && ABS(ABS(angle) - 180) < 40 ) {	// more likely a u-turn if both are one-way
+		str = @"u_turn";
+	}  else if ( ABS(ABS(angle) - 180) < 23 ) {
+		str = @"u_turn";
+	} else if ( angle < 0 )   {
+		str = @"left_turn";
+	} else {
+		str = @"right_turn";
+	}
+	return str;
+}
+
 
 // Enable/disable a left/right/straight turn restriction
 -(void)toggleTurnRestriction:(TurnRestrictHwyView *)targetHwy
@@ -332,18 +351,9 @@
 	
 	if ( isRestricting )  {
 		
-		double angle = [targetHwy turnAngleDegreesFromPoint:_selectedFromHwy.endPoint];
-				
-		NSString *str = nil;
-		if (ABS(angle) < 3)   {
-			str = @"no_straight_on";
-		} else if ( angle < 0 )   {
-			str = @"no_left_turn";
-		} else {
-			str = @"no_right_turn";
-		}
-		
-		targetHwy.objRel = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj fromNode:_selectedFromHwy.connectedNode to:targetHwy.wayObj toNode:targetHwy.connectedNode restriction:str];
+		NSString * restrictionName = [TurnRestrictController turnRestrictionTypeForIntersectionFrom:_selectedFromHwy to:targetHwy];
+		restrictionName = [@"no_" stringByAppendingString:restrictionName];
+		targetHwy.objRel = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj fromNode:_selectedFromHwy.connectedNode to:targetHwy.wayObj toNode:targetHwy.connectedNode restriction:restrictionName];
 
 	} else {
 		

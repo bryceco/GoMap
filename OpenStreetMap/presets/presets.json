@@ -7287,7 +7287,8 @@
 					   "ref"
 					   ],
 			"geometry": [
-						 "vertex"
+						 "point",
+						 "area"
 						 ],
 			"tags": {
 				"highway": "elevator"
