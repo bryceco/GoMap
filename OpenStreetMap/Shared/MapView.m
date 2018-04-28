@@ -2329,9 +2329,12 @@ NSString * ActionTitle( NSInteger action )
 	__weak MapView * weakSelf = self;
 	if ( object ) {
 		_pushpinView.dragCallback = ^(UIGestureRecognizerState state, CGFloat dx, CGFloat dy, UIGestureRecognizer * gesture ) {
+			MapView * strongSelf = weakSelf;
+			if ( strongSelf == nil )
+				return;
 			switch ( state ) {
 				case UIGestureRecognizerStateBegan:
-					[weakSelf.editorLayer.mapData beginUndoGrouping];
+					[strongSelf.editorLayer.mapData beginUndoGrouping];
 					_pushpinDragTotalMove.x = _pushpinDragTotalMove.y = 0.0;
 					_gestureDidMove		= NO;
 					break;
@@ -2342,8 +2345,6 @@ NSString * ActionTitle( NSInteger action )
 					// fall through so we properly terminate gesture
 				case UIGestureRecognizerStateEnded:
 					{
-						MapView * strongSelf = weakSelf;
-
 						[strongSelf.editorLayer.mapData endUndoGrouping];
 						[[DisplayLink shared] removeName:@"dragScroll"];
 
@@ -2373,11 +2374,10 @@ NSString * ActionTitle( NSInteger action )
 									strongSelf.editorLayer.selectedNode = hit.isNode;
 									[strongSelf placePushpinForSelection];
 								}
-							}
-							if ( hit.isWay ) {
+							} else if ( hit.isWay ) {
 								// add new node to hit way
 								OSMPoint pt = [hit.isWay pointOnWayForPoint:dragNode.location];
-								[strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode inWay:weakSelf.editorLayer.selectedWay];
+								[strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode inWay:strongSelf.editorLayer.selectedWay];
 								[strongSelf.editorLayer addNode:dragNode toWay:hit.isWay atIndex:segment+1];
 							}
 							return;
@@ -2416,7 +2416,6 @@ NSString * ActionTitle( NSInteger action )
 						// define the drag function
 						void (^dragObject)(CGFloat dragx, CGFloat dragy) = ^(CGFloat dragx, CGFloat dragy) {
 							// don't accumulate undo moves
-							MapView * strongSelf = weakSelf;
 							strongSelf->_pushpinDragTotalMove.x += dragx;
 							strongSelf->_pushpinDragTotalMove.y += dragy;
 							if ( strongSelf->_gestureDidMove ) {
@@ -2453,7 +2452,7 @@ NSString * ActionTitle( NSInteger action )
 							}
 
 							// do hit testing for connecting to other objects
-							if ( weakSelf.editorLayer.selectedWay && object.isNode ) {
+							if ( strongSelf.editorLayer.selectedWay && object.isNode ) {
 								NSInteger segment;
 								OsmBaseObject * hit = [strongSelf dragConnectionForNode:(id)object segment:&segment];
 								if ( hit ) {
@@ -2468,8 +2467,8 @@ NSString * ActionTitle( NSInteger action )
 						const CGFloat MinDistanceSide = 40.0;
 						const CGFloat MinDistanceTop = MinDistanceSide + 10.0;
 						const CGFloat MinDistanceBottom = MinDistanceSide + 120.0;
-						CGPoint arrow = weakSelf.pushpinView.arrowPoint;
-						CGRect screen = weakSelf.bounds;
+						CGPoint arrow = strongSelf.pushpinView.arrowPoint;
+						CGRect screen = strongSelf.bounds;
 						const CGFloat SCROLL_SPEED = 10.0;
 						CGFloat scrollx = 0, scrolly = 0;
 
@@ -2487,13 +2486,12 @@ NSString * ActionTitle( NSInteger action )
 							DisplayLink * displayLink = [DisplayLink shared];
 							__block NSTimeInterval prevTime = CACurrentMediaTime();
 							[displayLink addName:@"dragScroll" block:^{
-								MapView * strongSelf = weakSelf;
 								NSTimeInterval now = CACurrentMediaTime();
 								NSTimeInterval duration = now - prevTime;
 								prevTime = now;
 								CGFloat sx = scrollx * duration * 60.0;	// scale to 60 FPS assumption, need to move farther if framerate is slow
 								CGFloat sy = scrolly * duration * 60.0;
-								[weakSelf adjustOriginBy:CGPointMake(-sx,-sy)];
+								[strongSelf adjustOriginBy:CGPointMake(-sx,-sy)];
 								dragObject( sx, sy );
 								// update position of pushpin
 								CGPoint pt = CGPointWithOffset( weakSelf.pushpinView.arrowPoint, sx, sy );
