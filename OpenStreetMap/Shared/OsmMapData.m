@@ -139,7 +139,8 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 -(void)setupPeriodicSaveTimer
 {
 	__weak OsmMapData * weakSelf = self;
-	[_undoManager addChangeCallback:^{
+
+	[[NSNotificationCenter defaultCenter] addObserverForName:UndoManagerDidChangeNotification object:_undoManager queue:nil usingBlock:^(NSNotification * _Nonnull note) {
 		OsmMapData * myself = weakSelf;
 		if ( myself == nil )
 			return;
@@ -608,7 +609,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)addChangeCallback:(void(^)(void))callback
 {
-	[_undoManager addChangeCallback:callback];
+	[[NSNotificationCenter defaultCenter] addObserverForName:UndoManagerDidChangeNotification object:_undoManager queue:nil usingBlock:^(NSNotification * _Nonnull fnote) {
+		callback();
+	}];
 }
 -(void)beginUndoGrouping
 {

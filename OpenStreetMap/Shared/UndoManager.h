@@ -11,6 +11,8 @@
 #import "VectorMath.h"
 
 
+static NSString * UndoManagerDidChangeNotification = @"UndoManagerDidChangeNotification";
+
 
 @interface UndoAction : NSObject <NSCoding>
 @property (readonly,nonatomic)	NSString	*	selector;
@@ -39,8 +41,6 @@ typedef void(^UndoManagerChangeCallback)(void);
 
 	NSMutableArray	*	_groupingStack;	// for explicit grouping
 
-	NSMutableArray	*	_observerList;
-
 	NSMutableArray	*	_commentList;
 }
 
@@ -56,8 +56,6 @@ typedef void(^UndoManagerChangeCallback)(void);
 @property (assign) NSInteger				runLoopCounter;
 
 -(NSSet *)objectRefs;
-
--(void)addChangeCallback:(UndoManagerChangeCallback)callback;
 
 - (void)registerUndoComment:(NSString *)comment;
 - (void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;

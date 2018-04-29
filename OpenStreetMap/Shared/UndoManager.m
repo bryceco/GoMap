@@ -186,6 +186,12 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	return _undoStack.count + _redoStack.count;
 }
 
+-(void)postChangeNotification
+{
+	NSNotification * notification = [NSNotification notificationWithName:UndoManagerDidChangeNotification object:self];
+	[[NSNotificationQueue defaultQueue] enqueueNotification:notification postingStyle:NSPostWhenIdle coalesceMask:NSNotificationCoalescingOnName|NSNotificationCoalescingOnSender forModes:nil];
+}
+
 -(void)removeMostRecentRedo
 {
 	assert( _redoStack.count );
@@ -195,9 +201,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 		[_redoStack removeLastObject];
 	}
 
-	for ( UndoManagerChangeCallback callback in _observerList ) {
-		callback();
-	}
+	[self postChangeNotification];
 }
 
 - (void) removeAllActions
@@ -212,9 +216,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	[self didChangeValueForKey:@"canUndo"];
 	[self didChangeValueForKey:@"canRedo"];
 
-	for ( UndoManagerChangeCallback callback in _observerList ) {
-		callback();
-	}
+	[self postChangeNotification];
 }
 
 -(void)registerUndo:(UndoAction *)action
@@ -263,9 +265,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	[self didChangeValueForKey:@"canUndo"];
 	[self didChangeValueForKey:@"canRedo"];
 
-	for ( UndoManagerChangeCallback callback in _observerList ) {
-		callback();
-	}
+	[self postChangeNotification];
 }
 
 - (void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
@@ -323,9 +323,8 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	[self didChangeValueForKey:@"canUndo"];
 	[self didChangeValueForKey:@"canRedo"];
 
-	for ( UndoManagerChangeCallback callback in _observerList ) {
-		callback();
-	}
+	[self postChangeNotification];
+
 	if ( self.commentCallback ) {
 		self.commentCallback( YES, _commentList );
 	}
@@ -346,9 +345,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	[self didChangeValueForKey:@"canUndo"];
 	[self didChangeValueForKey:@"canRedo"];
 
-	for ( UndoManagerChangeCallback callback in _observerList ) {
-		callback();
-	}
+	[self postChangeNotification];
 	if ( self.commentCallback ) {
 		self.commentCallback( NO, _commentList );
 	}
@@ -363,16 +360,6 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 {
 	[_groupingStack removeLastObject];
 }
-
--(void)addChangeCallback:(UndoManagerChangeCallback)callback
-{
-	if ( _observerList == nil ) {
-		_observerList = [NSMutableArray arrayWithObject:callback];
-	} else {
-		[_observerList addObject:callback];
-	}
-}
-
 
 -(NSSet *)objectRefs
 {
