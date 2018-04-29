@@ -4995,15 +4995,18 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APA-kz-Xeq">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhx-8A-Atc">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhx-8A-Atc">
                                                 <rect key="frame" x="290" y="8" width="22" height="22"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
                                                     <action selector="infoButtonPressed:" destination="fZc-hX-GbL" eventType="touchUpInside" id="2xk-4I-CQf"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="mhx-8A-Atc" firstAttribute="top" secondItem="APA-kz-Xeq" secondAttribute="top" constant="8" id="HXM-7j-wG2"/>
+                                            <constraint firstAttribute="trailing" secondItem="mhx-8A-Atc" secondAttribute="trailing" constant="8" id="SAA-bu-ylY"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.85098039215686272" green="0.84313725490196079" blue="0.81960784313725488" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
