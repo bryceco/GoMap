@@ -346,6 +346,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	[self didChangeValueForKey:@"canRedo"];
 
 	[self postChangeNotification];
+	
 	if ( self.commentCallback ) {
 		self.commentCallback( NO, _commentList );
 	}

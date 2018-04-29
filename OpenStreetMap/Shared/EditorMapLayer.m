@@ -1924,8 +1924,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 						// the From member of the turn restriction is the selected way
 						if ( _selectedNode == nil || [relation memberByRole:@"via"].ref == _selectedNode ) {	// highlight if no node, is selected, or the selected node is the via node
 							for ( OsmMember * member in relation.members ) {
-								if ( member.isWay ) {
-									CGPathRef turnPath = [self pathForWay:member.ref];
+								if ( member.isWay && [member.ref isKindOfClass:[OsmWay class]] ) {
+									OsmWay * way = member.ref;
+									CGPathRef turnPath = [self pathForWay:way];
 									CAShapeLayer * haloLayer	= [CAShapeLayer new];
 									haloLayer.anchorPoint    	= CGPointMake(0, 0);
 									haloLayer.path            	= turnPath;
@@ -1936,7 +1937,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 									else
 										haloLayer.strokeColor  	= [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.75].CGColor;
 									haloLayer.fillColor        	= nil;
-									haloLayer.lineWidth        	= 10 * _highwayScale;
+									haloLayer.lineWidth        	= (way.tagInfo.lineWidth + 6) * _highwayScale; // 10 * _highwayScale;
 									haloLayer.lineCap        	= kCALineCapRound;
 									haloLayer.lineJoin        	= kCALineJoinRound;
 									haloLayer.zPosition        	= Z_HALO;
