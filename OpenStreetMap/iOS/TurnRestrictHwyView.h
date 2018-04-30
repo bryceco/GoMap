@@ -14,6 +14,13 @@
 @class OsmBaseObject;
 
 
+typedef enum {
+	TURN_RESTRICT_NONE = 0,
+	TURN_RESTRICT_NO = 1,
+	TURN_RESTRICT_ONLY = 2
+} TURN_RESTRICT;
+
+
 typedef void(^BlockTurnRestrictHwyView)(TurnRestrictHwyView *objLine);
 
 @interface TurnRestrictHwyView : UIView
@@ -29,11 +36,13 @@ typedef void(^BlockTurnRestrictHwyView)(TurnRestrictHwyView *objLine);
 @property (strong, nonatomic) CAShapeLayer			*	highlightLayer;
 @property (strong, nonatomic) CAShapeLayer 			*	highwayLayer;
 
-@property (strong,nonatomic) BlockTurnRestrictHwyView	lineSelectionCallback;
-@property (strong,nonatomic) BlockTurnRestrictHwyView	lineButtonPressCallback;
+@property (strong,nonatomic) BlockTurnRestrictHwyView	highwaySelectedCallback;
+@property (strong,nonatomic) BlockTurnRestrictHwyView	restrictionChangedCallback;
 
 @property (strong,nonatomic) UIButton *                 arrowButton;
 @property (strong,nonatomic) NSArray *                  parentWaysArray;
+
+@property (assign,nonatomic) TURN_RESTRICT				restriction;
 
 -(void)createTurnRestrictionButton;
 -(void)createOneWayArrowsForHighway;

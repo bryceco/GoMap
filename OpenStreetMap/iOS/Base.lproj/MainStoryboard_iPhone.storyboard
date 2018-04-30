@@ -4995,8 +4995,15 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APA-kz-Xeq">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qP9-Sc-sc4">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="20.5"/>
+                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mhx-8A-Atc">
-                                                <rect key="frame" x="290" y="8" width="22" height="22"/>
+                                                <rect key="frame" x="290" y="28.5" width="22" height="22"/>
                                                 <connections>
                                                     <action selector="infoButtonPressed:" destination="fZc-hX-GbL" eventType="touchUpInside" id="2xk-4I-CQf"/>
                                                 </connections>
@@ -5004,8 +5011,10 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="mhx-8A-Atc" firstAttribute="top" secondItem="APA-kz-Xeq" secondAttribute="top" constant="8" id="HXM-7j-wG2"/>
+                                            <constraint firstItem="qP9-Sc-sc4" firstAttribute="leading" secondItem="APA-kz-Xeq" secondAttribute="leading" id="Pfc-On-lDY"/>
                                             <constraint firstAttribute="trailing" secondItem="mhx-8A-Atc" secondAttribute="trailing" constant="8" id="SAA-bu-ylY"/>
+                                            <constraint firstAttribute="trailing" secondItem="qP9-Sc-sc4" secondAttribute="trailing" id="eLm-Cg-DhZ"/>
+                                            <constraint firstItem="mhx-8A-Atc" firstAttribute="top" secondItem="qP9-Sc-sc4" secondAttribute="bottom" constant="8" id="hX2-cC-Fk1"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -5024,10 +5033,12 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             <constraint firstItem="0as-7d-L0W" firstAttribute="leading" secondItem="fg1-MM-IyW" secondAttribute="leading" id="U3F-vT-3NH"/>
                             <constraint firstAttribute="trailing" secondItem="0as-7d-L0W" secondAttribute="trailing" id="Udi-0g-Cm3"/>
                             <constraint firstItem="Mms-6q-xZ5" firstAttribute="bottom" secondItem="0as-7d-L0W" secondAttribute="bottom" id="XT2-Cq-fUX"/>
+                            <constraint firstItem="qP9-Sc-sc4" firstAttribute="top" secondItem="APA-kz-Xeq" secondAttribute="top" id="muZ-Rz-g9e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Mms-6q-xZ5"/>
                     </view>
                     <connections>
+                        <outlet property="detailText" destination="qP9-Sc-sc4" id="Tiu-hw-aF3"/>
                         <outlet property="detailView" destination="APA-kz-Xeq" id="xpB-fg-j4c"/>
                         <outlet property="infoButton" destination="mhx-8A-Atc" id="Va2-wJ-tx4"/>
                         <outlet property="viewWithTitle" destination="0as-7d-L0W" id="eAO-Ve-v3A"/>

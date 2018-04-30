@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIView 				* 	viewWithTitle;
 @property (strong, nonatomic) IBOutlet UIView 				*	detailView;
 @property (strong, nonatomic) IBOutlet UIButton 			*	infoButton;
+@property (strong, nonatomic) IBOutlet UILabel	 			*	detailText;
 
 
 @property (strong,nonatomic)    OsmNode 		*	centralNode;	// the central node

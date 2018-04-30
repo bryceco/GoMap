@@ -28,14 +28,14 @@ static CGPoint MidPointOf(CGPoint p1, CGPoint p2)
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-	if ( _lineSelectionCallback )  {
-		_lineSelectionCallback( self );
+	if ( _highwaySelectedCallback )  {
+		_highwaySelectedCallback( self );
 	}
 }
 
 -(void)rotateButtonForDirection
 {
-	if ( !_arrowButton.isSelected ) {
+	if ( self.restriction == TURN_RESTRICT_NONE ) {
 		CGFloat angle = [TurnRestrictHwyView headingFromPoint:_centerPoint toPoint:_endPoint];
 		_arrowButton.transform = CGAffineTransformMakeRotation(M_PI+angle);
 	} else {
@@ -50,7 +50,6 @@ static CGPoint MidPointOf(CGPoint p1, CGPoint p2)
 
 	_arrowButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 	[_arrowButton setImage:[UIImage imageNamed:@"arrowAllow"] forState:UIControlStateNormal];
-	[_arrowButton setImage:[UIImage imageNamed:@"arrowRestrict"] forState:UIControlStateSelected];
 
 	_arrowButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
 	_arrowButton.center = location;
@@ -142,10 +141,8 @@ static CGPoint MidPointOf(CGPoint p1, CGPoint p2)
 
 -(void)restrictionButtonPressed:(UIButton *)sender
 {
-	sender.selected = !sender.selected;
-
-	if ( _lineButtonPressCallback )  {
-		_lineButtonPressCallback(self);
+	if ( _restrictionChangedCallback )  {
+		_restrictionChangedCallback(self);
 	}
 }
 

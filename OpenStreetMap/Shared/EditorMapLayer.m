@@ -1923,6 +1923,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 					if ( relation.isRestriction && [relation memberByRole:@"from"].ref == object  ) {
 						// the From member of the turn restriction is the selected way
 						if ( _selectedNode == nil || [relation memberByRole:@"via"].ref == _selectedNode ) {	// highlight if no node, is selected, or the selected node is the via node
+						//	BOOL isConditionalRestriction = relation.rags
 							for ( OsmMember * member in relation.members ) {
 								if ( member.isWay && [member.ref isKindOfClass:[OsmWay class]] ) {
 									OsmWay * way = member.ref;
@@ -1931,11 +1932,13 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 									haloLayer.anchorPoint    	= CGPointMake(0, 0);
 									haloLayer.path            	= turnPath;
 									if ( member.ref == object && ![member.role isEqualToString:@"to"] )
-										haloLayer.strokeColor 	= [UIColor colorWithRed:0 green:0 blue:0 alpha:0.75].CGColor;
-									else if ( [relation.tags[@"restriction"] containsString:@"only_"])
-										haloLayer.strokeColor   = [UIColor colorWithRed:0 green:0 blue:1.0 alpha:0.75].CGColor;
+										haloLayer.strokeColor 	= [UIColor.blackColor colorWithAlphaComponent:0.75].CGColor;
+									else if ( [relation.tags[@"restriction"] hasPrefix:@"only_"])
+										haloLayer.strokeColor   = [UIColor.blueColor colorWithAlphaComponent:0.75].CGColor;
+									else if ( [relation.tags[@"restriction"] hasPrefix:@"no_"])
+										haloLayer.strokeColor  	= [UIColor.redColor colorWithAlphaComponent:0.75].CGColor;
 									else
-										haloLayer.strokeColor  	= [UIColor colorWithRed:1.0 green:0 blue:0 alpha:0.75].CGColor;
+										haloLayer.strokeColor  	= [UIColor.orangeColor colorWithAlphaComponent:0.75].CGColor;	// some other kind of restriction
 									haloLayer.fillColor        	= nil;
 									haloLayer.lineWidth        	= (way.tagInfo.lineWidth + 6) * _highwayScale; // 10 * _highwayScale;
 									haloLayer.lineCap        	= kCALineCapRound;

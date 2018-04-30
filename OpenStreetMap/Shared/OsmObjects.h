@@ -119,6 +119,7 @@ typedef enum {
 -(NSDate *)dateForTimestamp;
 
 -(NSSet *)nodeSet;
+-(NSArray *)extendedKeysForKey:(NSString *)key;
 -(void)computeBoundingBox;
 -(BOOL)overlapsBox:(OSMRect)box;
 -(OSMRect)boundingBox;

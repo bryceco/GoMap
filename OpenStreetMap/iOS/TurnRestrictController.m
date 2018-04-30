@@ -18,14 +18,6 @@
 #import "OsmObjects.h"
 
 
-typedef enum TURN_ANGLE {
-	TURN_ANGLE_UTURN,
-	TURN_ANGLE_LEFT,
-	TURN_ANGLE_RIGHT,
-	TURN_ANGLE_STRAIGHT
-} TURN_ANGLE;
-
-
 @interface TurnRestrictController ()
 {
 	NSMutableArray		*	_parentWays;
@@ -153,6 +145,8 @@ typedef enum TURN_ANGLE {
 	CGPoint detailViewCenter	= CGPointMake( _detailView.frame.size.width/2, _detailView.frame.size.height/2 );
 	CGPoint positionOffset		= CGPointSubtract( centerNodePos, detailViewCenter );
 
+	self.detailText.text = @"Select a highway approaching the intersection";
+
 	// Get relations related to restrictions
 	_allRelations = [NSMutableArray new];
 	for ( OsmRelation * relation in _centralNode.relations )  {
@@ -226,9 +220,9 @@ typedef enum TURN_ANGLE {
 
 		[hwyView createTurnRestrictionButton];
 		[hwyView createOneWayArrowsForHighway];
-		hwyView.arrowButton.hidden 		= YES;
-		hwyView.lineButtonPressCallback = ^(TurnRestrictHwyView *objLine) { [self toggleTurnRestriction:objLine]; };
-		hwyView.lineSelectionCallback 	= ^(TurnRestrictHwyView *objLine) { [self selectFromHighway:objLine]; };
+		hwyView.arrowButton.hidden 			= YES;
+		hwyView.restrictionChangedCallback	= ^(TurnRestrictHwyView *objLine) { [self toggleTurnRestriction:objLine]; };
+		hwyView.highwaySelectedCallback 	= ^(TurnRestrictHwyView *objLine) { [self selectFromHighway:objLine]; };
 
 		[_detailView addSubview:hwyView];
 		[_highwayViewArray addObject:hwyView];
@@ -252,8 +246,8 @@ typedef enum TURN_ANGLE {
 	_uTurnButton.layer.cornerRadius 	= 2.0;
 	_uTurnButton.layer.borderColor 		= UIColor.blackColor.CGColor;
 
-	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnAllow"]	 forState:UIControlStateNormal];
-	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnRestrict"] forState:UIControlStateSelected];
+	[_uTurnButton setImage:[UIImage imageNamed:@"uTurnAllow"] forState:UIControlStateNormal];
+	[_uTurnButton setImage:[UIImage imageNamed:@"no_u_turn"] forState:UIControlStateSelected];
 	[_uTurnButton addTarget:self action:@selector(uTurnButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 	[_detailView addSubview:_uTurnButton];
 	_uTurnButton.hidden = true;
@@ -268,6 +262,22 @@ typedef enum TURN_ANGLE {
 	[self presentViewController:alert animated:YES completion:nil];
 }
 
+-(NSString *)textForTurnFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy
+{
+	NSString * fromName = [fromHwy.wayObj friendlyDescription];
+	NSString * toName = [toHwy.wayObj friendlyDescription];
+	switch ( toHwy.restriction ) {
+		case TURN_RESTRICT_NONE:
+			return [NSString stringWithFormat:@"Travel allowed from %@ to %@", fromName, toName];
+		case TURN_RESTRICT_NO:
+			return [NSString stringWithFormat:@"Travel prohibited from %@ to %@", fromName, toName];
+		case TURN_RESTRICT_ONLY:
+			return [NSString stringWithFormat:@"Travel only from %@ to %@", fromName, toName];
+	}
+	return nil;
+}
+
+
 // Select a new "From" highway
 -(void)selectFromHighway:(TurnRestrictHwyView *)selectedHwy
 {
@@ -280,13 +290,15 @@ typedef enum TURN_ANGLE {
 	_uTurnButton.hidden = _selectedFromHwy.wayObj.isOneWay != ONEWAY_NONE;
 	
 	CGFloat angle = [TurnRestrictHwyView headingFromPoint:selectedHwy.endPoint toPoint:selectedHwy.centerPoint];
-	_uTurnButton.transform = CGAffineTransformMakeRotation(angle);
+	_uTurnButton.transform = CGAffineTransformMakeRotation(M_PI+angle);
 	
 	_currentUTurnRelation = [self findRelation:_editedRelations
 										   from:_selectedFromHwy.wayObj
 											via:_centralNode
 											 to:_selectedFromHwy.wayObj];
 	_uTurnButton.selected = (_currentUTurnRelation != nil);
+
+	self.detailText.text = [NSString stringWithFormat:@"Travel from %@",selectedHwy.wayObj.friendlyDescription];
 
 	// highway exits center one-way
 	BOOL selectedHwyIsOneWayExit = [selectedHwy isOneWayExitingCenter];
@@ -296,25 +308,38 @@ typedef enum TURN_ANGLE {
 		selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay;
 		
 		if ( highway == selectedHwy ) {
+
 			// highway is selected
 			highway.highlightLayer.hidden = NO;
 			highway.arrowButton.hidden = YES;
+
 		} else {
+
 			// highway is deselected, so display restrictions applied to it
 			highway.highlightLayer.hidden = YES;
 			
 			OsmRelation * relation = [self findRelation:_editedRelations from:selectedHwy.wayObj via:_centralNode to:highway.wayObj];
-			BOOL isSelected = (relation == nil);
-			
+
 			highway.objRel = relation;
 			highway.arrowButton.hidden = NO;
-			highway.arrowButton.selected = !isSelected;
 
-			TURN_ANGLE turn = [TurnRestrictController turnTypeForIntersectionFrom:_selectedFromHwy to:highway];
-			NSString * turnName = [TurnRestrictController turnNameForAngle:turn];
-			turnName = [@"no_" stringByAppendingString:turnName];
-			[highway.arrowButton setImage:[UIImage imageNamed:turnName] forState:UIControlStateSelected];
-			[highway rotateButtonForDirection];
+			NSString * restriction = relation.tags[@"restriction"];
+			BOOL isUnsupportedRestriction = NO;
+			if ( restriction == nil ) {
+				NSArray * a = [relation extendedKeysForKey:@"restriction"];
+				if ( a.count ) {
+					restriction = relation.tags[ a.lastObject ];
+					isUnsupportedRestriction = YES;
+				}
+			}
+			if ( [restriction hasPrefix:@"no_"] ) {
+				highway.restriction = TURN_RESTRICT_NO;
+			} else if ( [restriction hasPrefix:@"only_"] ) {
+				highway.restriction = TURN_RESTRICT_ONLY;
+			} else {
+				highway.restriction = TURN_RESTRICT_NONE;
+			}
+			[self setTurnRestrictionIconForHighway:highway];
 
 			if ( selectedHwyIsOneWayExit ) {
 				highway.arrowButton.hidden = YES;
@@ -324,6 +349,7 @@ typedef enum TURN_ANGLE {
 		}
 	}
 
+	[self.detailView bringSubviewToFront:_detailText];
 	[self.detailView bringSubviewToFront:_infoButton];
 }
 
@@ -355,74 +381,111 @@ typedef enum TURN_ANGLE {
 	[mapData deleteTurnRestrictionRelation:relation];
 }
 
-+(TURN_ANGLE)turnTypeForIntersectionFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy
++(NSString *)turnTypeForIntersectionFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy
 {
 	double angle = [toHwy turnAngleDegreesFromPoint:fromHwy.endPoint];	// -180..180
 
-	if (ABS(angle) < 22)  {
-		return TURN_ANGLE_STRAIGHT;
+	if (ABS(angle) < 23)  {
+		return @"straight_on";
 	} else if ( toHwy.wayObj.isOneWay && fromHwy.wayObj.isOneWay && ABS(ABS(angle) - 180) < 40 ) {	// more likely a u-turn if both are one-way
-		return TURN_ANGLE_UTURN;
+		return @"u_turn";
 	}  else if ( ABS(ABS(angle) - 180) < 23 ) {
-		return TURN_ANGLE_UTURN;
+		return @"u_turn";
 	} else if ( angle < 0 )   {
-		return TURN_ANGLE_LEFT;
+		return @"left_turn";
 	} else {
-		return TURN_ANGLE_RIGHT;
+		return @"right_turn";
 	}
 }
 
-
-+(NSString *)turnNameForAngle:(TURN_ANGLE)angle
+-(NSString *)restrictionNameForHighway:(TurnRestrictHwyView *)targetHwy
 {
-	switch (angle) {
-		case TURN_ANGLE_RIGHT:
-			return @"right_turn";
-		case TURN_ANGLE_LEFT:
-			return @"left_turn";
-		case TURN_ANGLE_UTURN:
-			return @"u_turn";
-		case TURN_ANGLE_STRAIGHT:
-			return @"straight_on";
-		default:
-			return nil;
+	if ( targetHwy.restriction != TURN_RESTRICT_NONE )  {
+
+		NSString * restrictionName = [TurnRestrictController turnTypeForIntersectionFrom:_selectedFromHwy to:targetHwy];
+		if ( targetHwy.restriction == TURN_RESTRICT_ONLY )
+			restrictionName = [@"only_" stringByAppendingString:restrictionName];
+		else
+			restrictionName = [@"no_" stringByAppendingString:restrictionName];
+
+		return restrictionName;
+
+	} else {
+
+		return nil;
 	}
+}
+-(void)setTurnRestrictionIconForHighway:(TurnRestrictHwyView *)targetHwy
+{
+	NSString * name = [self restrictionNameForHighway:targetHwy];
+	if ( name ) {
+		[targetHwy.arrowButton setImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
+	} else {
+		[targetHwy.arrowButton setImage:[UIImage imageNamed:@"arrowAllow"] forState:UIControlStateNormal];
+	}
+	[targetHwy rotateButtonForDirection];
 }
 
 // Enable/disable a left/right/straight turn restriction
--(void)toggleTurnRestriction:(TurnRestrictHwyView *)targetHwy
+-(void)toggleTurnRestrictionUnsafe:(TurnRestrictHwyView *)targetHwy
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
-	
-	bool isRestricting = targetHwy.arrowButton.selected;
-	
-	if ( isRestricting )  {
-		
-		TURN_ANGLE turnType = [TurnRestrictController turnTypeForIntersectionFrom:_selectedFromHwy to:targetHwy];
-		NSString * restrictionName = [TurnRestrictController turnNameForAngle:turnType];
-		restrictionName = [@"no_" stringByAppendingString:restrictionName];
+
+	switch (targetHwy.restriction) {
+		case TURN_RESTRICT_NO:
+			targetHwy.restriction = TURN_RESTRICT_ONLY;
+			break;
+		case TURN_RESTRICT_NONE:
+			targetHwy.restriction = TURN_RESTRICT_NO;
+			break;
+		case TURN_RESTRICT_ONLY:
+			targetHwy.restriction = TURN_RESTRICT_NONE;
+			break;
+	}
+
+	if ( targetHwy.restriction != TURN_RESTRICT_NONE )  {
+
+		NSString * restrictionName = [self restrictionNameForHighway:targetHwy];
 		targetHwy.objRel = [self applyTurnRestriction:mapData from:_selectedFromHwy.wayObj fromNode:_selectedFromHwy.connectedNode to:targetHwy.wayObj toNode:targetHwy.connectedNode restriction:restrictionName];
 
 	} else {
-		
+
 		// Remove Relation
 		if ( targetHwy.objRel )  {
 
 			[self removeTurnRestriction:mapData relation:targetHwy.objRel];
 			[_editedRelations removeObject:targetHwy.objRel];
-			
 			targetHwy.objRel = nil;
 		}
+
 	}
 
-	[targetHwy rotateButtonForDirection];
+	[self setTurnRestrictionIconForHighway:targetHwy];
+
+	self.detailText.text = [self textForTurnFrom:_selectedFromHwy to:targetHwy];
 
 	appDelegate.mapView.editorLayer.selectedWay = _selectedFromHwy.wayObj;
 
 	[appDelegate.mapView.editorLayer setNeedsDisplay];
 	[appDelegate.mapView.editorLayer setNeedsLayout];
 }
+
+-(void)toggleTurnRestriction:(TurnRestrictHwyView *)targetHwy
+{
+	if ( targetHwy.objRel && targetHwy.objRel.tags[@"restriction"] == nil ) {
+		// it contains a restriction relation we don't understand
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+		[alert addAction:[UIAlertAction actionWithTitle:@"Modify" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+			[self toggleTurnRestrictionUnsafe:targetHwy];
+		}]];
+		[self presentViewController:alert animated:YES completion:nil];
+	} else {
+		[self toggleTurnRestrictionUnsafe:targetHwy];
+	}
+}
+
 
 // Use clicked the U-Turn button
 -(void)uTurnButtonClicked:(UIButton *)sender
@@ -445,6 +508,9 @@ typedef enum TURN_ANGLE {
 			_currentUTurnRelation = nil;
 		}
 	}
+
+	self.detailText.text = isRestricting ? [NSString stringWithFormat:@"U-Turn from %@ prohibited", _selectedFromHwy.wayObj.friendlyDescription]
+										 : [NSString stringWithFormat:@"U-Turn from %@ allowed", _selectedFromHwy.wayObj.friendlyDescription];
 
 	[appDelegate.mapView.editorLayer setNeedsDisplay];
 	[appDelegate.mapView.editorLayer setNeedsLayout];

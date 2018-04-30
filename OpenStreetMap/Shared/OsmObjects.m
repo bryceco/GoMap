@@ -367,6 +367,22 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	[self clearCachedProperties];
 }
 
+// get all keys that contain another part, like "restriction:conditional"
+-(NSArray *)extendedKeysForKey:(NSString *)key
+{
+	NSArray * keys = nil;
+	for ( NSString * tag in _tags ) {
+		if ( [tag hasPrefix:key]  &&  [tag characterAtIndex:key.length] == ':' ) {
+			if ( keys == nil ) {
+				keys = @[ tag ];
+			} else {
+				keys = [keys arrayByAddingObject:tag];
+			}
+		}
+	}
+	return keys;
+}
+
 -(NSSet *)nodeSet
 {
 	assert(NO);
