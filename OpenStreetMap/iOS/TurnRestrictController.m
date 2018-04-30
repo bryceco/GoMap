@@ -185,7 +185,7 @@
 		
 		// Highlight shape
 		CAShapeLayer * highlightLayer = [CAShapeLayer layer];
-		highlightLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH + 8;
+		highlightLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH + 10;
 		highlightLayer.strokeColor 	= UIColor.cyanColor.CGColor;
 		highlightLayer.lineCap 		= kCALineCapRound;
 		highlightLayer.path   		= bezierPath.CGPath;
@@ -264,15 +264,15 @@
 
 -(NSString *)textForTurnFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy
 {
-	NSString * fromName = [fromHwy.wayObj friendlyDescription];
-	NSString * toName = [toHwy.wayObj friendlyDescription];
+	NSString * fromName = fromHwy.wayObj.friendlyDescription;
+	NSString * toName = toHwy.wayObj.friendlyDescription;
 	switch ( toHwy.restriction ) {
 		case TURN_RESTRICT_NONE:
-			return [NSString stringWithFormat:@"Travel allowed from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:@"Travel ALLOWED from %@ to %@", fromName, toName];
 		case TURN_RESTRICT_NO:
-			return [NSString stringWithFormat:@"Travel prohibited from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:@"Travel PROHIBITED from %@ to %@", fromName, toName];
 		case TURN_RESTRICT_ONLY:
-			return [NSString stringWithFormat:@"Travel only from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:@"Travel ONLY from %@ to %@", fromName, toName];
 	}
 	return nil;
 }
