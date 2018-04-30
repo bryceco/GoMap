@@ -69,9 +69,10 @@
 	[self updateUndoRedoButtonState];
 	[self updateUploadButtonState];
 
+	__weak __auto_type weakSelf = self;
 	[self.mapView.editorLayer.mapData addChangeCallback:^{
-		[self updateUndoRedoButtonState];
-		[self updateUploadButtonState];
+		[weakSelf updateUndoRedoButtonState];
+		[weakSelf updateUploadButtonState];
 	}];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];

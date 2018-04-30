@@ -46,6 +46,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
+
 	[[AppDelegate getAppDelegate].mapView.editorLayer.mapData endUndoGrouping];
 }
 
@@ -324,12 +326,10 @@
 			highway.arrowButton.hidden = NO;
 
 			NSString * restriction = relation.tags[@"restriction"];
-			BOOL isUnsupportedRestriction = NO;
 			if ( restriction == nil ) {
 				NSArray * a = [relation extendedKeysForKey:@"restriction"];
 				if ( a.count ) {
 					restriction = relation.tags[ a.lastObject ];
-					isUnsupportedRestriction = YES;
 				}
 			}
 			if ( [restriction hasPrefix:@"no_"] ) {
