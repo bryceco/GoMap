@@ -45,6 +45,7 @@
 																	url:url
 																maxZoom:[zoomField.text integerValue]
 																roundUp:YES
+																projection:nil
 																polygon:NULL
 											   				attribString:nil
 												 			attribIcon:nil

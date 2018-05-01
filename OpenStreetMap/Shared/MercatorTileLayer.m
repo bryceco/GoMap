@@ -321,6 +321,22 @@ static inline int32_t modulus( int32_t a, int32_t n)
 	return TileXYToQuadKey(tileX, tileY, zoom);
 }
 
+static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString * projection)
+{
+	double zoomSize = 1 << z;
+	double lon = tx / zoomSize * M_PI * 2 - M_PI;
+	double lat = atan( sinh( M_PI*(1-2*ty/zoomSize)));
+	OSMPoint loc;
+	if ( [projection isEqualToString:@"EPSG:4326"] ) {
+		loc = OSMPointMake(lon*180/M_PI, lat*180/M_PI);
+	} else {
+		// EPSG:3857 and others
+		loc = OSMPointMake( lon, log(tan((M_PI_2+lat)/2)) );	// mercatorRaw
+		loc = Mult( loc, 20037508.34 / M_PI );
+	}
+	return loc;
+}
+
 -(NSString *)urlForZoom:(int32_t)zoom tileX:(int32_t)tileX tileY:(int32_t)tileY
 {
 	NSMutableString * url = [self.aerialService.url mutableCopy];
@@ -342,17 +358,32 @@ static inline int32_t modulus( int32_t a, int32_t n)
 		}
 	}
 
-	NSString * u = [self quadKeyForZoom:zoom tileX:tileX tileY:tileY];
-	NSString * x = [NSString stringWithFormat:@"%d",tileX];
-	NSString * y = [NSString stringWithFormat:@"%d",tileY];
-	NSString * negY = [NSString stringWithFormat:@"%d",(1<<zoom)-tileY-1];
-	NSString * z = [NSString stringWithFormat:@"%d",zoom];
-	[url replaceOccurrencesOfString:@"{u}" withString:u options:0 range:NSMakeRange(0,url.length)];
-	[url replaceOccurrencesOfString:@"{x}" withString:x options:0 range:NSMakeRange(0,url.length)];
-	[url replaceOccurrencesOfString:@"{y}" withString:y options:0 range:NSMakeRange(0,url.length)];
-	[url replaceOccurrencesOfString:@"{-y}" withString:negY options:0 range:NSMakeRange(0,url.length)];
-	[url replaceOccurrencesOfString:@"{zoom}" withString:z options:0 range:NSMakeRange(0,url.length)];
-	return url;
+	NSString * projection = self.aerialService.projection;
+	if ( projection ) {
+		// WMS
+		OSMPoint minXmaxY = TileToWMSCoords( tileX, tileY, zoom, projection );
+		OSMPoint maxXminY = TileToWMSCoords( tileX+1, tileY+1, zoom, projection );
+		NSString * bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",minXmaxY.x,maxXminY.y,maxXminY.x,minXmaxY.y];
+		[url replaceOccurrencesOfString:@"{width}" withString:@"256" options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{height}" withString:@"256" options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{proj}" withString:projection options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{bbox}" withString:bbox options:0 range:NSMakeRange(0, url.length)];
+
+	} else {
+		// TMS
+		NSString * u = [self quadKeyForZoom:zoom tileX:tileX tileY:tileY];
+		NSString * x = [NSString stringWithFormat:@"%d",tileX];
+		NSString * y = [NSString stringWithFormat:@"%d",tileY];
+		NSString * negY = [NSString stringWithFormat:@"%d",(1<<zoom)-tileY-1];
+		NSString * z = [NSString stringWithFormat:@"%d",zoom];
+		[url replaceOccurrencesOfString:@"{u}" withString:u options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{x}" withString:x options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{y}" withString:y options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{-y}" withString:negY options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{z}" withString:z options:0 range:NSMakeRange(0,url.length)];
+	}
+
+	return [url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
 }
 
 
