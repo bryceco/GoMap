@@ -3274,6 +3274,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			NSString * title = object.friendlyDescription;
 			[multiSelectSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 				// processing for selecting one of multipe objects
+				[_editorLayer setSelectedNode:nil];
+				[_editorLayer setSelectedWay:nil];
+				[_editorLayer setSelectedRelation:nil];
 				if ( object.isNode ) {
 					for ( OsmBaseObject * obj in objects ) {
 						if ( obj.isWay && [obj.isWay.nodes containsObject:object] ) {
@@ -3290,6 +3293,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 					OSMPoint latLon2 = [object.isWay pointOnWayForPoint:OSMPointMake(latLon.longitude,latLon.latitude)];
 					CGPoint pos = [self screenPointForLatitude:latLon2.y longitude:latLon2.x birdsEye:YES];
 					[self placePushpinAtPoint:pos object:object];
+				} else if ( object.isRelation ) {
+					[_editorLayer setSelectedRelation:object.isRelation];
+					[self placePushpinAtPoint:point object:object];
 				}
 			}]];
 		}

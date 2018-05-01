@@ -3758,6 +3758,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	OSMSize maxDegrees = { radius / pixelsPerDegree.width, radius / pixelsPerDegree.height };
 	const double NODE_BIAS = 0.5;	// make nodes appear closer so they can be selected
 
+	NSMutableSet * relations = [NSMutableSet new];
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.deleted )
 			continue;
@@ -3769,6 +3770,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 					dist *= NODE_BIAS;
 					if ( dist <= 1.0 ) {
 						block( node, dist, 0 );
+						[relations addObjectsFromArray:node.relations];
 					}
 				}
 			}
@@ -3778,7 +3780,8 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 				NSInteger seg = 0;
 				CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
 				if ( dist <= 1.0 ) {
-					block( object, dist, seg );
+					block( way, dist, seg );
+					[relations addObjectsFromArray:way.relations];
 				}
 			}
 			if ( testNodes ) {
@@ -3789,10 +3792,14 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 					dist *= NODE_BIAS;
 					if ( dist < 1.0 ) {
 						block( node, dist, 0 );
+						[relations addObjectsFromArray:node.relations];
 					}
 				}
 			}
 		}
+	}
+	for ( OsmRelation * relation in relations ) {
+		block( relation, 1.0, 0 );
 	}
 }
 
@@ -3845,9 +3852,9 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	}];
 	NSMutableArray * objects = [objectSet.allObjects mutableCopy];
 	[objects sortUsingComparator:^NSComparisonResult(OsmBaseObject * o1, OsmBaseObject * o2) {
-		int diff = (o1.isNode?YES:NO) - (o2.isNode?YES:NO);
+		int diff = (o1.isRelation?2:o1.isWay?1:0) - (o2.isRelation?2:o2.isWay?1:0);
 		if ( diff )
-			return diff < 0 ? NSOrderedAscending : NSOrderedDescending;
+			return -diff;
 		int64_t diff2 = o1.ident.longLongValue - o2.ident.longLongValue;
 		return diff2 < 0 ? NSOrderedAscending : diff2 > 0 ? NSOrderedDescending : NSOrderedSame;
 	}];
