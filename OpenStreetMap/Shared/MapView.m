@@ -284,18 +284,16 @@ CGSize SizeForImage( NSImage * image )
 	_progressIndicator.color = NSColor.greenColor;
 #endif
 
-	if ( [CLLocationManager locationServicesEnabled] ) {
-		_locationManager = [[CLLocationManager alloc] init];
-		_locationManager.delegate = self;
+	_locationManager = [[CLLocationManager alloc] init];
+	_locationManager.delegate = self;
 #if TARGET_OS_IPHONE
-		_locationManager.pausesLocationUpdatesAutomatically = NO;
-		_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableGpxLogging;
-		if (@available(iOS 11.0, *)) {
-			_locationManager.showsBackgroundLocationIndicator = YES;
-		}
-		_locationManager.activityType = CLActivityTypeOther;
-#endif
+	_locationManager.pausesLocationUpdatesAutomatically = NO;
+	_locationManager.allowsBackgroundLocationUpdates = self.gpsInBackground && self.enableGpxLogging;
+	if (@available(iOS 11.0, *)) {
+		_locationManager.showsBackgroundLocationIndicator = YES;
 	}
+	_locationManager.activityType = CLActivityTypeOther;
+#endif
 
 	// white background for status bar
 	_statusBarBackground.backgroundColor = NSColor.whiteColor;
@@ -709,10 +707,12 @@ CGSize SizeForImage( NSImage * image )
 		} else {
 			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:UIAlertControllerStyleAlert];
 			[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-			[alertError addAction:[UIAlertAction actionWithTitle:ignoreButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-				// ignore network errors for a while
-				_ignoreNetworkErrorsUntilDate = [[NSDate date] dateByAddingTimeInterval:5*60.0];
-			}]];
+			if ( ignoreButton ) {
+				[alertError addAction:[UIAlertAction actionWithTitle:ignoreButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+					// ignore network errors for a while
+					_ignoreNetworkErrorsUntilDate = [[NSDate date] dateByAddingTimeInterval:5*60.0];
+				}]];
+			}
 			[self.viewController presentViewController:alertError animated:YES completion:nil];
 		}
 #else
