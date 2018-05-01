@@ -115,11 +115,14 @@ static const CGFloat NodeHighlightRadius = 6.0;
 			_mapData = [[OsmMapData alloc] initWithCachedData];
 			t = CACurrentMediaTime() - t;
 #if TARGET_OS_IPHONE
-			if ( _mapData && t > 6.0 ) {
-				NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times. You may want to clear the cache (under Display settings) to improve performance.",nil);
-				UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text preferredStyle:UIAlertControllerStyleAlert];
-				[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
+			if ( _mapData && t > 5.0 ) {
+				// need to pause before posting the alert because the view controller isn't ready here yet
+				dispatch_async(dispatch_get_main_queue(), ^{
+					NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.",nil);
+					UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text preferredStyle:UIAlertControllerStyleAlert];
+					[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+					[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
+				});
 			}
 #endif
 		} else {
