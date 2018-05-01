@@ -90,6 +90,7 @@ if (!(condition)) {		\
 #if USE_RTREE
 	sqlite3_exec(_db, "drop table spatial;",	0, 0, 0 );
 #endif
+	sqlite3_exec(_db, "vacuum;",				0, 0, 0 );	// compact database
 }
 
 -(void)createTables
