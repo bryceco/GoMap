@@ -1946,7 +1946,7 @@ typedef enum {
 	ACTION_MORE,
 	ACTION_HEIGHT,
 } EDIT_ACTION;
-NSString * ActionTitle( NSInteger action )
+NSString * ActionTitle( NSInteger action, BOOL abbrev )
 {
 	switch (action) {
 		case ACTION_SPLIT:			return NSLocalizedString(@"Split",nil);
@@ -1965,7 +1965,7 @@ NSString * ActionTitle( NSInteger action )
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
 		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
-		case ACTION_RESTRICT:		return NSLocalizedString(@"Turn Restrictions", nil);
+		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", nil) : NSLocalizedString(@"Turn Restrictions", nil);
 	};
 	return nil;
 }
@@ -1992,9 +1992,9 @@ NSString * ActionTitle( NSInteger action )
 				[a addObject:@(ACTION_SPLIT)];
 			if ( join )
 				[a addObject:@(ACTION_JOIN)];
+			[a addObject:@(ACTION_ROTATE)];
 			if ( restriction )
 				[a addObject:@(ACTION_RESTRICT)];
-			[a addObject:@(ACTION_ROTATE)];
 			[a addObject:@(ACTION_HEIGHT)];
 			actionList = [NSArray arrayWithArray:a];
 		} else {
@@ -2015,7 +2015,7 @@ NSString * ActionTitle( NSInteger action )
 	}
 	UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Perform Action",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 	for ( NSNumber * value in actionList ) {
-		NSString * title = ActionTitle( value.integerValue );
+		NSString * title = ActionTitle( value.integerValue, NO );
 		[actionSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 			[self performEditAction:value.integerValue];
 		}]];
@@ -2202,13 +2202,16 @@ NSString * ActionTitle( NSInteger action )
 				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE) ];
 		} else {
 			if ( _editorLayer.selectedPrimary.isRelation )
-				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
+				if ( _editorLayer.selectedPrimary.isRelation.isRestriction )
+					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_RESTRICT) ];
+				else
+					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
 			else
 				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
 		}
 		[_editControl removeAllSegments];
 		for ( NSNumber * action in _editControlActions ) {
-			NSString * title = ActionTitle( action.integerValue );
+			NSString * title = ActionTitle( action.integerValue, YES );
 			[_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
 		}
 	}
@@ -2220,7 +2223,19 @@ NSString * ActionTitle( NSInteger action )
 {
 	// if GPS is running don't keep moving around
 	self.userOverrodeLocationPosition = YES;
-	
+
+	// if we currently have a relation selected then select the via node instead
+	if ( self.editorLayer.selectedPrimary.isRelation ) {
+		OsmRelation * relation = self.editorLayer.selectedPrimary.isRelation;
+		OsmWay * fromWay = [relation memberByRole:@"from"].ref;
+		OsmNode * viaNode = [relation memberByRole:@"via"].ref;
+		self.editorLayer.selectedWay = [fromWay isKindOfClass:[OsmWay class]] ? fromWay : nil;
+		self.editorLayer.selectedNode = [viaNode isKindOfClass:[OsmNode class]] ? viaNode : nil;
+		if ( self.editorLayer.selectedNode ) {
+			[self placePushpinForSelection];
+		}
+	}
+
 	TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
 	myVc.centralNode 			= self.editorLayer.selectedNode;
 	myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);

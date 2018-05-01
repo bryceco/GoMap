@@ -464,19 +464,19 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		if ( restriction == nil ) {
 			NSArray * a = [self extendedKeysForKey:@"restriction"];
 			if ( a.count ) {
-				restriction = a.lastObject;
+				NSString * key = a.lastObject;
+				restriction = self.tags[ key ];
 			}
 		}
 		if ( restriction ) {
-			NSString * type = self.tags[restriction];
-			if ( [type hasPrefix:@"no_left_turn"] )			return @"No Left Turn restriction";
-			if ( [type hasPrefix:@"no_right_turn"] )		return @"No Right Turn restriction";
-			if ( [type hasPrefix:@"no_straight_on"] )		return @"No Straight On restriction";
-			if ( [type hasPrefix:@"only_left_turn"] )		return @"Only Left Turn restriction";
-			if ( [type hasPrefix:@"only_right_turn"] )		return @"Only Right Turn restriction";
-			if ( [type hasPrefix:@"only_straight_on"] )		return @"Only Straight On restriction";
-			if ( [type hasPrefix:@"no_u_turn"] )			return @"No U-Turn restriction";
-			return [NSString stringWithFormat:@"Restriction: %@",type];
+			if ( [restriction hasPrefix:@"no_left_turn"] )		return @"No Left Turn restriction";
+			if ( [restriction hasPrefix:@"no_right_turn"] )		return @"No Right Turn restriction";
+			if ( [restriction hasPrefix:@"no_straight_on"] )	return @"No Straight On restriction";
+			if ( [restriction hasPrefix:@"only_left_turn"] )	return @"Only Left Turn restriction";
+			if ( [restriction hasPrefix:@"only_right_turn"] )	return @"Only Right Turn restriction";
+			if ( [restriction hasPrefix:@"only_straight_on"] )	return @"Only Straight On restriction";
+			if ( [restriction hasPrefix:@"no_u_turn"] )			return @"No U-Turn restriction";
+			return [NSString stringWithFormat:@"Restriction: %@",restriction];
 		} else {
 			return [NSString stringWithFormat:@"Relation: %@",self.tags[@"type"]];
 		}
