@@ -449,7 +449,7 @@
 	<tag key="highway" value="incline" name="Incline" type="way"/>
 	<tag key="highway" value="incline_steep" name="Incline Steep" type="way"/>
 	<tag key="highway" value="lane" name="Lane" type="way"/>
-	<tag key="highway" value="living_street" name="Living Street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street" lineColor="00FFFF" lineWidth="2.000000"/>
+	<tag key="highway" value="living_street" name="Living Street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street" lineColor="DDDDDD" lineWidth="2.000000"/>
 	<tag key="highway" value="milestone" name="Milestone" type="node"/>
 	<tag key="highway" value="mini_roundabout" name="Mini Roundabout" type="node" description="A road junction where the traffic goes around a painted circle or traversable island and has right of way." iconName="transport_miniroundabout_anticlockwise" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
 	<tag key="highway" value="minor" name="Minor" type="way"/>
