@@ -358,7 +358,7 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		}
 	}
 
-	NSString * projection = self.aerialService.projection;
+	NSString * projection = self.aerialService.wmsProjection;
 	if ( projection ) {
 		// WMS
 		OSMPoint minXmaxY = TileToWMSCoords( tileX, tileY, zoom, projection );

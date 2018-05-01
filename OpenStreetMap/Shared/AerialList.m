@@ -21,7 +21,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 @implementation AerialService
 
--(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp projection:(NSString *)projection polygon:(CGPathRef)polygon
+-(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
+			  wmsProjection:(NSString *)projection polygon:(CGPathRef)polygon
 			   attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
 	self = [super init];
@@ -35,7 +36,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		_url				= url ?: @"";
 		_maxZoom			= (int32_t)maxZoom ?: 21;
 		_roundZoomUp 		= roundUp;
-		_projection			= projection;
+		_wmsProjection		= projection;
 		_polygon			= CGPathCreateCopy( polygon );
 		_attributionString 	= attribString;
 		_attributionIcon	= attribIcon;
@@ -44,10 +45,11 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return self;
 }
 
-+(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp projection:(NSString *)projection polygon:(CGPathRef)polygon
++(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
+				wmsProjection:(NSString *)projection polygon:(CGPathRef)polygon
 				 attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
-	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp projection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
+	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 }
 
 -(BOOL)isBingAerial
@@ -67,7 +69,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 										 url:@"http://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
 									 maxZoom:21
 									 roundUp:YES
-								  projection:nil
+								  wmsProjection:nil
 									 polygon:NULL
 								attribString:@""
 								  attribIcon:[UIImage imageNamed:@"BingLogo.png"]
@@ -86,7 +88,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"http://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 									   maxZoom:19
 										roundUp:NO
-									 projection:nil
+									 wmsProjection:nil
 										polygon:NULL
 								   attribString:nil
 									 attribIcon:nil
@@ -104,7 +106,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"https://gps-{switch:a,b,c}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png"
 										maxZoom:20
 										roundUp:NO
-									 projection:nil
+									 wmsProjection:nil
 										polygon:NULL
 								   attribString:nil
 									 attribIcon:nil
@@ -122,7 +124,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"http://{switch:a,b,c}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
 										maxZoom:20
 										roundUp:NO
-									 projection:nil
+									 wmsProjection:nil
 										polygon:NULL
 								   attribString:nil
 									 attribIcon:nil
@@ -156,7 +158,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 						  url:url
 					  maxZoom:[dict[@"zoom"] integerValue]
 					  roundUp:[dict[@"roundUp"] boolValue]
-				   projection:nil
+				   wmsProjection:nil
 					  polygon:NULL
 				 attribString:nil
 				   attribIcon:nil
@@ -375,7 +377,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				}
 			}
 		}
-		AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES projection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
+		AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 		[externalAerials addObject:service];
 		CGPathRelease( polygon );
 		
