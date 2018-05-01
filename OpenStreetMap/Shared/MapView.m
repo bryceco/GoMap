@@ -1437,6 +1437,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			break;
 		case GPS_STATE_LOCATION:
 			self.gpsState = GPS_STATE_HEADING;
+			// fall through
 		case GPS_STATE_NONE:
 			{
 				CGPoint center = CGRectCenter(self.bounds);
