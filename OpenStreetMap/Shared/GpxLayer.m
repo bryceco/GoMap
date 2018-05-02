@@ -399,11 +399,11 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	for (;;) {
 		if ( _previousTracks.count == 0 )
 			break;
-		GpxTrack * track = _previousTracks[0];
+		GpxTrack * track = _previousTracks.lastObject;
 		GpxPoint * point = track.points[0];
 		if ( [date timeIntervalSinceDate:point.timestamp] > 0 ) {
 			// delete oldest
-			[self deleteTrack:_previousTracks[0]];
+			[self deleteTrack:track];
 		} else {
 			break;
 		}
@@ -518,6 +518,9 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
 			NSString * dir = [self saveDirectory];
 			NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
+			files = [files sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];	// file names are timestamps, so sort increasing
+			files = [[files reverseObjectEnumerator] allObjects];	// newest first
+
 			for ( NSString * file in files ) {
 				if ( [file hasSuffix:@".track"] ) {
 					NSString * path = [dir stringByAppendingPathComponent:file];
@@ -530,7 +533,8 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 						continue;
 					}
 					dispatch_sync(dispatch_get_main_queue(), ^{
-						//DLog(@"track %@: %ld points\n",track.startDate, (long)track.points.count);
+						// DLog(@"track %@: %@, %ld points\n",file,track.creationDate, (long)track.points.count);
+
 						[_previousTracks addObject:track];
 						[self setNeedsDisplay];
 						[self setNeedsLayout];
@@ -612,7 +616,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( _previousTracks == nil ) {
 		[self loadTracksInBackgroundWithProgress:nil];
 	}
-	[_previousTracks addObject:newTrack];
+	[_previousTracks insertObject:newTrack atIndex:0];
 	if ( center ) {
 		[self centerOnTrack:newTrack];
 	}

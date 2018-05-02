@@ -199,9 +199,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	GpxLayer * gpxLayer = mapView.gpxLayer;
 
-	if ( indexPath.section == SECTION_ACTIVE_TRACK && appDelegate.mapView.gpxLayer.activeTrack == nil ) {
+	if ( indexPath.section == SECTION_ACTIVE_TRACK && gpxLayer.activeTrack == nil ) {
 		// no active track
 		UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
 		cell.textLabel.text = @"No active track";
@@ -221,14 +222,13 @@
 		} else {
 			// enable background use
 			GpxTrackBackgroundCollection * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackBackgroundCollection" forIndexPath:indexPath];
-			[cell.enableBackground setOn:appDelegate.mapView.gpsInBackground];
+			[cell.enableBackground setOn:mapView.gpsInBackground];
 			return cell;
 		}
 	}
 
 	// active track or previous tracks
-	NSArray * prevTracks = appDelegate.mapView.gpxLayer.previousTracks;
-	GpxTrack *	track = indexPath.section == SECTION_ACTIVE_TRACK ? appDelegate.mapView.gpxLayer.activeTrack : prevTracks[ prevTracks.count - indexPath.row - 1 ];
+	GpxTrack *	track = indexPath.section == SECTION_ACTIVE_TRACK ? gpxLayer.activeTrack : gpxLayer.previousTracks[ indexPath.row ];
 	NSInteger	dur = (NSInteger)round(track.duration);
 	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
@@ -253,10 +253,9 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		NSArray * prevTracks = appDelegate.mapView.gpxLayer.previousTracks;
-		GpxTrack * track = prevTracks[ prevTracks.count - indexPath.row - 1 ];
-		[appDelegate.mapView.gpxLayer deleteTrack:track];
+		GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+		GpxTrack * track = gpxLayer.previousTracks[ indexPath.row ];
+		[gpxLayer deleteTrack:track];
 
 		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -290,9 +289,9 @@
 	} else if ( indexPath.section == SECTION_CONFIGURE ) {
 		// configuration
 	} else if ( indexPath.section == SECTION_PREVIOUS_TRACKS ) {
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		GpxTrack * track = appDelegate.mapView.gpxLayer.previousTracks[ indexPath.row ];
-		[appDelegate.mapView.gpxLayer centerOnTrack:track];
+		GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+		GpxTrack *	track = gpxLayer.previousTracks[ indexPath.row ];
+		[gpxLayer centerOnTrack:track];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	}
 }
