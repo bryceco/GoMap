@@ -244,19 +244,19 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="0bZ-QH-3ce">
+                <panGestureRecognizer cancelsTouchesInView="NO" minimumNumberOfTouches="1" id="0bZ-QH-3ce">
                     <connections>
                         <action selector="handlePanGesture:" destination="fss-Ag-fKJ" id="tOw-4b-9rt"/>
                         <outlet property="delegate" destination="fss-Ag-fKJ" id="J71-B4-4YV"/>
                     </connections>
                 </panGestureRecognizer>
-                <pinchGestureRecognizer id="Y1a-yM-KYa">
+                <pinchGestureRecognizer cancelsTouchesInView="NO" id="Y1a-yM-KYa">
                     <connections>
                         <action selector="handlePinchGesture:" destination="fss-Ag-fKJ" id="fuY-va-HHI"/>
                         <outlet property="delegate" destination="fss-Ag-fKJ" id="Und-5d-rjJ"/>
                     </connections>
                 </pinchGestureRecognizer>
-                <tapGestureRecognizer id="OlO-FJ-kfn" userLabel="Tap Gesture Recognizer - Single">
+                <tapGestureRecognizer cancelsTouchesInView="NO" id="OlO-FJ-kfn" userLabel="Tap Gesture Recognizer - Single">
                     <connections>
                         <action selector="handleTapGesture:" destination="fss-Ag-fKJ" id="ras-bV-QZu"/>
                         <outlet property="delegate" destination="fss-Ag-fKJ" id="hxv-uP-kPk"/>

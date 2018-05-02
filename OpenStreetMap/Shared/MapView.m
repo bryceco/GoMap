@@ -307,21 +307,17 @@ CGSize SizeForImage( NSImage * image )
 									   forState:UIControlStateNormal];
 	_editControl.layer.zPosition = Z_TOOLBAR;
 
-#if SHOW_3D
-	UIPanGestureRecognizer * panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerPanGesture:)];
-	panGestureRecognizer.minimumNumberOfTouches = 2;
-	panGestureRecognizer.maximumNumberOfTouches = 2;
-	[self addGestureRecognizer:panGestureRecognizer];
-#endif
-
+	// long press for selecting from multiple objects
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
 	longPress.delegate = self;
 	[self addGestureRecognizer:longPress];
 
+	// two-finger rotation
 	UIRotationGestureRecognizer * rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotationGesture:)];
 	rotationGesture.delegate = self;
 	[self addGestureRecognizer:rotationGesture];
 
+	// long-press on + for adding nodes via taps
 	_addNodeButtonLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(addNodeButtonLongPressHandler:)];
 	_addNodeButtonLongPressGestureRecognizer.minimumPressDuration = 0.001;
 	_addNodeButtonLongPressGestureRecognizer.delegate = self;
@@ -3153,11 +3149,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-	if ( [gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && otherGestureRecognizer != _addNodeButtonLongPressGestureRecognizer )
-		return NO;
-	if ( [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && gestureRecognizer != _addNodeButtonLongPressGestureRecognizer )
-		return NO;
-	return YES;
+	if ( gestureRecognizer == _addNodeButtonLongPressGestureRecognizer || otherGestureRecognizer == _addNodeButtonLongPressGestureRecognizer )
+		return YES;	// if holding down the + button then always allow other gestures to proceeed
+	if ( [gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] || [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]] )
+		return NO;	// don't register long-press when other gestures are occuring
+	if ( [gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] || [otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]] )
+		return NO;	// don't register taps during panning/zooming/rotating
+	return YES;	// allow other things so we can pan/zoom/rotate simultaneously
 }
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan
@@ -3170,6 +3168,15 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[displayLink removeName:DisplayLinkPanning];
 	} else if ( pan.state == UIGestureRecognizerStateChanged ) {
 		// move pan
+#if SHOW_3D
+		// multi-finger drag to initiate 3-D view
+		if ( self.enableBirdsEye && pan.numberOfTouches == 3 ) {
+			CGPoint translation = [pan translationInView:self];
+			double delta = -translation.y/40 / 180 * M_PI;
+			[self rotateBirdsEyeBy:delta];
+			return;
+		}
+#endif
 		CGPoint translation = [pan translationInView:self];
 		[self adjustOriginBy:translation];
 		[pan setTranslation:CGPointMake(0,0) inView:self];
@@ -3381,17 +3388,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	}
 }
 
-
-- (IBAction)handleTwoFingerPanGesture:(UIPanGestureRecognizer *)pan
-{
-	if ( self.enableBirdsEye ) {
-		CGPoint translation = [pan translationInView:self];
-		double delta = -translation.y/40 / 180 * M_PI;
-		[self rotateBirdsEyeBy:delta];
-	} else {
-		[self handlePanGesture:pan];
-	}
-}
 
 - (void)updateSpeechBalloonPosition
 {
