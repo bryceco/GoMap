@@ -61,7 +61,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.5.0.12</string>
+	<string>1.5.0.13</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -109,12 +109,6 @@
 			<false/>
 		</dict>
 	</dict>
-	<key>UISupportedExternalAccessoryProtocols</key>
-	<array>
-		<string>com.bad-elf.gps</string>
-		<string>com.dualav.xgps150</string>
-		<string>com.dualav.xgps160</string>
-	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
