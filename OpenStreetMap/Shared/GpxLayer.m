@@ -479,7 +479,15 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 -(NSArray *)allTracks
 {
-	return self.activeTrack ? self.previousTracks ? [self.previousTracks arrayByAddingObject:self.activeTrack] : @[self.activeTrack] : self.previousTracks;
+	if ( _activeTrack ) {
+		if ( _previousTracks.count ) {
+			return [@[ _activeTrack ] arrayByAddingObjectsFromArray:_previousTracks];
+		} else {
+			return @[ _activeTrack ];
+		}
+	} else {
+		return _previousTracks;
+	}
 }
 
 
@@ -749,7 +757,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 		// add the layer if not already present
 		if ( layer.superlayer == nil ) {
-			[self addSublayer:layer];
+			[self insertSublayer:layer atIndex:(unsigned)self.sublayers.count];	// place at bottom
 		}
 	}
 	
