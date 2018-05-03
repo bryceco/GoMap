@@ -55,7 +55,7 @@
 	NSInteger			_stabilizingCount;
 }
 @property (readonly,nonatomic)	GpxTrack		*	activeTrack;
-@property (strong,nonatomic)	NSMutableArray	*	previousTracks;
+@property (strong,nonatomic)	NSMutableArray	*	previousTracks;		// sorted with most recent first
 
 -(instancetype)initWithMapView:(MapView *)mapView;
 -(void)addPoint:(CLLocation *)location;

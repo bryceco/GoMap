@@ -353,7 +353,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			if ( self.previousTracks == nil ) {
 				self.previousTracks = [NSMutableArray new];
 			}
-			[self.previousTracks addObject:_activeTrack];
+			[self.previousTracks insertObject:_activeTrack atIndex:0];
 		}
 
 		[self saveToDisk:_activeTrack];
