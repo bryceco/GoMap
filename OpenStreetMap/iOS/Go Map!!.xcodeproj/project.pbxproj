@@ -62,7 +62,6 @@
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		022B09AA19BE9A3B0041687B /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A919BE9A3B0041687B /* CoreData.m */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
-		02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */ = {isa = PBXBuildFile; fileRef = 02329DB716D33FB100D20646 /* FuturePlist.txt */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
@@ -574,7 +573,6 @@
 		022B504716857E5F00E6619A /* OSMiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OSMiOS.entitlements; sourceTree = "<group>"; };
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CustomPresetController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		02329DB716D33FB100D20646 /* FuturePlist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FuturePlist.txt; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Go Map!!/Images.xcassets"; sourceTree = "<group>"; };
 		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
@@ -1395,7 +1393,6 @@
 		02ACBA3A16713CCB00BB4414 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				02329DB716D33FB100D20646 /* FuturePlist.txt */,
 				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
 				02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */,
 				023B892A19C148790060CDB5 /* Images.xcassets */,
@@ -2261,7 +2258,6 @@
 				0266D3B816C02D9200AD9A83 /* seamark_wreck.png in Resources */,
 				0266D3BA16C03D7400AD9A83 /* seamark_notice.p.64.png in Resources */,
 				021E5D6B16C0507B00B7A02A /* transport_stop.p.64.png in Resources */,
-				02329DB816D33FB100D20646 /* FuturePlist.txt in Resources */,
 				0228444716DD339300A1C051 /* redo32@2x.png in Resources */,
 				0228444816DD339300A1C051 /* undo32@2x.png in Resources */,
 			);
@@ -2435,7 +2431,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -2484,7 +2480,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
