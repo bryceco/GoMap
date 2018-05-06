@@ -1378,10 +1378,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K4Z-5c-5ee" userLabel="Commend Background">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4Z-5c-5ee" userLabel="Comment Background">
                                                     <rect key="frame" x="42" y="54" width="263" height="37"/>
                                                     <subviews>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Various comments..." translatesAutoresizingMaskIntoConstraints="NO" id="PHk-s9-onx">
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Various comments..." translatesAutoresizingMaskIntoConstraints="NO" id="PHk-s9-onx">
                                                             <rect key="frame" x="5" y="0.0" width="253" height="37"/>
                                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1418,11 +1418,14 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="tOO-VD-MeJ" secondAttribute="trailing" constant="12" id="34Q-Mn-rjb"/>
                                                 <constraint firstItem="9G2-Gl-CeP" firstAttribute="leading" secondItem="c9J-93-JX7" secondAttribute="leading" constant="15" id="8gC-Id-7w5"/>
+                                                <constraint firstItem="tOO-VD-MeJ" firstAttribute="top" secondItem="c9J-93-JX7" secondAttribute="top" constant="10" id="AaM-Py-xR3"/>
                                                 <constraint firstAttribute="trailing" secondItem="9G2-Gl-CeP" secondAttribute="trailing" constant="15" id="DbV-2Z-jQk"/>
+                                                <constraint firstItem="K4Z-5c-5ee" firstAttribute="top" secondItem="9G2-Gl-CeP" secondAttribute="bottom" constant="4" id="I0b-ME-HeI"/>
                                                 <constraint firstItem="9G2-Gl-CeP" firstAttribute="top" secondItem="c9J-93-JX7" secondAttribute="top" constant="29" id="Pdt-eA-eMl"/>
-                                                <constraint firstItem="K4Z-5c-5ee" firstAttribute="top" secondItem="c9J-93-JX7" secondAttribute="top" constant="54" id="Wzx-Fu-ED3"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="K4Z-5c-5ee" secondAttribute="bottom" priority="750" constant="2" id="bCF-jA-jZ7"/>
+                                                <constraint firstItem="K4Z-5c-5ee" firstAttribute="top" secondItem="9G2-Gl-CeP" secondAttribute="bottom" constant="4" id="QnI-bU-AYn"/>
+                                                <constraint firstItem="PHk-s9-onx" firstAttribute="top" secondItem="9G2-Gl-CeP" secondAttribute="bottom" constant="4" id="TOB-lM-Jz0"/>
                                                 <constraint firstItem="PHk-s9-onx" firstAttribute="leading" secondItem="c9J-93-JX7" secondAttribute="leading" constant="47" id="gdp-sE-MRb"/>
+                                                <constraint firstItem="9G2-Gl-CeP" firstAttribute="top" secondItem="tOO-VD-MeJ" secondAttribute="bottom" constant="-2" id="pif-j0-8PG"/>
                                                 <constraint firstItem="K4Z-5c-5ee" firstAttribute="leading" secondItem="c9J-93-JX7" secondAttribute="leadingMargin" constant="27" id="zH1-ER-8mG"/>
                                                 <constraint firstItem="tOO-VD-MeJ" firstAttribute="leading" secondItem="c9J-93-JX7" secondAttribute="leading" constant="15" id="zec-7q-AAf"/>
                                                 <constraint firstItem="tOO-VD-MeJ" firstAttribute="top" secondItem="c9J-93-JX7" secondAttribute="top" constant="10" id="zhV-uI-ZI6"/>
@@ -2196,10 +2199,11 @@ http://glyphish.com
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="eoy-5f-4YY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TWg-OH-juz" secondAttribute="leading" constant="20" symbolic="YES" id="2In-mg-Fqr"/>
+                                                <constraint firstItem="eoy-5f-4YY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="luL-VQ-zVX" secondAttribute="trailing" constant="6" id="EtJ-qO-Qb7"/>
                                                 <constraint firstItem="Ag2-3a-sJh" firstAttribute="centerX" secondItem="TWg-OH-juz" secondAttribute="centerX" id="fgo-m4-mfk"/>
                                                 <constraint firstItem="Ag2-3a-sJh" firstAttribute="centerY" secondItem="TWg-OH-juz" secondAttribute="centerY" id="oMZ-qu-jBj"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7sx-wS-Wt5" secondAttribute="trailing" constant="20" symbolic="YES" id="rdK-5C-iaf"/>
+                                                <constraint firstAttribute="trailing" secondItem="eoy-5f-4YY" secondAttribute="trailing" constant="21" id="sGC-Kv-7Px"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="luL-VQ-zVX" secondAttribute="trailing" constant="20" symbolic="YES" id="voH-SA-bX6"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -2208,7 +2212,6 @@ http://glyphish.com
                                             <constraint firstItem="7sx-wS-Wt5" firstAttribute="bottom" secondItem="KfV-6o-KKn" secondAttribute="bottom" constant="1" id="Tpn-JE-R8N"/>
                                             <constraint firstItem="eoy-5f-4YY" firstAttribute="centerY" secondItem="KfV-6o-KKn" secondAttribute="centerY" id="kll-xW-JRl"/>
                                             <constraint firstItem="luL-VQ-zVX" firstAttribute="top" secondItem="KfV-6o-KKn" secondAttribute="top" constant="5" id="mST-DT-wAa"/>
-                                            <constraint firstAttribute="trailing" secondItem="eoy-5f-4YY" secondAttribute="trailing" constant="21" id="nZP-wz-Ha1"/>
                                             <constraint firstItem="7sx-wS-Wt5" firstAttribute="leading" secondItem="KfV-6o-KKn" secondAttribute="leading" constant="20" id="vFw-8T-dUK"/>
                                         </constraints>
                                         <connections>
@@ -2254,14 +2257,14 @@ http://glyphish.com
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="tYe-3n-Lpi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ekd-Jz-Iic" secondAttribute="trailing" constant="6" id="4Qn-ru-hTy"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="19b-bC-hzn" secondAttribute="trailing" constant="20" symbolic="YES" id="IfP-M3-VnB"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ekd-Jz-Iic" secondAttribute="trailing" constant="20" symbolic="YES" id="Wwr-z6-UH7"/>
-                                                <constraint firstItem="tYe-3n-Lpi" firstAttribute="leading" secondItem="bLn-X0-w2E" secondAttribute="leading" constant="265" id="iFM-67-y3R"/>
+                                                <constraint firstAttribute="trailing" secondItem="tYe-3n-Lpi" secondAttribute="trailing" constant="21" id="pMs-BN-tWt"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
                                             <constraint firstItem="19b-bC-hzn" firstAttribute="leading" secondItem="YIs-CF-hGQ" secondAttribute="leading" constant="20" id="YrA-fg-fIf"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tYe-3n-Lpi" secondAttribute="trailing" id="ed0-ba-b2a"/>
                                             <constraint firstItem="tYe-3n-Lpi" firstAttribute="centerY" secondItem="YIs-CF-hGQ" secondAttribute="centerY" id="kJd-EN-yi0"/>
                                             <constraint firstItem="Ekd-Jz-Iic" firstAttribute="leading" secondItem="YIs-CF-hGQ" secondAttribute="leading" constant="20" id="u3K-Fh-TFx"/>
                                             <constraint firstAttribute="bottom" secondItem="19b-bC-hzn" secondAttribute="bottom" constant="1" id="wHE-Iu-i2w"/>
