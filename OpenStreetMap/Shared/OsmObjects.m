@@ -1296,27 +1296,33 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return self;
 }
 
--(NSSet *)allMemberObjects
+-(void)allMemberObjects:(NSMutableSet *)objects relations:(NSMutableSet *)relations
 {
-	NSMutableSet * set = [NSMutableSet new];
 	for ( OsmMember * member in _members ) {
-		if ( [member.ref isKindOfClass:[OsmBaseObject class]] ) {
-			OsmBaseObject * obj = member.ref;
-			if ( obj.isNode || obj.isWay ) {
-				[set addObject:obj];
-			} else if ( obj.isRelation ) {
-				OsmRelation * rel = (id)obj;
-				NSSet * s = [rel allMemberObjects];
-				[set addObjectsFromArray:[s allObjects]];
+		OsmBaseObject * obj = member.ref;
+		if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
+			if ( obj.isRelation ) {
+				if ( [relations containsObject:obj] ) {
+					// skip
+				} else {
+					[relations addObject:obj];
+					[obj.isRelation allMemberObjects:objects relations:relations];
+				}
 			} else {
-				// should never get here: skip
+				[objects addObject:obj];
 			}
-		} else {
-			// member is not resolved, so skip it
 		}
 	}
-	return set;
 }
+-(NSSet *)allMemberObjects
+{
+	NSMutableSet * objects = [NSMutableSet new];
+	NSMutableSet * relations = [NSMutableSet setWithObject:self];
+	[self allMemberObjects:objects relations:relations];
+	return objects;
+}
+
+
 
 
 -(void)resolveToMapData:(OsmMapData *)mapData
@@ -1398,16 +1404,14 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	BOOL first = YES;
 	OSMRect box = { 0, 0, 0, 0 };
-	for ( OsmMember * member in _members ) {
-		OsmBaseObject * obj = member.ref;
-		if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
-			OSMRect rc = obj.boundingBox;
-			if ( first ) {
-				box = rc;
-				first = NO;
-			} else {
-				box = OSMRectUnion(box,rc);
-			}
+	NSSet * objects = [self allMemberObjects];
+	for ( OsmBaseObject * obj in objects ) {
+		OSMRect rc = obj.boundingBox;
+		if ( first ) {
+			box = rc;
+			first = NO;
+		} else {
+			box = OSMRectUnion(box,rc);
 		}
 	}
 	_boundingBox = box;
