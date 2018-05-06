@@ -1131,28 +1131,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 +(NSString *)encodeBase64:(NSString *)plainText
 {
-	static const char alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-	NSMutableString * output = [[NSMutableString alloc] initWithCapacity:plainText.length*3];
-	const unsigned char * inputBuffer = (const unsigned char *)plainText.UTF8String;
-	NSInteger length = strlen((char *)inputBuffer);
-
-	for ( NSInteger i = 0; i < length; i += 3 ) {
-
-		NSInteger remain = length - i;
-
-		[output appendFormat:@"%c", alphabet[(inputBuffer[i] & 0xFC) >> 2]];
-		[output appendFormat:@"%c", alphabet[((inputBuffer[i] & 0x03) << 4) | ((remain > 1) ? ((inputBuffer[i + 1] & 0xF0) >> 4): 0)]];
-
-		if ( remain > 1 )
-			[output appendFormat:@"%c", alphabet[((inputBuffer[i + 1] & 0x0F) << 2) | ((remain > 2) ? ((inputBuffer[i + 2] & 0xC0) >> 6) : 0)]];
-		else
-			[output appendString:@"="];
-
-		if ( remain > 2 )
-			[output appendFormat:@"%c", alphabet[inputBuffer[i + 2] & 0x3F]];
-		else
-			[output appendString:@"="];
-	}
+	NSData * data = [plainText dataUsingEncoding:NSUTF8StringEncoding];
+	NSString * output = [data base64EncodedStringWithOptions:0];
 	return output;
 }
 
