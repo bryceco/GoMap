@@ -592,7 +592,6 @@ static NSString * PrettyTag( NSString * tag )
 									continue; // it's a very uncommon value, so ignore it
 								NSString * k = v[@"key"];
 								NSString * name = k;
-								k = [key stringByAppendingString:k];
 								CommonTagKey * tag = [CommonTagKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:yesNo];
 								[tags addObject:tag];
 							}
