@@ -1993,8 +1993,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	archiver.delegate = self;
 	[archiver encodeObject:self forKey:@"OsmMapData"];
 	[archiver finishEncoding];
-	[data writeToFile:path atomically:YES];
-
 	BOOL ok = data  &&  [data writeToFile:path atomically:YES];
 	return ok;
 }
