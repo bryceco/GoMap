@@ -1526,7 +1526,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 					}
 				}
 
-				[self updateSql:sqlUpdate isUpdate:YES];
+				[self updateSql:sqlUpdate];
 
 				NSString * url3 = [OSM_API_URL stringByAppendingFormat:@"api/0.6/changeset/%@/close", changesetID];
 				[self putRequest:url3 method:@"PUT" xml:nil completion:^(NSData *data,NSString * errorMessage) {
@@ -2014,7 +2014,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 #endif
 }
 
--(void)updateSql:(NSDictionary *)sqlUpdate isUpdate:(BOOL)isUpdate
+// after uploading a changeset we have to update the SQL database to reflect the changes the server replied with
+-(void)updateSql:(NSDictionary *)sqlUpdate
 {
 	NSMutableArray * insertNode		= [NSMutableArray new];
 	NSMutableArray * insertWay		= [NSMutableArray new];
@@ -2042,7 +2043,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			assert(NO);
 		}
 	}];
-	[self sqlSaveNodes:insertNode saveWays:insertWay saveRelations:insertRelation deleteNodes:deleteNode deleteWays:deleteWay deleteRelations:deleteRelation isUpdate:isUpdate];
+	[self sqlSaveNodes:insertNode saveWays:insertWay saveRelations:insertRelation deleteNodes:deleteNode deleteWays:deleteWay deleteRelations:deleteRelation isUpdate:YES];
 }
 
 
