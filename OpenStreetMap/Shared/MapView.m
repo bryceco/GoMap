@@ -3136,7 +3136,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
 	// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
-	if ( [touch.view isKindOfClass:[UIControl class]] || [touch.view isKindOfClass:[UIToolbar class]] ) {
+	UIView * view = touch.view;
+	while ( view ) {
+		if ( [view isKindOfClass:[UIControl class]] || [view isKindOfClass:[UIToolbar class]] )
+			break;
+		view = view.superview;
+	}
+	if ( view ) {
 		// we touched a button, slider, or other UIControl
 		if ( gestureRecognizer == _addNodeButtonLongPressGestureRecognizer ) {
 			return YES;
