@@ -1296,7 +1296,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return self;
 }
 
--(void)allMemberObjects:(NSMutableSet *)objects relations:(NSMutableSet *)relations
+-(void)forAllMemberObjectsRecurse:(void(^)(OsmBaseObject *))callback relations:(NSMutableSet *)relations
 {
 	for ( OsmMember * member in _members ) {
 		OsmBaseObject * obj = member.ref;
@@ -1305,20 +1305,27 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 				if ( [relations containsObject:obj] ) {
 					// skip
 				} else {
+					callback(obj);
 					[relations addObject:obj];
-					[obj.isRelation allMemberObjects:objects relations:relations];
+					[obj.isRelation forAllMemberObjectsRecurse:callback relations:relations];
 				}
 			} else {
-				[objects addObject:obj];
+				callback(obj);
 			}
 		}
 	}
 }
+-(void)forAllMemberObjects:(void(^)(OsmBaseObject *))callback
+{
+	NSMutableSet * relations = [NSMutableSet setWithObject:self];
+	[self forAllMemberObjectsRecurse:callback relations:relations];
+}
 -(NSSet *)allMemberObjects
 {
-	NSMutableSet * objects = [NSMutableSet new];
-	NSMutableSet * relations = [NSMutableSet setWithObject:self];
-	[self allMemberObjects:objects relations:relations];
+	__block NSMutableSet * objects = [NSMutableSet new];
+	[self forAllMemberObjects:^(OsmBaseObject * obj) {
+		[objects addObject:obj];
+	}];
 	return objects;
 }
 
@@ -1505,21 +1512,31 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(BOOL)containsObject:(OsmBaseObject *)object
 {
-	for ( OsmMember * member in _members ) {
-		if ( member.ref == object )
+	OsmNode * node = object.isNode;
+	NSSet * set = [self allMemberObjects];
+	for ( OsmBaseObject * obj in set ) {
+		if ( obj == object ) {
 			return YES;
-		if ( [member.ref isKindOfClass:[OsmRelation class]] ) {
-			OsmRelation * r = member.ref;
-			if ( [r containsObject:object] )
-				return YES;
 		}
-		if ( object.isNode && [member.ref isKindOfClass:[OsmWay class]] ) {
-			OsmWay * w = member.ref;
-			if ( [w.nodes containsObject:object] )
-				return YES;
+		if ( node && obj.isWay && [obj.isWay.nodes containsObject:object] ) {
+			return YES;
 		}
 	}
 	return NO;
+
+#if 0
+	__block contains = NO;
+	[self forAllMemberObjects:^(OsmBaseObject * obj) {
+		if ( obj == object ) {
+			contains = YES;
+			break;
+		}
+		if ( object.isNode && obj.isWay ) {
+			if ( && obj.isWay.nodes containsObject:object]) )
+		{
+		}
+	}];
+#endif
 }
 
 
