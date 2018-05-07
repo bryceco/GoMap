@@ -31,12 +31,25 @@
 	return 44.0;
 }
 
+-(BOOL)isBannedURL:(NSString *)url
+{
+	NSString * pattern = @".*\\.google(apis)?\\..*/(vt|kh)[\\?/].*([xyz]=.*){3}.*";
+	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:NULL];
+	NSRange range   = [regex rangeOfFirstMatchInString:url options:0 range:NSMakeRange(0,url.length)];
+	if ( range.location != NSNotFound )
+		return YES;
+	return NO;
+}
+
 -(IBAction)done:(id)sender
 {
 	// remove white space from subdomain list
 	NSString * url = [urlField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	url = [url stringByReplacingOccurrencesOfString:@"%7B" withString:@"{"];
 	url = [url stringByReplacingOccurrencesOfString:@"%7D" withString:@"}"];
+
+	if ( [self isBannedURL:urlField.text] )
+		return;
 
 	NSString * identifier = url;
 
@@ -67,11 +80,13 @@
 
 -(IBAction)contentChanged:(id)sender
 {
+	BOOL allowed = NO;
 	if ( nameField.text.length > 0 && urlField.text.length > 0 ) {
-		self.navigationItem.rightBarButtonItem.enabled = YES;
-	} else {
-		self.navigationItem.rightBarButtonItem.enabled = NO;
+		if ( ![self isBannedURL:urlField.text] ) {
+			allowed = YES;
+		}
 	}
+	self.navigationItem.rightBarButtonItem.enabled = allowed;
 }
 
 @end
