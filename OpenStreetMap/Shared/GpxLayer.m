@@ -188,18 +188,29 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 		NSXMLElement * namespace1 = [NSXMLElement namespaceWithName:@"ns1" stringValue:@"http://www.topografix.com/GPX/1/0"];
 		NSXMLElement * namespace2 = [NSXMLElement namespaceWithName:@"ns2" stringValue:@"http://www.topografix.com/GPX/1/1"];
+		NSXMLElement * namespace3 = [NSXMLElement namespaceWithName:@"ns3" stringValue:@"http://topografix.com/GPX/1/1"];	// HOT OSM uses this
 		[doc.rootElement addNamespace:namespace1];
 		[doc.rootElement addNamespace:namespace2];
+		[doc.rootElement addNamespace:namespace3];
+
+		NSArray * nsList = @[
+			  @"ns1:",
+			  @"ns2:",
+			  @"ns3:",
+			  @"",
+		];
+		NSArray * a = nil;
+		for ( NSString * ns in nsList ) {
+			NSString * xpath = [NSString stringWithFormat:@"./%@gpx/%@trk/%@trkseg/%@trkpt", ns, ns, ns, ns];
+			a = [doc nodesForXPath:xpath error:NULL];
+			if ( a.count )
+				break;
+		}
+		if ( a.count == 0 )
+			return nil;
 
 		NSMutableArray * points = [NSMutableArray new];
 		NSDateFormatter * dateFormatter = [OsmBaseObject rfc3339DateFormatter];
-		NSArray * a = [doc nodesForXPath:@"./ns1:gpx/ns1:trk/ns1:trkseg/ns1:trkpt" error:nil];
-		if ( a.count == 0 )
-			a = [doc nodesForXPath:@"./ns2:gpx/ns2:trk/ns2:trkseg/ns2:trkpt" error:nil];
-		if ( a.count == 0 )
-			a = [doc nodesForXPath:@"./gpx/trk/trkseg/trkpt" error:nil];
-		if ( a.count == 0 )
-			return nil;
 		for ( NSXMLElement * pt in a ) {
 			GpxPoint * point = [GpxPoint new];
 			point.latitude  = [pt attributeForName:@"lat"].stringValue.doubleValue;
