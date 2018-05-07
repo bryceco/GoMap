@@ -114,7 +114,13 @@
 	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _type];
 }
 
+static TagInfo * g_AddressRender = nil;
 static TagInfo * g_DefaultRender = nil;
+
+-(BOOL)isAddressPoint
+{
+	return self == g_AddressRender;
+}
 
 -(NSImage *)icon
 {
@@ -278,15 +284,10 @@ static TagInfo * g_DefaultRender = nil;
 		return _renderSize = 1250;
 	}
 
-	BOOL isAddress = object.tags.count > 0;
-	for ( NSString * key in object.tags ) {
-		if ( ![key hasPrefix:@"addr:"] ) {
-			isAddress = NO;
-			break;
-		}
+	// address points are extra low priority
+	if ( self == g_AddressRender ) {
+		return _renderSize = 40;
 	}
-	if ( isAddress )
-		return 40;	// lower priority than default
 
 	// get a default value
 	_renderSize = 50;
@@ -618,6 +619,25 @@ static TagInfo * g_DefaultRender = nil;
 	}];
 	if ( best ) {
 		return best;
+	}
+
+	// check if it is an address point
+	BOOL isAddress = object.isNode && object.tags.count > 0;
+	if ( isAddress ) {
+		for ( NSString * key in object.tags ) {
+			if ( ![key hasPrefix:@"addr:"] ) {
+				isAddress = NO;
+				break;
+			}
+		}
+		if ( isAddress ) {
+			if ( g_AddressRender == nil ) {
+				g_AddressRender = [TagInfo new];
+				g_AddressRender.key = @"ADDRESS";
+				g_AddressRender.lineWidth = 0.0;
+			}
+			return g_AddressRender;
+		}
 	}
 
 	if ( g_DefaultRender == nil ) {

@@ -3309,6 +3309,27 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(objectLimit,objects.count-objectLimit)];
 		[objects removeObjectsAtIndexes:range];
 	}
+
+#if 0
+	for ( OsmBaseObject * o in objects ) {
+		NSLog(@"%ld -> %@\n", (long)o->renderPriorityCached, o );
+	}
+#endif
+
+	// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
+	objectLimit = objects.count;
+	NSInteger addressCount = 0;
+	while ( addressCount < objectLimit ) {
+		OsmBaseObject * obj = objects[objectLimit-addressCount-1];
+		if ( ![obj.tagInfo isAddressPoint] )
+			break;
+		++addressCount;
+	}
+	if ( addressCount > 50 ) {
+		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(objectLimit-addressCount,addressCount)];
+		[objects removeObjectsAtIndexes:range];
+	}
+
 	return objects;
 }
 

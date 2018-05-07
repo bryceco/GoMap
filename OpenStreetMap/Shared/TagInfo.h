@@ -44,6 +44,8 @@
 -(CGImageRef)cgIcon;
 -(NSString *)friendlyName2;
 
+-(BOOL)isAddressPoint;
+
 -(NSInteger)renderSize:(OsmBaseObject *)object;
 
 +(NSColor *)colorForString:(NSString *)text;
