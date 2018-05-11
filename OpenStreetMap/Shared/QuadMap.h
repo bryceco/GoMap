@@ -17,9 +17,6 @@ typedef enum {
 } QUAD_ENUM;
 
 @class OsmBaseObject;
-
-
-typedef const struct QuadBoxCC * QuadBoxEnumerationType;
 struct QuadBoxCC;
 
 
@@ -32,18 +29,23 @@ struct QuadBoxCC;
 
 -(id)initWithRect:(OSMRect)rect;
 -(instancetype)initWithThis:(struct QuadBoxCC *)cpp;
--(void)missingPieces:(NSMutableArray *)pieces intersectingRect:(OSMRect)target;
--(void)makeWhole:(BOOL)success;
+-(void)reset;
+-(void)nullifyCpp;
+-(NSInteger)count;
+
+// spatial specific
 -(void)addMember:(OsmBaseObject *)member bbox:(OSMRect)bbox;
 -(BOOL)removeMember:(OsmBaseObject *)member bbox:(OSMRect)bbox;
 -(instancetype)getQuadBoxMember:(OsmBaseObject *)member bbox:(OSMRect)bbox;
--(void)enumerateWithBlock:(void (^)(const struct QuadBoxCC * quad))block;
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
--(void)reset;
--(void)nullifyCpp;
 
-// these are for purging old data:
+// region specific
+-(void)missingPieces:(NSMutableArray *)pieces intersectingRect:(OSMRect)target;
+-(void)makeWhole:(BOOL)success;
+
+// these are for discarding old data:
 -(BOOL)discardQuadsOlderThanDate:(NSDate *)date;
+-(NSDate *)discardOldestQuads:(double)fraction oldest:(NSDate *)oldest;
 -(BOOL)pointIsCovered:(OSMPoint)point;
 -(BOOL)nodesAreCovered:(NSArray *)nodeList;
 -(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate;
@@ -53,24 +55,25 @@ struct QuadBoxCC;
 
 
 @interface QuadMap : NSObject <NSCoding>
-{
-}
 @property (strong,nonatomic)	QuadBox	*	rootQuad;
 
--(void)mergeDerivedRegion:(QuadMap *)other success:(BOOL)success;
+-(NSInteger)count;
 -(id)initWithRect:(OSMRect)rect;
--(NSArray *)newQuadsForRect:(OSMRect)newRect;
--(void)makeWhole:(QuadBox *)quad success:(BOOL)success;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 
+// Region
+-(NSArray *)newQuadsForRect:(OSMRect)newRect;
+-(void)mergeDerivedRegion:(QuadMap *)other success:(BOOL)success;
+-(void)makeWhole:(QuadBox *)quad success:(BOOL)success;
+
+// Spatial
 -(void)updateMember:(OsmBaseObject *)member fromBox:(OSMRect)bbox undo:(UndoManager *)undo;
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 -(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
-
--(NSInteger)count;
+-(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 
 // these are for purging old data:
 -(BOOL)discardQuadsOlderThanDate:(NSDate *)date;
+-(NSDate *)discardOldestQuads:(double)fraction oldest:(NSDate *)oldest;
 -(BOOL)pointIsCovered:(OSMPoint)point;
 -(BOOL)nodesAreCovered:(NSArray *)nodeList;
 -(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate;

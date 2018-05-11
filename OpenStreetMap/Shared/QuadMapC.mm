@@ -12,20 +12,24 @@
 #import "QuadMap.h"
 #import "UndoManager.h"
 
-#if DEBUG
+#if DEBUG	// Display query regions as GPX lines
 #import "AppDelegate.h"
 #import "MapView.h"
 #import "GpxLayer.h"
 #endif
 
-
+// Don't query the server for regions smaller than this:
 static const double MinRectSize = 360.0 / (1 << 16);
 
 static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
+static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
+
 
 class QuadBoxCC
 {
+#pragma mark Construction
+
 private:
 	OSMRect							_rect;
 	std::vector<OsmBaseObject *>	_members;
@@ -64,6 +68,52 @@ public:
 		_owner = nil;	// remove reference so it can be released
 	}
 
+	void encodeWithCoder(NSCoder * coder) const
+	{
+		if ( _children[0] )	{ [coder encodeObject:_children[0]->owner()	forKey:@"child0"]; }
+		if ( _children[1] ) { [coder encodeObject:_children[1]->owner()	forKey:@"child1"]; }
+		if ( _children[2] ) { [coder encodeObject:_children[2]->owner()	forKey:@"child2"]; }
+		if ( _children[3] ) { [coder encodeObject:_children[3]->owner()	forKey:@"child3"]; }
+		[coder encodeBool:_whole												forKey:@"whole"];
+		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
+		[coder encodeBool:_isSplit												forKey:@"split"];
+		[coder encodeDouble:_downloadDate 										forKey:@"date"];
+	}
+	void initWithCoder(NSCoder * coder)
+	{
+		QuadBox * children[4];
+		children[0]	= [coder decodeObjectForKey:@"child0"];
+		children[1]	= [coder decodeObjectForKey:@"child1"];
+		children[2]	= [coder decodeObjectForKey:@"child2"];
+		children[3]	= [coder decodeObjectForKey:@"child3"];
+		for ( NSInteger i = 0; i < 4; ++i ) {
+			if ( children[i] ) {
+				_children[i] = children[i].cpp;
+				_children[i]->_parent = this;
+			} else {
+				_children[i] = NULL;
+			}
+		}
+		_whole			= [coder decodeBoolForKey:@"whole"];
+		_isSplit		= [coder decodeBoolForKey:@"split"];
+		_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
+		_downloadDate	= [coder decodeDoubleForKey:@"date"];
+		_parent			= NULL;
+		_busy			= false;
+		_owner			= NULL;
+
+		// if we just upgraded from an older install then we may need to set a download date
+		if ( _whole && _downloadDate == 0 )
+			_downloadDate = NSDate.timeIntervalSinceReferenceDate;
+	}
+	QuadBoxCC( NSCoder * coder, QuadBox * owner )
+	{
+		initWithCoder(coder);
+		_owner = owner;
+	}
+
+#pragma mark Common
+
 	const OSMRect & rect() const
 	{
 		return _rect;
@@ -73,6 +123,24 @@ public:
 	{
 		return _owner;
 	}
+
+	bool hasChildren() const
+	{
+		return _children[0] || _children[1] || _children[2] || _children[3];
+	}
+
+	QuadBoxCC * parent()
+	{
+		return _parent;
+	}
+
+	double downloadDate() const
+	{
+		return _downloadDate;
+	}
+
+
+
 
 	void reset()
 	{
@@ -129,6 +197,31 @@ public:
 		}
 		return (int)north << 1 | west;
 	}
+
+	void enumerateWithBlock( void (^block)(QuadBoxCC *) )
+	{
+		block(this);
+		for ( int child = 0; child <= QUAD_LAST; ++child ) {
+			QuadBoxCC * q = _children[ child ];
+			if ( q ) {
+				q->enumerateWithBlock(block);
+			}
+		}
+	}
+
+	QuadBoxCC * quadForRect(OSMRect target)
+	{
+		for ( int c = 0; c < 4; ++c ) {
+			QuadBoxCC * child = _children[c];
+			if ( child && OSMRectContainsRect(child->rect(), target) ) {
+				return child->quadForRect(target);
+			}
+		}
+		return this;
+	}
+
+
+#pragma mark Region
 
 	void missingPieces( std::vector<QuadBoxCC *> & pieces, const OSMRect & target )
 	{
@@ -213,22 +306,6 @@ public:
 		}
 	}
 
-	void enumerateWithBlock( void (^block)(const QuadBoxCC * quad) ) const
-	{
-		block(this);
-		for ( int child = 0; child <= QUAD_LAST; ++child ) {
-			QuadBoxCC * q = _children[ child ];
-			if ( q ) {
-				q->enumerateWithBlock(block);
-			}
-		}
-	}
-
-	bool hasChildren() const
-	{
-		return _children[0] || _children[1] || _children[2] || _children[3];
-	}
-
 
 	NSInteger countBusy() const
 	{
@@ -241,7 +318,98 @@ public:
 		return c;
 	}
 
-	static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
+	bool discardQuadsOlderThanDate( double date )
+	{
+		if ( _busy )
+			return NO;
+#if DEBUG
+		if ( _downloadDate == 0 ) {
+			// all leaf nodes must have a download date
+			//	assert( _parent == NULL || hasChildren() );
+		}
+#endif
+		if ( _downloadDate && _downloadDate < date ) {
+			delete this;
+			return YES;
+		} else {
+			bool changed = NO;
+			for ( int c = 0; c < 4; ++c ) {
+				QuadBoxCC * child = _children[c];
+				if ( child ) {
+					bool del = child->discardQuadsOlderThanDate(date);
+					if ( del ) {
+						changed = YES;
+					}
+				}
+			}
+			if ( changed && !_whole && _downloadDate == 0 && !hasChildren() && _parent ) {
+				delete this;
+			}
+			return changed;
+		}
+	}
+
+	// discard the oldest "fraction" of quads, or oldestDate, whichever is more
+	// return the cutoff date selected
+	double discardOldestQuads(double fraction,NSDate * oldestDate)
+	{
+		// get a list of all quads that have downloads
+		__block std::vector<QuadBoxCC *> list;
+		enumerateWithBlock(^(QuadBoxCC * quad) {
+			if ( quad->_downloadDate ) {
+				list.push_back(quad);
+			}
+		});
+		// sort ascending by date
+		std::sort( list.begin(), list.end(), ^(QuadBoxCC *a, QuadBoxCC * b){return a->_downloadDate < b->_downloadDate;} );
+
+		int index = (int)(list.size() * fraction);
+		double date = list[ index ]->downloadDate();
+		if ( date < oldestDate.timeIntervalSinceReferenceDate )
+			date = oldestDate.timeIntervalSinceReferenceDate;	// be more aggressive and prune even more
+		return this->discardQuadsOlderThanDate(date) ? date : 0.0;
+	}
+
+	bool pointIsCovered( OSMPoint point ) const
+	{
+		if ( _downloadDate ) {
+			return true;
+		} else {
+			int c = childForPoint(point);
+			QuadBoxCC * child = _children[c];
+			return child && child->pointIsCovered(point);
+		}
+	}
+	// if any node is covered then return true (don't delete object)
+	static bool nodesAreCovered( const QuadBoxCC * root, NSArray * nodeList )
+	{
+		const QuadBoxCC * quad = root;
+		for ( OsmNode * node in nodeList ) {
+			OSMPoint point = node.location;
+			// move up until we find a quad containing the point
+			BOOL found;
+			while ( !(found = OSMRectContainsPoint( quad->rect(), point )) && quad->_parent ) {
+				quad = quad->_parent;
+			}
+			if ( !found )
+				goto next_node;
+			// recurse down until we find a quad with a download date
+			while ( quad->downloadDate() == 0 ) {
+				int c = quad->childForPoint(point);
+				QuadBoxCC * child = quad->_children[c];
+				if ( child == NULL )
+					goto next_node;
+				quad = child;
+			}
+			return true;
+		next_node:
+			(void)0;
+		}
+		return false;
+	}
+
+
+#pragma mark Spatial
 
 	void addMember(OsmBaseObject * member, const OSMRect & bbox, int depth)
 	{
@@ -350,146 +518,15 @@ assert(this->_parent);
 			}
 		}
 	}
-
-
-	void encodeWithCoder(NSCoder * coder) const
-	{
-		if ( _children[0] )	{ [coder encodeObject:_children[0]->owner()	forKey:@"child0"]; }
-		if ( _children[1] ) { [coder encodeObject:_children[1]->owner()	forKey:@"child1"]; }
-		if ( _children[2] ) { [coder encodeObject:_children[2]->owner()	forKey:@"child2"]; }
-		if ( _children[3] ) { [coder encodeObject:_children[3]->owner()	forKey:@"child3"]; }
-		[coder encodeBool:_whole												forKey:@"whole"];
-		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
-		[coder encodeBool:_isSplit												forKey:@"split"];
-		[coder encodeDouble:_downloadDate 										forKey:@"date"];
-	}
-	void initWithCoder(NSCoder * coder)
-	{
-		QuadBox * children[4];
-		children[0]	= [coder decodeObjectForKey:@"child0"];
-		children[1]	= [coder decodeObjectForKey:@"child1"];
-		children[2]	= [coder decodeObjectForKey:@"child2"];
-		children[3]	= [coder decodeObjectForKey:@"child3"];
-		for ( NSInteger i = 0; i < 4; ++i ) {
-			if ( children[i] ) {
-				_children[i] = children[i].cpp;
-				_children[i]->_parent = this;
-			} else {
-				_children[i] = NULL;
-			}
-		}
-		_whole			= [coder decodeBoolForKey:@"whole"];
-		_isSplit		= [coder decodeBoolForKey:@"split"];
-		_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
-		_downloadDate	= [coder decodeDoubleForKey:@"date"];
-		_parent			= NULL;
-		_busy			= false;
-		_owner			= NULL;
-
-		// if we just upgraded from an older install then we may need to set a download date
-		if ( _whole && _downloadDate == 0 )
-			_downloadDate = NSDate.timeIntervalSinceReferenceDate;
-	}
-	QuadBoxCC( NSCoder * coder, QuadBox * owner )
-	{
-		initWithCoder(coder);
-		_owner = owner;
-	}
-
-	bool discardQuadsOlderThanDate( double date )
-	{
-		if ( _busy )
-			return NO;
-#if DEBUG
-		if ( _downloadDate == 0 ) {
-			// all leaf nodes must have a download date
-		//	assert( _parent == NULL || hasChildren() );
-		}
-#endif
-		if ( _downloadDate && _downloadDate < date ) {
-			delete this;
-			return YES;
-		} else {
-			bool changed = NO;
-			for ( int c = 0; c < 4; ++c ) {
-				QuadBoxCC * child = _children[c];
-				if ( child ) {
-					bool del = child->discardQuadsOlderThanDate(date);
-					if ( del ) {
-						changed = YES;
-					}
-				}
-			}
-			if ( changed && !_whole && _downloadDate == 0 && !hasChildren() && _parent ) {
-				delete this;
-			}
-			return changed;
-		}
-	}
-	bool pointIsCovered( OSMPoint point )
-	{
-		if ( _downloadDate ) {
-			return true;
-		} else {
-			int c = childForPoint(point);
-			QuadBoxCC * child = _children[c];
-			return child && child->pointIsCovered(point);
-		}
-	}
-	// if a single node is covered then return true (don't delete object)
-	static bool nodesAreCovered( const QuadBoxCC * root, NSArray * nodeList )
-	{
-		const QuadBoxCC * quad = root;
-		for ( OsmNode * node in nodeList ) {
-			OSMPoint point = node.location;
-			// move up until we find a quad containing the point
-			BOOL found;
-			while ( !(found = OSMRectContainsPoint( quad->rect(), point )) && quad->_parent ) {
-				quad = quad->_parent;
-			}
-			if ( !found )
-				goto next_node;
-			// recurse down until we find a quad with a download date
-			while ( quad->downloadDate() == 0 ) {
-				int c = quad->childForPoint(point);
-				QuadBoxCC * child = quad->_children[c];
-				if ( child == NULL )
-					goto next_node;
-				quad = child;
-			}
-			return true;
-		next_node:
-			(void)0;
-		}
-		return false;
-	}
-
-
-	QuadBoxCC * quadForRect(OSMRect target)
-	{
-		for ( int c = 0; c < 4; ++c ) {
-			QuadBoxCC * child = _children[c];
-			if ( child && OSMRectContainsRect(child->rect(), target) ) {
-				return child->quadForRect(target);
-			}
-		}
-		return this;
-	}
-
-	QuadBoxCC * parent()
-	{
-		return _parent;
-	}
-
-	double downloadDate() const
-	{
-		return _downloadDate;
-	}
 };
 
 
 
+
+
 @implementation QuadBox
+
+#pragma mark Common
 
 -(instancetype)initWithRect:(OSMRect)rect
 {
@@ -517,6 +554,8 @@ assert(this->_parent);
 
 -(void)dealloc
 {
+	delete _cpp;
+	_cpp = NULL;
 }
 
 -(void)reset
@@ -538,6 +577,31 @@ assert(this->_parent);
 {
 	return _cpp->rect();
 }
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+	_cpp->encodeWithCoder(coder);
+}
+
+-(id)initWithCoder:(NSCoder *)coder
+{
+	self = [super init];
+	if ( self ) {
+		_cpp = new QuadBoxCC( coder, self );
+	}
+	return self;
+}
+
+-(NSInteger)count
+{
+	__block NSInteger c = 0;
+	_cpp->enumerateWithBlock(^(QuadBoxCC * quad) {
+		++c;
+	});
+	return c;
+}
+
+#pragma mark Region
 
 -(double)downloadDate
 {
@@ -562,6 +626,19 @@ assert(this->_parent);
 	_cpp->makeWhole(success);
 }
 
+-(BOOL)nodesAreCovered:(NSArray *)nodeList
+{
+	return QuadBoxCC::nodesAreCovered(_cpp, nodeList);
+}
+-(BOOL)pointIsCovered:(OSMPoint)point
+{
+	return _cpp->pointIsCovered(point);
+}
+
+
+
+#pragma mark Spatial
+
 -(void)addMember:(OsmBaseObject *)member bbox:(OSMRect)bbox
 {
 	if ( bbox.origin.x == 0 && bbox.origin.y == 0 && bbox.size.width == 0 && bbox.size.height == 0 )
@@ -582,45 +659,21 @@ assert(this->_parent);
 	return nil;
 }
 
--(BOOL)nodesAreCovered:(NSArray *)nodeList
-{
-	return QuadBoxCC::nodesAreCovered(_cpp, nodeList);
-}
--(BOOL)pointIsCovered:(OSMPoint)point
-{
-	return _cpp->pointIsCovered(point);
-}
-
-
--(void)enumerateWithBlock:(void (^)(const struct QuadBoxCC * quad))block
-{
-	_cpp->enumerateWithBlock(block);
-}
-
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
 {
 	_cpp->findObjectsInArea(bbox, block);
 }
 
+#pragma mark Discard objects
 
--(void)encodeWithCoder:(NSCoder *)coder
-{
-	_cpp->encodeWithCoder(coder);
-}
--(id)initWithCoder:(NSCoder *)coder
-{
-	self = [super init];
-	if ( self ) {
-		_cpp = new QuadBoxCC( coder, self );
-	}
-	return self;
-}
-
-
-#pragma mark purge objects
 -(BOOL)discardQuadsOlderThanDate:(NSDate *)date
 {
 	return _cpp->discardQuadsOlderThanDate(date.timeIntervalSinceReferenceDate);
+}
+-(NSDate *)discardOldestQuads:(double)fraction oldest:(NSDate *)oldest
+{
+	double cutoff = _cpp->discardOldestQuads(fraction,oldest);
+	return cutoff ? [NSDate dateWithTimeIntervalSinceReferenceDate:cutoff] : nil;
 }
 -(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate
 {

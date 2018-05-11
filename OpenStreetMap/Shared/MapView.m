@@ -1279,13 +1279,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)discardStaleData
 {
-	NSTimeInterval interval = -24*60*60;
 	OsmMapData * mapData = self.editorLayer.mapData;
+	NSDate * oldest = [NSDate dateWithTimeIntervalSinceNow:-24*60*60];
 	BOOL changed = NO;
 	while ( mapData.nodeCount + mapData.wayCount + mapData.relationCount > 100000 ) {
-		NSDate * date = [NSDate dateWithTimeIntervalSinceNow:interval];
-		[mapData discardObjectsOlderThan:date];
-		interval /= 2;
+		[mapData discardObjectsOlderThan:oldest orFraction:0.33];
 		changed = YES;
 	}
 	if ( changed ) {

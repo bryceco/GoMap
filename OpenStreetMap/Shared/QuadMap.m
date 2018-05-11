@@ -16,6 +16,8 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 @implementation QuadMap
 
+#pragma mark Common
+
 -(instancetype)initWithRect:(OSMRect)rect
 {
 	self = [super init];
@@ -30,12 +32,33 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	return [self initWithRect:MAP_RECT];
 }
 
+-(NSInteger)count
+{
+	return [_rootQuad count];
+}
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+	[coder encodeObject:_rootQuad forKey:@"rootQuad"];
+}
+
+-(id)initWithCoder:(NSCoder *)coder
+{
+	self = [super init];
+	if ( self ) {
+		_rootQuad	= [coder decodeObjectForKey:@"rootQuad"];
+	}
+	return self;
+}
+
+
+#pragma mark Regions
+
 -(void)mergeDerivedRegion:(QuadMap *)other success:(BOOL)success
 {
 	assert( other.count == 1 );
 	[self makeWhole:other->_rootQuad success:success];
 }
-
 
 -(NSArray *)newQuadsForRect:(OSMRect)newRect
 {
@@ -55,11 +78,12 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	return quads;
 }
 
-
 -(void)makeWhole:(QuadBox *)quad success:(BOOL)success
 {
 	[quad makeWhole:success];
 }
+
+#pragma mark Spatial
 
 -(void)addMember:(OsmBaseObject *)member undo:(UndoManager *)undo
 {
@@ -98,6 +122,7 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 		}
 	}
 }
+// This is just like updateMember but allows boxed arguments so the undo manager can call it
 -(void)updateMemberBoxed:(OsmBaseObject *)member toBox:(NSData *)toBox fromBox:(NSData *)fromBox undo:(UndoManager *)undo
 {
 	const OSMRect * to = (const OSMRect *)toBox.bytes;
@@ -109,46 +134,23 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	[self updateMember:member toBox:member.boundingBox fromBox:bbox undo:undo];
 }
 
-
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
 {
 	[_rootQuad findObjectsInArea:bbox block:block];
 }
 
 
--(void)enumerateWithBlock:(void (^)(QuadBoxEnumerationType quad))block
-{
-	[_rootQuad enumerateWithBlock:block];
-}
+#pragma mark Purge objects
 
--(NSInteger)count
-{
-	__block NSInteger c = 0;
-	[self enumerateWithBlock:^(QuadBoxEnumerationType quad){
-		++c;
-	}];
-	return c;
-}
-
--(void)encodeWithCoder:(NSCoder *)coder
-{
-	[coder encodeObject:_rootQuad forKey:@"rootQuad"];
-}
--(id)initWithCoder:(NSCoder *)coder
-{
-	self = [super init];
-	if ( self ) {
-		_rootQuad	= [coder decodeObjectForKey:@"rootQuad"];
-	}
-	return self;
-}
-
-
-#pragma mark purge objects
 -(BOOL)discardQuadsOlderThanDate:(NSDate *)date
 {
 	return [_rootQuad discardQuadsOlderThanDate:date];
 }
+-(NSDate *)discardOldestQuads:(double)fraction oldest:(NSDate *)oldest
+{
+	return [_rootQuad discardOldestQuads:fraction oldest:oldest];
+}
+
 -(BOOL)pointIsCovered:(OSMPoint)point
 {
 	return [_rootQuad pointIsCovered:point];

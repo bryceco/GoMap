@@ -96,7 +96,6 @@ static NSString * g_UserAgent = nil;
 	
 	OSAtomicIncrement32(&_downloadCount);
 
-#if 1
 	NSURLSessionDataTask * task = [_urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		OSAtomicDecrement32(&_downloadCount);
 		
@@ -120,9 +119,6 @@ static NSString * g_UserAgent = nil;
 			completion(data,error);
 		}
 	}];
-#else
-	NSURLSessionDataTask * task = [_urlSession dataTaskWithRequest:request];
-#endif
 	[task resume];
 }
 

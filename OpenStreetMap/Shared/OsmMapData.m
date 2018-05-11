@@ -22,13 +22,8 @@
 #import "UndoManager.h"
 #import "VectorMath.h"
 
-#define USE_SQL 1
-
-
-#if USE_SQL
 #import "Database.h"
 #import "EditorMapLayer.h"
-#endif
 
 #define OSM_SERVER_KEY	@"OSM Server"
 
@@ -383,10 +378,15 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	return count;
 }
 
--(BOOL)discardObjectsOlderThan:(NSDate *)date
+-(BOOL)discardObjectsOlderThan:(NSDate *)date orFraction:(double)fraction
 {
 	if ( self.modificationCount > 0 )
 		return NO;
+
+	// get rid of old download regions
+	date = [_region discardOldestQuads:fraction oldest:date];
+	if ( date == nil )
+		return NO;	// nothing to discard
 
 	// look at dates of objects in each quad. If any objects are older than date then discard the contents of the quad and delete it.
 	NSTimeInterval interval = [NSDate.new timeIntervalSinceDate:date];
@@ -396,11 +396,6 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		NSLog(@"Discarding stale data %ld minutes old\n",(long)interval/60);
 	else
 		NSLog(@"Discarding stale data %ld hours old\n",(long)interval/60/60);
-
-	// get rid of old download regions
-	BOOL changed = [_region discardQuadsOlderThanDate:date];
-	if ( !changed )
-		return YES;
 
 	// now go through all objects and determine which are no longer in a downloaded region
 	NSMutableArray * removeRelations	= [NSMutableArray new];
@@ -1921,23 +1916,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)copyRelation:(OsmRelation *)relation
 {
 	[_relations setObject:relation forKey:relation.ident];
-#if USE_SQL
 	// don't copy member objects
-#else
-	for ( OsmMember * member in relation.members ) {
-		if ( [member.ref isKindOfClass:[NSNumber class]] )
-			continue;
-		if ( member.isNode ) {
-			[self copyNode:member.ref];
-		} else if ( member.isWay ) {
-			[self copyWay:member.ref];
-		} else if ( member.isRelation ) {
-			[self copyRelation:member.ref];
-		} else {
-			assert(NO);
-		}
-	}
-#endif
 }
 -(OsmMapData *)modifiedObjects
 {
@@ -1988,10 +1967,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_relations removeAllObjects];
 	[_spatial.rootQuad reset];
 	_region  = [QuadMap new];
-#if USE_SQL
+
 	Database * db = [Database new];
 	[db dropTables];
-#endif
 }
 
 -(void)purgeHard
@@ -2106,7 +2084,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		   isUpdate:(BOOL)isUpdate
 {
-#if USE_SQL
 	if ( saveNodes.count + saveWays.count + saveRelations.count + deleteNodes.count + deleteWays.count + deleteRelations.count == 0 )
 		return;
 	CFTimeInterval t = CACurrentMediaTime();
@@ -2116,7 +2093,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	t = CACurrentMediaTime() - t;
 	DLog(@"sql save %ld nodes, %ld ways, time = %f", (long)saveNodes.count, (long)saveWays.count, t);
 	[self save];
-#endif
 }
 
 // after uploading a changeset we have to update the SQL database to reflect the changes the server replied with
@@ -2155,7 +2131,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)save
 {
 	CFTimeInterval t = CACurrentMediaTime();
-#if USE_SQL
 	// save dirty data and relations
 	DbgAssert(g_EditorMapLayerForArchive);
 	OsmMapData * modified = [self modifiedObjects];
@@ -2165,19 +2140,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	_spatial.rootQuad = nil;	// This aliases modified->_spatial.rootQuad, which we will rebuild when we reload
 	[modified saveArchive];
 	_spatial.rootQuad = spatialRoot;
-#else
-	// First save just modified objects, which we can do very fast, in case we get killed during full save
-	OsmMapData * modified = [self modifiedObjects];
-	modified->_region = nil;	// don't preserve regions because we will need to reload all data
-	QuadBox * root = _spatial.rootQuad;
-	modified->_spatial = _spatial;
-	_spatial.rootQuad = nil;
-	[modified saveArchive];
-	_spatial.rootQuad = root;
 
-	// Next try to save everything. Since we save atomically this won't overwrite the fast save unless it succeeeds.
-	[self saveArchive];
-#endif
 	t = CACurrentMediaTime() - t;
 //	DLog(@"archive save %ld,%ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.count, (long)_region.count, t);
 	DLog(@"Objects = %ld", (long)self.nodeCount+self.wayCount+self.relationCount);
@@ -2204,7 +2167,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 	unarchiver.delegate = self;
 	self = [unarchiver decodeObjectForKey:@"OsmMapData"];
-#if USE_SQL
 	if ( self ) {
 		[self initCommon];
 
@@ -2232,14 +2194,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			_region = [QuadMap new];
 		}
 	}
-#else
-	if ( self ) {
-		// convert relation members from ids back into objects
-		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
-			[relation resolveToMapData:self];
-		}];
-	}
-#endif
 
 	return self;
 }
