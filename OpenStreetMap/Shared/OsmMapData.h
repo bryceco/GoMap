@@ -100,6 +100,8 @@ extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
 -(NSInteger)modificationCount;
 -(OsmMapData *)modifiedObjects;
 
+-(BOOL)discardObjectsOlderThan:(NSDate *)date;
+
 -(int32_t)wayCount;
 -(int32_t)nodeCount;
 -(int32_t)relationCount;

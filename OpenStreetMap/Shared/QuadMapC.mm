@@ -12,6 +12,12 @@
 #import "QuadMap.h"
 #import "UndoManager.h"
 
+#if DEBUG
+#import "AppDelegate.h"
+#import "MapView.h"
+#import "GpxLayer.h"
+#endif
+
 
 static const double MinRectSize = 360.0 / (1 << 16);
 
@@ -25,32 +31,45 @@ private:
 	std::vector<OsmBaseObject *>	_members;
 	QuadBoxCC					*	_parent;
 	QuadBoxCC					*	_children[ 4 ];
-	bool							_whole;
-	bool							_busy;
+	double							_downloadDate;
+	bool							_whole;				// this quad has already been processed
+	bool							_busy;				// this quad is currently being processed
 	bool							_isSplit;
-	__strong QuadBoxC			*	_owner;
+	__strong QuadBox			*	_owner;
 
 public:
-	QuadBoxCC( OSMRect rect, QuadBoxCC * parent, QuadBoxC * owner ) : _rect(rect), _parent(parent), _owner(owner)
+	QuadBoxCC( OSMRect rect, QuadBoxCC * parent, QuadBox * owner ) : _rect(rect), _parent(parent), _owner(owner)
 	{
 		_children[0] = _children[1] = _children[2] = _children[3] = NULL;
 		_whole = _busy = _isSplit = false;
+		_downloadDate = 0.0;
 		if ( _owner == nil )
-			_owner = [[QuadBoxC alloc] initWithThis:this];
+			_owner = [[QuadBox alloc] initWithThis:this];
 	}
 
 	~QuadBoxCC()
 	{
+		if ( _parent ) {
+			for ( int c = 0; c < 4; ++c ) {
+				if ( _parent->_children[c] == this ) {
+					_parent->_children[c] = NULL;
+				}
+			}
+		} else {
+			assert(NO);	// don't delete root node
+		}
+
 		reset();
-		_owner = nil;
+		[_owner nullifyCpp];
+		_owner = nil;	// remove reference so it can be released
 	}
 
-	const OSMRect rect() const
+	const OSMRect & rect() const
 	{
 		return _rect;
 	}
 
-	QuadBoxC * owner() const
+	QuadBox * owner() const
 	{
 		return _owner;
 	}
@@ -64,6 +83,7 @@ public:
 		_whole	= false;
 		_busy = false;
 		_isSplit = false;
+		_downloadDate = 0.0;
 		_members.clear();
 	}
 
@@ -83,6 +103,12 @@ public:
 	}
 
 	// find a child member could fit into
+	inline int childForPoint( OSMPoint point ) const
+	{
+		BOOL west  = point.x < _rect.origin.x + _rect.size.width*0.5;
+		BOOL north = point.y < _rect.origin.y + _rect.size.height*0.5;
+		return (int)north << 1 | west;
+	}
 	int childForRect( const OSMRect & child ) const
 	{
 		double midX = _rect.origin.x + _rect.size.width*0.5;
@@ -116,7 +142,7 @@ public:
 			return;
 		}
 		if ( OSMRectContainsRect(target, _rect) ) {
-			if ( _children[0] == nil && _children[1] == nil && _children[2] == nil && _children[3] == nil ) {
+			if ( !hasChildren() ) {
 				_busy = YES;
 				pieces.push_back(this);
 				return;
@@ -161,8 +187,12 @@ public:
 #endif
 
 		if ( success ) {
+			_downloadDate = NSDate.timeIntervalSinceReferenceDate;
 			_whole = YES;
 			_busy = NO;
+#if DEBUG
+			[[AppDelegate getAppDelegate].mapView.gpxLayer createGpxRect:CGRectFromOSMRect(_rect)];
+#endif
 			for ( int child = 0; child <= QUAD_LAST; ++child ) {
 				if ( _children[child] && _children[child]->countBusy() == 0 ) {
 					delete _children[child];
@@ -193,6 +223,12 @@ public:
 			}
 		}
 	}
+
+	bool hasChildren() const
+	{
+		return _children[0] || _children[1] || _children[2] || _children[3];
+	}
+
 
 	NSInteger countBusy() const
 	{
@@ -240,6 +276,7 @@ public:
 			_children[index]->addMember(member,bbox,depth+1);
 		} else {
 			// add to self
+assert(this->_parent);
 			_members.push_back(member);
 		}
 	}
@@ -284,7 +321,6 @@ public:
 		}
 	}
 
-
 	QuadBoxCC * getQuadBoxMember(OsmBaseObject * member, const OSMRect & bbox) const
 	{
 		auto iter = std::find(_members.begin(), _members.end(), member);
@@ -302,6 +338,20 @@ public:
 		return NULL;
 	}
 
+	void deleteObjectsWithPredicate( BOOL(^predicate)(OsmBaseObject * obj) )
+	{
+		auto last = std::remove_if( _members.begin(), _members.end(), predicate );
+		_members.erase( last, _members.end() );
+
+		for ( int c = 0; c <= QUAD_LAST; ++c ) {
+			QuadBoxCC * child = _children[ c ];
+			if ( child ) {
+				child->deleteObjectsWithPredicate( predicate );
+			}
+		}
+	}
+
+
 	void encodeWithCoder(NSCoder * coder) const
 	{
 		if ( _children[0] )	{ [coder encodeObject:_children[0]->owner()	forKey:@"child0"]; }
@@ -311,12 +361,11 @@ public:
 		[coder encodeBool:_whole												forKey:@"whole"];
 		[coder encodeObject:[NSData dataWithBytes:&_rect length:sizeof _rect]	forKey:@"rect"];
 		[coder encodeBool:_isSplit												forKey:@"split"];
-		//		[coder encodeObject:_parent							forKey:@"parent"];
-		//		[coder encodeObject:_members						forKey:@"members"];
+		[coder encodeDouble:_downloadDate 										forKey:@"date"];
 	}
 	void initWithCoder(NSCoder * coder)
 	{
-		QuadBoxC * children[4];
+		QuadBox * children[4];
 		children[0]	= [coder decodeObjectForKey:@"child0"];
 		children[1]	= [coder decodeObjectForKey:@"child1"];
 		children[2]	= [coder decodeObjectForKey:@"child2"];
@@ -332,22 +381,115 @@ public:
 		_whole			= [coder decodeBoolForKey:@"whole"];
 		_isSplit		= [coder decodeBoolForKey:@"split"];
 		_rect			= *(OSMRect *)[[coder decodeObjectForKey:@"rect"] bytes];
+		_downloadDate	= [coder decodeDoubleForKey:@"date"];
 		_parent			= NULL;
 		_busy			= false;
 		_owner			= NULL;
-		//		_parent			= [coder decodeObjectForKey:@"parent"];
-		//		_members		= [coder decodeObjectForKey:@"members"];
+
+		// if we just upgraded from an older install then we may need to set a download date
+		if ( _whole && _downloadDate == 0 )
+			_downloadDate = NSDate.timeIntervalSinceReferenceDate;
 	}
-	QuadBoxCC( NSCoder * coder, QuadBoxC * owner )
+	QuadBoxCC( NSCoder * coder, QuadBox * owner )
 	{
 		initWithCoder(coder);
 		_owner = owner;
+	}
+
+	bool discardQuadsOlderThanDate( double date )
+	{
+		if ( _busy )
+			return NO;
+#if DEBUG
+		if ( _downloadDate == 0 ) {
+			// all leaf nodes must have a download date
+		//	assert( _parent == NULL || hasChildren() );
+		}
+#endif
+		if ( _downloadDate && _downloadDate < date ) {
+			delete this;
+			return YES;
+		} else {
+			bool changed = NO;
+			for ( int c = 0; c < 4; ++c ) {
+				QuadBoxCC * child = _children[c];
+				if ( child ) {
+					bool del = child->discardQuadsOlderThanDate(date);
+					if ( del ) {
+						changed = YES;
+					}
+				}
+			}
+			if ( changed && !_whole && _downloadDate == 0 && !hasChildren() && _parent ) {
+				delete this;
+			}
+			return changed;
+		}
+	}
+	bool pointIsCovered( OSMPoint point )
+	{
+		if ( _downloadDate ) {
+			return true;
+		} else {
+			int c = childForPoint(point);
+			QuadBoxCC * child = _children[c];
+			return child && child->pointIsCovered(point);
+		}
+	}
+	// if a single node is covered then return true (don't delete object)
+	static bool nodesAreCovered( const QuadBoxCC * root, NSArray * nodeList )
+	{
+		const QuadBoxCC * quad = root;
+		for ( OsmNode * node in nodeList ) {
+			OSMPoint point = node.location;
+			// move up until we find a quad containing the point
+			BOOL found;
+			while ( !(found = OSMRectContainsPoint( quad->rect(), point )) && quad->_parent ) {
+				quad = quad->_parent;
+			}
+			if ( !found )
+				goto next_node;
+			// recurse down until we find a quad with a download date
+			while ( quad->downloadDate() == 0 ) {
+				int c = quad->childForPoint(point);
+				QuadBoxCC * child = quad->_children[c];
+				if ( child == NULL )
+					goto next_node;
+				quad = child;
+			}
+			return true;
+		next_node:
+			(void)0;
+		}
+		return false;
+	}
+
+
+	QuadBoxCC * quadForRect(OSMRect target)
+	{
+		for ( int c = 0; c < 4; ++c ) {
+			QuadBoxCC * child = _children[c];
+			if ( child && OSMRectContainsRect(child->rect(), target) ) {
+				return child->quadForRect(target);
+			}
+		}
+		return this;
+	}
+
+	QuadBoxCC * parent()
+	{
+		return _parent;
+	}
+
+	double downloadDate() const
+	{
+		return _downloadDate;
 	}
 };
 
 
 
-@implementation QuadBoxC
+@implementation QuadBox
 
 -(instancetype)initWithRect:(OSMRect)rect
 {
@@ -373,8 +515,6 @@ public:
 	return self;
 }
 
-
-
 -(void)dealloc
 {
 }
@@ -384,9 +524,24 @@ public:
 	_cpp->reset();
 }
 
+-(void)nullifyCpp
+{
+	_cpp = NULL;	// done only when _cpp deleted itself, and doesn't want us to use it any more in case somebody still has a reference to us
+}
+
+-(NSString *)description
+{
+	return NSStringFromCGRect(CGRectFromOSMRect(_cpp->rect()));
+}
+
 -(OSMRect)rect
 {
 	return _cpp->rect();
+}
+
+-(double)downloadDate
+{
+	return _cpp->downloadDate();
 }
 
 -(void)missingPieces:(NSMutableArray *)pieces intersectingRect:(OSMRect)target
@@ -395,7 +550,7 @@ public:
 	_cpp->missingPieces(missing, target);
 	for ( const auto & iter : missing ) {
 		QuadBoxCC & q = *iter;
-		QuadBoxC * box = q.owner();
+		QuadBox * box = q.owner();
 		[pieces addObject:box];
 	}
 }
@@ -427,8 +582,14 @@ public:
 	return nil;
 }
 
-
-
+-(BOOL)nodesAreCovered:(NSArray *)nodeList
+{
+	return QuadBoxCC::nodesAreCovered(_cpp, nodeList);
+}
+-(BOOL)pointIsCovered:(OSMPoint)point
+{
+	return _cpp->pointIsCovered(point);
+}
 
 
 -(void)enumerateWithBlock:(void (^)(const struct QuadBoxCC * quad))block
@@ -453,6 +614,71 @@ public:
 		_cpp = new QuadBoxCC( coder, self );
 	}
 	return self;
+}
+
+
+#pragma mark purge objects
+-(BOOL)discardQuadsOlderThanDate:(NSDate *)date
+{
+	return _cpp->discardQuadsOlderThanDate(date.timeIntervalSinceReferenceDate);
+}
+-(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate
+{
+	_cpp->deleteObjectsWithPredicate(predicate);
+}
+
+
+
+#pragma mark find sibling quadkeys
+
+typedef enum DIRECTION {
+	Up = 0,
+	Down = 1,
+	Left = 2,
+	Right = 3
+} DIRECTION;
+
+static void replaceCharacterInString( NSMutableString * string, NSInteger index, unichar replacement )
+{
+	[string replaceCharactersInRange:NSMakeRange(index,1) withString:[NSString stringWithCharacters:&replacement length:1]];
+}
+static char keyCharTranslate( char keyChar, DIRECTION direction )
+{
+	switch ( direction ) {
+		case Left:
+		case Right:
+			return "1032"[keyChar-'0'];
+		case Up:
+		case Down:
+			return "2301"[keyChar-'0'];
+	}
+	assert(NO);
+}
+static void keyTranslate( NSMutableString * key, int index, DIRECTION direction )
+{
+	if ( key.length == 0 ) {
+		return;
+	}
+
+	char savedChar = [key characterAtIndex:index];
+	char replacement = keyCharTranslate(savedChar, direction);
+	replaceCharacterInString(key, index, replacement );
+
+	if ( index > 0 ) {
+		if(((savedChar == '0') && (direction == Left  || direction == Up))   ||
+		   ((savedChar == '1') && (direction == Right || direction == Up))   ||
+		   ((savedChar == '2') && (direction == Left  || direction == Down)) ||
+		   ((savedChar == '3') && (direction == Right || direction == Down)))
+		{
+			keyTranslate( key, index - 1, direction );
+		}
+	}
+}
+NSString * sibling( NSString * quadkey, DIRECTION direction )
+{
+	NSMutableString * key = [quadkey mutableCopy];
+	keyTranslate( key, (int)key.length-1, direction );
+	return [NSString stringWithString:key];
 }
 
 @end

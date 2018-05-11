@@ -401,8 +401,8 @@ CGSize SizeForImage( NSImage * image )
 															  @"mapViewEnableRotation"	: @(YES),
 															  }];
 
-	self.viewState		 = (MapViewState)	 [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
-	self.viewOverlayMask = (ViewOverlayMask) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewOverlays"];
+	self.viewState				= (MapViewState)	 [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
+	self.viewOverlayMask		= (ViewOverlayMask) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewOverlays"];
 
 	self.enableRotation			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableRotation"];
 	self.enableBirdsEye			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBirdsEye"];
@@ -1273,6 +1273,25 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	double scale = 360/(widthDegrees / 2);
 	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
+}
+
+#pragma mark Discard stale data
+
+-(void)discardStaleData
+{
+	NSTimeInterval interval = -24*60*60;
+	OsmMapData * mapData = self.editorLayer.mapData;
+	BOOL changed = NO;
+	while ( mapData.nodeCount + mapData.wayCount + mapData.relationCount > 100000 ) {
+		NSDate * date = [NSDate dateWithTimeIntervalSinceNow:interval];
+		[mapData discardObjectsOlderThan:date];
+		interval /= 2;
+		changed = YES;
+	}
+	if ( changed ) {
+		[self flashMessage:@"Stale map data discarded"];
+		[self.editorLayer updateMapLocation];	// download data if necessary
+	}
 }
 
 #pragma mark Progress indicator

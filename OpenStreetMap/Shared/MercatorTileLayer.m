@@ -492,7 +492,7 @@ typedef enum {
 
 				if ( image ) {
 
-					dispatch_sync(dispatch_get_main_queue(), ^(void){
+					dispatch_async(dispatch_get_main_queue(), ^(void){
 						[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
 						if ( layer.superlayer ) {
 #if TARGET_OS_IPHONE

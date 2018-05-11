@@ -87,7 +87,10 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 }
 @end
 
+
+#pragma mark Track
 @implementation GpxTrack
+
 -(void)addPoint:(CLLocation *)location
 {
 	_recording = YES;
@@ -124,6 +127,23 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	_recording = NO;
 	_points = [NSArray arrayWithArray:_points];
 }
+
++(instancetype)gpxTrackWithRect:(CGRect)rect
+{
+	GpxTrack * track = [GpxTrack new];
+	CLLocation * nw = [[CLLocation alloc] initWithLatitude:rect.origin.y					longitude:rect.origin.x];
+	CLLocation * ne = [[CLLocation alloc] initWithLatitude:rect.origin.y					longitude:rect.origin.x+rect.size.width];
+	CLLocation * se = [[CLLocation alloc] initWithLatitude:rect.origin.y+rect.size.height	longitude:rect.origin.x+rect.size.width];
+	CLLocation * sw = [[CLLocation alloc] initWithLatitude:rect.origin.y+rect.size.height	longitude:rect.origin.x];
+	[track addPoint:nw];
+	[track addPoint:ne];
+	[track addPoint:se];
+	[track addPoint:sw];
+	[track addPoint:nw];
+	[track finishTrack];
+	return track;
+}
+
 
 -(NSString *)gpxXmlString
 {
@@ -502,6 +522,15 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 }
 
 
+-(void)createGpxRect:(CGRect)rect
+{
+	GpxTrack * track = [GpxTrack gpxTrackWithRect:rect];
+	[self.previousTracks insertObject:track atIndex:0];
+	[self setNeedsDisplay];
+	[self setNeedsLayout];
+}
+
+
 -(NSString *)saveDirectory
 {
 	NSArray * documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -546,12 +575,12 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 					GpxTrack * track = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 					if ( [track.creationDate timeIntervalSinceDate:cutoff] < 0 ) {
 						// skip because its too old
-						dispatch_sync(dispatch_get_main_queue(), ^{
+						dispatch_async(dispatch_get_main_queue(), ^{
 							[self deleteTrack:track];
 						});
 						continue;
 					}
-					dispatch_sync(dispatch_get_main_queue(), ^{
+					dispatch_async(dispatch_get_main_queue(), ^{
 						// DLog(@"track %@: %@, %ld points\n",file,track.creationDate, (long)track.points.count);
 
 						[_previousTracks addObject:track];

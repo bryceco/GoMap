@@ -179,7 +179,6 @@ static const CGFloat NodeHighlightRadius = 6.0;
 	[self updateMapLocation];
 }
 
-
 - (void)save
 {
 	[_mapData save];

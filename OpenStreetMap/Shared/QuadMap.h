@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 typedef enum {
 	QUAD_SE = 0,
 	QUAD_SW = 1,
@@ -19,37 +18,12 @@ typedef enum {
 
 @class OsmBaseObject;
 
-#define USE_QUAD_C 1
 
-@interface QuadBox : NSObject <NSCoding>
-{
-	@public
-	QuadBox			*	_children[ 4 ];
-	QuadBox			*	_parent;
-	BOOL				_whole;				// fully downloaded
-	BOOL				_busy;				// currently downloading
-	NSMutableArray	*	_members;
-	BOOL				_isSplit;
-}
-@property (readonly,nonatomic)	OSMRect		rect;
-
--(id)initWithRect:(OSMRect)rect;
--(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
--(void)reset;
-
-@end
-
-#if USE_QUAD_C
-#define QuadBox QuadBoxC
 typedef const struct QuadBoxCC * QuadBoxEnumerationType;
-#else
-typedef QuadBox * QuadBoxEnumerationType;
-#endif
-
-
 struct QuadBoxCC;
 
-@interface QuadBoxC : NSObject <NSCoding>
+
+@interface QuadBox : NSObject <NSCoding>
 {
 	struct QuadBoxCC *	_cpp;
 }
@@ -66,6 +40,13 @@ struct QuadBoxCC;
 -(void)enumerateWithBlock:(void (^)(const struct QuadBoxCC * quad))block;
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
 -(void)reset;
+-(void)nullifyCpp;
+
+// these are for purging old data:
+-(BOOL)discardQuadsOlderThanDate:(NSDate *)date;
+-(BOOL)pointIsCovered:(OSMPoint)point;
+-(BOOL)nodesAreCovered:(NSArray *)nodeList;
+-(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate;
 
 @end
 
@@ -87,4 +68,11 @@ struct QuadBoxCC;
 -(BOOL)removeMember:(OsmBaseObject *)member undo:(UndoManager *)undo;
 
 -(NSInteger)count;
+
+// these are for purging old data:
+-(BOOL)discardQuadsOlderThanDate:(NSDate *)date;
+-(BOOL)pointIsCovered:(OSMPoint)point;
+-(BOOL)nodesAreCovered:(NSArray *)nodeList;
+-(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate;
+
 @end

@@ -76,4 +76,6 @@
 
 -(BOOL)loadGPXData:(NSData *)data center:(BOOL)center;
 
+-(void)createGpxRect:(CGRect)rect;
+
 @end

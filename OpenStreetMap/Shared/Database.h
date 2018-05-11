@@ -17,6 +17,11 @@
 	struct sqlite3_stmt	*	_spatialDelete;
 }
 
++(NSString *)databasePathWithName:(NSString *)name;
+
+-(instancetype)initWithName:(NSString *)name;
+-(NSString *)path;
+
 -(void)dropTables;
 -(void)createTables;
 

@@ -210,6 +210,8 @@ typedef enum {
 
 -(BOOL)containsObject:(OsmBaseObject *)object;
 
+-(void)deresolveRefs;
+
 @end
 
 

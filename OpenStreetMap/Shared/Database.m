@@ -33,7 +33,7 @@ if (!(condition)) {		\
 
 #pragma mark initialize
 
-- (NSString *)databasePath
++(NSString *)databasePathWithName:(NSString *)name
 {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains( NSCachesDirectory, NSUserDomainMask, YES );
 	if ( [paths count] ) {
@@ -41,6 +41,9 @@ if (!(condition)) {		\
 		NSString * path = [[[paths objectAtIndex:0]
 							stringByAppendingPathComponent:bundleName]
 						   stringByAppendingPathComponent:@"data.sqlite3"];
+		if ( name.length ) {
+			path = [path stringByAppendingFormat:@".%@",name];
+		}
 		[[NSFileManager defaultManager] createDirectoryAtPath:path.stringByDeletingLastPathComponent withIntermediateDirectories:YES attributes:NULL error:NULL];
 //		DLog(@"sql = %@",path);
 		return path;
@@ -48,21 +51,32 @@ if (!(condition)) {		\
 	return nil;
 }
 
-
--(instancetype)init
+-(instancetype)initWithName:(NSString *)name
 {
 	self = [super init];
 	if ( self ) {
-		_path = [self databasePath];
+		_path = [Database databasePathWithName:name];
 		int rc = sqlite3_open_v2( _path.UTF8String, &_db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL );
 		if ( rc == SQLITE_OK ) {
-			rc = sqlite3_exec(_db, "PRAGMA foreign_keys=ON", NULL, NULL, NULL );
+			rc = sqlite3_exec(_db, "PRAGMA foreign_keys=ON;", NULL, NULL, NULL );
+			assert( rc == SQLITE_OK );
+			rc = sqlite3_exec(_db, "PRAGMA journal_mode=WAL;", NULL, NULL, NULL );
 			assert( rc == SQLITE_OK );
 		} else {
 			_db = NULL;
 		}
 	}
 	return self;
+}
+
+-(instancetype)init
+{
+	return [self initWithName:nil];
+}
+
+-(NSString *)path
+{
+	return _path;
 }
 
 -(void)dealloc
@@ -76,21 +90,27 @@ if (!(condition)) {		\
 	}
 #endif
 	if ( _db ) {
-		sqlite3_close(_db);
+		int rc = sqlite3_close(_db);
+		if ( rc != SQLITE_OK ) {
+			NSLog(@"Database could not close: %s\n", sqlite3_errmsg(_db) );
+		}
 	}
 }
 
 -(void)dropTables
 {
-	sqlite3_exec(_db, "drop table node_tags;",	0, 0, 0 );
-	sqlite3_exec(_db, "drop table nodes;",		0, 0, 0 );
-	sqlite3_exec(_db, "drop table way_tags;",	0, 0, 0 );
-	sqlite3_exec(_db, "drop table way_nodes;",	0, 0, 0 );
-	sqlite3_exec(_db, "drop table ways;",		0, 0, 0 );
+	sqlite3_exec(_db, "drop table node_tags;",			0, 0, 0 );
+	sqlite3_exec(_db, "drop table nodes;",				0, 0, 0 );
+	sqlite3_exec(_db, "drop table way_tags;",			0, 0, 0 );
+	sqlite3_exec(_db, "drop table way_nodes;",			0, 0, 0 );
+	sqlite3_exec(_db, "drop table ways;",				0, 0, 0 );
+	sqlite3_exec(_db, "drop table relation_tags;",		0, 0, 0 );
+	sqlite3_exec(_db, "drop table relation_members;",	0, 0, 0 );
+	sqlite3_exec(_db, "drop table relations;",			0, 0, 0 );
 #if USE_RTREE
-	sqlite3_exec(_db, "drop table spatial;",	0, 0, 0 );
+	sqlite3_exec(_db, "drop table spatial;",			0, 0, 0 );
 #endif
-	sqlite3_exec(_db, "vacuum;",				0, 0, 0 );	// compact database
+	sqlite3_exec(_db, "vacuum;",						0, 0, 0 );	// compact database
 }
 
 -(void)createTables
@@ -261,7 +281,7 @@ retry:
 		return YES;
 
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);", -1, &nodeStatement, nil ));
+	SqlCheck( sqlite3_prepare_v2( _db, "INSERT OR REPLACE INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);", -1, &nodeStatement, nil ));
 
 	sqlite3_stmt * tagStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
@@ -270,14 +290,15 @@ retry:
 	retry:
 		sqlite3_reset(nodeStatement);
 		SqlCheck( sqlite3_clear_bindings(nodeStatement));
-		SqlCheck( sqlite3_bind_text(nodeStatement,	1, node.user.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_text(nodeStatement,	2, node.timestamp.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_int(nodeStatement,	3, node.version));
-		SqlCheck( sqlite3_bind_int64(nodeStatement,	4, node.changeset));
-		SqlCheck( sqlite3_bind_int(nodeStatement,	5, node.uid));
+		SqlCheck( sqlite3_bind_text(nodeStatement,		1, node.user.UTF8String, -1, NULL));
+		SqlCheck( sqlite3_bind_text(nodeStatement,		2, node.timestamp.UTF8String, -1, NULL));
+		SqlCheck( sqlite3_bind_int(nodeStatement,		3, node.version));
+		SqlCheck( sqlite3_bind_int64(nodeStatement,		4, node.changeset));
+		SqlCheck( sqlite3_bind_int(nodeStatement,		5, node.uid));
 		SqlCheck( sqlite3_bind_double(nodeStatement,	6, node.lon));
 		SqlCheck( sqlite3_bind_double(nodeStatement,	7, node.lat));
-		SqlCheck( sqlite3_bind_int64(nodeStatement,	8, node.ident.longLongValue));
+		SqlCheck( sqlite3_bind_int64(nodeStatement,		8, node.ident.longLongValue));
+
 		rc = sqlite3_step(nodeStatement);
 		if ( rc == SQLITE_CONSTRAINT ) {
 			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
@@ -319,7 +340,7 @@ retry:
 		return YES;
 
 	sqlite3_stmt * wayStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);", -1, &wayStatement, nil ));
+	SqlCheck( sqlite3_prepare_v2( _db, "INSERT OR REPLACE INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);", -1, &wayStatement, nil ));
 
 	sqlite3_stmt * tagStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
@@ -339,6 +360,7 @@ retry:
 		SqlCheck( sqlite3_bind_int64(wayStatement,	5, way.changeset));
 		SqlCheck( sqlite3_bind_int(wayStatement,	6, way.uid));
 		SqlCheck( sqlite3_bind_int(wayStatement,	7, (int)way.nodes.count));
+
 		rc = sqlite3_step(wayStatement);
 		if ( rc == SQLITE_CONSTRAINT ) {
 			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
@@ -391,7 +413,7 @@ retry:
 		return YES;
 
 	sqlite3_stmt * baseStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);", -1, &baseStatement, nil ));
+	SqlCheck( sqlite3_prepare_v2( _db, "INSERT OR REPLACE INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);", -1, &baseStatement, nil ));
 
 	sqlite3_stmt * tagStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));

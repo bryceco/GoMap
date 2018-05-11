@@ -211,9 +211,9 @@ static inline OSMRect OSMRectUnion( OSMRect a, OSMRect b )
 static inline BOOL OSMRectContainsRect( OSMRect a, OSMRect b )
 {
 	return	a.origin.x <= b.origin.x &&
-	a.origin.y <= b.origin.y &&
-	a.origin.x + a.size.width >= b.origin.x + b.size.width &&
-	a.origin.y + a.size.height >= b.origin.y + b.size.height;
+			a.origin.y <= b.origin.y &&
+			a.origin.x + a.size.width >= b.origin.x + b.size.width &&
+			a.origin.y + a.size.height >= b.origin.y + b.size.height;
 }
 
 

@@ -182,13 +182,13 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 -(void)constructBaseAttributesWithVersion:(int32_t)version changeset:(int64_t)changeset user:(NSString *)user uid:(int32_t)uid ident:(int64_t)ident timestamp:(NSString *)timestmap
 {
 	assert( !_constructed );
-	_version	= version;
-	_changeset	= changeset;
-	_user		= user;
-	_uid		= uid;
-	_visible	= YES;
-	_ident		= @(ident);
-	_timestamp	= timestmap;
+	_version		= version;
+	_changeset		= changeset;
+	_user			= user;
+	_uid			= uid;
+	_visible		= YES;
+	_ident			= @(ident);
+	_timestamp		= timestmap;
 }
 
 -(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict
@@ -350,7 +350,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 	_deleted = deleted;
 }
-
 
 -(NSDictionary *)tags
 {
@@ -1370,6 +1369,20 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 }
 
+// convert references to objects back to NSNumber
+-(void)deresolveRefs
+{
+	for ( OsmMember * member in _members ) {
+		OsmBaseObject * ref = member.ref;
+		if ( [ref isKindOfClass:[OsmBaseObject class]] ) {
+			[ref removeRelation:self undo:nil];
+			[member resolveRefToObject:(OsmBaseObject *)ref.ident];
+		}
+	}
+}
+
+
+
 -(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo
 {
 	assert(undo);
@@ -1414,7 +1427,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	NSSet * objects = [self allMemberObjects];
 	for ( OsmBaseObject * obj in objects ) {
 		OSMRect rc = obj.boundingBox;
-		if ( first ) {
+		if ( rc.origin.x == 0 && rc.origin.y == 0 && rc.size.height == 0 && rc.size.width == 0 ) {
+			// skip
+		} else if ( first ) {
 			box = rc;
 			first = NO;
 		} else {
@@ -1596,8 +1611,8 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(void)resolveRefToObject:(OsmBaseObject *)object
 {
-	assert( [_ref isKindOfClass:[NSNumber class]] );
-	assert( (object.isNode && self.isNode) || (object.isWay && self.isWay) || (object.isRelation && self.isRelation) );
+	assert( [_ref isKindOfClass:[NSNumber class]] || [_ref isKindOfClass:[OsmBaseObject class]] );
+	assert( [object isKindOfClass:[NSNumber class]] || (object.isNode && self.isNode) || (object.isWay && self.isWay) || (object.isRelation && self.isRelation) );
 	_ref = object;
 }
 
