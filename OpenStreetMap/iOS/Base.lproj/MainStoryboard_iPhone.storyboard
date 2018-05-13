@@ -440,16 +440,16 @@
             </objects>
             <point key="canvasLocation" x="1613" y="-961"/>
         </scene>
-        <!--OSM Server-->
+        <!--Web View-->
         <scene sceneID="dYP-zB-Yq1">
             <objects>
-                <viewController id="eNH-pi-UM5" customClass="WebPageViewController" sceneMemberID="viewController">
+                <viewController id="eNH-pi-UM5" userLabel="Web View" customClass="WebPageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P90-3W-ivA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJf-xH-lf8">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                             </webView>
@@ -459,16 +459,16 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="M9Q-l6-Lsw" firstAttribute="centerX" secondItem="OJf-xH-lf8" secondAttribute="centerX" id="26B-FI-8dp"/>
-                            <constraint firstItem="M9Q-l6-Lsw" firstAttribute="top" secondItem="gjY-EU-uZa" secondAttribute="top" constant="16" id="8vF-pW-4iO"/>
-                            <constraint firstItem="OJf-xH-lf8" firstAttribute="trailing" secondItem="gjY-EU-uZa" secondAttribute="trailing" id="QSL-I3-D7Y"/>
-                            <constraint firstItem="OJf-xH-lf8" firstAttribute="bottom" secondItem="P90-3W-ivA" secondAttribute="bottom" id="Rzs-OM-mS0"/>
-                            <constraint firstItem="OJf-xH-lf8" firstAttribute="leading" secondItem="gjY-EU-uZa" secondAttribute="leading" id="YFf-9H-FXq"/>
-                            <constraint firstItem="OJf-xH-lf8" firstAttribute="top" secondItem="P90-3W-ivA" secondAttribute="top" id="zN2-rB-Ad2"/>
+                            <constraint firstItem="OJf-xH-lf8" firstAttribute="leading" secondItem="gjY-EU-uZa" secondAttribute="leading" id="BwT-m7-zkB"/>
+                            <constraint firstItem="gjY-EU-uZa" firstAttribute="trailing" secondItem="OJf-xH-lf8" secondAttribute="trailing" id="JMJ-ny-lhh"/>
+                            <constraint firstItem="OJf-xH-lf8" firstAttribute="top" secondItem="gjY-EU-uZa" secondAttribute="top" id="Nf6-f7-KZe"/>
+                            <constraint firstItem="M9Q-l6-Lsw" firstAttribute="centerX" secondItem="OJf-xH-lf8" secondAttribute="centerX" id="Osd-re-La6"/>
+                            <constraint firstItem="M9Q-l6-Lsw" firstAttribute="top" secondItem="gjY-EU-uZa" secondAttribute="top" constant="16" id="P8P-Xy-PgL"/>
+                            <constraint firstItem="OJf-xH-lf8" firstAttribute="bottom" secondItem="gjY-EU-uZa" secondAttribute="bottom" id="Quh-uT-kBV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gjY-EU-uZa"/>
                     </view>
-                    <navigationItem key="navigationItem" title="OSM Server" id="cBA-fl-u9F">
+                    <navigationItem key="navigationItem" title="Web View" id="cBA-fl-u9F">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="5Du-CA-cFl">
                             <connections>
                                 <action selector="doAction:" destination="eNH-pi-UM5" id="z0y-K3-tyw"/>

@@ -33,6 +33,9 @@
 		}
 	}
 
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+
 	UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButton:)];
 	self.navigationItem.leftBarButtonItems = @[ leftButton ];
 
@@ -43,6 +46,29 @@
 		[_webView loadRequest:request];
 	}
 }
+
+
+- (id)findFirstResponder
+{
+	if (self.isFirstResponder) {
+		return self;
+	}
+	for (UIView *subView in self.view.subviews) {
+		if ([subView isFirstResponder]) {
+			return subView;
+		}
+	}
+	return nil;
+}
+-(void)keyboardWillShow:(NSNotification *)notification
+{
+	NSLog(@"%@\n",[self findFirstResponder]);
+}
+-(void)keyboardDidShow:(NSNotification *)notification
+{
+	NSLog(@"%@\n",[self findFirstResponder]);
+}
+
 
 - (void)viewDidDisappear:(BOOL)animated
 {
