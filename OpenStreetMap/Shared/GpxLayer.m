@@ -522,12 +522,13 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 }
 
 
--(void)createGpxRect:(CGRect)rect
+-(GpxTrack *)createGpxRect:(CGRect)rect
 {
 	GpxTrack * track = [GpxTrack gpxTrackWithRect:rect];
 	[self.previousTracks insertObject:track atIndex:0];
 	[self setNeedsDisplay];
 	[self setNeedsLayout];
+	return track;
 }
 
 

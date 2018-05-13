@@ -383,12 +383,12 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	if ( self.modificationCount > 0 )
 		return NO;
 
-	// get rid of old download regions
+	// get rid of old quads marked as downloaded
 	date = [_region discardOldestQuads:fraction oldest:date];
 	if ( date == nil )
 		return NO;	// nothing to discard
 
-	// look at dates of objects in each quad. If any objects are older than date then discard the contents of the quad and delete it.
+#if DEBUG
 	NSTimeInterval interval = [NSDate.new timeIntervalSinceDate:date];
 	if ( interval < 2*60 )
 		NSLog(@"Discarding stale data %ld seconds old\n",(long)interval);
@@ -396,6 +396,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		NSLog(@"Discarding stale data %ld minutes old\n",(long)interval/60);
 	else
 		NSLog(@"Discarding stale data %ld hours old\n",(long)interval/60/60);
+#endif
+
+	CFTimeInterval t = CACurrentMediaTime();
 
 	// now go through all objects and determine which are no longer in a downloaded region
 	NSMutableArray * removeRelations	= [NSMutableArray new];
@@ -410,8 +413,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 					covered = YES;
 				}
 			} else if ( obj.isWay ) {
-				if ( [_region nodesAreCovered:obj.isWay.nodes] )
+				if ( [_region nodesAreCovered:obj.isWay.nodes] ) {
 					covered = YES;
+				}
 			}
 			if ( covered )
 				break;
@@ -437,10 +441,13 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		}
 	}];
 
+	if ( removeNodes.count + removeWays.count + removeRelations.count == 0 )
+		return NO;
+
 	// remove from dictionaries
-	[_nodes 	removeObjectsForKeys:removeNodes];
-	[_ways		removeObjectsForKeys:removeWays];
 	[_relations removeObjectsForKeys:removeRelations];
+	[_ways		removeObjectsForKeys:removeWays];
+	[_nodes 	removeObjectsForKeys:removeNodes];
 
 	// remove objects from spatial
 	[_spatial deleteObjectsWithPredicate:^BOOL(OsmBaseObject *obj) {
@@ -460,21 +467,28 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		[relation deresolveRefs];
 		[relation resolveToMapData:self];
 	}];
+	t = CACurrentMediaTime() - t;
+	NSLog(@"Discard sweep time = %f\n",t);
 
+	dispatch_async(Database.dispatchQueue, ^{
 
-	{
-		Database * db2 = [[Database alloc] initWithName:@"tmp"];
-		[db2 dropTables];
-		[db2 createTables];
-		[db2 saveNodes:[_nodes allValues] saveWays:[_ways allValues] saveRelations:[_relations allValues] deleteNodes:nil deleteWays:nil deleteRelations:nil isUpdate:NO];
-	}
-	NSString * oldPath = [Database databasePathWithName:@"tmp"];
-	NSString * newPath = [Database databasePathWithName:nil];
-	int error = rename( oldPath.UTF8String, newPath.UTF8String );
-	if ( error )
-		NSLog(@"failed to rename SQL database\n");
+		CFTimeInterval	t2 = CACurrentMediaTime();
+		NSString * tmpPath = [Database databasePathWithName:@"tmp"];
+		{
+			unlink( tmpPath.UTF8String );
+			Database * db2 = [[Database alloc] initWithName:@"tmp"];
+			[db2 createTables];
+			[db2 saveNodes:[_nodes allValues] saveWays:[_ways allValues] saveRelations:[_relations allValues] deleteNodes:nil deleteWays:nil deleteRelations:nil isUpdate:NO];
+		}
+		t2 = CACurrentMediaTime() - t2;
+		NSLog(@"Discard save time = %f, saved %ld objects\n",t2,(long)self.nodeCount+self.wayCount+self.relationCount);
 
-	NSLog(@"%ld objects\n",(long)self.nodeCount+self.wayCount+self.relationCount);
+		NSString * realPath = [Database databasePathWithName:nil];
+		int error = rename( tmpPath.UTF8String, realPath.UTF8String );
+		if ( error )
+			NSLog(@"failed to rename SQL database\n");
+
+	});
 
 	return YES;
 }
@@ -1175,6 +1189,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// store new nodes in database
 		if ( downloaded ) {
 			[self sqlSaveNodes:newNodes saveWays:newWays saveRelations:newRelations deleteNodes:nil deleteWays:nil deleteRelations:nil isUpdate:NO];
+
+			// purge old data
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				NSInteger newCount = newNodes.count + newWays.count + newRelations.count;
+				[[AppDelegate getAppDelegate].mapView discardStaleData:100000-newCount];
+			});
 		}
 	}
 
@@ -1968,8 +1988,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_spatial.rootQuad reset];
 	_region  = [QuadMap new];
 
-	Database * db = [Database new];
-	[db dropTables];
+	dispatch_async(Database.dispatchQueue, ^{
+		Database * db = [Database new];
+		[db dropTables];
+	});
 }
 
 -(void)purgeHard
@@ -2086,13 +2108,28 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	if ( saveNodes.count + saveWays.count + saveRelations.count + deleteNodes.count + deleteWays.count + deleteRelations.count == 0 )
 		return;
-	CFTimeInterval t = CACurrentMediaTime();
-	Database * db = [Database new];
-	[db createTables];
-	[db saveNodes:saveNodes saveWays:saveWays saveRelations:saveRelations deleteNodes:deleteNodes deleteWays:deleteWays deleteRelations:deleteRelations isUpdate:isUpdate];
-	t = CACurrentMediaTime() - t;
-	DLog(@"sql save %ld nodes, %ld ways, time = %f", (long)saveNodes.count, (long)saveWays.count, t);
-	[self save];
+
+	dispatch_async(Database.dispatchQueue, ^{
+		CFTimeInterval t = CACurrentMediaTime();
+		BOOL ok;
+		{
+			Database * db = [Database new];
+			[db createTables];
+			ok = [db saveNodes:saveNodes saveWays:saveWays saveRelations:saveRelations deleteNodes:deleteNodes deleteWays:deleteWays deleteRelations:deleteRelations isUpdate:isUpdate];
+			if ( !ok ) {
+				[Database deleteDatabaseWithName:nil];
+			}
+		}
+		t = CACurrentMediaTime() - t;
+		DLog(@"sql save %ld nodes, %ld ways, time = %f", (long)saveNodes.count, (long)saveWays.count, t);
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if ( !ok ) {
+				// database failure
+				_region = [QuadMap new];
+			}
+			[self save];
+		});
+	});
 }
 
 // after uploading a changeset we have to update the SQL database to reflect the changes the server replied with
@@ -2143,15 +2180,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	t = CACurrentMediaTime() - t;
 //	DLog(@"archive save %ld,%ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.count, (long)_region.count, t);
-	DLog(@"Objects = %ld", (long)self.nodeCount+self.wayCount+self.relationCount);
+	DLog(@"Save objects = %ld", (long)self.nodeCount+self.wayCount+self.relationCount);
 	
-#if DEBUG
-	dispatch_async(dispatch_get_main_queue(), ^{
-		// wait a moment before discarding so we close our copy of the database first
-		[[AppDelegate getAppDelegate].mapView discardStaleData];
-	});
-#endif
-
 	[_periodicSaveTimer invalidate];
 	_periodicSaveTimer = nil;
 }
@@ -2178,11 +2208,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}];
 
 		// merge info from SQL database
+		BOOL databaseFailure = NO;
 		@try {
 			Database * db = [Database new];
 			NSMutableDictionary * newNodes		= [db querySqliteNodes];
+			NSAssert(newNodes,nil);
 			NSMutableDictionary * newWays		= [db querySqliteWays];
+			NSAssert(newWays,nil);
 			NSMutableDictionary * newRelations	= [db querySqliteRelations];
+			NSAssert(newRelations,nil);
 
 			OsmMapData * newData = [[OsmMapData alloc] init];
 			newData->_nodes = newNodes;
@@ -2191,6 +2225,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[self merge:newData fromDownload:NO quadList:nil success:YES];
 		} @catch (id exception) {
 			// database couldn't be read, so have to download everything
+			databaseFailure = YES;
+		}
+		if ( databaseFailure ) {
+			[Database deleteDatabaseWithName:nil];
 			_region = [QuadMap new];
 		}
 	}

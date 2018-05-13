@@ -60,8 +60,8 @@ if (!(condition)) {		\
 		if ( rc == SQLITE_OK ) {
 			rc = sqlite3_exec(_db, "PRAGMA foreign_keys=ON;", NULL, NULL, NULL );
 			assert( rc == SQLITE_OK );
-			rc = sqlite3_exec(_db, "PRAGMA journal_mode=WAL;", NULL, NULL, NULL );
-			assert( rc == SQLITE_OK );
+//			rc = sqlite3_exec(_db, "PRAGMA journal_mode=WAL;", NULL, NULL, NULL );
+//			assert( rc == SQLITE_OK );
 		} else {
 			_db = NULL;
 		}
@@ -72,6 +72,23 @@ if (!(condition)) {		\
 -(instancetype)init
 {
 	return [self initWithName:nil];
+}
+
++(dispatch_queue_t)dispatchQueue
+{
+	static dispatch_queue_t _dispatchQueue;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT, 0);
+		_dispatchQueue = dispatch_queue_create("com.bryceco.gomap.database", attr );
+	});
+	return _dispatchQueue;
+}
+
++(void)deleteDatabaseWithName:(NSString *)name
+{
+	NSString * path = [Database databasePathWithName:name];
+	unlink( path.UTF8String );
 }
 
 -(NSString *)path
@@ -99,18 +116,19 @@ if (!(condition)) {		\
 
 -(void)dropTables
 {
-	sqlite3_exec(_db, "drop table node_tags;",			0, 0, 0 );
-	sqlite3_exec(_db, "drop table nodes;",				0, 0, 0 );
-	sqlite3_exec(_db, "drop table way_tags;",			0, 0, 0 );
-	sqlite3_exec(_db, "drop table way_nodes;",			0, 0, 0 );
-	sqlite3_exec(_db, "drop table ways;",				0, 0, 0 );
-	sqlite3_exec(_db, "drop table relation_tags;",		0, 0, 0 );
-	sqlite3_exec(_db, "drop table relation_members;",	0, 0, 0 );
-	sqlite3_exec(_db, "drop table relations;",			0, 0, 0 );
+	int rc;
+	rc = sqlite3_exec(_db, "drop table node_tags;",			0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table nodes;",				0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table way_tags;",			0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table way_nodes;",			0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table ways;",				0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table relation_tags;",		0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table relation_members;",	0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table relations;",			0, 0, 0 );
 #if USE_RTREE
-	sqlite3_exec(_db, "drop table spatial;",			0, 0, 0 );
+	rc = sqlite3_exec(_db, "drop table spatial;",			0, 0, 0 );
 #endif
-	sqlite3_exec(_db, "vacuum;",						0, 0, 0 );	// compact database
+	rc = sqlite3_exec(_db, "vacuum;",						0, 0, 0 );	// compact database
 }
 
 -(void)createTables
@@ -281,7 +299,7 @@ retry:
 		return YES;
 
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT OR REPLACE INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);", -1, &nodeStatement, nil ));
+	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);", -1, &nodeStatement, nil ));
 
 	sqlite3_stmt * tagStatement = NULL;
 	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
@@ -547,6 +565,8 @@ retry:
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate
 {
+	assert( dispatch_get_current_queue() == Database.dispatchQueue );
+
 	@try {
 
 		int rc = SQLITE_OK;
@@ -586,7 +606,6 @@ retry:
 
 	sqlite3_reset(tagStatement);
 	SqlCheck( sqlite3_clear_bindings(tagStatement));
-	DbgAssert(rc == SQLITE_OK);
 	while ( (rc = sqlite3_step(tagStatement)) == SQLITE_ROW) {
 		const uint8_t * ckey	= sqlite3_column_text(tagStatement, 0);
 		const uint8_t * cvalue	= sqlite3_column_text(tagStatement, 1);
@@ -596,7 +615,10 @@ retry:
 		NSString * value = [NSString stringWithUTF8String:(char *)cvalue];
 
 		OsmBaseObject * obj = objectDict[ @(ident) ];
-		NSAssert( obj, @"SQL query" );
+		if ( obj == nil ) {
+			rc = SQLITE_ERROR;
+			break;
+		}
 		NSMutableDictionary * tags = (id)obj.tags;
 		if ( tags == nil ) {
 			tags = [NSMutableDictionary new];
@@ -604,14 +626,15 @@ retry:
 		}
 		[tags setObject:value forKey:key];
 	}
-	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
+	if ( rc == SQLITE_DONE )
+		rc = SQLITE_OK;
 
 	[objectDict enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * obj, BOOL *stop) {
 		[obj setConstructed];
 	}];
 
 	sqlite3_finalize(tagStatement);
-	return YES;
+	return rc == SQLITE_OK;
 }
 
 -(NSMutableDictionary *)querySqliteNodes
@@ -645,12 +668,13 @@ retry:
 
 		[nodes setObject:node forKey:node.ident];
 	}
+	if ( rc == SQLITE_DONE || rc == SQLITE_OK ) {
+		BOOL ok = [self queryTagTable:@"node_tags" forObjects:nodes];
+		rc = ok ? SQLITE_OK : SQLITE_ERROR;
+	}
 
-	[self queryTagTable:@"node_tags" forObjects:nodes];
-
-	NSAssert(rc == SQLITE_DONE || rc == SQLITE_OK, @"SQL bad query result");
 	sqlite3_finalize(nodeStatement);
-	return nodes;
+	return rc == SQLITE_OK ? nodes : nil;
 }
 
 -(NSMutableDictionary *)querySqliteWays
@@ -672,6 +696,11 @@ retry:
 		int32_t			uid			= sqlite3_column_int(wayStatement, 5);
 		int32_t			nodecount	= sqlite3_column_int(wayStatement, 6);
 
+		if ( nodecount < 0 ) {
+			rc = SQLITE_ERROR;
+			break;
+		}
+
 		OsmWay * way = [[OsmWay alloc] init];
 		[way  constructBaseAttributesWithVersion:version
 									   changeset:changeset
@@ -685,16 +714,24 @@ retry:
 		[way constructNodeList:nodes];
 		[ways setObject:way forKey:way.ident];
 	}
-	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
+	if ( rc == SQLITE_DONE )
+		rc = SQLITE_OK;
+
 	sqlite3_finalize(wayStatement);
 
-	[self queryTagTable:@"way_tags" forObjects:ways];
-	[self queryNodesForWays:ways];
+	if ( rc == SQLITE_OK ) {
+		BOOL ok = [self queryTagTable:@"way_tags" forObjects:ways];
+		if ( ok ) {
+			ok = [self queryNodesForWays:ways];
+		}
+		if ( !ok )
+			rc = SQLITE_ERROR;
+	}
 
-	return ways;
+	return rc == SQLITE_OK ? ways : nil;
 }
 
--(void)queryNodesForWays:(NSDictionary *)ways
+-(BOOL)queryNodesForWays:(NSDictionary *)ways
 {
 	int rc = SQLITE_OK;
 
@@ -711,9 +748,10 @@ retry:
 		DbgAssert( list );
 		list[node_index] = @(node_id);
 	}
-	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
 
 	sqlite3_finalize(nodeStatement);
+
+	return rc == SQLITE_DONE || rc == SQLITE_OK;
 }
 
 

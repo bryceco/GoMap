@@ -115,7 +115,9 @@ static const CGFloat NodeHighlightRadius = 6.0;
 			_mapData = [[OsmMapData alloc] initWithCachedData];
 			t = CACurrentMediaTime() - t;
 #if TARGET_OS_IPHONE
-			if ( _mapData && t > 5.0 ) {
+			if ( _mapData && mapView.enableAutomaticCacheManagement ) {
+				[_mapData discardObjectsOlderThan:[NSDate dateWithTimeIntervalSinceNow:-24*60*60] orFraction:0.0];
+			} else if ( _mapData && t > 5.0 ) {
 				// need to pause before posting the alert because the view controller isn't ready here yet
 				dispatch_async(dispatch_get_main_queue(), ^{
 					NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.",nil);

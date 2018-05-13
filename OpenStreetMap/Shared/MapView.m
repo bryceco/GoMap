@@ -125,6 +125,19 @@ CGSize SizeForImage( NSImage * image )
 		_screenFromMapTransform = OSMTransformIdentity();
 		_birdsEyeDistance = 1000.0;
 
+		[[NSUserDefaults standardUserDefaults] registerDefaults:@{
+																  @"view.scale"				: @(nan("")),
+																  @"view.latitude"			: @(nan("")),
+																  @"view.longitude"			: @(nan("")),
+																  @"mapViewState"			: @(MAPVIEW_EDITORAERIAL),
+																  @"mapViewEnableBirdsEye"	: @(NO),
+																  @"mapViewEnableRotation"	: @(YES),
+																  @"automaticCacheManagement": @(YES)
+																  }];
+
+		// this option needs to be set before the editor is initialized
+		self.enableAutomaticCacheManagement	= [[NSUserDefaults standardUserDefaults] boolForKey:@"automaticCacheManagement"];
+
 		// get aerial database
 		self.customAerials = [AerialList new];
 
@@ -392,16 +405,8 @@ CGSize SizeForImage( NSImage * image )
 		return;
 	first = NO;
 
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{
-															  @"view.scale"				: @(nan("")),
-															  @"view.latitude"			: @(nan("")),
-															  @"view.longitude"			: @(nan("")),
-															  @"mapViewState"			: @(MAPVIEW_EDITORAERIAL),
-															  @"mapViewEnableBirdsEye"	: @(NO),
-															  @"mapViewEnableRotation"	: @(YES),
-															  }];
-
-	self.viewState				= (MapViewState)	 [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
+	// these need to be loaded late because assigning to them changes the view
+	self.viewState				= (MapViewState)	[[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
 	self.viewOverlayMask		= (ViewOverlayMask) [[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewOverlays"];
 
 	self.enableRotation			= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableRotation"];
@@ -511,7 +516,8 @@ CGSize SizeForImage( NSImage * image )
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableUnnamedRoadHalo	forKey:@"mapViewEnableUnnamedRoadHalo"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableGpxLogging		forKey:@"mapViewEnableBreadCrumb"];
 	[[NSUserDefaults standardUserDefaults] setBool:self.enableTurnRestriction	forKey:@"mapViewEnableTurnRestriction"];
-	
+	[[NSUserDefaults standardUserDefaults] setBool:self.enableAutomaticCacheManagement	forKey:@"automaticCacheManagement"];
+
 	[[NSUserDefaults standardUserDefaults] setObject:_countryCodeForLocation 	forKey:@"countryCodeForLocation"];
 
 	[[NSUserDefaults standardUserDefaults] synchronize];
@@ -1277,18 +1283,23 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 #pragma mark Discard stale data
 
--(void)discardStaleData
+-(void)discardStaleData:(NSInteger)limit
 {
-	OsmMapData * mapData = self.editorLayer.mapData;
-	NSDate * oldest = [NSDate dateWithTimeIntervalSinceNow:-24*60*60];
-	BOOL changed = NO;
-	while ( mapData.nodeCount + mapData.wayCount + mapData.relationCount > 100000 ) {
-		[mapData discardObjectsOlderThan:oldest orFraction:0.33];
-		changed = YES;
-	}
-	if ( changed ) {
-		[self flashMessage:@"Stale map data discarded"];
-		[self.editorLayer updateMapLocation];	// download data if necessary
+	if ( self.enableAutomaticCacheManagement ) {
+		// Clear editor data
+		OsmMapData * mapData = self.editorLayer.mapData;
+		NSDate * oldest = [NSDate dateWithTimeIntervalSinceNow:-24*60*60];
+		BOOL changed = NO;
+		while ( mapData.nodeCount + mapData.wayCount + mapData.relationCount > limit ) {
+			changed = [mapData discardObjectsOlderThan:oldest orFraction:0.33];
+			if ( !changed )
+				break;
+		}
+		// refresh screen
+		if ( changed ) {
+			[self flashMessage:@"Cache trimmed"];
+			[self.editorLayer updateMapLocation];	// download data if necessary
+		}
 	}
 }
 

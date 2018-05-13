@@ -12,7 +12,10 @@
 #import "QuadMap.h"
 #import "UndoManager.h"
 
-#if DEBUG	// Display query regions as GPX lines
+#if DEBUG
+#define SHOW_DOWNLOAD_QUADS 1
+#endif
+#if SHOW_DOWNLOAD_QUADS	// Display query regions as GPX lines
 #import "AppDelegate.h"
 #import "MapView.h"
 #import "GpxLayer.h"
@@ -40,6 +43,9 @@ private:
 	bool							_busy;				// this quad is currently being processed
 	bool							_isSplit;
 	__strong QuadBox			*	_owner;
+#if SHOW_DOWNLOAD_QUADS
+	GpxTrack					*	_gpxTrack;
+#endif
 
 public:
 	QuadBoxCC( OSMRect rect, QuadBoxCC * parent, QuadBox * owner ) : _rect(rect), _parent(parent), _owner(owner)
@@ -54,18 +60,26 @@ public:
 	~QuadBoxCC()
 	{
 		if ( _parent ) {
+			// remove parent's pointer to us
 			for ( int c = 0; c < 4; ++c ) {
 				if ( _parent->_children[c] == this ) {
 					_parent->_children[c] = NULL;
 				}
 			}
-		} else {
-			assert(NO);	// don't delete root node
 		}
 
-		reset();
+		// delete any children
+		for ( int c = 0; c < 4; ++c )
+			delete _children[c];
+		
 		[_owner nullifyCpp];
 		_owner = nil;	// remove reference so it can be released
+
+#if SHOW_DOWNLOAD_QUADS
+		if ( _gpxTrack ) {
+			[[AppDelegate getAppDelegate].mapView.gpxLayer deleteTrack:_gpxTrack];
+		}
+#endif
 	}
 
 	void encodeWithCoder(NSCoder * coder) const
@@ -138,9 +152,6 @@ public:
 	{
 		return _downloadDate;
 	}
-
-
-
 
 	void reset()
 	{
@@ -268,23 +279,12 @@ public:
 			return;
 		}
 
-#if DEBUG
-		BOOL isCorrectChild = NO;
-		for ( int child = 0; child <= QUAD_LAST; ++child ) {
-			if ( this == _parent->_children[child] ) {
-				isCorrectChild = YES;
-				break;
-			}
-		}
-		assert( isCorrectChild );
-#endif
-
 		if ( success ) {
 			_downloadDate = NSDate.timeIntervalSinceReferenceDate;
 			_whole = YES;
 			_busy = NO;
-#if DEBUG
-			[[AppDelegate getAppDelegate].mapView.gpxLayer createGpxRect:CGRectFromOSMRect(_rect)];
+#if SHOW_DOWNLOAD_QUADS	// Display query regions as GPX lines
+			_gpxTrack = [[AppDelegate getAppDelegate].mapView.gpxLayer createGpxRect:CGRectFromOSMRect(_rect)];
 #endif
 			for ( int child = 0; child <= QUAD_LAST; ++child ) {
 				if ( _children[child] && _children[child]->countBusy() == 0 ) {
@@ -294,12 +294,22 @@ public:
 			}
 			if ( _parent ) {
 				// if all children of parent exist and are whole then parent is whole as well
+				bool childrenComplete = true;
 				for ( int child = 0; child <= QUAD_LAST; ++child ) {
 					QuadBoxCC * c = _parent->_children[child];
-					if ( c == nil || !c->_whole )
-						return;
+					if ( c == nil || !c->_whole ) {
+						childrenComplete = false;
+						break;
+					}
 				}
-				_parent->makeWhole(success);
+				if ( childrenComplete ) {
+#if 1
+					// we want to have fine granularity during discard phase, so don't delete children by taking the makeWhole() path
+					_parent->_whole = YES;
+#else
+					_parent->makeWhole(success);
+#endif
+				}
 			}
 		} else {
 			_busy = NO;
@@ -322,14 +332,10 @@ public:
 	{
 		if ( _busy )
 			return NO;
-#if DEBUG
-		if ( _downloadDate == 0 ) {
-			// all leaf nodes must have a download date
-			//	assert( _parent == NULL || hasChildren() );
-		}
-#endif
+
 		if ( _downloadDate && _downloadDate < date ) {
 			delete this;
+			_parent->_whole = NO;
 			return YES;
 		} else {
 			bool changed = NO;
@@ -351,23 +357,25 @@ public:
 
 	// discard the oldest "fraction" of quads, or oldestDate, whichever is more
 	// return the cutoff date selected
-	double discardOldestQuads(double fraction,NSDate * oldestDate)
+	NSDate * discardOldestQuads(double fraction,NSDate * oldest)
 	{
-		// get a list of all quads that have downloads
-		__block std::vector<QuadBoxCC *> list;
-		enumerateWithBlock(^(QuadBoxCC * quad) {
-			if ( quad->_downloadDate ) {
-				list.push_back(quad);
-			}
-		});
-		// sort ascending by date
-		std::sort( list.begin(), list.end(), ^(QuadBoxCC *a, QuadBoxCC * b){return a->_downloadDate < b->_downloadDate;} );
+		if ( fraction ) {
+			// get a list of all quads that have downloads
+			__block std::vector<QuadBoxCC *> list;
+			this->enumerateWithBlock(^(QuadBoxCC * quad) {
+				if ( quad->_downloadDate ) {
+					list.push_back(quad);
+				}
+			});
+			// sort ascending by date
+			std::sort( list.begin(), list.end(), ^(QuadBoxCC *a, QuadBoxCC * b){return a->_downloadDate < b->_downloadDate;} );
 
-		int index = (int)(list.size() * fraction);
-		double date = list[ index ]->downloadDate();
-		if ( date < oldestDate.timeIntervalSinceReferenceDate )
-			date = oldestDate.timeIntervalSinceReferenceDate;	// be more aggressive and prune even more
-		return this->discardQuadsOlderThanDate(date) ? date : 0.0;
+			int index = (int)(list.size() * fraction);
+			double date2 = list[ index ]->downloadDate();
+			if ( date2 > oldest.timeIntervalSinceReferenceDate )
+				oldest = [NSDate dateWithTimeIntervalSinceReferenceDate:date2];	// be more aggressive and prune even more
+		}
+		return this->discardQuadsOlderThanDate(oldest.timeIntervalSinceReferenceDate) ? oldest : nil;
 	}
 
 	bool pointIsCovered( OSMPoint point ) const
@@ -567,6 +575,11 @@ assert(this->_parent);
 {
 	_cpp = NULL;	// done only when _cpp deleted itself, and doesn't want us to use it any more in case somebody still has a reference to us
 }
+-(void)deleteCpp
+{
+	delete _cpp;	// done when we need to be destroyed, and don't want _cpp to maintain a reference to us anymore
+	_cpp = NULL;
+}
 
 -(NSString *)description
 {
@@ -672,8 +685,7 @@ assert(this->_parent);
 }
 -(NSDate *)discardOldestQuads:(double)fraction oldest:(NSDate *)oldest
 {
-	double cutoff = _cpp->discardOldestQuads(fraction,oldest);
-	return cutoff ? [NSDate dateWithTimeIntervalSinceReferenceDate:cutoff] : nil;
+	return _cpp->discardOldestQuads(fraction,oldest);
 }
 -(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate
 {

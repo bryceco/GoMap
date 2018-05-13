@@ -180,6 +180,7 @@ typedef enum {
 @property (assign,nonatomic)	BOOL							enableUnnamedRoadHalo;
 @property (assign,nonatomic)	BOOL							enableGpxLogging;
 @property (assign,nonatomic)	BOOL							enableTurnRestriction;
+@property (assign,nonatomic)	BOOL							enableAutomaticCacheManagement;
 
 @property (readonly,nonatomic)	CAShapeLayer				*	crossHairs;
 
@@ -191,7 +192,7 @@ typedef enum {
 
 -(void)viewDidAppear;
 -(void)save;
--(void)discardStaleData;
+-(void)discardStaleData:(NSInteger)limit;
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 

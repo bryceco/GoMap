@@ -16,5 +16,6 @@
 	IBOutlet UILabel *	_breadcrumbDetail;
 	IBOutlet UILabel *	_locatorDetail;
 	IBOutlet UILabel *	_gpsTraceDetail;
+	IBOutlet UISwitch *	_automaticCacheManagement;
 }
 @end

@@ -31,6 +31,7 @@ struct QuadBoxCC;
 -(instancetype)initWithThis:(struct QuadBoxCC *)cpp;
 -(void)reset;
 -(void)nullifyCpp;
+-(void)deleteCpp;
 -(NSInteger)count;
 
 // spatial specific

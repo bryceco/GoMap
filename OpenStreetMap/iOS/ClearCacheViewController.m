@@ -39,6 +39,8 @@ enum {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
+	_automaticCacheManagement.on = appDelegate.mapView.enableAutomaticCacheManagement;
+
 	NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
 	_osmDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
 
@@ -64,11 +66,23 @@ enum {
 	}
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+	[super viewWillDisappear:animated];
+
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	appDelegate.mapView.enableAutomaticCacheManagement = _automaticCacheManagement.on;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+
+	if ( indexPath.section == 0 ) {
+		return;
+	}
 
 	switch ( indexPath.row ) {
 		case ROW_OSM_DATA:	// OSM

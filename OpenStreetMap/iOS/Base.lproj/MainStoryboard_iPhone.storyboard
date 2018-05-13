@@ -1922,6 +1922,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
+                            <tableViewSection headerTitle="Cache Management" footerTitle="Go Map!! will automatically discard old data to optimize performance." id="bmY-Hw-jv6">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GpxTrackBackgroundCollection" id="lza-y3-rho" customClass="GpxTrackBackgroundCollection">
+                                        <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lza-y3-rho" id="yi4-P3-Atq">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIe-MC-t44">
+                                                    <rect key="frame" x="16" y="11" width="231" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7lI-JG-n42">
+                                                    <rect key="frame" x="255" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="enableBackground:" destination="lza-y3-rho" eventType="valueChanged" id="3nj-Qk-kds"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7lI-JG-n42" firstAttribute="centerY" secondItem="yi4-P3-Atq" secondAttribute="centerY" id="0Br-IL-woY"/>
+                                                <constraint firstAttribute="trailing" secondItem="7lI-JG-n42" secondAttribute="trailing" constant="16" id="0O7-8o-ZN8"/>
+                                                <constraint firstItem="dIe-MC-t44" firstAttribute="leading" secondItem="yi4-P3-Atq" secondAttribute="leading" constant="16" id="6dD-cb-6Ej"/>
+                                                <constraint firstItem="7lI-JG-n42" firstAttribute="leading" secondItem="dIe-MC-t44" secondAttribute="trailing" constant="8" id="Tgz-db-aeN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <constraints>
+                                            <constraint firstItem="dIe-MC-t44" firstAttribute="centerY" secondItem="lza-y3-rho" secondAttribute="centerY" id="5tr-qe-s0o"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="enableBackground" destination="7lI-JG-n42" id="QyT-SM-ZPD"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Discard &amp; Refresh" id="SNa-W1-wga">
                                 <string key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
 
@@ -1930,7 +1968,7 @@ Warning: Clearing the OSM cache will cause you to lose any changes that have not
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Tbo-ge-Amz" detailTextLabel="QeZ-5t-GnS" style="IBUITableViewCellStyleSubtitle" id="880-7S-VMO">
-                                        <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="191" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="880-7S-VMO" id="y8Z-1Y-nx6">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -1954,7 +1992,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qJB-zo-Tda" detailTextLabel="XHN-uF-r8g" style="IBUITableViewCellStyleSubtitle" id="74P-WB-sUB">
-                                        <rect key="frame" x="0.0" y="99.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="235" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="74P-WB-sUB" id="61B-YQ-Y8X">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -1978,7 +2016,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="9aN-lr-L6e" detailTextLabel="hvz-TE-9J7" style="IBUITableViewCellStyleSubtitle" id="Kwg-8L-IiL">
-                                        <rect key="frame" x="0.0" y="143.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="279" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kwg-8L-IiL" id="Ii4-1Z-bqk">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -2002,7 +2040,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Bx1-9n-4r3" detailTextLabel="9pN-dp-rZU" style="IBUITableViewCellStyleSubtitle" id="aC7-Bc-2WV">
-                                        <rect key="frame" x="0.0" y="187.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="323" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aC7-Bc-2WV" id="AuC-gA-Z59">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -2026,7 +2064,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="cfe-0O-z4y" detailTextLabel="Po2-4Z-i8t" style="IBUITableViewCellStyleSubtitle" id="cZv-l9-rIL">
-                                        <rect key="frame" x="0.0" y="231.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="367" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cZv-l9-rIL" id="LeP-gg-Gob">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -2050,7 +2088,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="klC-Oh-Oyd" detailTextLabel="UT3-uR-YpN" style="IBUITableViewCellStyleSubtitle" id="R0d-2b-Psc">
-                                        <rect key="frame" x="0.0" y="275.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="411" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R0d-2b-Psc" id="Lcc-Zv-GIu">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
@@ -2086,6 +2124,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                     </navigationItem>
                     <connections>
                         <outlet property="_aerialDetail" destination="9pN-dp-rZU" id="EV7-yd-Ymu"/>
+                        <outlet property="_automaticCacheManagement" destination="7lI-JG-n42" id="FWw-ba-xNI"/>
                         <outlet property="_breadcrumbDetail" destination="hvz-TE-9J7" id="IJd-GD-ln5"/>
                         <outlet property="_gpsTraceDetail" destination="UT3-uR-YpN" id="PcU-x9-RqR"/>
                         <outlet property="_locatorDetail" destination="Po2-4Z-i8t" id="0mD-3R-3Kt"/>

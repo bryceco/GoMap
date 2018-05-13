@@ -32,6 +32,11 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	return [self initWithRect:MAP_RECT];
 }
 
+-(void)dealloc
+{
+	[_rootQuad deleteCpp];	// cpp has a strong reference to this so we need to reset it manually
+}
+
 -(NSInteger)count
 {
 	return [_rootQuad count];

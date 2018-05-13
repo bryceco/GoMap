@@ -16,14 +16,16 @@
 	struct sqlite3_stmt	*	_spatialInsert;
 	struct sqlite3_stmt	*	_spatialDelete;
 }
+@property (class,readonly,nonatomic)	dispatch_queue_t	dispatchQueue;
 
 +(NSString *)databasePathWithName:(NSString *)name;
++(void)deleteDatabaseWithName:(NSString *)name;
 
 -(instancetype)initWithName:(NSString *)name;
 -(NSString *)path;
 
--(void)dropTables;
 -(void)createTables;
+-(void)dropTables;
 
 -(BOOL)saveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
