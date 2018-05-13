@@ -448,23 +448,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJf-xH-lf8">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlF-jf-JeO">
                                 <rect key="frame" x="0.0" y="64" width="320" height="367"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <dataDetectorType key="dataDetectorTypes"/>
-                            </webView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="M9Q-l6-Lsw">
-                                <rect key="frame" x="142" y="80" width="37" height="37"/>
-                            </activityIndicatorView>
+                                <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="M9Q-l6-Lsw">
+                                        <rect key="frame" x="142" y="8" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="M9Q-l6-Lsw" firstAttribute="centerX" secondItem="hlF-jf-JeO" secondAttribute="centerX" id="PK4-Ms-ZWR"/>
+                                    <constraint firstItem="M9Q-l6-Lsw" firstAttribute="top" secondItem="hlF-jf-JeO" secondAttribute="top" constant="8" id="bPV-eV-yac"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="OJf-xH-lf8" firstAttribute="leading" secondItem="gjY-EU-uZa" secondAttribute="leading" id="BwT-m7-zkB"/>
-                            <constraint firstItem="gjY-EU-uZa" firstAttribute="trailing" secondItem="OJf-xH-lf8" secondAttribute="trailing" id="JMJ-ny-lhh"/>
-                            <constraint firstItem="OJf-xH-lf8" firstAttribute="top" secondItem="gjY-EU-uZa" secondAttribute="top" id="Nf6-f7-KZe"/>
-                            <constraint firstItem="M9Q-l6-Lsw" firstAttribute="centerX" secondItem="OJf-xH-lf8" secondAttribute="centerX" id="Osd-re-La6"/>
-                            <constraint firstItem="M9Q-l6-Lsw" firstAttribute="top" secondItem="gjY-EU-uZa" secondAttribute="top" constant="16" id="P8P-Xy-PgL"/>
-                            <constraint firstItem="OJf-xH-lf8" firstAttribute="bottom" secondItem="gjY-EU-uZa" secondAttribute="bottom" id="Quh-uT-kBV"/>
+                            <constraint firstItem="hlF-jf-JeO" firstAttribute="leading" secondItem="gjY-EU-uZa" secondAttribute="leading" id="B3e-7D-T6o"/>
+                            <constraint firstItem="gjY-EU-uZa" firstAttribute="bottom" secondItem="hlF-jf-JeO" secondAttribute="bottom" id="ZtO-Be-CBf"/>
+                            <constraint firstItem="hlF-jf-JeO" firstAttribute="top" secondItem="gjY-EU-uZa" secondAttribute="top" id="gt4-Jb-Ptp"/>
+                            <constraint firstItem="gjY-EU-uZa" firstAttribute="trailing" secondItem="hlF-jf-JeO" secondAttribute="trailing" id="vRK-LX-b3I"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gjY-EU-uZa"/>
                     </view>
@@ -478,7 +481,7 @@
                     <connections>
                         <outlet property="_actionButton" destination="5Du-CA-cFl" id="v4j-V7-3e6"/>
                         <outlet property="_activityIndicator" destination="M9Q-l6-Lsw" id="7pm-Za-p29"/>
-                        <outlet property="webView" destination="OJf-xH-lf8" id="7W1-gp-0De"/>
+                        <outlet property="webViewContainer" destination="hlF-jf-JeO" id="YO3-67-c8r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x9R-cA-JP5" userLabel="First Responder" sceneMemberID="firstResponder"/>

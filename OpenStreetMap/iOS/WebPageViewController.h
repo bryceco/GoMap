@@ -8,14 +8,17 @@
 
 #import <MessageUI/MessageUI.h>
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@interface WebPageViewController : UIViewController <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
+@interface WebPageViewController : UIViewController <WKNavigationDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 {
 	IBOutlet UIActivityIndicatorView	*	_activityIndicator;
 	IBOutlet UIBarButtonItem			*	_actionButton;
 }
-@property (assign,nonatomic)	IBOutlet UIWebView	*	webView;
+@property (assign,nonatomic)	IBOutlet UIView		*	webViewContainer;
+@property (strong,nonatomic)	WKWebView			*	webView;
 @property (copy,nonatomic)		NSString			*	url;
+
 - (IBAction)doAction:(id)sender;
 
 // used by custom web view, not storyboard:

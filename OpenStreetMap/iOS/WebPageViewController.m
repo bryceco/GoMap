@@ -16,13 +16,21 @@
 {
     [super viewDidLoad];
 
-	_webView.delegate = self;
-	_activityIndicator.color = UIColor.blackColor;
-}
+	// since we can't place WKWebView in the storyboard we have a UIView in its place
+	// we put the WKWebView inside it
+	WKWebViewConfiguration * webConfiguration = [WKWebViewConfiguration new];
+	_webView = [[WKWebView alloc] initWithFrame:_webViewContainer.bounds configuration:webConfiguration];
+	_webView.translatesAutoresizingMaskIntoConstraints = NO;
+	[_webViewContainer insertSubview:_webView belowSubview:_activityIndicator];
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
+	[_webView.topAnchor 	 constraintEqualToAnchor:_webViewContainer.topAnchor 		constant:0].active = YES;
+	[_webView.bottomAnchor 	 constraintEqualToAnchor:_webViewContainer.bottomAnchor 	constant:0].active = YES;
+	[_webView.leadingAnchor  constraintEqualToAnchor:_webViewContainer.leadingAnchor 	constant:0].active = YES;
+	[_webView.trailingAnchor constraintEqualToAnchor:_webViewContainer.trailingAnchor 	constant:0].active = YES;
+
+	_webView.navigationDelegate = self;
+
+	_activityIndicator.color = UIColor.blackColor;
 
 	if ( self.title.length ) {
 		self.navigationItem.title = self.title;
@@ -33,11 +41,8 @@
 		}
 	}
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-
 	UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButton:)];
-	self.navigationItem.leftBarButtonItems = @[ leftButton ];
+	self.navigationItem.leftBarButtonItem = leftButton;
 
 	if ( self.url ) {
 		NSString * escape = [self.url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
@@ -47,28 +52,10 @@
 	}
 }
 
-
-- (id)findFirstResponder
+- (void)viewWillAppear:(BOOL)animated
 {
-	if (self.isFirstResponder) {
-		return self;
-	}
-	for (UIView *subView in self.view.subviews) {
-		if ([subView isFirstResponder]) {
-			return subView;
-		}
-	}
-	return nil;
+	[super viewWillAppear:animated];
 }
--(void)keyboardWillShow:(NSNotification *)notification
-{
-	NSLog(@"%@\n",[self findFirstResponder]);
-}
--(void)keyboardDidShow:(NSNotification *)notification
-{
-	NSLog(@"%@\n",[self findFirstResponder]);
-}
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -76,18 +63,18 @@
 	[_webView stopLoading];
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
 	[_activityIndicator startAnimating];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
 	[_activityIndicator stopAnimating];
 	_activityIndicator.hidden = YES;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
 	[_activityIndicator stopAnimating];
 	
