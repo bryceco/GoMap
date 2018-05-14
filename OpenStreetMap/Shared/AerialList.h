@@ -29,6 +29,10 @@
 @property (readonly) NSString	*	attributionUrl;
 
 -(BOOL)isBingAerial;
+-(BOOL)isMapnik;
+-(BOOL)isOsmGpxOverlay;
+
+
 -(void)scaleAttributionIconToHeight:(CGFloat)height;
 -(void)loadIconFromWeb:(NSString *)url;
 

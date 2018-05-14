@@ -191,7 +191,7 @@ typedef enum {
 
 -(void)viewDidAppear;
 -(void)save;
--(void)discardStaleData:(NSInteger)limit;
+-(void)discardStaleData;
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 

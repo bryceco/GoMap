@@ -116,7 +116,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 			t = CACurrentMediaTime() - t;
 #if TARGET_OS_IPHONE
 			if ( _mapData && mapView.enableAutomaticCacheManagement ) {
-				[_mapData discardObjectsOlderThan:[NSDate dateWithTimeIntervalSinceNow:-24*60*60] orFraction:0.0];
+				[_mapData discardStaleData];
 			} else if ( _mapData && t > 5.0 ) {
 				// need to pause before posting the alert because the view controller isn't ready here yet
 				dispatch_async(dispatch_get_main_queue(), ^{

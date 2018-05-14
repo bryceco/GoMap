@@ -299,54 +299,60 @@ retry:
 		return YES;
 
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);", -1, &nodeStatement, nil ));
-
 	sqlite3_stmt * tagStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
 
-	for ( OsmNode * node in nodes ) {
-	retry:
-		sqlite3_reset(nodeStatement);
-		SqlCheck( sqlite3_clear_bindings(nodeStatement));
-		SqlCheck( sqlite3_bind_text(nodeStatement,		1, node.user.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_text(nodeStatement,		2, node.timestamp.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_int(nodeStatement,		3, node.version));
-		SqlCheck( sqlite3_bind_int64(nodeStatement,		4, node.changeset));
-		SqlCheck( sqlite3_bind_int(nodeStatement,		5, node.uid));
-		SqlCheck( sqlite3_bind_double(nodeStatement,	6, node.lon));
-		SqlCheck( sqlite3_bind_double(nodeStatement,	7, node.lat));
-		SqlCheck( sqlite3_bind_int64(nodeStatement,		8, node.ident.longLongValue));
+	@try {
+		
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);", -1, &nodeStatement, nil ));
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
 
-		rc = sqlite3_step(nodeStatement);
-		if ( rc == SQLITE_CONSTRAINT ) {
-			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
-			[self deleteNodes:@[node]];
-			goto retry;
-		}
-		if ( rc != SQLITE_DONE ) {
-			DbgAssert(NO);
-			continue;
-		}
+		for ( OsmNode * node in nodes ) {
+		retry:
+			sqlite3_reset(nodeStatement);
+			SqlCheck( sqlite3_clear_bindings(nodeStatement));
+			SqlCheck( sqlite3_bind_text(nodeStatement,		1, node.user.UTF8String, -1, NULL));
+			SqlCheck( sqlite3_bind_text(nodeStatement,		2, node.timestamp.UTF8String, -1, NULL));
+			SqlCheck( sqlite3_bind_int(nodeStatement,		3, node.version));
+			SqlCheck( sqlite3_bind_int64(nodeStatement,		4, node.changeset));
+			SqlCheck( sqlite3_bind_int(nodeStatement,		5, node.uid));
+			SqlCheck( sqlite3_bind_double(nodeStatement,	6, node.lon));
+			SqlCheck( sqlite3_bind_double(nodeStatement,	7, node.lat));
+			SqlCheck( sqlite3_bind_int64(nodeStatement,		8, node.ident.longLongValue));
 
-		[node.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-			sqlite3_reset(tagStatement);
-			SqlCheck( sqlite3_clear_bindings(tagStatement));
-			SqlCheck( sqlite3_bind_int64(tagStatement,	1, node.ident.longLongValue));
-			SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
-			rc = sqlite3_step(tagStatement);
+			rc = sqlite3_step(nodeStatement);
+			if ( rc == SQLITE_CONSTRAINT ) {
+				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
+				NSLog(@"retry node %@\n",node.ident);
+				[self deleteNodes:@[node]];
+				goto retry;
+			}
 			if ( rc != SQLITE_DONE ) {
 				DbgAssert(NO);
+				continue;
 			}
-		}];
-#if USE_RTREE
-		[self addToSpatial:node];
-#endif
+
+			[node.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+				sqlite3_reset(tagStatement);
+				SqlCheck( sqlite3_clear_bindings(tagStatement));
+				SqlCheck( sqlite3_bind_int64(tagStatement,	1, node.ident.longLongValue));
+				SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
+				SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
+				rc = sqlite3_step(tagStatement);
+				if ( rc != SQLITE_DONE ) {
+					DbgAssert(NO);
+				}
+			}];
+	#if USE_RTREE
+			[self addToSpatial:node];
+	#endif
+		}
+	} @catch (id exception) {
+		rc = SQLITE_ERROR;
+	} @finally {
+		sqlite3_finalize(nodeStatement);
+		sqlite3_finalize(tagStatement);
 	}
-
-	sqlite3_finalize(nodeStatement);
-	sqlite3_finalize(tagStatement);
-
+	
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
@@ -358,67 +364,70 @@ retry:
 		return YES;
 
 	sqlite3_stmt * wayStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT OR REPLACE INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);", -1, &wayStatement, nil ));
-
 	sqlite3_stmt * tagStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
-
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO way_nodes (ident,node_id,node_index) VALUES (?,?,?);", -1, &nodeStatement, nil ));
 
-	for ( OsmWay * way in ways ) {
-	retry:
-		// update way
-		sqlite3_reset(wayStatement);
-		SqlCheck( sqlite3_clear_bindings(wayStatement));
-		SqlCheck( sqlite3_bind_int64(wayStatement,	1, way.ident.longLongValue));
-		SqlCheck( sqlite3_bind_text(wayStatement,	2, way.user.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_text(wayStatement,	3, way.timestamp.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_int(wayStatement,	4, way.version));
-		SqlCheck( sqlite3_bind_int64(wayStatement,	5, way.changeset));
-		SqlCheck( sqlite3_bind_int(wayStatement,	6, way.uid));
-		SqlCheck( sqlite3_bind_int(wayStatement,	7, (int)way.nodes.count));
+	@try {
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);", -1, &wayStatement, nil ));
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO way_nodes (ident,node_id,node_index) VALUES (?,?,?);", -1, &nodeStatement, nil ));
 
-		rc = sqlite3_step(wayStatement);
-		if ( rc == SQLITE_CONSTRAINT ) {
-			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
-			[self deleteWays:@[ way ]];
-			goto retry;
+		for ( OsmWay * way in ways ) {
+		retry:
+			// update way
+			sqlite3_reset(wayStatement);
+			SqlCheck( sqlite3_clear_bindings(wayStatement));
+			SqlCheck( sqlite3_bind_int64(wayStatement,	1, way.ident.longLongValue));
+			SqlCheck( sqlite3_bind_text(wayStatement,	2, way.user.UTF8String, -1, NULL));
+			SqlCheck( sqlite3_bind_text(wayStatement,	3, way.timestamp.UTF8String, -1, NULL));
+			SqlCheck( sqlite3_bind_int(wayStatement,	4, way.version));
+			SqlCheck( sqlite3_bind_int64(wayStatement,	5, way.changeset));
+			SqlCheck( sqlite3_bind_int(wayStatement,	6, way.uid));
+			SqlCheck( sqlite3_bind_int(wayStatement,	7, (int)way.nodes.count));
+
+			rc = sqlite3_step(wayStatement);
+			if ( rc == SQLITE_CONSTRAINT ) {
+				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
+				NSLog(@"retry way %@\n",way.ident);
+				[self deleteWays:@[ way ]];
+				goto retry;
+			}
+			if ( rc != SQLITE_DONE ) {
+				DbgAssert(NO);
+				continue;
+			}
+
+			[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+				sqlite3_reset(tagStatement);
+				SqlCheck( sqlite3_clear_bindings(tagStatement));
+				SqlCheck( sqlite3_bind_int64(tagStatement,	1, way.ident.longLongValue));
+				SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
+				SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
+				rc = sqlite3_step(tagStatement);
+				DbgAssert(rc == SQLITE_DONE);
+			}];
+
+			int index = 0;
+			for ( OsmNode * node in way.nodes ) {
+				sqlite3_reset(nodeStatement);
+				SqlCheck( sqlite3_clear_bindings(nodeStatement));
+				SqlCheck( sqlite3_bind_int64(nodeStatement,	1, way.ident.longLongValue));
+				SqlCheck( sqlite3_bind_int64(nodeStatement,	2, node.ident.longLongValue));
+				SqlCheck( sqlite3_bind_int(nodeStatement,	3, index++));
+				rc = sqlite3_step(nodeStatement);
+				DbgAssert(rc == SQLITE_DONE);
+			}
+	#if USE_RTREE
+			[self addToSpatial:way];
+	#endif
 		}
-		if ( rc != SQLITE_DONE ) {
-			DbgAssert(NO);
-			continue;
-		}
-
-		[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-			sqlite3_reset(tagStatement);
-			SqlCheck( sqlite3_clear_bindings(tagStatement));
-			SqlCheck( sqlite3_bind_int64(tagStatement,	1, way.ident.longLongValue));
-			SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
-			rc = sqlite3_step(tagStatement);
-			DbgAssert(rc == SQLITE_DONE);
-		}];
-
-		int index = 0;
-		for ( OsmNode * node in way.nodes ) {
-			sqlite3_reset(nodeStatement);
-			SqlCheck( sqlite3_clear_bindings(nodeStatement));
-			SqlCheck( sqlite3_bind_int64(nodeStatement,	1, way.ident.longLongValue));
-			SqlCheck( sqlite3_bind_int64(nodeStatement,	2, node.ident.longLongValue));
-			SqlCheck( sqlite3_bind_int(nodeStatement,	3, index++));
-			rc = sqlite3_step(nodeStatement);
-			DbgAssert(rc == SQLITE_DONE);
-		}
-#if USE_RTREE
-		[self addToSpatial:way];
-#endif
+	} @catch (id exception) {
+		rc = SQLITE_ERROR;
+	} @finally {
+		sqlite3_finalize(wayStatement);
+		sqlite3_finalize(tagStatement);
+		sqlite3_finalize(nodeStatement);
 	}
-
-	sqlite3_finalize(wayStatement);
-	sqlite3_finalize(tagStatement);
-	sqlite3_finalize(nodeStatement);
-
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
@@ -431,69 +440,73 @@ retry:
 		return YES;
 
 	sqlite3_stmt * baseStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT OR REPLACE INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);", -1, &baseStatement, nil ));
-
 	sqlite3_stmt * tagStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
-
 	sqlite3_stmt * memberStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);", -1, &memberStatement, nil ));
 
-	for ( OsmRelation * relation in relations ) {
-	retry:
-		// update way
-		sqlite3_reset(baseStatement);
-		SqlCheck( sqlite3_clear_bindings(baseStatement));
-		SqlCheck( sqlite3_bind_int64(baseStatement,	1, relation.ident.longLongValue));
-		SqlCheck( sqlite3_bind_text(baseStatement,	2, relation.user.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_text(baseStatement,	3, relation.timestamp.UTF8String, -1, NULL));
-		SqlCheck( sqlite3_bind_int(baseStatement,	4, relation.version));
-		SqlCheck( sqlite3_bind_int64(baseStatement,	5, relation.changeset));
-		SqlCheck( sqlite3_bind_int(baseStatement,	6, relation.uid));
-		SqlCheck( sqlite3_bind_int(baseStatement,	7, (int)relation.members.count));
-		rc = sqlite3_step(baseStatement);
-		if ( rc == SQLITE_CONSTRAINT ) {
-			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
-			[self deleteRelations:@[ relation ]];
-			goto retry;
-		}
-		if ( rc != SQLITE_DONE ) {
-			DbgAssert(NO);
-			continue;
-		}
+	@try {
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);", -1, &baseStatement, nil ));
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);", -1, &tagStatement, nil ));
+		SqlCheck( sqlite3_prepare_v2( _db, "INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);", -1, &memberStatement, nil ));
 
-		[relation.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-			sqlite3_reset(tagStatement);
-			SqlCheck( sqlite3_clear_bindings(tagStatement));
-			SqlCheck( sqlite3_bind_int64(tagStatement,	1, relation.ident.longLongValue));
-			SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
-			rc = sqlite3_step(tagStatement);
-			DbgAssert(rc == SQLITE_DONE);
-		}];
+		for ( OsmRelation * relation in relations ) {
+		retry:
+			// update way
+			sqlite3_reset(baseStatement);
+			SqlCheck( sqlite3_clear_bindings(baseStatement));
+			SqlCheck( sqlite3_bind_int64(baseStatement,	1, relation.ident.longLongValue));
+			SqlCheck( sqlite3_bind_text(baseStatement,	2, relation.user.UTF8String, -1, NULL));
+			SqlCheck( sqlite3_bind_text(baseStatement,	3, relation.timestamp.UTF8String, -1, NULL));
+			SqlCheck( sqlite3_bind_int(baseStatement,	4, relation.version));
+			SqlCheck( sqlite3_bind_int64(baseStatement,	5, relation.changeset));
+			SqlCheck( sqlite3_bind_int(baseStatement,	6, relation.uid));
+			SqlCheck( sqlite3_bind_int(baseStatement,	7, (int)relation.members.count));
+			rc = sqlite3_step(baseStatement);
+			if ( rc == SQLITE_CONSTRAINT ) {
+				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
+				NSLog(@"retry relation %@\n",relation.ident);
+				[self deleteRelations:@[ relation ]];
+				goto retry;
+			}
+			if ( rc != SQLITE_DONE ) {
+				DbgAssert(NO);
+				continue;
+			}
 
-		int index = 0;
-		for ( OsmMember * member in relation.members ) {
-			NSNumber * ref = [member.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)member.ref).ident : member.ref;
-			sqlite3_reset(memberStatement);
-			SqlCheck( sqlite3_clear_bindings(memberStatement));
-			SqlCheck( sqlite3_bind_int64(memberStatement,	1, relation.ident.longLongValue));
-			SqlCheck( sqlite3_bind_text(memberStatement,	2, member.type.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_int64(memberStatement,	3, ref.longLongValue));
-			SqlCheck( sqlite3_bind_text(memberStatement,	4, member.role.UTF8String, -1, NULL));
-			SqlCheck( sqlite3_bind_int(memberStatement,		5, index++));
-			rc = sqlite3_step(memberStatement);
-			DbgAssert(rc == SQLITE_DONE);
+			[relation.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+				sqlite3_reset(tagStatement);
+				SqlCheck( sqlite3_clear_bindings(tagStatement));
+				SqlCheck( sqlite3_bind_int64(tagStatement,	1, relation.ident.longLongValue));
+				SqlCheck( sqlite3_bind_text(tagStatement,	2, key.UTF8String, -1, NULL));
+				SqlCheck( sqlite3_bind_text(tagStatement,	3, value.UTF8String, -1, NULL));
+				rc = sqlite3_step(tagStatement);
+				DbgAssert(rc == SQLITE_DONE);
+			}];
+
+			int index = 0;
+			for ( OsmMember * member in relation.members ) {
+				NSNumber * ref = [member.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)member.ref).ident : member.ref;
+				sqlite3_reset(memberStatement);
+				SqlCheck( sqlite3_clear_bindings(memberStatement));
+				SqlCheck( sqlite3_bind_int64(memberStatement,	1, relation.ident.longLongValue));
+				SqlCheck( sqlite3_bind_text(memberStatement,	2, member.type.UTF8String, -1, NULL));
+				SqlCheck( sqlite3_bind_int64(memberStatement,	3, ref.longLongValue));
+				SqlCheck( sqlite3_bind_text(memberStatement,	4, member.role.UTF8String, -1, NULL));
+				SqlCheck( sqlite3_bind_int(memberStatement,		5, index++));
+				rc = sqlite3_step(memberStatement);
+				DbgAssert(rc == SQLITE_DONE);
+			}
+	#if USE_RTREE
+			[self addToSpatial:relation];
+	#endif
 		}
-#if USE_RTREE
-		[self addToSpatial:relation];
-#endif
+	} @catch (id exception) {
+		rc = SQLITE_ERROR;
+	} @finally {
+		sqlite3_finalize(baseStatement);
+		sqlite3_finalize(tagStatement);
+		sqlite3_finalize(memberStatement);
 	}
-
-	sqlite3_finalize(baseStatement);
-	sqlite3_finalize(tagStatement);
-	sqlite3_finalize(memberStatement);
-
+	
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
@@ -507,15 +520,22 @@ retry:
 
 	int rc;
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "DELETE from NODES where ident=?;", -1, &nodeStatement, nil ));
-	for ( OsmNode * node in nodes ) {
-		sqlite3_reset(nodeStatement);
-		SqlCheck( sqlite3_clear_bindings(nodeStatement));
-		SqlCheck( sqlite3_bind_int64(nodeStatement, 1, node.ident.longLongValue));
-		rc = sqlite3_step(nodeStatement);
-		DbgAssert(rc == SQLITE_DONE);
+	
+	@try {
+		
+		SqlCheck( sqlite3_prepare_v2( _db, "DELETE from NODES where ident=?;", -1, &nodeStatement, nil ));
+		for ( OsmNode * node in nodes ) {
+			sqlite3_reset(nodeStatement);
+			SqlCheck( sqlite3_clear_bindings(nodeStatement));
+			SqlCheck( sqlite3_bind_int64(nodeStatement, 1, node.ident.longLongValue));
+			rc = sqlite3_step(nodeStatement);
+			DbgAssert(rc == SQLITE_DONE);
+		}
+	} @catch (id exception) {
+		rc = SQLITE_ERROR;
+	} @finally {
+		sqlite3_finalize(nodeStatement);
 	}
-	SqlCheck( sqlite3_finalize(nodeStatement) );
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
@@ -526,16 +546,22 @@ retry:
 
 	int rc;
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "DELETE from WAYS where ident=?;", -1, &nodeStatement, nil ));
+	
+	@try {
+		SqlCheck( sqlite3_prepare_v2( _db, "DELETE from WAYS where ident=?;", -1, &nodeStatement, nil ));
 
-	for ( OsmWay * way in ways ) {
-		sqlite3_reset(nodeStatement);
-		SqlCheck( sqlite3_clear_bindings(nodeStatement));
-		SqlCheck( sqlite3_bind_int64(nodeStatement, 1, way.ident.longLongValue));
-		rc = sqlite3_step(nodeStatement);
-		DbgAssert(rc == SQLITE_DONE);
+		for ( OsmWay * way in ways ) {
+			sqlite3_reset(nodeStatement);
+			SqlCheck( sqlite3_clear_bindings(nodeStatement));
+			SqlCheck( sqlite3_bind_int64(nodeStatement, 1, way.ident.longLongValue));
+			rc = sqlite3_step(nodeStatement);
+			DbgAssert(rc == SQLITE_DONE);
+		}
+	} @catch (id exception) {
+		rc = SQLITE_ERROR;
+	} @finally {
+		sqlite3_finalize(nodeStatement);
 	}
-	sqlite3_finalize(nodeStatement);
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
@@ -546,16 +572,22 @@ retry:
 
 	int rc;
 	sqlite3_stmt * relationStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "DELETE from RELATIONS where ident=?;", -1, &relationStatement, nil ));
+	
+	@try {
+		SqlCheck( sqlite3_prepare_v2( _db, "DELETE from RELATIONS where ident=?;", -1, &relationStatement, nil ));
 
-	for ( OsmRelation * relation in relations ) {
-		sqlite3_reset(relationStatement);
-		SqlCheck( sqlite3_clear_bindings(relationStatement));
-		SqlCheck( sqlite3_bind_int64(relationStatement, 1, relation.ident.longLongValue));
-		rc = sqlite3_step(relationStatement);
-		DbgAssert(rc == SQLITE_DONE);
+		for ( OsmRelation * relation in relations ) {
+			sqlite3_reset(relationStatement);
+			SqlCheck( sqlite3_clear_bindings(relationStatement));
+			SqlCheck( sqlite3_bind_int64(relationStatement, 1, relation.ident.longLongValue));
+			rc = sqlite3_step(relationStatement);
+			DbgAssert(rc == SQLITE_DONE);
+		}
+	} @catch (id exception) {
+		rc = SQLITE_ERROR;
+	} @finally {
+		sqlite3_finalize(relationStatement);
 	}
-	sqlite3_finalize(relationStatement);
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
@@ -565,32 +597,35 @@ retry:
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate
 {
+#if DEBUG
 	assert( dispatch_get_current_queue() == Database.dispatchQueue );
-
-	@try {
-
-		int rc = SQLITE_OK;
-		SqlCheck( sqlite3_exec(_db, "BEGIN", 0, 0, 0));
-		if ( isUpdate ) {
-			[self deleteNodes:saveNodes];
-			[self deleteWays:saveWays];
-			[self deleteRelations:saveRelations];
-		}
-		[self saveNodes:saveNodes];
-		[self saveWays:saveWays];
-		[self saveRelations:saveRelations];
-		[self deleteNodes:deleteNodes];
-		[self deleteWays:deleteWays];
-		[self deleteRelations:deleteRelations];
-		SqlCheck( sqlite3_exec(_db, "COMMIT", 0, 0, 0));
-		DbgAssert(rc == SQLITE_OK);
-
-		return rc == SQLITE_OK;
-
-	} @catch ( NSException * exception ) {
-
+#endif
+	
+	int rc = sqlite3_exec(_db, "BEGIN", 0, 0, 0);
+	if ( rc != SQLITE_OK )
 		return NO;
+	
+	BOOL ok = YES;
+	if ( isUpdate ) {
+		ok = ok && [self deleteNodes:saveNodes];
+		ok = ok && [self deleteWays:saveWays];
+		ok = ok && [self deleteRelations:saveRelations];
 	}
+	ok = ok && [self saveNodes:saveNodes];
+	ok = ok && [self saveWays:saveWays];
+	ok = ok && [self saveRelations:saveRelations];
+	ok = ok && [self deleteNodes:deleteNodes];
+	ok = ok && [self deleteWays:deleteWays];
+	ok = ok && [self deleteRelations:deleteRelations];
+	
+	if ( ok ) {
+		rc = sqlite3_exec(_db, "COMMIT", 0, 0, 0);
+		ok = rc == SQLITE_OK;
+	} else {
+		rc = sqlite3_exec(_db, "ROLLBACK", 0, 0, 0);
+	}
+
+	return ok;
 }
 
 
@@ -600,40 +635,44 @@ retry:
 {
 	int rc = SQLITE_OK;
 
-	NSString * query = [NSString stringWithFormat:@"SELECT key,value,ident FROM %@", tableName];
 	sqlite3_stmt * tagStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, query.UTF8String, -1, &tagStatement, nil ));
+	@try {
+		NSString * query = [NSString stringWithFormat:@"SELECT key,value,ident FROM %@", tableName];
+		SqlCheck( sqlite3_prepare_v2( _db, query.UTF8String, -1, &tagStatement, nil ));
 
-	sqlite3_reset(tagStatement);
-	SqlCheck( sqlite3_clear_bindings(tagStatement));
-	while ( (rc = sqlite3_step(tagStatement)) == SQLITE_ROW) {
-		const uint8_t * ckey	= sqlite3_column_text(tagStatement, 0);
-		const uint8_t * cvalue	= sqlite3_column_text(tagStatement, 1);
-		int64_t			ident	= sqlite3_column_int64(tagStatement, 2);
+		sqlite3_reset(tagStatement);
+		SqlCheck( sqlite3_clear_bindings(tagStatement));
+		while ( (rc = sqlite3_step(tagStatement)) == SQLITE_ROW) {
+			const uint8_t * ckey	= sqlite3_column_text(tagStatement, 0);
+			const uint8_t * cvalue	= sqlite3_column_text(tagStatement, 1);
+			int64_t			ident	= sqlite3_column_int64(tagStatement, 2);
 
-		NSString * key = [NSString stringWithUTF8String:(char *)ckey];
-		NSString * value = [NSString stringWithUTF8String:(char *)cvalue];
+			NSString * key = [NSString stringWithUTF8String:(char *)ckey];
+			NSString * value = [NSString stringWithUTF8String:(char *)cvalue];
 
-		OsmBaseObject * obj = objectDict[ @(ident) ];
-		if ( obj == nil ) {
-			rc = SQLITE_ERROR;
-			break;
+			OsmBaseObject * obj = objectDict[ @(ident) ];
+			if ( obj == nil ) {
+				rc = SQLITE_ERROR;
+				break;
+			}
+			NSMutableDictionary * tags = (id)obj.tags;
+			if ( tags == nil ) {
+				tags = [NSMutableDictionary new];
+				[obj setTags:tags undo:nil];
+			}
+			[tags setObject:value forKey:key];
 		}
-		NSMutableDictionary * tags = (id)obj.tags;
-		if ( tags == nil ) {
-			tags = [NSMutableDictionary new];
-			[obj setTags:tags undo:nil];
-		}
-		[tags setObject:value forKey:key];
+		if ( rc == SQLITE_DONE )
+			rc = SQLITE_OK;
+
+		[objectDict enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * obj, BOOL *stop) {
+			[obj setConstructed];
+		}];
+	} @catch (id exception) {
+		rc = SQLITE_ERROR;
+	} @finally {
+		sqlite3_finalize(tagStatement);
 	}
-	if ( rc == SQLITE_DONE )
-		rc = SQLITE_OK;
-
-	[objectDict enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * obj, BOOL *stop) {
-		[obj setConstructed];
-	}];
-
-	sqlite3_finalize(tagStatement);
 	return rc == SQLITE_OK;
 }
 
@@ -644,9 +683,12 @@ retry:
 
 	int rc = SQLITE_OK;
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes", -1, &nodeStatement, nil ));
+	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes", -1, &nodeStatement, nil );
+	if ( rc != SQLITE_OK )
+		return nil;
 
 	NSMutableDictionary * nodes = [NSMutableDictionary new];
+	
 	while ( (rc = sqlite3_step(nodeStatement)) == SQLITE_ROW )  {
 		int64_t			ident		= sqlite3_column_int64(nodeStatement, 0);
 		const uint8_t *	user		= sqlite3_column_text(nodeStatement, 1);
@@ -672,8 +714,8 @@ retry:
 		BOOL ok = [self queryTagTable:@"node_tags" forObjects:nodes];
 		rc = ok ? SQLITE_OK : SQLITE_ERROR;
 	}
-
 	sqlite3_finalize(nodeStatement);
+
 	return rc == SQLITE_OK ? nodes : nil;
 }
 
@@ -684,9 +726,12 @@ retry:
 
 	int rc = SQLITE_OK;
 	sqlite3_stmt * wayStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways", -1, &wayStatement, nil ));
-
 	NSMutableDictionary * ways = [NSMutableDictionary new];
+
+	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways", -1, &wayStatement, nil );
+	if ( rc != SQLITE_OK )
+		return nil;
+
 	while ( (rc = sqlite3_step(wayStatement)) == SQLITE_ROW )  {
 		int64_t			ident		= sqlite3_column_int64(wayStatement, 0);
 		const uint8_t *	user		= sqlite3_column_text(wayStatement, 1);
@@ -716,7 +761,6 @@ retry:
 	}
 	if ( rc == SQLITE_DONE )
 		rc = SQLITE_OK;
-
 	sqlite3_finalize(wayStatement);
 
 	if ( rc == SQLITE_OK ) {
@@ -736,8 +780,10 @@ retry:
 	int rc = SQLITE_OK;
 
 	sqlite3_stmt * nodeStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "SELECT ident,node_id,node_index FROM way_nodes", -1, &nodeStatement, nil ));
-
+	rc = sqlite3_prepare_v2( _db, "SELECT ident,node_id,node_index FROM way_nodes", -1, &nodeStatement, nil );
+	if ( rc != SQLITE_OK )
+		return NO;
+	
 	while ( (rc = sqlite3_step(nodeStatement)) == SQLITE_ROW) {
 		int64_t		ident		= sqlite3_column_int64(nodeStatement, 0);
 		int64_t		node_id		= sqlite3_column_int64(nodeStatement, 1);
@@ -763,7 +809,9 @@ retry:
 	int rc = SQLITE_OK;
 
 	sqlite3_stmt * relationStatement = NULL;
-	SqlCheck( sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations", -1, &relationStatement, nil ));
+	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations", -1, &relationStatement, nil );
+	if ( rc != SQLITE_OK )
+		return nil;
 
 	NSMutableDictionary * relations = [NSMutableDictionary new];
 	while ( (rc = sqlite3_step(relationStatement)) == SQLITE_ROW )  {
@@ -787,22 +835,25 @@ retry:
 		}
 		[relations setObject:relation forKey:relation.ident];
 	}
-	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
 	sqlite3_finalize(relationStatement);
 
-	[self queryTagTable:@"relation_tags" forObjects:relations];
-	[self queryMembersForRelations:relations];
-
-	return relations;
+	if ( rc == SQLITE_DONE || rc == SQLITE_OK) {
+		BOOL ok = [self queryTagTable:@"relation_tags" forObjects:relations];
+		if ( ok ) {
+			ok = [self queryMembersForRelations:relations];
+		}
+		rc = ok ? SQLITE_OK : SQLITE_ERROR;
+	}
+	return rc == SQLITE_OK ? relations : nil;
 }
 
--(void)queryMembersForRelations:(NSDictionary *)relations
+-(BOOL)queryMembersForRelations:(NSDictionary *)relations
 {
 	sqlite3_stmt * memberStatement = NULL;
 
-	int rc = SQLITE_OK;
-
-	SqlCheck( sqlite3_prepare_v2( _db, "SELECT ident,type,ref,role,member_index FROM relation_members", -1, &memberStatement, nil ));
+	int rc = sqlite3_prepare_v2( _db, "SELECT ident,type,ref,role,member_index FROM relation_members", -1, &memberStatement, nil );
+	if ( rc != SQLITE_OK )
+		return NO;
 
 	while ( (rc = sqlite3_step(memberStatement)) == SQLITE_ROW) {
 		int64_t			ident			= sqlite3_column_int64(memberStatement, 0);
@@ -817,9 +868,10 @@ retry:
 		DbgAssert( list );
 		list[member_index] = member;
 	}
-	DbgAssert(rc == SQLITE_DONE || rc == SQLITE_OK);
 
 	sqlite3_finalize(memberStatement);
+
+	return rc == SQLITE_DONE || rc == SQLITE_OK;
 }
 
 @end

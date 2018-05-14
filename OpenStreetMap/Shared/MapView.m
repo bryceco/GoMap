@@ -1284,19 +1284,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 #pragma mark Discard stale data
 
--(void)discardStaleData:(NSInteger)limit
+-(void)discardStaleData
 {
 	if ( self.enableAutomaticCacheManagement ) {
-		// Clear editor data
 		OsmMapData * mapData = self.editorLayer.mapData;
-		NSDate * oldest = [NSDate dateWithTimeIntervalSinceNow:-24*60*60];
-		BOOL changed = NO;
-		while ( mapData.nodeCount + mapData.wayCount + mapData.relationCount > limit ) {
-			changed = [mapData discardObjectsOlderThan:oldest orFraction:0.33];
-			if ( !changed )
-				break;
-		}
-		// refresh screen
+		BOOL changed = [mapData discardStaleData];
 		if ( changed ) {
 			[self flashMessage:@"Cache trimmed"];
 			[self.editorLayer updateMapLocation];	// download data if necessary

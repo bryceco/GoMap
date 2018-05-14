@@ -63,7 +63,7 @@ extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 @property (copy,nonatomic)	NSString *	credentialsPassword;
 
 @property (readonly,nonatomic)	NetworkStatus	*	serverNetworkStatus;
-
+@property (readonly,nonnull)	NSDate			*	previousDiscardDate;
 
 
 +(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer; // only used when saving/restoring undo manager
@@ -96,7 +96,7 @@ extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 -(NSInteger)modificationCount;
 -(OsmMapData *)modifiedObjects;
 
--(BOOL)discardObjectsOlderThan:(NSDate *)date orFraction:(double)fraction;
+-(BOOL)discardStaleData;
 
 -(int32_t)wayCount;
 -(int32_t)nodeCount;

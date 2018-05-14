@@ -104,7 +104,8 @@ extern CGSize SizeForImage(NSImage * image);
 		[[NSFileManager defaultManager] createDirectoryAtPath:_tileCacheDirectory withIntermediateDirectories:YES attributes:NULL error:NULL];
 	}
 
-	[self purgeOldCacheItemsAsync];
+	NSDate * expirationDate = [NSDate dateWithTimeIntervalSinceNow:-7*24*60*60];
+	[self purgeOldCacheItemsAsync:expirationDate];
 	[self setNeedsLayout];
 }
 
@@ -167,23 +168,23 @@ extern CGSize SizeForImage(NSImage * image);
 	[self setNeedsLayout];
 }
 
--(void)purgeOldCacheItemsAsync
+-(void)purgeOldCacheItemsAsync:(NSDate *)expiration
 {
 	NSString * cacheDir = _tileCacheDirectory;
 	if ( cacheDir.length == 0 )
 		return;
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-		NSDate * now = [NSDate date];
 		NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:cacheDir error:NULL];
 		for ( NSString * file in files ) {
 			NSString * path = [cacheDir stringByAppendingPathComponent:file];
 			struct stat status = { 0 };
 			stat( path.UTF8String, &status );
 			NSDate * date = [NSDate dateWithTimeIntervalSince1970:status.st_mtimespec.tv_sec];
-			NSTimeInterval age = [now timeIntervalSinceDate:date];
-			if ( age > 7.0 * 24*60*60 ) {
+			if ( [date compare:expiration] < 0 ) {
 				[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+				NSString * key = [file stringByDeletingPathExtension];
+				[_memoryTileCache removeObjectForKey:key];
 			}
 		}
 	});

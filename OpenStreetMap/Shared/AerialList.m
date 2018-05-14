@@ -54,9 +54,15 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 -(BOOL)isBingAerial
 {
-	if ( [self.identifier isEqualToString:BING_IDENTIFIER] )
-		return YES;
-	return NO;
+	return [self.identifier isEqualToString:BING_IDENTIFIER];
+}
+-(BOOL)isMapnik
+{
+	return [self.identifier isEqualToString:MAPNIK_IDENTIFIER];
+}
+-(BOOL)isOsmGpxOverlay
+{
+	return [self.identifier isEqualToString:OSM_GPS_TRACE_IDENTIFIER];
 }
 
 +(AerialService *)defaultBingAerial
