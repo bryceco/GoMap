@@ -75,7 +75,6 @@ static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char*
 static void NetworkStatusCallback( SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void * info )
 {
 #pragma unused (target)
-	assert(info);
 	NetworkStatus * myself = (__bridge NetworkStatus *)info;
 	assert( [myself isKindOfClass:[NetworkStatus class]] );
 	

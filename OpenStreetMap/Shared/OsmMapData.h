@@ -62,7 +62,7 @@ extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
 
-@property (readonly,nonatomic)	NetworkStatus	*	networkStatus;
+@property (readonly,nonatomic)	NetworkStatus	*	serverNetworkStatus;
 
 
 

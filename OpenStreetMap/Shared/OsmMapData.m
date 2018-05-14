@@ -71,12 +71,8 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	dispatch_once(&onceToken, ^{
 		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 		[defaults registerDefaults:@{ OSM_SERVER_KEY : @"https://api.openstreetmap.org/" }];
-		OSM_API_URL = [defaults objectForKey:OSM_SERVER_KEY];
-
-		NSURL * url = [NSURL URLWithString:OSM_API_URL];
-		_networkStatus = [NetworkStatus networkStatusWithHostName:url.host];
-		
-		NetworkConnectivity status = _networkStatus.currentConnectivity;
+		NSString * server = [defaults objectForKey:OSM_SERVER_KEY];
+		[self setServer:server];
 		
 		[self setupPeriodicSaveTimer];
 	});
@@ -130,6 +126,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	OSM_API_URL = hostname;
 
 	[self purgeSoft];
+	
+	NSURL * url = [NSURL URLWithString:OSM_API_URL];
+	_serverNetworkStatus = [NetworkStatus networkStatusWithHostName:url.host];
 }
 
 -(NSString *)getServer
@@ -939,7 +938,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	// check how much area we're trying to download, and if too large complain
 	NSError * error = nil;
-#if 1
 	NSArray * newQuads = nil;
 	double area = SurfaceArea( box );
 	BOOL tooLarge = area > 10.0*1000*1000;	// square kilometer
@@ -952,9 +950,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[[DownloadThreadPool osmPool] cancelAllDownloads];
 		}
 	}
-#else
-	NSArray * newQuads = [_region newQuadsForRect:box];
-#endif
 
 	if ( newQuads.count == 0 ) {
 		++activeRequests;
