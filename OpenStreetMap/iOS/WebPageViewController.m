@@ -52,11 +52,6 @@
 	}
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-}
-
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
@@ -71,7 +66,13 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
 	[_activityIndicator stopAnimating];
-	_activityIndicator.hidden = YES;
+}
+
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
+{
+	// forward error to other handler
+	[self webView:webView didFailNavigation:navigation withError:error];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
