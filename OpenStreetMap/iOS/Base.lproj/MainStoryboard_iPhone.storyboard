@@ -120,7 +120,7 @@
                                         </accessibility>
                                     </view>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-uc-hfQ">
-                                        <rect key="frame" x="86" y="382" width="173" height="44"/>
+                                        <rect key="frame" x="73.5" y="382" width="173" height="44"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="43" id="to3-dt-REX"/>
@@ -186,10 +186,10 @@
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="9t5-wq-j1u" secondAttribute="bottom" constant="55" id="WDm-wY-ec4"/>
                                     <constraint firstAttribute="trailing" secondItem="GTv-eT-l7q" secondAttribute="trailing" id="akz-iJ-wbD"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" id="cAR-iT-KBF"/>
-                                    <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" constant="9" id="fUu-P0-xQ0"/>
-                                    <constraint firstAttribute="trailing" secondItem="TnL-YC-BCg" secondAttribute="trailing" constant="12" id="hAx-Am-c4P"/>
+                                    <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" secondItem="4gw-jH-T1o" secondAttribute="leading" constant="9" id="fUu-P0-xQ0"/>
+                                    <constraint firstItem="4gw-jH-T1o" firstAttribute="trailing" secondItem="TnL-YC-BCg" secondAttribute="trailing" constant="12" id="hAx-Am-c4P"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" id="n5P-9d-3Mi"/>
-                                    <constraint firstAttribute="centerX" secondItem="zrW-uc-hfQ" secondAttribute="centerX" constant="-12.5" id="oyJ-uQ-7Yp"/>
+                                    <constraint firstAttribute="centerX" secondItem="zrW-uc-hfQ" secondAttribute="centerX" id="oyJ-uQ-7Yp"/>
                                     <constraint firstItem="zrW-uc-hfQ" firstAttribute="top" secondItem="Fo4-Nq-pAz" secondAttribute="bottom" constant="3" id="rsk-tU-dNz"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" id="wun-CK-ebL"/>
                                 </constraints>

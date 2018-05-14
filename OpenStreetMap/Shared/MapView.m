@@ -544,6 +544,7 @@ CGSize SizeForImage( NSImage * image )
 	CGRect rc = CGRectMake(10, rect.size.height - 80, 150, 30);
 	if (@available(iOS 11.0, *)) {
 		rc.origin.y -= self.safeAreaInsets.bottom;
+		rc.origin.x += self.safeAreaInsets.left;
 	}
 	_rulerLayer.frame = rc;
 #else
