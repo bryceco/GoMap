@@ -186,7 +186,6 @@ typedef enum {
 
 @property (readonly,nonatomic)	NSString					*	countryCodeForLocation;
 
-
 -(void)updateAerialAttributionButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
 

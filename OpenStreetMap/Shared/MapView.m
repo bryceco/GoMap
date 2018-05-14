@@ -140,7 +140,7 @@ CGSize SizeForImage( NSImage * image )
 
 		// get aerial database
 		self.customAerials = [AerialList new];
-
+		
 		NSMutableArray * bg = [NSMutableArray new];
 
 		_locatorLayer  = [[MercatorTileLayer alloc] initWithMapView:self];

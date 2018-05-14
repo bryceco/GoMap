@@ -14,6 +14,7 @@
 
 @class EditorMapLayer;
 @class MapView;
+@class NetworkStatus;
 @class NSXMLDocument;
 @class OsmBaseObject;
 @class OsmMember;
@@ -30,16 +31,7 @@ BOOL IsOsmBooleanFalse( NSString * value );
 extern NSString * OsmValueForBoolean( BOOL b );
 
 
-#if 1
-//#define OSM_API_URL	@"http://api.openstreetmap.org/"
-extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
-//#define OSM_API_URL	@"http://api.openstreetmap.fr/"	// faster: 4.62 seconds compared to 7.4 for .org server
-#elif 1
-#define OSM_API_URL	@"http://api.hosm.gwhat.org/"
-#elif 0
-#define OSM_API_URL	@"http://api06.dev.openstreetmap.org/"
-#endif
-
+extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
 
 
@@ -69,6 +61,10 @@ extern NSString * OSM_API_URL;//	@"http://api.openstreetmap.org/"
 
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
+
+@property (readonly,nonatomic)	NetworkStatus	*	networkStatus;
+
+
 
 +(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer; // only used when saving/restoring undo manager
 +(EditorMapLayer *)editorMapLayerForArchive; // only used when saving/restoring undo manager

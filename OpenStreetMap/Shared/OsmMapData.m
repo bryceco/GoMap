@@ -16,6 +16,7 @@
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 #import "MapView.h"
+#import "NetworkStatus.h"
 #import "OsmMapData.h"
 #import "OsmObjects.h"
 #import "QuadMap.h"
@@ -72,6 +73,11 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		[defaults registerDefaults:@{ OSM_SERVER_KEY : @"https://api.openstreetmap.org/" }];
 		OSM_API_URL = [defaults objectForKey:OSM_SERVER_KEY];
 
+		NSURL * url = [NSURL URLWithString:OSM_API_URL];
+		_networkStatus = [NetworkStatus networkStatusWithHostName:url.host];
+		
+		NetworkConnectivity status = _networkStatus.currentConnectivity;
+		
 		[self setupPeriodicSaveTimer];
 	});
 }
