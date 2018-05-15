@@ -33,7 +33,6 @@
 @class OsmBaseObject;
 @class PushPinView;
 @class RulerLayer;
-@class SpeechBalloonView;
 @class FpsLabel;
 @class TapAndDragGesture;
 @class VoiceAnnouncement;

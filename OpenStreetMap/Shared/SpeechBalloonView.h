@@ -16,10 +16,9 @@
 @interface SpeechBalloonView : NSView
 {
 	CGMutablePathRef	_path;
-	void			(^_balloonPress)(void);
-	void			(^_disclosurePress)(void);
 }
 
-- (id)initWithText:(NSString *)text balloonPress:(void(^)(void))balloonPress disclosurePress:(void(^)(void))disclosurePress;
+- (id)initWithText:(NSString *)text;
 - (void) setPoint:(CGPoint)point;
+- (void) setTargetView:(UIView *)view;
 @end

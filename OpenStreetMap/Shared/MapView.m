@@ -437,7 +437,7 @@ CGSize SizeForImage( NSImage * image )
 	[self updateNotesWithDelay:0];
 
 	[self updateAerialAttributionButton];
-
+	
 #if FRAMERATE_TEST
 	// automaatically scroll view for frame rate testing
 	OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };

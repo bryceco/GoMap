@@ -15,7 +15,7 @@
 #import "NotesTableViewController.h"
 #import "OsmMapData.h"
 #import "PushPinView.h"
-
+#import "SpeechBalloonView.h"
 
 @interface MapViewController ()
 @end
@@ -128,6 +128,12 @@
 	[self installLocationLongPressGestureRecognizer:YES];
 
 	_toolbar.layer.zPosition = 9000;
+	
+#if 0 && DEBUG
+	SpeechBalloonView * speech = [[SpeechBalloonView alloc] initWithText:@"Press here to create a new node,\nor to begin a way"];
+	[speech setTargetView:_toolbar];
+	[self.view addSubview:speech];
+#endif
 }
 
 -(void)setGpsState:(GPS_STATE)state
