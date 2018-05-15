@@ -297,98 +297,106 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	
 	NSMutableArray * externalAerials = [NSMutableArray new];
 	for ( NSDictionary * entry in json ) {
-		NSString * 	name	 			= entry[@"name"];
-		NSString * 	type 				= entry[@"type"];
-		NSArray *	projections			= entry[@"available_projections"];
-		NSString * 	url 				= entry[@"url"];
-		NSString * 	identifier 			= entry[@"id"];
-		NSInteger 	maxZoom 			= [entry[@"extent"][@"max_zoom"] integerValue];
-		NSString * 	attribIconString	= entry[@"icon"];
-		NSString * 	attribString 		= entry[@"attribution"][@"text"];
-		NSString * 	attribUrl 			= entry[@"attribution"][@"url"];
-		NSInteger	overlay				= [entry[@"overlay"] integerValue];
-		NSArray * 	polygonPoints 		= entry[@"extent"][@"polygon"];
-
-		if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
-			if ( ![knownUnsupported containsObject:type] )
-				NSLog(@"unsupported %@\n",type);
-			continue;
-		}
-		if ( overlay ) {
-			// we don't support overlays yet
-			continue;
-		}
-		if ( !( [url hasPrefix:@"http:"] || [url hasPrefix:@"https:"]) ) {
-			// invalid url
-			NSLog(@"skip url = %@\n",url);
-			continue;
-		}
-
-		// we only support some types of WMS projections
-		NSString * projection = nil;
-		if ( [type isEqualToString:@"wms"] ) {
-			for ( NSString * proj in projections ) {
-				if ( supportedProjections[proj] ) {
-					projection = proj;
-					break;
-				}
-			}
-			if ( projection == nil )
-				continue;
-		}
-
-		CGPathRef polygon = NULL;
-		if ( polygonPoints ) {
-			CGMutablePathRef path = CGPathCreateMutable();
-			for ( NSArray * loop in polygonPoints ) {
-				BOOL	first		= YES;
-				for ( NSArray * pt in loop ) {
-					double lon = [pt[0] doubleValue];
-					double lat = [pt[1] doubleValue];
-					if ( first ) {
-						CGPathMoveToPoint(path, NULL, lon, lat);
-						first = NO;
-					} else {
-						CGPathAddLineToPoint(path, NULL, lon, lat);
-					}
-				}
-				CGPathCloseSubpath( path );
-			}
-			polygon = CGPathCreateCopy( path );
-			CGPathRelease( path );
-		}
-
-		UIImage * attribIcon = nil;
-		BOOL httpIcon = NO;
-		if ( attribIconString.length > 0 ) {
-			NSArray * prefixList = @[ @"data:image/png;base64,",
-									  @"data:image/png:base64,",
-									  @"png:base64," ];
-			for ( NSString * prefix in prefixList ) {
-				if ( [attribIconString hasPrefix:prefix] ) {
-					attribIconString = [attribIconString substringFromIndex:prefix.length];
-					NSData * decodedData = [[NSData alloc] initWithBase64EncodedString:attribIconString options:0];
-					attribIcon = [UIImage imageWithData:decodedData];
-					if ( attribIcon == nil ) {
-						NSLog(@"bad icon decode: %@\n",attribIconString);
-					}
-					break;
-				}
-			}
-			if ( attribIcon == nil ) {
-				if ( [attribIconString hasPrefix:@"http"] ) {
-					httpIcon = YES;
-				} else {
-					NSLog(@"unsupported icon format: %@\n",attribIconString);
-				}
-			}
-		}
-		AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
-		[externalAerials addObject:service];
-		CGPathRelease( polygon );
 		
-		if ( httpIcon ) {
-			[service loadIconFromWeb:attribIconString];
+		NSString * 	name 		= entry[@"name"];
+		NSString * 	identifier	= entry[@"id"];
+
+		@try {
+			NSString * 	type 				= entry[@"type"];
+			NSArray *	projections			= entry[@"available_projections"];
+			NSString * 	url 				= entry[@"url"];
+			NSInteger 	maxZoom 			= [entry[@"extent"][@"max_zoom"] integerValue];
+			NSString * 	attribIconString	= entry[@"icon"];
+			NSString * 	attribString 		= entry[@"attribution"][@"text"];
+			NSString * 	attribUrl 			= entry[@"attribution"][@"url"];
+			NSInteger	overlay				= [entry[@"overlay"] integerValue];
+			NSArray * 	polygonList 		= entry[@"extent"][@"polygon"];
+
+			if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
+				if ( ![knownUnsupported containsObject:type] )
+					NSLog(@"unsupported %@\n",type);
+				continue;
+			}
+			if ( overlay ) {
+				// we don't support overlays yet
+				continue;
+			}
+			if ( !( [url hasPrefix:@"http:"] || [url hasPrefix:@"https:"]) ) {
+				// invalid url
+				NSLog(@"skip url = %@\n",url);
+				continue;
+			}
+
+			// we only support some types of WMS projections
+			NSString * projection = nil;
+			if ( [type isEqualToString:@"wms"] ) {
+				for ( NSString * proj in projections ) {
+					if ( supportedProjections[proj] ) {
+						projection = proj;
+						break;
+					}
+				}
+				if ( projection == nil )
+					continue;
+			}
+
+			CGPathRef polygonPath = NULL;
+			if ( polygonList ) {
+				CGMutablePathRef path = CGPathCreateMutable();
+				for ( NSArray * polygon in polygonList ) {
+					BOOL first = YES;
+					for ( NSArray * pt in polygon ) {
+						NSAssert( pt.count == 2, nil );
+						double lon = [pt[0] doubleValue];
+						double lat = [pt[1] doubleValue];
+						if ( first ) {
+							CGPathMoveToPoint(path, NULL, lon, lat);
+							first = NO;
+						} else {
+							CGPathAddLineToPoint(path, NULL, lon, lat);
+						}
+					}
+					CGPathCloseSubpath( path );
+				}
+				polygonPath = CGPathCreateCopy( path );
+				CGPathRelease( path );
+			}
+
+			UIImage * attribIcon = nil;
+			BOOL httpIcon = NO;
+			if ( attribIconString.length > 0 ) {
+				NSArray * prefixList = @[ @"data:image/png;base64,",
+										  @"data:image/png:base64,",
+										  @"png:base64," ];
+				for ( NSString * prefix in prefixList ) {
+					if ( [attribIconString hasPrefix:prefix] ) {
+						attribIconString = [attribIconString substringFromIndex:prefix.length];
+						NSData * decodedData = [[NSData alloc] initWithBase64EncodedString:attribIconString options:0];
+						attribIcon = [UIImage imageWithData:decodedData];
+						if ( attribIcon == nil ) {
+							NSLog(@"bad icon decode: %@\n",attribIconString);
+						}
+						break;
+					}
+				}
+				if ( attribIcon == nil ) {
+					if ( [attribIconString hasPrefix:@"http"] ) {
+						httpIcon = YES;
+					} else {
+						NSLog(@"unsupported icon format: %@\n",attribIconString);
+					}
+				}
+			}
+			AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES wmsProjection:projection polygon:polygonPath attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
+			[externalAerials addObject:service];
+			CGPathRelease( polygonPath );
+			
+			if ( httpIcon ) {
+				[service loadIconFromWeb:attribIconString];
+			}
+			
+		} @catch (id exception) {
+			NSLog(@"Aerial skipped: %@\n",name);
 		}
 	}
 	[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {
