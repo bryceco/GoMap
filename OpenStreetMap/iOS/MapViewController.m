@@ -141,8 +141,6 @@
 	if ( self.mapView.gpsState != state ) {
 		self.mapView.gpsState = state;
 
-	//	self.locationButton.tintColor = state != GPS_STATE_NONE ? [UIColor colorWithRed:0.6 green:0.3 blue:0.9 alpha:1] : nil;
-
 		if ( self.mapView.gpsState == GPS_STATE_NONE ) {
 			UIImage * image = [UIImage imageNamed:@"723-location-arrow-toolbar"];
 			UIButton * button = self.locationButton.customView;
@@ -163,13 +161,21 @@
 	switch (self.mapView.gpsState) {
 		case GPS_STATE_NONE:
 			[self setGpsState:GPS_STATE_LOCATION];
+			[self.mapView rotateToNorth];
 			break;
+#if 1
+		case GPS_STATE_LOCATION:
+		case GPS_STATE_HEADING:
+			[self setGpsState:GPS_STATE_NONE];
+			break;
+#else
 		case GPS_STATE_LOCATION:
 			[self setGpsState:GPS_STATE_HEADING];
 			break;
-		default:
+		case GPS_STATE_HEADING:
 			[self setGpsState:GPS_STATE_NONE];
 			break;
+#endif
 	}
 }
 

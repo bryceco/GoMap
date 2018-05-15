@@ -194,7 +194,9 @@ typedef enum {
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 
-- (void)locationUpdatedTo:(CLLocation *)newLocation;
+-(void)locationUpdatedTo:(CLLocation *)newLocation;
+-(void)startLocating;
+-(void)rotateToNorth;
 
 -(OSMRect)screenLongitudeLatitude;
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude birdsEye:(BOOL)birdsEye;
@@ -223,9 +225,8 @@ typedef enum {
 -(BOOL)isLocationSpecified;
 
 -(IBAction)requestAerialServiceAttribution:(id)sender;
--(IBAction)locateMe:(id)sender;
 -(IBAction)centerOnGPS:(id)sender;
--(IBAction)rotateToNorth:(id)sender;
+-(IBAction)compassPressed:(id)sender;
 -(IBAction)duplicateSelectedObject:(id)sender;
 -(IBAction)dropPin:(id)sender;
 -(void)removePin;

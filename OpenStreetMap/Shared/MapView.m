@@ -49,7 +49,7 @@ static const CGFloat Z_AERIAL			= -100;
 static const CGFloat Z_MAPNIK			= -99;
 static const CGFloat Z_LOCATOR			= -50;
 static const CGFloat Z_GPSTRACE			= -40;
-static const CGFloat Z_ROTATEGRAPHIC	= -35;
+static const CGFloat Z_ROTATEGRAPHIC	= -3;
 static const CGFloat Z_EDITOR			= -20;
 static const CGFloat Z_GPX				= -15;
 //static const CGFloat Z_BUILDINGS		= -18;
@@ -812,14 +812,14 @@ CGSize SizeForImage( NSImage * image )
 
 -(void)startObjectRotation
 {
-	_isRotateObjectMode				= YES;
-	_rotateObjectCenter				= _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
+	_isRotateObjectMode	= YES;
+	_rotateObjectCenter	= _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
 	[self removePin];
 	_rotateObjectOverlay = [[CAShapeLayer alloc] init];
 	CGFloat radiusInner = 70;
 	CGFloat radiusOuter = 90;
 	CGFloat arrowWidth = 60;
-	CGPoint center = [self screenPointForLatitude:_rotateObjectCenter.y longitude:_rotateObjectCenter.x birdsEye:YES]; // CGRectCenter(self.bounds);
+	CGPoint center = [self screenPointForLatitude:_rotateObjectCenter.y longitude:_rotateObjectCenter.x birdsEye:YES];
 	UIBezierPath * path = [UIBezierPath bezierPathWithArcCenter:center radius:radiusInner startAngle:M_PI/2 endAngle:M_PI clockwise:NO];
 	[path addLineToPoint:CGPointMake(center.x-(radiusOuter+radiusInner)/2+arrowWidth/2,center.y)];
 	[path addLineToPoint:CGPointMake(center.x-(radiusOuter+radiusInner)/2, center.y+arrowWidth/sqrt(2.0))];
@@ -1364,15 +1364,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 		_gpsState = gpsState;
 		if ( _gpsState != GPS_STATE_NONE ) {
-			[self locateMe:nil];
+			[self startLocating];
 		} else {
-			// turn off updates
-			[_locationManager stopUpdatingLocation];
-#if TARGET_OS_IPHONE
-			[_locationManager stopUpdatingHeading];
-#endif
-			[_locationBallLayer removeFromSuperlayer];
-			_locationBallLayer = nil;
+			[self stopLocating];
 		}
 	}
 }
@@ -1407,15 +1401,15 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
--(IBAction)locateMe:(id)sender
+-(void)startLocating
 {
 	CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 	if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
 		NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-        UIAlertController * alertGps = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alertGps addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-        [self.viewController presentViewController:alertGps animated:YES completion:nil];
+		UIAlertController * alertGps = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+		[alertGps addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[self.viewController presentViewController:alertGps animated:YES completion:nil];
 
 		self.gpsState = GPS_STATE_NONE;
 		return;
@@ -1431,9 +1425,17 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[_locationManager startUpdatingLocation];
 #if TARGET_OS_IPHONE
 	[_locationManager startUpdatingHeading];
-#else
-	[self performSelector:@selector(locationUpdateFailed:) withObject:nil afterDelay:5.0];
 #endif
+}
+
+-(void)stopLocating
+{
+	[_locationManager stopUpdatingLocation];
+#if TARGET_OS_IPHONE
+	[_locationManager stopUpdatingHeading];
+#endif
+	[_locationBallLayer removeFromSuperlayer];
+	_locationBallLayer = nil;
 }
 
 -(IBAction)centerOnGPS:(id)sender
@@ -1446,54 +1448,29 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[self setTransformForLatitude:location.coordinate.latitude longitude:location.coordinate.longitude];
 }
 
--(IBAction)rotateToNorth:(id)sender
+-(IBAction)compassPressed:(id)sender
 {
 	switch ( self.gpsState ) {
 		case GPS_STATE_HEADING:
 			self.gpsState = GPS_STATE_LOCATION;
 			break;
 		case GPS_STATE_LOCATION:
-			self.gpsState = GPS_STATE_HEADING;
-			// fall through
+			{
+				double rotation = OSMTransformRotation( _screenFromMapTransform );
+				if ( fabs(rotation) < 0.00001 ) {
+					// already facing north, so switch to Heading mode
+					self.gpsState = GPS_STATE_HEADING;
+				} else {
+					[self rotateToNorth];
+				}
+			}
+			break;
 		case GPS_STATE_NONE:
 			{
-				CGPoint center = CGRectCenter(self.bounds);
-				double rotation = OSMTransformRotation( _screenFromMapTransform );
-				[self animateRotationBy:-rotation aroundPoint:center];
+				[self rotateToNorth];
 			}
 			break;
 	}
-}
-
--(void)locationUpdateFailed:(NSError *)error
-{
-	MapViewController * controller = self.viewController;
-	[controller setGpsState:GPS_STATE_NONE];
-
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
-
-	if ( ![self isLocationSpecified] ) {
-		// go home
-#if 1
-		[self setTransformForLatitude:47.6858 longitude:-122.1917 width:0.01];
-#else
-		OSMTransform transform = { 0 };
-		transform.a = transform.d = 106344;
-		transform.tx = 9241972;
-		transform.ty = 4112460;
-		self.screenFromMapTransform = transform;
-#endif
-	}
-
-	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",nil),
-					   error ? error.localizedDescription : NSLocalizedString(@"Location services timed out.",nil)];
-	text = [NSLocalizedString(@"The current location cannot be determined: ",nil) stringByAppendingString:text];
-	if ( error ) {
-		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text, NSUnderlyingErrorKey : error} ];
-	} else {
-		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text} ];
-	}
-	[self presentError:error flash:NO];
 }
 
 - (void)updateUserLocationIndicator:(CLLocation *)location
@@ -1556,7 +1533,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			};
 			double miniHeading = easeInOutQuad( elapsedTime, 0, deltaHeading, duration);
 			[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
-			myself->_locationBallLayer.heading	= M_PI*3/2;
 			prevHeading = miniHeading;
 			if ( elapsedTime >= duration ) {
 				[displayLink removeName:DisplayLinkHeading];
@@ -1605,8 +1581,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	}
 }
 
-
-
 - (void)locationUpdatedTo:(CLLocation *)newLocation
 {
 	if ( _gpsState == GPS_STATE_NONE ) {
@@ -1622,7 +1596,8 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	}
 
 	// check if we moved an appreciable distance
-	double delta = hypot( newLocation.coordinate.latitude - _currentLocation.coordinate.latitude, newLocation.coordinate.longitude - _currentLocation.coordinate.longitude);
+	double delta = hypot( newLocation.coordinate.latitude - _currentLocation.coordinate.latitude,
+						  newLocation.coordinate.longitude - _currentLocation.coordinate.longitude);
 	delta *= MetersPerDegree( newLocation.coordinate.latitude );
 	if ( _locationBallLayer && delta < 0.1 && fabs(newLocation.horizontalAccuracy - _currentLocation.horizontalAccuracy) < 1.0 )
 		return;
@@ -1634,13 +1609,11 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
-		// DLog( @"gps point %d", (int)_gpxLayer.activeTrack.points.count );
 	}
 
 	if ( self.gpsState == GPS_STATE_NONE ) {
-		[_locationManager stopUpdatingLocation];
+		[self stopLocating];
 	}
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(locationUpdateFailed:) object:nil];
 
 #if TARGET_OS_IPHONE
 	CLLocationCoordinate2D pp = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:NO];
@@ -1669,7 +1642,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	[self updateUserLocationIndicator:newLocation];
 }
 
-// delegate for iIOS 6 and later
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
 	for ( CLLocation * location in locations ) {
@@ -1684,7 +1656,23 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-	[self locationUpdateFailed:error];
+	MapViewController * controller = self.viewController;
+	[controller setGpsState:GPS_STATE_NONE];
+	
+	if ( ![self isLocationSpecified] ) {
+		// go home
+		[self setTransformForLatitude:47.6858 longitude:-122.1917 width:0.01];
+	}
+	
+	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",nil),
+					   error ? error.localizedDescription : NSLocalizedString(@"Location services timed out.",nil)];
+	text = [NSLocalizedString(@"The current location cannot be determined: ",nil) stringByAppendingString:text];
+	if ( error ) {
+		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text, NSUnderlyingErrorKey : error} ];
+	} else {
+		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text} ];
+	}
+	[self presentError:error flash:NO];
 }
 
 
@@ -1850,7 +1838,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	}
 	if ( !_compassButton.hidden ) {
 		double screenAngle = OSMTransformRotation( _screenFromMapTransform );
-//		_compassButton.imageView.layer.transform = CATransform3DMakeAffineTransform( CGAffineTransformMakeRotation(screenAngle) );
 		_compassButton.transform = CGAffineTransformMakeRotation(screenAngle);
 	}
 }
@@ -1885,6 +1872,14 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	if ( _locationBallLayer ) {
 		[self updateUserLocationIndicator:nil];
 	}
+}
+
+-(void)rotateToNorth
+{
+	// Rotate to face North
+	CGPoint center = CGRectCenter(self.bounds);
+	double rotation = OSMTransformRotation( _screenFromMapTransform );
+	[self animateRotationBy:-rotation aroundPoint:center];
 }
 
 #pragma mark Key presses
@@ -3359,8 +3354,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (IBAction)handleRotationGesture:(UIRotationGestureRecognizer *)rotationGesture
 {
-	// Rotate object on screen
 	if ( _isRotateObjectMode ) {
+		// Rotate object on screen
 		if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
 			[_editorLayer.mapData beginUndoGrouping];
 			_gestureDidMove = NO;
@@ -3387,7 +3382,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				CGPoint dist = { new.x - pt.x, -(new.y - pt.y) };
 				[_editorLayer adjustNode:node byDistance:dist];
 			}
-//			rotationGesture.rotation = 0.0;
 		} else {
 			// ended
 			[self endObjectRotation];
@@ -3409,6 +3403,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			CGFloat angle = rotationGesture.rotation;
 			[self rotateBy:angle aroundScreenPoint:centerPoint];
 			rotationGesture.rotation = 0.0;
+			
+			if ( _gpsState == GPS_STATE_HEADING ) {
+				_gpsState = GPS_STATE_LOCATION;
+			}
 		} else if ( rotationGesture.state == UIGestureRecognizerStateEnded ) {
 			[self updateNotesWithDelay:0];
 		}

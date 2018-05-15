@@ -156,14 +156,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
-                                        <rect key="frame" x="281" y="70" width="32" height="32"/>
+                                        <rect key="frame" x="277" y="70" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="32" id="Umo-8r-F7i"/>
-                                            <constraint firstAttribute="height" constant="32" id="rLd-DR-Gbp"/>
+                                            <constraint firstAttribute="width" constant="40" id="Umo-8r-F7i"/>
+                                            <constraint firstAttribute="height" constant="40" id="rLd-DR-Gbp"/>
                                         </constraints>
                                         <state key="normal" image="compass.png"/>
                                         <connections>
-                                            <action selector="rotateToNorth:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="j6f-G1-Ixj"/>
+                                            <action selector="compassPressed:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="j6f-G1-Ixj"/>
                                         </connections>
                                     </button>
                                 </subviews>
