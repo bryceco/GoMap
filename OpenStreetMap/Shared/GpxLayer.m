@@ -480,7 +480,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 #endif
 
 		// automatically save periodically
-		NSInteger saveInterval = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive ? 30 : 120;	// save less frequently if we're in the background
+		NSInteger saveInterval = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive ? 30 : 180;	// save less frequently if we're in the background
 		if ( self.activeTrack.points.count % saveInterval == 0 ) {
 			[self saveActiveTrack];
 		}
