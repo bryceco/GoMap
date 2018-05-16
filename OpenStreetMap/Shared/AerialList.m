@@ -273,6 +273,48 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return nil;
 }
 
+-(BOOL)processArray:(NSArray *)array forPath:(CGMutablePathRef)path
+{
+	if ( ![array isKindOfClass:[NSArray class]] ) {
+		return NO;
+	}
+	NSArray * pt = array[0];
+	if ( ![pt isKindOfClass:[NSArray class]] )
+		return NO;
+	if ( pt.count != 2 || ![pt[0] isKindOfClass:[NSNumber class]] ) {
+		BOOL ok = YES;
+		for ( NSArray * a in array ) {
+			ok = ok && [self processArray:a forPath:path];
+		}
+		return ok;
+	} else {
+		BOOL first = YES;
+		BOOL ok = YES;
+		for ( pt in array ) {
+			ok = NO;
+			if ( pt.count == 2 ) {
+				NSNumber * a = pt[0];
+				NSNumber * b = pt[1];
+				if ( [a isKindOfClass:[NSNumber class]] && [b isKindOfClass:[NSNumber class]] ) {
+					double lon = a.doubleValue;
+					double lat = b.doubleValue;
+					if ( first ) {
+						CGPathMoveToPoint(path, NULL, lon, lat);
+						first = NO;
+					} else {
+						CGPathAddLineToPoint(path, NULL, lon, lat);
+					}
+					ok = YES;
+				}
+			}
+			if ( !ok ) {
+				break;
+			}
+		}
+		CGPathCloseSubpath( path );
+		return ok;
+	}
+}
 
 -(NSArray *)processOsmLabAerialsData:(NSData *)data
 {
@@ -302,15 +344,15 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		NSString * 	identifier	= entry[@"id"];
 
 		@try {
-			NSString * 	type 				= entry[@"type"];
-			NSArray *	projections			= entry[@"available_projections"];
-			NSString * 	url 				= entry[@"url"];
-			NSInteger 	maxZoom 			= [entry[@"extent"][@"max_zoom"] integerValue];
-			NSString * 	attribIconString	= entry[@"icon"];
-			NSString * 	attribString 		= entry[@"attribution"][@"text"];
-			NSString * 	attribUrl 			= entry[@"attribution"][@"url"];
-			NSInteger	overlay				= [entry[@"overlay"] integerValue];
-			NSArray * 	polygonList 		= entry[@"extent"][@"polygon"];
+			NSString	* 	type 				= entry[@"type"];
+			NSArray 	*	projections			= entry[@"available_projections"];
+			NSString 	* 	url 				= entry[@"url"];
+			NSInteger 		maxZoom 			= [entry[@"extent"][@"max_zoom"] integerValue];
+			NSString 	* 	attribIconString	= entry[@"icon"];
+			NSString 	* 	attribString 		= entry[@"attribution"][@"text"];
+			NSString 	* 	attribUrl 			= entry[@"attribution"][@"url"];
+			NSInteger		overlay				= [entry[@"overlay"] integerValue];
+			NSArray 	* 	polygonList 		= entry[@"extent"][@"polygon"];
 
 			if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
 				if ( ![knownUnsupported containsObject:type] )
@@ -343,20 +385,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			CGPathRef polygonPath = NULL;
 			if ( polygonList ) {
 				CGMutablePathRef path = CGPathCreateMutable();
-				for ( NSArray * polygon in polygonList ) {
-					BOOL first = YES;
-					for ( NSArray * pt in polygon ) {
-						NSAssert( pt.count == 2, nil );
-						double lon = [pt[0] doubleValue];
-						double lat = [pt[1] doubleValue];
-						if ( first ) {
-							CGPathMoveToPoint(path, NULL, lon, lat);
-							first = NO;
-						} else {
-							CGPathAddLineToPoint(path, NULL, lon, lat);
-						}
-					}
-					CGPathCloseSubpath( path );
+				BOOL ok = [self processArray:polygonList forPath:path];
+				if ( !ok ) {
+					CGPathRelease( path );
+					continue;
 				}
 				polygonPath = CGPathCreateCopy( path );
 				CGPathRelease( path );

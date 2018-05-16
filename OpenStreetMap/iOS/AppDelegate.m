@@ -234,6 +234,7 @@
 	
 	// while in background don't update our location so we don't download tiles/OSM data when moving
 	self.mapView.userOverrodeLocationPosition = YES;
+	[self.mapView.locationManager stopUpdatingHeading];
 }
 
 // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
@@ -241,6 +242,9 @@
 {
 	// allow gps to update our location
 	self.mapView.userOverrodeLocationPosition = NO;
+	if ( self.mapView.gpsState != GPS_STATE_NONE ) {
+		[self.mapView.locationManager startUpdatingHeading];
+	}
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

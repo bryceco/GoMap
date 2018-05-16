@@ -1348,11 +1348,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			[_gpxLayer endActiveTrack];
 		}
 
-		if ( _gpsState == GPS_STATE_HEADING ) {
+		if ( gpsState == GPS_STATE_HEADING ) {
+			// rotate to heading
+			CGPoint center = CGRectCenter(self.bounds);
+			double screenAngle = OSMTransformRotation( _screenFromMapTransform );
+			double heading = [self headingForCLHeading:_locationManager.heading];
+			[self animateRotationBy:-(screenAngle+heading) aroundPoint:center];
+		} else if ( gpsState == GPS_STATE_LOCATION ) {
 			// orient toward north
 			CGPoint center = CGRectCenter(self.bounds);
 			double rotation = OSMTransformRotation( _screenFromMapTransform );
 			[self animateRotationBy:-rotation aroundPoint:center];
+		} else {
+			// keep whatever rotation we had
 		}
 
 		if ( gpsState == GPS_STATE_NONE ) {
@@ -1364,9 +1372,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 		_gpsState = gpsState;
 		if ( _gpsState != GPS_STATE_NONE ) {
-			[self startLocating];
+			self.locating = YES;
 		} else {
-			[self stopLocating];
+			self.locating = NO;
 		}
 	}
 }
@@ -1401,41 +1409,45 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
--(void)startLocating
+-(void)setLocating:(BOOL)locating
 {
-	CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-	if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-		NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-		UIAlertController * alertGps = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-		[alertGps addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-		[self.viewController presentViewController:alertGps animated:YES completion:nil];
-
-		self.gpsState = GPS_STATE_NONE;
+	if ( _locating == locating )
 		return;
-	}
+	_locating = locating;
 
-	// ios 8 and later:
-	if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] ) {
-		[_locationManager requestWhenInUseAuthorization];
-	}
+	if ( locating ) {
+		
+		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
+			NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+			NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+			UIAlertController * alertGps = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
+			[alertGps addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.viewController presentViewController:alertGps animated:YES completion:nil];
 
-	self.userOverrodeLocationPosition	= NO;
-	self.userOverrodeLocationZoom		= NO;
-	[_locationManager startUpdatingLocation];
+			self.gpsState = GPS_STATE_NONE;
+			return;
+		}
+
+		// ios 8 and later:
+		if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] ) {
+			[_locationManager requestWhenInUseAuthorization];
+		}
+
+		self.userOverrodeLocationPosition	= NO;
+		self.userOverrodeLocationZoom		= NO;
+		[_locationManager startUpdatingLocation];
 #if TARGET_OS_IPHONE
-	[_locationManager startUpdatingHeading];
+		[_locationManager startUpdatingHeading];
 #endif
-}
-
--(void)stopLocating
-{
-	[_locationManager stopUpdatingLocation];
+	} else {
+		[_locationManager stopUpdatingLocation];
 #if TARGET_OS_IPHONE
-	[_locationManager stopUpdatingHeading];
+		[_locationManager stopUpdatingHeading];
 #endif
-	[_locationBallLayer removeFromSuperlayer];
-	_locationBallLayer = nil;
+		[_locationBallLayer removeFromSuperlayer];
+		_locationBallLayer = nil;
+	}
 }
 
 -(IBAction)centerOnGPS:(id)sender
@@ -1455,20 +1467,10 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			self.gpsState = GPS_STATE_LOCATION;
 			break;
 		case GPS_STATE_LOCATION:
-			{
-				double rotation = OSMTransformRotation( _screenFromMapTransform );
-				if ( fabs(rotation) < 0.00001 ) {
-					// already facing north, so switch to Heading mode
-					self.gpsState = GPS_STATE_HEADING;
-				} else {
-					[self rotateToNorth];
-				}
-			}
+			self.gpsState = GPS_STATE_HEADING;
 			break;
 		case GPS_STATE_NONE:
-			{
-				[self rotateToNorth];
-			}
+			[self rotateToNorth];
 			break;
 	}
 }
@@ -1541,43 +1543,42 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	}];
 }
 
+
+- (double)headingForCLHeading:(CLHeading *)clHeading
+{
+	double heading = clHeading.trueHeading * M_PI / 180;
+	switch ( [[UIApplication sharedApplication] statusBarOrientation] ) {
+		case UIDeviceOrientationPortraitUpsideDown:
+			heading += M_PI;
+			break;
+		case UIDeviceOrientationLandscapeLeft:
+			heading += M_PI/2;
+			break;
+		case UIDeviceOrientationLandscapeRight:
+			heading -= M_PI/2;
+			break;
+		case UIDeviceOrientationPortrait:
+		default:
+			break;
+	}
+	return heading;
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-	if ( _locationBallLayer ) {
+	double heading = [self headingForCLHeading:newHeading];
+	double screenAngle = OSMTransformRotation( _screenFromMapTransform );
 
-		double screenAngle = OSMTransformRotation( _screenFromMapTransform );
-		_locationBallLayer.headingAccuracy	= newHeading.headingAccuracy * M_PI / 180;
+	if ( _gpsState == GPS_STATE_HEADING ) {
+		// rotate to new heading
+		CGPoint center = CGRectCenter( self.bounds );
+		double delta = -(heading + screenAngle);
+		[self animateRotationBy:delta aroundPoint:center];
+	} else if ( _locationBallLayer ) {
+		// rotate location ball
+		_locationBallLayer.headingAccuracy	= newHeading.headingAccuracy * (M_PI / 180);
 		_locationBallLayer.showHeading		= YES;
-		double heading = newHeading.trueHeading * M_PI / 180;
-		switch ( [[UIApplication sharedApplication] statusBarOrientation] ) {
-			case UIDeviceOrientationPortraitUpsideDown:
-				heading += M_PI;
-				break;
-			case UIDeviceOrientationLandscapeLeft:
-				heading += M_PI/2;
-				break;
-			case UIDeviceOrientationLandscapeRight:
-				heading -= M_PI/2;
-				break;
-			case UIDeviceOrientationPortrait:
-			default:
-				break;
-		}
-		if ( _gpsState == GPS_STATE_LOCATION ) {
-			_locationBallLayer.heading	= heading + screenAngle - M_PI/2;
-		}
-		if ( _gpsState == GPS_STATE_HEADING ) {
-			// rotate to new heading
-			CGPoint	center;
-			if ( CGRectContainsPoint( self.bounds, _locationBallLayer.position ) ) {
-				center = _locationBallLayer.position;
-			} else {
-				center = CGRectCenter( self.bounds );
-			}
-
-			double delta = -(heading + screenAngle);
-			[self animateRotationBy:delta aroundPoint:center];
-		}
+		_locationBallLayer.heading			= heading + screenAngle - M_PI/2;
 	}
 }
 
@@ -1612,7 +1613,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	}
 
 	if ( self.gpsState == GPS_STATE_NONE ) {
-		[self stopLocating];
+		self.locating = NO;
 	}
 
 #if TARGET_OS_IPHONE
@@ -1633,10 +1634,10 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 #endif
 
 	if ( _locationBallLayer == nil ) {
-		_locationBallLayer = [LocationBallLayer new];
-		_locationBallLayer.zPosition = Z_BALL;
-		_locationBallLayer.heading = 0.0;
-		_locationBallLayer.showHeading = YES;
+		_locationBallLayer 				= [LocationBallLayer new];
+		_locationBallLayer.zPosition 	= Z_BALL;
+		_locationBallLayer.heading 		= 0.0;
+		_locationBallLayer.showHeading 	= YES;
 		[self.layer addSublayer:_locationBallLayer];
 	}
 	[self updateUserLocationIndicator:newLocation];
@@ -1833,12 +1834,11 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	t = OSMTransformTranslate( t, -offset.x, -offset.y );
 	self.screenFromMapTransform = t;
 
+	double screenAngle = OSMTransformRotation( _screenFromMapTransform );
+	_compassButton.transform = CGAffineTransformMakeRotation(screenAngle);
 	if ( _locationBallLayer ) {
-		_locationBallLayer.heading = _locationBallLayer.heading + angle;
-	}
-	if ( !_compassButton.hidden ) {
-		double screenAngle = OSMTransformRotation( _screenFromMapTransform );
-		_compassButton.transform = CGAffineTransformMakeRotation(screenAngle);
+		double heading = [self headingForCLHeading:_locationManager.heading];
+		_locationBallLayer.heading = screenAngle + heading - M_PI/2;
 	}
 }
 

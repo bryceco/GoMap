@@ -107,8 +107,6 @@ typedef enum {
 	NSDate							*	_lastErrorDate;		// to prevent spamming of error dialogs
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
 
-	CLLocationManager				*	_locationManager;
-
 	dispatch_source_t					_mailTimer;
 	VoiceAnnouncement				*	_voiceAnnouncement;
 
@@ -136,7 +134,7 @@ typedef enum {
 #endif
 @property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
 
-
+@property (readonly,nonatomic)	CLLocationManager			*	locationManager;
 @property (readonly,nonatomic)	CLLocation					*	currentLocation;
 @property (assign,nonatomic)	BOOL							userOverrodeLocationPosition;	// prevent gps updates from re-centering the view
 @property (assign,nonatomic)	BOOL							userOverrodeLocationZoom;		// prevent gps updates from changing the zoom level
@@ -194,8 +192,8 @@ typedef enum {
 
 +(OSMRect)mapRectForLatLonRect:(OSMRect)latLon;
 
+@property (assign,nonatomic)	BOOL	locating;
 -(void)locationUpdatedTo:(CLLocation *)newLocation;
--(void)startLocating;
 -(void)rotateToNorth;
 
 -(OSMRect)screenLongitudeLatitude;
