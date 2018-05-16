@@ -469,11 +469,11 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			return;
 		}
 
-#if 1
 		[self.activeTrack addPoint:location];
-#else
+
+#if DEBUG && 0
 		// for debugging only: magnify number of GPS points to test performance
-		for ( NSInteger i = 0; i < 1000; ++i ) {
+		for ( NSInteger i = 1; i < 1000; ++i ) {
 			CLLocation * loc = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(location.coordinate.latitude+i/1000000.0, location.coordinate.longitude) altitude:location.altitude horizontalAccuracy:location.horizontalAccuracy verticalAccuracy:location.verticalAccuracy course:location.course speed:location.speed timestamp:location.timestamp];
 			[self.activeTrack addPoint:loc];
 		}
@@ -489,6 +489,8 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		if ( self.activeTrack.points.count >= 3600 ) {
 			[self endActiveTrack];
 			[self startNewTrack];
+			_stabilizingCount = 100;	// already stable
+			[self addPoint:location];
 		}
 
 		[self setNeedsDisplay];
