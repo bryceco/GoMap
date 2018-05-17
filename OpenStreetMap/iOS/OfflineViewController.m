@@ -14,12 +14,6 @@
 
 
 @implementation OfflineTableViewCell
-- (void)layoutSubviews
-{
-	[super layoutSubviews];
-	[self.contentView layoutIfNeeded];
-}
-
 @end
 
 
