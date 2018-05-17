@@ -597,7 +597,7 @@ retry:
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate
 {
-#if DEBUG
+#if 0 && DEBUG
 	assert( dispatch_get_current_queue() == Database.dispatchQueue );
 #endif
 	
