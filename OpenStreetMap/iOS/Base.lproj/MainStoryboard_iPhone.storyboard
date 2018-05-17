@@ -2190,71 +2190,131 @@ http://glyphish.com
         <scene sceneID="GPb-Zw-mXf">
             <objects>
                 <tableViewController id="F6b-O4-VXY" customClass="OfflineViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="oXc-rb-qRv">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="oXc-rb-qRv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineTableViewCell" id="dsz-7f-f6L" customClass="OfflineTableViewCell">
-                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dsz-7f-f6L" id="xtn-fc-DVd">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVI-04-hFN">
-                                            <rect key="frame" x="16" y="3" width="246" height="20.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qk-15-BUc">
-                                            <rect key="frame" x="16" y="24.5" width="246" height="17"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="300" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bt0-CH-HbH">
-                                            <rect key="frame" x="268" y="6" width="36" height="32"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                            <state key="normal" title="Start"/>
-                                            <connections>
-                                                <action selector="toggleDownload:" destination="F6b-O4-VXY" eventType="touchUpInside" id="8j1-Xl-EsO"/>
-                                            </connections>
-                                        </button>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jh3-U2-gWC">
-                                            <rect key="frame" x="150" y="12" width="20" height="20"/>
-                                        </activityIndicatorView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="3qk-15-BUc" secondAttribute="bottom" constant="2" id="4Zv-ix-bwp"/>
-                                        <constraint firstItem="Jh3-U2-gWC" firstAttribute="centerY" secondItem="xtn-fc-DVd" secondAttribute="centerY" id="6gz-jc-DKh"/>
-                                        <constraint firstItem="AVI-04-hFN" firstAttribute="leading" secondItem="xtn-fc-DVd" secondAttribute="leading" constant="16" id="KAJ-YG-84v"/>
-                                        <constraint firstItem="bt0-CH-HbH" firstAttribute="leading" secondItem="AVI-04-hFN" secondAttribute="trailing" constant="6" id="XA2-b9-mzy"/>
-                                        <constraint firstItem="Jh3-U2-gWC" firstAttribute="centerX" secondItem="xtn-fc-DVd" secondAttribute="centerX" id="XaQ-4w-xfE"/>
-                                        <constraint firstAttribute="trailing" secondItem="bt0-CH-HbH" secondAttribute="trailing" constant="16" id="ZL9-Qy-vr3"/>
-                                        <constraint firstItem="AVI-04-hFN" firstAttribute="top" secondItem="xtn-fc-DVd" secondAttribute="top" constant="3" id="cR5-Da-aFN"/>
-                                        <constraint firstItem="bt0-CH-HbH" firstAttribute="centerY" secondItem="xtn-fc-DVd" secondAttribute="centerY" id="eWa-CI-RUE"/>
-                                        <constraint firstItem="3qk-15-BUc" firstAttribute="leading" secondItem="xtn-fc-DVd" secondAttribute="leading" constant="16" id="efv-OP-kLd"/>
-                                        <constraint firstItem="bt0-CH-HbH" firstAttribute="leading" secondItem="3qk-15-BUc" secondAttribute="trailing" constant="6" id="gCo-4C-y07"/>
-                                        <constraint firstItem="3qk-15-BUc" firstAttribute="top" secondItem="AVI-04-hFN" secondAttribute="bottom" constant="1" id="tQe-fe-R4Q"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="activityView" destination="Jh3-U2-gWC" id="H0d-Yb-Q8Z"/>
-                                    <outlet property="button" destination="bt0-CH-HbH" id="KqZ-nu-NtT"/>
-                                    <outlet property="detailLabel" destination="3qk-15-BUc" id="3rG-oW-qGp"/>
-                                    <outlet property="titleLabel" destination="AVI-04-hFN" id="fSa-Rl-kfD"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <sections/>
+                        <sections>
+                            <tableViewSection headerTitle="Download zoomed tiles" id="2TW-mO-uX2">
+                                <string key="footerTitle">If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</string>
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineTableViewCell" id="dsz-7f-f6L" customClass="OfflineTableViewCell">
+                                        <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dsz-7f-f6L" id="xtn-fc-DVd">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AVI-04-hFN">
+                                                    <rect key="frame" x="16" y="3" width="246" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qk-15-BUc">
+                                                    <rect key="frame" x="16" y="24.5" width="246" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="300" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bt0-CH-HbH">
+                                                    <rect key="frame" x="268" y="6" width="36" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <state key="normal" title="Start"/>
+                                                    <connections>
+                                                        <action selector="toggleDownload:" destination="F6b-O4-VXY" eventType="touchUpInside" id="8j1-Xl-EsO"/>
+                                                    </connections>
+                                                </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jh3-U2-gWC">
+                                                    <rect key="frame" x="150" y="12" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="3qk-15-BUc" secondAttribute="bottom" constant="2" id="4Zv-ix-bwp"/>
+                                                <constraint firstItem="Jh3-U2-gWC" firstAttribute="centerY" secondItem="xtn-fc-DVd" secondAttribute="centerY" id="6gz-jc-DKh"/>
+                                                <constraint firstItem="AVI-04-hFN" firstAttribute="leading" secondItem="xtn-fc-DVd" secondAttribute="leading" constant="16" id="KAJ-YG-84v"/>
+                                                <constraint firstItem="bt0-CH-HbH" firstAttribute="leading" secondItem="AVI-04-hFN" secondAttribute="trailing" constant="6" id="XA2-b9-mzy"/>
+                                                <constraint firstItem="Jh3-U2-gWC" firstAttribute="centerX" secondItem="xtn-fc-DVd" secondAttribute="centerX" id="XaQ-4w-xfE"/>
+                                                <constraint firstAttribute="trailing" secondItem="bt0-CH-HbH" secondAttribute="trailing" constant="16" id="ZL9-Qy-vr3"/>
+                                                <constraint firstItem="AVI-04-hFN" firstAttribute="top" secondItem="xtn-fc-DVd" secondAttribute="top" constant="3" id="cR5-Da-aFN"/>
+                                                <constraint firstItem="bt0-CH-HbH" firstAttribute="centerY" secondItem="xtn-fc-DVd" secondAttribute="centerY" id="eWa-CI-RUE"/>
+                                                <constraint firstItem="3qk-15-BUc" firstAttribute="leading" secondItem="xtn-fc-DVd" secondAttribute="leading" constant="16" id="efv-OP-kLd"/>
+                                                <constraint firstItem="bt0-CH-HbH" firstAttribute="leading" secondItem="3qk-15-BUc" secondAttribute="trailing" constant="6" id="gCo-4C-y07"/>
+                                                <constraint firstItem="3qk-15-BUc" firstAttribute="top" secondItem="AVI-04-hFN" secondAttribute="bottom" constant="1" id="tQe-fe-R4Q"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="activityView" destination="Jh3-U2-gWC" id="H0d-Yb-Q8Z"/>
+                                            <outlet property="button" destination="bt0-CH-HbH" id="KqZ-nu-NtT"/>
+                                            <outlet property="detailLabel" destination="3qk-15-BUc" id="3rG-oW-qGp"/>
+                                            <outlet property="titleLabel" destination="AVI-04-hFN" id="fSa-Rl-kfD"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineTableViewCell" id="dq1-Nm-fxO" customClass="OfflineTableViewCell">
+                                        <rect key="frame" x="0.0" y="99.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dq1-Nm-fxO" id="FJz-LI-67M">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Mapnik Tiles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Hk-5U-2Kg">
+                                                    <rect key="frame" x="16" y="3" width="246" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LaB-Et-hHT">
+                                                    <rect key="frame" x="16" y="24.5" width="246" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="300" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="snH-kp-6ib">
+                                                    <rect key="frame" x="268" y="6" width="36" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <state key="normal" title="Start"/>
+                                                    <connections>
+                                                        <action selector="toggleDownload:" destination="F6b-O4-VXY" eventType="touchUpInside" id="vqF-Kf-nT4"/>
+                                                    </connections>
+                                                </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1S9-Ra-VLU">
+                                                    <rect key="frame" x="150" y="12" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="snH-kp-6ib" firstAttribute="centerY" secondItem="FJz-LI-67M" secondAttribute="centerY" id="1bQ-rl-QEc"/>
+                                                <constraint firstItem="LaB-Et-hHT" firstAttribute="top" secondItem="0Hk-5U-2Kg" secondAttribute="bottom" constant="1" id="4u1-Wg-7ek"/>
+                                                <constraint firstItem="snH-kp-6ib" firstAttribute="leading" secondItem="LaB-Et-hHT" secondAttribute="trailing" constant="6" id="70D-VQ-aZJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="LaB-Et-hHT" secondAttribute="bottom" constant="2" id="8Gb-de-Vjf"/>
+                                                <constraint firstItem="LaB-Et-hHT" firstAttribute="leading" secondItem="FJz-LI-67M" secondAttribute="leading" constant="16" id="VOf-HM-3z4"/>
+                                                <constraint firstItem="0Hk-5U-2Kg" firstAttribute="leading" secondItem="FJz-LI-67M" secondAttribute="leading" constant="16" id="cbn-me-li8"/>
+                                                <constraint firstItem="0Hk-5U-2Kg" firstAttribute="top" secondItem="FJz-LI-67M" secondAttribute="top" constant="3" id="erh-8s-qrW"/>
+                                                <constraint firstItem="1S9-Ra-VLU" firstAttribute="centerX" secondItem="FJz-LI-67M" secondAttribute="centerX" id="kjc-BK-IRZ"/>
+                                                <constraint firstItem="1S9-Ra-VLU" firstAttribute="centerY" secondItem="FJz-LI-67M" secondAttribute="centerY" id="sLy-Ua-hh8"/>
+                                                <constraint firstAttribute="trailing" secondItem="snH-kp-6ib" secondAttribute="trailing" constant="16" id="wdo-XX-Siq"/>
+                                                <constraint firstItem="snH-kp-6ib" firstAttribute="leading" secondItem="0Hk-5U-2Kg" secondAttribute="trailing" constant="6" id="yGu-1F-ZZc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="activityView" destination="1S9-Ra-VLU" id="YI6-Dm-nwb"/>
+                                            <outlet property="button" destination="snH-kp-6ib" id="DAh-FJ-Gxg"/>
+                                            <outlet property="detailLabel" destination="LaB-Et-hHT" id="17J-tC-wUN"/>
+                                            <outlet property="titleLabel" destination="0Hk-5U-2Kg" id="Zh6-Pa-ZdB"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
                         <connections>
                             <outlet property="dataSource" destination="F6b-O4-VXY" id="V9f-IH-vaN"/>
                             <outlet property="delegate" destination="F6b-O4-VXY" id="7KZ-6U-DVD"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Prepare for Offline" id="m7D-wn-3MP"/>
+                    <connections>
+                        <outlet property="_aerialCell" destination="dsz-7f-f6L" id="aOq-Mg-QOo"/>
+                        <outlet property="_mapnikCell" destination="dq1-Nm-fxO" id="3hi-6N-ReJ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0LN-5K-8UA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -23,9 +23,9 @@
 
 @interface OfflineViewController : UITableViewController
 {
-	OfflineTableViewCell	*	_aerialCell;
-	OfflineTableViewCell	*	_mapnikCell;
-	NSInteger					_activityCount;
+	IBOutlet	OfflineTableViewCell	*	_aerialCell;
+	IBOutlet	OfflineTableViewCell	*	_mapnikCell;
+	NSInteger								_activityCount;
 }
 
 -(IBAction)toggleDownload:(id)sender;
