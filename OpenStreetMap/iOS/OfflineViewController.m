@@ -14,6 +14,10 @@
 
 
 @implementation OfflineTableViewCell
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+}
 @end
 
 
@@ -23,7 +27,7 @@
 {
     [super viewDidLoad];
 	
-	self.tableView.estimatedRowHeight = UITableViewAutomaticDimension;
+	self.tableView.estimatedRowHeight = 44;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
@@ -36,13 +40,6 @@
 		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%lu tiles needed",nil), (unsigned long)cell.tileList.count];
 		cell.button.enabled = cell.tileList.count > 0;
 	}
-	
-#if 0
-	[self.tableView reloadData];
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self.tableView reloadData];
-	});
-#endif
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -56,21 +53,12 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return UITableViewAutomaticDimension;
-//	UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-//	CGSize size = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//	return size.height;
-}
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewAutomaticDimension;
 }
 
-#if 0
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[cell fixConstraints];
 }
-#endif
 
 #pragma mark - Table view delegate
 
