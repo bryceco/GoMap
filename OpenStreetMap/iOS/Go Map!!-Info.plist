@@ -92,9 +92,9 @@
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>MainStoryboard_iPhone</string>
+	<string>MainStoryboard</string>
 	<key>UIMainStoryboardFile~ipad</key>
-	<string>MainStoryboard_iPhone</string>
+	<string>MainStoryboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array/>
 	<key>UIStatusBarTintParameters</key>

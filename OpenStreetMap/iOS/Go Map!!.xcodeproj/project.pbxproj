@@ -136,7 +136,7 @@
 		02ACBA4616713CCB00BB4414 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4516713CCB00BB4414 /* Default.png */; };
 		02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4716713CCB00BB4414 /* Default@2x.png */; };
 		02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4916713CCB00BB4414 /* Default-568h@2x.png */; };
-		02ACBA4D16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */; };
+		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
 		02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5216713CCB00BB4414 /* MapViewController.m */; };
 		02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5916713CCB00BB4414 /* SettingsViewController.m */; };
 		02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */; };
@@ -1069,7 +1069,7 @@
 		02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OsmNotesDatabase.h; path = ../Shared/OsmNotesDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = OsmNotesDatabase.m; path = ../Shared/OsmNotesDatabase.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02E8436E19B407C40044AC1D /* WebPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPageView.xib; sourceTree = "<group>"; };
-		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		02E8438219B4DF960044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -1346,7 +1346,7 @@
 				02E8437E19B4DE510044AC1D /* Localizable.strings */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
-				02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */,
+				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
 				02BED98C168BF87100357B94 /* NearbyMappersViewController.h */,
@@ -1876,7 +1876,7 @@
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02DAB7D71BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@3x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
-				02ACBA4D16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard in Resources */,
+				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
 				02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */,
 				02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */,
 				02ACBBC016713F2B00BB4414 /* BlueBall.png in Resources */,
@@ -2370,12 +2370,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		02ACBA4B16713CCB00BB4414 /* MainStoryboard_iPhone.storyboard */ = {
+		02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				02E8437919B4DD730044AC1D /* Base */,
 			);
-			name = MainStoryboard_iPhone.storyboard;
+			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 		02E8437E19B4DE510044AC1D /* Localizable.strings */ = {
