@@ -12,6 +12,7 @@
 
 
 @interface OfflineTableViewCell : UITableViewCell
+@property (strong,nonatomic)	IBOutlet UILabel					*	titleLabel;
 @property (strong,nonatomic)	IBOutlet UILabel					*	detailLabel;
 @property (strong,nonatomic)	IBOutlet UIButton					*	button;
 @property (strong,nonatomic)	IBOutlet UIActivityIndicatorView	*	activityView;
@@ -22,9 +23,9 @@
 
 @interface OfflineViewController : UITableViewController
 {
-	IBOutlet OfflineTableViewCell	*	_aerialCell;
-	IBOutlet OfflineTableViewCell	*	_mapnikCell;
-	NSInteger							_activityCount;
+	OfflineTableViewCell	*	_aerialCell;
+	OfflineTableViewCell	*	_mapnikCell;
+	NSInteger					_activityCount;
 }
 
 -(IBAction)toggleDownload:(id)sender;

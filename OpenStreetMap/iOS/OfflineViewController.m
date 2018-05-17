@@ -14,10 +14,12 @@
 
 
 @implementation OfflineTableViewCell
-- (void)awakeFromNib
+- (void)layoutSubviews
 {
-	[super awakeFromNib];
+	[super layoutSubviews];
+	[self.contentView layoutIfNeeded];
 }
+
 @end
 
 
@@ -27,19 +29,14 @@
 {
     [super viewDidLoad];
 	
-	self.tableView.estimatedRowHeight = 44;
+	self.tableView.estimatedRowHeight = 100;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-
-	_aerialCell.tileLayer 	= appDelegate.mapView.aerialLayer;
-	_mapnikCell.tileLayer	= appDelegate.mapView.mapnikLayer;
-
-	for ( OfflineTableViewCell * cell in @[ _aerialCell, _mapnikCell ] ) {
-		cell.tileList = [cell.tileLayer allTilesIntersectingVisibleRect];
-		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%lu tiles needed",nil), (unsigned long)cell.tileList.count];
-		cell.button.enabled = cell.tileList.count > 0;
-	}
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	[self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -50,15 +47,50 @@
 	}
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return UITableViewAutomaticDimension;
+	return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return 2;
+}
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	return @"Download zoomed tiles";
+}
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	return @"If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.";
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+-(OfflineTableViewCell *)newCellWithTitle:(NSString *)title tileLayer:(MercatorTileLayer *)tileLayer
 {
-	[cell fixConstraints];
+	OfflineTableViewCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"OfflineTableViewCell"];
+	cell.titleLabel.text	= title;
+	cell.tileLayer 			= tileLayer;
+	// common stuff
+	cell.tileList			= [cell.tileLayer allTilesIntersectingVisibleRect];
+	cell.detailLabel.text 	= [NSString stringWithFormat:NSLocalizedString(@"%lu tiles needed",nil), (unsigned long)cell.tileList.count];
+	cell.button.enabled 	= cell.tileList.count > 0;
+	return cell;
 }
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.row == 0 ) {
+		if ( _aerialCell == nil ) {
+			_aerialCell = [self newCellWithTitle:@"Aerial Tiles" tileLayer:AppDelegate.getAppDelegate.mapView.aerialLayer];
+		}
+		return _aerialCell;
+	} else {
+		if ( _mapnikCell == nil ) {
+			_mapnikCell = [self newCellWithTitle:@"Mapnik Tiles" tileLayer:AppDelegate.getAppDelegate.mapView.mapnikLayer];
+		}
+		return _mapnikCell;
+	}
+}
+
 
 #pragma mark - Table view delegate
 
