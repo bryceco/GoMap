@@ -1493,57 +1493,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	}
 }
 
-#if 0
-- (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager
-{
-	return YES;
-}
-#endif
-
-static NSString * const DisplayLinkHeading	= @"Heading";
-
-- (void)animateRotationBy:(double)deltaHeading aroundPoint:(CGPoint)center
-{
-	// don't rotate the long way around
-	while ( deltaHeading < -M_PI )
-		deltaHeading += 2*M_PI;
-	while ( deltaHeading > M_PI )
-		deltaHeading -= 2*M_PI;
-
-	if ( fabs(deltaHeading) < 0.00001 )
-		return;
-
-	CFTimeInterval startTime = CACurrentMediaTime();
-	double duration = 0.4;
-	__weak MapView * weakSelf = self;
-	__block double prevHeading = 0;
-	__weak DisplayLink * displayLink = [DisplayLink shared];
-	[displayLink addName:DisplayLinkHeading block:^{
-		MapView * myself = weakSelf;
-		if ( myself ) {
-			CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
-			if ( elapsedTime > duration ) {
-				elapsedTime = duration;	// don't want to over-rotate
-			}
-			// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
-			// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
-			double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
-				t /= d/2;
-				if (t < 1) return c/2*t*t + b;
-				t--;
-				return -c/2 * (t*(t-2) - 1) + b;
-			};
-			double miniHeading = easeInOutQuad( elapsedTime, 0, deltaHeading, duration);
-			[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
-			prevHeading = miniHeading;
-			if ( elapsedTime >= duration ) {
-				[displayLink removeName:DisplayLinkHeading];
-			}
-		}
-	}];
-}
-
-
 - (double)headingForCLHeading:(CLHeading *)clHeading
 {
 	double heading = clHeading.trueHeading * M_PI / 180;
@@ -1564,22 +1513,47 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	return heading;
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+- (void)updateHeadingSmoothed:(double)heading accuracy:(double)accuracy
 {
-	double heading = [self headingForCLHeading:newHeading];
 	double screenAngle = OSMTransformRotation( _screenFromMapTransform );
-
+	
 	if ( _gpsState == GPS_STATE_HEADING ) {
 		// rotate to new heading
 		CGPoint center = CGRectCenter( self.bounds );
 		double delta = -(heading + screenAngle);
-		[self animateRotationBy:delta aroundPoint:center];
+		[self rotateBy:delta aroundScreenPoint:center];
 	} else if ( _locationBallLayer ) {
 		// rotate location ball
-		_locationBallLayer.headingAccuracy	= newHeading.headingAccuracy * (M_PI / 180);
+		_locationBallLayer.headingAccuracy	= accuracy * (M_PI / 180);
 		_locationBallLayer.showHeading		= YES;
 		_locationBallLayer.heading			= heading + screenAngle - M_PI/2;
 	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+{
+	static double smoothHeading = 0.0;
+	double accuracy = newHeading.headingAccuracy;
+	double heading = [self headingForCLHeading:newHeading];
+
+	[[DisplayLink shared] addName:@"smoothHeading" block:^{
+		double delta = heading - smoothHeading;
+		if ( delta > M_PI ) {
+			delta -= 2*M_PI;
+		} else if ( delta < -M_PI ) {
+			delta += 2*M_PI;
+		}
+		delta *= 0.15;
+		if ( fabs(delta) < 0.001 ) {
+			smoothHeading = heading;
+		} else {
+			smoothHeading += delta;
+		}
+		[self updateHeadingSmoothed:smoothHeading accuracy:accuracy];
+		if ( heading == smoothHeading ) {
+			[[DisplayLink shared] removeName:@"smoothHeading"];
+		}
+	}];
 }
 
 - (void)locationUpdatedTo:(CLLocation *)newLocation
@@ -1837,9 +1811,64 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	double screenAngle = OSMTransformRotation( _screenFromMapTransform );
 	_compassButton.transform = CGAffineTransformMakeRotation(screenAngle);
 	if ( _locationBallLayer ) {
-		double heading = [self headingForCLHeading:_locationManager.heading];
-		_locationBallLayer.heading = screenAngle + heading - M_PI/2;
+		if ( _gpsState == GPS_STATE_HEADING && fabs(_locationBallLayer.heading - -M_PI/2) < 0.0001 ) {
+			// don't pin location ball to North until we've animated our rotation to north
+			_locationBallLayer.heading = -M_PI/2;
+		} else {
+			double heading = [self headingForCLHeading:_locationManager.heading];
+			_locationBallLayer.heading = screenAngle + heading - M_PI/2;
+		}
 	}
+}
+
+static NSString * const DisplayLinkHeading	= @"Heading";
+
+- (void)animateRotationBy:(double)deltaHeading aroundPoint:(CGPoint)center
+{
+	// don't rotate the long way around
+	while ( deltaHeading < -M_PI )
+		deltaHeading += 2*M_PI;
+	while ( deltaHeading > M_PI )
+		deltaHeading -= 2*M_PI;
+	
+	if ( fabs(deltaHeading) < 0.00001 )
+		return;
+	
+	CFTimeInterval startTime = CACurrentMediaTime();
+	
+	double duration = 0.4;
+	__weak MapView * weakSelf = self;
+	__block double prevHeading = 0;
+	__weak DisplayLink * displayLink = [DisplayLink shared];
+	[displayLink addName:DisplayLinkHeading block:^{
+		MapView * myself = weakSelf;
+		if ( myself ) {
+			CFTimeInterval elapsedTime = CACurrentMediaTime() - startTime;
+			if ( elapsedTime > duration ) {
+				elapsedTime = duration;	// don't want to over-rotate
+			}
+			// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
+			// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
+#if 1
+			double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
+				t /= d/2;
+				if (t < 1) return c/2*t*t + b;
+				t--;
+				return -c/2 * (t*(t-2) - 1) + b;
+			};
+#else
+			double (^easeInOutQuad)( double t, double b, double c, double d ) = ^( double t, double b, double c, double d ) {
+				return b + c*(t/d);
+			};
+#endif
+			double miniHeading = easeInOutQuad( elapsedTime, 0, deltaHeading, duration);
+			[myself rotateBy:miniHeading-prevHeading aroundScreenPoint:center];
+			prevHeading = miniHeading;
+			if ( elapsedTime >= duration ) {
+				[displayLink removeName:DisplayLinkHeading];
+			}
+		}
+	}];
 }
 
 -(void)rotateBirdsEyeBy:(CGFloat)angle
@@ -2736,6 +2765,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		// remove current selection
 		_editorLayer.selectedNode = nil;
 		_editorLayer.selectedWay = nil;
+		_editorLayer.selectedRelation = nil;
 
 		[self placePushpinAtPoint:dropPoint object:nil];
 	}

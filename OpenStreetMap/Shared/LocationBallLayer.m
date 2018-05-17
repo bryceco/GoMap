@@ -131,12 +131,10 @@
 }
 -(void)setHeading:(CGFloat)heading
 {
-#if TARGET_OS_IPHONE
 	if ( _heading != heading ) {
 		_heading = heading;
 		[self setNeedsLayout];
 	}
-#endif
 }
 
 -(BOOL)showHeading
