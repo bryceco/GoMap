@@ -17,8 +17,8 @@
 
 
 @interface AttributeCustomCell : UITableViewCell
-@property (assign,nonatomic)	IBOutlet UILabel	*	title;
-@property (assign,nonatomic)	IBOutlet UILabel	*	value;
+@property (assign,nonatomic)	IBOutlet UILabel		*	title;
+@property (assign,nonatomic)	IBOutlet UITextField	*	value;
 @end
 
 @implementation AttributeCustomCell
@@ -158,6 +158,10 @@ enum {
 			cell = nil;
 		}
 	}
+	// do extra work so keyboard won't display if they select a value
+	UITextField * value = cell.value;
+	value.inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+	
 	return cell;
 }
 

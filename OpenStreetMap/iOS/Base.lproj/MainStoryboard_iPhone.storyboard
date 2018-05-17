@@ -81,11 +81,11 @@
                                         </items>
                                     </toolbar>
                                     <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="800" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="fill" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-IT-DQC">
-                                        <rect key="frame" x="9" y="26" width="208" height="24"/>
+                                        <rect key="frame" x="9" y="26" width="217" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="SkQ-sE-D6j"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <state key="normal" title="Bing attribution" image="BingLogo.png">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -100,7 +100,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TnL-YC-BCg">
                                         <rect key="frame" x="286" y="28" width="22" height="22"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -136,19 +136,20 @@
                                         </connections>
                                     </segmentedControl>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoom to Edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N5Q-nV-TPG">
-                                        <rect key="frame" x="90" y="27" width="141.5" height="29"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <rect key="frame" x="89.5" y="27" width="142.5" height="31.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="66.6 FPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9t5-wq-j1u" customClass="FpsLabel">
-                                        <rect key="frame" x="116" y="352" width="104" height="29"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <rect key="frame" x="115" y="349.5" width="106" height="31.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <color key="textColor" red="0.98692119121551514" green="0.18576183915138245" blue="0.14714117348194122" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo4-Nq-pAz">
                                         <rect key="frame" x="9" y="351" width="57" height="28"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                         <state key="normal" title="Center"/>
                                         <connections>
@@ -161,6 +162,7 @@
                                             <constraint firstAttribute="width" constant="40" id="Umo-8r-F7i"/>
                                             <constraint firstAttribute="height" constant="40" id="rLd-DR-Gbp"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" image="compass.png"/>
                                         <connections>
                                             <action selector="compassPressed:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="j6f-G1-Ixj"/>
@@ -188,6 +190,7 @@
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="top" id="cAR-iT-KBF"/>
                                     <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" secondItem="4gw-jH-T1o" secondAttribute="leading" constant="9" id="fUu-P0-xQ0"/>
                                     <constraint firstItem="4gw-jH-T1o" firstAttribute="trailing" secondItem="TnL-YC-BCg" secondAttribute="trailing" constant="12" id="hAx-Am-c4P"/>
+                                    <constraint firstItem="9t5-wq-j1u" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fo4-Nq-pAz" secondAttribute="trailing" constant="8" id="iol-FI-vTO"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" id="n5P-9d-3Mi"/>
                                     <constraint firstAttribute="centerX" secondItem="zrW-uc-hfQ" secondAttribute="centerX" id="oyJ-uQ-7Yp"/>
                                     <constraint firstItem="zrW-uc-hfQ" firstAttribute="top" secondItem="Fo4-Nq-pAz" secondAttribute="bottom" constant="3" id="rsk-tU-dNz"/>
@@ -283,10 +286,7 @@
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3A-5n-1Iq">
                                             <rect key="frame" x="15" y="10" width="88.5" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="XdU-Zg-9HJ"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
@@ -295,7 +295,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="aI3-W4-aeV"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                         </textField>
                                     </subviews>
@@ -309,7 +309,6 @@
                                     <constraint firstAttribute="trailing" secondItem="pxY-di-zg7" secondAttribute="trailing" constant="34" id="KA0-g1-46V"/>
                                     <constraint firstItem="P3A-5n-1Iq" firstAttribute="baseline" secondItem="pxY-di-zg7" secondAttribute="baseline" constant="-1" id="hNs-Ia-tl6"/>
                                     <constraint firstItem="P3A-5n-1Iq" firstAttribute="leading" secondItem="l7g-Wi-ks5" secondAttribute="leading" constant="15" id="i97-d1-ltK"/>
-                                    <constraint firstItem="P3A-5n-1Iq" firstAttribute="top" secondItem="l7g-Wi-ks5" secondAttribute="top" constant="10" id="meS-r1-UIk"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="nameLabel" destination="P3A-5n-1Iq" id="tqE-4g-nUM"/>
@@ -324,20 +323,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wheelchair Access" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vli-Ct-Lpz">
-                                            <rect key="frame" x="15" y="11.5" width="163" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="PWL-7z-OCr"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <rect key="frame" x="15" y="11.5" width="152" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mickey D's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Nw-ha-JK5" customClass="AutocompleteTextField">
-                                            <rect key="frame" x="179" y="7" width="102" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="hun-Kn-7eN"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mickey D's" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Nw-ha-JK5" customClass="AutocompleteTextField">
+                                            <rect key="frame" x="168" y="11.5" width="113" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                         </textField>
                                     </subviews>
@@ -346,7 +339,6 @@
                                         <constraint firstAttribute="trailing" secondItem="9Nw-ha-JK5" secondAttribute="trailing" constant="5" id="Vfb-2V-gkb"/>
                                         <constraint firstItem="9Nw-ha-JK5" firstAttribute="centerY" secondItem="dDC-Qx-OfJ" secondAttribute="centerY" id="Vml-zj-qvM"/>
                                         <constraint firstItem="Vli-Ct-Lpz" firstAttribute="centerY" secondItem="dDC-Qx-OfJ" secondAttribute="centerY" id="Zd8-fg-GIW"/>
-                                        <constraint firstItem="9Nw-ha-JK5" firstAttribute="leading" secondItem="dDC-Qx-OfJ" secondAttribute="leading" constant="179" id="tmL-VT-cJi"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -365,17 +357,18 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPF-m9-RtO">
-                                            <rect key="frame" x="15" y="11.5" width="72" height="21"/>
+                                            <rect key="frame" x="15" y="11.5" width="70.5" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="sP9-O5-qpG"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="tPF-m9-RtO" firstAttribute="centerY" secondItem="6SI-QG-CUE" secondAttribute="centerY" id="Nqy-vf-q1I"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tPF-m9-RtO" secondAttribute="trailing" constant="8" id="bZp-8M-QBs"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -394,7 +387,7 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHA-2B-6DC">
                                             <rect key="frame" x="95.5" y="7" width="129" height="30"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <state key="normal" title="Customize Presets">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
@@ -513,16 +506,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Food &amp; Drink" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LUc-68-Anl">
-                                            <rect key="frame" x="16" y="3" width="113" height="21"/>
+                                            <rect key="frame" x="16" y="2" width="103" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X7U-Pa-WCn">
-                                            <rect key="frame" x="16" y="24" width="50" height="17"/>
+                                            <rect key="frame" x="16" y="22.5" width="56" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
@@ -539,7 +532,7 @@
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Food &amp; Drink" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XBV-Ie-LDT">
                                             <rect key="frame" x="16" y="0.0" width="269" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
@@ -584,7 +577,7 @@
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TK4-E8-1q7">
                                             <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -599,16 +592,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2Q5-Vd-FED">
-                                            <rect key="frame" x="16" y="3" width="37" height="21.5"/>
+                                            <rect key="frame" x="16" y="2" width="35.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZYn-TK-k7d">
-                                            <rect key="frame" x="16" y="24.5" width="50" height="17"/>
+                                            <rect key="frame" x="16" y="22.5" width="56" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -646,12 +639,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="tag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" customClass="AutocompleteTextField">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="tag" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" customClass="AutocompleteTextField">
                                             <rect key="frame" x="20" y="7" width="121" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="200" constant="121" id="usV-OU-r22"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="BEW-to-vAi"/>
@@ -661,9 +654,9 @@
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="tcL-nf-pp1"/>
                                             </connections>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cP3-lR-lzM" customClass="AutocompleteTextField">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cP3-lR-lzM" customClass="AutocompleteTextField">
                                             <rect key="frame" x="154" y="7" width="146" height="30"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="Bi5-qH-vtX"/>
@@ -698,12 +691,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="286" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="relation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Urd-9O-Mte" customClass="AutocompleteTextField">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="relation" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Urd-9O-Mte" customClass="AutocompleteTextField">
                                             <rect key="frame" x="20" y="8" width="121" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="200" constant="121" id="TNy-3c-Toh"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="ZB2-P2-lYD"/>
@@ -712,9 +705,9 @@
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="gc7-5Z-YFM"/>
                                             </connections>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="type" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0zS-QM-zwQ" customClass="AutocompleteTextField">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="type" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0zS-QM-zwQ" customClass="AutocompleteTextField">
                                             <rect key="frame" x="154" y="8" width="136" height="30"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="enw-Un-WMB"/>
@@ -747,12 +740,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="role" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sVp-1S-TjJ" customClass="AutocompleteTextField">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="role" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sVp-1S-TjJ" customClass="AutocompleteTextField">
                                             <rect key="frame" x="20" y="7" width="121" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" priority="200" constant="121" id="vNG-ES-mYU"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="WiJ-Ye-TUp"/>
@@ -762,9 +755,9 @@
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="WtR-Qy-I9s"/>
                                             </connections>
                                         </textField>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ref" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aCs-vS-YXj" customClass="AutocompleteTextField">
+                                        <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ref" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aCs-vS-YXj" customClass="AutocompleteTextField">
                                             <rect key="frame" x="154" y="7" width="146" height="30"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="WVW-x6-1Gd"/>
@@ -864,16 +857,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="OpenStreetMap Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="34N-Ep-rpf">
-                                                    <rect key="frame" x="16" y="12" width="179" height="20.5"/>
+                                                    <rect key="frame" x="16" y="12" width="175" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mus-SG-1Sz">
                                                     <rect key="frame" x="241" y="12" width="44" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -895,16 +888,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="osk-Kq-gDX">
-                                                    <rect key="frame" x="16" y="12" width="81" height="20.5"/>
+                                                    <rect key="frame" x="16" y="12" width="79" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6Lj-wh-z9f">
-                                                    <rect key="frame" x="243.5" y="13" width="41.5" height="19.5"/>
+                                                    <rect key="frame" x="241" y="12" width="44" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -928,7 +921,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Nearby Mappers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jcn-Lx-tj3">
                                                     <rect key="frame" x="16" y="0.0" width="269" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -948,7 +941,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Prepare for Offline" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rfX-TP-V0l">
                                                     <rect key="frame" x="16" y="0.0" width="269" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -968,7 +961,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Credits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TGa-tJ-nrC">
                                                     <rect key="frame" x="16" y="0.0" width="269" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -988,7 +981,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Bug Reports &amp; Suggestions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ags-Mx-c1q">
                                                     <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -1009,7 +1002,7 @@
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="OSM Server" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gec-8l-k4H">
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -1059,7 +1052,7 @@
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cc-E7-pzw">
                                                     <rect key="frame" x="17" y="11" width="90" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -1068,7 +1061,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="jlb-j2-jUZ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="5aR-9a-sW0"/>
@@ -1102,7 +1095,7 @@
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0y-gf-6DY">
                                                     <rect key="frame" x="19" y="11" width="88" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -1111,7 +1104,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="XMt-t8-Vph"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="ahQ-2t-H75"/>
@@ -1204,17 +1197,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="286" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title title title title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JbA-pC-plJ">
-                                            <rect key="frame" x="16" y="3" width="153" height="21.5"/>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title title title title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="JbA-pC-plJ">
+                                            <rect key="frame" x="16" y="2" width="140.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail detail detail detail detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DiU-tt-U7H">
-                                            <rect key="frame" x="16" y="24.5" width="194.5" height="17"/>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail detail detail detail detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="DiU-tt-U7H">
+                                            <rect key="frame" x="16" y="22.5" width="217.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
@@ -1245,8 +1238,8 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArV-4u-j7D">
-                                <rect key="frame" x="20" y="185" width="72.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="20" y="185" width="72.5" height="22"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1260,7 +1253,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="78" id="BDN-Iy-zRC"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="cxn-YY-uLs" id="Z5P-Wo-kk5"/>
@@ -1269,12 +1262,12 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet," translatesAutoresizingMaskIntoConstraints="NO" id="BAY-7z-hwv">
                                 <rect key="frame" x="20" y="208" width="280" height="252"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rqu-ny-n3F">
-                                <rect key="frame" x="267" y="179" width="33" height="32"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <rect key="frame" x="267" y="179" width="33" height="33"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <state key="normal" title="Mail">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -1284,13 +1277,13 @@
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changeset comment:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikj-u9-9Bn">
                                 <rect key="frame" x="20" y="72" width="280" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcE-yO-3eH">
-                                <rect key="frame" x="228" y="179" width="31" height="32"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <rect key="frame" x="227" y="179" width="32" height="33"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <state key="normal" title="Edit"/>
                                 <connections>
                                     <action selector="editXml:" destination="cxn-YY-uLs" eventType="touchUpInside" id="YKD-um-EvR"/>
@@ -1308,6 +1301,7 @@
                             <constraint firstItem="Plh-7W-ceY" firstAttribute="trailing" secondItem="Rqu-ny-n3F" secondAttribute="trailing" id="9xI-7y-n1e"/>
                             <constraint firstItem="Plh-7W-ceY" firstAttribute="leading" secondItem="INz-E8-qwF" secondAttribute="leading" constant="20" id="EOT-P1-WgA"/>
                             <constraint firstItem="hcE-yO-3eH" firstAttribute="centerY" secondItem="ArV-4u-j7D" secondAttribute="centerY" id="F6O-jM-uVV"/>
+                            <constraint firstItem="hcE-yO-3eH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ArV-4u-j7D" secondAttribute="trailing" constant="8" id="Hep-Es-qac"/>
                             <constraint firstItem="INz-E8-qwF" firstAttribute="bottom" secondItem="BAY-7z-hwv" secondAttribute="bottom" constant="20" id="J3o-wq-fUA"/>
                             <constraint firstItem="BAY-7z-hwv" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="34" id="QMD-tA-btW"/>
                             <constraint firstItem="hcE-yO-3eH" firstAttribute="top" secondItem="Plh-7W-ceY" secondAttribute="bottom" constant="5" id="UbC-7P-NEw"/>
@@ -1382,12 +1376,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4Z-5c-5ee" userLabel="Comment Background">
-                                                    <rect key="frame" x="42" y="54" width="263" height="37"/>
+                                                    <rect key="frame" x="42" y="54" width="263" height="38"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Various comments..." translatesAutoresizingMaskIntoConstraints="NO" id="PHk-s9-onx">
-                                                            <rect key="frame" x="5" y="0.0" width="253" height="37"/>
+                                                            <rect key="frame" x="5" y="0.0" width="253" height="38"/>
                                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                     </subviews>
@@ -1404,7 +1398,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="w54-Hh-f7L"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1413,7 +1407,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="qLY-kB-eeH"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1450,20 +1444,22 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2g1-vb-Cjc">
-                                                    <rect key="frame" x="240" y="137" width="67" height="30"/>
+                                                    <rect key="frame" x="236" y="137" width="71" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="x6O-EM-C3E"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <state key="normal" title="Comment"/>
                                                     <connections>
                                                         <action selector="doComment:" destination="S30-cU-QcE" eventType="touchUpInside" id="nyd-9w-bWE"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ0-aO-ri1">
-                                                    <rect key="frame" x="161" y="137" width="54" height="30"/>
+                                                    <rect key="frame" x="154" y="137" width="57" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="grj-0x-Afz"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <state key="normal" title="Resolve">
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -1473,7 +1469,7 @@
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New comment:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hH-Ja-fKn">
                                                     <rect key="frame" x="15" y="8" width="116" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1481,7 +1477,7 @@
                                                     <rect key="frame" x="33" y="37" width="263" height="90"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
@@ -1494,6 +1490,7 @@
                                                 <constraint firstItem="HeZ-95-3K1" firstAttribute="leading" secondItem="Fc0-ki-3cW" secondAttribute="leading" constant="33" id="YoX-Ag-ggv"/>
                                                 <constraint firstItem="OJ0-aO-ri1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Fc0-ki-3cW" secondAttribute="leading" constant="10" id="dg8-P0-elv"/>
                                                 <constraint firstItem="HeZ-95-3K1" firstAttribute="top" secondItem="Fc0-ki-3cW" secondAttribute="top" constant="37" id="dlR-zG-hiZ"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9hH-Ja-fKn" secondAttribute="trailing" constant="8" id="f3f-y8-vwJ"/>
                                                 <constraint firstItem="2g1-vb-Cjc" firstAttribute="leading" secondItem="OJ0-aO-ri1" secondAttribute="trailing" constant="25" id="lcF-Eq-BuX"/>
                                                 <constraint firstItem="HeZ-95-3K1" firstAttribute="top" secondItem="9hH-Ja-fKn" secondAttribute="bottom" constant="8" symbolic="YES" id="v3N-Cn-JjZ"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="HeZ-95-3K1" secondAttribute="bottom" constant="38" id="wWf-tZ-gdL"/>
@@ -1516,7 +1513,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="290" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1569,21 +1566,21 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1O-06-ApF">
                                             <rect key="frame" x="15" y="22" width="239" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-L5-Hcz">
                                             <rect key="frame" x="194" y="0.0" width="82" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12/22/20, 7:55 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-g5-fka">
                                             <rect key="frame" x="15" y="0.0" width="173" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1618,15 +1615,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4s8-Bj-JOX">
-                                            <rect key="frame" x="182" y="7" width="122" height="30"/>
+                                            <rect key="frame" x="177.5" y="6" width="126.5" height="32"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <state key="normal" title="99 Days"/>
                                             <connections>
                                                 <segue destination="Nkd-2e-8Au" kind="modal" id="ubS-cl-jpK"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete tracks after:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnI-tY-WWa">
-                                            <rect key="frame" x="16" y="11" width="158" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <rect key="frame" x="16" y="11" width="153.5" height="21"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1652,7 +1650,7 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collect in background:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-dW-3Fh">
                                             <rect key="frame" x="16" y="11" width="231" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1701,9 +1699,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks you record or download will be automatically deleted after:" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="MeQ-4N-FqC">
-                                <rect key="frame" x="20" y="100" width="280" height="40"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks you record or download will be automatically deleted after:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MeQ-4N-FqC">
+                                <rect key="frame" x="20" y="100" width="280" height="42.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1726,10 +1724,7 @@
                                 </items>
                             </navigationBar>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PK9-1m-unf">
-                                <rect key="frame" x="20" y="148" width="280" height="241"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="241" id="HoR-7j-PwO"/>
-                                </constraints>
+                                <rect key="frame" x="20" y="150.5" width="280" height="216"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1741,7 +1736,7 @@
                             <constraint firstItem="MeQ-4N-FqC" firstAttribute="leading" secondItem="8pi-lE-GdV" secondAttribute="leading" constant="20" id="YFD-xP-ujo"/>
                             <constraint firstItem="PK9-1m-unf" firstAttribute="top" secondItem="MeQ-4N-FqC" secondAttribute="bottom" constant="8" id="ifT-Ak-FTa"/>
                             <constraint firstItem="dWF-I1-mgM" firstAttribute="top" secondItem="kkY-2X-K4y" secondAttribute="topMargin" constant="20" id="q4Y-gT-acF"/>
-                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="kkY-2X-K4y" secondAttribute="topMargin" constant="80" id="qf3-vW-INh"/>
+                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="dWF-I1-mgM" secondAttribute="top" constant="60" id="qf3-vW-INh"/>
                             <constraint firstItem="8pi-lE-GdV" firstAttribute="trailing" secondItem="MeQ-4N-FqC" secondAttribute="trailing" constant="20" id="r2C-Ap-5CU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8pi-lE-GdV"/>
@@ -1865,7 +1860,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="51" id="V8Y-NC-MrI"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                     </subviews>
@@ -1885,16 +1880,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="stf-JU-iga">
-                                            <rect key="frame" x="16" y="3" width="38.5" height="21.5"/>
+                                            <rect key="frame" x="16" y="2" width="35.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l7S-YL-RKK">
-                                            <rect key="frame" x="16" y="24.5" width="50" height="17"/>
+                                            <rect key="frame" x="16" y="22.5" width="56" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
@@ -1936,7 +1931,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIe-MC-t44">
                                                     <rect key="frame" x="16" y="11" width="231" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -1978,16 +1973,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear OSM Data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tbo-ge-Amz">
-                                                    <rect key="frame" x="16" y="3" width="136.5" height="21.5"/>
+                                                    <rect key="frame" x="16" y="2" width="126.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QeZ-5t-GnS">
-                                                    <rect key="frame" x="16" y="24.5" width="37.5" height="17"/>
+                                                    <rect key="frame" x="16" y="22.5" width="41.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2002,16 +1997,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear Mapnik Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qJB-zo-Tda">
-                                                    <rect key="frame" x="16" y="3" width="159" height="21.5"/>
+                                                    <rect key="frame" x="16" y="2" width="147" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XHN-uF-r8g">
-                                                    <rect key="frame" x="16" y="24.5" width="50" height="17"/>
+                                                    <rect key="frame" x="16" y="22.5" width="56" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2026,16 +2021,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear GPX Tracks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9aN-lr-L6e">
-                                                    <rect key="frame" x="16" y="3" width="149.5" height="21.5"/>
+                                                    <rect key="frame" x="16" y="2" width="138" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hvz-TE-9J7">
-                                                    <rect key="frame" x="16" y="24.5" width="50" height="17"/>
+                                                    <rect key="frame" x="16" y="22.5" width="56" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2050,16 +2045,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear Aerial Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bx1-9n-4r3">
-                                                    <rect key="frame" x="16" y="3" width="145" height="21.5"/>
+                                                    <rect key="frame" x="16" y="2" width="134" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9pN-dp-rZU">
-                                                    <rect key="frame" x="16" y="24.5" width="37.5" height="17"/>
+                                                    <rect key="frame" x="16" y="22.5" width="41.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2074,16 +2069,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear Locator Overlay Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cfe-0O-z4y">
-                                                    <rect key="frame" x="16" y="3" width="232" height="21.5"/>
+                                                    <rect key="frame" x="16" y="2" width="214.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Po2-4Z-i8t">
-                                                    <rect key="frame" x="16" y="24.5" width="50" height="17"/>
+                                                    <rect key="frame" x="16" y="22.5" width="56" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2098,16 +2093,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear GPS Overlay Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="klC-Oh-Oyd">
-                                                    <rect key="frame" x="16" y="3" width="202.5" height="21.5"/>
+                                                    <rect key="frame" x="16" y="2" width="187.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UT3-uR-YpN">
-                                                    <rect key="frame" x="16" y="24.5" width="50" height="17"/>
+                                                    <rect key="frame" x="16" y="22.5" width="56" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2170,7 +2165,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                             </textView>
@@ -2213,8 +2208,8 @@ http://glyphish.com
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Aerial Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luL-VQ-zVX">
-                                                    <rect key="frame" x="20" y="5" width="95" height="22"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <rect key="frame" x="20" y="5" width="87.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2234,8 +2229,8 @@ http://glyphish.com
                                                     <rect key="frame" x="150" y="12" width="20" height="20"/>
                                                 </activityIndicatorView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sx-wS-Wt5">
-                                                    <rect key="frame" x="20" y="28" width="37.5" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="20" y="27" width="39.5" height="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2270,14 +2265,14 @@ http://glyphish.com
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Mapnik Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ekd-Jz-Iic">
-                                                    <rect key="frame" x="20" y="4" width="109" height="22"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <rect key="frame" x="20" y="4" width="100.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19b-bC-hzn">
-                                                    <rect key="frame" x="20" y="26" width="37.5" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="20" y="25" width="39.5" height="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -2352,17 +2347,17 @@ http://glyphish.com
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HNj-kK-OCP">
-                                            <rect key="frame" x="16" y="6" width="31.5" height="19.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="HNj-kK-OCP">
+                                            <rect key="frame" x="16" y="4" width="35.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KIO-8j-QsO">
-                                            <rect key="frame" x="16" y="25.5" width="40.5" height="13.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="KIO-8j-QsO">
+                                            <rect key="frame" x="16" y="24.5" width="47" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -2398,16 +2393,16 @@ http://glyphish.com
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cpC-iE-1Dm">
-                                            <rect key="frame" x="16" y="6" width="31.5" height="19.5"/>
+                                            <rect key="frame" x="16" y="4" width="35.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gre-3S-iPA">
-                                            <rect key="frame" x="16" y="25.5" width="30.5" height="13.5"/>
+                                            <rect key="frame" x="16" y="24.5" width="35" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -2476,17 +2471,17 @@ http://glyphish.com
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yue-km-52a">
-                                                    <rect key="frame" x="23" y="11" width="45" height="21"/>
+                                                    <rect key="frame" x="23" y="11" width="47" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="eXw-5O-hKa"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bing aerial" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w75-Lj-3jF">
-                                                    <rect key="frame" x="78" y="7" width="222" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="80" y="7" width="220" height="30"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="gWP-Gt-h0B" eventType="editingChanged" id="QvZ-c7-OHq"/>
@@ -2514,16 +2509,16 @@ http://glyphish.com
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swu-t3-p5w">
-                                                    <rect key="frame" x="23" y="11" width="32.5" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="23" y="11" width="33.5" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dzT-B4-za3">
-                                                    <rect key="frame" x="65.5" y="7" width="234.5" height="30"/>
+                                                    <rect key="frame" x="66.5" y="7" width="233.5" height="30"/>
                                                     <string key="placeholder">http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="gWP-Gt-h0B" eventType="editingChanged" id="Myf-fl-pHc"/>
@@ -2548,7 +2543,7 @@ http://glyphish.com
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Zoom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voF-Yf-33h">
                                                     <rect key="frame" x="23" y="11" width="98" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -2557,7 +2552,7 @@ http://glyphish.com
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="MGa-4t-9kL"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="gWP-Gt-h0B" eventType="editingChanged" id="5Gi-OJ-Ahd"/>
@@ -2567,7 +2562,7 @@ http://glyphish.com
                                             <constraints>
                                                 <constraint firstItem="uQ3-vb-l3H" firstAttribute="leading" secondItem="voF-Yf-33h" secondAttribute="trailing" constant="10" id="8E8-Tb-R0b"/>
                                                 <constraint firstAttribute="centerY" secondItem="uQ3-vb-l3H" secondAttribute="centerY" id="BCq-ZR-Bwe"/>
-                                                <constraint firstAttribute="trailing" secondItem="uQ3-vb-l3H" secondAttribute="trailing" constant="149" id="L4B-hZ-uNW"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uQ3-vb-l3H" secondAttribute="trailing" constant="8" id="L4B-hZ-uNW"/>
                                                 <constraint firstItem="uQ3-vb-l3H" firstAttribute="leading" secondItem="2xt-YE-Yaa" secondAttribute="leading" constant="131" id="Qjy-0a-EX4"/>
                                                 <constraint firstItem="voF-Yf-33h" firstAttribute="leading" secondItem="2xt-YE-Yaa" secondAttribute="leading" constant="23" id="lcA-8N-Thx"/>
                                                 <constraint firstAttribute="centerY" secondItem="voF-Yf-33h" secondAttribute="centerY" id="so8-lL-hWG"/>
@@ -2614,9 +2609,9 @@ http://glyphish.com
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5O-tO-QFr">
-                                <rect key="frame" x="153" y="432" width="61" height="28"/>
+                                <rect key="frame" x="142" y="429" width="65" height="31"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2627,9 +2622,9 @@ http://glyphish.com
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZK-2k-kEa">
-                                <rect key="frame" x="222" y="432" width="88" height="28"/>
+                                <rect key="frame" x="215" y="429" width="95" height="31"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" title="Set Height">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2642,7 +2637,7 @@ http://glyphish.com
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SdH-uy-BuK">
                                 <rect key="frame" x="121.5" y="20" width="77" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                 <state key="normal" title="Distance">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2652,7 +2647,7 @@ http://glyphish.com
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juy-LX-vDs">
                                 <rect key="frame" x="121.5" y="49" width="77" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                 <state key="normal" title="Height">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2664,6 +2659,7 @@ http://glyphish.com
                         <constraints>
                             <constraint firstItem="oBt-sw-lRB" firstAttribute="bottom" secondItem="QZK-2k-kEa" secondAttribute="bottom" constant="20" id="2jQ-eZ-Mfs"/>
                             <constraint firstItem="oBt-sw-lRB" firstAttribute="bottom" secondItem="l5O-tO-QFr" secondAttribute="bottom" constant="20" id="TqY-pW-y80"/>
+                            <constraint firstItem="l5O-tO-QFr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oBt-sw-lRB" secondAttribute="leading" id="VjX-Ja-wb7"/>
                             <constraint firstItem="juy-LX-vDs" firstAttribute="centerX" secondItem="oBt-sw-lRB" secondAttribute="centerX" id="bnY-ZI-p5b"/>
                             <constraint firstItem="QZK-2k-kEa" firstAttribute="trailing" secondItem="uz5-Hx-Irk" secondAttribute="trailingMargin" constant="6" id="bsI-EQ-d0B"/>
                             <constraint firstItem="SdH-uy-BuK" firstAttribute="top" secondItem="oBt-sw-lRB" secondAttribute="top" id="cX0-1x-udZ"/>
@@ -3563,7 +3559,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peH-96-gWt">
                                 <rect key="frame" x="20" y="112" width="280" height="348"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nrQ-9V-0ML">
@@ -3636,31 +3632,34 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changeset" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijx-N9-1eO">
-                                            <rect key="frame" x="26" y="11" width="89" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <rect key="frame" x="16" y="11" width="100" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="zre-Eo-fDl"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9pc-Qg-5ip">
-                                            <rect key="frame" x="134" y="11" width="155" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </label>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="value" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hfr-Mf-ZHv">
+                                            <rect key="frame" x="124" y="11.5" width="165" height="21"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                        </textField>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="ijx-N9-1eO" secondAttribute="centerY" id="BA8-hS-cQX"/>
-                                        <constraint firstItem="9pc-Qg-5ip" firstAttribute="leading" secondItem="3eE-LA-ydc" secondAttribute="leading" constant="134" id="LU3-0T-6gz"/>
-                                        <constraint firstItem="ijx-N9-1eO" firstAttribute="leading" secondItem="3eE-LA-ydc" secondAttribute="leadingMargin" constant="10" id="PXb-S8-8gs"/>
+                                        <constraint firstItem="hfr-Mf-ZHv" firstAttribute="leading" secondItem="ijx-N9-1eO" secondAttribute="trailing" constant="8" id="HnD-Rv-O07"/>
+                                        <constraint firstItem="ijx-N9-1eO" firstAttribute="leading" secondItem="3eE-LA-ydc" secondAttribute="leadingMargin" id="PXb-S8-8gs"/>
+                                        <constraint firstItem="hfr-Mf-ZHv" firstAttribute="centerY" secondItem="3eE-LA-ydc" secondAttribute="centerY" id="VK2-vP-Sn3"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
-                                    <constraint firstItem="9pc-Qg-5ip" firstAttribute="centerY" secondItem="h9U-Vj-X5o" secondAttribute="centerY" id="CD3-tl-nEY"/>
-                                    <constraint firstAttribute="trailing" secondItem="9pc-Qg-5ip" secondAttribute="trailing" constant="31" id="u5w-O2-Wc0"/>
+                                    <constraint firstAttribute="trailing" secondItem="hfr-Mf-ZHv" secondAttribute="trailing" constant="31" id="umX-mE-yug"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="title" destination="ijx-N9-1eO" id="y5c-t5-taN"/>
-                                    <outlet property="value" destination="9pc-Qg-5ip" id="cT4-DW-hjN"/>
+                                    <outlet property="value" destination="hfr-Mf-ZHv" id="fyk-Ht-seD"/>
                                     <segue destination="eNH-pi-UM5" kind="push" id="mrH-5v-JIV"/>
                                 </connections>
                             </tableViewCell>
@@ -3746,7 +3745,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="290" id="vRO-Aj-Sdr">
                                                     <rect key="frame" x="15" y="0.0" width="290" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -3894,7 +3893,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Editor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eN6-SZ-99I">
                                                     <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -3911,7 +3910,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Editor with Aerial" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MPq-PX-jf0">
                                                     <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -3926,13 +3925,14 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aerial only" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOd-BB-zEq">
-                                                    <rect key="frame" x="16" y="11" width="86" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <rect key="frame" x="16" y="11" width="83.5" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eac-Db-EaW">
-                                                    <rect key="frame" x="273" y="7" width="31" height="30"/>
+                                                    <rect key="frame" x="269" y="5.5" width="35" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <state key="normal" title="Bing"/>
                                                     <connections>
                                                         <segue destination="kDI-TR-PJA" kind="push" id="Oq8-XI-nsT"/>
@@ -3961,7 +3961,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Mapnik only" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9L3-JO-Whj">
                                                     <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
@@ -3982,7 +3982,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Clear Cache" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ZY-zi-luF">
                                                     <rect key="frame" x="16" y="0.0" width="269" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4004,8 +4004,8 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1f0-8q-yCi">
-                                                    <rect key="frame" x="16" y="11" width="94" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <rect key="frame" x="16" y="11" width="92" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4016,7 +4016,8 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     </connections>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
-                                                    <rect key="frame" x="190" y="7" width="47" height="30"/>
+                                                    <rect key="frame" x="184" y="5.5" width="53" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <state key="normal" title="Details"/>
                                                     <connections>
                                                         <segue destination="56N-ha-lzj" kind="push" id="B8X-vg-T4B"/>
@@ -4043,7 +4044,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes and Fixmes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0U-6M-7AT">
                                                     <rect key="frame" x="15" y="11" width="229" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4072,7 +4073,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenStreetMap GPS Traces" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMJ-yP-XJe">
                                                     <rect key="frame" x="15" y="11" width="237" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4098,7 +4099,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn Restrictions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6a-cT-Ufa">
                                                     <rect key="frame" x="15" y="11" width="237" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4124,7 +4125,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unnamed Roads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP1-qY-kXe">
                                                     <rect key="frame" x="15" y="11" width="237" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4151,7 +4152,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Rotation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUR-wT-knn">
                                                     <rect key="frame" x="15" y="11" width="237" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4177,7 +4178,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable 3-D Effects" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luT-Tw-T3x">
                                                     <rect key="frame" x="15" y="11" width="237" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4241,13 +4242,13 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Thd-dw-eaM"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Dogs Allowed" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eG3-Xz-Nnp">
                                                     <rect key="frame" x="132" y="7" width="168" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="qVy-gC-zT5"/>
@@ -4277,13 +4278,13 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eou-a6-V4g">
                                                     <rect key="frame" x="23" y="11" width="104" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="leisure " adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kPA-ky-U48">
                                                     <rect key="frame" x="132" y="7" width="168" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="8fV-oZ-Cyd"/>
@@ -4312,7 +4313,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="yti-MQ-ao3"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4321,7 +4322,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="luW-O3-yZN"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="CTz-DC-LcR"/>
@@ -4354,7 +4355,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="jTt-Jq-Fen"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4363,7 +4364,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="fj8-C7-tTE"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="mGS-Zh-CNb"/>
@@ -4396,7 +4397,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Lgt-ap-3bc"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4405,7 +4406,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="dun-cD-pb8"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="uWh-vf-snf"/>
@@ -4434,7 +4435,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Zj0-k2-1r9"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4443,7 +4444,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="xe7-U1-iln"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="dtU-Ze-rc1"/>
@@ -4472,7 +4473,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="diJ-wx-MvY"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4481,7 +4482,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="00h-js-usc"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="lrl-DI-aSV"/>
@@ -4510,7 +4511,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="PRY-GQ-qPg"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4519,7 +4520,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="0H3-Xi-Jdc"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="fnJ-N0-Rby"/>
@@ -4548,7 +4549,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="l2v-Zu-Som"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4557,7 +4558,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="G4D-hU-feB"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="SdA-vq-uOP"/>
@@ -4586,7 +4587,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="5vd-aI-V0p"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4595,7 +4596,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="G1I-Dc-xMN"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="TBo-kG-o2i"/>
@@ -4624,7 +4625,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Hzo-5h-Xzx"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4633,7 +4634,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="v4z-7w-05k"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="2Di-c4-Nav"/>
@@ -4662,7 +4663,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="dFP-ED-3Ty"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4671,7 +4672,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="6Sw-XT-YbG"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="zHn-15-H55"/>
@@ -4700,7 +4701,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="8U7-ei-h5R"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4709,7 +4710,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="dmP-PV-ljg"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="feN-e1-XbJ"/>
@@ -4738,7 +4739,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Fgf-xK-DVE"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4747,7 +4748,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="bH4-bx-Chq"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="h4g-Dv-No4"/>
@@ -4776,7 +4777,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="7XS-cR-Mln"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4785,7 +4786,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="tlz-ei-CYx"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="GTg-Oc-Rgo"/>
@@ -4814,7 +4815,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="P9l-QR-I2I"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -4823,7 +4824,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="OLj-hD-RKd"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="wrk-lD-d6y"/>
@@ -4904,7 +4905,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8Nt-xf-x5Q">
                                             <rect key="frame" x="16" y="0.0" width="269" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -4922,11 +4923,11 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bnh-U0-D7i">
-                                            <rect key="frame" x="112.5" y="11" width="62.5" height="21"/>
+                                            <rect key="frame" x="110" y="11" width="66" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="5xE-OX-Hes"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -4974,17 +4975,17 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Hostname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDx-6x-qqY">
-                                                    <rect key="frame" x="17" y="11" width="85" height="21"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <rect key="frame" x="17" y="11" width="82" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="498" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="api.openstreetmap.org" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="66J-ih-Lfh">
-                                                    <rect key="frame" x="112" y="7" width="189" height="30"/>
+                                                    <rect key="frame" x="109" y="7" width="192" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Dcr-XM-k1f"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldReturn:" destination="bSZ-Mq-pv6" eventType="editingDidEndOnExit" id="HK8-oB-Ufh"/>
@@ -5043,7 +5044,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qP9-Sc-sc4">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20.5"/>
                                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -5114,7 +5115,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <segue reference="g2g-Jn-Tdv"/>
         <segue reference="OEI-9h-7td"/>
         <segue reference="KuK-gp-RBs"/>
-        <segue reference="DvT-fe-8IR"/>
+        <segue reference="FTo-kL-oAC"/>
         <segue reference="mrH-5v-JIV"/>
     </inferredMetricsTieBreakers>
 </document>

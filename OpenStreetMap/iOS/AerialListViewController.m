@@ -113,8 +113,13 @@
 	if ( aerial == _aerials.currentAerial ) {
 		title = [@"\u2714 " stringByAppendingString:title];	// add checkmark
 	}
+	NSString * detail = aerial.url;
+	if ( [detail hasPrefix:@"https://"] )
+		detail = [detail substringFromIndex:8];
+	else if ( [detail hasPrefix:@"http://"] )
+		detail = [detail substringFromIndex:7];
 	cell.textLabel.text = title;
-	cell.detailTextLabel.text = aerial.url;
+	cell.detailTextLabel.text = detail;
 	return cell;
 }
 
