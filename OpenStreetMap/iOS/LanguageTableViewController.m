@@ -20,6 +20,9 @@
 {
     [super viewDidLoad];
 	_languages = [PresetLanguages new];
+	
+	self.tableView.estimatedRowHeight = 44;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 #pragma mark - Table view data source

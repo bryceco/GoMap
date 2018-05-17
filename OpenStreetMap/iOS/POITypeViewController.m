@@ -53,6 +53,9 @@ static NSInteger			mostRecentMaximum;
 {
 	[super viewDidLoad];
 
+	self.tableView.estimatedRowHeight = 44.0; // or could use UITableViewAutomaticDimension;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+	
 	NSString * geometry = [self currentSelectionGeometry];
 	if ( geometry == nil )
 		geometry = GEOMETRY_NODE;	// a brand new node

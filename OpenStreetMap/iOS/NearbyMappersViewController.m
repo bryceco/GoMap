@@ -20,6 +20,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.tableView.estimatedRowHeight = 44;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 

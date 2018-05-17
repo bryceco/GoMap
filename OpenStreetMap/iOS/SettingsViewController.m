@@ -26,6 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.tableView.estimatedRowHeight = 44.0;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -53,9 +56,15 @@
 			} else {
 				_username.text = appDelegate.userName;
 			}
+			
 			[self.tableView reloadData];
 		}];
 	}
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewAutomaticDimension;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

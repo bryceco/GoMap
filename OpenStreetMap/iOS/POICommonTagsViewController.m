@@ -47,6 +47,9 @@
 
 	[super viewDidLoad];
 
+	self.tableView.estimatedRowHeight = 44.0; // or could use UITableViewAutomaticDimension;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+
 	_tags = [CommonTagList sharedList];
 
 	if ( _drillDownGroup ) {
@@ -187,13 +190,6 @@
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[cell fixConstraints];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	// Fix bug on iPad where cell heights come back as -1:
-	// CGFloat h = [super tableView:tableView heightForRowAtIndexPath:indexPath];
-	return 44.0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
