@@ -24,17 +24,14 @@
 		_shapeLayer.strokeColor = NSColor.blackColor.CGColor;
 		_shapeLayer.fillColor = NULL;
 
+		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+		
 		_metricTextLayer					= [CATextLayer layer];
 		_britishTextLayer					= [CATextLayer layer];
-#if TARGET_OS_IPHONE
-		_metricTextLayer.font				= (__bridge CGFontRef)[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-		_britishTextLayer.font				= (__bridge CGFontRef)[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-#else
-		_metricTextLayer.font				= (__bridge CGFontRef)[NSFont labelFontOfSize:10];
-		_britishTextLayer.font				= (__bridge CGFontRef)[NSFont labelFontOfSize:10];
-#endif
-		_metricTextLayer.fontSize			= 12;
-		_britishTextLayer.fontSize			= 12;
+		_metricTextLayer.font				= (__bridge CGFontRef)font;
+		_britishTextLayer.font				= (__bridge CGFontRef)font;
+		_metricTextLayer.fontSize			= 12; // font.pointSize;
+		_britishTextLayer.fontSize			= 12; // font.pointSize;
 		_metricTextLayer.foregroundColor	= NSColor.blackColor.CGColor;
 		_britishTextLayer.foregroundColor	= NSColor.blackColor.CGColor;
 		_metricTextLayer.alignmentMode		= kCAAlignmentCenter;
@@ -113,7 +110,7 @@ double roundToEvenValue( double value )
 		return;
 
 	double metricWide = rc.size.width * metersPerPixel;
-	double britishWide = metricWide * 3.28084;
+	double britishWide = metricWide * 3.28084;	// feet per meter
 
 	NSString * metricUnit = @"meter";
 	NSString * metricSuffix = @"s";

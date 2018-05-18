@@ -19,6 +19,7 @@
 #import "EditorMapLayer.h"
 #import "MercatorTileLayer.h"
 #import "OsmMapData.h"
+#import "OsmObjects.h"
 #import "UploadViewController.h"
 
 
@@ -173,7 +174,7 @@
 
 -(IBAction)editXml:(id)sender
 {
-	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
+	AppDelegate * appDelegate = AppDelegate.getAppDelegate;
 
 	MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 	mail.mailComposeDelegate = self;
@@ -218,6 +219,38 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
+{
+	AppDelegate	*	appDelegate = AppDelegate.getAppDelegate;
+	NSString 	*	name = url.absoluteString;
+	if ( name.length == 0 )
+		return NO;
+	OsmIdentifier 	ident = [[name substringFromIndex:1] longLongValue];
+	switch ( [name characterAtIndex:0] ) {
+		case 'n':
+			ident = [OsmBaseObject extendedIdentifierForType:OSM_TYPE_NODE identifier:ident];
+			break;
+		case 'w':
+			ident = [OsmBaseObject extendedIdentifierForType:OSM_TYPE_WAY identifier:ident];
+			break;
+		case 'r':
+			ident = [OsmBaseObject extendedIdentifierForType:OSM_TYPE_RELATION identifier:ident];
+			break;
+		default:
+			return NO;
+	}
+	OsmBaseObject *	object = [appDelegate.mapView.editorLayer.mapData objectWithExtendedIdentifier:@(ident)];
+	if ( object == nil )
+		return NO;
+	
+	appDelegate.mapView.editorLayer.selectedRelation = object.isRelation;
+	appDelegate.mapView.editorLayer.selectedWay		 = object.isWay;
+	appDelegate.mapView.editorLayer.selectedNode	 = object.isNode;
+	[appDelegate.mapView placePushpinForSelection];
+	
+	[self cancel:nil];
+	return NO;
+}
 
 - (IBAction)cancel:(id)sender
 {

@@ -10,7 +10,7 @@
 
 @class OsmMapData;
 
-@interface UploadViewController : UIViewController <MFMailComposeViewControllerDelegate,UIAlertViewDelegate>
+@interface UploadViewController : UIViewController <UITextViewDelegate,MFMailComposeViewControllerDelegate,UIAlertViewDelegate>
 {
 	OsmMapData							*	_mapData;
 	IBOutlet UITextView					*	_xmlTextView;

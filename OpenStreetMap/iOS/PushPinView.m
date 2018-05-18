@@ -33,19 +33,21 @@
 
 		// text layer
 		_textLayer = [CATextLayer layer];
-		CGFontRef font = CGFontCreateWithFontName( (__bridge CFStringRef) @"Helvetica-Bold" );
-		_textLayer.font = font;
-		_textLayer.fontSize = 16;
-		_textLayer.alignmentMode = kCAAlignmentLeft;
-		_textLayer.foregroundColor = UIColor.whiteColor.CGColor;
+		
+		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+		_textLayer.font 			= (__bridge CFTypeRef)font;
+		_textLayer.fontSize 		= font.pointSize;
+		_textLayer.alignmentMode	= kCAAlignmentLeft;
+		_textLayer.truncationMode	= kCATruncationEnd;
+
+		_textLayer.foregroundColor 	= UIColor.whiteColor.CGColor;
 		[_shapeLayer addSublayer:_textLayer];
-		CGFontRelease(font);
 
 		_moveButton = [CALayer layer];
-		_moveButton.frame = CGRectMake( 0, 0, 25, 25 );
-		_moveButton.contents = (id) [UIImage imageNamed:@"move.png"].CGImage;
-		_moveButton.shadowColor = UIColor.whiteColor.CGColor;
-		_moveButton.shadowRadius = 5.0;
+		_moveButton.frame 			= CGRectMake( 0, 0, 25, 25 );
+		_moveButton.contents 		= (__bridge id)[UIImage imageNamed:@"move.png"].CGImage;
+		_moveButton.shadowColor 	= UIColor.whiteColor.CGColor;
+		_moveButton.shadowRadius 	= 5.0;
 		[_shapeLayer addSublayer:_moveButton];
 
 		_placeholderLayer = [CALayer layer];
@@ -127,10 +129,13 @@
 
 -(void)layoutSubviews
 {
+	CGSize	textSize = _textLayer.preferredFrameSize;
+	if ( textSize.width > 300 )
+		textSize.width = 300;
+
 	const NSInteger buttonCount = MAX(_buttonList.count,1);
 	const CGFloat	moveButtonGap = 3.0;
 	const CGFloat	buttonVerticalSpacing = 55;
-	const CGSize	textSize = _textLayer.preferredFrameSize;
 	const CGFloat	textAlleyWidth = 5;
 	const CGSize	boxSize = { textSize.width + 2*textAlleyWidth + moveButtonGap + _moveButton.frame.size.width,
 								textSize.height + 2*textAlleyWidth };
@@ -174,9 +179,12 @@
 	_shapeLayer.path = _path;
 
 	if ( _labelOnBottom ) {
-		_textLayer.frame = CGRectMake( textAlleyWidth, topGap+arrowHeight+textAlleyWidth, boxSize.width - textAlleyWidth, boxSize.height - textAlleyWidth );
-		_moveButton.frame = CGRectMake( boxSize.width - _moveButton.frame.size.width - 3, topGap + arrowHeight+textAlleyWidth - 3,
-									  _moveButton.frame.size.width, _moveButton.frame.size.height );
+		_textLayer.frame = CGRectMake( textAlleyWidth, topGap+arrowHeight+textAlleyWidth,
+									  boxSize.width - textAlleyWidth, textSize.width );
+		_moveButton.frame = CGRectMake( boxSize.width - _moveButton.frame.size.width - 3,
+									   topGap + arrowHeight+(boxSize.height-_moveButton.frame.size.height)/2,
+									   _moveButton.frame.size.width,
+									   _moveButton.frame.size.height );
 	} else {
 		_textLayer.frame = CGRectMake( textAlleyWidth, textAlleyWidth, boxSize.width - textAlleyWidth, boxSize.height - textAlleyWidth );
 	}

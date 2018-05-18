@@ -36,13 +36,8 @@ static const CGFloat arrowHeight = 48;
 
 		// text layer
 		CATextLayer * textLayer = [CATextLayer layer];
-#if TARGET_OS_IPHONE
 		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 		textLayer.font = (__bridge CGFontRef)font;
-#else
-		NSFont * font = [[NSFontManager sharedFontManager] convertFont:[NSFont labelFontOfSize:12] toHaveTrait:NSBoldFontMask];
-		textLayer.font = (__bridge CFTypeRef)font;
-#endif
 		textLayer.fontSize = 18;
 		textLayer.alignmentMode = kCAAlignmentCenter;
 		textLayer.string = text;
