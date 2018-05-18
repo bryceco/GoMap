@@ -374,18 +374,12 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 
 -(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset whiteOnBlock:(BOOL)whiteOnBlack
 {
-	static UIFont * uiFont = nil;
-	static CTFontRef ctFont = NULL;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-		ctFont = (__bridge CTFontRef)uiFont;
-	});
+	UIFont	* uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 
 	UIColor * textColor = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
 																		 attributes:@{
-																					  (NSString *)kCTFontAttributeName : (__bridge id)ctFont,
+																					  (NSString *)kCTFontAttributeName : uiFont,
 																					  (NSString *)kCTForegroundColorAttributeName : (id)textColor.CGColor }];
 	CTFramesetterRef framesetter = [self framesetterForString:attrString];
 	NSInteger charCount = string.length;
