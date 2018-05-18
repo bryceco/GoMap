@@ -708,7 +708,7 @@ static NSString * PrettyTag( NSString * tag )
 			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypeDecimalPad doesn't have Done button
 		else if ( [type isEqualToString:@"tel"] )
 			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypePhonePad doesn't have Done Button
-		else if ( [type isEqualToString:@"url"] || [type isEqualToString:@"wikipedia"] )
+		else if ( [type isEqualToString:@"url"] )
 			keyboard = UIKeyboardTypeURL;
 		else if ( [type isEqualToString:@"textarea"] )
 			capitalize = UITextAutocapitalizationTypeSentences;
