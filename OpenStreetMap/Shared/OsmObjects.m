@@ -664,7 +664,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 +(OsmIdentifier)extendedIdentifierForType:(OSM_TYPE)type identifier:(OsmIdentifier)identifier
 {
-	return identifier | ((uint64_t)type << 62);
+	return (identifier & (((uint64_t)1 << 62)-1)) | ((uint64_t)type << 62);
 }
 
 -(OsmIdentifier)extendedIdentifier
@@ -676,7 +676,9 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 +(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *)pType ident:(OsmIdentifier *)pIdent
 {
 	*pType  = extendedIdentifier >> 62 & 3;
-	*pIdent = extendedIdentifier & (((uint64_t)1 << 62)-1);
+	int64_t ident = extendedIdentifier & (((uint64_t)1 << 62)-1);
+	ident = (ident << 2) >> 2;	// sign extend
+	*pIdent = ident;
 }
 
 @end

@@ -1655,21 +1655,25 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)placePushpinForSelection
 {
-#if TARGET_OS_IPHONE
+	OSMPoint loc;
 	if ( _editorLayer.selectedNode ) {
-		CGPoint point = [self screenPointForLatitude:_editorLayer.selectedNode.lat longitude:_editorLayer.selectedNode.lon birdsEye:YES];
+		loc = _editorLayer.selectedNode.location;
+		CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedNode];
 	} else if ( _editorLayer.selectedWay ) {
-		OSMPoint pt = [_editorLayer.selectedWay centerPoint];
-		pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
-		CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+		loc = [_editorLayer.selectedWay midpointOfLine];
+		CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	} else if (_editorLayer.selectedRelation ) {
-		OSMPoint pt = [_editorLayer.selectedRelation centerPoint];
-		CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+		loc = [_editorLayer.selectedRelation centerPoint];
+		CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
 		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	}
-#endif
+	
+	if ( !CGRectContainsPoint( self.bounds, _pushpinView.arrowPoint ) ) {
+		// need to zoom to location
+		[self setTransformForLatitude:loc.y longitude:loc.x];
+	}
 }
 
 - (IBAction)undo:(id)sender

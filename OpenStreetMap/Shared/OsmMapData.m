@@ -1616,7 +1616,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)updateString:(NSMutableAttributedString *)string withTag:(NSXMLElement *)tag
 {
-	NSFont * font = [NSFont fontWithName:@"Helvetica" size:12];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ = %@\n",
 					   [tag attributeForName:@"k"].stringValue,
 					   [tag attributeForName:@"v"].stringValue];
@@ -1624,7 +1624,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)updateString:(NSMutableAttributedString *)string withMember:(NSXMLElement *)tag
 {
-	NSFont * font = [NSFont fontWithName:@"Helvetica" size:12];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ %@: \"%@\"\n",
 					   [tag attributeForName:@"type"].stringValue,
 					   [tag attributeForName:@"ref"].stringValue,
@@ -1634,16 +1634,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)updateString:(NSMutableAttributedString *)string withNode:(NSXMLElement *)node
 {
-	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
-	NSString * lat = [node attributeForName:@"lat"].stringValue;
-	NSString * lon = [node attributeForName:@"lon"].stringValue;
-	NSString * text = lat && lon
-		? [NSString stringWithFormat:NSLocalizedString(@"\tNode %@ (%.6f,%.6f)\n",nil), [node attributeForName:@"id"].stringValue, lat.doubleValue, lon.doubleValue]
-		: [NSString stringWithFormat:NSLocalizedString(@"\tNode %@\n",nil), [node attributeForName:@"id"].stringValue];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+
+	NSString * nodeName = [node attributeForName:@"id"].stringValue;
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tNode " attributes:@{ NSFontAttributeName : font }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:nodeName
+																   attributes:@{ NSFontAttributeName : font,
+																				 NSLinkAttributeName : [@"n" stringByAppendingString:nodeName] }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n" attributes:@{ NSFontAttributeName : font }]];
 	for ( NSXMLElement * tag in node.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
-			[self updateString:string withTag:(NSXMLElement *)tag];
+			[self updateString:string withTag:tag];
 		} else {
 			assert(NO);
 		}
@@ -1658,11 +1659,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}
 
-	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
-	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"\tWay %@ (%d nodes)\n",nil),
-					   [way attributeForName:@"id"].stringValue,
-					   nodeCount];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+	
+	NSString * wayName = [way attributeForName:@"id"].stringValue;
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tWay " attributes:@{ NSFontAttributeName : font }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:wayName
+																   attributes:@{ NSFontAttributeName : font,
+																				 NSLinkAttributeName : [@"w" stringByAppendingString:wayName] }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%d nodes)\n",nodeCount]
+																   attributes:@{ NSFontAttributeName : font }]];
 
 	for ( NSXMLElement * tag in way.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
@@ -1676,11 +1681,23 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)updateString:(NSMutableAttributedString *)string withRelation:(NSXMLElement *)relation
 {
-	NSFont * font = [NSFont fontWithName:@"Helvetica" size:14];
-	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"\tRelation %@ (%d members)\n",nil),
-					   [relation attributeForName:@"id"].stringValue,
-					   (int)relation.childCount];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+	int memberCount = 0;
+	for ( NSXMLElement * tag in relation.children ) {
+		if ( [tag.name isEqualToString:@"member"] ) {
+			memberCount++;
+		}
+	}
+
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+	
+	NSString * relationName = [relation attributeForName:@"id"].stringValue;
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:@{ NSFontAttributeName : font }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:relationName
+																   attributes:@{ NSFontAttributeName : font,
+																				 NSLinkAttributeName : [@"r" stringByAppendingString:relationName] }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%d members)\n",memberCount]
+																   attributes:@{ NSFontAttributeName : font }]];
+
 	for ( NSXMLElement * tag in relation.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
 			[self updateString:string withTag:(NSXMLElement *)tag];
@@ -1695,7 +1712,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	if ( objects.count == 0 )
 		return;
-	NSFont * font = [NSFont fontWithName:@"Helvetica" size:18];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:header attributes:@{ NSFontAttributeName : font }]];
 	for ( NSXMLElement * object in objects ) {
 		if ( [object.name isEqualToString:@"node"] ) {
@@ -1717,7 +1734,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		return nil;
 	NSMutableAttributedString * string = [NSMutableAttributedString new];
 	NSXMLElement * root = [doc rootElement];
-
+	
 	NSArray * deletes = [root elementsForName:@"delete"];
 	NSArray * creates = [root elementsForName:@"create"];
 	NSArray * modifys = [root elementsForName:@"modify"];
