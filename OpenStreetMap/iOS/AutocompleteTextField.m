@@ -334,7 +334,7 @@ static const CGFloat GradientHeight = 20.0;
 	UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if ( cell == nil ) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-		cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+		cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 	}
 	cell.textLabel.text = [_filteredCompletions objectAtIndex:indexPath.row];
     return cell;

@@ -52,7 +52,7 @@
 	NSAttributedString * text = [_mapData changesetAsAttributedString];
 	if ( text == nil ) {
 		_commitButton.enabled = NO;
-		UIFont * font = [UIFont fontWithName:@"Helvetica" size:16];
+		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 		_xmlTextView.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Nothing to upload, no changes have been made.",nil) attributes:@{ NSFontAttributeName : font }];
 	} else {
 		_commitButton.enabled = YES;

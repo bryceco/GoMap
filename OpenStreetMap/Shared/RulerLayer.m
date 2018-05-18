@@ -27,8 +27,8 @@
 		_metricTextLayer					= [CATextLayer layer];
 		_britishTextLayer					= [CATextLayer layer];
 #if TARGET_OS_IPHONE
-		_metricTextLayer.font				= (__bridge CGFontRef)[UIFont systemFontOfSize:10];
-		_britishTextLayer.font				= (__bridge CGFontRef)[UIFont systemFontOfSize:10];
+		_metricTextLayer.font				= (__bridge CGFontRef)[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+		_britishTextLayer.font				= (__bridge CGFontRef)[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
 #else
 		_metricTextLayer.font				= (__bridge CGFontRef)[NSFont labelFontOfSize:10];
 		_britishTextLayer.font				= (__bridge CGFontRef)[NSFont labelFontOfSize:10];

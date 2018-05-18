@@ -316,7 +316,7 @@ CGSize SizeForImage( NSImage * image )
 	_editControl.hidden = YES;
 	_editControl.selected = NO;
 	_editControl.selectedSegmentIndex = UISegmentedControlNoSegment;
-	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f] }
+	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] }
 									   forState:UIControlStateNormal];
 	_editControl.layer.zPosition = Z_TOOLBAR;
 
@@ -602,7 +602,7 @@ CGSize SizeForImage( NSImage * image )
 
 	if ( _flashLabel == nil ) {
 		_flashLabel = [UILabel new];
-		_flashLabel.font = [UIFont boldSystemFontOfSize:18];
+		_flashLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
 		_flashLabel.textAlignment = NSTextAlignmentCenter;
 		_flashLabel.textColor = UIColor.whiteColor;
 		_flashLabel.backgroundColor = UIColor.blackColor;
@@ -3046,7 +3046,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 						button.layer.cornerRadius		= 5;
 						button.layer.backgroundColor	= UIColor.blueColor.CGColor;
 						button.layer.borderColor		= UIColor.whiteColor.CGColor;
-						button.titleLabel.font			= [UIFont boldSystemFontOfSize:17];
+						button.titleLabel.font			= [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 						button.titleLabel.textColor		= UIColor.whiteColor;
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
 						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : note.isKeepRight ? @"R" : @"N";

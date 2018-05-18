@@ -427,7 +427,7 @@ static const CGFloat InsetPercent = 0.15;
 				} else {
 					label.layer.anchorPoint = CGPointMake(0, 0.5);
 					label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height-scrollHeight]];
-					label.font				= [UIFont systemFontOfSize:16];
+					label.font				= [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 					label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
 					label.textColor			= UIColor.blackColor;
 					label.textAlignment		= NSTextAlignmentCenter;

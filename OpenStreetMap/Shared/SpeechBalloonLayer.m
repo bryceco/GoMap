@@ -23,7 +23,7 @@ static const CGFloat arrowHeight = 16;
 		self.fillColor = NSColor.blueColor.CGColor;
 		self.strokeColor = NSColor.blackColor.CGColor;
 #if TARGET_OS_IPHONE
-		UIFont * font = [UIFont boldSystemFontOfSize:12];
+		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
 #else
 		NSFont * font = [[NSFontManager sharedFontManager] convertFont:[NSFont labelFontOfSize:12] toHaveTrait:NSBoldFontMask];
 #endif

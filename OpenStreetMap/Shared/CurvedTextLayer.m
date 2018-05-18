@@ -67,7 +67,8 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 		CGContextSetTextDrawingMode(ctx, kCGTextFill);
 	}
 
-	CTFontRef ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
+	UIFont * uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+	CTFontRef ctFont = (__bridge CTFontRef)uiFont;
 
 	CGContextSaveGState(ctx);
 	CGContextSetTextMatrix(ctx, CGAffineTransformIdentity);
@@ -139,7 +140,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 #if TARGET_OS_IPHONE
 	if ( font == nil )
-		font = [UIFont systemFontOfSize:10];
+		font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
 	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor,		NSFontAttributeName : font }];
 	NSAttributedString * s2 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)shadowColor.CGColor,	NSFontAttributeName : font }];
 #else
@@ -217,8 +218,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	// Don't cache these here because they are cached by the objects they are attached to
 	CATextLayer * layer = [CATextLayer new];
 
-	UIFont * font = [UIFont systemFontOfSize:11];
-	//	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
 	UIColor * textColor   = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	UIColor * shadowColor = whiteOnBlack ? UIColor.blackColor : UIColor.whiteColor;
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)textColor.CGColor, NSFontAttributeName : font }];
@@ -377,7 +377,8 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 	static CTFontRef ctFont = NULL;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		ctFont = CTFontCreateUIFontForLanguage( kCTFontUIFontSystem, 14.0, NULL );
+		UIFont * uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+		ctFont = (__bridge CTFontRef)uiFont;
 	});
 
 	UIColor * textColor = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;

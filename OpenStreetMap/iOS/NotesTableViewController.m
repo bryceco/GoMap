@@ -36,6 +36,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.tableView.estimatedRowHeight = 100;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
 	// add extra space at bottom so keyboard doesn't cover elements
 	UIEdgeInsets rc = self.tableView.contentInset;
@@ -179,31 +182,6 @@
 		_newComment = cell.text.text;
 		NSString * s = [_newComment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		cell.commentButton.enabled = s.length > 0;
-	}
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( self.note.comments && indexPath.section == 0 ) {
-		OsmNoteComment * comment = self.note.comments[ indexPath.row ];
-
-		if ( comment.text.length > 0 ) {
-			NSMutableParagraphStyle * paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-			[paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
-			NSDictionary * attrs = @{
-									 NSFontAttributeName : [UIFont systemFontOfSize:17],
-									 NSParagraphStyleAttributeName : paragraphStyle
-									 };
-			
-			CGRect rc = [comment.text boundingRectWithSize:CGSizeMake(self.view.bounds.size.width-60-20, 5000) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attrs context:nil];
-			return ceil(rc.size.height) + 85;
-		} else {
-			return 55;
-		}
-	} else if ( indexPath.row == 0 ) {
-		return 176;
-	} else {
-		return 44;
 	}
 }
 

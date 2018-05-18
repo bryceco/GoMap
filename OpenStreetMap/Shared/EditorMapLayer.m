@@ -2392,7 +2392,7 @@ static inline NSColor * ShadowColorForColor2( NSColor * color )
 		
 		OSMPoint point = way ? way.centerPoint : relation.centerPoint;
 		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x birdsEye:NO];
-		UIFont * font = [UIFont systemFontOfSize:11];
+		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
 		UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
 		UIColor * shadowColor = ShadowColorForColor2(textColor);
 		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:textColor shadowColor:shadowColor context:ctx];
