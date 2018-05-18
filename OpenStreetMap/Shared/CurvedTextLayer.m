@@ -235,7 +235,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	layer.string			= attrString;
 	layer.truncationMode	= kCATruncationNone;
 	layer.wrapped			= YES;
-	layer.alignmentMode		= kCAAlignmentCenter;
+	layer.alignmentMode		= kCAAlignmentLeft;	// because our origin is -3 this is actually centered
 
 	CGPathRef shadowPath	= CGPathCreateWithRect(bounds, NULL);
 	layer.shadowPath		= shadowPath;
@@ -374,10 +374,11 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 
 -(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset whiteOnBlock:(BOOL)whiteOnBlack
 {
+	static UIFont * uiFont = nil;
 	static CTFontRef ctFont = NULL;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		UIFont * uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+		uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 		ctFont = (__bridge CTFontRef)uiFont;
 	});
 
@@ -414,7 +415,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 
 	NSMutableArray * layers = [NSMutableArray new];
 
-	double lineHeight = 16.0; // CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0,attrString.length), NULL, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), NULL).height;
+	double lineHeight = uiFont.lineHeight;
 	CFIndex currentCharacter = 0;
 	double currentPixelOffset = offset;
 	while ( currentCharacter < charCount ) {
