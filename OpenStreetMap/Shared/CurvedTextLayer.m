@@ -235,8 +235,9 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 	UIColor * textColor   = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	UIColor * shadowColor = whiteOnBlack ? UIColor.blackColor : UIColor.whiteColor;
-	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)textColor.CGColor,
-																									  NSFontAttributeName : font }];
+	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
+																	  attributes:@{ NSForegroundColorAttributeName : (id)textColor.CGColor,
+																					NSFontAttributeName : font }];
 
 	CGRect bounds = { 0 };
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( (__bridge CFAttributedStringRef)attrString );
