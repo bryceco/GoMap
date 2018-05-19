@@ -1616,7 +1616,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)updateString:(NSMutableAttributedString *)string withTag:(NSXMLElement *)tag
 {
-	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ = %@\n",
 					   [tag attributeForName:@"k"].stringValue,
 					   [tag attributeForName:@"v"].stringValue];
@@ -1624,7 +1624,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)updateString:(NSMutableAttributedString *)string withMember:(NSXMLElement *)tag
 {
-	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ %@: \"%@\"\n",
 					   [tag attributeForName:@"type"].stringValue,
 					   [tag attributeForName:@"ref"].stringValue,
@@ -1634,7 +1634,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)updateString:(NSMutableAttributedString *)string withNode:(NSXMLElement *)node
 {
-	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 
 	NSString * nodeName = [node attributeForName:@"id"].stringValue;
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tNode " attributes:@{ NSFontAttributeName : font }]];
@@ -1659,7 +1659,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}
 
-	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 	
 	NSString * wayName = [way attributeForName:@"id"].stringValue;
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tWay " attributes:@{ NSFontAttributeName : font }]];
@@ -1688,7 +1688,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}
 
-	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 	
 	NSString * relationName = [relation attributeForName:@"id"].stringValue;
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:@{ NSFontAttributeName : font }]];
