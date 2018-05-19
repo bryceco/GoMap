@@ -68,7 +68,6 @@
 		02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02401F381DE1369E00F32AF5 /* ExternalGPS.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
 		0242331316750C81008A3B6A /* ArrowBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0242331216750C81008A3B6A /* ArrowBlue.png */; };
-		024ADF3616AE44CB00875658 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */; };
 		024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3B16B1B38B00875658 /* PathUtil.m */; };
 		024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */; };
 		024C323D1DEEA97100AD62AB /* OsmServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024C323C1DEEA97100AD62AB /* OsmServerViewController.m */; };
@@ -581,7 +580,6 @@
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../Shared/VectorMath.m; sourceTree = "<group>"; };
 		0242331216750C81008A3B6A /* ArrowBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlue.png; sourceTree = "<group>"; };
-		024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
 		024ADF3A16B1B38A00875658 /* PathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PathUtil.h; path = ../Shared/PathUtil.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		024ADF3B16B1B38B00875658 /* PathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PathUtil.m; path = ../Shared/PathUtil.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		024B4CA019BBE65F00BBA60B /* CustomPresetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1311,7 +1309,6 @@
 				02C19B341699E8C000F75E3C /* BingMetadataViewController.m */,
 				022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */,
 				022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */,
-				024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */,
 				020C2A8E168A7688003F2C2A /* CreditsViewController.h */,
 				020C2A8F168A7688003F2C2A /* CreditsViewController.m */,
 				0230558919B931A50041B151 /* CustomPresetController.h */,
@@ -2338,7 +2335,6 @@
 				0259E4081BCAEC88006C354C /* MyApplication.m in Sources */,
 				02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
-				024ADF3616AE44CB00875658 /* CoreData.xcdatamodeld in Sources */,
 				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,
 				028F504519B949780093C423 /* CommonTagList.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
@@ -2559,19 +2555,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		024ADF3416AE44CB00875658 /* CoreData.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */,
-			);
-			currentVersion = 024ADF3516AE44CB00875658 /* CoreData.xcdatamodel */;
-			path = CoreData.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 02ACBA2616713CCB00BB4414 /* Project object */;
 }
