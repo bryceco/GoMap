@@ -160,10 +160,16 @@ static const CGFloat NodeHighlightRadius = 6.0;
 						  @"lineWidth"	: [NSNull null],
 		};
 		_baseLayer.actions = self.actions;
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fontSizeDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
 	}
 	return self;
 }
 
+-(void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -172,6 +178,11 @@ static const CGFloat NodeHighlightRadius = 6.0;
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
+}
+
+-(void)fontSizeDidChange:(NSNotification *)notification
+{
+	[self resetDisplayLayers];
 }
 
 -(void)setBounds:(CGRect)bounds
@@ -2056,6 +2067,23 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	}
 	return a;
 }
+
+-(void)resetDisplayLayers
+{
+#if USE_SHAPELAYERS
+	// need to refresh all text objects
+	[_mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
+		obj.shapeLayers = nil;
+	}];
+	_baseLayer.sublayers = nil;
+#endif
+#if USE_SHAPELAYERS
+	[self setNeedsLayout];
+#else
+	[self setNeedsDisplay];
+#endif
+}
+
 
 #pragma mark CGContext based drawing
 
@@ -4276,18 +4304,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	if ( _whiteText != whiteText ) {
 		_whiteText = whiteText;
-#if USE_SHAPELAYERS
-		// need to refresh all text objects
-		[_mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
-			obj.shapeLayers = nil;
-		}];
-		_baseLayer.sublayers = nil;
-#endif
-#if USE_SHAPELAYERS
-		[self setNeedsLayout];
-#else
-		[self setNeedsDisplay];
-#endif
+		[self resetDisplayLayers];
 	}
 }
 

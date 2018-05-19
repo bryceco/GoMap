@@ -32,8 +32,22 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 		_textSizeCache				= [NSCache new];
 		_textSizeCache.countLimit	= 100;
 #endif
+
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fontSizeDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
 	}
 	return self;
+}
+
+-(void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)fontSizeDidChange:(NSNotification *)notification
+{
+	[_layerCache removeAllObjects];
+	[_textSizeCache removeAllObjects];
+	[_framesetterCache removeAllObjects];
 }
 
 +(instancetype)shared
@@ -140,7 +154,7 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 #if TARGET_OS_IPHONE
 	if ( font == nil )
-		font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+		font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
 	NSAttributedString * s1 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)color.CGColor,		NSFontAttributeName : font }];
 	NSAttributedString * s2 = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)shadowColor.CGColor,	NSFontAttributeName : font }];
 #else
@@ -213,15 +227,16 @@ static const CGFloat TEXT_SHADOW_WIDTH = 2.5;
 
 -(CALayer *)layerWithString:(NSString *)string whiteOnBlock:(BOOL)whiteOnBlack
 {
-	CGFloat MAX_TEXT_WIDTH	= 70.0;
+	CGFloat MAX_TEXT_WIDTH	= 100.0;
 
 	// Don't cache these here because they are cached by the objects they are attached to
 	CATextLayer * layer = [CATextLayer new];
 
-	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 	UIColor * textColor   = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	UIColor * shadowColor = whiteOnBlack ? UIColor.blackColor : UIColor.whiteColor;
-	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)textColor.CGColor, NSFontAttributeName : font }];
+	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string attributes:@{ NSForegroundColorAttributeName : (id)textColor.CGColor,
+																									  NSFontAttributeName : font }];
 
 	CGRect bounds = { 0 };
 	CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString( (__bridge CFAttributedStringRef)attrString );
