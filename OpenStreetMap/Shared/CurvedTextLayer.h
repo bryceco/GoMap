@@ -27,9 +27,6 @@
 
 +(instancetype)shared;
 
--(void)drawString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset color:(NSColor *)color shadowColor:(NSColor *)shadowColor context:(CGContextRef)ctx;
--(void)drawString:(NSString *)string centeredOnPoint:(CGPoint)point width:(CGFloat)lineWidth font:(UIFont *)font color:(UIColor *)color shadowColor:(UIColor *)shadowColor context:(CGContextRef)ctx;
-
 -(CALayer *)layerWithString:(NSString *)string whiteOnBlock:(BOOL)whiteOnBlack;
 -(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset whiteOnBlock:(BOOL)whiteOnBlack;
 

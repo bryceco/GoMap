@@ -30,9 +30,6 @@
 #import "TagInfo.h"
 #import "VectorMath.h"
 
-
-#define USE_SHAPELAYERS		1
-#define USE_CGCONTEXT		0
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
 
@@ -237,11 +234,7 @@ const double MinIconSizeInMeters = 2.0;
 	}
 
 	_speechBalloon.hidden = YES;
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 	[self updateMapLocation];
 }
 
@@ -266,19 +259,11 @@ const double MinIconSizeInMeters = 2.0;
 				}
 			});
 		} else {
-#if USE_SHAPELAYERS
 			[self setNeedsLayout];
-#else
-			[self setNeedsDisplay];
-#endif
 		}
 	}];
 
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 }
 
 -(void)didReceiveMemoryWarning
@@ -695,11 +680,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 }
 
 
-#if USE_SHAPELAYERS
 -(CAShapeLayer *)getOceanLayer:(NSArray *)objectList
-#else
--(BOOL)drawOceans:(NSArray *)objectList context:(CGContextRef)ctx
-#endif
 {
 	// get all coastline ways
 	NSMutableArray * outerSegments = [NSMutableArray new];
@@ -831,31 +812,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		return result;
 	}];
 
-
-#if 0
-	// drawing green/red entry/exit segments
-	for ( NSArray * outline in visibleSegments ) {
-		OSMPoint p1 = [outline[0] point];
-		OSMPoint p2 = [outline[1] point];
-		CGContextBeginPath(ctx);
-		CGContextSetLineCap(ctx, kCGLineCapRound);
-		CGContextMoveToPoint(ctx, p1.x, p1.y);
-		CGContextAddLineToPoint(ctx, p2.x, p2.y);
-		CGContextSetLineWidth(ctx, 6);
-		CGContextSetRGBStrokeColor(ctx, 0, 1, 0, 1);	// green
-		CGContextStrokePath(ctx);
-		//
-		p1 = [outline.lastObject point];
-		p2 = [outline[outline.count-2] point];
-		CGContextBeginPath(ctx);
-		CGContextMoveToPoint(ctx, p1.x, p1.y);
-		CGContextAddLineToPoint(ctx, p2.x, p2.y);
-		CGContextSetLineWidth(ctx, 6);
-		CGContextSetRGBStrokeColor(ctx, 1, 0, 0, 1);	// red
-		CGContextStrokePath(ctx);
-	}
-#endif
-
 	// now have a set of discontiguous arrays of coastline nodes. Draw segments adding points at screen corners to connect them
 	BOOL haveCoastline = NO;
 	CGMutablePathRef path = CGPathCreateMutable();
@@ -950,7 +906,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		CGPathAddLineToPoint(path, NULL, viewRect.origin.x, viewRect.origin.y+viewRect.size.height);
 		CGPathCloseSubpath(path);
 	}
-#if USE_SHAPELAYERS
+
 	CAShapeLayer * layer = [CAShapeLayer new];
 	layer.path = path;
 	layer.frame			= self.bounds;
@@ -962,14 +918,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	layer.zPosition		= Z_OCEAN;
 	CGPathRelease(path);
 	return layer;
-#else
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBFillColor(ctx, 0, 0, 1, 0.3);
-	CGContextFillPath(ctx);
-	CGPathRelease(path);
-	return YES;
-#endif
 }
 
 #pragma mark Common Drawing
@@ -1047,11 +995,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 			_mapCss = nil;
 		}
 		[self didChangeValueForKey:@"enableMapCss"];
-#if USE_SHAPELAYERS
 		[self setNeedsLayout];
-#else
-		[self setNeedsDisplay];
-#endif
 	}
 }
 
@@ -1240,7 +1184,6 @@ static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
 
 #pragma mark CAShapeLayer drawing
 
-#if USE_SHAPELAYERS
 #define ZSCALE 0.001
 const static CGFloat Z_BASE				= -1;
 const static CGFloat Z_OCEAN			= Z_BASE + 1 * ZSCALE;
@@ -1759,16 +1702,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			if ( isHighway ) {
 
 				// These are drawn dynamically
-#if 0
-				double length = 0.0;
-				CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
-				double offset = (length - name.length * Pixels_Per_Character) / 2;
-				if ( offset >= 0 ) {
-					NSArray * a = [CurvedTextLayer layersWithString:name alongPath:path offset:offset color:self.textColor];
-					[layers addObjectsFromArray:a];
-				}
-				CGPathRelease(path);
-#endif
 
 			} else {
 
@@ -2050,10 +1983,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 }
 
 
-#endif
-
-
-
 
 -(NSArray *)wayListForMultipolygonRelation:(OsmRelation *)relation
 {
@@ -2070,1138 +1999,13 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 -(void)resetDisplayLayers
 {
-#if USE_SHAPELAYERS
 	// need to refresh all text objects
 	[_mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
 		obj.shapeLayers = nil;
 	}];
 	_baseLayer.sublayers = nil;
-#endif
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 }
-
-
-#pragma mark CGContext based drawing
-
-#if USE_CGCONTEXT
-
--(BOOL)drawArea:(OsmBaseObject *)object context:(CGContextRef)ctx
-{
-	OsmWay * way = object.isWay;
-	OsmRelation * relation = object.isRelation;
-
-	if ( way && !way.isArea )
-		return NO;
-
-	TagInfo * tagInfo = object.tagInfo;
-	if ( tagInfo.areaColor == nil )
-		return NO;
-
-	if ( object.isCoastline )
-		return NO;	// already handled during ocean drawing
-
-
-	NSMutableArray * outer = way ? [NSMutableArray arrayWithObject:way] : [NSMutableArray arrayWithCapacity:relation.members.count];
-	NSMutableArray * inner = way ? nil : [NSMutableArray arrayWithCapacity:relation.members.count];
-	for ( OsmMember * mem in relation.members ) {
-		if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
-			if ( [mem.role isEqualToString:@"outer"] )
-				[outer addObject:mem.ref];
-			else if ( [mem.role isEqualToString:@"inner"] ) {
-				[inner addObject:mem.ref];
-			}
-		}
-	}
-
-	// join connected nodes together
-	outer = [self joinConnectedWays:outer];
-	inner = [self joinConnectedWays:inner];
-
-	// convert from nodes to screen points
-	for ( NSMutableArray * a in outer )
-		[self convertNodesToScreenPoints:a];
-	for ( NSMutableArray * a in inner )
-		[self convertNodesToScreenPoints:a];
-
-	// draw
-	CGMutablePathRef path = CGPathCreateMutable();
-	for ( NSArray * w in outer ) {
-		[self addPointList:w toPath:path];
-	}
-	for ( NSArray * w in inner ) {
-		[self addPointList:w toPath:path];
-	}
-	RGBAColor	fillColor;
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
-	[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
-	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, 0.25);
-	CGContextFillPath(ctx);
-	CGPathRelease(path);
-	return YES;
-}
-
-static inline NSColor * ShadowColorForColor( CGFloat r, CGFloat g, CGFloat b )
-{
-	return r+g+b > 1.5 ? UIColor.blackColor : UIColor.whiteColor;
-}
-static inline NSColor * ShadowColorForColor2( NSColor * color )
-{
-	CGFloat r, g, b, a;
-	[color getRed:&r green:&g blue:&b alpha:&a];
-	return ShadowColorForColor(r, g, b);
-}
-
--(BOOL)drawWayCasing:(OsmBaseObject *)object context:(CGContextRef)ctx
-{
-	if ( ![object isKindOfClass:[OsmBaseObject class]] )
-		// could be ObjectSubpart
-		return NO;
-
-	TagInfo * tagInfo = object.tagInfo;
-	if ( tagInfo.lineWidth == 0 )
-		return NO;
-
-	if ( object.isWay.isArea )
-		return NO;
-
-	NSArray * wayList = object.isWay ? @[ object ] : [self wayListForMultipolygonRelation:object.isRelation];
-	CGContextBeginPath(ctx);
-	for ( OsmWay * w in wayList ) {
-		CGPathRef path = [self pathForWay:w];
-		CGContextAddPath(ctx, path);
-		CGPathRelease(path);
-	}
-	CGFloat red = 0.2, green = 0.2, blue = 0.2, alpha = 1.0;
-	CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
-	CGContextSetLineWidth(ctx, (1+tagInfo.lineWidth)*_highwayScale);
-	CGContextStrokePath(ctx);
-	return YES;
-}
-
-
--(void)drawSelectedWayHighlight:(CGPathRef)path width:(CGFloat)lineWidth wayColor:(RGBAColor)wayColor nodes:(NSSet *)nodes context:(CGContextRef)ctx
-{
-	if ( lineWidth == 0 )
-		lineWidth = 1;
-	lineWidth += 2;	// since we're drawing highlight 2-wide we don't want it to intrude inward on way
-	CGPathRef selectionPath = CGPathCreateCopyByStrokingPath(path, NULL, lineWidth, kCGLineCapRound,  kCGLineJoinRound, 1.0);
-	CGContextSetRGBStrokeColor(ctx, wayColor.red, wayColor.green, wayColor.blue, wayColor.alpha);
-	CGContextSetLineWidth(ctx, 2);
-	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 2.0, ShadowColorForColor( wayColor.red, wayColor.green, wayColor.blue).CGColor );
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, selectionPath);
-	CGContextStrokePath(ctx);
-	CGPathRelease(selectionPath);
-
-	// draw nodes of way
-	for ( OsmNode * node in nodes ) {
-		CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-		if ( node == _selectedNode ) {
-			CGContextSetRGBStrokeColor(ctx, 1,0,0, 1);	// red
-		} else {
-			CGContextSetRGBStrokeColor(ctx, 0,1,0, 1);	// green
-		}
-		CGContextBeginPath(ctx);
-		CGContextSetLineWidth(ctx, 2);
-		CGRect rect = CGRectMake( round(pt.x - WayHighlightRadius), round(pt.y - WayHighlightRadius), 2*WayHighlightRadius, 2*WayHighlightRadius);
-		if ( [node hasInterestingTags] ) {
-			CGContextAddRect(ctx, rect);
-		} else {
-			CGContextAddEllipseInRect(ctx, rect);
-		}
-		CGContextStrokePath(ctx);
-	}
-	CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 0.0, NULL );
-}
-
--(void)drawMapCssWay:(ObjectSubpart *)subpart context:(CGContextRef)ctx
-{
-	if ( !subpart.object.isWay )
-		return;
-	OsmWay * way = (id)subpart.object;
-
-	NSDictionary * cssDict	= subpart.properties;
-	RGBAColor	lineColor;
-	BOOL line = DictRGB( cssDict, &lineColor,	@"color");
-	if ( !line )
-		return;
-	CGFloat		width		= 1.0;
-	CGLineJoin	lineJoin	= kCGLineJoinRound;
-	CGLineCap	lineCap		= kCGLineCapRound;
-	DictFloat(		cssDict, &width,			@"width" );
-	DictLineCap(	cssDict, &lineCap,			@"linecap" );
-	DictLineJoin(	cssDict, &lineJoin,			@"linejoin" );
-	CGFloat		*	dashList = NULL;
-	NSInteger dashCount = DictDashes(cssDict, &dashList, @"dashes" );
-	if ( dashCount || dashList ) {
-		CGContextSetLineDash(ctx, 0.0f, dashList, dashCount);
-		free( dashList );
-	}
-	CGContextSetLineCap(ctx, lineCap);
-	CGContextSetLineJoin(ctx, lineJoin);
-	CGPathRef path = [self pathForWay:way];
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor( ctx, lineColor.red, lineColor.green, lineColor.blue, lineColor.alpha);
-	CGContextSetLineWidth( ctx, width );
-	CGContextStrokePath(ctx);
-	CGPathRelease(path);
-
-	CGContextSetLineDash(ctx, 0.0f, NULL, 0);
-}
-
--(void)drawArrowsForPath:(CGPathRef)path context:(CGContextRef)ctx reversed:(BOOL)reversed
-{
-	BOOL solid = YES;
-	double interval = 100;
-	CGContextBeginPath(ctx);
-	CGContextSetLineWidth(ctx, 1);
-	if ( solid )
-		CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);
-	else
-		CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
-
-	InvokeBlockAlongPath( path, interval/2, interval, ^(OSMPoint loc, OSMPoint dir){
-		// draw direction arrow at loc/dir
-		double len = 15;
-		double width = 5;
-		OSMPoint p1 = { loc.x - dir.x*len + dir.y*width, loc.y - dir.y*len - dir.x*width };
-		OSMPoint p2 = { loc.x - dir.x*len - dir.y*width, loc.y - dir.y*len + dir.x*width };
-		CGContextMoveToPoint(ctx, p1.x, p1.y);
-		CGContextAddLineToPoint(ctx, loc.x, loc.y);
-		CGContextAddLineToPoint(ctx, p2.x, p2.y);
-		if ( solid ) {
-			CGContextAddLineToPoint(ctx, loc.x-dir.x*len*0.5, loc.y-dir.y*len*0.5);
-			CGContextClosePath(ctx);
-		}
-	});
-	if ( solid )
-		CGContextFillPath(ctx);
-	else
-		CGContextStrokePath(ctx);
-}
-
--(BOOL)drawWay:(OsmBaseObject *)object context:(CGContextRef)ctx
-{
-	TagInfo * tagInfo = object.tagInfo;
-
-	OsmWay * way = object.isWay ? (id)object : nil;
-	OsmRelation * relation = object.isRelation ? (id)object : nil;
-
-	NSArray * wayList = way ? @[ way ] : [self wayListForMultipolygonRelation:relation];
-
-	CGFloat red = 0, green = 0, blue = 0, alpha = 1;
-	[tagInfo.lineColor getRed:&red green:&green blue:&blue alpha:&alpha];
-	CGFloat lineWidth = tagInfo.lineWidth*_highwayScale;
-	if ( lineWidth == 0 )
-		lineWidth = 1;
-
-	for ( OsmWay * w in wayList ) {
-		CGContextBeginPath(ctx);
-		CGPathRef path = [self pathForWay:w];
-		CGContextAddPath(ctx, path);
-		CGContextSetRGBStrokeColor(ctx, red, green, blue, alpha);
-		CGContextSetLineWidth(ctx, lineWidth);
-
-		CGContextStrokePath(ctx);
-
-		if ( way && way.isOneWay ) {
-			[self drawArrowsForPath:path context:ctx reversed:way.isOneWay == ONEWAY_BACKWARD];
-		}
-		CGPathRelease(path);
-	}
-
-	return YES;
-}
-
--(void)drawMapCssName:(ObjectSubpart *)subpart context:(CGContextRef)ctx
-{
-	NSDictionary * cssDict	= subpart.properties;
-	NSString * textKey = [cssDict objectForKey:@"text"];
-	if ( textKey == nil )
-		return;
-	if ( [textKey characterAtIndex:0] == '"' )
-		textKey = [textKey substringWithRange:NSMakeRange(1, textKey.length-2)];
-	NSString * name = [subpart.object.tags objectForKey:textKey];
-	if ( name == nil )
-		return;
-	// don't draw the same name twice
-	if ( [_nameDrawSet containsObject:name] )
-		return;
-	[_nameDrawSet addObject:name];
-
-	CGFloat fontSize = 10.0;
-	DictFloat( cssDict, &fontSize, @"font-size" );
-	RGBAColor textColor = RGBAColorBlack;
-	DictRGB( cssDict, &textColor, @"text-color" );
-#if TARGET_OS_IPHONE
-	UIColor * color = [UIColor colorWithRed:textColor.red green:textColor.green blue:textColor.blue alpha:textColor.alpha];
-#else
-	NSColor * color = [NSColor colorWithCalibratedRed:textColor.red green:textColor.green blue:textColor.blue alpha:textColor.alpha];
-#endif
-
-#if 0
-	CGFloat haloRadius = 1.0;
-	DictFloat( cssDict, &haloRadius, @"text-halo-radius" );
-	NSString * font = [cssDict objectForKey:@"font-family"];
-	NSString * textPosition = [cssDict objectForKey:@"text-position"];
-	CGFloat textSpacing = 400;
-	DictFloat( cssDict, &textSpacing, @"text-spacing" );
-#endif
-
-	NSColor * shadowColor = ShadowColorForColor(textColor.red, textColor.green, textColor.blue);
-
-	OsmWay * way = subpart.object.isWay ? (id)subpart.object : nil;
-
-	BOOL area = way && way.isArea;
-	if ( way && !area ) {
-		// it is a line
-		CGPathRef path = [self pathForWay:way];
-		CGContextBeginPath(ctx);
-		CGContextAddPath(ctx, path);
-		[CurvedTextLayer.shared drawString:name alongPath:path offset:5.0 color:color shadowColor:shadowColor context:ctx];
-		CGPathRelease(path);
-	} else {
-		// it is a node or area
-		OSMPoint point = [way centerPoint];
-		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x birdsEye:NO];
-
-		UIColor * textColor2 = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
-		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:0 font:nil color:textColor2 shadowColor:ShadowColorForColor2(textColor2) context:ctx];
-	}
-}
-
-
--(BOOL)drawWayName:(OsmBaseObject *)object context:(CGContextRef)ctx
-{
-	// add street names
-	NSString * name = [object.tags objectForKey:@"name"];
-	if ( name == nil )
-		name = DrawNodeAsHouseNumber( object.tags );
-	if ( name == nil )
-		return NO;
-
-	// don't draw the same name twice
-	if ( [_nameDrawSet containsObject:name] )
-		return NO;
-	[_nameDrawSet addObject:name];
-
-	OsmWay * way = object.isWay ? (id)object : nil;
-	OsmRelation * relation = object.isRelation ? (id)object : nil;
-
-	BOOL isHighway = way && !way.isClosed;
-	if ( isHighway ) {
-
-		double length = 0.0;
-		CGPathRef path = [self pathClippedToViewRect:way length:&length];
-		double offset = (length - name.length * Pixels_Per_Character) / 2;
-		if ( offset < 0 ) {
-			CGPathRelease( path );
-			return NO;
-		}
-		UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
-		[CurvedTextLayer.shared drawString:name alongPath:path offset:offset color:textColor shadowColor:ShadowColorForColor2(textColor) context:ctx];
-		CGPathRelease(path);
-
-	} else {
-
-		// don't draw names on objects too narrow for the label
-		OSMRect bbox = object.boundingBox;
-		double pixelWidth = bbox.size.width * MetersPerDegree( bbox.origin.y ) / _mapView.metersPerPixel;
-		const NSInteger MaxLines = 3;
-		pixelWidth = pixelWidth * 0.9;
-		if ( name.length * Pixels_Per_Character > pixelWidth * MaxLines )
-			return NO;
-		
-		OSMPoint point = way ? way.centerPoint : relation.centerPoint;
-		CGPoint cgPoint = [_mapView screenPointForLatitude:point.y longitude:point.x birdsEye:NO];
-		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-		UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
-		UIColor * shadowColor = ShadowColorForColor2(textColor);
-		[CurvedTextLayer.shared drawString:name centeredOnPoint:cgPoint width:pixelWidth font:font color:textColor shadowColor:shadowColor context:ctx];
-	}
-	return YES;
-}
-
-
--(BOOL)drawNode:(OsmNode *)node context:(CGContextRef)ctx
-{
-	if ( _mapCss ) {
-		ObjectSubpart * subpart = (id)node;
-		OsmBaseObject * object = subpart.object;
-		if ( !object.isNode && !object.isWay.isArea )
-			return NO;
-		NSDictionary * cssDict	= subpart.properties;
-		NSString * iconName = [cssDict objectForKey:@"icon-image"];
-		if ( iconName == nil ) {
-			return NO;
-		}
-		node = (id)object;
-	}
-
-	CGPoint pt;
-	if ( node.isNode ) {
-		pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-	} else if ( node.isWay ) {
-		// this path is taken when MapCSS is drawing an icon in the center of an area, such as a parking lot
-		OSMPoint latLon = [node.isWay centerPoint];
-		pt = [_mapView screenPointForLatitude:latLon.y longitude:latLon.x birdsEye:NO];
-	} else {
-		assert(NO);
-		return NO;
-	}
-#if DEBUG && 0
-	NSAssert( CGRectContainsPoint(self.bounds,CGPointMake(pt.x, pt.y)), nil );
-#endif
-	pt.x = round(pt.x);	// performance optimization when drawing
-	pt.y = round(pt.y);
-
-	BOOL untagged = NO;
-	TagInfo * tagInfo = node.tagInfo;
-	if ( tagInfo.icon ) {
-
-		UIImage * icon = tagInfo.icon;
-		if ( _iconSize.height == MinIconSizeInPixels ) {
-			if ( tagInfo.scaledIcon == nil ) {
-				UIGraphicsBeginImageContext( _iconSize );
-				[icon drawInRect:CGRectMake(0,0,_iconSize.width,_iconSize.height)];
-				tagInfo.scaledIcon = UIGraphicsGetImageFromCurrentImageContext();
-				UIGraphicsEndImageContext();
-			}
-			icon = tagInfo.scaledIcon;
-		}
-
-		// draw with icon
-		CGContextSaveGState(ctx);
-		CGContextTranslateCTM(ctx, 0, pt.y+_iconSize.height);
-		CGContextScaleCTM(ctx, 1.0, -1.0);
-		CGRect rect = CGRectMake(pt.x-round(_iconSize.width/2), round(_iconSize.height/2), _iconSize.width, _iconSize.height);
-		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.whiteColor.CGColor );
-		CGContextDrawImage( ctx, rect, icon.CGImage );
-		CGContextRestoreGState(ctx);
-
-	} else {
-
-		// draw generic box
-		CGFloat red, green, blue;
-		if ( node.tags[@"shop"] ) {
-			red = 0xAC/255.0;
-			green = 0x39/255.0;
-			blue = 0xAC/255.0;
-		} else if ( node.tags[@"amenity"] || node.tags[@"building"] || node.tags[@"leisure"] ) {
-			red = 0x73/255.0;
-			green = 0x4A/255.0;
-			blue = 0x08/255.0;
-		} else if ( node.tags[@"tourism"] || node.tags[@"transport"] ) {
-			red = 0x00/255.0;
-			green = 0x92/255.0;
-			blue = 0xDA/255.0;
-		} else if ( node.tags[@"medical"] ) {
-			red = 0xDA/255.0;
-			green = 0x00/255.0;
-			blue = 0x92/255.0;
-		} else if ( node.tags[@"name"] ) {
-			// blue for generic interesting nodes
-			red = 0;
-			green = 0;
-			blue = 1;
-		} else {
-			// gray for untagged nodes
-			untagged = YES;
-			red = green = blue = 0.5;
-		}
-		CGContextSetRGBStrokeColor(ctx, red, green, blue, 1.0);
-
-		NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( node.tags ) : nil;
-		if ( houseNumber ) {
-
-			UIColor * textColor = self.whiteText ? UIColor.whiteColor : UIColor.blackColor;
-			UIColor * shadowColor = ShadowColorForColor2(textColor);
-			[CurvedTextLayer.shared drawString:houseNumber	centeredOnPoint:pt width:0 font:nil color:textColor shadowColor:shadowColor context:ctx];
-
-		} else {
-
-			CGContextSetLineWidth(ctx, 2.0);
-			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, ShadowColorForColor(red, green, blue).CGColor );
-			CGRect rect = CGRectMake(pt.x - round(_iconSize.width/4), pt.y - round(_iconSize.height/4), round(_iconSize.width/2), round(_iconSize.height/2));
-			CGContextBeginPath(ctx);
-			CGContextAddRect(ctx, rect);
-			CGContextStrokePath(ctx);
-		}
-	}
-
-	// if zoomed in very close then provide crosshairs
-	if ( _iconSize.width > 64 ) {
-		CGContextSetStrokeColorWithColor( ctx, NSColor.blackColor.CGColor );
-		CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.whiteColor.CGColor );
-		CGContextSetLineWidth( ctx, 2.0 );
-		CGContextBeginPath(ctx);
-		CGPoint line1[2] = { pt.x - 10, pt.y, pt.x+10, pt.y };
-		CGPoint line2[2] = { pt.x, pt.y - 10, pt.x, pt.y + 10 };
-		CGContextAddLines( ctx, line1, 2 );
-		CGContextAddLines( ctx, line2, 2 );
-		CGContextStrokePath(ctx);
-	}
-
-	return YES;
-}
-
--(void)drawHighlighedObjects:(CGContextRef)ctx
-{
-	NSInteger zoom = [self zoomLevel];
-
-	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
-	if ( _selectedNode ) {
-		[highlights addObject:_selectedNode];
-	}
-	if ( _selectedWay ) {
-		[highlights addObject:_selectedWay];
-	}
-	if ( _selectedRelation ) {
-		NSSet * members = [_selectedRelation allMemberObjects];
-		[highlights addObjectsFromArray:members.allObjects];
-	}
-	if ( _highlightObject ) {
-		[highlights addObject:_highlightObject];
-	}
-	for ( OsmBaseObject * object in highlights ) {
-		BOOL selected = object == _selectedNode || object == _selectedWay || [self.extraSelections containsObject:object];
-
-		if ( object.isWay ) {
-			OsmWay * way = (id)object;
-			CGFloat width = MaxSubpartWidthForWay( way, @(zoom) );
-			CGPathRef path = [self pathForWay:way];
-			RGBAColor color = { 1, 1, !selected, 1 };
-			NSSet * nodes = way == _selectedWay ? way.nodeSet : nil;
-			[self drawSelectedWayHighlight:path width:width wayColor:color nodes:nodes context:ctx];
-			CGPathRelease(path);
-		} else if ( object.isNode ) {
-			OsmNode * node = (id)object;
-			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-
-			CGContextBeginPath(ctx);
-			if ( selected )
-				CGContextSetRGBStrokeColor(ctx, 1,1,0, 1);	// yellow
-			else
-				CGContextSetRGBStrokeColor(ctx, 1,1,1, 1);	// white
-			CGContextSetShadowWithColor( ctx, CGSizeMake(0,0), 3.0, NSColor.blackColor.CGColor );
-			CGContextSetLineWidth(ctx, 2);
-			CGRect rect = CGRectMake(pt.x - _iconSize.width/2, pt.y - _iconSize.width/2, _iconSize.width, _iconSize.width);
-			CGContextAddRect(ctx, rect);
-			CGContextStrokePath(ctx);
-		}
-	}
-}
-
-#pragma mark CGContext (CSS) drawing
-
-
-#if 0
-static const RGBAColor RGBAColorBlack		= { 0, 0, 0, 1 };
-static const RGBAColor RGBAColorTransparent = { 0, 0, 0, 0 };
-
-static inline uint8_t CharHexValue( char ch )
-{
-	if ( ch >= '0' && ch <= '9' )
-		return ch -= '0';
-	if ( ch >= 'A' && ch <= 'F' )
-		return ch - ('A' - 10);
-	if ( ch >= 'a' && ch <= 'f' )
-		return ch - ('a' - 10);
-	assert(NO);
-	return 0;
-}
-static RGBAColor RGBFromString( NSString * text )
-{
-	if ( [text characterAtIndex:0] == '#' ) {
-		CFStringEncoding encoding = CFStringGetFastestEncoding( (__bridge CFStringRef)text );
-		if ( encoding != kCFStringEncodingMacRoman && encoding != kCFStringEncodingUTF8 )
-			encoding = kCFStringEncodingMacRoman;
-		UInt8 buffer[ 6 ] = { 0 };
-		CFRange range = { 1, sizeof buffer };
-		CFStringGetBytes( (__bridge CFStringRef)text, range, encoding, '?', NO, buffer, sizeof buffer, NULL );
-		RGBAColor color;
-		color.red	= (16 * CharHexValue( buffer[0] ) + CharHexValue( buffer[1] )) / 255.0;
-		color.green = (16 * CharHexValue( buffer[2] ) + CharHexValue( buffer[3] )) / 255.0;
-		color.blue	= (16 * CharHexValue( buffer[4] ) + CharHexValue( buffer[5] )) / 255.0;
-		color.alpha = 1.0;
-		return color;
-	} else {
-		static struct {
-			RGBAColor		color;
-			const char	*	name;
-		} ColorList[] = {
-			240/255.0, 248/255.0, 255/255.0, 1.0f, "aliceblue"           ,
-			250/255.0, 235/255.0, 215/255.0, 1.0f, "antiquewhite"        ,
-			0/255.0, 255/255.0, 255/255.0, 1.0f, "aqua"                ,
-			127/255.0, 255/255.0, 212/255.0, 1.0f, "aquamarine"          ,
-			240/255.0, 255/255.0, 255/255.0, 1.0f, "azure"               ,
-			245/255.0, 245/255.0, 220/255.0, 1.0f, "beige"               ,
-			255/255.0, 228/255.0, 196/255.0, 1.0f, "bisque"              ,
-			0/255.0,   0/255.0,   0/255.0, 1.0f, "black"               ,
-			255/255.0, 235/255.0, 205/255.0, 1.0f, "blanchedalmond"      ,
-			0/255.0,   0/255.0, 255/255.0, 1.0f, "blue"                ,
-			138/255.0,  43/255.0, 226/255.0, 1.0f, "blueviolet"          ,
-			165/255.0,  42/255.0,  42/255.0, 1.0f, "brown"               ,
-			222/255.0, 184/255.0, 135/255.0, 1.0f, "burlywood"           ,
-			95/255.0, 158/255.0, 160/255.0, 1.0f, "cadetblue"           ,
-			127/255.0, 255/255.0,   0/255.0, 1.0f, "chartreuse"          ,
-			210/255.0, 105/255.0,  30/255.0, 1.0f, "chocolate"           ,
-			255/255.0, 127/255.0,  80/255.0, 1.0f, "coral"               ,
-			100/255.0, 149/255.0, 237/255.0, 1.0f, "cornflowerblue"      ,
-			255/255.0, 248/255.0, 220/255.0, 1.0f, "cornsilk"            ,
-			220/255.0,  20/255.0,  60/255.0, 1.0f, "crimson"             ,
-			0/255.0, 255/255.0, 255/255.0, 1.0f, "cyan"                ,
-			0/255.0,   0/255.0, 139/255.0, 1.0f, "darkblue"            ,
-			0/255.0, 139/255.0, 139/255.0, 1.0f, "darkcyan"            ,
-			184/255.0, 134/255.0,  11/255.0, 1.0f, "darkgoldenrod"       ,
-			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgray"            ,
-			0/255.0, 100/255.0,   0/255.0, 1.0f, "darkgreen"           ,
-			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgrey"            ,
-			189/255.0, 183/255.0, 107/255.0, 1.0f, "darkkhaki"           ,
-			139/255.0,   0/255.0, 139/255.0, 1.0f, "darkmagenta"         ,
-			85/255.0, 107/255.0,  47/255.0, 1.0f, "darkolivegreen"      ,
-			255/255.0, 140/255.0,   0/255.0, 1.0f, "darkorange"          ,
-			153/255.0,  50/255.0, 204/255.0, 1.0f, "darkorchid"          ,
-			139/255.0,   0/255.0,   0/255.0, 1.0f, "darkred"             ,
-			233/255.0, 150/255.0, 122/255.0, 1.0f, "darksalmon"          ,
-			143/255.0, 188/255.0, 143/255.0, 1.0f, "darkseagreen"        ,
-			72/255.0,  61/255.0, 139/255.0, 1.0f, "darkslateblue"       ,
-			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategray"       ,
-			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategrey"       ,
-			0/255.0, 206/255.0, 209/255.0, 1.0f, "darkturquoise"       ,
-			148/255.0,   0/255.0, 211/255.0, 1.0f, "darkviolet"          ,
-			255/255.0,  20/255.0, 147/255.0, 1.0f, "deeppink"            ,
-			0/255.0, 191/255.0, 255/255.0, 1.0f, "deepskyblue"         ,
-			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgray"             ,
-			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgrey"             ,
-			30/255.0, 144/255.0, 255/255.0, 1.0f, "dodgerblue"          ,
-			178/255.0,  34/255.0,  34/255.0, 1.0f, "firebrick"           ,
-			255/255.0, 250/255.0, 240/255.0, 1.0f, "floralwhite"         ,
-			34/255.0, 139/255.0,  34/255.0, 1.0f, "forestgreen"         ,
-			255/255.0,   0/255.0, 255/255.0, 1.0f, "fuchsia"             ,
-			220/255.0, 220/255.0, 220/255.0, 1.0f, "gainsboro"           ,
-			248/255.0, 248/255.0, 255/255.0, 1.0f, "ghostwhite"          ,
-			255/255.0, 215/255.0,   0/255.0, 1.0f, "gold"                ,
-			218/255.0, 165/255.0,  32/255.0, 1.0f, "goldenrod"           ,
-			128/255.0, 128/255.0, 128/255.0, 1.0f, "gray"                ,
-			0/255.0, 128/255.0,   0/255.0, 1.0f, "green"               ,
-			173/255.0, 255/255.0,  47/255.0, 1.0f, "greenyellow"         ,
-			128/255.0, 128/255.0, 128/255.0, 1.0f, "grey"                ,
-			240/255.0, 255/255.0, 240/255.0, 1.0f, "honeydew"            ,
-			255/255.0, 105/255.0, 180/255.0, 1.0f, "hotpink"             ,
-			205/255.0,  92/255.0,  92/255.0, 1.0f, "indianred"           ,
-			75/255.0,   0/255.0, 130/255.0, 1.0f, "indigo"              ,
-			255/255.0, 255/255.0, 240/255.0, 1.0f, "ivory"               ,
-			240/255.0, 230/255.0, 140/255.0, 1.0f, "khaki"               ,
-			230/255.0, 230/255.0, 250/255.0, 1.0f, "lavender"            ,
-			255/255.0, 240/255.0, 245/255.0, 1.0f, "lavenderblush"       ,
-			124/255.0, 252/255.0,   0/255.0, 1.0f, "lawngreen"           ,
-			255/255.0, 250/255.0, 205/255.0, 1.0f, "lemonchiffon"        ,
-			173/255.0, 216/255.0, 230/255.0, 1.0f, "lightblue"           ,
-			240/255.0, 128/255.0, 128/255.0, 1.0f, "lightcyan"           ,
-			224/255.0, 255/255.0, 255/255.0, 1.0f, "lightcoral"          ,
-			250/255.0, 250/255.0, 210/255.0, 1.0f, "lightgoldenrodyellow",
-			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgray"           ,
-			144/255.0, 238/255.0, 144/255.0, 1.0f, "lightgreen"          ,
-			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgrey"           ,
-			255/255.0, 182/255.0, 193/255.0, 1.0f, "lightpink"           ,
-			255/255.0, 160/255.0, 122/255.0, 1.0f, "lightsalmon"         ,
-			32/255.0, 178/255.0, 170/255.0, 1.0f, "lightseagreen"       ,
-			135/255.0, 206/255.0, 250/255.0, 1.0f, "lightskyblue"        ,
-			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategray"      ,
-			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategrey"      ,
-			176/255.0, 196/255.0, 222/255.0, 1.0f, "lightsteelblue"      ,
-			255/255.0, 255/255.0, 224/255.0, 1.0f, "lightyellow"         ,
-			0/255.0, 255/255.0,   0/255.0, 1.0f, "lime"                ,
-			50/255.0, 205/255.0,  50/255.0, 1.0f, "limegreen"           ,
-			250/255.0, 240/255.0, 230/255.0, 1.0f, "linen"               ,
-			255/255.0,   0/255.0, 255/255.0, 1.0f, "magenta"             ,
-			128/255.0,   0/255.0,   0/255.0, 1.0f, "maroon"              ,
-			102/255.0, 205/255.0, 170/255.0, 1.0f, "mediumaquamarine"    ,
-			0/255.0,   0/255.0, 205/255.0, 1.0f, "mediumblue"          ,
-			186/255.0,  85/255.0, 211/255.0, 1.0f, "mediumorchid"        ,
-			147/255.0, 112/255.0, 219/255.0, 1.0f, "mediumpurple"        ,
-			60/255.0, 179/255.0, 113/255.0, 1.0f, "mediumseagreen"      ,
-			123/255.0, 104/255.0, 238/255.0, 1.0f, "mediumslateblue"     ,
-			0/255.0, 250/255.0, 154/255.0, 1.0f, "mediumspringgreen"   ,
-			72/255.0, 209/255.0, 204/255.0, 1.0f, "mediumturquoise"     ,
-			199/255.0,  21/255.0, 133/255.0, 1.0f, "mediumvioletred"     ,
-			25/255.0,  25/255.0, 112/255.0, 1.0f, "midnightblue"        ,
-			245/255.0, 255/255.0, 250/255.0, 1.0f, "mintcream"           ,
-			255/255.0, 228/255.0, 225/255.0, 1.0f, "mistyrose"           ,
-			255/255.0, 228/255.0, 181/255.0, 1.0f, "moccasin"            ,
-			255/255.0, 222/255.0, 173/255.0, 1.0f, "navajowhite"         ,
-			0/255.0,   0/255.0, 128/255.0, 1.0f, "navy"                ,
-			253/255.0, 245/255.0, 230/255.0, 1.0f, "oldlace"             ,
-			128/255.0, 128/255.0,   0/255.0, 1.0f, "olive"               ,
-			107/255.0, 142/255.0,  35/255.0, 1.0f, "olivedrab"           ,
-			255/255.0, 165/255.0,   0/255.0, 1.0f, "orange"              ,
-			255/255.0,  69/255.0,   0/255.0, 1.0f, "orangered"           ,
-			218/255.0, 112/255.0, 214/255.0, 1.0f, "orchid"              ,
-			238/255.0, 232/255.0, 170/255.0, 1.0f, "palegoldenrod"       ,
-			152/255.0, 251/255.0, 152/255.0, 1.0f, "palegreen"           ,
-			175/255.0, 238/255.0, 238/255.0, 1.0f, "paleturquoise"       ,
-			219/255.0, 112/255.0, 147/255.0, 1.0f, "palevioletred"       ,
-			255/255.0, 239/255.0, 213/255.0, 1.0f, "papayawhip"          ,
-			255/255.0, 218/255.0, 185/255.0, 1.0f, "peachpuff"           ,
-			205/255.0, 133/255.0,  63/255.0, 1.0f, "peru"                ,
-			255/255.0, 192/255.0, 203/255.0, 1.0f, "pink"                ,
-			221/255.0, 160/255.0, 221/255.0, 1.0f, "plum"                ,
-			176/255.0, 224/255.0, 230/255.0, 1.0f, "powderblue"          ,
-			128/255.0,   0/255.0, 128/255.0, 1.0f, "purple"              ,
-			255/255.0,   0/255.0,   0/255.0, 1.0f, "red"                 ,
-			188/255.0, 143/255.0, 143/255.0, 1.0f, "rosybrown"           ,
-			65/255.0, 105/255.0, 225/255.0, 1.0f, "royalblue"           ,
-			139/255.0,  69/255.0,  19/255.0, 1.0f, "saddlebrown"         ,
-			250/255.0, 128/255.0, 114/255.0, 1.0f, "salmon"              ,
-			244/255.0, 164/255.0,  96/255.0, 1.0f, "sandybrown"          ,
-			46/255.0, 139/255.0,  87/255.0, 1.0f, "seagreen"            ,
-			255/255.0, 245/255.0, 238/255.0, 1.0f, "seashell"            ,
-			160/255.0,  82/255.0,  45/255.0, 1.0f, "sienna"              ,
-			192/255.0, 192/255.0, 192/255.0, 1.0f, "silver"              ,
-			135/255.0, 206/255.0, 235/255.0, 1.0f, "skyblue"             ,
-			106/255.0,  90/255.0, 205/255.0, 1.0f, "slateblue"           ,
-			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategray"           ,
-			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategrey"           ,
-			255/255.0, 250/255.0, 250/255.0, 1.0f, "snow"                ,
-			0/255.0, 255/255.0, 127/255.0, 1.0f, "springgreen"         ,
-			70/255.0, 130/255.0, 180/255.0, 1.0f, "steelblue"           ,
-			210/255.0, 180/255.0, 140/255.0, 1.0f, "tan"                 ,
-			0/255.0, 128/255.0, 128/255.0, 1.0f, "teal"                ,
-			216/255.0, 191/255.0, 216/255.0, 1.0f, "thistle"             ,
-			255/255.0,  99/255.0,  71/255.0, 1.0f, "tomato"              ,
-			64/255.0, 224/255.0, 208/255.0, 1.0f, "turquoise"           ,
-			238/255.0, 130/255.0, 238/255.0, 1.0f, "violet"              ,
-			245/255.0, 222/255.0, 179/255.0, 1.0f, "wheat"               ,
-			255/255.0, 255/255.0, 255/255.0, 1.0f, "white"               ,
-			245/255.0, 245/255.0, 245/255.0, 1.0f, "whitesmoke"          ,
-			255/255.0, 255/255.0,   0/255.0, 1.0f, "yellow"              ,
-			154/255.0, 205/255.0,  50/255.0, 1.0f, "yellowgreen"         ,
-		};
-		static NSDictionary * colorDict = nil;
-		if ( colorDict == nil ) {
-			NSMutableDictionary * dict = [NSMutableDictionary new];
-			for ( int i = 0; i < sizeof ColorList/sizeof ColorList[0]; ++i ) {
-				[dict setObject:@(i) forKey:@(ColorList[i].name)];
-			}
-			colorDict = [NSDictionary dictionaryWithDictionary:dict];
-		}
-		NSNumber * index = [colorDict objectForKey:text];
-		if ( index ) {
-			return ColorList[ index.integerValue ].color;
-		}
-		assert(NO);
-		return RGBAColorTransparent;
-	}
-}
-static BOOL DictRGB( NSDictionary * dict, RGBAColor * color, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	*color = RGBFromString(text);
-	return YES;
-}
-static BOOL DictFloat( NSDictionary * dict, CGFloat * value, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	*value = text.doubleValue;
-	return YES;
-}
-static BOOL DictLineCap( NSDictionary * dict, CGLineCap * lineCap, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	if ( [text isEqualToString:@"round"] ) {
-		*lineCap = kCGLineCapRound;
-		return YES;
-	}
-	if ( [text isEqualToString:@"square"] ) {
-		*lineCap = kCGLineCapSquare;
-		return YES;
-	}
-	if ( [text isEqualToString:@"none"] ) {
-		*lineCap = kCGLineCapButt;
-		return YES;
-	}
-	assert(NO);
-	return NO;
-}
-static BOOL DictLineJoin( NSDictionary * dict, CGLineJoin * lineJoin, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	if ( [text isEqualToString:@"round"] ) {
-		*lineJoin = kCGLineJoinRound;
-		return YES;
-	}
-	if ( [text isEqualToString:@"miter"] ) {
-		*lineJoin = kCGLineJoinMiter;
-		return YES;
-	}
-	if ( [text isEqualToString:@"bevel"] ) {
-		*lineJoin = kCGLineJoinBevel;
-		return YES;
-	}
-	assert(NO);
-	return NO;
-}
-static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString * key )
-{
-	NSString * dashes = [dict objectForKey:@"dashes"];
-	if ( dashes == nil ) {
-		return 0;
-	}
-	NSArray * a = [dashes componentsSeparatedByString:@","];
-	assert( a.count > 0 && a.count % 2 == 0 );
-	*dashList = malloc( a.count * sizeof dashList[0][0] );
-	NSInteger index = 0;
-	for ( NSString * s in a ) {
-		(*dashList)[index] = [s doubleValue];
-		++index;
-	}
-	return a.count;
-}
-
--(void)drawMapCssCoastline:(ObjectSubpart *)subpart context:(CGContextRef)ctx
-{
-	if ( subpart.object.isCoastline && subpart.object.isWay) {
-		RGBAColor	lineColor = { 0, 0, 1, 1.0 };
-		CGContextSetLineCap(ctx, kCGLineCapRound);
-		CGContextSetLineJoin(ctx, kCGLineJoinRound);
-		CGPathRef path = [self pathForWay:((OsmWay *)subpart.object)];
-		CGContextBeginPath(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetRGBStrokeColor( ctx, lineColor.red, lineColor.green, lineColor.blue, lineColor.alpha);
-		CGContextSetLineWidth( ctx, 2.0 );
-		CGContextStrokePath(ctx);
-		CGPathRelease(path);
-	}
-}
-
--(BOOL)drawMapCssArea:(ObjectSubpart *)subpart context:(CGContextRef)ctx
-{
-	if ( !subpart.object.isWay )
-		return NO;
-	OsmWay * way = (id)subpart.object;
-	if ( !way.isArea )
-		return NO;
-
-	NSDictionary * cssDict	= subpart.properties;
-	RGBAColor	fillColor;
-	BOOL fill = DictRGB( cssDict, &fillColor,	@"fill-color" );
-	if ( !fill )
-		return NO;
-	DictFloat( cssDict, &fillColor.alpha,	@"fill-opacity" );
-	CGPathRef path = [self pathForWay:way];
-	CGContextBeginPath(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, fillColor.alpha);
-	CGContextFillPath(ctx);
-	CGPathRelease(path);
-	return YES;
-}
-
-
-static CGFloat MaxSubpartWidthForWay( OsmWay * way, NSNumber * zoom )
-{
-	CGFloat width = 1.0;
-	NSMutableDictionary * zoomDict = way.cssRenderPropertiesForZoom;
-	NSArray * objectSubparts = [zoomDict objectForKey:zoom];
-	for ( ObjectSubpart * subpart in objectSubparts ) {
-		NSDictionary * cssDict	= subpart.properties;
-		CGFloat	w;
-		if ( DictFloat( cssDict, &w, @"width" ) && w > width )
-			width = w;
-	}
-	return width;
-}
-#endif // CSS drawing
-#if 0
-static const RGBAColor RGBAColorBlack		= { 0, 0, 0, 1 };
-static const RGBAColor RGBAColorTransparent = { 0, 0, 0, 0 };
-
-static inline uint8_t CharHexValue( char ch )
-{
-	if ( ch >= '0' && ch <= '9' )
-		return ch -= '0';
-	if ( ch >= 'A' && ch <= 'F' )
-		return ch - ('A' - 10);
-	if ( ch >= 'a' && ch <= 'f' )
-		return ch - ('a' - 10);
-	assert(NO);
-	return 0;
-}
-static RGBAColor RGBFromString( NSString * text )
-{
-	if ( [text characterAtIndex:0] == '#' ) {
-		CFStringEncoding encoding = CFStringGetFastestEncoding( (__bridge CFStringRef)text );
-		if ( encoding != kCFStringEncodingMacRoman && encoding != kCFStringEncodingUTF8 )
-			encoding = kCFStringEncodingMacRoman;
-		UInt8 buffer[ 6 ] = { 0 };
-		CFRange range = { 1, sizeof buffer };
-		CFStringGetBytes( (__bridge CFStringRef)text, range, encoding, '?', NO, buffer, sizeof buffer, NULL );
-		RGBAColor color;
-		color.red	= (16 * CharHexValue( buffer[0] ) + CharHexValue( buffer[1] )) / 255.0;
-		color.green = (16 * CharHexValue( buffer[2] ) + CharHexValue( buffer[3] )) / 255.0;
-		color.blue	= (16 * CharHexValue( buffer[4] ) + CharHexValue( buffer[5] )) / 255.0;
-		color.alpha = 1.0;
-		return color;
-	} else {
-		static struct {
-			RGBAColor		color;
-			const char	*	name;
-		} ColorList[] = {
-			240/255.0, 248/255.0, 255/255.0, 1.0f, "aliceblue"           ,
-			250/255.0, 235/255.0, 215/255.0, 1.0f, "antiquewhite"        ,
-			0/255.0, 255/255.0, 255/255.0, 1.0f, "aqua"                ,
-			127/255.0, 255/255.0, 212/255.0, 1.0f, "aquamarine"          ,
-			240/255.0, 255/255.0, 255/255.0, 1.0f, "azure"               ,
-			245/255.0, 245/255.0, 220/255.0, 1.0f, "beige"               ,
-			255/255.0, 228/255.0, 196/255.0, 1.0f, "bisque"              ,
-			0/255.0,   0/255.0,   0/255.0, 1.0f, "black"               ,
-			255/255.0, 235/255.0, 205/255.0, 1.0f, "blanchedalmond"      ,
-			0/255.0,   0/255.0, 255/255.0, 1.0f, "blue"                ,
-			138/255.0,  43/255.0, 226/255.0, 1.0f, "blueviolet"          ,
-			165/255.0,  42/255.0,  42/255.0, 1.0f, "brown"               ,
-			222/255.0, 184/255.0, 135/255.0, 1.0f, "burlywood"           ,
-			95/255.0, 158/255.0, 160/255.0, 1.0f, "cadetblue"           ,
-			127/255.0, 255/255.0,   0/255.0, 1.0f, "chartreuse"          ,
-			210/255.0, 105/255.0,  30/255.0, 1.0f, "chocolate"           ,
-			255/255.0, 127/255.0,  80/255.0, 1.0f, "coral"               ,
-			100/255.0, 149/255.0, 237/255.0, 1.0f, "cornflowerblue"      ,
-			255/255.0, 248/255.0, 220/255.0, 1.0f, "cornsilk"            ,
-			220/255.0,  20/255.0,  60/255.0, 1.0f, "crimson"             ,
-			0/255.0, 255/255.0, 255/255.0, 1.0f, "cyan"                ,
-			0/255.0,   0/255.0, 139/255.0, 1.0f, "darkblue"            ,
-			0/255.0, 139/255.0, 139/255.0, 1.0f, "darkcyan"            ,
-			184/255.0, 134/255.0,  11/255.0, 1.0f, "darkgoldenrod"       ,
-			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgray"            ,
-			0/255.0, 100/255.0,   0/255.0, 1.0f, "darkgreen"           ,
-			169/255.0, 169/255.0, 169/255.0, 1.0f, "darkgrey"            ,
-			189/255.0, 183/255.0, 107/255.0, 1.0f, "darkkhaki"           ,
-			139/255.0,   0/255.0, 139/255.0, 1.0f, "darkmagenta"         ,
-			85/255.0, 107/255.0,  47/255.0, 1.0f, "darkolivegreen"      ,
-			255/255.0, 140/255.0,   0/255.0, 1.0f, "darkorange"          ,
-			153/255.0,  50/255.0, 204/255.0, 1.0f, "darkorchid"          ,
-			139/255.0,   0/255.0,   0/255.0, 1.0f, "darkred"             ,
-			233/255.0, 150/255.0, 122/255.0, 1.0f, "darksalmon"          ,
-			143/255.0, 188/255.0, 143/255.0, 1.0f, "darkseagreen"        ,
-			72/255.0,  61/255.0, 139/255.0, 1.0f, "darkslateblue"       ,
-			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategray"       ,
-			47/255.0,  79/255.0,  79/255.0, 1.0f, "darkslategrey"       ,
-			0/255.0, 206/255.0, 209/255.0, 1.0f, "darkturquoise"       ,
-			148/255.0,   0/255.0, 211/255.0, 1.0f, "darkviolet"          ,
-			255/255.0,  20/255.0, 147/255.0, 1.0f, "deeppink"            ,
-			0/255.0, 191/255.0, 255/255.0, 1.0f, "deepskyblue"         ,
-			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgray"             ,
-			105/255.0, 105/255.0, 105/255.0, 1.0f, "dimgrey"             ,
-			30/255.0, 144/255.0, 255/255.0, 1.0f, "dodgerblue"          ,
-			178/255.0,  34/255.0,  34/255.0, 1.0f, "firebrick"           ,
-			255/255.0, 250/255.0, 240/255.0, 1.0f, "floralwhite"         ,
-			34/255.0, 139/255.0,  34/255.0, 1.0f, "forestgreen"         ,
-			255/255.0,   0/255.0, 255/255.0, 1.0f, "fuchsia"             ,
-			220/255.0, 220/255.0, 220/255.0, 1.0f, "gainsboro"           ,
-			248/255.0, 248/255.0, 255/255.0, 1.0f, "ghostwhite"          ,
-			255/255.0, 215/255.0,   0/255.0, 1.0f, "gold"                ,
-			218/255.0, 165/255.0,  32/255.0, 1.0f, "goldenrod"           ,
-			128/255.0, 128/255.0, 128/255.0, 1.0f, "gray"                ,
-			0/255.0, 128/255.0,   0/255.0, 1.0f, "green"               ,
-			173/255.0, 255/255.0,  47/255.0, 1.0f, "greenyellow"         ,
-			128/255.0, 128/255.0, 128/255.0, 1.0f, "grey"                ,
-			240/255.0, 255/255.0, 240/255.0, 1.0f, "honeydew"            ,
-			255/255.0, 105/255.0, 180/255.0, 1.0f, "hotpink"             ,
-			205/255.0,  92/255.0,  92/255.0, 1.0f, "indianred"           ,
-			75/255.0,   0/255.0, 130/255.0, 1.0f, "indigo"              ,
-			255/255.0, 255/255.0, 240/255.0, 1.0f, "ivory"               ,
-			240/255.0, 230/255.0, 140/255.0, 1.0f, "khaki"               ,
-			230/255.0, 230/255.0, 250/255.0, 1.0f, "lavender"            ,
-			255/255.0, 240/255.0, 245/255.0, 1.0f, "lavenderblush"       ,
-			124/255.0, 252/255.0,   0/255.0, 1.0f, "lawngreen"           ,
-			255/255.0, 250/255.0, 205/255.0, 1.0f, "lemonchiffon"        ,
-			173/255.0, 216/255.0, 230/255.0, 1.0f, "lightblue"           ,
-			240/255.0, 128/255.0, 128/255.0, 1.0f, "lightcyan"           ,
-			224/255.0, 255/255.0, 255/255.0, 1.0f, "lightcoral"          ,
-			250/255.0, 250/255.0, 210/255.0, 1.0f, "lightgoldenrodyellow",
-			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgray"           ,
-			144/255.0, 238/255.0, 144/255.0, 1.0f, "lightgreen"          ,
-			211/255.0, 211/255.0, 211/255.0, 1.0f, "lightgrey"           ,
-			255/255.0, 182/255.0, 193/255.0, 1.0f, "lightpink"           ,
-			255/255.0, 160/255.0, 122/255.0, 1.0f, "lightsalmon"         ,
-			32/255.0, 178/255.0, 170/255.0, 1.0f, "lightseagreen"       ,
-			135/255.0, 206/255.0, 250/255.0, 1.0f, "lightskyblue"        ,
-			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategray"      ,
-			119/255.0, 136/255.0, 153/255.0, 1.0f, "lightslategrey"      ,
-			176/255.0, 196/255.0, 222/255.0, 1.0f, "lightsteelblue"      ,
-			255/255.0, 255/255.0, 224/255.0, 1.0f, "lightyellow"         ,
-			0/255.0, 255/255.0,   0/255.0, 1.0f, "lime"                ,
-			50/255.0, 205/255.0,  50/255.0, 1.0f, "limegreen"           ,
-			250/255.0, 240/255.0, 230/255.0, 1.0f, "linen"               ,
-			255/255.0,   0/255.0, 255/255.0, 1.0f, "magenta"             ,
-			128/255.0,   0/255.0,   0/255.0, 1.0f, "maroon"              ,
-			102/255.0, 205/255.0, 170/255.0, 1.0f, "mediumaquamarine"    ,
-			0/255.0,   0/255.0, 205/255.0, 1.0f, "mediumblue"          ,
-			186/255.0,  85/255.0, 211/255.0, 1.0f, "mediumorchid"        ,
-			147/255.0, 112/255.0, 219/255.0, 1.0f, "mediumpurple"        ,
-			60/255.0, 179/255.0, 113/255.0, 1.0f, "mediumseagreen"      ,
-			123/255.0, 104/255.0, 238/255.0, 1.0f, "mediumslateblue"     ,
-			0/255.0, 250/255.0, 154/255.0, 1.0f, "mediumspringgreen"   ,
-			72/255.0, 209/255.0, 204/255.0, 1.0f, "mediumturquoise"     ,
-			199/255.0,  21/255.0, 133/255.0, 1.0f, "mediumvioletred"     ,
-			25/255.0,  25/255.0, 112/255.0, 1.0f, "midnightblue"        ,
-			245/255.0, 255/255.0, 250/255.0, 1.0f, "mintcream"           ,
-			255/255.0, 228/255.0, 225/255.0, 1.0f, "mistyrose"           ,
-			255/255.0, 228/255.0, 181/255.0, 1.0f, "moccasin"            ,
-			255/255.0, 222/255.0, 173/255.0, 1.0f, "navajowhite"         ,
-			0/255.0,   0/255.0, 128/255.0, 1.0f, "navy"                ,
-			253/255.0, 245/255.0, 230/255.0, 1.0f, "oldlace"             ,
-			128/255.0, 128/255.0,   0/255.0, 1.0f, "olive"               ,
-			107/255.0, 142/255.0,  35/255.0, 1.0f, "olivedrab"           ,
-			255/255.0, 165/255.0,   0/255.0, 1.0f, "orange"              ,
-			255/255.0,  69/255.0,   0/255.0, 1.0f, "orangered"           ,
-			218/255.0, 112/255.0, 214/255.0, 1.0f, "orchid"              ,
-			238/255.0, 232/255.0, 170/255.0, 1.0f, "palegoldenrod"       ,
-			152/255.0, 251/255.0, 152/255.0, 1.0f, "palegreen"           ,
-			175/255.0, 238/255.0, 238/255.0, 1.0f, "paleturquoise"       ,
-			219/255.0, 112/255.0, 147/255.0, 1.0f, "palevioletred"       ,
-			255/255.0, 239/255.0, 213/255.0, 1.0f, "papayawhip"          ,
-			255/255.0, 218/255.0, 185/255.0, 1.0f, "peachpuff"           ,
-			205/255.0, 133/255.0,  63/255.0, 1.0f, "peru"                ,
-			255/255.0, 192/255.0, 203/255.0, 1.0f, "pink"                ,
-			221/255.0, 160/255.0, 221/255.0, 1.0f, "plum"                ,
-			176/255.0, 224/255.0, 230/255.0, 1.0f, "powderblue"          ,
-			128/255.0,   0/255.0, 128/255.0, 1.0f, "purple"              ,
-			255/255.0,   0/255.0,   0/255.0, 1.0f, "red"                 ,
-			188/255.0, 143/255.0, 143/255.0, 1.0f, "rosybrown"           ,
-			65/255.0, 105/255.0, 225/255.0, 1.0f, "royalblue"           ,
-			139/255.0,  69/255.0,  19/255.0, 1.0f, "saddlebrown"         ,
-			250/255.0, 128/255.0, 114/255.0, 1.0f, "salmon"              ,
-			244/255.0, 164/255.0,  96/255.0, 1.0f, "sandybrown"          ,
-			46/255.0, 139/255.0,  87/255.0, 1.0f, "seagreen"            ,
-			255/255.0, 245/255.0, 238/255.0, 1.0f, "seashell"            ,
-			160/255.0,  82/255.0,  45/255.0, 1.0f, "sienna"              ,
-			192/255.0, 192/255.0, 192/255.0, 1.0f, "silver"              ,
-			135/255.0, 206/255.0, 235/255.0, 1.0f, "skyblue"             ,
-			106/255.0,  90/255.0, 205/255.0, 1.0f, "slateblue"           ,
-			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategray"           ,
-			112/255.0, 128/255.0, 144/255.0, 1.0f, "slategrey"           ,
-			255/255.0, 250/255.0, 250/255.0, 1.0f, "snow"                ,
-			0/255.0, 255/255.0, 127/255.0, 1.0f, "springgreen"         ,
-			70/255.0, 130/255.0, 180/255.0, 1.0f, "steelblue"           ,
-			210/255.0, 180/255.0, 140/255.0, 1.0f, "tan"                 ,
-			0/255.0, 128/255.0, 128/255.0, 1.0f, "teal"                ,
-			216/255.0, 191/255.0, 216/255.0, 1.0f, "thistle"             ,
-			255/255.0,  99/255.0,  71/255.0, 1.0f, "tomato"              ,
-			64/255.0, 224/255.0, 208/255.0, 1.0f, "turquoise"           ,
-			238/255.0, 130/255.0, 238/255.0, 1.0f, "violet"              ,
-			245/255.0, 222/255.0, 179/255.0, 1.0f, "wheat"               ,
-			255/255.0, 255/255.0, 255/255.0, 1.0f, "white"               ,
-			245/255.0, 245/255.0, 245/255.0, 1.0f, "whitesmoke"          ,
-			255/255.0, 255/255.0,   0/255.0, 1.0f, "yellow"              ,
-			154/255.0, 205/255.0,  50/255.0, 1.0f, "yellowgreen"         ,
-		};
-		static NSDictionary * colorDict = nil;
-		if ( colorDict == nil ) {
-			NSMutableDictionary * dict = [NSMutableDictionary new];
-			for ( int i = 0; i < sizeof ColorList/sizeof ColorList[0]; ++i ) {
-				[dict setObject:@(i) forKey:@(ColorList[i].name)];
-			}
-			colorDict = [NSDictionary dictionaryWithDictionary:dict];
-		}
-		NSNumber * index = [colorDict objectForKey:text];
-		if ( index ) {
-			return ColorList[ index.integerValue ].color;
-		}
-		assert(NO);
-		return RGBAColorTransparent;
-	}
-}
-static BOOL DictRGB( NSDictionary * dict, RGBAColor * color, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	*color = RGBFromString(text);
-	return YES;
-}
-static BOOL DictFloat( NSDictionary * dict, CGFloat * value, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	*value = text.doubleValue;
-	return YES;
-}
-static BOOL DictLineCap( NSDictionary * dict, CGLineCap * lineCap, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	if ( [text isEqualToString:@"round"] ) {
-		*lineCap = kCGLineCapRound;
-		return YES;
-	}
-	if ( [text isEqualToString:@"square"] ) {
-		*lineCap = kCGLineCapSquare;
-		return YES;
-	}
-	if ( [text isEqualToString:@"none"] ) {
-		*lineCap = kCGLineCapButt;
-		return YES;
-	}
-	assert(NO);
-	return NO;
-}
-static BOOL DictLineJoin( NSDictionary * dict, CGLineJoin * lineJoin, NSString * key )
-{
-	NSString * text = [dict objectForKey:key];
-	if ( text == nil )
-		return NO;
-	if ( [text isEqualToString:@"round"] ) {
-		*lineJoin = kCGLineJoinRound;
-		return YES;
-	}
-	if ( [text isEqualToString:@"miter"] ) {
-		*lineJoin = kCGLineJoinMiter;
-		return YES;
-	}
-	if ( [text isEqualToString:@"bevel"] ) {
-		*lineJoin = kCGLineJoinBevel;
-		return YES;
-	}
-	assert(NO);
-	return NO;
-}
-static NSInteger DictDashes( NSDictionary * dict, CGFloat ** dashList, NSString * key )
-{
-	NSString * dashes = [dict objectForKey:@"dashes"];
-	if ( dashes == nil ) {
-		return 0;
-	}
-	NSArray * a = [dashes componentsSeparatedByString:@","];
-	assert( a.count > 0 && a.count % 2 == 0 );
-	*dashList = malloc( a.count * sizeof dashList[0][0] );
-	NSInteger index = 0;
-	for ( NSString * s in a ) {
-		(*dashList)[index] = [s doubleValue];
-		++index;
-	}
-	return a.count;
-}
-#endif
-
-#endif // USE_CGCONTEXT CGContext drawing
-
 
 #pragma mark Select objects and draw
 
@@ -3267,9 +2071,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 #else
 	NSInteger objectLimit = 500;
 #endif
-#if USE_SHAPELAYERS
 	objectLimit *= 3;
-#endif
 
 	double metersPerPixel = [_mapView metersPerPixel];
 	if ( metersPerPixel < 0.05 ) {
@@ -3363,7 +2165,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 }
 
 
-#if USE_SHAPELAYERS
 - (void)layoutSublayersSafe
 {
 	if ( _mapView.birdsEyeRotation ) {
@@ -3553,7 +2354,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	[self layoutSublayersSafe];
 	_isPerformingLayout = NO;
 }
-#endif
 
 -(void)setNeedsLayout
 {
@@ -3561,190 +2361,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		return;
 	[super setNeedsLayout];
 }
-
-
-#if !USE_SHAPELAYERS
-- (void)drawInContext:(CGContextRef)ctx
-{
-	if ( self.hidden )
-		return;
-
-	if ( _mapCss ) {
-		[self drawMapCssInContext:ctx];
-		return;
-	}
-
-	NSInteger nameLimit	= [self geekbenchScore] >= 2000 ? 10 : 5;
-
-	CFTimeInterval totalTime = CACurrentMediaTime();
-
-	int areaCount = 0;
-	int casingCount = 0;
-	int wayCount = 0;
-	int nodeCount = 0;
-	int nameCount = 0;
-
-	_shownObjects = [self getObjectsToDisplay];
-
-	_nameDrawSet = [NSMutableSet new];
-
-	// draw oceans
-	[self drawOceans:_shownObjects context:ctx];
-
-	// draw areas
-	CFTimeInterval areaTime = CACurrentMediaTime();
-	for ( OsmBaseObject * obj in _shownObjects ) {
-		if ( obj.isWay ) {
-			areaCount += [self drawArea:(id)obj context:ctx];
-		} else if ( obj.isRelation.isMultipolygon ) {
-			areaCount += [self drawArea:(id)obj context:ctx];
-		}
-	}
-	areaTime = CACurrentMediaTime() - areaTime;
-
-	// draw casings
-	CFTimeInterval casingTime = CACurrentMediaTime();
-	for ( OsmBaseObject * obj in _shownObjects ) {
-		if ( obj.isWay ) {
-			casingCount += [self drawWayCasing:obj context:ctx];
-		} else if ( obj.isRelation.isMultipolygon ) {
-			casingCount += [self drawWayCasing:obj context:ctx];
-		}
-	}
-	casingTime = CACurrentMediaTime() - casingTime;
-
-	// draw ways
-	CFTimeInterval wayTime = CACurrentMediaTime();
-	for ( OsmBaseObject * obj in _shownObjects ) {
-		if ( obj.isWay ) {
-			wayCount += [self drawWay:obj context:ctx];
-		} else if ( obj.isRelation.isMultipolygon ) {
-			wayCount += [self drawWay:obj context:ctx];
-		}
-	}
-	wayTime = CACurrentMediaTime() - wayTime;
-
-	// draw nodes
-	CFTimeInterval nodeTime = CACurrentMediaTime();
-	for ( OsmBaseObject * obj in _shownObjects ) {
-		if ( obj.isNode ) {
-			nodeCount += [self drawNode:(id)obj context:ctx];
-		}
-	}
-	nodeTime = CACurrentMediaTime() - nodeTime;
-
-	// draw names
-	CFTimeInterval nameTime = CACurrentMediaTime();
-	for ( OsmBaseObject * obj in _shownObjects ) {
-
-		if ( obj.isWay || obj.isRelation.isMultipolygon ) {
-			BOOL drawn = [self drawWayName:obj context:ctx];
-			nameCount += drawn;
-			nameLimit -= drawn;
-			if ( nameLimit <= 0 )
-				break;
-		}
-	}
-	nameTime = CACurrentMediaTime() - nameTime;
-
-	// draw highlights
-	[self drawHighlighedObjects:ctx];
-
-	totalTime = CACurrentMediaTime() - totalTime;
-
-#if 0
-	DLog( @"%.2f: area %d (%.2f), casing %d (%.2f), way %d (%.2f), node %d (%.2f) name %d (%.2f)",
-		 totalTime*1000,
-		 areaCount, areaTime*1000,
-		 casingCount, casingTime*1000,
-		 wayCount, wayTime*1000,
-		 nodeCount, nodeTime*1000,
-		 nameCount, nameTime*1000 );
-#endif
-}
-
-/*
- To render OSM nicely using Painter's algorithm you need to:
- - render background
- - render coaslines as polygons
- - render all the backgrounds (like forests, grass, different kinds of landuse=, ...)
- - render hillshading (optionally, of course)
-
- then, for each layer= tag in order from lowest to highest:
- - render casings in order of z-index-es
- - render *both* polygons and lines that represent foreground features (buildings, roads) in order of z-indexes
-
- then, render icons and labels in order that is backward for z-indexes (if renderer can detect collisions)
- or in order of z-indexes (if renderer can detect collisions).
- */
-- (void) drawMapCssInContext:(CGContextRef)ctx
-{
-	_shownObjects = [self getVisibleObjects];
-
-	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_shownObjects.count];
-	NSNumber * zoom = @( [self zoomLevel] );
-	for ( OsmBaseObject * object in _shownObjects ) {
-		// maps subpart ID to propery dictionary for this object
-		NSMutableDictionary * zoomDict = object.cssRenderPropertiesForZoom;
-		if ( zoomDict == nil ) {
-			zoomDict = [NSMutableDictionary new];
-			object.cssRenderPropertiesForZoom = zoomDict;
-		}
-		NSArray * subparts = [zoomDict objectForKey:zoom];
-		if ( subparts == nil ) {
-			NSDictionary * dict = [_mapCss matchObject:object zoom:zoom.integerValue];
-			NSMutableArray * subs = [NSMutableArray arrayWithCapacity:dict.count];
-			[dict enumerateKeysAndObjectsUsingBlock:^(NSString * subpartID, NSDictionary * props, BOOL *stop) {
-				ObjectSubpart * subpart = [ObjectSubpart new];
-				subpart.object		= object;
-				subpart.subpart		= subpartID;
-				subpart.properties	= props;
-				subpart.zIndex		= [[props objectForKey:@"z-index"] doubleValue];
-				[subs addObject:subpart];
-			}];
-			subparts = subs;
-			[zoomDict setObject:subparts forKey:zoom];
-		}
-		[a addObjectsFromArray:subparts];
-	}
-	[a sortUsingComparator:^NSComparisonResult(ObjectSubpart * obj1, ObjectSubpart * obj2) {
-		CGFloat z1 = obj1.zIndex;
-		CGFloat z2 = obj2.zIndex;
-		NSComparisonResult result = z1 < z2 ? NSOrderedAscending : z1 > z2 ? NSOrderedDescending : NSOrderedSame;
-		return result;
-	}];
-
-	_shownObjects = a;
-
-	// draw coastline
-#if !USE_SHAPELAYERS
-	[self drawOceans:a context:ctx];
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssCoastline:obj context:ctx];
-	}
-#endif
-	// draw areas
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssArea:obj context:ctx];
-	}
-	// draw ways
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssWay:obj context:ctx];
-	}
-	// draw nodes
-	for ( ObjectSubpart * obj in a ) {
-		[self drawNode:(OsmNode *)obj context:ctx];
-	}
-	// draw names
-	for ( ObjectSubpart * obj in a ) {
-		[self drawMapCssName:obj context:ctx];
-	}
-	// draw highlights
-	[self drawHighlighedObjects:ctx];
-}
-#endif
-
-
 
 #pragma mark Hit Testing
 
@@ -4002,22 +2618,14 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt birdsEye:YES];
 	[_mapData setLongitude:loc.longitude latitude:loc.latitude forNode:node inWay:_selectedWay];
 
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 }
 
 -(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
 {
 	[self saveSelection];
 	OsmBaseObject * newObject = [_mapData duplicateObject:object];
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 	return newObject;
 }
 
@@ -4027,11 +2635,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OsmNode * node = [_mapData createNodeAtLocation:loc];
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 	return node;
 }
 
@@ -4041,11 +2645,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 	OsmWay * way = [_mapData createWay];
 	[_mapData addNode:node toWay:way atIndex:0];
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 	return way;
 }
 
@@ -4054,11 +2654,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	[self saveSelection];
 
 	[_mapData addNode:node toWay:way atIndex:index];
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 }
 
 -(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way allowDegenerate:(BOOL)allowDegenerate
@@ -4129,11 +2725,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	[_speechBalloon removeFromSuperlayer];
 	_speechBalloon = nil;
 
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 }
 
 -(void)cancelOperation
@@ -4155,11 +2747,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 -(void)setNeedsDisplayForObject:(OsmBaseObject *)object
 {
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 }
 
 -(void)doSelectionChangeCallbacks
@@ -4229,22 +2817,14 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		else
 			[_extraSelections addObject:object];
 	}
-#if USE_SHAPELAYERS
 	[self setNeedsLayout];
-#else
-	[self setNeedsDisplay];
-#endif
 	[self doSelectionChangeCallbacks];
 }
 - (void)clearExtraSelections
 {
 	if ( _extraSelections ) {
 		_extraSelections = nil;
-#if USE_SHAPELAYERS
 		[self setNeedsLayout];
-#else
-		[self setNeedsDisplay];
-#endif
 		[self doSelectionChangeCallbacks];
 	}
 }
@@ -4258,11 +2838,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	if ( object != _highlightObject ) {
 		_highlightObject = object;
-#if USE_SHAPELAYERS
 		[self setNeedsLayout];
-#else
-		[self setNeedsDisplay];
-#endif
 	}
 	NSString * name = [_highlightObject friendlyDescription];
 	if ( name ) {
