@@ -182,7 +182,7 @@ static NSInteger g_nextUID = 1;
 {
 	self = [super init];
 	if ( self ) {
-		OSMPoint center = object.isNode ? OSMPointMake(object.isNode.lon, object.isNode.lat) : object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
+		OSMPoint center = object.selectionPoint;
 		_uid		= @(g_nextUID++);
 		_noteId		= @(object.extendedIdentifier);
 		_lat		= center.y;

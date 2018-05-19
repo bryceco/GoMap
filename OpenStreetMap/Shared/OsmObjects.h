@@ -116,6 +116,8 @@ typedef enum {
 -(OsmWay *)isWay;
 -(OsmRelation *)isRelation;
 
+-(OSMPoint)selectionPoint;
+
 -(NSDate *)dateForTimestamp;
 
 -(NSSet *)nodeSet;
@@ -169,7 +171,6 @@ typedef enum {
 -(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo;
 
 -(void)resolveToMapData:(OsmMapData *)mapData;
--(OSMPoint)midpointOfLine;
 -(OSMPoint)centerPoint;
 -(OSMPoint)centerPointWithArea:(double *)area;
 -(double)lengthInMeters;

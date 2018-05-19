@@ -813,7 +813,7 @@ CGSize SizeForImage( NSImage * image )
 -(void)startObjectRotation
 {
 	_isRotateObjectMode	= YES;
-	_rotateObjectCenter	= _editorLayer.selectedNode ? _editorLayer.selectedNode.location : [_editorLayer.selectedWay centerPoint];
+	_rotateObjectCenter	= _editorLayer.selectedNode ? _editorLayer.selectedNode.location : _editorLayer.selectedWay.centerPoint;
 	[self removePin];
 	_rotateObjectOverlay = [[CAShapeLayer alloc] init];
 	CGFloat radiusInner = 70;
@@ -1655,20 +1655,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)placePushpinForSelection
 {
-	OSMPoint loc;
-	if ( _editorLayer.selectedNode ) {
-		loc = _editorLayer.selectedNode.location;
-		CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
-		[self placePushpinAtPoint:point object:_editorLayer.selectedNode];
-	} else if ( _editorLayer.selectedWay ) {
-		loc = [_editorLayer.selectedWay midpointOfLine];
-		CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
-		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
-	} else if (_editorLayer.selectedRelation ) {
-		loc = [_editorLayer.selectedRelation centerPoint];
-		CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
-		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
-	}
+	OsmBaseObject * selection = _editorLayer.selectedPrimary;
+	if ( selection == nil )
+		return;
+	OSMPoint loc = selection.selectionPoint;
+	CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
+	[self placePushpinAtPoint:point object:selection];
 	
 	if ( !CGRectContainsPoint( self.bounds, _pushpinView.arrowPoint ) ) {
 		// need to zoom to location
@@ -2274,6 +2266,17 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		OsmRelation * relation = self.editorLayer.selectedPrimary.isRelation;
 		OsmWay * fromWay = [relation memberByRole:@"from"].ref;
 		OsmNode * viaNode = [relation memberByRole:@"via"].ref;
+		
+		if ( ![viaNode isKindOfClass:[OsmNode class]] ) {
+			// not supported yet
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Unsupported turn restriction type"
+										message:@"This app does not yet support editing turn restrictions without a node as the 'via' member"
+										preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.viewController presentViewController:alert animated:YES completion:nil];
+			return;
+		}
+		
 		self.editorLayer.selectedWay = [fromWay isKindOfClass:[OsmWay class]] ? fromWay : nil;
 		self.editorLayer.selectedNode = [viaNode isKindOfClass:[OsmNode class]] ? viaNode : nil;
 		if ( self.editorLayer.selectedNode ) {

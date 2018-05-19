@@ -1785,7 +1785,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			OsmBaseObject * viaMemberObject = viaMember.ref;
 			if ( [viaMemberObject isKindOfClass:[OsmBaseObject class]] ) {
 				if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
-					OSMPoint latLon = viaMemberObject.isNode ? viaMemberObject.isNode.location : viaMemberObject.isWay.midpointOfLine;
+					OSMPoint latLon = viaMemberObject.selectionPoint;
 					OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
 
 					CALayer * restrictionLayerIcon 		= [CALayer new];

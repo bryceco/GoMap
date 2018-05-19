@@ -139,6 +139,12 @@ NSString * OsmValueForBoolean( BOOL b )
 	return 1000000.0;
 }
 
+-(OSMPoint)selectionPoint
+{
+	assert(NO);
+	return OSMPointMake(0, 0);
+}
+
 static NSInteger _nextUnusedIdentifier = 0;
 
 +(NSInteger)nextUnusedIdentifier
@@ -705,6 +711,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return OSMPointMake(_lon, _lat);
 }
 
+-(OSMPoint)selectionPoint
+{
+	return OSMPointMake(_lon, _lat);
+}
+
 -(BOOL)isBetterToKeepThan:(OsmNode *)node
 {
 	if ( (self.ident.longLongValue > 0) == (node.ident.longLongValue > 0) ) {
@@ -1172,7 +1183,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return len;
 }
 
--(OSMPoint)midpointOfLine
+-(OSMPoint)selectionPoint
 {
 	double dist = [self lengthInMeters] / 2;
 	BOOL first = YES;
@@ -1192,6 +1203,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	}
 	return prev; // dummy value, shouldn't ever happen
 }
+
 
 -(BOOL)isClockwise
 {
@@ -1510,6 +1522,39 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		OSMRect rc = self.boundingBox;
 		return OSMPointMake( rc.origin.x + rc.size.width/2, rc.origin.y+rc.size.height);
 	}
+}
+-(OSMPoint)selectionPoint
+{
+	OSMRect bbox = self.boundingBox;
+	OSMPoint center = { bbox.origin.x + bbox.size.width/2, bbox.origin.y + bbox.size.height/2 };
+	if ( [self isMultipolygon] ) {
+		// pick a point on an outer polygon that is close to the center of the bbox
+		for ( OsmMember * member in _members ) {
+			if ( [member.role isEqualToString:@"outer"] ) {
+				OsmWay * way = member.ref;
+				if ( [way isKindOfClass:[OsmWay class]] && way.nodes.count > 0 ) {
+					return [way pointOnWayForPoint:center];
+				}
+			}
+		}
+	}
+	if ( [self isRestriction] ) {
+		// pick via node or way
+		for ( OsmMember * member in _members ) {
+			if ( [member.role isEqualToString:@"via"] ) {
+				OsmBaseObject * object = member.ref;
+				if ( [object isKindOfClass:[OsmBaseObject class]] ) {
+					if ( object.isNode || object.isWay ) {
+						return [object selectionPoint];
+					}
+				}
+			}
+		}
+	}
+	// choose any node/way member
+	NSSet * all = [self allMemberObjects];	// might be a super relation, so need to recurse down
+	OsmBaseObject * object = [all anyObject];
+	return [object selectionPoint];
 }
 
 -(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2
