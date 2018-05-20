@@ -1182,6 +1182,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return len;
 }
 
+// pick a point close to the center of the way
 -(OSMPoint)selectionPoint
 {
 	double dist = [self lengthInMeters] / 2;

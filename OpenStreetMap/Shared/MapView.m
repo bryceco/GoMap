@@ -2428,12 +2428,14 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 								// replace dragged node with hit node
 								NSDictionary * mergedTags = MergeTags(hit.tags,dragNode.tags);
 								NSInteger index = [dragWay.nodes indexOfObject:dragNode];
+								[strongSelf.editorLayer addNode:hit.isNode toWay:dragWay atIndex:index+1];
 								[strongSelf.editorLayer deleteNode:dragNode fromWay:dragWay allowDegenerate:YES];
-								[strongSelf.editorLayer addNode:hit.isNode toWay:dragWay atIndex:index];
 								[strongSelf.editorLayer.mapData setTags:mergedTags forObject:hit];
+
 								if ( dragWay.isArea ) {
 									strongSelf.editorLayer.selectedNode = nil;
-									[strongSelf placePushpinForSelection];
+									CGPoint pt = [strongSelf screenPointForLatitude:hit.isNode.lat longitude:hit.isNode.lon birdsEye:YES];
+									[strongSelf placePushpinAtPoint:pt object:dragWay];
 								} else {
 									strongSelf.editorLayer.selectedNode = hit.isNode;
 									[strongSelf placePushpinForSelection];
