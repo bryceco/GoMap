@@ -2749,17 +2749,26 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	}
 	if ( _pushpinView ) {
 
-		if ( !CGRectContainsPoint( self.bounds, _pushpinView.arrowPoint ) ) {
-			// pushpin is off screen
-			[self flashMessage:NSLocalizedString(@"Selected object is off screen",nil)];
-		} else if ( _editorLayer.selectedWay && _editorLayer.selectedNode ) {
+		BOOL (^offscreenWarning)(void) = ^{
+			if ( !CGRectContainsPoint( self.bounds, _pushpinView.arrowPoint ) ) {
+				// pushpin is off screen
+				[self flashMessage:NSLocalizedString(@"Selected object is off screen",nil)];
+				return YES;
+			} else {
+				return NO;
+			}
+		};
+		
+		if ( _editorLayer.selectedWay && _editorLayer.selectedNode ) {
 			// already editing a way so try to extend it
+			if ( offscreenWarning() ) return;
 			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified ];
 		} else if ( _editorLayer.selectedPrimary == nil && _pushpinView ) {
 			// just dropped a pin, so convert it into a way
 			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified];
 		} else if ( _editorLayer.selectedWay && _editorLayer.selectedNode == nil ) {
 			// add a new node to a way
+			if ( offscreenWarning() ) return;
 			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified];
 		} else if ( _editorLayer.selectedPrimary.isNode ) {
 			// nothing selected, or just a single node selected, so drop pin
