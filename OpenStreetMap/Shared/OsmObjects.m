@@ -267,7 +267,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(void)clearCachedProperties
 {
-	_cssRenderPropertiesForZoom	= nil;
 	_tagInfo					= nil;
 	renderPriorityCached		= 0;
 	_isOneWay					= nil;

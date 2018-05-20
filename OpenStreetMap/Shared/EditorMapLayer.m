@@ -17,7 +17,6 @@
 #import "CurvedTextLayer.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
-#import "MapCSS.h"
 #import "MapView.h"
 #import "MapViewController.h"
 #import "OsmMapData.h"
@@ -40,21 +39,6 @@
 #define DEFAULT_LINEJOIN	kCALineJoinMiter
 
 static const CGFloat Pixels_Per_Character = 8.0;
-
-
-enum {
-	SUBPART_AREA = 1,
-	SUBPART_WAY = 2,
-};
-
-@interface ObjectSubpart : NSObject	// Used for CSS drawing only
-@property (strong,nonatomic)	OsmBaseObject	*	object;
-@property (strong,nonatomic)	NSString		*	subpart;
-@property (strong,nonatomic)	NSDictionary	*	properties;
-@property (assign,nonatomic)	CGFloat				zIndex;
-@end
-@implementation ObjectSubpart
-@end
 
 
 @interface LayerProperties : NSObject
@@ -687,8 +671,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	NSMutableArray * innerSegments = [NSMutableArray new];
 	for ( id obj in objectList ) {
 		OsmBaseObject * object = obj;
-		if ( [object isKindOfClass:[ObjectSubpart class]] )
-			object = [(ObjectSubpart *)object object];
 		if ( object.isWay.isClosed && [object.tags[@"natural"] isEqualToString:@"water"] ) {
 			continue;	// lakes are not a concern of this function
 		}
@@ -979,25 +961,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	return score;
 }
 
-
-
--(BOOL)enableMapCss
-{
-	return _mapCss != nil;
-}
--(void)setEnableMapCss:(BOOL)enableMapCss
-{
-	if ( enableMapCss != (_mapCss != nil) ) {
-		[self willChangeValueForKey:@"enableMapCss"];
-		if ( enableMapCss ) {
-			_mapCss = [MapCSS sharedInstance];
-		} else {
-			_mapCss = nil;
-		}
-		[self didChangeValueForKey:@"enableMapCss"];
-		[self setNeedsLayout];
-	}
-}
 
 
 -(CGPathRef)pathForWay:(OsmWay *)way CF_RETURNS_RETAINED
@@ -1308,31 +1271,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 	if ( object.isNode ) {
 
-		if ( _mapCss ) {
-#if 0
-			ObjectSubpart * subpart = (id)object;
-			OsmBaseObject * subObject = subpart.object;
-			if ( !subObject.isNode && !subObject.isWay.isArea )
-				return NO;
-			NSDictionary * cssDict	= subpart.properties;
-			NSString * iconName = [cssDict objectForKey:@"icon-image"];
-			if ( iconName == nil ) {
-				return NO;
-			}
-			object = (id)subObject;
-#endif
-		}
-
-		OSMPoint pt;
-		if ( object.isNode ) {
-			pt = MapPointForLatitudeLongitude( object.isNode.lat, object.isNode.lon );
-		} else if ( object.isWay ) {
-			// this path is taken when MapCSS is drawing an icon in the center of an area, such as a parking lot
-			OSMPoint latLon = [object.isWay centerPoint];
-			pt = MapPointForLatitudeLongitude( latLon.y, latLon.x );
-		} else {
-			assert(NO);
-		}
+		OSMPoint pt = MapPointForLatitudeLongitude( object.isNode.lat, object.isNode.lon );
 
 		if ( tagInfo.icon ) {
 			UIImage * icon = tagInfo.scaledIcon;

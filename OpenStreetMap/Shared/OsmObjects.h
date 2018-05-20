@@ -63,7 +63,6 @@ typedef enum {
 	NSInteger			renderPriorityCached;
 }
 @property (readonly,nonatomic)	BOOL					deleted;
-@property (strong,nonatomic)	NSMutableDictionary	*	cssRenderPropertiesForZoom;
 @property (strong,nonatomic)	TagInfo				*	tagInfo;
 @property (readonly,nonatomic)	int32_t					modifyCount;
 @property (readonly,nonatomic)	NSArray				*	relations;
