@@ -1174,19 +1174,52 @@ static NSString * PrettyTag( NSString * tag )
 	TagInfo * tagInfo = [self tagInfo];
 	return tagInfo.summary;
 }
--(UIImage *)icon
+
+-(UIImage *)iconUnscaled
 {
+	if ( _icon )
+		return _icon;
+
 	TagInfo * tagInfo = [self tagInfo];
 	_icon = tagInfo.icon;
-	if ( _icon == nil ) {
-		NSString * iconName = _dict[ @"icon" ];
-		if ( iconName ) {
-			NSString * path = [NSString stringWithFormat:@"poi/%@-24", iconName];
-			_icon = [UIImage imageNamed:path];
+	if ( _icon )
+		return _icon;
+	
+	NSString * iconName = _dict[ @"icon" ];
+	if ( iconName ) {
+		NSString * path = [NSString stringWithFormat:@"poi/%@-24", iconName];
+		_icon = [UIImage imageNamed:path];
+		if ( _icon )
+			return _icon;
+		
+		_icon = [UIImage imageNamed:iconName];
+		if ( _icon ) {
+			return _icon;
 		}
 	}
+	_icon = (id)[NSNull null];
 	return _icon;
 }
+
+-(UIImage *)icon
+{
+	extern const double MinIconSizeInPixels;
+	if ( _icon == nil ) {
+		[self iconUnscaled];
+		if ( ![_icon isKindOfClass:[NSNull class]] ) {
+			CGFloat uiScaling = [[UIScreen mainScreen] scale];
+			UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
+			[_icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+			_icon = UIGraphicsGetImageFromCurrentImageContext();
+			UIGraphicsEndImageContext();
+		}
+	}
+	if ( [_icon isKindOfClass:[NSNull class]] )
+		return nil;
+	return _icon;
+}
+
+
 -(NSArray *)terms
 {
 	return _dict[ @"terms" ];

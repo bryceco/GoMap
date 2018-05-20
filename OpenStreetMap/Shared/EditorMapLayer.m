@@ -14,6 +14,7 @@
 #import "iosapi.h"
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
+#import "CommonTagList.h"
 #import "CurvedTextLayer.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
@@ -1273,26 +1274,32 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 		OSMPoint pt = MapPointForLatitudeLongitude( object.isNode.lat, object.isNode.lon );
 
-		if ( tagInfo.icon ) {
-			UIImage * icon = tagInfo.scaledIcon;
-			CGFloat uiScaling = [[UIScreen mainScreen] scale];
-			if ( icon == nil ) {
+		// first use TagInfo database
+		UIImage * icon = tagInfo.scaledIcon;
+		if ( icon == nil ) {
+			icon = tagInfo.icon;
+			if ( icon ) {
+				CGFloat uiScaling = [[UIScreen mainScreen] scale];
 				UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-				[tagInfo.icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+				[icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
 				icon = UIGraphicsGetImageFromCurrentImageContext();
 				UIGraphicsEndImageContext();
 				tagInfo.scaledIcon = icon;
 			}
+		}
+		if ( icon == nil ) {
+			NSString * featureName = [CommonTagList featureNameForObjectDict:object.tags geometry:object.geometryName];
+			CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+			icon = feature.icon;
+		}
+		if ( icon ) {
 			CALayer * layer = [CALayer new];
 			layer.bounds		= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
 			layer.anchorPoint	= CGPointMake(0.5, 0.5);
 			layer.position		= CGPointMake(pt.x,pt.y);
 			layer.contents		= (id)icon.CGImage;
-			layer.shadowColor	= NSColor.whiteColor.CGColor;
-			layer.shadowPath	= CGPathCreateWithRect( layer.bounds, NULL );
-			layer.shadowRadius	= 0.0;
-			layer.shadowOffset	= CGSizeMake(0,0);
-			layer.shadowOpacity	= 0.25;
+			layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+			layer.cornerRadius		= 5;
 			layer.zPosition		= Z_NODE;
 
 			LayerProperties * props = [LayerProperties new];
@@ -1322,22 +1329,19 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 				// generic box
 				CAShapeLayer * layer = [CAShapeLayer new];
-				CGRect rect = CGRectMake(-round(MinIconSizeInPixels/4), -round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
+				CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
+										 round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
 				CGPathRef path		= CGPathCreateWithRect( rect, NULL );
 				layer.path			= path;
-
-				layer.anchorPoint	= CGPointMake(0, 0);
-				layer.position		= CGPointMake(pt.x,pt.y);
-				layer.strokeColor	= [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
-				layer.fillColor		= nil;
-				layer.lineWidth		= 2.0;
-
-				layer.shadowPath	= CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
-				layer.shadowColor	= UIColor.whiteColor.CGColor;
-				layer.shadowRadius	= 0.0;
-				layer.shadowOffset	= CGSizeMake(0,0);
-				layer.shadowOpacity	= 0.25;
-				layer.zPosition		= Z_NODE;
+				layer.frame 		= CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
+												 MinIconSizeInPixels, MinIconSizeInPixels);
+				layer.position			= CGPointMake(pt.x,pt.y);
+				layer.strokeColor		= [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
+				layer.fillColor			= nil;
+				layer.lineWidth			= 2.0;
+				layer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+				layer.cornerRadius		= 5.0;
+				layer.zPosition			= Z_NODE;
 
 				LayerProperties * props = [LayerProperties new];
 				[layer setValue:props forKey:@"properties"];

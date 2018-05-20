@@ -110,6 +110,8 @@
 		027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC66206F3EED00D349D6 /* DDXMLDocument.m */; };
 		027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */; };
 		027EDC75206F3EED00D349D6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 027EDC6D206F3EED00D349D6 /* Info.plist */; };
+		027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3520B13B8000901E9F /* Maki Icons.xcassets */; };
+		027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
 		0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB316A0BB67002C46A9 /* shrub.p.64.png */; };
 		028F504519B949780093C423 /* CommonTagList.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* CommonTagList.m */; };
@@ -637,6 +639,8 @@
 		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		027EDC6D206F3EED00D349D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
+		027FEA3520B13B8000901E9F /* Maki Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Maki Icons.xcassets"; sourceTree = "<group>"; };
+		027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "iD SVG POI.xcassets"; path = "../iD SVG POI.xcassets"; sourceTree = "<group>"; };
 		0284FDB116A0B7DA002C46A9 /* tree.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.p.64.png; sourceTree = "<group>"; };
 		0284FDB316A0BB67002C46A9 /* shrub.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shrub.p.64.png; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1391,6 +1395,8 @@
 				027A469D1673B257000BE55C /* OSM-Logo144.png */,
 				02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */,
 				022B504716857E5F00E6619A /* OSMiOS.entitlements */,
+				027FEA3520B13B8000901E9F /* Maki Icons.xcassets */,
+				027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2089,6 +2095,7 @@
 				02ACBC9816713F2B00BB4414 /* sport_iceskating.p.64.png in Resources */,
 				02ACBC9916713F2B00BB4414 /* sport_jetski.p.64.png in Resources */,
 				02ACBC9A16713F2B00BB4414 /* sport_leisure_centre.p.64.png in Resources */,
+				027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */,
 				02ACBC9B16713F2B00BB4414 /* sport_minature_golf.p.64.png in Resources */,
 				02072AC11BD44B2800F1CAB4 /* 1200-file-type-settings-toolbar@2x.png in Resources */,
 				02ACBC9C16713F2B00BB4414 /* sport_motorracing.p.64.png in Resources */,
@@ -2183,6 +2190,7 @@
 				02ACBCEE16713F2B00BB4414 /* transport_traffic_lights.p.64.png in Resources */,
 				02ACBCEF16713F2B00BB4414 /* transport_train_station.p.64.png in Resources */,
 				02ACBCF016713F2B00BB4414 /* transport_train_station2.p.64.png in Resources */,
+				027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */,
 				02072AAA1BD4465F00F1CAB4 /* 702-share@3x.png in Resources */,
 				02130E85196CF58500498297 /* MenuIcon.png in Resources */,
 				02ACBCF116713F2B00BB4414 /* transport_tram_stop.p.64.png in Resources */,

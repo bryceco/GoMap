@@ -485,7 +485,8 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			[self saveActiveTrack];
 		}
 
-		// if the number of points is too large then the periodic save will begin taking too long, and drawing performance will degrade, so start a new track every hour
+		// if the number of points is too large then the periodic save will begin taking too long,
+		// and drawing performance will degrade, so start a new track every hour
 		if ( self.activeTrack.points.count >= 3600 ) {
 			[self endActiveTrack];
 			[self startNewTrack];

@@ -27,6 +27,8 @@
 static const CGFloat DefaultHitTestRadius = 10.0;	// how close to an object do we need to tap to select it
 static const CGFloat DragConnectHitTestRadius = DefaultHitTestRadius * 0.6;	// how close to an object do we need to drag a node to connect to it
 
+extern const double MinIconSizeInPixels;
+
 
 @interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>
 {
