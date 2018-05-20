@@ -116,7 +116,7 @@ typedef enum {
 	BOOL								_gestureDidMove;		// to maintain undo stack
 
 	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
-	NSTimeInterval						_addNodeButtonPressed;
+	NSTimeInterval						_addNodeButtonTimestamp;
 }
 
 #if TARGET_OS_IPHONE

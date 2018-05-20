@@ -3308,16 +3308,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 {
 	if ( tap.state == UIGestureRecognizerStateEnded ) {
 		CGPoint point = [tap locationInView:self];
-		BOOL extendedCommand = NO;
-		if ( tap.numberOfTapsRequired == 1 ) {
-
-			if ( _addNodeButtonPressed ) {
-				if ( _addNodeButtonPressed )
-					_addNodeButtonPressed -= 1.0;	// ensure tap event doesn't trigger
-				[self dropPinAtPoint:point userSpecified:YES];
-			} else {
-				[self singleClick:point extendedCommand:extendedCommand];
-			}
+		if ( _addNodeButtonTimestamp ) {
+			[self dropPinAtPoint:point userSpecified:YES];
+		} else {
+			[self singleClick:point extendedCommand:NO];
 		}
 	}
 }
@@ -3326,18 +3320,18 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 {
 	switch ( recognizer.state ) {
 		case UIGestureRecognizerStateBegan:
-			_addNodeButtonPressed = CACurrentMediaTime();
+			_addNodeButtonTimestamp = CACurrentMediaTime();
 			break;
 		case UIGestureRecognizerStateEnded:
-			if ( CACurrentMediaTime() - _addNodeButtonPressed < 0.5 ) {
+			if ( CACurrentMediaTime() - _addNodeButtonTimestamp < 0.5 ) {
 				// treat as tap
 				[self dropPin:self];
 			}
-			_addNodeButtonPressed = 0.0;
+			_addNodeButtonTimestamp = 0.0;
 			break;
 		case UIGestureRecognizerStateCancelled:
 		case UIGestureRecognizerStateFailed:
-			_addNodeButtonPressed = 0.0;
+			_addNodeButtonTimestamp = 0.0;
 			break;
 		default:
 			break;
