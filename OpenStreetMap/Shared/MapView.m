@@ -3578,10 +3578,36 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 					} else if ( hit == _editorLayer.selectedWay ) {
 						_grabbedObject = hit;
 #endif
+					} else if ( hit.isWay ) {
+						if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.relations containsObject:_editorLayer.selectedRelation] ) {
+							// selecting way inside previously selected relation
+							_editorLayer.selectedNode = nil;
+							_editorLayer.selectedWay = (id)hit;
+						} else if ( hit.relations.count > 0 ) {
+							// select relation the way belongs to
+							NSArray * relations = [hit.relations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
+								return relation.isMultipolygon;
+							}]];
+							OsmRelation * relation = relations.count > 0 ? relations[0] : nil;
+							if ( relation ) {
+								hit = relation;	// convert hit to relation
+								_editorLayer.selectedNode = nil;
+								_editorLayer.selectedWay = nil;
+								_editorLayer.selectedRelation = (id)hit;
+							} else {
+								_editorLayer.selectedNode = nil;
+								_editorLayer.selectedWay = (id)hit;
+								_editorLayer.selectedRelation = nil;
+							}
+						} else {
+							_editorLayer.selectedNode = nil;
+							_editorLayer.selectedWay = (id)hit;
+							_editorLayer.selectedRelation = nil;
+						}
 					} else {
 						_editorLayer.selectedNode = nil;
-						_editorLayer.selectedWay = (id)hit;
-						_editorLayer.selectedRelation = nil;
+						_editorLayer.selectedWay = nil;
+						_editorLayer.selectedRelation = (id)hit;
 					}
 				} else {
 					_editorLayer.selectedNode = nil;
@@ -3606,6 +3632,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				OSMPoint pt = { latLon.longitude, latLon.latitude };
 				pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
 				point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);	// if they later try to drag this way ask them if they really wanted to
+			} else if ( _editorLayer.selectedPrimary.isRelation ) {
 				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);	// if they later try to drag this way ask them if they really wanted to
 			}
 			[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];

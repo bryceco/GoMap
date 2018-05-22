@@ -1805,6 +1805,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	NSInteger			nameLimit	= 5 + (geekScore - 500) / 200;	// 500 -> 5, 2500 -> 10
 	NSMutableSet	*	nameSet		= [NSMutableSet new];
 	NSMutableArray	*	layers		= [NSMutableArray new];
+	UIColor			*	relationColor = [UIColor colorWithRed:66/255.0 green:188/255.0 blue:244/255.0 alpha:1.0];
 	
 	// highlighting
 	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
@@ -1823,12 +1824,13 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	}
 
 	for ( OsmBaseObject * object in highlights ) {
+		// selected is false if its highlighted because it's a member of a selected relation
 		BOOL selected = object == _selectedNode || object == _selectedWay || [_extraSelections containsObject:object];
 
 		if ( object.isWay ) {
-			CGFloat		lineWidth	= 1.0;
 			CGPathRef	path		= [self pathForWay:object.isWay];
-			UIColor	*	wayColor	= selected ? UIColor.cyanColor : UIColor.whiteColor;
+			CGFloat		lineWidth	= selected ? 1.0 : 2.0;
+			UIColor	*	wayColor	= selected ? UIColor.cyanColor : relationColor;
 
 			if ( lineWidth == 0 )
 				lineWidth = 1;
