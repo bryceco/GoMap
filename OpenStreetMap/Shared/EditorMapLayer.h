@@ -29,7 +29,6 @@ static const CGFloat DragConnectHitTestRadius = DefaultHitTestRadius * 0.6;	// h
 
 extern const double MinIconSizeInPixels;
 
-
 @interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>
 {
 	CGSize					_iconSize;
@@ -54,6 +53,22 @@ extern const double MinIconSizeInPixels;
 
 	CATransformLayer	*	_baseLayer;
 }
+
+@property (assign)	BOOL			enableObjectFilters;
+@property (assign)	BOOL			showLevel;
+@property (copy)	NSString	*	showLevelRange;
+@property (assign)	BOOL			showPoints;
+@property (assign)	BOOL			showTrafficRoads;
+@property (assign)	BOOL			showServiceRoads;
+@property (assign)	BOOL			showPaths;
+@property (assign)	BOOL			showBuildings;
+@property (assign)	BOOL			showLanduse;
+@property (assign)	BOOL			showBoundaries;
+@property (assign)	BOOL			showWater;
+@property (assign)	BOOL			showRail;
+@property (assign)	BOOL			showPower;
+@property (assign)	BOOL			showPastFuture;
+@property (assign)	BOOL			showOthers;
 
 @property (assign,nonatomic)	MapView				*	mapView;
 @property (assign,nonatomic)	BOOL					whiteText;

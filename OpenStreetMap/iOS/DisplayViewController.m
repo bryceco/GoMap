@@ -39,8 +39,14 @@ static const NSInteger CACHE_SECTION			= 3;
 -(IBAction)gpsSwitchChanged:(id)sender
 {
 	// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
-	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	MapView * mapView = AppDelegate.getAppDelegate.mapView;
 	mapView.enableGpxLogging = _gpxLoggingSwitch.on;
+}
+
+-(IBAction)toggleObjectFilters:(UISwitch *)sender
+{
+	EditorMapLayer * editor = AppDelegate.getAppDelegate.mapView.editorLayer;
+	editor.enableObjectFilters = sender.on;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -67,6 +73,7 @@ static const NSInteger CACHE_SECTION			= 3;
 		_unnamedRoadSwitch.on		= mapView.enableUnnamedRoadHalo;
 		_gpxLoggingSwitch.on		= mapView.enableGpxLogging;
 		_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
+		_objectFiltersSwitch.on		= mapView.editorLayer.enableObjectFilters;
 
 	} else {
 

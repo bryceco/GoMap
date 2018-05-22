@@ -20,6 +20,7 @@
 	IBOutlet UISwitch *	_unnamedRoadSwitch;
 	IBOutlet UISwitch *	_gpxLoggingSwitch;
 	IBOutlet UISwitch * _turnRestrictionSwitch;
+	IBOutlet UISwitch * _objectFiltersSwitch;
 }
 
 -(void)applyChanges;

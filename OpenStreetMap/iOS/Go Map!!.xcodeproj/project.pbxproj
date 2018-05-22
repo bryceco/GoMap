@@ -114,6 +114,7 @@
 		027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
 		0284FDB416A0BB67002C46A9 /* shrub.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB316A0BB67002C46A9 /* shrub.p.64.png */; };
+		028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */; };
 		028F504519B949780093C423 /* CommonTagList.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* CommonTagList.m */; };
 		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
@@ -644,6 +645,8 @@
 		0284FDB116A0B7DA002C46A9 /* tree.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tree.p.64.png; sourceTree = "<group>"; };
 		0284FDB316A0BB67002C46A9 /* shrub.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shrub.p.64.png; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		028E0C0A20B2182100CEC71F /* FilterObjectsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterObjectsViewController.h; sourceTree = "<group>"; };
+		028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterObjectsViewController.m; sourceTree = "<group>"; };
 		028F504319B949780093C423 /* CommonTagList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CommonTagList.h; path = ../Shared/CommonTagList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		028F504419B949780093C423 /* CommonTagList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CommonTagList.m; path = ../Shared/CommonTagList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
@@ -1313,6 +1316,8 @@
 				024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */,
 				0225A36819B63EFE008B63BA /* DisplayViewController.h */,
 				0225A36919B63F0D008B63BA /* DisplayViewController.m */,
+				028E0C0A20B2182100CEC71F /* FilterObjectsViewController.h */,
+				028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */,
 				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
 				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
 				02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */,
@@ -2324,6 +2329,7 @@
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
+				028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */,
 				0259E4081BCAEC88006C354C /* MyApplication.m in Sources */,
 				02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
