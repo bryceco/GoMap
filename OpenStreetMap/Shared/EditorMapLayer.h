@@ -54,21 +54,22 @@ extern const double MinIconSizeInPixels;
 	CATransformLayer	*	_baseLayer;
 }
 
-@property (assign)	BOOL			enableObjectFilters;
-@property (assign)	BOOL			showLevel;
-@property (copy)	NSString	*	showLevelRange;
-@property (assign)	BOOL			showPoints;
-@property (assign)	BOOL			showTrafficRoads;
-@property (assign)	BOOL			showServiceRoads;
-@property (assign)	BOOL			showPaths;
-@property (assign)	BOOL			showBuildings;
-@property (assign)	BOOL			showLanduse;
-@property (assign)	BOOL			showBoundaries;
-@property (assign)	BOOL			showWater;
-@property (assign)	BOOL			showRail;
-@property (assign)	BOOL			showPower;
-@property (assign)	BOOL			showPastFuture;
-@property (assign)	BOOL			showOthers;
+@property (assign,nonatomic)	BOOL			enableObjectFilters;	// turn all filters on/on
+@property (assign,nonatomic)	BOOL			showLevel;				// filter for building level
+@property (copy,nonatomic) 		NSString	*	showLevelRange;			// range of levels for building level
+@property (assign,nonatomic)	BOOL			showPoints;
+@property (assign,nonatomic)	BOOL			showTrafficRoads;
+@property (assign,nonatomic)	BOOL			showServiceRoads;
+@property (assign,nonatomic)	BOOL			showPaths;
+@property (assign,nonatomic)	BOOL			showBuildings;
+@property (assign,nonatomic)	BOOL			showLanduse;
+@property (assign,nonatomic)	BOOL			showBoundaries;
+@property (assign,nonatomic)	BOOL			showWater;
+@property (assign,nonatomic)	BOOL			showRail;
+@property (assign,nonatomic)	BOOL			showPower;
+@property (assign,nonatomic)	BOOL			showPastFuture;
+@property (assign,nonatomic)	BOOL			showOthers;
+
 
 @property (assign,nonatomic)	MapView				*	mapView;
 @property (assign,nonatomic)	BOOL					whiteText;

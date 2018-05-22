@@ -213,25 +213,46 @@ static const CGFloat NodeHighlightRadius = 6.0;
 
 - (void)save
 {
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setBool:_enableObjectFilters 	forKey:@"editor.enableObjectFilters"];
-	[defaults setBool:_showLevel			forKey:@"editor.showLevel"];
-	[defaults setObject:_showLevelRange 	forKey:@"editor.showLevelRange"];
-	[defaults setBool:_showPoints			forKey:@"editor.showPoints"];
-	[defaults setBool:_showTrafficRoads		forKey:@"editor.showTrafficRoads"];
-	[defaults setBool:_showServiceRoads		forKey:@"editor.showServiceRoads"];
-	[defaults setBool:_showPaths 			forKey:@"editor.showPaths"];
-	[defaults setBool:_showBuildings 		forKey:@"editor.showBuildings"];
-	[defaults setBool:_showLanduse 			forKey:@"editor.showLanduse"];
-	[defaults setBool:_showBoundaries 		forKey:@"editor.showBoundaries"];
-	[defaults setBool:_showWater 			forKey:@"editor.showWater"];
-	[defaults setBool:_showRail 			forKey:@"editor.showRail"];
-	[defaults setBool:_showPower 			forKey:@"editor.showPower"];
-	[defaults setBool:_showPastFuture 		forKey:@"editor.showPastFuture"];
-	[defaults setBool:_showOthers 			forKey:@"editor.showOthers"];
-
 	[_mapData save];
 }
+
+-(void)setEnableObjectFilters:(BOOL)enableObjectFilters
+{
+	if ( enableObjectFilters != _enableObjectFilters ) {
+		_enableObjectFilters = enableObjectFilters;
+		[[NSUserDefaults standardUserDefaults] setBool:_enableObjectFilters forKey:@"editor.enableObjectFilters"];
+	}
+}
+
+-(void)setShowLevelRange:(NSString *)showLevelRange
+{
+	if ( [showLevelRange isEqualToString:_showLevelRange] )
+		return;
+	_showLevelRange = [showLevelRange copy];
+	[[NSUserDefaults standardUserDefaults] setObject:_showLevelRange forKey:@"editor.showLevelRange"];
+	[_mapData clearCachedProperties];
+}
+
+#define SET_FILTER(name)\
+-(void)setShow##name:(BOOL)on {\
+if ( on != _show##name ) { _show##name = on;\
+[[NSUserDefaults standardUserDefaults] setBool:_show##name forKey:@"editor.show"#name];[_mapData clearCachedProperties];\
+}}
+SET_FILTER(Level)
+SET_FILTER(Points)
+SET_FILTER(TrafficRoads)
+SET_FILTER(ServiceRoads)
+SET_FILTER(Paths)
+SET_FILTER(Buildings)
+SET_FILTER(Landuse)
+SET_FILTER(Boundaries)
+SET_FILTER(Water)
+SET_FILTER(Rail)
+SET_FILTER(Power)
+SET_FILTER(PastFuture)
+SET_FILTER(Others)
+#undef SET_FILTER
+
 
 #pragma mark Map data
 
@@ -2208,7 +2229,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 	};
 	static BOOL (^predLanduse)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
-		return object.isWay.isArea && !predBuildings(object) && !predWater(object);
+		return (object.isWay.isArea || object.isRelation.isMultipolygon) && !predBuildings(object) && !predWater(object);
 	};
 	static BOOL (^predBoundaries)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
 		if ( object.tags[ @"boundary" ] ) {
@@ -2241,60 +2262,42 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		}];
 		return ok;
 	};
-	static BOOL (^predOther)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
-		return [object.geometryName isEqualToString:GEOMETRY_WAY] || [object.geometryName isEqualToString:GEOMETRY_AREA];
-	};
 
-	
-	NSMutableArray * predicates = [NSMutableArray new];
-	if ( predLevel ) {
-		[predicates addObject:predLevel];
-	}
-	if ( _showPoints ) {
-		[predicates addObject:predPoints];
-	}
-	if ( _showTrafficRoads ) {
-		[predicates addObject:predTrafficRoads];
-	}
-	if ( _showServiceRoads ) {
-		[predicates addObject:predServiceRoads];
-	}
-	if ( _showPaths ) {
-		[predicates addObject:predPaths];
-	}
-	if ( _showPastFuture ) {
-		[predicates addObject:predPastFuture];
-	}
-	if ( _showBuildings ) {
-		[predicates addObject:predBuildings];
-	}
-	if ( _showLanduse ) {
-		[predicates addObject:predLanduse];
-	}
-	if ( _showBoundaries ) {
-		[predicates addObject:predBoundaries];
-	}
-	if ( _showWater ) {
-		[predicates addObject:predWater];
-	}
-	if ( _showRail ) {
-		[predicates addObject:predRail];
-	}
-	if ( _showPower ) {
-		[predicates addObject:predPower];
-	}
-	if ( _showOthers ) {
-		[predicates addObject:predOther];
-	}
-
-	[objects filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmBaseObject * object, NSDictionary<NSString *,id> * _Nullable bindings) {
-		for ( BOOL (^pred)(OsmBaseObject *) in predicates ) {
-			if ( pred(object) ) {
-				return YES;
+	NSPredicate * predicate = [NSPredicate predicateWithBlock:^BOOL(OsmBaseObject * object, NSDictionary<NSString *,id> * _Nullable bindings) {
+		if ( predLevel && !predLevel(object) ) {
+			return NO;
+		}
+		BOOL matchAny = NO;
+#define MATCH(name)\
+		if ( _show##name || _showOthers ) { \
+			BOOL match = pred##name(object); \
+			if ( match && _show##name ) return YES; \
+			matchAny |= match; \
+		}
+		MATCH(Points);
+		MATCH(TrafficRoads);
+		MATCH(ServiceRoads);
+		MATCH(Paths);
+		MATCH(PastFuture);
+		MATCH(Buildings);
+		MATCH(Landuse);
+		MATCH(Boundaries);
+		MATCH(Water);
+		MATCH(Rail);
+		MATCH(Power);
+		MATCH(Water);
+#undef MATCH
+		if ( _showOthers && !matchAny ) {
+			if ( object.isWay && object.relations.count == 1 && ((OsmRelation *)object.relations.lastObject).isMultipolygon ) {
+				return NO;	// follow parent filter instead
 			}
+			return YES;
 		}
 		return NO;
-	}]];
+	}];
+	
+	// filter everything
+	[objects filterUsingPredicate:predicate];
 	
 	// if we are showing relations we need to ensure the members are visible too
 	NSMutableSet * add = [NSMutableSet new];
