@@ -560,7 +560,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	for ( NSInteger i = 0; i < parents.count; ++i ) {
 		OsmBaseObject * parent = parents[i];
 		OSMRectBoxed * box = parentBoxes[i];
-#if 1
+#if 0
 		// mark parent as modified when child node changes
 		[self incrementModifyCount:parent];
 #else
