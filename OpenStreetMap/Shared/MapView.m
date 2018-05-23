@@ -434,7 +434,7 @@ CGSize SizeForImage( NSImage * image )
 #endif
 
 	// get notes
-	[self updateNotesWithDelay:0];
+	[self updateNotesFromServerWithDelay:0];
 
 	[self updateAerialAttributionButton];
 	
@@ -931,7 +931,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			_mapnikLayer.hidden = YES;
 			break;
 	}
-	[self updateNotesWithDelay:0];
+	[self updateNotesFromServerWithDelay:0];
 
 	[CATransaction commit];
 
@@ -3030,7 +3030,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 
 #pragma mark Notes
 
--(void)updateNotesWithDelay:(CGFloat)delay
+-(void)updateNotesFromServerWithDelay:(CGFloat)delay
 {
 	if ( _viewOverlayMask & VIEW_OVERLAY_NOTES ) {
 		OSMRect rc = [self screenLongitudeLatitude];
@@ -3047,8 +3047,22 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	dispatch_async(dispatch_get_main_queue(), ^{	// need this to disable implicit animation
 
 		[UIView performWithoutAnimation:^{
-			[_notesDatabase.dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
-				UIButton * button = _notesViewDict[ note.uid ];
+			// if a button is no longer in the notes database then it got resolved and can go away
+			NSMutableArray * remove = [NSMutableArray new];
+			for ( NSNumber * tag in _notesViewDict ) {
+				if ( [_notesDatabase noteForTag:tag.integerValue] == nil ) {
+					[remove addObject:tag];
+				}
+			}
+			for ( NSNumber * tag in remove ) {
+				UIButton * button = _notesViewDict[tag];
+				[_notesViewDict removeObjectForKey:tag];
+				[button removeFromSuperview];
+			}
+			
+			// update new and existing buttons
+			[_notesDatabase enumerateNotes:^(OsmNote *note) {
+				UIButton * button = _notesViewDict[ @(note.tagId) ];
 				if ( _viewOverlayMask & VIEW_OVERLAY_NOTES ) {
 
 					// hide unwanted keep right buttons
@@ -3069,9 +3083,9 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 						button.titleLabel.textAlignment	= NSTextAlignmentCenter;
 						NSString * title = note.isFixme ? @"F" : note.isWaypoint ? @"W" : note.isKeepRight ? @"R" : @"N";
 						[button setTitle:title forState:UIControlStateNormal];
-						button.tag = note.uid.integerValue;
+						button.tag = note.tagId;
 						[self addSubview:button];
-						[_notesViewDict setObject:button forKey:note.uid];
+						[_notesViewDict setObject:button forKey:@(note.tagId)];
 					}
 
 					if ( [note.status isEqualToString:@"closed"] ) {
@@ -3090,7 +3104,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 					}
 				} else {
 					[button removeFromSuperview];
-					[_notesViewDict removeObjectForKey:note.uid];
+					[_notesViewDict removeObjectForKey:@(note.tagId)];
 				}
 			}];
 		}];
@@ -3104,7 +3118,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 -(void)noteButtonPress:(id)sender
 {
 	UIButton * button = sender;
-	OsmNote * note = _notesDatabase.dict[ @(button.tag) ];
+	OsmNote * note = [_notesDatabase noteForTag:button.tag];
 	if ( note == nil )
 		return;
 
@@ -3272,7 +3286,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				}
 			}
 		}];
-		[self updateNotesWithDelay:duration];
+		[self updateNotesFromServerWithDelay:duration];
 	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
 		DLog( @"pan gesture failed" );
 	} else {
@@ -3292,7 +3306,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 		[pinch setScale:1.0];
 	} else if ( pinch.state == UIGestureRecognizerStateEnded ) {
-		[self updateNotesWithDelay:0];
+		[self updateNotesFromServerWithDelay:0];
 	}
 }
 - (void)handleTapAndDragGesture:(TapAndDragGesture *)tapAndDrag
@@ -3310,7 +3324,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self adjustZoomBy:scale aroundScreenPoint:zoomCenter];
 
 	} else if ( tapAndDrag.state == UIGestureRecognizerStateEnded ) {
-		[self updateNotesWithDelay:0];
+		[self updateNotesFromServerWithDelay:0];
 	}
 }
 - (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap
@@ -3450,7 +3464,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				_gpsState = GPS_STATE_LOCATION;
 			}
 		} else if ( rotationGesture.state == UIGestureRecognizerStateEnded ) {
-			[self updateNotesWithDelay:0];
+			[self updateNotesFromServerWithDelay:0];
 		}
 	}
 }

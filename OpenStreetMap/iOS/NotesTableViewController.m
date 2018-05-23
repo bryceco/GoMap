@@ -150,7 +150,7 @@
 			[alert dismissViewControllerAnimated:YES completion:nil];
 			if ( newNote ) {
 				self.note = newNote;
-				dispatch_after(dispatch_time(DISPATCH_TIME_NOW,0), dispatch_get_main_queue(), ^{
+				dispatch_async( dispatch_get_main_queue(), ^{
 					[self done:nil];
 					[self.mapView refreshNoteButtonsFromDatabase];
 				});

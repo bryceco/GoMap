@@ -23,7 +23,7 @@ static NSArray * FixMeList = nil;
 #define STATUS_WAYPOINT		@"waypoint"
 
 
-static NSInteger g_nextUID = 1;
+static NSInteger g_nextTagID = 1;
 
 
 @implementation OsmNoteComment
@@ -79,7 +79,7 @@ static NSInteger g_nextUID = 1;
 {
 	self = [super init];
 	if ( self ) {
-		_uid	= @(g_nextUID++);
+		_tagId	= g_nextTagID++;
 		_lat	= lat;
 		_lon	= lon;
 	}
@@ -89,7 +89,7 @@ static NSInteger g_nextUID = 1;
 {
 	self = [super init];
 	if ( self ) {
-		_uid	= @(g_nextUID++);
+		_tagId	= g_nextTagID++;
 		_lat	= [noteElement attributeForName:@"lat"].stringValue.doubleValue;
 		_lon	= [noteElement attributeForName:@"lon"].stringValue.doubleValue;
 		for ( NSXMLElement * child in noteElement.children ) {
@@ -112,6 +112,7 @@ static NSInteger g_nextUID = 1;
 	}
 	return self;
 }
+
 -(instancetype)initWithGpxWaypointXml:(NSXMLElement *)waypointElement status:(NSString *)status namespace:(NSString *)ns mapData:(OsmMapData *)mapData
 {
 	self = [super init];
@@ -127,7 +128,7 @@ static NSInteger g_nextUID = 1;
 //								<object_id>2627663149</object_id>
 //		</extensions></wpt>
 
-		_uid	= @(g_nextUID++);
+		_tagId	= g_nextTagID++;
 		_lon	= [waypointElement attributeForName:@"lon"].stringValue.doubleValue;
 		_lat	= [waypointElement attributeForName:@"lat"].stringValue.doubleValue;
 		_status = status;
@@ -178,12 +179,13 @@ static NSInteger g_nextUID = 1;
 	}
 	return self;
 }
+
 -(instancetype)initWithFixmeObject:(OsmBaseObject *)object fixmeKey:(NSString *)fixme
 {
 	self = [super init];
 	if ( self ) {
 		OSMPoint center = object.selectionPoint;
-		_uid		= @(g_nextUID++);
+		_tagId		= g_nextTagID++;
 		_noteId		= @(object.extendedIdentifier);
 		_lat		= center.y;
 		_lon		= center.x;
@@ -214,6 +216,20 @@ static NSInteger g_nextUID = 1;
 	}
 	return text;
 }
+
+-(NSString *)key
+{
+	if ( self.isFixme )
+		return [NSString stringWithFormat:@"fixme-%@",_noteId];
+	if ( self.isWaypoint )
+		return [NSString stringWithFormat:@"waypoint-%@",_noteId];
+	if ( self.isKeepRight )
+		return [NSString stringWithFormat:@"keepright-%@",_noteId];
+	return [NSString stringWithFormat:@"note-%@",_noteId];
+}
+
+
+
 @end
 
 
@@ -223,7 +239,8 @@ static NSInteger g_nextUID = 1;
 {
 	self = [super init];
 	if ( self ) {
-		_dict = [NSMutableDictionary new];
+		_noteForTag = [NSMutableDictionary new];
+		_tagForKey  = [NSMutableDictionary new];
 		_workQueue = [NSOperationQueue new];
 		_workQueue.maxConcurrentOperationCount = 1;
 
@@ -235,7 +252,21 @@ static NSInteger g_nextUID = 1;
 -(void)reset
 {
 	[_workQueue cancelAllOperations];
-	[_dict removeAllObjects];
+	[_noteForTag removeAllObjects];
+	[_tagForKey removeAllObjects];
+}
+
+-(void)addOrUpdateNote:(OsmNote *)newNote
+{
+	NSString * key = newNote.key;
+	NSNumber * oldTag = _tagForKey[ key ];
+	NSNumber * newTag = @(newNote.tagId);
+	if ( oldTag ) {
+		// remove any existing tag with the same key
+		[_noteForTag removeObjectForKey:oldTag];
+	}
+	_tagForKey[key] = newTag;
+	_noteForTag[newTag] = newNote;
 }
 
 #if 0
@@ -275,7 +306,7 @@ static NSInteger g_nextUID = 1;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			// add downloaded notes
 			for ( OsmNote * note in newNotes ) {
-				[_dict setObject:note forKey:note.uid];
+				[self addOrUpdateNote:note];
 			}
 
 			// add FIXMEs
@@ -284,7 +315,7 @@ static NSInteger g_nextUID = 1;
 					NSString * fixme = obj.tags[key];
 					if ( fixme.length > 0 ) {
 						OsmNote * note = [[OsmNote alloc] initWithFixmeObject:obj fixmeKey:key];
-						[_dict setObject:note forKey:note.uid];
+						[self addOrUpdateNote:note];
 						break;
 					}
 				}
@@ -315,7 +346,7 @@ static NSInteger g_nextUID = 1;
 			for ( NSXMLElement * waypointElement in a ) {
 				OsmNote * note = [[OsmNote alloc] initWithGpxWaypointXml:waypointElement status:STATUS_KEEPRIGHT namespace:ns mapData:mapData];
 				if ( note ) {
-					[_dict setObject:note forKey:note.uid];
+					[self addOrUpdateNote:note];
 				}
 			}
 		}
@@ -354,11 +385,19 @@ static NSInteger g_nextUID = 1;
 }
 
 
+-(void)enumerateNotes:(void(^)(OsmNote * note))callback
+{
+	[_noteForTag enumerateKeysAndObjectsUsingBlock:^(NSString * key, OsmNote * note, BOOL * stop) {
+		callback( note );
+	}];
+}
+
+
 
 -(NSString *)description
 {
 	__block NSMutableString * text = [NSMutableString new];
-	[_dict enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
+	[_noteForTag enumerateKeysAndObjectsUsingBlock:^(id key, OsmNote * note, BOOL *stop) {
 		[text appendString:[note description]];
 	}];
 	return text;;
@@ -390,7 +429,7 @@ static NSInteger g_nextUID = 1;
 			for ( NSXMLElement * noteElement in [xmlDoc.rootElement nodesForXPath:@"./note" error:nil] ) {
 				newNote = [[OsmNote alloc] initWithNoteXml:noteElement];
 				if ( newNote ) {
-					[_dict setObject:newNote forKey:newNote.uid];
+					[self addOrUpdateNote:newNote];
 				}
 			}
 		}
@@ -398,6 +437,10 @@ static NSInteger g_nextUID = 1;
 	}];
 }
 
+-(OsmNote *)noteForTag:(NSInteger)tag
+{
+	return _noteForTag[ @(tag) ];
+}
 
 #pragma mark Ignore list
 
@@ -414,16 +457,15 @@ static NSInteger g_nextUID = 1;
 
 -(void)ignoreNote:(OsmNote *)note
 {
-	[self.ignoreList setObject:@YES forKey:note.noteId];
+	[self.ignoreList setObject:@YES forKey:@(note.tagId)];
 
 	NSString * path = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"keepRightIgnoreList"];
 	[NSKeyedArchiver archiveRootObject:_keepRightIgnoreList toFile:path];
-
 }
 
 -(BOOL)isIgnored:(OsmNote *)note
 {
-	if ( self.ignoreList[note.noteId] )
+	if ( self.ignoreList[@(note.tagId)] )
 		return YES;
 	return NO;
 }

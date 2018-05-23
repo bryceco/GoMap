@@ -243,6 +243,7 @@ typedef enum {
 - (void)setTagsForCurrentObject:(NSDictionary *)tags;
 #endif
 
+-(void)updateNotesFromServerWithDelay:(CGFloat)delay;
 -(void)refreshNoteButtonsFromDatabase;
 
 -(void)askToRate:(NSInteger)uploadCount;
