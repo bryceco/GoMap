@@ -1945,7 +1945,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 	// Arrow heads and street names
 	for ( OsmBaseObject * object in _shownObjects ) {
-		if ( object.isOneWay ) {
+		if ( object.isOneWay || [highlights containsObject:object] ) {
 
 			// arrow heads
 			[self invokeAlongScreenClippedWay:object.isWay offset:50 interval:100 block:^(OSMPoint loc, OSMPoint dir){
