@@ -143,17 +143,16 @@ static const CGFloat GradientHeight = 20.0;
 }
 
 
-- (CGSize)keyboardSizeFromNotification:(NSNotification *)notification
+- (CGRect)keyboardFrameFromNotification:(NSNotification *)notification
 {
 	NSDictionary *userInfo = [notification userInfo];
 	CGRect rect = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-	rect = [self.superview convertRect:rect fromView:nil];
-	return rect.size;
+	return rect;
 }
 
 - (void) keyboardWillShow:(NSNotification *)nsNotification
 {
-	_keyboardSize = [self keyboardSizeFromNotification:nsNotification];
+	_keyboardFrame = [self keyboardFrameFromNotification:nsNotification];
 
 	if ( self.editing && _filteredCompletions.count ) {
 		[self updateAutocomplete];
@@ -168,9 +167,10 @@ static const CGFloat GradientHeight = 20.0;
 #endif
 }
 
+// keyboard size can change if switching languages inside keyboard, etc.
 - (void) keyboardWillChange:(NSNotification *)nsNotification
 {
-	_keyboardSize = [self keyboardSizeFromNotification:nsNotification];
+	_keyboardFrame = [self keyboardFrameFromNotification:nsNotification];
 
 	if ( _completionTableView ) {
 		CGRect rect = [self frameForCompletionTableView];
@@ -191,7 +191,6 @@ static const CGFloat GradientHeight = 20.0;
 
 -(CGRect)frameForCompletionTableView
 {
-#if 1
 	UITableViewCell * cell = (id)self.superview;
 	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
 		cell = (id)cell.superview;
@@ -199,37 +198,15 @@ static const CGFloat GradientHeight = 20.0;
 	while ( tableView && ![tableView isKindOfClass:[UITableView class]] ) {
 		tableView = (id)tableView.superview;
 	}
-	UIWindow * window = (id)tableView.superview;
-	while ( window && ![window isKindOfClass:[UIWindow class]] )
-		window = (id)window.superview;
 
-	CGRect cellRC = [self convertRect:self.frame toView:tableView];
-	CGRect tableRC = [tableView convertRect:tableView.frame toView:nil];
-
+//	CGRect cellRC = [self convertRect:self.frame toView:tableView];
+	CGRect cellRC = [cell convertRect:cell.bounds toView:tableView];
+	CGRect keyboardPos = [tableView convertRect:_keyboardFrame fromView:nil];	// keyboard is in screen coordinates
 	CGRect rect;
 	rect.origin.x = 0;
 	rect.origin.y = cellRC.origin.y + cellRC.size.height;
 	rect.size.width = tableView.frame.size.width;
-	rect.size.height = tableView.frame.size.height - cellRC.origin.y - tableView.frame.origin.y - _keyboardSize.height;
-	rect.size.height = window.frame.size.height - tableRC.origin.y - _keyboardSize.height - cell.frame.size.height;
-#else
-	UITableViewCell * cell = (id)[self.superview superview];
-	UITableView * tableView = (id)[cell superview];
-	if ( [tableView isKindOfClass:[UITableViewCell class]] ) {
-		// ios 7
-		tableView = (id)tableView.superview.superview;
-		cell = (id)cell.superview;
-	}
-	UIScrollView * scrollView = (id)tableView.superview;
-	UIView * view = scrollView.superview;
-
-	CGRect rect;
-	rect.origin.x = cell.frame.origin.x;
-	rect.origin.y = cell.frame.origin.y + cell.frame.size.height;
-	rect.size.width = cell.frame.size.width;
-	rect.size.height = view.frame.size.height - _keyboardSize.height - cell.frame.size.height;
-	return rect;
-#endif
+	rect.size.height = keyboardPos.origin.y - rect.origin.y;
 	return rect;
 }
 
@@ -243,45 +220,34 @@ static const CGFloat GradientHeight = 20.0;
 				cell = (id)cell.superview;
 			UITableView * tableView = (id)cell.superview;
 			while ( tableView && ![tableView isKindOfClass:[UITableView class]] ) {
-				// iOS 7
 				tableView = (id)tableView.superview;
 			}
-
-			// add completion table to tableview
-			CGRect rect = [self frameForCompletionTableView];
-			_completionTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
-			_completionTableView.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
-			_completionTableView.separatorColor = [UIColor colorWithWhite:0.7 alpha:1.0];
-			_completionTableView.dataSource = self;
-			_completionTableView.delegate = self;
-			[tableView addSubview:_completionTableView];
-
-			_gradientLayer = [CAGradientLayer layer];
-			_gradientLayer.colors = @[
-						(id)[UIColor colorWithWhite:0.0 alpha:0.6].CGColor,
-						(id)[UIColor colorWithWhite:0.0 alpha:0.0].CGColor ];
-			CGRect rcGradient = rect;
-			rcGradient.size.height = GradientHeight;
-			_gradientLayer.frame = rcGradient;
-			[tableView.layer addSublayer:_gradientLayer];
-
+			
 			// scroll cell to top
-#if 1
 			NSIndexPath * p = [tableView indexPathForCell:cell];
 			[tableView scrollToRowAtIndexPath:p atScrollPosition:UITableViewScrollPositionTop animated:NO];
-#else
-			CGRect cellFrame = cell.frame;
-			cellFrame = [cell.superview convertRect:cellFrame toView:tableView];
-			if ( iOS7 ) {
-#if 0
-				cellFrame.origin.y += tableView.contentOffset.y;
-#else
-				cellFrame.origin.y -= 45 + 20;	// cell height + status bar height?
-#endif
-			}
-			[tableView setContentOffset:CGPointMake(0,cellFrame.origin.y) animated:YES];
-#endif
 			tableView.scrollEnabled = NO;
+
+			// cell doesn't always scroll to the same place, so give it a moment before we add the completion table
+			dispatch_async(dispatch_get_main_queue(), ^{
+				// add completion table to tableview
+				CGRect rect = [self frameForCompletionTableView];
+				_completionTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
+				_completionTableView.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
+				_completionTableView.separatorColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+				_completionTableView.dataSource = self;
+				_completionTableView.delegate = self;
+				[tableView addSubview:_completionTableView];
+
+				_gradientLayer = [CAGradientLayer layer];
+				_gradientLayer.colors = @[
+										  (id)[UIColor colorWithWhite:0.0 alpha:0.6].CGColor,
+										  (id)[UIColor colorWithWhite:0.0 alpha:0.0].CGColor ];
+				CGRect rcGradient = rect;
+				rcGradient.size.height = GradientHeight;
+				_gradientLayer.frame = rcGradient;
+				[tableView.layer addSublayer:_gradientLayer];
+			});
 		}
 		[_completionTableView reloadData];
 
