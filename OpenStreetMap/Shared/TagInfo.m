@@ -574,7 +574,7 @@ static TagInfo * g_DefaultRender = nil;
 	} else if ( [key isEqualToString:@"cuisine"] ) {
 		[set addObjectsFromArray:[self cuisineEthnicValues]];
 		[set addObjectsFromArray:[self cuisineStyleValues]];
-	} else if ( [key isEqualToString:@"fixme"] ) {
+	} else if ( [key isEqualToString:@"fixme"] || [key isEqualToString:@"FIXME"] ) {
 		[set addObjectsFromArray:[self fixmeValues]];
 	} else if ( [key isEqualToString:@"source"] ) {
 		[set addObjectsFromArray:[self sourceValues]];
