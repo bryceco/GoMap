@@ -88,6 +88,23 @@
 
 	[self.tableView reloadData];
 
+	if ( tabController.selection.isNode ) {
+		self.title = @"Node tags";
+	} else if ( tabController.selection.isWay ) {
+		self.title = @"Way tags";
+	} else if ( tabController.selection.isRelation ) {
+		NSString * type = tabController.keyValueDict[ @"type" ];
+		if ( type.length ) {
+			type = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+			type = [type capitalizedString];
+			self.title = [NSString stringWithFormat:@"%@ tags",type];
+		} else {
+			self.title = @"Relation tags";
+		}
+	} else {
+		self.title = @"All Tags";
+	}
+
 	_saveButton.enabled = [tabController isTagDictChanged];
 }
 

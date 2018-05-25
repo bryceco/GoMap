@@ -202,10 +202,12 @@ typedef enum {
 -(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo;
 -(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo;
 
+-(BOOL)isMultipolygon;
 -(BOOL)isRestriction;
+-(BOOL)isRoute;
+
 -(OsmMember *)memberByRole:(NSString *)role;
 
--(BOOL)isMultipolygon;
 -(OSMPoint)centerPoint;
 
 -(BOOL)containsObject:(OsmBaseObject *)object;

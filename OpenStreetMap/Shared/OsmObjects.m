@@ -1478,18 +1478,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return set;
 }
 
--(BOOL)isRestriction
-{
-	NSString * type = self.tags[ @"type" ];
-	if ( type ) {
-		if ( [type isEqualToString:@"restriction"] )
-			return YES;
-		if ( [type hasPrefix:@"restriction:"] )
-			return YES;
-	}
-	return NO;
-}
-
 -(OsmMember *)memberByRole:(NSString *)role
 {
 	for ( OsmMember * member in _members ) {
@@ -1504,6 +1492,25 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 {
 	return [_tags[@"type"] isEqualToString:@"multipolygon"];
 }
+
+-(BOOL)isRoute
+{
+	return [_tags[@"type"] isEqualToString:@"route"];
+}
+
+-(BOOL)isRestriction
+{
+	NSString * type = self.tags[ @"type" ];
+	if ( type ) {
+		if ( [type isEqualToString:@"restriction"] )
+			return YES;
+		if ( [type hasPrefix:@"restriction:"] )
+			return YES;
+	}
+	return NO;
+}
+
+
 
 -(OSMPoint)centerPoint
 {
