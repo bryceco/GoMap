@@ -13,8 +13,9 @@
 #import "UndoManager.h"
 
 #if DEBUG
-#define SHOW_DOWNLOAD_QUADS 1
+#define SHOW_DOWNLOAD_QUADS 0
 #endif
+
 #if SHOW_DOWNLOAD_QUADS	// Display query regions as GPX lines
 #import "AppDelegate.h"
 #import "MapView.h"
