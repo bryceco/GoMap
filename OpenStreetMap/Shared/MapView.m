@@ -3687,6 +3687,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
 				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);	// if they later try to drag this way ask them if they really wanted to
 			} else if ( _editorLayer.selectedPrimary.isRelation ) {
+				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
+				OSMPoint tap = { latLon.longitude, latLon.latitude };
+				tap = [_editorLayer.selectedRelation pointOnRelationForPoint:tap];
+				point = [self screenPointForLatitude:tap.y longitude:tap.x birdsEye:YES];
 				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);	// if they later try to drag this way ask them if they really wanted to
 			}
 			[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];

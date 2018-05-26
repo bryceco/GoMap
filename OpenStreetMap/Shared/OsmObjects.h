@@ -211,6 +211,7 @@ typedef enum {
 -(NSArray *)membersByRole:(NSString *)role;
 
 -(OSMPoint)centerPoint;
+-(OSMPoint)pointOnRelationForPoint:(OSMPoint)target;
 
 -(BOOL)containsObject:(OsmBaseObject *)object;
 

@@ -1601,6 +1601,26 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return dist;
 }
 
+-(OSMPoint)pointOnRelationForPoint:(OSMPoint)target
+{
+	OSMPoint bestPoint = target;
+	double bestDistance = 10000000.0;
+	for ( OsmBaseObject * object in self.allMemberObjects ) {
+		OSMPoint pt;
+		if ( object.isWay ) {
+			pt = [object.isWay pointOnWayForPoint:target];
+		} else {
+			pt = object.isNode.location;
+		}
+		double dist = DistanceFromPointToPoint(target, pt);
+		if ( dist < bestDistance ) {
+			bestDistance = dist;
+			bestPoint = pt;
+		}
+	}
+	return bestPoint;
+}
+
 -(BOOL)containsObject:(OsmBaseObject *)object
 {
 	OsmNode * node = object.isNode;
