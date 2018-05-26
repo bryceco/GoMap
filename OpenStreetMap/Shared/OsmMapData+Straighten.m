@@ -275,8 +275,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 -(OsmWay *)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
-	BOOL createRelations = NO;
-
 	[_undoManager registerUndoComment:NSLocalizedString(@"Split",nil)];
 
 	OsmWay * wayA = selectedWay;
@@ -284,8 +282,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	[self setTags:wayA.tags forObject:wayB];
 
-	OsmRelation * isOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.relations.lastObject : nil;
-	BOOL isClosed = wayA.isClosed;
+	OsmRelation * wayIsOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.relations.lastObject : nil;	// only 1 parent relation if it is simple
+
 	if (wayA.isClosed) {
 
 		// remove duplicated node
@@ -322,7 +320,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		[self addNode:node toWay:wayB atIndex:0];
 
 		// move remaining nodes to 2nd way
-		NSInteger idx = [wayA.nodes indexOfObject:node] + 1;
+		const NSInteger idx = [wayA.nodes indexOfObject:node] + 1;
 		while ( idx < wayA.nodes.count ) {
 			[self addNode:wayA.nodes[idx] toWay:wayB atIndex:wayB.nodes.count];
 			[self deleteNodeInWay:wayA index:idx];
@@ -331,70 +329,90 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	}
 
 	// get a unique set of parent relations (de-duplicate)
-	NSMutableArray * relations = [wayA.relations mutableCopy];
-	NSInteger idx = [relations count] - 1;
-	for ( OsmRelation * relation in [relations reverseObjectEnumerator] ) {
-		if ( [wayA.relations indexOfObject:relation inRange:NSMakeRange(0, idx)] != NSNotFound )
-			[relations removeObjectAtIndex:idx];
-		idx--;
-	}
+	NSSet * relations = [NSSet setWithArray:wayA.relations];
 
 	// fix parent relations
 	for ( OsmRelation * relation in relations ) {
-		for ( NSInteger index = 0; index < relation.members.count; ++index ) {
-			OsmMember * member = relation.members[index];
-			if ( member.ref == wayA ) {
 
-				if (relation.isRestriction) {
-					OsmMember * via = [relation memberByRole:@"via"];
-					if (via && ([wayB.nodes containsObject:via.ref] || (via.isWay && wayA == [relation memberByRole:@"from"].ref))) {                        // replace reference to wayA with wayB in relation
-						OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:member.role];
-						[self addMember:memberB toRelation:relation atIndex:index+1];
-						[self deleteMemberInRelation:relation index:index];
-					}
-				} else {
-					if (relation == isOuter) {
-						NSDictionary * merged = MergeTags(relation.tags, wayA.tags);
-						[self setTags:merged forObject:relation];
-						[self setTags:nil forObject:wayA];
-						[self setTags:nil forObject:wayB];
-					}
+		if (relation.isRestriction) {
 
-					// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
-					BOOL insertAfter = YES;
-					OsmMember * prevMem = index > 1 ? relation.members[index-1] : nil;
-					OsmWay * prevWay = prevMem && [prevMem.ref isKindOfClass:[OsmWay class]] ? prevMem.ref : nil;
-					if ( prevWay.nodes.count > 0 ) {
-						if ( prevWay.nodes[0] == wayB.nodes[0] ||
-							prevWay.nodes[0] == wayB.nodes.lastObject ||
-							prevWay.nodes.lastObject == wayB.nodes[0] ||
-							prevWay.nodes.lastObject == wayB.nodes.lastObject )
-						{
-							insertAfter = NO;
+			OsmMember 	* f = [relation memberByRole:@"from"];
+			NSArray 	* v = [relation membersByRole:@"via"];
+			OsmMember 	* t = [relation memberByRole:@"to"];
+
+			if ( f.ref == wayA || t.ref == wayA ) {
+
+				// 1. split a FROM/TO
+				BOOL keepB = NO;
+				for ( OsmMember * member in v ) {
+					OsmBaseObject * via = member.ref;
+					if ( ![via isKindOfClass:[OsmBaseObject class]] )
+						continue;
+					if ( via.isNode && [wayB.nodes containsObject:via] ) {
+						keepB = YES;
+						break;
+					} else if ( via.isWay && [via.isWay connectsToWay:wayB] ) {
+						keepB = YES;
+						break;
+					}
+				}
+
+				if ( keepB ) {
+					// replace member(s) referencing A with B
+					for ( NSInteger index = 0; index < relation.members.count; ++index ) {
+						OsmMember * memberA = relation.members[index];
+						if ( memberA.ref == wayA ) {
+							OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
+							[self addMember:memberB toRelation:relation atIndex:index+1];
+							[self deleteMemberInRelation:relation index:index];
 						}
 					}
-					OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
-					[self addMember:newMember toRelation:relation atIndex:insertAfter?index+1:index];
-					++index;
-					//                    index++;
+				}
+
+			} else {
+
+				// 2. split a VIA
+				OsmWay * prevWay = f.ref;
+				for ( NSInteger index = 0; index < relation.members.count; index++ ) {
+					OsmMember * memberA = relation.members[index];
+					if ( [memberA.role isEqualToString:@"via"] ) {
+						if ( memberA.ref == wayA ) {
+							OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
+							BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [wayB connectsToWay:prevWay];
+							[self addMember:memberB toRelation:relation atIndex:insertBefore?index:index+1];
+							break;
+						}
+						prevWay = memberA.ref;
+					}
 				}
 			}
-		}
-	}
 
-	if ( createRelations ) {
-		// convert split buildings into relations
-		if (!isOuter && isClosed) {
-			OsmRelation * multipolygon = [self createRelation];
-			NSMutableDictionary * tags = [wayA.tags mutableCopy];
-			[tags setValue:@"multipolygon" forKey:@"type"];
-			[self setTags:tags forObject:multipolygon];
-			OsmMember * memberA = [[OsmMember alloc] initWithRef:wayA role:@"outer"];
-			OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:@"outer"];
-			[self addMember:memberA toRelation:multipolygon atIndex:0];
-			[self addMember:memberB toRelation:multipolygon atIndex:1];
-			[self setTags:nil forObject:wayA];
-			[self setTags:nil forObject:wayB];
+		} else {
+
+			// All other relations (Routes, Multipolygons, etc):
+			// 1. Both `wayA` and `wayB` remain in the relation
+			// 2. But must be inserted as a pair
+
+			if ( relation == wayIsOuter ) {
+				NSDictionary * merged = MergeTags(relation.tags, wayA.tags);
+				[self setTags:merged forObject:relation];
+				[self setTags:nil forObject:wayA];
+				[self setTags:nil forObject:wayB];
+			}
+
+			// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
+			OsmWay * prevWay = nil;
+			NSInteger index = 0;
+			for ( OsmMember * member in relation.members ) {
+				if ( member.ref == wayA ) {
+					BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [prevWay.isWay connectsToWay:wayB];
+					OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
+					[self addMember:newMember toRelation:relation atIndex:insertBefore?index:index+1];
+					break;
+				}
+				prevWay = member.ref;
+				++index;
+			}
 		}
 	}
 

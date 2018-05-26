@@ -2010,10 +2010,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 - (void)presentEditActionSheet:(id)sender
 {
 	NSArray * actionList = nil;
-	if ( _editorLayer.selectedRelation ) {
-		// relation
-		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
-	} else if ( _editorLayer.selectedWay ) {
+	if ( _editorLayer.selectedWay ) {
 		if ( _editorLayer.selectedNode ) {
 			// node in way
 			NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
@@ -2046,6 +2043,13 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	} else if ( _editorLayer.selectedNode ) {
 		// node
 		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+	} else if ( _editorLayer.selectedRelation ) {
+		// relation
+		if ( _editorLayer.selectedRelation.isMultipolygon ) {
+			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
+		} else {
+			actionList = @[ @(ACTION_COPYTAGS) ];
+		}
 	} else {
 		// nothing selected
 		return;
@@ -2228,7 +2232,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 
 - (void)updateEditControl
 {
-	BOOL show = _pushpinView || _editorLayer.selectedWay || _editorLayer.selectedNode || _editorLayer.selectedRelation;
+	BOOL show = _pushpinView || _editorLayer.selectedPrimary;
 	_editControl.hidden = !show;
 	if ( show ) {
 		if ( _editorLayer.selectedPrimary == nil ) {
@@ -2241,6 +2245,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			if ( _editorLayer.selectedPrimary.isRelation )
 				if ( _editorLayer.selectedPrimary.isRelation.isRestriction )
 					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_RESTRICT) ];
+				else if ( _editorLayer.selectedPrimary.isRelation.isMultipolygon )
+					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_MORE) ];
 				else
 					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
 			else

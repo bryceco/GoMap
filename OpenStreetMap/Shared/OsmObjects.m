@@ -1267,6 +1267,18 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return NO;
 }
 
+-(OsmNode *)connectsToWay:(OsmWay *)way
+{
+	if ( _nodes.count > 0 && way.nodes.count > 0 ) {
+		if ( _nodes[0] == way.nodes[0] || _nodes[0] == way.nodes.lastObject )
+			return _nodes[0];
+		if ( _nodes.lastObject == way.nodes[0] || _nodes.lastObject == way.nodes.lastObject )
+			return _nodes.lastObject;
+	}
+	return nil;
+}
+
+
 -(id)initWithCoder:(NSCoder *)coder
 {
 	self = [super initWithCoder:coder];
@@ -1486,6 +1498,16 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		}
 	}
 	return nil;
+}
+-(NSArray *)membersByRole:(NSString *)role
+{
+	NSMutableArray * a = [NSMutableArray new];
+	for ( OsmMember * member in _members ) {
+		if ( [member.role isEqualToString:role] ) {
+			[a addObject:member];
+		}
+	}
+	return a;
 }
 
 -(BOOL)isMultipolygon

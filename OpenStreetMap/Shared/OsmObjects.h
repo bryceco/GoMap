@@ -184,6 +184,7 @@ typedef enum {
 -(OSMPoint)pointOnWayForPoint:(OSMPoint)point;
 +(BOOL)isClockwiseArrayOfPoints:(NSArray *)a;
 -(BOOL)hasDuplicatedNode;
+-(OsmNode *)connectsToWay:(OsmWay *)way;
 @end
 
 
@@ -207,6 +208,7 @@ typedef enum {
 -(BOOL)isRoute;
 
 -(OsmMember *)memberByRole:(NSString *)role;
+-(NSArray *)membersByRole:(NSString *)role;
 
 -(OSMPoint)centerPoint;
 
