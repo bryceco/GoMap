@@ -520,24 +520,34 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		return NO;
 	}
 
-#if 1
-	// don't allow joining to a way that is part of a relation
-	if ( otherWay.relations.count > 0 )
-		return NO;
-	if ( selectedWay.relations.count > 0 )
-		return NO;
-#else
-	// make sure no nodes are part of a turn restriction
-	NSArray * relations = [selectedWay.relations arrayByAddingObjectsFromArray:otherWay.relations];
-	for ( OsmRelation * parent in relations ) {
-		if ( parent.isRestriction ) {
-			for ( OsmMember * m in parent.members ) {
-				if ( [selectedWay.nodes containsObject:m.ref] || [otherWay.nodes containsObject:m.ref] )
-					return NO;
-			}
+	// don't allow joining to a way that is part of a relation, unless both are members of the same relation
+	if ( selectedWay.relations.count == 0 && otherWay.relations.count == 0 ) {
+		// no problems
+	} else if ( selectedWay.relations.count == 1 && otherWay.relations.count == 1 ) {
+		// both belong to a single relation
+		if ( selectedWay.relations.lastObject != otherWay.relations.lastObject ) {
+			return NO;
 		}
+		// .. and it's the same relation
+		OsmRelation * relation = selectedWay.relations.lastObject;
+		if ( relation.isRestriction ) {
+			// turn restriction is only okay if they are both via ways
+			NSArray * viaList = [relation membersByRole:@"via"];
+			int foundCount = 0;
+			for ( OsmMember * member in viaList ) {
+				if ( member.ref == selectedWay )
+					++foundCount;
+				if ( member.ref == otherWay )
+					++foundCount;
+			}
+			if ( foundCount != 2 )
+				return NO;
+		}
+		// route or polygon, so should be okay
+	} else {
+		// there are relations involved
+		return NO;
 	}
-#endif
 
 	// join nodes, preserving selected way
 	NSInteger index = 0;
