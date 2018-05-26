@@ -94,9 +94,9 @@ static const CGFloat NodeHighlightRadius = 6.0;
 		
 		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 		[defaults registerDefaults:@{
-			@"editor.enableObjectFilters" : @YES,
-			@"editor.showLevel" : @YES,
-			@"editor.showLevelRange" : @YES,
+			@"editor.enableObjectFilters" : @NO,
+			@"editor.showLevel" : @NO,
+			@"editor.showLevelRange" : @"",
 			@"editor.showPoints" : @YES,
 			@"editor.showTrafficRoads" : @YES,
 			@"editor.showServiceRoads" : @YES,
@@ -1230,8 +1230,8 @@ const static CGFloat Z_AREA				= Z_BASE + 2 * ZSCALE;
 const static CGFloat Z_HALO				= Z_BASE + 2.5 * ZSCALE;
 const static CGFloat Z_CASING			= Z_BASE + 3 * ZSCALE;
 const static CGFloat Z_LINE				= Z_BASE + 4 * ZSCALE;
-const static CGFloat Z_TURN             = Z_BASE + 4.5 * ZSCALE;
 const static CGFloat Z_NODE				= Z_BASE + 5 * ZSCALE;
+const static CGFloat Z_TURN             = Z_BASE + 5.5 * ZSCALE;	// higher than street signals, etc
 const static CGFloat Z_TEXT				= Z_BASE + 6 * ZSCALE;
 const static CGFloat Z_BUILDING_WALL	= Z_BASE + 7 * ZSCALE;
 const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 8 * ZSCALE;
@@ -1743,7 +1743,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	// Turn Restrictions
 	if ( _mapView.enableTurnRestriction ) {
 		if ( object.isRelation.isRestriction ) {
-			OsmMember * viaMember = [object.isRelation memberByRole:@"via" ];
+			OsmMember * viaMember = [object.isRelation memberByRole:@"via" ];	// fixme: this only gets one member but there might be several
 			OsmBaseObject * viaMemberObject = viaMember.ref;
 			if ( [viaMemberObject isKindOfClass:[OsmBaseObject class]] ) {
 				if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
