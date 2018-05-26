@@ -2264,8 +2264,51 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 // Turn restriction panel
 -(void)restrictOptionSelected
 {
-	// if GPS is running don't keep moving around
-	self.userOverrodeLocationPosition = YES;
+	void (^showRestrictionEditor)(void) = ^{
+		TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
+		myVc.centralNode 			= self.editorLayer.selectedNode;
+		myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);
+		myVc.screenFromMapTransform = _screenFromMapTransform;
+		myVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+		[_viewController presentViewController:myVc animated:YES completion:nil];
+
+		// if GPS is running don't keep moving around
+		self.userOverrodeLocationPosition = YES;
+
+		// scroll view so intersection stays visible
+		CGRect rc = myVc.viewWithTitle.frame;
+		int mid = rc.origin.y/2;
+		CGPoint pt = self.pushpinView.arrowPoint;
+		CGPoint delta = { self.bounds.size.width/2 - pt.x, mid - pt.y };
+		[self adjustOriginBy:delta];
+	};
+
+	// check if this is a fancy relation type we don't support well
+	void (^restrictionEditWarning)(OsmNode *) = ^(OsmNode * viaNode) {
+		BOOL warn = NO;
+		for ( OsmRelation * relation in viaNode.relations ) {
+			if ( relation.isRestriction ) {
+				NSString * type = relation.tags[ @"type" ];
+				if ( [type hasPrefix:@"restriction:"] || relation.tags[@"except"] ) {
+					warn = YES;
+				}
+			}
+		}
+		if ( warn ) {
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Unsupported turn restriction type"
+																			message:@"One or more turn restrictions connected to this node have extended properties that will not be displayed.\n\n"
+										 											@"Modififying these restrictions may destroy important information."
+																	 preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Edit restrictions",nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+				showRestrictionEditor();
+			}]];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.viewController presentViewController:alert animated:YES completion:nil];
+		} else {
+			showRestrictionEditor();
+		}
+	};
+
 
 	// if we currently have a relation selected then select the via node instead
 	if ( self.editorLayer.selectedPrimary.isRelation ) {
@@ -2287,22 +2330,12 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		self.editorLayer.selectedNode = [viaNode isKindOfClass:[OsmNode class]] ? viaNode : nil;
 		if ( self.editorLayer.selectedNode ) {
 			[self placePushpinForSelection];
+			restrictionEditWarning( self.editorLayer.selectedNode );
 		}
-	}
 
-	TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
-	myVc.centralNode 			= self.editorLayer.selectedNode;
-	myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);
-	myVc.screenFromMapTransform = _screenFromMapTransform;
-	myVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-	[_viewController presentViewController:myVc animated:YES completion:nil];
-	
-	// scroll view so intersection stays visible
-	CGRect rc = myVc.viewWithTitle.frame;
-	int mid = rc.origin.y/2;
-	CGPoint pt = self.pushpinView.arrowPoint;
-	CGPoint delta = { self.bounds.size.width/2 - pt.x, mid - pt.y };
-	[self adjustOriginBy:delta];
+	} else if ( self.editorLayer.selectedPrimary.isNode ) {
+		restrictionEditWarning( self.editorLayer.selectedNode );
+	}
 }
 
 
