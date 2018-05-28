@@ -14,6 +14,16 @@
 
 
 
+@interface OsmMapData ()
+// private methods in main file
+-(void)addNodeUnsafe:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
+-(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index;
+-(void)deleteWayUnsafe:(OsmWay *)way;
+-(void)addMemberUnsafe:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index;
+-(void)deleteMemberInRelationUnsafe:(OsmRelation *)relation index:(NSInteger)index;
+@end
+
+
 @implementation OsmMapData (Straighten)
 
 #pragma mark unjoinNodeFromWway
@@ -65,11 +75,15 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 		}
 	}
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"Straighten",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"Straighten",nil)];
 
 	for ( NSInteger i = count-1; i >= 0; --i ) {
 		if ( isnan( points[i].x ) ) {
-			[self deleteNodeInWay:way index:i];
+			OsmNode * node = way.nodes[i];
+			EditAction canDelete = [self canDeleteNode:node fromWay:way];
+			if ( canDelete ) {
+				canDelete();
+			}
 		} else {
 			OsmNode * node = way.nodes[i];
 			[self setLongitude:points[i].x latitude:latp2lat(points[i].y) forNode:node inWay:way];
@@ -144,15 +158,15 @@ NSString * reverseValue( NSString * key, NSString * value)
 		@"west" : @"east"
 	};
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"Reverse",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"Reverse",nil)];
 
 	// reverse nodes
 	NSArray * newNodes = [[way.nodes reverseObjectEnumerator] allObjects];
 	for ( NSInteger i = 0; i < newNodes.count; ++i ) {
-		[self addNode:newNodes[i] toWay:way atIndex:i];
+		[self addNodeUnsafe:newNodes[i] toWay:way atIndex:i];
 	}
 	while ( way.nodes.count > newNodes.count ) {
-		[self deleteNodeInWay:way index:way.nodes.count-1];
+		[self deleteNodeInWayUnsafe:way index:way.nodes.count-1];
 	}
 
 	// reverse tags
@@ -172,8 +186,8 @@ NSString * reverseValue( NSString * key, NSString * value)
 				if ( newRole ) {
 					NSInteger index = [relation.members indexOfObject:member];
 					OsmMember * newMember = [[OsmMember alloc] initWithRef:way role:newRole];
-					[self deleteMemberInRelation:relation index:index];
-					[self addMember:newMember toRelation:relation atIndex:index];
+					[self deleteMemberInRelationUnsafe:relation index:index];
+					[self addMemberUnsafe:newMember toRelation:relation atIndex:index];
 				}
 			}
 		}
@@ -184,37 +198,38 @@ NSString * reverseValue( NSString * key, NSString * value)
 #pragma mark disconnect
 
 // disconnect all other ways from the selected way joined to it at node
-- (BOOL)disconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
+- (EditAction)canDisconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
 	if ( node.wayCount < 2 )
-		return NO;
+		return nil;
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"Disconnect",nil)];
+	return ^{
+		[self registerUndoCommentString:NSLocalizedString(@"Disconnect",nil)];
 
-	CLLocationCoordinate2D loc = { node.lat, node.lon };
-	OsmNode * newNode = [self createNodeAtLocation:loc];
-	[self setTags:node.tags forObject:newNode];
+		CLLocationCoordinate2D loc = { node.lat, node.lon };
+		OsmNode * newNode = [self createNodeAtLocation:loc];
+		[self setTags:node.tags forObject:newNode];
 
-	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-		if ( way == selectedWay )
-			return;
-		BOOL disconnectWay = NO;
-		for ( OsmNode * n in way.nodes ) {
-			if ( n == node ) {
-				disconnectWay = YES;
-				break;
-			}
-		}
-		if ( disconnectWay ) {
-			for (NSInteger i = way.nodes.count-1; i >= 0; --i ) {
-				if ( way.nodes[i] == node) {
-					[self deleteNodeInWay:way index:i];
-					[self addNode:newNode toWay:way atIndex:i];
+		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
+			if ( way == selectedWay )
+				return;
+			BOOL disconnectWay = NO;
+			for ( OsmNode * n in way.nodes ) {
+				if ( n == node ) {
+					disconnectWay = YES;
+					break;
 				}
 			}
-		}
-	}];
-	return YES;
+			if ( disconnectWay ) {
+				for (NSInteger i = way.nodes.count-1; i >= 0; --i ) {
+					if ( way.nodes[i] == node) {
+						[self deleteNodeInWayUnsafe:way index:i];
+						[self addNodeUnsafe:newNode toWay:way atIndex:i];
+					}
+				}
+			}
+		}];
+	};
 }
 
 #pragma mark split
@@ -273,150 +288,152 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 }
 
 
--(OsmWay *)splitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
+-(EditActionReturnWay)canSplitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
-	[_undoManager registerUndoComment:NSLocalizedString(@"Split",nil)];
+	return ^{
+		[self registerUndoCommentString:NSLocalizedString(@"Split",nil)];
 
-	OsmWay * wayA = selectedWay;
-	OsmWay * wayB = [self createWay];
+		OsmWay * wayA = selectedWay;
+		OsmWay * wayB = [self createWay];
 
-	[self setTags:wayA.tags forObject:wayB];
+		[self setTags:wayA.tags forObject:wayB];
 
-	OsmRelation * wayIsOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.relations.lastObject : nil;	// only 1 parent relation if it is simple
+		OsmRelation * wayIsOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.relations.lastObject : nil;	// only 1 parent relation if it is simple
 
-	if (wayA.isClosed) {
+		if (wayA.isClosed) {
 
-		// remove duplicated node
-		[self deleteNodeInWay:wayA index:wayA.nodes.count-1];
+			// remove duplicated node
+			[self deleteNodeInWayUnsafe:wayA index:wayA.nodes.count-1];
 
-		// get segment indices
-		NSInteger idxA = [wayA.nodes indexOfObject:node];
-		NSInteger idxB = splitArea(wayA.nodes, idxA);
+			// get segment indices
+			NSInteger idxA = [wayA.nodes indexOfObject:node];
+			NSInteger idxB = splitArea(wayA.nodes, idxA);
 
-		// build new way
-		for ( NSInteger i = idxB; i != idxA; i = (i+1)%wayA.nodes.count) {
-			[self addNode:wayA.nodes[i] toWay:wayB atIndex:wayB.nodes.count];
+			// build new way
+			for ( NSInteger i = idxB; i != idxA; i = (i+1)%wayA.nodes.count) {
+				[self addNodeUnsafe:wayA.nodes[i] toWay:wayB atIndex:wayB.nodes.count];
+			}
+
+			// delete moved nodes from original way
+			for ( OsmNode * n in wayB.nodes ) {
+				NSInteger i = [wayA.nodes indexOfObject:n];
+				[self deleteNodeInWayUnsafe:wayA index:i];
+			}
+
+			// rebase A so it starts with selected node
+			while ( wayA.nodes[0] != node ) {
+				[self addNodeUnsafe:wayA.nodes[0] toWay:wayA atIndex:wayA.nodes.count];
+				[self deleteNodeInWayUnsafe:wayA index:0];
+			}
+
+			// add shared endpoints
+			[self addNodeUnsafe:wayB.nodes[0] toWay:wayA atIndex:wayA.nodes.count];
+			[self addNodeUnsafe:wayA.nodes[0] toWay:wayB atIndex:wayB.nodes.count];
+
+		} else {
+
+			// place common node in new way
+			[self addNodeUnsafe:node toWay:wayB atIndex:0];
+
+			// move remaining nodes to 2nd way
+			const NSInteger idx = [wayA.nodes indexOfObject:node] + 1;
+			while ( idx < wayA.nodes.count ) {
+				[self addNodeUnsafe:wayA.nodes[idx] toWay:wayB atIndex:wayB.nodes.count];
+				[self deleteNodeInWayUnsafe:wayA index:idx];
+			}
+
 		}
 
-		// delete moved nodes from original way
-		for ( OsmNode * n in wayB.nodes ) {
-			NSInteger i = [wayA.nodes indexOfObject:n];
-			[self deleteNodeInWay:wayA index:i];
-		}
+		// get a unique set of parent relations (de-duplicate)
+		NSSet * relations = [NSSet setWithArray:wayA.relations];
 
-		// rebase A so it starts with selected node
-		while ( wayA.nodes[0] != node ) {
-			[self addNode:wayA.nodes[0] toWay:wayA atIndex:wayA.nodes.count];
-			[self deleteNodeInWay:wayA index:0];
-		}
+		// fix parent relations
+		for ( OsmRelation * relation in relations ) {
 
-		// add shared endpoints
-		[self addNode:wayB.nodes[0] toWay:wayA atIndex:wayA.nodes.count];
-		[self addNode:wayA.nodes[0] toWay:wayB atIndex:wayB.nodes.count];
+			if (relation.isRestriction) {
 
-	} else {
+				OsmMember 	* f = [relation memberByRole:@"from"];
+				NSArray 	* v = [relation membersByRole:@"via"];
+				OsmMember 	* t = [relation memberByRole:@"to"];
 
-		// place common node in new way
-		[self addNode:node toWay:wayB atIndex:0];
+				if ( f.ref == wayA || t.ref == wayA ) {
 
-		// move remaining nodes to 2nd way
-		const NSInteger idx = [wayA.nodes indexOfObject:node] + 1;
-		while ( idx < wayA.nodes.count ) {
-			[self addNode:wayA.nodes[idx] toWay:wayB atIndex:wayB.nodes.count];
-			[self deleteNodeInWay:wayA index:idx];
-		}
-
-	}
-
-	// get a unique set of parent relations (de-duplicate)
-	NSSet * relations = [NSSet setWithArray:wayA.relations];
-
-	// fix parent relations
-	for ( OsmRelation * relation in relations ) {
-
-		if (relation.isRestriction) {
-
-			OsmMember 	* f = [relation memberByRole:@"from"];
-			NSArray 	* v = [relation membersByRole:@"via"];
-			OsmMember 	* t = [relation memberByRole:@"to"];
-
-			if ( f.ref == wayA || t.ref == wayA ) {
-
-				// 1. split a FROM/TO
-				BOOL keepB = NO;
-				for ( OsmMember * member in v ) {
-					OsmBaseObject * via = member.ref;
-					if ( ![via isKindOfClass:[OsmBaseObject class]] )
-						continue;
-					if ( via.isNode && [wayB.nodes containsObject:via] ) {
-						keepB = YES;
-						break;
-					} else if ( via.isWay && [via.isWay connectsToWay:wayB] ) {
-						keepB = YES;
-						break;
+					// 1. split a FROM/TO
+					BOOL keepB = NO;
+					for ( OsmMember * member in v ) {
+						OsmBaseObject * via = member.ref;
+						if ( ![via isKindOfClass:[OsmBaseObject class]] )
+							continue;
+						if ( via.isNode && [wayB.nodes containsObject:via] ) {
+							keepB = YES;
+							break;
+						} else if ( via.isWay && [via.isWay connectsToWay:wayB] ) {
+							keepB = YES;
+							break;
+						}
 					}
-				}
 
-				if ( keepB ) {
-					// replace member(s) referencing A with B
-					for ( NSInteger index = 0; index < relation.members.count; ++index ) {
+					if ( keepB ) {
+						// replace member(s) referencing A with B
+						for ( NSInteger index = 0; index < relation.members.count; ++index ) {
+							OsmMember * memberA = relation.members[index];
+							if ( memberA.ref == wayA ) {
+								OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
+								[self addMemberUnsafe:memberB toRelation:relation atIndex:index+1];
+								[self deleteMemberInRelationUnsafe:relation index:index];
+							}
+						}
+					}
+
+				} else {
+
+					// 2. split a VIA
+					OsmWay * prevWay = f.ref;
+					for ( NSInteger index = 0; index < relation.members.count; index++ ) {
 						OsmMember * memberA = relation.members[index];
-						if ( memberA.ref == wayA ) {
-							OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
-							[self addMember:memberB toRelation:relation atIndex:index+1];
-							[self deleteMemberInRelation:relation index:index];
+						if ( [memberA.role isEqualToString:@"via"] ) {
+							if ( memberA.ref == wayA ) {
+								OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
+								BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [wayB connectsToWay:prevWay];
+								[self addMemberUnsafe:memberB toRelation:relation atIndex:insertBefore?index:index+1];
+								break;
+							}
+							prevWay = memberA.ref;
 						}
 					}
 				}
 
 			} else {
 
-				// 2. split a VIA
-				OsmWay * prevWay = f.ref;
-				for ( NSInteger index = 0; index < relation.members.count; index++ ) {
-					OsmMember * memberA = relation.members[index];
-					if ( [memberA.role isEqualToString:@"via"] ) {
-						if ( memberA.ref == wayA ) {
-							OsmMember * memberB = [[OsmMember alloc] initWithRef:wayB role:memberA.role];
-							BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [wayB connectsToWay:prevWay];
-							[self addMember:memberB toRelation:relation atIndex:insertBefore?index:index+1];
-							break;
-						}
-						prevWay = memberA.ref;
+				// All other relations (Routes, Multipolygons, etc):
+				// 1. Both `wayA` and `wayB` remain in the relation
+				// 2. But must be inserted as a pair
+
+				if ( relation == wayIsOuter ) {
+					NSDictionary * merged = MergeTags(relation.tags, wayA.tags);
+					[self setTags:merged forObject:relation];
+					[self setTags:nil forObject:wayA];
+					[self setTags:nil forObject:wayB];
+				}
+
+				// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
+				OsmWay * prevWay = nil;
+				NSInteger index = 0;
+				for ( OsmMember * member in relation.members ) {
+					if ( member.ref == wayA ) {
+						BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [prevWay.isWay connectsToWay:wayB];
+						OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
+						[self addMemberUnsafe:newMember toRelation:relation atIndex:insertBefore?index:index+1];
+						break;
 					}
+					prevWay = member.ref;
+					++index;
 				}
-			}
-
-		} else {
-
-			// All other relations (Routes, Multipolygons, etc):
-			// 1. Both `wayA` and `wayB` remain in the relation
-			// 2. But must be inserted as a pair
-
-			if ( relation == wayIsOuter ) {
-				NSDictionary * merged = MergeTags(relation.tags, wayA.tags);
-				[self setTags:merged forObject:relation];
-				[self setTags:nil forObject:wayA];
-				[self setTags:nil forObject:wayB];
-			}
-
-			// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
-			OsmWay * prevWay = nil;
-			NSInteger index = 0;
-			for ( OsmMember * member in relation.members ) {
-				if ( member.ref == wayA ) {
-					BOOL insertBefore = [prevWay isKindOfClass:[OsmWay class]] && [prevWay.isWay connectsToWay:wayB];
-					OsmMember * newMember = [[OsmMember alloc] initWithRef:wayB role:member.role];
-					[self addMember:newMember toRelation:relation atIndex:insertBefore?index:index+1];
-					break;
-				}
-				prevWay = member.ref;
-				++index;
 			}
 		}
-	}
 
-	return wayB;
+		return wayB;
+	};
 }
 
 
@@ -459,24 +476,34 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	if ( requiresSplitting && splits.count > 0 && !requiresSplitting(splits) )
 		return nil;
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"create turn restriction",nil)];
+	// get all necessary splits
+	NSMutableArray * newWays = [NSMutableArray new];
+	for ( OsmWay * way in splits ) {
+		EditActionReturnWay split = [self canSplitWay:way atNode:viaNode];
+		if ( split == nil )
+			return nil;
+		[newWays addObject:split];
+	}
+
+	[self registerUndoCommentString:NSLocalizedString(@"create turn restriction",nil)];
+
+	for ( NSInteger i = 0; i < newWays.count; ++i ) {
+		OsmWay 				* way = splits[i];
+		EditActionReturnWay split = newWays[i];
+		OsmWay * newWay = split();
+		if ( way == fromWay && [newWay.nodes containsObject:fromWayNode] )
+			fromWay = newWay;
+		if ( way == toWay && [newWay.nodes containsObject:toWayNode] )
+			toWay = newWay;
+		newWays[i] = newWay;
+	}
 
 	if ( restriction == nil ) {
 		restriction = [self createRelation];
 	} else {
 		while ( restriction.members.count > 0 ) {
-			[self deleteMemberInRelation:restriction index:0];
+			[self deleteMemberInRelationUnsafe:restriction index:0];
 		}
-	}
-
-	NSMutableArray * newWays = [NSMutableArray new];
-	for ( OsmWay * way in splits ) {
-		OsmWay * newWay = [self splitWay:way atNode:viaNode];
-		if ( way == fromWay && [newWay.nodes containsObject:fromWayNode] )
-			fromWay = newWay;
-		if ( way == toWay && [newWay.nodes containsObject:toWayNode] )
-			toWay = newWay;
-		[newWays addObject:newWay];
 	}
 	
 	NSMutableDictionary * tags = [NSMutableDictionary new];
@@ -488,9 +515,9 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	OsmMember * viaM = [[OsmMember alloc] initWithRef:viaNode role:@"via"];
 	OsmMember * toM = [[OsmMember alloc] initWithRef:toWay role:@"to"];
 
-	[self addMember:fromM toRelation:restriction atIndex:0];
-	[self addMember:viaM toRelation:restriction atIndex:1];
-	[self addMember:toM toRelation:restriction atIndex:2];
+	[self addMemberUnsafe:fromM toRelation:restriction atIndex:0];
+	[self addMemberUnsafe:viaM toRelation:restriction atIndex:1];
+	[self addMemberUnsafe:toM toRelation:restriction atIndex:2];
 
 	if ( resultWays )
 		*resultWays = newWays;
@@ -498,26 +525,20 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	return restriction;
 }
 
--(void)deleteTurnRestrictionRelation:(OsmRelation *)restriction
-{
-	[_undoManager registerUndoComment:NSLocalizedString(@"delete turn restriction",nil)];
-	[self deleteRelation:restriction];
-}
-
 #pragma mark Join
 
--(BOOL)joinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode
+-(EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode
 {
 	NSArray * ways = [self waysContainingNode:selectedNode];
 	if ( ways.count != 2 )
-		return NO;
+		return nil;
 	OsmWay * otherWay = nil;
 	if ( ways[0] == selectedWay ) {
 		otherWay = ways[1];
 	} else if ( ways[1] == selectedWay ) {
 		otherWay = ways[0];
 	} else {
-		return NO;
+		return nil;
 	}
 
 	// don't allow joining to a way that is part of a relation, unless both are members of the same relation
@@ -526,7 +547,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	} else if ( selectedWay.relations.count == 1 && otherWay.relations.count == 1 ) {
 		// both belong to a single relation
 		if ( selectedWay.relations.lastObject != otherWay.relations.lastObject ) {
-			return NO;
+			return nil;
 		}
 		// .. and it's the same relation
 		OsmRelation * relation = selectedWay.relations.lastObject;
@@ -541,57 +562,58 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 					++foundCount;
 			}
 			if ( foundCount != 2 )
-				return NO;
+				return nil;
 		}
 		// route or polygon, so should be okay
 	} else {
 		// there are relations involved
-		return NO;
+		return nil;
 	}
 
-	// join nodes, preserving selected way
-	NSInteger index = 0;
-	if ( selectedWay.nodes.lastObject == otherWay.nodes[0] ) {
-		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
-		for ( OsmNode * n in otherWay.nodes ) {
-			if ( index++ == 0 )
-				continue;
-			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
-		}
-	} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
-		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
-		[self reverseWay:otherWay];	// reverse the tags on other way
-		for ( OsmNode * n in otherWay.nodes ) {
-			if ( index++ == 0 )
-				continue;
-			[self addNode:n toWay:selectedWay atIndex:selectedWay.nodes.count];
-		}
-	} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
-		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
-		[self reverseWay:otherWay];	// reverse the tags on other way
-		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
-			if ( index++ == 0 )
-				continue;
-			[self addNode:n toWay:selectedWay atIndex:0];
-		}
-	} else if ( selectedWay.nodes[0] == otherWay.nodes.lastObject ) {
-		[_undoManager registerUndoComment:NSLocalizedString(@"Join",nil)];
-		for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
-			if ( index++ == 0 )
-				continue;
-			[self addNode:n toWay:selectedWay atIndex:0];
-		}
-	} else {
-		return NO;
-	}
+	return ^{
 
-	// join tags
-	NSDictionary * newTags = MergeTags(selectedWay.tags, otherWay.tags);
-	[self setTags:newTags forObject:selectedWay];
+		// join nodes, preserving selected way
+		NSInteger index = 0;
+		if ( selectedWay.nodes.lastObject == otherWay.nodes[0] ) {
+			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
+			for ( OsmNode * n in otherWay.nodes ) {
+				if ( index++ == 0 )
+					continue;
+				[self addNodeUnsafe:n toWay:selectedWay atIndex:selectedWay.nodes.count];
+			}
+		} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
+			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
+			[self reverseWay:otherWay];	// reverse the tags on other way
+			for ( OsmNode * n in otherWay.nodes ) {
+				if ( index++ == 0 )
+					continue;
+				[self addNodeUnsafe:n toWay:selectedWay atIndex:selectedWay.nodes.count];
+			}
+		} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
+			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
+			[self reverseWay:otherWay];	// reverse the tags on other way
+			for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
+				if ( index++ == 0 )
+					continue;
+				[self addNodeUnsafe:n toWay:selectedWay atIndex:0];
+			}
+		} else if ( selectedWay.nodes[0] == otherWay.nodes.lastObject ) {
+			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
+			for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
+				if ( index++ == 0 )
+					continue;
+				[self addNodeUnsafe:n toWay:selectedWay atIndex:0];
+			}
+		} else {
+			return;	// never happens
+		}
 
-	[self deleteWay:otherWay];
+		// join tags
+		NSDictionary * newTags = MergeTags(selectedWay.tags, otherWay.tags);
+		[self setTags:newTags forObject:selectedWay];
 
-	return YES;
+		[self deleteWayUnsafe:otherWay];
+	};
 }
 
 #pragma mark Circularize
@@ -613,7 +635,7 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 	point.longitude = center.x + sin(ang*M_PI/180)*radius;
 	point.latitude  = latp2lat( center.y + cos(ang*M_PI/180)*radius );
 	OsmNode * newNode = [mapData createNodeAtLocation:point];
-	[mapData addNode:newNode toWay:way atIndex:index];
+	[mapData addNodeUnsafe:newNode toWay:way atIndex:index];
 }
 
 -(BOOL)circularizeWay:(OsmWay *)way
@@ -697,7 +719,7 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 		// check if node is a duplicate of previous node
 		NSInteger prev = [way.nodes indexOfObject:node];
 		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self duplicateNode:node];
-		[self addNode:newNode toWay:newWay atIndex:index++];
+		[self addNodeUnsafe:newNode toWay:newWay atIndex:index++];
 	}
 	[self setTags:way.tags forObject:newWay];
 	return newWay;
@@ -706,11 +728,11 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 - (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
 {
 	if ( object.isNode ) {
-		[_undoManager registerUndoComment:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
 		return [self duplicateNode:object.isNode];
 	}
 	if ( object.isWay ) {
-		[_undoManager registerUndoComment:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
 		return [self duplicateWay:object.isWay];
 	}
 	return nil;

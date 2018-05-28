@@ -97,15 +97,17 @@ typedef enum {
 -(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict;
 -(void)constructAsUserCreated:(NSString *)userName;
 -(void)setConstructed;
--(void)incrementModifyCount:(UndoManager *)undo;
--(void)setTags:(NSDictionary *)tags undo:(UndoManager *)undo;
--(void)setTimestamp:(NSDate *)date undo:(UndoManager *)undo;
--(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo;
--(void)resetModifyCount:(UndoManager *)undo;
 -(void)serverUpdateVersion:(NSInteger)version;
 -(void)serverUpdateChangeset:(OsmIdentifier)changeset;
 -(void)serverUpdateIdent:(OsmIdentifier)ident;
 -(void)serverUpdateInPlace:(OsmBaseObject *)newerVersion;
+
+-(void)incrementModifyCount:(UndoManager *)undo;
+-(void)resetModifyCount:(UndoManager *)undo;
+-(void)setTags:(NSDictionary *)tags undo:(UndoManager *)undo;
+-(void)setTimestamp:(NSDate *)date undo:(UndoManager *)undo;
+-(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo;
+
 -(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 -(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 
@@ -116,6 +118,7 @@ typedef enum {
 -(OsmRelation *)isRelation;
 
 -(OSMPoint)selectionPoint;
+-(OSMPoint)pointOnObjectForPoint:(OSMPoint)target;
 
 -(NSDate *)dateForTimestamp;
 
@@ -181,7 +184,6 @@ typedef enum {
 -(double)wayArea;
 -(BOOL)isMultipolygonMember;
 -(BOOL)isSimpleMultipolygonOuterMember;
--(OSMPoint)pointOnWayForPoint:(OSMPoint)point;
 +(BOOL)isClockwiseArrayOfPoints:(NSArray *)a;
 -(BOOL)hasDuplicatedNode;
 -(OsmNode *)connectsToWay:(OsmWay *)way;
@@ -211,7 +213,6 @@ typedef enum {
 -(NSArray *)membersByRole:(NSString *)role;
 
 -(OSMPoint)centerPoint;
--(OSMPoint)pointOnRelationForPoint:(OSMPoint)target;
 
 -(BOOL)containsObject:(OsmBaseObject *)object;
 

@@ -145,6 +145,12 @@ NSString * OsmValueForBoolean( BOOL b )
 	return OSMPointMake(0, 0);
 }
 
+-(OSMPoint)pointOnObjectForPoint:(OSMPoint)target
+{
+	assert(NO);
+	return OSMPointMake(0, 0);
+}
+
 static NSInteger _nextUnusedIdentifier = 0;
 
 +(NSInteger)nextUnusedIdentifier
@@ -715,6 +721,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return OSMPointMake(_lon, _lat);
 }
 
+-(OSMPoint)pointOnObjectForPoint:(OSMPoint)target
+{
+	return OSMPointMake(_lon, _lat);
+}
+
 -(BOOL)isBetterToKeepThan:(OsmNode *)node
 {
 	if ( (self.ident.longLongValue > 0) == (node.ident.longLongValue > 0) ) {
@@ -1023,11 +1034,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 // return the point on the way closest to the supplied point
--(OSMPoint)pointOnWayForPoint:(OSMPoint)point
+-(OSMPoint)pointOnObjectForPoint:(OSMPoint)target
 {
 	switch ( _nodes.count ) {
 		case 0:
-			return point;
+			return target;
 		case 1:
 			return ((OsmNode *)_nodes.lastObject).location;
 	}
@@ -1036,8 +1047,8 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	for ( NSInteger i = 1; i < _nodes.count; ++i ) {
 		OSMPoint p1 = [((OsmNode *)_nodes[i-1]) location];
 		OSMPoint p2 = [((OsmNode *)_nodes[ i ]) location];
-		OSMPoint linePoint = ClosestPointOnLineToPoint( p1, p2, point );
-		double dist = MagSquared( Sub( linePoint, point ) );
+		OSMPoint linePoint = ClosestPointOnLineToPoint( p1, p2, target );
+		double dist = MagSquared( Sub( linePoint, target ) );
 		if ( dist < bestDist ) {
 			bestDist = dist;
 			bestPoint = linePoint;
@@ -1183,7 +1194,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 }
 
 // pick a point close to the center of the way
--(OSMPoint)selectionPoint
+-(OSMPoint)selectionPoint 
 {
 	double dist = [self lengthInMeters] / 2;
 	BOOL first = YES;
@@ -1562,7 +1573,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 			if ( [member.role isEqualToString:@"outer"] ) {
 				OsmWay * way = member.ref;
 				if ( [way isKindOfClass:[OsmWay class]] && way.nodes.count > 0 ) {
-					return [way pointOnWayForPoint:center];
+					return [way pointOnObjectForPoint:center];
 				}
 			}
 		}
@@ -1592,26 +1603,23 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	for ( OsmMember * member in _members ) {
 		OsmBaseObject * object = member.ref;
 		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
-			double d = [object distanceToLineSegment:point1 point:point2];
-			if ( d < dist ) {
-				dist = d;
+			if ( !object.isRelation ) {
+				double d = [object distanceToLineSegment:point1 point:point2];
+				if ( d < dist ) {
+					dist = d;
+				}
 			}
 		}
 	}
 	return dist;
 }
 
--(OSMPoint)pointOnRelationForPoint:(OSMPoint)target
+-(OSMPoint)pointOnObjectForPoint:(OSMPoint)target
 {
 	OSMPoint bestPoint = target;
 	double bestDistance = 10000000.0;
 	for ( OsmBaseObject * object in self.allMemberObjects ) {
-		OSMPoint pt;
-		if ( object.isWay ) {
-			pt = [object.isWay pointOnWayForPoint:target];
-		} else {
-			pt = object.isNode.location;
-		}
+		OSMPoint pt = [object pointOnObjectForPoint:target];
 		double dist = DistanceFromPointToPoint(target, pt);
 		if ( dist < bestDistance ) {
 			bestDistance = dist;

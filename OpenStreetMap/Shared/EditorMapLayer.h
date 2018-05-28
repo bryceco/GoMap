@@ -9,6 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "VectorMath.h"
 #import "iosapi.h"
+#import "OsmMapData.h"
+
 
 @class OsmMapData;
 @class OsmRenderInfo;
@@ -19,7 +21,6 @@
 @class OsmWay;
 @class OsmRelation;
 @class QuadMap;
-@class SpeechBalloonLayer;
 
 #define SHOW_3D	1
 
@@ -33,11 +34,6 @@ extern const double MinIconSizeInPixels;
 {
 	CGSize					_iconSize;
 	double					_highwayScale;
-
-	OsmBaseObject		*	_highlightObject;
-	NSMutableArray		*	_extraSelections;
-
-	SpeechBalloonLayer	*	_speechBalloon;
 
 	MapCSS				*	_mapCss;
 	NSMutableSet		*	_nameDrawSet;
@@ -79,8 +75,6 @@ extern const double MinIconSizeInPixels;
 @property (readonly,nonatomic)	OsmBaseObject		*	selectedPrimary;	// way or node, but not a node in a selected way
 @property (readonly,nonatomic)	OsmMapData			*	mapData;
 @property (assign,nonatomic)	BOOL					addNodeInProgress;
-@property (assign,nonatomic)	BOOL					addWayInProgress;
-@property (assign,nonatomic)	BOOL					enableMapCss;
 
 - (id)initWithMapView:(MapView *)mapView;
 - (void)didReceiveMemoryWarning;
@@ -95,28 +89,27 @@ extern const double MinIconSizeInPixels;
 - (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius ;
 - (void)osmObjectsNearby:(CGPoint)point radius:(double)radius block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block;
 
+-(CGPoint)pointOnObject:(OsmBaseObject *)object forPoint:(CGPoint)point;
+
 
 -(NSArray *)shownObjects;
 
-- (void)osmHighlightObject:(OsmBaseObject *)object mousePoint:(CGPoint)mousePoint;
 - (void)updateMapLocation;
 - (void)purgeCachedDataHard:(BOOL)hard;
 
-- (void)toggleExtraSelection:(OsmBaseObject *)object;
-- (void)clearExtraSelections;
-- (NSArray *)extraSelections;
-
 - (void)setSelectionChangeCallback:(void (^)(void))callback;
+
+// editing
 
 -(OsmNode *)createNodeAtPoint:(CGPoint)point;
 -(OsmWay *)createWayWithNode:(OsmNode *)node;
--(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way;
--(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way allowDegenerate:(BOOL)allowDegenerate;
--(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
--(void)deleteSelectedObject;
--(void)cancelOperation;
+
 -(void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
 -(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;
+
+// these are similar to OsmMapData methods but also update selections and refresh the layout
+-(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index;
+-(EditAction)canDeleteSelectedObject;
 
 
 - (BOOL)copyTags:(OsmBaseObject *)object;

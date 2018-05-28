@@ -49,18 +49,18 @@ static const CGFloat Z_AERIAL			= -100;
 static const CGFloat Z_MAPNIK			= -99;
 static const CGFloat Z_LOCATOR			= -50;
 static const CGFloat Z_GPSTRACE			= -40;
-static const CGFloat Z_ROTATEGRAPHIC	= -3;
 static const CGFloat Z_EDITOR			= -20;
 static const CGFloat Z_GPX				= -15;
 //static const CGFloat Z_BUILDINGS		= -18;
 static const CGFloat Z_RULER			= -5;	// ruler is below buttons
+static const CGFloat Z_ROTATEGRAPHIC	= -3;
 //static const CGFloat Z_BING_LOGO		= 2;
 static const CGFloat Z_BLINK			= 4;
 static const CGFloat Z_BALL				= 5;
-static const CGFloat Z_FLASH			= 6;
-static const CGFloat Z_TOOLBAR			= 9000;
-static const CGFloat Z_PUSHPIN			= 9001;
-static const CGFloat Z_CROSSHAIRS		= 10000;
+static const CGFloat Z_TOOLBAR			= 90;
+static const CGFloat Z_PUSHPIN			= 91;
+static const CGFloat Z_CROSSHAIRS		= 100;
+static const CGFloat Z_FLASH			= 110;
 
 
 
@@ -256,18 +256,29 @@ CGSize SizeForImage( NSImage * image )
 #endif
 
 #if TARGET_OS_IPHONE
-		_editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSArray * comments) {
+		_editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSDictionary * context) {
+
 			if ( self.silentUndo )
 				return;
-			NSString * title = undo ? NSLocalizedString(@"Undo",nil) : NSLocalizedString(@"Redo",nil);
-			NSArray * comment = comments.count == 0 ? nil : undo ? comments.lastObject : comments[0];
-			NSString * action = comment[0];
-			NSData * location = comment[1];
+
+			NSString 	 * title 	= undo ? NSLocalizedString(@"Undo",nil) : NSLocalizedString(@"Redo",nil);
+			NSString 	 * action 	= context[@"comment"];
+			NSData 		 * location = context[@"location"];
+
 			if ( location.length == sizeof(OSMTransform) ) {
-				OSMTransform transform = *(OSMTransform *)[location bytes];
-				self.screenFromMapTransform = transform;
+				const OSMTransform * transform = (OSMTransform *)[location bytes];
+				self.screenFromMapTransform = *transform;
+			}
+
+			_editorLayer.selectedRelation 	= context[ @"selectedRelation" ];
+			_editorLayer.selectedWay 		= context[ @"selectedWay" ];
+			_editorLayer.selectedNode		= context[ @"selectedNode" ];
+
+			NSString * pushpin = context[@"pushpin"];
+			if ( pushpin ) {
+				[self placePushpinAtPoint:CGPointFromString(pushpin) object:_editorLayer.selectedPrimary];
 			} else {
-				DLog(@"bad undo comment");
+				[self removePin];
 			}
 			NSString * message = [NSString stringWithFormat:@"%@ %@", title, action];
 			[self flashMessage:message];
@@ -1687,8 +1698,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[_editorLayer.mapData undo];
 	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
-
-	[self placePushpinForSelection];
 }
 
 - (IBAction)redo:(id)sender
@@ -1704,23 +1713,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[_editorLayer.mapData redo];
 	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
-
-	[self placePushpinForSelection];
 }
 
-#if !TARGET_OS_IPHONE
-- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem
-{
-    SEL theAction = [anItem action];
-    if ( theAction == @selector(undo:) ) {
-		return [_editorLayer.mapData canUndo];
-	}
-	if ( theAction == @selector(redo:)) {
-		return [_editorLayer.mapData canRedo];
-	}
-	return YES;
-}
-#endif
 
 #pragma mark Resize & movement
 
@@ -1909,32 +1903,30 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 #pragma mark Key presses
 
-// Escape key
--(IBAction)cancelOperation:(id)sender
-{
-	[_editorLayer cancelOperation];
-
-#if !TARGET_OS_IPHONE
-	CGPoint point = [NSEvent mouseLocation];
-	point = [self.window convertScreenToBase:point];
-	point = [self convertPoint:point fromView:nil];
-	[self setCursorForPoint:point];
-#endif
-}
 
 -(IBAction)delete:(id)sender
 {
-#if TARGET_OS_IPHONE
 	UIAlertController *	alertDelete = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) preferredStyle:UIAlertControllerStyleAlert];
 	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-		[_editorLayer deleteSelectedObject];
-		[self removePin];
+	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+		EditAction canDelete = [_editorLayer canDeleteSelectedObject];
+		if ( canDelete ) {
+			canDelete();
+			CGPoint pos = _pushpinView.arrowPoint;
+			[self removePin];
+			if ( _editorLayer.selectedPrimary ) {
+				pos = [_editorLayer pointOnObject:_editorLayer.selectedPrimary forPoint:pos];
+				[self placePushpinAtPoint:pos object:_editorLayer.selectedPrimary];
+			}
+		} else {
+			UIAlertController *	alertFailed = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete failed",nil)
+																				  message:NSLocalizedString(@"The object could not be deleted because doing so would damage a relation it belongs to.",nil)
+																		   preferredStyle:UIAlertControllerStyleAlert];
+			[alertFailed addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+			[self.viewController presentViewController:alertFailed animated:YES completion:nil];
+		}
 	}]];
 	[self.viewController presentViewController:alertDelete animated:YES completion:nil];
-#else
-	[_editorLayer deleteSelectedObject];
-#endif
 }
 
 -(void)keyDown:(NSEvent *)event
@@ -2125,16 +2117,33 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 				error = NSLocalizedString(@"Cannot reverse way",nil);
 			break;
 		case ACTION_JOIN:
-			if ( ![_editorLayer.mapData joinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode] )
-				error = NSLocalizedString(@"Cannot join selection",nil);
+			{
+				EditAction join = [_editorLayer.mapData canJoinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
+				if ( join ) {
+					join();
+				} else {
+					error = NSLocalizedString(@"Cannot join selection",nil);
+				}
+			}
 			break;
 		case ACTION_DISCONNECT:
-			if ( ! [_editorLayer.mapData disconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode] )
-				error = NSLocalizedString(@"Cannot disconnect way",nil);
+			{
+				EditAction disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
+				if ( disconnect ) {
+					disconnect();
+				} else {
+					error = NSLocalizedString(@"Cannot disconnect way",nil);
+				}
+			}
 			break;
 		case ACTION_SPLIT:
-			if ( ! [_editorLayer.mapData splitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode] )
-				error = NSLocalizedString(@"Cannot split way",nil);
+			{
+				EditActionReturnWay split = [_editorLayer.mapData canSplitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
+				if ( split )
+					split();
+				else
+					error = NSLocalizedString(@"Cannot split way",nil);
+			}
 			break;
 		case ACTION_STRAIGHTEN:
 			if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) )
@@ -2369,6 +2378,12 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 
 
 #if TARGET_OS_IPHONE
+
+-(CGPoint)pushpinPosition
+{
+	return _pushpinView ? _pushpinView.arrowPoint : CGPointMake(nan(""), nan(""));
+}
+
 -(OsmBaseObject *)dragConnectionForNode:(OsmNode *)node segment:(NSInteger *)segment
 {
 	assert( node.isNode );
@@ -2465,12 +2480,11 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 							OsmBaseObject * hit = [strongSelf dragConnectionForNode:dragNode segment:&segment];
 							if ( hit.isNode ) {
 								// replace dragged node with hit node
-								NSDictionary * mergedTags = MergeTags(hit.tags,dragNode.tags);
-								NSInteger index = [dragWay.nodes indexOfObject:dragNode];
-								[strongSelf.editorLayer addNode:hit.isNode toWay:dragWay atIndex:index+1];
-								[strongSelf.editorLayer deleteNode:dragNode fromWay:dragWay allowDegenerate:YES];
-								[strongSelf.editorLayer.mapData setTags:mergedTags forObject:hit];
-
+								EditAction add = [strongSelf.editorLayer.mapData canReplaceNodeInWay:dragWay oldNode:dragNode withNode:hit.isNode];
+								if ( add == nil ) {
+									return;
+								}
+								add();
 								if ( dragWay.isArea ) {
 									strongSelf.editorLayer.selectedNode = nil;
 									CGPoint pt = [strongSelf screenPointForLatitude:hit.isNode.lat longitude:hit.isNode.lon birdsEye:YES];
@@ -2481,9 +2495,12 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 								}
 							} else if ( hit.isWay ) {
 								// add new node to hit way
-								OSMPoint pt = [hit.isWay pointOnWayForPoint:dragNode.location];
+								OSMPoint pt = [hit pointOnObjectForPoint:dragNode.location];
 								[strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode inWay:strongSelf.editorLayer.selectedWay];
-								[strongSelf.editorLayer addNode:dragNode toWay:hit.isWay atIndex:segment+1];
+								EditActionWithNode add = [strongSelf.editorLayer canAddNodeToWay:hit.isWay atIndex:segment+1];
+								if ( add ) {
+									add(dragNode);
+								}
 							}
 							return;
 						}
@@ -2526,9 +2543,13 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 							if ( strongSelf->_gestureDidMove ) {
 								[strongSelf.editorLayer.mapData endUndoGrouping];
 								strongSelf.silentUndo = YES;
-								[strongSelf.editorLayer.mapData undo];
+								NSDictionary * dict = [strongSelf.editorLayer.mapData undo];
 								strongSelf.silentUndo = NO;
 								[strongSelf.editorLayer.mapData beginUndoGrouping];
+								if ( dict ) {
+									// maintain the original pin location:
+									[strongSelf.editorLayer.mapData registerUndoCommentContext:dict];
+								}
 							}
 							strongSelf->_gestureDidMove = YES;
 
@@ -2640,18 +2661,18 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	_pushpinView.text = text;
 }
 
--(void)interactiveExtendSelectedWayToPoint:(CGPoint)newPoint userSpecified:(BOOL)userSpecified
+-(void)extendSelectedWayToPoint:(CGPoint)newPoint
 {
 	if ( !_pushpinView )
 		return;
 	OsmWay * way = _editorLayer.selectedWay;
 	OsmNode * node = _editorLayer.selectedNode;
-	CGPoint prevPoint = _pushpinView.arrowPoint;
+	CGPoint arrowPoint = _pushpinView.arrowPoint;
 
 	if ( way && !node ) {
-		// add new node at point
+		// insert a new node into way at point
 		NSInteger segment;
-		OsmBaseObject * object = [_editorLayer osmHitTestSelection:prevPoint radius:DefaultHitTestRadius segment:&segment];
+		OsmBaseObject * object = [_editorLayer osmHitTestSelection:arrowPoint radius:DefaultHitTestRadius segment:&segment];
 		if ( object == nil ) {
 			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select location",nil)
 																				 message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)
@@ -2660,10 +2681,13 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			[self.viewController presentViewController:alertError animated:YES completion:nil];
 			return;
 		}
-		OsmNode * newNode = [_editorLayer createNodeAtPoint:prevPoint];
-		[_editorLayer.mapData addNode:newNode toWay:way atIndex:segment+1];
-		_editorLayer.selectedNode = newNode;
-		[self placePushpinForSelection];
+		EditActionWithNode add = [_editorLayer canAddNodeToWay:way atIndex:segment+1];
+		if ( add ) {
+			OsmNode * newNode = [_editorLayer createNodeAtPoint:arrowPoint];
+			add(newNode);
+			_editorLayer.selectedNode = newNode;
+			[self placePushpinForSelection];
+		}
 
 	} else {
 
@@ -2677,7 +2701,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		}
 
 		if ( node == nil ) {
-			node = [_editorLayer createNodeAtPoint:prevPoint];
+			node = [_editorLayer createNodeAtPoint:arrowPoint];
 		}
 		if ( way == nil ) {
 			way = [_editorLayer createWayWithNode:node];
@@ -2687,14 +2711,11 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		if ( nextIndex == way.nodes.count - 1 )
 			++nextIndex;
 		// add new node at point
-		OSMPoint centerPoint = OSMPointFromCGPoint( self.center );
 		OsmNode * prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count-2] : nil;
 		CGPoint prevPrevPoint = prevPrevNode ? [self screenPointForLatitude:prevPrevNode.lat longitude:prevPrevNode.lon birdsEye:YES] : CGPointMake(0,0);
 
-		if ( userSpecified ) {
-			// just use the supplied point
-		} else if ( hypot( prevPoint.x-centerPoint.x, prevPoint.y-centerPoint.y) > 10.0 &&
-			(prevPrevNode==nil || hypot( prevPrevPoint.x-centerPoint.x, prevPrevPoint.y-centerPoint.y) > 10.0 ) )
+		if ( hypot( arrowPoint.x-newPoint.x, arrowPoint.y-newPoint.y) > 10.0 &&
+			(prevPrevNode==nil || hypot( prevPrevPoint.x-newPoint.x, prevPrevPoint.y-newPoint.y) > 10.0 ) )
 		{
 			// it's far enough from previous point to use
 		} else {
@@ -2702,27 +2723,27 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			// compute a good place for next point
 			if ( way.nodes.count < 2 ) {
 				// create 2nd point in the direction of the center of the screen
-				BOOL vert = fabs(prevPoint.x - centerPoint.x) < fabs(prevPoint.y - centerPoint.y);
+				BOOL vert = fabs(arrowPoint.x - newPoint.x) < fabs(arrowPoint.y - newPoint.y);
 				if ( vert ) {
-					newPoint.x = prevPoint.x;
-					newPoint.y = fabs(centerPoint.y-prevPoint.y) < 30 ? prevPoint.y + 60 : 2*centerPoint.y - prevPoint.y;
+					newPoint.x = arrowPoint.x;
+					newPoint.y = fabs(newPoint.y-arrowPoint.y) < 30 ? arrowPoint.y + 60 : 2*newPoint.y - arrowPoint.y;
 				} else {
-					newPoint.x = fabs(centerPoint.x-prevPoint.x) < 30 ? prevPoint.x + 60 : 2*centerPoint.x - prevPoint.x;
-					newPoint.y = prevPoint.y;
+					newPoint.x = fabs(newPoint.x-arrowPoint.x) < 30 ? arrowPoint.x + 60 : 2*newPoint.x - arrowPoint.x;
+					newPoint.y = arrowPoint.y;
 				}
 			} else if ( way.nodes.count == 2 ) {
 				// create 3rd point 90 degrees from first 2
 				OsmNode * n1 = way.nodes[1-prevIndex];
 				CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon birdsEye:YES];
-				CGPoint delta = { p1.x - prevPoint.x, p1.y - prevPoint.y };
+				CGPoint delta = { p1.x - arrowPoint.x, p1.y - arrowPoint.y };
 				double len = hypot( delta.x, delta.y );
 				if ( len > 100 ) {
 					delta.x *= 100/len;
 					delta.y *= 100/len;
 				}
-				OSMPoint np1 = { prevPoint.x - delta.y, prevPoint.y + delta.x };
-				OSMPoint np2 = { prevPoint.x + delta.y, prevPoint.y - delta.x };
-				if ( DistanceFromPointToPoint(np1, centerPoint) < DistanceFromPointToPoint(np2, centerPoint) )
+				OSMPoint np1 = { arrowPoint.x - delta.y, arrowPoint.y + delta.x };
+				OSMPoint np2 = { arrowPoint.x + delta.y, arrowPoint.y - delta.x };
+				if ( DistanceFromPointToPoint(np1, OSMPointFromCGPoint(newPoint)) < DistanceFromPointToPoint(np2, OSMPointFromCGPoint(newPoint)) )
 					newPoint = CGPointMake(np1.x,np1.y);
 				else
 					newPoint = CGPointMake(np2.x, np2.y);
@@ -2732,7 +2753,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 				OsmNode * n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex-2];
 				CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon birdsEye:YES];
 				CGPoint p2 = [self screenPointForLatitude:n2.lat longitude:n2.lon birdsEye:YES];
-				OSMPoint d1 = { prevPoint.x - p1.x, prevPoint.y - p1.y };
+				OSMPoint d1 = { arrowPoint.x - p1.x, arrowPoint.y - p1.y };
 				OSMPoint d2 = { p1.x - p2.x, p1.y - p2.y };
 				double a1 = atan2( d1.y, d1.x );
 				double a2 = atan2( d2.y, d2.x );
@@ -2743,7 +2764,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 				} else if ( dist > 100 )
 					dist = 100;
 				a1 += a1 - a2;
-				newPoint = CGPointMake( prevPoint.x + dist*cos(a1), prevPoint.y + dist*sin(a1) );
+				newPoint = CGPointMake( arrowPoint.x + dist*cos(a1), arrowPoint.y + dist*sin(a1) );
 			}
 			// make sure selected point is on-screen
 			CGRect rc = self.bounds;
@@ -2763,15 +2784,23 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			double d = hypot( s.x - newPoint.x, s.y - newPoint.y );
 			if ( d < 3.0 ) {
 				// join first to last
-				[_editorLayer addNode:start toWay:way atIndex:nextIndex];
-				_editorLayer.selectedWay = way;
-				_editorLayer.selectedNode = nil;
-				[self placePushpinAtPoint:s object:way];
+				EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex];
+				if ( action ) {
+					action(start);
+					_editorLayer.selectedWay = way;
+					_editorLayer.selectedNode = nil;
+					[self placePushpinAtPoint:s object:way];
+				}
 				return;
 			}
 		}
+
+
+		EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex];
+		if ( !action )
+			return;
 		OsmNode * node2 = [_editorLayer createNodeAtPoint:newPoint];
-		[_editorLayer addNode:node2 toWay:way atIndex:nextIndex];
+		action( node2 );
 		_editorLayer.selectedWay = way;
 		_editorLayer.selectedNode = node2;
 		[self placePushpinForSelection];
@@ -2779,9 +2808,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 }
 #endif
 
--(void)dropPinAtPoint:(CGPoint)dropPoint userSpecified:(BOOL)userSpecified
+-(void)dropPinAtPoint:(CGPoint)dropPoint
 {
-#if TARGET_OS_IPHONE
 	if ( _editorLayer.hidden ) {
 		[self flashMessage:NSLocalizedString(@"Editing layer not visible",nil)];
 		return;
@@ -2800,17 +2828,19 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		
 		if ( _editorLayer.selectedWay && _editorLayer.selectedNode ) {
 			// already editing a way so try to extend it
-			if ( offscreenWarning() ) return;
-			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified ];
+			if ( offscreenWarning() )
+				return;
+			[self extendSelectedWayToPoint:dropPoint];
 		} else if ( _editorLayer.selectedPrimary == nil && _pushpinView ) {
 			// just dropped a pin, so convert it into a way
-			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified];
+			[self extendSelectedWayToPoint:dropPoint];
 		} else if ( _editorLayer.selectedWay && _editorLayer.selectedNode == nil ) {
-			// add a new node to a way
-			if ( offscreenWarning() ) return;
-			[self interactiveExtendSelectedWayToPoint:dropPoint userSpecified:userSpecified];
+			// add a new node to a way at location of pushpin
+			if ( offscreenWarning() )
+				return;
+			[self extendSelectedWayToPoint:dropPoint];
 		} else if ( _editorLayer.selectedPrimary.isNode ) {
-			// nothing selected, or just a single node selected, so drop pin
+			// nothing selected, or just a single node selected, so drop a new pin
 			goto drop_pin;
 		}
 
@@ -2826,17 +2856,10 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 
 		[self placePushpinAtPoint:dropPoint object:nil];
 	}
-#endif
-}
--(IBAction)dropPin:(id)sender
-{
-	CGPoint point = CGRectCenter( self.bounds );
-	[self dropPinAtPoint:point userSpecified:NO];
 }
 
 - (void)setTagsForCurrentObject:(NSDictionary *)tags
 {
-#if TARGET_OS_IPHONE
 	if ( _editorLayer.selectedPrimary == nil ) {
 		// create new object
 		assert( _pushpinView );
@@ -2856,7 +2879,6 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
 	_confirmDrag = NO;
-#endif
 }
 
 -(void)unblinkObject
@@ -2914,95 +2936,10 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	CGPathRelease(path);
 }
 
--(void)updateAddWayProgress
-{
-#if !TARGET_OS_IPHONE
-	// if adding a way draw connection to mouse
-	if ( _editorLayer.addWayInProgress && _editorLayer.selectedWay ) {
-
-		if ( _addWayProgressLayer == nil ) {
-			_addWayProgressLayer = [CAShapeLayer layer];
-			_addWayProgressLayer.strokeColor = NSColor.brownColor.CGColor;
-			_addWayProgressLayer.shadowColor = NSColor.whiteColor.CGColor;
-			_addWayProgressLayer.shadowRadius = 5.0;
-			_addWayProgressLayer.lineWidth = 3.0;
-			_addWayProgressLayer.lineCap = @"round";
-			_addWayProgressLayer.frame = self.bounds;
-			[self.layer addSublayer:_addWayProgressLayer];
-		}
-		CGMutablePathRef path = CGPathCreateMutable();
-		OsmNode * n = _editorLayer.selectedWay.nodes.lastObject;
-		CGPoint start = [self viewPointForLatitude:n.lat longitude:n.lon];
-		CGPoint mouse = [self.window mouseLocationOutsideOfEventStream];
-		mouse = [self convertPoint:mouse fromView:nil];
-		CGPathMoveToPoint( path, NULL, start.x, start.y );
-		CGPathAddLineToPoint( path, NULL, mouse.x, mouse.y );
-		_addWayProgressLayer.path = path;
-		CGPathRelease(path);
-		_addWayProgressLayer.hidden = NO;
-	} else {
-		_addWayProgressLayer.hidden = YES;
-	}
-#endif
-}
-
--(IBAction)duplicateSelectedObject:(id)sender
-{
-	if ( _editorLayer.selectedPrimary.isNode ) {
-		OsmNode * origNode = _editorLayer.selectedPrimary.isNode;
-		CGPoint pt = [self screenPointForLatitude:origNode.lat longitude:origNode.lon birdsEye:YES];
-		pt.x += 20;
-		pt.y += 20;
-		OsmNode * newNode = [_editorLayer createNodeAtPoint:pt];
-		[_editorLayer.mapData setTags:origNode.tags forObject:newNode];
-		_editorLayer.selectedNode = newNode;
-		return;
-	}
-	if ( _editorLayer.selectedPrimary.isWay ) {
-		OsmWay * origWay = _editorLayer.selectedPrimary.isWay;
-		OsmWay * newWay = nil;
-		NSInteger last = origWay.nodes.lastObject == origWay.nodes[0] ? origWay.nodes.count : -1;
-		for ( OsmNode * origNode in origWay.nodes ) {
-			if ( --last == 0 ) {
-				[_editorLayer.mapData addNode:newWay.nodes[0] toWay:newWay atIndex:newWay.nodes.count];
-				break;
-			}
-			CGPoint pt = [self screenPointForLatitude:origNode.lat longitude:origNode.lon birdsEye:YES];
-			pt.x += 20;
-			pt.y += 20;
-			OsmNode * newNode = [_editorLayer createNodeAtPoint:pt];
-			if ( newWay == nil ) {
-				newWay = [_editorLayer createWayWithNode:newNode];
-			} else {
-				[_editorLayer.mapData addNode:newNode toWay:newWay atIndex:newWay.nodes.count];
-			}
-		}
-		[_editorLayer.mapData setTags:origWay.tags forObject:newWay];
-		_editorLayer.selectedWay = newWay;
-		return;
-	}
-}
-
 -(BOOL)canConnectTo:(OsmBaseObject *)hit
 {
 	if ( hit == nil )
 		return NO;
-	if ( _editorLayer.addNodeInProgress ) {
-		return hit.isWay != NULL;
-	}
-	if ( _editorLayer.addWayInProgress ) {
-		if ( hit.isWay ) {
-			return hit != _editorLayer.selectedWay;
-		}
-		if ( hit.isNode ) {
-			// check if connecting to existing way
-			if ( _editorLayer.selectedWay && [_editorLayer.selectedWay.nodes containsObject:hit] && hit != _editorLayer.selectedWay.nodes[0] ) {
-				// attempt to connect to ourself at other than first position (forming a loop)
-				return NO;
-			}
-			return YES;
-		}
-	}
 	if ( _grabbedObject && _grabbedObjectDragged && _grabbedObject.isNode ) {
 		if ( hit.isWay ) {
 			return hit != _editorLayer.selectedWay;
@@ -3011,59 +2948,6 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			return YES;
 	}
 	return NO;
-}
-
--(void)setCursorForPoint:(CGPoint)point
-{
-#if !TARGET_OS_IPHONE
-	BOOL isFirstResponder = (self == [self.window firstResponder]) && [self.window isKeyWindow];
-	if ( !isFirstResponder ) {
-		return;
-	}
-
-	OsmNode * canGrabNode = [_editorLayer osmHitTestNodeInSelection:point];
-
-	// draw connector to cursor for adding a new way point
-	[self updateAddWayProgress];
-
-	// check for hitting existing object
-	OsmBaseObject * hit = [_editorLayer osmHitTest:point];
-	[_editorLayer osmHighlightObject:hit mousePoint:point];
-
-	if ( canGrabNode ) {
-		hit = canGrabNode;
-	}
-
-	if ( [self canConnectTo:hit] ) {
-		NSInteger segment;
-		OsmBaseObject * hit2 = [_editorLayer osmHitTest:point segment:&segment ignoreList:nil];
-		[self blinkObject:hit2 segment:segment];
-	} else {
-		[self unblinkObject];
-	}
-
-	if ( _editorLayer.addNodeInProgress || _editorLayer.addWayInProgress ) {
-		[[NSCursor crosshairCursor] set];
-		return;
-	}
-
-	// check for hovering over a node in a previously selected way
-	if ( canGrabNode ) {
-		// grabbing selected item node
-		if ( [NSEvent pressedMouseButtons] & 1 ) {
-			[[NSCursor closedHandCursor] set];
-		} else {
-			[[NSCursor openHandCursor] set];
-		}
-		return;
-	}
-
-	if ( hit ) {
-		[[NSCursor pointingHandCursor] set];
-	} else {
-		[[NSCursor arrowCursor] set];
-	}
-#endif
 }
 
 
@@ -3169,14 +3053,9 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 				_editorLayer.selectedWay		= object.isWay;
 				_editorLayer.selectedRelation	= object.isRelation;
 
-				if ( object.isWay ) {
-					OSMPoint pt = { note.lon, note.lat };
-					pt = [object.isWay pointOnWayForPoint:pt];
-					CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
-					[self placePushpinAtPoint:point object:object];
-				} else {
-					[self placePushpinForSelection];
-				}
+				OSMPoint pt = [object pointOnObjectForPoint:OSMPointMake(note.lon, note.lat)];
+				CGPoint point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+				[self placePushpinAtPoint:point object:object];
 			}
 		}
 		OsmNoteComment * comment = note.comments.lastObject;
@@ -3371,9 +3250,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	if ( tap.state == UIGestureRecognizerStateEnded ) {
 		CGPoint point = [tap locationInView:self];
 		if ( _addNodeButtonTimestamp ) {
-			[self dropPinAtPoint:point userSpecified:YES];
+			[self dropPinAtPoint:point];
 		} else {
-			[self singleClick:point extendedCommand:NO];
+			[self singleClick:point];
 		}
 	}
 }
@@ -3387,7 +3266,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		case UIGestureRecognizerStateEnded:
 			if ( CACurrentMediaTime() - _addNodeButtonTimestamp < 0.5 ) {
 				// treat as tap
-				[self dropPin:self];
+				CGPoint point = CGRectCenter( self.bounds );
+				[self dropPinAtPoint:point];
 			}
 			_addNodeButtonTimestamp = 0.0;
 			break;
@@ -3400,6 +3280,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	}
 }
 
+// long press on map allows selection of various objects near the location
 - (IBAction)handleLongPressGesture:(UILongPressGestureRecognizer *)longPress
 {
 	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
@@ -3425,17 +3306,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 						}
 					}
 					[_editorLayer setSelectedNode:object.isNode];
-					[self placePushpinForSelection];
 				} else if ( object.isWay ) {
 					[_editorLayer setSelectedWay:object.isWay];
-					CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
-					OSMPoint latLon2 = [object.isWay pointOnWayForPoint:OSMPointMake(latLon.longitude,latLon.latitude)];
-					CGPoint pos = [self screenPointForLatitude:latLon2.y longitude:latLon2.x birdsEye:YES];
-					[self placePushpinAtPoint:pos object:object];
 				} else if ( object.isRelation ) {
 					[_editorLayer setSelectedRelation:object.isRelation];
-					[self placePushpinAtPoint:point object:object];
 				}
+				CGPoint pos = [_editorLayer pointOnObject:object forPoint:point];
+				[self placePushpinAtPoint:pos object:object];
 			}]];
 		}
 		[multiSelectSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -3517,7 +3394,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 #pragma mark Mouse movment
 
-- (void)singleClick:(CGPoint)point extendedCommand:(BOOL)extendedCommand
+- (void)singleClick:(CGPoint)point
 {
 	OsmBaseObject * hit = nil;
 	_grabbedObject = nil;
@@ -3527,82 +3404,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self endObjectRotation];
 	}
 
-	if ( _editorLayer.addNodeInProgress || _editorLayer.addWayInProgress ) {
+	if ( 0 ) {
 
-		// create node/way
-		if ( _editorLayer.addNodeInProgress ) {
-
-			// check if connecting to existing way
-			NSInteger segment;
-			hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius segment:&segment ignoreList:nil];
-
-			// create node
-			_editorLayer.addNodeInProgress = NO;
-			OsmNode * node = [_editorLayer createNodeAtPoint:point];
-			_editorLayer.selectedNode = node;
-			_editorLayer.selectedWay = nil;
-			_grabbedObject = node;
-
-			if ( hit && hit.isWay ) {
-				OsmWay * way = (id)hit;
-				[_editorLayer.mapData addNode:node toWay:way atIndex:segment+1];
-				_editorLayer.selectedWay = way;
-			}
-
-		} else {
-
-			// check if connecting to existing way
-			NSInteger segment;
-			hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius segment:&segment ignoreList:nil];
-			OsmNode * node = nil;
-			if ( hit && hit.isNode ) {
-
-				if ( _editorLayer.selectedWay && hit == _editorLayer.selectedWay.nodes.lastObject ) {
-					// double clicked final node, so terminate way
-					_editorLayer.addWayInProgress = NO;
-					_editorLayer.selectedNode = (id)hit;
-					_grabbedObject = (id)hit;
-					goto checkGrab;
-				}
-				if ( _editorLayer.selectedWay && [_editorLayer.selectedWay.nodes containsObject:hit] ) {
-					if ( hit == _editorLayer.selectedWay.nodes[0] ) {
-						// make loop
-						node = (id)hit;
-						_editorLayer.addWayInProgress = NO;
-						_editorLayer.selectedNode = node;
-						_grabbedObject = node;
-					} else {
-						// attempt to connect to ourself at other than first position (forming a loop)
-					}
-				} else {
-					node = (id)hit;
-				}
-			}
-			if ( node == nil ) {
-				node = [_editorLayer createNodeAtPoint:point];
-			}
-			if ( hit && hit.isWay && hit != _editorLayer.selectedWay ) {
-				// add node to other way as well
-				OsmWay * way = (id)hit;
-				[_editorLayer.mapData addNode:node toWay:way atIndex:segment+1];
-			}
-
-			// append node to way
-			_editorLayer.selectedNode = node;
-			if ( _editorLayer.selectedWay == nil ) {
-				// first node in way, so create way
-				_editorLayer.selectedWay = [_editorLayer createWayWithNode:node];
-			} else {
-				[_editorLayer.mapData addNode:node toWay:_editorLayer.selectedWay atIndex:_editorLayer.selectedWay.nodes.count];
-			}
-			_grabbedObject = node;
-		}
 
 	} else {
 
-		BOOL isAddedSelection = extendedCommand;
-
-		if ( _editorLayer.selectedWay && !isAddedSelection ) {
+		if ( _editorLayer.selectedWay ) {
 			// check for selecting node inside way
 			hit = [_editorLayer osmHitTestNodeInSelection:point radius:DefaultHitTestRadius];
 		}
@@ -3615,43 +3422,28 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 			// hit test anything
 			hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius];
-
-			if ( isAddedSelection ) {
-				if ( hit ) {
-					[_editorLayer toggleExtraSelection:hit];
-				}
-			} else {
-				if ( hit ) {
-					if ( hit.isNode ) {
-						_editorLayer.selectedNode = (id)hit;
-						_editorLayer.selectedWay = nil;
-						_editorLayer.selectedRelation = nil;
-						_grabbedObject = hit;
-#if !TARGET_OS_IPHONE
-					} else if ( hit == _editorLayer.selectedWay ) {
-						_grabbedObject = hit;
-#endif
-					} else if ( hit.isWay ) {
-						if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.relations containsObject:_editorLayer.selectedRelation] ) {
-							// selecting way inside previously selected relation
+			if ( hit ) {
+				if ( hit.isNode ) {
+					_editorLayer.selectedNode = (id)hit;
+					_editorLayer.selectedWay = nil;
+					_editorLayer.selectedRelation = nil;
+					_grabbedObject = hit;
+				} else if ( hit.isWay ) {
+					if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.relations containsObject:_editorLayer.selectedRelation] ) {
+						// selecting way inside previously selected relation
+						_editorLayer.selectedNode = nil;
+						_editorLayer.selectedWay = (id)hit;
+					} else if ( hit.relations.count > 0 ) {
+						// select relation the way belongs to
+						NSArray * relations = [hit.relations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
+							return relation.isMultipolygon;
+						}]];
+						OsmRelation * relation = relations.count > 0 ? relations[0] : nil;
+						if ( relation ) {
+							hit = relation;	// convert hit to relation
 							_editorLayer.selectedNode = nil;
-							_editorLayer.selectedWay = (id)hit;
-						} else if ( hit.relations.count > 0 ) {
-							// select relation the way belongs to
-							NSArray * relations = [hit.relations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
-								return relation.isMultipolygon;
-							}]];
-							OsmRelation * relation = relations.count > 0 ? relations[0] : nil;
-							if ( relation ) {
-								hit = relation;	// convert hit to relation
-								_editorLayer.selectedNode = nil;
-								_editorLayer.selectedWay = nil;
-								_editorLayer.selectedRelation = (id)hit;
-							} else {
-								_editorLayer.selectedNode = nil;
-								_editorLayer.selectedWay = (id)hit;
-								_editorLayer.selectedRelation = nil;
-							}
+							_editorLayer.selectedWay = nil;
+							_editorLayer.selectedRelation = (id)hit;
 						} else {
 							_editorLayer.selectedNode = nil;
 							_editorLayer.selectedWay = (id)hit;
@@ -3659,253 +3451,44 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 						}
 					} else {
 						_editorLayer.selectedNode = nil;
-						_editorLayer.selectedWay = nil;
-						_editorLayer.selectedRelation = (id)hit;
+						_editorLayer.selectedWay = (id)hit;
+						_editorLayer.selectedRelation = nil;
 					}
 				} else {
 					_editorLayer.selectedNode = nil;
 					_editorLayer.selectedWay = nil;
-					_editorLayer.selectedRelation = nil;
+					_editorLayer.selectedRelation = (id)hit;
 				}
-				[_delegate mapviewSelectionChanged:hit];
-				[_editorLayer clearExtraSelections];
+			} else {
+				_editorLayer.selectedNode = nil;
+				_editorLayer.selectedWay = nil;
+				_editorLayer.selectedRelation = nil;
 			}
+			[_delegate mapviewSelectionChanged:hit];
 		}
-#if TARGET_OS_IPHONE
+
 		[self removePin];
 
 		if ( _editorLayer.selectedPrimary ) {
-			if ( _editorLayer.selectedPrimary.isNode ) {
-				// center on node
-				OsmNode * node = (id)_editorLayer.selectedPrimary;
-				point = [self screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
-			} else if ( _editorLayer.selectedPrimary.isWay ) {
-				// when tapping a way select the point on the way closest to the tap
-				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
-				OSMPoint pt = { latLon.longitude, latLon.latitude };
-				pt = [_editorLayer.selectedWay pointOnWayForPoint:pt];
-				point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
-				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);	// if they later try to drag this way ask them if they really wanted to
-			} else if ( _editorLayer.selectedPrimary.isRelation ) {
-				CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
-				OSMPoint tap = { latLon.longitude, latLon.latitude };
-				tap = [_editorLayer.selectedRelation pointOnRelationForPoint:tap];
-				point = [self screenPointForLatitude:tap.y longitude:tap.x birdsEye:YES];
-				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);	// if they later try to drag this way ask them if they really wanted to
+			// adjuust tap point to touch object
+			CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
+			OSMPoint pt = { latLon.longitude, latLon.latitude };
+			pt = [_editorLayer.selectedPrimary pointOnObjectForPoint:pt];
+			point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+
+			if ( _editorLayer.selectedPrimary.isWay || _editorLayer.selectedPrimary.isRelation ) {
+				// if they later try to drag this way ask them if they really wanted to
+				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
 			}
 			[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 		}
-#endif
 	}
 
 checkGrab:
 	if ( _grabbedObject ) {
 		// grabbing selected item node
-#if !TARGET_OS_IPHONE
-		[[NSCursor closedHandCursor] push];
-		[_editorLayer.mapData beginUndoGrouping];
-#endif
 		_grabbedObjectDragged = NO;
-	} else if ( hit ) {
-#if !TARGET_OS_IPHONE
-		[[NSCursor pointingHandCursor] push];
-#endif
-	} else {
-		// move view
-#if !TARGET_OS_IPHONE
-		[[NSCursor arrowCursor] push];
-#endif
 	}
 }
-
-#if !TARGET_OS_IPHONE
-
-- (void)doubleClick:(CGPoint)point
-{
-	OsmBaseObject * selection = [_editorLayer osmHitTestSelection:point];
-	if ( selection ) {
-
-		// open tag editor window
-		[[NSCursor arrowCursor] set];
-		[_delegate doubleClickSelection:selection];
-
-	} else {
-
-		// zoom in on point
-		CGPoint center = CGRectCenter( self.bounds );
-		point.x = center.x - point.x;
-		point.y = center.y - point.y;
-		[self adjustOriginBy:point];
-		[self adjustZoomBy:2.0];
-	}
-}
-
-- (void)mouseMoved:(NSEvent *)theEvent
-{
-	CGPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-	
-	if ( !NSPointInRect(point, self.bounds) ) {
-		// not in our view
-		[[NSCursor arrowCursor] set];
-		[[self nextResponder] mouseMoved:theEvent];
-		return;
-	}
-
-	// update longitude/latitude property
-	[self setMousePoint:point];
-
-	[self setCursorForPoint:point];
-}
-
-- (void)mouseDragged:(NSEvent *)theEvent
-{
-	CGPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-
-	if ( !NSPointInRect(point, self.bounds) ) {
-		[[self nextResponder] mouseMoved:theEvent];
-		return;
-	}
-
-	CGPoint delta = CGPointMake( point.x-_lastMouseDragPos.x, point.y-_lastMouseDragPos.y);
-	_lastMouseDragPos = point;
-
-	if ( _grabbedObject ) {
-		if ( _grabbedObject.isNode ) {
-			[_editorLayer adjustNode:(OsmNode *)_grabbedObject byDistance:delta];
-		} else {
-			OsmWay * w = (id)_grabbedObject;
-			NSInteger last = w.nodes.lastObject == w.nodes[0] ? w.nodes.count : 0;
-			for ( OsmNode * n in w.nodes ) {
-				if ( --last == 0 )
-					break;
-				[_editorLayer adjustNode:n byDistance:delta];
-			}
-		}
-		_grabbedObjectDragged = YES;
-
-		NSInteger segment = 0;
-		OsmBaseObject * hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:@[_grabbedObject]];
-		if ( [self canConnectTo:hit] ) {
-			[self blinkObject:hit segment:segment];
-		} else {
-			[self unblinkObject];
-		}
-
-	} else {
-		[self adjustOriginBy:delta];
-	}
-}
-
-- (void)mouseDown:(NSEvent *)event
-{
-	CGPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-
-	if ( !NSPointInRect(point, self.bounds) ) {
-		[[self nextResponder] mouseMoved:event];
-		return;
-	}
-
-	_lastMouseDragPos = point;
-
-	if ( [event clickCount] == 1 ) {
-		BOOL extendedCommand = ([event modifierFlags] & NSCommandKeyMask) != 0;
-		[self singleClick:point extendedCommand:extendedCommand];
-	} else if ( [event clickCount] == 2 ) {
-		[self doubleClick:point];
-	}
-}
-
-- (void)mouseUp:(NSEvent *)theEvent
-{
-	CGPoint point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-
-	if ( !NSPointInRect(point, self.bounds) ) {
-		[[self nextResponder] mouseMoved:theEvent];
-		return;
-	}
-
-	if ( _grabbedObject ) {
-		[_editorLayer.mapData endUndoGrouping];
-		if ( _grabbedObjectDragged ) {
-			// check if we dragged node onto another node/line and need to merge/connect
-			NSInteger segment;
-			OsmBaseObject * hit = [_editorLayer osmHitTest:point segment:&segment ignoreList:@[_grabbedObject]];
-			if ( [self canConnectTo:hit] ) {
-				
-			}
-		};
-
-		_grabbedObject = nil;
-	}
-	[NSCursor pop];
-
-	[self setCursorForPoint:point];
-}
-
-
--(void)scrollWheel:(NSEvent *)event
-{
-	[NSAnimationContext beginGrouping];
-	[[NSAnimationContext currentContext] setDuration:0.0];
-
-	// if command key is held down when momentum phase begins then preserve it
-	if ( [event momentumPhase] == NSEventPhaseBegan ) {
-		_isZoomScroll = ([event modifierFlags] & NSCommandKeyMask) != 0;
-	} else if ( _isZoomScroll && [event momentumPhase] == NSEventPhaseEnded ) {
-		_isZoomScroll = NO;
-	}
-
-	if ( _isZoomScroll || ([event modifierFlags] & NSCommandKeyMask) ) {
-		// zoom instead of scroll
-		CGFloat dy = event.scrollingDeltaY;
-		if ( ! event.hasPreciseScrollingDeltas )
-			dy *= 10;
-		CGFloat ratio = 1000.0 / (dy + 1000.0);
-
-		{
-			// center zoom on mouse position
-			CGPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-			CGPoint center = CGRectCenter( self.bounds );
-			CGPoint delta = { center.x - point.x, center.y - point.y };
-			delta.x *= ratio - 1;
-			delta.y *= ratio - 1;
-			[self adjustOriginBy:delta];
-		}
-		[self adjustZoomBy:ratio];
-	} else {
-		// scroll
-		CGPoint delta = CGPointMake( event.scrollingDeltaX, event.scrollingDeltaY );
-		if ( ! event.hasPreciseScrollingDeltas ) {
-			delta = CGPointMake(delta.x * 10, delta.y * 10);
-		}
-		[self adjustOriginBy:delta];
-	}
-
-	CGPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-	[self setCursorForPoint:point];
-
-	[NSAnimationContext endGrouping];
-}
-
-- (void)magnifyWithEvent:(NSEvent *)event
-{
-	CGFloat mag = [event magnification];
-	[self adjustZoomBy:1.0+mag];
-
-	CGPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-	[self setCursorForPoint:point];
-}
-
-#if 0
--(void)rotateWithEvent:(NSEvent *)event
-{
-	CGFloat angle = [event rotation];
-	[self rotateByAngle:angle];
-
-	OSMPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-	[self setCursorForPoint:point];
-}
-#endif
-#endif	// desktop
 
 @end

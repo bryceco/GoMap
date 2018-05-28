@@ -183,6 +183,8 @@ typedef enum {
 
 @property (readonly,nonatomic)	NSString					*	countryCodeForLocation;
 
+@property (readonly,nonatomic)	CGPoint							pushpinPosition;
+
 -(void)updateAerialAttributionButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
 
@@ -225,8 +227,6 @@ typedef enum {
 -(IBAction)requestAerialServiceAttribution:(id)sender;
 -(IBAction)centerOnGPS:(id)sender;
 -(IBAction)compassPressed:(id)sender;
--(IBAction)duplicateSelectedObject:(id)sender;
--(IBAction)dropPin:(id)sender;
 -(void)removePin;
 -(void)refreshPushpinText;
 -(void)placePushpinForSelection;

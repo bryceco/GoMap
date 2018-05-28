@@ -14,18 +14,6 @@
 static NSString * UndoManagerDidChangeNotification = @"UndoManagerDidChangeNotification";
 
 
-@interface UndoAction : NSObject <NSCoding>
-@property (readonly,nonatomic)	NSString	*	selector;
-@property (readonly,nonatomic)	id				target;
-@property (readonly,nonatomic)	NSArray		*	objects;
-@property (assign)				NSInteger		group;
-@end
-
-
-@protocol UndoManagerDelegate <NSObject>
--(BOOL)undoAction:(UndoAction *)newAction duplicatesPreviousAction:(UndoAction *)prevAction;
-@end
-
 
 typedef void(^UndoManagerChangeCallback)(void);
 
@@ -44,25 +32,20 @@ typedef void(^UndoManagerChangeCallback)(void);
 	NSMutableArray	*	_commentList;
 }
 
-@property (strong,nonatomic) void (^commentCallback)(BOOL undo,NSArray * comments);
-@property (strong,nonatomic) NSData * (^locationCallback)(void);
-@property (weak,nonatomic)	id<UndoManagerDelegate> delegate;
-
 @property (readonly,nonatomic) BOOL			isUndoing;
 @property (readonly,nonatomic) BOOL			isRedoing;
 @property (readonly,nonatomic) BOOL			canUndo;
 @property (readonly,nonatomic) BOOL			canRedo;
-@property (readonly,nonatomic)	NSInteger	count;
+@property (readonly,nonatomic) NSInteger	count;
 @property (assign) NSInteger				runLoopCounter;
 
 -(NSSet *)objectRefs;
 
-- (void)registerUndoComment:(NSString *)comment;
+- (void)registerUndoComment:(NSDictionary *)comment;
 - (void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
 
--(void)registerUndo:(UndoAction *)action;
--(void)undo;
--(void)redo;
+-(NSDictionary *)undo;	// returns the oldest comment registered within the undo group
+-(NSDictionary *)redo;
 -(void)removeAllActions;
 -(void)removeMostRecentRedo;
 

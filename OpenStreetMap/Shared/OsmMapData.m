@@ -91,8 +91,6 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		_spatial		= [QuadMap new];
 		_undoManager	= [UndoManager new];
 
-		_undoManager.delegate = self;
-
 		[self initCommon];
 	}
 	return self;
@@ -388,6 +386,23 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 #pragma mark Editing
 
+-(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
+{
+	[_undoManager registerUndoWithTarget:target selector:selector objects:objects];
+}
+
+-(void)incrementModifyCount:(OsmBaseObject *)object
+{
+	[_undoManager registerUndoWithTarget:self selector:@selector(incrementModifyCount:) objects:@[object]];
+	[object incrementModifyCount:_undoManager];
+}
+
+-(void)clearCachedProperties:(OsmBaseObject *)object undo:(UndoManager *)undo
+{
+	[undo registerUndoWithTarget:self selector:@selector(clearCachedProperties:undo:) objects:@[object,undo]];
+	[object clearCachedProperties];
+}
+
 static NSString * StringTruncatedTo255( NSString * s )
 {
 	if ( s.length > 255 )
@@ -408,16 +423,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return newDict;
 }
 
--(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
-{
-	[_undoManager registerUndoWithTarget:target selector:selector objects:objects];
-}
-
 -(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object
 {
 	dict = DictWithTagsTruncatedTo255( dict );
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"set tags",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"set tags",nil)];
+
 	[object setTags:dict undo:_undoManager];
 }
 
@@ -431,7 +442,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self setConstructed:node];
 	[_nodes setObject:node forKey:node.ident];
 	
-	[_undoManager registerUndoComment:NSLocalizedString(@"create node",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"create node",nil)];
 	[node setDeleted:NO undo:_undoManager];
 	[_spatial addMember:node undo:_undoManager];
 	return node;
@@ -445,7 +456,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self setConstructed:way];
 	[_ways setObject:way forKey:way.ident];
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"create way",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"create way",nil)];
 	[way setDeleted:NO undo:_undoManager];
 	return way;
 }
@@ -458,12 +469,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self setConstructed:relation];
 	[_relations setObject:relation forKey:relation.ident];
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"create relation",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"create relation",nil)];
 	[relation setDeleted:NO undo:_undoManager];
 	return relation;
 }
 
--(void)removeFromParentRelations:(OsmBaseObject *)object
+-(void)removeFromParentRelationsUnsafe:(OsmBaseObject *)object
 {
 	while ( object.relations.count ) {
 		OsmRelation * relation = object.relations.lastObject;
@@ -480,37 +491,42 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 
 
--(void)deleteNode:(OsmNode *)node
+-(void)deleteNodeUnsafe:(OsmNode *)node
 {
 	assert( node.wayCount == 0 );
-	[_undoManager registerUndoComment:NSLocalizedString(@"delete node",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"delete node",nil)];
 
-	[self removeFromParentRelations:node];
+	[self removeFromParentRelationsUnsafe:node];
 
 	[node setDeleted:YES undo:_undoManager];
 
 	[_spatial removeMember:node undo:_undoManager];
 }
 
--(void)deleteWay:(OsmWay *)way
+-(void)deleteWayUnsafe:(OsmWay *)way
 {
-	[_undoManager registerUndoComment:NSLocalizedString(@"delete way",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"delete way",nil)];
 	[_spatial removeMember:way undo:_undoManager];
 
-	[self removeFromParentRelations:way];
+	[self removeFromParentRelationsUnsafe:way];
 
 	while ( way.nodes.count ) {
-		[self deleteNodeInWay:way index:way.nodes.count-1];
+		[self deleteNodeInWayUnsafe:way index:way.nodes.count-1];
 	}
 	[way setDeleted:YES undo:_undoManager];
 }
 
--(void)deleteRelation:(OsmRelation *)relation
+-(void)deleteRelationUnsafe:(OsmRelation *)relation
 {
-	[_undoManager registerUndoComment:NSLocalizedString(@"delete relation",nil)];
+	NSString * message 	= relation.isRestriction ? NSLocalizedString(@"delete restriction",nil)
+						: relation.isMultipolygon ? NSLocalizedString(@"delete multipolygon",nil)
+						: relation.isRoute ? NSLocalizedString(@"delete route",nil)
+						: NSLocalizedString(@"delete relation",nil);
+	[self registerUndoCommentString:message];
+
 	[_spatial removeMember:relation undo:_undoManager];
 
-	[self removeFromParentRelations:relation];
+	[self removeFromParentRelationsUnsafe:relation];
 
 	while ( relation.members.count ) {
 		[relation removeMemberAtIndex:relation.members.count-1 undo:_undoManager];
@@ -518,16 +534,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[relation setDeleted:YES undo:_undoManager];
 }
 
--(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index
+-(void)addNodeUnsafe:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index
 {
-	[_undoManager registerUndoComment:NSLocalizedString(@"add node to way",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"add node to way",nil)];
 	OSMRect origBox = way.boundingBox;
 	[way addNode:node atIndex:index undo:_undoManager];
 	[_spatial updateMember:way fromBox:origBox undo:_undoManager];
 }
--(void)deleteNodeInWay:(OsmWay *)way index:(NSInteger)index
+
+-(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index
 {
-	[_undoManager registerUndoComment:NSLocalizedString(@"delete node from way",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"delete node from way",nil)];
 	OsmNode * node = way.nodes[ index ];
 	assert( node.wayCount > 0 );
 
@@ -539,12 +556,168 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_spatial updateMember:way fromBox:bbox undo:_undoManager];
 
 	if ( node.wayCount == 0 ) {
-		[self deleteNode:node];
+		[self deleteNodeUnsafe:node];
 	}
 }
+
+
+#pragma mark external editing commands
+
+-(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index
+{
+	if ( way.nodes.count >= 2 && (index == 0 || index == way.nodes.count) ) {
+		// we don't want to extend a way that is a portion of a route relation, polygon, etc.
+		for ( OsmRelation * relation in way.relations ) {
+			if ( relation.isRestriction ) {
+				// only permissible if extending from/to on the end away from the via node/ways
+				NSArray * viaList = [relation membersByRole:@"via"];
+				OsmNode * prevNode = index ? way.nodes.lastObject : way.nodes[0];
+				// disallow extending any via way, or any way touching via node
+				for ( OsmMember * viaMember in viaList ) {
+					OsmBaseObject * via = viaMember.ref;
+					if ( [via isKindOfClass:[OsmBaseObject class]] ) {
+						if ( via == way || via == prevNode )
+							return nil;
+						if ( via.isWay && [via.isWay.nodes containsObject:prevNode] )
+							return nil;
+					}
+				}
+			} else {
+				return nil;
+			}
+		}
+	}
+	return ^(OsmNode * node){ [self addNodeUnsafe:node toWay:way atIndex:index]; };
+}
+
+-(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way
+{
+	NSArray * parentWays = [self waysContainingNode:node];
+
+	for ( OsmWay * parentWay in parentWays ) {
+
+		if ( parentWay.nodes[0] == node || parentWay.nodes.lastObject == node ) {
+			// only care if node is an endpoiont
+			// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
+			for ( OsmRelation * relation in parentWay.relations ) {
+				if ( relation.isRestriction ) {
+					// only permissible if deleting interior node of via, or non-via node in from/to
+					NSArray * viaList = [relation membersByRole:@"via"];
+					// disallow deleting an endpoint of any via way, or a via node itself
+					for ( OsmMember * viaMember in viaList ) {
+						OsmBaseObject * via = viaMember.ref;
+						if ( [via isKindOfClass:[OsmBaseObject class]] ) {
+							if ( via == node )
+								return nil;	// don't delete via node
+							else if ( via.isWay && (via.isWay.nodes[0] == node || via.isWay.nodes.lastObject == node) )
+								return nil;
+						}
+					}
+					// check if deleting the node will cause the way to become degenerate, and fail if this is unacceptable
+					OsmMember * from = [relation memberByRole:@"from"];
+					OsmMember * to   = [relation memberByRole:@"to"];
+					OsmWay * fromWay = [from.ref isKindOfClass:[OsmWay class]] ? from.ref : nil;
+					OsmWay * toWay   = [to.ref   isKindOfClass:[OsmWay class]] ? to.ref : nil;
+					if ( fromWay.nodes.count <= 2 && [fromWay.nodes containsObject:node] && ![self canDeleteWay:fromWay] )
+						return nil;
+					if ( toWay.nodes.count <= 2 && [toWay.nodes containsObject:node] && ![self canDeleteWay:toWay] )
+						return nil;
+				} else if ( relation.isMultipolygon ) {
+					// okay
+				} else {
+					return nil;
+				}
+			}
+		}
+	}
+
+	return ^{
+		BOOL needAreaFixup = way.nodes.lastObject == node  &&  way.nodes[0] == node;
+		for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
+			if ( way.nodes[index] == node ) {
+				[self deleteNodeInWayUnsafe:way index:index];
+				--index;
+			}
+		}
+		if ( way.nodes.count < 2 ) {
+			[self deleteWayUnsafe:way];
+		} else if ( needAreaFixup ) {
+			// special case where deleted node is first & last node of an area
+			[self addNodeUnsafe:way.nodes[0] toWay:way atIndex:way.nodes.count];
+		}
+	};
+}
+
+// used when dragging a node into another node
+-(EditAction)canReplaceNodeInWay:(OsmWay *)way oldNode:(OsmNode *)oldNode withNode:(OsmNode *)newNode
+{
+	EditAction delete = [self canDeleteNode:oldNode fromWay:way];
+	if ( !delete )
+		return nil;
+
+	return ^{
+		NSDictionary * mergedTags = MergeTags(oldNode.tags,newNode.tags);
+		[self setTags:mergedTags forObject:newNode];
+
+		for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
+			if ( way.nodes[index] == oldNode ) {
+				[self addNodeUnsafe:newNode toWay:way atIndex:index];
+				[self deleteNodeInWayUnsafe:way index:index+1];
+			}
+		}
+	};
+}
+
+// Only for solitary nodes. Otherwise use delete node in way.
+-(EditAction)canDeleteNode:(OsmNode *)node
+{
+	if ( node.wayCount > 0 || node.relations.count > 0 )
+		return nil;
+	return ^{
+		[self deleteNodeUnsafe:node];
+	};
+}
+
+-(EditAction)canDeleteWay:(OsmWay *)way
+{
+	if ( way.relations.count > 0 ) {
+		BOOL ok = NO;
+		if ( way.relations.count == 1 ) {
+			OsmRelation * relation = way.relations.lastObject;
+			if ( relation.isMultipolygon ) {
+				for ( OsmMember * member in relation.members ) {
+					if ( [member.role isEqualToString:@"inner"] && member.ref == way ) {
+						// okay!
+						ok = YES;
+						break;
+					}
+				}
+			}
+		}
+		if ( !ok ) {
+			return nil;
+		}
+	}
+
+	return ^{
+		[self deleteWayUnsafe:way];
+	};
+}
+
+-(EditAction)canDeleteRelation:(OsmRelation *)relation
+{
+	if ( !relation.isMultipolygon )
+		return nil;
+
+	return ^{
+		[self deleteRelationUnsafe:relation];
+	};
+}
+
+
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node inWay:(OsmWay *)way
 {
-	[_undoManager registerUndoComment:NSLocalizedString(@"move",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"move",nil)];
 
 	// need to update all ways/relation which contain the node
 	NSArray * parents = [self objectsContainingObject:node];
@@ -571,43 +744,37 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}
 }
 
--(void)clearCachedProperties:(OsmBaseObject *)object undo:(UndoManager *)undo
+-(void)addMemberUnsafe:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index
 {
-	[undo registerUndoWithTarget:self selector:@selector(clearCachedProperties:undo:) objects:@[object,undo]];
-	[object clearCachedProperties];
-}
-
--(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index
-{
-	[_undoManager registerUndoComment:NSLocalizedString(@"add object to relation",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"add object to relation",nil)];
 	OSMRect bbox = relation.boundingBox;
 	[relation addMember:member atIndex:index undo:_undoManager];
 	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
 }
 -(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index
 {
-	[_undoManager registerUndoComment:NSLocalizedString(@"delete object from relation",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"delete object from relation",nil)];
 	OSMRect bbox = relation.boundingBox;
 	[relation removeMemberAtIndex:index undo:_undoManager];
 	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
 }
 
--(void)incrementModifyCount:(OsmBaseObject *)object
-{
-	[_undoManager registerUndoWithTarget:self selector:@selector(incrementModifyCount:) objects:@[object]];
-	[object incrementModifyCount:_undoManager];
-}
-
 
 #pragma mark Undo manager
 
--(void)undo
+-(NSDictionary *)undo
 {
-	[_undoManager undo];
+	NSDictionary * comment = [_undoManager undo];
+	if ( self.undoCommentCallback )
+		self.undoCommentCallback(YES, comment);
+	return comment;
 }
--(void)redo
+-(NSDictionary *)redo
 {
-	[_undoManager redo];
+	NSDictionary * comment = [_undoManager redo];
+	if ( self.undoCommentCallback )
+		self.undoCommentCallback(NO, comment);
+	return comment;
 }
 -(BOOL)canUndo
 {
@@ -643,43 +810,21 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	[object setConstructed];
 }
--(void)setUndoCommentCallback:(void(^)(BOOL,NSArray *))commentCallback
+-(void)registerUndoCommentContext:(NSDictionary *)context
 {
-	_undoManager.commentCallback = commentCallback;
+	[_undoManager registerUndoComment:context];
 }
--(void(^)(BOOL,NSArray *))undoCommentCallback
+-(void)registerUndoCommentString:(NSString *)comment
 {
-	return _undoManager.commentCallback;
+	NSDictionary * context = self.undoContextForComment(comment);
+	[self registerUndoCommentContext:context];
 }
--(void)setUndoLocationCallback:(NSData * (^)(void))callback
-{
-	_undoManager.locationCallback = callback;
-}
+
 
 -(NSString *)undoManagerDescription
 {
 	return [_undoManager description];
 }
-
--(BOOL)undoAction:(UndoAction *)newAction duplicatesPreviousAction:(UndoAction *)prevAction
-{
-	if ( newAction.target != prevAction.target )
-		return NO;
-	if ( ![newAction.selector isEqualToString:prevAction.selector] )
-		return NO;
-	// same target and selector
-	if ( [newAction.selector isEqualToString:@"setLongitude:latitude:undo:"] ) {
-		return YES;
-	}
-	if ( [newAction.selector isEqualToString:@"setSelectedRelation:way:node:"] ) {
-		return	newAction.objects[0] == prevAction.objects[0] &&
-				newAction.objects[1] == prevAction.objects[1] &&
-				newAction.objects[2] == prevAction.objects[2];
-	}
-	return NO;
-}
-
-
 
 #pragma mark Server query
 
@@ -1808,8 +1953,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			_region			= [coder decodeObjectForKey:@"region"];
 			_spatial		= [coder decodeObjectForKey:@"spatial"];
 			_undoManager	= [coder decodeObjectForKey:@"undoManager"];
-
-			_undoManager.delegate = self;
 
 			[self initCommon];
 

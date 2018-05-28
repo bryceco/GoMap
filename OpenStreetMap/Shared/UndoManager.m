@@ -20,6 +20,16 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 }
 
 
+#pragma mark UndoAction
+
+@interface UndoAction : NSObject <NSCoding>
+@property (readonly,nonatomic)	NSString	*	selector;
+@property (readonly,nonatomic)	id				target;
+@property (readonly,nonatomic)	NSArray		*	objects;
+@property (assign,nonatomic)	NSInteger		group;
+@end
+
+
 @implementation UndoAction
 
 -(instancetype)initWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
@@ -128,6 +138,8 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 @end
 
 
+#pragma mark UndoManager
+
 @implementation UndoManager
 
 @synthesize isUndoing = _isUndoing;
@@ -223,33 +235,6 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 {
 	action.group = _groupingStack.count ? [_groupingStack.lastObject integerValue] : self.runLoopCounter;
 
-#if 0 // broken because when calling setLongitude:latitude:undo: we drop undoing the modify count
-
-	// ask delegate if we can ignore this undo action because it is redundant
-	if ( !_isUndoing && !_isRedoing && [self.delegate respondsToSelector:@selector(undoAction:duplicatesPreviousAction:)] ) {
-		NSArray * stack = _undoStack;
-		NSInteger group = action.group;
-		for ( NSInteger index = stack.count-1; index >= 0; --index ) {
-			UndoAction * prevAction = stack[ index ];
-			if ( prevAction.group != group )
-				break;
-
-			// special case for comments: only look at most recent
-			if ( [action.selector isEqualToString:@"doComment:location:"] && [prevAction.selector isEqualToString:action.selector] ) {
-				if ( [action.objects[0] isEqualToString:prevAction.objects[0]] )
-					return;
-				break;
-			}
-
-			BOOL dup = [_delegate undoAction:action duplicatesPreviousAction:prevAction];
-			if ( dup ) {
-				// don't bother registering this action
-				return;
-			}
-		}
-	}
-#endif
-
 	[self willChangeValueForKey:@"canUndo"];
 	[self willChangeValueForKey:@"canRedo"];
 	
@@ -277,16 +262,15 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	[self registerUndo:action];
 }
 
-- (void)doComment:(NSString *)comment location:(NSData *)location
+- (void)doComment:(NSDictionary *)comment
 {
-	[self registerUndoWithTarget:self selector:@selector(doComment:location:) objects:@[comment,location]];
-	[_commentList addObject:@[comment,location]];
+	[self registerUndoWithTarget:self selector:@selector(doComment:) objects:@[comment]];
+	[_commentList addObject:comment];
 }
 
-- (void)registerUndoComment:(NSString *)comment
+- (void)registerUndoComment:(NSDictionary *)comment
 {
-	NSData * location = self.locationCallback();
-	[self registerUndoWithTarget:self selector:@selector(doComment:location:) objects:@[comment,location]];
+	[self registerUndoWithTarget:self selector:@selector(doComment:) objects:@[comment]];
 }
 
 +(void)doActionGroupFromStack:(NSMutableArray *)stack
@@ -308,7 +292,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	}
 }
 
--(void)undo
+-(NSDictionary *)undo
 {
 	_commentList = [NSMutableArray new];
 
@@ -325,12 +309,11 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 	[self postChangeNotification];
 
-	if ( self.commentCallback ) {
-		self.commentCallback( YES, _commentList );
-	}
+	NSDictionary * comment = _commentList.count == 0 ? nil : _commentList.lastObject;
+	return comment;
 }
 
--(void)redo
+-(NSDictionary *)redo
 {
 	_commentList = [NSMutableArray new];
 
@@ -347,9 +330,8 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 	[self postChangeNotification];
 	
-	if ( self.commentCallback ) {
-		self.commentCallback( NO, _commentList );
-	}
+	NSDictionary * comment = _commentList.count == 0 ? nil: _commentList[0];
+	return comment;
 }
 
 -(void)beginUndoGrouping

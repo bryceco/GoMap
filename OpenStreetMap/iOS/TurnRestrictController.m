@@ -378,7 +378,15 @@
 }
 -(void)removeTurnRestriction:(OsmMapData *)mapData relation:(OsmRelation *)relation
 {
-	[mapData deleteTurnRestrictionRelation:relation];
+	EditAction canDelete = [mapData canDeleteRelation:relation];
+	if (canDelete ) {
+		canDelete();
+	} else {
+		NSString * message = @"The restriction cannot be deleted because it belongs to another relation.";
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Error deleting" message:message preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+		[self presentViewController:alert animated:YES completion:nil];
+	}
 }
 
 +(NSString *)turnTypeForIntersectionFrom:(TurnRestrictHwyView *)fromHwy to:(TurnRestrictHwyView *)toHwy

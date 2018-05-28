@@ -120,7 +120,7 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 	}
 #endif
 
-	[_undoManager registerUndoComment:NSLocalizedString(@"Make Rectangular",nil)];
+	[self registerUndoCommentString:NSLocalizedString(@"Make Rectangular",nil)];
 
 	double epsilon = 1e-4;
 
@@ -197,7 +197,10 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 
 			double dotp = normalizedDotProduct(i, points, count);
 			if (dotp < -1 + epsilon) {
-				[self deleteNodeInWay:way index:i];
+				EditAction canDeleteNode = [self canDeleteNode:node fromWay:way];
+				if ( canDeleteNode ) {
+					canDeleteNode();
+				}
 			}
 		}
 	}

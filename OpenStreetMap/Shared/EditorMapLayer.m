@@ -158,11 +158,23 @@ static const CGFloat NodeHighlightRadius = 6.0;
 		_mapData.credentialsPassword = appDelegate.userPassword;
 
 		__weak EditorMapLayer * weakSelf = self;
-		[_mapData setUndoLocationCallback:^NSData *{
+		_mapData.undoContextForComment = ^NSDictionary *(NSString * comment) {
 			OSMTransform trans = [weakSelf.mapView screenFromMapTransform];
-			NSData * data = [NSData dataWithBytes:&trans length:sizeof trans];
-			return data;
-		}];
+			NSData * location = [NSData dataWithBytes:&trans length:sizeof trans];
+			NSMutableDictionary * dict = [NSMutableDictionary new];
+			dict[ @"comment" ] = comment;
+			dict[ @"location" ] = location;
+			CGPoint pushpin = weakSelf.mapView.pushpinPosition;
+			if ( !isnan(pushpin.x) )
+				dict[ @"pushpin" ] = NSStringFromCGPoint(weakSelf.mapView.pushpinPosition);
+			if ( weakSelf.selectedRelation )
+				dict[ @"selectedRelation" ] = weakSelf.selectedRelation;
+			if ( weakSelf.selectedWay )
+				dict[ @"selectedWay" ] = weakSelf.selectedWay;
+			if ( weakSelf.selectedNode )
+				dict[ @"selectedNode" ] = weakSelf.selectedNode;
+			return dict;
+		};
 
 		_baseLayer = [CATransformLayer new];
 		[self addSublayer:_baseLayer];
@@ -286,14 +298,12 @@ const double MinIconSizeInMeters = 2.0;
 {
 	self.selectedNode	= nil;
 	self.selectedWay	= nil;
-	_highlightObject	= nil;
 	if ( hard ) {
 		[_mapData purgeHard];
 	} else {
 		[_mapData purgeSoft];
 	}
 
-	_speechBalloon.hidden = YES;
 	[self setNeedsLayout];
 	[self updateMapLocation];
 }
@@ -1808,7 +1818,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	UIColor			*	relationColor = [UIColor colorWithRed:66/255.0 green:188/255.0 blue:244/255.0 alpha:1.0];
 	
 	// highlighting
-	NSMutableArray * highlights = [NSMutableArray arrayWithArray:self.extraSelections];
+	NSMutableSet * highlights = [NSMutableSet new];
 	if ( _selectedNode ) {
 		[highlights addObject:_selectedNode];
 	}
@@ -1817,15 +1827,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	}
 	if ( _selectedRelation ) {
 		NSSet * members = [_selectedRelation allMemberObjects];
-		[highlights addObjectsFromArray:members.allObjects];
-	}
-	if ( _highlightObject ) {
-		[highlights addObject:_highlightObject];
+		[highlights unionSet:members];
 	}
 
 	for ( OsmBaseObject * object in highlights ) {
 		// selected is false if its highlighted because it's a member of a selected relation
-		BOOL selected = object == _selectedNode || object == _selectedWay || [_extraSelections containsObject:object];
+		BOOL selected = object == _selectedNode || object == _selectedWay;
 
 		if ( object.isWay ) {
 			CGPathRef	path		= [self pathForWay:object.isWay];
@@ -2826,6 +2833,14 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return (id) [EditorMapLayer osmHitTest:point radius:radius mapView:_mapView objects:list testNodes:YES ignoreList:nil segment:&segment];
 }
 
+-(CGPoint)pointOnObject:(OsmBaseObject *)object forPoint:(CGPoint)point
+{
+	CLLocationCoordinate2D latLon = [_mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
+	OSMPoint latLon2 = [object pointOnObjectForPoint:OSMPointMake(latLon.longitude,latLon.latitude)];
+	CGPoint pos = [_mapView screenPointForLatitude:latLon2.y longitude:latLon2.x birdsEye:YES];
+	return pos;
+}
+
 #pragma mark Copy/Paste
 
 - (BOOL)copyTags:(OsmBaseObject *)object
@@ -2852,26 +2867,9 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 #pragma mark Editing
 
-- (void)setSelectedRelation:(OsmRelation *)relation way:(OsmWay *)way node:(OsmNode *)node
-{
-	[self saveSelection];
-	self.selectedWay  = way;
-	self.selectedNode = node;
-	self.selectedRelation = relation;
-	[_mapView updateEditControl];
-}
-- (void)saveSelection
-{
-	id way		= _selectedWay  ?: [NSNull null];
-	id node		= _selectedNode ?: [NSNull null];
-	id relation = _selectedRelation ?: [NSNull null];
-	[_mapData registerUndoWithTarget:self selector:@selector(setSelectedRelation:way:node:) objects:@[relation,way,node]];
-}
 
 - (void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta
 {
-	[self saveSelection];
-
 	CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
 	pt.x += delta.x;
 	pt.y -= delta.y;
@@ -2883,7 +2881,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 -(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
 {
-	[self saveSelection];
 	OsmBaseObject * newObject = [_mapData duplicateObject:object];
 	[self setNeedsLayout];
 	return newObject;
@@ -2891,8 +2888,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 -(OsmNode *)createNodeAtPoint:(CGPoint)point
 {
-	[self saveSelection];
-
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OsmNode * node = [_mapData createNodeAtLocation:loc];
 	[self setNeedsLayout];
@@ -2901,97 +2896,73 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 -(OsmWay *)createWayWithNode:(OsmNode *)node
 {
-	[self saveSelection];
-
 	OsmWay * way = [_mapData createWay];
-	[_mapData addNode:node toWay:way atIndex:0];
+	EditActionWithNode add = [_mapData canAddNodeToWay:way atIndex:0];
+	add( node );
 	[self setNeedsLayout];
 	return way;
 }
 
--(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index
-{
-	[self saveSelection];
+#pragma mark Editing actions that modify data and can fail
 
-	[_mapData addNode:node toWay:way atIndex:index];
-	[self setNeedsLayout];
+-(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index
+{
+	EditActionWithNode action = [_mapData canAddNodeToWay:way atIndex:index];
+	if ( action == nil )
+		return nil;
+	return ^(OsmNode * node){
+		action(node);
+		[self setNeedsLayout];
+	};
 }
 
--(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way allowDegenerate:(BOOL)allowDegenerate
+-(EditAction)canDeleteSelectedObject
 {
-	[self saveSelection];
-
-	BOOL needAreaFixup = way.nodes.lastObject == node  &&  way.nodes[0] == node;
-	for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
-		if ( way.nodes[index] == node ) {
-			[_mapData deleteNodeInWay:way index:index];
-			--index;
-		}
-	}
-	if ( way.nodes.count < 2 && !allowDegenerate ) {
-		[_mapData deleteWay:way];
-		[self setSelectedWay:nil];
-	} else if ( needAreaFixup ) {
-		// special case where deleted node is first & last node of an area
-		[_mapData addNode:way.nodes[0] toWay:way atIndex:way.nodes.count];
-	}
-}
--(void)deleteNode:(OsmNode *)node fromWay:(OsmWay *)way
-{
-	[self saveSelection];
-
-	[self deleteNode:node fromWay:way allowDegenerate:NO];
-}
-
--(void)deleteSelectedObject
-{
-	[self saveSelection];
-
 	if ( _selectedNode ) {
 
 		// delete node from selected way
+		EditAction action;
 		if ( _selectedWay ) {
-			[self deleteNode:_selectedNode fromWay:_selectedWay];
+			action = [_mapData canDeleteNode:_selectedNode fromWay:_selectedWay];
 		} else {
-			[_mapData deleteNode:_selectedNode];
+			action = [_mapData canDeleteNode:_selectedNode];
 		}
-		
-		// deselect node after we've removed it from ways
-		[self setSelectedNode:nil];
+		if ( action ) {
+			return ^{
+				// deselect node after we've removed it from ways
+				action();
+				[self setSelectedNode:nil];
+				[self setNeedsLayout];
+			};
+		}
 
 	} else if ( _selectedWay ) {
 
 		// delete way
-		[_mapData deleteWay:_selectedWay];
-		[self setSelectedWay:nil];
-		[self setSelectedNode:nil];
+		EditAction action = [_mapData canDeleteWay:_selectedWay];
+		if ( action ) {
+			return ^{
+				action();
+				[self setSelectedNode:nil];
+				[self setSelectedWay:nil];
+				[self setNeedsLayout];
+			};
+		}
 
-	}
-	for ( OsmBaseObject * object in _extraSelections ) {
-		if ( object.isNode ) {
-			[_mapData deleteNode:(id)object];
-		} else if ( object.isWay ) {
-			[_mapData deleteWay:(id)object];
-		} else {
-			assert(NO);
+	} else if ( _selectedRelation ) {
+		EditAction action = [_mapData canDeleteRelation:_selectedRelation];
+		if ( action ) {
+			return ^{
+				action();
+				[self setSelectedNode:nil];
+				[self setSelectedWay:nil];
+				[self setSelectedRelation:nil];
+				[self setNeedsLayout];
+			};
 		}
 	}
-	[self clearExtraSelections];
 
-	if ( _highlightObject.deleted ) {
-		_highlightObject = nil;
-	}
-
-	[_speechBalloon removeFromSuperlayer];
-	_speechBalloon = nil;
-
-	[self setNeedsLayout];
-}
-
--(void)cancelOperation
-{
-	self.addNodeInProgress = NO;
-	self.addWayInProgress = NO;
+	return nil;
 }
 
 
@@ -3067,62 +3038,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	}
 }
 
-- (void)toggleExtraSelection:(OsmBaseObject *)object
-{
-	if ( [_extraSelections containsObject:object] ) {
-		[_extraSelections removeObject:object];
-	} else {
-		if ( _extraSelections == nil )
-			_extraSelections = [NSMutableArray arrayWithObject:object];
-		else
-			[_extraSelections addObject:object];
-	}
-	[self setNeedsLayout];
-	[self doSelectionChangeCallbacks];
-}
-- (void)clearExtraSelections
-{
-	if ( _extraSelections ) {
-		_extraSelections = nil;
-		[self setNeedsLayout];
-		[self doSelectionChangeCallbacks];
-	}
-}
-- (NSArray *)extraSelections
-{
-	return _extraSelections ? [NSArray arrayWithArray:_extraSelections] : nil;
-}
 
-
--(void)osmHighlightObject:(OsmBaseObject *)object mousePoint:(CGPoint)mousePoint
-{
-	if ( object != _highlightObject ) {
-		_highlightObject = object;
-		[self setNeedsLayout];
-	}
-	NSString * name = [_highlightObject friendlyDescription];
-	if ( name ) {
-		if ( _speechBalloon == nil ) {
-			_speechBalloon = [SpeechBalloonLayer new];
-			[self addSublayer:_speechBalloon];
-		}
-		if ( _highlightObject.isNode ) {
-			OsmNode * node = (id)_highlightObject;
-			mousePoint = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-		} else {
-			mousePoint = [self convertPoint:mousePoint fromLayer:_mapView.layer];
-		}
-		[CATransaction begin];
-		[CATransaction setAnimationDuration:0.0];
-		_speechBalloon.position = mousePoint;
-		_speechBalloon.text = name;
-		[CATransaction commit];
-
-		_speechBalloon.hidden = NO;
-	} else {
-		_speechBalloon.hidden = YES;
-	}
-}
 
 #pragma mark Properties
 

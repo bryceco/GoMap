@@ -30,9 +30,12 @@ BOOL IsOsmBooleanTrue( NSString * value );
 BOOL IsOsmBooleanFalse( NSString * value );
 extern NSString * OsmValueForBoolean( BOOL b );
 
-
 extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
+
+typedef void 	(^EditAction)(void);
+typedef void 	(^EditActionWithNode)(OsmNode * node);
+typedef OsmWay * (^EditActionReturnWay)(void);
 
 
 @interface OsmUserStatistics : NSObject
@@ -45,7 +48,7 @@ extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
 
 
-@interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate, UndoManagerDelegate>
+@interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate>
 {
 	NSString			*	_parserCurrentElementText;
 	NSMutableArray		*	_parserStack;
@@ -79,18 +82,24 @@ extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 -(void)purgeSoft;
 
 // undo manager interface
--(void)undo;
--(void)redo;
+-(NSDictionary *)undo;
+-(NSDictionary *)redo;
 -(BOOL)canUndo;
 -(BOOL)canRedo;
 -(void)beginUndoGrouping;
 -(void)endUndoGrouping;
 -(void)removeMostRecentRedo;
--(void)setUndoLocationCallback:(NSData * (^)(void))callback;
--(NSString *)undoManagerDescription;
-
 -(void)addChangeCallback:(void(^)(void))callback;
 -(void)clearUndoStack;
+-(NSString *)undoManagerDescription;
+
+// undo comments
+@property (strong,nonatomic)	NSDictionary * 	(^undoContextForComment)(NSString * comment);
+@property (strong,nonatomic) 	void 			(^undoCommentCallback)(BOOL undo,NSDictionary * context);
+-(void)registerUndoCommentString:(NSString *)comment;
+-(void)registerUndoCommentContext:(NSDictionary *)context;
+
+
 -(void)setConstructed:(OsmBaseObject *)object;
 
 -(NSInteger)modificationCount;
@@ -122,20 +131,19 @@ extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
 -(OsmWay *)createWay;
 -(OsmRelation *)createRelation;
--(void)deleteNode:(OsmNode *)node;
--(void)deleteWay:(OsmWay *)way;
--(void)addNode:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
--(void)deleteNodeInWay:(OsmWay *)way index:(NSInteger)index;
 
--(void)deleteRelation:(OsmRelation *)relation;
 
--(void)addMember:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index;
--(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index;
+-(EditAction)canDeleteNode:(OsmNode *)node;
+-(EditAction)canDeleteWay:(OsmWay *)way;
+-(EditAction)canDeleteRelation:(OsmRelation *)relation;
+
+-(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way;
+-(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index;
+-(EditAction)canReplaceNodeInWay:(OsmWay *)way oldNode:(OsmNode *)oldNode withNode:(OsmNode *)newNode;
 
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node inWay:(OsmWay *)way;
 -(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object;
 -(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
-@property (strong,nonatomic) void (^undoCommentCallback)(BOOL,NSArray *);
 
 
 - (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
