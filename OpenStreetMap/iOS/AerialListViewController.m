@@ -13,7 +13,6 @@
 #import "DisplayViewController.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
-#import "UITableViewCell+FixConstraints.h"
 
 
 #define SECTION_BUILTIN 	0
@@ -33,6 +32,9 @@
 
 	[super viewDidLoad];
 
+	self.tableView.estimatedRowHeight = 44.0;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
@@ -47,17 +49,6 @@
 	}
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	// Fix bug on iPad where cell heights come back as -1:
-	// CGFloat h = [super tableView:tableView heightForRowAtIndexPath:indexPath];
-	return 44.0;
-}
 
 #pragma mark - Table view data source
 

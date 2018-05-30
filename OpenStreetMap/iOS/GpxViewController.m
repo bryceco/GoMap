@@ -92,6 +92,9 @@
 {
 	[super viewDidLoad];
 
+	self.tableView.estimatedRowHeight = 44;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+
 	_navigationBar.topItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
@@ -263,22 +266,6 @@
     }   
 }
 
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 

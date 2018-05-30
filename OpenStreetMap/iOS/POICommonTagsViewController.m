@@ -20,7 +20,6 @@
 #import "POITabBarController.h"
 #import "POITypeViewController.h"
 #import "TagInfo.h"
-#import "UITableViewCell+FixConstraints.h"
 
 
 @interface CommonTagCell : UITableViewCell
@@ -61,6 +60,13 @@
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 	[center addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
 	[center addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardWillHideNotification object:nil];
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSLog(@"Section %ld Row %ld", (long)[indexPath section], (long)[indexPath row]);
+	return UITableViewAutomaticDimension;
 }
 
 -(void)dealloc
@@ -187,10 +193,6 @@
 
 #pragma mark - Table view data source
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

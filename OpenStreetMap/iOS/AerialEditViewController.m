@@ -8,7 +8,6 @@
 
 #import "AerialList.h"
 #import "AerialEditViewController.h"
-#import "UITableViewCell+FixConstraints.h"
 
 @interface AerialEditViewController ()
 @end
@@ -22,13 +21,6 @@
 	nameField.text = self.name;
 	urlField.text = self.url;
 	zoomField.text = [self.zoom stringValue];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	// Fix bug on iPad where cell heights come back as -1:
-	// CGFloat h = [super tableView:tableView heightForRowAtIndexPath:indexPath];
-	return 44.0;
 }
 
 -(BOOL)isBannedURL:(NSString *)url
@@ -71,11 +63,6 @@
 -(IBAction)cancel:(id)sender
 {
 	[self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
 }
 
 -(IBAction)contentChanged:(id)sender

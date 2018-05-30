@@ -16,7 +16,6 @@
 #import "MapViewController.h"
 #import "MercatorTileLayer.h"
 #import "DisplayViewController.h"
-#import "UITableViewCell+FixConstraints.h"
 
 
 static const NSInteger BACKGROUND_SECTION		= 0;
@@ -82,10 +81,6 @@ static const NSInteger CACHE_SECTION			= 3;
 	}
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
-}
 
 - (void)applyChanges
 {

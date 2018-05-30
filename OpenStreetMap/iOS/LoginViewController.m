@@ -12,7 +12,6 @@
 #import "LoginViewController.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "UITableViewCell+FixConstraints.h"
 
 @implementation LoginViewController
 
@@ -97,11 +96,6 @@
 
 	[KeyChain setString:appDelegate.userName forIdentifier:@"username"];
 	[KeyChain setString:appDelegate.userPassword forIdentifier:@"password"];
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
 }
 
 #pragma mark - Table view delegate

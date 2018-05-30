@@ -10,7 +10,6 @@
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "OfflineViewController.h"
-#import "UITableViewCell+FixConstraints.h"
 
 
 @implementation OfflineTableViewCell

@@ -9,7 +9,6 @@
 #import "CommonTagList.h"
 #import "CustomPresetController.h"
 #import "POICommonTagsViewController.h"
-#import "UITableViewCell+FixConstraints.h"
 
 @interface CustomPresetController ()
 @end
@@ -38,12 +37,6 @@
 	}
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	// Fix bug on iPad where cell heights come back as -1:
-	// CGFloat h = [super tableView:tableView heightForRowAtIndexPath:indexPath];
-	return 44.0;
-}
 
 -(IBAction)done:(id)sender
 {
@@ -77,11 +70,6 @@
 -(IBAction)cancel:(id)sender
 {
 	[self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
 }
 
 -(IBAction)contentChanged:(id)sender

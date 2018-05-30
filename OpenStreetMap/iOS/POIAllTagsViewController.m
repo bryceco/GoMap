@@ -17,7 +17,6 @@
 #import "POITabBarController.h"
 #import "PushPinView.h"
 #import "TagInfo.h"
-#import "UITableViewCell+FixConstraints.h"
 
 
 #define EDIT_RELATIONS 0
@@ -40,7 +39,6 @@
 - (void)awakeFromNib
 {
 	[super awakeFromNib];
-	[self fixConstraints];
 }
 
 @end
@@ -170,12 +168,6 @@
 {
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	// Fix bug on iPad where cell heights come back as -1:
-	// CGFloat h = [super tableView:tableView heightForRowAtIndexPath:indexPath];
-	return 44.0;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

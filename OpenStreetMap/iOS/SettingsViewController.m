@@ -18,7 +18,6 @@
 #import "MapViewController.h"
 #import "MercatorTileLayer.h"
 #import "SettingsViewController.h"
-#import "UITableViewCell+FixConstraints.h"
 
 
 @implementation SettingsViewController
@@ -60,16 +59,6 @@
 			[self.tableView reloadData];
 		}];
 	}
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewAutomaticDimension;
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

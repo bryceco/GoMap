@@ -12,7 +12,6 @@
 #import "OsmObjects.h"
 #import "POIAttributesViewController.h"
 #import "POITabBarController.h"
-#import "UITableViewCell+FixConstraints.h"
 #import "WebPageViewController.h"
 
 
@@ -54,11 +53,6 @@ enum {
 
 	POITabBarController	* tabController = (id)self.tabBarController;
 	_saveButton.enabled = [tabController isTagDictChanged];
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	[cell fixConstraints];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

@@ -1881,7 +1881,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 									else
 										haloLayer.strokeColor  	= [UIColor.orangeColor colorWithAlphaComponent:0.75].CGColor;	// some other kind of restriction
 									haloLayer.fillColor        	= nil;
-									haloLayer.lineWidth        	= (way.tagInfo.lineWidth + 6) * _highwayScale; // 10 * _highwayScale;
+									haloLayer.lineWidth        	= (way.tagInfo.lineWidth + 6) * _highwayScale;
 									haloLayer.lineCap        	= kCALineCapRound;
 									haloLayer.lineJoin        	= kCALineJoinRound;
 									haloLayer.zPosition        	= Z_HALO;
