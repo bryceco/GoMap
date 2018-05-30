@@ -55,7 +55,7 @@ typedef enum {
 	BOOL				_constructed;
 	NSDictionary	*	_tags;
 	NSNumber		*	_ident;
-	NSArray			*	_relations;
+	NSArray			*	_parentRelations;
 
 	NSNumber		*	_isOneWay;
 @public
@@ -65,7 +65,7 @@ typedef enum {
 @property (readonly,nonatomic)	BOOL					deleted;
 @property (strong,nonatomic)	TagInfo				*	tagInfo;
 @property (readonly,nonatomic)	int32_t					modifyCount;
-@property (readonly,nonatomic)	NSArray				*	relations;
+@property (readonly,nonatomic)	NSArray				*	parentRelations;
 @property (readonly,nonatomic)	OsmIdentifier			extendedIdentifier;
 @property (readonly,nonatomic)	OSM_TYPE				extendedType;
 

@@ -150,7 +150,7 @@
 
 	// Get relations related to restrictions
 	_allRelations = [NSMutableArray new];
-	for ( OsmRelation * relation in _centralNode.relations )  {
+	for ( OsmRelation * relation in _centralNode.parentRelations )  {
 		if ( relation.isRestriction && relation.members.count >= 3 )  {
 			[_allRelations addObject:relation];
 		}

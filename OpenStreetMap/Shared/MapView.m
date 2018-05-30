@@ -2284,7 +2284,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	// check if this is a fancy relation type we don't support well
 	void (^restrictionEditWarning)(OsmNode *) = ^(OsmNode * viaNode) {
 		BOOL warn = NO;
-		for ( OsmRelation * relation in viaNode.relations ) {
+		for ( OsmRelation * relation in viaNode.parentRelations ) {
 			if ( relation.isRestriction ) {
 				NSString * type = relation.tags[ @"type" ];
 				if ( [type hasPrefix:@"restriction:"] || relation.tags[@"except"] ) {
@@ -2496,7 +2496,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 						}
 						if ( isRotate )
 							break;
-						if ( strongSelf.editorLayer.selectedWay && strongSelf.editorLayer.selectedWay.tags.count == 0 && strongSelf.editorLayer.selectedWay.relations.count == 0 )
+						if ( strongSelf.editorLayer.selectedWay && strongSelf.editorLayer.selectedWay.tags.count == 0 && strongSelf.editorLayer.selectedWay.parentRelations.count == 0 )
 							break;
 						if ( strongSelf.editorLayer.selectedWay && strongSelf.editorLayer.selectedNode )
 							break;
@@ -3396,13 +3396,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				_editorLayer.selectedWay = nil;
 				_editorLayer.selectedRelation = nil;
 			} else if ( hit.isWay ) {
-				if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.relations containsObject:_editorLayer.selectedRelation] ) {
+				if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.parentRelations containsObject:_editorLayer.selectedRelation] ) {
 					// selecting way inside previously selected relation
 					_editorLayer.selectedNode = nil;
 					_editorLayer.selectedWay = (id)hit;
-				} else if ( hit.relations.count > 0 ) {
+				} else if ( hit.parentRelations.count > 0 ) {
 					// select relation the way belongs to
-					NSArray * relations = [hit.relations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
+					NSArray * relations = [hit.parentRelations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
 						return relation.isMultipolygon;
 					}]];
 					OsmRelation * relation = relations.count > 0 ? relations[0] : nil;

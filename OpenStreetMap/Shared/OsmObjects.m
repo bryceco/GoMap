@@ -57,7 +57,7 @@ NSString * OsmValueForBoolean( BOOL b )
 @synthesize tags = _tags;
 @synthesize modifyCount = _modifyCount;
 @synthesize ident = _ident;
-@synthesize relations = _relations;
+@synthesize parentRelations = _parentRelations;
 @synthesize boundingBox = _boundingBox;
 
 -(NSString *)description
@@ -100,7 +100,7 @@ NSString * OsmValueForBoolean( BOOL b )
 		if ( [natural isEqualToString:@"coastline"] )
 			return YES;
 		if ( [natural isEqualToString:@"water"] ) {
-			if ( !self.isRelation && _relations.count == 0 )
+			if ( !self.isRelation && _parentRelations.count == 0 )
 				return NO;	// its a lake or something
 			return YES;
 		}
@@ -571,7 +571,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	[coder encodeObject:_tags					forKey:@"tags"];
 	[coder encodeBool:_deleted					forKey:@"deleted"];
 	[coder encodeInt32:_modifyCount				forKey:@"modified"];
-	[coder encodeObject:_relations				forKey:@"relations"];
 }
 -(id)initWithCoder:(NSCoder *)coder
 {
@@ -587,7 +586,6 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		_tags			= [coder decodeObjectForKey:@"tags"];
 		_deleted		= [coder decodeBoolForKey:@"deleted"];
 		_modifyCount	= [coder decodeInt32ForKey:@"modified"];
-		_relations		= [coder decodeObjectForKey:@"relations"];
 	}
 	return self;
 }
@@ -621,11 +619,11 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		[undo registerUndoWithTarget:self selector:@selector(removeRelation:undo:) objects:@[relation,undo]];
 	}
 
-	if ( _relations ) {
-		if ( ![_relations containsObject:relation] )
-			_relations = [_relations arrayByAddingObject:relation];
+	if ( _parentRelations ) {
+		if ( ![_parentRelations containsObject:relation] )
+			_parentRelations = [_parentRelations arrayByAddingObject:relation];
 	} else {
-		_relations = @[ relation ];
+		_parentRelations = @[ relation ];
 	}
 }
 -(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo
@@ -633,17 +631,17 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	if ( _constructed && undo ) {
 		[undo registerUndoWithTarget:self selector:@selector(addRelation:undo:) objects:@[relation,undo]];
 	}
-	NSInteger index = [_relations indexOfObject:relation];
+	NSInteger index = [_parentRelations indexOfObject:relation];
 	if ( index == NSNotFound ) {
 		DLog(@"missing relation");
 		return;
 	}
-	if ( _relations.count == 1 ) {
-		_relations = nil;
+	if ( _parentRelations.count == 1 ) {
+		_parentRelations = nil;
 	} else {
-		NSMutableArray * a = [_relations mutableCopy];
+		NSMutableArray * a = [_parentRelations mutableCopy];
 		[a removeObjectAtIndex:index];
-		_relations = [NSArray arrayWithArray:a];
+		_parentRelations = [NSArray arrayWithArray:a];
 	}
 }
 
@@ -1000,7 +998,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(BOOL)isMultipolygonMember
 {
-	for ( OsmRelation * parent in self.relations ) {
+	for ( OsmRelation * parent in self.parentRelations ) {
 		if ( parent.isMultipolygon && parent.tags.count > 0 )
 			return YES;
 	}
@@ -1009,7 +1007,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 
 -(BOOL)isSimpleMultipolygonOuterMember
 {
-	NSArray * parents = self.relations;
+	NSArray * parents = self.parentRelations;
 	if (parents.count != 1)
 		return NO;
 

@@ -12,7 +12,7 @@
 
 @class OsmWay;
 
-@interface OsmMapData (Straighten)
+@interface OsmMapData (Edit)
 
 -(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way;
 

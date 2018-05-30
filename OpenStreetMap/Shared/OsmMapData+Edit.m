@@ -24,7 +24,7 @@
 @end
 
 
-@implementation OsmMapData (Straighten)
+@implementation OsmMapData (Edit)
 
 
 #pragma mark straighten
@@ -61,7 +61,7 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 			return nil;
 
 		// if node is interesting then move it, otherwise delete it.
-		if ( node.wayCount > 1 || node.relations.count > 0 || node.hasInterestingTags ) {
+		if ( node.wayCount > 1 || node.parentRelations.count > 0 || node.hasInterestingTags ) {
 			points[i] = [OSMPointBoxed pointWithPoint:newPoint];
 		} else {
 			// safe to delete
@@ -176,7 +176,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 		[self setTags:newTags forObject:way];
 
 		// reverse roles in relations the way belongs to
-		for ( OsmRelation * relation in way.relations ) {
+		for ( OsmRelation * relation in way.parentRelations ) {
 			for ( OsmMember * member in [relation.members copy] ) {
 				if ( member.ref == way ) {
 					NSString * newRole = roleReversals[ member.role ];
@@ -194,48 +194,53 @@ NSString * reverseValue( NSString * key, NSString * value)
 
 #pragma mark delete node in way
 
--(BOOL)canDisconnectOrRemove:(OsmWay *)way node:(OsmNode *)node
+-(BOOL)canDisconnectOrRemoveNode:(OsmNode *)node inWay:(OsmWay *)way
 {
 	// only care if node is an endpoiont
-	// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
-	for ( OsmRelation * relation in way.relations ) {
-		if ( relation.isRestriction ) {
-			// only permissible if deleting interior node of via, or non-via node in from/to
-			NSArray * viaList = [relation membersByRole:@"via"];
-			OsmMember * from = [relation memberByRole:@"from"];
-			OsmMember * to   = [relation memberByRole:@"to"];
-			if ( from.ref == way || to.ref == way ) {
-				if ( way.nodes.count <= 2 ) {
-					return NO;	// deleting node will cause degenerate way
-				}
-				for ( OsmMember * viaMember in viaList ) {
-					if ( viaMember.ref == node ) {
-						return NO;
-					} else {
-						OsmWay * viaWay = viaMember.ref;
-						if ( [viaWay isKindOfClass:[OsmWay class]] ) {
-							OsmNode * common = [viaWay connectsToWay:way];
-							if ( common == node ) {
-								// deleting the node that connects from/to and via
-								return NO;
+	if ( node == way.nodes[0] || node == way.nodes.lastObject ) {
+
+		// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
+		for ( OsmRelation * relation in way.parentRelations ) {
+			if ( relation.isRestriction ) {
+				// only permissible if deleting interior node of via, or non-via node in from/to
+				NSArray * viaList = [relation membersByRole:@"via"];
+				OsmMember * from = [relation memberByRole:@"from"];
+				OsmMember * to   = [relation memberByRole:@"to"];
+				if ( from.ref == way || to.ref == way ) {
+					if ( way.nodes.count <= 2 ) {
+						return NO;	// deleting node will cause degenerate way
+					}
+					for ( OsmMember * viaMember in viaList ) {
+						if ( viaMember.ref == node ) {
+							return NO;
+						} else {
+							OsmBaseObject * viaObject = viaMember.ref;
+							if ( [viaObject isKindOfClass:[OsmBaseObject class]] ) {
+								OsmNode * common = [viaObject.isWay connectsToWay:way];
+								if ( common.isNode == node ) {
+									// deleting the node that connects from/to and via
+									return NO;
+								}
+							} else {
+								return NO;	// if we don't know then assume not
 							}
 						}
 					}
 				}
-			}
 
-			// disallow deleting an endpoint of any via way, or a via node itself
-			for ( OsmMember * viaMember in viaList ) {
-				if ( viaMember.ref == way ) {
-					// can't delete an endpoint of a via way
-					return NO;
+				// disallow deleting an endpoint of any via way, or a via node itself
+				for ( OsmMember * viaMember in viaList ) {
+					if ( viaMember.ref == way ) {
+						// can't delete an endpoint of a via way
+						return NO;
+					}
 				}
+			} else if ( relation.isMultipolygon ) {
+				// okay
+			} else {
+				// don't allow deleting an endpoint node of routes, etc.
+				return NO;
 			}
-		} else if ( relation.isMultipolygon ) {
-			// okay
-		} else {
-			// don't allow deleting an endpoint node of routes, etc.
-			return NO;
 		}
 	}
 	return YES;
@@ -244,7 +249,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 
 -(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way
 {
-	if ( ![self canDisconnectOrRemove:way node:node] )
+	if ( ![self canDisconnectOrRemoveNode:node inWay:way] )
 		return nil;
 
 	return ^{
@@ -278,7 +283,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 	if ( node.wayCount < 2 )
 		return nil;
 
-	if ( ![self canDisconnectOrRemove:way node:node] )
+	if ( ![self canDisconnectOrRemoveNode:node inWay:way] )
 		return nil;
 
 	return ^{
@@ -363,7 +368,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 		[self setTags:wayA.tags forObject:wayB];
 
-		OsmRelation * wayIsOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.relations.lastObject : nil;	// only 1 parent relation if it is simple
+		OsmRelation * wayIsOuter = wayA.isSimpleMultipolygonOuterMember ? wayA.parentRelations.lastObject : nil;	// only 1 parent relation if it is simple
 
 		if (wayA.isClosed) {
 
@@ -410,7 +415,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		}
 
 		// get a unique set of parent relations (de-duplicate)
-		NSSet * relations = [NSSet setWithArray:wayA.relations];
+		NSSet * relations = [NSSet setWithArray:wayA.parentRelations];
 
 		// fix parent relations
 		for ( OsmRelation * relation in relations ) {
@@ -607,15 +612,15 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	}
 
 	// don't allow joining to a way that is part of a relation, unless both are members of the same relation
-	if ( selectedWay.relations.count == 0 && otherWay.relations.count == 0 ) {
+	if ( selectedWay.parentRelations.count == 0 && otherWay.parentRelations.count == 0 ) {
 		// no problems
-	} else if ( selectedWay.relations.count == 1 && otherWay.relations.count == 1 ) {
+	} else if ( selectedWay.parentRelations.count == 1 && otherWay.parentRelations.count == 1 ) {
 		// both belong to a single relation
-		if ( selectedWay.relations.lastObject != otherWay.relations.lastObject ) {
+		if ( selectedWay.parentRelations.lastObject != otherWay.parentRelations.lastObject ) {
 			return nil;
 		}
 		// .. and it's the same relation
-		OsmRelation * relation = selectedWay.relations.lastObject;
+		OsmRelation * relation = selectedWay.parentRelations.lastObject;
 		if ( relation.isRestriction ) {
 			// turn restriction is only okay if they are both via ways
 			NSArray * viaList = [relation membersByRole:@"via"];
@@ -1007,7 +1012,7 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 				OsmNode * node = way.nodes[i];
 
 				if ( node.wayCount > 1 ||
-					node.relations.count > 0 ||
+					node.parentRelations.count > 0 ||
 					node.hasInterestingTags)
 				{
 					continue;

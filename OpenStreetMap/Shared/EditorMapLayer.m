@@ -1860,7 +1860,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 			// Turn Restrictions
 			if ( _mapView.enableTurnRestriction ) {
-				for ( OsmRelation * relation in object.relations ) {
+				for ( OsmRelation * relation in object.parentRelations ) {
 					if ( relation.isRestriction && [relation memberByRole:@"from"].ref == object  ) {
 						// the From member of the turn restriction is the selected way
 						if ( _selectedNode == nil || [relation memberByRole:@"via"].ref == _selectedNode ) {	// highlight if no node, is selected, or the selected node is the via node
@@ -2298,7 +2298,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		MATCH(Water);
 #undef MATCH
 		if ( _showOthers && !matchAny ) {
-			if ( object.isWay && object.relations.count == 1 && ((OsmRelation *)object.relations.lastObject).isMultipolygon ) {
+			if ( object.isWay && object.parentRelations.count == 1 && ((OsmRelation *)object.parentRelations.lastObject).isMultipolygon ) {
 				return NO;	// follow parent filter instead
 			}
 			return YES;
@@ -2704,7 +2704,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 					dist *= NODE_BIAS;
 					if ( dist <= 1.0 ) {
 						block( node, dist, 0 );
-						[relations addObjectsFromArray:node.relations];
+						[relations addObjectsFromArray:node.parentRelations];
 					}
 				}
 			}
@@ -2715,7 +2715,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 				CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
 				if ( dist <= 1.0 ) {
 					block( way, dist, seg );
-					[relations addObjectsFromArray:way.relations];
+					[relations addObjectsFromArray:way.parentRelations];
 				}
 			}
 			if ( testNodes ) {
@@ -2726,7 +2726,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 					dist *= NODE_BIAS;
 					if ( dist < 1.0 ) {
 						block( node, dist, 0 );
-						[relations addObjectsFromArray:node.relations];
+						[relations addObjectsFromArray:node.parentRelations];
 					}
 				}
 			}

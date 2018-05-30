@@ -37,7 +37,7 @@
 			[_keyValueDict setObject:obj forKey:key];
 		}];
 
-		self.relationList = [selection.relations mutableCopy];
+		self.relationList = [selection.parentRelations mutableCopy];
 	}
 
 	NSInteger tabIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"POITabIndex"];

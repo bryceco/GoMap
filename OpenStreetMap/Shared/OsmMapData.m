@@ -477,13 +477,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)removeFromParentRelationsUnsafe:(OsmBaseObject *)object
 {
-	while ( object.relations.count ) {
-		OsmRelation * relation = object.relations.lastObject;
+	while ( object.parentRelations.count ) {
+		OsmRelation * relation = object.parentRelations.lastObject;
 		NSInteger memberIndex = 0;
 		while ( memberIndex < relation.members.count ) {
 			OsmMember * member = relation.members[memberIndex];
 			if ( member.ref == object ) {
-				[self deleteMemberInRelation:relation index:memberIndex];
+				[self deleteMemberInRelationUnsafe:relation index:memberIndex];
 			} else {
 				++memberIndex;
 			}
@@ -568,7 +568,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	if ( way.nodes.count >= 2 && (index == 0 || index == way.nodes.count) ) {
 		// we don't want to extend a way that is a portion of a route relation, polygon, etc.
-		for ( OsmRelation * relation in way.relations ) {
+		for ( OsmRelation * relation in way.parentRelations ) {
 			if ( relation.isRestriction ) {
 				// only permissible if extending from/to on the end away from the via node/ways
 				NSArray * viaList = [relation membersByRole:@"via"];
@@ -618,7 +618,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 // Only for solitary nodes. Otherwise use delete node in way.
 -(EditAction)canDeleteNode:(OsmNode *)node
 {
-	if ( node.wayCount > 0 || node.relations.count > 0 )
+	if ( node.wayCount > 0 || node.parentRelations.count > 0 )
 		return nil;
 	return ^{
 		[self deleteNodeUnsafe:node];
@@ -627,10 +627,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(EditAction)canDeleteWay:(OsmWay *)way
 {
-	if ( way.relations.count > 0 ) {
+	if ( way.parentRelations.count > 0 ) {
 		BOOL ok = NO;
-		if ( way.relations.count == 1 ) {
-			OsmRelation * relation = way.relations.lastObject;
+		if ( way.parentRelations.count == 1 ) {
+			OsmRelation * relation = way.parentRelations.lastObject;
 			if ( relation.isMultipolygon ) {
 				for ( OsmMember * member in relation.members ) {
 					if ( [member.role isEqualToString:@"inner"] && member.ref == way ) {
@@ -708,7 +708,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[relation addMember:member atIndex:index undo:_undoManager];
 	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
 }
--(void)deleteMemberInRelation:(OsmRelation *)relation index:(NSInteger)index
+-(void)deleteMemberInRelationUnsafe:(OsmRelation *)relation index:(NSInteger)index
 {
 	[self registerUndoCommentString:NSLocalizedString(@"delete object from relation",nil)];
 	OSMRect bbox = relation.boundingBox;
@@ -1152,6 +1152,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			}
 		}];
 		[newData->_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
+
 			OsmRelation * current = [_relations objectForKey:key];
 			if ( [_relations objectForKey:key] == nil ) {
 				[_relations setObject:relation forKey:key];
@@ -1167,6 +1168,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		// all relations, including old ones, need to be resolved against new objects
 		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
+
 			OSMRect bbox = relation.boundingBox;
 			[relation resolveToMapData:self];
 			[_spatial updateMember:relation fromBox:bbox undo:nil];
