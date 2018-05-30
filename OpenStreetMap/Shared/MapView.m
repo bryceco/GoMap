@@ -795,7 +795,10 @@ static const CGFloat Z_FLASH			= 110;
 -(void)startObjectRotation
 {
 	_isRotateObjectMode	= YES;
-	_rotateObjectCenter	= _editorLayer.selectedNode ? _editorLayer.selectedNode.location : _editorLayer.selectedWay.centerPoint;
+	_rotateObjectCenter	= _editorLayer.selectedNode ? _editorLayer.selectedNode.location
+						: _editorLayer.selectedWay ? _editorLayer.selectedWay.centerPoint
+						: _editorLayer.selectedRelation ? _editorLayer.selectedRelation.centerPoint
+						: OSMPointMake(0,0);
 	[self removePin];
 	_rotateObjectOverlay = [[CAShapeLayer alloc] init];
 	CGFloat radiusInner = 70;
@@ -2063,8 +2066,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			}
 			break;
 		case ACTION_ROTATE:
-			if ( _editorLayer.selectedWay == nil || _editorLayer.selectedRelation ) {
-				error = NSLocalizedString(@"Only ways can be rotated", nil);
+			if ( _editorLayer.selectedWay == nil && !_editorLayer.selectedRelation.isMultipolygon ) {
+				error = NSLocalizedString(@"Only ways/multipolygons can be rotated", nil);
 			} else {
 				[self startObjectRotation];
 			}
@@ -2108,7 +2111,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 					_editorLayer.selectedNode = disconnect();
 					[self placePushpinForSelection];
 				} else {
-					error = NSLocalizedString(@"Cannot disconnect way",nil);
+					error = NSLocalizedString(@"Cannot disconnect way: This would damage a relation.",nil);
 				}
 			}
 			break;
@@ -3316,7 +3319,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 			CGFloat delta = rotationGesture.rotation;
 			CGPoint	axis = [self screenPointForLatitude:_rotateObjectCenter.y longitude:_rotateObjectCenter.x birdsEye:YES];
-			for ( OsmNode * node in _editorLayer.selectedWay.nodeSet ) {
+			for ( OsmNode * node in _editorLayer.selectedPrimary.nodeSet ) {
 				CGPoint pt = [self screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
 				OSMPoint diff = { pt.x - axis.x, pt.y - axis.y };
 				double radius = hypot( diff.x, diff.y );

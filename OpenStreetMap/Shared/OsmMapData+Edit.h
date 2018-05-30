@@ -14,12 +14,13 @@
 
 @interface OsmMapData (Straighten)
 
+-(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way;
 
 - (EditAction)canOrthogonalizeWay:(OsmWay *)way;
 - (EditAction)canStraightenWay:(OsmWay *)way;
 - (EditAction)canReverseWay:(OsmWay *)way;
-- (EditActionReturnNode)canDisconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;
-- (EditActionReturnWay)canSplitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node;	// returns the new other half
+- (EditActionReturnNode)canDisconnectWay:(OsmWay *)way atNode:(OsmNode *)node;
+- (EditActionReturnWay)canSplitWay:(OsmWay *)way atNode:(OsmNode *)node;	// returns the new other half
 - (EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode;
 - (EditAction)canCircularizeWay:(OsmWay *)way;
 - (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;

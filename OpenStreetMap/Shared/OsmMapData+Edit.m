@@ -192,12 +192,93 @@ NSString * reverseValue( NSString * key, NSString * value)
 	};
 }
 
+#pragma mark delete node in way
+
+-(BOOL)canDisconnectOrRemove:(OsmWay *)way node:(OsmNode *)node
+{
+	// only care if node is an endpoiont
+	// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
+	for ( OsmRelation * relation in way.relations ) {
+		if ( relation.isRestriction ) {
+			// only permissible if deleting interior node of via, or non-via node in from/to
+			NSArray * viaList = [relation membersByRole:@"via"];
+			OsmMember * from = [relation memberByRole:@"from"];
+			OsmMember * to   = [relation memberByRole:@"to"];
+			if ( from.ref == way || to.ref == way ) {
+				if ( way.nodes.count <= 2 ) {
+					return NO;	// deleting node will cause degenerate way
+				}
+				for ( OsmMember * viaMember in viaList ) {
+					if ( viaMember.ref == node ) {
+						return NO;
+					} else {
+						OsmWay * viaWay = viaMember.ref;
+						if ( [viaWay isKindOfClass:[OsmWay class]] ) {
+							OsmNode * common = [viaWay connectsToWay:way];
+							if ( common == node ) {
+								// deleting the node that connects from/to and via
+								return NO;
+							}
+						}
+					}
+				}
+			}
+
+			// disallow deleting an endpoint of any via way, or a via node itself
+			for ( OsmMember * viaMember in viaList ) {
+				if ( viaMember.ref == way ) {
+					// can't delete an endpoint of a via way
+					return NO;
+				}
+			}
+		} else if ( relation.isMultipolygon ) {
+			// okay
+		} else {
+			// don't allow deleting an endpoint node of routes, etc.
+			return NO;
+		}
+	}
+	return YES;
+}
+
+
+-(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way
+{
+	if ( ![self canDisconnectOrRemove:way node:node] )
+		return nil;
+
+	return ^{
+		BOOL needAreaFixup = way.nodes.lastObject == node  &&  way.nodes[0] == node;
+		for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
+			if ( way.nodes[index] == node ) {
+				[self deleteNodeInWayUnsafe:way index:index];
+				--index;
+			}
+		}
+		if ( way.nodes.count < 2 ) {
+			EditAction delete = [self canDeleteWay:way];
+			if ( delete )
+				delete();	// this will also delete any relations the way belongs to
+			else
+				[self deleteWayUnsafe:way];
+		} else if ( needAreaFixup ) {
+			// special case where deleted node is first & last node of an area
+			[self addNodeUnsafe:way.nodes[0] toWay:way atIndex:way.nodes.count];
+		}
+	};
+}
+
 #pragma mark disconnect
 
 // disconnect all other ways from the selected way joined to it at node
-- (EditActionReturnNode)canDisconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
+- (EditActionReturnNode)canDisconnectWay:(OsmWay *)way atNode:(OsmNode *)node
 {
+	if ( ![way.nodes containsObject:node] )
+		return nil;
 	if ( node.wayCount < 2 )
+		return nil;
+
+	if ( ![self canDisconnectOrRemove:way node:node] )
 		return nil;
 
 	return ^{
@@ -208,9 +289,9 @@ NSString * reverseValue( NSString * key, NSString * value)
 		[self setTags:node.tags forObject:newNode];
 
 		NSInteger index;
-		while ( (index = [selectedWay.nodes indexOfObject:node]) != NSNotFound ) {
-			[self addNodeUnsafe:newNode toWay:selectedWay atIndex:index+1];
-			[self deleteNodeInWayUnsafe:selectedWay index:index];
+		while ( (index = [way.nodes indexOfObject:node]) != NSNotFound ) {
+			[self addNodeUnsafe:newNode toWay:way atIndex:index+1];
+			[self deleteNodeInWayUnsafe:way index:index];
 		}
 		return newNode;
 	};

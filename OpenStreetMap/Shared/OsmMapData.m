@@ -18,6 +18,7 @@
 #import "MapView.h"
 #import "NetworkStatus.h"
 #import "OsmMapData.h"
+#import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
 #import "QuadMap.h"
 #import "UndoManager.h"
@@ -593,58 +594,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	};
 }
 
--(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way
-{
-	if ( way.nodes[0] == node || way.nodes.lastObject == node ) {
-		// only care if node is an endpoiont
-		// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
-		for ( OsmRelation * relation in way.relations ) {
-			if ( relation.isRestriction ) {
-				// only permissible if deleting interior node of via, or non-via node in from/to
-				NSArray * viaList = [relation membersByRole:@"via"];
-				// disallow deleting an endpoint of any via way, or a via node itself
-				for ( OsmMember * viaMember in viaList ) {
-					OsmBaseObject * via = viaMember.ref;
-					if ( [via isKindOfClass:[OsmBaseObject class]] ) {
-						if ( via == node )
-							return nil;	// don't delete via node
-						else if ( via.isWay && (via.isWay.nodes[0] == node || via.isWay.nodes.lastObject == node) )
-							return nil;
-					}
-				}
-				// check if deleting the node will cause the way to become degenerate, and fail if this is unacceptable
-				OsmMember * from = [relation memberByRole:@"from"];
-				OsmMember * to   = [relation memberByRole:@"to"];
-				OsmWay * fromWay = [from.ref isKindOfClass:[OsmWay class]] ? from.ref : nil;
-				OsmWay * toWay   = [to.ref   isKindOfClass:[OsmWay class]] ? to.ref : nil;
-				if ( fromWay.nodes.count <= 2 && [fromWay.nodes containsObject:node] && ![self canDeleteWay:fromWay] )
-					return nil;
-				if ( toWay.nodes.count <= 2 && [toWay.nodes containsObject:node] && ![self canDeleteWay:toWay] )
-					return nil;
-			} else if ( relation.isMultipolygon ) {
-				// okay
-			} else {
-				return nil;
-			}
-		}
-	}
-
-	return ^{
-		BOOL needAreaFixup = way.nodes.lastObject == node  &&  way.nodes[0] == node;
-		for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
-			if ( way.nodes[index] == node ) {
-				[self deleteNodeInWayUnsafe:way index:index];
-				--index;
-			}
-		}
-		if ( way.nodes.count < 2 ) {
-			[self deleteWayUnsafe:way];
-		} else if ( needAreaFixup ) {
-			// special case where deleted node is first & last node of an area
-			[self addNodeUnsafe:way.nodes[0] toWay:way atIndex:way.nodes.count];
-		}
-	};
-}
 
 // used when dragging a node into another node
 -(EditAction)canReplaceNodeInWay:(OsmWay *)way oldNode:(OsmNode *)oldNode withNode:(OsmNode *)newNode

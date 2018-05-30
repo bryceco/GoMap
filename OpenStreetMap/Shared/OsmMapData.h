@@ -138,7 +138,6 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(EditAction)canDeleteWay:(OsmWay *)way;
 -(EditAction)canDeleteRelation:(OsmRelation *)relation;
 
--(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way;
 -(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index;
 -(EditAction)canReplaceNodeInWay:(OsmWay *)way oldNode:(OsmNode *)oldNode withNode:(OsmNode *)newNode;
 

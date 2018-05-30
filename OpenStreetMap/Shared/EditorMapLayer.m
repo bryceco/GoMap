@@ -1752,28 +1752,30 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	// Turn Restrictions
 	if ( _mapView.enableTurnRestriction ) {
 		if ( object.isRelation.isRestriction ) {
-			OsmMember * viaMember = [object.isRelation memberByRole:@"via" ];	// fixme: this only gets one member but there might be several
-			OsmBaseObject * viaMemberObject = viaMember.ref;
-			if ( [viaMemberObject isKindOfClass:[OsmBaseObject class]] ) {
-				if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
-					OSMPoint latLon = viaMemberObject.selectionPoint;
-					OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
+			NSArray * viaMembers = [object.isRelation membersByRole:@"via" ];
+			for ( OsmMember * viaMember in viaMembers ) {
+				OsmBaseObject * viaMemberObject = viaMember.ref;
+				if ( [viaMemberObject isKindOfClass:[OsmBaseObject class]] ) {
+					if ( viaMemberObject.isNode || viaMemberObject.isWay ) {
+						OSMPoint latLon = viaMemberObject.selectionPoint;
+						OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
 
-					CALayer * restrictionLayerIcon 		= [CALayer new];
-					restrictionLayerIcon.bounds 		= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-					restrictionLayerIcon.anchorPoint 	= CGPointMake(0.5,0.5);
-					restrictionLayerIcon.position 		= CGPointMake(pt.x, pt.y);
-					if ( viaMember.isWay && [object.tags[@"restriction"] isEqualToString:@"no_u_turn"] ) {
-						restrictionLayerIcon.contents 	= (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
-					} else {
-						restrictionLayerIcon.contents 	= (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
+						CALayer * restrictionLayerIcon 		= [CALayer new];
+						restrictionLayerIcon.bounds 		= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+						restrictionLayerIcon.anchorPoint 	= CGPointMake(0.5,0.5);
+						restrictionLayerIcon.position 		= CGPointMake(pt.x, pt.y);
+						if ( viaMember.isWay && [object.tags[@"restriction"] isEqualToString:@"no_u_turn"] ) {
+							restrictionLayerIcon.contents 	= (id)[UIImage imageNamed:@"no_u_turn"].CGImage;
+						} else {
+							restrictionLayerIcon.contents 	= (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
+						}
+						restrictionLayerIcon.zPosition		= Z_TURN;
+						LayerProperties * restrictionIconProps = [LayerProperties new];
+						[restrictionLayerIcon setValue:restrictionIconProps forKey:@"properties"];
+						restrictionIconProps->position = pt;
+
+						[layers addObject:restrictionLayerIcon];
 					}
-					restrictionLayerIcon.zPosition		= Z_TURN;
-					LayerProperties * restrictionIconProps = [LayerProperties new];
-					[restrictionLayerIcon setValue:restrictionIconProps forKey:@"properties"];
-					restrictionIconProps->position = pt;
-
-					[layers addObject:restrictionLayerIcon];
 				}
 			}
 		}
