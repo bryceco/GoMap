@@ -621,10 +621,12 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 		[undo registerUndoWithTarget:self selector:@selector(removeRelation:undo:) objects:@[relation,undo]];
 	}
 
-	if ( _relations )
-		_relations = [_relations arrayByAddingObject:relation];
-	else
+	if ( _relations ) {
+		if ( ![_relations containsObject:relation] )
+			_relations = [_relations arrayByAddingObject:relation];
+	} else {
 		_relations = @[ relation ];
+	}
 }
 -(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo
 {
@@ -980,7 +982,7 @@ NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
 	return oneWay;
 }
 
--(BOOL)isConnectedToWay:(OsmWay *)way
+-(BOOL)sharesNodesWithWay:(OsmWay *)way
 {
 	if ( _nodes.count * way.nodes.count < 100 ) {
 		for ( OsmNode * n in way.nodes ) {

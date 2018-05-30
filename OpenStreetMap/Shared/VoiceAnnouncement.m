@@ -103,7 +103,7 @@ static inline OSMPoint OSMPointFromCoordinate( CLLocationCoordinate2D coord )
 		// make sure it is within distance
 		double dist = [obj distanceToLineSegment:OSMPointFromCoordinate(_previousCoord) point:OSMPointFromCoordinate(coord)];
 		if ( dist < self.radius ) {
-			if ( _currentHighway && obj.isWay && obj.tags[@"highway"] && ![_currentHighway isConnectedToWay:obj.isWay] )
+			if ( _currentHighway && obj.isWay && obj.tags[@"highway"] && ![_currentHighway sharesNodesWithWay:obj.isWay] )
 				return;	// only announce ways connected to current way
 			[a addObject:@[ @(dist), obj ]];
 		}

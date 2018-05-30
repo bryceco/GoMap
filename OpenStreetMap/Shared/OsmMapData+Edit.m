@@ -1,13 +1,13 @@
 //
-//  OsmMapData+Straighten.m
+//  OsmMapData+Edit.m
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 7/9/14.
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-
-#import "OsmMapData+Straighten.h"
+#import "DLog.h"
+#import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
 #import "UndoManager.h"
 #import "VectorMath.h"
@@ -26,12 +26,6 @@
 
 @implementation OsmMapData (Straighten)
 
-#pragma mark unjoinNodeFromWway
-
-- (BOOL)disconnectNode:(OsmNode *)node fromWay:(OsmWay *)way
-{
-	return NO;
-}
 
 #pragma mark straighten
 
@@ -40,57 +34,59 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 	return ((node.x - start.x) * (end.x - start.x) + (node.y - start.y) * (end.y - start.y)) / MagSquared(Sub(end,start));
 }
 
-- (BOOL)straightenWay:(OsmWay *)way
+- (EditAction)canStraightenWay:(OsmWay *)way
 {
 	NSInteger count = way.nodes.count;
-	OSMPoint points[ count ];
+
+	NSMutableArray * points = [NSMutableArray arrayWithCapacity:count];
 	for ( NSInteger i = 0; i < count; ++i ) {
 		OsmNode * n = way.nodes[i];
-		OSMPoint p = n.location;
-		points[ i ].x = p.x;
-		points[ i ].y = lat2latp(p.y);
+		OSMPoint p = { n.lon, lat2latp(n.lat) };
+		points[i] = [OSMPointBoxed pointWithPoint:p];
 	}
-	OSMPoint startPoint = points[0];
-	OSMPoint endPoint = points[count-1];
+	OSMPoint startPoint = ((OSMPointBoxed *)points[0]).point;
+	OSMPoint endPoint = ((OSMPointBoxed *)points[count-1]).point;
 
 	double threshold = 0.2 * DistanceFromPointToPoint( startPoint, endPoint );
 
 	for ( NSInteger i = 1; i < count-1; i++) {
 		OsmNode * node = way.nodes[i];
-		OSMPoint point = points[i];
+		OSMPoint point = ((OSMPointBoxed *)points[i]).point;
 
 		double u = positionAlongWay( point, startPoint, endPoint );
 		OSMPoint newPoint = Add( startPoint, Mult( Sub(endPoint, startPoint), u ) );
 
 		double dist = DistanceFromPointToPoint( newPoint, point );
 		if ( dist > threshold )
-			return NO;
+			return nil;
 
 		// if node is interesting then move it, otherwise delete it.
 		if ( node.wayCount > 1 || node.relations.count > 0 || node.hasInterestingTags ) {
-			points[i] = newPoint;
+			points[i] = [OSMPointBoxed pointWithPoint:newPoint];
 		} else {
 			// safe to delete
-			points[i].x = points[i].y = nan("");
+			points[i] = [NSNull null];
 		}
 	}
 
-	[self registerUndoCommentString:NSLocalizedString(@"Straighten",nil)];
+	return ^{
+		[self registerUndoCommentString:NSLocalizedString(@"Straighten",nil)];
 
-	for ( NSInteger i = count-1; i >= 0; --i ) {
-		if ( isnan( points[i].x ) ) {
-			OsmNode * node = way.nodes[i];
-			EditAction canDelete = [self canDeleteNode:node fromWay:way];
-			if ( canDelete ) {
-				canDelete();
+		for ( NSInteger i = count-1; i >= 0; --i ) {
+			OSMPointBoxed * point = points[i];
+			if ( [point isKindOfClass:[NSNull class]] ) {
+				OsmNode * node = way.nodes[i];
+				EditAction canDelete = [self canDeleteNode:node fromWay:way];
+				if ( canDelete ) {
+					canDelete();
+				}
+			} else {
+				OsmNode * node = way.nodes[i];
+				OSMPoint pt = point.point;
+				[self setLongitude:pt.x latitude:latp2lat(pt.y) forNode:node inWay:way];
 			}
-		} else {
-			OsmNode * node = way.nodes[i];
-			[self setLongitude:points[i].x latitude:latp2lat(points[i].y) forNode:node inWay:way];
 		}
-	}
-
-	return YES;
+	};
 }
 
 #pragma mark reverse
@@ -147,7 +143,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 }
 
 
-- (BOOL)reverseWay:(OsmWay *)way
+- (EditAction)canReverseWay:(OsmWay *)way
 {
 	NSDictionary * roleReversals = @{
 		@"forward" : @"backward",
@@ -158,47 +154,48 @@ NSString * reverseValue( NSString * key, NSString * value)
 		@"west" : @"east"
 	};
 
-	[self registerUndoCommentString:NSLocalizedString(@"Reverse",nil)];
+	return ^{
+		[self registerUndoCommentString:NSLocalizedString(@"Reverse",nil)];
 
-	// reverse nodes
-	NSArray * newNodes = [[way.nodes reverseObjectEnumerator] allObjects];
-	for ( NSInteger i = 0; i < newNodes.count; ++i ) {
-		[self addNodeUnsafe:newNodes[i] toWay:way atIndex:i];
-	}
-	while ( way.nodes.count > newNodes.count ) {
-		[self deleteNodeInWayUnsafe:way index:way.nodes.count-1];
-	}
+		// reverse nodes
+		NSArray * newNodes = [[way.nodes reverseObjectEnumerator] allObjects];
+		for ( NSInteger i = 0; i < newNodes.count; ++i ) {
+			[self addNodeUnsafe:newNodes[i] toWay:way atIndex:i];
+		}
+		while ( way.nodes.count > newNodes.count ) {
+			[self deleteNodeInWayUnsafe:way index:way.nodes.count-1];
+		}
 
-	// reverse tags
-	__block NSMutableDictionary * newTags = [NSMutableDictionary new];
-	[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
-		k = reverseKey(k);
-		v = reverseValue(k, v);
-		[newTags setObject:v forKey:k];
-	}];
-	[self setTags:newTags forObject:way];
+		// reverse tags
+		__block NSMutableDictionary * newTags = [NSMutableDictionary new];
+		[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
+			k = reverseKey(k);
+			v = reverseValue(k, v);
+			[newTags setObject:v forKey:k];
+		}];
+		[self setTags:newTags forObject:way];
 
-	// reverse roles in relations the way belongs to
-	for ( OsmRelation * relation in way.relations ) {
-		for ( OsmMember * member in [relation.members copy] ) {
-			if ( member.ref == way ) {
-				NSString * newRole = roleReversals[ member.role ];
-				if ( newRole ) {
-					NSInteger index = [relation.members indexOfObject:member];
-					OsmMember * newMember = [[OsmMember alloc] initWithRef:way role:newRole];
-					[self deleteMemberInRelationUnsafe:relation index:index];
-					[self addMemberUnsafe:newMember toRelation:relation atIndex:index];
+		// reverse roles in relations the way belongs to
+		for ( OsmRelation * relation in way.relations ) {
+			for ( OsmMember * member in [relation.members copy] ) {
+				if ( member.ref == way ) {
+					NSString * newRole = roleReversals[ member.role ];
+					if ( newRole ) {
+						NSInteger index = [relation.members indexOfObject:member];
+						OsmMember * newMember = [[OsmMember alloc] initWithRef:way role:newRole];
+						[self deleteMemberInRelationUnsafe:relation index:index];
+						[self addMemberUnsafe:newMember toRelation:relation atIndex:index];
+					}
 				}
 			}
 		}
-	}
-	return YES;
+	};
 }
 
 #pragma mark disconnect
 
 // disconnect all other ways from the selected way joined to it at node
-- (EditAction)canDisconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
+- (EditActionReturnNode)canDisconnectWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
 {
 	if ( node.wayCount < 2 )
 		return nil;
@@ -210,25 +207,12 @@ NSString * reverseValue( NSString * key, NSString * value)
 		OsmNode * newNode = [self createNodeAtLocation:loc];
 		[self setTags:node.tags forObject:newNode];
 
-		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-			if ( way == selectedWay )
-				return;
-			BOOL disconnectWay = NO;
-			for ( OsmNode * n in way.nodes ) {
-				if ( n == node ) {
-					disconnectWay = YES;
-					break;
-				}
-			}
-			if ( disconnectWay ) {
-				for (NSInteger i = way.nodes.count-1; i >= 0; --i ) {
-					if ( way.nodes[i] == node) {
-						[self deleteNodeInWayUnsafe:way index:i];
-						[self addNodeUnsafe:newNode toWay:way atIndex:i];
-					}
-				}
-			}
-		}];
+		NSInteger index;
+		while ( (index = [selectedWay.nodes indexOfObject:node]) != NSNotFound ) {
+			[self addNodeUnsafe:newNode toWay:selectedWay atIndex:index+1];
+			[self deleteNodeInWayUnsafe:selectedWay index:index];
+		}
+		return newNode;
 	};
 }
 
@@ -570,6 +554,9 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		return nil;
 	}
 
+	if ( ![selectedWay connectsToWay:otherWay] )
+		return nil;
+
 	return ^{
 
 		// join nodes, preserving selected way
@@ -583,7 +570,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			}
 		} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
 			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
-			[self reverseWay:otherWay];	// reverse the tags on other way
+			EditAction reverse = [self canReverseWay:otherWay];	// reverse the tags on other way
+			reverse();
 			for ( OsmNode * n in otherWay.nodes ) {
 				if ( index++ == 0 )
 					continue;
@@ -591,7 +579,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			}
 		} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
 			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
-			[self reverseWay:otherWay];	// reverse the tags on other way
+			EditAction reverse = [self canReverseWay:otherWay];	// reverse the tags on other way
+			reverse();
 			for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
 				if ( index++ == 0 )
 					continue;
@@ -605,6 +594,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				[self addNodeUnsafe:n toWay:selectedWay atIndex:0];
 			}
 		} else {
+			DbgAssert(NO);
 			return;	// never happens
 		}
 
@@ -638,65 +628,66 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 	[mapData addNodeUnsafe:newNode toWay:way atIndex:index];
 }
 
--(BOOL)circularizeWay:(OsmWay *)way
+-(EditAction)canCircularizeWay:(OsmWay *)way
 {
 	if ( !way.isWay )
-		return NO;
+		return nil;
 	if ( !way.isClosed )
-		return NO;
+		return nil;
 	if ( way.nodes.count < 4 )
-		return NO;
+		return nil;
 
-	OSMPoint center = [way centerPointWithArea:NULL];
-	center.y = lat2latp(center.y);
-	double radius = AverageDistanceToCenter(way, center);
+	return ^{
+		OSMPoint center = [way centerPointWithArea:NULL];
+		center.y = lat2latp(center.y);
+		double radius = AverageDistanceToCenter(way, center);
 
-	for ( int i = 0; i < way.nodes.count-1; i++ ) {
-		OsmNode * n = way.nodes[i];
-		double c = hypot( n.lon - center.x, lat2latp(n.lat) - center.y );
-		double lat = latp2lat( center.y + (lat2latp(n.lat) - center.y) / c * radius );
-		double lon = center.x + (n.lon - center.x) / c * radius;
-		[self setLongitude:lon latitude:lat forNode:n inWay:way];
-	}
+		for ( int i = 0; i < way.nodes.count-1; i++ ) {
+			OsmNode * n = way.nodes[i];
+			double c = hypot( n.lon - center.x, lat2latp(n.lat) - center.y );
+			double lat = latp2lat( center.y + (lat2latp(n.lat) - center.y) / c * radius );
+			double lon = center.x + (n.lon - center.x) / c * radius;
+			[self setLongitude:lon latitude:lat forNode:n inWay:way];
+		}
 
-	// Insert extra nodes to make circle
-	// clockwise: angles decrease, wrapping round from -170 to 170
-	BOOL clockwise = way.isClockwise;
-	for ( int i = 0; i < way.nodes.count; ++i ) {
-		int j = (i+1) % way.nodes.count;
+		// Insert extra nodes to make circle
+		// clockwise: angles decrease, wrapping round from -170 to 170
+		BOOL clockwise = way.isClockwise;
+		for ( int i = 0; i < way.nodes.count; ++i ) {
+			int j = (i+1) % way.nodes.count;
 
-		OsmNode * n1 = way.nodes[i];
-		OsmNode * n2 = way.nodes[j];
+			OsmNode * n1 = way.nodes[i];
+			OsmNode * n2 = way.nodes[j];
 
-		double a1 = atan2( n1.lon - center.x, lat2latp(n1.lat) - center.y) * (180/M_PI);
-		double a2 = atan2( n2.lon - center.x, lat2latp(n2.lat) - center.y) * (180/M_PI);
-		if ( clockwise ) {
-			if (a2 > a1) {
-				a2 -= 360;
-			}
-			double diff = a1 - a2;
-			if  ( diff > 20 ) {
-				for ( double ang = a1-20; ang > a2+10; ang -= 20 ) {
-					InsertNode( self, way, center, ang, radius, i+1 );
-					j++;
-					i++;
+			double a1 = atan2( n1.lon - center.x, lat2latp(n1.lat) - center.y) * (180/M_PI);
+			double a2 = atan2( n2.lon - center.x, lat2latp(n2.lat) - center.y) * (180/M_PI);
+			if ( clockwise ) {
+				if (a2 > a1) {
+					a2 -= 360;
 				}
-			}
-		} else {
-			if ( a1 > a2 ) {
-				a1 -= 360;
-			}
-			double diff = a2 - a1;
-			if ( diff > 20 ) {
-				for ( double ang = a1 + 20; ang < a2 - 10; ang += 20 ) {
-					InsertNode( self, way, center, ang, radius, i+1 );
-					j++;
-					i++;
+				double diff = a1 - a2;
+				if  ( diff > 20 ) {
+					for ( double ang = a1-20; ang > a2+10; ang -= 20 ) {
+						InsertNode( self, way, center, ang, radius, i+1 );
+						j++;
+						i++;
+					}
+				}
+			} else {
+				if ( a1 > a2 ) {
+					a1 -= 360;
+				}
+				double diff = a2 - a1;
+				if ( diff > 20 ) {
+					for ( double ang = a1 + 20; ang < a2 - 10; ang += 20 ) {
+						InsertNode( self, way, center, ang, radius, i+1 );
+						j++;
+						i++;
+					}
 				}
 			}
 		}
-	}
-	return YES;
+	};
 }
 
 #pragma mark Duplicate
@@ -730,11 +721,227 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 	if ( object.isNode ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
 		return [self duplicateNode:object.isNode];
-	}
-	if ( object.isWay ) {
+	} else if ( object.isWay ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
 		return [self duplicateWay:object.isWay];
+	} else if ( object.isRelation.isMultipolygon ) {
+		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
+		OsmRelation * newRelation = [self createRelation];
+		for ( OsmMember * member in object.isRelation.members ) {
+			OsmWay * way = member.ref;
+			if ( [way isKindOfClass:[OsmWay class]] ) {
+				OsmWay * newWay = nil;
+				for ( NSInteger prev = 0; prev < newRelation.members.count; ++prev ) {
+					OsmMember * m = object.isRelation.members[prev];
+					if ( m.ref == way ) {
+						// way is duplicated
+						newWay = ((OsmMember *)newRelation.members[prev]).ref;
+						break;
+					}
+				}
+				if ( newWay == nil )
+					newWay = [self duplicateWay:way];
+				OsmMember * newMember = [[OsmMember alloc] initWithType:member.type ref:(NSNumber *)newWay role:member.role];
+				[newRelation addMember:newMember atIndex:newRelation.members.count undo:_undoManager];
+			}
+		}
+		[self setTags:object.tags forObject:newRelation];
+		return newRelation;
 	}
 	return nil;
 }
+
+#pragma mark Rectangularize
+
+static double rectoThreshold;
+static double rectoLowerThreshold;
+static double rectoUpperThreshold;
+
+static double filterDotProduct(double dotp)
+{
+	if (rectoLowerThreshold > fabs(dotp) || fabs(dotp) > rectoUpperThreshold) {
+		return dotp;
+	}
+	return 0;
+}
+
+static double normalizedDotProduct(NSInteger i, const OSMPoint points[], NSInteger count)
+{
+	OSMPoint a = points[(i - 1 + count) % count];
+	OSMPoint b = points[i];
+	OSMPoint c = points[(i + 1) % count];
+	OSMPoint p = Sub(a, b);
+	OSMPoint q = Sub(c, b);
+
+	p = UnitVector(p);
+	q = UnitVector(q);
+
+	return Dot(p,q);
+}
+
+static double squareness(const OSMPoint points[], NSInteger count)
+{
+	double sum = 0.0;
+	for ( NSInteger i = 0; i < count; ++i ) {
+		double dotp = normalizedDotProduct(i, points,count);
+		dotp = filterDotProduct(dotp);
+		sum += 2.0 * MIN(fabs(dotp - 1.0), MIN(fabs(dotp), fabs(dotp + 1)));
+	}
+	return sum;
+}
+
+
+static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger count, NSInteger * pCorner, double * pDotp )
+{
+	OSMPoint a = array[(i - 1 + count) % count];
+	OSMPoint c = array[(i + 1) % count];
+	OSMPoint p = Sub(a, b);
+	OSMPoint q = Sub(c, b);
+
+	OSMPoint origin = {0,0};
+	double scale = 2 * MIN(DistanceFromPointToPoint(p, origin), DistanceFromPointToPoint(q, origin));
+	p = UnitVector(p);
+	q = UnitVector(q);
+
+	if ( isnan(p.x) || isnan(q.x) ) {
+		if ( pDotp )
+			*pDotp = 1.0;
+		return OSMPointMake(0, 0);
+	}
+
+	double dotp = filterDotProduct( Dot(p,q) );
+
+	// nasty hack to deal with almost-straight segments (angle is closer to 180 than to 90/270).
+	if (count > 3) {
+		if (dotp < -0.707106781186547) {
+			dotp += 1.0;
+		}
+	} else {
+		// for triangles save the best corner
+		if (dotp && pDotp && fabs(dotp) < *pDotp) {
+			*pCorner = i;
+			*pDotp = fabs( dotp );
+		}
+	}
+
+	OSMPoint r = UnitVector( Add(p,q) );
+	r = Mult( r, 0.1 * dotp * scale );
+	return r;
+}
+
+-(EditAction)canOrthogonalizeWay:(OsmWay *)way
+{
+	// needs a closed way to work properly.
+	if ( !way.isWay || !way.isClosed || way.nodes.count < 3 ) {
+		return nil;
+	}
+
+
+#if 0
+	if ( squareness(points,count) == 0.0 ) {
+		// already square
+		return NO;
+	}
+#endif
+
+	return ^{
+		[self registerUndoCommentString:NSLocalizedString(@"Make Rectangular",nil)];
+
+		rectoThreshold = 12; // degrees within right or straight to alter
+		rectoLowerThreshold = cos((90 - rectoThreshold) * M_PI / 180);
+		rectoUpperThreshold = cos(rectoThreshold * M_PI / 180);
+
+		NSInteger count = way.nodes.count-1;
+		OSMPoint points[ count ];
+		for ( NSInteger i = 0; i < count; ++i ) {
+			OsmNode * node = way.nodes[i];
+			points[i].x = node.lon;
+			points[i].y = lat2latp(node.lat);
+		}
+
+		double epsilon = 1e-4;
+
+		if (count == 3) {
+
+			double score = 0.0;
+			NSInteger corner = 0;
+			double dotp = 1.0;
+
+			for ( NSInteger step = 0; step < 1000; step++) {
+				OSMPoint motions[ count ];
+				for ( NSInteger i = 0; i < count; ++i ) {
+					motions[i] = calcMotion(points[i],i,points,count,&corner,&dotp);
+				}
+				points[corner] = Add( points[corner],motions[corner] );
+				score = dotp;
+				if (score < epsilon) {
+					break;
+				}
+			}
+
+			// apply new position
+			OsmNode * node = way.nodes[corner];
+			[self setLongitude:points[corner].x latitude:latp2lat(points[corner].y) forNode:node inWay:way];
+
+		} else {
+
+			OSMPoint best[count];
+			OSMPoint originalPoints[count];
+			memcpy( originalPoints, points, sizeof points);
+			double score = 1e9;
+
+			for ( NSInteger step = 0; step < 1000; step++) {
+				OSMPoint motions[ count ];
+				for ( NSInteger i = 0; i < count; ++i ) {
+					motions[i] = calcMotion(points[i],i,points,count,NULL,NULL);
+					//				NSLog(@"motion[%ld] = %f,%f", i, motions[i].x, motions[i].y );
+				}
+				for ( NSInteger i = 0; i < count; i++) {
+					points[i] = Add( points[i], motions[i] );
+					//				NSLog(@"points[%ld] = %f,%f", i, points[i].x, points[i].y );
+				}
+				double newScore = squareness(points,count);
+				if (newScore < score) {
+					memcpy( best, points, sizeof points);
+					score = newScore;
+				}
+				if (score < epsilon) {
+					break;
+				}
+			}
+
+			memcpy(points,best,sizeof points);
+
+			for ( NSInteger i = 0; i < way.nodes.count; ++i ) {
+				NSInteger modi = i < count ? i : 0;
+				OsmNode * node = way.nodes[i];
+				if ( points[i].x != originalPoints[i].x || points[i].y != originalPoints[i].y ) {
+					[self setLongitude:points[modi].x latitude:latp2lat(points[modi].y) forNode:node inWay:way];
+				}
+			}
+
+			// remove empty nodes on straight sections
+			// * deleting nodes that are referenced by non-downloaded ways could case data loss
+			for (NSInteger i = count-1; i >= 0; i--) {
+				OsmNode * node = way.nodes[i];
+
+				if ( node.wayCount > 1 ||
+					node.relations.count > 0 ||
+					node.hasInterestingTags)
+				{
+					continue;
+				}
+
+				double dotp = normalizedDotProduct(i, points, count);
+				if (dotp < -1 + epsilon) {
+					EditAction canDeleteNode = [self canDeleteNode:node fromWay:way];
+					if ( canDeleteNode ) {
+						canDeleteNode();
+					}
+				}
+			}
+		}
+	};
+}
+
 @end

@@ -43,8 +43,7 @@
 		020CD97B169D4BC900BF3AAF /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 020CD97A169D4BC900BF3AAF /* Default-Landscape~ipad.png */; };
 		02130E85196CF58500498297 /* MenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02130E84196CF58500498297 /* MenuIcon.png */; };
 		0219563216DDC26E00074D15 /* GpxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0219563116DDC26E00074D15 /* GpxViewController.m */; };
-		021B30C71973AA4400B36EFF /* OsmMapData+Orthogonalize.m in Sources */ = {isa = PBXBuildFile; fileRef = 021B30C41973AA4400B36EFF /* OsmMapData+Orthogonalize.m */; };
-		021B30C81973AA4400B36EFF /* OsmMapData+Straighten.m in Sources */ = {isa = PBXBuildFile; fileRef = 021B30C61973AA4400B36EFF /* OsmMapData+Straighten.m */; };
+		021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */; };
 		021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */ = {isa = PBXBuildFile; fileRef = 021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */; };
 		021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C6AA71686145C00FB17B0 /* UndoManager.m */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
@@ -539,10 +538,8 @@
 		02130E84196CF58500498297 /* MenuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MenuIcon.png; sourceTree = "<group>"; };
 		0219563016DDC26E00074D15 /* GpxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GpxViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0219563116DDC26E00074D15 /* GpxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GpxViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		021B30C31973AA4400B36EFF /* OsmMapData+Orthogonalize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Orthogonalize.h"; path = "../Shared/OsmMapData+Orthogonalize.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		021B30C41973AA4400B36EFF /* OsmMapData+Orthogonalize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "OsmMapData+Orthogonalize.m"; path = "../Shared/OsmMapData+Orthogonalize.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		021B30C51973AA4400B36EFF /* OsmMapData+Straighten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Straighten.h"; path = "../Shared/OsmMapData+Straighten.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		021B30C61973AA4400B36EFF /* OsmMapData+Straighten.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "OsmMapData+Straighten.m"; path = "../Shared/OsmMapData+Straighten.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Edit.h"; path = "../Shared/OsmMapData+Edit.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "OsmMapData+Edit.m"; path = "../Shared/OsmMapData+Edit.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VoiceAnnouncement.h; path = ../Shared/VoiceAnnouncement.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VoiceAnnouncement.m; path = ../Shared/VoiceAnnouncement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		021C6AA61686145C00FB17B0 /* UndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndoManager.h; path = ../Shared/UndoManager.h; sourceTree = "<group>"; };
@@ -1756,10 +1753,8 @@
 				02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */,
 				02ACBA8316713F2A00BB4414 /* OsmMapData.h */,
 				02ACBA8416713F2A00BB4414 /* OsmMapData.m */,
-				021B30C31973AA4400B36EFF /* OsmMapData+Orthogonalize.h */,
-				021B30C41973AA4400B36EFF /* OsmMapData+Orthogonalize.m */,
-				021B30C51973AA4400B36EFF /* OsmMapData+Straighten.h */,
-				021B30C61973AA4400B36EFF /* OsmMapData+Straighten.m */,
+				021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */,
+				021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */,
 				02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */,
 				02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */,
 				02ACBA8516713F2A00BB4414 /* OsmObjects.h */,
@@ -2290,7 +2285,6 @@
 				025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */,
 				024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */,
 				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
-				021B30C71973AA4400B36EFF /* OsmMapData+Orthogonalize.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				02ACBD2416717D7000BB4414 /* TagInfo.m in Sources */,
 				0225A36A19B63F0D008B63BA /* DisplayViewController.m in Sources */,
@@ -2298,7 +2292,7 @@
 				0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */,
 				0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */,
 				0205460616766808004A2A23 /* POIPresetViewController.m in Sources */,
-				021B30C81973AA4400B36EFF /* OsmMapData+Straighten.m in Sources */,
+				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,

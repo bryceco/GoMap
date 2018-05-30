@@ -13,8 +13,7 @@
 #import "MapView.h"
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
-#import "OsmMapData+Orthogonalize.h"
-#import "OsmMapData+Straighten.h"
+#import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
 
 

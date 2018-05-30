@@ -22,8 +22,7 @@
 #import "MercatorTileLayer.h"
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
-#import "OsmMapData+Orthogonalize.h"
-#import "OsmMapData+Straighten.h"
+#import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
@@ -65,24 +64,6 @@ static const CGFloat Z_FLASH			= 110;
 
 
 
-CGSize SizeForImage( NSImage * image )
-{
-#if TARGET_OS_IPHONE
-	return image.size;
-#else
-	NSArray * reps = image.representations;
-	if ( reps.count ) {
-		CGSize size = { 0 };
-		for ( NSImageRep * rep in reps ) {
-			if ( rep.pixelsWide > size.width )
-				size = CGSizeMake(rep.pixelsWide, rep.pixelsHigh);
-		}
-		return size;
-	} else {
-		return image.size;
-	}
-#endif
-}
 
 
 @interface MapView ()
@@ -184,22 +165,6 @@ CGSize SizeForImage( NSImage * image )
 			[self.layer addSublayer:layer];
 		}
 
-		// bing logo
-		{
-#if TARGET_OS_IPHONE
-			// button provided by storyboard
-#else
-			NSImage * image = [NSImage imageNamed:@"BingLogo.png"];
-			assert(image);
-			CGSize size = SizeForImage(image);
-			_bingMapsLogo = [CALayer layer];
-			_bingMapsLogo.zPosition = Z_BING_LOGO;
-			_bingMapsLogo.contents = image;
-			_bingMapsLogo.frame = CGRectMake(10, 10, size.width, size.height);
-			[self.layer addSublayer:_bingMapsLogo];
-#endif
-		}
-
 		_rulerLayer = [[RulerLayer alloc] init];
 		_rulerLayer.mapView = self;
 		_rulerLayer.zPosition = Z_RULER;
@@ -275,7 +240,7 @@ CGSize SizeForImage( NSImage * image )
 			_editorLayer.selectedNode		= context[ @"selectedNode" ];
 
 			NSString * pushpin = context[@"pushpin"];
-			if ( pushpin ) {
+			if ( pushpin && _editorLayer.selectedPrimary ) {
 				[self placePushpinAtPoint:CGPointFromString(pushpin) object:_editorLayer.selectedPrimary];
 			} else {
 				[self removePin];
@@ -605,6 +570,12 @@ CGSize SizeForImage( NSImage * image )
 	}
 }
 
+-(void)showAlert:(NSString *)title message:(NSString *)message
+{
+	UIAlertController * alertError = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+	[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+	[self.viewController presentViewController:alertError animated:YES completion:nil];
+}
 
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration
 {
@@ -720,7 +691,7 @@ CGSize SizeForImage( NSImage * image )
 			[self flashMessage:text duration:0.9];
 		} else {
 			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:UIAlertControllerStyleAlert];
-			[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+			[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 			if ( ignoreButton ) {
 				[alertError addAction:[UIAlertAction actionWithTitle:ignoreButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 					// ignore network errors for a while
@@ -1432,10 +1403,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
 			NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 			NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-			UIAlertController * alertGps = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-			[alertGps addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.viewController presentViewController:alertGps animated:YES completion:nil];
-
+			[self showAlert:title message:nil];
 			self.gpsState = GPS_STATE_NONE;
 			return;
 		}
@@ -1919,11 +1887,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 				[self placePushpinAtPoint:pos object:_editorLayer.selectedPrimary];
 			}
 		} else {
-			UIAlertController *	alertFailed = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete failed",nil)
-																				  message:NSLocalizedString(@"The object could not be deleted because doing so would damage a relation it belongs to.",nil)
-																		   preferredStyle:UIAlertControllerStyleAlert];
-			[alertFailed addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-			[self.viewController presentViewController:alertFailed animated:YES completion:nil];
+			[self showAlert:NSLocalizedString(@"Delete failed",nil) message:NSLocalizedString(@"The object could not be deleted because doing so would damage a relation it belongs to.",nil)];
 		}
 	}]];
 	[self.viewController presentViewController:alertDelete animated:YES completion:nil];
@@ -2062,7 +2026,6 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	button.size.width = segmentWidth;
 	actionSheet.popoverPresentationController.sourceView = self.editControl;
 	actionSheet.popoverPresentationController.sourceRect = button;
-
 }
 
 -(void)performEditAction:(NSInteger)action
@@ -2107,14 +2070,26 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			}
 			break;
 		case ACTION_RECTANGULARIZE:
-			if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) )
-				error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
-			else if ( ! [_editorLayer.mapData orthogonalizeWay:_editorLayer.selectedWay] )
-				error = NSLocalizedString(@"The way is not sufficiently rectangular",nil);
+			{
+				if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
+					error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
+				} else {
+					EditAction rect = [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay];
+					if ( rect )
+						rect();
+					else
+						error = NSLocalizedString(@"The way is not sufficiently rectangular",nil);
+				}
+			}
 			break;
 		case ACTION_REVERSE:
-			if ( ![_editorLayer.mapData reverseWay:_editorLayer.selectedWay] )
-				error = NSLocalizedString(@"Cannot reverse way",nil);
+			{
+				EditAction reverse = [_editorLayer.mapData canReverseWay:_editorLayer.selectedWay];
+				if ( reverse )
+					reverse();
+				else
+					error = NSLocalizedString(@"Cannot reverse way",nil);
+			}
 			break;
 		case ACTION_JOIN:
 			{
@@ -2128,9 +2103,10 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			break;
 		case ACTION_DISCONNECT:
 			{
-				EditAction disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
+				EditActionReturnNode disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
 				if ( disconnect ) {
-					disconnect();
+					_editorLayer.selectedNode = disconnect();
+					[self placePushpinForSelection];
 				} else {
 					error = NSLocalizedString(@"Cannot disconnect way",nil);
 				}
@@ -2146,14 +2122,26 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			}
 			break;
 		case ACTION_STRAIGHTEN:
-			if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) )
-				error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
-			else if ( ! [_editorLayer.mapData straightenWay:_editorLayer.selectedWay] )
-				error = NSLocalizedString(@"The way is not sufficiently straight",nil);
+			{
+				if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
+					error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
+				} else {
+					EditAction straighten = [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay];
+					if ( straighten )
+						straighten();
+					else
+						error = NSLocalizedString(@"The way is not sufficiently straight",nil);
+				}
+			}
 			break;
 		case ACTION_CIRCULARIZE:
-			if ( ! [_editorLayer.mapData circularizeWay:_editorLayer.selectedWay] )
-				error = NSLocalizedString(@"The way cannot be made circular",nil);
+			{
+				EditAction circle = [_editorLayer.mapData canCircularizeWay:_editorLayer.selectedWay];
+				if ( circle )
+					circle();
+				else
+					error = NSLocalizedString(@"The way cannot be made circular",nil);
+			}
 			break;
 		case ACTION_HEIGHT:
 			if ( self.gpsState != GPS_STATE_NONE ) {
@@ -2186,9 +2174,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			break;
 	}
 	if ( error ) {
-		UIAlertController * alertError = [UIAlertController alertControllerWithTitle:error message:nil preferredStyle:UIAlertControllerStyleAlert];
-		[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-		[self.viewController presentViewController:alertError animated:YES completion:nil];
+		[self showAlert:error message:nil];
 	}
 
 	[self.editorLayer setNeedsDisplay];
@@ -2327,11 +2313,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		
 		if ( ![viaNode isKindOfClass:[OsmNode class]] ) {
 			// not supported yet
-			UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Unsupported turn restriction type"
-										message:@"This app does not yet support editing turn restrictions without a node as the 'via' member"
-										preferredStyle:UIAlertControllerStyleAlert];
-			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.viewController presentViewController:alert animated:YES completion:nil];
+			[self showAlert:@"Unsupported turn restriction type"
+					message:@"This app does not yet support editing turn restrictions without a node as the 'via' member"];
 			return;
 		}
 		
@@ -2438,6 +2421,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	// drop in center of screen
 	[self removePin];
 
+	_confirmDrag = NO;
+
 	_pushpinView = [PushPinView new];
 	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
 	_pushpinView.layer.zPosition = Z_PUSHPIN;
@@ -2500,6 +2485,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 								EditActionWithNode add = [strongSelf.editorLayer canAddNodeToWay:hit.isWay atIndex:segment+1];
 								if ( add ) {
 									add(dragNode);
+								} else {
+									[strongSelf showAlert:@"Error" message:@"Unable to extend the way because it would cause a relation to become invalid"];
 								}
 							}
 							return;
@@ -2674,11 +2661,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		NSInteger segment;
 		OsmBaseObject * object = [_editorLayer osmHitTestSelection:arrowPoint radius:DefaultHitTestRadius segment:&segment];
 		if ( object == nil ) {
-			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select location",nil)
-																				 message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)
-																		  preferredStyle:UIAlertControllerStyleAlert];
-			[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.viewController presentViewController:alertError animated:YES completion:nil];
+			[self showAlert:NSLocalizedString(@"Select location",nil) message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)];
 			return;
 		}
 		EditActionWithNode add = [_editorLayer canAddNodeToWay:way atIndex:segment+1];
@@ -2797,8 +2780,10 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 
 
 		EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex];
-		if ( !action )
+		if ( !action ) {
+			[self showAlert:@"Can't extend way" message:@"Extending the way would damage a relation the way belongs to"];
 			return;
+		}
 		OsmNode * node2 = [_editorLayer createNodeAtPoint:newPoint];
 		action( node2 );
 		_editorLayer.selectedWay = way;
@@ -2936,19 +2921,6 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	CGPathRelease(path);
 }
 
--(BOOL)canConnectTo:(OsmBaseObject *)hit
-{
-	if ( hit == nil )
-		return NO;
-	if ( _grabbedObject && _grabbedObjectDragged && _grabbedObject.isNode ) {
-		if ( hit.isWay ) {
-			return hit != _editorLayer.selectedWay;
-		}
-		if ( hit.isNode )
-			return YES;
-	}
-	return NO;
-}
 
 
 #pragma mark Notes
@@ -3397,58 +3369,45 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (void)singleClick:(CGPoint)point
 {
 	OsmBaseObject * hit = nil;
-	_grabbedObject = nil;
 
 	// disable rotation if in action
 	if ( _isRotateObjectMode ) {
 		[self endObjectRotation];
 	}
 
-	if ( 0 ) {
 
+	if ( _editorLayer.selectedWay ) {
+		// check for selecting node inside way
+		hit = [_editorLayer osmHitTestNodeInSelection:point radius:DefaultHitTestRadius];
+	}
+	if ( hit ) {
+		_editorLayer.selectedNode = (id)hit;
 
 	} else {
 
-		if ( _editorLayer.selectedWay ) {
-			// check for selecting node inside way
-			hit = [_editorLayer osmHitTestNodeInSelection:point radius:DefaultHitTestRadius];
-		}
+		// hit test anything
+		hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius];
 		if ( hit ) {
-			_editorLayer.selectedNode = (id)hit;
-			[_delegate mapviewSelectionChanged:hit];
-			_grabbedObject = (id)hit;
-
-		} else {
-
-			// hit test anything
-			hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius];
-			if ( hit ) {
-				if ( hit.isNode ) {
-					_editorLayer.selectedNode = (id)hit;
-					_editorLayer.selectedWay = nil;
-					_editorLayer.selectedRelation = nil;
-					_grabbedObject = hit;
-				} else if ( hit.isWay ) {
-					if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.relations containsObject:_editorLayer.selectedRelation] ) {
-						// selecting way inside previously selected relation
+			if ( hit.isNode ) {
+				_editorLayer.selectedNode = (id)hit;
+				_editorLayer.selectedWay = nil;
+				_editorLayer.selectedRelation = nil;
+			} else if ( hit.isWay ) {
+				if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.relations containsObject:_editorLayer.selectedRelation] ) {
+					// selecting way inside previously selected relation
+					_editorLayer.selectedNode = nil;
+					_editorLayer.selectedWay = (id)hit;
+				} else if ( hit.relations.count > 0 ) {
+					// select relation the way belongs to
+					NSArray * relations = [hit.relations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
+						return relation.isMultipolygon;
+					}]];
+					OsmRelation * relation = relations.count > 0 ? relations[0] : nil;
+					if ( relation ) {
+						hit = relation;	// convert hit to relation
 						_editorLayer.selectedNode = nil;
-						_editorLayer.selectedWay = (id)hit;
-					} else if ( hit.relations.count > 0 ) {
-						// select relation the way belongs to
-						NSArray * relations = [hit.relations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
-							return relation.isMultipolygon;
-						}]];
-						OsmRelation * relation = relations.count > 0 ? relations[0] : nil;
-						if ( relation ) {
-							hit = relation;	// convert hit to relation
-							_editorLayer.selectedNode = nil;
-							_editorLayer.selectedWay = nil;
-							_editorLayer.selectedRelation = (id)hit;
-						} else {
-							_editorLayer.selectedNode = nil;
-							_editorLayer.selectedWay = (id)hit;
-							_editorLayer.selectedRelation = nil;
-						}
+						_editorLayer.selectedWay = nil;
+						_editorLayer.selectedRelation = (id)hit;
 					} else {
 						_editorLayer.selectedNode = nil;
 						_editorLayer.selectedWay = (id)hit;
@@ -3456,38 +3415,35 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 					}
 				} else {
 					_editorLayer.selectedNode = nil;
-					_editorLayer.selectedWay = nil;
-					_editorLayer.selectedRelation = (id)hit;
+					_editorLayer.selectedWay = (id)hit;
+					_editorLayer.selectedRelation = nil;
 				}
 			} else {
 				_editorLayer.selectedNode = nil;
 				_editorLayer.selectedWay = nil;
-				_editorLayer.selectedRelation = nil;
+				_editorLayer.selectedRelation = (id)hit;
 			}
-			[_delegate mapviewSelectionChanged:hit];
-		}
-
-		[self removePin];
-
-		if ( _editorLayer.selectedPrimary ) {
-			// adjuust tap point to touch object
-			CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
-			OSMPoint pt = { latLon.longitude, latLon.latitude };
-			pt = [_editorLayer.selectedPrimary pointOnObjectForPoint:pt];
-			point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
-
-			if ( _editorLayer.selectedPrimary.isWay || _editorLayer.selectedPrimary.isRelation ) {
-				// if they later try to drag this way ask them if they really wanted to
-				_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
-			}
-			[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
+		} else {
+			_editorLayer.selectedNode = nil;
+			_editorLayer.selectedWay = nil;
+			_editorLayer.selectedRelation = nil;
 		}
 	}
 
-checkGrab:
-	if ( _grabbedObject ) {
-		// grabbing selected item node
-		_grabbedObjectDragged = NO;
+	[self removePin];
+
+	if ( _editorLayer.selectedPrimary ) {
+		// adjust tap point to touch object
+		CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:point birdsEye:YES];
+		OSMPoint pt = { latLon.longitude, latLon.latitude };
+		pt = [_editorLayer.selectedPrimary pointOnObjectForPoint:pt];
+		point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
+
+		if ( _editorLayer.selectedPrimary.isWay || _editorLayer.selectedPrimary.isRelation ) {
+			// if they later try to drag this way ask them if they really wanted to
+			_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
+		}
+		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	}
 }
 

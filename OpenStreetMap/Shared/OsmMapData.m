@@ -587,46 +587,44 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			}
 		}
 	}
-	return ^(OsmNode * node){ [self addNodeUnsafe:node toWay:way atIndex:index]; };
+
+	return ^(OsmNode * node) {
+		[self addNodeUnsafe:node toWay:way atIndex:index];
+	};
 }
 
 -(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way
 {
-	NSArray * parentWays = [self waysContainingNode:node];
-
-	for ( OsmWay * parentWay in parentWays ) {
-
-		if ( parentWay.nodes[0] == node || parentWay.nodes.lastObject == node ) {
-			// only care if node is an endpoiont
-			// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
-			for ( OsmRelation * relation in parentWay.relations ) {
-				if ( relation.isRestriction ) {
-					// only permissible if deleting interior node of via, or non-via node in from/to
-					NSArray * viaList = [relation membersByRole:@"via"];
-					// disallow deleting an endpoint of any via way, or a via node itself
-					for ( OsmMember * viaMember in viaList ) {
-						OsmBaseObject * via = viaMember.ref;
-						if ( [via isKindOfClass:[OsmBaseObject class]] ) {
-							if ( via == node )
-								return nil;	// don't delete via node
-							else if ( via.isWay && (via.isWay.nodes[0] == node || via.isWay.nodes.lastObject == node) )
-								return nil;
-						}
+	if ( way.nodes[0] == node || way.nodes.lastObject == node ) {
+		// only care if node is an endpoiont
+		// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
+		for ( OsmRelation * relation in way.relations ) {
+			if ( relation.isRestriction ) {
+				// only permissible if deleting interior node of via, or non-via node in from/to
+				NSArray * viaList = [relation membersByRole:@"via"];
+				// disallow deleting an endpoint of any via way, or a via node itself
+				for ( OsmMember * viaMember in viaList ) {
+					OsmBaseObject * via = viaMember.ref;
+					if ( [via isKindOfClass:[OsmBaseObject class]] ) {
+						if ( via == node )
+							return nil;	// don't delete via node
+						else if ( via.isWay && (via.isWay.nodes[0] == node || via.isWay.nodes.lastObject == node) )
+							return nil;
 					}
-					// check if deleting the node will cause the way to become degenerate, and fail if this is unacceptable
-					OsmMember * from = [relation memberByRole:@"from"];
-					OsmMember * to   = [relation memberByRole:@"to"];
-					OsmWay * fromWay = [from.ref isKindOfClass:[OsmWay class]] ? from.ref : nil;
-					OsmWay * toWay   = [to.ref   isKindOfClass:[OsmWay class]] ? to.ref : nil;
-					if ( fromWay.nodes.count <= 2 && [fromWay.nodes containsObject:node] && ![self canDeleteWay:fromWay] )
-						return nil;
-					if ( toWay.nodes.count <= 2 && [toWay.nodes containsObject:node] && ![self canDeleteWay:toWay] )
-						return nil;
-				} else if ( relation.isMultipolygon ) {
-					// okay
-				} else {
-					return nil;
 				}
+				// check if deleting the node will cause the way to become degenerate, and fail if this is unacceptable
+				OsmMember * from = [relation memberByRole:@"from"];
+				OsmMember * to   = [relation memberByRole:@"to"];
+				OsmWay * fromWay = [from.ref isKindOfClass:[OsmWay class]] ? from.ref : nil;
+				OsmWay * toWay   = [to.ref   isKindOfClass:[OsmWay class]] ? to.ref : nil;
+				if ( fromWay.nodes.count <= 2 && [fromWay.nodes containsObject:node] && ![self canDeleteWay:fromWay] )
+					return nil;
+				if ( toWay.nodes.count <= 2 && [toWay.nodes containsObject:node] && ![self canDeleteWay:toWay] )
+					return nil;
+			} else if ( relation.isMultipolygon ) {
+				// okay
+			} else {
+				return nil;
 			}
 		}
 	}
@@ -691,6 +689,16 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 						ok = YES;
 						break;
 					}
+				}
+			} else if ( relation.isRestriction ) {
+				// allow deleting if we're both from and to (u-turn)
+				OsmMember * from = [relation memberByRole:@"from"];
+				OsmMember * to   = [relation memberByRole:@"to"];
+				if ( from.ref == way && to.ref == way ) {
+					return ^{
+						[self deleteRelationUnsafe:relation];
+						[self deleteWayUnsafe:way];
+					};
 				}
 			}
 		}

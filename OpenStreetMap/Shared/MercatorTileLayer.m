@@ -24,9 +24,6 @@
 #define CUSTOM_TRANSFORM 1
 
 
-extern CGSize SizeForImage(NSImage * image);
-
-
 
 @implementation MercatorTileLayer
 

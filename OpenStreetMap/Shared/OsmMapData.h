@@ -33,9 +33,10 @@ extern NSString * OsmValueForBoolean( BOOL b );
 extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
 
-typedef void 	(^EditAction)(void);
-typedef void 	(^EditActionWithNode)(OsmNode * node);
-typedef OsmWay * (^EditActionReturnWay)(void);
+typedef void 		(^EditAction)(void);
+typedef void 		(^EditActionWithNode)(OsmNode * node);
+typedef OsmWay    * (^EditActionReturnWay)(void);
+typedef OsmNode   * (^EditActionReturnNode)(void);
 
 
 @interface OsmUserStatistics : NSObject

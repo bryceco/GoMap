@@ -38,12 +38,6 @@
 @class VoiceAnnouncement;
 
 
-@protocol MapViewDelegate <NSObject>
--(void)mapviewSelectionChanged:(id)selection;
--(void)mapviewViewportChanged;
--(void)doubleClickSelection:(id)selection;
-@end
-
 typedef enum _MapViewState {
 	MAPVIEW_NONE = -1,
 	MAPVIEW_EDITOR,
@@ -79,9 +73,6 @@ typedef enum {
 	CGPoint								_lastMouseDragPos;
 
 	NSInteger							_progressActive;
-
-	OsmBaseObject					*	_grabbedObject;
-	BOOL								_grabbedObjectDragged;	// track whether a node was actually dragged during select
 
 	LocationBallLayer				*	_locationBallLayer;
 	CAShapeLayer					*	_addWayProgressLayer;
@@ -158,7 +149,6 @@ typedef enum {
 @property (readonly,nonatomic)	MercatorTileLayer			*	gpsTraceLayer;
 @property (readonly,nonatomic)	NSArray						*	backgroundLayers;	// list of all layers that need to be resized, etc.
 
-@property (weak,nonatomic)		NSObject<MapViewDelegate>	*	delegate;
 @property (assign,nonatomic)	OSMTransform					screenFromMapTransform;
 @property (readonly,nonatomic)	OSMTransform					mapFromScreenTransform;
 
