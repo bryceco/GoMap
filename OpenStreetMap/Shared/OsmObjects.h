@@ -22,7 +22,8 @@
 @class TagInfo;
 @class UndoManager;
 
-NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags);
+BOOL IsInterestingTag(NSString * key);
+NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOnConflict);
 
 
 BOOL IsOsmBooleanTrue( NSString * value );

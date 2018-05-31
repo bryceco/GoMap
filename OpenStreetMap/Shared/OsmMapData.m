@@ -601,9 +601,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	EditAction delete = [self canDeleteNode:oldNode fromWay:way];
 	if ( !delete )
 		return nil;
+	NSDictionary * mergedTags = MergeTags(oldNode.tags, newNode.tags, NO );
+	if ( mergedTags == nil )
+		return nil;
 
 	return ^{
-		NSDictionary * mergedTags = MergeTags(oldNode.tags,newNode.tags);
 		[self setTags:mergedTags forObject:newNode];
 
 		for ( NSInteger index = 0; index < way.nodes.count; ++index ) {

@@ -75,20 +75,26 @@ NSString * OsmValueForBoolean( BOOL b )
 
 
 
+BOOL IsInterestingTag(NSString * key)
+{
+	if ( [key isEqualToString:@"attribution"] )
+		return NO;
+	if ( [key isEqualToString:@"created_by"] )
+		return NO;
+	if ( [key isEqualToString:@"source"] )
+		return NO;
+	if ( [key isEqualToString:@"odbl"] )
+		return NO;
+	if ( [key rangeOfString:@"tiger:"].location == 0 )
+		return NO;
+	return YES;
+}
+
 -(BOOL)hasInterestingTags
 {
 	for ( NSString * key in self.tags ) {
-		if ( [key isEqualToString:@"attribution"] )
-			continue;
-		if ( [key isEqualToString:@"created_by"] )
-			continue;
-		if ( [key isEqualToString:@"source"] )
-			continue;
-		if ( [key isEqualToString:@"odbl"] )
-			continue;
-		if ( [key rangeOfString:@"tiger:"].location == 0 )
-			continue;
-		return YES;
+		if ( IsInterestingTag(key) )
+			return YES;
 	}
 	return NO;
 }
@@ -164,29 +170,35 @@ static NSInteger _nextUnusedIdentifier = 0;
 }
 
 
-NSDictionary * MergeTags(NSDictionary * this, NSDictionary * tags)
+NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL allowConflicts )
 {
-	if ( this.count == 0 )
-		return [tags copy];
-	__block NSMutableDictionary * merged = [this mutableCopy];
-	__block BOOL changed = NO;
-	for ( NSString * k in tags ) {
-		NSString * t1 = merged[k];
-		NSString * t2 = tags[k];
-		if (t1 == nil) {
-			changed = true;
-			merged[k] = t2;
-		} else if ( ![t1 isEqualToString:t2] ) {
-			changed = true;
-			NSArray * a1 = [t1 componentsSeparatedByString:@";"];
-			NSArray * a2 = [t2 componentsSeparatedByString:@";"];
-			NSMutableSet * s = [NSMutableSet setWithArray:a1];
-			[s addObjectsFromArray:a2];
-			NSArray * m = [s allObjects];
-			merged[k] = [m componentsJoinedByString:@";"];
+	if ( ourTags.count == 0 )
+		return [otherTags copy];
+
+	__block NSMutableDictionary * merged = [ourTags mutableCopy];
+	[otherTags enumerateKeysAndObjectsUsingBlock:^(NSString * otherKey, NSString * otherValue, BOOL * stop) {
+		NSString * ourValue = merged[otherKey];
+		if (ourValue == nil) {
+			merged[otherKey] = otherValue;
+		} else if ( ![ourValue isEqualToString:otherValue] ) {
+			if ( !allowConflicts ) {
+				if ( IsInterestingTag(otherKey) ) {
+					*stop = YES;
+					merged = nil;
+				}
+			} else {
+				NSArray * a1 = [ourValue componentsSeparatedByString:@";"];
+				NSArray * a2 = [otherValue componentsSeparatedByString:@";"];
+				NSMutableSet * s = [NSMutableSet setWithArray:a1];
+				[s addObjectsFromArray:a2];
+				NSArray * m = [s allObjects];
+				merged[otherKey] = [m componentsJoinedByString:@";"];
+			}
 		}
-	}
-	return changed ? [NSDictionary dictionaryWithDictionary:merged] : [this copy];
+	}];
+	if ( merged == nil )
+		return nil;	// conflict
+	return [NSDictionary dictionaryWithDictionary:merged];
 }
 
 #pragma mark Construction

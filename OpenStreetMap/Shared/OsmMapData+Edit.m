@@ -27,7 +27,7 @@
 @implementation OsmMapData (Edit)
 
 
-#pragma mark straighten
+#pragma mark straightenWay
 
 static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 {
@@ -89,7 +89,7 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 	};
 }
 
-#pragma mark reverse
+#pragma mark reverseWay
 
 NSString * reverseKey( NSString * key )
 {
@@ -192,7 +192,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 	};
 }
 
-#pragma mark delete node in way
+#pragma mark deleteNodeFromWay
 
 -(BOOL)canDisconnectOrRemoveNode:(OsmNode *)node inWay:(OsmWay *)way
 {
@@ -273,7 +273,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 	};
 }
 
-#pragma mark disconnect
+#pragma mark disconnectWayAtNode
 
 // disconnect all other ways from the selected way joined to it at node
 - (EditActionReturnNode)canDisconnectWay:(OsmWay *)way atNode:(OsmNode *)node
@@ -302,7 +302,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 	};
 }
 
-#pragma mark split
+#pragma mark splitWayAtNode
 
 // if the way is closed, we need to search for a partner node
 // to split the way at.
@@ -480,7 +480,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				// 2. But must be inserted as a pair
 
 				if ( relation == wayIsOuter ) {
-					NSDictionary * merged = MergeTags(relation.tags, wayA.tags);
+					NSDictionary * merged = MergeTags(relation.tags, wayA.tags, YES);
 					[self setTags:merged forObject:relation];
 					[self setTags:nil forObject:wayA];
 					[self setTags:nil forObject:wayB];
@@ -595,53 +595,55 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	return restriction;
 }
 
-#pragma mark Join
+#pragma mark joinWay
 
 -(EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode
 {
-	NSArray * ways = [self waysContainingNode:selectedNode];
-	if ( ways.count != 2 )
-		return nil;
-	OsmWay * otherWay = nil;
-	if ( ways[0] == selectedWay ) {
-		otherWay = ways[1];
-	} else if ( ways[1] == selectedWay ) {
-		otherWay = ways[0];
-	} else {
-		return nil;
-	}
+	if ( selectedWay.nodes[0] != selectedNode && selectedWay.nodes.lastObject != selectedNode )
+		return nil;	// must be endpoint node
 
-	// don't allow joining to a way that is part of a relation, unless both are members of the same relation
-	if ( selectedWay.parentRelations.count == 0 && otherWay.parentRelations.count == 0 ) {
-		// no problems
-	} else if ( selectedWay.parentRelations.count == 1 && otherWay.parentRelations.count == 1 ) {
-		// both belong to a single relation
-		if ( selectedWay.parentRelations.lastObject != otherWay.parentRelations.lastObject ) {
-			return nil;
+	NSArray * ways = [self waysContainingNode:selectedNode];
+	OsmWay * otherWay = nil;
+	for ( OsmWay * way in ways ) {
+		if ( way == selectedWay )
+			continue;
+		if ( way.nodes[0] == selectedNode || way.nodes.lastObject == selectedNode ) {
+			if ( otherWay ) {
+				// ambigious connection
+				return nil;
+			}
+			otherWay = way;
 		}
-		// .. and it's the same relation
-		OsmRelation * relation = selectedWay.parentRelations.lastObject;
+	}
+	if ( otherWay == nil )
+		return nil;
+
+	NSMutableSet * relations = [NSMutableSet setWithArray:selectedWay.parentRelations];
+	[relations intersectSet:[NSSet setWithArray:otherWay.parentRelations]];
+	for ( OsmRelation * relation in relations ) {
+		// both belong to relation
 		if ( relation.isRestriction ) {
-			// turn restriction is only okay if they are both via ways
+			// joining is only okay if both belong to via
 			NSArray * viaList = [relation membersByRole:@"via"];
-			int foundCount = 0;
+			int foundSet = 0;
 			for ( OsmMember * member in viaList ) {
 				if ( member.ref == selectedWay )
-					++foundCount;
+					foundSet |= 1;
 				if ( member.ref == otherWay )
-					++foundCount;
+					foundSet |= 2;
 			}
-			if ( foundCount != 2 )
+			if ( foundSet != 3 )
 				return nil;
 		}
 		// route or polygon, so should be okay
-	} else {
-		// there are relations involved
-		return nil;
 	}
 
-	if ( ![selectedWay connectsToWay:otherWay] )
+	//
+	NSDictionary * newTags = MergeTags(selectedWay.tags, otherWay.tags, NO);
+	if ( newTags == nil ) {
+		// tag conflict
 		return nil;
+	}
 
 	return ^{
 
@@ -685,7 +687,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		}
 
 		// join tags
-		NSDictionary * newTags = MergeTags(selectedWay.tags, otherWay.tags);
 		[self setTags:newTags forObject:selectedWay];
 
 		[self deleteWayUnsafe:otherWay];

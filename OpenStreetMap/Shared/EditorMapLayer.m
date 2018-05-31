@@ -2859,7 +2859,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
 	if ( copyPasteTags.count == 0 )
 		return NO;
-	NSDictionary * newTags = MergeTags(object.tags, copyPasteTags);
+	NSDictionary * newTags = MergeTags(object.tags, copyPasteTags, YES);
 	[self.mapData setTags:newTags forObject:object];
 	return YES;
 }
