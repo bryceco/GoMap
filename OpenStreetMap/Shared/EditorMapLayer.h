@@ -108,8 +108,8 @@ extern const double MinIconSizeInPixels;
 -(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;
 
 // these are similar to OsmMapData methods but also update selections and refresh the layout
--(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index;
--(EditAction)canDeleteSelectedObject;
+-(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index error:(NSString **)error;
+-(EditAction)canDeleteSelectedObject:(NSString **)error;
 
 
 - (BOOL)copyTags:(OsmBaseObject *)object;

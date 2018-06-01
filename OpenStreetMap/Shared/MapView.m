@@ -1880,7 +1880,8 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 	UIAlertController *	alertDelete = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) preferredStyle:UIAlertControllerStyleAlert];
 	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
 	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-		EditAction canDelete = [_editorLayer canDeleteSelectedObject];
+		NSString * error = nil;
+		EditAction canDelete = [_editorLayer canDeleteSelectedObject:&error];
 		if ( canDelete ) {
 			canDelete();
 			CGPoint pos = _pushpinView.arrowPoint;
@@ -1890,7 +1891,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 				[self placePushpinAtPoint:pos object:_editorLayer.selectedPrimary];
 			}
 		} else {
-			[self showAlert:NSLocalizedString(@"Delete failed",nil) message:NSLocalizedString(@"The object could not be deleted because doing so would damage a relation it belongs to.",nil)];
+			[self showAlert:NSLocalizedString(@"Delete failed",nil) message:error];
 		}
 	}]];
 	[self.viewController presentViewController:alertDelete animated:YES completion:nil];
@@ -2077,51 +2078,40 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 				if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
 					error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
 				} else {
-					EditAction rect = [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay];
+					EditAction rect = [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay error:&error];
 					if ( rect )
 						rect();
-					else
-						error = NSLocalizedString(@"The way is not sufficiently rectangular",nil);
 				}
 			}
 			break;
 		case ACTION_REVERSE:
 			{
-				EditAction reverse = [_editorLayer.mapData canReverseWay:_editorLayer.selectedWay];
+				EditAction reverse = [_editorLayer.mapData canReverseWay:_editorLayer.selectedWay error:&error];
 				if ( reverse )
 					reverse();
-				else
-					error = NSLocalizedString(@"Cannot reverse way",nil);
 			}
 			break;
 		case ACTION_JOIN:
 			{
-				EditAction join = [_editorLayer.mapData canJoinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
-				if ( join ) {
+				EditAction join = [_editorLayer.mapData canJoinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
+				if ( join )
 					join();
-				} else {
-					error = NSLocalizedString(@"Cannot join selection",nil);
-				}
 			}
 			break;
 		case ACTION_DISCONNECT:
 			{
-				EditActionReturnNode disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
+				EditActionReturnNode disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
 				if ( disconnect ) {
 					_editorLayer.selectedNode = disconnect();
 					[self placePushpinForSelection];
-				} else {
-					error = NSLocalizedString(@"Cannot disconnect way: This would damage a relation.",nil);
 				}
 			}
 			break;
 		case ACTION_SPLIT:
 			{
-				EditActionReturnWay split = [_editorLayer.mapData canSplitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode];
+				EditActionReturnWay split = [_editorLayer.mapData canSplitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
 				if ( split )
 					split();
-				else
-					error = NSLocalizedString(@"Cannot split way",nil);
 			}
 			break;
 		case ACTION_STRAIGHTEN:
@@ -2129,21 +2119,17 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 				if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
 					error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
 				} else {
-					EditAction straighten = [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay];
+					EditAction straighten = [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay error:&error];
 					if ( straighten )
 						straighten();
-					else
-						error = NSLocalizedString(@"The way is not sufficiently straight",nil);
 				}
 			}
 			break;
 		case ACTION_CIRCULARIZE:
 			{
-				EditAction circle = [_editorLayer.mapData canCircularizeWay:_editorLayer.selectedWay];
+				EditAction circle = [_editorLayer.mapData canCircularizeWay:_editorLayer.selectedWay error:&error];
 				if ( circle )
 					circle();
-				else
-					error = NSLocalizedString(@"The way cannot be made circular",nil);
 			}
 			break;
 		case ACTION_HEIGHT:
@@ -2468,11 +2454,13 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 							OsmBaseObject * hit = [strongSelf dragConnectionForNode:dragNode segment:&segment];
 							if ( hit.isNode ) {
 								// replace dragged node with hit node
-								EditAction add = [strongSelf.editorLayer.mapData canReplaceNodeInWay:dragWay oldNode:dragNode withNode:hit.isNode];
-								if ( add == nil ) {
+								NSString * error = nil;
+								EditActionReturnNode merge = [strongSelf.editorLayer.mapData canMergeNode:dragNode intoNode:hit.isNode error:&error];
+								if ( merge == nil ) {
+									[strongSelf showAlert:error message:nil];
 									return;
 								}
-								add();
+								hit = merge();
 								if ( dragWay.isArea ) {
 									strongSelf.editorLayer.selectedNode = nil;
 									CGPoint pt = [strongSelf screenPointForLatitude:hit.isNode.lat longitude:hit.isNode.lon birdsEye:YES];
@@ -2484,12 +2472,13 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 							} else if ( hit.isWay ) {
 								// add new node to hit way
 								OSMPoint pt = [hit pointOnObjectForPoint:dragNode.location];
-								[strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode inWay:strongSelf.editorLayer.selectedWay];
-								EditActionWithNode add = [strongSelf.editorLayer canAddNodeToWay:hit.isWay atIndex:segment+1];
+								[strongSelf.editorLayer.mapData setLongitude:pt.x latitude:pt.y forNode:dragNode];
+								NSString * error = nil;
+								EditActionWithNode add = [strongSelf.editorLayer canAddNodeToWay:hit.isWay atIndex:segment+1 error:&error];
 								if ( add ) {
 									add(dragNode);
 								} else {
-									[strongSelf showAlert:@"Error" message:@"Unable to extend the way because it would cause a relation to become invalid"];
+									[strongSelf showAlert:@"Error connecting to way" message:error];
 								}
 							}
 							return;
@@ -2667,12 +2656,15 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			[self showAlert:NSLocalizedString(@"Select location",nil) message:NSLocalizedString(@"Select the location in the way in which to create the new node",nil)];
 			return;
 		}
-		EditActionWithNode add = [_editorLayer canAddNodeToWay:way atIndex:segment+1];
+		NSString * error = nil;
+		EditActionWithNode add = [_editorLayer canAddNodeToWay:way atIndex:segment+1 error:&error];
 		if ( add ) {
 			OsmNode * newNode = [_editorLayer createNodeAtPoint:arrowPoint];
 			add(newNode);
 			_editorLayer.selectedNode = newNode;
 			[self placePushpinForSelection];
+		} else {
+			[self showAlert:@"Error" message:error];
 		}
 
 	} else {
@@ -2770,21 +2762,25 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			double d = hypot( s.x - newPoint.x, s.y - newPoint.y );
 			if ( d < 3.0 ) {
 				// join first to last
-				EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex];
+				NSString * error = nil;
+				EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
 				if ( action ) {
 					action(start);
 					_editorLayer.selectedWay = way;
 					_editorLayer.selectedNode = nil;
 					[self placePushpinAtPoint:s object:way];
+				} else {
+					// don't bother showing an error message
 				}
 				return;
 			}
 		}
 
 
-		EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex];
+		NSString * error = nil;
+		EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
 		if ( !action ) {
-			[self showAlert:@"Can't extend way" message:@"Extending the way would damage a relation the way belongs to"];
+			[self showAlert:@"Can't extend way" message:error];
 			return;
 		}
 		OsmNode * node2 = [_editorLayer createNodeAtPoint:newPoint];

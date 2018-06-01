@@ -2875,7 +2875,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	pt.x += delta.x;
 	pt.y -= delta.y;
 	CLLocationCoordinate2D loc = [_mapView longitudeLatitudeForScreenPoint:pt birdsEye:YES];
-	[_mapData setLongitude:loc.longitude latitude:loc.latitude forNode:node inWay:_selectedWay];
+	[_mapData setLongitude:loc.longitude latitude:loc.latitude forNode:node];
 
 	[self setNeedsLayout];
 }
@@ -2898,7 +2898,8 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 -(OsmWay *)createWayWithNode:(OsmNode *)node
 {
 	OsmWay * way = [_mapData createWay];
-	EditActionWithNode add = [_mapData canAddNodeToWay:way atIndex:0];
+	NSString * dummy;
+	EditActionWithNode add = [_mapData canAddNodeToWay:way atIndex:0 error:&dummy];
 	add( node );
 	[self setNeedsLayout];
 	return way;
@@ -2906,9 +2907,9 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 #pragma mark Editing actions that modify data and can fail
 
--(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index
+-(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index error:(NSString **)error
 {
-	EditActionWithNode action = [_mapData canAddNodeToWay:way atIndex:index];
+	EditActionWithNode action = [_mapData canAddNodeToWay:way atIndex:index error:error];
 	if ( action == nil )
 		return nil;
 	return ^(OsmNode * node){
@@ -2917,16 +2918,16 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	};
 }
 
--(EditAction)canDeleteSelectedObject
+-(EditAction)canDeleteSelectedObject:(NSString **)error
 {
 	if ( _selectedNode ) {
 
 		// delete node from selected way
 		EditAction action;
 		if ( _selectedWay ) {
-			action = [_mapData canDeleteNode:_selectedNode fromWay:_selectedWay];
+			action = [_mapData canDeleteNode:_selectedNode fromWay:_selectedWay error:error];
 		} else {
-			action = [_mapData canDeleteNode:_selectedNode];
+			action = [_mapData canDeleteNode:_selectedNode error:error];
 		}
 		if ( action ) {
 			return ^{
@@ -2940,7 +2941,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	} else if ( _selectedWay ) {
 
 		// delete way
-		EditAction action = [_mapData canDeleteWay:_selectedWay];
+		EditAction action = [_mapData canDeleteWay:_selectedWay error:error];
 		if ( action ) {
 			return ^{
 				action();
@@ -2951,7 +2952,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		}
 
 	} else if ( _selectedRelation ) {
-		EditAction action = [_mapData canDeleteRelation:_selectedRelation];
+		EditAction action = [_mapData canDeleteRelation:_selectedRelation error:error];
 		if ( action ) {
 			return ^{
 				action();

@@ -173,7 +173,7 @@ static NSInteger _nextUnusedIdentifier = 0;
 NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL allowConflicts )
 {
 	if ( ourTags.count == 0 )
-		return [otherTags copy];
+		return otherTags ? [otherTags copy] : @{};
 
 	__block NSMutableDictionary * merged = [ourTags mutableCopy];
 	[otherTags enumerateKeysAndObjectsUsingBlock:^(NSString * otherKey, NSString * otherValue, BOOL * stop) {

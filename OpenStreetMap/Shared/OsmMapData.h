@@ -39,6 +39,7 @@ typedef OsmWay    * (^EditActionReturnWay)(void);
 typedef OsmNode   * (^EditActionReturnNode)(void);
 
 
+
 @interface OsmUserStatistics : NSObject
 @property (strong,nonatomic)	NSString	*	user;
 @property (strong,nonatomic)	NSDate		*	lastEdit;
@@ -134,14 +135,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(OsmRelation *)createRelation;
 
 
--(EditAction)canDeleteNode:(OsmNode *)node;
--(EditAction)canDeleteWay:(OsmWay *)way;
--(EditAction)canDeleteRelation:(OsmRelation *)relation;
-
--(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index;
--(EditAction)canReplaceNodeInWay:(OsmWay *)way oldNode:(OsmNode *)oldNode withNode:(OsmNode *)newNode;
-
--(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node inWay:(OsmWay *)way;
+-(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node;
 -(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object;
 -(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
 

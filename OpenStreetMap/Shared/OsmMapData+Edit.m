@@ -7,6 +7,7 @@
 //
 
 #import "DLog.h"
+#import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
 #import "UndoManager.h"
@@ -18,7 +19,9 @@
 // private methods in main file
 -(void)addNodeUnsafe:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
 -(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index;
+-(void)deleteNodeUnsafe:(OsmNode *)node;
 -(void)deleteWayUnsafe:(OsmWay *)way;
+-(void)deleteRelationUnsafe:(OsmRelation *)relation;
 -(void)addMemberUnsafe:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index;
 -(void)deleteMemberInRelationUnsafe:(OsmRelation *)relation index:(NSInteger)index;
 @end
@@ -26,6 +29,166 @@
 
 @implementation OsmMapData (Edit)
 
+#pragma mark canDeleteNode
+
+// Only for solitary nodes. Otherwise use delete node in way.
+-(EditAction)canDeleteNode:(OsmNode *)node error:(NSString **)error
+{
+	if ( node.wayCount > 0 || node.parentRelations.count > 0 ) {
+		*error = NSLocalizedString(@"Can't delete node that is part of a relation", nil);
+		return nil;
+	}
+	return ^{
+		[self deleteNodeUnsafe:node];
+	};
+}
+
+#pragma mark canDeleteWay
+
+-(EditAction)canDeleteWay:(OsmWay *)way error:(NSString **)error
+{
+	if ( way.parentRelations.count > 0 ) {
+		BOOL ok = NO;
+		if ( way.parentRelations.count == 1 ) {
+			OsmRelation * relation = way.parentRelations.lastObject;
+			if ( relation.isMultipolygon ) {
+				for ( OsmMember * member in relation.members ) {
+					if ( [member.role isEqualToString:@"inner"] && member.ref == way ) {
+						// okay!
+						ok = YES;
+						break;
+					}
+				}
+			} else if ( relation.isRestriction ) {
+				// allow deleting if we're both from and to (u-turn)
+				OsmMember * from = [relation memberByRole:@"from"];
+				OsmMember * to   = [relation memberByRole:@"to"];
+				if ( from.ref == way && to.ref == way ) {
+					return ^{
+						[self deleteRelationUnsafe:relation];
+						[self deleteWayUnsafe:way];
+					};
+				}
+			}
+		}
+		if ( !ok ) {
+			*error = NSLocalizedString(@"Can't delete way that is part of a Route or similar relation", nil);
+			return nil;
+		}
+	}
+
+	return ^{
+		[self deleteWayUnsafe:way];
+	};
+}
+
+#pragma mark canDeleteRelation
+
+-(EditAction)canDeleteRelation:(OsmRelation *)relation error:(NSString **)error
+{
+	if ( !relation.isMultipolygon ) {
+		*error = NSLocalizedString(@"Can't delete relation that is not a multipolygon", nil);
+		return nil;
+	}
+
+	return ^{
+		[self deleteRelationUnsafe:relation];
+	};
+}
+
+#pragma mark canAddNodeToWay
+
+-(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index error:(NSString **)error
+{
+	if ( way.nodes.count >= 2 && (index == 0 || index == way.nodes.count) ) {
+		// we don't want to extend a way that is a portion of a route relation, polygon, etc.
+		for ( OsmRelation * relation in way.parentRelations ) {
+			if ( relation.isRestriction ) {
+				// only permissible if extending from/to on the end away from the via node/ways
+				NSArray * viaList = [relation membersByRole:@"via"];
+				OsmNode * prevNode = index ? way.nodes.lastObject : way.nodes[0];
+				// disallow extending any via way, or any way touching via node
+				for ( OsmMember * viaMember in viaList ) {
+					OsmBaseObject * via = viaMember.ref;
+					if ( [via isKindOfClass:[OsmBaseObject class]] ) {
+						if ( via.isWay && (via == way || [via.isWay.nodes containsObject:prevNode]) ) {
+							*error = NSLocalizedString(@"Extending a 'via' in a Turn Restriction will break the relation", nil);
+							return nil;
+						}
+					} else {
+						*error = NSLocalizedString(@"The way belongs to a relation that is not fully downloaded", nil);
+						return nil;
+					}
+				}
+			} else {
+				*error = NSLocalizedString(@"Extending a way which belongs to a Route or similar relation may damage the relation", nil);
+				return nil;
+			}
+		}
+	}
+
+	return ^(OsmNode * node) {
+		[self addNodeUnsafe:node toWay:way atIndex:index];
+	};
+}
+
+#pragma mark canReplaceNodeInWay
+
+// used when dragging a node into another node
+-(EditActionReturnNode)canMergeNode:(OsmNode *)node1 intoNode:(OsmNode *)node2 error:(NSString **)error
+{
+	NSDictionary * mergedTags = MergeTags(node1.tags, node2.tags, NO );
+	if ( mergedTags == nil ) {
+		*error = NSLocalizedString(@"The merged nodes contain conflicting tags", nil);
+		return nil;
+	}
+
+	OsmNode * survivor;
+	if ( node1.ident.longLongValue < 0 ) {
+		survivor = node2;
+	} else if ( node2.ident.longLongValue < 0 ) {
+		survivor = node1;
+	} else if ( node1.wayCount > node2.wayCount ) {
+		survivor = node1;
+	} else {
+		survivor = node2;
+	}
+	OsmNode * deadNode = (survivor == node1) ? node2 : node1;
+
+	if ( survivor == node1 ) {
+		// update survivor to have location of other node
+		[self setLongitude:node2.lon latitude:node2.lat forNode:survivor];
+	}
+
+	return ^{
+		[self setTags:mergedTags forObject:survivor];
+
+		// need to replace the node in all objects everywhere
+		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL * _Nonnull stop) {
+			if ( [way.nodes containsObject:deadNode] ) {
+				for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
+					if ( way.nodes[index] == deadNode ) {
+						[self addNodeUnsafe:survivor toWay:way atIndex:index];
+						[self deleteNodeInWayUnsafe:way index:index+1];
+					}
+				}
+			}
+		}];
+		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL * _Nonnull stop) {
+			for ( NSInteger index = 0; index < relation.members.count; ++index ) {
+				OsmMember * member = relation.members[index];
+				if ( member.ref == deadNode ) {
+					OsmMember * newMember = [[OsmMember alloc] initWithRef:survivor role:member.role];
+					[self addMemberUnsafe:newMember toRelation:relation atIndex:index+1];
+					[self deleteMemberInRelationUnsafe:relation index:index];
+				}
+			}
+		}];
+
+		[self deleteNodeUnsafe:deadNode];
+		return survivor;
+	};
+}
 
 #pragma mark straightenWay
 
@@ -34,7 +197,7 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 	return ((node.x - start.x) * (end.x - start.x) + (node.y - start.y) * (end.y - start.y)) / MagSquared(Sub(end,start));
 }
 
-- (EditAction)canStraightenWay:(OsmWay *)way
+- (EditAction)canStraightenWay:(OsmWay *)way error:(NSString **)error
 {
 	NSInteger count = way.nodes.count;
 
@@ -57,8 +220,10 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 		OSMPoint newPoint = Add( startPoint, Mult( Sub(endPoint, startPoint), u ) );
 
 		double dist = DistanceFromPointToPoint( newPoint, point );
-		if ( dist > threshold )
+		if ( dist > threshold ) {
+			*error = NSLocalizedString(@"The way is not sufficiently straight", nil);
 			return nil;
+		}
 
 		// if node is interesting then move it, otherwise delete it.
 		if ( node.wayCount > 1 || node.parentRelations.count > 0 || node.hasInterestingTags ) {
@@ -76,14 +241,17 @@ static double positionAlongWay( OSMPoint node, OSMPoint start, OSMPoint end )
 			OSMPointBoxed * point = points[i];
 			if ( [point isKindOfClass:[NSNull class]] ) {
 				OsmNode * node = way.nodes[i];
-				EditAction canDelete = [self canDeleteNode:node fromWay:way];
+				NSString * dummy = nil;
+				EditAction canDelete = [self canDeleteNode:node fromWay:way error:&dummy];
 				if ( canDelete ) {
 					canDelete();
+				} else {
+					// no big deal
 				}
 			} else {
 				OsmNode * node = way.nodes[i];
 				OSMPoint pt = point.point;
-				[self setLongitude:pt.x latitude:latp2lat(pt.y) forNode:node inWay:way];
+				[self setLongitude:pt.x latitude:latp2lat(pt.y) forNode:node];
 			}
 		}
 	};
@@ -143,7 +311,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 }
 
 
-- (EditAction)canReverseWay:(OsmWay *)way
+- (EditAction)canReverseWay:(OsmWay *)way error:(NSString **)error
 {
 	NSDictionary * roleReversals = @{
 		@"forward" : @"backward",
@@ -194,7 +362,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 
 #pragma mark deleteNodeFromWay
 
--(BOOL)canDisconnectOrRemoveNode:(OsmNode *)node inWay:(OsmWay *)way
+-(BOOL)canDisconnectOrDeleteNode:(OsmNode *)node inWay:(OsmWay *)way isDelete:(BOOL)isDelete error:(NSString **)error
 {
 	// only care if node is an endpoiont
 	if ( node == way.nodes[0] || node == way.nodes.lastObject ) {
@@ -202,16 +370,25 @@ NSString * reverseValue( NSString * key, NSString * value)
 		// we don't want to truncate a way that is a portion of a route relation, polygon, etc.
 		for ( OsmRelation * relation in way.parentRelations ) {
 			if ( relation.isRestriction ) {
+				for ( OsmMember * member in relation.members ) {
+					if ( ! [member.ref isKindOfClass:[OsmBaseObject class]] ) {
+						*error = NSLocalizedString(@"The way belongs to a relation this not fully downloaded", nil);
+						return NO;
+					}
+				}
+
 				// only permissible if deleting interior node of via, or non-via node in from/to
 				NSArray * viaList = [relation membersByRole:@"via"];
 				OsmMember * from = [relation memberByRole:@"from"];
 				OsmMember * to   = [relation memberByRole:@"to"];
 				if ( from.ref == way || to.ref == way ) {
-					if ( way.nodes.count <= 2 ) {
+					if ( isDelete && way.nodes.count <= 2 ) {
+						*error = NSLocalizedString(@"Can't remove Turn Restriction to/from way", nil);
 						return NO;	// deleting node will cause degenerate way
 					}
 					for ( OsmMember * viaMember in viaList ) {
 						if ( viaMember.ref == node ) {
+							*error = NSLocalizedString(@"Can't remove Turn Restriction 'via' node", nil);
 							return NO;
 						} else {
 							OsmBaseObject * viaObject = viaMember.ref;
@@ -219,10 +396,9 @@ NSString * reverseValue( NSString * key, NSString * value)
 								OsmNode * common = [viaObject.isWay connectsToWay:way];
 								if ( common.isNode == node ) {
 									// deleting the node that connects from/to and via
+									*error = NSLocalizedString(@"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'", nil);
 									return NO;
 								}
-							} else {
-								return NO;	// if we don't know then assume not
 							}
 						}
 					}
@@ -232,6 +408,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 				for ( OsmMember * viaMember in viaList ) {
 					if ( viaMember.ref == way ) {
 						// can't delete an endpoint of a via way
+						*error = NSLocalizedString(@"Can't remove node in Turn Restriction 'via' way", nil);
 						return NO;
 					}
 				}
@@ -239,6 +416,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 				// okay
 			} else {
 				// don't allow deleting an endpoint node of routes, etc.
+				*error = NSLocalizedString(@"Can't remove component of a Route or similar relation", nil);
 				return NO;
 			}
 		}
@@ -247,9 +425,9 @@ NSString * reverseValue( NSString * key, NSString * value)
 }
 
 
--(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way
+-(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way error:(NSString **)error
 {
-	if ( ![self canDisconnectOrRemoveNode:node inWay:way] )
+	if ( ![self canDisconnectOrDeleteNode:node inWay:way isDelete:YES error:error] )
 		return nil;
 
 	return ^{
@@ -261,7 +439,8 @@ NSString * reverseValue( NSString * key, NSString * value)
 			}
 		}
 		if ( way.nodes.count < 2 ) {
-			EditAction delete = [self canDeleteWay:way];
+			NSString * dummy = nil;
+			EditAction delete = [self canDeleteWay:way error:&dummy];
 			if ( delete )
 				delete();	// this will also delete any relations the way belongs to
 			else
@@ -276,14 +455,18 @@ NSString * reverseValue( NSString * key, NSString * value)
 #pragma mark disconnectWayAtNode
 
 // disconnect all other ways from the selected way joined to it at node
-- (EditActionReturnNode)canDisconnectWay:(OsmWay *)way atNode:(OsmNode *)node
+- (EditActionReturnNode)canDisconnectWay:(OsmWay *)way atNode:(OsmNode *)node error:(NSString **)error
 {
-	if ( ![way.nodes containsObject:node] )
+	if ( ![way.nodes containsObject:node] ) {
+		*error = NSLocalizedString(@"Node is not an element of way", nil);
 		return nil;
-	if ( node.wayCount < 2 )
+	}
+	if ( node.wayCount < 2 ) {
+		*error = NSLocalizedString(@"The way must have at least 2 nodes", nil);
 		return nil;
+	}
 
-	if ( ![self canDisconnectOrRemoveNode:node inWay:way] )
+	if ( ![self canDisconnectOrDeleteNode:node inWay:way isDelete:NO error:error] )
 		return nil;
 
 	return ^{
@@ -358,7 +541,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 }
 
 
--(EditActionReturnWay)canSplitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node
+-(EditActionReturnWay)canSplitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node error:(NSString **)error
 {
 	return ^{
 		[self registerUndoCommentString:NSLocalizedString(@"Split",nil)];
@@ -549,7 +732,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	// get all necessary splits
 	NSMutableArray * newWays = [NSMutableArray new];
 	for ( OsmWay * way in splits ) {
-		EditActionReturnWay split = [self canSplitWay:way atNode:viaNode];
+		NSString * error;
+		EditActionReturnWay split = [self canSplitWay:way atNode:viaNode error:&error];
 		if ( split == nil )
 			return nil;
 		[newWays addObject:split];
@@ -597,10 +781,12 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 #pragma mark joinWay
 
--(EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode
+-(EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode error:(NSString **)error
 {
-	if ( selectedWay.nodes[0] != selectedNode && selectedWay.nodes.lastObject != selectedNode )
+	if ( selectedWay.nodes[0] != selectedNode && selectedWay.nodes.lastObject != selectedNode ) {
+		*error = NSLocalizedString(@"Node must first or last node of the way",nil);
 		return nil;	// must be endpoint node
+	}
 
 	NSArray * ways = [self waysContainingNode:selectedNode];
 	OsmWay * otherWay = nil;
@@ -610,13 +796,16 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		if ( way.nodes[0] == selectedNode || way.nodes.lastObject == selectedNode ) {
 			if ( otherWay ) {
 				// ambigious connection
+				*error = NSLocalizedString(@"The target way is ambiguous",nil);
 				return nil;
 			}
 			otherWay = way;
 		}
 	}
-	if ( otherWay == nil )
+	if ( otherWay == nil ) {
+		*error = NSLocalizedString(@"Missing way to connect to",nil);
 		return nil;
+	}
 
 	NSMutableSet * relations = [NSMutableSet setWithArray:selectedWay.parentRelations];
 	[relations intersectSet:[NSSet setWithArray:otherWay.parentRelations]];
@@ -632,16 +821,26 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 				if ( member.ref == otherWay )
 					foundSet |= 2;
 			}
-			if ( foundSet != 3 )
+			if ( foundSet != 3 ) {
+				*error = NSLocalizedString(@"Joining would invalidate a Turn Restriction the way belongs to",nil);
 				return nil;
+			}
 		}
 		// route or polygon, so should be okay
 	}
 
-	//
+	// check if extending the way would break something
+	NSInteger loc = [selectedWay.nodes indexOfObject:selectedNode];
+	if ( ![self canAddNodeToWay:selectedWay atIndex:(loc?:loc+1) error:error] )
+		return nil;
+	loc = [otherWay.nodes indexOfObject:selectedNode];
+	if ( ![self canAddNodeToWay:otherWay atIndex:(loc?:loc+1) error:error] )
+		return nil;
+
 	NSDictionary * newTags = MergeTags(selectedWay.tags, otherWay.tags, NO);
 	if ( newTags == nil ) {
 		// tag conflict
+		*error = NSLocalizedString(@"The ways contain incompatible tags",nil);
 		return nil;
 	}
 
@@ -649,6 +848,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 		// join nodes, preserving selected way
 		NSInteger index = 0;
+		NSString * dummy = nil;
 		if ( selectedWay.nodes.lastObject == otherWay.nodes[0] ) {
 			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
 			for ( OsmNode * n in otherWay.nodes ) {
@@ -658,7 +858,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			}
 		} else if ( selectedWay.nodes.lastObject == otherWay.nodes.lastObject ) {
 			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
-			EditAction reverse = [self canReverseWay:otherWay];	// reverse the tags on other way
+			EditAction reverse = [self canReverseWay:otherWay error:&dummy];	// reverse the tags on other way
 			reverse();
 			for ( OsmNode * n in otherWay.nodes ) {
 				if ( index++ == 0 )
@@ -667,7 +867,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			}
 		} else if ( selectedWay.nodes[0] == otherWay.nodes[0] ) {
 			[self registerUndoCommentString:NSLocalizedString(@"Join",nil)];
-			EditAction reverse = [self canReverseWay:otherWay];	// reverse the tags on other way
+			EditAction reverse = [self canReverseWay:otherWay error:&dummy];	// reverse the tags on other way
 			reverse();
 			for ( OsmNode * n in [[otherWay.nodes reverseObjectEnumerator] allObjects] ) {
 				if ( index++ == 0 )
@@ -715,14 +915,12 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 	[mapData addNodeUnsafe:newNode toWay:way atIndex:index];
 }
 
--(EditAction)canCircularizeWay:(OsmWay *)way
+-(EditAction)canCircularizeWay:(OsmWay *)way error:(NSString **)error
 {
-	if ( !way.isWay )
+	if ( !way.isWay || !way.isClosed || way.nodes.count < 4 ) {
+		*error = NSLocalizedString(@"Requires a closed way with at least 3 nodes",nil);
 		return nil;
-	if ( !way.isClosed )
-		return nil;
-	if ( way.nodes.count < 4 )
-		return nil;
+	}
 
 	return ^{
 		OSMPoint center = [way centerPointWithArea:NULL];
@@ -734,7 +932,7 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 			double c = hypot( n.lon - center.x, lat2latp(n.lat) - center.y );
 			double lat = latp2lat( center.y + (lat2latp(n.lat) - center.y) / c * radius );
 			double lon = center.x + (n.lon - center.x) / c * radius;
-			[self setLongitude:lon latitude:lat forNode:n inWay:way];
+			[self setLongitude:lon latitude:lat forNode:n];
 		}
 
 		// Insert extra nodes to make circle
@@ -900,7 +1098,7 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 
 	// nasty hack to deal with almost-straight segments (angle is closer to 180 than to 90/270).
 	if (count > 3) {
-		if (dotp < -0.707106781186547) {
+		if (dotp < -0.707106781186547) { // -sin(PI/4)
 			dotp += 1.0;
 		}
 	} else {
@@ -916,13 +1114,13 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 	return r;
 }
 
--(EditAction)canOrthogonalizeWay:(OsmWay *)way
+-(EditAction)canOrthogonalizeWay:(OsmWay *)way error:(NSString **)error
 {
 	// needs a closed way to work properly.
-	if ( !way.isWay || !way.isClosed || way.nodes.count < 3 ) {
+	if ( !way.isWay || !way.isClosed || way.nodes.count < 5 ) {
+		*error = NSLocalizedString(@"Requires a closed way with at least 4 nodes",nil);
 		return nil;
 	}
-
 
 #if 0
 	if ( squareness(points,count) == 0.0 ) {
@@ -968,42 +1166,43 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 
 			// apply new position
 			OsmNode * node = way.nodes[corner];
-			[self setLongitude:points[corner].x latitude:latp2lat(points[corner].y) forNode:node inWay:way];
+			[self setLongitude:points[corner].x latitude:latp2lat(points[corner].y) forNode:node];
 
 		} else {
 
-			OSMPoint best[count];
 			OSMPoint originalPoints[count];
 			memcpy( originalPoints, points, sizeof points);
-			double score = 1e9;
+			double bestScore = 1e9;
+			OSMPoint bestPoints[count];
 
 			for ( NSInteger step = 0; step < 1000; step++) {
 				OSMPoint motions[ count ];
 				for ( NSInteger i = 0; i < count; ++i ) {
 					motions[i] = calcMotion(points[i],i,points,count,NULL,NULL);
-					//				NSLog(@"motion[%ld] = %f,%f", i, motions[i].x, motions[i].y );
 				}
 				for ( NSInteger i = 0; i < count; i++) {
-					points[i] = Add( points[i], motions[i] );
-					//				NSLog(@"points[%ld] = %f,%f", i, points[i].x, points[i].y );
+					if ( !isnan(motions[i].x) ) {
+						points[i] = Add( points[i], motions[i] );
+					}
 				}
 				double newScore = squareness(points,count);
-				if (newScore < score) {
-					memcpy( best, points, sizeof points);
-					score = newScore;
+				if (newScore < bestScore) {
+					memcpy( bestPoints, points, sizeof points);
+					bestScore = newScore;
 				}
-				if (score < epsilon) {
+				if (bestScore < epsilon) {
+					NSLog(@"Straighten steps = %d",(int)step);
 					break;
 				}
 			}
 
-			memcpy(points,best,sizeof points);
+			memcpy(points,bestPoints,sizeof points);
 
 			for ( NSInteger i = 0; i < way.nodes.count; ++i ) {
 				NSInteger modi = i < count ? i : 0;
 				OsmNode * node = way.nodes[i];
 				if ( points[i].x != originalPoints[i].x || points[i].y != originalPoints[i].y ) {
-					[self setLongitude:points[modi].x latitude:latp2lat(points[modi].y) forNode:node inWay:way];
+					[self setLongitude:points[modi].x latitude:latp2lat(points[modi].y) forNode:node];
 				}
 			}
 
@@ -1021,9 +1220,12 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 
 				double dotp = normalizedDotProduct(i, points, count);
 				if (dotp < -1 + epsilon) {
-					EditAction canDeleteNode = [self canDeleteNode:node fromWay:way];
+					NSString * dummy = nil;
+					EditAction canDeleteNode = [self canDeleteNode:node fromWay:way error:&dummy];
 					if ( canDeleteNode ) {
 						canDeleteNode();
+					} else {
+						// oh well...
 					}
 				}
 			}
