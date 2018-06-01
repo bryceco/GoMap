@@ -15,9 +15,10 @@
 {
 	// Bug finally fixed in iOS 11
 	if ([UIDevice.currentDevice.systemVersion compare:@"11" options:NSNumericSearch] != NSOrderedAscending) {
-		return [super systemLayoutSizeFittingSize:targetSize
+		CGSize size = [super systemLayoutSizeFittingSize:targetSize
 					withHorizontalFittingPriority:horizontalFittingPriority
 						  verticalFittingPriority:verticalFittingPriority];
+		return size;
 	}
 
 	[self layoutIfNeeded];

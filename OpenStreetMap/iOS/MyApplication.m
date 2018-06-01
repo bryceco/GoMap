@@ -9,7 +9,7 @@
 #import "MyApplication.h"
 
 #if DEBUG
-#define ENABLE_TOUCH_CIRCLES 0
+#define ENABLE_TOUCH_CIRCLES 1
 #else
 #define ENABLE_TOUCH_CIRCLES 0
 #endif
@@ -23,10 +23,22 @@ static const CGFloat TOUCH_RADIUS = 22;
 {
 	self = [super init];
 	if ( self ) {
-		_touches = [NSMutableDictionary new];
+		_touches 	= [NSMutableDictionary new];
+		_touchImage	= [UIImage imageNamed:@"Finger"];
 	}
 	return self;
 }
+
+-(CGRect)rectForTouchPosition:(CGPoint)pos
+{
+	if ( _touchImage ) {
+		CGRect rc = { pos, _touchImage.size };
+		return CGRectOffset(rc, -_touchImage.size.width/2, -TOUCH_RADIUS);
+	} else {
+		return CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS);
+	}
+}
+
 
 -(void)sendEvent:(UIEvent *)event
 {
@@ -56,17 +68,23 @@ static const CGFloat TOUCH_RADIUS = 22;
 		}
 
 		if ( touch.phase == UITouchPhaseBegan ) {
-			UIWindow * win = [[UIWindow alloc] initWithFrame:CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS)];
+			UIWindow * win = [[UIWindow alloc] initWithFrame:[self rectForTouchPosition:pos]];
+			NSLog(@"Touch begin: %@", NSStringFromCGRect(win.frame));
 			_touches[@((long)touch)] = @{ @"win" : win, @"start" : @(touch.timestamp) };
 			win.windowLevel = UIWindowLevelStatusBar;
 			win.hidden = NO;
-			win.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:1.0 alpha:1.0];
-			win.layer.cornerRadius = TOUCH_RADIUS;
-			win.layer.opacity = 0.85;
+			if ( _touchImage ) {
+				win.layer.contents = (id)_touchImage.CGImage;
+			} else {
+				win.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:1.0 alpha:1.0];
+				win.layer.cornerRadius = TOUCH_RADIUS;
+				win.layer.opacity = 0.85;
+			}
 		} else if ( touch.phase == UITouchPhaseMoved ) {
 			NSDictionary * dict = _touches[ @((long)touch) ];
 			UIWindow * win = dict[ @"win" ];
-			win.frame = CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS);
+			win.frame = [self rectForTouchPosition:pos];
+			NSLog(@"Touch move: %@", NSStringFromCGRect(win.frame));
 		} else if ( touch.phase == UITouchPhaseStationary ) {
 			// ignore
 		} else { // ended/cancelled

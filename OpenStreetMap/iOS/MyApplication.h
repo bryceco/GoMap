@@ -10,6 +10,7 @@
 
 @interface MyApplication : UIApplication
 {
-	NSMutableDictionary * _touches;
+	NSMutableDictionary * 	_touches;
+	UIImage				*	_touchImage;
 }
 @end
