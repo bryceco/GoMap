@@ -285,7 +285,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P3A-5n-1Iq">
-                                            <rect key="frame" x="15" y="6" width="100" height="31.5"/>
+                                            <rect key="frame" x="15" y="10" width="100" height="23.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="hGf-rq-khQ"/>
                                             </constraints>
@@ -300,9 +300,9 @@
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="P3A-5n-1Iq" firstAttribute="top" secondItem="5MU-Jz-yPQ" secondAttribute="top" constant="6" id="5mQ-Ti-k3X"/>
+                                        <constraint firstItem="P3A-5n-1Iq" firstAttribute="top" secondItem="5MU-Jz-yPQ" secondAttribute="top" constant="10" id="5mQ-Ti-k3X"/>
                                         <constraint firstItem="pxY-di-zg7" firstAttribute="leading" secondItem="P3A-5n-1Iq" secondAttribute="trailing" constant="5" id="7uA-46-IKR"/>
-                                        <constraint firstAttribute="bottom" secondItem="P3A-5n-1Iq" secondAttribute="bottom" constant="6" id="gSr-RH-E11"/>
+                                        <constraint firstAttribute="bottom" secondItem="P3A-5n-1Iq" secondAttribute="bottom" constant="10" id="gSr-RH-E11"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
@@ -323,7 +323,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wheelchair Access" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vli-Ct-Lpz">
-                                            <rect key="frame" x="15" y="6" width="155" height="31.5"/>
+                                            <rect key="frame" x="15" y="10" width="155" height="23.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="155" id="eGs-Kl-S6W"/>
                                             </constraints>
@@ -338,9 +338,9 @@
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Vli-Ct-Lpz" firstAttribute="top" secondItem="dDC-Qx-OfJ" secondAttribute="top" constant="6" id="Bhr-rv-iJO"/>
+                                        <constraint firstItem="Vli-Ct-Lpz" firstAttribute="top" secondItem="dDC-Qx-OfJ" secondAttribute="top" constant="10" id="Bhr-rv-iJO"/>
                                         <constraint firstItem="9Nw-ha-JK5" firstAttribute="leading" secondItem="Vli-Ct-Lpz" secondAttribute="trailing" constant="6" id="FZk-Bd-8gd"/>
-                                        <constraint firstAttribute="bottom" secondItem="Vli-Ct-Lpz" secondAttribute="bottom" constant="6" id="QeP-ah-s92"/>
+                                        <constraint firstAttribute="bottom" secondItem="Vli-Ct-Lpz" secondAttribute="bottom" constant="10" id="QeP-ah-s92"/>
                                         <constraint firstAttribute="trailing" secondItem="9Nw-ha-JK5" secondAttribute="trailing" constant="5" id="Vfb-2V-gkb"/>
                                         <constraint firstItem="9Nw-ha-JK5" firstAttribute="centerY" secondItem="dDC-Qx-OfJ" secondAttribute="centerY" id="Vml-zj-qvM"/>
                                     </constraints>
@@ -361,15 +361,15 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Payment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPF-m9-RtO">
-                                            <rect key="frame" x="15" y="6" width="70.5" height="31.5"/>
+                                            <rect key="frame" x="15" y="10" width="70.5" height="23.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="tPF-m9-RtO" secondAttribute="bottom" constant="6" id="AdQ-9M-CLY"/>
-                                        <constraint firstItem="tPF-m9-RtO" firstAttribute="top" secondItem="6SI-QG-CUE" secondAttribute="top" constant="6" id="HRi-rB-ZV9"/>
+                                        <constraint firstAttribute="bottom" secondItem="tPF-m9-RtO" secondAttribute="bottom" constant="10" id="AdQ-9M-CLY"/>
+                                        <constraint firstItem="tPF-m9-RtO" firstAttribute="top" secondItem="6SI-QG-CUE" secondAttribute="top" constant="10" id="HRi-rB-ZV9"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tPF-m9-RtO" secondAttribute="trailing" constant="8" id="bZp-8M-QBs"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -388,7 +388,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHA-2B-6DC">
-                                            <rect key="frame" x="95.5" y="5" width="129" height="33.5"/>
+                                            <rect key="frame" x="95.5" y="10" width="129" height="23.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <state key="normal" title="Customize Presets">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -399,9 +399,8 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="pHA-2B-6DC" secondAttribute="centerY" id="2w0-Qb-dxL"/>
-                                        <constraint firstItem="pHA-2B-6DC" firstAttribute="top" secondItem="IcA-4t-XoH" secondAttribute="top" constant="5" id="5R8-cz-CeX"/>
-                                        <constraint firstAttribute="bottom" secondItem="pHA-2B-6DC" secondAttribute="bottom" constant="5" id="JHN-9J-IAc"/>
+                                        <constraint firstItem="pHA-2B-6DC" firstAttribute="top" secondItem="IcA-4t-XoH" secondAttribute="top" constant="10" id="5R8-cz-CeX"/>
+                                        <constraint firstAttribute="bottom" secondItem="pHA-2B-6DC" secondAttribute="bottom" constant="10" id="JHN-9J-IAc"/>
                                         <constraint firstAttribute="centerX" secondItem="pHA-2B-6DC" secondAttribute="centerX" id="ZBx-xE-UMq"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -502,7 +501,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FinalCell" textLabel="LUc-68-Anl" detailTextLabel="X7U-Pa-WCn" style="IBUITableViewCellStyleSubtitle" id="rRF-a2-sIn">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FinalCell" textLabel="LUc-68-Anl" detailTextLabel="X7U-Pa-WCn" style="IBUITableViewCellStyleSubtitle" id="rRF-a2-sIn" customClass="MultilineTableViewCell">
                                 <rect key="frame" x="0.0" y="99.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rRF-a2-sIn" id="OBB-T0-Ocb">
