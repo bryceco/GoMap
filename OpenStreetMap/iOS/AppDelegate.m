@@ -245,6 +245,9 @@
 	if ( self.mapView.gpsState != GPS_STATE_NONE ) {
 		[self.mapView.locationManager startUpdatingHeading];
 	}
+
+	// remove badge now, so it disappears promptly on exit
+	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

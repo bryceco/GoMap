@@ -729,7 +729,6 @@ static const CGFloat Z_FLASH			= 110;
 			[self showInAppStore];
         }]];
         [self.viewController presentViewController:alertViewRateApp animated:YES completion:nil];
-
 	}
 }
 -(void)showInAppStore
