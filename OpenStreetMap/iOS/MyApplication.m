@@ -8,12 +8,6 @@
 
 #import "MyApplication.h"
 
-#if DEBUG
-#define ENABLE_TOUCH_CIRCLES 1
-#else
-#define ENABLE_TOUCH_CIRCLES 1
-#endif
-
 @implementation MyApplication
 -(instancetype)init
 {
@@ -25,7 +19,6 @@
 	return self;
 }
 
-#if ENABLE_TOUCH_CIRCLES
 static const CGFloat TOUCH_RADIUS = 22;
 
 -(CGRect)rectForTouchPosition:(CGPoint)pos
@@ -37,13 +30,14 @@ static const CGFloat TOUCH_RADIUS = 22;
 		return CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS);
 	}
 }
-#endif
 
 -(void)sendEvent:(UIEvent *)event
 {
 	[super sendEvent:event];
 
-#if ENABLE_TOUCH_CIRCLES
+	if ( !_showTouchCircles )
+		return;
+
 	for ( UITouch * touch in event.allTouches ) {
 
 		CGPoint pos2 = [touch locationInView:nil];
@@ -104,6 +98,5 @@ static const CGFloat TOUCH_RADIUS = 22;
 			[_touches removeObjectForKey:@((long)touch)];
 		}
 	}
-#endif
 }
 @end

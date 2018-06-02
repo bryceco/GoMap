@@ -13,4 +13,7 @@
 	NSMutableDictionary * 	_touches;
 	UIImage				*	_touchImage;
 }
+
+@property(assign,nonatomic)	BOOL showTouchCircles;
+
 @end

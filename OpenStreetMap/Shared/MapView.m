@@ -20,6 +20,7 @@
 #import "HtmlAlertViewController.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
+#import "MyApplication.h"
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
@@ -2416,6 +2417,18 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 {
 	// drop in center of screen
 	[self removePin];
+
+#if 1
+	if ( [object.tags[@"addr:housenumber"] isEqualToString:@"409"] &&
+		 [object.tags[@"addr:street"] isEqualToString:@"2nd Street West"] &&
+		 [object.tags[@"addr:postcode"] isEqualToString:@"98033"] &&
+		 object.isWay &&
+		 !object.isWay.isClosed )
+	{
+		MyApplication * app = (id)[UIApplication sharedApplication];
+		app.showTouchCircles = YES;
+	}
+#endif
 
 	_confirmDrag = NO;
 
