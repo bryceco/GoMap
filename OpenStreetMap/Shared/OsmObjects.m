@@ -1532,6 +1532,14 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	}
 	return a;
 }
+-(OsmMember *)memberByRef:(OsmBaseObject *)ref
+{
+	for ( OsmMember * member in _members ) {
+		if ( member.ref == ref )
+			return member;
+	}
+	return nil;
+}
 
 -(BOOL)isMultipolygon
 {

@@ -155,12 +155,157 @@
 	}
 	OsmNode * deadNode = (survivor == node1) ? node2 : node1;
 
-	if ( survivor == node1 ) {
-		// update survivor to have location of other node
-		[self setLongitude:node2.lon latitude:node2.lat forNode:survivor];
+	// if the nodes have different relation roles they can't merge
+
+	// 1. disable if the nodes being connected have conflicting relation roles
+	NSArray * nodes = @[ survivor, deadNode ];
+	NSMutableSet * restrictions = [NSMutableSet new];
+	NSMutableDictionary * seen = [NSMutableDictionary new];
+	for ( OsmNode * node in nodes ) {
+		NSArray * relations = node.parentRelations;
+		for ( OsmRelation * relation in relations ) {
+			OsmMember * member = [relation memberByRef:node];
+			NSString * role = member.role;
+
+			// if this node is a via node in a restriction, remember for later
+			if ( relation.isRestriction ) {
+				[restrictions addObject:relation];
+			}
+
+			NSString * prevRole = seen[relation.ident];
+			if (prevRole && ![prevRole isEqualToString:role] ) {
+				*error = NSLocalizedString(@"The nodes have conflicting roles in parent relations", nil);
+				return nil;
+			} else {
+				seen[relation.ident] = role;
+			}
+		}
+	}
+
+	// gather restrictions for parent ways
+	for ( OsmNode * node in nodes ) {
+		NSArray * parents = [self waysContainingNode:node];
+		for ( OsmWay * parent in parents ) {
+			for ( OsmRelation * relation in parent.parentRelations ) {
+				if ( relation.isRestriction ) {
+					[restrictions addObject:relation];
+				}
+			}
+		}
+	}
+
+	// test restrictions
+	for ( OsmRelation * relation in restrictions ) {
+
+		NSMutableSet * memberWays = [NSMutableSet new];
+		for ( OsmMember * member in relation.members ) {
+			if ( member.isWay ) {
+				if ( ![member.ref isKindOfClass:[OsmWay class]] ) {
+					*error = NSLocalizedString(@"A relation the node belongs to is not fully downloaded",nil);
+					return nil;
+				}
+				[memberWays addObject:member.ref];
+			}
+		}
+
+		OsmMember * f = [relation memberByRole:@"from"];
+		OsmMember * t = [relation memberByRole:@"to"];
+		BOOL isUturn = (f.ref == t.ref);
+
+		// 2a. disable if connection would damage a restriction (a key node is a node at the junction of ways)
+		NSDictionary * collection = @{
+									  @"from" : [NSMutableSet new],
+									  @"via" : [NSMutableSet new],
+									  @"to" : [NSMutableSet new]
+									  };
+		NSMutableSet * keyfrom 	= [NSMutableSet new];
+		NSMutableSet * keyto 	= [NSMutableSet new];
+		for ( OsmMember * member in relation.members ) {
+
+			NSString * role = member.role;
+
+			if (member.isNode ) {
+
+				[collection[role] addObject:member];
+
+				if ( [role isEqualToString:@"via"] ) {
+					[keyfrom addObject:member];
+					[keyto   addObject:member];
+				}
+
+			} else if ( member.isWay ) {
+
+				OsmWay * way = member.ref;
+				if ( ![way isKindOfClass:[OsmBaseObject class]] ) {
+					*error = NSLocalizedString(@"A relation the node belongs to is not fully downloaded",nil);
+					return nil;
+				}
+				[collection[role] addObjectsFromArray:way.nodes];
+
+				if ( [role isEqualToString:@"from"] || [role isEqualToString:@"via"] ) {
+					[keyfrom addObject:way.nodes[0]];
+					[keyfrom addObject:way.nodes.lastObject];
+				}
+				if ( [role isEqualToString:@"to"] || [role isEqualToString:@"via"] ) {
+					[keyto addObject:way.nodes[0]];
+					[keyto addObject:way.nodes.lastObject];
+				}
+			}
+		}
+
+		NSPredicate * filter = [NSPredicate predicateWithBlock:^BOOL(OsmNode * node, id bindings) {
+			return ![keyfrom containsObject:node] && ![keyto containsObject:node];
+		}];
+		NSArray * from = [[collection[@"from"] allObjects] filteredArrayUsingPredicate:filter];
+		NSArray * to   = [[collection[@"to"]   allObjects] filteredArrayUsingPredicate:filter];
+		NSArray * via  = [[collection[@"via"]  allObjects] filteredArrayUsingPredicate:filter];
+
+		BOOL connectFrom = false;
+		BOOL connectVia = false;
+		BOOL connectTo = false;
+		BOOL connectKeyFrom = false;
+		BOOL connectKeyTo = false;
+
+		for ( OsmNode * n in nodes ) {
+			if ( [from containsObject:n] ) 		 { connectFrom = true; }
+			if ( [via containsObject:n]	)	     { connectVia = true; }
+			if ( [to containsObject:n] )		 { connectTo = true; }
+			if ( [keyfrom containsObject:n] )	 { connectKeyFrom = true; }
+			if ( [keyto containsObject:n] )		 { connectKeyTo = true; }
+		}
+		if ( (connectFrom && connectTo && !isUturn) ||
+			 (connectFrom && connectVia) ||
+			 (connectTo   && connectVia) )
+		{
+			*error = NSLocalizedString(@"Connecting the nodes would damage a relation",nil);
+			return nil;
+		}
+
+		// connecting to a key node -
+		// if both nodes are on a member way (i.e. part of the turn restriction),
+		// the connecting node must be adjacent to the key node.
+		if ( connectKeyFrom || connectKeyTo ) {
+
+			OsmNode * n0 = nil;
+			OsmNode * n1 = nil;
+			for ( OsmWay * way in memberWays ) {
+				if ( [way.nodes containsObject:nodes[0]] ) { n0 = nodes[0]; }
+				if ( [way.nodes containsObject:nodes[1]] ) { n1 = nodes[1]; }
+			}
+
+			if ( n0 && n1 ) {    // both nodes are part of the restriction
+				*error = NSLocalizedString(@"Connecting the nodes would damage a relation",nil);
+				return nil;
+			}
+		}
 	}
 
 	return ^{
+		if ( survivor == node1 ) {
+			// update survivor to have location of other node
+			[self setLongitude:node2.lon latitude:node2.lat forNode:survivor];
+		}
+
 		[self setTags:mergedTags forObject:survivor];
 
 		// need to replace the node in all objects everywhere
