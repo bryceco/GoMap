@@ -335,8 +335,8 @@ public:
 			return NO;
 
 		if ( _downloadDate && _downloadDate < date ) {
-			delete this;
 			_parent->_whole = NO;
+			delete this;
 			return YES;
 		} else {
 			bool changed = NO;
