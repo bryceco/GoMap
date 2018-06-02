@@ -45,7 +45,11 @@ static const CGFloat TOUCH_RADIUS = 22;
 
 #if ENABLE_TOUCH_CIRCLES
 	for ( UITouch * touch in event.allTouches ) {
+
 		CGPoint pos2 = [touch locationInView:nil];
+		// if we double-tap then then second tap will be captured by our own window
+		pos2 = [touch.window convertPoint:pos2 toWindow:nil];
+
 		CGPoint pos = pos2;
 		CGRect bounds = [[UIScreen mainScreen] bounds];
 
