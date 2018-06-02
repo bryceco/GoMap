@@ -241,7 +241,13 @@ static const CGFloat Z_FLASH			= 110;
 
 			NSString * pushpin = context[@"pushpin"];
 			if ( pushpin && _editorLayer.selectedPrimary ) {
-				[self placePushpinAtPoint:CGPointFromString(pushpin) object:_editorLayer.selectedPrimary];
+				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
+				CGPoint pt = CGPointFromString(pushpin);
+				CLLocationCoordinate2D loc = [self longitudeLatitudeForScreenPoint:pt birdsEye:YES];
+				OSMPoint pos = [_editorLayer.selectedPrimary pointOnObjectForPoint:OSMPointMake(loc.longitude, loc.latitude)];
+				pt = [self screenPointForLatitude:pos.y longitude:pos.x birdsEye:YES];
+				// place pushpin
+				[self placePushpinAtPoint:pt object:_editorLayer.selectedPrimary];
 			} else {
 				[self removePin];
 			}
