@@ -448,13 +448,13 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="M9Q-l6-Lsw">
-                                        <rect key="frame" x="142" y="8" width="37" height="37"/>
+                                        <rect key="frame" x="142" y="20" width="37" height="37"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="M9Q-l6-Lsw" firstAttribute="centerX" secondItem="hlF-jf-JeO" secondAttribute="centerX" id="PK4-Ms-ZWR"/>
-                                    <constraint firstItem="M9Q-l6-Lsw" firstAttribute="top" secondItem="hlF-jf-JeO" secondAttribute="top" constant="8" id="bPV-eV-yac"/>
+                                    <constraint firstItem="M9Q-l6-Lsw" firstAttribute="top" secondItem="hlF-jf-JeO" secondAttribute="top" constant="20" id="bPV-eV-yac"/>
                                 </constraints>
                             </view>
                         </subviews>

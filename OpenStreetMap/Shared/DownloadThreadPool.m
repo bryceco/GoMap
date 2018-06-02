@@ -107,6 +107,8 @@ static NSString * g_UserAgent = nil;
 			DLog(@"HTTP error %ld: %@", (long)httpResponse.statusCode, [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode] );
 			DLog(@"URL: %@", url );
 			NSString * text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			if ( text.length == 0 )
+				text = [NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode];
 			error = [NSError errorWithDomain:@"HTTP" code:httpResponse.statusCode userInfo:@{ NSLocalizedDescriptionKey:text?:@""}];
 			data = nil;
 		}

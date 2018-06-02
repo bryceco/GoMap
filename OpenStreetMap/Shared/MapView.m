@@ -642,7 +642,9 @@ static const CGFloat Z_FLASH			= 110;
 
 		NSString * text = error.localizedDescription;
 
-		if ( [error.domain isEqualToString:@"HTTP"] && error.code >= 400 && error.code < 500 ) {
+		if ( [error.domain isEqualToString:@"HTTP"] && error.code >= 400 && error.code < 500
+			&& error.localizedDescription.length > 0 && [error.localizedDescription hasPrefix:@"<"] )
+		{
 			// present HTML error code
 			WebPageViewController * webController = [[WebPageViewController alloc] initWithNibName:@"WebPageView" bundle:nil];
 			[webController view];

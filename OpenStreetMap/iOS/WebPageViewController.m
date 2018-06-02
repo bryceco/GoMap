@@ -41,7 +41,7 @@
 		}
 	}
 
-	UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButton:)];
+	UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back",nil) style:UIBarButtonItemStylePlain target:self action:@selector(backButton:)];
 	self.navigationItem.leftBarButtonItem = leftButton;
 
 	if ( self.url ) {

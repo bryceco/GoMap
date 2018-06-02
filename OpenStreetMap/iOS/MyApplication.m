@@ -68,7 +68,6 @@ static const CGFloat TOUCH_RADIUS = 22;
 
 		if ( touch.phase == UITouchPhaseBegan ) {
 			UIWindow * win = [[UIWindow alloc] initWithFrame:[self rectForTouchPosition:pos]];
-			NSLog(@"Touch begin: %@", NSStringFromCGRect(win.frame));
 			_touches[@((long)touch)] = @{ @"win" : win, @"start" : @(touch.timestamp) };
 			win.windowLevel = UIWindowLevelStatusBar;
 			win.hidden = NO;
@@ -79,11 +78,11 @@ static const CGFloat TOUCH_RADIUS = 22;
 				win.layer.cornerRadius = TOUCH_RADIUS;
 				win.layer.opacity = 0.85;
 			}
+
 		} else if ( touch.phase == UITouchPhaseMoved ) {
 			NSDictionary * dict = _touches[ @((long)touch) ];
 			UIWindow * win = dict[ @"win" ];
 			win.frame = [self rectForTouchPosition:pos];
-			NSLog(@"Touch move: %@", NSStringFromCGRect(win.frame));
 		} else if ( touch.phase == UITouchPhaseStationary ) {
 			// ignore
 		} else { // ended/cancelled
