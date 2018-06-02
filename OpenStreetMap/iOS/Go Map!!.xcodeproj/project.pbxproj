@@ -1339,6 +1339,8 @@
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
+				022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */,
+				022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */,
 				02BED98C168BF87100357B94 /* NearbyMappersViewController.h */,
 				02BED98D168BF87200357B94 /* NearbyMappersViewController.m */,
 				02F8F4321696004B002A0820 /* NominatumViewController.h */,
@@ -1377,8 +1379,6 @@
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
-				022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */,
-				022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";

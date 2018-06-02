@@ -112,9 +112,9 @@
                                             <segue destination="XIv-Uv-W3O" kind="modal" id="CvQ-Su-F4k"/>
                                         </connections>
                                     </button>
-                                    <view alpha="0.24999999999999967" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
+                                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
-                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
                                         </accessibility>
@@ -157,10 +157,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
-                                        <rect key="frame" x="277" y="70" width="40" height="40"/>
+                                        <rect key="frame" x="275" y="70" width="44" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="Umo-8r-F7i"/>
-                                            <constraint firstAttribute="height" constant="40" id="rLd-DR-Gbp"/>
+                                            <constraint firstAttribute="width" constant="44" id="Umo-8r-F7i"/>
+                                            <constraint firstAttribute="height" constant="44" id="rLd-DR-Gbp"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" image="compass.png"/>

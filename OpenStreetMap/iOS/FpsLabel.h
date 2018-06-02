@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FpsLabel : UILabel
+@property (assign,nonatomic)	BOOL	showFPS;
 @end

@@ -21,48 +21,57 @@ const int FRAME_COUNT = 60;
 	dispatch_source_t	_timer;
 }
 
-- (void)awakeFromNib
+-(void)awakeFromNib
 {
 	[super awakeFromNib];
-
-#if ENABLE_FPS
-	DisplayLink * displayLink = [DisplayLink shared];
-	__weak FpsLabel * weakSelf = self;
-	[displayLink addName:@"FpsLabel" block:^{
-		[weakSelf frameUpdated];
-	}];
-
-	// create a timer to update the text twice a second
-	dispatch_queue_t queue = dispatch_get_main_queue();
-	_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-	if ( _timer ) {
-		dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, NSEC_PER_SEC/2, NSEC_PER_SEC/5);
-		dispatch_source_set_event_handler(_timer, ^{
-			[self updateText];
-		} );
-		dispatch_resume(_timer);
-	}
-	self.layer.shadowColor		= UIColor.whiteColor.CGColor;
-	CGPathRef path				= CGPathCreateWithRect(self.bounds, NULL);
-	self.layer.shadowPath		= path;
-	self.layer.shadowOpacity	= 0.3;
-	self.layer.shadowRadius		= 0;
-	self.layer.shadowOffset		= CGSizeMake(0, 0);
-	CGPathRelease(path);
-#else
-	self.text = nil;
+	self.showFPS = NO;
 	self.hidden = YES;
-#endif
 }
 
 - (void)dealloc
 {
-	if ( _timer ) {
-		DisplayLink * displayLink = [DisplayLink shared];
-		[displayLink removeName:@"FpsLabel"];
-		dispatch_source_cancel( _timer );
+	self.showFPS = NO;
+}
+
+-(void)setShowFPS:(BOOL)showFPS
+{
+	if ( showFPS != _showFPS ) {
+		_showFPS = showFPS;
+
+		if ( showFPS ) {
+
+			self.hidden = NO;
+			
+			DisplayLink * displayLink = [DisplayLink shared];
+			__weak FpsLabel * weakSelf = self;
+			[displayLink addName:@"FpsLabel" block:^{
+				[weakSelf frameUpdated];
+			}];
+
+			// create a timer to update the text twice a second
+			dispatch_queue_t queue = dispatch_get_main_queue();
+			_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+			if ( _timer ) {
+				dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, NSEC_PER_SEC/2, NSEC_PER_SEC/5);
+				dispatch_source_set_event_handler(_timer, ^{
+					[self updateText];
+				} );
+				dispatch_resume(_timer);
+			}
+			self.layer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.6].CGColor;
+
+		} else {
+			self.text = nil;
+			self.hidden = YES;
+			if ( _timer ) {
+				DisplayLink * displayLink = [DisplayLink shared];
+				[displayLink removeName:@"FpsLabel"];
+				dispatch_source_cancel( _timer );
+			}
+		}
 	}
 }
+
 
 - (void)updateText
 {
@@ -85,20 +94,16 @@ const int FRAME_COUNT = 60;
 		self.text = [NSString stringWithFormat:@"%.1f FPS", average];
 	else
 		self.text = [NSString stringWithFormat:@"%.2f FPS", average];
-	if ( average < 1.0 ) {
-		NSLog(@"frame");
-	}
+	NSLog(@"frame");
 }
 
 - (void)frameUpdated
 {
-#if ENABLE_FPS
 	// add to history
 	CFTimeInterval now = CACurrentMediaTime();
 	_history[_historyPos++] = now;
 	if ( _historyPos >= FRAME_COUNT )
 		_historyPos = 0;
-#endif
 }
 
 @end

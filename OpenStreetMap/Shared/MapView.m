@@ -291,10 +291,6 @@ static const CGFloat Z_FLASH			= 110;
 	_locationManager.activityType = CLActivityTypeOther;
 #endif
 
-	// white background for status bar
-	_statusBarBackground.backgroundColor = NSColor.whiteColor;
-	_statusBarBackground.alpha = 0.25;
-
 	// set up action button
 	_editControl.hidden = YES;
 	_editControl.selected = NO;
@@ -2419,14 +2415,13 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 	[self removePin];
 
 #if 1
-	if ( [object.tags[@"addr:housenumber"] isEqualToString:@"409"] &&
-		 [object.tags[@"addr:street"] isEqualToString:@"2nd Street West"] &&
-		 [object.tags[@"addr:postcode"] isEqualToString:@"98033"] &&
-		 object.isWay &&
-		 !object.isWay.isClosed )
-	{
-		MyApplication * app = (id)[UIApplication sharedApplication];
-		app.showTouchCircles = YES;
+	for ( NSString * feature in [object.tags[@"GoMap"] componentsSeparatedByString:@";"] ) {
+		if ( [feature isEqualToString:@"showtouchcircles"] ) {
+			MyApplication * app = (id)[UIApplication sharedApplication];
+			app.showTouchCircles = YES;
+		} else if ( [feature isEqualToString:@"fps"] ) {
+			self.fpsLabel.showFPS = YES;
+		}
 	}
 #endif
 
