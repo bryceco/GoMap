@@ -3157,27 +3157,29 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self adjustOriginBy:translation];
 		[pan setTranslation:CGPointMake(0,0) inView:self];
 	} else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ) {	// cancelled occurs when we throw an error dialog
-		// finish pan with inertia
-		CGPoint initialVelecity = [pan velocityInView:self];
-		CFTimeInterval startTime = CACurrentMediaTime();
 		double duration = 0.5;
-		__weak MapView * weakSelf = self;
-		__weak DisplayLink * displayLink = [DisplayLink shared];
-		[displayLink addName:DisplayLinkPanning block:^{
-			MapView * myself = weakSelf;
-			if ( myself ) {
-				double timeOffset = CACurrentMediaTime() - startTime;
-				if ( timeOffset >= duration ) {
-					[displayLink removeName:DisplayLinkPanning];
-				} else {
-					CGPoint translation;
-					double t = timeOffset / duration;	// time [0..1]
-					translation.x = (1-t) * initialVelecity.x * displayLink.duration;
-					translation.y = (1-t) * initialVelecity.y * displayLink.duration;
-					[myself adjustOriginBy:translation];
+		if ( _pushpinView == nil ) {	// don't use inertia while user is drawing
+			// finish pan with inertia
+			CGPoint initialVelecity = [pan velocityInView:self];
+			CFTimeInterval startTime = CACurrentMediaTime();
+			__weak MapView * weakSelf = self;
+			__weak DisplayLink * displayLink = [DisplayLink shared];
+			[displayLink addName:DisplayLinkPanning block:^{
+				MapView * myself = weakSelf;
+				if ( myself ) {
+					double timeOffset = CACurrentMediaTime() - startTime;
+					if ( timeOffset >= duration ) {
+						[displayLink removeName:DisplayLinkPanning];
+					} else {
+						CGPoint translation;
+						double t = timeOffset / duration;	// time [0..1]
+						translation.x = (1-t) * initialVelecity.x * displayLink.duration;
+						translation.y = (1-t) * initialVelecity.y * displayLink.duration;
+						[myself adjustOriginBy:translation];
+					}
 				}
-			}
-		}];
+			}];
+		}
 		[self updateNotesFromServerWithDelay:duration];
 	} else if ( pan.state == UIGestureRecognizerStateFailed ) {
 		DLog( @"pan gesture failed" );
