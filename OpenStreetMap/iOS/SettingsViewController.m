@@ -51,7 +51,7 @@
 	if ( appDelegate.userName.length > 0 ) {
 		[appDelegate.mapView.editorLayer.mapData verifyUserCredentialsWithCompletion:^(NSString * errorMessage) {
 			if ( errorMessage ) {
-				_username.text = @"<invalid>";
+				_username.text = NSLocalizedString(@"<unknown>",nil);
 			} else {
 				_username.text = appDelegate.userName;
 			}

@@ -720,8 +720,8 @@ static const CGFloat Z_FLASH			= 110;
 {
 	double countLog10 = log10(uploadCount);
 	if ( uploadCount > 1 && countLog10 == floor(countLog10) ) {
-		NSString * title = [NSString stringWithFormat:@"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?", (long)uploadCount];
-        UIAlertController * alertViewRateApp = [UIAlertController alertControllerWithTitle:title message:@"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." preferredStyle:UIAlertControllerStyleAlert];
+		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?",nil), (long)uploadCount];
+        UIAlertController * alertViewRateApp = [UIAlertController alertControllerWithTitle:title message:NSLocalizedString(@"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.",nil) preferredStyle:UIAlertControllerStyleAlert];
         [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Maybe later...",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
         [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"I'll do it!",nil)    style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 			[self showInAppStore];
@@ -907,7 +907,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			_mapnikLayer.hidden = NO;
 			_userInstructionLabel.hidden = _viewState != MAPVIEW_EDITOR && _viewState != MAPVIEW_EDITORAERIAL;
 			if ( !_userInstructionLabel.hidden )
-				_userInstructionLabel.text = @"Zoom to Edit";
+				_userInstructionLabel.text = NSLocalizedString(@"Zoom to Edit",nil);
 			break;
 		case MAPVIEW_NONE:
 			// shouldn't occur
@@ -1275,7 +1275,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		OsmMapData * mapData = self.editorLayer.mapData;
 		BOOL changed = [mapData discardStaleData];
 		if ( changed ) {
-			[self flashMessage:@"Cache trimmed"];
+			[self flashMessage:NSLocalizedString(@"Cache trimmed",nil)];
 			[self.editorLayer updateMapLocation];	// download data if necessary
 		}
 	}
@@ -1675,7 +1675,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 #if TARGET_OS_IPHONE
 	if ( _editorLayer.hidden ) {
-		[self flashMessage:@"Editing layer not visible"];
+		[self flashMessage:NSLocalizedString(@"Editing layer not visible",nil)];
 		return;
 	}
 	[self removePin];
@@ -1878,8 +1878,8 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 -(IBAction)delete:(id)sender
 {
 	UIAlertController *	alertDelete = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) preferredStyle:UIAlertControllerStyleAlert];
-	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-	[alertDelete addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+	[alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+	[alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete",nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
 		NSString * error = nil;
 		EditAction canDelete = [_editorLayer canDeleteSelectedObject:&error];
 		if ( canDelete ) {
@@ -2302,8 +2302,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		
 		if ( ![viaNode isKindOfClass:[OsmNode class]] ) {
 			// not supported yet
-			[self showAlert:@"Unsupported turn restriction type"
-					message:@"This app does not yet support editing turn restrictions without a node as the 'via' member"];
+			[self showAlert:NSLocalizedString(@"Unsupported turn restriction type",nil)
+					message:NSLocalizedString(@"This app does not yet support editing turn restrictions without a node as the 'via' member",nil)];
 			return;
 		}
 		
@@ -2478,7 +2478,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 								if ( add ) {
 									add(dragNode);
 								} else {
-									[strongSelf showAlert:@"Error connecting to way" message:error];
+									[strongSelf showAlert:NSLocalizedString(@"Error connecting to way",nil) message:error];
 								}
 							}
 							return;
@@ -2493,7 +2493,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 							strongSelf->_confirmDrag = NO;
 
 							UIAlertController *	alertMove = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Confirm move",nil) message:NSLocalizedString(@"Move selected object?",nil) preferredStyle:UIAlertControllerStyleAlert];
-							[alertMove addAction:[UIAlertAction actionWithTitle:@"Undo" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+							[alertMove addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Undo",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
 								// cancel move
 								[strongSelf->_editorLayer.mapData undo];
 								[strongSelf->_editorLayer.mapData removeMostRecentRedo];
@@ -2504,7 +2504,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 								[strongSelf->_editorLayer setNeedsDisplay];
 								[strongSelf->_editorLayer setNeedsLayout];
 							}]];
-							[alertMove addAction:[UIAlertAction actionWithTitle:@"Move" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+							[alertMove addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Move",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 								// okay
 							}]];
 							[strongSelf.viewController presentViewController:alertMove animated:YES completion:nil];
@@ -2664,25 +2664,21 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 			_editorLayer.selectedNode = newNode;
 			[self placePushpinForSelection];
 		} else {
-			[self showAlert:@"Error" message:error];
+			[self showAlert:NSLocalizedString(@"Error",nil) message:error];
 		}
 
 	} else {
 
-		if ( node && way && way.nodes.count ) {
-			if ( way.isClosed )
-				return;
-			if ( !(node == way.nodes[0] || node == way.nodes.lastObject) ) {
-				// both a node and way selected but node is not an endpoint
-				return;
-			}
-		}
-
-		if ( node == nil ) {
-			node = [_editorLayer createNodeAtPoint:arrowPoint];
-		}
-		if ( way == nil ) {
+		if ( node && way && way.nodes.count && !(node == way.nodes[0] || node == way.nodes.lastObject) ) {
+			// both a node and way selected but selectedd node is not an endpoint, so we will create a new way from that node
 			way = [_editorLayer createWayWithNode:node];
+		} else {
+			if ( node == nil ) {
+				node = [_editorLayer createNodeAtPoint:arrowPoint];
+			}
+			if ( way == nil ) {
+				way = [_editorLayer createWayWithNode:node];
+			}
 		}
 		NSInteger prevIndex = [way.nodes indexOfObject:node];
 		NSInteger nextIndex = prevIndex;
@@ -2780,7 +2776,7 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		NSString * error = nil;
 		EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
 		if ( !action ) {
-			[self showAlert:@"Can't extend way" message:error];
+			[self showAlert:NSLocalizedString(@"Can't extend way",nil) message:error];
 			return;
 		}
 		OsmNode * node2 = [_editorLayer createNodeAtPoint:newPoint];

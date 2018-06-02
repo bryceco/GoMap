@@ -2104,7 +2104,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				if ( objectLevel == nil )
 					return YES;
 				NSArray * floorSet = nil;
-				double floor;
+				double floor = 0.0;
 				if ( [objectLevel containsString:@";"] ) {
 					floorSet = [objectLevel componentsSeparatedByString:@";"];
 				} else {

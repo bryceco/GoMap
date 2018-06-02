@@ -208,7 +208,7 @@
 	if ( indexPath.section == SECTION_ACTIVE_TRACK && gpxLayer.activeTrack == nil ) {
 		// no active track
 		UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.textLabel.text = @"No active track";
+		cell.textLabel.text = NSLocalizedString(@"No active track",nil);
 		return cell;
 	}
 	if ( indexPath.section == SECTION_CONFIGURE ) {
@@ -218,7 +218,7 @@
 			GpxTrackExpirationCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackExpirationCell" forIndexPath:indexPath];
 			NSNumber * expirationDays = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
 			NSInteger expiration = [expirationDays integerValue];
-			NSString * title = expiration <= 0 ? @"Never" : [NSString stringWithFormat:@"%ld Days",(long)expiration];
+			NSString * title = expiration <= 0 ? NSLocalizedString(@"Never",nil) : [NSString stringWithFormat:NSLocalizedString(@"%ld Days",nil),(long)expiration];
 			[cell.expirationButton setTitle:title forState:UIControlStateNormal];
 			[cell.expirationButton sizeToFit];
 			return cell;
@@ -349,7 +349,7 @@
 			if ( httpResponse.statusCode == 200 ) {
 				// ok
 				UIAlertController * success = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Complete",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-				[success addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+				[success addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 				[self presentViewController:success animated:YES completion:nil];
 			} else {
 				DLog(@"response = %@\n",response);
@@ -362,7 +362,7 @@
 				}
 				// failure
 				UIAlertController * failure = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Failed",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-				[failure addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+				[failure addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 				[self presentViewController:failure animated:YES completion:nil];
 			}
 		}];

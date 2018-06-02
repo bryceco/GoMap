@@ -90,30 +90,30 @@ enum {
 
 		switch ( indexPath.row ) {
 			case ROW_IDENTIFIER:
-				cell.title.text = @"Identifier";
+				cell.title.text = NSLocalizedString(@"Identifier",nil);
 				cell.value.text = object.ident.stringValue;
 				cell.accessoryType	= object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
 			case ROW_USER:
-				cell.title.text = @"User";
+				cell.title.text = NSLocalizedString(@"User",nil);
 				cell.value.text = object.user;
 				cell.accessoryType	= object.user.length > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
 			case ROW_UID:
-				cell.title.text = @"UID";
+				cell.title.text = NSLocalizedString(@"UID",nil);
 				cell.value.text = @(object.uid).stringValue;
 				break;
 			case ROW_MODIFIED:
-				cell.title.text = @"Modified";
+				cell.title.text = NSLocalizedString(@"Modified",nil);
 				cell.value.text = [NSDateFormatter localizedStringFromDate:object.dateForTimestamp dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle];
 				break;
 			case ROW_VERSION:
-				cell.title.text = @"Version";
+				cell.title.text = NSLocalizedString(@"Version",nil);
 				cell.value.text = @(object.version).stringValue;
 				cell.accessoryType	= object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
 			case ROW_CHANGESET:
-				cell.title.text = @"Changeset";
+				cell.title.text = NSLocalizedString(@"Changeset",nil);
 				cell.value.text = @(object.changeset).stringValue;
 				cell.accessoryType = object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;

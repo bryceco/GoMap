@@ -485,8 +485,8 @@ static const CGFloat InsetPercent = 0.15;
 {
 	if ( _canZoom ) {
 		NSString * height = _currentHeight;
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Height = %@ meters",_currentHeight]
-																		message:@"Set height tag?"
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Height = %@ meters",nil),_currentHeight]
+																		message:NSLocalizedString(@"Set height tag?",nil)
 																 preferredStyle:UIAlertControllerStyleAlert];
 		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Set",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -494,7 +494,7 @@ static const CGFloat InsetPercent = 0.15;
 		}]];
 		[self presentViewController:alert animated:YES completion:nil];
 	} else {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Set Height Tag" message:@"meters" preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Set Height Tag",nil) message:NSLocalizedString(@"meters",nil) preferredStyle:UIAlertControllerStyleAlert];
 		[alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
 			textField.keyboardType	= UIKeyboardTypeNumbersAndPunctuation;
 		}];

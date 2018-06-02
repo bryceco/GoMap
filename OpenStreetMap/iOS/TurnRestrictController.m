@@ -146,7 +146,7 @@
 	CGPoint detailViewCenter	= CGPointMake( _detailView.frame.size.width/2, _detailView.frame.size.height/2 );
 	CGPoint positionOffset		= CGPointSubtract( centerNodePos, detailViewCenter );
 
-	self.detailText.text = @"Select a highway approaching the intersection";
+	self.detailText.text = NSLocalizedString(@"Select a highway approaching the intersection",nil);
 
 	// Get relations related to restrictions
 	_allRelations = [NSMutableArray new];
@@ -256,10 +256,10 @@
 
 -(IBAction)infoButtonPressed:(id)sender
 {
-	NSString * message = @"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\n"
-						"Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.";
+	NSString * message = NSLocalizedString(@"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\n"
+						"Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.",nil);
 	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Turn Restrictions" message:message preferredStyle:UIAlertControllerStyleAlert];
-	[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 	[self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -483,9 +483,9 @@
 {
 	if ( targetHwy.objRel && targetHwy.objRel.tags[@"restriction"] == nil ) {
 		// it contains a restriction relation we don't understand
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-		[alert addAction:[UIAlertAction actionWithTitle:@"Modify" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Warning",nil) message:NSLocalizedString(@"The turn contains an unrecognized turn restriction style. Proceeding will destroy it.",nil) preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Modify",nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
 			[self toggleTurnRestrictionUnsafe:targetHwy];
 		}]];
 		[self presentViewController:alert animated:YES completion:nil];

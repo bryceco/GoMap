@@ -54,7 +54,7 @@
 
 			// warn that email addresses don't work
 			if ( [appDelegate.userName containsString:@"@"] ) {
-				errorMessage = @"You must provide your OSM user name, not an email address.";
+				errorMessage = NSLocalizedString(@"You must provide your OSM user name, not an email address.",nil);
 			}
 			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Bad login",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
 			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];

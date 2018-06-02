@@ -143,7 +143,7 @@
 		cell = (id) [cell superview];
 	if ( cell ) {
 		NSString * s = [cell.text.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Updating Note..." message:nil preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Updating Note...",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
 		[self presentViewController:alert animated:YES completion:nil];
 
 		[self.mapView.notesDatabase updateNote:self.note close:resolve comment:s completion:^(OsmNote * newNote, NSString *errorMessage) {
@@ -155,8 +155,8 @@
 					[self.mapView refreshNoteButtonsFromDatabase];
 				});
 			} else {
-				UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:@"Error" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-				[alert2 addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil]];
+				UIAlertController * alert2 = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+				[alert2 addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 				[self presentViewController:alert2 animated:YES completion:nil];
 			}
 		}];

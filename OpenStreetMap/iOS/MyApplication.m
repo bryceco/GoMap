@@ -11,11 +11,7 @@
 #if DEBUG
 #define ENABLE_TOUCH_CIRCLES 1
 #else
-#define ENABLE_TOUCH_CIRCLES 0
-#endif
-
-#if ENABLE_TOUCH_CIRCLES
-static const CGFloat TOUCH_RADIUS = 22;
+#define ENABLE_TOUCH_CIRCLES 1
 #endif
 
 @implementation MyApplication
@@ -29,6 +25,9 @@ static const CGFloat TOUCH_RADIUS = 22;
 	return self;
 }
 
+#if ENABLE_TOUCH_CIRCLES
+static const CGFloat TOUCH_RADIUS = 22;
+
 -(CGRect)rectForTouchPosition:(CGPoint)pos
 {
 	if ( _touchImage ) {
@@ -38,7 +37,7 @@ static const CGFloat TOUCH_RADIUS = 22;
 		return CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS);
 	}
 }
-
+#endif
 
 -(void)sendEvent:(UIEvent *)event
 {

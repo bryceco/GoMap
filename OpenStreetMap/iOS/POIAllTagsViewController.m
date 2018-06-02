@@ -87,9 +87,9 @@
 	[self.tableView reloadData];
 
 	if ( tabController.selection.isNode ) {
-		self.title = @"Node tags";
+		self.title = NSLocalizedString(@"Node tags",nil);
 	} else if ( tabController.selection.isWay ) {
-		self.title = @"Way tags";
+		self.title = NSLocalizedString(@"Way tags",nil);
 	} else if ( tabController.selection.isRelation ) {
 		NSString * type = tabController.keyValueDict[ @"type" ];
 		if ( type.length ) {
@@ -97,10 +97,10 @@
 			type = [type capitalizedString];
 			self.title = [NSString stringWithFormat:@"%@ tags",type];
 		} else {
-			self.title = @"Relation tags";
+			self.title = NSLocalizedString(@"Relation tags",nil);
 		}
 	} else {
-		self.title = @"All Tags";
+		self.title = NSLocalizedString(@"All Tags",nil);
 	}
 
 	_saveButton.enabled = [tabController isTagDictChanged];
