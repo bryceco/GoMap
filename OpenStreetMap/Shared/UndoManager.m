@@ -330,7 +330,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 	[self postChangeNotification];
 	
-	NSDictionary * comment = _commentList.count == 0 ? nil: _commentList[0];
+	NSDictionary * comment = _commentList.count == 0 ? nil: _commentList.lastObject;
 	return comment;
 }
 
