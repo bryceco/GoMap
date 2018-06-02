@@ -100,7 +100,6 @@
 	copy.belongsTo		= self.belongsTo;
 	copy.iconName		= self.iconName;
 	copy.summary		= self.summary;
-	copy.wikiPage		= self.wikiPage;
 	copy.lineColor		= self.lineColor;
 	copy.lineWidth		= self.lineWidth;
 	copy.lineColorText	= self.lineColorText;
@@ -330,7 +329,6 @@ static TagInfo * g_DefaultRender = nil;
 		tagType.type			= [tag attributeForName:@"type"].stringValue;
 		tagType.belongsTo		= [tag attributeForName:@"belongsTo"].stringValue;
 		tagType.iconName		= [tag attributeForName:@"iconName"].stringValue;
-		tagType.wikiPage		= [tag attributeForName:@"wikiPage"].stringValue;
 		tagType.lineColor		= [TagInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
 		tagType.areaColor		= [TagInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
 		tagType.lineWidth		= [tag attributeForName:@"lineWidth"].stringValue.doubleValue;

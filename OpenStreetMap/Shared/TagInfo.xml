@@ -10,16 +10,16 @@
 	<tag key="aerialway" value="pylon" name="Pylon" type="way" description="A pylon supporting the aerialway cable." areaColor="663300"/>
 	<tag key="aerialway" value="station" name="Station" type="way" description="A station where passengers can enter and/or leave the aerialway" areaColor="663300"/>
 
-	<tag key="aeroway" value="aerodrome" name="Aerodrome" type="node;area" description="An Aerodrome (UK), Airport (US)" iconName="transport_aerodrome2" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:aeroway%3Daerodrome" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
+	<tag key="aeroway" value="aerodrome" name="Aerodrome" type="node;area" description="An Aerodrome (UK), Airport (US)" iconName="transport_aerodrome2" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
 	<tag key="aeroway" value="airport" name="Airport" iconName="transport_airport"/>
-	<tag key="aeroway" value="apron" name="Apron" description="An '''apron''' is the surfaced part of an airport where planes park." wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="990000"/>
+	<tag key="aeroway" value="apron" name="Apron" description="An '''apron''' is the surfaced part of an airport where planes park." areaColor="990000"/>
 	<tag key="aeroway" value="gate" name="Gate" description="Used to mark the gate numbers at the airports." iconName="transport_airport_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway"/>
 	<tag key="aeroway" value="hangar" name="Hangar" areaColor="990000"/>
-	<tag key="aeroway" value="helipad" name="Helipad" description="A place where helicopters can land." iconName="transport_helicopter_pad" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="330000"/>
+	<tag key="aeroway" value="helipad" name="Helipad" description="A place where helicopters can land." iconName="transport_helicopter_pad" areaColor="330000"/>
 	<tag key="aeroway" value="navigationaid" name="Navigation Aid" description="Used to mark air navigation aid land stations (NDB, VOR, VOR/DME, WAAS, etc.)."/>
-	<tag key="aeroway" value="runway" name="Runway" description="A strip of land kept clear and set aside for airplanes to take off from and land on." wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" lineColor="330000" lineWidth="3.000000"/>
-	<tag key="aeroway" value="taxiway" name="Taxiway" description="Where airplanes manouevre between runways and parking areas." wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" lineColor="660000" lineWidth="2.000000"/>
-	<tag key="aeroway" value="terminal" name="Terminal" description="Airport passenger building" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway" areaColor="BB0000"/>
+	<tag key="aeroway" value="runway" name="Runway" description="A strip of land kept clear and set aside for airplanes to take off from and land on." lineColor="330000" lineWidth="3.000000"/>
+	<tag key="aeroway" value="taxiway" name="Taxiway" description="Where airplanes manouevre between runways and parking areas." lineColor="660000" lineWidth="2.000000"/>
+	<tag key="aeroway" value="terminal" name="Terminal" description="Airport passenger building" areaColor="BB0000"/>
 	<tag key="aeroway" value="windsock" name="Windsock" description="Shows pilots wind direction and speed."/>
 
 	<tag key="airmark" value="beacon" name="Beacon" description="Base tag for beacons used in aerial navigation"/>
@@ -31,14 +31,14 @@
 	<tag key="amenity" value="animal_shelter" name="Animal Shelter" type="node;area" description="A shelter for animal recovery"/>
 	<tag key="amenity" value="architect_office" name="Architect Office" type="node;area"/>
 	<tag key="amenity" value="arts_centre" name="Arts Centre" type="node;area" description="An arts centre. A venue where a variety of arts are performed or conducted" />
-	<tag key="amenity" value="atm" name="ATM" type="node;area" description="A device that provides the clients of a financial institution with access to financial transactions." iconName="money_atm" wikiPage="http://wiki.openstreetmap.org/wiki/Atm" />
+	<tag key="amenity" value="atm" name="ATM" type="node;area" description="A device that provides the clients of a financial institution with access to financial transactions." iconName="money_atm" />
 	<tag key="amenity" value="audiologist" name="Audiologist" type="node;area" description="healthcare professional specialized in identifying, diagnosing, treating and monitoring diseases of the audition"/>
 	<tag key="amenity" value="baby_hatch" name="Baby Hatch" type="node;area" areaColor="EEEEEE"/>
-	<tag key="amenity" value="bank" name="Bank" type="node;area" description="Shows the location of a bank branch." iconName="money_bank2" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbank" />
+	<tag key="amenity" value="bank" name="Bank" type="node;area" description="Shows the location of a bank branch." iconName="money_bank2" />
 	<tag key="amenity" value="bar" name="Bar" type="node;area" description="A location for 'party' drinking" iconName="food_bar" areaColor="ECBA52"/>
 	<tag key="amenity" value="bbq" name="BBQ" type="node;area" description="A permanently built place for having a BBQ" iconName="tourist_picnic" />
 	<tag key="amenity" value="bench" name="Bench" type="node;area" description="A place for people to sit; allows room for several people." iconName="amenity_bench" lineColor="F7EFB7"/>
-	<tag key="amenity" value="bicycle_parking" name="Bicycle Parking" type="node;area" description="A place for parking bicycles." iconName="transport_parking_bicycle" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking" />
+	<tag key="amenity" value="bicycle_parking" name="Bicycle Parking" type="node;area" description="A place for parking bicycles." iconName="transport_parking_bicycle" />
 	<tag key="amenity" value="bicycle_rental" name="Bicycle Rental" type="node;area" description="A place where you can pick up and drop off rented bikes." iconName="transport_rental_bicycle" />
 	<tag key="amenity" value="biergarten" name="Biergarten" type="node;area" description="A place where beverages (beer) and prepared food are served." iconName="food_biergarten" areaColor="ECBA52"/>
 	<tag key="amenity" value="bikeshed" name="Bike Shed" type="node;area"/>
@@ -46,13 +46,13 @@
 	<tag key="amenity" value="brothel" name="Brothel" type="node;area" description="An establishment specifically dedicated to prostitution." areaColor="ECBA52"/>
 	<tag key="amenity" value="bureau_de_change" name="Currency Exchange" type="node;area" description="A Bureau de Change (using the widest accepted international name) is a generally small office or kiosk that changes foreign bank notes and travellers cheques and usually does nothing else." iconName="money_currency_exchange" />
 	<tag key="amenity" value="bus_station" name="Bus Station" type="node;area" description="A &quot;bus stop&quot; would be a place on a particular bus route where the bus regularly stops to pick up / drop off passengers." iconName="transport_bus_station" />
-	<tag key="amenity" value="cafe" name="Cafe" type="node;area" description="Is for a generally informal place with sit-down facilities selling beverages and light meals and/or snacks." iconName="food_cafe" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dcafe" areaColor="ECBA52"/>
+	<tag key="amenity" value="cafe" name="Cafe" type="node;area" description="Is for a generally informal place with sit-down facilities selling beverages and light meals and/or snacks." iconName="food_cafe" areaColor="ECBA52"/>
 	<tag key="amenity" value="car_rental" name="Car Rental" type="node;area" description="Marks a place from which motor cars / automobiles can be rented." iconName="transport_rental_car" />
 	<tag key="amenity" value="car_sharing" name="Car Sharing" type="node;area" description="Carsharing station, where you get your booked car, often separate areas on parking places." />
-	<tag key="amenity" value="car_wash" name="Car Wash" type="node;area" description="A place where you can wash your car." iconName="transport_car_wash" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dcar_wash" />
+	<tag key="amenity" value="car_wash" name="Car Wash" type="node;area" description="A place where you can wash your car." iconName="transport_car_wash" />
 	<tag key="amenity" value="casino" name="Casino" type="node;area" iconName="tourist_casino"/>
 	<tag key="amenity" value="charging_station" name="Charging Station" type="node;area" description="A place to plug in your electrical car"/>
-	<tag key="amenity" value="cinema" name="Cinema" type="node;area" description="Used to mark a cinema (movie theater)." iconName="tourist_cinema" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dcinema" />
+	<tag key="amenity" value="cinema" name="Cinema" type="node;area" description="Used to mark a cinema (movie theater)." iconName="tourist_cinema" />
 	<tag key="amenity" value="clinic" name="Clinic" type="node;area" description="Medium-sized medical centres with tens of staff; smaller than a hospital and larger than a doctor's practice." iconName="health_doctors"/>
 	<tag key="amenity" value="clock" name="Clock" type="node;area" description="Publicly visible clock." iconName="tourist_clock"/>
 	<tag key="amenity" value="coast_guard" name="Coast Guard" type="node;area"/>
@@ -74,12 +74,12 @@
 	<tag key="amenity" value="embassy" name="Embassy" type="node;area" description="A representation of a country in another country." iconName="poi_embassy" />
 	<tag key="amenity" value="emergency_phone" name="Emergency Phone" type="node;area" iconName="transport_emergency_phone" />
 	<tag key="amenity" value="ev_charging" name="Ev Charging" type="node;area" description="A place where electric vehicles can recharge their batteries"/>
-	<tag key="amenity" value="fast_food" name="Fast Food" type="node;area" description="Is for a place concentrating on very fast counter-only service and take-away food." iconName="food_fastfood" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dfast_food" areaColor="ECBA52"/>
+	<tag key="amenity" value="fast_food" name="Fast Food" type="node;area" description="Is for a place concentrating on very fast counter-only service and take-away food." iconName="food_fastfood" areaColor="ECBA52"/>
 	<tag key="amenity" value="feeding_place" name="Feeding Place" type="node;area"/>
-	<tag key="amenity" value="ferry_terminal" name="Ferry Terminal" type="node;area" description="A place where people/cars/etc. can board and leave a [[ferries" iconName="transport_port" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dferry_terminal" />
+	<tag key="amenity" value="ferry_terminal" name="Ferry Terminal" type="node;area" description="A place where people/cars/etc. can board and leave a [[ferries" iconName="transport_port" />
 	<tag key="amenity" value="festival_grounds" name="Festival Grounds" type="node;area" description="A place dedicated for festivals - like song and dance festivals"/>
 	<tag key="amenity" value="fire_hydrant" name="Fire Hydrant" type="node;area" description="A fire hydrant is an active fire protection measure, and a source of water provided in most urban, suburban and rural areas with municipal water service to enable firefighters to tap into the municipal water supply to assist in extinguishing a fire."/>
-	<tag key="amenity" value="fire_station" name="Fire Station" type="node;area" description="Used to mark a fire station." iconName="amenity_firestation2" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dfire_station" />
+	<tag key="amenity" value="fire_station" name="Fire Station" type="node;area" description="Used to mark a fire station." iconName="amenity_firestation2" />
 	<tag key="amenity" value="fitness_station" name="Fitness Station" type="node;area"/>
 	<tag key="amenity" value="food_court" name="Food Court" type="node;area" description="Is for a generally informal place with sit-down facilities that is contiguous with the counters of multiple food vendors and provides" areaColor="ECBA52"/>
 	<tag key="amenity" value="fountain" name="Fountain" type="node;area" description="A fountain for cultural / decorational / recreational purposes." iconName="amenity_fountain2" areaColor="00005F"/>
@@ -88,14 +88,14 @@
 	<tag key="amenity" value="grave_yard" name="Grave Yard" type="node;area" description="To mark places where people, or sometimes animals are buried which is close to a amenity=place_of_worship ." iconName="place_of_worship_unknown3" />
 	<tag key="amenity" value="grit_bin" name="Grit Bin" type="node;area" description="A container that hold grit or a mixture from salt and grit"/>
 	<tag key="amenity" value="harbourmaster" name="Harbour Master" type="node;area"/>
-	<tag key="amenity" value="hospital" name="Hospital" type="node;area" description="Used to mark a hospital. Image shows mapnik rendering" iconName="health_hospital" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dhospital" areaColor="EEEEEE"/>
+	<tag key="amenity" value="hospital" name="Hospital" type="node;area" description="Used to mark a hospital. Image shows mapnik rendering" iconName="health_hospital" areaColor="EEEEEE"/>
 	<tag key="amenity" value="hunting_stand" name="Hunting Stand" type="node;area" description="Hunting stands are open or enclosed platforms used by hunters to place themselves at an elevated height above the terrain." iconName="sport_shooting" />
 	<tag key="amenity" value="ice_cream" name="Ice Cream" type="node;area" description="A place that sells ice cream and frozen yoghurt over the counter." iconName="food_ice_cream" areaColor="ECBA52"/>
 	<tag key="amenity" value="jail" name="Jail (prison)" type="node;area"/>
-	<tag key="amenity" value="kindergarten" name="Kindergarten" type="node;area" description="Used to mark a kindergarten." iconName="education_nursery3" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dkindergarten" />
+	<tag key="amenity" value="kindergarten" name="Kindergarten" type="node;area" description="Used to mark a kindergarten." iconName="education_nursery3" />
 	<tag key="amenity" value="kiosk" name="Kiosk" type="node;area"/>
 	<tag key="amenity" value="kneipp_water_cure" name="Kneipp Water Cure" type="node;area" description="A foot bath is a shallow pool, often with handrail."/>
-	<tag key="amenity" value="library" name="Library" type="node;area" description="Used to mark a library." iconName="amenity_library" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dlibrary" />
+	<tag key="amenity" value="library" name="Library" type="node;area" description="Used to mark a library." iconName="amenity_library" />
 	<tag key="amenity" value="life_ring" name="Life Ring" type="node;area" description="A floating ring to throw out to someone who is struggling in water"/>
 	<tag key="amenity" value="lifeboat_station" name="Lifeboat Station" type="node;area"/>
 	<tag key="amenity" value="love_hotel" name="Love Hotel" type="node;area"/>
@@ -104,27 +104,27 @@
 	<tag key="amenity" value="monastery" name="Monastery" type="node;area"/>
 	<tag key="amenity" value="nightclub" name="Nightclub" type="node;area" description="A nightclub is a place to dance and drink at night." areaColor="ECBA52"/>
 	<tag key="amenity" value="nursing_home" name="Nursing Home" type="node;area" description="A home for disabled/elderly persons who need permanent care."/>
-	<tag key="amenity" value="parking" name="Parking" type="node;area" description="A place for parking cars" iconName="transport_parking_car" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dparking" />
+	<tag key="amenity" value="parking" name="Parking" type="node;area" description="A place for parking cars" iconName="transport_parking_car" />
 	<tag key="amenity" value="parking_entrance" name="Parking Entrance" type="node;area" description="A entrance to an underground or multi storey parking facility"/>
 	<tag key="amenity" value="parking_space" name="Parking Space" type="node;area" description="A single parking space on a parking lot"/>
 	<tag key="amenity" value="payment_terminal" name="Payment Terminal" type="node;area"/>
-	<tag key="amenity" value="pharmacy" name="Pharmacy" type="node;area" description="A shop where a pharmacist sells medications (drugstore)" iconName="health_pharmacy" wikiPage="http://wiki.openstreetmap.org/wiki/Pharmacy" areaColor="EEEEEE"/>
-	<tag key="amenity" value="place_of_worship" name="Place Of Worship" type="node;area" description="All places of worship independently of the religion or denomination get the tag amenity=place_of_worship (church,temple,mosque)." iconName="place_of_worship_unknown" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dplace_of_worship" />
-	<tag key="amenity" value="police" name="Police" type="node;area" description="Used to mark a police station." iconName="amenity_police2" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dpolice" />
-	<tag key="amenity" value="post_box" name="Post Box" type="node;area" description="Used to mark the location of a postbox." iconName="amenity_post_box" wikiPage="http://wiki.openstreetmap.org/wiki/Post_box" />
-	<tag key="amenity" value="post_office" name="Post Office" type="node;area" description="A place where letters and parcels may be sent or collected." iconName="amenity_post_office" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity=post_office" />
+	<tag key="amenity" value="pharmacy" name="Pharmacy" type="node;area" description="A shop where a pharmacist sells medications (drugstore)" iconName="health_pharmacy" areaColor="EEEEEE"/>
+	<tag key="amenity" value="place_of_worship" name="Place Of Worship" type="node;area" description="All places of worship independently of the religion or denomination get the tag amenity=place_of_worship (church,temple,mosque)." iconName="place_of_worship_unknown" />
+	<tag key="amenity" value="police" name="Police" type="node;area" description="Used to mark a police station." iconName="amenity_police2" />
+	<tag key="amenity" value="post_box" name="Post Box" type="node;area" description="Used to mark the location of a postbox." iconName="amenity_post_box" />
+	<tag key="amenity" value="post_office" name="Post Office" type="node;area" description="A place where letters and parcels may be sent or collected." iconName="amenity_post_office" />
 	<tag key="amenity" value="prison" name="Prison" type="node;area" description="A prison (jail)." />
-	<tag key="amenity" value="pub" name="Pub" type="node;area" description="A pub" iconName="food_pub" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dpub" areaColor="ECBA52"/>
+	<tag key="amenity" value="pub" name="Pub" type="node;area" description="A pub" iconName="food_pub" areaColor="ECBA52"/>
 	<tag key="amenity" value="public_bath" name="Public Bath" type="node;area"/>
 	<tag key="amenity" value="public_building" name="Public Building" type="node;area" description="Used to mark a public building." iconName="amenity_public_building2" />
-	<tag key="amenity" value="recycling" name="Recycling" type="node;area" description="Container or centre where you can take waste for recycling." iconName="amenity_recycling" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Drecycling" />
+	<tag key="amenity" value="recycling" name="Recycling" type="node;area" description="Container or centre where you can take waste for recycling." iconName="amenity_recycling" />
 	<tag key="amenity" value="register_office" name="Register Office" type="node;area" description="Used to mark a register of births, marriages and deaths."/>
 	<tag key="amenity" value="rescue_box" name="Rescue Box" type="node;area"/>
 	<tag key="amenity" value="restaurant" name="Restaurant" type="node;area" description="Is for a generally formal place with sit-down facilities selling full meals served by waiters and often licensed (where allowed) to sell alcoholic drinks." iconName="food_restaurant" areaColor="ECBA52"/>
 	<tag key="amenity" value="retirement_home" name="Retirement Home" type="node;area" description="A home for elderly persons."/>
 	<tag key="amenity" value="sauna" name="Sauna" type="node;area" description="Small room or house to experience dry or wet heat sessions."/>
 	<tag key="amenity" value="sceptic_tank" name="Sceptic Tank" type="node;area"/>
-	<tag key="amenity" value="school" name="School" type="node;area" description="Institution designed for learning under the supervision of teachers." iconName="education_school" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dschool" />
+	<tag key="amenity" value="school" name="School" type="node;area" description="Institution designed for learning under the supervision of teachers." iconName="education_school" />
 	<tag key="amenity" value="security_booth" name="Security Booth" type="node;area"/>
 	<tag key="amenity" value="septic_tank" name="Septic Tank" type="node;area"/>
 	<tag key="amenity" value="shelter" name="Shelter" type="node;area" description="Small place to protect against bad weather conditions" iconName="accommodation_shelter2" />
@@ -141,29 +141,29 @@
 	<tag key="amenity" value="telephone" name="Telephone" type="node;area" description="A Public telephone" iconName="amenity_telephone" />
 	<tag key="amenity" value="theatre" name="Theatre" type="node;area" description="Used to mark a theatre." iconName="tourist_theatre" />
 	<tag key="amenity" value="toilets" name="Toilets" type="node;area" description="Public toilets" iconName="amenity_toilets" />
-	<tag key="amenity" value="townhall" name="Townhall" type="node;area" description="A building where the administration of a village, town or city may be located, or it may just serve as a community meeting place." iconName="amenity_town_hall" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dtownhall" />
+	<tag key="amenity" value="townhall" name="Townhall" type="node;area" description="A building where the administration of a village, town or city may be located, or it may just serve as a community meeting place." iconName="amenity_town_hall" />
 	<tag key="amenity" value="training" name="Training" type="node;area"/>
 	<tag key="amenity" value="university" name="University" type="node;area" description="An educational institution designed for instruction, examination, or both, of students in many branches of advanced learning." iconName="education_university" />
 	<tag key="amenity" value="vending_machine" name="Vending Machine" type="node;area" description="A machine to vend goods, tickets and so on" iconName="shopping_vending_machine" />
-	<tag key="amenity" value="veterinary" name="Veterinary" type="node;area" description="A place where a veterinary surgeon (vet) practices." iconName="health_veterinary" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity%3Dveterinary" areaColor="EEEEEE"/>
+	<tag key="amenity" value="veterinary" name="Veterinary" type="node;area" description="A place where a veterinary surgeon (vet) practices." iconName="health_veterinary" areaColor="EEEEEE"/>
 	<tag key="amenity" value="waste_basket" name="Waste Basket" type="node;area" description="A single small container for depositing garbage that is easily accesible for pedestrians." iconName="amenity_waste_bin" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
 	<tag key="amenity" value="waste_disposal" name="Waste Disposal" type="node;area" description="A place where canal boaters, caravaners etc. can dispose of rubbish (trash/waste)."/>
 	<tag key="amenity" value="waste_transfer_station" name="Waste Transfer Station" type="node;area" description="Location that accepts a variety of waste, consolidates and transfers it"/>
 	<tag key="amenity" value="watering_place" name="Watering Place" type="node;area" description="Place where water is contained and animals can drink."/>
 
-	<tag key="barrier" value="block" name="Block" type="node_in_way" description="Large immobile block(s) barring free access along a way." iconName="barrier_blocks" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dblock" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="bollard" name="Bollard" type="node_in_way" description="Solid (usually concrete or metal) pillar or pillars in the middle of the road to prevent passage by some traffic." iconName="barrier_bollard" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dbollard" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="block" name="Block" type="node_in_way" description="Large immobile block(s) barring free access along a way." iconName="barrier_blocks" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="bollard" name="Bollard" type="node_in_way" description="Solid (usually concrete or metal) pillar or pillars in the middle of the road to prevent passage by some traffic." iconName="barrier_bollard" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="bus_trap" name="Bus Trap" type="node_in_way" description="A short section of the roadway where there is a deep dip in the middle to prevent passage by some traffic."/>
 	<tag key="barrier" value="cattle_grid" name="Cattle Grid" type="way;node_in_way" description="A hole in the road surface covered in a series of bars that allow wheeled vehicles but not animals to cross." iconName="barrier_cattle_grid" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
 	<tag key="barrier" value="chain" name="Chain" type="way;node_in_way" description="A chain used to prevent motorised vehicles."/>
 	<tag key="barrier" value="chicane" name="Chicane" type="node_in_way"/>
-	<tag key="barrier" value="city_wall" name="City Wall" type="way;node_in_way" description="is a fortification used to defend a city or settlement from potential aggressors. In ancient to modern times, they were used to enclose settlements." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcity_wall" lineColor="F0F050" lineWidth="2.000000"/>
+	<tag key="barrier" value="city_wall" name="City Wall" type="way;node_in_way" description="is a fortification used to defend a city or settlement from potential aggressors. In ancient to modern times, they were used to enclose settlements." lineColor="F0F050" lineWidth="2.000000"/>
 	<tag key="barrier" value="cycle_barrier" name="Cycle Barrier" type="way;node_in_way" description="Barriers along paths that slow or prevent access for bicycle users." iconName="barrier_cycle_barrier" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
 	<tag key="barrier" value="ditch" name="Ditch" type="way;node_in_way" description="A ditch, trench or ravine" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dditch"/>
 	<tag key="barrier" value="entrance" name="Entrance" type="node_in_way" description="An entrance in the middle of a barrier. The type of entrance barrier plus the [[Key:entrance]] tag." iconName="barrier_entrance"/>
-	<tag key="barrier" value="fence" name="Fence" type="node_in_way" description="A fence is a freestanding structure designed to restrict or prevent movement across a boundary. It is generally distinguished from a wall by the lightness of its construction." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dfence" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="fence" name="Fence" type="node_in_way" description="A fence is a freestanding structure designed to restrict or prevent movement across a boundary. It is generally distinguished from a wall by the lightness of its construction." lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="gate" name="Gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow access." iconName="barrier_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
-	<tag key="barrier" value="hedge" name="Hedge" type="way;node_in_way" description="A hedge is a line of closely spaced shrubs and tree species, which form a barrier or mark the boundary of an area." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dhedge" lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
+	<tag key="barrier" value="hedge" name="Hedge" type="way;node_in_way" description="A hedge is a line of closely spaced shrubs and tree species, which form a barrier or mark the boundary of an area." lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
 	<tag key="barrier" value="hedge_bank" name="Hedge Bank" type="node_in_way"/>
 	<tag key="barrier" value="horse_stile" name="Horse Stile" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gap" name="Kent Carriage Gap" type="node_in_way"/>
@@ -171,14 +171,14 @@
 	<tag key="barrier" value="kissing_gate" name="Kissing Gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow restricted access." iconName="barrier_kissing_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
 	<tag key="barrier" value="lift_gate" name="Lift Gate" type="way;node_in_way" description="A lift gate (boom barrier) is a bar, or pole pivoted in such a way as to allow the boom to block vehicular access through a controlled point." iconName="barrier_lift_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
 	<tag key="barrier" value="motorcycle_barrier" name="Motorcycle Barrier" type="way;node_in_way" description="Barriers along paths that prevent access to motorcycles."/>
-	<tag key="barrier" value="retaining_wall" name="Retaining Wall" type="node_in_way" description="A retaining wall is a structure that holds back soil or rock from a building, structure or area. Retaining walls prevent downslope movement or erosion and provide support for vertical or near-vertical grade changes. Right side is bottom, left side is top" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dretaining_wall" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="retaining_wall" name="Retaining Wall" type="node_in_way" description="A retaining wall is a structure that holds back soil or rock from a building, structure or area. Retaining walls prevent downslope movement or erosion and provide support for vertical or near-vertical grade changes. Right side is bottom, left side is top" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="sally_port" name="Sally Port" type="node_in_way"/>
 	<tag key="barrier" value="spikes" name="Spikes" type="node_in_way"/>
 	<tag key="barrier" value="stile" name="Stile" type="node_in_way" description="A structure which provides people a passage through or over a boundary via steps, ladders or narrow gaps." iconName="barrier_stile" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
 	<tag key="barrier" value="sump_buster" name="Sump Buster" type="node_in_way" description="A barrier to stop cars (two tracked vehicles with less than a certain ground clearance and width between tracks)."/>
-	<tag key="barrier" value="toll_booth" name="Toll Booth" type="node_in_way" description="A place where a road usage toll or fee is collected." iconName="barrier_toll_booth" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dtoll_booth" areaColor="F0F050"/>
+	<tag key="barrier" value="toll_booth" name="Toll Booth" type="node_in_way" description="A place where a road usage toll or fee is collected." iconName="barrier_toll_booth" areaColor="F0F050"/>
 	<tag key="barrier" value="turnstile" name="Turnstile" type="node_in_way" description="A passage on foot through a fence"/>
-	<tag key="barrier" value="wall" name="Wall" type="way;node_in_way" description="A wall is a freestanding structure, designed to restrict or prevent movement across a boundary, typically made from solid brick, concrete or rocks, and almost always built so that it is opaque to vision." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwall" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="wall" name="Wall" type="way;node_in_way" description="A wall is a freestanding structure, designed to restrict or prevent movement across a boundary, typically made from solid brick, concrete or rocks, and almost always built so that it is opaque to vision." lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="wire_fence" name="Wire Fence" type="way;node_in_way" iconName="barrier_generic" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwire_fence"/>
 
 	<default key="building" areaColor="D9AD64"/>
@@ -223,8 +223,8 @@
 	<tag key="building" value="warehouse" name="Warehouse" type="node;area" />
 	<tag key="building" value="yes" name="Building" type="node;area" />
 
-	<tag key="boundary" value="administrative" name="Administrative Boundary" type="way" description="An administrative boundary" iconName="poi_boundary_administrative" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=administrative" lineColor="B100FF" lineWidth="1.000000"/>
-	<tag key="boundary" value="national_park" type="way" description="Used for boundaries of national parks" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=national_park" lineColor="FF6600" lineWidth="1.000000"/>
+	<tag key="boundary" value="administrative" name="Administrative Boundary" type="way" description="An administrative boundary" iconName="poi_boundary_administrative" lineColor="B100FF" lineWidth="1.000000"/>
+	<tag key="boundary" value="national_park" type="way" description="Used for boundaries of national parks" lineColor="FF6600" lineWidth="1.000000"/>
 	<tag key="boundary" value="protected_area" description="Used to  mark the boundaries of protected areas including national parks, marine protection areas, heritage sites and indigenous areas" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
 	<tag key="boundary" value="town" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
 	<tag key="boundary" value="census" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=census"/>
@@ -438,59 +438,61 @@
 	<tag key="highway" value="cattle_grid" name="Cattle Grid" type="node"/>
 	<tag key="highway" value="construction" name="Construction" type="way" lineColor="ffff00" lineWidth="2.000000"/>
 	<tag key="highway" value="conveyor" name="Conveyor" type="way"/>
+	<tag key="highway" value="corridor" name="Corridor" type="way" description="A corridor inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
+
 	<tag key="highway" value="crossing" name="Crossing" type="node" description="Pedestrians can cross a street here - e.g. zebra crossing" iconName="transport_zebra_crossing"/>
-	<tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dcycleway" lineColor="b100ff" lineWidth="1.000000"/>
+	<tag key="highway" value="cycleway" name="Cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." lineColor="b100ff" lineWidth="1.000000"/>
 	<tag key="highway" value="elevator" name="Elevator" type="node" description="A elevator (or lift) is used to travel vertically, providing passenger and freight access between pathways at different floor levels."/>
 	<tag key="highway" value="emergency_access_point" name="Emergency Access Point" type="node" description="Sign number which can be used to define you current position in case of an emergency" areaColor="C0C0C0"/>
-	<tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dfootway" lineColor="aa3311" areaColor="00FF00" lineWidth="0.5"/>
+	<tag key="highway" value="footway" name="Footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." lineColor="aa3311" areaColor="00FF00" lineWidth="0.5"/>
 	<tag key="highway" value="ford" name="Ford" type="way" description="A point where a path or road crosses a river or stream which is at times covered by shallow water." iconName="transport_ford" lineColor="FF0000" lineWidth="2.000000"/>
 	<tag key="highway" value="gate" name="Gate" type="node"/>
 	<tag key="highway" value="give_way" name="Give Way" type="node" description="Used to mark give way signs"/>
 	<tag key="highway" value="incline" name="Incline" type="way"/>
 	<tag key="highway" value="incline_steep" name="Incline Steep" type="way"/>
 	<tag key="highway" value="lane" name="Lane" type="way"/>
-	<tag key="highway" value="living_street" name="Living Street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dliving_street" lineColor="DDDDDD" lineWidth="2.000000"/>
+	<tag key="highway" value="living_street" name="Living Street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, etc." lineColor="DDDDDD" lineWidth="2.000000"/>
 	<tag key="highway" value="milestone" name="Milestone" type="node"/>
 	<tag key="highway" value="mini_roundabout" name="Mini Roundabout" type="node" description="A road junction where the traffic goes around a painted circle or traversable island and has right of way." iconName="transport_miniroundabout_anticlockwise" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
 	<tag key="highway" value="minor" name="Minor" type="way"/>
-	<tag key="highway" value="motorway" name="Motorway" type="way" description="High capacity highways designed to safely carry fast motor traffic." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmotorway" lineColor="CF2081" lineWidth="3.000000"/>
+	<tag key="highway" value="motorway" name="Motorway" type="way" description="High capacity highways designed to safely carry fast motor traffic." lineColor="CF2081" lineWidth="3.000000"/>
 	<tag key="highway" value="motorway_junction" name="Motorway Junction" type="way" description="Indicates a junction/exit."/>
 	<tag key="highway" value="motorway_link" name="Motorway Link" type="way" description="The link roads (sliproads / ramps) leading to and from a motorway." lineColor="CF2081" lineWidth="2.000000"/>
 	<tag key="highway" value="moving_walkway" name="Moving Walkway" type="way"/>
 	<tag key="highway" value="passing_place" name="Passing Place" type="way" description="A passing place on a single track road."/>
-	<tag key="highway" value="path" name="Path" type="way" description="A generic path" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dpath" lineColor="A52A2A" lineWidth="0.5"/>
+	<tag key="highway" value="path" name="Path" type="way" description="A generic path" lineColor="A52A2A" lineWidth="0.5"/>
 	<tag key="highway" value="pedestrian" name="Pedestrian" type="way" description="For Roads , i.e. mainly / exclusively for pedestrians (often Shopping Areas)." lineColor="008000" areaColor="aa3311" lineWidth="2.000000"/>
 	<tag key="highway" value="piste" name="Piste" type="way"/>
 	<tag key="highway" value="platform" name="Platform" type="node;area" description="A platform of a bus station." lineColor="C0C0C0" areaColor="C0C0C0" lineWidth="2.000000"/>
-	<tag key="highway" value="primary" name="Primary" type="way" description="A highway linking large towns." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary" lineColor="FFA500" lineWidth="3.000000"/>
-	<tag key="highway" value="primary_link" name="Primary Link" type="way" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dprimary_link" lineColor="FFA500" lineWidth="2.000000"/>
+	<tag key="highway" value="primary" name="Primary" type="way" description="A highway linking large towns." lineColor="FFA500" lineWidth="3.000000"/>
+	<tag key="highway" value="primary_link" name="Primary Link" type="way" lineColor="FFA500" lineWidth="2.000000"/>
 	<tag key="highway" value="proposed" name="Proposed" type="way"/>
 	<tag key="highway" value="raceway" name="Raceway" type="way"/>
-	<tag key="highway" value="residential" name="Residential" type="way" description="Road in a residential area" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dresidential" lineColor="FFFFFF" lineWidth="2.000000"/>
+	<tag key="highway" value="residential" name="Residential" type="way" description="Road in a residential area" lineColor="FFFFFF" lineWidth="2.000000"/>
 	<tag key="highway" value="rest_area" name="Rest Area" type="way;node_in_way" description="Place where drivers can leave the road to rest, but not refuel." areaColor="C0C0C0"/>
 	<tag key="highway" value="road" name="Road" type="way" description="Road with unknown classification." lineColor="808080" lineWidth="2.000000"/>
-	<tag key="highway" value="secondary" name="Secondary" type="way" description="A highway linking large towns." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsecondary" lineColor="FFFF00" lineWidth="3.000000"/>
-	<tag key="highway" value="secondary_link" name="Secondary Link" type="way" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsecondary_link" lineColor="FFFF00" lineWidth="2.000000"/>
-	<tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dservice" lineColor="45588c" lineWidth="1.000000"/>
+	<tag key="highway" value="secondary" name="Secondary" type="way" description="A highway linking large towns." lineColor="FFFF00" lineWidth="3.000000"/>
+	<tag key="highway" value="secondary_link" name="Secondary Link" type="way" lineColor="FFFF00" lineWidth="2.000000"/>
+	<tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." lineColor="45588c" lineWidth="1.000000"/>
 	<tag key="highway" value="services" name="Services" type="way" description="Place where drivers can leave a road to refuel, rest, or take refreshments." areaColor="C0C0C0"/>
 	<tag key="highway" value="speed_camera" name="Speed Camera" type="node_in_way" description="A fixed road-side or overhead speed camera"/>
-	<tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dsteps" lineColor="aa3311" lineWidth="1.75000"/>
+	<tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" lineColor="aa3311" lineWidth="1.75000"/>
 	<tag key="highway" value="stile" name="Stile" type="way"/>
 	<tag key="highway" value="stop" name="Stop" type="way" description="Used to mark stop signs" iconName="transport_stop"/>
 	<tag key="highway" value="street_lamp" name="Street Lamp" type="node" description="A single pole with one or more lights to illuminate the street." iconName="poi/street_lamp-24.png"/>
-	<tag key="highway" value="tertiary" name="Tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary" lineColor="fcfc83" lineWidth="2.000000"/>
-	<tag key="highway" value="tertiary_link" name="Tertiary Link" type="way" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtertiary_link" lineColor="fcfc83" lineWidth="1.500000"/>
+	<tag key="highway" value="tertiary" name="Tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." lineColor="fcfc83" lineWidth="2.000000"/>
+	<tag key="highway" value="tertiary_link" name="Tertiary Link" type="way" lineColor="fcfc83" lineWidth="1.500000"/>
 	<tag key="highway" value="toll_booth" name="Toll Booth" type="node"/>
 	<tag key="highway" value="track" name="Track" type="way" description="Roads '''for agricultural use''': farm roads, forest tracks, etc." lineColor="996644" lineWidth="1.000000"/>
 	<tag key="highway" value="traffic_calming" name="Traffic Calming" type="node_in_way" iconName="transport_speedbump"/>
 	<tag key="highway" value="traffic_mirror" name="Traffic Mirror" type="way"/>
 	<tag key="highway" value="traffic_signals" name="Traffic Signals" type="node_in_way" description="A traffic signal for regulating circulation." iconName="transport_traffic_lights"/>
 	<tag key="highway" value="trail" name="Trail" type="way" description="For hiking trails etc"/>
-	<tag key="highway" value="trunk" name="Trunk" type="way" description="Important roads that aren’t motorways." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dtrunk" lineColor="DD2F22" lineWidth="3.000000"/>
+	<tag key="highway" value="trunk" name="Trunk" type="way" description="Important roads that aren’t motorways." lineColor="DD2F22" lineWidth="3.000000"/>
 	<tag key="highway" value="trunk_link" name="Trunk Link" type="way" lineColor="DD2F22" lineWidth="2.000000"/>
 	<tag key="highway" value="turning_circle" name="Turning Circle" type="way;node_in_way" description="A widened area of road that allows vehicles to turn more easily." iconName="transport_turning_circle" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
 	<tag key="highway" value="turning_loop" name="Turning Loop" type="way;node_in_way" description="A widened area of a highway with a non-traversable island for turning around, often circular and at the end of a road." iconName="transport_turning_circle"/>
-	<tag key="highway" value="unclassified" name="Unclassified" type="way" description="Public access road, non-residential." wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dunclassified" lineColor="96795d" lineWidth="2.000000"/>
+	<tag key="highway" value="unclassified" name="Unclassified" type="way" description="Public access road, non-residential." lineColor="96795d" lineWidth="2.000000"/>
 	<tag key="highway" value="unsurfaced" name="Unsurfaced" type="way" lineColor="C0C0C0" lineWidth="1.000000"/>
 	<tag key="highway" value="yield" name="Yield" type="way"/>
 
@@ -531,6 +533,11 @@
 
 	<tag key="incline" value="down" name="Down"/>
 	<tag key="incline" value="up" name="Up"/>
+
+	<tag key="indoor" value="area" name="Indoor Area" type="way" description="An area inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="indoor" value="corridor" name="Corridor" type="way" description="A corridor inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="indoor" value="room" name="Room" type="way" description="A room inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="indoor" value="wall" name="Indoor Area" type="way" description="A wall inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
 
 	<tag key="industrial" value="auto_wrecker" name="Auto Wrecker" description="long term disposal site for wrecked vehicles."/>
 	<tag key="industrial" value="well_cluster" name="Well Cluster"/>
@@ -1457,7 +1464,7 @@
 	<tag key="shop" value="communication" name="Communication" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="computer" name="Computer" type="node;area" description="A shop selling computers, peripherals, software, ..." iconName="shopping_computer" areaColor="7D81FF"/>
 	<tag key="shop" value="confectionery" name="Confectionery" type="node;area" description="Confectionery. A shop selling sweets and pastry" iconName="shopping_confectionery" areaColor="7D81FF"/>
-	<tag key="shop" value="convenience" name="Convenience" type="node;area" description="A convenience store. A small local shop carrying a small subset of the items you would find in a supermarket" iconName="shopping_convenience" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:shop%3Dconvenience" areaColor="7D81FF"/>
+	<tag key="shop" value="convenience" name="Convenience" type="node;area" description="A convenience store. A small local shop carrying a small subset of the items you would find in a supermarket" iconName="shopping_convenience" areaColor="7D81FF"/>
 	<tag key="shop" value="copyshop" name="Copyshop" type="node;area" description="A shop that offers photocopying and printing services." iconName="shopping_copyshop" areaColor="7D81FF"/>
 	<tag key="shop" value="curtain" name="Curtain" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="deli" name="Deli" type="node;area" description="Used to mark a delicatessen store." areaColor="7D81FF"/>
@@ -1531,7 +1538,7 @@
 	<tag key="shop" value="shoes" name="Shoes" type="node;area" description="Selling shoes." iconName="shopping_clothes" areaColor="7D81FF" />
 	<tag key="shop" value="sports" name="Sports" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="stationery" name="Stationery" type="node;area" description="A shop selling office supplies" areaColor="7D81FF"/>
-	<tag key="shop" value="supermarket" name="Supermarket" type="node;area" description="A large store for groceries and other goods." iconName="shopping_supermarket" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:shop%3Dsupermarket" areaColor="7D81FF"/>
+	<tag key="shop" value="supermarket" name="Supermarket" type="node;area" description="A large store for groceries and other goods." iconName="shopping_supermarket" areaColor="7D81FF"/>
 	<tag key="shop" value="systembolaget" name="Systembolaget" type="node;area" description="The only stores in Sweden allowed to sell alcohol." areaColor="7D81FF"/>
 	<tag key="shop" value="tattoo" name="Tattoo" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="ticket" name="Ticket" type="node;area" areaColor="7D81FF"/>
@@ -1699,10 +1706,10 @@
 	<tag key="tourism" value="chalet" name="Chalet" type="node;area" description="Detached cottages with self-contained cooking/bathroom/toilet facilities" iconName="accommodation_chalet" areaColor="E1A0A2"/>
 	<tag key="tourism" value="guest_house" name="Guest House" type="node;area" description="Guest House and Bed&amp;Breakfast" iconName="accommodation_bed_and_breakfast" areaColor="E1A0A2"/>
 	<tag key="tourism" value="hostel" name="Hostel" type="node;area" description="Cheap accommodation with shared bedrooms." iconName="accommodation_youth_hostel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="hotel" name="Hotel" type="node;area" description="Used to tag a hotel." iconName="accommodation_hotel" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:tourism%3Dhotel" areaColor="E1A0A2"/>
+	<tag key="tourism" value="hotel" name="Hotel" type="node;area" description="Used to tag a hotel." iconName="accommodation_hotel" areaColor="E1A0A2"/>
 	<tag key="tourism" value="information" name="Information" type="node;area" description="Information for tourists and visitors, including information offices" iconName="tourist_information" areaColor="E180A2"/>
-	<tag key="tourism" value="motel" name="Motel" type="node;area" description="Short term accommodation, particularly for people travelling by car." iconName="accommodation_motel" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:tourism%3Dmotel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="museum" name="Museum" type="node;area" description="A museum." iconName="tourist_museum" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:tourism%3Dmuseum" areaColor="E180A2"/>
+	<tag key="tourism" value="motel" name="Motel" type="node;area" description="Short term accommodation, particularly for people travelling by car." iconName="accommodation_motel" areaColor="E1A0A2"/>
+	<tag key="tourism" value="museum" name="Museum" type="node;area" description="A museum." iconName="tourist_museum" areaColor="E180A2"/>
 	<tag key="tourism" value="picnic_site" name="Picnic Site" type="node;area" description="A picnic site" iconName="tourist_picnic" areaColor="E180A2"/>
 	<tag key="tourism" value="theme_park" name="Theme Park" type="node;area" iconName="tourist_theme_park" areaColor="E180A2"/>
 	<tag key="tourism" value="tourism-attraction" name="Tourism-Attraction" type="node;area"/>

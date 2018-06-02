@@ -31,7 +31,6 @@
 @property (strong,nonatomic)	NSString	*	belongsTo;
 @property (strong,nonatomic)	NSString	*	iconName;
 @property (strong,nonatomic)	NSString	*	summary;
-@property (strong,nonatomic)	NSString	*	wikiPage;
 @property (strong,nonatomic)	NSColor		*	lineColor;
 @property (assign,nonatomic)	NSString	*	lineColorText;
 @property (assign,nonatomic)	CGFloat			lineWidth;
