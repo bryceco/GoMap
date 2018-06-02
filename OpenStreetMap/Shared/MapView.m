@@ -2684,8 +2684,8 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 
 	} else {
 
-		if ( node && way && way.nodes.count && !(node == way.nodes[0] || node == way.nodes.lastObject) ) {
-			// both a node and way selected but selectedd node is not an endpoint, so we will create a new way from that node
+		if ( node && way && way.nodes.count && (way.isClosed || (node != way.nodes[0] && node != way.nodes.lastObject)) ) {
+			// both a node and way are selected but selected node is not an endpoint (or way is closed), so we will create a new way from that node
 			way = [_editorLayer createWayWithNode:node];
 		} else {
 			if ( node == nil ) {
