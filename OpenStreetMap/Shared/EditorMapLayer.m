@@ -2573,8 +2573,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 					// its an icon or a generic box
 				}
 
-				pt2.x = round(pt2.x);
-				pt2.y = round(pt2.y);
+				CGFloat scale = [[UIScreen mainScreen] scale];
+				pt2.x = round(pt2.x * scale)/scale;
+				pt2.y = round(pt2.y * scale)/scale;
 				layer.position = CGPointFromOSMPoint(pt2);
 			}
 
