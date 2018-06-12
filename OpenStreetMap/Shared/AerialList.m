@@ -412,7 +412,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
 	if ( cachedData == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
 		// download newer version periodically
-		NSString * urlString = @"https://raw.githubusercontent.com/osmlab/editor-layer-index/gh-pages/imagery.json";
+		NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
 		NSURL * downloadUrl = [NSURL URLWithString:urlString];
 		NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 			NSArray * externalAerials = [self processOsmLabAerialsData:data];
