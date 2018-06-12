@@ -1308,12 +1308,23 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	if ( self ) {
 		_nodes	= [coder decodeObjectForKey:@"nodes"];
 		_constructed = YES;
+#if DEBUG
+		for ( OsmNode * node in _nodes ) {
+			assert( node.wayCount > 0 );
+		}
+#endif
 	}
 	return self;
 }
 
 -(void)encodeWithCoder:(NSCoder *)coder
 {
+#if DEBUG
+	for ( OsmNode * node in _nodes ) {
+		assert( node.wayCount > 0 );
+	}
+#endif
+
 	[super encodeWithCoder:coder];
 	[coder encodeObject:_nodes forKey:@"nodes"];
 }

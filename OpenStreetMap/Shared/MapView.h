@@ -21,8 +21,10 @@
 @class CAShapeLayer;
 @class AerialList;
 @class AerialService;
+@class Buildings3DView;
 @class DisplayLink;
 @class EditorMapLayer;
+@class FpsLabel;
 @class GpxLayer;
 @class HtmlErrorWindow;
 @class LocationBallLayer;
@@ -33,7 +35,6 @@
 @class OsmBaseObject;
 @class PushPinView;
 @class RulerLayer;
-@class FpsLabel;
 @class TapAndDragGesture;
 @class VoiceAnnouncement;
 
@@ -144,6 +145,8 @@ typedef enum {
 @property (readonly,nonatomic)	MercatorTileLayer			*	mapnikLayer;
 @property (readonly,nonatomic)	EditorMapLayer				*	editorLayer;
 @property (readonly,nonatomic)	GpxLayer					*	gpxLayer;
+@property (readonly,nonatomic)	Buildings3DView				*	buildings3D;
+
 // overlays
 @property (readonly,nonatomic)	MercatorTileLayer			*	locatorLayer;
 @property (readonly,nonatomic)	MercatorTileLayer			*	gpsTraceLayer;

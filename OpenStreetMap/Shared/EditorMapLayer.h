@@ -11,7 +11,7 @@
 #import "iosapi.h"
 #import "OsmMapData.h"
 
-
+@class Buildings3DView;
 @class OsmMapData;
 @class OsmRenderInfo;
 @class MapCSS;
@@ -23,7 +23,7 @@
 @class QuadMap;
 
 #define SHOW_3D	1
-
+#define USE_SCENEKIT 0
 
 static const CGFloat DefaultHitTestRadius = 10.0;	// how close to an object do we need to tap to select it
 static const CGFloat DragConnectHitTestRadius = DefaultHitTestRadius * 0.6;	// how close to an object do we need to drag a node to connect to it

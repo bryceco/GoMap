@@ -12,6 +12,7 @@
 
 #import "AerialList.h"
 #import "BingMapsGeometry.h"
+#import "Buildings3DView.h"
 #import "DisplayLink.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
@@ -49,6 +50,9 @@ static const CGFloat Z_AERIAL			= -100;
 static const CGFloat Z_MAPNIK			= -99;
 static const CGFloat Z_LOCATOR			= -50;
 static const CGFloat Z_GPSTRACE			= -40;
+#if USE_SCENEKIT
+static const CGFloat Z_BUILDINGS3D		= -30;
+#endif
 static const CGFloat Z_EDITOR			= -20;
 static const CGFloat Z_GPX				= -15;
 //static const CGFloat Z_BUILDINGS		= -18;
@@ -161,6 +165,13 @@ static const CGFloat Z_FLASH			= 110;
 		_gpxLayer.hidden = YES;
 		[bg addObject:_gpxLayer];
 
+#if USE_SCENEKIT
+		_buildings3D = [[Buildings3DView alloc] initWithFrame:self.bounds];
+		_buildings3D.mapView = self;
+		[self addSubview:_buildings3D];
+		_buildings3D.layer.zPosition = Z_BUILDINGS3D;
+#endif
+		
 		_backgroundLayers = [NSArray arrayWithArray:bg];
 		for ( CALayer * layer in _backgroundLayers ) {
 			[self.layer addSublayer:layer];
@@ -548,6 +559,8 @@ static const CGFloat Z_FLASH			= 110;
 			layer.bounds = self.layer.bounds;
 		}
 	}
+	_buildings3D.frame = self.layer.bounds;
+
 	_crossHairs.position = CGRectCenter( rect );
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;

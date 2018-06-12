@@ -14,6 +14,7 @@
 #import "iosapi.h"
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
+#import "Buildings3DView.h"
 #import "CommonTagList.h"
 #import "CurvedTextLayer.h"
 #import "DLog.h"
@@ -1383,7 +1384,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			layer.position		= CGPointMake(pt.x,pt.y);
 			layer.contents		= (id)icon.CGImage;
 			layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-			layer.cornerRadius		= 5;
+			layer.cornerRadius	= 5;
 			layer.zPosition		= Z_NODE;
 
 			LayerProperties * props = [LayerProperties new];
@@ -1617,6 +1618,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 				[layers addObject:layer];
 
+
 #if SHOW_3D
 				// if its a building then add walls for 3D
 				if ( object.tags[@"building"] != nil ) {
@@ -1662,6 +1664,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 						height *= 3;
 					}
 
+#if USE_SCENEKIT
+					UIBezierPath * wallPath = [UIBezierPath bezierPathWithCGPath:path];
+					[_mapView.buildings3D addShapeWithPath:wallPath height:height position:refPoint];
+#else
 					// get walls
 					double hue = object.ident.longLongValue % 20 - 10;
 					for ( int isInner = 0; isInner < 2; ++isInner ) {
@@ -1707,6 +1713,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 						roof.transform = t;
 						[layers addObject:roof];
 					}
+#endif // USE_SCENEKIT
 				}
 #endif	// SHOW_3D
 
@@ -2581,6 +2588,15 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 			}
 		}
 	}
+
+
+#if USE_SCENEKIT
+	{
+		CGPoint center = CGRectCenter(_mapView.bounds);
+		OSMPoint mapCenter = [_mapView mapPointFromScreenPoint:OSMPointFromCGPoint(center) birdsEye:NO];
+		[_mapView.buildings3D setCameraDirection:tRotation birdsEye:_mapView.birdsEyeRotation distance:_mapView.birdsEyeDistance fromPoint:mapCenter];
+	}
+#endif
 
 #if FADE_INOUT
 	[CATransaction commit];

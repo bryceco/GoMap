@@ -810,6 +810,8 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		t.m34 = -1.0/_mapView.birdsEyeDistance;
 		t = CATransform3DRotate( t, _mapView.birdsEyeRotation, 1.0, 0, 0);
 		self.sublayerTransform = t;
+	} else {
+		self.sublayerTransform = CATransform3DIdentity;
 	}
 }
 

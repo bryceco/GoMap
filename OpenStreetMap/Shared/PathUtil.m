@@ -33,7 +33,17 @@ NSInteger CGPathGetPoints( CGPathRef path, CGPoint pointList[] )
 {
 	__block NSInteger index = 0;
 	CGPathApplyBlockEx( path, ^(CGPathElementType type, CGPoint *points) {
-		pointList[ index++ ] = points[0];
+		switch ( type ) {
+			case kCGPathElementMoveToPoint:
+			case kCGPathElementAddLineToPoint:
+				pointList[ index++ ] = points[0];
+				break;
+			case kCGPathElementCloseSubpath:
+				pointList[ index++ ] = pointList[0];
+				break;
+			default:
+				break;
+		}
 	});
 	return index;
 }

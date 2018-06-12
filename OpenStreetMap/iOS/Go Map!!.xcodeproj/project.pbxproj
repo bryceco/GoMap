@@ -58,6 +58,8 @@
 		022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A53167B8F1C00D7A5AC /* POITabBarController.m */; };
 		022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */; };
 		022ABCA120C1AACF002D4977 /* MultilineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */; };
+		022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022ABCA320C3750A002D4977 /* Buildings3DView.m */; };
+		022ABCA520C37618002D4977 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025B841619DCF55C0053C637 /* SceneKit.framework */; };
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
@@ -563,6 +565,8 @@
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ClearCacheViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultilineTableViewCell.h; sourceTree = "<group>"; };
 		022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultilineTableViewCell.m; sourceTree = "<group>"; };
+		022ABCA220C3750A002D4977 /* Buildings3DView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buildings3DView.h; sourceTree = "<group>"; };
+		022ABCA320C3750A002D4977 /* Buildings3DView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Buildings3DView.m; sourceTree = "<group>"; };
 		022B09A619BD3F7B0041687B /* QuadMapC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadMapC.mm; path = ../Shared/QuadMapC.mm; sourceTree = "<group>"; };
 		022B504716857E5F00E6619A /* OSMiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OSMiOS.entitlements; sourceTree = "<group>"; };
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1082,6 +1086,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				022ABCA520C37618002D4977 /* SceneKit.framework in Frameworks */,
 				02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */,
 				02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
@@ -1720,6 +1725,8 @@
 				02C3C73819A6DCEA003B6783 /* AerialList.h */,
 				02C3C73919A6DCEA003B6783 /* AerialList.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
+				022ABCA220C3750A002D4977 /* Buildings3DView.h */,
+				022ABCA320C3750A002D4977 /* Buildings3DView.m */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				028F504319B949780093C423 /* CommonTagList.h */,
 				028F504419B949780093C423 /* CommonTagList.m */,
@@ -1749,6 +1756,8 @@
 				02ACBA8216713F2A00BB4414 /* MercatorTileLayer.m */,
 				0259E4061BCAEC88006C354C /* MyApplication.h */,
 				0259E4071BCAEC88006C354C /* MyApplication.m */,
+				02A8613E20A95C2B008C465F /* NetworkStatus.h */,
+				02A8613C20A95C16008C465F /* NetworkStatus.m */,
 				02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */,
 				02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */,
 				02ACBA8316713F2A00BB4414 /* OsmMapData.h */,
@@ -1786,8 +1795,6 @@
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
 				021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */,
 				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
-				02A8613E20A95C2B008C465F /* NetworkStatus.h */,
-				02A8613C20A95C16008C465F /* NetworkStatus.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -2303,6 +2310,7 @@
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
 				02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */,
+				022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
