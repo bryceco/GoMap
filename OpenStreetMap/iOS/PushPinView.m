@@ -29,6 +29,9 @@
 		_shapeLayer = [CAShapeLayer layer];
 		_shapeLayer.fillColor = UIColor.grayColor.CGColor;
 		_shapeLayer.strokeColor = UIColor.whiteColor.CGColor;
+		_shapeLayer.shadowColor = UIColor.blackColor.CGColor;
+		_shapeLayer.shadowOffset = CGSizeMake(3,3);
+		_shapeLayer.shadowOpacity = 0.6;
 		[self.layer addSublayer:_shapeLayer];
 
 		// text layer
@@ -177,6 +180,7 @@
 	CGRect viewRect = CGPathGetPathBoundingBox( _path );
 	_shapeLayer.frame = CGRectMake( 0, 0, 20, 20 );	// arbitrary since it is a shape
 	_shapeLayer.path = _path;
+	_shapeLayer.shadowPath = _path;
 
 	if ( _labelOnBottom ) {
 		_textLayer.frame = CGRectMake( textAlleyWidth, topGap+arrowHeight+textAlleyWidth,
