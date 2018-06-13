@@ -319,7 +319,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 			NSDictionary * properties = isGeoJSON ? entry[@"properties"] : entry;
 			NSString * 	name 				= properties[@"name"];
-			NSLog(@"name = %@",name);
 			NSString * 	identifier			= properties[@"id"];
 			NSString * 	type 				= properties[@"type"];
 			NSArray *	projections			= properties[@"available_projections"];
@@ -471,10 +470,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
 		NSURL * downloadUrl = [NSURL URLWithString:urlString];
 		NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+			[[NSUserDefaults standardUserDefaults] setObject:now forKey:@"lastImageryDownloadDate"];
 			NSArray * externalAerials = [self processOsmLabAerialsData:data];
 			if ( externalAerials.count > 100 ) {
 				// cache download for next time
-				[[NSUserDefaults standardUserDefaults] setObject:now  forKey:@"lastImageryDownloadDate"];
 				[data writeToFile:[self pathToExternalAerialsCache] options:NSDataWritingAtomic error:NULL];
 				// notify caller of update
 				dispatch_async(dispatch_get_main_queue(), ^{
