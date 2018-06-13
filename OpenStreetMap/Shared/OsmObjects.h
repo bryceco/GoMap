@@ -120,6 +120,8 @@ typedef enum {
 
 -(OSMPoint)selectionPoint;
 -(OSMPoint)pointOnObjectForPoint:(OSMPoint)target;
+-(CGPathRef)linePathForObjectWithRefPoint:(OSMPoint *)refPoint CF_RETURNS_RETAINED;
+-(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
 
 -(NSDate *)dateForTimestamp;
 
@@ -185,7 +187,7 @@ typedef enum {
 -(double)wayArea;
 -(BOOL)isMultipolygonMember;
 -(BOOL)isSimpleMultipolygonOuterMember;
-+(BOOL)isClockwiseArrayOfPoints:(NSArray *)a;
++(BOOL)isClockwiseArrayOfNodes:(NSArray *)nodes;
 -(BOOL)hasDuplicatedNode;
 -(OsmNode *)connectsToWay:(OsmWay *)way;
 @end
@@ -214,6 +216,7 @@ typedef enum {
 -(NSArray *)membersByRole:(NSString *)role;
 -(OsmMember *)memberByRef:(OsmBaseObject *)ref;
 
+-(NSMutableArray *)waysInMultipolygon;
 
 -(OSMPoint)centerPoint;
 

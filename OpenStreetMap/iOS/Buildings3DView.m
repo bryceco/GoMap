@@ -12,8 +12,7 @@
 #import "VectorMath.h"
 
 
-#define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
-
+extern const double PATH_SCALING;
 
 
 @interface BuildingProperties : NSObject

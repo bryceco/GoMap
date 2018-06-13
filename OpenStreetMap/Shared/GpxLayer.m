@@ -16,7 +16,7 @@
 #import "OsmObjects.h"
 #import "PathUtil.h"
 
-#define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
+extern const double PATH_SCALING;
 
 
 //static const NSTimeInterval	MAX_AGE		= 7.0 * 24 * 60 * 60;

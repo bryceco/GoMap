@@ -34,7 +34,7 @@
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
 
-#define PATH_SCALING	(256*256.0)		// scale up sizes in paths so Core Animation doesn't round them off
+const double PATH_SCALING = (256*256.0);		// scale up sizes in paths so Core Animation doesn't round them off
 
 
 #define DEFAULT_LINECAP		kCALineCapSquare
@@ -609,21 +609,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 }
-+(void)convertNodesToMapPoints:(NSMutableArray *)nodeList
-{
-	if ( nodeList.count == 0 )
-		return;
-	BOOL isLoop = nodeList.count > 1 && nodeList[0] == nodeList.lastObject;
-	for ( NSInteger index = 0, count = nodeList.count; index < count; ++index ) {
-		if ( isLoop && index == count-1 ) {
-			nodeList[index] = nodeList[0];
-		} else {
-			OsmNode * node = nodeList[index];
-			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
-			nodeList[index] = [OSMPointBoxed pointWithPoint:pt];
-		}
-	}
-}
 
 
 -(NSMutableArray *)visibleSegmentsOfWay:(NSMutableArray *)way inView:(OSMRect)viewRect
@@ -730,28 +715,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 		}
 	}
 }
-+(void)addBoxedPointList:(NSArray *)list toPath:(CGMutablePathRef)path refPoint:(OSMPoint)refPoint
-{
-	OSMPointBoxed * first = nil;
-	for ( OSMPointBoxed * point in list ) {
-		OSMPoint p = point.point;
-		p.x -= refPoint.x;
-		p.y -= refPoint.y;
-		p.x *= PATH_SCALING;
-		p.y *= PATH_SCALING;
-		if ( isinf(p.x) )
-			break;
-		if ( first == nil ) {
-			first = point;
-			CGPathMoveToPoint(path, NULL, p.x, p.y );
-		} else if ( point == first ) {
-			CGPathCloseSubpath( path );
-		} else {
-			CGPathAddLineToPoint( path, NULL, p.x, p.y );
-		}
-	}
-}
-
 
 -(CAShapeLayer *)getOceanLayer:(NSArray *)objectList
 {
@@ -1252,63 +1215,10 @@ const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 9 * ZSCALE;
 const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 10 * ZSCALE;
 const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
--(CGPathRef)pathForObject:(OsmBaseObject *)object refPoint:(OSMPoint *)refPoint CF_RETURNS_RETAINED
-{
-	NSArray * wayList = object.isWay ? @[ object ] : object.isRelation ? [self wayListForMultipolygonRelation:object.isRelation] : nil;
-	if ( wayList == nil )
-		return nil;
-
-	CGMutablePathRef	path		= CGPathCreateMutable();
-	OSMPoint			initial		= { 0, 0 };
-	BOOL				haveInitial	= NO;
-
-	for ( OsmWay * way in wayList ) {
-
-		BOOL first = YES;
-		for ( OsmNode * node in way.nodes ) {
-			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
-			if ( isinf(pt.x) )
-				break;
-			if ( !haveInitial ) {
-				initial = pt;
-				haveInitial = YES;
-			}
-			pt.x -= initial.x;
-			pt.y -= initial.y;
-			pt.x *= PATH_SCALING;
-			pt.y *= PATH_SCALING;
-			if ( first ) {
-				CGPathMoveToPoint(path, NULL, pt.x, pt.y);
-				first = NO;
-			} else {
-				CGPathAddLineToPoint(path, NULL, pt.x, pt.y);
-			}
-		}
-	}
-
-	if ( refPoint && haveInitial ) {
-		// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
-		CGRect bbox	= CGPathGetPathBoundingBox( path );
-		if ( !isinf(bbox.origin.x) ) {
-			CGAffineTransform tran = CGAffineTransformMakeTranslation( -bbox.origin.x, -bbox.origin.y );
-			CGPathRef path2 = CGPathCreateCopyByTransformingPath( path, &tran );
-			CGPathRelease( path );
-			path = (CGMutablePathRef)path2;
-			*refPoint = OSMPointMake( initial.x + (double)bbox.origin.x/PATH_SCALING, initial.y + (double)bbox.origin.y/PATH_SCALING );
-		} else {
-#if DEBUG
-			DLog(@"bad path: %@", object);
-			CGPathDump(path);
-#endif
-		}
-	}
-
-	return path;
-}
 
 -(CALayer *)buildingWallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2 height:(double)height hue:(double)hue
 {
-	OSMPoint dir = Sub( p2, p1 );
+	OSMPoint dir = Sub(p2,p1);
 	double length = Mag( dir );
 	double angle = atan2( dir.y, dir.x );
 
@@ -1331,7 +1241,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	wall.opaque			= YES;
 	wall.frame			= CGRectMake(0, 0, length*PATH_SCALING, height);
 	wall.backgroundColor= color.CGColor;
-	wall.position		= CGPointMake( p1.x, p1.y );
+	wall.position		= CGPointFromOSMPoint(p1);
 	wall.borderWidth	= 1.0;
 	wall.borderColor	= [UIColor blackColor].CGColor;
 
@@ -1445,7 +1355,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 		if ( tagInfo.lineWidth && !object.isWay.isArea ) {
 			OSMPoint refPoint;
-			CGPathRef path = [self pathForObject:object refPoint:&refPoint];
+			CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
 			if ( path ) {
 
 				{
@@ -1529,7 +1439,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	// way (also provides an outline for areas)
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 		OSMPoint refPoint = { 0, 0 };
-		CGPathRef path = [self pathForObject:object refPoint:&refPoint];
+		CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
 
 		if ( path ) {
 			CGFloat red = 0, green = 0, blue = 0, alpha = 1;
@@ -1572,38 +1482,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	if ( object.isWay.isArea || object.isRelation.isMultipolygon ) {
 		if ( tagInfo.areaColor && !object.isCoastline ) {
 
-			NSMutableArray * outer = object.isWay ? [NSMutableArray arrayWithObject:object.isWay] : [NSMutableArray arrayWithCapacity:object.isRelation.members.count];
-			NSMutableArray * inner = object.isWay ? nil : [NSMutableArray arrayWithCapacity:object.isRelation.members.count];
-			for ( OsmMember * mem in object.isRelation.members ) {
-				if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
-					if ( [mem.role isEqualToString:@"outer"] )
-						[outer addObject:mem.ref];
-					else if ( [mem.role isEqualToString:@"inner"] ) {
-						[inner addObject:mem.ref];
-					}
-				}
-			}
-
-			// join connected nodes together
-			outer = [self joinConnectedWays:outer];
-			inner = [self joinConnectedWays:inner];
-
-			if ( outer.count > 0 ) {
-				// convert from nodes to screen points
-				for ( NSMutableArray * a in outer )
-					[EditorMapLayer convertNodesToMapPoints:a];
-				for ( NSMutableArray * a in inner )
-					[EditorMapLayer convertNodesToMapPoints:a];
-
+			OSMPoint refPoint;
+			CGPathRef path = [object shapePathForObjectWithRefPoint:&refPoint];
+			if ( path ) {
 				// draw
-				CGMutablePathRef path = CGPathCreateMutable();
-				OSMPoint refPoint = ((OSMPointBoxed *)outer[0][0]).point;
-				for ( NSArray * w in outer ) {
-					[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
-				}
-				for ( NSArray * w in inner ) {
-					[EditorMapLayer addBoxedPointList:w toPath:path refPoint:refPoint];
-				}
 				RGBAColor	fillColor;
 				[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
 				fillColor.alpha = object.tags[@"landuse"] ? 0.15 : 0.25;
@@ -1644,11 +1526,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 										// malformed
 									}
 								}
-								height = (v1 * 12 + v2) * 0.0254;
+								height = (v1 * 12 + v2) * 0.0254;	// meters/inch
 							} else if ( [scanner scanString:@"ft" intoString:NULL] ) {
-								height *= 0.3048;
+								height *= 0.3048;	// meters/foot
 							} else if ( [scanner scanString:@"yd" intoString:NULL] ) {
-								height *= 0.9144;
+								height *= 0.9144;	// meters/yard
 							}
 						}
 					} else {
@@ -1673,22 +1555,21 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 #else
 					// get walls
 					double hue = object.ident.longLongValue % 20 - 10;
-					for ( int isInner = 0; isInner < 2; ++isInner ) {
-						for ( NSArray * w in isInner ? inner : outer ) {
-#if SINGLE_SIDED_WALLS
-							BOOL clockwise = [OsmWay isClockwiseArrayOfPoints:w] ^ isInner;
-#else
-							BOOL clockwise = YES;
-#endif
-							for ( NSInteger i = 0; i < w.count-1; ++i ) {
-								OSMPointBoxed * pp1 = w[i+!clockwise];
-								OSMPointBoxed * pp2 = w[i+clockwise];
-								CALayer * wall = [self buildingWallLayerForPoint:pp1.point point:pp2.point height:height hue:hue];
-								[layers addObject:wall];
-							}
+					__block BOOL hasPrev = NO;
+					__block OSMPoint prevPoint;
+					CGPathApplyBlockEx(path, ^(CGPathElementType type, CGPoint *points) {
+						if ( type == kCGPathElementMoveToPoint ) {
+							prevPoint = Add( refPoint, Mult(OSMPointFromCGPoint(points[0]),1/PATH_SCALING));
+							hasPrev = YES;
+						} else if ( type == kCGPathElementAddLineToPoint && hasPrev ) {
+							OSMPoint pt = Add( refPoint, Mult(OSMPointFromCGPoint(points[0]),1/PATH_SCALING));
+							CALayer * wall = [self buildingWallLayerForPoint:pt point:prevPoint height:height hue:hue];
+							[layers addObject:wall];
+							prevPoint = pt;
+						} else {
+							hasPrev = NO;
 						}
-					}
-
+					});
 					if ( YES ) {
 						// get roof
 						UIColor	* color = [UIColor colorWithHue:0 saturation:0.05 brightness:0.75+hue/100 alpha:1.0];
@@ -2021,19 +1902,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 }
 
 
-
--(NSArray *)wayListForMultipolygonRelation:(OsmRelation *)relation
-{
-	NSMutableArray * a = [NSMutableArray arrayWithCapacity:relation.members.count];
-	for ( OsmMember * mem in relation.members ) {
-		if ( [mem.role isEqualToString:@"outer"] || [mem.role isEqualToString:@"inner"] ) {
-			if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
-				[a addObject:mem.ref];
-			}
-		}
-	}
-	return a;
-}
 
 -(void)resetDisplayLayers
 {

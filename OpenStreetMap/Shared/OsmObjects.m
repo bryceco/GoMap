@@ -18,6 +18,7 @@
 #import "UndoManager.h"
 
 
+extern const double PATH_SCALING;
 
 
 BOOL IsOsmBooleanTrue( NSString * value )
@@ -156,6 +157,69 @@ BOOL IsInterestingTag(NSString * key)
 	assert(NO);
 	return OSMPointMake(0, 0);
 }
+
+
+// suitable for drawing outlines for highlighting, but doesn't correctly connect relation members into loops
+-(CGPathRef)linePathForObjectWithRefPoint:(OSMPoint *)refPoint CF_RETURNS_RETAINED
+{
+	NSArray * wayList = self.isWay ? @[ self ] : self.isRelation ? self.isRelation.waysInMultipolygon : nil;
+	if ( wayList == nil )
+		return nil;
+
+	CGMutablePathRef	path		= CGPathCreateMutable();
+	OSMPoint			initial		= { 0, 0 };
+	BOOL				haveInitial	= NO;
+
+	for ( OsmWay * way in wayList ) {
+
+		BOOL first = YES;
+		for ( OsmNode * node in way.nodes ) {
+			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
+			if ( isinf(pt.x) )
+				break;
+			if ( !haveInitial ) {
+				initial = pt;
+				haveInitial = YES;
+			}
+			pt.x -= initial.x;
+			pt.y -= initial.y;
+			pt.x *= PATH_SCALING;
+			pt.y *= PATH_SCALING;
+			if ( first ) {
+				CGPathMoveToPoint(path, NULL, pt.x, pt.y);
+				first = NO;
+			} else {
+				CGPathAddLineToPoint(path, NULL, pt.x, pt.y);
+			}
+		}
+	}
+
+	if ( refPoint && haveInitial ) {
+		// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
+		CGRect bbox	= CGPathGetPathBoundingBox( path );
+		if ( !isinf(bbox.origin.x) ) {
+			CGAffineTransform tran = CGAffineTransformMakeTranslation( -bbox.origin.x, -bbox.origin.y );
+			CGPathRef path2 = CGPathCreateCopyByTransformingPath( path, &tran );
+			CGPathRelease( path );
+			path = (CGMutablePathRef)path2;
+			*refPoint = OSMPointMake( initial.x + (double)bbox.origin.x/PATH_SCALING, initial.y + (double)bbox.origin.y/PATH_SCALING );
+		} else {
+#if DEBUG
+			DLog(@"bad path: %@", self);
+#endif
+		}
+	}
+	return path;
+}
+
+
+// suitable for drawing polygon areas with holes, etc.
+-(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED
+{
+	assert(NO);
+	return nil;
+}
+
 
 static NSInteger _nextUnusedIdentifier = 0;
 
@@ -1228,17 +1292,15 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
--(BOOL)isClockwise
++(BOOL)isClockwiseArrayOfNodes:(NSArray *)nodes
 {
-	if ( !self.isClosed )
-		return NO;
-	if ( self.nodes.count < 4 )
+	if ( nodes.count < 4 || nodes[0] != nodes.lastObject )
 		return NO;
 	CGFloat sum = 0;
 	BOOL first = YES;
 	OSMPoint offset;
 	OSMPoint previous;
-	for ( OsmNode * node in self.nodes )  {
+	for ( OsmNode * node in nodes )  {
 		OSMPoint point = node.location;
 		if ( first ) {
 			offset = point;
@@ -1253,30 +1315,31 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	return sum >= 0;
 }
 
-
-+(BOOL)isClockwiseArrayOfPoints:(NSArray *)a
+-(BOOL)isClockwise
 {
-	if ( a[0] != a.lastObject )
-		return NO;
-	if ( a.count < 4 )
-		return NO;
-	CGFloat sum = 0;
+	return [OsmWay isClockwiseArrayOfNodes:self.nodes];
+}
+
+
+-(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
+{
+	if ( !self.isClosed )
+		return nil;
+	CGMutablePathRef path = CGPathCreateMutable();
 	BOOL first = YES;
-	OSMPoint offset;
-	OSMPoint previous;
-	for ( OSMPointBoxed * p in a )  {
-		OSMPoint point = p.point;
+	// want loops to run clockwise
+	NSEnumerator * enumerator = self.isClockwise ? self.nodes.objectEnumerator : self.nodes.reverseObjectEnumerator;
+	for ( OsmNode * n in enumerator ) {
+		OSMPoint pt = MapPointForLatitudeLongitude( n.lat, n.lon );
 		if ( first ) {
-			offset = point;
-			previous.x = previous.y = 0;
 			first = NO;
+			*pRefPoint = pt;
+			CGPathMoveToPoint(path, NULL, 0, 0);
 		} else {
-			OSMPoint current = { point.x - offset.x, point.y - offset.y };
-			sum += previous.x*current.y - previous.y*current.x;
-			previous = current;
+			CGPathAddLineToPoint(path, NULL, (pt.x-pRefPoint->x)*PATH_SCALING, (pt.y-pRefPoint->y)*PATH_SCALING );
 		}
 	}
-	return sum >= 0;
+	return path;
 }
 
 -(BOOL)hasDuplicatedNode
@@ -1582,6 +1645,100 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
+-(NSMutableArray *)waysInMultipolygon
+{
+	if ( !self.isMultipolygon )
+		return nil;
+	NSMutableArray * a = [NSMutableArray arrayWithCapacity:_members.count];
+	for ( OsmMember * mem in _members ) {
+		NSString * role = mem.role;
+		if ( [role isEqualToString:@"outer"] || [role isEqualToString:@"inner"] ) {
+			if ( [mem.ref isKindOfClass:[OsmWay class]] ) {
+				[a addObject:mem.ref];
+			}
+		}
+	}
+	return a;
+}
+
+
+-(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED
+{
+	CGMutablePathRef 	path = CGPathCreateMutable();
+	BOOL				hasRefPoint = NO;
+	OSMPoint			refPoint;
+	NSMutableArray	*	loop = [NSMutableArray new];
+
+	NSMutableArray	*	members = [self.members mutableCopy];
+	[members filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmMember * member, NSDictionary<NSString *,id> * bindings) {
+		return [member.ref isKindOfClass:[OsmWay class]] && ([member.role isEqualToString:@"outer"] || [member.role isEqualToString:@"inner"]);
+	}]];
+	BOOL isInner = NO;
+
+	while ( members.count ) {
+		if ( loop.count == 0 ) {
+			// add a member to loop
+			OsmMember * member = members.lastObject;
+			[members removeObjectAtIndex:members.count-1];
+			isInner = [member.role isEqualToString:@"inner"];
+			OsmWay * way = member.ref;
+			[loop addObjectsFromArray:way.nodes];
+			if ( !hasRefPoint ) {
+				OsmNode * n = way.nodes[0];
+				OSMPoint pt = MapPointForLatitudeLongitude( n.lat, n.lon );
+				hasRefPoint = YES;
+				refPoint = pt;
+			}
+		} else {
+			// find adjacent way
+			BOOL foundAdjacent = NO;
+			for ( NSInteger i = 0; i < members.count; ++i ) {
+				OsmMember * member = members[i];
+				if ( [member.role isEqualToString:@"inner"] != isInner )
+					continue;
+				OsmWay * way = member.ref;
+				NSEnumerator * enumerator = way.nodes[0] == loop.lastObject ? way.nodes.objectEnumerator
+										  	: way.nodes.lastObject == loop.lastObject ? way.nodes.reverseObjectEnumerator
+											: nil;
+				if ( enumerator ) {
+					foundAdjacent = YES;
+					BOOL first = YES;
+					for ( OsmNode * n in enumerator ) {
+						if ( first ) {
+							first = NO;
+						} else {
+							[loop addObject:n];
+						}
+					}
+					[members removeObjectAtIndex:i];
+					break;
+				}
+			}
+			if ( !foundAdjacent ) {
+				// invalid, but we'll try to continue
+				[loop addObject:loop[0]];	// force-close the loop
+			}
+		}
+
+		if ( loop.count && loop.lastObject == loop[0] ) {
+			// finished a loop. Outer goes clockwise, inner goes counterclockwise
+			NSEnumerator * enumerator = [OsmWay isClockwiseArrayOfNodes:loop] == isInner ? loop.reverseObjectEnumerator : loop.objectEnumerator;
+			BOOL first = YES;
+			for ( OsmNode * n in enumerator ) {
+				OSMPoint pt = MapPointForLatitudeLongitude( n.lat, n.lon );
+				if ( first ) {
+					first = NO;
+					CGPathMoveToPoint(path, NULL, (pt.x-refPoint.x)*PATH_SCALING, (pt.y-refPoint.y)*PATH_SCALING);
+				} else {
+					CGPathAddLineToPoint(path, NULL, (pt.x-refPoint.x)*PATH_SCALING, (pt.y-refPoint.y)*PATH_SCALING);
+				}
+			}
+			[loop removeAllObjects];
+		}
+	}
+	*pRefPoint = refPoint;
+	return path;
+}
 
 -(OSMPoint)centerPoint
 {
