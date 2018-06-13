@@ -273,12 +273,26 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return nil;
 }
 
--(NSArray *)processOsmLabAerialsData:(NSData *)data
+
+-(void)addPoints:(NSArray *)points toPath:(CGMutablePathRef)path
 {
-	if ( data == nil || data.length == 0 )
-		return nil;
-	id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-	if ( json == nil )
+	BOOL first = YES;
+	for ( NSArray * pt in points ) {
+		double lon = [pt[0] doubleValue];
+		double lat = [pt[1] doubleValue];
+		if ( first ) {
+			CGPathMoveToPoint(path, NULL, lon, lat);
+			first = NO;
+		} else {
+			CGPathAddLineToPoint(path, NULL, lon, lat);
+		}
+	}
+	CGPathCloseSubpath( path );
+}
+
+-(NSArray *)processOsmLabAerialsList:(NSArray *)featureArray isGeoJSON:(BOOL)isGeoJSON
+{
+	if ( ![featureArray isKindOfClass:[NSArray class]] )
 		return nil;
 
 	NSDictionary * supportedProjections = @{
@@ -292,25 +306,41 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		@"EPSG:102100" 	: @(YES),
 		@"EPSG:3785" 	: @(YES)
 	};
-	
+
 	NSArray * knownUnsupported = @[ @"scanex", @"wms_endpoint", @"bing" ];
-	
 	NSMutableArray * externalAerials = [NSMutableArray new];
-	for ( NSDictionary * entry in json ) {
-		
-		NSString * 	name 		= entry[@"name"];
-		NSString * 	identifier	= entry[@"id"];
+	for ( NSDictionary * entry in featureArray ) {
+
 		@try {
-			NSString * 	type 				= entry[@"type"];
-			NSArray *	projections			= entry[@"available_projections"];
-			NSString * 	url 				= entry[@"url"];
-			NSInteger 	maxZoom 			= [entry[@"extent"][@"max_zoom"] integerValue];
-			NSString * 	attribIconString	= entry[@"icon"];
-			NSString * 	attribString 		= entry[@"attribution"][@"text"];
-			NSString * 	attribUrl 			= entry[@"attribution"][@"url"];
-			NSInteger	overlay				= [entry[@"overlay"] integerValue];
-			NSArray * 	polygonPoints 		= entry[@"extent"][@"polygon"];
-			
+			if ( isGeoJSON && ![entry[@"type"] isEqualToString:@"Feature"] ) {
+				NSLog(@"Aerial: skipping type %@", entry[@"type"]);
+				continue;
+			}
+
+			NSDictionary * properties = isGeoJSON ? entry[@"properties"] : entry;
+			NSString * 	name 				= properties[@"name"];
+			NSLog(@"name = %@",name);
+			NSString * 	identifier			= properties[@"id"];
+			NSString * 	type 				= properties[@"type"];
+			NSArray *	projections			= properties[@"available_projections"];
+			NSString * 	url 				= properties[@"url"];
+			NSInteger 	maxZoom 			= isGeoJSON ? [properties[@"max_zoom"] integerValue] : [properties[@"extent"][@"max_zoom"] integerValue];
+			NSString * 	attribIconString	= properties[@"icon"];
+			NSString * 	attribString 		= properties[@"attribution"][@"text"];
+			NSString * 	attribUrl 			= properties[@"attribution"][@"url"];
+			NSInteger	overlay				= [properties[@"overlay"] integerValue];
+			NSArray * 	polygonPoints 		= nil;
+			BOOL		isMultiPolygon		= NO;
+			if ( isGeoJSON ) {
+				NSDictionary * 	geometry = entry[@"geometry"];
+				if ( [geometry isKindOfClass:[NSDictionary class]] ) {
+					polygonPoints = geometry[@"coordinates"];
+					isMultiPolygon = [geometry[@"type"] isEqualToString:@"MultiPolygon"];
+				}
+			} else {
+				polygonPoints = properties[@"extent"][@"polygon"];
+			}
+
 			if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
 				if ( ![knownUnsupported containsObject:type] )
 					NSLog(@"unsupported %@\n",type);
@@ -325,7 +355,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				NSLog(@"skip url = %@\n",url);
 				continue;
 			}
-			
+
 			// we only support some types of WMS projections
 			NSString * projection = nil;
 			if ( [type isEqualToString:@"wms"] ) {
@@ -338,28 +368,25 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				if ( projection == nil )
 					continue;
 			}
-			
+
 			CGPathRef polygon = NULL;
 			if ( polygonPoints ) {
 				CGMutablePathRef path = CGPathCreateMutable();
-				for ( NSArray * loop in polygonPoints ) {
-					BOOL	first		= YES;
-					for ( NSArray * pt in loop ) {
-						double lon = [pt[0] doubleValue];
-						double lat = [pt[1] doubleValue];
-						if ( first ) {
-							CGPathMoveToPoint(path, NULL, lon, lat);
-							first = NO;
-						} else {
-							CGPathAddLineToPoint(path, NULL, lon, lat);
+				if ( isMultiPolygon ) {
+					for ( NSArray * outer in polygonPoints ) {
+						for ( NSArray * loop in outer ) {
+							[self addPoints:loop toPath:path];
 						}
 					}
-					CGPathCloseSubpath( path );
+				} else {
+					for ( NSArray * loop in polygonPoints ) {
+						[self addPoints:loop toPath:path];
+					}
 				}
 				polygon = CGPathCreateCopy( path );
 				CGPathRelease( path );
 			}
-			
+
 			UIImage * attribIcon = nil;
 			BOOL httpIcon = NO;
 			if ( attribIconString.length > 0 ) {
@@ -388,18 +415,46 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 			[externalAerials addObject:service];
 			CGPathRelease( polygon );
-			
+
 			if ( httpIcon ) {
 				[service loadIconFromWeb:attribIconString];
 			}
 		} @catch (id exception) {
-			NSLog(@"Aerial skipped: %@\n",name);
+			NSLog(@"*** Aerial skipped\n");
 		}
 	}
 	[externalAerials sortUsingComparator:^NSComparisonResult( AerialService * obj1, AerialService * obj2) {
 		return [obj1.name caseInsensitiveCompare:obj2.name];
 	}];
 	return [NSArray arrayWithArray:externalAerials];	// return immutable copy
+}
+
+-(NSArray *)processOsmLabAerialsData:(NSData *)data
+{
+	if ( data == nil || data.length == 0 )
+		return nil;
+
+	@try {
+		id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+		if ( json == nil )
+			return nil;
+		if ( [json isKindOfClass:[NSArray class]] ) {
+			// unversioned variety
+			return [self processOsmLabAerialsList:json isGeoJSON:NO];
+		} else {
+			NSDictionary * meta = json[@"meta"];
+			NSString * formatVersion = meta[@"format_version"];
+			if ( ![formatVersion isEqualToString:@"1.0"] )
+				return nil;
+			NSString * metaType = json[@"type"];
+			if ( ![metaType isEqualToString:@"FeatureCollection"] )
+				return nil;
+			NSArray * features = json[@"features"];
+			return [self processOsmLabAerialsList:features isGeoJSON:YES];
+		}
+	} @catch (id exception) {
+		return nil;
+	}
 }
 
 
@@ -412,11 +467,12 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
 	if ( cachedData == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
 		// download newer version periodically
+//		NSString * urlString = @"https://raw.githubusercontent.com/osmlab/editor-layer-index/gh-pages/imagery.json";
 		NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
 		NSURL * downloadUrl = [NSURL URLWithString:urlString];
 		NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 			NSArray * externalAerials = [self processOsmLabAerialsData:data];
-			if ( externalAerials ) {
+			if ( externalAerials.count > 100 ) {
 				// cache download for next time
 				[[NSUserDefaults standardUserDefaults] setObject:now  forKey:@"lastImageryDownloadDate"];
 				[data writeToFile:[self pathToExternalAerialsCache] options:NSDataWritingAtomic error:NULL];
