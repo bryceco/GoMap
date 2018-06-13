@@ -2618,6 +2618,22 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 					}
 				}
 			}
+		} else if ( object.isRelation.isMultipolygon ) {
+			OsmRelation * relation = (id)object;
+			if ( ![ignoreList containsObject:relation] ) {
+				for ( OsmMember * member in relation.members ) {
+					if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {
+						OsmWay * way = member.ref;
+						if ( [way isKindOfClass:[OsmWay class]] ) {
+							NSInteger seg = 0;
+							CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
+							if ( dist <= 1.0 ) {
+								block( relation, dist, seg );
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	for ( OsmRelation * relation in relations ) {
