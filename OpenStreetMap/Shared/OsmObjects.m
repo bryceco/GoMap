@@ -1393,6 +1393,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
 -(void)resolveToMapData:(OsmMapData *)mapData
 {
+	BOOL needsRedraw = NO;
 	for ( OsmMember * member in _members ) {
 		id ref = member.ref;
 		if ( ![ref isKindOfClass:[NSNumber class]] )
@@ -1404,6 +1405,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 			if ( way ) {
 				[member resolveRefToObject:way];
 				[way addRelation:self undo:nil];
+				needsRedraw = YES;
 			} else {
 				// way is not in current view
 			}
@@ -1412,6 +1414,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 			if ( node ) {
 				[member resolveRefToObject:node];
 				[node addRelation:self undo:nil];
+				needsRedraw = YES;
 			} else {
 				// node is not in current view
 			}
@@ -1420,12 +1423,16 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 			if ( rel ) {
 				[member resolveRefToObject:rel];
 				[rel addRelation:self undo:nil];
+				needsRedraw = YES;
 			} else {
 				// relation is not in current view
 			}
 		} else {
 			assert(NO);
 		}
+	}
+	if ( needsRedraw ) {
+		[self clearCachedProperties];
 	}
 }
 
