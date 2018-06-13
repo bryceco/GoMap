@@ -321,15 +321,15 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			NSString * 	name 				= properties[@"name"];
 			NSString * 	identifier			= properties[@"id"];
 			NSString * 	type 				= properties[@"type"];
-			NSArray *	projections			= properties[@"available_projections"];
+			NSArray  *	projections			= properties[@"available_projections"];
 			NSString * 	url 				= properties[@"url"];
 			NSInteger 	maxZoom 			= isGeoJSON ? [properties[@"max_zoom"] integerValue] : [properties[@"extent"][@"max_zoom"] integerValue];
 			NSString * 	attribIconString	= properties[@"icon"];
 			NSString * 	attribString 		= properties[@"attribution"][@"text"];
 			NSString * 	attribUrl 			= properties[@"attribution"][@"url"];
 			NSInteger	overlay				= [properties[@"overlay"] integerValue];
-			NSArray * 	polygonPoints 		= nil;
-			BOOL		isMultiPolygon		= NO;
+			NSArray  * 	polygonPoints 		= nil;
+			BOOL		isMultiPolygon		= NO;	// a GeoJSON multipolygon, which has an extra layer of nesting
 			if ( isGeoJSON ) {
 				NSDictionary * 	geometry = entry[@"geometry"];
 				if ( [geometry isKindOfClass:[NSDictionary class]] ) {
