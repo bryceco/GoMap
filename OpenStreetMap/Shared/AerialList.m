@@ -16,6 +16,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 #define MAPNIK_IDENTIFIER			@"MapnikIdentifier"
 #define OSM_GPS_TRACE_IDENTIFIER	@"OsmGpsTraceIdentifier"
 #define MAPBOX_LOCATOR_IDENTIFIER	@"MapboxLocatorIdentifier"
+#define NO_NAME_IDENTIFIER          @"No Name Identifier"
 
 
 
@@ -137,6 +138,24 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 									  attribUrl:nil];
 	});
 	return service;
+}
++(instancetype)noName
+{
+    static AerialService * service = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        service = [AerialService aerialWithName:@"QA Poole No Name"
+                                     identifier:NO_NAME_IDENTIFIER
+                                            url:@"https://tile{switch:2,3}.poole.ch/noname/{zoom}/{x}/{y}.png"
+                                        maxZoom:25
+                                        roundUp:NO
+                                  wmsProjection:nil
+                                        polygon:NULL
+                                   attribString:nil
+                                     attribIcon:nil
+                                      attribUrl:nil];
+    });
+    return service;
 }
 
 -(NSDictionary *)dictionary

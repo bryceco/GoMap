@@ -41,6 +41,7 @@
 +(instancetype)mapnik;
 +(instancetype)gpsTrace;
 +(instancetype)mapboxLocator;
++(instancetype)noName;
 
 @end
 

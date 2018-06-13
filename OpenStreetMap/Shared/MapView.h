@@ -51,6 +51,7 @@ typedef enum _ViewOverlayMask {
 	VIEW_OVERLAY_LOCATOR	= 1 << 0,
 	VIEW_OVERLAY_GPSTRACE	= 1 << 1,
 	VIEW_OVERLAY_NOTES		= 1 << 2,
+    VIEW_OVERLAY_NONAME     = 1 << 3,
 } ViewOverlayMask;
 
 typedef enum {
@@ -145,6 +146,7 @@ typedef enum {
 @property (readonly,nonatomic)	MercatorTileLayer			*	mapnikLayer;
 @property (readonly,nonatomic)	EditorMapLayer				*	editorLayer;
 @property (readonly,nonatomic)	GpxLayer					*	gpxLayer;
+@property (readonly,nonatomic)  MercatorTileLayer           *   noNameLayer;
 @property (readonly,nonatomic)	Buildings3DView				*	buildings3D;
 
 // overlays
