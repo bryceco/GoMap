@@ -2407,7 +2407,7 @@ http://glyphish.com
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zI2-YM-qbl">
-                                            <rect key="frame" x="128.5" y="20.5" width="63" height="3"/>
+                                            <rect key="frame" x="128.5" y="8" width="63" height="27.5"/>
                                             <state key="normal" title="Add New">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
@@ -2418,9 +2418,9 @@ http://glyphish.com
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="zI2-YM-qbl" secondAttribute="centerY" id="Igd-vs-zPD"/>
-                                        <constraint firstAttribute="bottom" secondItem="zI2-YM-qbl" secondAttribute="bottom" constant="20" symbolic="YES" id="Jrt-Ra-DWO"/>
+                                        <constraint firstAttribute="bottom" secondItem="zI2-YM-qbl" secondAttribute="bottom" constant="8" id="Jrt-Ra-DWO"/>
                                         <constraint firstAttribute="centerX" secondItem="zI2-YM-qbl" secondAttribute="centerX" id="j98-mE-XhB"/>
-                                        <constraint firstItem="zI2-YM-qbl" firstAttribute="top" secondItem="vzX-E7-7y5" secondAttribute="top" constant="20" symbolic="YES" id="pk2-hn-Uid"/>
+                                        <constraint firstItem="zI2-YM-qbl" firstAttribute="top" secondItem="vzX-E7-7y5" secondAttribute="top" constant="8" id="pk2-hn-Uid"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
