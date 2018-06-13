@@ -2802,15 +2802,15 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 
 
 		NSString * error = nil;
-		EditActionWithNode action = [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
-		if ( !action ) {
+		EditActionWithNode addNodeToWay = [_editorLayer canAddNodeToWay:way atIndex:nextIndex error:&error];
+		if ( !addNodeToWay ) {
 			[self showAlert:NSLocalizedString(@"Can't extend way",nil) message:error];
 			return;
 		}
 		OsmNode * node2 = [_editorLayer createNodeAtPoint:newPoint];
-		action( node2 );
-		_editorLayer.selectedWay = way;
+		_editorLayer.selectedWay = way;		// set selection before perfoming add-node action so selection is recorded in undo stack
 		_editorLayer.selectedNode = node2;
+		addNodeToWay( node2 );
 		[self placePushpinForSelection];
 	}
 }

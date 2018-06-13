@@ -159,20 +159,23 @@ static const CGFloat NodeHighlightRadius = 6.0;
 
 		__weak EditorMapLayer * weakSelf = self;
 		_mapData.undoContextForComment = ^NSDictionary *(NSString * comment) {
-			OSMTransform trans = [weakSelf.mapView screenFromMapTransform];
+			EditorMapLayer * strongSelf = weakSelf;
+			if ( strongSelf == nil )
+				return nil;
+			OSMTransform trans = [strongSelf.mapView screenFromMapTransform];
 			NSData * location = [NSData dataWithBytes:&trans length:sizeof trans];
 			NSMutableDictionary * dict = [NSMutableDictionary new];
 			dict[ @"comment" ] = comment;
 			dict[ @"location" ] = location;
-			CGPoint pushpin = weakSelf.mapView.pushpinPosition;
+			CGPoint pushpin = strongSelf.mapView.pushpinPosition;
 			if ( !isnan(pushpin.x) )
-				dict[ @"pushpin" ] = NSStringFromCGPoint(weakSelf.mapView.pushpinPosition);
-			if ( weakSelf.selectedRelation )
-				dict[ @"selectedRelation" ] = weakSelf.selectedRelation;
-			if ( weakSelf.selectedWay )
-				dict[ @"selectedWay" ] = weakSelf.selectedWay;
-			if ( weakSelf.selectedNode )
-				dict[ @"selectedNode" ] = weakSelf.selectedNode;
+				dict[ @"pushpin" ] = NSStringFromCGPoint(strongSelf.mapView.pushpinPosition);
+			if ( strongSelf.selectedRelation )
+				dict[ @"selectedRelation" ] = strongSelf.selectedRelation;
+			if ( strongSelf.selectedWay )
+				dict[ @"selectedWay" ] = strongSelf.selectedWay;
+			if ( strongSelf.selectedNode )
+				dict[ @"selectedNode" ] = strongSelf.selectedNode;
 			return dict;
 		};
 
