@@ -24,8 +24,6 @@
 
 		_labelOnBottom = YES;
 
-		// self.layer.backgroundColor = UIColor.redColor.CGColor;
-
 		_shapeLayer = [CAShapeLayer layer];
 		_shapeLayer.fillColor = UIColor.grayColor.CGColor;
 		_shapeLayer.strokeColor = UIColor.whiteColor.CGColor;
@@ -49,8 +47,6 @@
 		_moveButton = [CALayer layer];
 		_moveButton.frame 			= CGRectMake( 0, 0, 25, 25 );
 		_moveButton.contents 		= (__bridge id)[UIImage imageNamed:@"move.png"].CGImage;
-		_moveButton.shadowColor 	= UIColor.whiteColor.CGColor;
-		_moveButton.shadowRadius 	= 5.0;
 		[_shapeLayer addSublayer:_moveButton];
 
 		_placeholderLayer = [CALayer layer];
@@ -101,7 +97,6 @@
 {
 	_placeholderImage = placeholderImage;
 	_placeholderLayer.contents = (id)_placeholderImage.CGImage;
-	[self setNeedsLayout];
 }
 
 -(BOOL)labelOnBottom
@@ -184,7 +179,7 @@
 
 	if ( _labelOnBottom ) {
 		_textLayer.frame = CGRectMake( textAlleyWidth, topGap+arrowHeight+textAlleyWidth,
-									  boxSize.width - textAlleyWidth, textSize.width );
+									  boxSize.width - textAlleyWidth, textSize.height );
 		_moveButton.frame = CGRectMake( boxSize.width - _moveButton.frame.size.width - 3,
 									   topGap + arrowHeight+(boxSize.height-_moveButton.frame.size.height)/2,
 									   _moveButton.frame.size.width,
