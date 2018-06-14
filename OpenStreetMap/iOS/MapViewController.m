@@ -23,11 +23,6 @@
 @implementation MapViewController
 
 
-- (void)updateDeleteButtonState
-{
-	_trashcanButton.enabled = self.mapView.editorLayer.selectedPrimary && !self.mapView.editorLayer.hidden;
-}
-
 - (void)updateUndoRedoButtonState
 {
 	_undoButton.enabled = self.mapView.editorLayer.mapData.canUndo && !self.mapView.editorLayer.hidden;
@@ -60,10 +55,6 @@
 
 	AppDelegate * delegate = [AppDelegate getAppDelegate];
 	delegate.mapView = self.mapView;
-
-	[self.mapView.editorLayer setSelectionChangeCallback:^{
-		[self updateDeleteButtonState];
-	}];
 
 	// undo/redo buttons
 	[self updateUndoRedoButtonState];

@@ -41,8 +41,6 @@ extern const double MinIconSizeInPixels;
 	NSMutableArray		*	_shownObjects;
 	NSMutableSet		*	_fadingOutSet;
 
-	NSMutableArray		*	_selectionChangeCallbacks;
-
 	NSMutableArray		*	_highlightLayers;
 
 	BOOL					_isPerformingLayout;
@@ -96,8 +94,6 @@ extern const double MinIconSizeInPixels;
 
 - (void)updateMapLocation;
 - (void)purgeCachedDataHard:(BOOL)hard;
-
-- (void)setSelectionChangeCallback:(void (^)(void))callback;
 
 // editing
 

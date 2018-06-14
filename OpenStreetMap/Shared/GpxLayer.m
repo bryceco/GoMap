@@ -354,7 +354,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		// observe changes to geometry
 		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 
-		[self setNeedsDisplay];
 		[self setNeedsLayout];
 	}
 	return self;
@@ -419,7 +418,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 	[_previousTracks removeObject:track];
 	[track.shapeLayer removeFromSuperlayer];
-	[self setNeedsDisplay];
 	[self setNeedsLayout];
 }
 
@@ -494,7 +492,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 			[self addPoint:location];
 		}
 
-		[self setNeedsDisplay];
 		[self setNeedsLayout];
 	}
 }
@@ -503,7 +500,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ( object == _mapView && [keyPath isEqualToString:@"screenFromMapTransform"] )  {
-		[self setNeedsDisplay];
 		[self setNeedsLayout];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -529,7 +525,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 {
 	GpxTrack * track = [GpxTrack gpxTrackWithRect:rect];
 	[self.previousTracks insertObject:track atIndex:0];
-	[self setNeedsDisplay];
 	[self setNeedsLayout];
 	return track;
 }
@@ -588,7 +583,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 						// DLog(@"track %@: %@, %ld points\n",file,track.creationDate, (long)track.points.count);
 
 						[_previousTracks addObject:track];
-						[self setNeedsDisplay];
 						[self setNeedsLayout];
 						if ( progressCallback ) {
 							progressCallback();
@@ -638,7 +632,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[[NSFileManager defaultManager] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:NULL];
 
 	[self setNeedsLayout];
-	[self setNeedsDisplay];
 
 	if ( active ) {
 		[self startNewTrack];
@@ -831,7 +824,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( wasHidden && !hidden ) {
 
 		[self loadTracksInBackgroundWithProgress:nil];
-		[self setNeedsDisplay];
 		[self setNeedsLayout];
 	}
 }

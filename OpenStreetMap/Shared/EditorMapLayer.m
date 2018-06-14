@@ -2640,6 +2640,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		}
 	}
 	for ( OsmRelation * relation in relations ) {
+		// for non-multipolygon relations, like turn restrictions
 		block( relation, 1.0, 0 );
 	}
 }
@@ -2651,7 +2652,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	__block NSInteger hitSegment = 0;
 	__block CGFloat bestDist = 1000000;
 	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
-		if ( dist < bestDist ) {
+		if ( dist <= bestDist ) {
 			bestDist = dist;
 			hit = obj;
 			hitSegment = segment;
@@ -2877,29 +2878,11 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 #pragma mark Highlighting and Selection
 
-- (void)setSelectionChangeCallback:(void (^)(void))callback
-{
-	if ( _selectionChangeCallbacks == nil )
-		_selectionChangeCallbacks = [NSMutableArray arrayWithObject:callback];
-	else
-		[_selectionChangeCallbacks addObject:callback];
-}
-
 -(void)setNeedsDisplayForObject:(OsmBaseObject *)object
 {
 	[self setNeedsLayout];
 }
 
--(void)doSelectionChangeCallbacks
-{
-	for ( void (^callback)(void) in _selectionChangeCallbacks ) {
-		callback();
-	}
-}
-+ (NSSet *)keyPathsForValuesAffectingSelectedPrimary
-{
-	return [NSSet setWithObjects:@"selectedNode", @"selectedWay", nil];
-}
 -(OsmBaseObject *)selectedPrimary
 {
 	return _selectedNode ? _selectedNode : _selectedWay ? _selectedWay : _selectedRelation;
@@ -2922,7 +2905,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	if ( selectedNode != _selectedNode ) {
 		_selectedNode = selectedNode;
 		[self setNeedsDisplayForObject:selectedNode];
-		[self doSelectionChangeCallbacks];
 		[_mapView updateEditControl];
 	}
 }
@@ -2932,7 +2914,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	if ( selectedWay != _selectedWay ) {
 		_selectedWay = selectedWay;
 		[self setNeedsDisplayForObject:selectedWay];
-		[self doSelectionChangeCallbacks];
 		[_mapView updateEditControl];
 	}
 }
@@ -2942,7 +2923,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	if ( selectedRelation != _selectedRelation ) {
 		_selectedRelation = selectedRelation;
 		[self setNeedsDisplayForObject:selectedRelation];
-		[self doSelectionChangeCallbacks];
 		[_mapView updateEditControl];
 	}
 }

@@ -474,8 +474,6 @@
 	self.detailText.text = [self textForTurnFrom:_selectedFromHwy to:targetHwy];
 
 	appDelegate.mapView.editorLayer.selectedWay = _selectedFromHwy.wayObj;
-
-	[appDelegate.mapView.editorLayer setNeedsDisplay];
 	[appDelegate.mapView.editorLayer setNeedsLayout];
 }
 
@@ -520,7 +518,6 @@
 	self.detailText.text = isRestricting ? [NSString stringWithFormat:@"U-Turn from %@ prohibited", _selectedFromHwy.wayObj.friendlyDescription]
 										 : [NSString stringWithFormat:@"U-Turn from %@ allowed", _selectedFromHwy.wayObj.friendlyDescription];
 
-	[appDelegate.mapView.editorLayer setNeedsDisplay];
 	[appDelegate.mapView.editorLayer setNeedsLayout];
 }
 

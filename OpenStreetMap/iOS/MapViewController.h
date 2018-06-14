@@ -16,7 +16,6 @@
 @interface MapViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate>
 {
 	IBOutlet UIToolbar		*	_toolbar;
-	IBOutlet UIBarButtonItem *	_trashcanButton;
 	IBOutlet UIBarButtonItem *	_uploadButton;
 	IBOutlet UIBarButtonItem *	_undoButton;
 	IBOutlet UIBarButtonItem *	_redoButton;
@@ -28,7 +27,6 @@
 -(IBAction)toggleLocation:(id)sender;
 -(void)setGpsState:(GPS_STATE)state;
 
-- (void)updateDeleteButtonState;
 - (void)updateUndoRedoButtonState;
 
 @end

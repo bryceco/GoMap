@@ -946,7 +946,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[CATransaction commit];
 
 	// enable/disable editing buttons based on visibility
-	[_viewController updateDeleteButtonState];
 	[_viewController updateUndoRedoButtonState];
 	[self updateAerialAttributionButton];
 }
@@ -988,7 +987,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( _enableUnnamedRoadHalo != enableUnnamedRoadHalo ) {
 		_enableUnnamedRoadHalo = enableUnnamedRoadHalo;
 		[_editorLayer.mapData clearCachedProperties];	// reset layers associated with objects
-		[_editorLayer setNeedsDisplay];
 		[_editorLayer setNeedsLayout];
 	}
 }
@@ -1008,7 +1006,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( _enableTurnRestriction != enableTurnRestriction ) {
 		_enableTurnRestriction = enableTurnRestriction;
 		[_editorLayer.mapData clearCachedProperties];    // reset layers associated with objects
-		[_editorLayer setNeedsDisplay];
 		[_editorLayer setNeedsLayout];
 	}
 }
@@ -1692,7 +1689,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 
 	[_editorLayer.mapData undo];
-	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
 }
 
@@ -1707,7 +1703,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
 
 	[_editorLayer.mapData redo];
-	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
 }
 
@@ -2191,7 +2186,6 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		[self showAlert:error message:nil];
 	}
 
-	[self.editorLayer setNeedsDisplay];
 	[self.editorLayer setNeedsLayout];
 	[self refreshPushpinText];
 }
@@ -2537,7 +2531,6 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 								strongSelf->_editorLayer.selectedWay = nil;
 								strongSelf->_editorLayer.selectedRelation = nil;
 								[strongSelf removePin];
-								[strongSelf->_editorLayer setNeedsDisplay];
 								[strongSelf->_editorLayer setNeedsLayout];
 							}]];
 							[alertMove addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Move",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -2892,7 +2885,6 @@ NSString * ActionTitle( NSInteger action, BOOL abbrev )
 		[self refreshPushpinText];
 		[self refreshNoteButtonsFromDatabase];
 	}
-	[_editorLayer setNeedsDisplay];
 	[_editorLayer setNeedsLayout];
 	_confirmDrag = NO;
 }
@@ -3472,11 +3464,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		pt = [_editorLayer.selectedPrimary pointOnObjectForPoint:pt];
 		point = [self screenPointForLatitude:pt.y longitude:pt.x birdsEye:YES];
 
+		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
+
 		if ( _editorLayer.selectedPrimary.isWay || _editorLayer.selectedPrimary.isRelation ) {
 			// if they later try to drag this way ask them if they really wanted to
 			_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
 		}
-		[self placePushpinAtPoint:point object:_editorLayer.selectedPrimary];
 	}
 }
 
