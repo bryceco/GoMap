@@ -2652,7 +2652,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	__block NSInteger hitSegment = 0;
 	__block CGFloat bestDist = 1000000;
 	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
-		if ( dist <= bestDist ) {
+		if ( dist < bestDist ) {
 			bestDist = dist;
 			hit = obj;
 			hitSegment = segment;
@@ -2672,13 +2672,57 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return _shownObjects;
 }
 
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment ignoreList:(NSArray *)ignoreList
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)pSegment ignoreList:(NSArray *)ignoreList
 {
 	if ( self.hidden )
 		return nil;
 
-	OsmBaseObject * hit = [EditorMapLayer osmHitTest:point radius:(CGFloat)radius mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList segment:segment];
+#if 1
+	__block CGFloat bestDist = 1000000;
+	NSMutableDictionary * best = [NSMutableDictionary new];
+	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
+		if ( dist < bestDist ) {
+			bestDist = dist;
+			[best removeAllObjects];
+			best[obj] = @(segment);
+		} else if ( dist == bestDist ) {
+			best[obj] = @(segment);
+		}
+	}];
+	if ( bestDist > 1.0 )
+		return nil;
+
+	OsmBaseObject * pick = nil;
+	if ( best.count > 1 ) {
+		if ( pick == nil && self.selectedPrimary.isRelation ) {
+			// pick a way that is a member of the relation if possible
+			for ( OsmMember * member in self.selectedPrimary.isRelation.members ) {
+				if ( best[member.ref] ) {
+					pick = member.ref;
+					break;
+				}
+			}
+		}
+		if ( pick == nil && self.selectedPrimary == nil ) {
+			// nothing currently selected, so prefer relations
+			for ( OsmBaseObject * obj in best ) {
+				if ( obj.isRelation ) {
+					pick = obj;
+					break;
+				}
+			}
+		}
+	}
+	if ( pick == nil ) {
+		pick = best.allKeys.lastObject;
+	}
+	if ( pSegment )
+		*pSegment = [best[pick] integerValue];
+	return pick;
+#else
+	OsmBaseObject * hit = [EditorMapLayer osmHitTest:point radius:(CGFloat)radius mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList segment:pSegment];
 	return hit;
+#endif
 }
 - (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius 
 {
