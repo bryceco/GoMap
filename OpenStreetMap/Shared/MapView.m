@@ -47,7 +47,8 @@
 
 
 static const CGFloat Z_AERIAL			= -100;
-static const CGFloat Z_MAPNIK			= -99;
+static const CGFloat Z_NONAME           = -99;
+static const CGFloat Z_MAPNIK			= -98;
 static const CGFloat Z_LOCATOR			= -50;
 static const CGFloat Z_GPSTRACE			= -40;
 #if USE_SCENEKIT
@@ -140,6 +141,12 @@ static const CGFloat Z_FLASH			= 110;
 		_gpsTraceLayer.aerialService = [AerialService gpsTrace];
 		_gpsTraceLayer.hidden = YES;
 		[bg addObject:_gpsTraceLayer];
+        
+        _noNameLayer = [[MercatorTileLayer alloc] initWithMapView:self];
+        _noNameLayer.zPosition = Z_NONAME;
+        _noNameLayer.aerialService = [AerialService noName];
+        _noNameLayer.hidden = YES;
+        [bg addObject:_noNameLayer];
 
 		_aerialLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_aerialLayer.zPosition = Z_AERIAL;
@@ -892,6 +899,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	_locatorLayer.hidden  = (newOverlays & VIEW_OVERLAY_LOCATOR) == 0;
 	_gpsTraceLayer.hidden = (newOverlays & VIEW_OVERLAY_GPSTRACE) == 0;
+    _noNameLayer.hidden   = (newOverlays & VIEW_OVERLAY_NONAME) ==0;
 
 	switch (newState) {
 		case MAPVIEW_EDITOR:

@@ -1231,6 +1231,40 @@
             </objects>
             <point key="canvasLocation" x="1812" y="442"/>
         </scene>
+        <!--QA Poole Attribution View Controller-->
+        <scene sceneID="D7A-KY-U59">
+            <objects>
+                <viewController id="4DL-61-s7e" userLabel="QA Poole Attribution View Controller" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cic-Nf-H5T">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hsp-Xj-TU6">
+                                <rect key="frame" x="16" y="64" width="288" height="396"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Simon Poole, Data ©OpenStreetMap contributors
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="19" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="1Pp-Dq-lMU"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="QA Pool No Name Tiles" id="H3p-Ta-kIy" userLabel="QA Poole"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5i0-Uq-W3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-450" y="2065"/>
+        </scene>
         <!--Upload-->
         <scene sceneID="lne-Ek-nNV">
             <objects>
@@ -4518,18 +4552,26 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <rect key="frame" x="253" y="6" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unnamed Roads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP1-qY-kXe">
-                                                    <rect key="frame" x="15" y="11" width="237" height="21"/>
+                                                    <rect key="frame" x="16" y="11" width="131" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ma1-9e-uMZ">
+                                                    <rect key="frame" x="223" y="11" width="22" height="22"/>
+                                                    <connections>
+                                                        <segue destination="4DL-61-s7e" kind="push" id="Mpt-06-wDs"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="CUT-E6-72l" firstAttribute="centerY" secondItem="ZP1-qY-kXe" secondAttribute="centerY" id="1iO-la-o3p"/>
-                                                <constraint firstItem="ZP1-qY-kXe" firstAttribute="leading" secondItem="42b-hz-6KV" secondAttribute="leading" constant="15" id="KKn-UD-4Nz"/>
+                                                <constraint firstItem="ZP1-qY-kXe" firstAttribute="leading" secondItem="42b-hz-6KV" secondAttribute="leading" constant="16" id="KKn-UD-4Nz"/>
+                                                <constraint firstItem="ma1-9e-uMZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZP1-qY-kXe" secondAttribute="trailing" constant="5" id="ReM-DB-nek"/>
+                                                <constraint firstItem="ma1-9e-uMZ" firstAttribute="centerY" secondItem="42b-hz-6KV" secondAttribute="centerY" id="SHe-bo-w5B"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="CUT-E6-72l" secondAttribute="trailing" constant="10" id="Zdf-Zm-YLC"/>
                                                 <constraint firstItem="CUT-E6-72l" firstAttribute="centerY" secondItem="42b-hz-6KV" secondAttribute="centerY" id="bBP-uh-aJJ"/>
-                                                <constraint firstItem="CUT-E6-72l" firstAttribute="leading" secondItem="ZP1-qY-kXe" secondAttribute="trailing" constant="1" id="xqX-1O-S9M"/>
+                                                <constraint firstItem="CUT-E6-72l" firstAttribute="leading" secondItem="ma1-9e-uMZ" secondAttribute="trailing" constant="8" id="xqX-1O-S9M"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -4541,7 +4583,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                         <rect key="frame" x="0.0" y="639.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQI-EZ-rd6" id="pIi-Ie-btg">
-                                            <rect key="frame" x="0.0" y="0.0" width="294" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="286" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Filters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxX-tl-ZLH">
