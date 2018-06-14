@@ -2621,17 +2621,20 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		} else if ( object.isRelation.isMultipolygon ) {
 			OsmRelation * relation = (id)object;
 			if ( ![ignoreList containsObject:relation] ) {
+				CGFloat bestDist = 10000.0;
 				for ( OsmMember * member in relation.members ) {
 					if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {
 						OsmWay * way = member.ref;
 						if ( [way isKindOfClass:[OsmWay class]] ) {
 							NSInteger seg = 0;
 							CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
-							if ( dist <= 1.0 ) {
-								block( relation, dist, seg );
-							}
+							if ( dist < bestDist )
+								bestDist = dist;
 						}
 					}
+				}
+				if ( bestDist <= 1.0 ) {
+					block( relation, bestDist, 0 );
 				}
 			}
 		}
