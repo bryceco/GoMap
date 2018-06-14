@@ -1666,7 +1666,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 {
 	CGMutablePathRef 	path = CGPathCreateMutable();
 	BOOL				hasRefPoint = NO;
-	OSMPoint			refPoint;
+	OSMPoint			refPoint = { 0, 0 };	// make static analyzer happy
 	NSMutableArray	*	loop = [NSMutableArray new];
 
 	NSMutableArray	*	members = [self.members mutableCopy];

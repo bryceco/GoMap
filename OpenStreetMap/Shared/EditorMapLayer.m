@@ -1882,9 +1882,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 					if ( ![nameSet containsObject:name] ) {
 						double length = 0.0;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
-						double offset = (length - name.length * Pixels_Per_Character) / 2;	// center along way
-						if ( offset >= 0 ) {
-							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path offset:offset whiteOnBlock:self.whiteText];
+						if ( length >= name.length * Pixels_Per_Character ) {
+							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path whiteOnBlock:self.whiteText];
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;

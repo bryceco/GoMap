@@ -221,7 +221,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 	return [_layerCache objectForKey:string];
 }
 
--(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path offset:(CGFloat)offset whiteOnBlock:(BOOL)whiteOnBlack
+-(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path whiteOnBlock:(BOOL)whiteOnBlack
 {
 	UIFont	* uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 
@@ -255,6 +255,18 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 			pathPoints[pathPointCount-1-i] = p;
 		}
 	}
+
+	// center the text along the path
+	CGFloat pathLength = 0.0;
+	for ( NSInteger i = 1; i < pathPointCount; ++i ) {
+		pathLength += hypot( pathPoints[i].x - pathPoints[i-1].x, pathPoints[i].y - pathPoints[i-1].y );
+	}
+	CGSize textSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0,string.length), nil, CGSizeMake(0,0), NULL);
+	if ( textSize.width+8 >= pathLength ) {
+		CFRelease( framesetter );
+		return nil;
+	}
+	CGFloat offset = (pathLength - textSize.width) / 2;
 
 	NSMutableArray * layers = [NSMutableArray new];
 
