@@ -339,6 +339,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			NSDictionary * properties = isGeoJSON ? entry[@"properties"] : entry;
 			NSString * 	name 				= properties[@"name"];
 			NSString * 	identifier			= properties[@"id"];
+			NSString *	endDate				= properties[@"end_date"];
 			NSString * 	type 				= properties[@"type"];
 			NSArray  *	projections			= properties[@"available_projections"];
 			NSString * 	url 				= properties[@"url"];
@@ -359,6 +360,14 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				polygonPoints = properties[@"extent"][@"polygon"];
 			}
 
+			if ( endDate.length ) {
+				NSInteger year = [endDate integerValue];
+				if ( year > 0 ) {
+					NSDate * date = [NSDate dateWithTimeIntervalSince1970:(year-1970)*365.25*24*60*60];
+					if ( date && [date timeIntervalSinceNow] < -20*365.0*24*60*60 )
+						continue;
+				}
+			}
 			if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
 				if ( ![knownUnsupported containsObject:type] )
 					NSLog(@"unsupported %@\n",type);
