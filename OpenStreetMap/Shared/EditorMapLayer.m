@@ -2677,7 +2677,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	if ( self.hidden )
 		return nil;
 
-#if 1
 	__block CGFloat bestDist = 1000000;
 	NSMutableDictionary * best = [NSMutableDictionary new];
 	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
@@ -2694,9 +2693,9 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 	OsmBaseObject * pick = nil;
 	if ( best.count > 1 ) {
-		if ( pick == nil && self.selectedPrimary.isRelation ) {
+		if ( pick == nil && self.selectedRelation ) {
 			// pick a way that is a member of the relation if possible
-			for ( OsmMember * member in self.selectedPrimary.isRelation.members ) {
+			for ( OsmMember * member in self.selectedRelation.members ) {
 				if ( best[member.ref] ) {
 					pick = member.ref;
 					break;
@@ -2714,16 +2713,13 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 		}
 	}
 	if ( pick == nil ) {
-		pick = best.allKeys.lastObject;
+		pick = [[best keyEnumerator] nextObject];
 	}
 	if ( pSegment )
 		*pSegment = [best[pick] integerValue];
 	return pick;
-#else
-	OsmBaseObject * hit = [EditorMapLayer osmHitTest:point radius:(CGFloat)radius mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList segment:pSegment];
-	return hit;
-#endif
 }
+
 - (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius 
 {
 	return [self osmHitTest:point radius:radius segment:NULL ignoreList:nil];
