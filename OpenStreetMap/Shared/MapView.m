@@ -1167,7 +1167,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
 	southwest = LongitudeLatitudeFromMapPoint(southwest);
 	northeast = LongitudeLatitudeFromMapPoint(northeast);
-
+	// if the map is zoomed to the top/bottom boundary then the y-axis will be crazy
+	if ( southwest.y > northeast.y ) {
+		northeast.y = southwest.y;
+		screenRect.size.height = 0;
+	}
 	double meters = GreatCircleDistance( southwest, northeast );
 	double pixels = hypot(screenRect.size.width,screenRect.size.height);
 	return meters/pixels;
