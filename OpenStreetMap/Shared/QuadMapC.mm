@@ -23,7 +23,7 @@
 #endif
 
 // Don't query the server for regions smaller than this:
-static const double MinRectSize = 360.0 / (1 << 16);
+static const double MinRectSize = 360.0 / (1 << 18);
 
 static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
