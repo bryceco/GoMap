@@ -344,6 +344,19 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	[_groupingStack removeLastObject];
 }
 
+-(NSInteger)countUndoGroups
+{
+	NSInteger count = 0;
+	NSInteger group = -1;
+	for ( UndoAction * action in _undoStack ) {
+		if ( action.group != group ) {
+			++count;
+			group = action.group;
+		}
+	}
+ 	return count;
+}
+
 -(NSSet *)objectRefs
 {
 	NSMutableSet * refs = [NSMutableSet new];

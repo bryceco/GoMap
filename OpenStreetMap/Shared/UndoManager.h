@@ -36,7 +36,7 @@ typedef void(^UndoManagerChangeCallback)(void);
 @property (readonly,nonatomic) BOOL			isRedoing;
 @property (readonly,nonatomic) BOOL			canUndo;
 @property (readonly,nonatomic) BOOL			canRedo;
-@property (readonly,nonatomic) NSInteger	count;
+@property (readonly,nonatomic) NSInteger	countUndoGroups;
 @property (assign) NSInteger				runLoopCounter;
 
 -(NSSet *)objectRefs;

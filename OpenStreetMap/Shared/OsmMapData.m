@@ -372,6 +372,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 -(NSInteger)modificationCount
 {
+#if 1
+	return _undoManager.countUndoGroups;
+#else
 	__block NSInteger count = 0;
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmNode * node, BOOL *stop) {
 		count += node.deleted ? node.ident.longLongValue > 0 : node.isModified;
@@ -383,6 +386,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		count += relation.deleted ? relation.ident.longLongValue > 0 : relation.isModified;
 	}];
 	return count;
+#endif
 }
 
 #pragma mark Editing
