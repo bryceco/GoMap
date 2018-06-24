@@ -232,7 +232,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 -(void)loadIconFromWeb:(NSString *)url
 {
-	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+	NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
+											  cachePolicy:NSURLRequestReturnCacheDataElseLoad
+										  timeoutInterval:60];
+	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 		if ( data ) {
 			UIImage * image = [UIImage imageWithData:data];
 			_attributionIcon = image;
