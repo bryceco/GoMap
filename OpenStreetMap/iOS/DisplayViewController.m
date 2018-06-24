@@ -97,9 +97,9 @@ static const NSInteger CACHE_SECTION			= 3;
 		}
 	}
 	ViewOverlayMask mask = 0;
-	mask |= _notesSwitch.on		? VIEW_OVERLAY_NOTES    : 0;
-	mask |= _gpsTraceSwitch.on	? VIEW_OVERLAY_GPSTRACE : 0;
-    mask |= _unnamedRoadSwitch.on ? VIEW_OVERLAY_NONAME : 0;
+	mask |= _notesSwitch.on			? VIEW_OVERLAY_NOTES    : 0;
+	mask |= _gpsTraceSwitch.on		? VIEW_OVERLAY_GPSTRACE : 0;
+    mask |= _unnamedRoadSwitch.on 	? VIEW_OVERLAY_NONAME 	: 0;
 	mapView.viewOverlayMask = mask;
 
 	mapView.enableBirdsEye			= _birdsEyeSwitch.on;

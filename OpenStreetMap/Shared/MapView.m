@@ -851,17 +851,17 @@ static const CGFloat Z_FLASH			= 110;
 
 #pragma mark View State
 
--(void)setViewStateOverride:(BOOL)override
+-(void)setViewStateZoomedOut:(BOOL)override
 {
-	[self setViewState:_viewState overlays:_viewOverlayMask override:override];
+	[self setViewState:_viewState overlays:_viewOverlayMask zoomedOut:override];
 }
 -(void)setViewState:(MapViewState)state
 {
-	[self setViewState:state overlays:_viewOverlayMask override:_viewStateOverride];
+	[self setViewState:state overlays:_viewOverlayMask zoomedOut:_viewStateZoomedOut];
 }
 -(void)setViewOverlayMask:(ViewOverlayMask)mask
 {
-	[self setViewState:_viewState overlays:mask override:_viewStateOverride];
+	[self setViewState:_viewState overlays:mask zoomedOut:_viewStateZoomedOut];
 }
 
 static inline MapViewState StateFor(MapViewState state, BOOL override)
@@ -872,25 +872,29 @@ static inline MapViewState StateFor(MapViewState state, BOOL override)
 		return MAPVIEW_AERIAL;
 	return state;
 }
-static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask mask, BOOL override)
+static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask mask, BOOL zoomedOut)
 {
-	if ( override && state == MAPVIEW_EDITORAERIAL )
+	if ( zoomedOut && state == MAPVIEW_EDITORAERIAL ) {
 		return mask | VIEW_OVERLAY_LOCATOR;
+	}
+	if ( !zoomedOut ) {
+		return mask & ~VIEW_OVERLAY_NONAME;
+	}
 	return mask;
 }
 
--(void)setViewState:(MapViewState)state overlays:(ViewOverlayMask)overlays override:(BOOL)override
+-(void)setViewState:(MapViewState)state overlays:(ViewOverlayMask)overlays zoomedOut:(BOOL)zoomedOut
 {
-	if ( _viewState == state && _viewOverlayMask == overlays && _viewStateOverride == override )
+	if ( _viewState == state && _viewOverlayMask == overlays && _viewStateZoomedOut == zoomedOut )
 		return;
 
-	MapViewState oldState = StateFor(_viewState,_viewStateOverride);
-	MapViewState newState = StateFor( state, override );
-	ViewOverlayMask oldOverlays = OverlaysFor(_viewState, _viewOverlayMask, _viewStateOverride);
-	ViewOverlayMask newOverlays = OverlaysFor(state, overlays, override);
-	_viewState = state;
-	_viewOverlayMask = overlays;
-	_viewStateOverride = override;
+	MapViewState oldState = StateFor(_viewState,_viewStateZoomedOut);
+	MapViewState newState = StateFor( state, zoomedOut );
+	ViewOverlayMask oldOverlays = OverlaysFor(_viewState, _viewOverlayMask, _viewStateZoomedOut);
+	ViewOverlayMask newOverlays = OverlaysFor(state, overlays, zoomedOut);
+	_viewState 			= state;
+	_viewOverlayMask 	= overlays;
+	_viewStateZoomedOut = zoomedOut;
 	if ( newState == oldState && newOverlays == oldOverlays )
 		return;
 
@@ -899,7 +903,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	_locatorLayer.hidden  = (newOverlays & VIEW_OVERLAY_LOCATOR) == 0;
 	_gpsTraceLayer.hidden = (newOverlays & VIEW_OVERLAY_GPSTRACE) == 0;
-    _noNameLayer.hidden   = (newOverlays & VIEW_OVERLAY_NONAME) ==0;
+    _noNameLayer.hidden   = (newOverlays & VIEW_OVERLAY_NONAME) == 0;
 
 	switch (newState) {
 		case MAPVIEW_EDITOR:
@@ -1060,7 +1064,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	double area = MetersPerDegree( latLon.latitude );
 	OSMRect rcMap = [self boundingMapRectForScreen];
 	area = area*area * rcMap.size.width * rcMap.size.height;
-	self.viewStateOverride = area > 2.0*1000*1000;
+	self.viewStateZoomedOut = area > 2.0*1000*1000;
 
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];

@@ -133,7 +133,7 @@ typedef enum {
 @property (assign,nonatomic)	BOOL							userOverrodeLocationZoom;		// prevent gps updates from changing the zoom level
 
 @property (assign,nonatomic)	MapViewState					viewState;			// layer currently displayed
-@property (assign,nonatomic)	BOOL							viewStateOverride;	// override layer because we're zoomed out
+@property (assign,nonatomic)	BOOL							viewStateZoomedOut;	// override layer because we're zoomed out
 @property (assign,nonatomic)	ViewOverlayMask					viewOverlayMask;
 
 @property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
