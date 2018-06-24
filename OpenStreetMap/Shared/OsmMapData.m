@@ -372,21 +372,18 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 -(NSInteger)modificationCount
 {
-#if 1
-	return _undoManager.countUndoGroups;
-#else
-	__block NSInteger count = 0;
+	__block NSInteger modifications = 0;
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmNode * node, BOOL *stop) {
-		count += node.deleted ? node.ident.longLongValue > 0 : node.isModified;
+		modifications += node.deleted ? node.ident.longLongValue > 0 : node.isModified;
 	}];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-		count += way.deleted ? way.ident.longLongValue > 0 : way.isModified;
+		modifications += way.deleted ? way.ident.longLongValue > 0 : way.isModified;
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL *stop) {
-		count += relation.deleted ? relation.ident.longLongValue > 0 : relation.isModified;
+		modifications += relation.deleted ? relation.ident.longLongValue > 0 : relation.isModified;
 	}];
-	return count;
-#endif
+	NSInteger undoCount = _undoManager.countUndoGroups;
+	return MIN(modifications,undoCount);	// different ways to count, but both can be inflated so take the minimum
 }
 
 #pragma mark Editing
