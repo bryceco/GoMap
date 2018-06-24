@@ -2278,6 +2278,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	_spatial.rootQuad = spatialRoot;
 
 	t = CACurrentMediaTime() - t;
+	(void)t;
 //	DLog(@"archive save %ld,%ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.count, (long)_region.count, t);
 //	DLog(@"Save objects = %ld", (long)self.nodeCount+self.wayCount+self.relationCount);
 	

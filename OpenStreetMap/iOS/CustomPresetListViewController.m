@@ -54,9 +54,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section != 0 )
-		return nil;
-
+	assert( indexPath.section == 0 );
 	if ( indexPath.row < _customPresets.count ) {
 		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"backgroundCell" forIndexPath:indexPath];
 		CustomPreset * preset = [_customPresets presetAtIndex:indexPath.row];

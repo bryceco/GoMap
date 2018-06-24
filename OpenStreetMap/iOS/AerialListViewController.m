@@ -94,8 +94,6 @@
 	}
 
 	NSArray * list = [self aerialListForSection:indexPath.section];
-	if ( list == nil )
-		return nil;
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"backgroundCell" forIndexPath:indexPath];
 	AerialService * aerial = list[ indexPath.row ];
 

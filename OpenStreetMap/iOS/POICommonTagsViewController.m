@@ -239,8 +239,6 @@
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CustomizePresets" forIndexPath:indexPath];
 			return cell;
 		}
-		if ( indexPath.section > _tags.sectionCount )
-			return nil;
 	}
 
 	id rowObject = _drillDownGroup ? _drillDownGroup.tags[ indexPath.row ] : [_tags tagAtIndexPath:indexPath];

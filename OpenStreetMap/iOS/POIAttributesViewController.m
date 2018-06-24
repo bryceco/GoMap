@@ -118,7 +118,7 @@ enum {
 				cell.accessoryType = object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
 			default:
-				cell = nil;
+				assert(NO);
 		}
 
 	} else {
@@ -149,7 +149,7 @@ enum {
 			cell.value.text = name;
 		} else {
 			// shouldn't be here
-			cell = nil;
+			assert(NO);
 		}
 	}
 	// do extra work so keyboard won't display if they select a value

@@ -116,19 +116,20 @@ if (!(condition)) {		\
 
 -(void)dropTables
 {
-	int rc;
-	rc = sqlite3_exec(_db, "drop table node_tags;",			0, 0, 0 );
-	rc = sqlite3_exec(_db, "drop table nodes;",				0, 0, 0 );
-	rc = sqlite3_exec(_db, "drop table way_tags;",			0, 0, 0 );
-	rc = sqlite3_exec(_db, "drop table way_nodes;",			0, 0, 0 );
-	rc = sqlite3_exec(_db, "drop table ways;",				0, 0, 0 );
-	rc = sqlite3_exec(_db, "drop table relation_tags;",		0, 0, 0 );
-	rc = sqlite3_exec(_db, "drop table relation_members;",	0, 0, 0 );
-	rc = sqlite3_exec(_db, "drop table relations;",			0, 0, 0 );
+	int rc = 0;
+	rc |= sqlite3_exec(_db, "drop table node_tags;",			0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table nodes;",				0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table way_tags;",			0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table way_nodes;",			0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table ways;",				0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table relation_tags;",		0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table relation_members;",	0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table relations;",			0, 0, 0 );
 #if USE_RTREE
-	rc = sqlite3_exec(_db, "drop table spatial;",			0, 0, 0 );
+	rc |= sqlite3_exec(_db, "drop table spatial;",			0, 0, 0 );
 #endif
-	rc = sqlite3_exec(_db, "vacuum;",						0, 0, 0 );	// compact database
+	rc |= sqlite3_exec(_db, "vacuum;",						0, 0, 0 );	// compact database
+	(void)rc;
 }
 
 -(void)createTables
@@ -622,7 +623,7 @@ retry:
 		rc = sqlite3_exec(_db, "COMMIT", 0, 0, 0);
 		ok = rc == SQLITE_OK;
 	} else {
-		rc = sqlite3_exec(_db, "ROLLBACK", 0, 0, 0);
+		sqlite3_exec(_db, "ROLLBACK", 0, 0, 0);
 	}
 
 	return ok;
