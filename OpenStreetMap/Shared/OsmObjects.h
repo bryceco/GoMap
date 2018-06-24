@@ -188,8 +188,10 @@ typedef enum {
 -(BOOL)isMultipolygonMember;
 -(BOOL)isSimpleMultipolygonOuterMember;
 +(BOOL)isClockwiseArrayOfNodes:(NSArray *)nodes;
++(CGPathRef)shapePathForNodes:(NSArray *)nodes forward:(BOOL)forward withRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
 -(BOOL)hasDuplicatedNode;
 -(OsmNode *)connectsToWay:(OsmWay *)way;
+-(NSInteger)segmentClosestToPoint:(OSMPoint)point;
 @end
 
 
@@ -207,6 +209,7 @@ typedef enum {
 
 -(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo;
 -(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo;
+-(void)assignMembers:(NSArray *)members undo:(UndoManager *)undo;
 
 -(BOOL)isMultipolygon;
 -(BOOL)isRestriction;
@@ -217,6 +220,8 @@ typedef enum {
 -(OsmMember *)memberByRef:(OsmBaseObject *)ref;
 
 -(NSMutableArray *)waysInMultipolygon;
+-(NSArray *)buildMultipolygonRepairing:(BOOL)repairing;
++(NSArray *)buildMultipolygonFromMembers:(NSArray *)memberList repairing:(BOOL)repairing;
 
 -(OSMPoint)centerPoint;
 

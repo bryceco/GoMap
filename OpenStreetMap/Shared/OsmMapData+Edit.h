@@ -19,10 +19,16 @@
 - (EditAction)canDeleteWay:(OsmWay *)way error:(NSString **)error;
 - (EditAction)canDeleteRelation:(OsmRelation *)relation error:(NSString **)error;
 
+// ways
 - (EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index error:(NSString **)error;
 - (EditActionReturnNode)canMergeNode:(OsmNode *)node1 intoNode:(OsmNode *)node2 error:(NSString **)error;
-
 - (EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way error:(NSString **)error;
+
+// relations
+-(EditAction)canAddObject:(OsmBaseObject *)obj toRelation:(OsmRelation *)relation error:(NSString **)error;
+-(EditAction)canRemoveObject:(OsmBaseObject *)obj fromRelation:(OsmRelation *)relation error:(NSString **)error;
+-(void)updateMultipolygonRelationRoles:(OsmRelation *)relation;
+-(void)updateParentMultipolygonRelationRolesForWay:(OsmWay *)way;
 
 // more complicated stuff:
 - (EditAction)canOrthogonalizeWay:(OsmWay *)way error:(NSString **)error;

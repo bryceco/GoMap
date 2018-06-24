@@ -2519,7 +2519,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 #pragma mark Hit Testing
 
-
 inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize maxDegrees, CLLocationCoordinate2D coord1, CLLocationCoordinate2D coord2)
 {
 	OSMPoint line1 = { coord1.longitude - point.longitude, coord1.latitude - point.latitude };
@@ -2536,7 +2535,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return dist;
 }
 
-+ (CGFloat)osmHitTest:(CLLocationCoordinate2D)location maxDegrees:(OSMSize)maxDegrees forWay:(OsmWay *)way segment:(NSInteger *)segment
++ (CGFloat)osmHitTestWay:(OsmWay *)way location:(CLLocationCoordinate2D)location maxDegrees:(OSMSize)maxDegrees segment:(NSInteger *)segment
 {
 	CLLocationCoordinate2D previous;
 	NSInteger seg = -1;
@@ -2556,14 +2555,12 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	}
 	return bestDist;
 }
-+ (CGFloat)osmHitTest:(CLLocationCoordinate2D)location maxDegrees:(OSMSize)maxDegrees forNode:(OsmNode *)node
++ (CGFloat)osmHitTestNode:(OsmNode *)node location:(CLLocationCoordinate2D)location maxDegrees:(OSMSize)maxDegrees
 {
 	OSMPoint delta = {
-		fabs(location.longitude - node.lon),
-		fabs(location.latitude - node.lat)
+		(location.longitude - node.lon) / maxDegrees.width,
+		(location.latitude - node.lat) / maxDegrees.height
 	};
-	delta.x /= maxDegrees.width;
-	delta.y /= maxDegrees.height;
 	CGFloat dist = hypot(delta.x, delta.y);
 	return dist;
 }
@@ -2587,7 +2584,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			OsmNode * node = (id)object;
 			if ( ![ignoreList containsObject:node] ) {
 				if ( testNodes || node.wayCount == 0 ) {
-					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forNode:node];
+					CGFloat dist = [self osmHitTestNode:node location:location maxDegrees:maxDegrees];
 					dist *= NODE_BIAS;
 					if ( dist <= 1.0 ) {
 						block( node, dist, 0 );
@@ -2599,7 +2596,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			OsmWay * way = (id)object;
 			if ( ![ignoreList containsObject:way] ) {
 				NSInteger seg = 0;
-				CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
+				CGFloat dist = [self osmHitTestWay:way location:location maxDegrees:maxDegrees segment:&seg];
 				if ( dist <= 1.0 ) {
 					block( way, dist, seg );
 					[relations addObjectsFromArray:way.parentRelations];
@@ -2609,7 +2606,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 				for ( OsmNode * node in way.nodes ) {
 					if ( [ignoreList containsObject:node] )
 						continue;
-					CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forNode:node];
+					CGFloat dist = [self osmHitTestNode:node location:location maxDegrees:maxDegrees];
 					dist *= NODE_BIAS;
 					if ( dist < 1.0 ) {
 						block( node, dist, 0 );
@@ -2622,13 +2619,15 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			if ( ![ignoreList containsObject:relation] ) {
 				CGFloat bestDist = 10000.0;
 				for ( OsmMember * member in relation.members ) {
-					if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {
-						OsmWay * way = member.ref;
-						if ( [way isKindOfClass:[OsmWay class]] ) {
-							NSInteger seg = 0;
-							CGFloat dist = [self osmHitTest:location maxDegrees:maxDegrees forWay:way segment:&seg];
-							if ( dist < bestDist )
-								bestDist = dist;
+					OsmWay * way = member.ref;
+					if ( [way isKindOfClass:[OsmWay class]] ) {
+						if ( ![ignoreList containsObject:way] ) {
+							if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {
+								NSInteger seg = 0;
+								CGFloat dist = [self osmHitTestWay:way location:location maxDegrees:maxDegrees segment:&seg];
+								if ( dist < bestDist )
+									bestDist = dist;
+							}
 						}
 					}
 				}
@@ -2644,41 +2643,15 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	}
 }
 
-+ (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
-				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
-{
-	__block __unsafe_unretained id hit = nil;
-	__block NSInteger hitSegment = 0;
-	__block CGFloat bestDist = 1000000;
-	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:mapView objects:objects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
-		if ( dist < bestDist ) {
-			bestDist = dist;
-			hit = obj;
-			hitSegment = segment;
-		}
-	}];
-	if ( bestDist <= 1.0 ) {
-		if ( pSegment )
-			*pSegment = hitSegment;
-		return hit;
-	}
-	return nil;
-}
-
-
--(NSArray *)shownObjects
-{
-	return _shownObjects;
-}
-
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)pSegment ignoreList:(NSArray *)ignoreList
+// default hit test when clicking on the map, or drag-connecting
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
 {
 	if ( self.hidden )
 		return nil;
 
 	__block CGFloat bestDist = 1000000;
 	NSMutableDictionary * best = [NSMutableDictionary new];
-	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:_mapView objects:_shownObjects testNodes:NO ignoreList:ignoreList block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
+	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:_mapView objects:_shownObjects testNodes:testNodes ignoreList:ignoreList block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
 		if ( dist < bestDist ) {
 			bestDist = dist;
 			[best removeAllObjects];
@@ -2719,75 +2692,44 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	return pick;
 }
 
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius 
-{
-	return [self osmHitTest:point radius:radius segment:NULL ignoreList:nil];
-}
-
-// return close objects
+// return all nearby objects
 - (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
 {
 	NSMutableSet * objectSet = [NSMutableSet new];
 	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
 		[objectSet addObject:obj];
 	}];
-	NSMutableArray * objects = [objectSet.allObjects mutableCopy];
-	[objects sortUsingComparator:^NSComparisonResult(OsmBaseObject * o1, OsmBaseObject * o2) {
+	NSMutableArray * objectList = [objectSet.allObjects mutableCopy];
+	[objectList sortUsingComparator:^NSComparisonResult(OsmBaseObject * o1, OsmBaseObject * o2) {
 		int diff = (o1.isRelation?2:o1.isWay?1:0) - (o2.isRelation?2:o2.isWay?1:0);
 		if ( diff )
 			return -diff;
 		int64_t diff2 = o1.ident.longLongValue - o2.ident.longLongValue;
 		return diff2 < 0 ? NSOrderedAscending : diff2 > 0 ? NSOrderedDescending : NSOrderedSame;
 	}];
-	return objects;
+	return objectList;
 }
 
-- (void)osmObjectsNearby:(CGPoint)point radius:(double)radius block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
+// drill down to a node in the currently selected way
+-(OsmNode *)osmHitTestNodeInSelectedWay:(CGPoint)point radius:(CGFloat)radius
 {
-	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:block];
-}
-
-
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment
-{
-	if ( self.hidden )
+	if ( _selectedWay == nil )
 		return nil;
-	if ( _selectedWay ) {
-		return [EditorMapLayer osmHitTest:point radius:radius mapView:_mapView objects:@[_selectedWay] testNodes:NO ignoreList:nil segment:segment];
-	}
-	if ( _selectedNode ) {
-		return [EditorMapLayer osmHitTest:point radius:radius mapView:_mapView objects:@[_selectedNode] testNodes:YES ignoreList:nil segment:segment];
+	__block __unsafe_unretained OsmBaseObject * hit = nil;
+	__block CGFloat bestDist = 1000000;
+	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_selectedWay.nodes testNodes:YES ignoreList:nil block:^(OsmBaseObject * obj,CGFloat dist,NSInteger segment){
+		if ( dist < bestDist ) {
+			bestDist = dist;
+			hit = obj;
+		}
+	}];
+	if ( bestDist <= 1.0 ) {
+		assert(hit.isNode);
+		return hit.isNode;
 	}
 	return nil;
 }
 
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius
-{
-	return [self osmHitTestSelection:point radius:radius segment:NULL];
-}
-
--(OsmNode *)osmHitTestNodeInSelection:(CGPoint)point radius:(CGFloat)radius
-{
-	if ( _selectedWay == nil && _selectedNode == nil )
-		return nil;
-	NSMutableArray * list = [NSMutableArray new];
-	for ( OsmNode * node in _selectedWay.nodeSet ) {
-		[list addObject:node];
-	}
-	if ( _selectedNode ) {
-		[list addObject:_selectedNode];
-	}
-	NSInteger segment;
-	return (id) [EditorMapLayer osmHitTest:point radius:radius mapView:_mapView objects:list testNodes:YES ignoreList:nil segment:&segment];
-}
-
--(CGPoint)pointOnObject:(OsmBaseObject *)object forPoint:(CGPoint)point
-{
-	CLLocationCoordinate2D latLon = [_mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
-	OSMPoint latLon2 = [object pointOnObjectForPoint:OSMPointMake(latLon.longitude,latLon.latitude)];
-	CGPoint pos = [_mapView screenPointForLatitude:latLon2.y longitude:latLon2.x birdsEye:YES];
-	return pos;
-}
 
 #pragma mark Copy/Paste
 
@@ -2894,6 +2836,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 				action();
 				[self setSelectedNode:nil];
 				[self setSelectedWay:nil];
+				[self setSelectedRelation:nil];
 				[self setNeedsLayout];
 			};
 		}

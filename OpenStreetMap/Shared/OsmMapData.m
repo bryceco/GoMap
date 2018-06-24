@@ -604,15 +604,29 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	OSMRect bbox = relation.boundingBox;
 	[relation addMember:member atIndex:index undo:_undoManager];
 	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
+	[self updateMultipolygonRelationRoles:relation];
 }
 -(void)deleteMemberInRelationUnsafe:(OsmRelation *)relation index:(NSInteger)index
 {
-	[self registerUndoCommentString:NSLocalizedString(@"delete object from relation",nil)];
-	OSMRect bbox = relation.boundingBox;
-	[relation removeMemberAtIndex:index undo:_undoManager];
-	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
+	if ( relation.members.count == 1 ) {
+		// deleting last member of relation, so delete relation
+		[self deleteRelationUnsafe:relation];
+	} else {
+		[self registerUndoCommentString:NSLocalizedString(@"delete object from relation",nil)];
+		OSMRect bbox = relation.boundingBox;
+		[relation removeMemberAtIndex:index undo:_undoManager];
+		[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
+		[self updateMultipolygonRelationRoles:relation];
+	}
 }
+-(void)updateMembersUnsafe:(NSArray *)memberList inRelation:(OsmRelation *)relation
+{
+	[self registerUndoCommentString:NSLocalizedString(@"update relation members",nil)];
+	OSMRect bbox = relation.boundingBox;
+	[relation assignMembers:memberList undo:_undoManager];
+	[_spatial updateMember:relation fromBox:bbox undo:_undoManager];
 
+}
 
 #pragma mark Undo manager
 

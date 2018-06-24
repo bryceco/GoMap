@@ -77,20 +77,9 @@ extern const double MinIconSizeInPixels;
 - (id)initWithMapView:(MapView *)mapView;
 - (void)didReceiveMemoryWarning;
 
-- (OsmNode *)osmHitTestNodeInSelection:(CGPoint)point radius:(CGFloat)radius ;
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius ;
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment ignoreList:(NSArray *)ignoreList;
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius ;
-- (OsmBaseObject *)osmHitTestSelection:(CGPoint)point radius:(CGFloat)radius segment:(NSInteger *)segment;
-+ (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
-				   ignoreList:(NSArray *)ignoreList segment:(NSInteger *)segment;
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray *)ignoreList segment:(NSInteger *)segment;
 - (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius ;
-- (void)osmObjectsNearby:(CGPoint)point radius:(double)radius block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block;
-
--(CGPoint)pointOnObject:(OsmBaseObject *)object forPoint:(CGPoint)point;
-
-
--(NSArray *)shownObjects;
+- (OsmNode *)osmHitTestNodeInSelectedWay:(CGPoint)point radius:(CGFloat)radius ;
 
 - (void)updateMapLocation;
 - (void)purgeCachedDataHard:(BOOL)hard;

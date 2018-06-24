@@ -24,6 +24,7 @@
 -(void)deleteRelationUnsafe:(OsmRelation *)relation;
 -(void)addMemberUnsafe:(OsmMember *)member toRelation:(OsmRelation *)relation atIndex:(NSInteger)index;
 -(void)deleteMemberInRelationUnsafe:(OsmRelation *)relation index:(NSInteger)index;
+-(void)updateMembersUnsafe:(NSArray *)memberList inRelation:(OsmRelation *)relation;
 @end
 
 
@@ -52,13 +53,7 @@
 		if ( way.parentRelations.count == 1 ) {
 			OsmRelation * relation = way.parentRelations.lastObject;
 			if ( relation.isMultipolygon ) {
-				for ( OsmMember * member in relation.members ) {
-					if ( [member.role isEqualToString:@"inner"] && member.ref == way ) {
-						// okay!
-						ok = YES;
-						break;
-					}
-				}
+				ok = YES;
 			} else if ( relation.isRestriction ) {
 				// allow deleting if we're both from and to (u-turn)
 				OsmMember * from = [relation memberByRole:@"from"];
@@ -129,6 +124,126 @@
 
 	return ^(OsmNode * node) {
 		[self addNodeUnsafe:node toWay:way atIndex:index];
+	};
+}
+
+#pragma mark updateMultipolygonRelationRoles
+
+-(void)updateMultipolygonRelationRoles:(OsmRelation *)relation
+{
+	if ( !relation.isMultipolygon )
+		return;
+
+	NSMutableArray	* members	= [relation.members mutableCopy];
+	NSArray		 	* loopList 	= [OsmRelation buildMultipolygonFromMembers:members repairing:NO];
+	NSMutableSet   	* innerSet 	= [NSMutableSet new];
+	for ( NSArray * loop in loopList ) {
+		OSMPoint refPoint;
+		CGPathRef path = [OsmWay shapePathForNodes:loop forward:YES withRefPoint:&refPoint];
+		if ( path == NULL )
+			continue;
+		for ( NSInteger m = 0; m < members.count; ++m ) {
+			OsmMember * member = members[m];
+			OsmWay * way = member.ref;
+			if ( ![way isKindOfClass:[OsmWay class]] || way.nodes.count == 0 )
+				continue;
+			OsmNode * node = way.nodes.lastObject;
+			if ( [loop containsObject:node] ) {
+				// This way is part of the loop being checked against
+				continue;
+			}
+			extern const double PATH_SCALING;
+			OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
+			pt = Sub( pt, refPoint );
+			pt = Mult( pt, PATH_SCALING );
+			BOOL isInner = CGPathContainsPoint(path, NULL, CGPointFromOSMPoint(pt), NO);
+			if ( isInner ) {
+				[innerSet addObject:member];
+			}
+		}
+		CGPathRelease(path);
+	}
+	// update roles if necessary
+	BOOL changed = NO;
+	for ( NSInteger m = 0; m < members.count; ++m ) {
+		OsmMember * member = members[m];
+		if ( [innerSet containsObject:member] ) {
+			if ( ![member.role isEqualToString:@"inner"] ) {
+				members[m] = [[OsmMember alloc] initWithRef:member.ref role:@"inner"];
+				changed = YES;
+			}
+		} else {
+			if ( ![member.role isEqualToString:@"outer"] ) {
+				members[m] = [[OsmMember alloc] initWithRef:member.ref role:@"outer"];
+				changed = YES;
+			}
+		}
+	}
+	if ( changed ) {
+		[self updateMembersUnsafe:members inRelation:relation];
+	}
+}
+
+-(void)updateParentMultipolygonRelationRolesForWay:(OsmWay *)way
+{
+	for ( OsmRelation * relation in way.parentRelations ) {
+		// might have moved an inner outside a multipolygon
+		[self updateMultipolygonRelationRoles:relation];
+	}
+}
+
+#pragma mark canAddWayToRelation
+
+-(EditAction)canAddObject:(OsmBaseObject *)obj toRelation:(OsmRelation *)relation error:(NSString **)error
+{
+	if ( !relation.isMultipolygon ) {
+		*error = NSLocalizedString(@"Only multipolygon relations are supported", nil);
+		return nil;
+	}
+	OsmWay * newWay = obj.isWay;
+	if ( !newWay ) {
+		*error = NSLocalizedString(@"Can only add ways to multipolygons", nil);
+		return nil;
+	}
+	NSString * role = nil;
+	NSInteger index = 0;
+	for ( OsmMember * m in relation.members ) {
+		OsmWay * w = m.ref;
+		++index;
+		if ( ![w isKindOfClass:[OsmWay class]] )
+			continue;
+		if ( ![m.role isEqualToString:@"inner"] && ![m.role isEqualToString:@"outer"] )
+			continue;
+		if ( [newWay connectsToWay:w] ) {
+			role = m.role;
+			break;
+		}
+	}
+	if ( role == nil )
+		role = @"outer";
+
+	return ^{
+		OsmMember * newMember = [[OsmMember alloc] initWithRef:newWay role:role];
+		[self addMemberUnsafe:newMember toRelation:relation atIndex:index];
+	};
+}
+
+#pragma mark canRemoveWayFromRelation
+
+-(EditAction)canRemoveObject:(OsmBaseObject *)obj fromRelation:(OsmRelation *)relation error:(NSString **)error
+{
+	if ( !relation.isMultipolygon ) {
+		*error = NSLocalizedString(@"Only multipolygon relations are supported", nil);
+		return nil;
+	}
+	return ^{
+		for ( NSInteger index = 0; index < relation.members.count; ++index ) {
+			OsmMember * member = relation.members[index];
+			if ( member.ref == obj ) {
+				[self deleteMemberInRelationUnsafe:relation index:index];
+				--index;
+			}
+		}
 	};
 }
 
@@ -586,14 +701,16 @@ NSString * reverseValue( NSString * key, NSString * value)
 		if ( way.nodes.count < 2 ) {
 			NSString * dummy = nil;
 			EditAction delete = [self canDeleteWay:way error:&dummy];
-			if ( delete )
+			if ( delete ) {
 				delete();	// this will also delete any relations the way belongs to
-			else
+			} else {
 				[self deleteWayUnsafe:way];
+			}
 		} else if ( needAreaFixup ) {
 			// special case where deleted node is first & last node of an area
 			[self addNodeUnsafe:way.nodes[0] toWay:way atIndex:way.nodes.count];
 		}
+		[self updateParentMultipolygonRelationRolesForWay:way];
 	};
 }
 
@@ -1035,6 +1152,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		[self setTags:newTags forObject:selectedWay];
 
 		[self deleteWayUnsafe:otherWay];
+		[self updateParentMultipolygonRelationRolesForWay:selectedWay];
 	};
 }
 

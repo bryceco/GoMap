@@ -779,7 +779,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"OsmNode %@", [super description]];
+	return [NSString stringWithFormat:@"OsmNode (%f,%f) %@", self.lon, self.lat, [super description]];
 }
 
 -(OsmNode *)isNode
@@ -1320,15 +1320,14 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	return [OsmWay isClockwiseArrayOfNodes:self.nodes];
 }
 
-
--(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
++(CGPathRef)shapePathForNodes:(NSArray *)nodes forward:(BOOL)forward withRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
 {
-	if ( !self.isClosed )
+	if ( nodes.count == 0 || nodes[0] != nodes.lastObject )
 		return nil;
 	CGMutablePathRef path = CGPathCreateMutable();
 	BOOL first = YES;
 	// want loops to run clockwise
-	NSEnumerator * enumerator = self.isClockwise ? self.nodes.objectEnumerator : self.nodes.reverseObjectEnumerator;
+	NSEnumerator * enumerator = forward ? nodes.objectEnumerator : nodes.reverseObjectEnumerator;
 	for ( OsmNode * n in enumerator ) {
 		OSMPoint pt = MapPointForLatitudeLongitude( n.lat, n.lon );
 		if ( first ) {
@@ -1340,6 +1339,11 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 		}
 	}
 	return path;
+}
+
+-(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
+{
+	return [OsmWay shapePathForNodes:self.nodes forward:self.isClockwise withRefPoint:pRefPoint];
 }
 
 -(BOOL)hasDuplicatedNode
@@ -1364,6 +1368,21 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	return nil;
 }
 
+-(NSInteger)segmentClosestToPoint:(OSMPoint)point
+{
+	NSInteger best = -1;
+	double bestDist = 100000000.0;
+	for ( NSInteger index = 0; index+1 < _nodes.count; ++index ) {
+		OsmNode * this = _nodes[index];
+		OsmNode * next = _nodes[index+1];
+		double dist = DistanceFromPointToLineSegment(point, this.location, next.location);
+		if ( dist < bestDist ) {
+			bestDist = dist;
+			best = index;
+		}
+	}
+	return best;
+}
 
 -(id)initWithCoder:(NSCoder *)coder
 {
@@ -1512,6 +1531,54 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
+
+-(void)assignMembers:(NSArray *)members undo:(UndoManager *)undo
+{
+	if ( _constructed ) {
+		assert(undo);
+		[self incrementModifyCount:undo];
+		[undo registerUndoWithTarget:self selector:@selector(assignMembers:undo:) objects:@[_members,undo]];
+	}
+
+	// figure out which members changed and update their relation parents
+#if 1
+	NSMutableSet * old = [NSMutableSet new];
+	NSMutableSet * new = [NSMutableSet new];
+	for ( OsmMember * m in _members ) {
+		if ( [m.ref isKindOfClass:[OsmBaseObject class]] ) {
+			[old addObject:m.ref];
+		}
+	}
+	for ( OsmMember * m in members ) {
+		if ( [m.ref isKindOfClass:[OsmBaseObject class]] ) {
+			[new addObject:m.ref];
+		}
+	}
+	NSMutableSet * common = [new mutableCopy];
+	[common intersectSet:old];
+	[new minusSet:common];	// added items
+	[old minusSet:common];	// removed items
+	for ( OsmBaseObject * obj in old ) {
+		[obj removeRelation:self undo:nil];
+	}
+	for ( OsmBaseObject * obj in new ) {
+		[obj addRelation:self undo:nil];
+	}
+#else
+	NSArray * old = [_members sortedArrayUsingComparator:^NSComparisonResult(OsmMember * obj1, OsmMember * obj2) {
+		NSNumber * r1 = [obj1.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)obj1.ref).ident : obj1.ref;
+		NSNumber * r2 = [obj2.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)obj2.ref).ident : obj2.ref;
+		return [r1 compare:r2];
+	}];
+	NSArray * new = [members sortedArrayUsingComparator:^NSComparisonResult(OsmMember * obj1, OsmMember * obj2) {
+		NSNumber * r1 = [obj1.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)obj1.ref).ident : obj1.ref;
+		NSNumber * r2 = [obj2.ref isKindOfClass:[OsmBaseObject class]] ? ((OsmBaseObject *)obj2.ref).ident : obj2.ref;
+		return [r1 compare:r2];
+	}];
+#endif
+
+	_members = [members mutableCopy];
+}
 
 -(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo
 {
@@ -1662,36 +1729,29 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
--(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED
++(NSArray *)buildMultipolygonFromMembers:(NSArray *)memberList repairing:(BOOL)repairing
 {
-	CGMutablePathRef 	path = CGPathCreateMutable();
-	BOOL				hasRefPoint = NO;
-	OSMPoint			refPoint = { 0, 0 };	// make static analyzer happy
-	NSMutableArray	*	loop = [NSMutableArray new];
-
-	NSMutableArray	*	members = [self.members mutableCopy];
+	NSMutableArray	*	loopList = [NSMutableArray new];
+	NSMutableArray	*	loop = nil;
+	NSMutableArray	*	members = [memberList mutableCopy];
 	[members filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmMember * member, NSDictionary<NSString *,id> * bindings) {
 		return [member.ref isKindOfClass:[OsmWay class]] && ([member.role isEqualToString:@"outer"] || [member.role isEqualToString:@"inner"]);
 	}]];
 	BOOL isInner = NO;
+	BOOL foundAdjacent = NO;
 
 	while ( members.count ) {
-		if ( loop.count == 0 ) {
+		if ( loop == nil ) {
 			// add a member to loop
 			OsmMember * member = members.lastObject;
 			[members removeObjectAtIndex:members.count-1];
 			isInner = [member.role isEqualToString:@"inner"];
 			OsmWay * way = member.ref;
-			[loop addObjectsFromArray:way.nodes];
-			if ( !hasRefPoint ) {
-				OsmNode * n = way.nodes[0];
-				OSMPoint pt = MapPointForLatitudeLongitude( n.lat, n.lon );
-				hasRefPoint = YES;
-				refPoint = pt;
-			}
+			loop = [way.nodes mutableCopy];
+			foundAdjacent = YES;
 		} else {
 			// find adjacent way
-			BOOL foundAdjacent = NO;
+			foundAdjacent = NO;
 			for ( NSInteger i = 0; i < members.count; ++i ) {
 				OsmMember * member = members[i];
 				if ( [member.role isEqualToString:@"inner"] != isInner )
@@ -1714,26 +1774,56 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 					break;
 				}
 			}
-			if ( !foundAdjacent ) {
+			if ( !foundAdjacent && repairing ) {
 				// invalid, but we'll try to continue
 				[loop addObject:loop[0]];	// force-close the loop
 			}
 		}
 
-		if ( loop.count && loop.lastObject == loop[0] ) {
+		if ( loop.count && (loop.lastObject == loop[0] || !foundAdjacent) ) {
 			// finished a loop. Outer goes clockwise, inner goes counterclockwise
-			NSEnumerator * enumerator = [OsmWay isClockwiseArrayOfNodes:loop] == isInner ? loop.reverseObjectEnumerator : loop.objectEnumerator;
-			BOOL first = YES;
-			for ( OsmNode * n in enumerator ) {
-				OSMPoint pt = MapPointForLatitudeLongitude( n.lat, n.lon );
-				if ( first ) {
-					first = NO;
-					CGPathMoveToPoint(path, NULL, (pt.x-refPoint.x)*PATH_SCALING, (pt.y-refPoint.y)*PATH_SCALING);
-				} else {
-					CGPathAddLineToPoint(path, NULL, (pt.x-refPoint.x)*PATH_SCALING, (pt.y-refPoint.y)*PATH_SCALING);
+			NSArray * lp = [OsmWay isClockwiseArrayOfNodes:loop] == isInner ? [[loop reverseObjectEnumerator] allObjects] : loop;
+			[loopList addObject:lp];
+			loop = nil;
+		}
+	}
+	return loopList;
+}
+
+
+-(NSArray *)buildMultipolygonRepairing:(BOOL)repairing
+{
+	if ( !self.isMultipolygon )
+		return nil;
+	NSArray * a = [OsmRelation buildMultipolygonFromMembers:self.members repairing:repairing];
+	return a;
+}
+
+
+-(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED
+{
+	NSArray * loopList = [self buildMultipolygonRepairing:YES];
+	if ( loopList.count == 0 )
+		return NULL;
+
+	CGMutablePathRef 	path = CGPathCreateMutable();
+	BOOL				hasRefPoint = NO;
+	OSMPoint			refPoint;
+
+	for ( NSArray * loop in loopList ) {
+		BOOL first = YES;
+		for ( OsmNode * n in loop ) {
+			OSMPoint pt = MapPointForLatitudeLongitude( n.lat, n.lon );
+			if ( first ) {
+				first = NO;
+				if ( !hasRefPoint ) {
+					hasRefPoint = YES;
+					refPoint = pt;
 				}
+				CGPathMoveToPoint(path, NULL, (pt.x-refPoint.x)*PATH_SCALING, (pt.y-refPoint.y)*PATH_SCALING);
+			} else {
+				CGPathAddLineToPoint(path, NULL, (pt.x-refPoint.x)*PATH_SCALING, (pt.y-refPoint.y)*PATH_SCALING);
 			}
-			[loop removeAllObjects];
 		}
 	}
 	*pRefPoint = refPoint;
