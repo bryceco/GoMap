@@ -83,6 +83,8 @@ static const CGFloat NodeHighlightRadius = 6.0;
 	if ( self ) {
 		_mapView = mapView;
 
+		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+
 		self.whiteText = YES;
 
 		_fadingOutSet = [NSMutableSet new];
@@ -128,27 +130,22 @@ static const CGFloat NodeHighlightRadius = 6.0;
 		_showPastFuture 		= [defaults boolForKey:@"editor.showPastFuture"];
 		_showOthers 			= [defaults boolForKey:@"editor.showOthers"];
 
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		if ( !appDelegate.isAppUpgrade ) {
-			CFTimeInterval t = CACurrentMediaTime();
-			_mapData = [[OsmMapData alloc] initWithCachedData];
-			t = CACurrentMediaTime() - t;
+		CFTimeInterval t = CACurrentMediaTime();
+		_mapData = [[OsmMapData alloc] initWithCachedData];
+		t = CACurrentMediaTime() - t;
 #if TARGET_OS_IPHONE
-			if ( _mapData && mapView.enableAutomaticCacheManagement ) {
-				[_mapData discardStaleData];
-			} else if ( _mapData && t > 5.0 ) {
-				// need to pause before posting the alert because the view controller isn't ready here yet
-				dispatch_async(dispatch_get_main_queue(), ^{
-					NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.",nil);
-					UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text preferredStyle:UIAlertControllerStyleAlert];
-					[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-					[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
-				});
-			}
-#endif
-		} else {
-			// discard existing database on upgrade
+		if ( _mapData && mapView.enableAutomaticCacheManagement ) {
+			[_mapData discardStaleData];
+		} else if ( _mapData && t > 5.0 ) {
+			// need to pause before posting the alert because the view controller isn't ready here yet
+			dispatch_async(dispatch_get_main_queue(), ^{
+				NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.",nil);
+				UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text preferredStyle:UIAlertControllerStyleAlert];
+				[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+				[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
+			});
 		}
+#endif
 		if ( _mapData == nil ) {
 			_mapData = [OsmMapData new];
 			[_mapData purgeHard];	// force database to get reset
