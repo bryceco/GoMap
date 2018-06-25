@@ -317,6 +317,33 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	if ( ![featureArray isKindOfClass:[NSArray class]] )
 		return nil;
 
+	NSDictionary * blacklist = @{
+		@"hike_n_bike"					: @YES,                  // 'Hike & Bike'
+		@"osm-mapnik-german_style"		: @YES,      // 'OpenStreetMap (German Style)'
+		@"osm-mapnik-black_and_white"	: @YES,   // 'OpenStreetMap (Standard Black & White)'
+		@"skobbler"						: @YES,                     // 'Skobbler'
+		@"openpt_map"					: @YES,                   // 'OpenPT Map (overlay)'
+		@"tf-cycle"						: @YES,                     // 'Thunderforest OpenCycleMap'
+		@"qa_no_address"				: @YES,                // 'QA No Address'
+		@"landsat"						: @YES,                      // 'Landsat'
+
+		@"US-TIGER-Roads-2012"			: @YES,
+		@"US-TIGER-Roads-2014"			: @YES,
+
+		@"Waymarked_Trails-Cycling"		: @YES,
+		@"Waymarked_Trails-Hiking"		: @YES,
+		@"Waymarked_Trails-MTB"			: @YES,
+		@"Waymarked_Trails-Skating"		: @YES,
+		@"Waymarked_Trails-Winter_Sports": @YES,
+
+		@"OSM_Inspector-Addresses"		: @YES,
+		@"OSM_Inspector-Geometry"		: @YES,
+		@"OSM_Inspector-Highways"		: @YES,
+		@"OSM_Inspector-Multipolygon"	: @YES,
+		@"OSM_Inspector-Places"			: @YES,
+		@"OSM_Inspector-Routing"		: @YES,
+		@"OSM_Inspector-Tagging"		: @YES
+	};
 	NSDictionary * supportedProjections = @{
 		@"EPSG:3857" 	: @(YES),
 		@"EPSG:4326" 	: @(YES),
@@ -338,10 +365,13 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				NSLog(@"Aerial: skipping type %@", entry[@"type"]);
 				continue;
 			}
-
 			NSDictionary * properties = isGeoJSON ? entry[@"properties"] : entry;
 			NSString * 	name 				= properties[@"name"];
 			NSString * 	identifier			= properties[@"id"];
+			if ( identifier.length == 0 || blacklist[identifier] ) {
+				NSLog(@"Aerial: skipping %@", identifier);
+				continue;
+			}
 			NSString *	endDate				= properties[@"end_date"];
 			NSString * 	type 				= properties[@"type"];
 			NSArray  *	projections			= properties[@"available_projections"];
@@ -377,7 +407,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				continue;
 			}
 			if ( overlay ) {
-				// we don't support overlays yet
+				// we don@"t support overlays yet
 				continue;
 			}
 			if ( !( [url hasPrefix:@"http:"] || [url hasPrefix:@"https:"]) ) {
