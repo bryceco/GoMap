@@ -28,7 +28,7 @@ static const double MinRectSize = 360.0 / (1 << 18);
 static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
-
+static const NSInteger MAX_DEPTH = 26;	// 2 feet wide
 
 class QuadBoxCC
 {
@@ -422,11 +422,7 @@ public:
 
 	void addMember(OsmBaseObject * member, const OSMRect & bbox, int depth)
 	{
-		if ( depth > 100 ) {
-			NSLog(@"deep");
-		}
-
-		if ( !_isSplit && _members.size() < MAX_MEMBERS_PER_LEVEL ) {
+		if ( !_isSplit && (depth >= MAX_DEPTH || _members.size() < MAX_MEMBERS_PER_LEVEL) ) {
 #if defined(DEBUG)
 			// assert( !_members. containsObject:member] );
 #endif
