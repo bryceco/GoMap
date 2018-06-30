@@ -164,7 +164,7 @@
 			completion( NSLocalizedString( @"The XML is improperly formed", nil ) );
 			return;
 		}
-		[_mapData uploadChangeset:xmlDoc comment:comment imagery:imagery retries:0 completion:completion];
+		[_mapData uploadChangesetXml:xmlDoc comment:comment imagery:imagery completion:completion];
 
 	} else {
 		// normal upload
