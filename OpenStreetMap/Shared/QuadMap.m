@@ -69,7 +69,7 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 {
 	NSMutableArray * quads = [NSMutableArray new];
 
-	assert( newRect.origin.x <= 180 && newRect.origin.x >= -180 );
+	assert( newRect.origin.x >= -180.0 && newRect.origin.x <= 180.0 );
 	if ( newRect.origin.x + newRect.size.width > 180 ) {
 		OSMRect half;
 		half.origin.x = -180;

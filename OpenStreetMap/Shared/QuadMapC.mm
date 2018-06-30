@@ -449,7 +449,6 @@ public:
 			_children[index]->addMember(member,bbox,depth+1);
 		} else {
 			// add to self
-assert(this->_parent);
 			_members.push_back(member);
 		}
 	}
