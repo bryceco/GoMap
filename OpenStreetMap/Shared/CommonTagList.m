@@ -1039,8 +1039,12 @@ static NSString * PrettyTag( NSString * tag )
 
 -(void)load
 {
-	NSString * path = [CustomPresetList archivePath];
-	_list = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+	@try {	// some people experience a crash during loading...
+		NSString * path = [CustomPresetList archivePath];
+		_list = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+	} @catch ( id exception ) {
+		NSLog(@"error loading custom presets");
+	}
 	if ( _list == nil ) {
 		_list = [NSMutableArray new];
 	}
