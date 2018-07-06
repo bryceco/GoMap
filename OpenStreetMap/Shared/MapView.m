@@ -1256,6 +1256,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	rc.size.height = northeast.y - southwest.y;
 	if ( rc.size.width < 0 ) // crossed 180 degrees longitude
 		rc.size.width += 360;
+	if ( rc.size.height < 0 )
+		rc.size.height += 180;
 	return rc;
 }
 

@@ -282,6 +282,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
 {
+#if 0 && DEBUG
+	NSLog(@"box = %@",NSStringFromCGRect(CGRectFromOSMRect(bbox)));
+#endif
 	if ( bbox.origin.x < 180 && bbox.origin.x + bbox.size.width > 180 ) {
 		OSMRect left = { bbox.origin.x, bbox.origin.y, 180-bbox.origin.x, bbox.size.height };
 		OSMRect right = { -180, bbox.origin.y, bbox.origin.x + bbox.size.width - 180, bbox.size.height };

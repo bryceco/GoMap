@@ -17,8 +17,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
 
+	self.tableView.estimatedRowHeight = 44;
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
 
 - (IBAction)textFieldReturn:(id)sender
 {
