@@ -15,6 +15,9 @@
 	if ( self ) {
 		_touches 	= [NSMutableDictionary new];
 		_touchImage	= [UIImage imageNamed:@"Finger"];
+#if 0
+		self.showTouchCircles = YES;
+#endif
 	}
 	return self;
 }
@@ -25,7 +28,10 @@ static const CGFloat TOUCH_RADIUS = 22;
 {
 	if ( _touchImage ) {
 		CGRect rc = { pos, _touchImage.size };
-		return CGRectOffset(rc, -_touchImage.size.width/2, -TOUCH_RADIUS);
+		rc = CGRectOffset(rc, -_touchImage.size.width/2, -TOUCH_RADIUS);
+		rc.origin.x += 15;	// extra so rotated finger is aligned
+		rc.origin.y -= 10;	// extra so touches on toolbar or easier to see
+		return rc;
 	} else {
 		return CGRectMake(pos.x-TOUCH_RADIUS, pos.y-TOUCH_RADIUS, 2*TOUCH_RADIUS, 2*TOUCH_RADIUS);
 	}
@@ -71,6 +77,7 @@ static const CGFloat TOUCH_RADIUS = 22;
 			win.hidden = NO;
 			if ( _touchImage ) {
 				win.layer.contents = (id)_touchImage.CGImage;
+				win.layer.affineTransform = CGAffineTransformMakeRotation(-M_PI/4);
 			} else {
 				win.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:1.0 alpha:1.0];
 				win.layer.cornerRadius = TOUCH_RADIUS;
@@ -80,12 +87,14 @@ static const CGFloat TOUCH_RADIUS = 22;
 		} else if ( touch.phase == UITouchPhaseMoved ) {
 			NSDictionary * dict = _touches[ @((long)touch) ];
 			UIWindow * win = dict[ @"win" ];
+			win.layer.affineTransform = CGAffineTransformIdentity;
 			win.frame = [self rectForTouchPosition:pos];
+			win.layer.affineTransform = CGAffineTransformMakeRotation(-M_PI/4);
 		} else if ( touch.phase == UITouchPhaseStationary ) {
 			// ignore
 		} else { // ended/cancelled
 			// remove window after a slight delay so quick taps are still visible
-			const double MIN_DISPLAY_INTERVAL = 0.2;
+			const double MIN_DISPLAY_INTERVAL = 0.5;
 			NSDictionary * dict = _touches[ @((long)touch) ];
 			NSTimeInterval delta = touch.timestamp - [dict[@"start"] doubleValue];
 			if ( delta < MIN_DISPLAY_INTERVAL ) {
