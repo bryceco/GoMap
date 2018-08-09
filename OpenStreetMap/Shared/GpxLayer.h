@@ -37,7 +37,6 @@
 @property (readonly,nonatomic)	NSArray			*	points;
 @property (strong,nonatomic)	CAShapeLayer	*	shapeLayer;
 
--(BOOL)saveXmlFile:(NSString * )path;
 -(NSString *)gpxXmlString;
 -(NSData *)gpxXmlData;
 -(instancetype)initWithXmlData:(NSData *)data;

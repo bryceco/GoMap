@@ -189,11 +189,6 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	NSData * data = [[self gpxXmlString] dataUsingEncoding:NSUTF8StringEncoding];
 	return data;
 }
--(BOOL)saveXmlFile:(NSString * )path
-{
-	NSData * data = [self gpxXmlData];
-	return [data writeToFile:path atomically:YES];
-}
 
 -(instancetype)initWithXmlData:(NSData *)data
 {
