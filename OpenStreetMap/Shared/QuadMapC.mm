@@ -271,8 +271,7 @@ public:
 	// If the download succeeded we can mark this region and its children as whole.
 	void makeWhole(BOOL success)
 	{
-		assert(_parent);
-		if ( _parent->_whole ) {
+		if ( _parent && _parent->_whole ) {
 			// parent was made whole (somehow) before we completed, so nothing to do
 			if ( this->countBusy() == 0 ) {
 				delete this;
