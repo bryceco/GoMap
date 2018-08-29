@@ -20,7 +20,6 @@
 		029B19E8211D137600CCAA7A /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029B19E3211D12FB00CCAA7A /* MainWindow.xib */; };
 		029B1A09211D146300CCAA7A /* TagInfoEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029B19EA211D146100CCAA7A /* TagInfoEditorWindowController.xib */; };
 		029B1A0A211D146300CCAA7A /* UsersWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029B19EB211D146100CCAA7A /* UsersWindowController.xib */; };
-		029B1A0B211D146300CCAA7A /* OpenStreetMap-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 029B19ED211D146100CCAA7A /* OpenStreetMap-Info.plist */; };
 		029B1A0C211D146300CCAA7A /* TagInfoEditorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B19EE211D146100CCAA7A /* TagInfoEditorWindowController.m */; };
 		029B1A0D211D146300CCAA7A /* TagEditorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 029B19EF211D146100CCAA7A /* TagEditorWindowController.xib */; };
 		029B1A0E211D146300CCAA7A /* changeset copy.xsl in Resources */ = {isa = PBXBuildFile; fileRef = 029B19F1211D146100CCAA7A /* changeset copy.xsl */; };
@@ -142,7 +141,7 @@
 		029B1A30211D14D300CCAA7A /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Database.m; sourceTree = "<group>"; };
 		029B1A31211D14D300CCAA7A /* KeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyChain.h; sourceTree = "<group>"; };
 		029B1A32211D14D300CCAA7A /* DownloadThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadThreadPool.h; sourceTree = "<group>"; };
-		029B1A33211D14D300CCAA7A /* AerialList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AerialList.h; sourceTree = "<group>"; };
+		029B1A33211D14D300CCAA7A /* AerialList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AerialList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		029B1A34211D14D300CCAA7A /* BingMapsGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BingMapsGeometry.h; sourceTree = "<group>"; };
 		029B1A35211D14D300CCAA7A /* SpeechBalloonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechBalloonLayer.m; sourceTree = "<group>"; };
 		029B1A36211D14D400CCAA7A /* QuadMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuadMap.h; sourceTree = "<group>"; };
@@ -450,7 +449,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				029B1A0B211D146300CCAA7A /* OpenStreetMap-Info.plist in Resources */,
 				029B1A0E211D146300CCAA7A /* changeset copy.xsl in Resources */,
 				029B1A0D211D146300CCAA7A /* TagEditorWindowController.xib in Resources */,
 				029B19E7211D137600CCAA7A /* MainMenu.xib in Resources */,

@@ -385,7 +385,6 @@ static TagInfo * g_DefaultRender = nil;
 	return self;
 }
 
-#if TARGET_OS_IPHONE
 // belongTo means that the text appears either as the key or the belongTo field
 -(NSArray *)subitemsOfType:(NSString *)type belongTo:(NSString *)belongTo
 {
@@ -431,14 +430,14 @@ static TagInfo * g_DefaultRender = nil;
 	}]];
 }
 
-
+#if TARGET_OS_IPHONE
 #else
 -(NSMenu *)menuWithTag:(NSString *)key target:(id)target action:(SEL)action
 {
 	NSMenu * menu = [[NSMenu alloc] initWithTitle:key];
 
 	// if other tags belong to this tag then add them as submenus
-	NSArray * childTags = [self tagsBelongTo:key];
+	NSArray * childTags = [self tagsBelongTo:key type:nil];
 	if ( childTags.count ) {
 
 		// get set of key values for children
@@ -484,7 +483,7 @@ static TagInfo * g_DefaultRender = nil;
 
 -(NSMenu *)tagNodeMenuWithTarget:(id)target action:(SEL)action
 {
-	return [self menuWithTag:@"node" target:(id)target action:(SEL)action];
+	return [self menuWithTag:@"node" target:target action:action];
 }
 -(NSMenu *)tagWayMenuWithTarget:(id)target action:(SEL)action
 {

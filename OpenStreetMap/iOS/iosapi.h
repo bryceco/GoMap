@@ -20,9 +20,12 @@ typedef int64_t OsmIdentifier;
 #define NSImage				UIImage
 #define NSProgressIndicator UIActivityIndicatorView
 #define NSView				UIView
-
 #define pointValue			CGPointValue
 #define valueWithPoint		valueWithCGPoint
+
+#else
+
+#define UIImage				NSImage
 
 #endif
 
