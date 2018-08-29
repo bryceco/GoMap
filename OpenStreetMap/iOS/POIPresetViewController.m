@@ -19,6 +19,9 @@
 {
     [super viewDidLoad];
 
+	self.tableView.estimatedRowHeight 	= UITableViewAutomaticDimension;
+	self.tableView.rowHeight 			= UITableViewAutomaticDimension;
+
 #if 0
 	_sectionValues	= [NSMutableArray new];
 	_sectionNames	= [NSMutableArray new];
