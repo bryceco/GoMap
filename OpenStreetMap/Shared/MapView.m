@@ -3447,7 +3447,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 			CGFloat delta = rotationGesture.rotation;
 			CGPoint	axis = [self screenPointForLatitude:_rotateObjectCenter.y longitude:_rotateObjectCenter.x birdsEye:YES];
-			for ( OsmNode * node in _editorLayer.selectedPrimary.nodeSet ) {
+			OsmBaseObject * rotatedObject = _editorLayer.selectedRelation ?: _editorLayer.selectedWay;
+			for ( OsmNode * node in rotatedObject.nodeSet ) {
 				CGPoint pt = [self screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
 				OSMPoint diff = { pt.x - axis.x, pt.y - axis.y };
 				double radius = hypot( diff.x, diff.y );
