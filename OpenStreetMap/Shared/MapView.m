@@ -3265,9 +3265,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[pan setTranslation:CGPointMake(0,0) inView:self];
 	} else if (pan.state == UIGestureRecognizerStateEnded || pan.state == UIGestureRecognizerStateCancelled ) {	// cancelled occurs when we throw an error dialog
 		double duration = 0.5;
-		if ( _pushpinView == nil ) {	// don't use inertia while user is drawing
-			// finish pan with inertia
-			CGPoint initialVelecity = [pan velocityInView:self];
+
+		// finish pan with inertia
+		CGPoint initialVelecity = [pan velocityInView:self];
+		if ( hypot(initialVelecity.x,initialVelecity.y) < 100.0 ) {
+			// don't use inertia for small movements because it interferes with dropping the pin precisely
+		} else {
 			CFTimeInterval startTime = CACurrentMediaTime();
 			__weak MapView * weakSelf = self;
 			__weak DisplayLink * displayLink = [DisplayLink shared];
