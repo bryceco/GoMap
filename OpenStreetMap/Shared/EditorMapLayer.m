@@ -2833,7 +2833,6 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 				action();
 				[self setSelectedNode:nil];
 				[self setSelectedWay:nil];
-				[self setSelectedRelation:nil];
 				[self setNeedsLayout];
 			};
 		}
