@@ -1845,7 +1845,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 		return [outerSet[0] centerPoint];
 	} else {
 		OSMRect rc = self.boundingBox;
-		return OSMPointMake( rc.origin.x + rc.size.width/2, rc.origin.y+rc.size.height);
+		return OSMPointMake( rc.origin.x + rc.size.width/2, rc.origin.y+rc.size.height/2);
 	}
 }
 -(OSMPoint)selectionPoint
