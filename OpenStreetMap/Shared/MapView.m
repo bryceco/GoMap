@@ -1950,6 +1950,15 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 				[self showAlert:NSLocalizedString(@"Delete failed",nil) message:error];
 			}
 		}]];
+
+		// compute location for action sheet to originate
+		CGRect button = self.editControl.bounds;
+		CGFloat segmentWidth = button.size.width / self.editControl.numberOfSegments;	// hack because we can't get the frame for an individual segment
+		button.origin.x += button.size.width - 2*segmentWidth;
+		button.size.width = segmentWidth;
+		alertDelete.popoverPresentationController.sourceView = self.editControl;
+		alertDelete.popoverPresentationController.sourceRect = button;
+
 	} else {
 		// regular delete
 		alertDelete = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -2118,6 +2127,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	}
 	[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
 	[self.viewController presentViewController:actionSheet animated:YES completion:nil];
+
 	// compute location for action sheet to originate
 	CGRect button = self.editControl.bounds;
 	CGFloat segmentWidth = button.size.width / self.editControl.numberOfSegments;	// hack because we can't get the frame for an individual segment
@@ -2330,6 +2340,13 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				}]];
 #endif
 				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+
+				// compute location for action sheet to originate. This will be the uppermost node in the polygon
+				OSMRect box = _editorLayer.selectedPrimary.boundingBox;
+				box = [MapView mapRectForLatLonRect:box];
+				OSMRect rc = [self boundingScreenRectForMapRect:box];
+				actionSheet.popoverPresentationController.sourceView = self;
+				actionSheet.popoverPresentationController.sourceRect = CGRectFromOSMRect(rc);
 				[self.viewController presentViewController:actionSheet animated:YES completion:nil];
 				return;
 			}

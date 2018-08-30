@@ -110,7 +110,6 @@
 		027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC65206F3EED00D349D6 /* DDXMLNode.m */; };
 		027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC66206F3EED00D349D6 /* DDXMLDocument.m */; };
 		027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */; };
-		027EDC75206F3EED00D349D6 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 027EDC6D206F3EED00D349D6 /* Info.plist */; };
 		027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3520B13B8000901E9F /* Maki Icons.xcassets */; };
 		027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */; };
 		0284FDB216A0B7DA002C46A9 /* tree.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0284FDB116A0B7DA002C46A9 /* tree.p.64.png */; };
@@ -639,7 +638,6 @@
 		027EDC69206F3EED00D349D6 /* DDXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLElement.h; sourceTree = "<group>"; };
 		027EDC6B206F3EED00D349D6 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
 		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
-		027EDC6D206F3EED00D349D6 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
 		027FEA3520B13B8000901E9F /* Maki Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Maki Icons.xcassets"; path = "../Maki Icons.xcassets"; sourceTree = "<group>"; };
 		027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "iD SVG POI.xcassets"; path = "../iD SVG POI.xcassets"; sourceTree = "<group>"; };
@@ -1204,7 +1202,6 @@
 				027EDC60206F3EED00D349D6 /* DDXMLElement.m */,
 				027EDC6F206F3EED00D349D6 /* DDXMLNode.h */,
 				027EDC65206F3EED00D349D6 /* DDXMLNode.m */,
-				027EDC6D206F3EED00D349D6 /* Info.plist */,
 				027EDC61206F3EED00D349D6 /* KissXML.h */,
 				027EDC67206F3EED00D349D6 /* Private */,
 			);
@@ -2134,7 +2131,6 @@
 				02ACBCB516713F2B00BB4414 /* tourist_clock.p.64.png in Resources */,
 				02ACBCB616713F2B00BB4414 /* tourist_fountain.p.64.png in Resources */,
 				02ACBCB716713F2B00BB4414 /* tourist_guidepost.p.64.png in Resources */,
-				027EDC75206F3EED00D349D6 /* Info.plist in Resources */,
 				02ACBCB816713F2B00BB4414 /* tourist_information.p.64.png in Resources */,
 				02ACBCB916713F2B00BB4414 /* tourist_map.p.64.png in Resources */,
 				02ACBCBA16713F2B00BB4414 /* tourist_memorial.p.64.png in Resources */,
