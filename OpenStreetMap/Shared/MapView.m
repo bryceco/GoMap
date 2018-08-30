@@ -3379,15 +3379,20 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				return obj.isWay != nil;
 			}]];
 			if ( ways.count == 1 ) {
-				NSString * error = nil;
-				EditAction add = [_editorLayer.mapData canAddObject:ways.lastObject toRelation:_editorLayer.selectedRelation error:&error];
-				if ( add ) {
-					add();
-					[self flashMessage:@"added to multipolygon relation"];
-					[_editorLayer setNeedsLayout];
-				} else {
-					[self showAlert:NSLocalizedString(@"Error",nil) message:error];
-				}
+				UIAlertController * confirm = [UIAlertController alertControllerWithTitle:@"Add way to multipolygon?" message:@"The inner/outer role will be calculated automatically" preferredStyle:UIAlertControllerStyleAlert];
+				[confirm addAction:[UIAlertAction actionWithTitle:@"Add member" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+					NSString * error = nil;
+					EditAction add = [_editorLayer.mapData canAddObject:ways.lastObject toRelation:_editorLayer.selectedRelation error:&error];
+					if ( add ) {
+						add();
+						[self flashMessage:@"added to multipolygon relation"];
+						[_editorLayer setNeedsLayout];
+					} else {
+						[self showAlert:NSLocalizedString(@"Error",nil) message:error];
+					}
+				}]];
+				[confirm addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+				[self.viewController presentViewController:confirm animated:YES completion:nil];
 			}
 			return;
 		}
