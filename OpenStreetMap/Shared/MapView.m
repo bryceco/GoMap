@@ -3399,19 +3399,19 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				return obj.isWay != nil;
 			}]];
 			if ( ways.count == 1 ) {
-				UIAlertController * confirm = [UIAlertController alertControllerWithTitle:@"Add way to multipolygon?" message:@"The inner/outer role will be calculated automatically" preferredStyle:UIAlertControllerStyleAlert];
-				[confirm addAction:[UIAlertAction actionWithTitle:@"Add member" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				UIAlertController * confirm = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add way to multipolygon?",nil) message:NSLocalizedString(@"The inner/outer role will be calculated automatically",nil) preferredStyle:UIAlertControllerStyleAlert];
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 					NSString * error = nil;
 					EditAction add = [_editorLayer.mapData canAddObject:ways.lastObject toRelation:_editorLayer.selectedRelation error:&error];
 					if ( add ) {
 						add();
-						[self flashMessage:@"added to multipolygon relation"];
+						[self flashMessage:NSLocalizedString(@"added to multipolygon relation",nil)];
 						[_editorLayer setNeedsLayout];
 					} else {
 						[self showAlert:NSLocalizedString(@"Error",nil) message:error];
 					}
 				}]];
-				[confirm addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 				[self.viewController presentViewController:confirm animated:YES completion:nil];
 			}
 			return;
