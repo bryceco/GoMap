@@ -134,8 +134,13 @@
 	if ( !relation.isMultipolygon )
 		return;
 
+	BOOL				isComplete = NO;
 	NSMutableArray	* members	= [relation.members mutableCopy];
-	NSArray		 	* loopList 	= [OsmRelation buildMultipolygonFromMembers:members repairing:NO];
+	NSArray		 	* loopList 	= [OsmRelation buildMultipolygonFromMembers:members repairing:NO isComplete:&isComplete];
+
+	if ( !isComplete )
+		return;
+
 	NSMutableSet   	* innerSet 	= [NSMutableSet new];
 	for ( NSArray * loop in loopList ) {
 		OSMPoint refPoint;
@@ -167,6 +172,9 @@
 	BOOL changed = NO;
 	for ( NSInteger m = 0; m < members.count; ++m ) {
 		OsmMember * member = members[m];
+		if ( ![member.ref isKindOfClass:[OsmWay class]] ) {
+			continue;
+		}
 		if ( [innerSet containsObject:member] ) {
 			if ( ![member.role isEqualToString:@"inner"] ) {
 				members[m] = [[OsmMember alloc] initWithRef:member.ref role:@"inner"];

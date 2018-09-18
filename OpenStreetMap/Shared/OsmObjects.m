@@ -1729,7 +1729,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
-+(NSArray *)buildMultipolygonFromMembers:(NSArray *)memberList repairing:(BOOL)repairing
++(NSArray *)buildMultipolygonFromMembers:(NSArray *)memberList repairing:(BOOL)repairing isComplete:(BOOL *)isComplete
 {
 	NSMutableArray	*	loopList = [NSMutableArray new];
 	NSMutableArray	*	loop = nil;
@@ -1739,6 +1739,8 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	}]];
 	BOOL isInner = NO;
 	BOOL foundAdjacent = NO;
+
+	*isComplete = members.count == memberList.count;
 
 	while ( members.count ) {
 		if ( loop == nil ) {
@@ -1776,6 +1778,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 			}
 			if ( !foundAdjacent && repairing ) {
 				// invalid, but we'll try to continue
+				*isComplete = NO;
 				[loop addObject:loop[0]];	// force-close the loop
 			}
 		}
@@ -1795,7 +1798,8 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 {
 	if ( !self.isMultipolygon )
 		return nil;
-	NSArray * a = [OsmRelation buildMultipolygonFromMembers:self.members repairing:repairing];
+	BOOL isComplete = YES;
+	NSArray * a = [OsmRelation buildMultipolygonFromMembers:self.members repairing:repairing isComplete:&isComplete];
 	return a;
 }
 

@@ -221,7 +221,7 @@ typedef enum {
 
 -(NSMutableArray *)waysInMultipolygon;
 -(NSArray *)buildMultipolygonRepairing:(BOOL)repairing;
-+(NSArray *)buildMultipolygonFromMembers:(NSArray *)memberList repairing:(BOOL)repairing;
++(NSArray *)buildMultipolygonFromMembers:(NSArray *)memberList repairing:(BOOL)repairing isComplete:(BOOL *)isComplete;
 
 -(OSMPoint)centerPoint;
 
