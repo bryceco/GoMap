@@ -10,8 +10,10 @@
 
 #import "BingMapsGeometry.h"
 #import "DLog.h"
-#import "GpxLayer.h"
+#if TARGET_OS_IPHONE
 #import "DDXML.h"
+#endif
+#import "GpxLayer.h"
 #import "MapView.h"
 #import "OsmObjects.h"
 #import "PathUtil.h"
@@ -473,7 +475,11 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 #endif
 
 		// automatically save periodically
+#if TARGET_OS_IPHONE
 		NSInteger saveInterval = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive ? 30 : 180;	// save less frequently if we're in the background
+#else
+		NSInteger saveInterval = 30;
+#endif
 		if ( self.activeTrack.points.count % saveInterval == 0 ) {
 			[self saveActiveTrack];
 		}

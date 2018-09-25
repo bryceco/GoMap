@@ -9,6 +9,7 @@
 #import <CoreText/CoreText.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "iosapi.h"
 #import "CurvedTextLayer.h"
 #import "PathUtil.h"
 
@@ -31,7 +32,9 @@
 		_textSizeCache.countLimit	= 100;
 #endif
 
+#if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fontSizeDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+#endif
 	}
 	return self;
 }
@@ -65,7 +68,11 @@
 	// Don't cache these here because they are cached by the objects they are attached to
 	CATextLayer * layer = [CATextLayer new];
 
+#if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+#else
+	NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 	UIColor * textColor   = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	UIColor * shadowColor = whiteOnBlack ? UIColor.blackColor : UIColor.whiteColor;
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
@@ -201,13 +208,22 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 {
 	NSValue * size = [_textSizeCache objectForKey:string];
 	if ( size ) {
+#if TARGET_OS_IPHONE
 		return size.CGSizeValue;
+#else
+		return size.sizeValue;
+#endif
 	}
 
 	CTFramesetterRef framesetter = [self framesetterForString:string];
 	CGSize suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(0, 0), NULL, CGSizeMake(70, CGFLOAT_MAX), NULL);
 	CFRelease( framesetter );
-	[_textSizeCache setObject:[NSValue valueWithCGSize:suggestedSize] forKey:string];
+#if TARGET_OS_IPHONE
+	NSValue * value = [NSValue valueWithCGSize:suggestedSize];
+#else
+	NSValue * value = [NSValue valueWithSize:suggestedSize];
+#endif
+	[_textSizeCache setObject:value forKey:string];
 	return suggestedSize;
 }
 
@@ -223,7 +239,11 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 
 -(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path whiteOnBlock:(BOOL)whiteOnBlack
 {
+#if TARGET_OS_IPHONE
 	UIFont	* uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+#else
+	NSFont * uiFont = [NSFont labelFontOfSize:12];
+#endif
 
 	UIColor * textColor = whiteOnBlack ? UIColor.whiteColor : UIColor.blackColor;
 	NSAttributedString * attrString = [[NSAttributedString alloc] initWithString:string
@@ -270,7 +290,11 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 
 	NSMutableArray * layers = [NSMutableArray new];
 
+#if TARGET_OS_IPHONE
 	double lineHeight = uiFont.lineHeight;
+#else
+	double lineHeight = uiFont.ascender + uiFont.descender + 2.0;
+#endif
 	CFIndex currentCharacter = 0;
 	double currentPixelOffset = offset;
 	while ( currentCharacter < charCount ) {
@@ -318,8 +342,9 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 			layer.alignmentMode		= kCAAlignmentCenter;
 
 			layer.shouldRasterize	= YES;
+#if TARGET_OS_IPHONE
 			layer.contentsScale		= [[UIScreen mainScreen] scale];
-
+#endif
 			CGPathRef	shadowPath	= CGPathCreateWithRect(bounds, NULL);
 			layer.shadowColor		= whiteOnBlack ? UIColor.blackColor.CGColor : UIColor.whiteColor.CGColor;
 			layer.shadowRadius		= 0.0;

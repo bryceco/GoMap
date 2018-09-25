@@ -432,7 +432,7 @@ typedef enum {
 #if TARGET_OS_IPHONE
 		layer.contents = (__bridge id)cachedImage.CGImage;
 #else
-		layer.contents = image;
+		layer.contents = cachedImage;
 #endif
 		layer.hidden = NO;
 		if ( completion )
@@ -455,7 +455,7 @@ typedef enum {
 #if TARGET_OS_IPHONE
 					layer.contents = (__bridge id)fileImage.CGImage;
 #else
-					layer.contents = image;
+					layer.contents = fileImage;
 #endif
 					layer.hidden = NO;
 #if CUSTOM_TRANSFORM

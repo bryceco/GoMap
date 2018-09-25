@@ -24,7 +24,11 @@
 		_shapeLayer.strokeColor = NSColor.blackColor.CGColor;
 		_shapeLayer.fillColor = NULL;
 
+#if TARGET_OS_IPHONE
 		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+#else
+		NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 		
 		_metricTextLayer					= [CATextLayer layer];
 		_britishTextLayer					= [CATextLayer layer];
@@ -173,7 +177,7 @@ double roundToEvenValue( double value )
 
 	rect.size.width = MAX(metricPixels,britishPixels);
 	rect = CGRectInset( rect, -2, -2 );
-	self.shadowPath = [[UIBezierPath bezierPathWithRect:rect] CGPath];
+	self.shadowPath = CGPathCreateWithRect(rect, NULL);
 }
 
 @end

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
+#import "iosapi.h"
 #import "AerialList.h"
 #import <CommonCrypto/CommonDigest.h>
 
@@ -226,7 +227,19 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	if ( _attributionIcon && fabs(_attributionIcon.size.height - height) > 0.1 ) {
 		CGFloat scale = _attributionIcon.size.height / height;
+#if TARGET_OS_IPHONE
 		_attributionIcon = [[UIImage alloc] initWithCGImage:_attributionIcon.CGImage scale:scale orientation:_attributionIcon.imageOrientation];
+#else
+		NSSize size = { _attributionIcon.size.width * scale, _attributionIcon.size.height * scale };
+		NSImage * result = [[NSImage alloc] initWithSize:size];
+		[result lockFocus];
+		NSAffineTransform * transform = [NSAffineTransform transform];
+		[transform scaleBy:scale];
+		[transform concat];
+		[_attributionIcon drawAtPoint:NSZeroPoint fromRect:NSZeroRect operation:NSCompositingOperationCopy fraction:1.0];
+		[result unlockFocus];
+		_attributionIcon = result;
+#endif
 	}
 }
 
@@ -237,7 +250,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 										  timeoutInterval:60];
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 		if ( data ) {
-			UIImage * image = [UIImage imageWithData:data];
+			UIImage * image = [[NSImage alloc] initWithData:data];
 			_attributionIcon = image;
 		}
 	}];
@@ -457,7 +470,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 					if ( [attribIconString hasPrefix:prefix] ) {
 						attribIconString = [attribIconString substringFromIndex:prefix.length];
 						NSData * decodedData = [[NSData alloc] initWithBase64EncodedString:attribIconString options:0];
-						attribIcon = [UIImage imageWithData:decodedData];
+						attribIcon = [[UIImage alloc] initWithData:decodedData];
 						if ( attribIcon == nil ) {
 							NSLog(@"bad icon decode: %@\n",attribIconString);
 						}

@@ -16,7 +16,7 @@
 @class UsersWindowController;
 
 
-@interface MainWindowController : NSWindowController <MapViewDelegate>
+@interface MainWindowController : NSWindowController
 {
 	TagEditorWindowController		*	_tagEditorWindowController;
 	UsersWindowController			*	_usersWindowController;

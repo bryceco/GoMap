@@ -59,7 +59,8 @@
 	[_progressIndicator startAnimation:self];
 	[_uploadButton setEnabled:NO];
 	[_cancelButton setEnabled:NO];
-	[_mapData uploadChangeset:comment completion:^(NSString * error){
+
+	[_mapData uploadChangesetWithComment:comment imagery:nil completion:^(NSString *error) {
 		[_progressIndicator stopAnimation:nil];
 		[_uploadButton setEnabled:YES];
 		[_cancelButton setEnabled:YES];

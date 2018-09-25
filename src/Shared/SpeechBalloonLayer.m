@@ -22,7 +22,11 @@ static const CGFloat arrowHeight = 16;
 	if ( self ) {
 		self.fillColor = NSColor.blueColor.CGColor;
 		self.strokeColor = NSColor.blackColor.CGColor;
+#if TARGET_OS_IPHONE
 		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+#else
+		NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 		_textLayer = [CATextLayer layer];
 		_textLayer.font = (__bridge CFTypeRef)font;
 		_textLayer.fontSize = 12;

@@ -10,7 +10,11 @@
 
 @interface DisplayLink : NSObject
 {
+#if TARGET_OS_IPHONE
 	CADisplayLink		*	_displayLink;
+#else
+	CVDisplayLinkRef		_displayLink;
+#endif
 	NSMutableDictionary	*	_blockDict;
 }
 +(instancetype)shared;

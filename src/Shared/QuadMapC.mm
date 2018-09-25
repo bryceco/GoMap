@@ -578,7 +578,11 @@ public:
 
 -(NSString *)description
 {
+#if TARGET_OS_IPHONE
 	return NSStringFromCGRect(CGRectFromOSMRect(_cpp->rect()));
+#else
+	return NSStringFromRect(CGRectFromOSMRect(_cpp->rect()));
+#endif
 }
 
 -(OSMRect)rect

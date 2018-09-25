@@ -182,10 +182,12 @@
 			if ( [EW isEqualToString:@"W"] )
 				dLon = -dLon;
 
+#if TARGET_OS_IPHONE
 			CLLocation * loc = [[CLLocation alloc] initWithLatitude:dLat longitude:dLon];
 			DLog(@"lat/lon = %@", loc);
 			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 			[appDelegate.mapView locationUpdatedTo:loc];
+#endif
 		} else if ( [line hasPrefix:@"PGSV"] ) {
 			// satelite info, one line per satelite
 		} else if ( [line hasPrefix:@"PGSA"] ) {

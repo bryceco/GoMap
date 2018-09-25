@@ -108,8 +108,10 @@ typedef enum {
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
 	BOOL								_gestureDidMove;		// to maintain undo stack
 
+#if TARGET_OS_IPHONE
 	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
 	NSTimeInterval						_addNodeButtonTimestamp;
+#endif
 }
 
 #if TARGET_OS_IPHONE
@@ -124,8 +126,11 @@ typedef enum {
 
 @property (assign,nonatomic)	IBOutlet UIToolbar			*	toolbar;
 @property (assign,nonatomic)	IBOutlet UIButton			*	addNodeButton;
-#endif
 @property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
+
+@property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
+@property (strong,nonatomic)	NSArray						*	editControlActions;
+#endif
 
 @property (readonly,nonatomic)	CLLocationManager			*	locationManager;
 @property (readonly,nonatomic)	CLLocation					*	currentLocation;
@@ -135,9 +140,6 @@ typedef enum {
 @property (assign,nonatomic)	MapViewState					viewState;			// layer currently displayed
 @property (assign,nonatomic)	BOOL							viewStateZoomedOut;	// override layer because we're zoomed out
 @property (assign,nonatomic)	ViewOverlayMask					viewOverlayMask;
-
-@property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
-@property (strong,nonatomic)	NSArray						*	editControlActions;
 
 @property (readonly,nonatomic)	OsmNotesDatabase			*	notesDatabase;
 @property (readonly,nonatomic)	NSMutableDictionary			*	notesViewDict;

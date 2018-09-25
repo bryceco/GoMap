@@ -36,7 +36,11 @@ static const CGFloat arrowHeight = 48;
 
 		// text layer
 		CATextLayer * textLayer = [CATextLayer layer];
+#if TARGET_OS_IPHONE
 		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+#else
+		NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 		textLayer.font = (__bridge CGFontRef)font;
 		textLayer.fontSize = 18;
 		textLayer.alignmentMode = kCAAlignmentCenter;
@@ -90,8 +94,10 @@ static const CGFloat arrowHeight = 48;
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(NSEvent *)event
 {
+#if TARGET_OS_IPHONE
 	if ( ![super pointInside:point withEvent:event] )
 		return NO;
+#endif
 	if ( ! CGPathContainsPoint( _path, NULL, point, NO) )
 		return NO;
 	return YES;

@@ -30,7 +30,7 @@ static const CGFloat DragConnectHitTestRadius = DefaultHitTestRadius * 0.6;	// h
 
 extern const double MinIconSizeInPixels;
 
-@interface EditorMapLayer : CALayer<UIActionSheetDelegate,NSCoding>
+@interface EditorMapLayer : CALayer<NSCoding>
 {
 	CGSize					_iconSize;
 	double					_highwayScale;

@@ -6,7 +6,13 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#else
+#import <Cocoa/Cocoa.h>
+typedef int UIKeyboardType;
+typedef int UITextAutocapitalizationType;
+#endif
 
 
 #define GEOMETRY_AREA	@"area"

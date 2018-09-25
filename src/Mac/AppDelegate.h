@@ -10,15 +10,19 @@
 
 @class Downloader;
 @class MainWindowController;
+@class MapView;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 {
 }
 
-@property (strong,nonatomic) MainWindowController	*	mainWindowController;
+@property (strong,nonatomic) 	MainWindowController	*	mainWindowController;
+@property (assign,nonatomic)	MapView					*	mapView;
 
 @property (strong,nonatomic) NSString *	userName;
 @property (strong,nonatomic) NSString *	userPassword;
+
++(AppDelegate *)getAppDelegate;
 
 -(NSString *)appName;
 -(NSString *)appVersion;

@@ -7,11 +7,11 @@
 //
 
 #if TARGET_OS_IPHONE
-#import "iosapi.h"
 #import <Foundation/Foundation.h>
 #else
 #import <Cocoa/Cocoa.h>
 #endif
+#import "iosapi.h"
 
 @interface SpeechBalloonView : NSView
 {
