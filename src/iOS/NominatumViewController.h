@@ -1,6 +1,6 @@
 //
 //  NominatumViewController.h
-//  OSMiOS
+//  Go Map!!
 //
 //  Created by Bryce Cogswell on 1/3/13.
 //  Copyright (c) 2013 Bryce Cogswell. All rights reserved.

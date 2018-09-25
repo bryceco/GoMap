@@ -1,6 +1,6 @@
 //
-//  SecondViewController.m
-//  OSMiOS
+//  SettingsViewController.m
+//  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/6/12.
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.

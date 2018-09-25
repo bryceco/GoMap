@@ -1,6 +1,6 @@
 //
 //  POITabBarController.m
-//  OSMiOS
+//  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/14/12.
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.

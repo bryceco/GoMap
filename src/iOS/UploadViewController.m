@@ -1,6 +1,6 @@
 //
 //  UploadViewController.m
-//  OSMiOS
+//  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/19/12.
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
