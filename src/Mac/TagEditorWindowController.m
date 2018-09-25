@@ -285,9 +285,11 @@
 		[self updateTypeFromTags];
 		[self refreshCustomArray];
 		[self refreshAttributesArray:_osmObject];
-		
+
+#if 0
 		_relations = osmObject.relations;
 		[_relationsTableView reloadData];
+#endif
 
 		TagInfo * tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForObject:_osmObject];
 		_iconImageView.image = tagInfo.icon;

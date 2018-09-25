@@ -19,9 +19,11 @@
 #import "CurvedTextLayer.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
+#if TARGET_OS_IPHONE
 #import "FilterObjectsViewController.h"
-#import "MapView.h"
 #import "MapViewController.h"
+#endif
+#import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
@@ -191,8 +193,9 @@ static const CGFloat NodeHighlightRadius = 6.0;
 						  @"lineWidth"	: [NSNull null],
 		};
 		_baseLayer.actions = self.actions;
-		
+#if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fontSizeDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+#endif
 	}
 	return self;
 }
@@ -1967,6 +1970,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 - (void)filterObjects:(NSMutableArray *)objects
 {
+#if TARGET_OS_IPHONE
 	BOOL (^predLevel)(OsmBaseObject *) = nil;
 
 	if ( _showLevel ) {
@@ -2198,6 +2202,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( OsmBaseObject * o in add ) {
 		[objects addObject:o];
 	}
+#endif
 }
 
 - (NSMutableArray *)getObjectsToDisplay

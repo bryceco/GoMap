@@ -6,6 +6,7 @@
 //  Copyright © 2018 Bryce. All rights reserved.
 //
 
+#import "iosapi.h"
 #import "Buildings3DView.h"
 #import "MapView.h"
 #import "PathUtil.h"
@@ -40,8 +41,10 @@ extern const double PATH_SCALING;
 		self.scene = [SCNScene scene];
 
 		self.autoenablesDefaultLighting = YES;
-		self.userInteractionEnabled = NO;
 		self.backgroundColor = UIColor.clearColor;
+#if TARGET_OS_IPHONE
+		self.userInteractionEnabled = NO;
+#endif
 
 		self.layer.affineTransform = CGAffineTransformMakeScale(1,-1);	// flip y-axis
 

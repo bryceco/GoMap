@@ -34,7 +34,6 @@
 
 -(void)windowDidLoad
 {
-	_mapView.delegate = self;
 }
 
 -(IBAction)editTags:(id)sender
@@ -49,12 +48,17 @@
 
 -(IBAction)removeObject:(id)sender
 {
-	[_mapView.editorLayer deleteSelectedObject];
+	NSString * error = nil;
+	EditAction delete = [_mapView.editorLayer canDeleteSelectedObject:&error];
+	if ( delete )
+		delete();
 }
 
 -(IBAction)cancelOperation:(id)sender
 {
+#if 0
 	[_mapView.editorLayer cancelOperation];
+#endif
 }
 
 -(IBAction)showUsers:(id)sender
@@ -63,16 +67,17 @@
 		_usersWindowController = [UsersWindowController usersWindowController];
 	}
 	[_usersWindowController.window orderFront:self];
-	OSMRect rect = _mapView.viewportLongitudeLatitude;
+	OSMRect rect = [_mapView screenLongitudeLatitude];
 	_usersWindowController.users = [_mapView.editorLayer.mapData userStatisticsForRegion:rect];
 }
 
 
 -(IBAction)showInPotlatch2:(id)sender
 {
-	OSMRect rect = [_mapView viewportLongitudeLatitude];
+	OSMRect rect = [_mapView screenLongitudeLatitude];
 	OSMPoint center = { rect.origin.x + rect.size.width/2, rect.origin.y + rect.size.height/2 };
-	double z = _mapView.mapTransform.a;
+
+	double z = OSMTransformScaleX( _mapView.screenFromMapTransform );
 	NSInteger zoom = lround( log2( z ) );
 	NSString * text = [NSString stringWithFormat:
 					   @"http://www.openstreetmap.org/edit?lat=%.9f&lon=%.9f&zoom=%ld",
@@ -81,7 +86,7 @@
 }
 -(IBAction)showInGoogleMaps:(id)sender
 {
-	OSMRect rect = [_mapView viewportLongitudeLatitude];
+	OSMRect rect = [_mapView screenLongitudeLatitude];
 	OSMPoint center = { rect.origin.x + rect.size.width/2, rect.origin.y + rect.size.height/2 };
 	NSString * text = [NSString stringWithFormat:
 					   @"http://maps.google.com/maps?ll=%f,%f&spn=%f,%f",
@@ -92,7 +97,7 @@
 
 -(IBAction)purgeOsmCachedData:(id)sender
 {
-	[_mapView.editorLayer purgeCachedData];
+	[_mapView.editorLayer.mapData purgeSoft];
 }
 -(IBAction)purgeMapnikTileCache:(id)sender
 {

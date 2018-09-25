@@ -15,6 +15,17 @@
 #import "OsmObjects.h"
 #import "TagInfo.h"
 
+
+#if !TARGET_OS_IPHONE
+const int UIKeyboardTypeDefault					= 0;
+const int UIKeyboardTypeNumbersAndPunctuation 	= 1;
+const int UIKeyboardTypeURL						= 2;
+
+const int UITextAutocapitalizationTypeNone		= 0;
+const int UITextAutocapitalizationTypeSentences = 1;
+const int UITextAutocapitalizationTypeWords		= 2;
+#endif
+
 static NSDictionary * g_addressFormatsDict;
 static NSDictionary * g_defaultsDict;
 static NSDictionary * g_categoriesDict;
@@ -459,8 +470,15 @@ static NSString * PrettyTag( NSString * tag )
 	NSDictionary*	stringsTypesDict	= dict[ @"strings" ][ @"types" ];
 	NSArray		*	optionsArray		= dict[ @"options" ];
 	NSString	*	defaultValue		= dict[ @"default" ];
+#if TARGET_OS_IPHONE
 	UIKeyboardType					keyboard = UIKeyboardTypeDefault;
 	UITextAutocapitalizationType	capitalize = [key hasPrefix:@"name:"] || [key isEqualToString:@"operator"] ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
+#else
+	int keyboard = 0;
+	const int UITextAutocapitalizationTypeNone = 0;
+	const int UITextAutocapitalizationTypeWords = 1;
+	int	capitalize = [key hasPrefix:@"name:"] || [key isEqualToString:@"operator"] ? UITextAutocapitalizationTypeWords : UITextAutocapitalizationTypeNone;
+#endif
 
 //r	DLog(@"%@",dict);
 
@@ -982,7 +1000,13 @@ static NSString * PrettyTag( NSString * tag )
 
 -(CommonTagKey *)tagAtIndexPath:(NSIndexPath *)indexPath
 {
+#if TARGET_OS_IPHONE
 	return [self tagAtSection:indexPath.section row:indexPath.row];
+#else
+	NSUInteger section = [indexPath indexAtPosition:0];
+	NSUInteger row = [indexPath indexAtPosition:1];
+	return [self tagAtSection:section row:row];
+#endif
 }
 
 @end
@@ -1211,11 +1235,22 @@ static NSString * PrettyTag( NSString * tag )
 	if ( _icon == nil ) {
 		[self iconUnscaled];
 		if ( ![_icon isKindOfClass:[NSNull class]] ) {
+#if TARGET_OS_IPHONE
 			CGFloat uiScaling = [[UIScreen mainScreen] scale];
 			UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
 			[_icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
 			_icon = UIGraphicsGetImageFromCurrentImageContext();
 			UIGraphicsEndImageContext();
+#else
+			NSSize newSize = { MinIconSizeInPixels, MinIconSizeInPixels };
+			NSImage *smallImage = [[NSImage alloc] initWithSize: newSize];
+			[smallImage lockFocus];
+			[_icon setSize:newSize];
+			[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+			[_icon drawAtPoint:NSZeroPoint fromRect:CGRectMake(0, 0, newSize.width, newSize.height) operation:NSCompositeCopy fraction:1.0];
+			[smallImage unlockFocus];
+			_icon = smallImage;
+#endif
 		}
 	}
 	if ( [_icon isKindOfClass:[NSNull class]] )

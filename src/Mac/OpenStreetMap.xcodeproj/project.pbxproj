@@ -39,7 +39,6 @@
 		029B1A5B211D14D800CCAA7A /* CommonTagList.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A1F211D14D200CCAA7A /* CommonTagList.m */; };
 		029B1A5C211D14D800CCAA7A /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A20211D14D200CCAA7A /* ExternalGPS.m */; };
 		029B1A5D211D14D800CCAA7A /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A22211D14D200CCAA7A /* LocationBallLayer.m */; };
-		029B1A5E211D14D800CCAA7A /* UndoManagerDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A23211D14D200CCAA7A /* UndoManagerDump.m */; };
 		029B1A5F211D14D800CCAA7A /* OsmMapData+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A24211D14D200CCAA7A /* OsmMapData+Edit.m */; };
 		029B1A60211D14D800CCAA7A /* DownloadThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A25211D14D200CCAA7A /* DownloadThreadPool.m */; };
 		029B1A61211D14D800CCAA7A /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A29211D14D200CCAA7A /* DisplayLink.m */; };
@@ -64,68 +63,65 @@
 		029B1A74211D14D800CCAA7A /* OsmNotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A4E211D14D600CCAA7A /* OsmNotesDatabase.m */; };
 		029B1A75211D14D800CCAA7A /* OsmMapData.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A51211D14D700CCAA7A /* OsmMapData.m */; };
 		029B1A76211D14D800CCAA7A /* TagInfo.menu.xml in Resources */ = {isa = PBXBuildFile; fileRef = 029B1A52211D14D700CCAA7A /* TagInfo.menu.xml */; };
-		029B1A77211D14D800CCAA7A /* VoiceAnnouncement.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A54211D14D700CCAA7A /* VoiceAnnouncement.m */; };
 		029B1A78211D14D800CCAA7A /* KeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A56211D14D700CCAA7A /* KeyChain.m */; };
 		029B1A79211D14D800CCAA7A /* TagInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 029B1A58211D14D800CCAA7A /* TagInfo.m */; };
 		029B1A7A211D14D800CCAA7A /* TagInfo.xml in Resources */ = {isa = PBXBuildFile; fileRef = 029B1A59211D14D800CCAA7A /* TagInfo.xml */; };
 		02C4254D1677F7BE00761C54 /* DetailDisclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C4254C1677F7BE00761C54 /* DetailDisclosure.png */; };
 		02CCCEFD194AA14C00FCE2F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CCCEFC194AA14C00FCE2F6 /* Foundation.framework */; };
+		02DD19712159C51F0008CFC2 /* NetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DD19702159C51F0008CFC2 /* NetworkStatus.m */; };
 		02FE3F5A15F113CA00A6CFAE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FE3F5915F113CA00A6CFAE /* Cocoa.framework */; };
-		02FE3F6615F113CA00A6CFAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 02FE3F6515F113CA00A6CFAE /* main.m */; };
 		02FE3F8715F13C7300A6CFAE /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FE3F8615F13C7300A6CFAE /* libbz2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		02117CB3163D9FE700EFC9CE /* BlueBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueBall.png; sourceTree = "<group>"; };
-		02117CB5163DBBB800EFC9CE /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingPlaceholderImage.png; sourceTree = "<group>"; };
-		021F713B211D040A000BFA32 /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
-		021F713D211D0C13000BFA32 /* png */ = {isa = PBXFileReference; lastKnownFileType = folder; path = png; sourceTree = "<group>"; };
+		02117CB3163D9FE700EFC9CE /* BlueBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BlueBall.png; path = ../Images/BlueBall.png; sourceTree = "<group>"; };
+		02117CB5163DBBB800EFC9CE /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Images/BingPlaceholderImage.png; sourceTree = "<group>"; };
+		021F713B211D040A000BFA32 /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingLogo.png; path = ../Images/BingLogo.png; sourceTree = "<group>"; };
+		021F713D211D0C13000BFA32 /* png */ = {isa = PBXFileReference; lastKnownFileType = folder; name = png; path = ../png; sourceTree = "<group>"; };
 		026E8CB11612B7CA0098345C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		026E8CC21612DF620098345C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		0275B3B61615819500124A14 /* OpenStreetMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = OpenStreetMap.entitlements; path = Mac/OpenStreetMap.entitlements; sourceTree = "<group>"; };
+		0275B3B61615819500124A14 /* OpenStreetMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenStreetMap.entitlements; sourceTree = "<group>"; };
 		027A469F1673BA2B000BE55C /* OSM-Logo256.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; name = "OSM-Logo256.ico"; path = "../OSM-Logo256.ico"; sourceTree = "<group>"; };
 		029AD6E9164207340045B20D /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		029AD6F31642EDC40045B20D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		029B19E3211D12FB00CCAA7A /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		029B19E4211D12FB00CCAA7A /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
-		029B19E5211D12FB00CCAA7A /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		029B19E6211D12FC00CCAA7A /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
-		029B19EA211D146100CCAA7A /* TagInfoEditorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TagInfoEditorWindowController.xib; path = Mac/TagInfoEditorWindowController.xib; sourceTree = SOURCE_ROOT; };
-		029B19EB211D146100CCAA7A /* UsersWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UsersWindowController.xib; path = Mac/UsersWindowController.xib; sourceTree = SOURCE_ROOT; };
-		029B19EC211D146100CCAA7A /* TagInfoEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagInfoEditorWindowController.h; path = Mac/TagInfoEditorWindowController.h; sourceTree = SOURCE_ROOT; };
-		029B19ED211D146100CCAA7A /* OpenStreetMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "OpenStreetMap-Info.plist"; path = "Mac/OpenStreetMap-Info.plist"; sourceTree = SOURCE_ROOT; };
-		029B19EE211D146100CCAA7A /* TagInfoEditorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagInfoEditorWindowController.m; path = Mac/TagInfoEditorWindowController.m; sourceTree = SOURCE_ROOT; };
-		029B19EF211D146100CCAA7A /* TagEditorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TagEditorWindowController.xib; path = Mac/TagEditorWindowController.xib; sourceTree = SOURCE_ROOT; };
-		029B19F0211D146100CCAA7A /* TagEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagEditorWindowController.h; path = Mac/TagEditorWindowController.h; sourceTree = SOURCE_ROOT; };
-		029B19F1211D146100CCAA7A /* changeset copy.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "changeset copy.xsl"; path = "Mac/changeset copy.xsl"; sourceTree = SOURCE_ROOT; };
-		029B19F2211D146100CCAA7A /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindowController.h; path = Mac/MainWindowController.h; sourceTree = SOURCE_ROOT; };
-		029B19F3211D146100CCAA7A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Mac/AppDelegate.h; sourceTree = SOURCE_ROOT; };
-		029B19F4211D146100CCAA7A /* TextInputWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextInputWindowController.m; path = Mac/TextInputWindowController.m; sourceTree = SOURCE_ROOT; };
-		029B19F5211D146100CCAA7A /* ChangesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangesWindowController.m; path = Mac/ChangesWindowController.m; sourceTree = SOURCE_ROOT; };
-		029B19F6211D146100CCAA7A /* TabbingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabbingTableView.h; path = Mac/TabbingTableView.h; sourceTree = SOURCE_ROOT; };
-		029B19F7211D146200CCAA7A /* ChangesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChangesWindowController.xib; path = Mac/ChangesWindowController.xib; sourceTree = SOURCE_ROOT; };
-		029B19F8211D146200CCAA7A /* TabbingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabbingTableView.m; path = Mac/TabbingTableView.m; sourceTree = SOURCE_ROOT; };
-		029B19F9211D146200CCAA7A /* TagEditorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagEditorWindowController.m; path = Mac/TagEditorWindowController.m; sourceTree = SOURCE_ROOT; };
-		029B19FA211D146200CCAA7A /* HtmlErrorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HtmlErrorWindow.h; path = Mac/HtmlErrorWindow.h; sourceTree = SOURCE_ROOT; };
-		029B19FB211D146200CCAA7A /* TextInputWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextInputWindowController.h; path = Mac/TextInputWindowController.h; sourceTree = SOURCE_ROOT; };
-		029B19FC211D146200CCAA7A /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TODO; path = Mac/TODO; sourceTree = SOURCE_ROOT; };
-		029B19FD211D146200CCAA7A /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainWindowController.m; path = Mac/MainWindowController.m; sourceTree = SOURCE_ROOT; };
-		029B19FE211D146200CCAA7A /* OpenStreetMap-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OpenStreetMap-Prefix.pch"; path = "Mac/OpenStreetMap-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		029B19FF211D146200CCAA7A /* OpenStreetMap.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = OpenStreetMap.entitlements; path = Mac/OpenStreetMap.entitlements; sourceTree = SOURCE_ROOT; };
-		029B1A00211D146200CCAA7A /* UsersWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UsersWindowController.m; path = Mac/UsersWindowController.m; sourceTree = SOURCE_ROOT; };
-		029B1A01211D146200CCAA7A /* ChangesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangesWindowController.h; path = Mac/ChangesWindowController.h; sourceTree = SOURCE_ROOT; };
-		029B1A02211D146200CCAA7A /* UsersWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UsersWindowController.h; path = Mac/UsersWindowController.h; sourceTree = SOURCE_ROOT; };
-		029B1A03211D146200CCAA7A /* HtmlErrorWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HtmlErrorWindow.m; path = Mac/HtmlErrorWindow.m; sourceTree = SOURCE_ROOT; };
-		029B1A05211D146300CCAA7A /* TextInputWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TextInputWindowController.xib; path = Mac/TextInputWindowController.xib; sourceTree = SOURCE_ROOT; };
-		029B1A06211D146300CCAA7A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Mac/AppDelegate.m; sourceTree = SOURCE_ROOT; };
-		029B1A07211D146300CCAA7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Mac/main.m; sourceTree = SOURCE_ROOT; };
-		029B1A08211D146300CCAA7A /* HtmlErrorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HtmlErrorWindow.xib; path = Mac/HtmlErrorWindow.xib; sourceTree = SOURCE_ROOT; };
-		029B1A1E211D14D200CCAA7A /* VoiceAnnouncement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceAnnouncement.h; sourceTree = "<group>"; };
+		029B19E3211D12FB00CCAA7A /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = ../Mac/MainWindow.xib; sourceTree = "<group>"; };
+		029B19E4211D12FB00CCAA7A /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Credits.rtf; path = ../Mac/Credits.rtf; sourceTree = "<group>"; };
+		029B19E5211D12FB00CCAA7A /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = ../Mac/MainMenu.xib; sourceTree = "<group>"; };
+		029B19E6211D12FC00CCAA7A /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ../Mac/InfoPlist.strings; sourceTree = "<group>"; };
+		029B19EA211D146100CCAA7A /* TagInfoEditorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagInfoEditorWindowController.xib; sourceTree = SOURCE_ROOT; };
+		029B19EB211D146100CCAA7A /* UsersWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsersWindowController.xib; sourceTree = SOURCE_ROOT; };
+		029B19EC211D146100CCAA7A /* TagInfoEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagInfoEditorWindowController.h; sourceTree = SOURCE_ROOT; };
+		029B19ED211D146100CCAA7A /* OpenStreetMap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OpenStreetMap-Info.plist"; sourceTree = SOURCE_ROOT; };
+		029B19EE211D146100CCAA7A /* TagInfoEditorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagInfoEditorWindowController.m; sourceTree = SOURCE_ROOT; };
+		029B19EF211D146100CCAA7A /* TagEditorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagEditorWindowController.xib; sourceTree = SOURCE_ROOT; };
+		029B19F0211D146100CCAA7A /* TagEditorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagEditorWindowController.h; sourceTree = SOURCE_ROOT; };
+		029B19F1211D146100CCAA7A /* changeset copy.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "changeset copy.xsl"; sourceTree = SOURCE_ROOT; };
+		029B19F2211D146100CCAA7A /* MainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = SOURCE_ROOT; };
+		029B19F3211D146100CCAA7A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		029B19F4211D146100CCAA7A /* TextInputWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextInputWindowController.m; sourceTree = SOURCE_ROOT; };
+		029B19F5211D146100CCAA7A /* ChangesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangesWindowController.m; sourceTree = SOURCE_ROOT; };
+		029B19F6211D146100CCAA7A /* TabbingTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabbingTableView.h; sourceTree = SOURCE_ROOT; };
+		029B19F7211D146200CCAA7A /* ChangesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangesWindowController.xib; sourceTree = SOURCE_ROOT; };
+		029B19F8211D146200CCAA7A /* TabbingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabbingTableView.m; sourceTree = SOURCE_ROOT; };
+		029B19F9211D146200CCAA7A /* TagEditorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagEditorWindowController.m; sourceTree = SOURCE_ROOT; };
+		029B19FA211D146200CCAA7A /* HtmlErrorWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HtmlErrorWindow.h; sourceTree = SOURCE_ROOT; };
+		029B19FB211D146200CCAA7A /* TextInputWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInputWindowController.h; sourceTree = SOURCE_ROOT; };
+		029B19FC211D146200CCAA7A /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = SOURCE_ROOT; };
+		029B19FD211D146200CCAA7A /* MainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = SOURCE_ROOT; };
+		029B19FE211D146200CCAA7A /* OpenStreetMap-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenStreetMap-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		029B19FF211D146200CCAA7A /* OpenStreetMap.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = OpenStreetMap.entitlements; sourceTree = SOURCE_ROOT; };
+		029B1A00211D146200CCAA7A /* UsersWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsersWindowController.m; sourceTree = SOURCE_ROOT; };
+		029B1A01211D146200CCAA7A /* ChangesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangesWindowController.h; sourceTree = SOURCE_ROOT; };
+		029B1A02211D146200CCAA7A /* UsersWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsersWindowController.h; sourceTree = SOURCE_ROOT; };
+		029B1A03211D146200CCAA7A /* HtmlErrorWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HtmlErrorWindow.m; sourceTree = SOURCE_ROOT; };
+		029B1A05211D146300CCAA7A /* TextInputWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextInputWindowController.xib; sourceTree = SOURCE_ROOT; };
+		029B1A06211D146300CCAA7A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		029B1A07211D146300CCAA7A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		029B1A08211D146300CCAA7A /* HtmlErrorWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HtmlErrorWindow.xib; sourceTree = SOURCE_ROOT; };
 		029B1A1F211D14D200CCAA7A /* CommonTagList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonTagList.m; sourceTree = "<group>"; };
 		029B1A20211D14D200CCAA7A /* ExternalGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExternalGPS.m; sourceTree = "<group>"; };
 		029B1A21211D14D200CCAA7A /* CurvedTextLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurvedTextLayer.h; sourceTree = "<group>"; };
 		029B1A22211D14D200CCAA7A /* LocationBallLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationBallLayer.m; sourceTree = "<group>"; };
-		029B1A23211D14D200CCAA7A /* UndoManagerDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UndoManagerDump.m; sourceTree = "<group>"; };
 		029B1A24211D14D200CCAA7A /* OsmMapData+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OsmMapData+Edit.m"; sourceTree = "<group>"; };
 		029B1A25211D14D200CCAA7A /* DownloadThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadThreadPool.m; sourceTree = "<group>"; };
 		029B1A26211D14D200CCAA7A /* ExternalGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExternalGPS.h; sourceTree = "<group>"; };
@@ -174,24 +170,24 @@
 		029B1A51211D14D700CCAA7A /* OsmMapData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OsmMapData.m; sourceTree = "<group>"; };
 		029B1A52211D14D700CCAA7A /* TagInfo.menu.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TagInfo.menu.xml; sourceTree = "<group>"; };
 		029B1A53211D14D700CCAA7A /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayLink.h; sourceTree = "<group>"; };
-		029B1A54211D14D700CCAA7A /* VoiceAnnouncement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceAnnouncement.m; sourceTree = "<group>"; };
 		029B1A55211D14D700CCAA7A /* LocationBallLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationBallLayer.h; sourceTree = "<group>"; };
 		029B1A56211D14D700CCAA7A /* KeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyChain.m; sourceTree = "<group>"; };
 		029B1A57211D14D800CCAA7A /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLog.h; sourceTree = "<group>"; };
 		029B1A58211D14D800CCAA7A /* TagInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagInfo.m; sourceTree = "<group>"; };
 		029B1A59211D14D800CCAA7A /* TagInfo.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TagInfo.xml; sourceTree = "<group>"; };
 		029B1A5A211D14D800CCAA7A /* CommonTagList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonTagList.h; sourceTree = "<group>"; };
-		029B1A7B211D157700CCAA7A /* iosapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iosapi.h; path = iOS/iosapi.h; sourceTree = SOURCE_ROOT; };
-		02C4254C1677F7BE00761C54 /* DetailDisclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DetailDisclosure.png; sourceTree = "<group>"; };
+		029B1A7B211D157700CCAA7A /* iosapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iosapi.h; path = ../Shared/iosapi.h; sourceTree = SOURCE_ROOT; };
+		02C4254C1677F7BE00761C54 /* DetailDisclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DetailDisclosure.png; path = ../Images/DetailDisclosure.png; sourceTree = "<group>"; };
 		02CCCEF7194A9F7E00FCE2F6 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		02CCCEFC194AA14C00FCE2F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		02DD196F2159C51F0008CFC2 /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkStatus.h; sourceTree = "<group>"; };
+		02DD19702159C51F0008CFC2 /* NetworkStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkStatus.m; sourceTree = "<group>"; };
 		02FE3F5515F113CA00A6CFAE /* OpenStreetMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenStreetMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02FE3F5915F113CA00A6CFAE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		02FE3F5C15F113CA00A6CFAE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		02FE3F5D15F113CA00A6CFAE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		02FE3F6115F113CA00A6CFAE /* OpenStreetMap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "OpenStreetMap-Info.plist"; path = "Mac/OpenStreetMap-Info.plist"; sourceTree = "<group>"; };
-		02FE3F6515F113CA00A6CFAE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Mac/main.m; sourceTree = "<group>"; };
-		02FE3F6715F113CA00A6CFAE /* OpenStreetMap-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "OpenStreetMap-Prefix.pch"; path = "Mac/OpenStreetMap-Prefix.pch"; sourceTree = "<group>"; };
+		02FE3F6115F113CA00A6CFAE /* OpenStreetMap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OpenStreetMap-Info.plist"; sourceTree = "<group>"; };
+		02FE3F6715F113CA00A6CFAE /* OpenStreetMap-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OpenStreetMap-Prefix.pch"; sourceTree = "<group>"; };
 		02FE3F8615F13C7300A6CFAE /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -248,12 +244,13 @@
 				029B19EB211D146100CCAA7A /* UsersWindowController.xib */,
 			);
 			name = Mac;
-			path = "New Group1";
 			sourceTree = "<group>";
 		};
 		029B1A1D211D149B00CCAA7A /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				02DD196F2159C51F0008CFC2 /* NetworkStatus.h */,
+				02DD19702159C51F0008CFC2 /* NetworkStatus.m */,
 				029B1A7B211D157700CCAA7A /* iosapi.h */,
 				029B1A33211D14D300CCAA7A /* AerialList.h */,
 				029B1A37211D14D400CCAA7A /* AerialList.m */,
@@ -311,13 +308,11 @@
 				029B1A59211D14D800CCAA7A /* TagInfo.xml */,
 				029B1A46211D14D500CCAA7A /* UndoManager.h */,
 				029B1A44211D14D500CCAA7A /* UndoManager.m */,
-				029B1A23211D14D200CCAA7A /* UndoManagerDump.m */,
 				029B1A4B211D14D600CCAA7A /* VectorMath.h */,
 				029B1A3D211D14D400CCAA7A /* VectorMath.m */,
-				029B1A1E211D14D200CCAA7A /* VoiceAnnouncement.h */,
-				029B1A54211D14D700CCAA7A /* VoiceAnnouncement.m */,
 			);
-			path = Shared;
+			name = Shared;
+			path = ../Shared;
 			sourceTree = "<group>";
 		};
 		02DFBBB816345FE80021F1C9 /* Resources */ = {
@@ -334,7 +329,7 @@
 				027A469F1673BA2B000BE55C /* OSM-Logo256.ico */,
 			);
 			name = Resources;
-			path = Images;
+			path = ../Images;
 			sourceTree = "<group>";
 		};
 		02FE3F4A15F113CA00A6CFAE = {
@@ -388,7 +383,6 @@
 			children = (
 				0275B3B61615819500124A14 /* OpenStreetMap.entitlements */,
 				02FE3F6115F113CA00A6CFAE /* OpenStreetMap-Info.plist */,
-				02FE3F6515F113CA00A6CFAE /* main.m */,
 				02FE3F6715F113CA00A6CFAE /* OpenStreetMap-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -433,6 +427,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				en,
 			);
 			mainGroup = 02FE3F4A15F113CA00A6CFAE;
 			productRefGroup = 02FE3F5615F113CA00A6CFAE /* Products */;
@@ -489,13 +484,13 @@
 				029B1A6A211D14D800CCAA7A /* OsmObjects.m in Sources */,
 				029B1A67211D14D800CCAA7A /* AerialList.m in Sources */,
 				029B1A66211D14D800CCAA7A /* SpeechBalloonLayer.m in Sources */,
-				029B1A5E211D14D800CCAA7A /* UndoManagerDump.m in Sources */,
 				029B1A0F211D146300CCAA7A /* TextInputWindowController.m in Sources */,
 				029B1A6B211D14D800CCAA7A /* QuadMapC.mm in Sources */,
 				029B1A64211D14D800CCAA7A /* GpxLayer.m in Sources */,
 				029B1A73211D14D800CCAA7A /* RulerLayer.m in Sources */,
 				029B1A75211D14D800CCAA7A /* OsmMapData.m in Sources */,
 				029B1A60211D14D800CCAA7A /* DownloadThreadPool.m in Sources */,
+				02DD19712159C51F0008CFC2 /* NetworkStatus.m in Sources */,
 				029B1A5F211D14D800CCAA7A /* OsmMapData+Edit.m in Sources */,
 				029B1A12211D146300CCAA7A /* TabbingTableView.m in Sources */,
 				029B1A72211D14D800CCAA7A /* EditorMapLayer.m in Sources */,
@@ -506,11 +501,9 @@
 				029B1A15211D146300CCAA7A /* MainWindowController.m in Sources */,
 				029B1A61211D14D800CCAA7A /* DisplayLink.m in Sources */,
 				029B1A5D211D14D800CCAA7A /* LocationBallLayer.m in Sources */,
-				029B1A77211D14D800CCAA7A /* VoiceAnnouncement.m in Sources */,
 				029B1A6C211D14D800CCAA7A /* VectorMath.m in Sources */,
 				029B1A13211D146300CCAA7A /* TagEditorWindowController.m in Sources */,
 				029B1A78211D14D800CCAA7A /* KeyChain.m in Sources */,
-				02FE3F6615F113CA00A6CFAE /* main.m in Sources */,
 				029B1A70211D14D800CCAA7A /* UndoManager.m in Sources */,
 				029B1A65211D14D800CCAA7A /* Database.m in Sources */,
 				029B1A1B211D146300CCAA7A /* main.m in Sources */,
@@ -547,7 +540,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -570,7 +563,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -578,12 +571,12 @@
 		02FE3F7415F113CA00A6CFAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Mac/OpenStreetMap.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OpenStreetMap.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Mac/OpenStreetMap-Prefix.pch";
+				GCC_PREFIX_HEADER = "OpenStreetMap-Prefix.pch";
 				INFOPLIST_FILE = "Mac/OpenStreetMap-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -594,12 +587,12 @@
 		02FE3F7515F113CA00A6CFAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Mac/OpenStreetMap.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OpenStreetMap.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Mac/OpenStreetMap-Prefix.pch";
+				GCC_PREFIX_HEADER = "OpenStreetMap-Prefix.pch";
 				INFOPLIST_FILE = "Mac/OpenStreetMap-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

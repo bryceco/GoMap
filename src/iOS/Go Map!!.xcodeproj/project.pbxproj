@@ -453,7 +453,6 @@
 		02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */; };
 		02ACBCFC16713F2B00BB4414 /* TagInfo.menu.xml in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBA16713F2A00BB4414 /* TagInfo.menu.xml */; };
 		02ACBCFD16713F2B00BB4414 /* TagInfo.xml in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBB16713F2A00BB4414 /* TagInfo.xml */; };
-		02ACBCFE16713F2B00BB4414 /* UndoManagerDump.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBBC16713F2A00BB4414 /* UndoManagerDump.m */; };
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
@@ -539,8 +538,8 @@
 		0219563116DDC26E00074D15 /* GpxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GpxViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Edit.h"; path = "../Shared/OsmMapData+Edit.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "OsmMapData+Edit.m"; path = "../Shared/OsmMapData+Edit.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VoiceAnnouncement.h; path = ../Shared/VoiceAnnouncement.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VoiceAnnouncement.m; path = ../Shared/VoiceAnnouncement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VoiceAnnouncement.h; path = ../Shared/VoiceAnnouncement.h; sourceTree = "<group>"; };
+		021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VoiceAnnouncement.m; path = ../Shared/VoiceAnnouncement.m; sourceTree = "<group>"; };
 		021C6AA61686145C00FB17B0 /* UndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndoManager.h; path = ../Shared/UndoManager.h; sourceTree = "<group>"; };
 		021C6AA71686145C00FB17B0 /* UndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UndoManager.m; path = ../Shared/UndoManager.m; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -555,7 +554,7 @@
 		0225A36819B63EFE008B63BA /* DisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DisplayViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0225A36919B63F0D008B63BA /* DisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DisplayViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0228442A16D8870C00A1C051 /* GpxLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = GpxLayer.h; path = ../Shared/GpxLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		0228442B16D8870C00A1C051 /* GpxLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = GpxLayer.m; path = ../Shared/GpxLayer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0228442B16D8870C00A1C051 /* GpxLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = GpxLayer.m; path = ../Shared/GpxLayer.m; sourceTree = "<group>"; };
 		0228444516DD339200A1C051 /* redo32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redo32@2x.png"; sourceTree = "<group>"; };
 		0228444616DD339300A1C051 /* undo32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "undo32@2x.png"; sourceTree = "<group>"; };
 		022A2A52167B8F1C00D7A5AC /* POITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POITabBarController.h; sourceTree = "<group>"; };
@@ -564,8 +563,8 @@
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ClearCacheViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultilineTableViewCell.h; sourceTree = "<group>"; };
 		022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultilineTableViewCell.m; sourceTree = "<group>"; };
-		022ABCA220C3750A002D4977 /* Buildings3DView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buildings3DView.h; sourceTree = "<group>"; };
-		022ABCA320C3750A002D4977 /* Buildings3DView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Buildings3DView.m; sourceTree = "<group>"; };
+		022ABCA220C3750A002D4977 /* Buildings3DView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Buildings3DView.h; path = ../Shared/Buildings3DView.h; sourceTree = "<group>"; };
+		022ABCA320C3750A002D4977 /* Buildings3DView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Buildings3DView.m; path = ../Shared/Buildings3DView.m; sourceTree = "<group>"; };
 		022B09A619BD3F7B0041687B /* QuadMapC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadMapC.mm; path = ../Shared/QuadMapC.mm; sourceTree = "<group>"; };
 		022B504716857E5F00E6619A /* OSMiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OSMiOS.entitlements; sourceTree = "<group>"; };
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -575,8 +574,8 @@
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		02401F371DE1369E00F32AF5 /* ExternalGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ExternalGPS.h; path = ../Shared/ExternalGPS.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02401F381DE1369E00F32AF5 /* ExternalGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ExternalGPS.m; path = ../Shared/ExternalGPS.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		02401F371DE1369E00F32AF5 /* ExternalGPS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ExternalGPS.h; path = ../Shared/ExternalGPS.h; sourceTree = "<group>"; };
+		02401F381DE1369E00F32AF5 /* ExternalGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ExternalGPS.m; path = ../Shared/ExternalGPS.m; sourceTree = "<group>"; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../Shared/VectorMath.m; sourceTree = "<group>"; };
 		0242331216750C81008A3B6A /* ArrowBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowBlue.png; sourceTree = "<group>"; };
@@ -595,8 +594,8 @@
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025F1CF21BCD9B070097D7FE /* TapAndDragGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TapAndDragGesture.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TapAndDragGesture.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		0260484019E66C8700415CB1 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		0260484119E66C8700415CB1 /* DisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DisplayLink.m; path = ../Shared/DisplayLink.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0260484019E66C8700415CB1 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; };
+		0260484119E66C8700415CB1 /* DisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DisplayLink.m; path = ../Shared/DisplayLink.m; sourceTree = "<group>"; };
 		0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchor_berth.p.64.png; sourceTree = "<group>"; };
 		0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchorage.p.64.png; sourceTree = "<group>"; };
 		0266D39316C02D9200AD9A83 /* seamark_beacon_cardinal.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_beacon_cardinal.p.64.png; sourceTree = "<group>"; };
@@ -646,8 +645,8 @@
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		028E0C0A20B2182100CEC71F /* FilterObjectsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterObjectsViewController.h; sourceTree = "<group>"; };
 		028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterObjectsViewController.m; sourceTree = "<group>"; };
-		028F504319B949780093C423 /* CommonTagList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CommonTagList.h; path = ../Shared/CommonTagList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		028F504419B949780093C423 /* CommonTagList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CommonTagList.m; path = ../Shared/CommonTagList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		028F504319B949780093C423 /* CommonTagList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CommonTagList.h; path = ../Shared/CommonTagList.h; sourceTree = "<group>"; };
+		028F504419B949780093C423 /* CommonTagList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CommonTagList.m; path = ../Shared/CommonTagList.m; sourceTree = "<group>"; };
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		029043A11682797A00BE3480 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		029043A21682797A00BE3480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -663,8 +662,8 @@
 		02A194AE19C69701002338DA /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Database.h; path = ../Shared/Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02A194AF19C69701002338DA /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = Database.m; path = ../Shared/Database.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		02A8613C20A95C16008C465F /* NetworkStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkStatus.m; sourceTree = "<group>"; };
-		02A8613E20A95C2B008C465F /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkStatus.h; sourceTree = "<group>"; };
+		02A8613C20A95C16008C465F /* NetworkStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NetworkStatus.m; path = ../Shared/NetworkStatus.m; sourceTree = "<group>"; };
+		02A8613E20A95C2B008C465F /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkStatus.h; path = ../Shared/NetworkStatus.h; sourceTree = "<group>"; };
 		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		02ACBA3516713CCB00BB4414 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -687,11 +686,11 @@
 		02ACBA6F16713F2A00BB4414 /* BlueBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueBall.png; sourceTree = "<group>"; };
 		02ACBA7016713F2A00BB4414 /* changeset.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = changeset.xsl; path = ../Shared/changeset.xsl; sourceTree = "<group>"; };
 		02ACBA7116713F2A00BB4414 /* CurvedTextLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CurvedTextLayer.h; path = ../Shared/CurvedTextLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CurvedTextLayer.m; path = ../Shared/CurvedTextLayer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CurvedTextLayer.m; path = ../Shared/CurvedTextLayer.m; sourceTree = "<group>"; };
 		02ACBA7316713F2A00BB4414 /* DownloadThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DownloadThreadPool.h; path = ../Shared/DownloadThreadPool.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02ACBA7416713F2A00BB4414 /* DownloadThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DownloadThreadPool.m; path = ../Shared/DownloadThreadPool.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		02ACBA7516713F2A00BB4414 /* EditorMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EditorMapLayer.h; path = ../Shared/EditorMapLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = EditorMapLayer.m; path = ../Shared/EditorMapLayer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		02ACBA7516713F2A00BB4414 /* EditorMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EditorMapLayer.h; path = ../Shared/EditorMapLayer.h; sourceTree = "<group>"; };
+		02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = EditorMapLayer.m; path = ../Shared/EditorMapLayer.m; sourceTree = "<group>"; };
 		02ACBA7F16713F2A00BB4414 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapView.h; path = ../Shared/MapView.h; sourceTree = "<group>"; };
 		02ACBA8016713F2A00BB4414 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapView.m; path = ../Shared/MapView.m; sourceTree = "<group>"; };
 		02ACBA8116713F2A00BB4414 /* MercatorTileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MercatorTileLayer.h; path = ../Shared/MercatorTileLayer.h; sourceTree = "<group>"; };
@@ -1006,9 +1005,8 @@
 		02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonLayer.m; path = ../Shared/SpeechBalloonLayer.m; sourceTree = "<group>"; };
 		02ACBBBA16713F2A00BB4414 /* TagInfo.menu.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TagInfo.menu.xml; path = ../Shared/TagInfo.menu.xml; sourceTree = "<group>"; };
 		02ACBBBB16713F2A00BB4414 /* TagInfo.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TagInfo.xml; path = ../Shared/TagInfo.xml; sourceTree = "<group>"; };
-		02ACBBBC16713F2A00BB4414 /* UndoManagerDump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UndoManagerDump.m; path = ../Shared/UndoManagerDump.m; sourceTree = "<group>"; };
 		02ACBBBD16713F2A00BB4414 /* VectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VectorMath.h; path = ../Shared/VectorMath.h; sourceTree = "<group>"; };
-		02ACBD0016713FCF00BB4414 /* iosapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iosapi.h; sourceTree = "<group>"; };
+		02ACBD0016713FCF00BB4414 /* iosapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iosapi.h; path = ../Shared/iosapi.h; sourceTree = "<group>"; };
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1041,7 +1039,7 @@
 		02C3C73519A5D679003B6783 /* AerialEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AerialEditViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C3C73619A5D679003B6783 /* AerialEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AerialEditViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02C3C73819A6DCEA003B6783 /* AerialList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AerialList.h; path = ../Shared/AerialList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02C3C73919A6DCEA003B6783 /* AerialList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AerialList.m; path = ../Shared/AerialList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		02C3C73919A6DCEA003B6783 /* AerialList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AerialList.m; path = ../Shared/AerialList.m; sourceTree = "<group>"; };
 		02C4255116796B5800761C54 /* SpeechBalloonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonView.h; path = ../Shared/SpeechBalloonView.h; sourceTree = "<group>"; };
 		02C4255216796B5800761C54 /* SpeechBalloonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonView.m; path = ../Shared/SpeechBalloonView.m; sourceTree = "<group>"; };
 		02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AutocompleteTextField.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1330,7 +1328,6 @@
 				02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */,
 				02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */,
 				025A1D001690DC32002B60CB /* Images */,
-				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
 				02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */,
@@ -1719,6 +1716,7 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				02C3C73819A6DCEA003B6783 /* AerialList.h */,
 				02C3C73919A6DCEA003B6783 /* AerialList.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
@@ -1787,7 +1785,6 @@
 				02BF745020793EE20028ED6A /* TurnRestrictHwyView.m */,
 				021C6AA61686145C00FB17B0 /* UndoManager.h */,
 				021C6AA71686145C00FB17B0 /* UndoManager.m */,
-				02ACBBBC16713F2A00BB4414 /* UndoManagerDump.m */,
 				02ACBBBD16713F2A00BB4414 /* VectorMath.h */,
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
 				021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */,
@@ -2284,7 +2281,6 @@
 				02ACBCF816713F2B00BB4414 /* QuadMap.m in Sources */,
 				02ACBCF916713F2B00BB4414 /* RulerLayer.m in Sources */,
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
-				02ACBCFE16713F2B00BB4414 /* UndoManagerDump.m in Sources */,
 				025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */,
 				024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */,
 				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,

@@ -26,6 +26,11 @@ typedef int64_t OsmIdentifier;
 #else
 
 #define UIImage				NSImage
+#define UIColor				NSColor
+#define UIFont				NSFont
+#define UIView				NSView
+#define UIBezierPath		NSBezierPath
+#define UIApplication		NSApplication
 
 #endif
 

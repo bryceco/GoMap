@@ -1456,7 +1456,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSXMLElement * osmChange = [xmlDoc rootElement];
 	for ( NSXMLElement * changeType in osmChange.children ) {	// create/modify/delete
 		for ( NSXMLElement * osmObject in changeType.children ) {	// node/way/relation
-			if ( [osmObject isKindOfClass:[DDXMLElement class]] ) {
+			if ( [osmObject isKindOfClass:[NSXMLElement class]] ) {
 				[osmObject addAttribute:[NSXMLNode attributeWithName:@"changeset" stringValue:changesetID]];
 			}
 		}
@@ -1644,7 +1644,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)updateString:(NSMutableAttributedString *)string withTag:(NSXMLElement *)tag
 {
+#if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
+#else
+	NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ = %@\n",
 					   [tag attributeForName:@"k"].stringValue,
 					   [tag attributeForName:@"v"].stringValue];
@@ -1652,7 +1656,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)updateString:(NSMutableAttributedString *)string withMember:(NSXMLElement *)tag
 {
+#if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleCallout];
+#else
+	NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ %@: \"%@\"\n",
 					   [tag attributeForName:@"type"].stringValue,
 					   [tag attributeForName:@"ref"].stringValue,
@@ -1662,7 +1670,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)updateString:(NSMutableAttributedString *)string withNode:(NSXMLElement *)node
 {
+#if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+#else
+	NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 
 	NSString * nodeName = [node attributeForName:@"id"].stringValue;
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tNode " attributes:@{ NSFontAttributeName : font }]];
@@ -1687,8 +1699,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}
 
+#if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-	
+#else
+	NSFont * font = [NSFont labelFontOfSize:12];
+#endif
+
 	NSString * wayName = [way attributeForName:@"id"].stringValue;
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tWay " attributes:@{ NSFontAttributeName : font }]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:wayName
@@ -1716,8 +1732,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 	}
 
+#if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-	
+#else
+	NSFont * font = [NSFont labelFontOfSize:12];
+#endif
+
 	NSString * relationName = [relation attributeForName:@"id"].stringValue;
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:@{ NSFontAttributeName : font }]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:relationName
@@ -1740,7 +1760,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	if ( objects.count == 0 )
 		return;
+
+#if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+#else
+	NSFont * font = [NSFont labelFontOfSize:12];
+#endif
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:header attributes:@{ NSFontAttributeName : font }]];
 	for ( NSXMLElement * object in objects ) {
 		if ( [object.name isEqualToString:@"node"] ) {
@@ -1788,7 +1813,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(NSString *)changesetAsHtml
 {
-#if TARGET_OS_IPHONE
+#if 1 || TARGET_OS_IPHONE
 	return nil;
 #else
 	NSXMLDocument * xml = [self createXmlWithChangeset:@"0"];

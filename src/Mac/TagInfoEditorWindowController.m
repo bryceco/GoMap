@@ -127,8 +127,10 @@
 			[element addAttribute:[NSXMLNode attributeWithName:@"description"	stringValue:tag.summary]];
 		if ( tag.iconName.length )
 			[element addAttribute:[NSXMLNode attributeWithName:@"iconName"		stringValue:tag.iconName]];
+#if 0
 		if ( tag.wikiPage.length )
 			[element addAttribute:[NSXMLNode attributeWithName:@"wikiPage"		stringValue:tag.wikiPage]];
+#endif
 		if ( tag.lineColor )
 			[element addAttribute:[NSXMLNode attributeWithName:@"lineColor" stringValue:[TagInfo stringForColor:tag.lineColor]]];
 		if ( tag.areaColor )
@@ -191,6 +193,7 @@
 				}
 			}
 
+#if 0
 			// wiki
 			if ( tagType.wikiPage.length < 2 ) {
 				NSArray * wikis = [feature elementsForName:@"help"];
@@ -202,6 +205,7 @@
 						tagType.wikiPage = url;
 				}
 			}
+#endif
 			
 			// icon
 			if ( tagType.iconName.length < 2 ) {
