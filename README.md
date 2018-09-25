@@ -1,7 +1,7 @@
 
 # Go Map!!
 
-Go Map!! is an iPhone/iPad editor for adding cartographic information to [OpenStreetMap](www.openstreetmap.org).
+Go Map!! is an iPhone/iPad editor for adding cartographic information to [OpenStreetMap](https://www.openstreetmap.org).
 
 ## Source code structure
 
