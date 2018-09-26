@@ -75,6 +75,10 @@
 
 @end
 
+// this needs to be shared, because sometimes we'll create a new autocomplete text field when the keyboard is already showing,
+// so it never gets a chance to retrieve the size:
+static CGRect	s_keyboardFrame;
+
 
 
 @implementation AutocompleteTextField
@@ -152,7 +156,7 @@ static const CGFloat GradientHeight = 20.0;
 
 - (void) keyboardWillShow:(NSNotification *)nsNotification
 {
-	_keyboardFrame = [self keyboardFrameFromNotification:nsNotification];
+	s_keyboardFrame = [self keyboardFrameFromNotification:nsNotification];
 
 	if ( self.editing && _filteredCompletions.count ) {
 		[self updateAutocomplete];
@@ -170,7 +174,7 @@ static const CGFloat GradientHeight = 20.0;
 // keyboard size can change if switching languages inside keyboard, etc.
 - (void) keyboardWillChange:(NSNotification *)nsNotification
 {
-	_keyboardFrame = [self keyboardFrameFromNotification:nsNotification];
+	s_keyboardFrame = [self keyboardFrameFromNotification:nsNotification];
 
 	if ( _completionTableView ) {
 		CGRect rect = [self frameForCompletionTableView];
@@ -201,7 +205,7 @@ static const CGFloat GradientHeight = 20.0;
 
 //	CGRect cellRC = [self convertRect:self.frame toView:tableView];
 	CGRect cellRC = [cell convertRect:cell.bounds toView:tableView];
-	CGRect keyboardPos = [tableView convertRect:_keyboardFrame fromView:nil];	// keyboard is in screen coordinates
+	CGRect keyboardPos = [tableView convertRect:s_keyboardFrame fromView:nil];	// keyboard is in screen coordinates
 	CGRect rect;
 	rect.origin.x = 0;
 	rect.origin.y = cellRC.origin.y + cellRC.size.height;

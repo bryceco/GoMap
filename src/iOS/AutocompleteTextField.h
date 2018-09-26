@@ -15,7 +15,6 @@
 {
 	AutocompleteTextFieldDelegate	*	_myDelegate;
 
-	CGRect								_keyboardFrame;
 	UITableView						*	_completionTableView;
 	CGFloat								_origCellOffset;
 	NSArray							*	_filteredCompletions;
