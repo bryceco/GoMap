@@ -211,7 +211,9 @@ static NSInteger			mostRecentMaximum;
 		// no search
 		_searchArrayAll = nil;
 		_searchArrayRecent = nil;
+#if 0
 		[_searchBar performSelector:@selector(resignFirstResponder) withObject:nil afterDelay:0.1];
+#endif
 	} else {
 		// searching
 		_searchArrayAll = [[CommonTagList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
