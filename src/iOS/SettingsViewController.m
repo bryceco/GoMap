@@ -119,7 +119,11 @@
 		
 		@"iPhone10,3" : @"iPhone X (Verizon/Sprint/China)",
 		@"iPhone10,6" : @"iPhone X",
-		
+
+		@"iPhone11,2" : @"iPhone XS",
+		@"iPhone11,6" : @"iPhone XS Max",
+		@"iPhone11,8" : @"iPhone XR",
+
 		// iPod
 		@"iPod1,1" : @"iPod Touch (1 Gen)",
 		@"iPod2,1" : @"iPod Touch (2 Gen)",
