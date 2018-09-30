@@ -2320,7 +2320,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 					OsmRelation * relation = [_editorLayer.mapData createRelation];
 					NSDictionary * tags = @{ @"type" : type };
 					[_editorLayer.mapData setTags:tags forObject:relation];
-					EditAction add = [_editorLayer.mapData canAddObject:_editorLayer.selectedPrimary toRelation:relation error:nil];
+					EditAction add = [_editorLayer.mapData canAddObject:_editorLayer.selectedPrimary toRelation:relation withRole:@"outer" error:nil];
 					add();
 					_editorLayer.selectedNode = nil;
 					_editorLayer.selectedWay = nil;
@@ -3399,10 +3399,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				return obj.isWay != nil;
 			}]];
 			if ( ways.count == 1 ) {
-				UIAlertController * confirm = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add way to multipolygon?",nil) message:NSLocalizedString(@"The inner/outer role will be calculated automatically",nil) preferredStyle:UIAlertControllerStyleAlert];
-				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				UIAlertController * confirm = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add way to multipolygon?",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+				void (^addMmember)(NSString *) = ^(NSString * role) {
 					NSString * error = nil;
-					EditAction add = [_editorLayer.mapData canAddObject:ways.lastObject toRelation:_editorLayer.selectedRelation error:&error];
+					EditAction add = [_editorLayer.mapData canAddObject:ways.lastObject toRelation:_editorLayer.selectedRelation withRole:role error:&error];
 					if ( add ) {
 						add();
 						[self flashMessage:NSLocalizedString(@"added to multipolygon relation",nil)];
@@ -3410,6 +3410,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 					} else {
 						[self showAlert:NSLocalizedString(@"Error",nil) message:error];
 					}
+				};
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add outer member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+					addMmember(@"outer");
+				}]];
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add inner member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+					addMmember(@"inner");
 				}]];
 				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 				[self.viewController presentViewController:confirm animated:YES completion:nil];

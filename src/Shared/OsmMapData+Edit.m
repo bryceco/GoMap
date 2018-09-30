@@ -202,7 +202,7 @@
 
 #pragma mark canAddWayToRelation
 
--(EditAction)canAddObject:(OsmBaseObject *)obj toRelation:(OsmRelation *)relation error:(NSString **)error
+-(EditAction)canAddObject:(OsmBaseObject *)obj toRelation:(OsmRelation *)relation withRole:(NSString *)role error:(NSString **)error
 {
 	if ( !relation.isMultipolygon ) {
 		*error = NSLocalizedString(@"Only multipolygon relations are supported", nil);
@@ -213,7 +213,8 @@
 		*error = NSLocalizedString(@"Can only add ways to multipolygons", nil);
 		return nil;
 	}
-	NSString * role = nil;
+
+	// place the member adjacent to a way its connected to, if any
 	NSInteger index = 0;
 	for ( OsmMember * m in relation.members ) {
 		OsmWay * w = m.ref;
@@ -223,12 +224,18 @@
 		if ( ![m.role isEqualToString:@"inner"] && ![m.role isEqualToString:@"outer"] )
 			continue;
 		if ( [newWay connectsToWay:w] ) {
-			role = m.role;
+			if ( role && ![role isEqualToString:m.role] ) {
+				*error = NSLocalizedString(@"Cannot connect an inner way to an outer way", nil);
+				return nil;
+			}
+			role = m.role;	// copy the role of the way it's connected to
 			break;
 		}
 	}
-	if ( role == nil )
-		role = @"outer";
+	if ( role == nil ) {
+		*error = NSLocalizedString(@"Unknown role", nil);
+		return nil;
+	}
 
 	return ^{
 		OsmMember * newMember = [[OsmMember alloc] initWithRef:newWay role:role];

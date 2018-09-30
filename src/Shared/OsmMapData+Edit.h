@@ -25,7 +25,7 @@
 - (EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way error:(NSString **)error;
 
 // relations
--(EditAction)canAddObject:(OsmBaseObject *)obj toRelation:(OsmRelation *)relation error:(NSString **)error;
+-(EditAction)canAddObject:(OsmBaseObject *)obj toRelation:(OsmRelation *)relation withRole:(NSString *)role error:(NSString **)error;
 -(EditAction)canRemoveObject:(OsmBaseObject *)obj fromRelation:(OsmRelation *)relation error:(NSString **)error;
 -(void)updateMultipolygonRelationRoles:(OsmRelation *)relation;
 -(void)updateParentMultipolygonRelationRolesForWay:(OsmWay *)way;
