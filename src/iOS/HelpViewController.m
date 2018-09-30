@@ -29,12 +29,16 @@
 	}
 }
 
+- (void)viewDidLayoutSubviews
+{
+    [_textView setContentOffset:CGPointZero animated:NO];
+}
+
 
 - (IBAction)cancel:(id)sender
 {
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 
 @end
