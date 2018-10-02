@@ -1961,7 +1961,9 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 	} else {
 		// regular delete
-		alertDelete = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete",nil) message:NSLocalizedString(@"Delete selection?",nil) preferredStyle:UIAlertControllerStyleAlert];
+		NSString * name = [_editorLayer.selectedPrimary friendlyDescription];
+		NSString * question = [NSString stringWithFormat:@"Delete %@?",name];
+		alertDelete = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
 		[alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete",nil) style:UIAlertActionStyleDestructive handler:deleteHandler]];
 	}
