@@ -1584,7 +1584,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="12:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-L5-Hcz">
-                                            <rect key="frame" x="198.5" y="6" width="72.5" height="21"/>
+                                            <rect key="frame" x="187.5" y="6" width="72.5" height="21"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1596,10 +1596,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEr-ao-8x1">
-                                            <rect key="frame" x="279" y="13.5" width="21" height="28"/>
+                                            <rect key="frame" x="274" y="11.5" width="32" height="32"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="21" id="OCa-Ve-Avy"/>
-                                                <constraint firstAttribute="height" constant="28" id="g0U-1H-4Oc"/>
+                                                <constraint firstAttribute="width" constant="32" id="OCa-Ve-Avy"/>
+                                                <constraint firstAttribute="height" constant="32" id="g0U-1H-4Oc"/>
                                             </constraints>
                                             <state key="normal" image="702-share.png"/>
                                             <connections>
@@ -1610,11 +1610,11 @@
                                     <constraints>
                                         <constraint firstItem="v6h-g5-fka" firstAttribute="top" secondItem="GKM-Tu-fW7" secondAttribute="top" constant="6" id="0Q8-kv-guZ"/>
                                         <constraint firstItem="EEr-ao-8x1" firstAttribute="centerY" secondItem="GKM-Tu-fW7" secondAttribute="centerY" id="0jA-bB-ISY"/>
-                                        <constraint firstAttribute="trailing" secondItem="EEr-ao-8x1" secondAttribute="trailing" constant="20" symbolic="YES" id="FV0-lI-RUc"/>
+                                        <constraint firstAttribute="trailing" secondItem="EEr-ao-8x1" secondAttribute="trailing" constant="14" id="FV0-lI-RUc"/>
                                         <constraint firstAttribute="bottom" secondItem="h1O-06-ApF" secondAttribute="bottom" constant="6" id="Fee-ex-CFi"/>
                                         <constraint firstItem="EHa-L5-Hcz" firstAttribute="top" secondItem="GKM-Tu-fW7" secondAttribute="top" constant="6" id="Ihi-re-Fij"/>
                                         <constraint firstItem="h1O-06-ApF" firstAttribute="top" secondItem="v6h-g5-fka" secondAttribute="bottom" constant="3" id="JJ6-ev-0TL"/>
-                                        <constraint firstItem="EEr-ao-8x1" firstAttribute="leading" secondItem="EHa-L5-Hcz" secondAttribute="trailing" constant="8" symbolic="YES" id="Mia-Jn-aPu"/>
+                                        <constraint firstItem="EEr-ao-8x1" firstAttribute="leading" secondItem="EHa-L5-Hcz" secondAttribute="trailing" constant="14" id="Mia-Jn-aPu"/>
                                         <constraint firstItem="EEr-ao-8x1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h1O-06-ApF" secondAttribute="trailing" constant="8" symbolic="YES" id="O0D-yF-QSq"/>
                                         <constraint firstItem="h1O-06-ApF" firstAttribute="leading" secondItem="GKM-Tu-fW7" secondAttribute="leading" constant="20" symbolic="YES" id="Yw7-DO-0VX"/>
                                         <constraint firstItem="EHa-L5-Hcz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="v6h-g5-fka" secondAttribute="trailing" constant="8" symbolic="YES" id="c29-op-0Qw"/>

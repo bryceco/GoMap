@@ -324,6 +324,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 @implementation GpxLayer
 
 @synthesize activeTrack = _activeTrack;
+@synthesize selectedTrack = _selectedTrack;
 
 -(id)initWithMapView:(MapView *)mapView
 {
@@ -364,6 +365,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	}
 	_activeTrack = [GpxTrack new];
 	_stabilizingCount = 0;
+	self.selectedTrack = _activeTrack;
 }
 
 -(void)endActiveTrack
@@ -385,6 +387,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 
 		[self saveToDisk:_activeTrack];
 		_activeTrack = nil;
+		self.selectedTrack = nil;
 	}
 }
 
@@ -651,6 +654,25 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[_mapView setTransformForLatitude:pt.latitude longitude:pt.longitude width:widthDegrees];
 }
 
+-(GpxTrack *)selectedTrack
+{
+	return _selectedTrack;
+}
+-(void)setSelectedTrack:(GpxTrack *)selectedTrack
+{
+	if ( selectedTrack != _selectedTrack ) {
+		[_selectedTrack.shapeLayer removeFromSuperlayer];
+		_selectedTrack.shapeLayer = nil; // color changes
+
+		_selectedTrack = selectedTrack;
+
+		[_selectedTrack.shapeLayer removeFromSuperlayer];
+		_selectedTrack.shapeLayer = nil; // color changes
+
+		[self setNeedsLayout];
+	}
+}
+
 
 // Load a GPX trace from an external source
 -(BOOL)loadGPXData:(NSData *)data center:(BOOL)center
@@ -665,6 +687,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[_previousTracks insertObject:newTrack atIndex:0];
 	if ( center ) {
 		[self centerOnTrack:newTrack];
+		self.selectedTrack = newTrack;
 	}
 	[self saveToDisk:newTrack];
 	return YES;
@@ -736,7 +759,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	memset(track->shapePaths, 0, sizeof track->shapePaths);
 	track->shapePaths[0] = CGPathRetain( path );
 
-	UIColor * color = track == _activeTrack ? UIColor.redColor : [UIColor colorWithRed:1.0 green:99/255.0 blue:249/255.0 alpha:1.0];
+	UIColor * color = track == _selectedTrack ? UIColor.redColor : [UIColor colorWithRed:1.0 green:99/255.0 blue:249/255.0 alpha:1.0];
 
 	CAShapeLayer * layer = [CAShapeLayer new];
 	layer.anchorPoint	= CGPointMake(0, 0);

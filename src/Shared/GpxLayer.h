@@ -30,7 +30,7 @@
 	BOOL		_recording;
 	double		_distance;
 @public
-	CGPathRef	shapePaths[20];
+	CGPathRef	shapePaths[20];	// an array of paths, each simplified according to zoom level so we have good performance when zoomed out
 }
 @property (strong,nonatomic)	NSString		*	name;
 @property (strong,nonatomic)	NSDate			*	creationDate;	// when trace was recorded or downloaded
@@ -42,8 +42,8 @@
 -(instancetype)initWithXmlData:(NSData *)data;
 -(instancetype)initWithXmlFile:(NSString * )path;
 
-- (NSTimeInterval)duration;
-- (double)distance;
+-(NSTimeInterval)duration;
+-(double)distance;
 
 @end
 
@@ -53,7 +53,8 @@
 	MapView			*	_mapView;
 	NSInteger			_stabilizingCount;
 }
-@property (readonly,nonatomic)	GpxTrack		*	activeTrack;
+@property (readonly,nonatomic)	GpxTrack		*	activeTrack;		// track currently being recorded
+@property (weak,nonatomic)		GpxTrack		*	selectedTrack;		// track picked in view controller
 @property (strong,nonatomic)	NSMutableArray	*	previousTracks;		// sorted with most recent first
 
 -(instancetype)initWithMapView:(MapView *)mapView;
