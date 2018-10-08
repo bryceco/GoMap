@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="ipad10_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,20 +19,18 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OSM-Logo144.png" translatesAutoresizingMaskIntoConstraints="NO" id="LGc-Lj-kcs">
-                                <rect key="frame" x="228" y="242" width="144" height="144"/>
-                                <animations/>
+                                <rect key="frame" x="345" y="498" width="144" height="144"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
-                                <rect key="frame" x="20" y="120" width="560" height="43"/>
-                                <animations/>
+                                <rect key="frame" x="20" y="291" width="794" height="43"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Go Map!!">
                                         <attributes>
-                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="36" name="HelveticaNeue-BoldItalic"/>
                                             <font key="NSOriginalFont" size="36" name="HelveticaNeue-BoldItalic"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
@@ -38,16 +40,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OSM-Logo256.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Nv-ci-hNo">
-                                <rect key="frame" x="177" y="216" width="256" height="256"/>
-                                <animations/>
+                                <rect key="frame" x="294" y="387" width="256" height="256"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="256" id="IXy-gi-0zi"/>
                                     <constraint firstAttribute="width" constant="256" id="POc-un-Wi3"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <animations/>
-                        <color key="backgroundColor" red="0.78823529410000004" green="0.90980392160000001" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.78823529410000004" green="0.90980392160000001" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4Nv-ci-hNo" firstAttribute="top" secondItem="GJd-Yh-RWb" secondAttribute="bottom" constant="53" id="2Cc-er-moP"/>
                             <constraint firstItem="4Nv-ci-hNo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Mu2-og-Go1"/>

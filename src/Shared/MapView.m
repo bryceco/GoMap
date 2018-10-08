@@ -2045,98 +2045,204 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 - (void)updateEditControl
 {
-	BOOL show = _pushpinView || _editorLayer.selectedPrimary;
-	_editControl.hidden = !show;
-	if ( show ) {
-		if ( _editorLayer.selectedPrimary == nil ) {
-			// brand new node
-			if ( _editorLayer.canPasteTags )
-				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE), @(ACTION_PASTETAGS) ];
-			else
-				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE) ];
-		} else {
-			if ( _editorLayer.selectedPrimary.isRelation )
-				if ( _editorLayer.selectedPrimary.isRelation.isRestriction )
-					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_RESTRICT) ];
-				else if ( _editorLayer.selectedPrimary.isRelation.isMultipolygon )
-					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_MORE) ];
-				else
-					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
-				else
-					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
-		}
-		[_editControl removeAllSegments];
-		for ( NSNumber * action in _editControlActions ) {
-			NSString * title = ActionTitle( (EDIT_ACTION)action.integerValue, YES );
-			[_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
-		}
-	}
+    BOOL show = _pushpinView || _editorLayer.selectedPrimary;
+    _editControl.hidden = !show;
+    BOOL split = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
+    NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
+    BOOL restriction    = _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
+    if ( show ) {
+        if ( _editorLayer.selectedPrimary == nil ) {
+            // brand new node
+            if ( _editorLayer.canPasteTags )
+            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE), @(ACTION_PASTETAGS) ];
+            else
+            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE) ];
+        } else {
+            if ( _editorLayer.selectedPrimary.isRelation )
+            if ( _editorLayer.selectedPrimary.isRelation.isRestriction )
+            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RESTRICT) ];
+            else if ( _editorLayer.selectedPrimary.isRelation.isMultipolygon )
+            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_MORE) ];
+            else
+            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
+            else {
+                if (_editorLayer.selectedNode && split)
+                if(restriction)
+                self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_SPLIT), @(ACTION_DELETE), @(ACTION_RESTRICT), @(ACTION_MORE)];
+                else
+                self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_DELETE), @(ACTION_SPLIT), @(ACTION_MORE)];
+                else
+                if (restriction)
+                self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_RESTRICT), @(ACTION_MORE)];
+                else
+                if (!_editorLayer.selectedWay.isClosed && _editorLayer.selectedWay.isOneWay)
+                self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_REVERSE), @(ACTION_DELETE), @(ACTION_MORE) ];
+                else
+                self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
+            }
+        }
+        [_editControl removeAllSegments];
+        for ( NSNumber * action in _editControlActions ) {
+            NSString * title = ActionTitle( (EDIT_ACTION)action.integerValue, YES );
+            [_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
+        }
+    }
+//    Same as main repo
+//    BOOL show = _pushpinView || _editorLayer.selectedPrimary;
+//    _editControl.hidden = !show;
+//    if ( show ) {
+//        if ( _editorLayer.selectedPrimary == nil ) {
+//            // brand new node
+//            if ( _editorLayer.canPasteTags )
+//            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE), @(ACTION_PASTETAGS) ];
+//            else
+//            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE) ];
+//        } else {
+//            if ( _editorLayer.selectedPrimary.isRelation )
+//            if ( _editorLayer.selectedPrimary.isRelation.isRestriction )
+//            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_RESTRICT) ];
+//            else if ( _editorLayer.selectedPrimary.isRelation.isMultipolygon )
+//            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_MORE) ];
+//            else
+//            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
+//            else
+//            self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
+//        }
+//        [_editControl removeAllSegments];
+//        for ( NSNumber * action in _editControlActions ) {
+//            NSString * title = ActionTitle( (EDIT_ACTION)action.integerValue, YES );
+//            [_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
+//        }
+//    }
 }
 
 - (void)presentEditActionSheet:(id)sender
 {
-	NSArray * actionList = nil;
-	if ( _editorLayer.selectedWay ) {
-		if ( _editorLayer.selectedNode ) {
-			// node in way
-			NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
-			BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
-			BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
-			BOOL join 			= parentWays.count > 1;
-			BOOL restriction	= _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
-			
-			NSMutableArray * a = [NSMutableArray arrayWithObject:@(ACTION_COPYTAGS)];
-			if ( disconnect )
-				[a addObject:@(ACTION_DISCONNECT)];
-			if ( split )
-				[a addObject:@(ACTION_SPLIT)];
-			if ( join )
-				[a addObject:@(ACTION_JOIN)];
-			[a addObject:@(ACTION_ROTATE)];
-			if ( restriction )
-				[a addObject:@(ACTION_RESTRICT)];
-			[a addObject:@(ACTION_HEIGHT)];
-			actionList = [NSArray arrayWithArray:a];
-		} else {
-			if ( _editorLayer.selectedWay.isClosed ) {
-				// polygon
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
-			} else {
-				// line
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
-			}
-		}
-	} else if ( _editorLayer.selectedNode ) {
-		// node
-		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
-	} else if ( _editorLayer.selectedRelation ) {
-		// relation
-		if ( _editorLayer.selectedRelation.isMultipolygon ) {
-			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
-		} else {
-			actionList = @[ @(ACTION_COPYTAGS) ];
-		}
-	} else {
-		// nothing selected
-		return;
-	}
-	UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Perform Action",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-	for ( NSNumber * value in actionList ) {
-		NSString * title = ActionTitle( (EDIT_ACTION)value.integerValue, NO );
-		[actionSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-			[self performEditAction:(EDIT_ACTION)value.integerValue];
-		}]];
-	}
-	[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-	[self.viewController presentViewController:actionSheet animated:YES completion:nil];
-
-	// compute location for action sheet to originate
-	CGRect button = self.editControl.bounds;
-	CGFloat segmentWidth = button.size.width / self.editControl.numberOfSegments;	// hack because we can't get the frame for an individual segment
-	button.origin.x += button.size.width - segmentWidth;
-	button.size.width = segmentWidth;
-	actionSheet.popoverPresentationController.sourceView = self.editControl;
-	actionSheet.popoverPresentationController.sourceRect = button;
+    NSArray * actionList = nil;
+    if ( _editorLayer.selectedWay ) {
+        if ( _editorLayer.selectedNode ) {
+            // node in way
+            NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
+            BOOL disconnect        = parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
+            //            BOOL split             = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
+            BOOL join             = parentWays.count > 1;
+            //            BOOL restriction    = _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
+            
+            NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), nil];
+            if ( disconnect )
+            [a addObject:@(ACTION_DISCONNECT)];
+            //            if ( split )
+            //                [a addObject:@(ACTION_SPLIT)];
+            if ( join )
+            [a addObject:@(ACTION_JOIN)];
+            [a addObject:@(ACTION_ROTATE)];
+            //            if ( restriction )
+            //                [a addObject:@(ACTION_RESTRICT)];
+            //            [a addObject:@(ACTION_HEIGHT)];
+            actionList = [NSArray arrayWithArray:a];
+        } else {
+            if ( _editorLayer.selectedWay.isClosed ) {
+                // polygon
+                actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE) ];
+            } else {
+                // line
+                actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE) ];
+            }
+        }
+    } else if ( _editorLayer.selectedNode ) {
+        // node
+        actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+    } else if ( _editorLayer.selectedRelation ) {
+        // relation
+        if ( _editorLayer.selectedRelation.isMultipolygon ) {
+            actionList = @[ @(ACTION_COPYTAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
+        } else {
+            actionList = @[ @(ACTION_COPYTAGS) ];
+        }
+    } else {
+        // nothing selected
+        return;
+    }
+    UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Perform Action",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    for ( NSNumber * value in actionList ) {
+        NSString * title = ActionTitle( (EDIT_ACTION)value.integerValue, NO );
+        [actionSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [self performEditAction: (EDIT_ACTION)value.integerValue];
+        }]];
+    }
+    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+    [self.viewController presentViewController:actionSheet animated:YES completion:nil];
+    // compute location for action sheet to originate
+    CGRect button = self.editControl.bounds;
+    CGFloat segmentWidth = button.size.width / self.editControl.numberOfSegments;    // hack because we can't get the frame for an individual segment
+    button.origin.x += button.size.width - segmentWidth;
+    button.size.width = segmentWidth;
+    actionSheet.popoverPresentationController.sourceView = self.editControl;
+    actionSheet.popoverPresentationController.sourceRect = button;
+    
+//    Same as main repo
+//    NSArray * actionList = nil;
+//    if ( _editorLayer.selectedWay ) {
+//        if ( _editorLayer.selectedNode ) {
+//            // node in way
+//            NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
+//            BOOL disconnect        = parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
+//            BOOL split             = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
+//            BOOL join             = parentWays.count > 1;
+//            BOOL restriction    = _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
+//
+//            NSMutableArray * a = [NSMutableArray arrayWithObject:@(ACTION_COPYTAGS)];
+//            if ( disconnect )
+//            [a addObject:@(ACTION_DISCONNECT)];
+//            if ( split )
+//            [a addObject:@(ACTION_SPLIT)];
+//            if ( join )
+//            [a addObject:@(ACTION_JOIN)];
+//            [a addObject:@(ACTION_ROTATE)];
+//            if ( restriction )
+//            [a addObject:@(ACTION_RESTRICT)];
+//            [a addObject:@(ACTION_HEIGHT)];
+//            actionList = [NSArray arrayWithArray:a];
+//        } else {
+//            if ( _editorLayer.selectedWay.isClosed ) {
+//                // polygon
+//                actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
+//            } else {
+//                // line
+//                actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
+//            }
+//        }
+//    } else if ( _editorLayer.selectedNode ) {
+//        // node
+//        actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+//    } else if ( _editorLayer.selectedRelation ) {
+//        // relation
+//        if ( _editorLayer.selectedRelation.isMultipolygon ) {
+//            actionList = @[ @(ACTION_COPYTAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
+//        } else {
+//            actionList = @[ @(ACTION_COPYTAGS) ];
+//        }
+//    } else {
+//        // nothing selected
+//        return;
+//    }
+//    UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Perform Action",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+//    for ( NSNumber * value in actionList ) {
+//        NSString * title = ActionTitle( (EDIT_ACTION)value.integerValue, NO );
+//        [actionSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//            [self performEditAction:(EDIT_ACTION)value.integerValue];
+//        }]];
+//    }
+//    [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+//    [self.viewController presentViewController:actionSheet animated:YES completion:nil];
+//
+//    // compute location for action sheet to originate
+//    CGRect button = self.editControl.bounds;
+//    CGFloat segmentWidth = button.size.width / self.editControl.numberOfSegments;    // hack because we can't get the frame for an individual segment
+//    button.origin.x += button.size.width - segmentWidth;
+//    button.size.width = segmentWidth;
+//    actionSheet.popoverPresentationController.sourceView = self.editControl;
+//    actionSheet.popoverPresentationController.sourceRect = button;
 }
 
 

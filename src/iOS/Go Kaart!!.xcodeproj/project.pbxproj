@@ -62,7 +62,6 @@
 		022ABCA520C37618002D4977 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025B841619DCF55C0053C637 /* SceneKit.framework */; };
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
-		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -494,6 +493,13 @@
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		26350648216BF445002D3471 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26350647216BF445002D3471 /* Images.xcassets */; };
+		2635064C216C0BF0002D3471 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2635064B216C0BEF002D3471 /* Launch Screen.storyboard */; };
+		26350652216C0CAC002D3471 /* marioKaart72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2635064D216C0CAB002D3471 /* marioKaart72.png */; };
+		26350653216C0CAC002D3471 /* marioKaart144.png in Resources */ = {isa = PBXBuildFile; fileRef = 2635064E216C0CAB002D3471 /* marioKaart144.png */; };
+		26350654216C0CAC002D3471 /* marioKaart256.png in Resources */ = {isa = PBXBuildFile; fileRef = 2635064F216C0CAC002D3471 /* marioKaart256.png */; };
+		26350655216C0CAC002D3471 /* marioKaart114.png in Resources */ = {isa = PBXBuildFile; fileRef = 26350650216C0CAC002D3471 /* marioKaart114.png */; };
+		26350656216C0CAC002D3471 /* marioKaart57.png in Resources */ = {isa = PBXBuildFile; fileRef = 26350651216C0CAC002D3471 /* marioKaart57.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -569,7 +575,6 @@
 		022B504716857E5F00E6619A /* OSMiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = OSMiOS.entitlements; sourceTree = "<group>"; };
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CustomPresetController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Go Map!!/Images.xcassets"; sourceTree = "<group>"; };
 		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
@@ -664,7 +669,7 @@
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		02A8613C20A95C16008C465F /* NetworkStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NetworkStatus.m; path = ../Shared/NetworkStatus.m; sourceTree = "<group>"; };
 		02A8613E20A95C2B008C465F /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkStatus.h; path = ../Shared/NetworkStatus.h; sourceTree = "<group>"; };
-		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		02ACBA2F16713CCB00BB4414 /* Go Kaart!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Kaart!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		02ACBA3516713CCB00BB4414 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1075,6 +1080,13 @@
 		02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo256.png"; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
+		26350647216BF445002D3471 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		2635064B216C0BEF002D3471 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../../../Go_Kaart/OpenStreetMap/iOS/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		2635064D216C0CAB002D3471 /* marioKaart72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marioKaart72.png; sourceTree = "<group>"; };
+		2635064E216C0CAB002D3471 /* marioKaart144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marioKaart144.png; sourceTree = "<group>"; };
+		2635064F216C0CAC002D3471 /* marioKaart256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marioKaart256.png; sourceTree = "<group>"; };
+		26350650216C0CAC002D3471 /* marioKaart114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marioKaart114.png; sourceTree = "<group>"; };
+		26350651216C0CAC002D3471 /* marioKaart57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marioKaart57.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1259,7 +1271,7 @@
 		02ACBA3016713CCB00BB4414 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				02ACBA2F16713CCB00BB4414 /* Go Map!!.app */,
+				02ACBA2F16713CCB00BB4414 /* Go Kaart!!.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1330,6 +1342,7 @@
 				025A1D001690DC32002B60CB /* Images */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
+				2635064B216C0BEF002D3471 /* Launch Screen.storyboard */,
 				02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */,
 				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
 				02E8437E19B4DE510044AC1D /* Localizable.strings */,
@@ -1387,12 +1400,17 @@
 			children = (
 				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
 				02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */,
-				023B892A19C148790060CDB5 /* Images.xcassets */,
+				26350647216BF445002D3471 /* Images.xcassets */,
 				02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */,
 				02ACBA3F16713CCB00BB4414 /* main.m */,
 				027FEA3520B13B8000901E9F /* Maki Icons.xcassets */,
 				025A1CFA1690B96E002B60CB /* OSM-Logo57.png */,
 				027A469A1673B251000BE55C /* OSM-Logo72.png */,
+				26350651216C0CAC002D3471 /* marioKaart57.png */,
+				2635064D216C0CAB002D3471 /* marioKaart72.png */,
+				26350650216C0CAC002D3471 /* marioKaart114.png */,
+				2635064E216C0CAB002D3471 /* marioKaart144.png */,
+				2635064F216C0CAC002D3471 /* marioKaart256.png */,
 				025A1CFB1690B96E002B60CB /* OSM-Logo114.png */,
 				027A469D1673B257000BE55C /* OSM-Logo144.png */,
 				02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */,
@@ -1810,7 +1828,7 @@
 			);
 			name = "Go Map!!";
 			productName = OSMiOS;
-			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
+			productReference = 02ACBA2F16713CCB00BB4414 /* Go Kaart!!.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1823,7 +1841,7 @@
 				ORGANIZATIONNAME = Bryce;
 				TargetAttributes = {
 					02ACBA2E16713CCB00BB4414 = {
-						DevelopmentTeam = MKTTC6734C;
+						DevelopmentTeam = 2STHX823T6;
 						SystemCapabilities = {
 							com.apple.SafariKeychain = {
 								enabled = 1;
@@ -1832,7 +1850,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Map!!" */;
+			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Kaart!!" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1925,6 +1943,7 @@
 				02ACBC0216713F2B00BB4414 /* barrier_toll_booth.p.64.png in Resources */,
 				02ACBC0316713F2B00BB4414 /* education_college.p.64.png in Resources */,
 				02ACBC0416713F2B00BB4414 /* education_college_vocational.p.64.png in Resources */,
+				26350655216C0CAC002D3471 /* marioKaart114.png in Resources */,
 				02ACBC0516713F2B00BB4414 /* education_nursery.p.64.png in Resources */,
 				02ACBC0616713F2B00BB4414 /* education_nursery2.p.64.png in Resources */,
 				02ACBC0716713F2B00BB4414 /* education_nursery3.p.64.png in Resources */,
@@ -1937,6 +1956,7 @@
 				02ACBC0D16713F2B00BB4414 /* food_biergarten.p.64.png in Resources */,
 				02ACBC0E16713F2B00BB4414 /* food_cafe.p.64.png in Resources */,
 				02ACBC0F16713F2B00BB4414 /* food_drinkingtap.p.64.png in Resources */,
+				26350648216BF445002D3471 /* Images.xcassets in Resources */,
 				02ACBC1016713F2B00BB4414 /* food_fastfood.p.64.png in Resources */,
 				02ACBC1116713F2B00BB4414 /* food_fastfood2.p.64.png in Resources */,
 				02ACBC1216713F2B00BB4414 /* food_fastfood_pizza.p.64.png in Resources */,
@@ -1951,6 +1971,8 @@
 				02ACBC1A16713F2B00BB4414 /* health_hospital.p.64.png in Resources */,
 				02ACBC1B16713F2B00BB4414 /* health_hospital_emergency.p.64.png in Resources */,
 				02ACBC1C16713F2B00BB4414 /* health_hospital_emergency2.p.64.png in Resources */,
+				26350652216C0CAC002D3471 /* marioKaart72.png in Resources */,
+				2635064C216C0BF0002D3471 /* Launch Screen.storyboard in Resources */,
 				02ACBC1D16713F2B00BB4414 /* health_opticians.p.64.png in Resources */,
 				02ACBC1E16713F2B00BB4414 /* health_pharmacy.p.64.png in Resources */,
 				02ACBC1F16713F2B00BB4414 /* health_pharmacy_dispencing.p.64.png in Resources */,
@@ -1969,6 +1991,7 @@
 				02ACBC2B16713F2B00BB4414 /* money_bank.p.64.png in Resources */,
 				02ACBC2C16713F2B00BB4414 /* money_bank2.p.64.png in Resources */,
 				02ACBC2D16713F2B00BB4414 /* money_currency_exchange.p.64.png in Resources */,
+				26350656216C0CAC002D3471 /* marioKaart57.png in Resources */,
 				02ACBC2E16713F2B00BB4414 /* place_of_worship_bahai.p.64.png in Resources */,
 				02ACBC2F16713F2B00BB4414 /* place_of_worship_bahai3.p.64.png in Resources */,
 				02ACBC3016713F2B00BB4414 /* place_of_worship_buddhist.p.64.png in Resources */,
@@ -2126,6 +2149,7 @@
 				02ACBCB316713F2B00BB4414 /* tourist_cinema.p.64.png in Resources */,
 				02ACBCB416713F2B00BB4414 /* tourist_cinema2.p.64.png in Resources */,
 				02ACBCB516713F2B00BB4414 /* tourist_clock.p.64.png in Resources */,
+				26350654216C0CAC002D3471 /* marioKaart256.png in Resources */,
 				02ACBCB616713F2B00BB4414 /* tourist_fountain.p.64.png in Resources */,
 				02ACBCB716713F2B00BB4414 /* tourist_guidepost.p.64.png in Resources */,
 				02ACBCB816713F2B00BB4414 /* tourist_information.p.64.png in Resources */,
@@ -2145,6 +2169,7 @@
 				02ACBCC616713F2B00BB4414 /* tourist_windmill.p.64.png in Resources */,
 				02ACBCC716713F2B00BB4414 /* tourist_wreck.p.64.png in Resources */,
 				02ACBCC816713F2B00BB4414 /* tourist_zoo.p.64.png in Resources */,
+				26350653216C0CAC002D3471 /* marioKaart144.png in Resources */,
 				02ACBCC916713F2B00BB4414 /* transport_aerodrome.p.64.png in Resources */,
 				02ACBCCA16713F2B00BB4414 /* transport_aerodrome2.p.64.png in Resources */,
 				02ACBCCB16713F2B00BB4414 /* transport_airport.p.64.png in Resources */,
@@ -2167,7 +2192,6 @@
 				02ACBCDA16713F2B00BB4414 /* transport_marina.p.64.png in Resources */,
 				02ACBCDB16713F2B00BB4414 /* transport_miniroundabout_anticlockwise.p.64.png in Resources */,
 				02ACBCDC16713F2B00BB4414 /* transport_miniroundabout_clockwise.p.64.png in Resources */,
-				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
 				02ACBCDD16713F2B00BB4414 /* transport_parking.p.64.png in Resources */,
 				02ACBCDE16713F2B00BB4414 /* transport_parking_bicycle.p.64.png in Resources */,
 				02ACBCDF16713F2B00BB4414 /* transport_parking_car.p.64.png in Resources */,
@@ -2487,14 +2511,14 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MKTTC6734C;
+				DEVELOPMENT_TEAM = 2STHX823T6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Go Map!!-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
-				PRODUCT_NAME = "Go Map!!";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaartgroup.GoKaart;
+				PRODUCT_NAME = "Go Kaart!!";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "OSMiOS/Go Map!!-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2511,14 +2535,14 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MKTTC6734C;
+				DEVELOPMENT_TEAM = 2STHX823T6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Go Map!!-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
-				PRODUCT_NAME = "Go Map!!";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kaartgroup.GoKaart;
+				PRODUCT_NAME = "Go Kaart!!";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "OSMiOS/Go Map!!-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
@@ -2528,7 +2552,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Map!!" */ = {
+		02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Kaart!!" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02ACBA5F16713CCB00BB4414 /* Debug */,
