@@ -321,7 +321,7 @@
 
 		[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
 		[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"description\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];
-		[body appendData:[[NSString stringWithFormat:@"Go Map!! %@",startDateFriendly] dataUsingEncoding:NSUTF8StringEncoding]];
+		[body appendData:[[NSString stringWithFormat:@"Go Kaart!! %@",startDateFriendly] dataUsingEncoding:NSUTF8StringEncoding]];
 
 		[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary]   dataUsingEncoding:NSUTF8StringEncoding]];
 		[body appendData:[[NSString stringWithString:[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"tags\"\r\n\r\n"]] dataUsingEncoding:NSUTF8StringEncoding]];

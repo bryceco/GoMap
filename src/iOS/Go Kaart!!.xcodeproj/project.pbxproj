@@ -1814,9 +1814,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		02ACBA2E16713CCB00BB4414 /* Go Map!! */ = {
+		02ACBA2E16713CCB00BB4414 /* Go Kaart!! */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 02ACBA6116713CCB00BB4414 /* Build configuration list for PBXNativeTarget "Go Map!!" */;
+			buildConfigurationList = 02ACBA6116713CCB00BB4414 /* Build configuration list for PBXNativeTarget "Go Kaart!!" */;
 			buildPhases = (
 				02ACBA2B16713CCB00BB4414 /* Sources */,
 				02ACBA2C16713CCB00BB4414 /* Frameworks */,
@@ -1826,7 +1826,7 @@
 			);
 			dependencies = (
 			);
-			name = "Go Map!!";
+			name = "Go Kaart!!";
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Kaart!!.app */;
 			productType = "com.apple.product-type.application";
@@ -1864,7 +1864,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				02ACBA2E16713CCB00BB4414 /* Go Map!! */,
+				02ACBA2E16713CCB00BB4414 /* Go Kaart!! */,
 			);
 		};
 /* End PBXProject section */
@@ -2561,7 +2561,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		02ACBA6116713CCB00BB4414 /* Build configuration list for PBXNativeTarget "Go Map!!" */ = {
+		02ACBA6116713CCB00BB4414 /* Build configuration list for PBXNativeTarget "Go Kaart!!" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02ACBA6216713CCB00BB4414 /* Debug */,
