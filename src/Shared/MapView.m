@@ -2016,6 +2016,7 @@ typedef enum {
 	ACTION_PASTETAGS,
 	ACTION_RESTRICT,
 	ACTION_CREATE_RELATION,
+    ACTION_REPLACETAGS
 } EDIT_ACTION;
 
 NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
@@ -2039,6 +2040,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
 		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", nil) : NSLocalizedString(@"Turn Restrictions", nil);
 		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", nil);
+        case ACTION_REPLACETAGS:    return NSLocalizedString(@"Replace Tags", nil);
 	};
 	return nil;
 }
@@ -2080,12 +2082,13 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		if ( _editorLayer.selectedNode ) {
 			// node in way
 			NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
-			BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
+            BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
 			BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
 			BOOL join 			= parentWays.count > 1;
 			BOOL restriction	= _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
 			
-			NSMutableArray * a = [NSMutableArray arrayWithObject:@(ACTION_COPYTAGS)];
+			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), nil];
+            
 			if ( disconnect )
 				[a addObject:@(ACTION_DISCONNECT)];
 			if ( split )
@@ -2100,21 +2103,21 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
 			} else {
 				// line
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
 	} else if ( _editorLayer.selectedRelation ) {
 		// relation
 		if ( _editorLayer.selectedRelation.isMultipolygon ) {
-			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
+			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
 		} else {
-			actionList = @[ @(ACTION_COPYTAGS) ];
+			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS) ];
 		}
 	} else {
 		// nothing selected
@@ -2160,6 +2163,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			case ACTION_CIRCULARIZE:
 			case ACTION_COPYTAGS:
 			case ACTION_PASTETAGS:
+            case ACTION_REPLACETAGS:
 			case ACTION_EDITTAGS:
 			case ACTION_CREATE_RELATION:
 				if ( self.editorLayer.selectedWay &&
@@ -2210,6 +2214,19 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			if ( ! [_editorLayer pasteTags:_editorLayer.selectedPrimary] )
 				error = NSLocalizedString(@"No tags to paste",nil);
 			break;
+        case ACTION_REPLACETAGS:
+            if ( _editorLayer.selectedPrimary == nil ) {
+                // pasting to brand new object, so we need to create it first
+                [self setTagsForCurrentObject:@{}];
+            }
+            if ( _editorLayer.selectedWay && _editorLayer.selectedNode && _editorLayer.selectedWay.tags.count == 0 ) {
+                // if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+                _editorLayer.selectedNode = nil;
+                [self refreshPushpinText];
+            }
+            if ( ! [_editorLayer replaceTags:_editorLayer.selectedPrimary] )
+                error = NSLocalizedString(@"No tags to replace",nil);
+            break;
 		case ACTION_DUPLICATE:
 			{
 				OsmBaseObject * newObject = [_editorLayer duplicateObject:_editorLayer.selectedPrimary];
