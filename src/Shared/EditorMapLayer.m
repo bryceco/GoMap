@@ -2756,12 +2756,10 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 - (BOOL)replaceTags:(OsmBaseObject *)object
 {
-    NSLog(@"OBJECT BEFORE: %@", object.tags);
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
     if ( copyPasteTags.count == 0 )
         return NO;
     [self.mapData setTags:copyPasteTags forObject:object];
-    NSLog(@"OBJECT AFTER: %@", object.tags);
     return YES;
 }
 
