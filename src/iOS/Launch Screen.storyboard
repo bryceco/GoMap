@@ -22,13 +22,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OSM-Logo144.png" translatesAutoresizingMaskIntoConstraints="NO" id="LGc-Lj-kcs">
-                                <rect key="frame" x="345" y="498" width="144" height="144"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="marioKaart114.png" translatesAutoresizingMaskIntoConstraints="NO" id="LGc-Lj-kcs">
+                                <rect key="frame" x="360" y="455" width="114" height="114"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-Yh-RWb">
                                 <rect key="frame" x="20" y="291" width="794" height="43"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Go Map!!">
+                                    <fragment content="Go ">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="36" name="HelveticaNeue-BoldItalic"/>
+                                            <font key="NSOriginalFont" size="36" name="HelveticaNeue-BoldItalic"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Kaart">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="36" name="HelveticaNeue-BoldItalic"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="!!">
                                         <attributes>
                                             <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="36" name="HelveticaNeue-BoldItalic"/>
@@ -39,7 +54,7 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OSM-Logo256.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Nv-ci-hNo">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marioKaart256.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Nv-ci-hNo">
                                 <rect key="frame" x="294" y="387" width="256" height="256"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="256" id="IXy-gi-0zi"/>
@@ -71,7 +86,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="OSM-Logo144.png" width="144" height="144"/>
-        <image name="OSM-Logo256.png" width="256" height="256"/>
+        <image name="marioKaart114.png" width="114" height="114"/>
+        <image name="marioKaart256.png" width="256" height="256"/>
     </resources>
 </document>
