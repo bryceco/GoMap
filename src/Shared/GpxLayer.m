@@ -759,7 +759,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	memset(track->shapePaths, 0, sizeof track->shapePaths);
 	track->shapePaths[0] = CGPathRetain( path );
 
-	UIColor * color = track == _selectedTrack ? UIColor.redColor : [UIColor colorWithRed:1.0 green:99/255.0 blue:249/255.0 alpha:1.0];
+	UIColor * color = track == _selectedTrack ? UIColor.greenColor : [UIColor colorWithRed:1.0 green:99/255.0 blue:249/255.0 alpha:1.0];
 
 	CAShapeLayer * layer = [CAShapeLayer new];
 	layer.anchorPoint	= CGPointMake(0, 0);

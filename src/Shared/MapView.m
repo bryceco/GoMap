@@ -2056,7 +2056,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         if ( _editorLayer.selectedPrimary == nil ) {
             // brand new node
             if ( _editorLayer.canPasteTags )
-                self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE), @(ACTION_PASTETAGS) ];
+                self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE), @(ACTION_PASTETAGS), @(ACTION_REPLACETAGS) ];
             else
                 self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_ADDNOTE) ];
         } else {
@@ -2078,7 +2078,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
                                 self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_COPYTAGS), @(ACTION_PASTETAGS), @(ACTION_REPLACETAGS), @(ACTION_RESTRICT), @(ACTION_MORE)];
                             else
                                 if (!_editorLayer.selectedWay.isClosed && _editorLayer.selectedWay.isOneWay)
-                                    self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_REVERSE), @(ACTION_DELETE), @(ACTION_MORE) ];
+                                    self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_REVERSE), @(ACTION_DELETE), @(ACTION_REPLACETAGS), @(ACTION_MORE) ];
                                 else
                                     self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_COPYTAGS), @(ACTION_PASTETAGS),  @(ACTION_REPLACETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
                 }
