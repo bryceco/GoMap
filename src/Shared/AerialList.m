@@ -129,7 +129,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	dispatch_once(&onceToken, ^{
 		service = [AerialService aerialWithName:@"Mapbox Locator"
 									 identifier:MAPBOX_LOCATOR_IDENTIFIER
-											url:@"http://{switch:a,b,c}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJhNVlHd29ZIn0.ti6wATGDWOmCnCYen-Ip7Q"
+											url:@"https://{switch:a,b,c,d}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJjaml5MjVyb3MwMWV0M3hxYmUzdGdwbzE4In0.q548FjhsSJzvXsGlPsFxAQ"
 										maxZoom:20
 										roundUp:NO
 									 wmsProjection:nil
