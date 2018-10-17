@@ -52,7 +52,7 @@
  @param selectedObject The object that the user selected on the map.
  */
 - (void)updatePOIAttributesTabBarItemVisibilityWithSelectedObject:(nullable OsmBaseObject *)selectedObject {
-    BOOL isAddingNewItem = selectedObject.ident.integerValue == 0;
+    BOOL isAddingNewItem = selectedObject.ident.integerValue <= 0;
     if (isAddingNewItem) {
         NSMutableArray<UIViewController *> *viewControllers = [NSMutableArray arrayWithArray:self.viewControllers];
         [viewControllers removeLastObject];
