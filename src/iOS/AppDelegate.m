@@ -53,18 +53,7 @@
 	self.userName		= [KeyChain getStringForIdentifier:@"username"];
 	self.userPassword	= [KeyChain getStringForIdentifier:@"password"];
 
-	if ( self.userName.length == 0 ) {
-		self.userName		= [defaults objectForKey:@"username"];
-		self.userPassword	= [defaults objectForKey:@"password"];
-
-		if ( self.userName.length )
-			[KeyChain setString:self.userName		forIdentifier:@"username"];
-		if ( self.userPassword.length )
-			[KeyChain setString:self.userPassword	forIdentifier:@"password"];
-
-		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
-		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
-	}
+	[self removePlaintextCredentialsFromUserDefaults];
 
 	[DownloadThreadPool setUserAgent:[NSString stringWithFormat:@"%@/%@", self.appName, self.appVersion]];
 
@@ -79,6 +68,13 @@
 	return YES;
 }
 
+/**
+ Makes sure that the user defaults do not contain plaintext credentials from previous app versions.
+ */
+- (void)removePlaintextCredentialsFromUserDefaults {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"username"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+}
 
 -(void)setMapLatitude:(double)lat longitude:(double)lon zoom:(double)zoom view:(MapViewState)view
 {
@@ -220,10 +216,6 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:self.userName		forKey:@"username"];
-	[defaults setObject:self.userPassword	forKey:@"password"];
-
 	// set app badge if edits are pending
 	NSInteger pendingEdits = [self.mapView.editorLayer.mapData modificationCount];
 	if ( pendingEdits ) {
