@@ -42,8 +42,23 @@
 
 	NSInteger tabIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"POITabIndex"];
 	self.selectedIndex = tabIndex;
+    
+    [self updatePOIAttributesTabBarItemVisibilityWithSelectedObject:selection];
 }
 
+/**
+ Hides the POI attributes tab bar item when the user is adding a new item, since it doesn't have any attributes yet.
+
+ @param selectedObject The object that the user selected on the map.
+ */
+- (void)updatePOIAttributesTabBarItemVisibilityWithSelectedObject:(nullable OsmBaseObject *)selectedObject {
+    BOOL isAddingNewItem = selectedObject.ident.integerValue <= 0;
+    if (isAddingNewItem) {
+        NSMutableArray<UIViewController *> *viewControllers = [NSMutableArray arrayWithArray:self.viewControllers];
+        [viewControllers removeLastObject];
+        [self setViewControllers:viewControllers animated:NO];
+    }
+}
 
 - (void)setFeatureKey:(NSString *)key value:(NSString *)value
 {
