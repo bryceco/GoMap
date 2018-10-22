@@ -2745,22 +2745,18 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
 	return copyPasteTags.count > 0;
 }
-- (BOOL)pasteTags:(OsmBaseObject *)object
+- (void)mergeTags:(OsmBaseObject *)object
 {
+    // Merge tags
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
-	if ( copyPasteTags.count == 0 )
-		return NO;
 	NSDictionary * newTags = MergeTags(object.tags, copyPasteTags, YES);
 	[self.mapData setTags:newTags forObject:object];
-	return YES;
 }
-- (BOOL)replaceTags:(OsmBaseObject *)object
+- (void)replaceTags:(OsmBaseObject *)object
 {
+    // Replace all tags
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
-    if ( copyPasteTags.count == 0 )
-        return NO;
     [self.mapData setTags:copyPasteTags forObject:object];
-    return YES;
 }
 
 

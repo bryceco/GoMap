@@ -1913,6 +1913,28 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 #pragma mark Key presses
 
+/**
+ Offers the option to either merge tags or replace them with the copied tags.
+ @param sender nil
+ */
+-(IBAction)paste:(id)sender
+{
+    NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
+    if ( copyPasteTags.count == 0 ) {
+        [self showAlert:NSLocalizedString(@"No tags to merge",nil) message:nil];
+        return;
+    }
+    NSString * question = [NSString stringWithFormat:@"Paste %lu tags?", copyPasteTags.count];
+    UIAlertController * alertPaste = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Paste",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
+    [alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+    [alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Merge Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
+        [_editorLayer mergeTags:_editorLayer.selectedPrimary];
+    }]];
+    [alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Replace Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
+        [_editorLayer replaceTags:_editorLayer.selectedPrimary];
+    }]];
+    [self.viewController presentViewController:alertPaste animated:YES completion:nil];
+}
 
 -(IBAction)delete:(id)sender
 {
@@ -2015,8 +2037,7 @@ typedef enum {
 	ACTION_COPYTAGS,
 	ACTION_PASTETAGS,
 	ACTION_RESTRICT,
-	ACTION_CREATE_RELATION,
-    ACTION_REPLACETAGS
+	ACTION_CREATE_RELATION
 } EDIT_ACTION;
 
 NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
@@ -2040,7 +2061,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
 		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", nil) : NSLocalizedString(@"Turn Restrictions", nil);
 		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", nil);
-        case ACTION_REPLACETAGS:    return NSLocalizedString(@"Replace Tags", nil);
 	};
 	return nil;
 }
@@ -2087,7 +2107,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			BOOL join 			= parentWays.count > 1;
 			BOOL restriction	= _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
 			
-			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), nil];
+			NSMutableArray * a = [NSMutableArray arrayWithObjects:@(ACTION_COPYTAGS), nil];
             
 			if ( disconnect )
 				[a addObject:@(ACTION_DISCONNECT)];
@@ -2103,21 +2123,21 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
 			} else {
 				// line
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
 	} else if ( _editorLayer.selectedRelation ) {
 		// relation
 		if ( _editorLayer.selectedRelation.isMultipolygon ) {
-			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
+			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_ROTATE), @(ACTION_DUPLICATE) ];
 		} else {
-			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_REPLACETAGS) ];
+			actionList = @[ @(ACTION_COPYTAGS), @(ACTION_PASTETAGS) ];
 		}
 	} else {
 		// nothing selected
@@ -2163,7 +2183,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			case ACTION_CIRCULARIZE:
 			case ACTION_COPYTAGS:
 			case ACTION_PASTETAGS:
-            case ACTION_REPLACETAGS:
 			case ACTION_EDITTAGS:
 			case ACTION_CREATE_RELATION:
 				if ( self.editorLayer.selectedWay &&
@@ -2211,22 +2230,8 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				_editorLayer.selectedNode = nil;
 				[self refreshPushpinText];
 			}
-			if ( ! [_editorLayer pasteTags:_editorLayer.selectedPrimary] )
-				error = NSLocalizedString(@"No tags to paste",nil);
+            [self paste:nil];
 			break;
-        case ACTION_REPLACETAGS:
-            if ( _editorLayer.selectedPrimary == nil ) {
-                // pasting to brand new object, so we need to create it first
-                [self setTagsForCurrentObject:@{}];
-            }
-            if ( _editorLayer.selectedWay && _editorLayer.selectedNode && _editorLayer.selectedWay.tags.count == 0 ) {
-                // if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-                _editorLayer.selectedNode = nil;
-                [self refreshPushpinText];
-            }
-            if ( ! [_editorLayer replaceTags:_editorLayer.selectedPrimary] )
-                error = NSLocalizedString(@"No tags to replace",nil);
-            break;
 		case ACTION_DUPLICATE:
 			{
 				OsmBaseObject * newObject = [_editorLayer duplicateObject:_editorLayer.selectedPrimary];
