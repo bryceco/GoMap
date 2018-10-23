@@ -1921,19 +1921,27 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 {
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
     if ( copyPasteTags.count == 0 ) {
-        [self showAlert:NSLocalizedString(@"No tags to merge",nil) message:nil];
-        return;
+		[self showAlert:NSLocalizedString(@"No tags to paste",nil) message:nil];
+		return;
     }
-    NSString * question = [NSString stringWithFormat:@"Paste %lu tags?", copyPasteTags.count];
-    UIAlertController * alertPaste = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Paste",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
-    [alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
-    [alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Merge Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
-        [_editorLayer mergeTags:_editorLayer.selectedPrimary];
-    }]];
-    [alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Replace Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
-        [_editorLayer replaceTags:_editorLayer.selectedPrimary];
-    }]];
-    [self.viewController presentViewController:alertPaste animated:YES completion:nil];
+
+	if ( _editorLayer.selectedPrimary.tags.count > 0 ) {
+		NSString * question = [NSString stringWithFormat:@"Pasting %lu tag(s)", copyPasteTags.count];
+		UIAlertController * alertPaste = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Paste",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
+		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Merge Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
+			[_editorLayer mergeTags:_editorLayer.selectedPrimary];
+			[self refreshPushpinText];
+		}]];
+		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Replace Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
+			[_editorLayer replaceTags:_editorLayer.selectedPrimary];
+			[self refreshPushpinText];
+		}]];
+		[self.viewController presentViewController:alertPaste animated:YES completion:nil];
+	} else {
+		[_editorLayer replaceTags:_editorLayer.selectedPrimary];
+		[self refreshPushpinText];
+	}
 }
 
 -(IBAction)delete:(id)sender
