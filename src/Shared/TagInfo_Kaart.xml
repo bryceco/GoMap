@@ -473,15 +473,15 @@
 	<tag key="highway" value="road" name="Road" type="way" description="Road with unknown classification." lineColor="808080" lineWidth="2.000000"/>
 	<tag key="highway" value="secondary" name="Secondary" type="way" description="A highway linking large towns." lineColor="FFFF00" lineWidth="3.000000"/>
 	<tag key="highway" value="secondary_link" name="Secondary Link" type="way" lineColor="FFFF00" lineWidth="2.000000"/>
-	<tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." lineColor="45588c" lineWidth="1.000000"/>
+	<tag key="highway" value="service" name="Service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." lineColor="D4FF33" lineWidth="1.000000"/>
 	<tag key="highway" value="services" name="Services" type="way" description="Place where drivers can leave a road to refuel, rest, or take refreshments." areaColor="C0C0C0"/>
 	<tag key="highway" value="speed_camera" name="Speed Camera" type="node_in_way" description="A fixed road-side or overhead speed camera"/>
 	<tag key="highway" value="steps" name="Steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" lineColor="aa3311" lineWidth="1.75000"/>
 	<tag key="highway" value="stile" name="Stile" type="way"/>
 	<tag key="highway" value="stop" name="Stop" type="way" description="Used to mark stop signs" iconName="transport_stop"/>
 	<tag key="highway" value="street_lamp" name="Street Lamp" type="node" description="A single pole with one or more lights to illuminate the street." iconName="poi/street_lamp-24.png"/>
-	<tag key="highway" value="tertiary" name="Tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." lineColor="fcfc83" lineWidth="2.000000"/>
-	<tag key="highway" value="tertiary_link" name="Tertiary Link" type="way" lineColor="fcfc83" lineWidth="1.500000"/>
+	<tag key="highway" value="tertiary" name="Tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." lineColor="408CCC" lineWidth="2.000000"/>
+	<tag key="highway" value="tertiary_link" name="Tertiary Link" type="way" lineColor="408CCC" lineWidth="1.500000"/>
 	<tag key="highway" value="toll_booth" name="Toll Booth" type="node"/>
 	<tag key="highway" value="track" name="Track" type="way" description="Roads '''for agricultural use''': farm roads, forest tracks, etc." lineColor="996644" lineWidth="1.000000"/>
 	<tag key="highway" value="traffic_calming" name="Traffic Calming" type="node_in_way" iconName="transport_speedbump"/>

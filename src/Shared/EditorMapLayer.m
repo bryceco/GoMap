@@ -1466,10 +1466,18 @@ const static CGFloat Z_ARROWS            = Z_BASE + 11 * ZSCALE;
             props->position        = refPoint;
             props->lineWidth    = layer.lineWidth;
 
-#if 0    // Enable to show motorway_link with dashed lines. Looks kind of ugly and reduces framerate by up to 30%f
+#if 1    // Enable to show motorway_link with dashed lines. Looks kind of ugly and reduces framerate by up to 30%f
             BOOL link = [object.tags[@"highway"] hasSuffix:@"_link"];
+            BOOL alley = [object.tags[@"service"] isEqualToString:@"alley"];
+            BOOL driveway = [object.tags[@"service"] isEqualToString:@"driveway"];
             if ( link ) {
                 props->lineDashes = @[@(10 * _highwayScale), @(10 * _highwayScale)];
+            }
+            if ( alley ) {
+                props->lineDashes = @[@(1 * _highwayScale), @(2 * _highwayScale)];
+            }
+            if ( driveway ) {
+                props->lineDashes = @[@(10 * _highwayScale), @(5 * _highwayScale)];
             }
 #endif
 
@@ -1596,11 +1604,15 @@ const static CGFloat Z_ARROWS            = Z_BASE + 11 * ZSCALE;
                         props->lineWidth    = 1.0;
                         roof.transform = t;
                         [layers addObject:roof];
+                        
+                        
                     }
 #endif // USE_SCENEKIT
                 }
 #endif    // SHOW_3D
 
+                
+                
                 CGPathRelease(path);
             }
         }
