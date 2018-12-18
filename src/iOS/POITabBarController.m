@@ -25,64 +25,79 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[super viewWillAppear:animated];
+    [super viewWillAppear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	OsmBaseObject * selection = appDelegate.mapView.editorLayer.selectedPrimary;
-	self.selection = selection;
-	self.keyValueDict = [NSMutableDictionary new];
-	self.relationList = [NSMutableArray new];
-	if ( selection ) {
-		[selection.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * obj, BOOL *stop) {
-			[_keyValueDict setObject:obj forKey:key];
-		}];
+    AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+    OsmBaseObject * selection = appDelegate.mapView.editorLayer.selectedPrimary;
+    self.selection = selection;
+    self.keyValueDict = [NSMutableDictionary new];
+    self.relationList = [NSMutableArray new];
+    if ( selection ) {
+        [selection.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * obj, BOOL *stop) {
+            [_keyValueDict setObject:obj forKey:key];
+        }];
 
-		self.relationList = [selection.parentRelations mutableCopy];
-	}
+        self.relationList = [selection.parentRelations mutableCopy];
+    }
 
-	NSInteger tabIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"POITabIndex"];
-	self.selectedIndex = tabIndex;
+    NSInteger tabIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"POITabIndex"];
+    self.selectedIndex = tabIndex;
+    
+    [self updatePOIAttributesTabBarItemVisibilityWithSelectedObject:selection];
 }
 
+/**
+ Hides the POI attributes tab bar item when the user is adding a new item, since it doesn't have any attributes yet.
+
+ @param selectedObject The object that the user selected on the map.
+ */
+- (void)updatePOIAttributesTabBarItemVisibilityWithSelectedObject:(nullable OsmBaseObject *)selectedObject {
+    BOOL isAddingNewItem = selectedObject.ident.integerValue <= 0;
+    if (isAddingNewItem) {
+        NSMutableArray<UIViewController *> *viewControllers = [NSMutableArray arrayWithArray:self.viewControllers];
+        [viewControllers removeLastObject];
+        [self setViewControllers:viewControllers animated:NO];
+    }
+}
 
 - (void)setFeatureKey:(NSString *)key value:(NSString *)value
 {
-	if ( value ) {
-		[_keyValueDict setObject:value forKey:key];
-	} else {
-		[_keyValueDict removeObjectForKey:key];
-	}
+    if ( value ) {
+        [_keyValueDict setObject:value forKey:key];
+    } else {
+        [_keyValueDict removeObjectForKey:key];
+    }
 }
 
 - (void)commitChanges
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	[appDelegate.mapView setTagsForCurrentObject:self.keyValueDict];
+    AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+    [appDelegate.mapView setTagsForCurrentObject:self.keyValueDict];
     [appDelegate.mapView updateEditControl];
 }
 
 - (BOOL)isTagDictChanged:(NSDictionary *)newDictionary
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+    AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
-	NSDictionary * tags = appDelegate.mapView.editorLayer.selectedPrimary.tags;
-	if ( tags.count == 0 )
-		return newDictionary.count != 0;
+    NSDictionary * tags = appDelegate.mapView.editorLayer.selectedPrimary.tags;
+    if ( tags.count == 0 )
+        return newDictionary.count != 0;
 
-	return ![newDictionary isEqual:tags];
+    return ![newDictionary isEqual:tags];
 }
 
 - (BOOL)isTagDictChanged
 {
-	return [self isTagDictChanged:self.keyValueDict];
+    return [self isTagDictChanged:self.keyValueDict];
 }
 
 
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-	NSInteger tabIndex = [tabBar.items indexOfObject:item];
-	[[NSUserDefaults standardUserDefaults] setInteger:tabIndex forKey:@"POITabIndex"];
+    NSInteger tabIndex = [tabBar.items indexOfObject:item];
+    [[NSUserDefaults standardUserDefaults] setInteger:tabIndex forKey:@"POITabIndex"];
 }
 
 
