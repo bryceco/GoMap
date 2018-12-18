@@ -98,6 +98,8 @@ extern const double MinIconSizeInPixels;
 
 
 - (BOOL)copyTags:(OsmBaseObject *)object;
+- (BOOL)copyName:(OsmBaseObject *)object;
+- (BOOL)copyNameAndClass:(OsmBaseObject *)object;
 - (BOOL)pasteTags:(OsmBaseObject *)object;
 - (BOOL)canPasteTags;
 - (BOOL)replaceTags:(OsmBaseObject *)object;

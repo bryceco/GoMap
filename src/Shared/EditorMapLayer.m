@@ -2779,6 +2779,18 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
     [[NSUserDefaults standardUserDefaults] setObject:object.tags forKey:@"copyPasteTags"];
     return object.tags.count > 0;
 }
+- (BOOL)copyName:(OsmBaseObject *)object
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDictionary dictionaryWithObjectsAndKeys: object.tags[@"name"], @"name", nil] forKey:@"copyPasteTags"];
+    return object.tags[@"name"];
+}
+- (BOOL)copyNameAndClass:(OsmBaseObject *)object
+{
+    NSDictionary * tags = [NSDictionary dictionaryWithObjectsAndKeys:object.tags[@"name"], @"name", object.tags[@"highway"], @"highway", nil];
+    NSLog(@"TAGS: %@", tags);
+    [[NSUserDefaults standardUserDefaults] setObject:tags forKey:@"copyPasteTags"];
+    return ( object.tags[@"name"] && object.tags[@"highway"] );
+}
 - (BOOL)canPasteTags
 {
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
@@ -2791,6 +2803,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
         return NO;
     NSDictionary * newTags = MergeTags(object.tags, copyPasteTags, YES);
     [self.mapData setTags:newTags forObject:object];
+    [self setNeedsLayout];
     return YES;
 }
 - (BOOL)replaceTags:(OsmBaseObject *)object
@@ -2799,6 +2812,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
     if ( copyPasteTags.count == 0 )
         return NO;
     [self.mapData setTags:copyPasteTags forObject:object];
+    [self setNeedsLayout];
     return YES;
 }
 
