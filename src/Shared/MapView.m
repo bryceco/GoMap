@@ -2088,7 +2088,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
     BOOL split = _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
     NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
     BOOL restriction    = _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;
-    NSLog(@"TAGS: %@", [[[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"] allKeys]);
     if ( show ) {
         if ( _editorLayer.selectedPrimary == nil ) {
             // brand new node
