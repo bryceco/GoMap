@@ -242,21 +242,14 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	__block NSMutableDictionary * merged = [ourTags mutableCopy];
 	[otherTags enumerateKeysAndObjectsUsingBlock:^(NSString * otherKey, NSString * otherValue, BOOL * stop) {
 		NSString * ourValue = merged[otherKey];
-		if (ourValue == nil) {
-			merged[otherKey] = otherValue;
-		} else if ( ![ourValue isEqualToString:otherValue] ) {
+		if ( ![ourValue isEqualToString:otherValue] ) {
 			if ( !allowConflicts ) {
 				if ( IsInterestingTag(otherKey) ) {
 					*stop = YES;
 					merged = nil;
 				}
 			} else {
-				NSArray * a1 = [ourValue componentsSeparatedByString:@";"];
-				NSArray * a2 = [otherValue componentsSeparatedByString:@";"];
-				NSMutableSet * s = [NSMutableSet setWithArray:a1];
-				[s addObjectsFromArray:a2];
-				NSArray * m = [s allObjects];
-				merged[otherKey] = [m componentsJoinedByString:@";"];
+                merged[otherKey] = otherValue;
 			}
 		}
 	}];
