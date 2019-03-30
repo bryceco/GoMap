@@ -28,6 +28,7 @@ static const CGFloat arrowHeight = 16;
 		NSFont * font = [NSFont labelFontOfSize:12];
 #endif
 		_textLayer = [CATextLayer layer];
+        _textLayer.contentsScale = UIScreen.mainScreen.scale;
 		_textLayer.font = (__bridge CFTypeRef)font;
 		_textLayer.fontSize = 12;
 		_textLayer.alignmentMode = kCAAlignmentCenter;

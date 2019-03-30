@@ -36,6 +36,7 @@ static const CGFloat arrowHeight = 48;
 
 		// text layer
 		CATextLayer * textLayer = [CATextLayer layer];
+        textLayer.contentsScale = UIScreen.mainScreen.scale;
 #if TARGET_OS_IPHONE
 		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 #else

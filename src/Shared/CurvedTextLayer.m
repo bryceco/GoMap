@@ -67,6 +67,7 @@
 
 	// Don't cache these here because they are cached by the objects they are attached to
 	CATextLayer * layer = [CATextLayer new];
+    layer.contentsScale = UIScreen.mainScreen.scale;
 
 #if TARGET_OS_IPHONE
 	UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
@@ -320,6 +321,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 		CGFloat pixelLength;
 		if ( layer == nil ) {
 			layer = [CATextLayer layer];
+            layer.contentsScale = UIScreen.mainScreen.scale;
 			layer.actions			= @{ @"position" : [NSNull null] };
 			NSAttributedString * attribSubstring = [attrString attributedSubstringFromRange:NSMakeRange(currentCharacter,count)];
 			layer.string			= attribSubstring;
