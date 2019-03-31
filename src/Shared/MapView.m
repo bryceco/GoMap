@@ -2415,33 +2415,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	}
 }
 
-
-#if 0 // Used to clean up data corruption bug: if a node appears in a way twice consequetively remove the 2nd instance
-- (void)deleteDuplicateNodes
-{
-	[_editorLayer.mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
-		OsmWay * way = obj.isWay;
-		if ( way ) {
-		retry:
-			if ( way.hasDuplicatedNode ) {
-				NSLog(@"way %@ has duplicate nodes",way.ident);
-				OsmNode * prev = nil;
-				NSInteger index = 0;
-				for ( OsmNode * node in way.nodes ) {
-					if ( node == prev ) {
-						[_editorLayer.mapData deleteNodeInWay:way index:index];
-						goto retry;
-					}
-					prev = node;
-					++index;
-				}
-			}
-		}
-	}];
-}
-#endif
-
-
 #pragma mark PushPin
 
 
