@@ -1933,22 +1933,6 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 	return a;
 }
 
-#if 0
-static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	NSInteger diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
-	return diff > 0;	// sort descending
-}
-static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	long long diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
-	if ( diff == 0 )
-		diff = obj1.ident.longLongValue - obj2.ident.longLongValue;	// older objects are bigger
-	return diff > 0;	// sort descending
-}
-#endif
-
-
 - (void)filterObjects:(NSMutableArray *)objects
 {
 #if TARGET_OS_IPHONE
@@ -2225,12 +2209,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	// sort from big to small objects
-#if 0
-	[objects partialSortK:2*objectLimit+1 compare:VisibleSizeLessStrict];
-#else
 	[objects partialSortOsmObjectVisibleSize:2*objectLimit+1];
-#endif
-
 
 	// adjust the list of objects so that we get all or none of the same type
 	if ( objects.count > objectLimit ) {
