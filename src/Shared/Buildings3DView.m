@@ -130,82 +130,11 @@ extern const double PATH_SCALING;
 	[CATransaction commit];
 }
 
-
--(SCNGeometry *)buildingGeometryForPath:(UIBezierPath *)path height:(double)height colors:(NSMutableArray *)colors
-{
-	double hue = random() % 20 - 10;
-	[colors removeAllObjects];
-	[colors addObject:[UIColor colorWithHue:0 saturation:0.05 brightness:0.75+hue/100 alpha:1.0]];
-	[colors addObject:colors.lastObject];	// duplicate roof and floor
-
-	// get list of points in path
-	int32_t pointCount = (int32_t) CGPathPointCount( path.CGPath );
-	CGPoint points[ pointCount ];
-	CGPathGetPoints( path.CGPath, points );
-	--pointCount;	// don't need to repeat the start/end point
-
-	SCNVector3 vertices[ 2*pointCount ];
-	for ( NSInteger i = 0; i < pointCount; ++i ) {
-		vertices[i] 			= SCNVector3Make(points[i].x, points[i].y, 0.0);
-		vertices[pointCount+i]	= SCNVector3Make(points[i].x, points[i].y, height);
-
-		// get color for wall segment
-		CGPoint next = points[(i+1)%pointCount];
-		double angle = atan2(next.y-points[i].y, next.x-points[i].x);
-		double intensity = angle/M_PI;
-		if ( intensity < 0 )
-			++intensity;
-		UIColor	* color = [UIColor colorWithHue:(37+hue)/360.0 saturation:0.61 brightness:0.5+intensity/2 alpha:1.0];
-		[colors addObject:color];
-	}
-	SCNGeometrySource * geoSource = [SCNGeometrySource geometrySourceWithVertices:vertices count:pointCount*2];
-	NSMutableArray * elements = [NSMutableArray new];
-
-	// roof and floor
-	int32_t floor[ pointCount+1 ];
-	int32_t roof[ pointCount+1 ];
-	floor[0] = pointCount;
-	roof[0] = pointCount;
-	for ( int32_t i = 0; i < pointCount; ++i ) {
-		floor[1+i] = i;
-		roof[1+i] = pointCount+i;
-	}
-	NSData * floorData = [NSData dataWithBytes:floor length:sizeof floor];
-	NSData * roofData = [NSData dataWithBytes:roof length:sizeof roof];
-	SCNGeometryElement * geoFloor = [SCNGeometryElement geometryElementWithData:floorData primitiveType:SCNGeometryPrimitiveTypePolygon primitiveCount:1 bytesPerIndex:sizeof floor[0]];
-	SCNGeometryElement * geoRoof  = [SCNGeometryElement geometryElementWithData:roofData  primitiveType:SCNGeometryPrimitiveTypePolygon primitiveCount:1 bytesPerIndex:sizeof roof[0]];
-	[elements addObject:geoFloor];
-	[elements addObject:geoRoof];
-
-	for ( int32_t w = 0; w < pointCount; ++w ) {
-		int32_t wall[ 5 ] = {
-			4,	// number of points
-			w,
-			(w+1)%pointCount,
-			(w+1)%pointCount+pointCount,
-			w+pointCount
-		};
-		NSData * data = [NSData dataWithBytes:wall length:sizeof wall];
-		SCNGeometryElement * element = [SCNGeometryElement geometryElementWithData:data primitiveType:SCNGeometryPrimitiveTypePolygon primitiveCount:1 bytesPerIndex:sizeof wall[0]];
-		[elements addObject:element];
-	}
-
-	SCNGeometry * geom = [SCNGeometry geometryWithSources:@[geoSource] elements:elements];
-	return geom;
-}
-
-
 -(void)addShapeWithPath:(UIBezierPath *)path height:(double)height position:(OSMPoint)position
 {
-#if 0
-	// build walls ourself
-	NSMutableArray * colors = [NSMutableArray new];
-	SCNGeometry * building = [self buildingGeometryForPath:path height:height colors:colors];
-#else
 	// extrude shape from path
 	NSMutableArray * colors = [NSMutableArray arrayWithObject:UIColor.greenColor];
 	SCNShape * building = [SCNShape shapeWithPath:path extrusionDepth:height];
-#endif
 	for ( NSInteger i = 0; i < colors.count; ++i ) {
 		SCNMaterial * material = [SCNMaterial new];
 		material.diffuse.contents = colors[i];
