@@ -2432,14 +2432,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 	OsmWay * way = _editorLayer.selectedWay;
 
-#if 0
-	// only do this checks if we want to be extra cautious
-	if ( node != way.nodes[0] && node != way.nodes.lastObject )
-		return nil;
-	if ( node.wayCount > 1 )
-		return nil;
-#endif
-
 	NSArray * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
 	NSArray * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
