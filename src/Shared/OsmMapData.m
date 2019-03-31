@@ -934,12 +934,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[_parserStack addObject:@"osm"];
 
 	} else if ( [elementName isEqualToString:@"bounds"] ) {
-#if 0
-		double minLat = [[attributeDict objectForKey:@"minlat"] doubleValue];
-		double minLon = [[attributeDict objectForKey:@"minlon"] doubleValue];
-		double maxLat = [[attributeDict objectForKey:@"maxlat"] doubleValue];
-		double maxLon = [[attributeDict objectForKey:@"maxlon"] doubleValue];
-#endif
 		[_parserStack addObject:@"bounds"];
 
 	} else if ( [elementName isEqualToString:@"note"] ) {
