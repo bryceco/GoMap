@@ -91,7 +91,6 @@ static const CGFloat GradientHeight = 20.0;
 	self = [super initWithCoder:coder];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)   name:UIKeyboardWillShowNotification object:nil];
-//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:)   name:UIKeyboardDidShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
 	_myDelegate = [AutocompleteTextFieldDelegate new];
@@ -161,14 +160,6 @@ static const CGFloat GradientHeight = 20.0;
 	if ( self.editing && _filteredCompletions.count ) {
 		[self updateAutocomplete];
 	}
-}
-- (void)keyboardDidShow:(NSNotification *)notification
-{
-#if 0
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self updateAutocompleteForString:@""];
-	});
-#endif
 }
 
 // keyboard size can change if switching languages inside keyboard, etc.
