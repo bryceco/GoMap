@@ -598,10 +598,6 @@ retry:
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate
 {
-#if 0 && DEBUG
-	assert( dispatch_get_current_queue() == Database.dispatchQueue );
-#endif
-	
 	int rc = sqlite3_exec(_db, "BEGIN", 0, 0, 0);
 	if ( rc != SQLITE_OK )
 		return NO;
