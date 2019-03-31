@@ -770,18 +770,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	OSMRect viewRect = { cgViewRect.origin.x, cgViewRect.origin.y, cgViewRect.size.width, cgViewRect.size.height };
 	CGPoint viewCenter = CGRectCenter(cgViewRect);
 
-#if 0
-	// discard any segments that begin or end inside the view rectangle
-	NSArray * innerInvalid = [innerSegments filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * way, NSDictionary *bindings) {
-		return way[0] != way.lastObject && (OSMRectContainsPoint(viewRect, [way[0] point]) || OSMRectContainsPoint(viewRect, [(OsmWay *)way.lastObject point]) );
-	}]];
-	NSArray * outerInvalid = [innerSegments filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * way, NSDictionary *bindings) {
-		return way[0] != way.lastObject && (OSMRectContainsPoint(viewRect, [way[0] point]) || OSMRectContainsPoint(viewRect, [way.lastObject point]) );
-	}]];
-	[innerSegments removeObjectsInArray:innerInvalid];
-	[outerSegments removeObjectsInArray:outerInvalid];
-#endif
-
 	// ensure that outer ways are clockwise and inner ways are counterclockwise
 	for ( NSMutableArray * way in outerSegments ) {
 		if ( way[0] == way.lastObject ) {
