@@ -53,11 +53,6 @@
 {
 	completionHandler(NSURLSessionResponseAllow);
 }
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable cachedResponse))completionHandler
-{
-	NSLog(@"will cache\n");
-	completionHandler(proposedResponse);
-}
 #endif
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data

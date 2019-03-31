@@ -282,9 +282,6 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
 {
-#if 0 && DEBUG
-	NSLog(@"box = %@",NSStringFromCGRect(CGRectFromOSMRect(bbox)));
-#endif
 	if ( bbox.origin.x < 180 && bbox.origin.x + bbox.size.width > 180 ) {
 		OSMRect left = { bbox.origin.x, bbox.origin.y, 180-bbox.origin.x, bbox.size.height };
 		OSMRect right = { -180, bbox.origin.y, bbox.origin.x + bbox.size.width - 180, bbox.size.height };
@@ -701,11 +698,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	NSMutableArray * queries = [NSMutableArray new];
 
-#if 0
-	DLog(@"\nquad list:");
-	for ( QuadBox * q in quadList ) DLog(@"  %@", NSStringFromRect(q.rect));
-#endif
-
 	// sort by row
 	quadList = [quadList sortedArrayUsingComparator:^NSComparisonResult(QuadBox * q1, QuadBox * q2) {
 		double diff = q1.rect.origin.y - q2.rect.origin.y;
@@ -767,12 +759,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		query.rect = rect;
 		[queries addObject:query];
 	}
-
-#if 0
-	DLog(@"\nquery list:");
-	for ( ServerQuery * q in queries )
-		DLog(@"  %@", NSStringFromCGRect(CGRectFromOSMRect(q.rect)));
-#endif
 
 	return queries;
 }

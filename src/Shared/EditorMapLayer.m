@@ -2288,12 +2288,6 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		[objects removeObjectsAtIndexes:range];
 	}
 
-#if 0
-	for ( OsmBaseObject * o in objects ) {
-		NSLog(@"%ld -> %@\n", (long)o->renderPriorityCached, o );
-	}
-#endif
-
 	// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
 	objectLimit = objects.count;
 	NSInteger addressCount = 0;
