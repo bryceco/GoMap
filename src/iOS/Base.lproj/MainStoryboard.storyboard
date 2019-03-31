@@ -1720,13 +1720,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks you record or download will be automatically deleted after:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MeQ-4N-FqC">
-                                <rect key="frame" x="20" y="100" width="280" height="42.5"/>
+                                <rect key="frame" x="20" y="84" width="280" height="42.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dWF-I1-mgM">
-                                <rect key="frame" x="0.0" y="40" width="320" height="44"/>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWF-I1-mgM">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Configure GPX Tracks" id="oSD-0y-Vt0">
                                         <barButtonItem key="backBarButtonItem" title="Cancel" id="1SY-O5-qJR"/>
@@ -1744,7 +1744,7 @@
                                 </items>
                             </navigationBar>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PK9-1m-unf">
-                                <rect key="frame" x="20" y="150.5" width="280" height="216"/>
+                                <rect key="frame" x="20" y="134.5" width="280" height="216"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1755,8 +1755,8 @@
                             <constraint firstItem="dWF-I1-mgM" firstAttribute="leading" secondItem="8pi-lE-GdV" secondAttribute="leading" id="Qur-RJ-Ubv"/>
                             <constraint firstItem="MeQ-4N-FqC" firstAttribute="leading" secondItem="8pi-lE-GdV" secondAttribute="leading" constant="20" id="YFD-xP-ujo"/>
                             <constraint firstItem="PK9-1m-unf" firstAttribute="top" secondItem="MeQ-4N-FqC" secondAttribute="bottom" constant="8" id="ifT-Ak-FTa"/>
-                            <constraint firstItem="dWF-I1-mgM" firstAttribute="top" secondItem="kkY-2X-K4y" secondAttribute="topMargin" constant="20" id="q4Y-gT-acF"/>
-                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="dWF-I1-mgM" secondAttribute="top" constant="60" id="qf3-vW-INh"/>
+                            <constraint firstItem="dWF-I1-mgM" firstAttribute="top" secondItem="8pi-lE-GdV" secondAttribute="top" id="q4Y-gT-acF"/>
+                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="dWF-I1-mgM" secondAttribute="bottom" constant="20" id="qf3-vW-INh"/>
                             <constraint firstItem="8pi-lE-GdV" firstAttribute="trailing" secondItem="MeQ-4N-FqC" secondAttribute="trailing" constant="20" id="r2C-Ap-5CU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8pi-lE-GdV"/>
@@ -3852,7 +3852,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                 <navigationController id="Fx1-V2-8uJ" customClass="RotatingNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y5O-uv-8Kt">
-                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -5529,7 +5529,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <segue reference="g2g-Jn-Tdv"/>
         <segue reference="ZKT-be-rhK"/>
         <segue reference="KuK-gp-RBs"/>
-        <segue reference="DvT-fe-8IR"/>
+        <segue reference="FTo-kL-oAC"/>
         <segue reference="mrH-5v-JIV"/>
     </inferredMetricsTieBreakers>
 </document>
