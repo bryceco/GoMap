@@ -76,7 +76,6 @@
 		0259E4081BCAEC88006C354C /* MyApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259E4071BCAEC88006C354C /* MyApplication.m */; };
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
-		025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */; };
 		0260484219E66C8700415CB1 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0260484119E66C8700415CB1 /* DisplayLink.m */; };
 		0266D3A516C02D9200AD9A83 /* seamark_anchor_berth.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */; };
 		0266D3A616C02D9200AD9A83 /* seamark_anchorage.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 0266D39216C02D9200AD9A83 /* seamark_anchorage.p.64.png */; };
@@ -592,8 +591,6 @@
 		025A1CFA1690B96E002B60CB /* OSM-Logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo57.png"; sourceTree = "<group>"; };
 		025A1CFB1690B96E002B60CB /* OSM-Logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo114.png"; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
-		025F1CF21BCD9B070097D7FE /* TapAndDragGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TapAndDragGesture.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TapAndDragGesture.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0260484019E66C8700415CB1 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; };
 		0260484119E66C8700415CB1 /* DisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DisplayLink.m; path = ../Shared/DisplayLink.m; sourceTree = "<group>"; };
 		0266D39116C02D9200AD9A83 /* seamark_anchor_berth.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seamark_anchor_berth.p.64.png; sourceTree = "<group>"; };
@@ -1779,8 +1776,6 @@
 				02ACBD2316717D7000BB4414 /* TagInfo.m */,
 				02ACBBBA16713F2A00BB4414 /* TagInfo.menu.xml */,
 				02ACBBBB16713F2A00BB4414 /* TagInfo.xml */,
-				025F1CF21BCD9B070097D7FE /* TapAndDragGesture.h */,
-				025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */,
 				02BF744F20793EE10028ED6A /* TurnRestrictHwyView.h */,
 				02BF745020793EE20028ED6A /* TurnRestrictHwyView.m */,
 				021C6AA61686145C00FB17B0 /* UndoManager.h */,
@@ -2281,7 +2276,6 @@
 				02ACBCF816713F2B00BB4414 /* QuadMap.m in Sources */,
 				02ACBCF916713F2B00BB4414 /* RulerLayer.m in Sources */,
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
-				025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */,
 				024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */,
 				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,

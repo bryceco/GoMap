@@ -28,7 +28,6 @@
 #import "OsmObjects.h"
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
-#import "TapAndDragGesture.h"
 #import "TurnRestrictController.h"
 #import "VoiceAnnouncement.h"
 
@@ -360,13 +359,6 @@ static const CGFloat Z_FLASH			= 110;
 	//self.compassButton.hidden = YES;
 	self.compassButton.clipsToBounds = NO;
 	self.compassButton.contentMode = UIViewContentModeCenter;
-
-#if 0
-	// Support zoom via tap and drag
-	_tapAndDragGesture = [[TapAndDragGesture alloc] initWithTarget:self action:@selector(handleTapAndDragGesture:)];
-	_tapAndDragGesture.delegate = self;
-	[self addGestureRecognizer:_tapAndDragGesture];
-#endif
 
 #if 0
 	// check for mail periodically and update application badge
@@ -3362,24 +3354,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self updateNotesFromServerWithDelay:0];
 	}
 }
-- (void)handleTapAndDragGesture:(TapAndDragGesture *)tapAndDrag
-{
-	// do single-finger zooming
-	if ( tapAndDrag.state == UIGestureRecognizerStateChanged ) {
-		self.userOverrodeLocationZoom = YES;
 
-		DisplayLink * displayLink = [DisplayLink shared];
-		[displayLink removeName:DisplayLinkPanning];
-
-		CGPoint delta = [tapAndDrag translationInView:self];
-		double scale = 1 + delta.y * 0.01;
-		CGPoint zoomCenter = CGRectCenter( [self bounds] );
-		[self adjustZoomBy:scale aroundScreenPoint:zoomCenter];
-
-	} else if ( tapAndDrag.state == UIGestureRecognizerStateEnded ) {
-		[self updateNotesFromServerWithDelay:0];
-	}
-}
 - (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap
 {
 	if ( tap.state == UIGestureRecognizerStateEnded ) {

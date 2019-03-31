@@ -35,7 +35,6 @@
 @class OsmBaseObject;
 @class PushPinView;
 @class RulerLayer;
-@class TapAndDragGesture;
 @class VoiceAnnouncement;
 
 
@@ -102,8 +101,6 @@ typedef enum {
 
 	dispatch_source_t					_mailTimer;
 	VoiceAnnouncement				*	_voiceAnnouncement;
-
-	TapAndDragGesture				*	_tapAndDragGesture;
 
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
 	BOOL								_gestureDidMove;		// to maintain undo stack
