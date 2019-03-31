@@ -943,10 +943,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		DLog(@"OSM parser: Unknown tag '%@'", elementName);
 		[_parserStack addObject:elementName];
-#if 0
-		_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"OSM parser: Unknown tag '%@'", elementName]}];
-		[parser abortParsing];
-#endif
 
 	}
 }
