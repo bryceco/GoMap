@@ -128,25 +128,6 @@ static NSInteger EliminatePointsOnStraightSegments( NSInteger pointCount, CGPoin
 	return dst+1;
 }
 
-#if 0
-static NSInteger LongestStraightSegment( NSInteger pathPointCount, const CGPoint pathPoints[] )
-{
-	CGFloat longest = 0;
-	NSInteger longestIndex = 0;
-	for ( int i = 1; i < pathPointCount; ++i ) {
-		CGPoint p1 = pathPoints[i-1];
-		CGPoint p2 = pathPoints[i];
-		CGPoint delta = { p1.x - p2.x, p1.y - p2.y };
-		CGFloat len = hypot( delta.x, delta.y );
-		if ( len > longest ) {
-			longest = len;
-			longestIndex = i-1;
-		}
-	}
-	return longestIndex;
-}
-#endif
-
 static BOOL PositionAndAngleForOffset( NSInteger pointCount, const CGPoint points[], double offset, double baselineOffsetDistance, CGPoint * pPos, CGFloat * pAngle, CGFloat * pLength )
 {
 	CGPoint	previous = points[0];
