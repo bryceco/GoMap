@@ -40,6 +40,8 @@
 		_britishTextLayer.foregroundColor	= NSColor.blackColor.CGColor;
 		_metricTextLayer.alignmentMode		= kCAAlignmentCenter;
 		_britishTextLayer.alignmentMode		= kCAAlignmentCenter;
+        _metricTextLayer.contentsScale      = UIScreen.mainScreen.scale;
+        _britishTextLayer.contentsScale     = UIScreen.mainScreen.scale;
 
 		self.shadowColor					= NSColor.whiteColor.CGColor;
 		self.shadowRadius					= 0.0;

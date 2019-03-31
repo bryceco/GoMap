@@ -34,6 +34,7 @@
 
 		// text layer
 		_textLayer = [CATextLayer layer];
+        _textLayer.contentsScale = UIScreen.mainScreen.scale;
 		
 		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 		_textLayer.font 			= (__bridge CFTypeRef)font;
