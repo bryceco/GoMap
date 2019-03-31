@@ -218,13 +218,6 @@ static const CGFloat Z_FLASH			= 110;
 			[self.layer addSublayer:_crossHairs];
 		}
 
-#if 0	// no evidence this help things
-		for ( CALayer * layer in _backgroundLayers ) {
-			layer.drawsAsynchronously = YES;
-		}
-		_rulerLayer.drawsAsynchronously	= YES;
-#endif
-
 #if !TARGET_OS_IPHONE
 		[self setFrame:frame];
 #endif
