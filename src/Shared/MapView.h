@@ -99,7 +99,6 @@ typedef enum {
 	NSDate							*	_lastErrorDate;		// to prevent spamming of error dialogs
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
 
-	dispatch_source_t					_mailTimer;
 	VoiceAnnouncement				*	_voiceAnnouncement;
 
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
