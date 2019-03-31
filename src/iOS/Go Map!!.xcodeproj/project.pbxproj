@@ -456,7 +456,6 @@
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
 		02ACBD2416717D7000BB4414 /* TagInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBD2316717D7000BB4414 /* TagInfo.m */; };
-		02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */; };
 		02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */; };
 		02BCC5A2206AEDDE00B4478B /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BCC5A1206AEDDC00B4478B /* compass.png */; };
 		02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED989168B6F2F00357B94 /* WebPageViewController.m */; };
@@ -1009,8 +1008,6 @@
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02ACBD2216717D6F00BB4414 /* TagInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagInfo.h; path = ../Shared/TagInfo.h; sourceTree = "<group>"; };
 		02ACBD2316717D7000BB4414 /* TagInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagInfo.m; path = ../Shared/TagInfo.m; sourceTree = "<group>"; };
-		02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HtmlAlertViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HtmlAlertViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LanguageTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LanguageTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1322,8 +1319,6 @@
 				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
 				02F371B216A4F3E6003E9548 /* HelpViewController.h */,
 				02F371B316A4F3E6003E9548 /* HelpViewController.m */,
-				02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */,
-				02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */,
 				025A1D001690DC32002B60CB /* Images */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
@@ -2290,7 +2285,6 @@
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
 				024C323D1DEEA97100AD62AB /* OsmServerViewController.m in Sources */,
-				02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */,
 				022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */,
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,
