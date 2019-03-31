@@ -780,14 +780,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSError * error = nil;
 			BOOL ok = [mapData parseXmlStream:stream error:&error];
 			if ( !ok ) {
-				if ( 0 /*agent.dataHeader.length*/ ) {
-#if 0
-					// probably some html-encoded error message from the server, or if cancelled then the leading portion of the xml download
-					//NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
-					//error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
-					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Data not available",nil) }];
-#endif
-				} else if ( stream.streamError ) {
+                if ( stream.streamError ) {
 					error = stream.streamError;
 				} else if ( error ) {
 					// use the parser's reported error
