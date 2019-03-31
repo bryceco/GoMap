@@ -628,12 +628,6 @@ static const CGFloat Z_FLASH			= 110;
 			return;
 		}
 
-#if 0
-		id ignorable = [error.userInfo objectForKey:@"Ignorable"];
-		if ( ignorable )
-			return;
-#endif
-
 #if TARGET_OS_IPHONE
 		BOOL isNetworkError = NO;
 		NSString * title = NSLocalizedString(@"Error",nil);
