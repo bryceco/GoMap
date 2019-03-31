@@ -3464,6 +3464,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     </fragment>
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="at5-53-Fcu">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
