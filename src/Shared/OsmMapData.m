@@ -584,12 +584,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	for ( NSInteger i = 0; i < parents.count; ++i ) {
 		OsmBaseObject * parent = parents[i];
 		OSMRectBoxed * box = parentBoxes[i];
-#if 0
-		// mark parent as modified when child node changes
-		[self incrementModifyCount:parent];
-#else
 		[self clearCachedProperties:parent undo:_undoManager];
-#endif
 		[parent computeBoundingBox];
 		[_spatial updateMember:parent fromBox:box.rect undo:_undoManager];
 	}

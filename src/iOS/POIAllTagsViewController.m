@@ -193,12 +193,6 @@
 		cell.text1.didSelect = ^{ [cell.text2 becomeFirstResponder]; };
 		cell.text2.didSelect = ^{};
 
-#if 0
-		if ( [kv[0] length] == 0 && [kv[1] length] == 0 ) {
-			// empty key/value so set keyboard focus to it
-			[cell.text1 becomeFirstResponder];
-		}
-#endif
 		return cell;
 
 	} else if ( indexPath.section == 1 ) {

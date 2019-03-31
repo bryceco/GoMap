@@ -590,14 +590,6 @@ static TagInfo * g_DefaultRender = nil;
 
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object
 {
-#if 0
-	if ( [[object.tags objectForKey:@"seamark:type"] isEqualToString:@"buoy_lateral"] ) {
-		int i = 1;
-		++i;
-		--i;
-	}
-#endif
-
 	// try exact match
 	__block TagInfo * best = nil;
 	[object.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){

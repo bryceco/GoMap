@@ -1931,20 +1931,6 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 		}
 	}
 	return NO;
-
-#if 0
-	__block contains = NO;
-	[self forAllMemberObjects:^(OsmBaseObject * obj) {
-		if ( obj == object ) {
-			contains = YES;
-			break;
-		}
-		if ( object.isNode && obj.isWay ) {
-			if ( && obj.isWay.nodes containsObject:object]) )
-		{
-		}
-	}];
-#endif
 }
 
 

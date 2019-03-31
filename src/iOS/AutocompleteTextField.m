@@ -32,9 +32,6 @@
 {
 	if ( [_realDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)])
 		[_realDelegate textFieldDidBeginEditing:textField];
-#if 0
-	[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:self.owner.text];
-#endif
 }
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {

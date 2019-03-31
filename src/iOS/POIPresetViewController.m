@@ -21,32 +21,6 @@
 
 	self.tableView.estimatedRowHeight 	= UITableViewAutomaticDimension;
 	self.tableView.rowHeight 			= UITableViewAutomaticDimension;
-
-#if 0
-	_sectionValues	= [NSMutableArray new];
-	_sectionNames	= [NSMutableArray new];
-
-	for ( NSInteger i = 0; i < self.valueDefinitions.count; i++ ) {
-		NSArray * valueList	= _valueDefinitions[i];
-		if ( [valueList isKindOfClass:[NSString class]] ) {
-			// expand using taginfo
-			SEL selector = NSSelectorFromString((id)valueList);
-			TagInfoDatabase * database = [TagInfoDatabase sharedTagInfoDatabase];
-			if ( selector && [database respondsToSelector:selector]	) {
-				IMP imp = [database methodForSelector:selector];
-				NSArray * (*func)(id, SEL) = (void *)imp;
-				valueList = func(database, selector);
-			} else {
-				valueList = @[];
-			}
-		} else {
-			// should already be an array
-			assert( [valueList isKindOfClass:[NSArray class]] );
-		}
-		[_sectionValues addObject:valueList];
-		[_sectionNames addObject:sectionHeader];
-	}
-#endif
 }
 
 #pragma mark - Table view data source

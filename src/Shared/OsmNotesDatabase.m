@@ -269,24 +269,6 @@ static NSInteger g_nextTagID = 1;
 	_noteForTag[newTag] = newNote;
 }
 
-#if 0
--(void)updateObject:(OsmBaseObject *)object
-{
-	NSNumber * ident = @(object.extendedIdentifier);
-	[_dict removeObjectForKey:ident];
-
-	for ( NSString * key in FixMeList ) {
-		NSString * fixme = object.tags[key];
-		if ( fixme.length > 0 ) {
-			OsmNote * note = [[OsmNote alloc] initWithFixmeObject:object fixmeKey:key];
-			[_dict setObject:note forKey:note.ident];
-			break;
-		}
-	}
-}
-#endif
-
-
 -(void)updateNotesForRegion:(OSMRect)box fixmeData:(OsmMapData *)mapData completion:(void(^)(void))completion
 {
 	NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?closed=0&bbox=%f,%f,%f,%f", box.origin.x, box.origin.y, box.origin.x+box.size.width, box.origin.y+box.size.height];

@@ -50,16 +50,7 @@ extern const double PATH_SCALING;
 
 		SCNNode * root = self.scene.rootNode;
 
-#if 0
-		CGFloat boxSize = 5.0;
-		SCNGeometry * box = [SCNBox boxWithWidth:boxSize height:boxSize length:boxSize chamferRadius:0.0];
-		box.firstMaterial = [SCNMaterial new];
-		box.firstMaterial.diffuse.contents          = [UIColor redColor];
-		box.firstMaterial.locksAmbientWithDiffuse   = YES;
-		_centerNode = [SCNNode nodeWithGeometry:box];
-#else
 		_centerNode = [SCNNode node];
-#endif
 
 		// add camera
 		SCNCamera * camera = [SCNCamera camera];
@@ -71,28 +62,6 @@ extern const double PATH_SCALING;
 	}
 	return self;
 }
-
-#if 0
--(void)updateMaterialsForGeometry:(SCNGeometry *)geometry
-{
-	if ( geometry.geometryElementCount != geometry.materials.count ) {
-		NSMutableArray * colors = [NSMutableArray arrayWithCapacity:geometry.geometryElementCount];
-		SCNGeometrySource * vertexData = nil;
-		for ( SCNGeometrySource * source in geometry.geometrySources ) {
-			if ( source.semantic == SCNGeometrySourceSemanticVertex ) {
-				vertexData = source;
-				break;
-			}
-		}
-		if ( vertexData == nil ) {
-			return;
-		}
-		for ( SCNGeometryElement * element in geometry.geometryElements ) {
-
-		}
-	}
-}
-#endif
 
 -(void)setCameraDirection:(double)direction birdsEye:(double)birdsEye distance:(double)distance fromPoint:(OSMPoint)center
 {
