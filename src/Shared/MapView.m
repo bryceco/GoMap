@@ -28,7 +28,6 @@
 #import "RulerLayer.h"
 #import "SpeechBalloonView.h"
 #import "TurnRestrictController.h"
-#import "VoiceAnnouncement.h"
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
@@ -219,12 +218,6 @@ static const CGFloat Z_FLASH			= 110;
 			_crossHairs.position = CGRectCenter( self.bounds );
 			[self.layer addSublayer:_crossHairs];
 		}
-
-#if 0
-		_voiceAnnouncement = [VoiceAnnouncement new];
-		_voiceAnnouncement.mapView = self;
-		_voiceAnnouncement.radius = 30;	// meters
-#endif
 
 #if 0	// no evidence this help things
 		for ( CALayer * layer in _backgroundLayers ) {
@@ -493,7 +486,6 @@ static const CGFloat Z_FLASH			= 110;
 }
 -(void)applicationWillTerminate :(NSNotification *)notification
 {
-	[_voiceAnnouncement removeAll];
 	[self save];
 }
 
@@ -1357,9 +1349,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 		if ( gpsState == GPS_STATE_NONE ) {
 			_centerOnGPSButton.hidden = YES;
-			_voiceAnnouncement.enabled = NO;
-		} else {
-			_voiceAnnouncement.enabled = YES;
 		}
 
 		_gpsState = gpsState;
@@ -1566,10 +1555,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( _locationBallLayer && delta < 0.1 && fabs(newLocation.horizontalAccuracy - _currentLocation.horizontalAccuracy) < 1.0 )
 		return;
 	_currentLocation = [newLocation copy];
-
-	if ( _voiceAnnouncement && !_editorLayer.hidden ) {
-		[_voiceAnnouncement announceForLocation:newLocation.coordinate];
-	}
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];

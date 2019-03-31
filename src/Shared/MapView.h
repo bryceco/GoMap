@@ -35,8 +35,6 @@
 @class OsmBaseObject;
 @class PushPinView;
 @class RulerLayer;
-@class VoiceAnnouncement;
-
 
 typedef enum _MapViewState {
 	MAPVIEW_NONE = -1,
@@ -98,8 +96,6 @@ typedef enum {
 
 	NSDate							*	_lastErrorDate;		// to prevent spamming of error dialogs
 	NSDate							*	_ignoreNetworkErrorsUntilDate;
-
-	VoiceAnnouncement				*	_voiceAnnouncement;
 
 	CGPoint								_pushpinDragTotalMove;	// to maintain undo stack
 	BOOL								_gestureDidMove;		// to maintain undo stack
