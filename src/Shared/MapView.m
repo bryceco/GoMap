@@ -2406,7 +2406,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 #pragma mark PushPin
 
-
 #if TARGET_OS_IPHONE
 
 -(CGPoint)pushpinPosition
