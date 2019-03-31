@@ -26,7 +26,6 @@
 #import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
 #import "RulerLayer.h"
-#import "SpeechBalloonView.h"
 #import "TurnRestrictController.h"
 
 #if TARGET_OS_IPHONE

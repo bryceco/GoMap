@@ -468,7 +468,6 @@
 		02C3C73419A5A40C003B6783 /* AerialListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73319A5A40C003B6783 /* AerialListViewController.m */; };
 		02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73619A5D679003B6783 /* AerialEditViewController.m */; };
 		02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73919A6DCEA003B6783 /* AerialList.m */; };
-		02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C4255216796B5800761C54 /* SpeechBalloonView.m */; };
 		02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */; };
 		02DAB7D51BFA4BBC00360AED /* 723-location-arrow-toolbar-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 02DAB7D21BFA4BBC00360AED /* 723-location-arrow-toolbar-selected.png */; };
 		02DAB7D61BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02DAB7D31BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@2x.png */; };
@@ -1031,8 +1030,6 @@
 		02C3C73619A5D679003B6783 /* AerialEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AerialEditViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02C3C73819A6DCEA003B6783 /* AerialList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AerialList.h; path = ../Shared/AerialList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C3C73919A6DCEA003B6783 /* AerialList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AerialList.m; path = ../Shared/AerialList.m; sourceTree = "<group>"; };
-		02C4255116796B5800761C54 /* SpeechBalloonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonView.h; path = ../Shared/SpeechBalloonView.h; sourceTree = "<group>"; };
-		02C4255216796B5800761C54 /* SpeechBalloonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonView.m; path = ../Shared/SpeechBalloonView.m; sourceTree = "<group>"; };
 		02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AutocompleteTextField.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AutocompleteTextField.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02DAB7D21BFA4BBC00360AED /* 723-location-arrow-toolbar-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "723-location-arrow-toolbar-selected.png"; sourceTree = "<group>"; };
@@ -1762,8 +1759,6 @@
 				02ACBBB516713F2A00BB4414 /* RulerLayer.m */,
 				02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */,
 				02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */,
-				02C4255116796B5800761C54 /* SpeechBalloonView.h */,
-				02C4255216796B5800761C54 /* SpeechBalloonView.m */,
 				02ACBD2216717D6F00BB4414 /* TagInfo.h */,
 				02ACBD2316717D7000BB4414 /* TagInfo.m */,
 				02ACBBBA16713F2A00BB4414 /* TagInfo.menu.xml */,
@@ -2275,7 +2270,6 @@
 				0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */,
 				0205460616766808004A2A23 /* POIPresetViewController.m in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
-				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
 				024C323D1DEEA97100AD62AB /* OsmServerViewController.m in Sources */,
