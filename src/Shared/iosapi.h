@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #ifndef OSMiOS_iosapi_h
 #define OSMiOS_iosapi_h
 
