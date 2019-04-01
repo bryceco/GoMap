@@ -50,6 +50,12 @@ NSString * OSM_API_URL;
 
 #pragma mark OsmMapData
 
+@interface OsmMapData ()
+
+@property (readonly,nonnull)    NSDate *            previousDiscardDate;
+
+@end
+
 @implementation OsmMapData
 
 static EditorMapLayer * g_EditorMapLayerForArchive = nil;
