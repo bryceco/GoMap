@@ -24,4 +24,19 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: View Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        cancelButton.addTarget(self,
+                               action: #selector(cancel),
+                               for: .touchUpInside)
+    }
+    
+    // MARK: Private methods
+    
+    @objc private func cancel() {
+        dismiss(animated: true, completion: nil)
+    }
 }
