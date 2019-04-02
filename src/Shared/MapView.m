@@ -2042,6 +2042,7 @@ typedef enum {
 	ACTION_DISCONNECT,
 	ACTION_CIRCULARIZE,
 	ACTION_HEIGHT,
+    ACTION_MEASURE_DIRECTION,
 	ACTION_COPYTAGS,
 	ACTION_PASTETAGS,
 	ACTION_RESTRICT,
@@ -2067,6 +2068,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
 		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
+        case ACTION_MEASURE_DIRECTION: return NSLocalizedString(@"Measure Direction", nil);
 		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", nil) : NSLocalizedString(@"Turn Restrictions", nil);
 		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", nil);
 	};
@@ -2127,19 +2129,20 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			if ( restriction )
 				[a addObject:@(ACTION_RESTRICT)];
 			[a addObject:@(ACTION_HEIGHT)];
+            [a addObject:@(ACTION_MEASURE_DIRECTION)];
 			actionList = [NSArray arrayWithArray:a];
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_MEASURE_DIRECTION), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
 			} else {
 				// line
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_MEASURE_DIRECTION), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_MEASURE_DIRECTION), @(ACTION_DUPLICATE) ];
 	} else if ( _editorLayer.selectedRelation ) {
 		// relation
 		if ( _editorLayer.selectedRelation.isMultipolygon ) {
@@ -2212,6 +2215,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			case ACTION_DELETE:
 			case ACTION_MORE:
 			case ACTION_HEIGHT:
+            case ACTION_MEASURE_DIRECTION:
 				break;
 		}
 
@@ -2326,6 +2330,13 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				error = NSLocalizedString(@"This action requires GPS to be turned on",nil);
 			}
 			break;
+        case ACTION_MEASURE_DIRECTION: {
+                DirectionViewController *viewController = [[DirectionViewController alloc] init];
+                [self.viewController presentViewController:viewController
+                                                  animated:YES
+                                                completion:nil];
+            }
+            break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
 			break;
