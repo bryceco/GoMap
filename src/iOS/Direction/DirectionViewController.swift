@@ -14,6 +14,8 @@ import UIKit
     
     @IBOutlet weak var cancelButton: UIButton!
     
+    // MARK: Initializer
+    
     @objc init() {
         super.init(nibName: nil, bundle: nil)
     }
