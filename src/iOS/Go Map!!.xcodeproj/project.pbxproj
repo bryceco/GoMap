@@ -496,9 +496,20 @@
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
+		647F46D92253F48900CEC482 /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D82253F48900CEC482 /* GoMapTests.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		647F46DB2253F48900CEC482 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02ACBA2616713CCB00BB4414 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02ACBA2E16713CCB00BB4414;
+			remoteInfo = "Go Map!!";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0205460416766808004A2A23 /* POIPresetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIPresetViewController.h; sourceTree = "<group>"; };
@@ -1081,6 +1092,9 @@
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
+		647F46D62253F48900CEC482 /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		647F46D82253F48900CEC482 /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
+		647F46DA2253F48900CEC482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1105,6 +1119,13 @@
 				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
 				02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */,
 				02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		647F46D32253F48900CEC482 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1259,6 +1280,7 @@
 			children = (
 				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
+				647F46D72253F48900CEC482 /* GoMapTests */,
 				02ACBA3216713CCB00BB4414 /* Frameworks */,
 				02ACBA3016713CCB00BB4414 /* Products */,
 			);
@@ -1268,6 +1290,7 @@
 			isa = PBXGroup;
 			children = (
 				02ACBA2F16713CCB00BB4414 /* Go Map!!.app */,
+				647F46D62253F48900CEC482 /* GoMapTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1802,6 +1825,15 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
+		647F46D72253F48900CEC482 /* GoMapTests */ = {
+			isa = PBXGroup;
+			children = (
+				647F46D82253F48900CEC482 /* GoMapTests.swift */,
+				647F46DA2253F48900CEC482 /* Info.plist */,
+			);
+			path = GoMapTests;
+			sourceTree = "<group>";
+		};
 		64D74BF02253DF39004FFD20 /* Direction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1833,12 +1865,31 @@
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
 			productType = "com.apple.product-type.application";
 		};
+		647F46D52253F48900CEC482 /* GoMapTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 647F46DF2253F48900CEC482 /* Build configuration list for PBXNativeTarget "GoMapTests" */;
+			buildPhases = (
+				647F46D22253F48900CEC482 /* Sources */,
+				647F46D32253F48900CEC482 /* Frameworks */,
+				647F46D42253F48900CEC482 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				647F46DC2253F48900CEC482 /* PBXTargetDependency */,
+			);
+			name = GoMapTests;
+			productName = GoMapTests;
+			productReference = 647F46D62253F48900CEC482 /* GoMapTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		02ACBA2616713CCB00BB4414 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Bryce;
 				TargetAttributes = {
@@ -1850,6 +1901,11 @@
 							};
 						};
 					};
+					647F46D52253F48900CEC482 = {
+						CreatedOnToolsVersion = 10.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 02ACBA2E16713CCB00BB4414;
+					};
 				};
 			};
 			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Map!!" */;
@@ -1857,6 +1913,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hant",
@@ -1867,6 +1924,7 @@
 			projectRoot = "";
 			targets = (
 				02ACBA2E16713CCB00BB4414 /* Go Map!! */,
+				647F46D52253F48900CEC482 /* GoMapTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2275,6 +2333,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		647F46D42253F48900CEC482 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2365,7 +2430,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		647F46D22253F48900CEC482 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				647F46D92253F48900CEC482 /* GoMapTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		647F46DC2253F48900CEC482 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02ACBA2E16713CCB00BB4414 /* Go Map!! */;
+			targetProxy = 647F46DB2253F48900CEC482 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */ = {
@@ -2551,6 +2632,77 @@
 			};
 			name = Release;
 		};
+		647F46DD2253F48900CEC482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = GoMapTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Go Map!!.app/Go Map!!";
+			};
+			name = Debug;
+		};
+		647F46DE2253F48900CEC482 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = GoMapTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Go Map!!.app/Go Map!!";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2568,6 +2720,15 @@
 			buildConfigurations = (
 				02ACBA6216713CCB00BB4414 /* Debug */,
 				02ACBA6316713CCB00BB4414 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		647F46DF2253F48900CEC482 /* Build configuration list for PBXNativeTarget "GoMapTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				647F46DD2253F48900CEC482 /* Debug */,
+				647F46DE2253F48900CEC482 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
