@@ -494,6 +494,7 @@
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 /* End PBXBuildFile section */
@@ -1077,6 +1078,7 @@
 		02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo256.png"; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
+		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1801,6 +1803,7 @@
 		64D74BF02253DF39004FFD20 /* Direction */ = {
 			isa = PBXGroup;
 			children = (
+				647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */,
 				64D74BF12253DF49004FFD20 /* DirectionViewController.swift */,
 				64D74BF22253DF49004FFD20 /* DirectionViewController.xib */,
 			);
@@ -2278,6 +2281,7 @@
 			files = (
 				02ACBA4016713CCB00BB4414 /* main.m in Sources */,
 				02ACBA4416713CCB00BB4414 /* AppDelegate.m in Sources */,
+				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
 				02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */,
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
 				02ACBBC216713F2B00BB4414 /* CurvedTextLayer.m in Sources */,
