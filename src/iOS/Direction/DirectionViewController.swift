@@ -10,6 +10,10 @@ import UIKit
 
 @objc class DirectionViewController: UIViewController {
     
+    // MARK: Private properties
+    
+    @IBOutlet weak var cancelButton: UIButton!
+    
     @objc init() {
         super.init(nibName: nil, bundle: nil)
     }
