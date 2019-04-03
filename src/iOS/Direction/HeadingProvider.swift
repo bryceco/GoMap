@@ -9,8 +9,8 @@
 import Foundation
 import CoreLocation
 
-protocol HeadingProviderDelegate {
-    func headingProviderDidUpdateTrueHeading(_ trueHeading: CLLocationDirection)
+protocol HeadingProviderDelegate: class {
+    func headingProviderDidUpdateHeading(_ heading: CLHeading)
 }
 
 protocol HeadingProviding: AnyObject {
