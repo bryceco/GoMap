@@ -501,7 +501,6 @@
 		6442666D22542BD200C0D545 /* MeasureDirectionViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666C22542BD200C0D545 /* MeasureDirectionViewModelDelegateMock.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
-		647F46D92253F48900CEC482 /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D82253F48900CEC482 /* GoMapTests.swift */; };
 		647F46E22253F5D700CEC482 /* MeasureDirectionViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46E12253F5D700CEC482 /* MeasureDirectionViewModelTestCase.swift */; };
 		647F46E52254032200CEC482 /* HeadingProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46E42254032200CEC482 /* HeadingProviderMock.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
@@ -1105,7 +1104,6 @@
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		647F46D62253F48900CEC482 /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		647F46D82253F48900CEC482 /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
 		647F46DA2253F48900CEC482 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		647F46E12253F5D700CEC482 /* MeasureDirectionViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModelTestCase.swift; sourceTree = "<group>"; };
 		647F46E42254032200CEC482 /* HeadingProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProviderMock.swift; sourceTree = "<group>"; };
@@ -1855,7 +1853,6 @@
 			isa = PBXGroup;
 			children = (
 				647F46E32254031900CEC482 /* Mocks */,
-				647F46D82253F48900CEC482 /* GoMapTests.swift */,
 				647F46DA2253F48900CEC482 /* Info.plist */,
 				647F46E12253F5D700CEC482 /* MeasureDirectionViewModelTestCase.swift */,
 			);
@@ -2475,7 +2472,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				647F46D92253F48900CEC482 /* GoMapTests.swift in Sources */,
 				647F46E22253F5D700CEC482 /* MeasureDirectionViewModelTestCase.swift in Sources */,
 				6442666D22542BD200C0D545 /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				647F46E52254032200CEC482 /* HeadingProviderMock.swift in Sources */,
