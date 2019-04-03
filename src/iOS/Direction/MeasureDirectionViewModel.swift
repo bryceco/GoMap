@@ -20,13 +20,20 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     weak var delegate: MeasureDirectionViewModelDelegate?
     var valueLabelText = Observable<String>("...")
     var oldValueLabelText = Observable<String?>(nil)
-    var isPrimaryActionButtonHidden = Observable<Bool>(false)
+    var isPrimaryActionButtonHidden = Observable<Bool>(true)
     var dismissButtonTitle = Observable<String>("Cancel")
     
     // MARK: Private properties
     
     private let headingProvider: HeadingProviding
-    private var mostRecentHeading: CLHeading?
+    private var mostRecentHeading: CLHeading? {
+        didSet {
+            if mostRecentHeading != nil {
+                // We have a heading that the user could apply. Show the primary action button.
+                isPrimaryActionButtonHidden.value = false
+            }
+        }
+    }
     
     // MARK: Initializer
     
@@ -41,7 +48,6 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
             valueLabelText.value = "🤷‍♂️"
             oldValueLabelText.value = "This device is not able to provide heading data."
             dismissButtonTitle.value = "Back"
-            isPrimaryActionButtonHidden.value = true
             
             return
         }
