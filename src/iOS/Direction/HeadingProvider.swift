@@ -14,7 +14,7 @@ protocol HeadingProviderDelegate {
 }
 
 protocol HeadingProviding: AnyObject {
-    var delegate: HeadingProviderDelegate? { get }
+    var delegate: HeadingProviderDelegate? { get set }
     
     /// Flag whether this object is able to provide compass-related headings.
     var isHeadingAvailable: Bool { get }
