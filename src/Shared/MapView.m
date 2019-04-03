@@ -3669,6 +3669,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
         NSMutableDictionary *tags = [object.tags mutableCopy];
         [tags setObject:direction forKey:@"direction"];
         [_editorLayer.mapData setTags:tags forObject:object];
+        
+        [self flashMessage:@"Direction updated" duration:1.0];
     }
 }
 
