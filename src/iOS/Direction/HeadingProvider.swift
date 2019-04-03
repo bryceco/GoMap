@@ -25,3 +25,49 @@ protocol HeadingProviding: AnyObject {
     /// Stops the generation of heading updates.
     func stopUpdatingHeading()
 }
+
+class LocationManagerHeadingProvider: NSObject, HeadingProviding {
+    
+    // MARK: Public properties
+    
+    static let shared = LocationManagerHeadingProvider()
+    
+    // MARK: Private properties
+    
+    private let locationManager: CLLocationManager
+    
+    // MARK: Initializer
+    
+    init(locationManager: CLLocationManager = CLLocationManager()) {
+        self.locationManager = locationManager
+        
+        super.init()
+        
+        locationManager.delegate = self
+    }
+    
+    // MARK: HeadingProviding
+    
+    weak var delegate: HeadingProviderDelegate?
+    
+    var isHeadingAvailable: Bool {
+        return CLLocationManager.headingAvailable()
+    }
+    
+    func startUpdatingHeading() {
+        locationManager.startUpdatingHeading()
+    }
+    
+    func stopUpdatingHeading() {
+        locationManager.stopUpdatingHeading()
+    }
+    
+}
+
+extension LocationManagerHeadingProvider: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        delegate?.headingProviderDidUpdateHeading(newHeading)
+    }
+    
+}
