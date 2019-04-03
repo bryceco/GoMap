@@ -1447,7 +1447,24 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
 			NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 			NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-			[self showAlert:title message:nil];
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                                     message:nil
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
+                                                                 style:UIAlertActionStyleCancel
+                                                               handler:nil];
+            UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+                                                                 style:UIAlertActionStyleDefault
+                                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                                     [self openAppSettings];
+                                                                 }];
+            
+            [alertController addAction:openSettings];
+            [alertController addAction:okayAction];
+            
+            [self.viewController presentViewController:alertController animated:YES completion:nil];
+            
 			self.gpsState = GPS_STATE_NONE;
 			return;
 		}
@@ -1471,6 +1488,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationBallLayer removeFromSuperlayer];
 		_locationBallLayer = nil;
 	}
+}
+
+- (void)openAppSettings {
+    NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if (openSettingsURL) {
+        [[UIApplication sharedApplication] openURL:openSettingsURL];
+    }
 }
 
 -(IBAction)centerOnGPS:(id)sender
