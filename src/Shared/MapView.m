@@ -1445,25 +1445,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		
 		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-			NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-			NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-            
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
-                                                                                     message:nil
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
-                                                                 style:UIAlertActionStyleCancel
-                                                               handler:nil];
-            UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
-                                                                 style:UIAlertActionStyleDefault
-                                                                 handler:^(UIAlertAction * _Nonnull action) {
-                                                                     [self openAppSettings];
-                                                                 }];
-            
-            [alertController addAction:openSettings];
-            [alertController addAction:okayAction];
-            
-            [self.viewController presentViewController:alertController animated:YES completion:nil];
+            [self askUserToAllowLocationAccess];
             
 			self.gpsState = GPS_STATE_NONE;
 			return;
@@ -1488,6 +1470,28 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationBallLayer removeFromSuperlayer];
 		_locationBallLayer = nil;
 	}
+}
+
+- (void)askUserToAllowLocationAccess {
+    NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:nil];
+    UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self openAppSettings];
+                                                         }];
+    
+    [alertController addAction:openSettings];
+    [alertController addAction:okayAction];
+    
+    [self.viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)openAppSettings {
