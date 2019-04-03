@@ -497,6 +497,7 @@
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
+		6442666B2254229000C0D545 /* CLHeadingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666A2254229000C0D545 /* CLHeadingMock.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		647F46D92253F48900CEC482 /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D82253F48900CEC482 /* GoMapTests.swift */; };
@@ -1097,6 +1098,7 @@
 		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		6442666A2254229000C0D545 /* CLHeadingMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLHeadingMock.swift; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		647F46D62253F48900CEC482 /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1848,11 +1850,20 @@
 		647F46D72253F48900CEC482 /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				647F46E32254031900CEC482 /* Mocks */,
 				647F46D82253F48900CEC482 /* GoMapTests.swift */,
 				647F46DA2253F48900CEC482 /* Info.plist */,
 				647F46E12253F5D700CEC482 /* MeasureDirectionViewModelTestCase.swift */,
 			);
 			path = GoMapTests;
+			sourceTree = "<group>";
+		};
+		647F46E32254031900CEC482 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				6442666A2254229000C0D545 /* CLHeadingMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		64D74BF02253DF39004FFD20 /* Direction */ = {
@@ -2460,6 +2471,7 @@
 			files = (
 				647F46D92253F48900CEC482 /* GoMapTests.swift in Sources */,
 				647F46E22253F5D700CEC482 /* MeasureDirectionViewModelTestCase.swift in Sources */,
+				6442666B2254229000C0D545 /* CLHeadingMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
