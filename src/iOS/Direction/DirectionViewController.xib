@@ -13,6 +13,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DirectionViewController" customModule="Go_Map__" customModuleProvider="target">
             <connections>
                 <outlet property="cancelButton" destination="exg-Jc-FOH" id="CnY-a7-OsG"/>
+                <outlet property="oldValueLabel" destination="vtk-nS-Ss4" id="NWp-UC-W8u"/>
+                <outlet property="primaryActionButton" destination="Yt9-h6-KKC" id="Rab-5A-ApE"/>
+                <outlet property="valueLabel" destination="Jc3-Um-Aiy" id="JXy-87-YXE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -37,9 +40,12 @@
                                 <constraint firstAttribute="height" constant="48" id="yjr-HZ-arI"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                            <state key="normal" title="Start measurement">
+                            <state key="normal" title="Update &quot;direction&quot; tag">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <connections>
+                                <action selector="didTapPrimaryActionButton" destination="-1" eventType="touchUpInside" id="kSg-bS-kBU"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exg-Jc-FOH">
                             <rect key="frame" x="0.0" y="56" width="351" height="48"/>
@@ -53,19 +59,28 @@
                         </button>
                     </subviews>
                 </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old value: 42" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vtk-nS-Ss4">
+                    <rect key="frame" x="142.33333333333334" y="477.66666666666669" width="90.666666666666657" height="18"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" priority="750" id="0gw-bf-jgD"/>
+                <constraint firstItem="vtk-nS-Ss4" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Yt9-h6-KKC" secondAttribute="top" priority="750" constant="12" id="Adm-r5-9o5"/>
+                <constraint firstItem="vtk-nS-Ss4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="D3g-qG-fcE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BZS-tz-AfD" secondAttribute="trailing" constant="12" id="Dsk-Go-Vb9"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BZS-tz-AfD" secondAttribute="bottom" id="go9-T8-0C5"/>
+                <constraint firstItem="vtk-nS-Ss4" firstAttribute="top" secondItem="Jc3-Um-Aiy" secondAttribute="bottom" id="jHH-iN-oIm"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="48" id="kpR-mk-xAZ"/>
                 <constraint firstItem="BZS-tz-AfD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="lQ2-Ao-QCx"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="pDn-LN-AYY"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="BZS-tz-AfD" secondAttribute="top" constant="-48" id="sIB-OX-Ui1"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="137.68115942028987" y="84.375"/>
+            <point key="canvasLocation" x="136.80000000000001" y="84.236453201970448"/>
         </view>
     </objects>
 </document>
