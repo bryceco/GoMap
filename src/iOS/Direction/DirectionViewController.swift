@@ -105,22 +105,23 @@ import UIKit
             self.cancelButton.setTitle(title, for: .normal)
             }.add(to: &self.disposal)
     }
+    
+    private func dismissViewController(_ completion: (() -> Void)? = nil) {
+        if let navigationController = navigationController {
+            navigationController.popViewController(animated: true)
+            completion?()
+        } else {
+            dismiss(animated: true) {
+                completion?()
+            }
+        }
+    }
 }
 
 extension DirectionViewController: MeasureDirectionViewModelDelegate {
     func didFinishUpdatingTag(key: String, value: String?) {
-        /// Block that is executed after the view controller was dismissed.
-        let afterDismiss: (() -> Void) = { [weak self] in
+        dismissViewController { [weak self] in
             self?.delegate?.directionViewControllerDidUpdateTag(key: key, value: value)
-        }
-        
-        if let navigationController = navigationController {
-            navigationController.popViewController(animated: true)
-            afterDismiss()
-        } else {
-            dismiss(animated: true) {
-                afterDismiss()
-            }
         }
     }
 }
