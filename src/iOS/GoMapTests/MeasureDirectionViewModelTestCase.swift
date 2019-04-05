@@ -157,10 +157,18 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         XCTAssertEqual(delegateMock.key, key)
     }
     
-    func testDidTapPrimaryActionButtonShouldInformDelegateWithDirectionNilWhenNoHeadingUpdateWasReceivedYet() {
+    func testDidTapPrimaryActionButtonShouldInformDelegateWithOldValueWhenNoHeadingUpdateWasReceivedYet() {
+        let oldValue = "Lorem Ipsum"
+        
+        // Re-create the view model and pass the mocked old value.
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock,
+                                              key: key,
+                                              value: oldValue)
+        viewModel.delegate = delegateMock
+        
         viewModel.didTapPrimaryActionButton()
         
-        XCTAssertNil(delegateMock.value)
+        XCTAssertEqual(delegateMock.value, oldValue)
     }
     
     func testDidTapPrimaryActionButtonShouldAskDelegateToDismissWithDirectionWithoutDecimalsOfTheLastHeadingUpdate() {

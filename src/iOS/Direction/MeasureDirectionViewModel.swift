@@ -27,6 +27,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     
     private let headingProvider: HeadingProviding
     private let key: String
+    private let oldValue: String?
     private var mostRecentHeading: CLHeading? {
         didSet {
             if mostRecentHeading != nil {
@@ -43,6 +44,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
          value: String? = nil) {
         self.headingProvider = headingProvider
         self.key = key
+        self.oldValue = value
         
         super.init()
         
@@ -57,6 +59,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
         }
         
         if let oldValue = value {
+            valueLabelText.value = oldValue
             oldValueLabelText.value = "Old value: \(oldValue)"
         }
     }
@@ -72,14 +75,14 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     }
     
     func didTapPrimaryActionButton() {
-        let direction: String?
+        let value: String?
         if let heading = mostRecentHeading {
-            direction = "\(Int(heading.trueHeading))"
+            value = "\(Int(heading.trueHeading))"
         } else {
-            direction = nil
+            value = oldValue
         }
         
-        delegate?.didFinishUpdatingTag(key: key, value: direction)
+        delegate?.didFinishUpdatingTag(key: key, value: value)
     }
     
     // MARK: HeadingProviderDelegate
