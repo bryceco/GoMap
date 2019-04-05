@@ -59,7 +59,6 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
         }
         
         if let oldValue = value {
-            valueLabelText.value = oldValue
             oldValueLabelText.value = "Old value: \(oldValue)"
         }
     }
