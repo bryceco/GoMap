@@ -403,15 +403,19 @@
 	value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	textField.text = value;
 
-	POITabBarController * tabController = (id)self.tabBarController;
+    [self updateTagWithValue:value forKey:key];
+}
 
-	if ( value.length ) {
-		[tabController.keyValueDict setObject:value forKey:key];
-	} else {
-		[tabController.keyValueDict removeObjectForKey:key];
-	}
-
-	_saveButton.enabled = [tabController isTagDictChanged];
+- (void)updateTagWithValue:(NSString *)value forKey:(NSString *)key {
+    POITabBarController * tabController = (id)self.tabBarController;
+    
+    if ( value.length ) {
+        [tabController.keyValueDict setObject:value forKey:key];
+    } else {
+        [tabController.keyValueDict removeObjectForKey:key];
+    }
+    
+    _saveButton.enabled = [tabController isTagDictChanged];
 }
 
 @end
