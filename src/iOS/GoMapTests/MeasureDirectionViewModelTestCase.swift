@@ -15,13 +15,14 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
     
     private var viewModel: MeasureDirectionViewModel!
     private var headingProviderMock: HeadingProviderMock!
+    private let key = "lorem-ipsum-key"
     private var delegateMock: MeasureDirectionViewModelDelegateMock!
 
     override func setUp() {
         super.setUp()
         
         headingProviderMock = HeadingProviderMock()
-        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock)
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         
         delegateMock = MeasureDirectionViewModelDelegateMock()
         viewModel.delegate = delegateMock
@@ -41,7 +42,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         headingProviderMock.isHeadingAvailable = false
         
         // Re-create the view model, since it only asks for the `headingAvailble` during initialization.
-        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock)
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         
         XCTAssertEqual(viewModel.valueLabelText.value, "🤷‍♂️")
     }
@@ -50,7 +51,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         headingProviderMock.isHeadingAvailable = false
         
         // Re-create the view model, since it only asks for the `headingAvailble` during initialization.
-        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock)
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         
         XCTAssertEqual(viewModel.oldValueLabelText.value,
                        "This device is not able to provide heading data.")
@@ -60,7 +61,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         headingProviderMock.isHeadingAvailable = false
         
         // Re-create the view model, since it only asks for the `headingAvailble` during initialization.
-        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock)
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         
         XCTAssertTrue(viewModel.isPrimaryActionButtonHidden.value)
     }
@@ -69,7 +70,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         headingProviderMock.isHeadingAvailable = false
         
         // Re-create the view model, since it only asks for the `headingAvailble` during initialization.
-        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock)
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         
         XCTAssertEqual(viewModel.dismissButtonTitle.value, "Back")
     }
@@ -80,7 +81,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         headingProviderMock.isHeadingAvailable = true
         
         // Re-create the view model, since it only asks for the `headingAvailble` during initialization.
-        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock)
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         
         XCTAssertEqual(viewModel.valueLabelText.value, "...")
     }
@@ -89,7 +90,9 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         let oldValue = "Lorem Ipsum"
         
         // Re-create the view model and pass the mocked old value.
-        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, oldValue: oldValue)
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock,
+                                              key: key,
+                                              oldValue: oldValue)
         
         XCTAssertEqual(viewModel.oldValueLabelText.value, "Old value: \(oldValue)")
     }

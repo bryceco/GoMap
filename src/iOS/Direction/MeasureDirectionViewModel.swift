@@ -26,6 +26,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     // MARK: Private properties
     
     private let headingProvider: HeadingProviding
+    private let key: String
     private var mostRecentHeading: CLHeading? {
         didSet {
             if mostRecentHeading != nil {
@@ -37,8 +38,11 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     
     // MARK: Initializer
     
-    init(headingProvider: HeadingProviding = LocationManagerHeadingProvider.shared, oldValue: String? = nil) {
+    init(headingProvider: HeadingProviding = LocationManagerHeadingProvider.shared,
+         key: String,
+         oldValue: String? = nil) {
         self.headingProvider = headingProvider
+        self.key = key
         
         super.init()
         

@@ -20,7 +20,7 @@ import UIKit
     
     // MARK: Private properties
     
-    private let viewModel = MeasureDirectionViewModel()
+    private let viewModel: MeasureDirectionViewModel
     private var disposal = Disposal()
     
     @IBOutlet weak var valueLabel: UILabel!
@@ -30,7 +30,9 @@ import UIKit
     
     // MARK: Initializer
     
-    @objc init() {
+    @objc init(key: String) {
+        self.viewModel = MeasureDirectionViewModel(key: key)
+        
         super.init(nibName: nil, bundle: nil)
     }
     
