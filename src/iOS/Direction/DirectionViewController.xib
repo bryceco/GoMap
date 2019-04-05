@@ -25,8 +25,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="320" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jc3-Um-Aiy" userLabel="Value Label">
-                    <rect key="frame" x="77" y="334.33333333333331" width="221" height="143.33333333333331"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="120"/>
+                    <rect key="frame" x="160.33333333333334" y="388" width="54.333333333333343" height="36"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -60,8 +60,14 @@
                     </subviews>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Old value: 42" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vtk-nS-Ss4">
-                    <rect key="frame" x="142.33333333333334" y="477.66666666666669" width="90.666666666666657" height="18"/>
+                    <rect key="frame" x="142.33333333333334" y="424" width="90.666666666666657" height="18"/>
                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position your device parallel to the direction of the object." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4vY-m2-xMW">
+                    <rect key="frame" x="16" y="56" width="343" height="314"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -72,15 +78,20 @@
                 <constraint firstItem="vtk-nS-Ss4" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Yt9-h6-KKC" secondAttribute="top" priority="750" constant="12" id="Adm-r5-9o5"/>
                 <constraint firstItem="vtk-nS-Ss4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="D3g-qG-fcE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BZS-tz-AfD" secondAttribute="trailing" constant="12" id="Dsk-Go-Vb9"/>
+                <constraint firstItem="4vY-m2-xMW" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fb9-1b-Ais"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BZS-tz-AfD" secondAttribute="bottom" id="go9-T8-0C5"/>
                 <constraint firstItem="vtk-nS-Ss4" firstAttribute="top" secondItem="Jc3-Um-Aiy" secondAttribute="bottom" id="jHH-iN-oIm"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="48" id="kpR-mk-xAZ"/>
                 <constraint firstItem="BZS-tz-AfD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="lQ2-Ao-QCx"/>
+                <constraint firstItem="4vY-m2-xMW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="p0F-sn-R8n"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="pDn-LN-AYY"/>
+                <constraint firstAttribute="trailingMargin" secondItem="4vY-m2-xMW" secondAttribute="trailing" id="red-4Y-usc"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="BZS-tz-AfD" secondAttribute="top" constant="-48" id="sIB-OX-Ui1"/>
+                <constraint firstItem="4vY-m2-xMW" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="12" id="uZn-Gc-PwT"/>
+                <constraint firstItem="Jc3-Um-Aiy" firstAttribute="top" secondItem="4vY-m2-xMW" secondAttribute="bottom" constant="18" id="yCf-3A-Su5"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="136.80000000000001" y="84.236453201970448"/>
+            <point key="canvasLocation" x="136.69950738916256" y="84"/>
         </view>
     </objects>
 </document>
