@@ -75,7 +75,7 @@ import UIKit
     }
     
     @objc private func cancel() {
-        dismiss(animated: true, completion: nil)
+        dismissViewController()
     }
     
     private func bindToViewModel() {
