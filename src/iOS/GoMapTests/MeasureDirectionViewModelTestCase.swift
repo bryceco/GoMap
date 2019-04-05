@@ -97,6 +97,28 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         XCTAssertEqual(viewModel.oldValueLabelText.value, "Old value: \(oldValue)")
     }
     
+    func testOldValueLabelTextShouldBeNilIfTheOriginalValueWasNil() {
+        let oldValue: String? = nil
+        
+        // Re-create the view model and pass the mocked old value.
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock,
+                                              key: key,
+                                              value: oldValue)
+        
+        XCTAssertNil(viewModel.oldValueLabelText.value)
+    }
+    
+    func testOldValueLabelTextShouldBeNilIfTheOriginalValueWasAnEmptyString() {
+        let oldValue = ""
+        
+        // Re-create the view model and pass the mocked old value.
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock,
+                                              key: key,
+                                              value: oldValue)
+        
+        XCTAssertNil(viewModel.oldValueLabelText.value)
+    }
+    
     // MARK: primaryActionButtonTitle
     
     func testPrimaryActionButtonTitleShouldIndicateThatTheGivenKeyWillBeUpdated() {
