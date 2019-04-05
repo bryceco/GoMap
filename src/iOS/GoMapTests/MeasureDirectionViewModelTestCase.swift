@@ -141,16 +141,26 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
     
     // MARK: didTapPrimaryActionButton
     
-    func testDidTapPrimaryActionButtonShouldAskDelegateToDismiss() {
+    func testDidTapPrimaryActionButtonShouldInformDelegate() {
         viewModel.didTapPrimaryActionButton()
         
-        XCTAssertTrue(delegateMock.dismissCalled)
+        XCTAssertTrue(delegateMock.didFinishUpdatingTagCalled)
     }
     
-    func testDidTapPrimaryActionButtonShouldAskDelegateToDismissWithDirectionNilWhenNoHeadingUpdateWasReceivedYet() {
+    func testDidTapPrimaryActionButtonShouldInformDelegateWithTheKeyFromTheInitialization() {
+        let key = "foo"
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
+        viewModel.delegate = delegateMock
+        
         viewModel.didTapPrimaryActionButton()
         
-        XCTAssertNil(delegateMock.dismissDirection)
+        XCTAssertEqual(delegateMock.key, key)
+    }
+    
+    func testDidTapPrimaryActionButtonShouldInformDelegateWithDirectionNilWhenNoHeadingUpdateWasReceivedYet() {
+        viewModel.didTapPrimaryActionButton()
+        
+        XCTAssertNil(delegateMock.value)
     }
     
     func testDidTapPrimaryActionButtonShouldAskDelegateToDismissWithDirectionWithoutDecimalsOfTheLastHeadingUpdate() {
@@ -162,7 +172,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         
         viewModel.didTapPrimaryActionButton()
         
-        XCTAssertEqual(delegateMock.dismissDirection, "987")
+        XCTAssertEqual(delegateMock.value, "987")
     }
 
 }

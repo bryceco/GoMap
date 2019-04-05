@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 @objc protocol MeasureDirectionViewModelDelegate: class {
-    func dismiss(_ direction: String?)
+    func didFinishUpdatingTag(key: String, value: String?)
 }
 
 class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
@@ -79,7 +79,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
             direction = nil
         }
         
-        delegate?.dismiss(direction)
+        delegate?.didFinishUpdatingTag(key: key, value: direction)
     }
     
     // MARK: HeadingProviderDelegate

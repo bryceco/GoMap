@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol DirectionViewControllerDelegate: class {
-    func directionViewControllerDidDetermineDirection(_ direction: String?)
+    func directionViewControllerDidUpdateTag(key: String, value: String?)
 }
 
 @objc class DirectionViewController: UIViewController {
@@ -34,6 +34,8 @@ import UIKit
         self.viewModel = MeasureDirectionViewModel(key: key)
         
         super.init(nibName: nil, bundle: nil)
+        
+        self.viewModel.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,7 +47,6 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.delegate = self
         bindToViewModel()
         
         cancelButton.addTarget(self,
@@ -103,9 +104,10 @@ import UIKit
 }
 
 extension DirectionViewController: MeasureDirectionViewModelDelegate {
-    func dismiss(_ direction: String?) {
+    func didFinishUpdatingTag(key: String, value: String?) {
         dismiss(animated: true) { [weak self] in
-            self?.delegate?.directionViewControllerDidDetermineDirection(direction)
+            self?.delegate?.directionViewControllerDidUpdateTag(key: key, value: value)
         }
     }
 }
+

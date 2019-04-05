@@ -3657,9 +3657,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 #pragma mark - DirectionViewControllerDelegate
 
-- (void)directionViewControllerDidDetermineDirection:(NSString *)direction {
-    if (direction.length == 0) {
-        // Ignore emmpty directions, and don't change the old value.
+- (void)directionViewControllerDidUpdateTagWithKey:(NSString *)key value:(NSString *)value {
+    if (value.length == 0) {
+        // Ignore emmpty values - keep the current one.
     } else if (_editorLayer.selectedPrimary == nil) {
         // Without something selected, there's no need to update anything.
         // TODO: Should we maybe create a node here? Or just don't offer the action?
@@ -3667,10 +3667,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
         // Update the object's tags.
         OsmBaseObject *object = _editorLayer.selectedPrimary;
         NSMutableDictionary *tags = [object.tags mutableCopy];
-        [tags setObject:direction forKey:@"direction"];
+        [tags setObject:value forKey:key];
         [_editorLayer.mapData setTags:tags forObject:object];
         
-        [self flashMessage:@"Direction updated" duration:1.0];
+        NSString *messageWithPlaceholders = NSLocalizedString(@"'%@' updated",
+                                                              @"Message that is displayed when a tag was successfully updated");
+        [self flashMessage:[NSString stringWithFormat:messageWithPlaceholders, key]
+                  duration:1.0];
     }
 }
 
