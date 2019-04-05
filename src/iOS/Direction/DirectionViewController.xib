@@ -31,7 +31,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BZS-tz-AfD">
-                    <rect key="frame" x="12" y="674" width="351" height="104"/>
+                    <rect key="frame" x="12" y="662" width="351" height="104"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yt9-h6-KKC">
                             <rect key="frame" x="0.0" y="0.0" width="351" height="48"/>
@@ -79,7 +79,7 @@
                 <constraint firstItem="vtk-nS-Ss4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="D3g-qG-fcE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BZS-tz-AfD" secondAttribute="trailing" constant="12" id="Dsk-Go-Vb9"/>
                 <constraint firstItem="4vY-m2-xMW" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fb9-1b-Ais"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BZS-tz-AfD" secondAttribute="bottom" id="go9-T8-0C5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BZS-tz-AfD" secondAttribute="bottom" constant="12" id="go9-T8-0C5"/>
                 <constraint firstItem="vtk-nS-Ss4" firstAttribute="top" secondItem="Jc3-Um-Aiy" secondAttribute="bottom" id="jHH-iN-oIm"/>
                 <constraint firstItem="Jc3-Um-Aiy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="48" id="kpR-mk-xAZ"/>
                 <constraint firstItem="BZS-tz-AfD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="12" id="lQ2-Ao-QCx"/>
