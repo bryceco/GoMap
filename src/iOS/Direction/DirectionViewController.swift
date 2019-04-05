@@ -79,6 +79,8 @@ import UIKit
     }
     
     private func bindToViewModel() {
+        primaryActionButton.setTitle(viewModel.primaryActionButtonTitle, for: .normal)
+        
         viewModel.valueLabelText.observe { [weak self] text, _ in
             guard let self = self else { return }
             

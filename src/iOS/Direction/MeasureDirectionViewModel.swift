@@ -20,6 +20,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     weak var delegate: MeasureDirectionViewModelDelegate?
     var valueLabelText = Observable<String>("...")
     var oldValueLabelText = Observable<String?>(nil)
+    let primaryActionButtonTitle: String
     var isPrimaryActionButtonHidden = Observable<Bool>(true)
     var dismissButtonTitle = Observable<String>("Cancel")
     
@@ -45,6 +46,8 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
         self.headingProvider = headingProvider
         self.key = key
         self.oldValue = value
+        
+        self.primaryActionButtonTitle = String(format: "Update '%@' tag", key)
         
         super.init()
         

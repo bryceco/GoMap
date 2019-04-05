@@ -97,6 +97,16 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         XCTAssertEqual(viewModel.oldValueLabelText.value, "Old value: \(oldValue)")
     }
     
+    // MARK: primaryActionButtonTitle
+    
+    func testPrimaryActionButtonTitleShouldIndicateThatTheGivenKeyWillBeUpdated() {
+        let key = "some-key"
+        
+        viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
+        
+        XCTAssertEqual(viewModel.primaryActionButtonTitle, "Update 'some-key' tag")
+    }
+    
     // MARK: isPrimaryActionButtonHidden
     
     func testPrimaryActionButtonShouldBeHiddenWhenNoHeadingUpdateHasBeenProvidedYet() {
