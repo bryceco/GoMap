@@ -92,7 +92,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         // Re-create the view model and pass the mocked old value.
         viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock,
                                               key: key,
-                                              oldValue: oldValue)
+                                              value: oldValue)
         
         XCTAssertEqual(viewModel.oldValueLabelText.value, "Old value: \(oldValue)")
     }

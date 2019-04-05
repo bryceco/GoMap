@@ -40,7 +40,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     
     init(headingProvider: HeadingProviding = LocationManagerHeadingProvider.shared,
          key: String,
-         oldValue: String? = nil) {
+         value: String? = nil) {
         self.headingProvider = headingProvider
         self.key = key
         
@@ -56,7 +56,7 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
             return
         }
         
-        if let oldValue = oldValue {
+        if let oldValue = value {
             oldValueLabelText.value = "Old value: \(oldValue)"
         }
     }

@@ -2331,7 +2331,9 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			}
 			break;
         case ACTION_MEASURE_DIRECTION: {
-                DirectionViewController *viewController = [[DirectionViewController alloc] initWithKey:@"direction"];
+                NSString *existingValue = _editorLayer.selectedPrimary.tags[@"direction"];
+                DirectionViewController *viewController = [[DirectionViewController alloc] initWithKey:@"direction"
+                                                                                                 value:existingValue];
                 viewController.delegate = self;
                 [self.viewController presentViewController:viewController
                                                   animated:YES

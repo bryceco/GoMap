@@ -30,8 +30,8 @@ import UIKit
     
     // MARK: Initializer
     
-    @objc init(key: String) {
-        self.viewModel = MeasureDirectionViewModel(key: key)
+    @objc init(key: String, value: String?) {
+        self.viewModel = MeasureDirectionViewModel(key: key, value: value)
         
         super.init(nibName: nil, bundle: nil)
         
