@@ -105,8 +105,18 @@ import UIKit
 
 extension DirectionViewController: MeasureDirectionViewModelDelegate {
     func didFinishUpdatingTag(key: String, value: String?) {
-        dismiss(animated: true) { [weak self] in
+        /// Block that is executed after the view controller was dismissed.
+        let afterDismiss: (() -> Void) = { [weak self] in
             self?.delegate?.directionViewControllerDidUpdateTag(key: key, value: value)
+        }
+        
+        if let navigationController = navigationController {
+            navigationController.popViewController(animated: true)
+            afterDismiss()
+        } else {
+            dismiss(animated: true) {
+                afterDismiss()
+            }
         }
     }
 }
