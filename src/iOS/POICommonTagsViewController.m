@@ -34,7 +34,9 @@
 @implementation CommonTagCell
 @end
 
+@interface POICommonTagsViewController() <DirectionViewControllerDelegate>
 
+@end
 
 @implementation POICommonTagsViewController
 
@@ -262,8 +264,15 @@
 		[cell.valueField addTarget:self action:@selector(textFieldChanged:)			forControlEvents:UIControlEventEditingChanged];
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
 		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
-
-		cell.accessoryType = commonTag.presetList.count ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+        
+        if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:commonTag.tagKey]) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else if (commonTag.presetList.count > 0) {
+            // The user can select from a list of presets.
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
 
 		POITabBarController	* tabController = (id)self.tabBarController;
 		NSDictionary * objectDict = tabController.keyValueDict;
@@ -306,6 +315,11 @@
 
 	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
+    } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:cell.commonTag.tagKey]) {
+        DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:cell.commonTag.tagKey
+                                                                                                  value:cell.valueField.text];
+        directionViewController.delegate = self;
+        [self.navigationController pushViewController:directionViewController animated:YES];
 	} else if ( [cell.commonTag isKindOfClass:[CommonTagGroup class]] ) {
 		// special case for drill down
 		CommonTagGroup * group = (id)cell.commonTag;
@@ -416,6 +430,24 @@
     }
     
     _saveButton.enabled = [tabController isTagDictChanged];
+}
+
+/**
+ Determines whether the `DirectionViewController` can be used to measure the value for the tag with the given key.
+ 
+ @param key The key of the tag that should be measured.
+ @return YES if the key can be measured using the `DirectionViewController`, NO if not.
+ */
+- (BOOL)canUseDirectionViewControllerToMeasureValueForTagWithKey:(NSString *)key {
+    NSArray<NSString *> *keys = @[@"direction", @"camera:direction"];
+    
+    return [keys containsObject:key];
+}
+
+#pragma mark - <DirectionViewControllerDelegate>
+
+- (void)directionViewControllerDidUpdateTagWithKey:(NSString *)key value:(NSString *)value {
+    [self updateTagWithValue:value forKey:key];
 }
 
 @end
