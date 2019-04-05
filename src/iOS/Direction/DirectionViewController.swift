@@ -47,6 +47,8 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Measure Direction"
+        
         bindToViewModel()
         
         cancelButton.addTarget(self,
