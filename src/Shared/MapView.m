@@ -3650,7 +3650,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
         // Ignore emmpty values - keep the current one.
     } else if (_editorLayer.selectedPrimary == nil) {
         // Without something selected, there's no need to update anything.
-        // TODO: Should we maybe create a node here? Or just don't offer the action?
     } else {
         // Update the object's tags.
         OsmBaseObject *object = _editorLayer.selectedPrimary;
