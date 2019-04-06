@@ -316,10 +316,8 @@
 	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
     } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:cell.commonTag.tagKey]) {
-        DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:cell.commonTag.tagKey
-                                                                                                  value:cell.valueField.text];
-        directionViewController.delegate = self;
-        [self.navigationController pushViewController:directionViewController animated:YES];
+        [self presentDirectionViewControllerForTagWithKey:cell.commonTag.tagKey
+                                                    value:cell.valueField.text];
 	} else if ( [cell.commonTag isKindOfClass:[CommonTagGroup class]] ) {
 		// special case for drill down
 		CommonTagGroup * group = (id)cell.commonTag;
@@ -442,6 +440,13 @@
     NSArray<NSString *> *keys = @[@"direction", @"camera:direction"];
     
     return [keys containsObject:key];
+}
+
+- (void)presentDirectionViewControllerForTagWithKey:(NSString *)key value:(NSString *)value {
+    DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:key
+                                                                                              value:value];
+    directionViewController.delegate = self;
+    [self.navigationController pushViewController:directionViewController animated:YES];
 }
 
 #pragma mark - <DirectionViewControllerDelegate>
