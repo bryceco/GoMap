@@ -338,7 +338,7 @@ static const CGFloat Z_FLASH			= 110;
 	_notesViewDict			= [NSMutableDictionary new];
 
 	// make help button have rounded corners
-	_helpButton.layer.cornerRadius = 10.0;
+	_helpButton.layer.cornerRadius = _helpButton.bounds.size.width / 2;
 
 	// observe changes to aerial visibility so we can show/hide bing logo
 	[_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
