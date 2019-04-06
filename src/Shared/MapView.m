@@ -86,6 +86,7 @@ static const CGFloat Z_FLASH			= 110;
 @synthesize viewState			= _viewState;
 @synthesize screenFromMapTransform	= _screenFromMapTransform;
 
+const CGFloat kEditControlCornerRadius = 4;
 
 #pragma mark initialization
 
@@ -316,6 +317,7 @@ static const CGFloat Z_FLASH			= 110;
 	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] }
 									   forState:UIControlStateNormal];
 	_editControl.layer.zPosition = Z_TOOLBAR;
+    _editControl.layer.cornerRadius = kEditControlCornerRadius;
 
 	// long press for selecting from multiple objects
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
