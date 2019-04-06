@@ -3611,7 +3611,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hfr-Mf-ZHv">
+                                        <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hfr-Mf-ZHv">
                                             <rect key="frame" x="124" y="11.5" width="165" height="21"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
