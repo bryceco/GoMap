@@ -132,8 +132,10 @@
 	POITabBarController * tabController = (id)self.tabBarController;
     if (tabController.selection.isRelation) {
 		return 3;
+    } else if (_relations.count > 0) {
+        return 2;
     } else {
-		return 2;
+        return 1;
     }
 }
 
