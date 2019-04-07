@@ -1630,6 +1630,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  */
 - (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node {
     NSMutableArray<CALayer *> *layers = [NSMutableArray array];
+    
+    CALayer *fieldOfViewLayer = [self fieldOfViewShapeLayerWithCameraNode:node];
+    if (fieldOfViewLayer) {
+        [layers addObject:fieldOfViewLayer];
+    }
 
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
     
@@ -1712,6 +1717,69 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     }
 
     return layers;
+}
+
+/**
+ Determines the `CALayer` instance required to draw the field of view for the given `node`
+ if it was a surveillance camera.
+
+ @param node The node to get the layers for.
+ @return A `CALayer` instance for rendering the given node's field of view.
+ */
+- (CALayer *)fieldOfViewShapeLayerWithCameraNode:(OsmNode *)node {
+    BOOL isSurveillanceCamera = [node.tags[@"surveillance:type"] isEqualToString:@"camera"];
+    if (!isSurveillanceCamera) {
+        // For nodes other than surveillance cameras, we don't want to have a FOV shape layer.
+        return nil;
+    }
+    
+    NSString *directionAsString = node.tags[@"camera:direction"];
+    if (!directionAsString) {
+        // Without a direction, we are not able to draw the FOV.
+        return nil;
+    }
+    
+    CGFloat direction = [directionAsString floatValue];
+    CGFloat heading = direction - 90;
+    
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    
+    layer.fillColor = [UIColor colorWithWhite:0.2 alpha:0.9].CGColor;
+    layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.9].CGColor;
+    layer.lineWidth = 0.5;
+    
+    layer.zPosition = -1;
+    
+    OSMPoint pt = MapPointForLatitudeLongitude(node.lat, node.lon);
+    
+    double screenAngle = OSMTransformRotation(self.mapView.screenFromMapTransform);
+    layer.affineTransform = CGAffineTransformMakeRotation(screenAngle);
+    
+    CGFloat radius = 30.0;
+    CGFloat fieldOfViewRadius = 55;
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddArc(path,
+                 NULL,
+                 0.0,
+                 0.0,
+                 radius,
+                 [self radiansFromDegrees:heading - fieldOfViewRadius / 2],
+                 [self radiansFromDegrees:heading + fieldOfViewRadius / 2],
+                 NO);
+    CGPathAddLineToPoint(path, NULL, 0, 0);
+    CGPathCloseSubpath(path);
+    layer.path = path;
+    CGPathRelease(path);
+    
+    LayerProperties *layerProperties = [LayerProperties new];
+    layerProperties->position = pt;
+    [layer setValue:layerProperties forKey:@"properties"];
+    
+    return layer;
+}
+
+- (CGFloat)radiansFromDegrees:(CGFloat)degrees {
+    return degrees * M_PI / 180;
 }
 
 -(NSMutableArray *)getShapeLayersForHighlights
@@ -2453,7 +2521,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 						}
 					}
 
-				} else {
+                } else if ([object.tags[@"surveillance:type"] isEqualToString:@"camera"] && [layer isKindOfClass:[CAShapeLayer class]]) {
+                    layer.affineTransform = CGAffineTransformMakeRotation(tRotation);
+                } else {
 
 					// its an icon or a generic box
 				}
