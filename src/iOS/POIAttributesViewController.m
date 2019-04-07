@@ -34,6 +34,8 @@ enum {
 
 @implementation POIAttributesViewController
 
+const NSInteger kCoordinateSection = 1;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -121,7 +123,7 @@ enum {
 				assert(NO);
 		}
 
-	} else {
+	} else if (indexPath.section == kCoordinateSection) {
 
 		if ( object.isNode ) {
 			OsmNode * node = object.isNode;
