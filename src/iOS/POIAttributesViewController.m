@@ -34,6 +34,8 @@ enum {
 
 @implementation POIAttributesViewController
 
+const NSInteger kCoordinateSection = 1;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -121,7 +123,7 @@ enum {
 				assert(NO);
 		}
 
-	} else {
+	} else if (indexPath.section == kCoordinateSection) {
 
 		if ( object.isNode ) {
 			OsmNode * node = object.isNode;
@@ -206,6 +208,34 @@ enum {
 
 	}
 	[super prepareForSegue:segue sender:sender];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Allow the user to copy the latitude/longitude.
+    return indexPath.section == kCoordinateSection;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+        // Allow users to copy latitude/longitude.
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (![cell isKindOfClass:[AttributeCustomCell class]]) {
+        // For cells other than `AttributeCustomCell`, we don't know how to get the value.
+        return;
+    }
+    
+    AttributeCustomCell *customCell = (AttributeCustomCell *)cell;
+    
+    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+        [UIPasteboard.generalPasteboard setString:customCell.value.text];
+    }
 }
 
 -(IBAction)cancel:(id)sender
