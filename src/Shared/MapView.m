@@ -1478,8 +1478,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
     NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
     
+    [self askUserToOpenSettingsWithAlertTitle:title message:nil];
+}
+
+- (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
-                                                                             message:nil
+                                                                             message:message
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
                                                          style:UIAlertActionStyleCancel
@@ -2350,11 +2354,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			}
 			break;
 		case ACTION_HEIGHT:
-			if ( self.gpsState != GPS_STATE_NONE ) {
-				[self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
-			} else {
-				error = NSLocalizedString(@"This action requires GPS to be turned on",nil);
-			}
+            [self presentViewControllerForMeasuringHeight];
 			break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
@@ -3671,6 +3671,21 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
 		}
 	}
+}
+
+- (void)presentViewControllerForMeasuringHeight {
+    if ( self.gpsState == GPS_STATE_NONE ) {
+        NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
+        
+        [self showAlert:errorMessage message:nil];
+    } else if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusDenied) {
+        NSString *title = NSLocalizedString(@"Unable to access the camera", "");
+        NSString *message = NSLocalizedString(@"In order to measure height, please enable camera access in the app's settings.", "");
+        
+        [self askUserToOpenSettingsWithAlertTitle:title message:message];
+    } else {
+        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
+    }
 }
 
 @end
