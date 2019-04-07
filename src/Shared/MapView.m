@@ -3670,12 +3670,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 }
 
 - (void)presentViewControllerForMeasuringHeight {
-    if ( self.gpsState != GPS_STATE_NONE ) {
-        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
-    } else {
+    if ( self.gpsState == GPS_STATE_NONE ) {
         NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
         
         [self showAlert:errorMessage message:nil];
+    } else {
+        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
     }
 }
 
