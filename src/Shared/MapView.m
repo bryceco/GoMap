@@ -1478,12 +1478,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
     NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
     
-    [self askUserToOpenSettingsWithAlertTitle:title];
+    [self askUserToOpenSettingsWithAlertTitle:title message:nil];
 }
 
-- (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title {
+- (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
-                                                                             message:nil
+                                                                             message:message
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
                                                          style:UIAlertActionStyleCancel
