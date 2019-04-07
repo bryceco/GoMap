@@ -2350,11 +2350,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			}
 			break;
 		case ACTION_HEIGHT:
-			if ( self.gpsState != GPS_STATE_NONE ) {
-				[self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
-			} else {
-				error = NSLocalizedString(@"This action requires GPS to be turned on",nil);
-			}
+            [self presentViewControllerForMeasuringHeight];
 			break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
@@ -3671,6 +3667,16 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
 		}
 	}
+}
+
+- (void)presentViewControllerForMeasuringHeight {
+    if ( self.gpsState != GPS_STATE_NONE ) {
+        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
+    } else {
+        NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
+        
+        [self showAlert:errorMessage message:nil];
+    }
 }
 
 @end
