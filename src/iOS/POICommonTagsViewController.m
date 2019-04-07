@@ -446,7 +446,9 @@
     DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:key
                                                                                               value:value];
     directionViewController.delegate = self;
-    [self.navigationController pushViewController:directionViewController animated:YES];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:directionViewController];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - <DirectionViewControllerDelegate>
