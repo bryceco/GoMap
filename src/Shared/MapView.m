@@ -3678,6 +3678,11 @@ static NSString * const DisplayLinkPanning	= @"Panning";
         NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
         
         [self showAlert:errorMessage message:nil];
+    } else if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusDenied) {
+        NSString *title = NSLocalizedString(@"Unable to access the camera", "");
+        NSString *message = NSLocalizedString(@"In order to measure height, please enable camera access in the app's settings.", "");
+        
+        [self askUserToOpenSettingsWithAlertTitle:title message:message];
     } else {
         [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
     }
