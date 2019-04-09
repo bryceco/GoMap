@@ -30,9 +30,9 @@
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmBaseObject * selection = appDelegate.mapView.editorLayer.selectedPrimary;
 	self.selection = selection;
+	self.keyValueDict = [NSMutableDictionary new];
 	self.relationList = [NSMutableArray new];
-	if ( selection && !self.keyValueDict ) {
-        self.keyValueDict = [NSMutableDictionary new];
+	if ( selection ) {
 		[selection.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * obj, BOOL *stop) {
 			[_keyValueDict setObject:obj forKey:key];
 		}];
