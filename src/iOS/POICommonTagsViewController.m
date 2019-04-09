@@ -17,7 +17,6 @@
 #import "POICommonTagsViewController.h"
 #import "POIPresetViewController.h"
 #import "POITabBarController.h"
-#import "POITabBarController.h"
 #import "POITypeViewController.h"
 #import "TagInfo.h"
 
