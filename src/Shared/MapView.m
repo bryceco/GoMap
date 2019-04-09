@@ -86,6 +86,7 @@ static const CGFloat Z_FLASH			= 110;
 @synthesize viewState			= _viewState;
 @synthesize screenFromMapTransform	= _screenFromMapTransform;
 
+const CGFloat kEditControlCornerRadius = 4;
 
 #pragma mark initialization
 
@@ -316,6 +317,7 @@ static const CGFloat Z_FLASH			= 110;
 	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] }
 									   forState:UIControlStateNormal];
 	_editControl.layer.zPosition = Z_TOOLBAR;
+    _editControl.layer.cornerRadius = kEditControlCornerRadius;
 
 	// long press for selecting from multiple objects
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
@@ -338,7 +340,7 @@ static const CGFloat Z_FLASH			= 110;
 	_notesViewDict			= [NSMutableDictionary new];
 
 	// make help button have rounded corners
-	_helpButton.layer.cornerRadius = 10.0;
+	_helpButton.layer.cornerRadius = _helpButton.bounds.size.width / 2;
 
 	// observe changes to aerial visibility so we can show/hide bing logo
 	[_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
@@ -1445,9 +1447,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		
 		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-			NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-			NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-			[self showAlert:title message:nil];
+            [self askUserToAllowLocationAccess];
+            
 			self.gpsState = GPS_STATE_NONE;
 			return;
 		}
@@ -1471,6 +1472,39 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationBallLayer removeFromSuperlayer];
 		_locationBallLayer = nil;
 	}
+}
+
+- (void)askUserToAllowLocationAccess {
+    NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+    
+    [self askUserToOpenSettingsWithAlertTitle:title message:nil];
+}
+
+- (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:nil];
+    UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self openAppSettings];
+                                                         }];
+    
+    [alertController addAction:openSettings];
+    [alertController addAction:okayAction];
+    
+    [self.viewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)openAppSettings {
+    NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if (openSettingsURL) {
+        [[UIApplication sharedApplication] openURL:openSettingsURL];
+    }
 }
 
 -(IBAction)centerOnGPS:(id)sender
@@ -2320,11 +2354,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			}
 			break;
 		case ACTION_HEIGHT:
-			if ( self.gpsState != GPS_STATE_NONE ) {
-				[self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
-			} else {
-				error = NSLocalizedString(@"This action requires GPS to be turned on",nil);
-			}
+            [self presentViewControllerForMeasuringHeight];
 			break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
@@ -3641,6 +3671,21 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
 		}
 	}
+}
+
+- (void)presentViewControllerForMeasuringHeight {
+    if ( self.gpsState == GPS_STATE_NONE ) {
+        NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
+        
+        [self showAlert:errorMessage message:nil];
+    } else if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusDenied) {
+        NSString *title = NSLocalizedString(@"Unable to access the camera", "");
+        NSString *message = NSLocalizedString(@"In order to measure height, please enable camera access in the app's settings.", "");
+        
+        [self askUserToOpenSettingsWithAlertTitle:title message:message];
+    } else {
+        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
+    }
 }
 
 #pragma mark - DirectionViewControllerDelegate
