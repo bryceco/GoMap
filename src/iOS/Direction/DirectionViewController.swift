@@ -56,6 +56,15 @@ import UIKit
                                for: .touchUpInside)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Hide the "Close" button if this view controller was part of a bigger `UINavigationController` stack.
+        if let navigationController = navigationController {
+            cancelButton.isHidden = navigationController.viewControllers.count > 1
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -75,7 +84,7 @@ import UIKit
     }
     
     @objc private func cancel() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     private func bindToViewModel() {
