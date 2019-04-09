@@ -13,7 +13,7 @@
 #import "OsmObjects.h"
 #import "POICommonTagsViewController.h"
 #import "POITabBarController.h"
-
+#import "POIAttributesViewController.h"
 
 @implementation POITabBarController
 
@@ -54,9 +54,20 @@
 - (void)updatePOIAttributesTabBarItemVisibilityWithSelectedObject:(nullable OsmBaseObject *)selectedObject {
     BOOL isAddingNewItem = selectedObject.ident.integerValue <= 0;
     if (isAddingNewItem) {
-        NSMutableArray<UIViewController *> *viewControllers = [NSMutableArray arrayWithArray:self.viewControllers];
-        [viewControllers removeLastObject];
-        [self setViewControllers:viewControllers animated:NO];
+        // Remove the `POIAttributesViewController`.
+        NSMutableArray<UIViewController *> *viewControllersToKeep = [NSMutableArray array];
+        [self.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            if ([obj isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)obj viewControllers].firstObject isKindOfClass:[POIAttributesViewController class]]) {
+                // For new objects, the navigation controller that contains the view controller
+                // for POI attributes is not needed; ignore it.
+                return;
+            } else {
+                [viewControllersToKeep addObject:obj];
+            }
+        }];
+        
+        [self setViewControllers:viewControllersToKeep animated:NO];
     }
 }
 
