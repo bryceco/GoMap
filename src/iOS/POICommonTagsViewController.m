@@ -311,10 +311,17 @@
 	CommonTagCell * cell = (id) [tableView cellForRowAtIndexPath:indexPath];
 	if ( cell.accessoryType == UITableViewCellAccessoryNone )
 		return;
+    
+    // This workaround is necessary because `tableView:cellForRowAtIndexPath:`
+    // currently sets `cell.commonTag` to an instance of `CommonTagGroup` by casting it to `id`.
+    CommonTagKey *commonTag;
+    if ([cell.commonTag isKindOfClass:[CommonTagKey class]]) {
+        commonTag = cell.commonTag;
+    }
 
 	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
-    } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:cell.commonTag.tagKey]) {
+    } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:commonTag.tagKey]) {
         [self presentDirectionViewControllerForTagWithKey:cell.commonTag.tagKey
                                                     value:cell.valueField.text];
 	} else if ( [cell.commonTag isKindOfClass:[CommonTagGroup class]] ) {
