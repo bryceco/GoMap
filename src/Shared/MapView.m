@@ -72,7 +72,7 @@ static const CGFloat Z_FLASH			= 110;
 
 
 
-@interface MapView () <DirectionViewControllerDelegate>
+@interface MapView ()
 @property (strong,nonatomic) IBOutlet UIView	*	statusBarBackground;
 @end
 
@@ -3685,27 +3685,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
         [self askUserToOpenSettingsWithAlertTitle:title message:message];
     } else {
         [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
-    }
-}
-
-#pragma mark - DirectionViewControllerDelegate
-
-- (void)directionViewControllerDidUpdateTagWithKey:(NSString *)key value:(NSString *)value {
-    if (value.length == 0) {
-        // Ignore emmpty values - keep the current one.
-    } else if (_editorLayer.selectedPrimary == nil) {
-        // Without something selected, there's no need to update anything.
-    } else {
-        // Update the object's tags.
-        OsmBaseObject *object = _editorLayer.selectedPrimary;
-        NSMutableDictionary *tags = [object.tags mutableCopy];
-        [tags setObject:value forKey:key];
-        [_editorLayer.mapData setTags:tags forObject:object];
-        
-        NSString *messageWithPlaceholders = NSLocalizedString(@"'%@' updated",
-                                                              @"Message that is displayed when a tag was successfully updated");
-        [self flashMessage:[NSString stringWithFormat:messageWithPlaceholders, key]
-                  duration:1.0];
     }
 }
 
