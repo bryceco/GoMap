@@ -75,7 +75,7 @@ import UIKit
     }
     
     @objc private func cancel() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     private func bindToViewModel() {
@@ -111,7 +111,7 @@ extension DirectionViewController: MeasureDirectionViewModelDelegate {
     func didFinishUpdatingTag(key: String, value: String?) {
         delegate?.directionViewControllerDidUpdateTag(key: key, value: value)
         
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
 
