@@ -495,7 +495,6 @@
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
-		64348D0B225EA24E00ADE7FB /* GoMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D0A225EA24E00ADE7FB /* GoMapUITests.swift */; };
 		64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */; };
 /* End PBXBuildFile section */
 
@@ -1099,7 +1098,6 @@
 		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
 		64348CEE225E7CD900ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		64348D0A225EA24E00ADE7FB /* GoMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapUITests.swift; sourceTree = "<group>"; };
 		64348D0C225EA24E00ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUITestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1850,7 +1848,6 @@
 		64348D09225EA24E00ADE7FB /* GoMapUITests */ = {
 			isa = PBXGroup;
 			children = (
-				64348D0A225EA24E00ADE7FB /* GoMapUITests.swift */,
 				64348D0C225EA24E00ADE7FB /* Info.plist */,
 				64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */,
 			);
@@ -2481,7 +2478,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64348D0B225EA24E00ADE7FB /* GoMapUITests.swift in Sources */,
 				64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
