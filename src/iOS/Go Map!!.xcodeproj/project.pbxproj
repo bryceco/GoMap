@@ -507,6 +507,7 @@
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
+		64348CF5225E817300ADE7FB /* Berlin.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 64348CF4225E817300ADE7FB /* Berlin.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1122,6 +1123,7 @@
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
+		64348CF4225E817300ADE7FB /* Berlin.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Berlin.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1444,6 +1446,7 @@
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
+				64348CF4225E817300ADE7FB /* Berlin.gpx */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -2149,6 +2152,7 @@
 				02ACBC3516713F2B00BB4414 /* place_of_worship_hindu3.p.64.png in Resources */,
 				02ACBC3616713F2B00BB4414 /* place_of_worship_islamic.p.64.png in Resources */,
 				02ACBC3716713F2B00BB4414 /* place_of_worship_islamic3.p.64.png in Resources */,
+				64348CF5225E817300ADE7FB /* Berlin.gpx in Resources */,
 				02ACBC3816713F2B00BB4414 /* place_of_worship_jain.p.64.png in Resources */,
 				02072AA91BD4465F00F1CAB4 /* 702-share@2x.png in Resources */,
 				02ACBC3916713F2B00BB4414 /* place_of_worship_jain3.p.64.png in Resources */,
