@@ -494,6 +494,11 @@
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
+		64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */; };
+		64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */; };
+		64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF9225E867800ADE7FB /* CLHeadingMock.swift */; };
+		64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */; };
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
@@ -501,7 +506,6 @@
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
-		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1093,6 +1097,13 @@
 		02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo256.png"; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
+		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
+		64348CEE225E7CD900ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadingProviderMock.swift; sourceTree = "<group>"; };
+		64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModelDelegateMock.swift; sourceTree = "<group>"; };
+		64348CF9225E867800ADE7FB /* CLHeadingMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLHeadingMock.swift; sourceTree = "<group>"; };
+		64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModelTestCase.swift; sourceTree = "<group>"; };
 		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -1100,9 +1111,6 @@
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
-		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
-		64348CEE225E7CD900ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1832,6 +1840,27 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
+		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
+			isa = PBXGroup;
+			children = (
+				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
+				64348CF6225E867800ADE7FB /* Mocks */,
+				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
+				64348CEE225E7CD900ADE7FB /* Info.plist */,
+			);
+			path = GoMapTests;
+			sourceTree = "<group>";
+		};
+		64348CF6225E867800ADE7FB /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */,
+				64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */,
+				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		6442666322540EDF00C0D545 /* Observable */ = {
 			isa = PBXGroup;
 			children = (
@@ -1852,15 +1881,6 @@
 				647F46D02253F08200CEC482 /* HeadingProvider.swift */,
 			);
 			path = Direction;
-            sourceTree = "<group>";
-        };
-		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
-			isa = PBXGroup;
-			children = (
-				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
-				64348CEE225E7CD900ADE7FB /* Info.plist */,
-			);
-			path = GoMapTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2455,7 +2475,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
+				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
+				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
+				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
