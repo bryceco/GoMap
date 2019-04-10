@@ -508,6 +508,8 @@
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64348CF5225E817300ADE7FB /* Berlin.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 64348CF4225E817300ADE7FB /* Berlin.gpx */; };
+		64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */; };
+		64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1124,6 +1126,8 @@
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64348CF4225E817300ADE7FB /* Berlin.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Berlin.gpx; sourceTree = "<group>"; };
+		64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OsmNode+Direction.swift"; sourceTree = "<group>"; };
+		64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNode_DirectionTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1868,6 +1872,7 @@
 			children = (
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
+				64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */,
 				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
 			);
@@ -1911,6 +1916,7 @@
 				64D74BF12253DF49004FFD20 /* DirectionViewController.swift */,
 				64D74BF22253DF49004FFD20 /* DirectionViewController.xib */,
 				647F46D02253F08200CEC482 /* HeadingProvider.swift */,
+				64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */,
 			);
 			path = Direction;
 			sourceTree = "<unknown>";
@@ -2495,6 +2501,7 @@
 				022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
+				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
 				02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */,
@@ -2544,6 +2551,7 @@
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
+				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
