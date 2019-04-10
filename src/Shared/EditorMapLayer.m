@@ -32,6 +32,7 @@
 #import "SpeechBalloonLayer.h"
 #import "TagInfo.h"
 #import "VectorMath.h"
+#import "Go_Map__-Swift.h"
 
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
@@ -1731,8 +1732,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         return nil;
     }
     
-    NSString *directionAsString = node.tags[@"camera:direction"];
-    CGFloat direction = [directionAsString floatValue];
+    CGFloat direction = node.direction;
+    if (direction == NSNotFound) {
+        // Without a direction, there's nothing we could display.
+        return nil;
+    }
+    
     CGFloat heading = direction - 90;
     
     CAShapeLayer *layer = [CAShapeLayer layer];
@@ -1781,12 +1786,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     BOOL isSurveillanceCamera = [node.tags[@"surveillance:type"] isEqualToString:@"camera"];
     if (!isSurveillanceCamera) {
         // For nodes other than surveillance cameras, we don't want to have a FOV shape layer.
-        return NO;
-    }
-    
-    NSString *directionAsString = node.tags[@"camera:direction"];
-    if (!directionAsString) {
-        // Without a direction, there is nothing to display.
         return NO;
     }
     
