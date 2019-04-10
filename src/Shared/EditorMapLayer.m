@@ -1727,18 +1727,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  @return A `CALayer` instance for rendering the given node's field of view.
  */
 - (CALayer *)fieldOfViewShapeLayerWithCameraNode:(OsmNode *)node {
-    BOOL isSurveillanceCamera = [node.tags[@"surveillance:type"] isEqualToString:@"camera"];
-    if (!isSurveillanceCamera) {
-        // For nodes other than surveillance cameras, we don't want to have a FOV shape layer.
+    if (![self shouldDisplayDirectionIndicatorForNode:node]) {
         return nil;
     }
     
     NSString *directionAsString = node.tags[@"camera:direction"];
-    if (!directionAsString) {
-        // Without a direction, we are not able to draw the FOV.
-        return nil;
-    }
-    
     CGFloat direction = [directionAsString floatValue];
     CGFloat heading = direction - 90;
     
@@ -1776,6 +1769,28 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     [layer setValue:layerProperties forKey:@"properties"];
     
     return layer;
+}
+
+/**
+ Determines whether the direction indicator should be displayed for the given node.
+
+ @param node The node determine the direction indicator visibility for.
+ @return YES if the direction indicator should be displayed, NO if not.
+ */
+- (BOOL)shouldDisplayDirectionIndicatorForNode:(OsmNode *)node {
+    BOOL isSurveillanceCamera = [node.tags[@"surveillance:type"] isEqualToString:@"camera"];
+    if (!isSurveillanceCamera) {
+        // For nodes other than surveillance cameras, we don't want to have a FOV shape layer.
+        return NO;
+    }
+    
+    NSString *directionAsString = node.tags[@"camera:direction"];
+    if (!directionAsString) {
+        // Without a direction, there is nothing to display.
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (CGFloat)radiansFromDegrees:(CGFloat)degrees {
