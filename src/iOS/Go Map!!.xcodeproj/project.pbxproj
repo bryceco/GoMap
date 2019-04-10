@@ -494,7 +494,18 @@
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		64348CEF225E7CD900ADE7FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02ACBA2616713CCB00BB4414 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02ACBA2E16713CCB00BB4414;
+			remoteInfo = "Go Map!!";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0205460416766808004A2A23 /* POIPresetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIPresetViewController.h; sourceTree = "<group>"; };
@@ -1075,6 +1086,9 @@
 		02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo256.png"; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
+		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
+		64348CEE225E7CD900ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1097,6 +1111,13 @@
 				02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */,
 				02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */,
 				02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64348CE7225E7CD900ADE7FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1251,6 +1272,7 @@
 			children = (
 				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
+				64348CEB225E7CD900ADE7FB /* GoMapTests */,
 				02ACBA3216713CCB00BB4414 /* Frameworks */,
 				02ACBA3016713CCB00BB4414 /* Products */,
 			);
@@ -1260,6 +1282,7 @@
 			isa = PBXGroup;
 			children = (
 				02ACBA2F16713CCB00BB4414 /* Go Map!!.app */,
+				64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1793,6 +1816,15 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
+		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
+			isa = PBXGroup;
+			children = (
+				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
+				64348CEE225E7CD900ADE7FB /* Info.plist */,
+			);
+			path = GoMapTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1813,12 +1845,31 @@
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
 			productType = "com.apple.product-type.application";
 		};
+		64348CE9225E7CD900ADE7FB /* GoMapTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64348CF3225E7CD900ADE7FB /* Build configuration list for PBXNativeTarget "GoMapTests" */;
+			buildPhases = (
+				64348CE6225E7CD900ADE7FB /* Sources */,
+				64348CE7225E7CD900ADE7FB /* Frameworks */,
+				64348CE8225E7CD900ADE7FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				64348CF0225E7CD900ADE7FB /* PBXTargetDependency */,
+			);
+			name = GoMapTests;
+			productName = GoMapTests;
+			productReference = 64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		02ACBA2616713CCB00BB4414 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Bryce;
 				TargetAttributes = {
@@ -1830,6 +1881,11 @@
 							};
 						};
 					};
+					64348CE9225E7CD900ADE7FB = {
+						CreatedOnToolsVersion = 10.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 02ACBA2E16713CCB00BB4414;
+					};
 				};
 			};
 			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Map!!" */;
@@ -1837,6 +1893,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hant",
@@ -1847,6 +1904,7 @@
 			projectRoot = "";
 			targets = (
 				02ACBA2E16713CCB00BB4414 /* Go Map!! */,
+				64348CE9225E7CD900ADE7FB /* GoMapTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2254,6 +2312,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		64348CE8225E7CD900ADE7FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2341,7 +2406,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		64348CE6225E7CD900ADE7FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		64348CF0225E7CD900ADE7FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02ACBA2E16713CCB00BB4414 /* Go Map!! */;
+			targetProxy = 64348CEF225E7CD900ADE7FB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */ = {
@@ -2529,6 +2610,77 @@
 			};
 			name = Release;
 		};
+		64348CF1225E7CD900ADE7FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = GoMapTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Go Map!!.app/Go Map!!";
+			};
+			name = Debug;
+		};
+		64348CF2225E7CD900ADE7FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = GoMapTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMapTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Go Map!!.app/Go Map!!";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2546,6 +2698,15 @@
 			buildConfigurations = (
 				02ACBA6216713CCB00BB4414 /* Debug */,
 				02ACBA6316713CCB00BB4414 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		64348CF3225E7CD900ADE7FB /* Build configuration list for PBXNativeTarget "GoMapTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64348CF1225E7CD900ADE7FB /* Debug */,
+				64348CF2225E7CD900ADE7FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
