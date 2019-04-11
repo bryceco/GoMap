@@ -179,7 +179,9 @@ double roundToEvenValue( double value )
 
 	rect.size.width = MAX(metricPixels,britishPixels);
 	rect = CGRectInset( rect, -2, -2 );
-	self.shadowPath = CGPathCreateWithRect(rect, NULL);
+	CGPathRef path2 = CGPathCreateWithRect(rect, NULL);
+	self.shadowPath = path2;
+	CGPathRelease(path2);
 }
 
 @end
