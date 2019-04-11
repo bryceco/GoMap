@@ -65,6 +65,8 @@
 		[weakSelf updateUndoRedoButtonState];
 		[weakSelf updateUploadButtonState];
 	}];
+    
+    self.locationButton.accessibilityIdentifier = @"location_button";
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];
 }
