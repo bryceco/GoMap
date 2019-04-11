@@ -1901,6 +1901,7 @@
 				647F46D02253F08200CEC482 /* HeadingProvider.swift */,
 			);
 			path = Direction;
+		};
 		64348D09225EA24E00ADE7FB /* GoMapUITests */ = {
 			isa = PBXGroup;
 			children = (
