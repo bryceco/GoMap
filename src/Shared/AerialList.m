@@ -93,7 +93,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	dispatch_once(&onceToken, ^{
 		service = [AerialService aerialWithName:@"MapnikTiles"
 									 identifier:MAPNIK_IDENTIFIER
-											url:@"http://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+											url:@"https://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 									   maxZoom:19
 										roundUp:NO
 									 wmsProjection:nil
