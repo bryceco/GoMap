@@ -9,6 +9,10 @@
 import Foundation
 
 extension OsmNode {
+    
+    /// The direction in which the node is facing.
+    /// Since Objective-C is not able to work with optionals, the direction is `NSNotFound`
+    /// if the node does not have a direction value instead of being `nil`.
     @objc var direction: Int {
         get {
             let keys = ["direction", "camera:direction"]
