@@ -783,7 +783,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return queries;
 }
 
-// http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
+// https://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
 + (void)osmDataForUrl:(NSString *)url quads:(ServerQuery *)quads completion:(void(^)(ServerQuery * quads,OsmMapData * data,NSError * error))completion
 {
 	[[DownloadThreadPool osmPool] streamForUrl:url callback:^(NSInputStream * stream,NSError * error2){
@@ -1826,7 +1826,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( xml == nil )
 		return nil;
 	// get XSLT code
-	// http://www.w3schools.com/xml/tryxslt.asp?xmlfile=simple&xsltfile=simple
+	// https://www.w3schools.com/xml/tryxslt.asp?xmlfile=simple&xsltfile=simple
 	NSString *xsltPath = [[NSBundle mainBundle] pathForResource:@"changeset" ofType:@"xsl"];
 	assert(xsltPath);
 	NSURL * xsltUrl = [NSURL fileURLWithPath:xsltPath];

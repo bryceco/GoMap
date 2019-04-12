@@ -391,7 +391,7 @@ static inline OSMPoint OSMPointApplyTransform( OSMPoint pt, OSMTransform t )
 	if ( t.m34 ) {
 		double z = t.m13 * pt.x + t.m23 * pt.y + t.m33 * zp + t.m43;
 		// use z and m34 to "shrink" objects as they get farther away (perspective)
-		// http://en.wikipedia.org/wiki/3D_projection
+		// https://en.wikipedia.org/wiki/3D_projection
 		double ex = x;	// eye position
 		double ey = y;
 		double ez = -1/t.m34;

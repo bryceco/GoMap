@@ -93,7 +93,7 @@
 
 
 // http://aprs.gids.nl/nmea/#allgp
-// http://www.gpsinformation.org/dale/nmea.htm
+// https://www.gpsinformation.org/dale/nmea.htm
 -(void)processNMEA:(NSMutableData *)data
 {
 	while ( data.length > 8 ) {
