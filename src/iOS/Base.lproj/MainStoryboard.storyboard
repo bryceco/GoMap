@@ -237,11 +237,11 @@
                         <outlet property="_uploadButton" destination="ma4-oI-tBL" id="wVI-LB-h9R"/>
                         <outlet property="locationButton" destination="e3U-Im-GKP" id="LSh-pS-Mw5"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
-                        <segue destination="siu-I6-IEp" kind="modal" identifier="searchSegue" id="iXU-B0-fRW"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
                         <segue destination="S30-cU-QcE" kind="modal" identifier="NotesSegue" id="gMc-ga-KGQ"/>
                         <segue destination="Fhw-zr-ueA" kind="modal" identifier="CalculateHeightSegue" id="Tzh-5J-H7G"/>
                         <segue destination="DCR-m3-Qgc" kind="modal" identifier="BingMetadataSegue" id="OSh-Rq-XOM"/>
+                        <segue destination="TCa-h6-J4b" kind="modal" identifier="searchSegue" id="RuH-7x-qpi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -3675,26 +3675,14 @@ This Privacy Policy may be updated from time to time for any reason. We will not
             </objects>
             <point key="canvasLocation" x="1508" y="-1584"/>
         </scene>
-        <!--Nominatum View Controller-->
+        <!--Search for Location-->
         <scene sceneID="nhJ-xs-noU">
             <objects>
-                <viewController id="siu-I6-IEp" customClass="NominatumViewController" sceneMemberID="viewController">
+                <viewController title="Search for Location" id="siu-I6-IEp" customClass="NominatumViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SQe-Tw-wQG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jyC-G0-Vbc">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <items>
-                                    <navigationItem title="Search for Location" id="Bfb-FI-LQK">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="1Lg-Le-97T">
-                                            <connections>
-                                                <action selector="cancel:" destination="siu-I6-IEp" id="JLa-m4-1ei"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <searchBar contentMode="redraw" placeholder="Niagara Falls" translatesAutoresizingMaskIntoConstraints="NO" id="xw9-Ro-Fai">
                                 <rect key="frame" x="0.0" y="64" width="320" height="56"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
@@ -3737,19 +3725,23 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <constraints>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="bottom" id="2UE-0c-j5w"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" constant="125" id="Ctw-fE-ucI"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="Jnz-cD-A1p"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="L7s-F4-sIf"/>
-                            <constraint firstItem="xw9-Ro-Fai" firstAttribute="top" secondItem="jyC-G0-Vbc" secondAttribute="bottom" id="MW5-hy-CGk"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="SBf-Qz-WXs"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="top" secondItem="JYP-Gu-HBL" secondAttribute="top" id="XOx-7Z-PXh"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="Z07-2o-YAz"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="imf-Fu-CBo"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="jrd-cT-OYe"/>
+                            <constraint firstItem="JYP-Gu-HBL" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="top" id="sPq-5G-3wa"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="centerX" secondItem="xw9-Ro-Fai" secondAttribute="centerX" id="sdn-2O-8GI"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="bottom" secondItem="SQe-Tw-wQG" secondAttribute="bottom" constant="20" id="zuH-3C-T3Q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JYP-Gu-HBL"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Search for Location" id="FaM-WV-S6I">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="1Lg-Le-97T">
+                            <connections>
+                                <action selector="cancel:" destination="siu-I6-IEp" id="JLa-m4-1ei"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="_activityIndicator" destination="BJx-hX-58b" id="Qaa-v5-g28"/>
                         <outlet property="_searchBar" destination="xw9-Ro-Fai" id="uxK-r6-i4V"/>
@@ -5468,6 +5460,22 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QOY-V7-23X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3703" y="-881"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YTa-de-xid">
+            <objects>
+                <navigationController id="TCa-h6-J4b" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gM1-Uk-3Nn">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="siu-I6-IEp" kind="relationship" relationship="rootViewController" id="r7K-5q-X63"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ep-D2-P5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="-1090"/>
         </scene>
     </scenes>
     <resources>
