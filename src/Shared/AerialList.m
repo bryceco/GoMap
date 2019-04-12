@@ -206,7 +206,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 -(NSString *)metadataUrl
 {
 	if ( self.isBingAerial ) {
-		return @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
+		return @"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
 	}
 	return nil;
 }
