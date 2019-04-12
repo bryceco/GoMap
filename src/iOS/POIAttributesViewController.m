@@ -190,17 +190,17 @@ const NSInteger kCoordinateSection = 1;
 			if ( indexPath.row == ROW_IDENTIFIER ) {
 				NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
 				web.title = type.capitalizedString;
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@", type, object.ident];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/%@/%@", type, object.ident];
 			} else if ( indexPath.row == ROW_USER ) {
 				web.title = NSLocalizedString(@"User",nil);
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/user/%@", object.user];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", object.user];
 			} else if ( indexPath.row == ROW_VERSION ) {
 				web.title = NSLocalizedString(@"History",nil);
 				NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@/history", type, object.ident];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/%@/%@/history", type, object.ident];
 			} else if ( indexPath.row == ROW_CHANGESET ) {
 				web.title = NSLocalizedString(@"Changeset",nil);
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/changeset/%ld", (long)object.changeset];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/changeset/%ld", (long)object.changeset];
 			} else {
 				assert( NO );
 			}
