@@ -1632,9 +1632,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 - (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node {
     NSMutableArray<CALayer *> *layers = [NSMutableArray array];
     
-    CALayer *fieldOfViewLayer = [self fieldOfViewShapeLayerWithCameraNode:node];
-    if (fieldOfViewLayer) {
-        [layers addObject:fieldOfViewLayer];
+    CALayer *directionLayer = [self directionShapeLayerWithNode:node];
+    if (directionLayer) {
+        [layers addObject:directionLayer];
     }
 
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
@@ -1721,13 +1721,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 }
 
 /**
- Determines the `CALayer` instance required to draw the field of view for the given `node`
- if it was a surveillance camera.
+ Determines the `CALayer` instance required to draw the direction of the given `node`.
 
- @param node The node to get the layers for.
- @return A `CALayer` instance for rendering the given node's field of view.
+ @param node The node to get the layer for.
+ @return A `CALayer` instance for rendering the given node's direction.
  */
-- (CALayer *)fieldOfViewShapeLayerWithCameraNode:(OsmNode *)node {
+- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node {
     CGFloat direction = node.direction;
     if (direction == NSNotFound) {
         // Without a direction, there's nothing we could display.
