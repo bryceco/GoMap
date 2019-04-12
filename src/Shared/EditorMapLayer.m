@@ -1741,7 +1741,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.9].CGColor;
     layer.lineWidth = 0.5;
     
-    layer.zPosition = -1;
+    layer.zPosition = Z_NODE;
     
     OSMPoint pt = MapPointForLatitudeLongitude(node.lat, node.lon);
     
