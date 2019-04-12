@@ -107,7 +107,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="XIv-Uv-W3O" kind="modal" id="CvQ-Su-F4k"/>
+                                            <segue destination="tSG-1g-AqH" kind="modal" id="D2E-xQ-BeP"/>
                                         </connections>
                                     </button>
                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
@@ -2698,7 +2698,23 @@ http://glyphish.com
             </objects>
             <point key="canvasLocation" x="-2198" y="-1090"/>
         </scene>
-        <!--Help View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="1p7-Qc-3Vu">
+            <objects>
+                <navigationController id="tSG-1g-AqH" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RlG-YW-YZ2">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="XIv-Uv-W3O" kind="relationship" relationship="rootViewController" id="uwY-mY-BQN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P2T-Yi-Ton" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2190" y="-1788"/>
+        </scene>
+        <!--Help-->
         <scene sceneID="ViH-as-IQq">
             <objects>
                 <viewController id="XIv-Uv-W3O" customClass="HelpViewController" sceneMemberID="viewController">
@@ -3474,39 +3490,30 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="at5-53-Fcu">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <items>
-                                    <navigationItem title="Help" id="hKF-nO-JpA">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="TBM-Qb-u66">
-                                            <connections>
-                                                <action selector="cancel:" destination="XIv-Uv-W3O" id="EjB-xg-Xvy"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="rQo-Nf-qGw" firstAttribute="leading" secondItem="ZCh-OS-VVE" secondAttribute="leading" id="0Qi-Fv-vmn"/>
                             <constraint firstItem="rQo-Nf-qGw" firstAttribute="bottom" secondItem="hRy-vu-CNs" secondAttribute="bottom" id="CDf-dd-22f"/>
-                            <constraint firstItem="at5-53-Fcu" firstAttribute="trailing" secondItem="ZCh-OS-VVE" secondAttribute="trailing" id="f58-BZ-43W"/>
+                            <constraint firstItem="rQo-Nf-qGw" firstAttribute="top" secondItem="ZCh-OS-VVE" secondAttribute="top" id="U7f-dy-Pwh"/>
                             <constraint firstItem="rQo-Nf-qGw" firstAttribute="trailing" secondItem="ZCh-OS-VVE" secondAttribute="trailing" id="pfi-r8-m9z"/>
-                            <constraint firstItem="at5-53-Fcu" firstAttribute="leading" secondItem="ZCh-OS-VVE" secondAttribute="leading" id="seo-1c-jiV"/>
-                            <constraint firstItem="at5-53-Fcu" firstAttribute="top" secondItem="ZCh-OS-VVE" secondAttribute="top" id="vOY-44-38b"/>
-                            <constraint firstItem="rQo-Nf-qGw" firstAttribute="top" secondItem="at5-53-Fcu" secondAttribute="bottom" id="wWv-hj-8f8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZCh-OS-VVE"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Help" id="LPf-te-M9b">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="TBM-Qb-u66">
+                            <connections>
+                                <action selector="cancel:" destination="XIv-Uv-W3O" id="EjB-xg-Xvy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="_textView" destination="rQo-Nf-qGw" id="wGj-kw-lAv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crr-EC-dTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1418" y="-1090"/>
+            <point key="canvasLocation" x="-1365" y="-1789"/>
         </scene>
         <!--Bing Metadata View Controller-->
         <scene sceneID="I12-cf-9pY">
@@ -5509,7 +5516,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="g2g-Jn-Tdv"/>
-        <segue reference="ZKT-be-rhK"/>
+        <segue reference="OEI-9h-7td"/>
         <segue reference="KuK-gp-RBs"/>
         <segue reference="FTo-kL-oAC"/>
         <segue reference="mrH-5v-JIV"/>
