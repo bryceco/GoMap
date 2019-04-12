@@ -1766,6 +1766,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     
     LayerProperties *layerProperties = [LayerProperties new];
     layerProperties->position = pt;
+    [layer setValue:@"direction" forKey:@"key"];
     [layer setValue:layerProperties forKey:@"properties"];
     
     return layer;
@@ -2514,7 +2515,8 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 						}
 					}
 
-                } else if ([object.tags[@"surveillance:type"] isEqualToString:@"camera"] && [layer isKindOfClass:[CAShapeLayer class]]) {
+                } else if ([[layer valueForKey:@"key"] isEqualToString:@"direction"]) {
+                    // This layer draws the `direction` of an object, so it needs to rotate along with the map.
                     layer.affineTransform = CGAffineTransformMakeRotation(tRotation);
                 } else {
 
