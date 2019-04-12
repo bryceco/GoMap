@@ -32,6 +32,7 @@
 #import "SpeechBalloonLayer.h"
 #import "TagInfo.h"
 #import "VectorMath.h"
+#import "Go_Map__-Swift.h"
 
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
@@ -1268,87 +1269,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	TagInfo * tagInfo = object.tagInfo;
 	NSMutableArray * layers = [NSMutableArray new];
 
-	if ( object.isNode ) {
-
-		OSMPoint pt = MapPointForLatitudeLongitude( object.isNode.lat, object.isNode.lon );
-
-		// first use TagInfo database
-		UIImage * icon = tagInfo.scaledIcon;
-		if ( icon == nil ) {
-			icon = tagInfo.icon;
-			if ( icon ) {
-				CGFloat uiScaling = [[UIScreen mainScreen] scale];
-				UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-				[icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
-				icon = UIGraphicsGetImageFromCurrentImageContext();
-				UIGraphicsEndImageContext();
-				tagInfo.scaledIcon = icon;
-			}
-		}
-		if ( icon == nil ) {
-			NSString * featureName = [CommonTagList featureNameForObjectDict:object.tags geometry:object.geometryName];
-			CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
-			icon = feature.icon;
-		}
-		if ( icon ) {
-			CALayer * layer = [CALayer new];
-			layer.bounds		= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-			layer.anchorPoint	= CGPointMake(0.5, 0.5);
-			layer.position		= CGPointMake(pt.x,pt.y);
-			layer.contents		= (id)icon.CGImage;
-			layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-			layer.cornerRadius	= 5;
-			layer.zPosition		= Z_NODE;
-
-			LayerProperties * props = [LayerProperties new];
-			[layer setValue:props forKey:@"properties"];
-			props->position = pt;
-			[layers addObject:layer];
-
-		} else {
-
-			// draw generic box
-			RGBAColor color = [self defaultColorForObject:object];
-			BOOL untagged = color.alpha == 0.0;
-			NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( object.tags ) : nil;
-			if ( houseNumber ) {
-
-				CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
-				layer.anchorPoint	= CGPointMake(0.5, 0.5);
-				layer.position		= CGPointMake(pt.x, pt.y);
-				layer.zPosition		= Z_NODE;
-				LayerProperties * props = [LayerProperties new];
-				[layer setValue:props forKey:@"properties"];
-				props->position = pt;
-
-				[layers addObject:layer];
-
-			} else {
-
-				// generic box
-				CAShapeLayer * layer = [CAShapeLayer new];
-				CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
-										 round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
-				CGPathRef path		= CGPathCreateWithRect( rect, NULL );
-				layer.path			= path;
-				layer.frame 		= CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
-												 MinIconSizeInPixels, MinIconSizeInPixels);
-				layer.position			= CGPointMake(pt.x,pt.y);
-				layer.strokeColor		= [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
-				layer.fillColor			= nil;
-				layer.lineWidth			= 2.0;
-				layer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
-				layer.cornerRadius		= 5.0;
-				layer.zPosition			= Z_NODE;
-
-				LayerProperties * props = [LayerProperties new];
-				[layer setValue:props forKey:@"properties"];
-				props->position = pt;
-
-				[layers addObject:layer];
-				CGPathRelease(path);
-			}
-		}
+    OsmNode *node = object.isNode;
+	if (node) {
+        [layers addObjectsFromArray:[self shapeLayersForForNode:node]];
 	}
 
 	// casing
@@ -1700,6 +1623,158 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	return layers;
 }
 
+/**
+ Determines the `CALayer` instances required to present the given `node` on the map.
+ 
+ @param node The `OsmNode` instance to get the layers for.
+ @return A list of `CALayer` instances that are used to represent the given `node` on the map.
+ */
+- (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node {
+    NSMutableArray<CALayer *> *layers = [NSMutableArray array];
+    
+    CALayer *directionLayer = [self directionShapeLayerWithNode:node];
+    if (directionLayer) {
+        [layers addObject:directionLayer];
+    }
+
+    OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
+    
+    // first use TagInfo database
+    UIImage * icon = node.tagInfo.scaledIcon;
+    if ( icon == nil ) {
+        icon = node.tagInfo.icon;
+        if ( icon ) {
+            CGFloat uiScaling = [[UIScreen mainScreen] scale];
+            UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
+            [icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+            icon = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            node.tagInfo.scaledIcon = icon;
+        }
+    }
+    if ( icon == nil ) {
+        NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
+        CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+        icon = feature.icon;
+    }
+    if ( icon ) {
+        CALayer * layer = [CALayer new];
+        layer.bounds        = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        layer.anchorPoint    = CGPointMake(0.5, 0.5);
+        layer.position        = CGPointMake(pt.x,pt.y);
+        layer.contents        = (id)icon.CGImage;
+        layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+        layer.cornerRadius    = 5;
+        layer.zPosition        = Z_NODE;
+        
+        LayerProperties * props = [LayerProperties new];
+        [layer setValue:props forKey:@"properties"];
+        props->position = pt;
+        [layers addObject:layer];
+        
+    } else {
+        
+        // draw generic box
+        RGBAColor color = [self defaultColorForObject:node];
+        BOOL untagged = color.alpha == 0.0;
+        NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( node.tags ) : nil;
+        if ( houseNumber ) {
+            
+            CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
+            layer.anchorPoint    = CGPointMake(0.5, 0.5);
+            layer.position        = CGPointMake(pt.x, pt.y);
+            layer.zPosition        = Z_NODE;
+            LayerProperties * props = [LayerProperties new];
+            [layer setValue:props forKey:@"properties"];
+            props->position = pt;
+            
+            [layers addObject:layer];
+            
+        } else {
+            
+            // generic box
+            CAShapeLayer * layer = [CAShapeLayer new];
+            CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
+                                     round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
+            CGPathRef path        = CGPathCreateWithRect( rect, NULL );
+            layer.path            = path;
+            layer.frame         = CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
+                                             MinIconSizeInPixels, MinIconSizeInPixels);
+            layer.position            = CGPointMake(pt.x,pt.y);
+            layer.strokeColor        = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
+            layer.fillColor            = nil;
+            layer.lineWidth            = 2.0;
+            layer.backgroundColor    = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+            layer.cornerRadius        = 5.0;
+            layer.zPosition            = Z_NODE;
+            
+            LayerProperties * props = [LayerProperties new];
+            [layer setValue:props forKey:@"properties"];
+            props->position = pt;
+            
+            [layers addObject:layer];
+            CGPathRelease(path);
+        }
+    }
+
+    return layers;
+}
+
+/**
+ Determines the `CALayer` instance required to draw the direction of the given `node`.
+
+ @param node The node to get the layer for.
+ @return A `CALayer` instance for rendering the given node's direction.
+ */
+- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node {
+    CGFloat direction = node.direction;
+    if (direction == NSNotFound) {
+        // Without a direction, there's nothing we could display.
+        return nil;
+    }
+    
+    CGFloat heading = direction - 90;
+    
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    
+    layer.fillColor = [UIColor colorWithWhite:0.2 alpha:0.9].CGColor;
+    layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.9].CGColor;
+    layer.lineWidth = 0.5;
+    
+    layer.zPosition = Z_NODE;
+    
+    OSMPoint pt = MapPointForLatitudeLongitude(node.lat, node.lon);
+    
+    double screenAngle = OSMTransformRotation(self.mapView.screenFromMapTransform);
+    layer.affineTransform = CGAffineTransformMakeRotation(screenAngle);
+    
+    CGFloat radius = 30.0;
+    CGFloat fieldOfViewRadius = 55;
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddArc(path,
+                 NULL,
+                 0.0,
+                 0.0,
+                 radius,
+                 [self radiansFromDegrees:heading - fieldOfViewRadius / 2],
+                 [self radiansFromDegrees:heading + fieldOfViewRadius / 2],
+                 NO);
+    CGPathAddLineToPoint(path, NULL, 0, 0);
+    CGPathCloseSubpath(path);
+    layer.path = path;
+    CGPathRelease(path);
+    
+    LayerProperties *layerProperties = [LayerProperties new];
+    layerProperties->position = pt;
+    [layer setValue:@"direction" forKey:@"key"];
+    [layer setValue:layerProperties forKey:@"properties"];
+    
+    return layer;
+}
+
+- (CGFloat)radiansFromDegrees:(CGFloat)degrees {
+    return degrees * M_PI / 180;
+}
 
 -(NSMutableArray *)getShapeLayersForHighlights
 {
@@ -2440,7 +2515,10 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 						}
 					}
 
-				} else {
+                } else if ([[layer valueForKey:@"key"] isEqualToString:@"direction"]) {
+                    // This layer draws the `direction` of an object, so it needs to rotate along with the map.
+                    layer.affineTransform = CGAffineTransformMakeRotation(tRotation);
+                } else {
 
 					// its an icon or a generic box
 				}
