@@ -1728,10 +1728,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  @return A `CALayer` instance for rendering the given node's field of view.
  */
 - (CALayer *)fieldOfViewShapeLayerWithCameraNode:(OsmNode *)node {
-    if (![self shouldDisplayDirectionIndicatorForNode:node]) {
-        return nil;
-    }
-    
     CGFloat direction = node.direction;
     if (direction == NSNotFound) {
         // Without a direction, there's nothing we could display.
@@ -1774,22 +1770,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     [layer setValue:layerProperties forKey:@"properties"];
     
     return layer;
-}
-
-/**
- Determines whether the direction indicator should be displayed for the given node.
-
- @param node The node determine the direction indicator visibility for.
- @return YES if the direction indicator should be displayed, NO if not.
- */
-- (BOOL)shouldDisplayDirectionIndicatorForNode:(OsmNode *)node {
-    BOOL isSurveillanceCamera = [node.tags[@"surveillance:type"] isEqualToString:@"camera"];
-    if (!isSurveillanceCamera) {
-        // For nodes other than surveillance cameras, we don't want to have a FOV shape layer.
-        return NO;
-    }
-    
-    return YES;
 }
 
 - (CGFloat)radiansFromDegrees:(CGFloat)degrees {
