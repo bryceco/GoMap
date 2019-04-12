@@ -35,6 +35,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [self.view endEditing:YES];
+    
 	[super viewWillDisappear:animated];
 	[[NSUserDefaults standardUserDefaults] setObject:_historyArray forKey:@"searchHistory"];
 }
