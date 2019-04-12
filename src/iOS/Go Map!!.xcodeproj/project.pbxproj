@@ -499,6 +499,7 @@
 		64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */; };
 		64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF9225E867800ADE7FB /* CLHeadingMock.swift */; };
 		64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */; };
+		64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */; };
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
@@ -506,7 +507,6 @@
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
-		64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1112,6 +1112,9 @@
 		64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModelDelegateMock.swift; sourceTree = "<group>"; };
 		64348CF9225E867800ADE7FB /* CLHeadingMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLHeadingMock.swift; sourceTree = "<group>"; };
 		64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModelTestCase.swift; sourceTree = "<group>"; };
+		64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		64348D0C225EA24E00ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUITestCase.swift; sourceTree = "<group>"; };
 		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -1119,9 +1122,6 @@
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
-		64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		64348D0C225EA24E00ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUITestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1881,6 +1881,15 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		64348D09225EA24E00ADE7FB /* GoMapUITests */ = {
+			isa = PBXGroup;
+			children = (
+				64348D0C225EA24E00ADE7FB /* Info.plist */,
+				64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */,
+			);
+			path = GoMapUITests;
+			sourceTree = "<group>";
+		};
 		6442666322540EDF00C0D545 /* Observable */ = {
 			isa = PBXGroup;
 			children = (
@@ -1901,15 +1910,7 @@
 				647F46D02253F08200CEC482 /* HeadingProvider.swift */,
 			);
 			path = Direction;
-		};
-		64348D09225EA24E00ADE7FB /* GoMapUITests */ = {
-			isa = PBXGroup;
-			children = (
-				64348D0C225EA24E00ADE7FB /* Info.plist */,
-				64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */,
-			);
-			path = GoMapUITests;
-			sourceTree = "<group>";
+			sourceTree = "<unknown>";
 		};
 /* End PBXGroup section */
 
