@@ -1,6 +1,6 @@
 ## Presets
 
-iD editor preset and field types are defined in [JSON](http://en.wikipedia.org/wiki/JSON)
+iD editor preset and field types are defined in [JSON](https://en.wikipedia.org/wiki/JSON)
 files located under the `data/presets` folder of the iD repository.
 
 #### Preset Files
@@ -214,7 +214,7 @@ common tag values from the Taginfo service to use as dropdown values.
 ## Icons
 
 Preset icons in iD are pulled from the open source map icon set,
-[Maki](http://www.mapbox.com/maki/).
+[Maki](https://www.mapbox.com/maki/).
 
 The icons are identified in iD by the same name as they are on the Maki home.  Use those
 names when identifying the icon to be used for a given preset.
