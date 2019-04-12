@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -2121,14 +2121,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Clear GPS Overlay Tiles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="klC-Oh-Oyd">
-                                                    <rect key="frame" x="16" y="3" width="187.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="3" width="187.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UT3-uR-YpN">
-                                                    <rect key="frame" x="16" y="23.5" width="53" height="18"/>
+                                                    <rect key="frame" x="15" y="23.5" width="53" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2921,10 +2921,10 @@ Cg
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <mutableString key="content">Tags are used to describe objects in the OpenStreetMap database, such as indicating that a location contains a shop or restaurant and what it's name is. To select an existing object, either a node or a way, simply tap it. To select a building you must select a wall rather than the center. Selected objects are highlighted in yellow and display a title (gray box) and a configuration button (blue triangle). Press the configuration button to view and edit tags. 
+                                        <string key="content">Tags are used to describe objects in the OpenStreetMap database, such as indicating that a location contains a shop or restaurant and what it's name is. To select an existing object, either a node or a way, simply tap it. To select a building you must select a wall rather than the center. Selected objects are highlighted in yellow and display a title (gray box) and a configuration button (blue triangle). Press the configuration button to view and edit tags. 
 The tag editing screen presented has three tabs of views. The first view (Common Tags) presents fields for adding common points of interest. The second tab screen allows advanced users to add arbitrary tags and values.
 The third tab screen shows metadata about the object: who created it and when, and additional low-level details. From this screen you can also drill down to information stored on the OSM server about the user, change set, object history, and object details:
-</mutableString>
+</string>
                                         <attributes>
                                             <font key="NSFont" size="14" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
@@ -3013,8 +3013,8 @@ Cg
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <mutableString key="content">If you wish to add nodes to a way there are two approaches, depending on whether you are adding the node to the middle of the way or extending it at either end. To add a node to the middle of a way: Select the way by tapping close to the position where you want the new node to appear, then press "+". A node will be added at the selected location. To append a node to the end of a way first select the way, then select a node at either end, then press "+". A new node will be added to the start or end of the way.
-</mutableString>
+                                        <string key="content">If you wish to add nodes to a way there are two approaches, depending on whether you are adding the node to the middle of the way or extending it at either end. To add a node to the middle of a way: Select the way by tapping close to the position where you want the new node to appear, then press "+". A node will be added at the selected location. To append a node to the end of a way first select the way, then select a node at either end, then press "+". A new node will be added to the start or end of the way.
+</string>
                                         <attributes>
                                             <font key="NSFont" size="14" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
@@ -3129,9 +3129,9 @@ Cg
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <mutableString key="content">When you are finished making your changes to the map you can submit your changes to the OpenStreetMap server by pressing the upload (cloud) button. If the change is uploaded successfully you will simply be returned to the map screen. After uploading you cannot undo to a previous state; all changes are final. If your upload fails because of a version conflict or other reason you can email the OSM change file ("osmChange.osc") to yourself to fix the problems offline.
+                                        <string key="content">When you are finished making your changes to the map you can submit your changes to the OpenStreetMap server by pressing the upload (cloud) button. If the change is uploaded successfully you will simply be returned to the map screen. After uploading you cannot undo to a previous state; all changes are final. If your upload fails because of a version conflict or other reason you can email the OSM change file ("osmChange.osc") to yourself to fix the problems offline.
 You must have a username and password registered at www.openstreetmap.org to upload changes, and have your username and password configured on the Settings|Credentials screen.
-</mutableString>
+</string>
                                         <attributes>
                                             <font key="NSFont" size="14" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
@@ -3813,7 +3813,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                 <navigationController id="Fx1-V2-8uJ" customClass="RotatingNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y5O-uv-8Kt">
-                        <rect key="frame" x="0.0" y="20" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
