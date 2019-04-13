@@ -13,7 +13,7 @@
 	<tag key="aeroway" value="aerodrome" name="Aerodrome" type="node;area" description="An Aerodrome (UK), Airport (US)" iconName="transport_aerodrome2" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
 	<tag key="aeroway" value="airport" name="Airport" iconName="transport_airport"/>
 	<tag key="aeroway" value="apron" name="Apron" description="An '''apron''' is the surfaced part of an airport where planes park." areaColor="990000"/>
-	<tag key="aeroway" value="gate" name="Gate" description="Used to mark the gate numbers at the airports." iconName="transport_airport_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Key:aeroway"/>
+	<tag key="aeroway" value="gate" name="Gate" description="Used to mark the gate numbers at the airports." iconName="transport_airport_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Key:aeroway"/>
 	<tag key="aeroway" value="hangar" name="Hangar" areaColor="990000"/>
 	<tag key="aeroway" value="helipad" name="Helipad" description="A place where helicopters can land." iconName="transport_helicopter_pad" areaColor="330000"/>
 	<tag key="aeroway" value="navigationaid" name="Navigation Aid" description="Used to mark air navigation aid land stations (NDB, VOR, VOR/DME, WAAS, etc.)."/>
@@ -146,7 +146,7 @@
 	<tag key="amenity" value="university" name="University" type="node;area" description="An educational institution designed for instruction, examination, or both, of students in many branches of advanced learning." iconName="education_university" />
 	<tag key="amenity" value="vending_machine" name="Vending Machine" type="node;area" description="A machine to vend goods, tickets and so on" iconName="shopping_vending_machine" />
 	<tag key="amenity" value="veterinary" name="Veterinary" type="node;area" description="A place where a veterinary surgeon (vet) practices." iconName="health_veterinary" areaColor="EEEEEE"/>
-	<tag key="amenity" value="waste_basket" name="Waste Basket" type="node;area" description="A single small container for depositing garbage that is easily accesible for pedestrians." iconName="amenity_waste_bin" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
+	<tag key="amenity" value="waste_basket" name="Waste Basket" type="node;area" description="A single small container for depositing garbage that is easily accesible for pedestrians." iconName="amenity_waste_bin" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
 	<tag key="amenity" value="waste_disposal" name="Waste Disposal" type="node;area" description="A place where canal boaters, caravaners etc. can dispose of rubbish (trash/waste)."/>
 	<tag key="amenity" value="waste_transfer_station" name="Waste Transfer Station" type="node;area" description="Location that accepts a variety of waste, consolidates and transfers it"/>
 	<tag key="amenity" value="watering_place" name="Watering Place" type="node;area" description="Place where water is contained and animals can drink."/>
@@ -154,32 +154,32 @@
 	<tag key="barrier" value="block" name="Block" type="node_in_way" description="Large immobile block(s) barring free access along a way." iconName="barrier_blocks" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="bollard" name="Bollard" type="node_in_way" description="Solid (usually concrete or metal) pillar or pillars in the middle of the road to prevent passage by some traffic." iconName="barrier_bollard" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="bus_trap" name="Bus Trap" type="node_in_way" description="A short section of the roadway where there is a deep dip in the middle to prevent passage by some traffic."/>
-	<tag key="barrier" value="cattle_grid" name="Cattle Grid" type="way;node_in_way" description="A hole in the road surface covered in a series of bars that allow wheeled vehicles but not animals to cross." iconName="barrier_cattle_grid" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
+	<tag key="barrier" value="cattle_grid" name="Cattle Grid" type="way;node_in_way" description="A hole in the road surface covered in a series of bars that allow wheeled vehicles but not animals to cross." iconName="barrier_cattle_grid" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
 	<tag key="barrier" value="chain" name="Chain" type="way;node_in_way" description="A chain used to prevent motorised vehicles."/>
 	<tag key="barrier" value="chicane" name="Chicane" type="node_in_way"/>
 	<tag key="barrier" value="city_wall" name="City Wall" type="way;node_in_way" description="is a fortification used to defend a city or settlement from potential aggressors. In ancient to modern times, they were used to enclose settlements." lineColor="F0F050" lineWidth="2.000000"/>
-	<tag key="barrier" value="cycle_barrier" name="Cycle Barrier" type="way;node_in_way" description="Barriers along paths that slow or prevent access for bicycle users." iconName="barrier_cycle_barrier" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
-	<tag key="barrier" value="ditch" name="Ditch" type="way;node_in_way" description="A ditch, trench or ravine" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dditch"/>
+	<tag key="barrier" value="cycle_barrier" name="Cycle Barrier" type="way;node_in_way" description="Barriers along paths that slow or prevent access for bicycle users." iconName="barrier_cycle_barrier" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
+	<tag key="barrier" value="ditch" name="Ditch" type="way;node_in_way" description="A ditch, trench or ravine" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dditch"/>
 	<tag key="barrier" value="entrance" name="Entrance" type="node_in_way" description="An entrance in the middle of a barrier. The type of entrance barrier plus the [[Key:entrance]] tag." iconName="barrier_entrance"/>
 	<tag key="barrier" value="fence" name="Fence" type="node_in_way" description="A fence is a freestanding structure designed to restrict or prevent movement across a boundary. It is generally distinguished from a wall by the lightness of its construction." lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="gate" name="Gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow access." iconName="barrier_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
+	<tag key="barrier" value="gate" name="Gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow access." iconName="barrier_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
 	<tag key="barrier" value="hedge" name="Hedge" type="way;node_in_way" description="A hedge is a line of closely spaced shrubs and tree species, which form a barrier or mark the boundary of an area." lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
 	<tag key="barrier" value="hedge_bank" name="Hedge Bank" type="node_in_way"/>
 	<tag key="barrier" value="horse_stile" name="Horse Stile" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gap" name="Kent Carriage Gap" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gate" name="Kent Carriage Gate" type="node_in_way"/>
-	<tag key="barrier" value="kissing_gate" name="Kissing Gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow restricted access." iconName="barrier_kissing_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
-	<tag key="barrier" value="lift_gate" name="Lift Gate" type="way;node_in_way" description="A lift gate (boom barrier) is a bar, or pole pivoted in such a way as to allow the boom to block vehicular access through a controlled point." iconName="barrier_lift_gate" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
+	<tag key="barrier" value="kissing_gate" name="Kissing Gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow restricted access." iconName="barrier_kissing_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
+	<tag key="barrier" value="lift_gate" name="Lift Gate" type="way;node_in_way" description="A lift gate (boom barrier) is a bar, or pole pivoted in such a way as to allow the boom to block vehicular access through a controlled point." iconName="barrier_lift_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
 	<tag key="barrier" value="motorcycle_barrier" name="Motorcycle Barrier" type="way;node_in_way" description="Barriers along paths that prevent access to motorcycles."/>
 	<tag key="barrier" value="retaining_wall" name="Retaining Wall" type="node_in_way" description="A retaining wall is a structure that holds back soil or rock from a building, structure or area. Retaining walls prevent downslope movement or erosion and provide support for vertical or near-vertical grade changes. Right side is bottom, left side is top" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="sally_port" name="Sally Port" type="node_in_way"/>
 	<tag key="barrier" value="spikes" name="Spikes" type="node_in_way"/>
-	<tag key="barrier" value="stile" name="Stile" type="node_in_way" description="A structure which provides people a passage through or over a boundary via steps, ladders or narrow gaps." iconName="barrier_stile" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
+	<tag key="barrier" value="stile" name="Stile" type="node_in_way" description="A structure which provides people a passage through or over a boundary via steps, ladders or narrow gaps." iconName="barrier_stile" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
 	<tag key="barrier" value="sump_buster" name="Sump Buster" type="node_in_way" description="A barrier to stop cars (two tracked vehicles with less than a certain ground clearance and width between tracks)."/>
 	<tag key="barrier" value="toll_booth" name="Toll Booth" type="node_in_way" description="A place where a road usage toll or fee is collected." iconName="barrier_toll_booth" areaColor="F0F050"/>
 	<tag key="barrier" value="turnstile" name="Turnstile" type="node_in_way" description="A passage on foot through a fence"/>
 	<tag key="barrier" value="wall" name="Wall" type="way;node_in_way" description="A wall is a freestanding structure, designed to restrict or prevent movement across a boundary, typically made from solid brick, concrete or rocks, and almost always built so that it is opaque to vision." lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="wire_fence" name="Wire Fence" type="way;node_in_way" iconName="barrier_generic" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwire_fence"/>
+	<tag key="barrier" value="wire_fence" name="Wire Fence" type="way;node_in_way" iconName="barrier_generic" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwire_fence"/>
 
 	<default key="building" areaColor="D9AD64"/>
 	<tag key="building" value="apartments" name="Apartments" type="node;area" />
@@ -225,9 +225,9 @@
 
 	<tag key="boundary" value="administrative" name="Administrative Boundary" type="way" description="An administrative boundary" iconName="poi_boundary_administrative" lineColor="B100FF" lineWidth="1.000000"/>
 	<tag key="boundary" value="national_park" type="way" description="Used for boundaries of national parks" lineColor="FF6600" lineWidth="1.000000"/>
-	<tag key="boundary" value="protected_area" description="Used to  mark the boundaries of protected areas including national parks, marine protection areas, heritage sites and indigenous areas" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
-	<tag key="boundary" value="town" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
-	<tag key="boundary" value="census" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:boundary=census"/>
+	<tag key="boundary" value="protected_area" description="Used to  mark the boundaries of protected areas including national parks, marine protection areas, heritage sites and indigenous areas" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
+	<tag key="boundary" value="town" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
+	<tag key="boundary" value="census" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=census"/>
 
 	<tag key="center_turn_lane" value="yes" name="Yes" belongsTo="highway"/>
 
@@ -453,7 +453,7 @@
 	<tag key="highway" value="lane" name="Lane" type="way"/>
 	<tag key="highway" value="living_street" name="Living Street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, etc." lineColor="DDDDDD" lineWidth="2.000000"/>
 	<tag key="highway" value="milestone" name="Milestone" type="node"/>
-	<tag key="highway" value="mini_roundabout" name="Mini Roundabout" type="node" description="A road junction where the traffic goes around a painted circle or traversable island and has right of way." iconName="transport_miniroundabout_anticlockwise" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
+	<tag key="highway" value="mini_roundabout" name="Mini Roundabout" type="node" description="A road junction where the traffic goes around a painted circle or traversable island and has right of way." iconName="transport_miniroundabout_anticlockwise" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
 	<tag key="highway" value="minor" name="Minor" type="way"/>
 	<tag key="highway" value="motorway" name="Motorway" type="way" description="High capacity highways designed to safely carry fast motor traffic." lineColor="CF2081" lineWidth="3.000000"/>
 	<tag key="highway" value="motorway_junction" name="Motorway Junction" type="way" description="Indicates a junction/exit."/>
@@ -490,7 +490,7 @@
 	<tag key="highway" value="trail" name="Trail" type="way" description="For hiking trails etc"/>
 	<tag key="highway" value="trunk" name="Trunk" type="way" description="Important roads that aren’t motorways." lineColor="DD2F22" lineWidth="3.000000"/>
 	<tag key="highway" value="trunk_link" name="Trunk Link" type="way" lineColor="DD2F22" lineWidth="2.000000"/>
-	<tag key="highway" value="turning_circle" name="Turning Circle" type="way;node_in_way" description="A widened area of road that allows vehicles to turn more easily." iconName="transport_turning_circle" wikiPage="http://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
+	<tag key="highway" value="turning_circle" name="Turning Circle" type="way;node_in_way" description="A widened area of road that allows vehicles to turn more easily." iconName="transport_turning_circle" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
 	<tag key="highway" value="turning_loop" name="Turning Loop" type="way;node_in_way" description="A widened area of a highway with a non-traversable island for turning around, often circular and at the end of a road." iconName="transport_turning_circle"/>
 	<tag key="highway" value="unclassified" name="Unclassified" type="way" description="Public access road, non-residential." lineColor="96795d" lineWidth="2.000000"/>
 	<tag key="highway" value="unsurfaced" name="Unsurfaced" type="way" lineColor="C0C0C0" lineWidth="1.000000"/>
@@ -1766,7 +1766,7 @@
 	<tag key="type" value="network" name="Network"/>
 	<tag key="type" value="observation_spot" name="Observation Spot" description="Used with man_made=survey_point to indicate a observation spot"/>
 	<tag key="type" value="public_transport" name="Public Transport" description="Represents a public transport related relation."/>
-	<tag key="type" value="restriction" name="Restriction" wikiPage="http://wiki.openstreetmap.org/wiki/Turn_restrictions"/>
+	<tag key="type" value="restriction" name="Restriction" wikiPage="https://wiki.openstreetmap.org/wiki/Turn_restrictions"/>
 	<tag key="type" value="route_master" name="Route Master"/>
 	<tag key="type" value="site" name="Site" description="Used for grouping several features together as one conceptual 'site' (eg a convention complex)."/>
 	<tag key="type" value="street" name="Street"/>

@@ -74,7 +74,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	dispatch_once(&onceToken, ^{
 		bing = [AerialService aerialWithName:@"Bing Aerial"
 								  identifier:BING_IDENTIFIER
-										 url:@"http://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
+										 url:@"https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
 									 maxZoom:21
 									 roundUp:YES
 								  wmsProjection:nil
@@ -93,7 +93,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	dispatch_once(&onceToken, ^{
 		service = [AerialService aerialWithName:@"MapnikTiles"
 									 identifier:MAPNIK_IDENTIFIER
-											url:@"http://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+											url:@"https://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 									   maxZoom:19
 										roundUp:NO
 									 wmsProjection:nil
@@ -206,7 +206,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 -(NSString *)metadataUrl
 {
 	if ( self.isBingAerial ) {
-		return @"http://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
+		return @"https://dev.virtualearth.net/REST/V1/Imagery/Metadata/Aerial/%f,%f?zl=%d&include=ImageryProviders&key=" BING_MAPS_KEY;
 	}
 	return nil;
 }
