@@ -239,9 +239,9 @@
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
                         <segue destination="Fhw-zr-ueA" kind="modal" identifier="CalculateHeightSegue" id="Tzh-5J-H7G"/>
-                        <segue destination="DCR-m3-Qgc" kind="modal" identifier="BingMetadataSegue" id="OSh-Rq-XOM"/>
                         <segue destination="TCa-h6-J4b" kind="modal" identifier="searchSegue" id="RuH-7x-qpi"/>
                         <segue destination="wrG-56-yuW" kind="modal" identifier="NotesSegue" id="ROf-ZO-hu1"/>
+                        <segue destination="rzX-ca-ESu" kind="modal" identifier="BingMetadataSegue" id="MvO-jp-eEt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -2173,16 +2173,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHr-ta-k6F">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <string key="text">Copyright © 2012-2015 Bryce Cogswell. 
+                                <mutableString key="text">Copyright © 2012-2015 Bryce Cogswell. 
 All rights reserved.
 
 OpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):
-http://www.openstreetmap.com/copyright
+https://www.openstreetmap.com/copyright
 
 Bing aerial imagery copyright Microsoft and its suppliers:
-http://www.microsoft.com/maps/product/terms.html, http://www.microsoft.com/maps/assets/docs/terms.aspx
+https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
 
-Mapbox aerial imagery copyright Mapbox and its suppliers: http://www.mapbox.com/tos
+Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos
 
 XML parsing courtesy of Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
@@ -2192,7 +2192,7 @@ http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
-</string>
+</mutableString>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -2697,6 +2697,22 @@ http://glyphish.com
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mMW-XQ-UjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2198" y="-1090"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Yja-PP-LZI">
+            <objects>
+                <navigationController id="rzX-ca-ESu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8DV-Ex-fD9">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DCR-m3-Qgc" kind="relationship" relationship="rootViewController" id="ciw-Md-Gcx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="05c-vm-Znh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1365" y="-1090"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1p7-Qc-3Vu">
@@ -3515,7 +3531,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
             </objects>
             <point key="canvasLocation" x="-1365" y="-1789"/>
         </scene>
-        <!--Bing Metadata View Controller-->
+        <!--Bing Maps-->
         <scene sceneID="I12-cf-9pY">
             <objects>
                 <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" sceneMemberID="viewController">
@@ -3523,18 +3539,6 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o07-MJ-im6">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <items>
-                                    <navigationItem title="Bing Maps" id="bp9-2D-wIC">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="AC4-hh-8iz">
-                                            <connections>
-                                                <action selector="cancel:" destination="DCR-m3-Qgc" id="8ju-1i-8uA"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing_rgb.png" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
                                 <rect key="frame" x="20" y="70" width="104" height="32"/>
                                 <constraints>
@@ -3554,21 +3558,25 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="o07-MJ-im6" secondAttribute="bottom" constant="6" id="GOW-bt-J4u"/>
+                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" constant="6" id="DF9-IQ-f5Q"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="trailing" secondItem="peH-96-gWt" secondAttribute="trailing" constant="20" id="Gbj-CW-o1z"/>
                             <constraint firstItem="peH-96-gWt" firstAttribute="top" secondItem="UQm-nn-P6E" secondAttribute="bottom" constant="10" id="LDs-I1-aby"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="bottom" secondItem="peH-96-gWt" secondAttribute="bottom" constant="20" id="MBt-TZ-IJx"/>
-                            <constraint firstItem="o07-MJ-im6" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" id="MSJ-1V-pQc"/>
                             <constraint firstItem="peH-96-gWt" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="Pxd-vG-XoU"/>
-                            <constraint firstItem="o07-MJ-im6" firstAttribute="trailing" secondItem="A8k-Ic-iRd" secondAttribute="trailing" id="S1t-Oe-Q2A"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="centerY" secondItem="UQm-nn-P6E" secondAttribute="centerY" id="UMF-Ru-SZ8"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="126" id="XXx-3q-VEr"/>
-                            <constraint firstItem="o07-MJ-im6" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" id="lP4-2E-6YN"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="UQm-nn-P6E" secondAttribute="trailing" constant="2" id="mBW-14-KcJ"/>
                             <constraint firstItem="UQm-nn-P6E" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="qzq-UY-gsf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="A8k-Ic-iRd"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Bing Maps" id="Qz0-Ce-YCX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="AC4-hh-8iz">
+                            <connections>
+                                <action selector="cancel:" destination="DCR-m3-Qgc" id="8ju-1i-8uA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="nrQ-9V-0ML" id="bD0-eM-Al9"/>
                         <outlet property="textView" destination="peH-96-gWt" id="oF9-ze-EOx"/>

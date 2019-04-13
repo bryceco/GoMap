@@ -129,7 +129,7 @@
 		[_activityIndicator startAnimating];
 
 		NSString * text = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-		NSString * url = [NSString stringWithFormat:@"http://nominatim.openstreetmap.org/search?q=%@&format=json",text];
+		NSString * url = [NSString stringWithFormat:@"https://nominatim.openstreetmap.org/search?q=%@&format=json",text];
 		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				
@@ -140,7 +140,7 @@
 					/*
 					 {
 					 "place_id":"5639098",
-					 "licence":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright",
+					 "licence":"Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https:\/\/www.openstreetmap.org\/copyright",
 					 "osm_type":"node",
 					 "osm_id":"585214834",
 					 "boundingbox":["55.9587516784668","55.9587554931641","-3.20986247062683","-3.20986223220825"],
@@ -148,7 +148,7 @@
 					 "display_name":"Hectors, Deanhaugh Street, Stockbridge, Dean, Edinburgh, City of Edinburgh, Scotland, EH4 1NE, United Kingdom",
 					 "class":"amenity",
 					 "type":"pub",
-					 "icon":"http:\/\/nominatim.openstreetmap.org\/images\/mapicons\/food_pub.p.20.png"
+					 "icon":"https:\/\/nominatim.openstreetmap.org\/images\/mapicons\/food_pub.p.20.png"
 					 },
 					 */
 					
