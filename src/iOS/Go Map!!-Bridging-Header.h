@@ -3,3 +3,4 @@
 //
 
 #import "OsmObjects.h"
+#import "CommonTagList.h"
