@@ -80,7 +80,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 								  wmsProjection:nil
 									 polygon:NULL
 								attribString:@""
-								  attribIcon:[UIImage imageNamed:@"BingLogo.png"]
+								  attribIcon:[UIImage imageNamed:@"bing-logo"]
 								   attribUrl:nil];
 	});
 	return bing;
