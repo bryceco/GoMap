@@ -84,7 +84,7 @@
                                             <constraint firstAttribute="height" constant="24" id="SkQ-sE-D6j"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <state key="normal" title="Bing attribution" image="bing-logo">
+                                        <state key="normal" title="Bing attribution" image="bing-logo-white">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -5508,7 +5508,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <image name="751-eye-toolbar.png" width="22" height="12"/>
         <image name="852-map-toolbar.png" width="22" height="18"/>
         <image name="982-food-toolbar.png" width="22" height="18"/>
-        <image name="bing-logo" width="78.5" height="17"/>
+        <image name="bing-logo-white" width="78.5" height="17"/>
         <image name="bing_rgb.png" width="408" height="144"/>
         <image name="compass.png" width="100" height="100"/>
         <image name="redo32.png" width="32" height="26"/>
