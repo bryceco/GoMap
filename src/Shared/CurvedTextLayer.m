@@ -343,7 +343,6 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 			layer.wrapped			= NO;
 			layer.alignmentMode		= kCAAlignmentCenter;
 
-			layer.shouldRasterize	= YES;
 #if TARGET_OS_IPHONE
 			layer.contentsScale		= [[UIScreen mainScreen] scale];
 #endif
