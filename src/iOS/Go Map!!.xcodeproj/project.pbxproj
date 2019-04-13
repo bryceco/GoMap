@@ -1065,7 +1065,6 @@
 		02BF745320793F0A0028ED6A /* TurnRestrictController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurnRestrictController.m; sourceTree = "<group>"; };
 		02C19B331699E8BF00F75E3C /* BingMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BingMetadataViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C19B341699E8C000F75E3C /* BingMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BingMetadataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		02C19B361699EA7A00F75E3C /* bing_rgb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bing_rgb.png; sourceTree = "<group>"; };
 		02C3C73219A5A40C003B6783 /* AerialListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AerialListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C3C73319A5A40C003B6783 /* AerialListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AerialListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02C3C73519A5D679003B6783 /* AerialEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AerialEditViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1209,7 +1208,6 @@
 				02072ABF1BD44B2800F1CAB4 /* 1200-file-type-settings-toolbar@3x.png */,
 				02205F3A1674550D00D57D23 /* ArrowBlack.png */,
 				0242331216750C81008A3B6A /* ArrowBlue.png */,
-				02C19B361699EA7A00F75E3C /* bing_rgb.png */,
 				02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */,
 				02ACBA6F16713F2A00BB4414 /* BlueBall.png */,
 				0296876A1680D57700B8FF2C /* bullseye.png */,
@@ -2407,7 +2405,6 @@
 				02072AC81BD452F200F1CAB4 /* 982-food-toolbar@3x.png in Resources */,
 				025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */,
 				025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */,
-				02C19B371699EA7A00F75E3C /* bing_rgb.png in Resources */,
 				02072AC61BD452F200F1CAB4 /* 982-food-toolbar.png in Resources */,
 				020CD975169D4B5A00BF3AAF /* Default-Portrait~ipad.png in Resources */,
 				020CD977169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png in Resources */,
