@@ -3535,7 +3535,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing_rgb.png" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
                                 <rect key="frame" x="20" y="70" width="104" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="104" id="1vt-lM-5xK"/>
@@ -5508,8 +5508,8 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <image name="751-eye-toolbar.png" width="22" height="12"/>
         <image name="852-map-toolbar.png" width="22" height="18"/>
         <image name="982-food-toolbar.png" width="22" height="18"/>
+        <image name="bing-logo-gray" width="78.5" height="17"/>
         <image name="bing-logo-white" width="78.5" height="17"/>
-        <image name="bing_rgb.png" width="408" height="144"/>
         <image name="compass.png" width="100" height="100"/>
         <image name="redo32.png" width="32" height="26"/>
         <image name="undo32.png" width="32" height="26"/>
