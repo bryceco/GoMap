@@ -505,6 +505,8 @@
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
+		64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */; };
+		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */; };
@@ -1122,6 +1124,8 @@
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
+		64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTagKeyTestCase.swift; sourceTree = "<group>"; };
+		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OsmNode+Direction.swift"; sourceTree = "<group>"; };
@@ -1867,10 +1871,12 @@
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
 				64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */,
 				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
+				64C072FC22622B9C00598078 /* Vendor */,
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
 			);
 			path = GoMapTests;
@@ -1904,6 +1910,14 @@
 			);
 			name = Observable;
 			path = ../Shared/Observable;
+			sourceTree = "<group>";
+		};
+		64C072FC22622B9C00598078 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				64C072FD22622B9C00598078 /* Require.swift */,
+			);
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 		64D74BF02253DF39004FFD20 /* Direction */ = {
@@ -2543,9 +2557,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
+				64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
+				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
 			);

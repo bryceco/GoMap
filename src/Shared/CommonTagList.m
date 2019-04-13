@@ -229,11 +229,11 @@ static NSString * PrettyTag( NSString * tag )
 					if ( i >= presets.count )
 						break;
 					CommonTagValue * p = presets[i];
-					if ( p.tagValue.length >= 20 )
+					if ( p.name.length >= 20 )
 						continue;
 					if ( s.length )
 						[s appendString:@", "];
-					[s appendString:p.tagValue];
+					[s appendString:p.name];
 				}
 				[s appendString:@"..."];
 				placeholder = s;
