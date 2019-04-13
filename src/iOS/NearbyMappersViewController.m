@@ -70,7 +70,7 @@
 
 	WebPageViewController * web = segue.destinationViewController;
 	web.title = NSLocalizedString(@"User",nil);
-	web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/user/%@", user];
+	web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", user];
 
 	[super prepareForSegue:segue sender:sender];
 }
