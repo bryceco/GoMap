@@ -261,7 +261,7 @@ double SurfaceArea( OSMRect latLon )
 }
 
 
-// https://www.movable-type.co.uk/scripts/latlong.html
+// http://www.movable-type.co.uk/scripts/latlong.html
 double GreatCircleDistance( OSMPoint p1, OSMPoint p2 )
 {
 	const double earthRadius = 6378137.0; // meters

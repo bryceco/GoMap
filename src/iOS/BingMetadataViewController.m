@@ -12,7 +12,7 @@
 #import "BingMetadataViewController.h"
 #import "MercatorTileLayer.h"
 
-// https://www.microsoft.com/maps/attribution.aspx
+// http://www.microsoft.com/maps/attribution.aspx
 
 
 @implementation BingMetadataViewController

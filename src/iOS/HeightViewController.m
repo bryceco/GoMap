@@ -238,7 +238,7 @@ static const CGFloat InsetPercent = 0.15;
 			double	focal_length;
 			double	vertical_sensor_size;
 		} ModelList[] = {
-			// https://caramba-apps.com/blog/files/field-of-view-angles-ipad-iphone.html
+			// http://caramba-apps.com/blog/files/field-of-view-angles-ipad-iphone.html
 
 			{ "iPad5,4",	0, 3.3, 0 },		// iPad Air 2
 			{ "iPad4,5",	0 },				// iPad Mini (2nd Generation iPad Mini - Cellular)
