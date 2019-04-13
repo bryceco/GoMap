@@ -589,7 +589,12 @@ const CGFloat kEditControlCornerRadius = 4;
 	AerialService * service = self.aerialLayer.aerialService;
 	_aerialServiceLogo.hidden = self.aerialLayer.hidden || (service.attributionString.length == 0 && service.attributionIcon == nil);
 	if ( !_aerialServiceLogo.hidden ) {
-		[service scaleAttributionIconToHeight:_aerialServiceLogo.frame.size.height];
+        // For Bing maps, the attribution icon is part of the app's assets and already has the desired size,
+        // so there's no need to scale it.
+        if (!service.isBingAerial) {
+            [service scaleAttributionIconToHeight:_aerialServiceLogo.frame.size.height];
+        }
+		
 		[_aerialServiceLogo setImage:service.attributionIcon forState:UIControlStateNormal];
 		[_aerialServiceLogo setTitle:service.attributionString forState:UIControlStateNormal];
 	}
