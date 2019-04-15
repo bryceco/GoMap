@@ -511,6 +511,7 @@
 		64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */; };
 		64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
+		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1130,6 +1131,7 @@
 		64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OsmNode+Direction.swift"; sourceTree = "<group>"; };
 		64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNode_DirectionTestCase.swift; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1878,6 +1880,7 @@
 				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
 				64C072FC22622B9C00598078 /* Vendor */,
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
+				64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -2572,6 +2575,7 @@
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
+				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,3 +7,4 @@
 #import "LoginViewController.h"
 #import "KeyChain.h"
 #import "AppDelegate.h"
+#import "OsmMapData.h"

@@ -123,7 +123,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	if ( [hostname hasSuffix:@"/"] ) {
 		// great
 	} else {
-		hostname = [hostname stringByAppendingString:@"//"];
+		hostname = [hostname stringByAppendingString:@"/"];
 	}
 
 	if ( OSM_API_URL.length ) {
