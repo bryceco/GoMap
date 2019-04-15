@@ -1,5 +1,5 @@
 //
-//  XmlParserDelegate.h
+//  OsmMapData.h
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 9/1/12.
