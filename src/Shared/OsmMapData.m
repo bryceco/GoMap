@@ -1570,12 +1570,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:tags];
 	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/changeset/create"];
 	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * putData,NSString * putErrorMessage){
-		if ( putData ) {
-			NSString * changesetID = [[NSString alloc] initWithBytes:putData.bytes length:putData.length encoding:NSUTF8StringEncoding];
-			completion(changesetID,nil);
-		} else {
-			completion(nil,putErrorMessage);
-		}
+        if (!putData || putErrorMessage) {
+            completion(nil, putErrorMessage);
+            return;
+        }
+        
+        NSString *responseString = [[NSString alloc] initWithBytes:putData.bytes length:putData.length encoding:NSUTF8StringEncoding];
+        
+        NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        if ([responseString rangeOfCharacterFromSet:notDigits].location == NSNotFound) {
+            // The response string only contains of the digits 0 through 9.
+            // Assume that the request was successful and that the server responded with a changeset ID.
+            completion(responseString, nil);
+        } else {
+            // The response did not only contain digits; treat this as an error.
+            completion(nil, responseString);
+        }
 	}];
 }
 
