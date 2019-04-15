@@ -12,13 +12,16 @@ import XCTest
 class OSMMapDataTestCase: XCTestCase {
     
     var mapData: OsmMapData!
+    var userDefaults: UserDefaults!
 
     override func setUp() {
-        mapData = OsmMapData()
+        userDefaults = createDedicatedUserDefaults()
+        mapData = OsmMapData(userDefaults: userDefaults)
     }
 
     override func tearDown() {
         mapData = nil
+        userDefaults = nil
     }
     
     func testSetServerShouldAddThePathSeparatorSuffixIfItDoesNotExist() {
