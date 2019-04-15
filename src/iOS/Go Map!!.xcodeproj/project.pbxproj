@@ -512,6 +512,7 @@
 		64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
+		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1132,6 +1133,7 @@
 		64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNode_DirectionTestCase.swift; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
+		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1873,6 +1875,7 @@
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				64E21EB622651F0D004605D7 /* Helpers */,
 				64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
@@ -1941,6 +1944,14 @@
 				64E21EB222651620004605D7 /* LoginViewController.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		64E21EB622651F0D004605D7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2572,6 +2583,7 @@
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
+				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
