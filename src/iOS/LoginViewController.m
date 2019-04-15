@@ -68,6 +68,8 @@
 			_password.text	= password;
 			[_username resignFirstResponder];
 			[_password resignFirstResponder];
+            
+            [self saveVerifiedCredentialsWithUsername:username password:password];
 
 			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Login successful",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
 			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
