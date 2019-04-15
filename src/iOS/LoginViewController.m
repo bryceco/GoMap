@@ -89,14 +89,6 @@
 	_verifyButton.enabled = _username.text.length && _password.text.length;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-    
-    [self saveVerifiedCredentialsWithUsername:[_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-                                     password:[_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-}
-
 #pragma mark - Table view delegate
 
 @end
