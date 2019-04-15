@@ -40,10 +40,13 @@
 {
 	if ( _activityIndicator.isAnimating )
 		return;
+    
+    NSString *username = [_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *password = [_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
-	appDelegate.userName		= [_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	appDelegate.userPassword	= [_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    appDelegate.userName		= username;
+    appDelegate.userPassword	= password;
 
 	_activityIndicator.color = UIColor.darkGrayColor;
 	[_activityIndicator startAnimating];
@@ -61,8 +64,8 @@
 			[self presentViewController:alert animated:YES completion:nil];
 		} else {
 			// verifying credentials may update the appDelegate values when we subsitute name for correct case:
-			_username.text	= appDelegate.userName;
-			_password.text	= appDelegate.userPassword;
+			_username.text	= username;
+			_password.text	= password;
 			[_username resignFirstResponder];
 			[_password resignFirstResponder];
 
