@@ -89,13 +89,9 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-
-	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
-	appDelegate.userName		= [_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	appDelegate.userPassword	= [_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-	[KeyChain setString:appDelegate.userName forIdentifier:@"username"];
-	[KeyChain setString:appDelegate.userPassword forIdentifier:@"password"];
+    
+    [self saveVerifiedCredentialsWithUsername:[_username.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
+                                     password:[_password.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
 }
 
 #pragma mark - Table view delegate
