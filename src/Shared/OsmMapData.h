@@ -64,6 +64,14 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 	NSTimer				*	_periodicSaveTimer;
 }
 
+/**
+ Initializes the object.
+
+ @param userDefaults The `UserDefaults` instance to use.
+ @return An initialized instance of this object.
+ */
+- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults;
+
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
 
