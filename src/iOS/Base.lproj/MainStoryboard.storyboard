@@ -1172,8 +1172,8 @@
                     <connections>
                         <outlet property="_activityIndicator" destination="jcT-tR-WDO" id="J8A-AQ-LZf"/>
                         <outlet property="_password" destination="e7I-rE-dAW" id="Ugu-EO-x5C"/>
+                        <outlet property="_saveButton" destination="ctb-pg-pM9" id="qk6-V6-1jq"/>
                         <outlet property="_username" destination="YQ4-05-lQz" id="ge6-8t-VeT"/>
-                        <outlet property="_verifyButton" destination="ctb-pg-pM9" id="5cm-I2-11p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CzF-UG-rbA" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -10,7 +10,7 @@
 
 @interface LoginViewController : UITableViewController
 {
-	IBOutlet UIBarButtonItem			*	_verifyButton;
+	IBOutlet UIBarButtonItem			*	_saveButton;
 	IBOutlet UITextField				*	_username;
 	IBOutlet UITextField				*	_password;
 	IBOutlet UIActivityIndicatorView	*	_activityIndicator;

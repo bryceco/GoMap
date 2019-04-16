@@ -27,7 +27,7 @@
 
 - (IBAction)textFieldDidChange:(id)sender
 {
-	_verifyButton.enabled = _username.text.length && _password.text.length;
+	_saveButton.enabled = _username.text.length && _password.text.length;
 }
 
 - (IBAction)registerAccount:(id)sender
@@ -88,7 +88,7 @@
 	_username.text	= appDelegate.userName;
 	_password.text	= appDelegate.userPassword;
 
-	_verifyButton.enabled = _username.text.length && _password.text.length;
+	_saveButton.enabled = _username.text.length && _password.text.length;
 }
 
 #pragma mark - Table view delegate
