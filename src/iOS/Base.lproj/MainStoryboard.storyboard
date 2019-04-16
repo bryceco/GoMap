@@ -1163,7 +1163,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Login" id="O6E-f1-A1k">
                         <barButtonItem key="backBarButtonItem" title="Back" id="kt1-K7-kcu"/>
-                        <barButtonItem key="rightBarButtonItem" title="Verify" style="done" id="ctb-pg-pM9">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="ctb-pg-pM9">
                             <connections>
                                 <action selector="verifyAccount:" destination="kl3-Fg-1QU" id="qEc-ab-jnj"/>
                             </connections>
