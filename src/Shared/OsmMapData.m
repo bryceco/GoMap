@@ -1,5 +1,5 @@
 //
-//  XmlParserDelegate.m
+//  OsmMapData.m
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 9/1/12.
@@ -52,6 +52,7 @@ NSString * OSM_API_URL;
 
 @interface OsmMapData ()
 
+@property (readonly,nonnull) NSUserDefaults *userDefaults;
 @property (readonly,nonnull)    NSDate *            previousDiscardDate;
 
 @end
@@ -76,31 +77,29 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-		[defaults registerDefaults:@{ OSM_SERVER_KEY : @"https://api.openstreetmap.org/" }];
-		NSString * server = [defaults objectForKey:OSM_SERVER_KEY];
+		[self.userDefaults registerDefaults:@{ OSM_SERVER_KEY : @"https://api.openstreetmap.org/" }];
+		NSString * server = [self.userDefaults objectForKey:OSM_SERVER_KEY];
 		[self setServer:server];
 		
 		[self setupPeriodicSaveTimer];
 	});
 }
 
-
--(id)init
-{
-	self = [super init];
-	if ( self ) {
-		_parserStack	= [NSMutableArray arrayWithCapacity:20];
-		_nodes			= [NSMutableDictionary dictionaryWithCapacity:1000];
-		_ways			= [NSMutableDictionary dictionaryWithCapacity:1000];
-		_relations		= [NSMutableDictionary dictionaryWithCapacity:10];
-		_region			= [QuadMap new];
-		_spatial		= [QuadMap new];
-		_undoManager	= [UndoManager new];
-
-		[self initCommon];
-	}
-	return self;
+- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults {
+    if (self = [super init]) {
+        _userDefaults = userDefaults;
+        _parserStack    = [NSMutableArray arrayWithCapacity:20];
+        _nodes            = [NSMutableDictionary dictionaryWithCapacity:1000];
+        _ways            = [NSMutableDictionary dictionaryWithCapacity:1000];
+        _relations        = [NSMutableDictionary dictionaryWithCapacity:10];
+        _region            = [QuadMap new];
+        _spatial        = [QuadMap new];
+        _undoManager    = [UndoManager new];
+        
+        [self initCommon];
+    }
+    
+    return self;
 }
 
 -(void)dealloc
@@ -123,7 +122,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	if ( [hostname hasSuffix:@"/"] ) {
 		// great
 	} else {
-		hostname = [hostname stringByAppendingString:@"//"];
+		hostname = [hostname stringByAppendingString:@"/"];
 	}
 
 	if ( OSM_API_URL.length ) {
@@ -131,8 +130,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		[self purgeSoft];
 	}
 	
-	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:hostname forKey:OSM_SERVER_KEY];
+	[self.userDefaults setObject:hostname forKey:OSM_SERVER_KEY];
 	OSM_API_URL = hostname;
 	
 	NSURL * url = [NSURL URLWithString:OSM_API_URL];
@@ -796,7 +794,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		} else {
 
-			OsmMapData * mapData = [[OsmMapData alloc] init];
+			OsmMapData * mapData = [[OsmMapData alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
 			NSError * error = nil;
 			BOOL ok = [mapData parseXmlStream:stream error:&error];
 			if ( !ok ) {
@@ -1572,12 +1570,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSXMLDocument * xmlCreate = [OsmMapData createXmlWithType:@"changeset" tags:tags];
 	NSString * url = [OSM_API_URL stringByAppendingString:@"api/0.6/changeset/create"];
 	[self putRequest:url method:@"PUT" xml:xmlCreate completion:^(NSData * putData,NSString * putErrorMessage){
-		if ( putData ) {
-			NSString * changesetID = [[NSString alloc] initWithBytes:putData.bytes length:putData.length encoding:NSUTF8StringEncoding];
-			completion(changesetID,nil);
-		} else {
-			completion(nil,putErrorMessage);
-		}
+        if (!putData || putErrorMessage) {
+            completion(nil, putErrorMessage);
+            return;
+        }
+        
+        NSString *responseString = [[NSString alloc] initWithBytes:putData.bytes length:putData.length encoding:NSUTF8StringEncoding];
+        
+        NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        if ([responseString rangeOfCharacterFromSet:notDigits].location == NSNotFound) {
+            // The response string only contains of the digits 0 through 9.
+            // Assume that the request was successful and that the server responded with a changeset ID.
+            completion(responseString, nil);
+        } else {
+            // The response did not only contain digits; treat this as an error.
+            completion(nil, responseString);
+        }
 	}];
 }
 
@@ -1906,7 +1914,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(OsmMapData *)modifiedObjects
 {
 	// get modified nodes and ways
-	OsmMapData * modified = [[OsmMapData alloc] init];
+	OsmMapData * modified = [[OsmMapData alloc] initWithUserDefaults:self.userDefaults];
 
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmNode * object, BOOL *stop) {
 		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {
@@ -2362,7 +2370,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSMutableDictionary * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
 
-			OsmMapData * newData = [[OsmMapData alloc] init];
+			OsmMapData * newData = [[OsmMapData alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
 			newData->_nodes = newNodes;
 			newData->_ways = newWays;
 			newData->_relations = newRelations;

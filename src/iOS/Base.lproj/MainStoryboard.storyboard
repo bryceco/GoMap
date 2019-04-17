@@ -1062,7 +1062,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" translatesAutoresizingMaskIntoConstraints="NO" id="YQ4-05-lQz">
                                                     <rect key="frame" x="142" y="11.5" width="159" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="5aR-9a-sW0"/>
                                                         <action selector="textFieldReturn:" destination="kl3-Fg-1QU" eventType="editingDidEndOnExit" id="HIT-FM-Ke9"/>
@@ -1163,7 +1163,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Login" id="O6E-f1-A1k">
                         <barButtonItem key="backBarButtonItem" title="Back" id="kt1-K7-kcu"/>
-                        <barButtonItem key="rightBarButtonItem" title="Verify" style="done" id="ctb-pg-pM9">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="ctb-pg-pM9">
                             <connections>
                                 <action selector="verifyAccount:" destination="kl3-Fg-1QU" id="qEc-ab-jnj"/>
                             </connections>
@@ -1172,8 +1172,8 @@
                     <connections>
                         <outlet property="_activityIndicator" destination="jcT-tR-WDO" id="J8A-AQ-LZf"/>
                         <outlet property="_password" destination="e7I-rE-dAW" id="Ugu-EO-x5C"/>
+                        <outlet property="_saveButton" destination="ctb-pg-pM9" id="qk6-V6-1jq"/>
                         <outlet property="_username" destination="YQ4-05-lQz" id="ge6-8t-VeT"/>
-                        <outlet property="_verifyButton" destination="ctb-pg-pM9" id="5cm-I2-11p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CzF-UG-rbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
