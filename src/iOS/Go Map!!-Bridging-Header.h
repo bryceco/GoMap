@@ -4,3 +4,5 @@
 
 #import "OsmObjects.h"
 #import "CommonTagList.h"
+#import "SettingsViewController.h"
+#import "AppDelegate.h"
