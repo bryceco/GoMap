@@ -207,6 +207,10 @@
 {
 	return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
+
+- (NSString *)appBuildNumber {
+    return NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"];
+}
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {

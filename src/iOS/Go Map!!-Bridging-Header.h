@@ -8,3 +8,4 @@
 #import "KeyChain.h"
 #import "AppDelegate.h"
 #import "OsmMapData.h"
+#import "SettingsViewController.h"
