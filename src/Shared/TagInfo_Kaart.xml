@@ -469,6 +469,7 @@
 	<tag key="highway" value="proposed" name="Proposed" type="way"/>
 	<tag key="highway" value="raceway" name="Raceway" type="way"/>
 	<tag key="highway" value="residential" name="Residential" type="way" description="Road in a residential area" lineColor="FFFFFF" lineWidth="2.000000"/>
+ 	<tag key="highway" value="residential" name="Motorcycle only" type="way" belongsTo="motorcycle=yes;motor_vehicle=no" description="Road in a residential area where only motorcycles are allowed" lineColor="0000FF" lineWidth="2.000000" /> 
 	<tag key="highway" value="rest_area" name="Rest Area" type="way;node_in_way" description="Place where drivers can leave the road to rest, but not refuel." areaColor="C0C0C0"/>
 	<tag key="highway" value="road" name="Road" type="way" description="Road with unknown classification." lineColor="808080" lineWidth="2.000000"/>
 	<tag key="highway" value="secondary" name="Secondary" type="way" description="A highway linking large towns." lineColor="FFFF00" lineWidth="3.000000"/>
