@@ -63,7 +63,6 @@
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
-		023D1720168A30C00011FABC /* BingLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 023D171F168A30C00011FABC /* BingLogo.png */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
 		02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02401F381DE1369E00F32AF5 /* ExternalGPS.m */; };
@@ -467,7 +466,6 @@
 		02BF745120793EE20028ED6A /* TurnRestrictHwyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BF745020793EE20028ED6A /* TurnRestrictHwyView.m */; };
 		02BF745420793F0A0028ED6A /* TurnRestrictController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BF745320793F0A0028ED6A /* TurnRestrictController.m */; };
 		02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C19B341699E8C000F75E3C /* BingMetadataViewController.m */; };
-		02C19B371699EA7A00F75E3C /* bing_rgb.png in Resources */ = {isa = PBXBuildFile; fileRef = 02C19B361699EA7A00F75E3C /* bing_rgb.png */; };
 		02C3C73419A5A40C003B6783 /* AerialListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73319A5A40C003B6783 /* AerialListViewController.m */; };
 		02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73619A5D679003B6783 /* AerialEditViewController.m */; };
 		02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73919A6DCEA003B6783 /* AerialList.m */; };
@@ -505,12 +503,17 @@
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
+		64C968452261ED3100351C0C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64C968442261ED3100351C0C /* Media.xcassets */; };
+		64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* SettingsViewController.swift */; };
 		64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */; };
 		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */; };
 		64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */; };
+		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
+		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
+		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -604,7 +607,6 @@
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CustomPresetController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Go Map!!/Images.xcassets"; sourceTree = "<group>"; };
-		023D171F168A30C00011FABC /* BingLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BingLogo.png; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
@@ -1067,7 +1069,6 @@
 		02BF745320793F0A0028ED6A /* TurnRestrictController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurnRestrictController.m; sourceTree = "<group>"; };
 		02C19B331699E8BF00F75E3C /* BingMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BingMetadataViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C19B341699E8C000F75E3C /* BingMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BingMetadataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		02C19B361699EA7A00F75E3C /* bing_rgb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bing_rgb.png; sourceTree = "<group>"; };
 		02C3C73219A5A40C003B6783 /* AerialListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AerialListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C3C73319A5A40C003B6783 /* AerialListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AerialListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02C3C73519A5D679003B6783 /* AerialEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AerialEditViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1124,12 +1125,17 @@
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
+		64C968442261ED3100351C0C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		64981F1E22667D7700178476 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTagKeyTestCase.swift; sourceTree = "<group>"; };
 		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OsmNode+Direction.swift"; sourceTree = "<group>"; };
 		64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNode_DirectionTestCase.swift; sourceTree = "<group>"; };
+		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
+		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1210,8 +1216,6 @@
 				02072ABF1BD44B2800F1CAB4 /* 1200-file-type-settings-toolbar@3x.png */,
 				02205F3A1674550D00D57D23 /* ArrowBlack.png */,
 				0242331216750C81008A3B6A /* ArrowBlue.png */,
-				02C19B361699EA7A00F75E3C /* bing_rgb.png */,
-				023D171F168A30C00011FABC /* BingLogo.png */,
 				02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */,
 				02ACBA6F16713F2A00BB4414 /* BlueBall.png */,
 				0296876A1680D57700B8FF2C /* bullseye.png */,
@@ -1366,6 +1370,7 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
+				64981F1D22667D7700178476 /* Extensions */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
 				02C3C73619A5D679003B6783 /* AerialEditViewController.m */,
@@ -1452,6 +1457,7 @@
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
+				64C968442261ED3100351C0C /* Media.xcassets */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -1871,6 +1877,7 @@
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				64E21EB622651F0D004605D7 /* Helpers */,
 				64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
@@ -1878,6 +1885,7 @@
 				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
 				64C072FC22622B9C00598078 /* Vendor */,
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
+				64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -1912,6 +1920,15 @@
 			path = ../Shared/Observable;
 			sourceTree = "<group>";
 		};
+		64981F1D22667D7700178476 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				64981F1E22667D7700178476 /* SettingsViewController.swift */,
+				64E21EB222651620004605D7 /* LoginViewController.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		64C072FC22622B9C00598078 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -1930,6 +1947,14 @@
 				64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */,
 			);
 			path = Direction;
+			sourceTree = "<group>";
+		};
+		64E21EB622651F0D004605D7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2311,6 +2336,7 @@
 				02ACBCAF16713F2B00BB4414 /* tourist_beach.p.64.png in Resources */,
 				02ACBCB016713F2B00BB4414 /* tourist_casino.p.64.png in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
+				64C968452261ED3100351C0C /* Media.xcassets in Resources */,
 				02ACBCB116713F2B00BB4414 /* tourist_castle.p.64.png in Resources */,
 				02ACBCB216713F2B00BB4414 /* tourist_castle2.p.64.png in Resources */,
 				02ACBCB316713F2B00BB4414 /* tourist_cinema.p.64.png in Resources */,
@@ -2404,11 +2430,9 @@
 				0296876F1680D5D400B8FF2C /* undo32.png in Resources */,
 				02912D46168504AC00A541BC /* move.png in Resources */,
 				02912D4D16852AEC00A541BC /* question.png in Resources */,
-				023D1720168A30C00011FABC /* BingLogo.png in Resources */,
 				02072AC81BD452F200F1CAB4 /* 982-food-toolbar@3x.png in Resources */,
 				025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */,
 				025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */,
-				02C19B371699EA7A00F75E3C /* bing_rgb.png in Resources */,
 				02072AC61BD452F200F1CAB4 /* 982-food-toolbar.png in Resources */,
 				020CD975169D4B5A00BF3AAF /* Default-Portrait~ipad.png in Resources */,
 				020CD977169D4B7300BF3AAF /* Default-Portrait@2x~ipad.png in Resources */,
@@ -2478,6 +2502,7 @@
 				02E626701997168800565D62 /* KeyChain.m in Sources */,
 				02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */,
 				02BF745120793EE20028ED6A /* TurnRestrictHwyView.m in Sources */,
+				64E21EB322651620004605D7 /* LoginViewController.swift in Sources */,
 				02ACBBCB16713F2B00BB4414 /* MercatorTileLayer.m in Sources */,
 				02ACBBCC16713F2B00BB4414 /* OsmMapData.m in Sources */,
 				027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */,
@@ -2528,6 +2553,7 @@
 				027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */,
 				02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */,
 				02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */,
+				64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
@@ -2561,9 +2587,11 @@
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
+				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
+				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

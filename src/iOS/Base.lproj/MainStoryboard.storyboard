@@ -79,12 +79,12 @@
                                         </items>
                                     </toolbar>
                                     <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="800" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="fill" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-IT-DQC">
-                                        <rect key="frame" x="9" y="26" width="217" height="24"/>
+                                        <rect key="frame" x="9" y="26" width="202.5" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="SkQ-sE-D6j"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <state key="normal" title="Bing attribution" image="BingLogo.png">
+                                        <state key="normal" title="Bing attribution" image="bing-logo-white">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -1062,7 +1062,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" translatesAutoresizingMaskIntoConstraints="NO" id="YQ4-05-lQz">
                                                     <rect key="frame" x="142" y="11.5" width="159" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="5aR-9a-sW0"/>
                                                         <action selector="textFieldReturn:" destination="kl3-Fg-1QU" eventType="editingDidEndOnExit" id="HIT-FM-Ke9"/>
@@ -1163,7 +1163,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Login" id="O6E-f1-A1k">
                         <barButtonItem key="backBarButtonItem" title="Back" id="kt1-K7-kcu"/>
-                        <barButtonItem key="rightBarButtonItem" title="Verify" style="done" id="ctb-pg-pM9">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="ctb-pg-pM9">
                             <connections>
                                 <action selector="verifyAccount:" destination="kl3-Fg-1QU" id="qEc-ab-jnj"/>
                             </connections>
@@ -1172,8 +1172,8 @@
                     <connections>
                         <outlet property="_activityIndicator" destination="jcT-tR-WDO" id="J8A-AQ-LZf"/>
                         <outlet property="_password" destination="e7I-rE-dAW" id="Ugu-EO-x5C"/>
+                        <outlet property="_saveButton" destination="ctb-pg-pM9" id="qk6-V6-1jq"/>
                         <outlet property="_username" destination="YQ4-05-lQz" id="ge6-8t-VeT"/>
-                        <outlet property="_verifyButton" destination="ctb-pg-pM9" id="5cm-I2-11p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CzF-UG-rbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3539,7 +3539,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing_rgb.png" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
                                 <rect key="frame" x="20" y="70" width="104" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="104" id="1vt-lM-5xK"/>
@@ -5516,8 +5516,8 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <image name="751-eye-toolbar.png" width="22" height="12"/>
         <image name="852-map-toolbar.png" width="22" height="18"/>
         <image name="982-food-toolbar.png" width="22" height="18"/>
-        <image name="BingLogo.png" width="93" height="29"/>
-        <image name="bing_rgb.png" width="408" height="144"/>
+        <image name="bing-logo-gray" width="78.5" height="17"/>
+        <image name="bing-logo-white" width="78.5" height="17"/>
         <image name="compass.png" width="100" height="100"/>
         <image name="redo32.png" width="32" height="26"/>
         <image name="undo32.png" width="32" height="26"/>

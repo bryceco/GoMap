@@ -4,3 +4,8 @@
 
 #import "OsmObjects.h"
 #import "CommonTagList.h"
+#import "LoginViewController.h"
+#import "KeyChain.h"
+#import "AppDelegate.h"
+#import "OsmMapData.h"
+#import "SettingsViewController.h"
