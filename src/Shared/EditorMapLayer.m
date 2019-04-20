@@ -1665,6 +1665,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         layer.contents        = (id)icon.CGImage;
         layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
         layer.cornerRadius    = 5;
+        layer.masksToBounds = YES;
         layer.zPosition        = Z_NODE;
         
         LayerProperties * props = [LayerProperties new];
