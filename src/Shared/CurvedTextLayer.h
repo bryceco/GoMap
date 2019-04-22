@@ -28,6 +28,6 @@
 +(instancetype)shared;
 
 -(CALayer *)layerWithString:(NSString *)string whiteOnBlock:(BOOL)whiteOnBlack;
--(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path whiteOnBlock:(BOOL)whiteOnBlack;
+-(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path whiteOnBlock:(BOOL)whiteOnBlack shouldRasterize:(BOOL)shouldRasterize;
 
 @end
