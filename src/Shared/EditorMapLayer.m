@@ -1976,7 +1976,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	return layers;
 }
 
+/**
+ Determines whether text layers that display street names should be rasterized.
 
+ @return The value to use for the text layer's `shouldRasterize` property.
+ */
+- (BOOL)shouldRasterizeStreetNames {
+    return [self geekbenchScore] < 2500;
+}
 
 -(void)resetDisplayLayers
 {
