@@ -228,7 +228,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 	return suggestedSize;
 }
 
--(id)getCachedLayerForString:(NSString *)string whiteOnBlack:(BOOL)whiteOnBlack
+-(id)getCachedLayerForString:(NSString *)string whiteOnBlack:(BOOL)whiteOnBlack shouldRasterize:(BOOL)shouldRasterize
 {
 	if ( _cachedColorIsWhiteOnBlack != whiteOnBlack ) {
 		[_layerCache removeAllObjects];
@@ -238,7 +238,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 	return [_layerCache objectForKey:string];
 }
 
--(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path whiteOnBlock:(BOOL)whiteOnBlack
+-(NSArray *)layersWithString:(NSString *)string alongPath:(CGPathRef)path whiteOnBlock:(BOOL)whiteOnBlack shouldRasterize:(BOOL)shouldRasterize
 {
 #if TARGET_OS_IPHONE
 	UIFont	* uiFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
@@ -314,7 +314,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 
 #if USE_CURVEDLAYER_CACHE
 		NSString * cacheKey = [NSString stringWithFormat:@"%@:%f",[string substringWithRange:NSMakeRange(currentCharacter, count)],angle];
-		CATextLayer * layer = [self getCachedLayerForString:cacheKey whiteOnBlack:whiteOnBlack];
+		CATextLayer * layer = [self getCachedLayerForString:cacheKey whiteOnBlack:whiteOnBlack shouldRasterize:shouldRasterize];
 #else
 		CATextLayer * layer = nil;
 #endif
@@ -342,6 +342,7 @@ static BOOL IsRTL( CTTypesetterRef typesetter )
 			layer.truncationMode	= kCATruncationNone;
 			layer.wrapped			= NO;
 			layer.alignmentMode		= kCAAlignmentCenter;
+            layer.shouldRasterize   = shouldRasterize;
 
 #if TARGET_OS_IPHONE
 			layer.contentsScale		= [[UIScreen mainScreen] scale];
