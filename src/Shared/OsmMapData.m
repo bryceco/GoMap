@@ -1866,7 +1866,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (id)initWithCoder:(NSCoder *)coder
 {
-	self = [super init];
+	self = [self init];
 	if ( self ) {
 
 		@try {
