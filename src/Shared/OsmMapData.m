@@ -798,7 +798,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		} else {
 
-			OsmMapData * mapData = [[OsmMapData alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+			OsmMapData * mapData = [[OsmMapData alloc] init];
 			NSError * error = nil;
 			BOOL ok = [mapData parseXmlStream:stream error:&error];
 			if ( !ok ) {
@@ -2373,7 +2373,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSMutableDictionary * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
 
-			OsmMapData * newData = [[OsmMapData alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+			OsmMapData * newData = [[OsmMapData alloc] init];
 			newData->_nodes = newNodes;
 			newData->_ways = newWays;
 			newData->_relations = newRelations;
