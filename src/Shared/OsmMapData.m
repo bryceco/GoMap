@@ -102,6 +102,10 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
     return self;
 }
 
+- (instancetype)init {
+    return [self initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+}
+
 -(void)dealloc
 {
 	[_periodicSaveTimer invalidate];
