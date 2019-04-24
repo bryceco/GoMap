@@ -102,6 +102,10 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
     return self;
 }
 
+- (instancetype)init {
+    return [self initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+}
+
 -(void)dealloc
 {
 	[_periodicSaveTimer invalidate];
@@ -794,7 +798,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		} else {
 
-			OsmMapData * mapData = [[OsmMapData alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+			OsmMapData * mapData = [[OsmMapData alloc] init];
 			NSError * error = nil;
 			BOOL ok = [mapData parseXmlStream:stream error:&error];
 			if ( !ok ) {
@@ -1862,7 +1866,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (id)initWithCoder:(NSCoder *)coder
 {
-	self = [super init];
+	self = [self init];
 	if ( self ) {
 
 		@try {
@@ -2349,9 +2353,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 	unarchiver.delegate = self;
 	self = [unarchiver decodeObjectForKey:@"OsmMapData"];
-	if ( self ) {
-		[self initCommon];
-
+	if ( self = [self init] ) {
+        
 		// rebuild spatial database
 		_spatial.rootQuad = [QuadBox new];
 		[self enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
@@ -2370,7 +2373,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSMutableDictionary * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
 
-			OsmMapData * newData = [[OsmMapData alloc] initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+			OsmMapData * newData = [[OsmMapData alloc] init];
 			newData->_nodes = newNodes;
 			newData->_ways = newWays;
 			newData->_relations = newRelations;

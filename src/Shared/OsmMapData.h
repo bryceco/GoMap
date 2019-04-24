@@ -70,7 +70,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
  @param userDefaults The `UserDefaults` instance to use.
  @return An initialized instance of this object.
  */
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults;
+- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults NS_DESIGNATED_INITIALIZER;
 
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
