@@ -2353,8 +2353,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 	unarchiver.delegate = self;
 	self = [unarchiver decodeObjectForKey:@"OsmMapData"];
-	if ( self = [self init] ) {
-        
+	if ( self ) {
+
 		// rebuild spatial database
 		_spatial.rootQuad = [QuadBox new];
 		[self enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
