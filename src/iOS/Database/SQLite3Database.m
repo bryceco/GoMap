@@ -677,7 +677,7 @@ retry:
 	return rc == SQLITE_OK;
 }
 
--(NSDictionary *)querySqliteNodes
+- (NSDictionary<NSNumber *,OsmNode *> *)querySqliteNodes
 {
 	if ( _db == NULL )
 		return nil;
@@ -720,7 +720,7 @@ retry:
 	return rc == SQLITE_OK ? nodes : nil;
 }
 
--(NSDictionary *)querySqliteWays
+- (NSDictionary<NSNumber *,OsmWay *> *)querySqliteWays
 {
 	if ( _db == NULL )
 		return nil;
@@ -802,7 +802,7 @@ retry:
 }
 
 
--(NSDictionary *)querySqliteRelations
+- (NSDictionary<NSNumber *,OsmRelation *> *)querySqliteRelations
 {
 	if ( _db == NULL )
 		return nil;
