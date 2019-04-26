@@ -9,7 +9,7 @@
 import Foundation
 
 @objc protocol Database {
-    func querySqliteNodes() -> [NSNumber: OsmNode]?
-    func querySqliteWays() -> [NSNumber: OsmWay]?
-    func querySqliteRelations() -> [NSNumber: OsmRelation]?
+    func querySqliteNodes() -> [NSNumber: OsmNode]
+    func querySqliteWays() -> [NSNumber: OsmWay]
+    func querySqliteRelations() -> [NSNumber: OsmRelation]
 }

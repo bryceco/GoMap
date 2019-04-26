@@ -680,13 +680,13 @@ retry:
 - (NSDictionary<NSNumber *,OsmNode *> *)querySqliteNodes
 {
 	if ( _db == NULL )
-		return nil;
+        return @{};
 
 	int rc = SQLITE_OK;
 	sqlite3_stmt * nodeStatement = NULL;
 	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes", -1, &nodeStatement, nil );
 	if ( rc != SQLITE_OK )
-		return nil;
+		return @{};
 
 	NSMutableDictionary * nodes = [NSMutableDictionary new];
 	
@@ -717,13 +717,13 @@ retry:
 	}
 	sqlite3_finalize(nodeStatement);
 
-	return rc == SQLITE_OK ? nodes : nil;
+	return rc == SQLITE_OK ? nodes : @{};
 }
 
 - (NSDictionary<NSNumber *,OsmWay *> *)querySqliteWays
 {
 	if ( _db == NULL )
-		return nil;
+		return @{};
 
 	int rc = SQLITE_OK;
 	sqlite3_stmt * wayStatement = NULL;
@@ -731,7 +731,7 @@ retry:
 
 	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways", -1, &wayStatement, nil );
 	if ( rc != SQLITE_OK )
-		return nil;
+		return @{};
 
 	while ( (rc = sqlite3_step(wayStatement)) == SQLITE_ROW )  {
 		int64_t			ident		= sqlite3_column_int64(wayStatement, 0);
@@ -773,7 +773,7 @@ retry:
 			rc = SQLITE_ERROR;
 	}
 
-	return rc == SQLITE_OK ? ways : nil;
+	return rc == SQLITE_OK ? ways : @{};
 }
 
 -(BOOL)queryNodesForWays:(NSDictionary *)ways
@@ -805,14 +805,14 @@ retry:
 - (NSDictionary<NSNumber *,OsmRelation *> *)querySqliteRelations
 {
 	if ( _db == NULL )
-		return nil;
+		return @{};
 
 	int rc = SQLITE_OK;
 
 	sqlite3_stmt * relationStatement = NULL;
 	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations", -1, &relationStatement, nil );
 	if ( rc != SQLITE_OK )
-		return nil;
+		return @{};
 
 	NSMutableDictionary * relations = [NSMutableDictionary new];
 	while ( (rc = sqlite3_step(relationStatement)) == SQLITE_ROW )  {
@@ -845,7 +845,7 @@ retry:
 		}
 		rc = ok ? SQLITE_OK : SQLITE_ERROR;
 	}
-	return rc == SQLITE_OK ? relations : nil;
+	return rc == SQLITE_OK ? relations : @{};
 }
 
 -(BOOL)queryMembersForRelations:(NSDictionary *)relations
