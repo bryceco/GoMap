@@ -695,8 +695,8 @@
 		0296876D1680D5D400B8FF2C /* undo32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo32.png; sourceTree = "<group>"; };
 		02A077D0167A77A400686261 /* POIAllTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAllTagsViewController.h; sourceTree = "<group>"; };
 		02A077D1167A77A400686261 /* POIAllTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAllTagsViewController.m; sourceTree = "<group>"; };
-		02A194AE19C69701002338DA /* SQLite3Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SQLite3Database.h; path = ../Shared/SQLite3Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02A194AF19C69701002338DA /* SQLite3Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SQLite3Database.m; path = ../Shared/SQLite3Database.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		02A194AE19C69701002338DA /* SQLite3Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SQLite3Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		02A194AF19C69701002338DA /* SQLite3Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SQLite3Database.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		02A8613C20A95C16008C465F /* NetworkStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NetworkStatus.m; path = ../Shared/NetworkStatus.m; sourceTree = "<group>"; };
 		02A8613E20A95C2B008C465F /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkStatus.h; path = ../Shared/NetworkStatus.h; sourceTree = "<group>"; };
@@ -1797,6 +1797,7 @@
 			isa = PBXGroup;
 			children = (
 				6442666322540EDF00C0D545 /* Observable */,
+				647D09F72272F47000FB7A76 /* Database */,
 				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				02C3C73819A6DCEA003B6783 /* AerialList.h */,
 				02C3C73919A6DCEA003B6783 /* AerialList.m */,
@@ -1808,8 +1809,6 @@
 				028F504419B949780093C423 /* CommonTagList.m */,
 				02ACBA7116713F2A00BB4414 /* CurvedTextLayer.h */,
 				02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */,
-				02A194AE19C69701002338DA /* SQLite3Database.h */,
-				02A194AF19C69701002338DA /* SQLite3Database.m */,
 				0260484019E66C8700415CB1 /* DisplayLink.h */,
 				0260484119E66C8700415CB1 /* DisplayLink.m */,
 				0289D0DD16A88BA300F86151 /* DLog.h */,
@@ -1918,6 +1917,15 @@
 			);
 			name = Observable;
 			path = ../Shared/Observable;
+			sourceTree = "<group>";
+		};
+		647D09F72272F47000FB7A76 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				02A194AE19C69701002338DA /* SQLite3Database.h */,
+				02A194AF19C69701002338DA /* SQLite3Database.m */,
+			);
+			path = Database;
 			sourceTree = "<group>";
 		};
 		64981F1D22667D7700178476 /* Extensions */ = {
