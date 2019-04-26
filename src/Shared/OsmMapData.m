@@ -52,6 +52,7 @@ NSString * OSM_API_URL;
 
 @interface OsmMapData ()
 
+@property (readonly,nonnull) id<Database> database;
 @property (readonly,nonnull) NSUserDefaults *userDefaults;
 @property (readonly,nonnull)    NSDate *            previousDiscardDate;
 
@@ -85,8 +86,10 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	});
 }
 
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults {
+- (instancetype)initWithDatabase:(id<Database>)database
+                    userDefaults:(NSUserDefaults *)userDefaults {
     if (self = [super init]) {
+        _database = database;
         _userDefaults = userDefaults;
         _parserStack    = [NSMutableArray arrayWithCapacity:20];
         _nodes            = [NSMutableDictionary dictionaryWithCapacity:1000];
@@ -103,7 +106,8 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 - (instancetype)init {
-    return [self initWithUserDefaults:[NSUserDefaults standardUserDefaults]];
+    return [self initWithDatabase:[SQLite3Database new]
+                     userDefaults:[NSUserDefaults standardUserDefaults]];
 }
 
 -(void)dealloc
@@ -1918,7 +1922,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(OsmMapData *)modifiedObjects
 {
 	// get modified nodes and ways
-	OsmMapData * modified = [[OsmMapData alloc] initWithUserDefaults:self.userDefaults];
+	OsmMapData * modified = [[OsmMapData alloc] initWithDatabase:self.database
+                                                    userDefaults:self.userDefaults];
 
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key, OsmNode * object, BOOL *stop) {
 		if ( object.deleted ? object.ident.longLongValue > 0 : object.isModified ) {

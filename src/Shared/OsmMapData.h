@@ -67,10 +67,12 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 /**
  Initializes the object.
 
+ @param database The `Database` instance to use.
  @param userDefaults The `UserDefaults` instance to use.
  @return An initialized instance of this object.
  */
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDatabase:(id<Database>)database
+                    userDefaults:(NSUserDefaults *)userDefaults NS_DESIGNATED_INITIALIZER;
 
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;

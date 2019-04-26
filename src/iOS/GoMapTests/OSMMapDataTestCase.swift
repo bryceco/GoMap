@@ -12,15 +12,19 @@ import XCTest
 class OSMMapDataTestCase: XCTestCase {
     
     var mapData: OsmMapData!
+    var databaseMock: DatabaseMock!
     var userDefaults: UserDefaults!
 
     override func setUp() {
+        databaseMock = DatabaseMock()
         userDefaults = createDedicatedUserDefaults()
-        mapData = OsmMapData(userDefaults: userDefaults)
+        mapData = OsmMapData(database: databaseMock,
+                             userDefaults: userDefaults)
     }
 
     override func tearDown() {
         mapData = nil
+        databaseMock = nil
         userDefaults = nil
     }
     
