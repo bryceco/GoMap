@@ -24,7 +24,7 @@
 #import "UndoManager.h"
 #import "VectorMath.h"
 
-#import "Database.h"
+#import "SQLite3Database.h"
 #import "EditorMapLayer.h"
 
 #define OSM_SERVER_KEY	@"OSM Server"
@@ -1965,8 +1965,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_spatial.rootQuad reset];
 	_region  = [QuadMap new];
 
-	dispatch_async(Database.dispatchQueue, ^{
-		[Database deleteDatabaseWithName:nil];
+	dispatch_async(SQLite3Database.dispatchQueue, ^{
+		[SQLite3Database deleteDatabaseWithName:nil];
 	});
 }
 
@@ -2085,15 +2085,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( saveNodes.count + saveWays.count + saveRelations.count + deleteNodes.count + deleteWays.count + deleteRelations.count == 0 )
 		return;
 
-	dispatch_async(Database.dispatchQueue, ^{
+	dispatch_async(SQLite3Database.dispatchQueue, ^{
 		CFTimeInterval t = CACurrentMediaTime();
 		BOOL ok;
 		{
-			Database * db = [Database new];
+			SQLite3Database * db = [SQLite3Database new];
 			[db createTables];
 			ok = [db saveNodes:saveNodes saveWays:saveWays saveRelations:saveRelations deleteNodes:deleteNodes deleteWays:deleteWays deleteRelations:deleteRelations isUpdate:isUpdate];
 			if ( !ok ) {
-				[Database deleteDatabaseWithName:nil];
+				[SQLite3Database deleteDatabaseWithName:nil];
 			}
 		}
 		t = CACurrentMediaTime() - t;
@@ -2254,21 +2254,21 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSArray * saveWays 		= [_ways allValues];
 	NSArray * saveRelations = [_relations allValues];
 	
-	dispatch_async(Database.dispatchQueue, ^{
+	dispatch_async(SQLite3Database.dispatchQueue, ^{
 		
 		CFTimeInterval	t2 = CACurrentMediaTime();
 		NSString * tmpPath;
 		{
 			// its faster to create a brand new database than to update the existing one, because SQLite deletes are slow
-			[Database deleteDatabaseWithName:@"tmp"];
-			Database * db2 = [[Database alloc] initWithName:@"tmp"];
+			[SQLite3Database deleteDatabaseWithName:@"tmp"];
+			SQLite3Database * db2 = [[SQLite3Database alloc] initWithName:@"tmp"];
 			tmpPath = db2.path;
 			[db2 createTables];
 			[db2 saveNodes:saveNodes saveWays:saveWays saveRelations:saveRelations
 			   deleteNodes:nil deleteWays:nil deleteRelations:nil isUpdate:NO];
 		}
 		
-		NSString * realPath = [Database databasePathWithName:nil];
+		NSString * realPath = [SQLite3Database databasePathWithName:nil];
 		int error = rename( tmpPath.UTF8String, realPath.UTF8String );
 		if ( error )
 			NSLog(@"failed to rename SQL database\n");
@@ -2365,7 +2365,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// merge info from SQL database
 		BOOL databaseFailure = NO;
 		@try {
-			Database * db = [Database new];
+			SQLite3Database * db = [SQLite3Database new];
 			NSMutableDictionary * newNodes		= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
 			NSMutableDictionary * newWays		= [db querySqliteWays];
@@ -2384,7 +2384,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}
 		if ( databaseFailure ) {
 			NSLog(@"Unable to read database: recreating from scratch\n");
-			[Database deleteDatabaseWithName:nil];
+			[SQLite3Database deleteDatabaseWithName:nil];
 			_region = [QuadMap new];
 		}
 	}

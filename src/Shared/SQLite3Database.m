@@ -1,5 +1,5 @@
 //
-//  Database.m
+//  SQLite3Database.m
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/14/14.
@@ -9,7 +9,7 @@
 #import <sqlite3.h>
 
 #import "DLog.h"
-#import "Database.h"
+#import "SQLite3Database.h"
 #import "OsmObjects.h"
 
 
@@ -29,7 +29,7 @@ if (!(condition)) {		\
 #endif
 
 
-@implementation Database
+@implementation SQLite3Database
 
 #pragma mark initialize
 
@@ -55,7 +55,7 @@ if (!(condition)) {		\
 {
 	self = [super init];
 	if ( self ) {
-		_path = [Database databasePathWithName:name];
+		_path = [SQLite3Database databasePathWithName:name];
 		int rc = sqlite3_open_v2( _path.UTF8String, &_db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL );
 		if ( rc == SQLITE_OK ) {
 			rc = sqlite3_exec(_db, "PRAGMA foreign_keys=ON;", NULL, NULL, NULL );
@@ -87,7 +87,7 @@ if (!(condition)) {		\
 
 +(void)deleteDatabaseWithName:(NSString *)name
 {
-	NSString * path = [Database databasePathWithName:name];
+	NSString * path = [SQLite3Database databasePathWithName:name];
 	unlink( path.UTF8String );
 }
 

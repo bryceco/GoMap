@@ -124,7 +124,7 @@
 		0296876E1680D5D400B8FF2C /* redo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 0296876C1680D5D400B8FF2C /* redo32.png */; };
 		0296876F1680D5D400B8FF2C /* undo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 0296876D1680D5D400B8FF2C /* undo32.png */; };
 		02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A077D1167A77A400686261 /* POIAllTagsViewController.m */; };
-		02A194B019C69701002338DA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A194AF19C69701002338DA /* Database.m */; };
+		02A194B019C69701002338DA /* SQLite3Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A194AF19C69701002338DA /* SQLite3Database.m */; };
 		02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A194B119C6A432002338DA /* libsqlite3.0.dylib */; };
 		02A8613D20A95C16008C465F /* NetworkStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A8613C20A95C16008C465F /* NetworkStatus.m */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
@@ -695,8 +695,8 @@
 		0296876D1680D5D400B8FF2C /* undo32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo32.png; sourceTree = "<group>"; };
 		02A077D0167A77A400686261 /* POIAllTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAllTagsViewController.h; sourceTree = "<group>"; };
 		02A077D1167A77A400686261 /* POIAllTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAllTagsViewController.m; sourceTree = "<group>"; };
-		02A194AE19C69701002338DA /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Database.h; path = ../Shared/Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02A194AF19C69701002338DA /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = Database.m; path = ../Shared/Database.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		02A194AE19C69701002338DA /* SQLite3Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SQLite3Database.h; path = ../Shared/SQLite3Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		02A194AF19C69701002338DA /* SQLite3Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SQLite3Database.m; path = ../Shared/SQLite3Database.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		02A8613C20A95C16008C465F /* NetworkStatus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NetworkStatus.m; path = ../Shared/NetworkStatus.m; sourceTree = "<group>"; };
 		02A8613E20A95C2B008C465F /* NetworkStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkStatus.h; path = ../Shared/NetworkStatus.h; sourceTree = "<group>"; };
@@ -1808,8 +1808,8 @@
 				028F504419B949780093C423 /* CommonTagList.m */,
 				02ACBA7116713F2A00BB4414 /* CurvedTextLayer.h */,
 				02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */,
-				02A194AE19C69701002338DA /* Database.h */,
-				02A194AF19C69701002338DA /* Database.m */,
+				02A194AE19C69701002338DA /* SQLite3Database.h */,
+				02A194AF19C69701002338DA /* SQLite3Database.m */,
 				0260484019E66C8700415CB1 /* DisplayLink.h */,
 				0260484119E66C8700415CB1 /* DisplayLink.m */,
 				0289D0DD16A88BA300F86151 /* DLog.h */,
@@ -2496,7 +2496,7 @@
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
 				02ACBBC216713F2B00BB4414 /* CurvedTextLayer.m in Sources */,
 				02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */,
-				02A194B019C69701002338DA /* Database.m in Sources */,
+				02A194B019C69701002338DA /* SQLite3Database.m in Sources */,
 				02ACBBC416713F2B00BB4414 /* EditorMapLayer.m in Sources */,
 				02C3C73419A5A40C003B6783 /* AerialListViewController.m in Sources */,
 				02E626701997168800565D62 /* KeyChain.m in Sources */,

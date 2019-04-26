@@ -1,5 +1,5 @@
 //
-//  Database.h
+//  SQLite3Database.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/14/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Database : NSObject
+@interface SQLite3Database : NSObject
 {
 	NSString			*	_path;
 	struct sqlite3		*	_db;
