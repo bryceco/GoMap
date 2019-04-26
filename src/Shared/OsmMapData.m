@@ -2371,17 +2371,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// merge info from SQL database
 		BOOL databaseFailure = NO;
 		@try {
-			NSMutableDictionary * newNodes		= [db querySqliteNodes];
+			NSDictionary * newNodes		= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
-			NSMutableDictionary * newWays		= [db querySqliteWays];
+			NSDictionary * newWays		= [db querySqliteWays];
 			NSAssert(newWays,nil);
-			NSMutableDictionary * newRelations	= [db querySqliteRelations];
+			NSDictionary * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
 
 			OsmMapData * newData = [[OsmMapData alloc] init];
-			newData->_nodes = newNodes;
-			newData->_ways = newWays;
-			newData->_relations = newRelations;
+			newData->_nodes = [NSMutableDictionary dictionaryWithDictionary:newNodes];
+			newData->_ways = [NSMutableDictionary dictionaryWithDictionary:newWays];
+			newData->_relations = [NSMutableDictionary dictionaryWithDictionary:newRelations];
 			[self merge:newData fromDownload:NO quadList:nil success:YES];
 		} @catch (id exception) {
 			// database couldn't be read, or we couldn't resolve references correctly, so have to download everything

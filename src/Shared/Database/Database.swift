@@ -9,7 +9,7 @@
 import Foundation
 
 @objc protocol Database {
-    func querySqliteNodes() -> NSMutableDictionary?
-    func querySqliteWays() -> NSMutableDictionary?
-    func querySqliteRelations() -> NSMutableDictionary?
+    func querySqliteNodes() -> NSDictionary?
+    func querySqliteWays() -> NSDictionary?
+    func querySqliteRelations() -> NSDictionary?
 }

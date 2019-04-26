@@ -14,15 +14,15 @@ class DatabaseMock: NSObject {
 
 extension DatabaseMock: Database {
     
-    func querySqliteNodes() -> NSMutableDictionary? {
+    func querySqliteNodes() -> NSDictionary? {
         return [:]
     }
     
-    func querySqliteWays() -> NSMutableDictionary? {
+    func querySqliteWays() -> NSDictionary? {
         return [:]
     }
     
-    func querySqliteRelations() -> NSMutableDictionary? {
+    func querySqliteRelations() -> NSDictionary? {
         return [:]
     }
     
