@@ -501,6 +501,7 @@
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
+		647D09F92272F48400FB7A76 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D09F82272F48400FB7A76 /* Database.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64C968452261ED3100351C0C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64C968442261ED3100351C0C /* Media.xcassets */; };
@@ -1123,6 +1124,7 @@
 		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		647D09F82272F48400FB7A76 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Database.swift; path = ../../Shared/Database/Database.swift; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64C968442261ED3100351C0C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -1922,6 +1924,7 @@
 		647D09F72272F47000FB7A76 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				647D09F82272F48400FB7A76 /* Database.swift */,
 				02A194AE19C69701002338DA /* SQLite3Database.h */,
 				02A194AF19C69701002338DA /* SQLite3Database.m */,
 			);
@@ -2497,6 +2500,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				647D09F92272F48400FB7A76 /* Database.swift in Sources */,
 				02ACBA4016713CCB00BB4414 /* main.m in Sources */,
 				02ACBA4416713CCB00BB4414 /* AppDelegate.m in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
