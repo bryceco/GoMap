@@ -2365,7 +2365,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// merge info from SQL database
 		BOOL databaseFailure = NO;
 		@try {
-			SQLite3Database * db = [SQLite3Database new];
+			id<Database> db = [SQLite3Database new];
 			NSMutableDictionary * newNodes		= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
 			NSMutableDictionary * newWays		= [db querySqliteWays];

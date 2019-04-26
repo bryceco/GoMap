@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SQLite3Database : NSObject
+@interface SQLite3Database : NSObject <Database>
 {
 	NSString			*	_path;
 	struct sqlite3		*	_db;
@@ -30,9 +30,5 @@
 -(BOOL)saveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate;
-
--(NSMutableDictionary *)querySqliteNodes;
--(NSMutableDictionary *)querySqliteWays;
--(NSMutableDictionary *)querySqliteRelations;
 
 @end
