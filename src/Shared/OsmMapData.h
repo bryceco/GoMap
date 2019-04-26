@@ -24,7 +24,7 @@
 @class QuadBox;
 @class QuadMap;
 @class QuadMapC;
-
+@protocol Database;
 
 BOOL IsOsmBooleanTrue( NSString * value );
 BOOL IsOsmBooleanFalse( NSString * value );
@@ -81,6 +81,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 +(EditorMapLayer *)editorMapLayerForArchive; // only used when saving/restoring undo manager
 
 -(id)initWithCachedData;
+- (instancetype)initWithCachedDataFromDatabase:(id<Database>)db;
 -(void)save;
 
 -(NSString *)getServer;

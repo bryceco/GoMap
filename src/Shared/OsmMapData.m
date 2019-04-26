@@ -2344,6 +2344,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(instancetype)initWithCachedData
 {
+    id<Database> database = [SQLite3Database new];
+    
+    return [self initWithCachedDataFromDatabase:database];
+}
+
+- (instancetype)initWithCachedDataFromDatabase:(id<Database>)db {
 	NSString * path = [self pathToArchiveFile];
 	NSData * data = [NSData dataWithContentsOfFile:path];
 	if ( data == nil ) {
@@ -2365,7 +2371,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		// merge info from SQL database
 		BOOL databaseFailure = NO;
 		@try {
-			id<Database> db = [SQLite3Database new];
 			NSMutableDictionary * newNodes		= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
 			NSMutableDictionary * newWays		= [db querySqliteWays];
