@@ -511,6 +511,8 @@
 		64C968452261ED3100351C0C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64C968442261ED3100351C0C /* Media.xcassets */; };
 		64D64CE2227ECEA20040C67A /* OsmBaseObject+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */; };
 		64D64CE9227ECF450040C67A /* BaseObjectMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CE8227ECF450040C67A /* BaseObjectMatching.swift */; };
+		64D64CEC227ED0790040C67A /* KeyExistsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CEB227ED0790040C67A /* KeyExistsQuery.swift */; };
+		64D64CF8227ED2480040C67A /* KeyExistsQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CF7227ED2480040C67A /* KeyExistsQueryTestCase.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1135,6 +1137,8 @@
 		64C968442261ED3100351C0C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmBaseObject+Make.swift"; sourceTree = "<group>"; };
 		64D64CE8227ECF450040C67A /* BaseObjectMatching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatching.swift; sourceTree = "<group>"; };
+		64D64CEB227ED0790040C67A /* KeyExistsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQuery.swift; sourceTree = "<group>"; };
+		64D64CF7227ED2480040C67A /* KeyExistsQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQueryTestCase.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1883,6 +1887,7 @@
 			isa = PBXGroup;
 			children = (
 				64E21EB622651F0D004605D7 /* Helpers */,
+				64D64CF5227ED2480040C67A /* Overpass */,
 				64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
@@ -1955,6 +1960,23 @@
 			isa = PBXGroup;
 			children = (
 				64D64CE8227ECF450040C67A /* BaseObjectMatching.swift */,
+				64D64CEB227ED0790040C67A /* KeyExistsQuery.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		64D64CF5227ED2480040C67A /* Overpass */ = {
+			isa = PBXGroup;
+			children = (
+				64D64CF6227ED2480040C67A /* Queries */,
+			);
+			path = Overpass;
+			sourceTree = "<group>";
+		};
+		64D64CF6227ED2480040C67A /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				64D64CF7227ED2480040C67A /* KeyExistsQueryTestCase.swift */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -2565,6 +2587,7 @@
 				02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
+				64D64CEC227ED0790040C67A /* KeyExistsQuery.swift in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
@@ -2607,6 +2630,7 @@
 			files = (
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
 				64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */,
+				64D64CF8227ED2480040C67A /* KeyExistsQueryTestCase.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
