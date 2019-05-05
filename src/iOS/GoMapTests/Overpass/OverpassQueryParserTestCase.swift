@@ -77,6 +77,18 @@ class OverpassQueryParserTestCase: XCTestCase {
         XCTAssertEqual(keyExistQuery.key, "capacity")
         XCTAssertTrue(keyExistQuery.isNegated)
     }
+
+    func testParseQueryShouldIgnoreUnexpectedTypes() {
+        let queryString = "type:lorem-ipsum"
+        let result = parser.parse(queryString)
+
+        guard case let .success(query) = result else {
+            XCTFail("The parser should have successfully parsed the query.")
+            return
+        }
+
+        XCTAssertNil(query)
+    }
     
     func testParseQueryForType() {
         let queryString = "type:way"
