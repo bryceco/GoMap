@@ -517,6 +517,8 @@
 		64D64CFB227ED3340040C67A /* RecursiveQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CFA227ED3340040C67A /* RecursiveQuery.swift */; };
 		64D64CFD227ED3470040C67A /* RecursiveQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CFC227ED3470040C67A /* RecursiveQueryTestCase.swift */; };
 		64D64D00227ED5EB0040C67A /* overpass-query-parser.js in Resources */ = {isa = PBXBuildFile; fileRef = 64D64CFF227ED5EB0040C67A /* overpass-query-parser.js */; };
+		64D64D03227ED7470040C67A /* OverpassQueryParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D02227ED7470040C67A /* OverpassQueryParser.swift */; };
+		64D64D05227ED75A0040C67A /* OverpassQueryParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D04227ED75A0040C67A /* OverpassQueryParserTestCase.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1147,6 +1149,8 @@
 		64D64CFA227ED3340040C67A /* RecursiveQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQuery.swift; sourceTree = "<group>"; };
 		64D64CFC227ED3470040C67A /* RecursiveQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQueryTestCase.swift; sourceTree = "<group>"; };
 		64D64CFF227ED5EB0040C67A /* overpass-query-parser.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "overpass-query-parser.js"; sourceTree = "<group>"; };
+		64D64D02227ED7470040C67A /* OverpassQueryParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverpassQueryParser.swift; sourceTree = "<group>"; };
+		64D64D04227ED75A0040C67A /* OverpassQueryParserTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverpassQueryParserTestCase.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1961,6 +1965,7 @@
 			isa = PBXGroup;
 			children = (
 				64D64CFF227ED5EB0040C67A /* overpass-query-parser.js */,
+				64D64D02227ED7470040C67A /* OverpassQueryParser.swift */,
 				64D64CE7227ECF450040C67A /* Queries */,
 			);
 			path = Overpass;
@@ -1979,6 +1984,7 @@
 		64D64CF5227ED2480040C67A /* Overpass */ = {
 			isa = PBXGroup;
 			children = (
+				64D64D04227ED75A0040C67A /* OverpassQueryParserTestCase.swift */,
 				64D64CF6227ED2480040C67A /* Queries */,
 			);
 			path = Overpass;
@@ -2590,6 +2596,7 @@
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
+				64D64D03227ED7470040C67A /* OverpassQueryParser.swift in Sources */,
 				02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */,
 				022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
@@ -2648,6 +2655,7 @@
 				64D64CEE227ED11F0040C67A /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
+				64D64D05227ED75A0040C67A /* OverpassQueryParserTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64D64CE2227ECEA20040C67A /* OsmBaseObject+Make.swift in Sources */,
