@@ -10,7 +10,7 @@ import Foundation
 import JavaScriptCore
 
 enum OverpassQueryParserResult {
-    case success(BaseObjectMatching)
+    case success(BaseObjectMatching?)
     case error(String)
 }
 
@@ -88,13 +88,13 @@ class OverpassQueryParser: OverpassQueryParsing {
         }
         
         guard
-            let parserResult = parseReturnValue?.toDictionary() as? [String: Any],
-            let resultingQuery = processParserResult(parserResult)
+            let parserResult = parseReturnValue?.toDictionary() as? [String: Any]
         else {
             // The method _must_ return an object. Not having one is very likely an error with the JavaScript itself.
             return .error("The parser did not return a value.")
         }
         
+        let resultingQuery = processParserResult(parserResult)
         return .success(resultingQuery)
     }
     
