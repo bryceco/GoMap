@@ -95,6 +95,8 @@ class OverpassQueryParser: OverpassQueryParsing {
                 let valueDetails = keyValuePairs["val"] as? [String: String],
                 let valueRegularExpression = valueDetails["regex"] {
                 return RegularExpressionQuery(key: key, value: valueRegularExpression)
+            } else if queryOperation == "substr", let key = keyValuePairs["key"] as? String, let value = keyValuePairs["val"] as? String {
+                return RegularExpressionQuery(key: key, value: ".*\(value).*")
             }
         }
         

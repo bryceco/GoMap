@@ -116,6 +116,24 @@ class OverpassQueryParserTestCase: XCTestCase {
         XCTAssertEqual(regularExpressionQuery.value, "pier|surveillance")
     }
     
+    func testParseSubstrQueryShouldResultInRegularExpressionQuery() {
+        let queryString = "man_made:ll"
+        let result = parser.parse(queryString)
+        
+        guard case let .success(query) = result else {
+            XCTFail("The parser should have successfully parsed the query.")
+            return
+        }
+        
+        guard let regularExpressionQuery = query as? RegularExpressionQuery else {
+            XCTFail("The parser should have returned a query that queries for a tag with regular expressions.")
+            return
+        }
+        
+        XCTAssertEqual(regularExpressionQuery.key, "man_made")
+        XCTAssertEqual(regularExpressionQuery.value, ".*ll.*")
+    }
+    
     func testParseQueryForExistinceOfAKey() {
         let queryString = "capacity = *"
         let result = parser.parse(queryString)
