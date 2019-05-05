@@ -509,6 +509,7 @@
 		64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */; };
 		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
 		64C968452261ED3100351C0C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64C968442261ED3100351C0C /* Media.xcassets */; };
+		64D64CE2227ECEA20040C67A /* OsmBaseObject+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1131,6 +1132,7 @@
 		64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTagKeyTestCase.swift; sourceTree = "<group>"; };
 		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		64C968442261ED3100351C0C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmBaseObject+Make.swift"; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1896,6 +1898,7 @@
 				64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */,
 				64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */,
 				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
+				64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2588,6 +2591,7 @@
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
+				64D64CE2227ECEA20040C67A /* OsmBaseObject+Make.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
