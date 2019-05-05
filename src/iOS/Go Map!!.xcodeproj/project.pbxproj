@@ -519,6 +519,8 @@
 		64D64D00227ED5EB0040C67A /* overpass-query-parser.js in Resources */ = {isa = PBXBuildFile; fileRef = 64D64CFF227ED5EB0040C67A /* overpass-query-parser.js */; };
 		64D64D03227ED7470040C67A /* OverpassQueryParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D02227ED7470040C67A /* OverpassQueryParser.swift */; };
 		64D64D05227ED75A0040C67A /* OverpassQueryParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D04227ED75A0040C67A /* OverpassQueryParserTestCase.swift */; };
+		64D64D08227EF2B10040C67A /* TypeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D07227EF2B00040C67A /* TypeQuery.swift */; };
+		64D64D0A227EF3790040C67A /* TypeQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D09227EF3780040C67A /* TypeQueryTestCase.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1151,6 +1153,8 @@
 		64D64CFF227ED5EB0040C67A /* overpass-query-parser.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "overpass-query-parser.js"; sourceTree = "<group>"; };
 		64D64D02227ED7470040C67A /* OverpassQueryParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverpassQueryParser.swift; sourceTree = "<group>"; };
 		64D64D04227ED75A0040C67A /* OverpassQueryParserTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverpassQueryParserTestCase.swift; sourceTree = "<group>"; };
+		64D64D07227EF2B00040C67A /* TypeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeQuery.swift; sourceTree = "<group>"; };
+		64D64D09227EF3780040C67A /* TypeQueryTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeQueryTestCase.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1976,6 +1980,7 @@
 			children = (
 				64D64CE8227ECF450040C67A /* BaseObjectMatching.swift */,
 				64D64CEB227ED0790040C67A /* KeyExistsQuery.swift */,
+				64D64D07227EF2B00040C67A /* TypeQuery.swift */,
 				64D64CFA227ED3340040C67A /* RecursiveQuery.swift */,
 			);
 			path = Queries;
@@ -1995,6 +2000,7 @@
 			children = (
 				64D64CF7227ED2480040C67A /* KeyExistsQueryTestCase.swift */,
 				64D64CFC227ED3470040C67A /* RecursiveQueryTestCase.swift */,
+				64D64D09227EF3780040C67A /* TypeQueryTestCase.swift */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -2622,6 +2628,7 @@
 				64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
+				64D64D08227EF2B10040C67A /* TypeQuery.swift in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
 				028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */,
@@ -2655,6 +2662,7 @@
 				64D64CEE227ED11F0040C67A /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
+				64D64D0A227EF3790040C67A /* TypeQueryTestCase.swift in Sources */,
 				64D64D05227ED75A0040C67A /* OverpassQueryParserTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
