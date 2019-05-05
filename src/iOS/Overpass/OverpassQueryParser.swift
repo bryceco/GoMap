@@ -89,6 +89,12 @@ class OverpassQueryParser: OverpassQueryParsing {
                 return KeyValueQuery(key: key, value: value)
             } else if queryOperation == "neq", let key = keyValuePairs["key"] as? String, let value = keyValuePairs["val"] as? String {
                 return KeyValueQuery(key: key, value: value, isNegated: true)
+            } else if
+                ["like", "likelike"].contains(queryOperation),
+                let key = keyValuePairs["key"] as? String,
+                let valueDetails = keyValuePairs["val"] as? [String: String],
+                let valueRegularExpression = valueDetails["regex"] {
+                return RegularExpressionQuery(key: key, value: valueRegularExpression)
             }
         }
         
