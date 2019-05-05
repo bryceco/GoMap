@@ -85,6 +85,10 @@ class OverpassQueryParser: OverpassQueryParsing {
                 return KeyExistsQuery(key: key, isNegated: true)
             } else if queryOperation == "type", let typeString = keyValuePairs["type"] as? String, let type = ElementType(rawValue: typeString) {
                 return TypeQuery(type: type)
+            } else if queryOperation == "eq", let key = keyValuePairs["key"] as? String, let value = keyValuePairs["val"] as? String {
+                return KeyValueQuery(key: key, value: value)
+            } else if queryOperation == "neq", let key = keyValuePairs["key"] as? String, let value = keyValuePairs["val"] as? String {
+                return KeyValueQuery(key: key, value: value, isNegated: true)
             }
         }
         

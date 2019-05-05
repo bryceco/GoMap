@@ -42,6 +42,44 @@ class OverpassQueryParserTestCase: XCTestCase {
     
     // MARK: Valid queries
     
+    func testParseQueryForKeyValuePair() {
+        let queryString = "man_made = surveillance"
+        let result = parser.parse(queryString)
+        
+        guard case let .success(query) = result else {
+            XCTFail("The parser should have successfully parsed the query.")
+            return
+        }
+        
+        guard let keyValueQuery = query as? KeyValueQuery else {
+            XCTFail("The parser should have returned a query that queries for a tag's key/value pair.")
+            return
+        }
+        
+        XCTAssertEqual(keyValueQuery.key, "man_made")
+        XCTAssertEqual(keyValueQuery.value, "surveillance")
+        XCTAssertFalse(keyValueQuery.isNegated)
+    }
+    
+    func testParseQueryForAbsenceOfKeyValuePair() {
+        let queryString = "man_made != surveillance"
+        let result = parser.parse(queryString)
+        
+        guard case let .success(query) = result else {
+            XCTFail("The parser should have successfully parsed the query.")
+            return
+        }
+        
+        guard let keyValueQuery = query as? KeyValueQuery else {
+            XCTFail("The parser should have returned a query that queries for a tag's key/value pair.")
+            return
+        }
+        
+        XCTAssertEqual(keyValueQuery.key, "man_made")
+        XCTAssertEqual(keyValueQuery.value, "surveillance")
+        XCTAssertTrue(keyValueQuery.isNegated)
+    }
+    
     func testParseQueryForExistinceOfAKey() {
         let queryString = "capacity = *"
         let result = parser.parse(queryString)
