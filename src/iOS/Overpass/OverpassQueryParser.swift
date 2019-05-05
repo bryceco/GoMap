@@ -62,17 +62,30 @@ class OverpassQueryParser: OverpassQueryParsing {
     private func processParserResult(_ parserResult: [String: Any]) -> BaseObjectMatching? {
         guard let queryDetails = parserResult["query"] as? [String: Any] else { return nil }
         
-        guard let queryOperation = queryDetails["query"] as? String else {
-            assertionFailure("Unable to determine the query operation.")
-            return nil
-        }
-        
-        if queryOperation == "key", let key = queryDetails["key"] as? String {
-            return KeyExistsQuery(key: key)
-        } else if queryOperation == "nokey", let key = queryDetails["key"] as? String {
-            return KeyExistsQuery(key: key, isNegated: true)
-        } else if queryOperation == "type", let typeString = queryDetails["type"] as? String, let type = ElementType(rawValue: typeString) {
-            return TypeQuery(type: type)
+        return query(from: queryDetails)
+    }
+    
+    /// Method that recursively creates the query from the given key/value pairs.
+    ///
+    /// - Parameter keyValuePairs: Key/value pairs with details on the query.
+    /// - Returns: The query from the key/value pairs, if any.
+    private func query(from keyValuePairs: [String: Any]) -> BaseObjectMatching? {
+        if
+            let logicalString = keyValuePairs["logical"] as? String,
+            let logical = RecursiveQuery.Logical(rawValue: logicalString),
+            let childQueryKeyValuePairs = keyValuePairs["queries"] as? [[String: Any]] {
+            // This is a recursive query.
+            let childQueries = childQueryKeyValuePairs.compactMap({ query(from: $0) })
+            
+            return RecursiveQuery(logical: logical, queries: childQueries)
+        } else if let queryOperation = keyValuePairs["query"] as? String {
+            if queryOperation == "key", let key = keyValuePairs["key"] as? String {
+                return KeyExistsQuery(key: key)
+            } else if queryOperation == "nokey", let key = keyValuePairs["key"] as? String {
+                return KeyExistsQuery(key: key, isNegated: true)
+            } else if queryOperation == "type", let typeString = keyValuePairs["type"] as? String, let type = ElementType(rawValue: typeString) {
+                return TypeQuery(type: type)
+            }
         }
         
         return nil

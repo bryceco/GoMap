@@ -106,5 +106,41 @@ class OverpassQueryParserTestCase: XCTestCase {
         
         XCTAssertEqual(typeQuery.type, .way)
     }
+    
+    func testParserQueryWithRecursiveQueryAndLogicalAnd() {
+        let queryString = "man_made != * and camera:type != *"
+        let result = parser.parse(queryString)
+        
+        guard case let .success(query) = result else {
+            XCTFail("The parser should have successfully parsed the query.")
+            return
+        }
+        
+        guard let recursiveQuery = query as? RecursiveQuery else {
+            XCTFail("The parser should have returned a recursive query.")
+            return
+        }
+        
+        XCTAssertEqual(recursiveQuery.logical, .and)
+        XCTAssertEqual(recursiveQuery.queries.count, 2)
+    }
+    
+    func testParserQueryWithRecursiveQueryAndLogicalOr() {
+        let queryString = "man_made != * or camera:type != *"
+        let result = parser.parse(queryString)
+        
+        guard case let .success(query) = result else {
+            XCTFail("The parser should have successfully parsed the query.")
+            return
+        }
+        
+        guard let recursiveQuery = query as? RecursiveQuery else {
+            XCTFail("The parser should have returned a recursive query.")
+            return
+        }
+        
+        XCTAssertEqual(recursiveQuery.logical, .or)
+        XCTAssertEqual(recursiveQuery.queries.count, 2)
+    }
 
 }
