@@ -11,6 +11,14 @@ import XCTest
 
 class RecursiveQueryTestCase: XCTestCase {
     
+    func testRecursiveQueryWithNoQueriesShouldReturnFalse() {
+        RecursiveQuery.Logical.allCases.forEach { logical in
+            let query = RecursiveQuery(logical: logical, queries: [])
+            
+            XCTAssertFalse(query.matches(OsmBaseObject()))
+        }
+    }
+    
     func testRecursiveQueryWithLogicalAndAndAllQueriesReturningTrueShouldReturnTrue() {
         let firstMatchMock = BaseObjectMatcherMock()
         let secondMatchMock = BaseObjectMatcherMock()

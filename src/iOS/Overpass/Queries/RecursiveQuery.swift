@@ -7,7 +7,7 @@
 //
 
 struct RecursiveQuery {
-    enum Logical: String {
+    enum Logical: String, CaseIterable {
         case and, or
     }
     
@@ -23,6 +23,11 @@ struct RecursiveQuery {
 extension RecursiveQuery: BaseObjectMatching {
     
     func matches(_ object: OsmBaseObject) -> Bool {
+        guard queries.count > 0 else {
+            // Without child queries, the recursive query does not match any object.
+            return false
+        }
+        
         switch logical {
         case .and:
             return queries.first { !$0.matches(object) } == nil
