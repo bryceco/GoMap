@@ -77,5 +77,22 @@ class OverpassQueryParserTestCase: XCTestCase {
         XCTAssertEqual(keyExistQuery.key, "capacity")
         XCTAssertTrue(keyExistQuery.isNegated)
     }
+    
+    func testParseQueryForType() {
+        let queryString = "type:way"
+        let result = parser.parse(queryString)
+        
+        guard case let .success(query) = result else {
+            XCTFail("The parser should have successfully parsed the query.")
+            return
+        }
+        
+        guard let typeQuery = query as? TypeQuery else {
+            XCTFail("The parser should have returned a query that queries for the type.")
+            return
+        }
+        
+        XCTAssertEqual(typeQuery.type, .way)
+    }
 
 }
