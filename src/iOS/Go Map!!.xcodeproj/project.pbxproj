@@ -513,6 +513,7 @@
 		64D64CE9227ECF450040C67A /* BaseObjectMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CE8227ECF450040C67A /* BaseObjectMatching.swift */; };
 		64D64CEC227ED0790040C67A /* KeyExistsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CEB227ED0790040C67A /* KeyExistsQuery.swift */; };
 		64D64CF8227ED2480040C67A /* KeyExistsQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CF7227ED2480040C67A /* KeyExistsQueryTestCase.swift */; };
+		64D64CEE227ED11F0040C67A /* BaseObjectMatcherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64CED227ED11F0040C67A /* BaseObjectMatcherMock.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1139,6 +1140,7 @@
 		64D64CE8227ECF450040C67A /* BaseObjectMatching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatching.swift; sourceTree = "<group>"; };
 		64D64CEB227ED0790040C67A /* KeyExistsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQuery.swift; sourceTree = "<group>"; };
 		64D64CF7227ED2480040C67A /* KeyExistsQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQueryTestCase.swift; sourceTree = "<group>"; };
+		64D64CED227ED11F0040C67A /* BaseObjectMatcherMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseObjectMatcherMock.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1907,6 +1909,7 @@
 				64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */,
 				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
 				64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */,
+				64D64CED227ED11F0040C67A /* BaseObjectMatcherMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2631,6 +2634,7 @@
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
 				64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */,
 				64D64CF8227ED2480040C67A /* KeyExistsQueryTestCase.swift in Sources */,
+				64D64CEE227ED11F0040C67A /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
