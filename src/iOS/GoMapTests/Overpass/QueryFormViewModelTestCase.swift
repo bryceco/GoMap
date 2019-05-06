@@ -13,15 +13,18 @@ import XCTest
 class QueryFormViewModelTestCase: XCTestCase {
     
     var viewModel: QueryFormViewModel!
+    var queryParserMock: OverpassQueryParserMock!
 
     override func setUp() {
         super.setUp()
         
-        viewModel = QueryFormViewModel()
+        queryParserMock = OverpassQueryParserMock()
+        viewModel = QueryFormViewModel(parser: queryParserMock)
     }
 
     override func tearDown() {
         viewModel = nil
+        queryParserMock = nil
         
         super.tearDown()
     }
