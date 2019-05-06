@@ -72,6 +72,9 @@
                                             </barButtonItem>
                                             <barButtonItem systemItem="flexibleSpace" id="4kg-8e-lu7"/>
                                             <barButtonItem image="852-map-toolbar.png" style="plain" id="43k-EH-kfB" userLabel="Display Button">
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="display_options_button"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <segue destination="UfZ-fJ-hyB" kind="push" id="YAs-Pe-6oG"/>
                                                 </connections>
