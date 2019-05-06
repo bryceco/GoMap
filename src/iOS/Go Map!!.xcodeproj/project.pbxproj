@@ -527,6 +527,7 @@
 		64D64D18227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D17227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift */; };
 		64D64D202280B5250040C67A /* QueryFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D1E2280B5250040C67A /* QueryFormViewController.swift */; };
 		64D64D212280B5250040C67A /* QueryFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D64D1F2280B5250040C67A /* QueryFormViewController.xib */; };
+		64D64D232280B9EF0040C67A /* OverpassQueryFormUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D222280B9EF0040C67A /* OverpassQueryFormUITestCase.swift */; };
 		64D64D262280BA420040C67A /* XCTestCase+UITestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */; };
 		64D64D282280BF0D0040C67A /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D272280BF0D0040C67A /* DisplayViewController.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
@@ -1169,6 +1170,7 @@
 		64D64D17227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpressionQueryTestCase.swift; sourceTree = "<group>"; };
 		64D64D1E2280B5250040C67A /* QueryFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewController.swift; sourceTree = "<group>"; };
 		64D64D1F2280B5250040C67A /* QueryFormViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QueryFormViewController.xib; sourceTree = "<group>"; };
+		64D64D222280B9EF0040C67A /* OverpassQueryFormUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverpassQueryFormUITestCase.swift; sourceTree = "<group>"; };
 		64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UITestHelper.swift"; sourceTree = "<group>"; };
 		64D64D272280BF0D0040C67A /* DisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
@@ -1950,6 +1952,7 @@
 				64D64D242280BA180040C67A /* Helper */,
 				64348D0C225EA24E00ADE7FB /* Info.plist */,
 				64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */,
+				64D64D222280B9EF0040C67A /* OverpassQueryFormUITestCase.swift */,
 			);
 			path = GoMapUITests;
 			sourceTree = "<group>";
@@ -2728,6 +2731,7 @@
 			files = (
 				64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */,
 				64D64D262280BA420040C67A /* XCTestCase+UITestHelper.swift in Sources */,
+				64D64D232280B9EF0040C67A /* OverpassQueryFormUITestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
