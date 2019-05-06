@@ -525,6 +525,8 @@
 		64D64D14227F36E50040C67A /* KeyValueQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D13227F36E40040C67A /* KeyValueQueryTestCase.swift */; };
 		64D64D16227F3C200040C67A /* RegularExpressionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D15227F3C200040C67A /* RegularExpressionQuery.swift */; };
 		64D64D18227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D17227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift */; };
+		64D64D202280B5250040C67A /* QueryFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D1E2280B5250040C67A /* QueryFormViewController.swift */; };
+		64D64D212280B5250040C67A /* QueryFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D64D1F2280B5250040C67A /* QueryFormViewController.xib */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1163,6 +1165,8 @@
 		64D64D13227F36E40040C67A /* KeyValueQueryTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueQueryTestCase.swift; sourceTree = "<group>"; };
 		64D64D15227F3C200040C67A /* RegularExpressionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpressionQuery.swift; sourceTree = "<group>"; };
 		64D64D17227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpressionQueryTestCase.swift; sourceTree = "<group>"; };
+		64D64D1E2280B5250040C67A /* QueryFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewController.swift; sourceTree = "<group>"; };
+		64D64D1F2280B5250040C67A /* QueryFormViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QueryFormViewController.xib; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1976,6 +1980,7 @@
 		64D64CE6227ECF450040C67A /* Overpass */ = {
 			isa = PBXGroup;
 			children = (
+				64D64D1D2280B5020040C67A /* QueryForm */,
 				64D64CFF227ED5EB0040C67A /* overpass-query-parser.js */,
 				64D64D02227ED7470040C67A /* OverpassQueryParser.swift */,
 				64D64CE7227ECF450040C67A /* Queries */,
@@ -2015,6 +2020,15 @@
 				64D64D17227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift */,
 			);
 			path = Queries;
+			sourceTree = "<group>";
+		};
+		64D64D1D2280B5020040C67A /* QueryForm */ = {
+			isa = PBXGroup;
+			children = (
+				64D64D1E2280B5250040C67A /* QueryFormViewController.swift */,
+				64D64D1F2280B5250040C67A /* QueryFormViewController.xib */,
+			);
+			path = QueryForm;
 			sourceTree = "<group>";
 		};
 		64D74BF02253DF39004FFD20 /* Direction */ = {
@@ -2378,6 +2392,7 @@
 				02072AB51BD4494300F1CAB4 /* 845-location-target-toolbar@2x.png in Resources */,
 				02ACBC8D16713F2B00BB4414 /* sport_archery.p.64.png in Resources */,
 				02ACBC8E16713F2B00BB4414 /* sport_baseball.p.64.png in Resources */,
+				64D64D212280B5250040C67A /* QueryFormViewController.xib in Resources */,
 				02ACBC8F16713F2B00BB4414 /* sport_canoe.p.64.png in Resources */,
 				02072AC01BD44B2800F1CAB4 /* 1200-file-type-settings-toolbar.png in Resources */,
 				02072AE61BD5E99B00F1CAB4 /* 709-plus-toolbar.png in Resources */,
@@ -2627,6 +2642,7 @@
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
 				64D64CEC227ED0790040C67A /* KeyExistsQuery.swift in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
+				64D64D202280B5250040C67A /* QueryFormViewController.swift in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				64D64D12227F364D0040C67A /* KeyValueQuery.swift in Sources */,
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
