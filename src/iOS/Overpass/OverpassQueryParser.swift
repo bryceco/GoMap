@@ -109,6 +109,7 @@ class OverpassQueryParser: OverpassQueryParsing {
         let parseReturnValue = parseMethod.call(withArguments: [query])
         
         if let errorMessage = context.exception?.toString() {
+            context.exception = nil
             return .error(errorMessage)
         }
         

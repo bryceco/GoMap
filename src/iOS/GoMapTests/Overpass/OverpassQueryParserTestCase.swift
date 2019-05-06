@@ -61,6 +61,26 @@ class OverpassQueryParserTestCase: XCTestCase {
         XCTAssertFalse(keyValueQuery.isNegated)
     }
     
+    func testInvokingParseVeryQuicklyWithAlteringValuesShouldResetExceptionAfterEveryEncounter() {
+        let invalidQueryString = "**"
+        let validQueryString = "man_made = surveillance"
+        
+        for iteration in 1...20 {
+            let useValidQuery = iteration % 2 == 0
+            let queryToUse = useValidQuery ? validQueryString : invalidQueryString
+            
+            let result = parser.parse(queryToUse)
+            switch result {
+            case .error(_):
+                XCTAssertFalse(useValidQuery,
+                               "The parser should return an error if the query is _not_ valid.")
+            case .success(_):
+                XCTAssertTrue(useValidQuery,
+                              "The parser should return success if the query was valid.")
+            }
+        }
+    }
+    
     func testParseQueryForAbsenceOfKeyValuePair() {
         let queryString = "man_made != surveillance"
         let result = parser.parse(queryString)
