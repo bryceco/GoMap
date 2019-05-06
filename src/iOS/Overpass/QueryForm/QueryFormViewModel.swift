@@ -9,5 +9,9 @@
 import Foundation
 
 class QueryFormViewModel: NSObject {
+    
+    // MARK: Public properties
+    
+    var queryText = Observable<String>("")
 
 }

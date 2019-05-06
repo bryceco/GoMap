@@ -25,5 +25,11 @@ class QueryFormViewModelTestCase: XCTestCase {
         
         super.tearDown()
     }
+    
+    // MARK: queryText
+    
+    func testQueryTextShouldInitiallyBeEmpty() {
+        XCTAssertTrue(viewModel.queryText.value.isEmpty)
+    }
 
 }
