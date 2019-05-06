@@ -13,6 +13,7 @@ class QueryFormViewModel: NSObject {
     // MARK: Public properties
     
     var queryText = Observable<String>("")
+    var errorMessage = Observable<String>("")
     
     // MARK: Private properties
     

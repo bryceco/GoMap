@@ -26,8 +26,6 @@ class QueryFormViewController: UIViewController {
         
         bindToViewModel()
         
-        errorLabel.text = nil
-        
         startListeningForKeyboardNotifications()
         setupKeyboardDismissOnTapGestureRecognizer()
     }
@@ -37,6 +35,10 @@ class QueryFormViewController: UIViewController {
     private func bindToViewModel() {
         viewModel.queryText.observe { [weak self] text, _ in
             self?.textView.text = text
+            }.add(to: &self.disposal)
+        
+        viewModel.errorMessage.observe { [weak self] text, _ in
+            self?.errorLabel.text = text
             }.add(to: &self.disposal)
     }
     

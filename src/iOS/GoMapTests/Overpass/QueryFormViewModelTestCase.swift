@@ -34,5 +34,11 @@ class QueryFormViewModelTestCase: XCTestCase {
     func testQueryTextShouldInitiallyBeEmpty() {
         XCTAssertTrue(viewModel.queryText.value.isEmpty)
     }
+    
+    // MARK: errorMessage
+    
+    func testErrorMessageShouldInitiallyBeEmpty() {
+        XCTAssertTrue(viewModel.errorMessage.value.isEmpty)
+    }
 
 }
