@@ -63,6 +63,17 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssertTrue(errorLabel.label.hasPrefix("SyntaxError:"))
     }
     
+    func testEnteringAValidQueryShouldHideTheErrorMessageLabel() {
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText("man_made = surveillance")
+        
+        let errorLabel = app.staticTexts["error_message"]
+        XCTAssertFalse(errorLabel.exists)
+    }
+    
     func testTappingOnTheErrorLabelShouldDismissTheKeyboard() {
         goToOverpassQueryViewController()
         
