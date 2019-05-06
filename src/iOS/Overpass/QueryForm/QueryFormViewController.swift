@@ -24,7 +24,8 @@ class QueryFormViewController: UIViewController {
         
         title = "Overpass Query"
         
-        textView.text = nil
+        bindToViewModel()
+        
         errorLabel.text = nil
         
         startListeningForKeyboardNotifications()
@@ -32,6 +33,12 @@ class QueryFormViewController: UIViewController {
     }
     
     // MARK: Private methods
+    
+    private func bindToViewModel() {
+        viewModel.queryText.observe { [weak self] text, _ in
+            self?.textView.text = text
+            }.add(to: &self.disposal)
+    }
     
     func startListeningForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
