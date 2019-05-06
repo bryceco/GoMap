@@ -24,6 +24,8 @@ class QueryFormViewController: UIViewController {
         
         title = "Overpass Query"
         
+        textView.delegate = self
+        
         bindToViewModel()
         
         startListeningForKeyboardNotifications()
@@ -123,4 +125,10 @@ class QueryFormViewController: UIViewController {
         view.endEditing(true)
     }
     
+}
+
+extension QueryFormViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.evaluateQuery(textView.text)
+    }
 }
