@@ -18,6 +18,7 @@
 #import "DisplayViewController.h"
 
 static const NSInteger BACKGROUND_SECTION		= 0;
+static const NSInteger FILTER_SECTION = 3;
 
 @interface CustomBackgroundCell : UITableViewCell
 @property IBOutlet UIButton * button;
@@ -140,7 +141,9 @@ static const NSInteger BACKGROUND_SECTION		= 0;
 		}
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 
-	}
+    } else if (indexPath.section == FILTER_SECTION && indexPath.row == 1) {
+        [self presentOverpassQueryViewController];
+    }
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	// automatically dismiss settings when a new background is selected
