@@ -12,6 +12,7 @@ class QueryFormViewController: UIViewController {
     
     // MARK: Private properties
     
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var stackViewBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {

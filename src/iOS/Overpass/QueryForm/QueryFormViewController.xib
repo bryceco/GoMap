@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QueryFormViewController" customModule="Go_Map__" customModuleProvider="target">
             <connections>
                 <outlet property="stackViewBottomConstraint" destination="CgJ-iB-MwZ" id="YtM-1X-DOA"/>
+                <outlet property="textView" destination="ZhF-8c-GU1" id="rpY-hH-5OJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
