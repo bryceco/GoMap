@@ -528,6 +528,7 @@
 		64D64D202280B5250040C67A /* QueryFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D1E2280B5250040C67A /* QueryFormViewController.swift */; };
 		64D64D212280B5250040C67A /* QueryFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D64D1F2280B5250040C67A /* QueryFormViewController.xib */; };
 		64D64D262280BA420040C67A /* XCTestCase+UITestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */; };
+		64D64D282280BF0D0040C67A /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D272280BF0D0040C67A /* DisplayViewController.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1169,6 +1170,7 @@
 		64D64D1E2280B5250040C67A /* QueryFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewController.swift; sourceTree = "<group>"; };
 		64D64D1F2280B5250040C67A /* QueryFormViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QueryFormViewController.xib; sourceTree = "<group>"; };
 		64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UITestHelper.swift"; sourceTree = "<group>"; };
+		64D64D272280BF0D0040C67A /* DisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1968,6 +1970,7 @@
 			children = (
 				64981F1E22667D7700178476 /* SettingsViewController.swift */,
 				64E21EB222651620004605D7 /* LoginViewController.swift */,
+				64D64D272280BF0D0040C67A /* DisplayViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2672,6 +2675,7 @@
 				64D64D08227EF2B10040C67A /* TypeQuery.swift in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
+				64D64D282280BF0D0040C67A /* DisplayViewController.swift in Sources */,
 				028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */,
 				0259E4081BCAEC88006C354C /* MyApplication.m in Sources */,
 				022ABCA120C1AACF002D4977 /* MultilineTableViewCell.m in Sources */,
