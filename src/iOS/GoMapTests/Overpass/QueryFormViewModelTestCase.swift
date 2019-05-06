@@ -57,5 +57,13 @@ class QueryFormViewModelTestCase: XCTestCase {
         
         XCTAssertTrue(viewModel.errorMessage.value.isEmpty)
     }
+    
+    // MARK: isSaveButtonEnabled
+    
+    func testIsSavedButtonEnabledShouldInitiallyBeFalse() {
+        XCTAssertFalse(viewModel.isSaveButtonEnabled.value)
+    }
+    
+    
 
 }
