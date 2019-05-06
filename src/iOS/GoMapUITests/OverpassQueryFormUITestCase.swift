@@ -52,6 +52,22 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssertTrue(errorLabel.isHittable)
     }
     
+    func testEnteringAnInvalidQueryShouldDisplaySyntaxErrorMessage() {
+        goToOverpassQueryViewController()
+
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText("**")
+
+        let errorLabel = app.staticTexts["error_message"]
+        guard let errorMessage = errorLabel.value as? String else {
+            XCTFail("Unable to read the error message.")
+            return
+        }
+
+        XCTAssertTrue(errorMessage.hasPrefix("SyntaxError:"))
+    }
+    
     func testTappingOnTheErrorLabelShouldDismissTheKeyboard() {
         goToOverpassQueryViewController()
         
