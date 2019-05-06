@@ -30,6 +30,17 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
     }
     
+    func testEnteringAnInvalidQueryShouldDisplayAnErrorMessage() {
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText("**")
+        
+        let errorLabel = app.staticTexts["error_message"]
+        XCTAssertTrue(errorLabel.isHittable)
+    }
+    
     // MARK: Helper methods
     
     private func goToOverpassQueryViewController() {
