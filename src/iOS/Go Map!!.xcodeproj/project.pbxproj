@@ -506,6 +506,7 @@
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* SettingsViewController.swift */; };
+		64B2AD172280E59200204F8B /* QueryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD162280E59200204F8B /* QueryFormViewModel.swift */; };
 		64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */; };
 		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
 		64C968452261ED3100351C0C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64C968442261ED3100351C0C /* Media.xcassets */; };
@@ -1149,6 +1150,7 @@
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		64B2AD162280E59200204F8B /* QueryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModel.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* CommonTagKeyTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTagKeyTestCase.swift; sourceTree = "<group>"; };
 		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		64C968442261ED3100351C0C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -2036,6 +2038,7 @@
 			children = (
 				64D64D1E2280B5250040C67A /* QueryFormViewController.swift */,
 				64D64D1F2280B5250040C67A /* QueryFormViewController.xib */,
+				64B2AD162280E59200204F8B /* QueryFormViewModel.swift */,
 			);
 			path = QueryForm;
 			sourceTree = "<group>";
@@ -2675,6 +2678,7 @@
 				64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
+				64B2AD172280E59200204F8B /* QueryFormViewModel.swift in Sources */,
 				64D64D08227EF2B10040C67A /* TypeQuery.swift in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
