@@ -7,5 +7,9 @@
 //
 
 extension DisplayViewController {
-    
+    @objc func presentOverpassQueryViewController() {
+        let viewController = QueryFormViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
