@@ -9,7 +9,11 @@
 import UIKit
 
 class QueryFormViewController: UIViewController {
-
+    
+    // MARK: Private properties
+    
+    @IBOutlet weak var stackViewBottomConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
