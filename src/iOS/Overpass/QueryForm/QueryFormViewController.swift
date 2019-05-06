@@ -20,6 +20,7 @@ class QueryFormViewController: UIViewController {
         title = "Overpass Query"
         
         startListeningForKeyboardNotifications()
+        setupKeyboardDismissOnTapGestureRecognizer()
     }
     
     // MARK: Private methods
@@ -92,6 +93,17 @@ class QueryFormViewController: UIViewController {
         
         return animationDurationNumber.doubleValue
         
+    }
+    
+    private func setupKeyboardDismissOnTapGestureRecognizer() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self,
+                                                       action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(gestureRecognizer)
+        gestureRecognizer.cancelsTouchesInView = false
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 }

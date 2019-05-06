@@ -41,6 +41,19 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssertTrue(errorLabel.isHittable)
     }
     
+    func testTappingOnTheErrorLabelShouldDismissTheKeyboard() {
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText("**")
+        
+        let errorLabel = app.staticTexts["error_message"]
+        errorLabel.tap()
+        
+        XCTAssert(app.keyboards.count == 0, "The keyboard should be dismissed")
+    }
+    
     // MARK: Helper methods
     
     private func goToOverpassQueryViewController() {
