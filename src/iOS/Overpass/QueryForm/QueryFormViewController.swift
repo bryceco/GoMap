@@ -12,6 +12,9 @@ class QueryFormViewController: UIViewController {
     
     // MARK: Private properties
     
+    private let viewModel = QueryFormViewModel()
+    private var disposal = Disposal()
+    
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var errorLabel: UILabel!
     @IBOutlet private weak var stackViewBottomConstraint: NSLayoutConstraint!
