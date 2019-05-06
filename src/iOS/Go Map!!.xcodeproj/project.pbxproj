@@ -527,6 +527,7 @@
 		64D64D18227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D17227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift */; };
 		64D64D202280B5250040C67A /* QueryFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D1E2280B5250040C67A /* QueryFormViewController.swift */; };
 		64D64D212280B5250040C67A /* QueryFormViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D64D1F2280B5250040C67A /* QueryFormViewController.xib */; };
+		64D64D262280BA420040C67A /* XCTestCase+UITestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
@@ -1167,6 +1168,7 @@
 		64D64D17227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpressionQueryTestCase.swift; sourceTree = "<group>"; };
 		64D64D1E2280B5250040C67A /* QueryFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewController.swift; sourceTree = "<group>"; };
 		64D64D1F2280B5250040C67A /* QueryFormViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QueryFormViewController.xib; sourceTree = "<group>"; };
+		64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UITestHelper.swift"; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -1943,6 +1945,7 @@
 		64348D09225EA24E00ADE7FB /* GoMapUITests */ = {
 			isa = PBXGroup;
 			children = (
+				64D64D242280BA180040C67A /* Helper */,
 				64348D0C225EA24E00ADE7FB /* Info.plist */,
 				64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */,
 			);
@@ -2029,6 +2032,14 @@
 				64D64D1F2280B5250040C67A /* QueryFormViewController.xib */,
 			);
 			path = QueryForm;
+			sourceTree = "<group>";
+		};
+		64D64D242280BA180040C67A /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		64D74BF02253DF39004FFD20 /* Direction */ = {
@@ -2712,6 +2723,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */,
+				64D64D262280BA420040C67A /* XCTestCase+UITestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
