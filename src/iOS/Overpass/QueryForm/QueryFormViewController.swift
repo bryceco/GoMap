@@ -12,9 +12,9 @@ class QueryFormViewController: UIViewController {
     
     // MARK: Private properties
     
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var stackViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var textView: UITextView!
+    @IBOutlet private weak var errorLabel: UILabel!
+    @IBOutlet private weak var stackViewBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
