@@ -34,6 +34,13 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssertTrue(textField.label.isEmpty)
     }
     
+    func testErrorMessageLabelShouldInitiallyNotBePresent() {
+        goToOverpassQueryViewController()
+        
+        let errorMessageLabel = app.staticTexts["error_message"]
+        XCTAssertFalse(errorMessageLabel.exists)
+    }
+    
     func testEnteringAnInvalidQueryShouldDisplayAnErrorMessage() {
         goToOverpassQueryViewController()
         
