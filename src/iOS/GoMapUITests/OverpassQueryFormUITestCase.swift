@@ -27,6 +27,13 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
     }
     
+    func testQueryTextFieldShouldInitiallyBeEmpty() {
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        XCTAssertTrue(textField.label.isEmpty)
+    }
+    
     func testEnteringAnInvalidQueryShouldDisplayAnErrorMessage() {
         goToOverpassQueryViewController()
         

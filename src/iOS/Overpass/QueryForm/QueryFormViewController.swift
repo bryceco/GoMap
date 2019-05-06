@@ -20,6 +20,8 @@ class QueryFormViewController: UIViewController {
         
         title = "Overpass Query"
         
+        textView.text = nil
+        
         startListeningForKeyboardNotifications()
         setupKeyboardDismissOnTapGestureRecognizer()
     }
