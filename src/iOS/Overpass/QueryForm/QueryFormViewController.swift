@@ -10,4 +10,10 @@ import UIKit
 
 class QueryFormViewController: UIViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "Overpass Query"
+    }
+    
 }
