@@ -8,6 +8,13 @@
 
 import Foundation
 
+protocol QueryFormViewModelDelegate: class {
+    /// Asks the delegate to present the preview with the given URL string.
+    ///
+    /// - Parameter url: The URL of the preview address as a string.
+    func presentPreviewWithOverpassTurbo(url: String)
+}
+
 class QueryFormViewModel: NSObject {
     
     // MARK: Public properties
@@ -15,6 +22,8 @@ class QueryFormViewModel: NSObject {
     var queryText = Observable<String>("")
     var errorMessage = Observable<String>("")
     var isPreviewButtonEnabled = Observable<Bool>(false)
+    
+    weak var delegate: QueryFormViewModelDelegate?
     
     // MARK: Private properties
     
