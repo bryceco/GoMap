@@ -39,6 +39,7 @@ class QueryFormViewModel: NSObject {
     func evaluateQuery(_ query: String) {
         guard !query.isEmpty else {
             errorMessage.value = ""
+            isPreviewButtonEnabled.value = false
             return
         }
         
@@ -47,8 +48,10 @@ class QueryFormViewModel: NSObject {
         switch result {
         case .error(let message):
             errorMessage.value = message
+            isPreviewButtonEnabled.value = false
         case .success(_):
             errorMessage.value = ""
+            isPreviewButtonEnabled.value = true
         }
     }
 

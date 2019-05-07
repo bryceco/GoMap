@@ -69,6 +69,19 @@ class QueryFormViewModelTestCase: XCTestCase {
         XCTAssertFalse(viewModel.isPreviewButtonEnabled.value)
     }
     
+    func testIsPreviewButtonEnabledAfterEvaluatingAValidQueryShouldBeTrue() {
+        viewModel.evaluateQuery("man_made=surveillance")
+        
+        XCTAssertTrue(viewModel.isPreviewButtonEnabled.value)
+    }
+    
+    func testIsPreviewButtonEnabledAfterEvaluatingAnInvalidQueryShouldBeFalse() {
+        queryParserMock.mockedResult = .error("")
+        viewModel.evaluateQuery("lorem ipsum dolor sit amet")
+        
+        XCTAssertFalse(viewModel.isPreviewButtonEnabled.value)
+    }
+    
     func testIsPreviewButtonEnabledAfterEvaluatingEmptyQueryShouldBeFalse() {
         viewModel.evaluateQuery("man_made=surveillance")
         viewModel.evaluateQuery("")

@@ -112,6 +112,44 @@ class OverpassQueryFormUITestCase: XCTestCase {
     
     // MARK: previewButton
     
+    func testPreviewButtonShouldBeEnabledWhenEnteringAValidQuery() {
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText("man_made = surveillance")
+        
+        XCTAssertTrue(app.buttons["preview_button"].isEnabled)
+    }
+    
+    func testPreviewButtonShouldBeDisabledWhenEnteringAnInvalidQuery() {
+        let invalidQuery = "lorem ipsum dolor sit amet"
+        
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText(invalidQuery)
+        
+        XCTAssertFalse(app.buttons["preview_button"].isEnabled)
+    }
+    
+    func testPreviewButtonShouldBeDisabledWhenTheQueryIsEmpty() {
+        let invalidQuery = "lorem ipsum dolor sit amet"
+        
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText(invalidQuery)
+        
+        // Remove all characters.
+        let deleteCharacters = String(repeating: XCUIKeyboardKey.delete.rawValue, count: invalidQuery.count)
+        textField.typeText(deleteCharacters)
+        
+        XCTAssertFalse(app.buttons["preview_button"].isEnabled)
+    }
+    
     func testTappingOnPreviewButtonShouldNotDismissTheKeyboard() {
         goToOverpassQueryViewController()
         
