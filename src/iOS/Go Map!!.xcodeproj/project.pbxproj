@@ -505,6 +505,7 @@
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
+		64972E9922820ACD00286157 /* QueryFormViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */; };
 		64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* SettingsViewController.swift */; };
 		64B2AD172280E59200204F8B /* QueryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD162280E59200204F8B /* QueryFormViewModel.swift */; };
 		64B2AD192280E5E500204F8B /* QueryFormViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */; };
@@ -1151,6 +1152,7 @@
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
+		64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModelDelegateMock.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		64B2AD162280E59200204F8B /* QueryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModel.swift; sourceTree = "<group>"; };
 		64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModelTestCase.swift; sourceTree = "<group>"; };
@@ -1948,6 +1950,7 @@
 				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
 				64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */,
 				64B2AD1A2280EAAB00204F8B /* OverpassQueryParserMock.swift */,
+				64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */,
 				64D64CED227ED11F0040C67A /* BaseObjectMatcherMock.swift */,
 			);
 			path = Mocks;
@@ -2728,6 +2731,7 @@
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64D64CE2227ECEA20040C67A /* OsmBaseObject+Make.swift in Sources */,
 				64D64CFD227ED3470040C67A /* RecursiveQueryTestCase.swift in Sources */,
+				64972E9922820ACD00286157 /* QueryFormViewModelDelegateMock.swift in Sources */,
 				64B2AD1B2280EAAB00204F8B /* OverpassQueryParserMock.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
