@@ -509,6 +509,7 @@
 		64972E9B2282125500286157 /* String+PercentEncodingForRFC3986.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9A2282125500286157 /* String+PercentEncodingForRFC3986.swift */; };
 		64972E9D22821AE300286157 /* QuestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9C22821AE300286157 /* QuestManager.swift */; };
 		64972EA222822BDB00286157 /* QuestManagerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA122822BDB00286157 /* QuestManagerTestCase.swift */; };
+		64972EA4228230F000286157 /* QuestManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA3228230F000286157 /* QuestManagerMock.swift */; };
 		64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* SettingsViewController.swift */; };
 		64B2AD172280E59200204F8B /* QueryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD162280E59200204F8B /* QueryFormViewModel.swift */; };
 		64B2AD192280E5E500204F8B /* QueryFormViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */; };
@@ -1159,6 +1160,7 @@
 		64972E9A2282125500286157 /* String+PercentEncodingForRFC3986.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PercentEncodingForRFC3986.swift"; sourceTree = "<group>"; };
 		64972E9C22821AE300286157 /* QuestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManager.swift; sourceTree = "<group>"; };
 		64972EA122822BDB00286157 /* QuestManagerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManagerTestCase.swift; sourceTree = "<group>"; };
+		64972EA3228230F000286157 /* QuestManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManagerMock.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		64B2AD162280E59200204F8B /* QueryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModel.swift; sourceTree = "<group>"; };
 		64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModelTestCase.swift; sourceTree = "<group>"; };
@@ -1957,6 +1959,7 @@
 				64D64CE1227ECEA20040C67A /* OsmBaseObject+Make.swift */,
 				64B2AD1A2280EAAB00204F8B /* OverpassQueryParserMock.swift */,
 				64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */,
+				64972EA3228230F000286157 /* QuestManagerMock.swift */,
 				64D64CED227ED11F0040C67A /* BaseObjectMatcherMock.swift */,
 			);
 			path = Mocks;
@@ -2733,6 +2736,7 @@
 				64D64CF8227ED2480040C67A /* KeyExistsQueryTestCase.swift in Sources */,
 				64D64CEE227ED11F0040C67A /* BaseObjectMatcherMock.swift in Sources */,
 				64972EA222822BDB00286157 /* QuestManagerTestCase.swift in Sources */,
+				64972EA4228230F000286157 /* QuestManagerMock.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64D64D14227F36E50040C67A /* KeyValueQueryTestCase.swift in Sources */,
