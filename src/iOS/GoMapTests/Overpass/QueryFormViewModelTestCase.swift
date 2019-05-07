@@ -75,13 +75,5 @@ class QueryFormViewModelTestCase: XCTestCase {
         
         XCTAssertFalse(viewModel.isPreviewButtonEnabled.value)
     }
-    
-    // MARK: isSaveButtonEnabled
-    
-    func testIsSavedButtonEnabledShouldInitiallyBeFalse() {
-        XCTAssertFalse(viewModel.isSaveButtonEnabled.value)
-    }
-    
-    
 
 }
