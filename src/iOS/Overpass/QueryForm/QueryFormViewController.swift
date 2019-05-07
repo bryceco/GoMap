@@ -118,6 +118,7 @@ class QueryFormViewController: UIViewController {
     private func setupKeyboardDismissOnTapGestureRecognizer() {
         let gestureRecognizer = UITapGestureRecognizer(target: self,
                                                        action: #selector(dismissKeyboard))
+        gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
         gestureRecognizer.cancelsTouchesInView = false
     }
@@ -136,5 +137,16 @@ class QueryFormViewController: UIViewController {
 extension QueryFormViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         viewModel.evaluateQuery(textView.text)
+    }
+}
+
+extension QueryFormViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if previewButton.bounds.contains(touch.location(in: previewButton)) {
+            // The user touched the preview button; don't dismiss the keyboard.
+            return false
+        }
+        
+        return true
     }
 }

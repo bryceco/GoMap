@@ -103,6 +103,20 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssert(app.keyboards.count == 0, "The keyboard should be dismissed")
     }
     
+    // MARK: previewButton
+    
+    func testTappingOnPreviewButtonShouldNotDismissTheKeyboard() {
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText("man_made = surveillance")
+        
+        app.buttons["preview_button"].tap()
+        
+        XCTAssert(app.keyboards.count > 0, "The keyboard should not have been dismissed")
+    }
+    
     // MARK: Helper methods
     
     private func goToOverpassQueryViewController() {
