@@ -17,6 +17,7 @@ class QueryFormViewController: UIViewController {
     
     @IBOutlet private weak var textView: UITextView!
     @IBOutlet private weak var errorLabel: UILabel!
+    @IBOutlet private weak var previewButton: UIButton!
     @IBOutlet private weak var stackViewBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -123,6 +124,11 @@ class QueryFormViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    // MARK: Preview Button
+    
+    @IBAction private func didTapPreviewButton() {
     }
     
 }

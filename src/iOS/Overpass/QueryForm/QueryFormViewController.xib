@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QueryFormViewController" customModule="Go_Map__" customModuleProvider="target">
             <connections>
                 <outlet property="errorLabel" destination="wRC-ka-y2U" id="kbh-7g-a0L"/>
+                <outlet property="previewButton" destination="mo3-V0-OdH" id="fRt-jL-tTi"/>
                 <outlet property="stackViewBottomConstraint" destination="CgJ-iB-MwZ" id="YtM-1X-DOA"/>
                 <outlet property="textView" destination="ZhF-8c-GU1" id="rpY-hH-5OJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -52,6 +53,9 @@
                             <state key="normal" title="Preview on Overpass Turbo">
                                 <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="didTapPreviewButton" destination="-1" eventType="touchUpInside" id="iBq-Ng-WG1"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>
