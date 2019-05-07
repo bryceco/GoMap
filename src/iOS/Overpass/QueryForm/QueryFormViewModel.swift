@@ -37,6 +37,11 @@ class QueryFormViewModel: NSObject {
     // MARK: Public methods
     
     func evaluateQuery(_ query: String) {
+        guard !query.isEmpty else {
+            errorMessage.value = ""
+            return
+        }
+        
         let result = parser.parse(query)
         
         switch result {

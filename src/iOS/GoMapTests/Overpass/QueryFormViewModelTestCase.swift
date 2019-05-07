@@ -58,6 +58,15 @@ class QueryFormViewModelTestCase: XCTestCase {
         XCTAssertTrue(viewModel.errorMessage.value.isEmpty)
     }
     
+    func testEvaluateQueryShouldEmptyErrorMessageIfQueryIsEmpty() {
+        queryParserMock.mockedResult = .success(nil)
+        
+        viewModel.evaluateQuery("**")
+        viewModel.evaluateQuery("")
+        
+        XCTAssertTrue(viewModel.errorMessage.value.isEmpty)
+    }
+    
     // MARK: isSaveButtonEnabled
     
     func testIsSavedButtonEnabledShouldInitiallyBeFalse() {

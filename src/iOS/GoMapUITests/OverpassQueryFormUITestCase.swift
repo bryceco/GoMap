@@ -74,6 +74,22 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssertFalse(errorLabel.exists)
     }
     
+    func testEnteringQueryAndThenRemovingAllTextShouldHideTheErrorMessageLabel() {
+        goToOverpassQueryViewController()
+        
+        let query = "man_made = surveillance"
+        
+        let textField = app.textViews["query_text_view"]
+        textField.tap()
+        textField.typeText(query)
+        
+        let deleteCharacters = String(repeating: XCUIKeyboardKey.delete.rawValue, count: query.count)
+        textField.typeText(deleteCharacters)
+        
+        let errorLabel = app.staticTexts["error_message"]
+        XCTAssertFalse(errorLabel.exists)
+    }
+    
     func testTappingOnTheErrorLabelShouldDismissTheKeyboard() {
         goToOverpassQueryViewController()
         
