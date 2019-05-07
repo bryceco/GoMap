@@ -507,6 +507,8 @@
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64972E9922820ACD00286157 /* QueryFormViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */; };
 		64972E9B2282125500286157 /* String+PercentEncodingForRFC3986.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9A2282125500286157 /* String+PercentEncodingForRFC3986.swift */; };
+		64972E9D22821AE300286157 /* QuestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9C22821AE300286157 /* QuestManager.swift */; };
+		64972EA222822BDB00286157 /* QuestManagerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA122822BDB00286157 /* QuestManagerTestCase.swift */; };
 		64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* SettingsViewController.swift */; };
 		64B2AD172280E59200204F8B /* QueryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD162280E59200204F8B /* QueryFormViewModel.swift */; };
 		64B2AD192280E5E500204F8B /* QueryFormViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */; };
@@ -1155,6 +1157,8 @@
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModelDelegateMock.swift; sourceTree = "<group>"; };
 		64972E9A2282125500286157 /* String+PercentEncodingForRFC3986.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PercentEncodingForRFC3986.swift"; sourceTree = "<group>"; };
+		64972E9C22821AE300286157 /* QuestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManager.swift; sourceTree = "<group>"; };
+		64972EA122822BDB00286157 /* QuestManagerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManagerTestCase.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		64B2AD162280E59200204F8B /* QueryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModel.swift; sourceTree = "<group>"; };
 		64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModelTestCase.swift; sourceTree = "<group>"; };
@@ -2006,6 +2010,7 @@
 				64D64CFF227ED5EB0040C67A /* overpass-query-parser.js */,
 				64D64D02227ED7470040C67A /* OverpassQueryParser.swift */,
 				64D64CE7227ECF450040C67A /* Queries */,
+				64972E9C22821AE300286157 /* QuestManager.swift */,
 			);
 			path = Overpass;
 			sourceTree = "<group>";
@@ -2029,6 +2034,7 @@
 				64D64D04227ED75A0040C67A /* OverpassQueryParserTestCase.swift */,
 				64D64CF6227ED2480040C67A /* Queries */,
 				64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */,
+				64972EA122822BDB00286157 /* QuestManagerTestCase.swift */,
 			);
 			path = Overpass;
 			sourceTree = "<group>";
@@ -2673,6 +2679,7 @@
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
 				64D64CEC227ED0790040C67A /* KeyExistsQuery.swift in Sources */,
+				64972E9D22821AE300286157 /* QuestManager.swift in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
 				64D64D202280B5250040C67A /* QueryFormViewController.swift in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
@@ -2725,6 +2732,7 @@
 				64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */,
 				64D64CF8227ED2480040C67A /* KeyExistsQueryTestCase.swift in Sources */,
 				64D64CEE227ED11F0040C67A /* BaseObjectMatcherMock.swift in Sources */,
+				64972EA222822BDB00286157 /* QuestManagerTestCase.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64D64D14227F36E50040C67A /* KeyValueQueryTestCase.swift in Sources */,
