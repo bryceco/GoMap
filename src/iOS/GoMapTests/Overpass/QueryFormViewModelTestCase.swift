@@ -93,5 +93,43 @@ class QueryFormViewModelTestCase: XCTestCase {
         
         XCTAssertFalse(viewModel.isPreviewButtonEnabled.value)
     }
+    
+    // MARK: presentPreview
+    
+    func testPresentPreviewWithEmptyQueryShouldNotNotifyDelegate() {
+        viewModel.evaluateQuery("")
+        
+        viewModel.presentPreview()
+        
+        XCTAssertFalse(delegateMock.didCallPresentPreview)
+    }
+    
+    func testPresentPreviewWithInvalidQueryShouldNotNotifyDelegate() {
+        queryParserMock.mockedResult = .error("")
+        viewModel.evaluateQuery("lorem ipsum dolor sit amet")
+        
+        viewModel.presentPreview()
+        
+        XCTAssertFalse(delegateMock.didCallPresentPreview)
+    }
+    
+    func testPresentPreviewWithValidQueryShouldNotifyDelegate() {
+        viewModel.evaluateQuery("man_made=surveillance")
+        
+        viewModel.presentPreview()
+        
+        XCTAssertTrue(delegateMock.didCallPresentPreview)
+    }
+    
+    func testPresentPreviewWithValidQueryShouldNotifyDelegateWithOverpassTurboURLAndEncodedQuery() {
+        let query = "type:node and man_made=surveillance and camera:mount=pole"
+        viewModel.evaluateQuery(query)
+        
+        viewModel.presentPreview()
+        
+        let encodedQuery = "type%3Anode%20and%20man_made%3Dsurveillance%20and%20camera%3Amount%3Dpole"
+        let expectedURL = "https://overpass-turbo.eu?w=\(encodedQuery)&R"
+        XCTAssertEqual(delegateMock.previewURL, expectedURL)
+    }
 
 }

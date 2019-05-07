@@ -70,5 +70,18 @@ class QueryFormViewModel: NSObject {
             isPreviewButtonEnabled.value = true
         }
     }
+    
+    func presentPreview() {
+        guard
+            !mostRecentSuccessfulQuery.isEmpty,
+            let escapedQuery = mostRecentSuccessfulQuery.addingPercentEncodingForRFC3986()
+        else {
+            // Without a proper query, there's no need to notify the delegate.
+            return
+        }
+        
+        let previewURL = "https://overpass-turbo.eu?w=\(escapedQuery)&R"
+        delegate?.presentPreviewWithOverpassTurbo(url: previewURL)
+    }
 
 }
