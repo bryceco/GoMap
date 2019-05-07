@@ -43,6 +43,10 @@ class QueryFormViewController: UIViewController {
         viewModel.errorMessage.observe { [weak self] text, _ in
             self?.errorLabel.text = text
             }.add(to: &self.disposal)
+        
+        viewModel.isPreviewButtonEnabled.observe { [weak self] isEnabled, _ in
+            self?.previewButton.isEnabled = isEnabled
+            }.add(to: &self.disposal)
     }
     
     func startListeningForKeyboardNotifications() {

@@ -34,6 +34,13 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssertTrue(textField.label.isEmpty)
     }
     
+    func testPreviewButtonShouldInitiallyBeDisabled() {
+        goToOverpassQueryViewController()
+        
+        let button = app.buttons["preview_button"]
+        XCTAssertFalse(button.isEnabled)
+    }
+    
     func testErrorMessageLabelShouldInitiallyNotBePresent() {
         goToOverpassQueryViewController()
         

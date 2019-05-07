@@ -63,6 +63,19 @@ class QueryFormViewModelTestCase: XCTestCase {
         XCTAssertTrue(viewModel.errorMessage.value.isEmpty)
     }
     
+    // MARK: isPreviewButtonEnabled
+    
+    func testIsPreviewButtonEnabledShouldInitiallyBeFalse() {
+        XCTAssertFalse(viewModel.isPreviewButtonEnabled.value)
+    }
+    
+    func testIsPreviewButtonEnabledAfterEvaluatingEmptyQueryShouldBeFalse() {
+        viewModel.evaluateQuery("man_made=surveillance")
+        viewModel.evaluateQuery("")
+        
+        XCTAssertFalse(viewModel.isPreviewButtonEnabled.value)
+    }
+    
     // MARK: isSaveButtonEnabled
     
     func testIsSavedButtonEnabledShouldInitiallyBeFalse() {

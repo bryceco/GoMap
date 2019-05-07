@@ -14,6 +14,7 @@ class QueryFormViewModel: NSObject {
     
     var queryText = Observable<String>("")
     var errorMessage = Observable<String>("")
+    var isPreviewButtonEnabled = Observable<Bool>(false)
     var isSaveButtonEnabled = Observable<Bool>(false)
     
     // MARK: Private properties
