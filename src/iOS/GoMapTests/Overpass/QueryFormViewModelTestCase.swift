@@ -14,17 +14,22 @@ class QueryFormViewModelTestCase: XCTestCase {
     
     var viewModel: QueryFormViewModel!
     var queryParserMock: OverpassQueryParserMock!
+    var delegateMock: QueryFormViewModelDelegateMock!
 
     override func setUp() {
         super.setUp()
         
         queryParserMock = OverpassQueryParserMock()
         viewModel = QueryFormViewModel(parser: queryParserMock)
+        
+        delegateMock = QueryFormViewModelDelegateMock()
+        viewModel.delegate = delegateMock
     }
 
     override func tearDown() {
         viewModel = nil
         queryParserMock = nil
+        delegateMock = nil
         
         super.tearDown()
     }
