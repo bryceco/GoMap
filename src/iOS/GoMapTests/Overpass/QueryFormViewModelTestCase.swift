@@ -51,16 +51,12 @@ class QueryFormViewModelTestCase: XCTestCase {
     }
     
     func testEvaluateQueryShouldEmptyErrorMessageIfParserWasSuccessful() {
-        queryParserMock.mockedResult = .success(nil)
-        
         viewModel.evaluateQuery("type:node")
         
         XCTAssertTrue(viewModel.errorMessage.value.isEmpty)
     }
     
     func testEvaluateQueryShouldEmptyErrorMessageIfQueryIsEmpty() {
-        queryParserMock.mockedResult = .success(nil)
-        
         viewModel.evaluateQuery("**")
         viewModel.evaluateQuery("")
         

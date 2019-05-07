@@ -11,7 +11,7 @@ import Foundation
 
 class OverpassQueryParserMock: NSObject {
     var query: String?
-    var mockedResult: OverpassQueryParserResult = .error("")
+    var mockedResult: OverpassQueryParserResult = .success(nil)
 }
 
 extension OverpassQueryParserMock: OverpassQueryParsing {
