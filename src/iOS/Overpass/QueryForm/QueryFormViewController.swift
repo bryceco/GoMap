@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class QueryFormViewController: UIViewController {
     
@@ -36,6 +37,8 @@ class QueryFormViewController: UIViewController {
     // MARK: Private methods
     
     private func bindToViewModel() {
+        viewModel.delegate = self
+        
         viewModel.queryText.observe { [weak self] text, _ in
             self?.textView.text = text
             }.add(to: &self.disposal)
@@ -134,6 +137,7 @@ class QueryFormViewController: UIViewController {
     // MARK: Preview Button
     
     @IBAction private func didTapPreviewButton() {
+        viewModel.presentPreview()
     }
     
 }
@@ -152,5 +156,14 @@ extension QueryFormViewController: UIGestureRecognizerDelegate {
         }
         
         return true
+    }
+}
+
+extension QueryFormViewController: QueryFormViewModelDelegate {
+    func presentPreviewWithOverpassTurbo(url: String) {
+        guard let url = URL(string: url) else { return }
+        
+        let viewController = SFSafariViewController(url: url)
+        present(viewController, animated: true)
     }
 }

@@ -150,7 +150,7 @@ class OverpassQueryFormUITestCase: XCTestCase {
         XCTAssertFalse(app.buttons["preview_button"].isEnabled)
     }
     
-    func testTappingOnPreviewButtonShouldNotDismissTheKeyboard() {
+    func testTappingOnPreviewButtonWhenAValidQueryWasEnteredShouldPresentThePreview() {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
@@ -159,7 +159,9 @@ class OverpassQueryFormUITestCase: XCTestCase {
         
         app.buttons["preview_button"].tap()
         
-        XCTAssert(app.keyboards.count > 0, "The keyboard should not have been dismissed")
+        let elementExistsExpectation = expectation(for: NSPredicate(format: "exists == 1"),
+                                                   evaluatedWith: app.webViews.firstMatch)
+        wait(for: [elementExistsExpectation], timeout: 3)
     }
     
     // MARK: Helper methods
