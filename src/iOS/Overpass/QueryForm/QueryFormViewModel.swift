@@ -29,6 +29,10 @@ class QueryFormViewModel: NSObject {
     
     private let parser: OverpassQueryParsing
     
+    /// The last successfully parsed query string.
+    /// When the parser results in an error, this string is set to an empty string.
+    private var mostRecentSuccessfulQuery = ""
+    
     // MARK: Initializer
     
     init(parser: OverpassQueryParsing) {
@@ -47,6 +51,7 @@ class QueryFormViewModel: NSObject {
     
     func evaluateQuery(_ query: String) {
         guard !query.isEmpty else {
+            mostRecentSuccessfulQuery = ""
             errorMessage.value = ""
             isPreviewButtonEnabled.value = false
             return
@@ -56,9 +61,11 @@ class QueryFormViewModel: NSObject {
         
         switch result {
         case .error(let message):
+            mostRecentSuccessfulQuery = ""
             errorMessage.value = message
             isPreviewButtonEnabled.value = false
         case .success(_):
+            mostRecentSuccessfulQuery = query
             errorMessage.value = ""
             isPreviewButtonEnabled.value = true
         }
