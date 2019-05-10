@@ -40,8 +40,15 @@ class QueryFormViewModelTestCase: XCTestCase {
     
     // MARK: queryText
     
-    func testQueryTextShouldInitiallyBeEmpty() {
-        XCTAssertTrue(viewModel.queryText.value.isEmpty)
+    func testQueryTextShouldBeTheActiveQuestQuery() {
+        let query = "camera:mount = wall"
+        questManagerMock.activeQuestQuery = query
+        
+        // Re-create the view model so that it reads from the manager.
+        viewModel = QueryFormViewModel(parser: queryParserMock,
+                                       questManager: questManagerMock)
+        
+        XCTAssertEqual(viewModel.queryText.value, query)
     }
     
     // MARK: errorMessage
@@ -74,8 +81,24 @@ class QueryFormViewModelTestCase: XCTestCase {
     
     // MARK: isPreviewButtonEnabled
     
-    func testIsPreviewButtonEnabledShouldInitiallyBeFalse() {
+    func testIsPreviewButtonEnabledShouldInitiallyBeFalseIfTheActiveQuestQueryIsNil() {
+        questManagerMock.activeQuestQuery = nil
+        
+        // Re-create the view model so that it reads from the manager.
+        viewModel = QueryFormViewModel(parser: queryParserMock,
+                                       questManager: questManagerMock)
+        
         XCTAssertFalse(viewModel.isPreviewButtonEnabled.value)
+    }
+    
+    func testIsPreviewButtonEnabledShouldInitiallyBeTrueIfTheActiveQuestQueryWasNotNil() {
+        questManagerMock.activeQuestQuery = "man_made=surveillance"
+        
+        // Re-create the view model so that it reads from the manager.
+        viewModel = QueryFormViewModel(parser: queryParserMock,
+                                       questManager: questManagerMock)
+        
+        XCTAssertTrue(viewModel.isPreviewButtonEnabled.value)
     }
     
     func testIsPreviewButtonEnabledAfterEvaluatingAValidQueryShouldBeTrue() {
@@ -134,6 +157,49 @@ class QueryFormViewModelTestCase: XCTestCase {
         let encodedQuery = "type%3Anode%20and%20man_made%3Dsurveillance%20and%20camera%3Amount%3Dpole"
         let expectedURL = "https://overpass-turbo.eu?w=\(encodedQuery)&R"
         XCTAssertEqual(delegateMock.previewURL, expectedURL)
+    }
+    
+    // MARK: viewWillDisappear
+    
+    func testViewWillDisappearShouldSetTheActiveQuestToNilWhenTheQueryIsNotValid() {
+        queryParserMock.mockedResult = .error("")
+        viewModel.evaluateQuery("lorem ipsum dolor sit amet")
+        
+        viewModel.viewWillDisappear()
+        
+        XCTAssertNil(questManagerMock.activeQuestQuery)
+    }
+    
+    func testViewWillDisappearShouldSetTheActiveQuestToNilWhenParserProducedEmptyResult() {
+        queryParserMock.mockedResult = .success(nil)
+        viewModel.evaluateQuery("abc")
+        
+        viewModel.viewWillDisappear()
+        
+        XCTAssertNil(questManagerMock.activeQuestQuery)
+    }
+    
+    func testViewWillDisappearShouldSetTheActiveQuestToTheGivenQueryWhenParserProducedAResultThatIsNotEmpty() {
+        let query = "man_made=surveillance"
+        viewModel.evaluateQuery(query)
+        
+        viewModel.viewWillDisappear()
+        
+        XCTAssertEqual(questManagerMock.activeQuestQuery, query)
+    }
+    
+    func testViewWillDisappearShouldNotSetTheActiveQuestToNilWhenTheViewModelIsRecreated() {
+        let query = "man_made=surveillance"
+        
+        let firstViewModel = QueryFormViewModel(parser: queryParserMock, questManager: questManagerMock)
+        firstViewModel.evaluateQuery(query)
+        
+        firstViewModel.viewWillDisappear()
+        
+        let secondViewModel = QueryFormViewModel(parser: queryParserMock, questManager: questManagerMock)
+        secondViewModel.viewWillDisappear()
+        
+        XCTAssertEqual(questManagerMock.activeQuestQuery, query)
     }
 
 }

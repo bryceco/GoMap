@@ -34,6 +34,12 @@ class QueryFormViewController: UIViewController {
         setupKeyboardDismissOnTapGestureRecognizer()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.viewWillDisappear()
+        
+        super.viewWillDisappear(animated)
+    }
+    
     // MARK: Private methods
     
     private func bindToViewModel() {

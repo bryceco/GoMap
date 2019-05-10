@@ -44,6 +44,13 @@ class QueryFormViewModel: NSObject {
          questManager: QuestManaging = QuestManager()) {
         self.parser = parser
         self.questManager = questManager
+        
+        super.init()
+        
+        if let activeQuery = questManager.activeQuestQuery {
+            evaluateQuery(activeQuery)
+        }
+        self.queryText.value = self.mostRecentSuccessfulQuery
     }
     
     convenience override init() {
@@ -86,6 +93,17 @@ class QueryFormViewModel: NSObject {
         
         let previewURL = "https://overpass-turbo.eu?w=\(escapedQuery)&R"
         delegate?.presentPreviewWithOverpassTurbo(url: previewURL)
+    }
+    
+    func viewWillDisappear() {
+        let queryToSave: String?
+        if mostRecentSuccessfulQuery.isEmpty {
+            queryToSave = nil
+        } else {
+            queryToSave = mostRecentSuccessfulQuery
+        }
+        
+        questManager.activeQuestQuery = queryToSave
     }
 
 }

@@ -27,20 +27,6 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
     }
     
-    func testQueryTextFieldShouldInitiallyBeEmpty() {
-        goToOverpassQueryViewController()
-        
-        let textField = app.textViews["query_text_view"]
-        XCTAssertTrue(textField.label.isEmpty)
-    }
-    
-    func testPreviewButtonShouldInitiallyBeDisabled() {
-        goToOverpassQueryViewController()
-        
-        let button = app.buttons["preview_button"]
-        XCTAssertFalse(button.isEnabled)
-    }
-    
     func testErrorMessageLabelShouldInitiallyNotBePresent() {
         goToOverpassQueryViewController()
         
@@ -180,6 +166,78 @@ class OverpassQueryFormUITestCase: XCTestCase {
         let elementExistsExpectation = expectation(for: NSPredicate(format: "exists == 1"),
                                                    evaluatedWith: app.webViews.firstMatch)
         wait(for: [elementExistsExpectation], timeout: 3)
+    }
+    
+    // MARK: Persistence
+    
+    func testTappingBackWhenAValidQueryIsEnteredShouldSaveTheQuery() {
+        let query = "man_made = surveillance"
+        
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
+        textField.tap()
+        textField.typeText(query)
+        
+        // Tap the back button.
+        app.tapBackButton()
+        
+        // Go back to the query form.
+        app.cells["overpass_query"].tap()
+        waitForViewController("Overpass Query")
+        
+        // Tap the back button.
+        app.tapBackButton()
+        
+        // Go back to the query form.
+        app.cells["overpass_query"].tap()
+        waitForViewController("Overpass Query")
+        
+        XCTAssertEqual(app.textViews["query_text_view"].value as? String, query)
+    }
+    
+    func testTappingBackWhenAnInvalidQueryIsEnteredShouldRememberAnEmptyString() {
+        let invalidQuery = "lorem ipsum dolor sit amet"
+        
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
+        textField.tap()
+        textField.typeText(invalidQuery)
+        
+        // Tap the back button.
+        app.tapBackButton()
+        
+        // Go back to the query form.
+        app.cells["overpass_query"].tap()
+        waitForViewController("Overpass Query")
+        
+        XCTAssertTrue((app.textViews["query_text_view"].value as? String)?.isEmpty ?? false)
+    }
+    
+    func testPreviewButtonShouldBeEnabledWhenEnteringTheViewControllerWithASavedQuery() {
+        let query = "man_made = surveillance"
+        
+        goToOverpassQueryViewController()
+        
+        let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
+        textField.tap()
+        textField.typeText(query)
+        
+        // Tap the back button.
+        app.tapBackButton()
+        
+        // Go back to the query form.
+        app.cells["overpass_query"].tap()
+        waitForViewController("Overpass Query")
+        
+        XCTAssertTrue(app.buttons["preview_button"].isEnabled)
     }
     
     // MARK: Helper methods
