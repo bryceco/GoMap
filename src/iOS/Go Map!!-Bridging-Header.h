@@ -10,3 +10,4 @@
 #import "OsmMapData.h"
 #import "SettingsViewController.h"
 #import "DisplayViewController.h"
+#import "EditorMapLayer.h"
