@@ -16,13 +16,16 @@ final class QuestManager: NSObject, QuestManaging {
     
     private let userDefaults: UserDefaults
     private let activeQueryUserDefaultsKey: String
+    private let notificationCenter: NotificationCenter
     
     // MARK: Initializer
     
     init(userDefaults: UserDefaults = .standard,
-         activeQueryUserDefaultsKey: String = "activeQuestQuery") {
+         activeQueryUserDefaultsKey: String = "activeQuestQuery",
+         notificationCenter: NotificationCenter = .default) {
         self.userDefaults = userDefaults
         self.activeQueryUserDefaultsKey = activeQueryUserDefaultsKey
+        self.notificationCenter = notificationCenter
     }
     
     var activeQuestQuery: String? {

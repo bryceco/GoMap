@@ -15,6 +15,7 @@ class QuestManagerTestCase: XCTestCase {
     var manager: QuestManaging!
     var userDefaults: UserDefaults!
     var activeQueryUserDefaultsKey = "foo-bar"
+    var notificationCenter: NotificationCenter!
 
     override func setUp() {
         super.setUp()
@@ -25,8 +26,11 @@ class QuestManagerTestCase: XCTestCase {
             userDefaults.removeObject(forKey: key)
         }
         
+        notificationCenter = NotificationCenter()
+        
         manager = QuestManager(userDefaults: userDefaults,
-                               activeQueryUserDefaultsKey: activeQueryUserDefaultsKey)
+                               activeQueryUserDefaultsKey: activeQueryUserDefaultsKey,
+                               notificationCenter: notificationCenter)
     }
 
     override func tearDown() {
