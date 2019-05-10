@@ -10,6 +10,10 @@ protocol QuestManaging {
     var activeQuestQuery: String? { get set }
 }
 
+extension NSNotification.Name {
+    static let QuestManagerDidUpdateActiveQuest = Notification.Name("QuestManagerDidUpdateActiveQuest")
+}
+
 final class QuestManager: NSObject, QuestManaging {
     
     // MARK: Private properties
@@ -30,6 +34,14 @@ final class QuestManager: NSObject, QuestManaging {
     
     var activeQuestQuery: String? {
         get { return userDefaults.string(forKey: activeQueryUserDefaultsKey) }
-        set { userDefaults.set(newValue, forKey: activeQueryUserDefaultsKey) }
+        set {
+            let isUpdatedValue = activeQuestQuery != newValue
+            
+            userDefaults.set(newValue, forKey: activeQueryUserDefaultsKey)
+            
+            if isUpdatedValue {
+                notificationCenter.post(name: .QuestManagerDidUpdateActiveQuest, object: self)
+            }
+        }
     }
 }

@@ -53,5 +53,32 @@ class QuestManagerTestCase: XCTestCase {
         secondManager.activeQuestQuery = nil
         XCTAssertNil(manager.activeQuestQuery)
     }
+    
+    func testSetActiveQuestQueryShouldPostNotification() {
+        manager.activeQuestQuery = "camera:mount = pole"
+        
+        let notificationExpectation = expectation(forNotification: .QuestManagerDidUpdateActiveQuest,
+                                                  object: manager,
+                                                  notificationCenter: notificationCenter,
+                                                  handler: nil)
+        
+        manager.activeQuestQuery = "man_made = surveillance"
+        
+        wait(for: [notificationExpectation], timeout: 1.0)
+    }
+    
+    func testSetActiveQuestQueryToTheSameShouldNotPostNotification() {
+        manager.activeQuestQuery = "camera:mount = pole"
+        
+        let notificationExpectation = expectation(forNotification: .QuestManagerDidUpdateActiveQuest,
+                                                  object: manager,
+                                                  notificationCenter: notificationCenter,
+                                                  handler: nil)
+        notificationExpectation.isInverted = true
+        
+        manager.activeQuestQuery = "camera:mount = pole"
+        
+        wait(for: [notificationExpectation], timeout: 1.0)
+    }
 
 }
