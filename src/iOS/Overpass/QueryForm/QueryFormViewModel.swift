@@ -32,7 +32,11 @@ class QueryFormViewModel: NSObject {
     
     /// The last successfully parsed query string.
     /// When the parser results in an error, this string is set to an empty string.
-    private var mostRecentSuccessfulQuery = ""
+    private var mostRecentSuccessfulQuery = "" {
+        didSet {
+            isPreviewButtonEnabled.value = !mostRecentSuccessfulQuery.isEmpty
+        }
+    }
     
     // MARK: Initializer
     
@@ -56,7 +60,6 @@ class QueryFormViewModel: NSObject {
         guard !query.isEmpty else {
             mostRecentSuccessfulQuery = ""
             errorMessage.value = ""
-            isPreviewButtonEnabled.value = false
             return
         }
         
@@ -66,11 +69,9 @@ class QueryFormViewModel: NSObject {
         case .error(let message):
             mostRecentSuccessfulQuery = ""
             errorMessage.value = message
-            isPreviewButtonEnabled.value = false
-        case .success(_):
-            mostRecentSuccessfulQuery = query
+        case .success(let baseObjectMatcher):
+            mostRecentSuccessfulQuery = baseObjectMatcher == nil ? "" : query
             errorMessage.value = ""
-            isPreviewButtonEnabled.value = true
         }
     }
     
