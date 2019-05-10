@@ -512,6 +512,8 @@
 		64972EA222822BDB00286157 /* QuestManagerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA122822BDB00286157 /* QuestManagerTestCase.swift */; };
 		64972EA4228230F000286157 /* QuestManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA3228230F000286157 /* QuestManagerMock.swift */; };
 		64972EA7228242A800286157 /* XCUIElement+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA6228242A800286157 /* XCUIElement+TestHelper.swift */; };
+		64972EA922858C9000286157 /* MapViewQuestAnnotationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA822858C9000286157 /* MapViewQuestAnnotationManager.swift */; };
+		64972EAB22858FDF00286157 /* MapViewQuestAnnotationManagerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EAA22858FDF00286157 /* MapViewQuestAnnotationManagerTestCase.swift */; };
 		64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* SettingsViewController.swift */; };
 		64B2AD172280E59200204F8B /* QueryFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD162280E59200204F8B /* QueryFormViewModel.swift */; };
 		64B2AD192280E5E500204F8B /* QueryFormViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */; };
@@ -1165,6 +1167,8 @@
 		64972EA122822BDB00286157 /* QuestManagerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManagerTestCase.swift; sourceTree = "<group>"; };
 		64972EA3228230F000286157 /* QuestManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManagerMock.swift; sourceTree = "<group>"; };
 		64972EA6228242A800286157 /* XCUIElement+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+TestHelper.swift"; sourceTree = "<group>"; };
+		64972EA822858C9000286157 /* MapViewQuestAnnotationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewQuestAnnotationManager.swift; sourceTree = "<group>"; };
+		64972EAA22858FDF00286157 /* MapViewQuestAnnotationManagerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewQuestAnnotationManagerTestCase.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		64B2AD162280E59200204F8B /* QueryFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModel.swift; sourceTree = "<group>"; };
 		64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModelTestCase.swift; sourceTree = "<group>"; };
@@ -2018,6 +2022,7 @@
 				64D64D02227ED7470040C67A /* OverpassQueryParser.swift */,
 				64D64CE7227ECF450040C67A /* Queries */,
 				64972E9C22821AE300286157 /* QuestManager.swift */,
+				64972EA822858C9000286157 /* MapViewQuestAnnotationManager.swift */,
 			);
 			path = Overpass;
 			sourceTree = "<group>";
@@ -2042,6 +2047,7 @@
 				64D64CF6227ED2480040C67A /* Queries */,
 				64B2AD182280E5E500204F8B /* QueryFormViewModelTestCase.swift */,
 				64972EA122822BDB00286157 /* QuestManagerTestCase.swift */,
+				64972EAA22858FDF00286157 /* MapViewQuestAnnotationManagerTestCase.swift */,
 			);
 			path = Overpass;
 			sourceTree = "<group>";
@@ -2701,6 +2707,7 @@
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
 				027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */,
+				64972EA922858C9000286157 /* MapViewQuestAnnotationManager.swift in Sources */,
 				02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */,
 				02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */,
 				64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */,
@@ -2748,6 +2755,7 @@
 				64D64D14227F36E50040C67A /* KeyValueQueryTestCase.swift in Sources */,
 				64D64D18227F3CFB0040C67A /* RegularExpressionQueryTestCase.swift in Sources */,
 				64D64D0A227EF3790040C67A /* TypeQueryTestCase.swift in Sources */,
+				64972EAB22858FDF00286157 /* MapViewQuestAnnotationManagerTestCase.swift in Sources */,
 				64D64D05227ED75A0040C67A /* OverpassQueryParserTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
