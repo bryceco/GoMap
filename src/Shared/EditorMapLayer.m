@@ -67,6 +67,11 @@ static const CGFloat Pixels_Per_Character = 8.0;
 }
 @end
 
+@interface EditorMapLayer()
+
+@property (nonatomic, readonly) id<MapViewQuestAnnotationManaging> questAnnotationManager;
+
+@end
 
 @implementation EditorMapLayer
 
@@ -85,6 +90,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 	self = [super init];
 	if ( self ) {
 		_mapView = mapView;
+        _questAnnotationManager = [[MapViewQuestAnnotationManager alloc] init];
 
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
