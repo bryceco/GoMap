@@ -508,6 +508,7 @@
 		64972E9922820ACD00286157 /* QueryFormViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */; };
 		64972E9B2282125500286157 /* String+PercentEncodingForRFC3986.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9A2282125500286157 /* String+PercentEncodingForRFC3986.swift */; };
 		64972E9D22821AE300286157 /* QuestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9C22821AE300286157 /* QuestManager.swift */; };
+		64972EA0228227B400286157 /* XCUIApplication+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972E9F228227B400286157 /* XCUIApplication+TestHelper.swift */; };
 		64972EA222822BDB00286157 /* QuestManagerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA122822BDB00286157 /* QuestManagerTestCase.swift */; };
 		64972EA4228230F000286157 /* QuestManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA3228230F000286157 /* QuestManagerMock.swift */; };
 		64972EA7228242A800286157 /* XCUIElement+TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972EA6228242A800286157 /* XCUIElement+TestHelper.swift */; };
@@ -1160,6 +1161,7 @@
 		64972E9822820ACD00286157 /* QueryFormViewModelDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryFormViewModelDelegateMock.swift; sourceTree = "<group>"; };
 		64972E9A2282125500286157 /* String+PercentEncodingForRFC3986.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PercentEncodingForRFC3986.swift"; sourceTree = "<group>"; };
 		64972E9C22821AE300286157 /* QuestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManager.swift; sourceTree = "<group>"; };
+		64972E9F228227B400286157 /* XCUIApplication+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+TestHelper.swift"; sourceTree = "<group>"; };
 		64972EA122822BDB00286157 /* QuestManagerTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManagerTestCase.swift; sourceTree = "<group>"; };
 		64972EA3228230F000286157 /* QuestManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestManagerMock.swift; sourceTree = "<group>"; };
 		64972EA6228242A800286157 /* XCUIElement+TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+TestHelper.swift"; sourceTree = "<group>"; };
@@ -2070,6 +2072,7 @@
 			isa = PBXGroup;
 			children = (
 				64D64D252280BA420040C67A /* XCTestCase+UITestHelper.swift */,
+				64972E9F228227B400286157 /* XCUIApplication+TestHelper.swift */,
 				64972EA6228242A800286157 /* XCUIElement+TestHelper.swift */,
 			);
 			path = Helper;
@@ -2767,6 +2770,7 @@
 				64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */,
 				64D64D262280BA420040C67A /* XCTestCase+UITestHelper.swift in Sources */,
 				64972EA7228242A800286157 /* XCUIElement+TestHelper.swift in Sources */,
+				64972EA0228227B400286157 /* XCUIApplication+TestHelper.swift in Sources */,
 				64D64D232280B9EF0040C67A /* OverpassQueryFormUITestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
