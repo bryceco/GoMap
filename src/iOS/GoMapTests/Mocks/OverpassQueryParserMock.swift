@@ -10,7 +10,7 @@ import Foundation
 @testable import Go_Map__
 
 class OverpassQueryParserMock: NSObject {
-    var didCallParse = false
+    var parseCallCounter = 0
     var query: String?
     var mockedResult: OverpassQueryParserResult = .success(BaseObjectMatcherMock())
 }
@@ -18,7 +18,7 @@ class OverpassQueryParserMock: NSObject {
 extension OverpassQueryParserMock: OverpassQueryParsing {
     
     func parse(_ query: String) -> OverpassQueryParserResult {
-        didCallParse = true
+        parseCallCounter += 1
         self.query = query
         
         return mockedResult

@@ -40,7 +40,7 @@ class MapViewQuestAnnotationManagerTestCase: XCTestCase {
         
         _ = manager.shouldShowQuestAnnotation(for: object)
         
-        XCTAssertFalse(queryParserMock.didCallParse)
+        XCTAssertEqual(queryParserMock.parseCallCounter, 0)
     }
     
     func testShowAnnotationWithActiveQueryShouldAskParserToParse() {
@@ -50,7 +50,7 @@ class MapViewQuestAnnotationManagerTestCase: XCTestCase {
         
         _ = manager.shouldShowQuestAnnotation(for: object)
         
-        XCTAssertTrue(queryParserMock.didCallParse)
+        XCTAssertEqual(queryParserMock.parseCallCounter, 1)
         XCTAssertEqual(queryParserMock.query, query)
     }
     
