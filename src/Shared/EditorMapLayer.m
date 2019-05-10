@@ -1723,8 +1723,46 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
             CGPathRelease(path);
         }
     }
+    
+    CALayer *questAnnotationLayer = [self questAnnotationLayerWithNode:node];
+    if (questAnnotationLayer) {
+        [layers addObject:questAnnotationLayer];
+    }
 
     return layers;
+}
+
+/**
+ Determines the `CALayer` to render in order to visually indicate that the given `OsmNode` is part of a quest.
+
+ @param node The node to determine the `CALayer` for.
+ @return The layer that should be rendered in order to indicate a quest for the given node.
+ */
+- (CALayer *)questAnnotationLayerWithNode:(OsmNode *)node {
+    if (![self.questAnnotationManager shouldShowQuestAnnotationFor:node]) {
+        return nil;
+    }
+    
+    CGFloat diameter = MinIconSizeInPixels + 10;
+    
+    CALayer *layer = [CALayer new];
+    layer.bounds = CGRectMake(0, 0, diameter, diameter);
+    
+    layer.cornerRadius = diameter / 2;
+    layer.masksToBounds = YES;
+    
+    layer.borderColor = [UIColor colorWithRed:0 green:0.19921875 blue:0.99609375 alpha:0.7].CGColor;
+    layer.borderWidth = 2;
+    
+    layer.backgroundColor = [UIColor colorWithRed:0.99609375 green:0.796875 blue:0 alpha:0.3].CGColor;
+    
+    layer.zPosition = Z_NODE;
+    
+    LayerProperties * props = [LayerProperties new];
+    props->position = MapPointForLatitudeLongitude( node.lat, node.lon );
+    [layer setValue:props forKey:@"properties"];
+    
+    return layer;
 }
 
 /**
