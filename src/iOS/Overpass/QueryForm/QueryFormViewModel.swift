@@ -28,6 +28,7 @@ class QueryFormViewModel: NSObject {
     // MARK: Private properties
     
     private let parser: OverpassQueryParsing
+    private var questManager: QuestManaging
     
     /// The last successfully parsed query string.
     /// When the parser results in an error, this string is set to an empty string.
@@ -35,8 +36,10 @@ class QueryFormViewModel: NSObject {
     
     // MARK: Initializer
     
-    init(parser: OverpassQueryParsing) {
+    init(parser: OverpassQueryParsing,
+         questManager: QuestManaging = QuestManager()) {
         self.parser = parser
+        self.questManager = questManager
     }
     
     convenience override init() {
