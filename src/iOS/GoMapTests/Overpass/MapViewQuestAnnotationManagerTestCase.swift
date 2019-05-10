@@ -54,6 +54,35 @@ class MapViewQuestAnnotationManagerTestCase: XCTestCase {
         XCTAssertEqual(queryParserMock.query, query)
     }
     
+    func testShowAnnotationWithActiveQueryThatIsValidShouldOnlyAskParserToParseIfQueryWasChanged() {
+        let object = OsmBaseObject()
+        
+        questManagerMock.activeQuestQuery = "man_made = surveillance"
+        
+        // For the first query, act as if the result did not match.
+        let negativeMatcher = BaseObjectMatcherMock()
+        negativeMatcher.doesMatch = false
+        queryParserMock.mockedResult = .success(negativeMatcher)
+        
+        for _ in 0...10 {
+            XCTAssertFalse(manager.shouldShowQuestAnnotation(for: object))
+        }
+        XCTAssertEqual(queryParserMock.parseCallCounter, 1)
+        
+        // Now change the query.
+        questManagerMock.activeQuestQuery = "camera:mount = wall"
+        
+        // For the second query, act as if the result matched.
+        let positiveMatcher = BaseObjectMatcherMock()
+        positiveMatcher.doesMatch = true
+        queryParserMock.mockedResult = .success(positiveMatcher)
+        
+        for _ in 0...10 {
+            XCTAssertTrue(manager.shouldShowQuestAnnotation(for: object))
+        }
+        XCTAssertEqual(queryParserMock.parseCallCounter, 2)
+    }
+    
     func testShowAnnotationWithQueryThatCausesParserErrorShouldReturnFalse() {
         let query: String? = "lorem ipsum dolor sit amet"
         questManagerMock.activeQuestQuery = query

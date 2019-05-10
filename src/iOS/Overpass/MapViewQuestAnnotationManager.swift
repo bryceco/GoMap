@@ -19,6 +19,9 @@ import Foundation
     private let questManager: QuestManaging
     private let queryParser: OverpassQueryParsing
     
+    private var lastParsedQuery: String?
+    private var lastMatcher: BaseObjectMatching?
+    
     // MARK: Initializer
     
     init(questManager: QuestManaging, queryParser: OverpassQueryParsing) {
@@ -43,12 +46,25 @@ import Foundation
             return false
         }
         
+        guard activeQuery != lastParsedQuery else {
+            // We've already parsed this query before, and there's no need to do it again.
+            return lastMatcher?.matches(baseObject) ?? false
+        }
+        
+        // Remember the query that was parsed last.
+        lastParsedQuery = activeQuery
+        
         guard
             case let .success(parsedMatcher) = queryParser.parse(activeQuery),
             let matcher = parsedMatcher
         else {
+            lastMatcher = nil
+            
             return false
         }
+        
+        // Remember the parsed matcher.
+        lastMatcher = matcher
         
         return matcher.matches(baseObject)
     }
