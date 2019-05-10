@@ -52,6 +52,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText("**")
         
@@ -63,6 +65,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
 
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText("**")
 
@@ -74,6 +78,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText("man_made = surveillance")
         
@@ -87,6 +93,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         let query = "man_made = surveillance"
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText(query)
         
@@ -101,6 +109,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText("**")
         
@@ -116,6 +126,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText("man_made = surveillance")
         
@@ -128,6 +140,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText(invalidQuery)
         
@@ -140,6 +154,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText(invalidQuery)
         
@@ -154,6 +170,8 @@ class OverpassQueryFormUITestCase: XCTestCase {
         goToOverpassQueryViewController()
         
         let textField = app.textViews["query_text_view"]
+        textField.clearTextField()
+        
         textField.tap()
         textField.typeText("man_made = surveillance")
         
