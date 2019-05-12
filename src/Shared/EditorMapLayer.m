@@ -203,6 +203,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fontSizeDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
 #endif
+        [self observeQuestChanges];
 	}
 	return self;
 }
