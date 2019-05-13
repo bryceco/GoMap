@@ -66,9 +66,13 @@
 		[weakSelf updateUploadButtonState];
 	}];
     
-    self.locationButton.accessibilityIdentifier = @"location_button";
+    [self setupAccessibility];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];
+}
+
+- (void)setupAccessibility {
+    self.locationButton.accessibilityIdentifier = @"location_button";
 }
 
 - (void)viewWillAppear:(BOOL)animated
