@@ -18,6 +18,7 @@
 #import "SpeechBalloonView.h"
 
 @interface MapViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *displayBarButtonItem;
 @end
 
@@ -75,6 +76,7 @@
 - (void)setupAccessibility {
     self.locationButton.accessibilityIdentifier = @"location_button";
     
+    _settingsBarButtonItem.accessibilityLabel = @"Settings";
     _displayBarButtonItem.accessibilityLabel = @"Display options";
 }
 

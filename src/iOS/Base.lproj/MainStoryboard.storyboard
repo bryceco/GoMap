@@ -240,6 +240,7 @@
                         <outlet property="displayBarButtonItem" destination="43k-EH-kfB" id="Lzf-EY-aaK"/>
                         <outlet property="locationButton" destination="e3U-Im-GKP" id="LSh-pS-Mw5"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
+                        <outlet property="settingsBarButtonItem" destination="npa-P4-nL0" id="Enw-Rp-dIO"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
                         <segue destination="Fhw-zr-ueA" kind="modal" identifier="CalculateHeightSegue" id="Tzh-5J-H7G"/>
                         <segue destination="TCa-h6-J4b" kind="modal" identifier="searchSegue" id="RuH-7x-qpi"/>
