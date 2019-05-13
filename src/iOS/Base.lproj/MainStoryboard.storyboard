@@ -32,6 +32,7 @@
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Af5-y9-yOe">
                                                     <rect key="frame" x="16" y="0.0" width="22" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Locate me"/>
                                                     <state key="normal" image="723-location-arrow-toolbar.png"/>
                                                     <connections>
                                                         <action selector="toggleLocation:" destination="2" eventType="touchUpInside" id="WWX-Tw-6Tj"/>
