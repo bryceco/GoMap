@@ -156,6 +156,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
                                         <rect key="frame" x="275" y="70" width="44" height="44"/>
+                                        <accessibility key="accessibilityConfiguration" hint="Reorient map north" identifier="compass_button" label="Compass"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="Umo-8r-F7i"/>
                                             <constraint firstAttribute="height" constant="44" id="rLd-DR-Gbp"/>
