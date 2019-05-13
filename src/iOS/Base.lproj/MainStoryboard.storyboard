@@ -237,6 +237,7 @@
                         <outlet property="_toolbar" destination="GTv-eT-l7q" id="sfg-93-w4E"/>
                         <outlet property="_undoButton" destination="in0-IO-OB6" id="zx7-uA-FJ2"/>
                         <outlet property="_uploadButton" destination="ma4-oI-tBL" id="wVI-LB-h9R"/>
+                        <outlet property="displayBarButtonItem" destination="43k-EH-kfB" id="Lzf-EY-aaK"/>
                         <outlet property="locationButton" destination="e3U-Im-GKP" id="LSh-pS-Mw5"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
