@@ -32,6 +32,7 @@
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Af5-y9-yOe">
                                                     <rect key="frame" x="16" y="0.0" width="22" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Locate me"/>
                                                     <state key="normal" image="723-location-arrow-toolbar.png"/>
                                                     <connections>
                                                         <action selector="toggleLocation:" destination="2" eventType="touchUpInside" id="WWX-Tw-6Tj"/>
@@ -50,7 +51,7 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="9sY-7x-Af0"/>
-                                            <barButtonItem title="Item" style="plain" id="Ceq-eN-yV5" userLabel="Add Button">
+                                            <barButtonItem title="Add node" style="plain" id="Ceq-eN-yV5" userLabel="Add Button">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uWA-Q5-QJr">
                                                     <rect key="frame" x="143" y="0.0" width="44" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -156,6 +157,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
                                         <rect key="frame" x="275" y="70" width="44" height="44"/>
+                                        <accessibility key="accessibilityConfiguration" hint="Reorient map north" identifier="compass_button" label="Compass"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="Umo-8r-F7i"/>
                                             <constraint firstAttribute="height" constant="44" id="rLd-DR-Gbp"/>
@@ -235,8 +237,10 @@
                         <outlet property="_toolbar" destination="GTv-eT-l7q" id="sfg-93-w4E"/>
                         <outlet property="_undoButton" destination="in0-IO-OB6" id="zx7-uA-FJ2"/>
                         <outlet property="_uploadButton" destination="ma4-oI-tBL" id="wVI-LB-h9R"/>
+                        <outlet property="displayBarButtonItem" destination="43k-EH-kfB" id="Lzf-EY-aaK"/>
                         <outlet property="locationButton" destination="e3U-Im-GKP" id="LSh-pS-Mw5"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
+                        <outlet property="settingsBarButtonItem" destination="npa-P4-nL0" id="Enw-Rp-dIO"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
                         <segue destination="Fhw-zr-ueA" kind="modal" identifier="CalculateHeightSegue" id="Tzh-5J-H7G"/>
                         <segue destination="TCa-h6-J4b" kind="modal" identifier="searchSegue" id="RuH-7x-qpi"/>
