@@ -76,6 +76,7 @@
 - (void)setupAccessibility {
     self.locationButton.accessibilityIdentifier = @"location_button";
     
+    _undoButton.accessibilityLabel = @"Undo";
     _settingsBarButtonItem.accessibilityLabel = @"Settings";
     _displayBarButtonItem.accessibilityLabel = @"Display options";
 }
