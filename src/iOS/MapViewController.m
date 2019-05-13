@@ -79,6 +79,7 @@
     _undoButton.accessibilityLabel = @"Undo";
     _redoButton.accessibilityLabel = @"Redo";
     _settingsBarButtonItem.accessibilityLabel = @"Settings";
+    _uploadButton.accessibilityLabel = @"Upload your changes";
     _displayBarButtonItem.accessibilityLabel = @"Display options";
 }
 
