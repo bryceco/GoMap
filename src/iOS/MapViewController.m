@@ -18,6 +18,8 @@
 #import "SpeechBalloonView.h"
 
 @interface MapViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *displayBarButtonItem;
 @end
 
 @implementation MapViewController
@@ -65,8 +67,20 @@
 		[weakSelf updateUndoRedoButtonState];
 		[weakSelf updateUploadButtonState];
 	}];
+    
+    [self setupAccessibility];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];
+}
+
+- (void)setupAccessibility {
+    self.locationButton.accessibilityIdentifier = @"location_button";
+    
+    _undoButton.accessibilityLabel = @"Undo";
+    _redoButton.accessibilityLabel = @"Redo";
+    _settingsBarButtonItem.accessibilityLabel = @"Settings";
+    _uploadButton.accessibilityLabel = @"Upload your changes";
+    _displayBarButtonItem.accessibilityLabel = @"Display options";
 }
 
 - (void)viewWillAppear:(BOOL)animated

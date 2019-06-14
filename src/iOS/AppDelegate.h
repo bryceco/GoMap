@@ -27,6 +27,7 @@
 
 -(NSString *)appName;
 -(NSString *)appVersion;
+- (NSString *)appBuildNumber;
 
 +(AppDelegate *) getAppDelegate;
 @end

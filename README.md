@@ -1,7 +1,9 @@
 
 # Go Map!!
 
-Go Map!! is an iPhone/iPad editor for adding cartographic information to [OpenStreetMap](https://www.openstreetmap.org).
+Go Map!! is an iPhone/iPad editor for adding cartographic information to [OpenStreetMap][1].
+
+[![Download on the App Store badge][2]][3]
 
 ## Source code structure
 
@@ -11,3 +13,7 @@ Go Map!! is an iPhone/iPad editor for adding cartographic information to [OpenSt
 * Images - Images used for application elements (buttons, etc)
 * png/poi/Maki/iD SVG POI - Icons used for map elements (POIs, etc)
 * presets - The presets database copied from the iD editor
+
+[1]: https://www.openstreetmap.org
+[2]: download-on-the-app-store.png
+[3]: https://itunes.apple.com/app/id592990211

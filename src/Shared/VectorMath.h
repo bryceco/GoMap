@@ -6,6 +6,8 @@
 //
 //
 
+#import <UIKit/UIKit.h>
+
 #ifndef Rocket_VectorMath_h
 #define Rocket_VectorMath_h
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,6 +32,7 @@
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Af5-y9-yOe">
                                                     <rect key="frame" x="16" y="0.0" width="22" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Locate me"/>
                                                     <state key="normal" image="723-location-arrow-toolbar.png"/>
                                                     <connections>
                                                         <action selector="toggleLocation:" destination="2" eventType="touchUpInside" id="WWX-Tw-6Tj"/>
@@ -50,7 +51,7 @@
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="9sY-7x-Af0"/>
-                                            <barButtonItem title="Item" style="plain" id="Ceq-eN-yV5" userLabel="Add Button">
+                                            <barButtonItem title="Add node" style="plain" id="Ceq-eN-yV5" userLabel="Add Button">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uWA-Q5-QJr">
                                                     <rect key="frame" x="143" y="0.0" width="44" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -79,12 +80,12 @@
                                         </items>
                                     </toolbar>
                                     <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="800" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="fill" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-IT-DQC">
-                                        <rect key="frame" x="9" y="26" width="217" height="24"/>
+                                        <rect key="frame" x="9" y="26" width="202.5" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="SkQ-sE-D6j"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <state key="normal" title="Bing attribution" image="BingLogo.png">
+                                        <state key="normal" title="Bing attribution" image="bing-logo-white">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -107,7 +108,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="XIv-Uv-W3O" kind="modal" id="CvQ-Su-F4k"/>
+                                            <segue destination="tSG-1g-AqH" kind="modal" id="D2E-xQ-BeP"/>
                                         </connections>
                                     </button>
                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
@@ -156,6 +157,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
                                         <rect key="frame" x="275" y="70" width="44" height="44"/>
+                                        <accessibility key="accessibilityConfiguration" hint="Reorient map north" identifier="compass_button" label="Compass"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="Umo-8r-F7i"/>
                                             <constraint firstAttribute="height" constant="44" id="rLd-DR-Gbp"/>
@@ -235,13 +237,15 @@
                         <outlet property="_toolbar" destination="GTv-eT-l7q" id="sfg-93-w4E"/>
                         <outlet property="_undoButton" destination="in0-IO-OB6" id="zx7-uA-FJ2"/>
                         <outlet property="_uploadButton" destination="ma4-oI-tBL" id="wVI-LB-h9R"/>
+                        <outlet property="displayBarButtonItem" destination="43k-EH-kfB" id="Lzf-EY-aaK"/>
                         <outlet property="locationButton" destination="e3U-Im-GKP" id="LSh-pS-Mw5"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
-                        <segue destination="siu-I6-IEp" kind="modal" identifier="searchSegue" id="iXU-B0-fRW"/>
+                        <outlet property="settingsBarButtonItem" destination="npa-P4-nL0" id="Enw-Rp-dIO"/>
                         <segue destination="f5t-25-IXF" kind="modal" identifier="poiSegue" id="OEI-9h-7td"/>
-                        <segue destination="S30-cU-QcE" kind="modal" identifier="NotesSegue" id="gMc-ga-KGQ"/>
                         <segue destination="Fhw-zr-ueA" kind="modal" identifier="CalculateHeightSegue" id="Tzh-5J-H7G"/>
-                        <segue destination="DCR-m3-Qgc" kind="modal" identifier="BingMetadataSegue" id="OSh-Rq-XOM"/>
+                        <segue destination="TCa-h6-J4b" kind="modal" identifier="searchSegue" id="RuH-7x-qpi"/>
+                        <segue destination="wrG-56-yuW" kind="modal" identifier="NotesSegue" id="ROf-ZO-hu1"/>
+                        <segue destination="rzX-ca-ESu" kind="modal" identifier="BingMetadataSegue" id="MvO-jp-eEt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -1062,7 +1066,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" translatesAutoresizingMaskIntoConstraints="NO" id="YQ4-05-lQz">
                                                     <rect key="frame" x="142" y="11.5" width="159" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="5aR-9a-sW0"/>
                                                         <action selector="textFieldReturn:" destination="kl3-Fg-1QU" eventType="editingDidEndOnExit" id="HIT-FM-Ke9"/>
@@ -1163,7 +1167,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Login" id="O6E-f1-A1k">
                         <barButtonItem key="backBarButtonItem" title="Back" id="kt1-K7-kcu"/>
-                        <barButtonItem key="rightBarButtonItem" title="Verify" style="done" id="ctb-pg-pM9">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="ctb-pg-pM9">
                             <connections>
                                 <action selector="verifyAccount:" destination="kl3-Fg-1QU" id="qEc-ab-jnj"/>
                             </connections>
@@ -1172,8 +1176,8 @@
                     <connections>
                         <outlet property="_activityIndicator" destination="jcT-tR-WDO" id="J8A-AQ-LZf"/>
                         <outlet property="_password" destination="e7I-rE-dAW" id="Ugu-EO-x5C"/>
+                        <outlet property="_saveButton" destination="ctb-pg-pM9" id="qk6-V6-1jq"/>
                         <outlet property="_username" destination="YQ4-05-lQz" id="ge6-8t-VeT"/>
-                        <outlet property="_verifyButton" destination="ctb-pg-pM9" id="5cm-I2-11p"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CzF-UG-rbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1370,7 +1374,23 @@
             </objects>
             <point key="canvasLocation" x="293" y="1819"/>
         </scene>
-        <!--Notes Table View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="IuR-Zy-phT">
+            <objects>
+                <navigationController id="wrG-56-yuW" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n2c-NG-Rrn">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="S30-cU-QcE" kind="relationship" relationship="rootViewController" id="jzd-kX-GEf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LaK-ox-R0W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4543" y="639"/>
+        </scene>
+        <!--Note-->
         <scene sceneID="12g-at-ojg">
             <objects>
                 <viewController id="S30-cU-QcE" customClass="NotesTableViewController" sceneMemberID="viewController">
@@ -1378,20 +1398,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C3v-kD-Re9">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <items>
-                                    <navigationItem title="Note" id="qIZ-iS-gwF">
-                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="cancel" id="uMQ-Rj-wEm">
-                                            <connections>
-                                                <action selector="done:" destination="S30-cU-QcE" id="85d-qs-S5A"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="DRB-XW-UOn">
-                                <rect key="frame" x="0.0" y="60" width="320" height="420"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="noteCommentCell" rowHeight="102" id="6Un-rp-X2n" customClass="NotesCommentCell">
@@ -1543,16 +1551,20 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="DRB-XW-UOn" firstAttribute="bottom" secondItem="gog-wr-wAd" secondAttribute="bottom" id="4Vi-cw-zUc"/>
+                            <constraint firstItem="DRB-XW-UOn" firstAttribute="bottom" secondItem="iDL-ho-g1h" secondAttribute="bottom" id="4Vi-cw-zUc"/>
                             <constraint firstItem="DRB-XW-UOn" firstAttribute="leading" secondItem="gog-wr-wAd" secondAttribute="leading" id="GMA-z8-Au9"/>
-                            <constraint firstItem="C3v-kD-Re9" firstAttribute="top" secondItem="gog-wr-wAd" secondAttribute="top" id="HvL-Bn-Rbg"/>
-                            <constraint firstItem="DRB-XW-UOn" firstAttribute="top" secondItem="gog-wr-wAd" secondAttribute="top" constant="40" id="J6W-fa-HO8"/>
-                            <constraint firstItem="DRB-XW-UOn" firstAttribute="trailing" secondItem="C3v-kD-Re9" secondAttribute="trailing" id="UUc-fa-MNM"/>
+                            <constraint firstItem="DRB-XW-UOn" firstAttribute="top" secondItem="gog-wr-wAd" secondAttribute="top" id="J6W-fa-HO8"/>
                             <constraint firstItem="gog-wr-wAd" firstAttribute="trailing" secondItem="DRB-XW-UOn" secondAttribute="trailing" id="aLK-Zt-rkq"/>
-                            <constraint firstItem="DRB-XW-UOn" firstAttribute="leading" secondItem="C3v-kD-Re9" secondAttribute="leading" id="qR6-by-uBI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gog-wr-wAd"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Note" id="MBY-TK-Wuy">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="cancel" id="uMQ-Rj-wEm">
+                            <connections>
+                                <action selector="done:" destination="S30-cU-QcE" id="85d-qs-S5A"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="DRB-XW-UOn" id="mVg-pg-tr4"/>
                     </connections>
@@ -1720,13 +1732,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPX Tracks you record or download will be automatically deleted after:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MeQ-4N-FqC">
-                                <rect key="frame" x="20" y="100" width="280" height="42.5"/>
+                                <rect key="frame" x="20" y="84" width="280" height="42.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dWF-I1-mgM">
-                                <rect key="frame" x="0.0" y="40" width="320" height="44"/>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWF-I1-mgM">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Configure GPX Tracks" id="oSD-0y-Vt0">
                                         <barButtonItem key="backBarButtonItem" title="Cancel" id="1SY-O5-qJR"/>
@@ -1744,7 +1756,7 @@
                                 </items>
                             </navigationBar>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PK9-1m-unf">
-                                <rect key="frame" x="20" y="150.5" width="280" height="216"/>
+                                <rect key="frame" x="20" y="134.5" width="280" height="216"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1755,8 +1767,8 @@
                             <constraint firstItem="dWF-I1-mgM" firstAttribute="leading" secondItem="8pi-lE-GdV" secondAttribute="leading" id="Qur-RJ-Ubv"/>
                             <constraint firstItem="MeQ-4N-FqC" firstAttribute="leading" secondItem="8pi-lE-GdV" secondAttribute="leading" constant="20" id="YFD-xP-ujo"/>
                             <constraint firstItem="PK9-1m-unf" firstAttribute="top" secondItem="MeQ-4N-FqC" secondAttribute="bottom" constant="8" id="ifT-Ak-FTa"/>
-                            <constraint firstItem="dWF-I1-mgM" firstAttribute="top" secondItem="kkY-2X-K4y" secondAttribute="topMargin" constant="20" id="q4Y-gT-acF"/>
-                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="dWF-I1-mgM" secondAttribute="top" constant="60" id="qf3-vW-INh"/>
+                            <constraint firstItem="dWF-I1-mgM" firstAttribute="top" secondItem="8pi-lE-GdV" secondAttribute="top" id="q4Y-gT-acF"/>
+                            <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="dWF-I1-mgM" secondAttribute="bottom" constant="20" id="qf3-vW-INh"/>
                             <constraint firstItem="8pi-lE-GdV" firstAttribute="trailing" secondItem="MeQ-4N-FqC" secondAttribute="trailing" constant="20" id="r2C-Ap-5CU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8pi-lE-GdV"/>
@@ -2165,16 +2177,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHr-ta-k6F">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <string key="text">Copyright © 2012-2015 Bryce Cogswell. 
+                                <mutableString key="text">Copyright © 2012-2015 Bryce Cogswell. 
 All rights reserved.
 
 OpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):
-http://www.openstreetmap.com/copyright
+https://www.openstreetmap.com/copyright
 
 Bing aerial imagery copyright Microsoft and its suppliers:
-http://www.microsoft.com/maps/product/terms.html, http://www.microsoft.com/maps/assets/docs/terms.aspx
+https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
 
-Mapbox aerial imagery copyright Mapbox and its suppliers: http://www.mapbox.com/tos
+Mapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos
 
 XML parsing courtesy of Robbie Hanson's KissXML:
 https://github.com/robbiehanson/KissXML
@@ -2184,7 +2196,7 @@ http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
-</string>
+</mutableString>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -2690,7 +2702,39 @@ http://glyphish.com
             </objects>
             <point key="canvasLocation" x="-2198" y="-1090"/>
         </scene>
-        <!--Help View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="Yja-PP-LZI">
+            <objects>
+                <navigationController id="rzX-ca-ESu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8DV-Ex-fD9">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DCR-m3-Qgc" kind="relationship" relationship="rootViewController" id="ciw-Md-Gcx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="05c-vm-Znh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1365" y="-1090"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1p7-Qc-3Vu">
+            <objects>
+                <navigationController id="tSG-1g-AqH" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RlG-YW-YZ2">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="XIv-Uv-W3O" kind="relationship" relationship="rootViewController" id="uwY-mY-BQN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P2T-Yi-Ton" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2190" y="-1788"/>
+        </scene>
+        <!--Help-->
         <scene sceneID="ViH-as-IQq">
             <objects>
                 <viewController id="XIv-Uv-W3O" customClass="HelpViewController" sceneMemberID="viewController">
@@ -3270,27 +3314,7 @@ This privacy policy governs your use of the software application </string>
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" for mobile devices that was created by ">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="Helvetica"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
-                                                <tabStops/>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Bryce Cogswell">
-                                        <attributes>
-                                            <color key="NSColor" red="0.0" green="0.0" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="14" name="Helvetica"/>
-                                            <url key="NSLink" string="http://www.openstreetmap.org/user/bryceco/diary"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
-                                                <tabStops/>
-                                            </paragraphStyle>
-                                            <integer key="NSUnderline" value="1"/>
-                                            <color key="NSUnderlineColor" red="0.0" green="0.0" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=". ">
+                                    <fragment content=" for mobile devices that was created by Bryce Cogswell (https://www.openstreetmap.org/user/bryceco/diary). ">
                                         <attributes>
                                             <font key="NSFont" size="14" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
@@ -3361,28 +3385,8 @@ The data you edit and upload to openstreetmap.org using </string>
                                             </paragraphStyle>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" is subject to the OpenStreetMap ">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="Helvetica"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
-                                                <tabStops/>
-                                            </paragraphStyle>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Privacy Policy">
-                                        <attributes>
-                                            <color key="NSColor" red="0.0" green="0.0" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="14" name="Helvetica"/>
-                                            <url key="NSLink" string="http://wiki.openstreetmap.org/wiki/Privacy_Policy"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" paragraphSpacing="12" defaultTabInterval="36">
-                                                <tabStops/>
-                                            </paragraphStyle>
-                                            <integer key="NSUnderline" value="1"/>
-                                            <color key="NSUnderlineColor" red="0.0" green="0.0" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </attributes>
-                                    </fragment>
                                     <fragment>
-                                        <string key="content">.
+                                        <string key="content"> is subject to the OpenStreetMap Privacy Policy (https://wiki.osmfoundation.org/wiki/Privacy_Policy).
 </string>
                                         <attributes>
                                             <font key="NSFont" size="14" name="Helvetica"/>
@@ -3504,42 +3508,34 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                     </fragment>
                                 </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="at5-53-Fcu">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <items>
-                                    <navigationItem title="Help" id="hKF-nO-JpA">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="TBM-Qb-u66">
-                                            <connections>
-                                                <action selector="cancel:" destination="XIv-Uv-W3O" id="EjB-xg-Xvy"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="rQo-Nf-qGw" firstAttribute="leading" secondItem="ZCh-OS-VVE" secondAttribute="leading" id="0Qi-Fv-vmn"/>
                             <constraint firstItem="rQo-Nf-qGw" firstAttribute="bottom" secondItem="hRy-vu-CNs" secondAttribute="bottom" id="CDf-dd-22f"/>
-                            <constraint firstItem="at5-53-Fcu" firstAttribute="trailing" secondItem="ZCh-OS-VVE" secondAttribute="trailing" id="f58-BZ-43W"/>
+                            <constraint firstItem="rQo-Nf-qGw" firstAttribute="top" secondItem="ZCh-OS-VVE" secondAttribute="top" id="U7f-dy-Pwh"/>
                             <constraint firstItem="rQo-Nf-qGw" firstAttribute="trailing" secondItem="ZCh-OS-VVE" secondAttribute="trailing" id="pfi-r8-m9z"/>
-                            <constraint firstItem="at5-53-Fcu" firstAttribute="leading" secondItem="ZCh-OS-VVE" secondAttribute="leading" id="seo-1c-jiV"/>
-                            <constraint firstItem="at5-53-Fcu" firstAttribute="top" secondItem="ZCh-OS-VVE" secondAttribute="top" id="vOY-44-38b"/>
-                            <constraint firstItem="rQo-Nf-qGw" firstAttribute="top" secondItem="at5-53-Fcu" secondAttribute="bottom" id="wWv-hj-8f8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZCh-OS-VVE"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Help" id="LPf-te-M9b">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="TBM-Qb-u66">
+                            <connections>
+                                <action selector="cancel:" destination="XIv-Uv-W3O" id="EjB-xg-Xvy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="_textView" destination="rQo-Nf-qGw" id="wGj-kw-lAv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crr-EC-dTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1418" y="-1090"/>
+            <point key="canvasLocation" x="-1365" y="-1789"/>
         </scene>
-        <!--Bing Metadata View Controller-->
+        <!--Bing Maps-->
         <scene sceneID="I12-cf-9pY">
             <objects>
                 <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" sceneMemberID="viewController">
@@ -3547,19 +3543,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o07-MJ-im6">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <items>
-                                    <navigationItem title="Bing Maps" id="bp9-2D-wIC">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="AC4-hh-8iz">
-                                            <connections>
-                                                <action selector="cancel:" destination="DCR-m3-Qgc" id="8ju-1i-8uA"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing_rgb.png" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
                                 <rect key="frame" x="20" y="70" width="104" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="104" id="1vt-lM-5xK"/>
@@ -3578,21 +3562,25 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="o07-MJ-im6" secondAttribute="bottom" constant="6" id="GOW-bt-J4u"/>
+                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" constant="6" id="DF9-IQ-f5Q"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="trailing" secondItem="peH-96-gWt" secondAttribute="trailing" constant="20" id="Gbj-CW-o1z"/>
                             <constraint firstItem="peH-96-gWt" firstAttribute="top" secondItem="UQm-nn-P6E" secondAttribute="bottom" constant="10" id="LDs-I1-aby"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="bottom" secondItem="peH-96-gWt" secondAttribute="bottom" constant="20" id="MBt-TZ-IJx"/>
-                            <constraint firstItem="o07-MJ-im6" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" id="MSJ-1V-pQc"/>
                             <constraint firstItem="peH-96-gWt" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="Pxd-vG-XoU"/>
-                            <constraint firstItem="o07-MJ-im6" firstAttribute="trailing" secondItem="A8k-Ic-iRd" secondAttribute="trailing" id="S1t-Oe-Q2A"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="centerY" secondItem="UQm-nn-P6E" secondAttribute="centerY" id="UMF-Ru-SZ8"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="126" id="XXx-3q-VEr"/>
-                            <constraint firstItem="o07-MJ-im6" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" id="lP4-2E-6YN"/>
                             <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="UQm-nn-P6E" secondAttribute="trailing" constant="2" id="mBW-14-KcJ"/>
                             <constraint firstItem="UQm-nn-P6E" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="qzq-UY-gsf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="A8k-Ic-iRd"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Bing Maps" id="Qz0-Ce-YCX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="AC4-hh-8iz">
+                            <connections>
+                                <action selector="cancel:" destination="DCR-m3-Qgc" id="8ju-1i-8uA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="nrQ-9V-0ML" id="bD0-eM-Al9"/>
                         <outlet property="textView" destination="peH-96-gWt" id="oF9-ze-EOx"/>
@@ -3650,7 +3638,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hfr-Mf-ZHv">
+                                        <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="value" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hfr-Mf-ZHv">
                                             <rect key="frame" x="124" y="11.5" width="165" height="21"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -3714,26 +3702,14 @@ This Privacy Policy may be updated from time to time for any reason. We will not
             </objects>
             <point key="canvasLocation" x="1508" y="-1584"/>
         </scene>
-        <!--Nominatum View Controller-->
+        <!--Search for Location-->
         <scene sceneID="nhJ-xs-noU">
             <objects>
-                <viewController id="siu-I6-IEp" customClass="NominatumViewController" sceneMemberID="viewController">
+                <viewController title="Search for Location" id="siu-I6-IEp" customClass="NominatumViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SQe-Tw-wQG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jyC-G0-Vbc">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <items>
-                                    <navigationItem title="Search for Location" id="Bfb-FI-LQK">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="1Lg-Le-97T">
-                                            <connections>
-                                                <action selector="cancel:" destination="siu-I6-IEp" id="JLa-m4-1ei"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <searchBar contentMode="redraw" placeholder="Niagara Falls" translatesAutoresizingMaskIntoConstraints="NO" id="xw9-Ro-Fai">
                                 <rect key="frame" x="0.0" y="64" width="320" height="56"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
@@ -3776,19 +3752,23 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <constraints>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="bottom" id="2UE-0c-j5w"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" constant="125" id="Ctw-fE-ucI"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="Jnz-cD-A1p"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="L7s-F4-sIf"/>
-                            <constraint firstItem="xw9-Ro-Fai" firstAttribute="top" secondItem="jyC-G0-Vbc" secondAttribute="bottom" id="MW5-hy-CGk"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="leading" secondItem="JYP-Gu-HBL" secondAttribute="leading" id="SBf-Qz-WXs"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="top" secondItem="JYP-Gu-HBL" secondAttribute="top" id="XOx-7Z-PXh"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="Z07-2o-YAz"/>
                             <constraint firstItem="xw9-Ro-Fai" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="imf-Fu-CBo"/>
-                            <constraint firstItem="jyC-G0-Vbc" firstAttribute="trailing" secondItem="JYP-Gu-HBL" secondAttribute="trailing" id="jrd-cT-OYe"/>
+                            <constraint firstItem="JYP-Gu-HBL" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="top" id="sPq-5G-3wa"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="centerX" secondItem="xw9-Ro-Fai" secondAttribute="centerX" id="sdn-2O-8GI"/>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="bottom" secondItem="SQe-Tw-wQG" secondAttribute="bottom" constant="20" id="zuH-3C-T3Q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JYP-Gu-HBL"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Search for Location" id="FaM-WV-S6I">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="1Lg-Le-97T">
+                            <connections>
+                                <action selector="cancel:" destination="siu-I6-IEp" id="JLa-m4-1ei"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="_activityIndicator" destination="BJx-hX-58b" id="Qaa-v5-g28"/>
                         <outlet property="_searchBar" destination="xw9-Ro-Fai" id="uxK-r6-i4V"/>
@@ -3856,6 +3836,11 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="view.backgroundColor">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="2" kind="relationship" relationship="rootViewController" id="aLN-Kg-iHf"/>
                     </connections>
@@ -5508,6 +5493,22 @@ This Privacy Policy may be updated from time to time for any reason. We will not
             </objects>
             <point key="canvasLocation" x="-3703" y="-881"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YTa-de-xid">
+            <objects>
+                <navigationController id="TCa-h6-J4b" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gM1-Uk-3Nn">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="siu-I6-IEp" kind="relationship" relationship="rootViewController" id="r7K-5q-X63"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ep-D2-P5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="-1090"/>
+        </scene>
     </scenes>
     <resources>
         <image name="1200-file-type-settings-toolbar.png" width="16" height="22"/>
@@ -5519,17 +5520,17 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <image name="751-eye-toolbar.png" width="22" height="12"/>
         <image name="852-map-toolbar.png" width="22" height="18"/>
         <image name="982-food-toolbar.png" width="22" height="18"/>
-        <image name="BingLogo.png" width="93" height="29"/>
-        <image name="bing_rgb.png" width="408" height="144"/>
+        <image name="bing-logo-gray" width="78.5" height="17"/>
+        <image name="bing-logo-white" width="78.5" height="17"/>
         <image name="compass.png" width="100" height="100"/>
         <image name="redo32.png" width="32" height="26"/>
         <image name="undo32.png" width="32" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="g2g-Jn-Tdv"/>
-        <segue reference="ZKT-be-rhK"/>
+        <segue reference="OEI-9h-7td"/>
         <segue reference="KuK-gp-RBs"/>
-        <segue reference="DvT-fe-8IR"/>
+        <segue reference="FTo-kL-oAC"/>
         <segue reference="mrH-5v-JIV"/>
     </inferredMetricsTieBreakers>
 </document>

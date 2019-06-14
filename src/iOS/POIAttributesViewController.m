@@ -34,6 +34,8 @@ enum {
 
 @implementation POIAttributesViewController
 
+const NSInteger kCoordinateSection = 1;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -121,7 +123,7 @@ enum {
 				assert(NO);
 		}
 
-	} else {
+	} else if (indexPath.section == kCoordinateSection) {
 
 		if ( object.isNode ) {
 			OsmNode * node = object.isNode;
@@ -188,17 +190,17 @@ enum {
 			if ( indexPath.row == ROW_IDENTIFIER ) {
 				NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
 				web.title = type.capitalizedString;
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@", type, object.ident];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/%@/%@", type, object.ident];
 			} else if ( indexPath.row == ROW_USER ) {
 				web.title = NSLocalizedString(@"User",nil);
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/user/%@", object.user];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", object.user];
 			} else if ( indexPath.row == ROW_VERSION ) {
 				web.title = NSLocalizedString(@"History",nil);
 				NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@/history", type, object.ident];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/%@/%@/history", type, object.ident];
 			} else if ( indexPath.row == ROW_CHANGESET ) {
 				web.title = NSLocalizedString(@"Changeset",nil);
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/changeset/%ld", (long)object.changeset];
+				web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/changeset/%ld", (long)object.changeset];
 			} else {
 				assert( NO );
 			}
@@ -206,6 +208,34 @@ enum {
 
 	}
 	[super prepareForSegue:segue sender:sender];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Allow the user to copy the latitude/longitude.
+    return indexPath.section == kCoordinateSection;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+        // Allow users to copy latitude/longitude.
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (![cell isKindOfClass:[AttributeCustomCell class]]) {
+        // For cells other than `AttributeCustomCell`, we don't know how to get the value.
+        return;
+    }
+    
+    AttributeCustomCell *customCell = (AttributeCustomCell *)cell;
+    
+    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+        [UIPasteboard.generalPasteboard setString:customCell.value.text];
+    }
 }
 
 -(IBAction)cancel:(id)sender

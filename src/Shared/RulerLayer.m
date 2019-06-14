@@ -40,6 +40,8 @@
 		_britishTextLayer.foregroundColor	= NSColor.blackColor.CGColor;
 		_metricTextLayer.alignmentMode		= kCAAlignmentCenter;
 		_britishTextLayer.alignmentMode		= kCAAlignmentCenter;
+        _metricTextLayer.contentsScale      = UIScreen.mainScreen.scale;
+        _britishTextLayer.contentsScale     = UIScreen.mainScreen.scale;
 
 		self.shadowColor					= NSColor.whiteColor.CGColor;
 		self.shadowRadius					= 0.0;
@@ -177,7 +179,9 @@ double roundToEvenValue( double value )
 
 	rect.size.width = MAX(metricPixels,britishPixels);
 	rect = CGRectInset( rect, -2, -2 );
-	self.shadowPath = CGPathCreateWithRect(rect, NULL);
+	CGPathRef path2 = CGPathCreateWithRect(rect, NULL);
+	self.shadowPath = path2;
+	CGPathRelease(path2);
 }
 
 @end

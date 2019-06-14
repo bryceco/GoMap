@@ -130,10 +130,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	POITabBarController * tabController = (id)self.tabBarController;
-	if ( tabController.selection.isRelation )
+    if (tabController.selection.isRelation) {
 		return 3;
-	else
-		return 2;
+    } else if (_relations.count > 0) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -415,6 +418,8 @@
 
 -(IBAction)cancel:(id)sender
 {
+    [self.view endEditing:YES];
+    
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 

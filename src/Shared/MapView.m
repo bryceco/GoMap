@@ -86,6 +86,7 @@ static const CGFloat Z_FLASH            = 110;
 @synthesize viewState            = _viewState;
 @synthesize screenFromMapTransform    = _screenFromMapTransform;
 
+const CGFloat kEditControlCornerRadius = 4;
 
 #pragma mark initialization
 
@@ -308,41 +309,42 @@ static const CGFloat Z_FLASH            = 110;
     }
     _locationManager.activityType = CLActivityTypeOther;
 #endif
-    
-    // set up action button
-    _editControl.hidden = YES;
-    _editControl.selected = NO;
-    _editControl.selectedSegmentIndex = UISegmentedControlNoSegment;
-    [_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] }
-                                forState:UIControlStateNormal];
-    _editControl.layer.zPosition = Z_TOOLBAR;
-    
-    // long press for selecting from multiple objects
-    UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-    longPress.delegate = self;
-    [self addGestureRecognizer:longPress];
-    
-    // two-finger rotation
-    UIRotationGestureRecognizer * rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotationGesture:)];
-    rotationGesture.delegate = self;
-    [self addGestureRecognizer:rotationGesture];
-    
-    // long-press on + for adding nodes via taps
-    _addNodeButtonLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(addNodeButtonLongPressHandler:)];
-    _addNodeButtonLongPressGestureRecognizer.minimumPressDuration = 0.001;
-    _addNodeButtonLongPressGestureRecognizer.delegate = self;
-    [self.addNodeButton addGestureRecognizer:_addNodeButtonLongPressGestureRecognizer];
-    
-    _notesDatabase            = [OsmNotesDatabase new];
-    _notesDatabase.mapData    = _editorLayer.mapData;
-    _notesViewDict            = [NSMutableDictionary new];
-    
-    // make help button have rounded corners
-    _helpButton.layer.cornerRadius = 10.0;
-    
-    // observe changes to aerial visibility so we can show/hide bing logo
-    [_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
-    [_editorLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
+
+	// set up action button
+	_editControl.hidden = YES;
+	_editControl.selected = NO;
+	_editControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] }
+									   forState:UIControlStateNormal];
+	_editControl.layer.zPosition = Z_TOOLBAR;
+    _editControl.layer.cornerRadius = kEditControlCornerRadius;
+
+	// long press for selecting from multiple objects
+	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+	longPress.delegate = self;
+	[self addGestureRecognizer:longPress];
+
+	// two-finger rotation
+	UIRotationGestureRecognizer * rotationGesture = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotationGesture:)];
+	rotationGesture.delegate = self;
+	[self addGestureRecognizer:rotationGesture];
+
+	// long-press on + for adding nodes via taps
+	_addNodeButtonLongPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(addNodeButtonLongPressHandler:)];
+	_addNodeButtonLongPressGestureRecognizer.minimumPressDuration = 0.001;
+	_addNodeButtonLongPressGestureRecognizer.delegate = self;
+	[self.addNodeButton addGestureRecognizer:_addNodeButtonLongPressGestureRecognizer];
+
+	_notesDatabase			= [OsmNotesDatabase new];
+	_notesDatabase.mapData	= _editorLayer.mapData;
+	_notesViewDict			= [NSMutableDictionary new];
+
+	// make help button have rounded corners
+	_helpButton.layer.cornerRadius = _helpButton.bounds.size.width / 2;
+
+	// observe changes to aerial visibility so we can show/hide bing logo
+	[_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
+	[_editorLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
 #if !TARGET_OS_IPHONE
     [self.window setAcceptsMouseMovedEvents:YES];
 #endif
@@ -584,13 +586,18 @@ static const CGFloat Z_FLASH            = 110;
 
 -(void)updateAerialAttributionButton
 {
-    AerialService * service = self.aerialLayer.aerialService;
-    _aerialServiceLogo.hidden = self.aerialLayer.hidden || (service.attributionString.length == 0 && service.attributionIcon == nil);
-    if ( !_aerialServiceLogo.hidden ) {
-        [service scaleAttributionIconToHeight:_aerialServiceLogo.frame.size.height];
-        [_aerialServiceLogo setImage:service.attributionIcon forState:UIControlStateNormal];
-        [_aerialServiceLogo setTitle:service.attributionString forState:UIControlStateNormal];
-    }
+	AerialService * service = self.aerialLayer.aerialService;
+	_aerialServiceLogo.hidden = self.aerialLayer.hidden || (service.attributionString.length == 0 && service.attributionIcon == nil);
+	if ( !_aerialServiceLogo.hidden ) {
+        // For Bing maps, the attribution icon is part of the app's assets and already has the desired size,
+        // so there's no need to scale it.
+        if (!service.isBingAerial) {
+            [service scaleAttributionIconToHeight:_aerialServiceLogo.frame.size.height];
+        }
+		
+		[_aerialServiceLogo setImage:service.attributionIcon forState:UIControlStateNormal];
+		[_aerialServiceLogo setTitle:service.attributionString forState:UIControlStateNormal];
+	}
 }
 
 -(void)showAlert:(NSString *)title message:(NSString *)message
@@ -1437,29 +1444,28 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)setLocating:(BOOL)locating
 {
-    if ( _locating == locating )
-        return;
-    _locating = locating;
-    
-    if ( locating ) {
-        
-        CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-        if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-            NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-            NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-            [self showAlert:title message:nil];
-            self.gpsState = GPS_STATE_NONE;
-            return;
-        }
-        
-        // ios 8 and later:
-        if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] ) {
-            [_locationManager requestWhenInUseAuthorization];
-        }
-        
-        self.userOverrodeLocationPosition    = NO;
-        self.userOverrodeLocationZoom        = NO;
-        [_locationManager startUpdatingLocation];
+	if ( _locating == locating )
+		return;
+	_locating = locating;
+
+	if ( locating ) {
+		
+		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
+            [self askUserToAllowLocationAccess];
+            
+			self.gpsState = GPS_STATE_NONE;
+			return;
+		}
+
+		// ios 8 and later:
+		if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] ) {
+			[_locationManager requestWhenInUseAuthorization];
+		}
+
+		self.userOverrodeLocationPosition	= NO;
+		self.userOverrodeLocationZoom		= NO;
+		[_locationManager startUpdatingLocation];
 #if TARGET_OS_IPHONE
         [_locationManager startUpdatingHeading];
 #endif
@@ -1470,6 +1476,39 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 #endif
         [_locationBallLayer removeFromSuperlayer];
         _locationBallLayer = nil;
+    }
+}
+
+- (void)askUserToAllowLocationAccess {
+    NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+    
+    [self askUserToOpenSettingsWithAlertTitle:title message:nil];
+}
+
+- (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:nil];
+    UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self openAppSettings];
+                                                         }];
+    
+    [alertController addAction:openSettings];
+    [alertController addAction:okayAction];
+    
+    [self.viewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)openAppSettings {
+    NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if (openSettingsURL) {
+        [[UIApplication sharedApplication] openURL:openSettingsURL];
     }
 }
 
@@ -2341,165 +2380,146 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 -(void)performEditAction:(EDIT_ACTION)action
 {
-    NSString * error = nil;
-    switch (action) {
-        case ACTION_COPYTAGS:
-//            if ( ! [_editorLayer copyTags:_editorLayer.selectedPrimary] )
-//                error = NSLocalizedString(@"The object does contain any tags",nil);
-            [self copy:nil];
-            break;
-        case ACTION_PASTETAGS:
-            if ( _editorLayer.selectedPrimary == nil ) {
-                // pasting to brand new object, so we need to create it first
-                [self setTagsForCurrentObject:@{}];
-            }
-            if ( _editorLayer.selectedWay && _editorLayer.selectedNode && _editorLayer.selectedWay.tags.count == 0 ) {
-                // if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-                _editorLayer.selectedNode = nil;
-                [self refreshPushpinText];
-            }
-            if ( ! [_editorLayer pasteTags:_editorLayer.selectedPrimary] )
-                error = NSLocalizedString(@"No tags to paste",nil);
-            break;
-        case ACTION_REPLACETAGS:
-            if ( _editorLayer.selectedPrimary == nil ) {
-                // pasting to brand new object, so we need to create it first
-                [self setTagsForCurrentObject:@{}];
-            }
-            if ( _editorLayer.selectedWay && _editorLayer.selectedNode && _editorLayer.selectedWay.tags.count == 0 ) {
-                // if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-                _editorLayer.selectedNode = nil;
-                [self refreshPushpinText];
-            }
-            if ( ! [_editorLayer replaceTags:_editorLayer.selectedPrimary] )
-                error = NSLocalizedString(@"No tags to replace",nil);
-            break;
-        case ACTION_DUPLICATE:
-        {
-            OsmBaseObject * newObject = [_editorLayer duplicateObject:_editorLayer.selectedPrimary];
-            if ( newObject == nil ) {
-                error = NSLocalizedString(@"Could not duplicate object",nil);
-            } else {
-                _editorLayer.selectedNode        = newObject.isNode;
-                _editorLayer.selectedWay        = newObject.isWay;
-                _editorLayer.selectedRelation    = newObject.isRelation;
-                [self placePushpinForSelection];
-            }
-        }
-            break;
-        case ACTION_ROTATE:
-            if ( _editorLayer.selectedWay == nil && !_editorLayer.selectedRelation.isMultipolygon ) {
-                error = NSLocalizedString(@"Only ways/multipolygons can be rotated", nil);
-            } else {
-                [self startObjectRotation];
-            }
-            break;
-        case ACTION_RECTANGULARIZE:
-        {
-            if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
-                error = NSLocalizedString(@"The selected way must be completely visible", nil);    // avoid bugs where nodes are deleted from other objects
-            } else {
-                EditAction rect = [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay error:&error];
-                if ( rect )
-                    rect();
-            }
-        }
-            break;
-        case ACTION_REVERSE:
-        {
-            EditAction reverse = [_editorLayer.mapData canReverseWay:_editorLayer.selectedWay error:&error];
-            if ( reverse )
-                reverse();
-        }
-            break;
-        case ACTION_JOIN:
-        {
-            EditAction join = [_editorLayer.mapData canJoinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
-            if ( join )
-                join();
-        }
-            break;
-        case ACTION_DISCONNECT:
-        {
-            EditActionReturnNode disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
-            if ( disconnect ) {
-                _editorLayer.selectedNode = disconnect();
-                [self placePushpinForSelection];
-            }
-        }
-            break;
-        case ACTION_SPLIT:
-        {
-            EditActionReturnWay split = [_editorLayer.mapData canSplitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
-            if ( split )
-                split();
-        }
-            break;
-        case ACTION_STRAIGHTEN:
-        {
-            if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
-                error = NSLocalizedString(@"The selected way must be completely visible", nil);    // avoid bugs where nodes are deleted from other objects
-            } else {
-                EditAction straighten = [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay error:&error];
-                if ( straighten )
-                    straighten();
-            }
-        }
-            break;
-        case ACTION_CIRCULARIZE:
-        {
-            EditAction circle = [_editorLayer.mapData canCircularizeWay:_editorLayer.selectedWay error:&error];
-            if ( circle )
-                circle();
-        }
-            break;
-        case ACTION_HEIGHT:
-            if ( self.gpsState != GPS_STATE_NONE ) {
-                [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
-            } else {
-                error = NSLocalizedString(@"This action requires GPS to be turned on",nil);
-            }
-            break;
-        case ACTION_EDITTAGS:
-            [self presentTagEditor:nil];
-            break;
-        case ACTION_ADDNOTE:
-        {
-            CLLocationCoordinate2D pos = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:YES];
-            OsmNote * note = [[OsmNote alloc] initWithLat:pos.latitude lon:pos.longitude];
-            [self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
-            [self removePin];
-        }
-            break;
-        case ACTION_DELETE:
-            [self delete:nil];
-            break;
-        case ACTION_MORE:
-            [self presentEditActionSheet:nil];
-            break;
-        case ACTION_RESTRICT:
-            [self restrictOptionSelected];
-            break;
-        case ACTION_CREATE_RELATION:
-        {
-            void (^create)(NSString * type) = ^(NSString * type){
-                OsmRelation * relation = [_editorLayer.mapData createRelation];
-                NSDictionary * tags = @{ @"type" : type };
-                [_editorLayer.mapData setTags:tags forObject:relation];
-                EditAction add = [_editorLayer.mapData canAddObject:_editorLayer.selectedPrimary toRelation:relation withRole:@"outer" error:nil];
-                add();
-                _editorLayer.selectedNode = nil;
-                _editorLayer.selectedWay = nil;
-                _editorLayer.selectedRelation = relation;
-                [self.editorLayer setNeedsLayout];
-                [self refreshPushpinText];
-                [self showAlert:NSLocalizedString(@"Adding members:",nil)
-                        message:NSLocalizedString(@"To add another member to the relation 'long press' on the way to be added",nil)];
-            };
-            UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Create Relation Type",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Multipolygon", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action2) {
-                create(@"multipolygon");
-            }]];
+	NSString * error = nil;
+	switch (action) {
+		case ACTION_COPYTAGS:
+			if ( ! [_editorLayer copyTags:_editorLayer.selectedPrimary] )
+				error = NSLocalizedString(@"The object does contain any tags",nil);
+			break;
+		case ACTION_PASTETAGS:
+			if ( _editorLayer.selectedPrimary == nil ) {
+				// pasting to brand new object, so we need to create it first
+				[self setTagsForCurrentObject:@{}];
+			}
+			if ( _editorLayer.selectedWay && _editorLayer.selectedNode && _editorLayer.selectedWay.tags.count == 0 ) {
+				// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+				_editorLayer.selectedNode = nil;
+				[self refreshPushpinText];
+			}
+            [self paste:nil];
+			break;
+		case ACTION_DUPLICATE:
+			{
+				OsmBaseObject * newObject = [_editorLayer duplicateObject:_editorLayer.selectedPrimary];
+				if ( newObject == nil ) {
+					error = NSLocalizedString(@"Could not duplicate object",nil);
+				} else {
+					_editorLayer.selectedNode		= newObject.isNode;
+					_editorLayer.selectedWay		= newObject.isWay;
+					_editorLayer.selectedRelation	= newObject.isRelation;
+					[self placePushpinForSelection];
+				}
+			}
+			break;
+		case ACTION_ROTATE:
+			if ( _editorLayer.selectedWay == nil && !_editorLayer.selectedRelation.isMultipolygon ) {
+				error = NSLocalizedString(@"Only ways/multipolygons can be rotated", nil);
+			} else {
+				[self startObjectRotation];
+			}
+			break;
+		case ACTION_RECTANGULARIZE:
+			{
+				if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
+					error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
+				} else {
+					EditAction rect = [_editorLayer.mapData canOrthogonalizeWay:_editorLayer.selectedWay error:&error];
+					if ( rect )
+						rect();
+				}
+			}
+			break;
+		case ACTION_REVERSE:
+			{
+				EditAction reverse = [_editorLayer.mapData canReverseWay:_editorLayer.selectedWay error:&error];
+				if ( reverse )
+					reverse();
+			}
+			break;
+		case ACTION_JOIN:
+			{
+				EditAction join = [_editorLayer.mapData canJoinWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
+				if ( join )
+					join();
+			}
+			break;
+		case ACTION_DISCONNECT:
+			{
+				EditActionReturnNode disconnect = [_editorLayer.mapData canDisconnectWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
+				if ( disconnect ) {
+					_editorLayer.selectedNode = disconnect();
+					[self placePushpinForSelection];
+				}
+			}
+			break;
+		case ACTION_SPLIT:
+			{
+				EditActionReturnWay split = [_editorLayer.mapData canSplitWay:_editorLayer.selectedWay atNode:_editorLayer.selectedNode error:&error];
+				if ( split )
+					split();
+			}
+			break;
+		case ACTION_STRAIGHTEN:
+			{
+				if ( _editorLayer.selectedWay.ident.longLongValue >= 0  &&  !OSMRectContainsRect( self.screenLongitudeLatitude, _editorLayer.selectedWay.boundingBox ) ) {
+					error = NSLocalizedString(@"The selected way must be completely visible", nil);	// avoid bugs where nodes are deleted from other objects
+				} else {
+					EditAction straighten = [_editorLayer.mapData canStraightenWay:_editorLayer.selectedWay error:&error];
+					if ( straighten )
+						straighten();
+				}
+			}
+			break;
+		case ACTION_CIRCULARIZE:
+			{
+				EditAction circle = [_editorLayer.mapData canCircularizeWay:_editorLayer.selectedWay error:&error];
+				if ( circle )
+					circle();
+			}
+			break;
+		case ACTION_HEIGHT:
+            [self presentViewControllerForMeasuringHeight];
+			break;
+		case ACTION_EDITTAGS:
+			[self presentTagEditor:nil];
+			break;
+		case ACTION_ADDNOTE:
+			{
+				CLLocationCoordinate2D pos = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:YES];
+				OsmNote * note = [[OsmNote alloc] initWithLat:pos.latitude lon:pos.longitude];
+				[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
+				[self removePin];
+			}
+			break;
+		case ACTION_DELETE:
+			[self delete:nil];
+			break;
+		case ACTION_MORE:
+			[self presentEditActionSheet:nil];
+			break;
+		case ACTION_RESTRICT:
+			[self restrictOptionSelected];
+			break;
+		case ACTION_CREATE_RELATION:
+			{
+				void (^create)(NSString * type) = ^(NSString * type){
+					OsmRelation * relation = [_editorLayer.mapData createRelation];
+					NSDictionary * tags = @{ @"type" : type };
+					[_editorLayer.mapData setTags:tags forObject:relation];
+					EditAction add = [_editorLayer.mapData canAddObject:_editorLayer.selectedPrimary toRelation:relation withRole:@"outer" error:nil];
+					add();
+					_editorLayer.selectedNode = nil;
+					_editorLayer.selectedWay = nil;
+					_editorLayer.selectedRelation = relation;
+					[self.editorLayer setNeedsLayout];
+					[self refreshPushpinText];
+					[self showAlert:NSLocalizedString(@"Adding members:",nil)
+							message:NSLocalizedString(@"To add another member to the relation 'long press' on the way to be added",nil)];
+				};
+				UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Create Relation Type",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Multipolygon", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action2) {
+					create(@"multipolygon");
+				}]];
 #if 0
             [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Building", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action2) {
                 create(@"building");
@@ -3774,6 +3794,21 @@ static NSString * const DisplayLinkPanning    = @"Panning";
             // if they later try to drag this way ask them if they really wanted to
             _confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
         }
+    }
+}
+
+- (void)presentViewControllerForMeasuringHeight {
+    if ( self.gpsState == GPS_STATE_NONE ) {
+        NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
+        
+        [self showAlert:errorMessage message:nil];
+    } else if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusDenied) {
+        NSString *title = NSLocalizedString(@"Unable to access the camera", "");
+        NSString *message = NSLocalizedString(@"In order to measure height, please enable camera access in the app's settings.", "");
+        
+        [self askUserToOpenSettingsWithAlertTitle:title message:message];
+    } else {
+        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
     }
 }
 

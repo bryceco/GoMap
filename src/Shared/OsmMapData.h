@@ -1,5 +1,5 @@
 //
-//  XmlParserDelegate.h
+//  OsmMapData.h
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 9/1/12.
@@ -64,12 +64,18 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 	NSTimer				*	_periodicSaveTimer;
 }
 
+/**
+ Initializes the object.
+
+ @param userDefaults The `UserDefaults` instance to use.
+ @return An initialized instance of this object.
+ */
+- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults NS_DESIGNATED_INITIALIZER;
+
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
 
 @property (readonly,nonatomic)	NetworkStatus	*	serverNetworkStatus;
-@property (readonly,nonnull)	NSDate			*	previousDiscardDate;
-
 
 +(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer; // only used when saving/restoring undo manager
 +(EditorMapLayer *)editorMapLayerForArchive; // only used when saving/restoring undo manager

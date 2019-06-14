@@ -32,6 +32,7 @@
 #import "SpeechBalloonLayer.h"
 #import "TagInfo.h"
 #import "VectorMath.h"
+#import "Go_Map__-Swift.h"
 
 #define FADE_INOUT            0
 #define SINGLE_SIDED_WALLS    1
@@ -1262,212 +1263,134 @@ const static CGFloat Z_ARROWS            = Z_BASE + 11 * ZSCALE;
 
 -(NSArray *)getShapeLayersForObject:(OsmBaseObject *)object
 {
-    if ( object.shapeLayers )
-        return object.shapeLayers;
+	if ( object.shapeLayers )
+		return object.shapeLayers;
 
-    TagInfo * tagInfo = object.tagInfo;
-    NSMutableArray * layers = [NSMutableArray new];
+	TagInfo * tagInfo = object.tagInfo;
+	NSMutableArray * layers = [NSMutableArray new];
 
-    if ( object.isNode ) {
+    OsmNode *node = object.isNode;
+	if (node) {
+        [layers addObjectsFromArray:[self shapeLayersForForNode:node]];
+	}
 
-        OSMPoint pt = MapPointForLatitudeLongitude( object.isNode.lat, object.isNode.lon );
+	// casing
+	if ( object.isWay || object.isRelation.isMultipolygon ) {
+		if ( tagInfo.lineWidth && !object.isWay.isArea ) {
+			OSMPoint refPoint;
+			CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
+			if ( path ) {
 
-        // first use TagInfo database
-        UIImage * icon = tagInfo.scaledIcon;
-        if ( icon == nil ) {
-            icon = tagInfo.icon;
-            if ( icon ) {
-                CGFloat uiScaling = [[UIScreen mainScreen] scale];
-                UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-                [icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
-                icon = UIGraphicsGetImageFromCurrentImageContext();
-                UIGraphicsEndImageContext();
-                tagInfo.scaledIcon = icon;
-            }
-        }
-        if ( icon == nil ) {
-            NSString * featureName = [CommonTagList featureNameForObjectDict:object.tags geometry:object.geometryName];
-            CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
-            icon = feature.icon;
-        }
-        if ( icon ) {
-            CALayer * layer = [CALayer new];
-            layer.bounds        = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-            layer.anchorPoint    = CGPointMake(0.5, 0.5);
-            layer.position        = CGPointMake(pt.x,pt.y);
-            layer.contents        = (id)icon.CGImage;
-            layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-            layer.cornerRadius    = 5;
-            layer.zPosition        = Z_NODE;
+				{
+					CAShapeLayer * layer = [CAShapeLayer new];
+					layer.anchorPoint	= CGPointMake(0, 0);
+					layer.position		= CGPointFromOSMPoint( refPoint );
+					layer.path			= path;
+					layer.strokeColor	= UIColor.blackColor.CGColor; // [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
+					layer.fillColor		= nil;
+					layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
+					layer.lineCap		= DEFAULT_LINECAP;
+					layer.lineJoin		= DEFAULT_LINEJOIN;
+					layer.zPosition		= Z_CASING;
+					LayerProperties * props = [LayerProperties new];
+					[layer setValue:props forKey:@"properties"];
+					props->position = refPoint;
+					props->lineWidth = layer.lineWidth;
+					NSString * bridge = object.tags[@"bridge"];
+					if ( bridge && !IsOsmBooleanFalse(bridge) ) {
+						props->lineWidth += 4;
+					}
+					NSString * tunnel = object.tags[@"tunnel"];
+					if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
+						// props->lineDashes = @[@(6), @(3)];					// doesn't work because dashes get rounded off due to path scaling
+						props->lineWidth += 2;
+						layer.strokeColor = UIColor.brownColor.CGColor;
+					}
 
-            LayerProperties * props = [LayerProperties new];
-            [layer setValue:props forKey:@"properties"];
-            props->position = pt;
-            [layers addObject:layer];
+					[layers addObject:layer];
+				}
 
-        } else {
+				// provide a halo for streets that don't have a name
+				if ( _mapView.enableUnnamedRoadHalo ) {
+					if ( object.tags[@"name"] == nil && ![object.tags[@"noname"] isEqualToString:@"yes"] ) {
+						// it lacks a name
+						static NSDictionary * highwayTypes = nil;
+						enum { USES_NAME = 1, USES_REF = 2 };
+						if ( highwayTypes == nil )
+							highwayTypes = @{ @"motorway":@(USES_REF),
+											  @"trunk":@(USES_REF),
+											  @"primary":@(USES_REF),
+											  @"secondary":@(USES_REF),
+											  @"tertiary":@(USES_NAME),
+											  @"unclassified":@(USES_NAME),
+											  @"residential":@(USES_NAME),
+											  @"road":@(USES_NAME),
+											  @"living_street":@(USES_NAME) };
+						NSString * highway = object.tags[@"highway"];
+						if ( highway ) {
+							// it is a highway
+							NSInteger uses = [highwayTypes[highway] integerValue];
+							if ( uses ) {
+								if ( (uses & USES_REF) ? object.tags[@"ref"] == nil : YES ) {
+									CAShapeLayer * haloLayer = [CAShapeLayer new];
+									haloLayer.anchorPoint	= CGPointMake(0, 0);
+									haloLayer.position		= CGPointFromOSMPoint( refPoint );
+									haloLayer.path			= path;
+									haloLayer.strokeColor	= [UIColor colorWithRed:1.0 green:0 blue:0 alpha:1.0].CGColor;
+									haloLayer.fillColor		= nil;
+									haloLayer.lineWidth		= (2+tagInfo.lineWidth)*_highwayScale;
+									haloLayer.lineCap		= DEFAULT_LINECAP;
+									haloLayer.lineJoin		= DEFAULT_LINEJOIN;
+									haloLayer.zPosition		= Z_HALO;
+									LayerProperties * haloProps = [LayerProperties new];
+									[haloLayer setValue:haloProps forKey:@"properties"];
+									haloProps->position = refPoint;
+									haloProps->lineWidth = haloLayer.lineWidth;
 
-            // draw generic box
-            RGBAColor color = [self defaultColorForObject:object];
-            BOOL untagged = color.alpha == 0.0;
-            NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( object.tags ) : nil;
-            if ( houseNumber ) {
+									[layers addObject:haloLayer];
+								}
+							}
+						}
+					}
+				}
 
-                CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
-                layer.anchorPoint    = CGPointMake(0.5, 0.5);
-                layer.position        = CGPointMake(pt.x, pt.y);
-                layer.zPosition        = Z_NODE;
-                LayerProperties * props = [LayerProperties new];
-                [layer setValue:props forKey:@"properties"];
-                props->position = pt;
+				CGPathRelease(path);
+			}
+		}
+	}
 
-                [layers addObject:layer];
+	// way (also provides an outline for areas)
+	if ( object.isWay || object.isRelation.isMultipolygon ) {
+		OSMPoint refPoint = { 0, 0 };
+		CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
 
-            } else {
+		if ( path ) {
+			CGFloat red = 0, green = 0, blue = 0, alpha = 1;
+			[tagInfo.lineColor getRed:&red green:&green blue:&blue alpha:&alpha];
+			CGFloat lineWidth = tagInfo.lineWidth*_highwayScale;
+			if ( lineWidth == 0 )
+				lineWidth = 1;
 
-                // generic box
-                CAShapeLayer * layer = [CAShapeLayer new];
-                CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
-                                         round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
-                CGPathRef path        = CGPathCreateWithRect( rect, NULL );
-                layer.path            = path;
-                layer.frame         = CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
-                                                 MinIconSizeInPixels, MinIconSizeInPixels);
-                layer.position            = CGPointMake(pt.x,pt.y);
-                layer.strokeColor        = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
-                layer.fillColor            = nil;
-                layer.lineWidth            = 2.0;
-                layer.backgroundColor    = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
-                layer.cornerRadius        = 5.0;
-                layer.zPosition            = Z_NODE;
+			CAShapeLayer * layer = [CAShapeLayer new];
+			layer.anchorPoint	= CGPointMake(0, 0);
+			CGRect bbox			= CGPathGetPathBoundingBox( path );
+			layer.bounds		= CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
+			layer.position		= CGPointFromOSMPoint( refPoint );
+			layer.path			= path;
+			layer.strokeColor	= [UIColor colorWithRed:red green:green blue:blue alpha:alpha].CGColor;
+			layer.fillColor		= nil;
+			layer.lineWidth		= lineWidth;
+			layer.lineCap		= DEFAULT_LINECAP;
+			layer.lineJoin		= DEFAULT_LINEJOIN;
+			layer.zPosition		= Z_LINE;
 
-                LayerProperties * props = [LayerProperties new];
-                [layer setValue:props forKey:@"properties"];
-                props->position = pt;
+			LayerProperties * props = [LayerProperties new];
+			[layer setValue:props forKey:@"properties"];
+			props->position		= refPoint;
+			props->lineWidth	= layer.lineWidth;
 
-                [layers addObject:layer];
-                CGPathRelease(path);
-            }
-        }
-    }
-
-    // casing
-    if ( object.isWay || object.isRelation.isMultipolygon ) {
-        if ( tagInfo.lineWidth && !object.isWay.isArea ) {
-            OSMPoint refPoint;
-            CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
-            if ( path ) {
-
-                {
-                    CAShapeLayer * layer = [CAShapeLayer new];
-                    layer.anchorPoint    = CGPointMake(0, 0);
-                    layer.position        = CGPointFromOSMPoint( refPoint );
-                    layer.path            = path;
-                    layer.strokeColor    = UIColor.blackColor.CGColor; // [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0].CGColor;
-                    layer.fillColor        = nil;
-                    layer.lineWidth        = (1+tagInfo.lineWidth)*_highwayScale;
-                    layer.lineCap        = DEFAULT_LINECAP;
-                    layer.lineJoin        = DEFAULT_LINEJOIN;
-                    layer.zPosition        = Z_CASING;
-                    LayerProperties * props = [LayerProperties new];
-                    [layer setValue:props forKey:@"properties"];
-                    props->position = refPoint;
-                    props->lineWidth = layer.lineWidth;
-                    NSString * bridge = object.tags[@"bridge"];
-                    if ( bridge && !IsOsmBooleanFalse(bridge) ) {
-                        props->lineWidth += 4;
-                    }
-                    NSString * tunnel = object.tags[@"tunnel"];
-                    if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
-                        // props->lineDashes = @[@(6), @(3)];                    // doesn't work because dashes get rounded off due to path scaling
-                        props->lineWidth += 2;
-                        layer.strokeColor = UIColor.brownColor.CGColor;
-                    }
-
-                    [layers addObject:layer];
-                }
-
-                // provide a halo for streets that don't have a name
-                if ( _mapView.enableUnnamedRoadHalo ) {
-                    if ( object.tags[@"name"] == nil && ![object.tags[@"noname"] isEqualToString:@"yes"] ) {
-                        // it lacks a name
-                        static NSDictionary * highwayTypes = nil;
-                        enum { USES_NAME = 1, USES_REF = 2 };
-                        if ( highwayTypes == nil )
-                            highwayTypes = @{ @"motorway":@(USES_REF),
-                                              @"trunk":@(USES_REF),
-                                              @"primary":@(USES_REF),
-                                              @"secondary":@(USES_REF),
-                                              @"tertiary":@(USES_NAME),
-                                              @"unclassified":@(USES_NAME),
-                                              @"residential":@(USES_NAME),
-                                              @"road":@(USES_NAME),
-                                              @"living_street":@(USES_NAME) };
-                        NSString * highway = object.tags[@"highway"];
-                        if ( highway ) {
-                            // it is a highway
-                            NSInteger uses = [highwayTypes[highway] integerValue];
-                            if ( uses ) {
-                                if ( (uses & USES_REF) ? object.tags[@"ref"] == nil : YES ) {
-                                    CAShapeLayer * haloLayer = [CAShapeLayer new];
-                                    haloLayer.anchorPoint    = CGPointMake(0, 0);
-                                    haloLayer.position        = CGPointFromOSMPoint( refPoint );
-                                    haloLayer.path            = path;
-                                    haloLayer.strokeColor    = [UIColor colorWithRed:1.0 green:0 blue:0 alpha:1.0].CGColor;
-                                    haloLayer.fillColor        = nil;
-                                    haloLayer.lineWidth        = (2+tagInfo.lineWidth)*_highwayScale;
-                                    haloLayer.lineCap        = DEFAULT_LINECAP;
-                                    haloLayer.lineJoin        = DEFAULT_LINEJOIN;
-                                    haloLayer.zPosition        = Z_HALO;
-                                    LayerProperties * haloProps = [LayerProperties new];
-                                    [haloLayer setValue:haloProps forKey:@"properties"];
-                                    haloProps->position = refPoint;
-                                    haloProps->lineWidth = haloLayer.lineWidth;
-
-                                    [layers addObject:haloLayer];
-                                }
-                            }
-                        }
-                    }
-                }
-
-                CGPathRelease(path);
-            }
-        }
-    }
-
-    // way (also provides an outline for areas)
-    if ( object.isWay || object.isRelation.isMultipolygon ) {
-        OSMPoint refPoint = { 0, 0 };
-        CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
-
-        if ( path ) {
-            CGFloat red = 0, green = 0, blue = 0, alpha = 1;
-            [tagInfo.lineColor getRed:&red green:&green blue:&blue alpha:&alpha];
-            CGFloat lineWidth = tagInfo.lineWidth*_highwayScale;
-            if ( lineWidth == 0 )
-                lineWidth = 1;
-
-            CAShapeLayer * layer = [CAShapeLayer new];
-            layer.anchorPoint    = CGPointMake(0, 0);
-            CGRect bbox            = CGPathGetPathBoundingBox( path );
-            layer.bounds        = CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
-            layer.position        = CGPointFromOSMPoint( refPoint );
-            layer.path            = path;
-            layer.strokeColor    = [UIColor colorWithRed:red green:green blue:blue alpha:alpha].CGColor;
-            layer.fillColor        = nil;
-            layer.lineWidth        = lineWidth;
-            layer.lineCap        = DEFAULT_LINECAP;
-            layer.lineJoin        = DEFAULT_LINEJOIN;
-            layer.zPosition        = Z_LINE;
-
-            LayerProperties * props = [LayerProperties new];
-            [layer setValue:props forKey:@"properties"];
-            props->position        = refPoint;
-            props->lineWidth    = layer.lineWidth;
-
-#if 1    // Enable to show motorway_link with dashed lines. Looks kind of ugly and reduces framerate by up to 30%f
-            BOOL link = [object.tags[@"highway"] hasSuffix:@"_link"];
+#if 1	// Enable to show motorway_link with dashed lines. Looks kind of ugly and reduces framerate by up to 30%f
+			BOOL link = [object.tags[@"highway"] hasSuffix:@"_link"];
             BOOL alley = [object.tags[@"service"] isEqualToString:@"alley"];
             BOOL driveway = [object.tags[@"service"] isEqualToString:@"driveway"];
             if ( link ) {
@@ -1712,6 +1635,159 @@ const static CGFloat Z_ARROWS            = Z_BASE + 11 * ZSCALE;
     return layers;
 }
 
+/**
+ Determines the `CALayer` instances required to present the given `node` on the map.
+ 
+ @param node The `OsmNode` instance to get the layers for.
+ @return A list of `CALayer` instances that are used to represent the given `node` on the map.
+ */
+- (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node {
+    NSMutableArray<CALayer *> *layers = [NSMutableArray array];
+    
+    CALayer *directionLayer = [self directionShapeLayerWithNode:node];
+    if (directionLayer) {
+        [layers addObject:directionLayer];
+    }
+
+    OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
+    
+    // first use TagInfo database
+    UIImage * icon = node.tagInfo.scaledIcon;
+    if ( icon == nil ) {
+        icon = node.tagInfo.icon;
+        if ( icon ) {
+            CGFloat uiScaling = [[UIScreen mainScreen] scale];
+            UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
+            [icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+            icon = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            node.tagInfo.scaledIcon = icon;
+        }
+    }
+    if ( icon == nil ) {
+        NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
+        CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+        icon = feature.icon;
+    }
+    if ( icon ) {
+        CALayer * layer = [CALayer new];
+        layer.bounds        = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        layer.anchorPoint    = CGPointMake(0.5, 0.5);
+        layer.position        = CGPointMake(pt.x,pt.y);
+        layer.contents        = (id)icon.CGImage;
+        layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+        layer.cornerRadius    = 5;
+        layer.masksToBounds = YES;
+        layer.zPosition        = Z_NODE;
+        
+        LayerProperties * props = [LayerProperties new];
+        [layer setValue:props forKey:@"properties"];
+        props->position = pt;
+        [layers addObject:layer];
+        
+    } else {
+        
+        // draw generic box
+        RGBAColor color = [self defaultColorForObject:node];
+        BOOL untagged = color.alpha == 0.0;
+        NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( node.tags ) : nil;
+        if ( houseNumber ) {
+            
+            CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
+            layer.anchorPoint    = CGPointMake(0.5, 0.5);
+            layer.position        = CGPointMake(pt.x, pt.y);
+            layer.zPosition        = Z_NODE;
+            LayerProperties * props = [LayerProperties new];
+            [layer setValue:props forKey:@"properties"];
+            props->position = pt;
+            
+            [layers addObject:layer];
+            
+        } else {
+            
+            // generic box
+            CAShapeLayer * layer = [CAShapeLayer new];
+            CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
+                                     round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
+            CGPathRef path        = CGPathCreateWithRect( rect, NULL );
+            layer.path            = path;
+            layer.frame         = CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
+                                             MinIconSizeInPixels, MinIconSizeInPixels);
+            layer.position            = CGPointMake(pt.x,pt.y);
+            layer.strokeColor        = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
+            layer.fillColor            = nil;
+            layer.lineWidth            = 2.0;
+            layer.backgroundColor    = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+            layer.cornerRadius        = 5.0;
+            layer.zPosition            = Z_NODE;
+            
+            LayerProperties * props = [LayerProperties new];
+            [layer setValue:props forKey:@"properties"];
+            props->position = pt;
+            
+            [layers addObject:layer];
+            CGPathRelease(path);
+        }
+    }
+
+    return layers;
+}
+
+/**
+ Determines the `CALayer` instance required to draw the direction of the given `node`.
+
+ @param node The node to get the layer for.
+ @return A `CALayer` instance for rendering the given node's direction.
+ */
+- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node {
+    CGFloat direction = node.direction;
+    if (direction == NSNotFound) {
+        // Without a direction, there's nothing we could display.
+        return nil;
+    }
+    
+    CGFloat heading = direction - 90;
+    
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    
+    layer.fillColor = [UIColor colorWithWhite:0.2 alpha:0.9].CGColor;
+    layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.9].CGColor;
+    layer.lineWidth = 0.5;
+    
+    layer.zPosition = Z_NODE;
+    
+    OSMPoint pt = MapPointForLatitudeLongitude(node.lat, node.lon);
+    
+    double screenAngle = OSMTransformRotation(self.mapView.screenFromMapTransform);
+    layer.affineTransform = CGAffineTransformMakeRotation(screenAngle);
+    
+    CGFloat radius = 30.0;
+    CGFloat fieldOfViewRadius = 55;
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddArc(path,
+                 NULL,
+                 0.0,
+                 0.0,
+                 radius,
+                 [self radiansFromDegrees:heading - fieldOfViewRadius / 2],
+                 [self radiansFromDegrees:heading + fieldOfViewRadius / 2],
+                 NO);
+    CGPathAddLineToPoint(path, NULL, 0, 0);
+    CGPathCloseSubpath(path);
+    layer.path = path;
+    CGPathRelease(path);
+    
+    LayerProperties *layerProperties = [LayerProperties new];
+    layerProperties->position = pt;
+    [layer setValue:@"direction" forKey:@"key"];
+    [layer setValue:layerProperties forKey:@"properties"];
+    
+    return layer;
+}
+
+- (CGFloat)radiansFromDegrees:(CGFloat)degrees {
+    return degrees * M_PI / 180;
+}
 
 -(NSMutableArray *)getShapeLayersForHighlights
 {
@@ -1851,95 +1927,77 @@ const static CGFloat Z_ARROWS            = Z_BASE + 11 * ZSCALE;
             CGPathRelease(path);
             CGPathRelease(shadowPath);
 #endif
-        }
-    }
+		}
+	}
 
-    // Arrow heads and street names
-    for ( OsmBaseObject * object in _shownObjects ) {
-        if ( object.isOneWay ) {
+	// Arrow heads and street names
+	for ( OsmBaseObject * object in _shownObjects ) {
+		if ( object.isOneWay || [highlights containsObject:object] ) {
 
-            // arrow heads
-            [self invokeAlongScreenClippedWay:object.isWay offset:50 interval:100 block:^(OSMPoint loc, OSMPoint dir){
-                // draw direction arrow at loc/dir
-                BOOL reversed = object.isOneWay == ONEWAY_BACKWARD;
-                double len = reversed ? -15 : 15;
-                double width = 5;
+			// arrow heads
+			[self invokeAlongScreenClippedWay:object.isWay offset:50 interval:100 block:^(OSMPoint loc, OSMPoint dir){
+				// draw direction arrow at loc/dir
+				BOOL reversed = object.isOneWay == ONEWAY_BACKWARD;
+				double len = reversed ? -15 : 15;
+				double width = 5;
 
-                OSMPoint p1 = { loc.x - dir.x*len + dir.y*width, loc.y - dir.y*len - dir.x*width };
-                OSMPoint p2 = { loc.x - dir.x*len - dir.y*width, loc.y - dir.y*len + dir.x*width };
+				OSMPoint p1 = { loc.x - dir.x*len + dir.y*width, loc.y - dir.y*len - dir.x*width };
+				OSMPoint p2 = { loc.x - dir.x*len - dir.y*width, loc.y - dir.y*len + dir.x*width };
 
-                CGMutablePathRef arrowPath = CGPathCreateMutable();
-                CGPathMoveToPoint(arrowPath, NULL, p1.x, p1.y);
-                CGPathAddLineToPoint(arrowPath, NULL, loc.x, loc.y);
-                CGPathAddLineToPoint(arrowPath, NULL, p2.x, p2.y);
-                CGPathAddLineToPoint(arrowPath, NULL, loc.x-dir.x*len*0.5, loc.y-dir.y*len*0.5);
-                CGPathCloseSubpath(arrowPath);
+				CGMutablePathRef arrowPath = CGPathCreateMutable();
+				CGPathMoveToPoint(arrowPath, NULL, p1.x, p1.y);
+				CGPathAddLineToPoint(arrowPath, NULL, loc.x, loc.y);
+				CGPathAddLineToPoint(arrowPath, NULL, p2.x, p2.y);
+				CGPathAddLineToPoint(arrowPath, NULL, loc.x-dir.x*len*0.5, loc.y-dir.y*len*0.5);
+				CGPathCloseSubpath(arrowPath);
 
-                CAShapeLayer * arrow = [CAShapeLayer new];
-                arrow.path = arrowPath;
-                arrow.lineWidth = 1;
-                arrow.fillColor = UIColor.blackColor.CGColor;
-                arrow.zPosition    = Z_ARROWS;
-                [layers addObject:arrow];
-                CGPathRelease(arrowPath);
-            }];
-        }
-        if ( [highlights containsObject:object] ) {
-            
-            // arrow heads
-            [self invokeAlongScreenClippedWay:object.isWay offset: object.isOneWay ? 30 : 50 interval:100 block:^(OSMPoint loc, OSMPoint dir){
-                // draw direction arrow at loc/dir
-                double len = 15;
-                double width = 5;
-                
-                OSMPoint p1 = { loc.x - dir.x*len + dir.y*width, loc.y - dir.y*len - dir.x*width };
-                OSMPoint p2 = { loc.x - dir.x*len - dir.y*width, loc.y - dir.y*len + dir.x*width };
-                
-                CGMutablePathRef arrowPath = CGPathCreateMutable();
-                CGPathMoveToPoint(arrowPath, NULL, p1.x, p1.y);
-                CGPathAddLineToPoint(arrowPath, NULL, loc.x, loc.y);
-                CGPathAddLineToPoint(arrowPath, NULL, p2.x, p2.y);
-                CGPathAddLineToPoint(arrowPath, NULL, loc.x-dir.x*len*0.5, loc.y-dir.y*len*0.5);
-                CGPathCloseSubpath(arrowPath);
-                
-                CAShapeLayer * arrow = [CAShapeLayer new];
-                arrow.path = arrowPath;
-                arrow.lineWidth = 1;
-                arrow.fillColor = UIColor.redColor.CGColor;
-                arrow.zPosition    = Z_ARROWS;
-                [layers addObject:arrow];
-                CGPathRelease(arrowPath);
-            }];
-        }
+				CAShapeLayer * arrow = [CAShapeLayer new];
+				arrow.path = arrowPath;
+				arrow.lineWidth = 1;
+				arrow.fillColor = UIColor.blackColor.CGColor;
+				arrow.zPosition	= Z_ARROWS;
+				[layers addObject:arrow];
+				CGPathRelease(arrowPath);
+			}];
+		}
 
-        // street names
-        if ( nameLimit > 0 ) {
-            BOOL isHighway = object.isWay && !object.isWay.isArea;
-            if ( isHighway ) {
-                NSString * name = object.tags[ @"name" ];
-                if ( name ) {
-                    if ( ![nameSet containsObject:name] ) {
-                        double length = 0.0;
-                        CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
-                        if ( length >= name.length * Pixels_Per_Character ) {
-                            NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path whiteOnBlock:self.whiteText];
-                            if ( a.count ) {
-                                [layers addObjectsFromArray:a];
-                                --nameLimit;
-                                [nameSet addObject:name];
-                            }
-                        }
-                        CGPathRelease(path);
-                    }
-                }
-            }
-        }
-    }
+		// street names
+		if ( nameLimit > 0 ) {
+			BOOL isHighway = object.isWay && !object.isWay.isArea;
+			if ( isHighway ) {
+				NSString * name = object.tags[ @"name" ];
+				if ( name ) {
+					if ( ![nameSet containsObject:name] ) {
+						double length = 0.0;
+						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
+						if ( length >= name.length * Pixels_Per_Character ) {
+							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path
+                                                                      whiteOnBlock:self.whiteText
+                                                                   shouldRasterize:[self shouldRasterizeStreetNames]];
+							if ( a.count ) {
+								[layers addObjectsFromArray:a];
+								--nameLimit;
+								[nameSet addObject:name];
+							}
+						}
+						CGPathRelease(path);
+					}
+				}
+			}
+		}
+	}
 
-    return layers;
+	return layers;
 }
 
+/**
+ Determines whether text layers that display street names should be rasterized.
 
+ @return The value to use for the text layer's `shouldRasterize` property.
+ */
+- (BOOL)shouldRasterizeStreetNames {
+    return [self geekbenchScore] < 2500;
+}
 
 -(void)resetDisplayLayers
 {
@@ -2409,89 +2467,92 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
     [CATransaction setAnimationDuration:1.0];
 #endif
 
-    const double    tRotation        = OSMTransformRotation( _mapView.screenFromMapTransform );
-    const double    tScale            = OSMTransformScaleX( _mapView.screenFromMapTransform );
-    const double    pScale            = tScale / PATH_SCALING;
-    const double    pixelsPerMeter    = 0.8 * 1.0 / [_mapView metersPerPixel];
+	const double	tRotation		= OSMTransformRotation( _mapView.screenFromMapTransform );
+	const double	tScale			= OSMTransformScaleX( _mapView.screenFromMapTransform );
+	const double	pScale			= tScale / PATH_SCALING;
+	const double	pixelsPerMeter	= 0.8 * 1.0 / [_mapView metersPerPixel];
 
-    for ( OsmBaseObject * object in _shownObjects ) {
+	for ( OsmBaseObject * object in _shownObjects ) {
 
-        NSArray * layers = [self getShapeLayersForObject:object];
+		NSArray * layers = [self getShapeLayersForObject:object];
 
-        for ( CALayer * layer in layers ) {
+		for ( CALayer * layer in layers ) {
 
-            // configure the layer for presentation
-            BOOL isShapeLayer = [layer isKindOfClass:[CAShapeLayer class]];
-            LayerProperties * props = [layer valueForKey:@"properties"];
-            OSMPoint pt = props->position;
-            OSMPoint pt2 = [_mapView screenPointFromMapPoint:pt birdsEye:NO];
+			// configure the layer for presentation
+			BOOL isShapeLayer = [layer isKindOfClass:[CAShapeLayer class]];
+			LayerProperties * props = [layer valueForKey:@"properties"];
+			OSMPoint pt = props->position;
+			OSMPoint pt2 = [_mapView screenPointFromMapPoint:pt birdsEye:NO];
 
-            if ( props->is3D || (isShapeLayer && !object.isNode) ) {
+			if ( props->is3D || (isShapeLayer && !object.isNode) ) {
 
-                // way or area -- need to rotate and scale
-                if ( props->is3D ) {
-                    if ( _mapView.birdsEyeRotation == 0.0 ) {
-                        [layer removeFromSuperlayer];
-                        continue;
-                    }
-                    CATransform3D t = CATransform3DMakeTranslation( pt2.x-pt.x, pt2.y-pt.y, 0 );
-                    t = CATransform3DScale( t, pScale, pScale, pixelsPerMeter );
-                    t = CATransform3DRotate( t, tRotation, 0, 0, 1 );
-                    t = CATransform3DConcat( props->transform, t );
-                    layer.transform = t;
-                    if ( !isShapeLayer ) {
-                        layer.borderWidth = props->lineWidth / pScale;    // wall
-                    }
+				// way or area -- need to rotate and scale
+				if ( props->is3D ) {
+					if ( _mapView.birdsEyeRotation == 0.0 ) {
+						[layer removeFromSuperlayer];
+						continue;
+					}
+					CATransform3D t = CATransform3DMakeTranslation( pt2.x-pt.x, pt2.y-pt.y, 0 );
+					t = CATransform3DScale( t, pScale, pScale, pixelsPerMeter );
+					t = CATransform3DRotate( t, tRotation, 0, 0, 1 );
+					t = CATransform3DConcat( props->transform, t );
+					layer.transform = t;
+					if ( !isShapeLayer ) {
+						layer.borderWidth = props->lineWidth / pScale;	// wall
+					}
+				} else {
+					CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
+					t = CGAffineTransformScale( t, pScale, pScale );
+					t = CGAffineTransformRotate( t, tRotation );
+					layer.affineTransform = t;
+				}
+
+				if ( isShapeLayer ) {
+				} else {
+					// its a wall, so bounds are already height/length of wall
+				}
+
+				if ( isShapeLayer ) {
+					CAShapeLayer * shape = (id)layer;
+					shape.lineWidth = props->lineWidth / pScale;
+					shape.lineDashPattern = props->lineDashes ? @[ @([props->lineDashes[0] doubleValue]/pScale), @([props->lineDashes[1] doubleValue]/pScale) ] : nil;
+				}
+
+			} else {
+
+				// node or text -- no scale transform applied
+				if ( [layer isKindOfClass:[CATextLayer class]] ) {
+
+					// get size of building (or whatever) into which we need to fit the text
+					if ( object.isNode ) {
+						// its a node with text, such as an address node
+					} else {
+						// its a label on a building or polygon
+						OSMRect rcMap = [MapView mapRectForLatLonRect:object.boundingBox];
+						OSMRect	rcScreen = [_mapView boundingScreenRectForMapRect:rcMap];
+						if ( layer.bounds.size.width >= 1.1*rcScreen.size.width ) {
+							// text label is too big so hide it
+							[layer removeFromSuperlayer];
+							continue;
+						}
+					}
+
+                } else if ([[layer valueForKey:@"key"] isEqualToString:@"direction"]) {
+                    // This layer draws the `direction` of an object, so it needs to rotate along with the map.
+                    layer.affineTransform = CGAffineTransformMakeRotation(tRotation);
                 } else {
-                    CGAffineTransform t = CGAffineTransformMakeTranslation( pt2.x-pt.x, pt2.y-pt.y);
-                    t = CGAffineTransformScale( t, pScale, pScale );
-                    t = CGAffineTransformRotate( t, tRotation );
-                    layer.affineTransform = t;
-                }
 
-                if ( isShapeLayer ) {
-                } else {
-                    // its a wall, so bounds are already height/length of wall
-                }
+					// its an icon or a generic box
+				}
 
-                if ( isShapeLayer ) {
-                    CAShapeLayer * shape = (id)layer;
-                    shape.lineWidth = props->lineWidth / pScale;
-                    shape.lineDashPattern = props->lineDashes ? @[ @([props->lineDashes[0] doubleValue]/pScale), @([props->lineDashes[1] doubleValue]/pScale) ] : nil;
-                }
+				CGFloat scale = [[UIScreen mainScreen] scale];
+				pt2.x = round(pt2.x * scale)/scale;
+				pt2.y = round(pt2.y * scale)/scale;
+				layer.position = CGPointFromOSMPoint(pt2);
+			}
 
-            } else {
-
-                // node or text -- no scale transform applied
-                if ( [layer isKindOfClass:[CATextLayer class]] ) {
-
-                    // get size of building (or whatever) into which we need to fit the text
-                    if ( object.isNode ) {
-                        // its a node with text, such as an address node
-                    } else {
-                        // its a label on a building or polygon
-                        OSMRect rcMap = [MapView mapRectForLatLonRect:object.boundingBox];
-                        OSMRect    rcScreen = [_mapView boundingScreenRectForMapRect:rcMap];
-                        if ( layer.bounds.size.width >= 1.1*rcScreen.size.width ) {
-                            // text label is too big so hide it
-                            [layer removeFromSuperlayer];
-                            continue;
-                        }
-                    }
-
-                } else {
-
-                    // its an icon or a generic box
-                }
-
-                CGFloat scale = [[UIScreen mainScreen] scale];
-                pt2.x = round(pt2.x * scale)/scale;
-                pt2.y = round(pt2.y * scale)/scale;
-                layer.position = CGPointFromOSMPoint(pt2);
-            }
-
-            // add the layer if not already present
-            if ( layer.superlayer == nil ) {
+			// add the layer if not already present
+			if ( layer.superlayer == nil ) {
 #if FADE_INOUT
                 [layer removeAllAnimations];
                 layer.opacity = 1.0;
