@@ -514,15 +514,17 @@
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
-		CD55FE4B2353962700A8202B /* WebPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD55FE4A2353962700A8202B /* WebPage.storyboard */; };
 		CD55FE4E2353965900A8202B /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD55FE4C2353965900A8202B /* Settings.storyboard */; };
 		CD55FE4F2353990800A8202B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD55FE47235395FE00A8202B /* Login.storyboard */; };
+		CD6ACE582355E23D00B0A321 /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD6ACE562355E23D00B0A321 /* Display.storyboard */; };
 		CD7ED4572355DB8E00F3A466 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED4552355DB8E00F3A466 /* Help.storyboard */; };
-		CD7ED4592355DBF400F3A466 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED4582355DBF400F3A466 /* Search.storyboard */; };
 		CD7ED45C2355DC4000F3A466 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED45A2355DC4000F3A466 /* Notes.storyboard */; };
-		CD7ED45E2355DC7300F3A466 /* Upload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED45D2355DC7300F3A466 /* Upload.storyboard */; };
 		CD7ED4612355DCE400F3A466 /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED45F2355DCE400F3A466 /* Height.storyboard */; };
-		CD7ED4632355DD0E00F3A466 /* Bing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED4622355DD0E00F3A466 /* Bing.storyboard */; };
+		CD9CE06C2355FBD400E022E3 /* Bing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD9CE06E2355FBD400E022E3 /* Bing.storyboard */; };
+		CD9CE06F2355FC2F00E022E3 /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD9CE0712355FC2F00E022E3 /* POI.storyboard */; };
+		CD9CE0722355FC3B00E022E3 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD9CE0742355FC3B00E022E3 /* Search.storyboard */; };
+		CD9CE0752355FC4200E022E3 /* Upload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD9CE0772355FC4200E022E3 /* Upload.storyboard */; };
+		CD9CE0782355FC4C00E022E3 /* WebPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD9CE07A2355FC4C00E022E3 /* WebPage.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1146,14 +1148,16 @@
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
 		CD55FE48235395FE00A8202B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
-		CD55FE4A2353962700A8202B /* WebPage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WebPage.storyboard; sourceTree = "<group>"; };
 		CD55FE4D2353965900A8202B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		CD6ACE572355E23D00B0A321 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
 		CD7ED4562355DB8E00F3A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Help.storyboard; sourceTree = "<group>"; };
-		CD7ED4582355DBF400F3A466 /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		CD7ED45B2355DC4000F3A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Notes.storyboard; sourceTree = "<group>"; };
-		CD7ED45D2355DC7300F3A466 /* Upload.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Upload.storyboard; sourceTree = "<group>"; };
 		CD7ED4602355DCE400F3A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Height.storyboard; sourceTree = "<group>"; };
-		CD7ED4622355DD0E00F3A466 /* Bing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bing.storyboard; sourceTree = "<group>"; };
+		CD9CE06D2355FBD400E022E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Bing.storyboard; sourceTree = "<group>"; };
+		CD9CE0702355FC2F00E022E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/POI.storyboard; sourceTree = "<group>"; };
+		CD9CE0732355FC3B00E022E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Search.storyboard; sourceTree = "<group>"; };
+		CD9CE0762355FC4200E022E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Upload.storyboard; sourceTree = "<group>"; };
+		CD9CE0792355FC4C00E022E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/WebPage.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1396,7 +1400,7 @@
 				02ACBA4316713CCB00BB4414 /* AppDelegate.m */,
 				02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */,
 				02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */,
-				CD7ED4622355DD0E00F3A466 /* Bing.storyboard */,
+				CD9CE06E2355FBD400E022E3 /* Bing.storyboard */,
 				02C19B331699E8BF00F75E3C /* BingMetadataViewController.h */,
 				02C19B341699E8C000F75E3C /* BingMetadataViewController.m */,
 				022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */,
@@ -1408,6 +1412,7 @@
 				024B4CA019BBE65F00BBA60B /* CustomPresetListViewController.h */,
 				024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */,
 				64D74BF02253DF39004FFD20 /* Direction */,
+				CD6ACE562355E23D00B0A321 /* Display.storyboard */,
 				0225A36819B63EFE008B63BA /* DisplayViewController.h */,
 				0225A36919B63F0D008B63BA /* DisplayViewController.m */,
 				64981F1D22667D7700178476 /* Extensions */,
@@ -1453,6 +1458,7 @@
 				02BED99E168D102600357B94 /* OfflineViewController.m */,
 				024C323B1DEEA97100AD62AB /* OsmServerViewController.h */,
 				024C323C1DEEA97100AD62AB /* OsmServerViewController.m */,
+				CD9CE0712355FC2F00E022E3 /* POI.storyboard */,
 				02A077D0167A77A400686261 /* POIAllTagsViewController.h */,
 				02A077D1167A77A400686261 /* POIAllTagsViewController.m */,
 				023D1721168A36B00011FABC /* POIAttributesViewController.h */,
@@ -1470,7 +1476,7 @@
 				0296873E167E30C700B8FF2C /* PushPinView.m */,
 				025224E616D7292E00B6FD53 /* RotatingNavigationController.h */,
 				025224E716D7292E00B6FD53 /* RotatingNavigationController.m */,
-				CD7ED4582355DBF400F3A466 /* Search.storyboard */,
+				CD9CE0742355FC3B00E022E3 /* Search.storyboard */,
 				CD55FE4C2353965900A8202B /* Settings.storyboard */,
 				02ACBA5816713CCB00BB4414 /* SettingsViewController.h */,
 				02ACBA5916713CCB00BB4414 /* SettingsViewController.m */,
@@ -1478,10 +1484,10 @@
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				02BF745220793F0A0028ED6A /* TurnRestrictController.h */,
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
-				CD7ED45D2355DC7300F3A466 /* Upload.storyboard */,
+				CD9CE0772355FC4200E022E3 /* Upload.storyboard */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
-				CD55FE4A2353962700A8202B /* WebPage.storyboard */,
+				CD9CE07A2355FC4C00E022E3 /* WebPage.storyboard */,
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
@@ -2110,7 +2116,7 @@
 				02072AE81BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png in Resources */,
 				02ACBBCE16713F2B00BB4414 /* accommodation_alpinehut.p.64.png in Resources */,
 				02ACBBCF16713F2B00BB4414 /* accommodation_bed_and_breakfast.p.64.png in Resources */,
-				CD7ED4592355DBF400F3A466 /* Search.storyboard in Resources */,
+				CD9CE0722355FC3B00E022E3 /* Search.storyboard in Resources */,
 				02ACBBD016713F2B00BB4414 /* accommodation_bed_and_breakfast2.p.64.png in Resources */,
 				02ACBBD116713F2B00BB4414 /* accommodation_camping.p.64.png in Resources */,
 				02ACBBD216713F2B00BB4414 /* accommodation_caravan_park.p.64.png in Resources */,
@@ -2186,6 +2192,7 @@
 				02ACBC1416713F2B00BB4414 /* food_pizza.p.64.png in Resources */,
 				02072ABB1BD4497500F1CAB4 /* 732-cloud-upload-toolbar@2x.png in Resources */,
 				02ACBC1516713F2B00BB4414 /* food_pub.p.64.png in Resources */,
+				CD6ACE582355E23D00B0A321 /* Display.storyboard in Resources */,
 				02ACBC1616713F2B00BB4414 /* food_restaurant.p.64.png in Resources */,
 				02ACBC1716713F2B00BB4414 /* health_dentist.p.64.png in Resources */,
 				02ACBC1816713F2B00BB4414 /* health_doctors.p.64.png in Resources */,
@@ -2308,7 +2315,7 @@
 				02ACBC7D16713F2B00BB4414 /* shopping_kiosk.p.64.png in Resources */,
 				02ACBC7E16713F2B00BB4414 /* shopping_laundrette.p.64.png in Resources */,
 				02ACBC7F16713F2B00BB4414 /* shopping_marketplace.p.64.png in Resources */,
-				CD55FE4B2353962700A8202B /* WebPage.storyboard in Resources */,
+				CD9CE0782355FC4C00E022E3 /* WebPage.storyboard in Resources */,
 				02ACBC8016713F2B00BB4414 /* shopping_mobile_phone.p.64.png in Resources */,
 				02ACBC8116713F2B00BB4414 /* shopping_motorcycle.p.64.png in Resources */,
 				02ACBC8216713F2B00BB4414 /* shopping_music.p.64.png in Resources */,
@@ -2392,13 +2399,13 @@
 				02ACBCC716713F2B00BB4414 /* tourist_wreck.p.64.png in Resources */,
 				02ACBCC816713F2B00BB4414 /* tourist_zoo.p.64.png in Resources */,
 				02ACBCC916713F2B00BB4414 /* transport_aerodrome.p.64.png in Resources */,
-				CD7ED45E2355DC7300F3A466 /* Upload.storyboard in Resources */,
+				CD9CE0752355FC4200E022E3 /* Upload.storyboard in Resources */,
 				02ACBCCA16713F2B00BB4414 /* transport_aerodrome2.p.64.png in Resources */,
 				02ACBCCB16713F2B00BB4414 /* transport_airport.p.64.png in Resources */,
 				02072AAE1BD446F500F1CAB4 /* 852-map-toolbar.png in Resources */,
 				02ACBCCC16713F2B00BB4414 /* transport_airport2.p.64.png in Resources */,
 				02ACBCCD16713F2B00BB4414 /* transport_airport_gate.p.64.png in Resources */,
-				CD7ED4632355DD0E00F3A466 /* Bing.storyboard in Resources */,
+				CD9CE06C2355FBD400E022E3 /* Bing.storyboard in Resources */,
 				CD55FE4E2353965900A8202B /* Settings.storyboard in Resources */,
 				02ACBCCE16713F2B00BB4414 /* transport_airport_terminal.p.64.png in Resources */,
 				02ACBCCF16713F2B00BB4414 /* transport_bus_station.p.64.png in Resources */,
@@ -2446,6 +2453,7 @@
 				02ACBCF216713F2B00BB4414 /* transport_turning_circle.p.64.png in Resources */,
 				02ACBCF316713F2B00BB4414 /* transport_walking.p.64.png in Resources */,
 				02ACBCF416713F2B00BB4414 /* transport_zebra_crossing.p.64.png in Resources */,
+				CD9CE06F2355FC2F00E022E3 /* POI.storyboard in Resources */,
 				02ACBCF516713F2B00BB4414 /* water_dam.p.64.png in Resources */,
 				02DAB7D61BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@2x.png in Resources */,
 				02ACBCF616713F2B00BB4414 /* water_tower.p.64.png in Resources */,
@@ -2694,6 +2702,14 @@
 			name = Settings.storyboard;
 			sourceTree = "<group>";
 		};
+		CD6ACE562355E23D00B0A321 /* Display.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD6ACE572355E23D00B0A321 /* Base */,
+			);
+			name = Display.storyboard;
+			sourceTree = "<group>";
+		};
 		CD7ED4552355DB8E00F3A466 /* Help.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2716,6 +2732,46 @@
 				CD7ED4602355DCE400F3A466 /* Base */,
 			);
 			name = Height.storyboard;
+			sourceTree = "<group>";
+		};
+		CD9CE06E2355FBD400E022E3 /* Bing.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD9CE06D2355FBD400E022E3 /* Base */,
+			);
+			name = Bing.storyboard;
+			sourceTree = "<group>";
+		};
+		CD9CE0712355FC2F00E022E3 /* POI.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD9CE0702355FC2F00E022E3 /* Base */,
+			);
+			name = POI.storyboard;
+			sourceTree = "<group>";
+		};
+		CD9CE0742355FC3B00E022E3 /* Search.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD9CE0732355FC3B00E022E3 /* Base */,
+			);
+			name = Search.storyboard;
+			sourceTree = "<group>";
+		};
+		CD9CE0772355FC4200E022E3 /* Upload.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD9CE0762355FC4200E022E3 /* Base */,
+			);
+			name = Upload.storyboard;
+			sourceTree = "<group>";
+		};
+		CD9CE07A2355FC4C00E022E3 /* WebPage.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD9CE0792355FC4C00E022E3 /* Base */,
+			);
+			name = WebPage.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
