@@ -94,9 +94,9 @@
 	<key>UIInterfaceOrientation</key>
 	<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	<key>UILaunchStoryboardName</key>
-	<string>Launch Screen</string>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>MainStoryboard</string>
+	<string>Main</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>MainStoryboard</string>
 	<key>UIRequiredDeviceCapabilities</key>

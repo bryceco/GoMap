@@ -136,7 +136,7 @@
 		02ACBA4616713CCB00BB4414 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4516713CCB00BB4414 /* Default.png */; };
 		02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4716713CCB00BB4414 /* Default@2x.png */; };
 		02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4916713CCB00BB4414 /* Default-568h@2x.png */; };
-		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
+		02ACBA4D16713CCB00BB4414 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* Main.storyboard */; };
 		02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5216713CCB00BB4414 /* MapViewController.m */; };
 		02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5916713CCB00BB4414 /* SettingsViewController.m */; };
 		02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */; };
@@ -484,7 +484,7 @@
 		02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */; };
 		02E8436F19B407C40044AC1D /* WebPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E8436E19B407C40044AC1D /* WebPageView.xib */; };
 		02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02E8437E19B4DE510044AC1D /* Localizable.strings */; };
-		02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */; };
+		02ED19811BBF119C00A57CF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* LaunchScreen.storyboard */; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
 		02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */; };
 		02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F371B316A4F3E6003E9548 /* HelpViewController.m */; };
@@ -514,6 +514,15 @@
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
+		CD55FE4B2353962700A8202B /* WebPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD55FE4A2353962700A8202B /* WebPage.storyboard */; };
+		CD55FE4E2353965900A8202B /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD55FE4C2353965900A8202B /* Settings.storyboard */; };
+		CD55FE4F2353990800A8202B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD55FE47235395FE00A8202B /* Login.storyboard */; };
+		CD7ED4572355DB8E00F3A466 /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED4552355DB8E00F3A466 /* Help.storyboard */; };
+		CD7ED4592355DBF400F3A466 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED4582355DBF400F3A466 /* Search.storyboard */; };
+		CD7ED45C2355DC4000F3A466 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED45A2355DC4000F3A466 /* Notes.storyboard */; };
+		CD7ED45E2355DC7300F3A466 /* Upload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED45D2355DC7300F3A466 /* Upload.storyboard */; };
+		CD7ED4612355DCE400F3A466 /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED45F2355DCE400F3A466 /* Height.storyboard */; };
+		CD7ED4632355DD0E00F3A466 /* Bing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD7ED4622355DD0E00F3A466 /* Bing.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1095,9 +1104,9 @@
 		02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OsmNotesDatabase.h; path = ../Shared/OsmNotesDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = OsmNotesDatabase.m; path = ../Shared/OsmNotesDatabase.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02E8436E19B407C40044AC1D /* WebPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPageView.xib; sourceTree = "<group>"; };
-		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		02E8438219B4DF960044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		02ED19801BBF119C00A57CF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GpxConfigureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GpxConfigureViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1136,6 +1145,15 @@
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
+		CD55FE48235395FE00A8202B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
+		CD55FE4A2353962700A8202B /* WebPage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WebPage.storyboard; sourceTree = "<group>"; };
+		CD55FE4D2353965900A8202B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		CD7ED4562355DB8E00F3A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Help.storyboard; sourceTree = "<group>"; };
+		CD7ED4582355DBF400F3A466 /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		CD7ED45B2355DC4000F3A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Notes.storyboard; sourceTree = "<group>"; };
+		CD7ED45D2355DC7300F3A466 /* Upload.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Upload.storyboard; sourceTree = "<group>"; };
+		CD7ED4602355DCE400F3A466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Height.storyboard; sourceTree = "<group>"; };
+		CD7ED4622355DD0E00F3A466 /* Bing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bing.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1370,8 +1388,6 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
-				64981F1D22667D7700178476 /* Extensions */,
-				64D74BF02253DF39004FFD20 /* Direction */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
 				02C3C73619A5D679003B6783 /* AerialEditViewController.m */,
 				02C3C73219A5A40C003B6783 /* AerialListViewController.h */,
@@ -1380,6 +1396,7 @@
 				02ACBA4316713CCB00BB4414 /* AppDelegate.m */,
 				02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */,
 				02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */,
+				CD7ED4622355DD0E00F3A466 /* Bing.storyboard */,
 				02C19B331699E8BF00F75E3C /* BingMetadataViewController.h */,
 				02C19B341699E8C000F75E3C /* BingMetadataViewController.m */,
 				022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */,
@@ -1390,8 +1407,10 @@
 				0230558A19B931B20041B151 /* CustomPresetController.m */,
 				024B4CA019BBE65F00BBA60B /* CustomPresetListViewController.h */,
 				024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */,
+				64D74BF02253DF39004FFD20 /* Direction */,
 				0225A36819B63EFE008B63BA /* DisplayViewController.h */,
 				0225A36919B63F0D008B63BA /* DisplayViewController.m */,
+				64981F1D22667D7700178476 /* Extensions */,
 				028E0C0A20B2182100CEC71F /* FilterObjectsViewController.h */,
 				028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */,
 				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
@@ -1400,8 +1419,10 @@
 				02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
+				CD7ED45F2355DCE400F3A466 /* Height.storyboard */,
 				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
 				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
+				CD7ED4552355DB8E00F3A466 /* Help.storyboard */,
 				02F371B216A4F3E6003E9548 /* HelpViewController.h */,
 				02F371B316A4F3E6003E9548 /* HelpViewController.m */,
 				02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */,
@@ -1410,19 +1431,22 @@
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
 				02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */,
-				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
+				02ED19801BBF119C00A57CF4 /* LaunchScreen.storyboard */,
 				02E8437E19B4DE510044AC1D /* Localizable.strings */,
+				CD55FE47235395FE00A8202B /* Login.storyboard */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
-				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
+				02ACBA4B16713CCB00BB4414 /* Main.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
+				64C968442261ED3100351C0C /* Media.xcassets */,
 				022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */,
 				022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */,
 				02BED98C168BF87100357B94 /* NearbyMappersViewController.h */,
 				02BED98D168BF87200357B94 /* NearbyMappersViewController.m */,
 				02F8F4321696004B002A0820 /* NominatumViewController.h */,
 				02F8F4331696004B002A0820 /* NominatumViewController.m */,
+				CD7ED45A2355DC4000F3A466 /* Notes.storyboard */,
 				02695B8B1A08C1DB0028D95E /* NotesTableViewController.h */,
 				02695B8C1A08C1DB0028D95E /* NotesTableViewController.m */,
 				02BED99D168D102600357B94 /* OfflineViewController.h */,
@@ -1446,18 +1470,21 @@
 				0296873E167E30C700B8FF2C /* PushPinView.m */,
 				025224E616D7292E00B6FD53 /* RotatingNavigationController.h */,
 				025224E716D7292E00B6FD53 /* RotatingNavigationController.m */,
+				CD7ED4582355DBF400F3A466 /* Search.storyboard */,
+				CD55FE4C2353965900A8202B /* Settings.storyboard */,
 				02ACBA5816713CCB00BB4414 /* SettingsViewController.h */,
 				02ACBA5916713CCB00BB4414 /* SettingsViewController.m */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				02BF745220793F0A0028ED6A /* TurnRestrictController.h */,
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
+				CD7ED45D2355DC7300F3A466 /* Upload.storyboard */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
+				CD55FE4A2353962700A8202B /* WebPage.storyboard */,
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
-				64C968442261ED3100351C0C /* Media.xcassets */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -2075,7 +2102,7 @@
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02DAB7D71BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@3x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
-				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
+				02ACBA4D16713CCB00BB4414 /* Main.storyboard in Resources */,
 				02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */,
 				02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */,
 				02ACBBC016713F2B00BB4414 /* BlueBall.png in Resources */,
@@ -2083,6 +2110,7 @@
 				02072AE81BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png in Resources */,
 				02ACBBCE16713F2B00BB4414 /* accommodation_alpinehut.p.64.png in Resources */,
 				02ACBBCF16713F2B00BB4414 /* accommodation_bed_and_breakfast.p.64.png in Resources */,
+				CD7ED4592355DBF400F3A466 /* Search.storyboard in Resources */,
 				02ACBBD016713F2B00BB4414 /* accommodation_bed_and_breakfast2.p.64.png in Resources */,
 				02ACBBD116713F2B00BB4414 /* accommodation_camping.p.64.png in Resources */,
 				02ACBBD216713F2B00BB4414 /* accommodation_caravan_park.p.64.png in Resources */,
@@ -2213,6 +2241,7 @@
 				02ACBC4616713F2B00BB4414 /* poi_embassy2.p.64.png in Resources */,
 				02ACBC4716713F2B00BB4414 /* poi_military_bunker.p.64.png in Resources */,
 				02ACBC4816713F2B00BB4414 /* poi_mine.p.64.png in Resources */,
+				CD7ED4612355DCE400F3A466 /* Height.storyboard in Resources */,
 				02ACBC4916713F2B00BB4414 /* poi_mine_abandoned.p.64.png in Resources */,
 				02ACBC4A16713F2B00BB4414 /* poi_mountain_pass.p.64.png in Resources */,
 				02072AA81BD4465F00F1CAB4 /* 702-share.png in Resources */,
@@ -2261,6 +2290,7 @@
 				02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */,
 				02ACBC6E16713F2B00BB4414 /* shopping_department_store.p.64.png in Resources */,
 				02ACBC6F16713F2B00BB4414 /* shopping_diy.p.64.png in Resources */,
+				CD55FE4F2353990800A8202B /* Login.storyboard in Resources */,
 				02ACBC7016713F2B00BB4414 /* shopping_estateagent.p.64.png in Resources */,
 				02ACBC7116713F2B00BB4414 /* shopping_estateagent2.p.64.png in Resources */,
 				02ACBC7216713F2B00BB4414 /* shopping_estateagent3.p.64.png in Resources */,
@@ -2278,6 +2308,7 @@
 				02ACBC7D16713F2B00BB4414 /* shopping_kiosk.p.64.png in Resources */,
 				02ACBC7E16713F2B00BB4414 /* shopping_laundrette.p.64.png in Resources */,
 				02ACBC7F16713F2B00BB4414 /* shopping_marketplace.p.64.png in Resources */,
+				CD55FE4B2353962700A8202B /* WebPage.storyboard in Resources */,
 				02ACBC8016713F2B00BB4414 /* shopping_mobile_phone.p.64.png in Resources */,
 				02ACBC8116713F2B00BB4414 /* shopping_motorcycle.p.64.png in Resources */,
 				02ACBC8216713F2B00BB4414 /* shopping_music.p.64.png in Resources */,
@@ -2334,7 +2365,7 @@
 				02ACBCAE16713F2B00BB4414 /* tourist_battlefield.p.64.png in Resources */,
 				02ACBCAF16713F2B00BB4414 /* tourist_beach.p.64.png in Resources */,
 				02ACBCB016713F2B00BB4414 /* tourist_casino.p.64.png in Resources */,
-				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
+				02ED19811BBF119C00A57CF4 /* LaunchScreen.storyboard in Resources */,
 				64C968452261ED3100351C0C /* Media.xcassets in Resources */,
 				02ACBCB116713F2B00BB4414 /* tourist_castle.p.64.png in Resources */,
 				02ACBCB216713F2B00BB4414 /* tourist_castle2.p.64.png in Resources */,
@@ -2361,11 +2392,14 @@
 				02ACBCC716713F2B00BB4414 /* tourist_wreck.p.64.png in Resources */,
 				02ACBCC816713F2B00BB4414 /* tourist_zoo.p.64.png in Resources */,
 				02ACBCC916713F2B00BB4414 /* transport_aerodrome.p.64.png in Resources */,
+				CD7ED45E2355DC7300F3A466 /* Upload.storyboard in Resources */,
 				02ACBCCA16713F2B00BB4414 /* transport_aerodrome2.p.64.png in Resources */,
 				02ACBCCB16713F2B00BB4414 /* transport_airport.p.64.png in Resources */,
 				02072AAE1BD446F500F1CAB4 /* 852-map-toolbar.png in Resources */,
 				02ACBCCC16713F2B00BB4414 /* transport_airport2.p.64.png in Resources */,
 				02ACBCCD16713F2B00BB4414 /* transport_airport_gate.p.64.png in Resources */,
+				CD7ED4632355DD0E00F3A466 /* Bing.storyboard in Resources */,
+				CD55FE4E2353965900A8202B /* Settings.storyboard in Resources */,
 				02ACBCCE16713F2B00BB4414 /* transport_airport_terminal.p.64.png in Resources */,
 				02ACBCCF16713F2B00BB4414 /* transport_bus_station.p.64.png in Resources */,
 				02072AB41BD4494300F1CAB4 /* 845-location-target-toolbar.png in Resources */,
@@ -2448,12 +2482,14 @@
 				0266D3AB16C02D9200AD9A83 /* seamark_beacon_special_purpose.p.64.png in Resources */,
 				0266D3AC16C02D9200AD9A83 /* seamark_buoy_cardinal.p.64.png in Resources */,
 				0266D3AD16C02D9200AD9A83 /* seamark_buoy_isolated_danger.png in Resources */,
+				CD7ED4572355DB8E00F3A466 /* Help.storyboard in Resources */,
 				0266D3AE16C02D9200AD9A83 /* seamark_buoy_lateral.p.64.png in Resources */,
 				0266D3AF16C02D9200AD9A83 /* seamark_buoy_safe_water.p.64.png in Resources */,
 				0266D3B016C02D9200AD9A83 /* seamark_buoy_special_purpose.p.64.png in Resources */,
 				0266D3B116C02D9200AD9A83 /* seamark_fog_signal.p.64.png in Resources */,
 				02DAB7DB1BFA4C3B00360AED /* 723-location-arrow-toolbar.png in Resources */,
 				0266D3B216C02D9200AD9A83 /* seamark_light_float.p.64.png in Resources */,
+				CD7ED45C2355DC4000F3A466 /* Notes.storyboard in Resources */,
 				0266D3B316C02D9200AD9A83 /* seamark_light_major.p.64.png in Resources */,
 				0266D3B416C02D9200AD9A83 /* seamark_light_minor.p.64.png in Resources */,
 				0266D3B516C02D9200AD9A83 /* seamark_light_vessel.p.64.png in Resources */,
@@ -2626,12 +2662,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */ = {
+		02ACBA4B16713CCB00BB4414 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				02E8437919B4DD730044AC1D /* Base */,
 			);
-			name = MainStoryboard.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		02E8437E19B4DE510044AC1D /* Localizable.strings */ = {
@@ -2640,6 +2676,46 @@
 				02E8438219B4DF960044AC1D /* Base */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		CD55FE47235395FE00A8202B /* Login.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD55FE48235395FE00A8202B /* Base */,
+			);
+			name = Login.storyboard;
+			sourceTree = "<group>";
+		};
+		CD55FE4C2353965900A8202B /* Settings.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD55FE4D2353965900A8202B /* Base */,
+			);
+			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
+		CD7ED4552355DB8E00F3A466 /* Help.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD7ED4562355DB8E00F3A466 /* Base */,
+			);
+			name = Help.storyboard;
+			sourceTree = "<group>";
+		};
+		CD7ED45A2355DC4000F3A466 /* Notes.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD7ED45B2355DC4000F3A466 /* Base */,
+			);
+			name = Notes.storyboard;
+			sourceTree = "<group>";
+		};
+		CD7ED45F2355DCE400F3A466 /* Height.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CD7ED4602355DCE400F3A466 /* Base */,
+			);
+			name = Height.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2757,7 +2833,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2783,7 +2858,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";

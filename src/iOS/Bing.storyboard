@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rzX-ca-ESu">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Yja-PP-LZI">
+            <objects>
+                <navigationController id="rzX-ca-ESu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8DV-Ex-fD9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DCR-m3-Qgc" kind="relationship" relationship="rootViewController" id="ciw-Md-Gcx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="05c-vm-Znh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1511" y="-2224"/>
+        </scene>
+        <!--Bing Maps-->
+        <scene sceneID="I12-cf-9pY">
+            <objects>
+                <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleAspectFit" id="SRh-fQ-dAA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
+                                <rect key="frame" x="20" y="62" width="104" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="104" id="1vt-lM-5xK"/>
+                                    <constraint firstAttribute="height" constant="32" id="ms7-lz-1eH"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peH-96-gWt">
+                                <rect key="frame" x="20" y="104" width="280" height="336"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nrQ-9V-0ML">
+                                <rect key="frame" x="126" y="68" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" constant="6" id="DF9-IQ-f5Q"/>
+                            <constraint firstItem="A8k-Ic-iRd" firstAttribute="trailing" secondItem="peH-96-gWt" secondAttribute="trailing" constant="20" id="Gbj-CW-o1z"/>
+                            <constraint firstItem="peH-96-gWt" firstAttribute="top" secondItem="UQm-nn-P6E" secondAttribute="bottom" constant="10" id="LDs-I1-aby"/>
+                            <constraint firstItem="A8k-Ic-iRd" firstAttribute="bottom" secondItem="peH-96-gWt" secondAttribute="bottom" constant="20" id="MBt-TZ-IJx"/>
+                            <constraint firstItem="peH-96-gWt" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="Pxd-vG-XoU"/>
+                            <constraint firstItem="nrQ-9V-0ML" firstAttribute="centerY" secondItem="UQm-nn-P6E" secondAttribute="centerY" id="UMF-Ru-SZ8"/>
+                            <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="126" id="XXx-3q-VEr"/>
+                            <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="UQm-nn-P6E" secondAttribute="trailing" constant="2" id="mBW-14-KcJ"/>
+                            <constraint firstItem="UQm-nn-P6E" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="qzq-UY-gsf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="A8k-Ic-iRd"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Bing Maps" id="Qz0-Ce-YCX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="AC4-hh-8iz">
+                            <connections>
+                                <action selector="cancel:" destination="DCR-m3-Qgc" id="8ju-1i-8uA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="activityIndicator" destination="nrQ-9V-0ML" id="bD0-eM-Al9"/>
+                        <outlet property="textView" destination="peH-96-gWt" id="oF9-ze-EOx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f8A-Xu-2Bc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-804" y="-2225"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bing-logo-gray" width="78.5" height="17"/>
+    </resources>
+</document>
