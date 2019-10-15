@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="rzX-ca-ESu">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +13,7 @@
             <objects>
                 <navigationController id="rzX-ca-ESu" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8DV-Ex-fD9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -31,23 +33,22 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
-                                <rect key="frame" x="20" y="62" width="104" height="32"/>
+                                <rect key="frame" x="20" y="94" width="104" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="104" id="1vt-lM-5xK"/>
                                     <constraint firstAttribute="height" constant="32" id="ms7-lz-1eH"/>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peH-96-gWt">
-                                <rect key="frame" x="20" y="104" width="280" height="336"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="136" width="374" height="706"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nrQ-9V-0ML">
-                                <rect key="frame" x="126" y="68" width="20" height="20"/>
+                                <rect key="frame" x="126" y="100" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" constant="6" id="DF9-IQ-f5Q"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="trailing" secondItem="peH-96-gWt" secondAttribute="trailing" constant="20" id="Gbj-CW-o1z"/>

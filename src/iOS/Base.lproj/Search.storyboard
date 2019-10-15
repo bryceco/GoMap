@@ -38,7 +38,7 @@
                                                     <rect key="frame" x="20" y="0.0" width="374" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="textColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                             </subviews>
@@ -54,7 +54,7 @@
                                 <rect key="frame" x="188.5" y="125" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="abd-jd-9tI" firstAttribute="top" secondItem="xw9-Ro-Fai" secondAttribute="bottom" id="2UE-0c-j5w"/>
                             <constraint firstItem="BJx-hX-58b" firstAttribute="top" secondItem="SQe-Tw-wQG" secondAttribute="top" constant="125" id="Ctw-fE-ucI"/>
