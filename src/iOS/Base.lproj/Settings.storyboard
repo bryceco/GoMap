@@ -260,7 +260,7 @@
                         <subviews>
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHr-ta-k6F">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <string key="text">Copyright © 2012-2015 Bryce Cogswell. 
 All rights reserved.
 
@@ -281,6 +281,7 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -345,6 +346,7 @@ http://glyphish.com
                                                 </button>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jh3-U2-gWC">
                                                     <rect key="frame" x="197" y="12" width="20" height="20"/>
+                                                    <color key="color" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -397,6 +399,7 @@ http://glyphish.com
                                                 </button>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1S9-Ra-VLU">
                                                     <rect key="frame" x="197" y="12" width="20" height="20"/>
+                                                    <color key="color" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
