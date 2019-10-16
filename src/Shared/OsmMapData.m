@@ -1667,10 +1667,22 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 #else
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
+
+    UIColor * color = UIColor.blackColor;
+
+    if (@available(iOS 13.0, *)) {
+        color = UIColor.labelColor;
+    }
+
+    NSDictionary * attrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color
+    };
+
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ = %@\n",
 					   [tag attributeForName:@"k"].stringValue,
 					   [tag attributeForName:@"v"].stringValue];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:attrs]];
 }
 -(void)updateString:(NSMutableAttributedString *)string withMember:(NSXMLElement *)tag
 {
@@ -1679,11 +1691,23 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 #else
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
+
+    UIColor * color = UIColor.blackColor;
+
+    if (@available(iOS 13.0, *)) {
+        color = UIColor.labelColor;
+    }
+
+    NSDictionary * attrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color
+    };
+
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ %@: \"%@\"\n",
 					   [tag attributeForName:@"type"].stringValue,
 					   [tag attributeForName:@"ref"].stringValue,
 					   [tag attributeForName:@"role"].stringValue];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:attrs]];
 }
 
 -(void)updateString:(NSMutableAttributedString *)string withNode:(NSXMLElement *)node
@@ -1694,12 +1718,28 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
 
-	NSString * nodeName = [node attributeForName:@"id"].stringValue;
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tNode " attributes:@{ NSFontAttributeName : font }]];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:nodeName
-																   attributes:@{ NSFontAttributeName : font,
-																				 NSLinkAttributeName : [@"n" stringByAppendingString:nodeName] }]];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n" attributes:@{ NSFontAttributeName : font }]];
+    UIColor * color = UIColor.blackColor;
+
+    if (@available(iOS 13.0, *)) {
+        color = UIColor.labelColor;
+    }
+
+    NSDictionary * attrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color
+    };
+
+    NSString * nodeName = [node attributeForName:@"id"].stringValue;
+    NSDictionary * linkAttrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color,
+        NSLinkAttributeName : [@"n" stringByAppendingString:nodeName]
+    };
+
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tNode " attributes:attrs]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:nodeName attributes:linkAttrs]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n" attributes:attrs]];
+
 	for ( NSXMLElement * tag in node.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
 			[self updateString:string withTag:tag];
@@ -1723,13 +1763,28 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
 
-	NSString * wayName = [way attributeForName:@"id"].stringValue;
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tWay " attributes:@{ NSFontAttributeName : font }]];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:wayName
-																   attributes:@{ NSFontAttributeName : font,
-																				 NSLinkAttributeName : [@"w" stringByAppendingString:wayName] }]];
+    UIColor * color = UIColor.blackColor;
+
+    if (@available(iOS 13.0, *)) {
+        color = UIColor.labelColor;
+    }
+
+    NSDictionary * attrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color
+    };
+
+    NSString * wayName = [way attributeForName:@"id"].stringValue;
+    NSDictionary * linkAttrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color,
+        NSLinkAttributeName : [@"w" stringByAppendingString:wayName]
+    };
+
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tWay " attributes:attrs]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:wayName attributes:linkAttrs]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%d nodes)\n",nodeCount]
-																   attributes:@{ NSFontAttributeName : font }]];
+																   attributes:attrs]];
 
 	for ( NSXMLElement * tag in way.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
@@ -1756,13 +1811,28 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
 
-	NSString * relationName = [relation attributeForName:@"id"].stringValue;
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:@{ NSFontAttributeName : font }]];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:relationName
-																   attributes:@{ NSFontAttributeName : font,
-																				 NSLinkAttributeName : [@"r" stringByAppendingString:relationName] }]];
+    UIColor * color = UIColor.blackColor;
+
+    if (@available(iOS 13.0, *)) {
+        color = UIColor.labelColor;
+    }
+
+    NSDictionary * attrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color
+    };
+
+    NSString * relationName = [relation attributeForName:@"id"].stringValue;
+    NSDictionary * linkAttrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color,
+        NSLinkAttributeName : [@"r" stringByAppendingString:relationName]
+    };
+
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:attrs]];
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:relationName attributes:linkAttrs]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%d members)\n",memberCount]
-																   attributes:@{ NSFontAttributeName : font }]];
+																   attributes:attrs]];
 
 	for ( NSXMLElement * tag in relation.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
@@ -1784,7 +1854,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 #else
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:header attributes:@{ NSFontAttributeName : font }]];
+
+    UIColor * color = UIColor.blackColor;
+
+    if (@available(iOS 13.0, *)) {
+        color = UIColor.labelColor;
+    }
+
+    NSDictionary * attrs = @{
+        NSFontAttributeName : font,
+        NSForegroundColorAttributeName : color
+    };
+
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:header attributes:attrs]];
 	for ( NSXMLElement * object in objects ) {
 		if ( [object.name isEqualToString:@"node"] ) {
 			[self updateString:string withNode:object];
