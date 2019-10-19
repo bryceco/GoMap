@@ -1,2 +1,6 @@
 # Bundler
 vendor/bundle
+
+# fastlane
+fastlane/report.xml
+fastlane/test_output
