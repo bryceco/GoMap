@@ -1685,11 +1685,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 #else
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
+    
+    UIColor *foregroundColor = UIColor.blackColor;
+    if (@available(iOS 13.0, *)) {
+        foregroundColor = UIColor.labelColor;
+    }
+    
 	NSString * text = [NSString stringWithFormat:@"\t\t%@ %@: \"%@\"\n",
 					   [tag attributeForName:@"type"].stringValue,
 					   [tag attributeForName:@"ref"].stringValue,
 					   [tag attributeForName:@"role"].stringValue];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font }]];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
 }
 
 -(void)updateString:(NSMutableAttributedString *)string withNode:(NSXMLElement *)node
@@ -1771,14 +1777,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 #else
 	NSFont * font = [NSFont labelFontOfSize:12];
 #endif
+    
+    UIColor *foregroundColor = UIColor.blackColor;
+    if (@available(iOS 13.0, *)) {
+        foregroundColor = UIColor.labelColor;
+    }
 
 	NSString * relationName = [relation attributeForName:@"id"].stringValue;
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:@{ NSFontAttributeName : font }]];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:relationName
 																   attributes:@{ NSFontAttributeName : font,
 																				 NSLinkAttributeName : [@"r" stringByAppendingString:relationName] }]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%d members)\n",memberCount]
-																   attributes:@{ NSFontAttributeName : font }]];
+                                                                   attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
 
 	for ( NSXMLElement * tag in relation.children ) {
 		if ( [tag.name isEqualToString:@"tag"] ) {
