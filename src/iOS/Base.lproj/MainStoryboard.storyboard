@@ -3554,7 +3554,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peH-96-gWt">
                                 <rect key="frame" x="20" y="112" width="280" height="348"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -3562,7 +3562,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                 <rect key="frame" x="126" y="76" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" constant="6" id="DF9-IQ-f5Q"/>
                             <constraint firstItem="A8k-Ic-iRd" firstAttribute="trailing" secondItem="peH-96-gWt" secondAttribute="trailing" constant="20" id="Gbj-CW-o1z"/>
