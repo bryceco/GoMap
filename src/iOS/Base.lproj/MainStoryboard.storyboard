@@ -1759,7 +1759,7 @@
                                 <rect key="frame" x="20" y="134.5" width="280" height="216"/>
                             </pickerView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="8pi-lE-GdV" firstAttribute="trailing" secondItem="dWF-I1-mgM" secondAttribute="trailing" id="7Rd-eV-6in"/>
                             <constraint firstItem="PK9-1m-unf" firstAttribute="leading" secondItem="8pi-lE-GdV" secondAttribute="leading" constant="20" id="Egi-t4-gQv"/>
