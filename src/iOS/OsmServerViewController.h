@@ -11,5 +11,6 @@
 @interface OsmServerViewController : UITableViewController
 
 @property (assign,nonatomic) IBOutlet UITextField	*	hostname;
+@property (retain, nonatomic) NSString	*	originalHostname;
 
 @end
