@@ -32,7 +32,7 @@
 #import "SpeechBalloonLayer.h"
 #import "TagInfo.h"
 #import "VectorMath.h"
-#import "Go_Map__-Swift.h"
+#import "Go_Kaart__-Swift.h"
 
 #define FADE_INOUT            0
 #define SINGLE_SIDED_WALLS    1
@@ -2857,22 +2857,21 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
     return copyPasteTags.count > 0;
 }
-- (BOOL)pasteTags:(OsmBaseObject *)object
+- (void)mergeTags:(OsmBaseObject *)object
 {
     // Merge tags
-	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
-	NSDictionary * newTags = MergeTags(object.tags, copyPasteTags, YES);
-	[self.mapData setTags:newTags forObject:object];
-	[self setNeedsLayout];
-    return YES;
+    NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
+    NSDictionary * newTags = MergeTags(object.tags, copyPasteTags, YES);
+    [self.mapData setTags:newTags forObject:object];
+    [self setNeedsLayout];
 }
-- (BOOL)replaceTags:(OsmBaseObject *)object
+
+- (void)replaceTags:(OsmBaseObject *)object
 {
     // Replace all tags
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
     [self.mapData setTags:copyPasteTags forObject:object];
     [self setNeedsLayout];
-    return YES;
 }
 
 

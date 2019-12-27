@@ -12,5 +12,5 @@
 	#import <UIKit/UIKit.h>
 	#import <Foundation/Foundation.h>
     #import <CoreLocation/CoreLocation.h>
-    #import "Go_Map__-Swift.h"
+    #import "Go_Kaart__-Swift.h"
 #endif
