@@ -3773,18 +3773,9 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                         <outlet property="_activityIndicator" destination="BJx-hX-58b" id="Qaa-v5-g28"/>
                         <outlet property="_searchBar" destination="xw9-Ro-Fai" id="uxK-r6-i4V"/>
                         <outlet property="_tableView" destination="abd-jd-9tI" id="JEm-Wo-mtE"/>
-                        <outlet property="searchDisplayController" destination="yyz-Me-8kv" id="3kV-uC-rTf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdo-ip-Va2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="yyz-Me-8kv">
-                    <connections>
-                        <outlet property="delegate" destination="siu-I6-IEp" id="amY-4c-akr"/>
-                        <outlet property="searchContentsController" destination="siu-I6-IEp" id="3AQ-Pi-vqH"/>
-                        <outlet property="searchResultsDataSource" destination="siu-I6-IEp" id="LcQ-9A-mJN"/>
-                        <outlet property="searchResultsDelegate" destination="siu-I6-IEp" id="qKF-z8-srs"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="139" y="-1104"/>
         </scene>
