@@ -13,7 +13,8 @@
 #import "MapViewController.h"
 #import "NominatumViewController.h"
 
-
+@interface NominatumViewController() <UITableViewDelegate>
+@end
 
 @implementation NominatumViewController
 
