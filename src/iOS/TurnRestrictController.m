@@ -14,7 +14,7 @@
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 
 
 @interface TurnRestrictController ()

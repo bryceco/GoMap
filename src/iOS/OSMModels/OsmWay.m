@@ -8,6 +8,8 @@
 
 #import "OsmWay.h"
 
+#import "OsmMember.h"
+
 @implementation OsmWay
 
 -(NSString *)description

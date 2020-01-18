@@ -12,7 +12,7 @@
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
 #import "PushPinView.h"

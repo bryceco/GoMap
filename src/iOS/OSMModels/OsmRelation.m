@@ -8,6 +8,8 @@
 
 #import "OsmRelation.h"
 
+#import "OsmMember.h"
+
 @implementation OsmRelation
 
 -(NSString *)description

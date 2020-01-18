@@ -9,7 +9,7 @@
 #import "DLog.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "UndoManager.h"
 #import "VectorMath.h"
 
