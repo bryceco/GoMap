@@ -37,6 +37,8 @@ typedef enum {
     TRISTATE_NO
 } TRISTATE;
 
+NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOnConflict);
+
 @interface OsmBaseObject : NSObject <NSCoding,NSCopying>
 {
 @protected

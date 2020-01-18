@@ -8,8 +8,6 @@
 
 #import "OsmBaseObject.h"
 
-NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOnConflict);
-
 
 BOOL IsOsmBooleanTrue( NSString * value );
 BOOL IsOsmBooleanFalse( NSString * value );
