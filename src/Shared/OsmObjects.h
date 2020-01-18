@@ -24,24 +24,6 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 BOOL IsOsmBooleanTrue( NSString * value );
 BOOL IsOsmBooleanFalse( NSString * value );
 
-@interface OsmNode : OsmBaseObject <NSCoding>
-{
-}
-@property (readonly,nonatomic)	double		lat;
-@property (readonly,nonatomic)	double		lon;
-@property (readonly,nonatomic)	NSInteger	wayCount;
-@property (assign,nonatomic)	OsmWay	*	turnRestrictionParentWay;	// temporarily used during turn restriction processing
-
--(void)setLongitude:(double)longitude latitude:(double)latitude undo:(UndoManager *)undo;
--(void)setWayCount:(NSInteger)wayCount undo:(UndoManager *)undo;
-
--(OSMPoint)location;
--(BOOL)isBetterToKeepThan:(OsmNode *)node;
-
-@end
-
-
-
 @interface OsmWay : OsmBaseObject <NSCoding>
 {
 	NSMutableArray	*	_nodes;
