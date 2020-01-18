@@ -1031,6 +1031,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9rw-qG-ctZ">
                                                     <rect key="frame" x="251" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="showFPSLabelSwitchDidChangeValue:" destination="dn9-E8-wB3" eventType="valueChanged" id="fkz-Qb-DFF"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -1057,6 +1060,7 @@
                         <outlet property="_language" destination="6Lj-wh-z9f" id="SZv-Dk-7jl"/>
                         <outlet property="_sendMailCell" destination="OR6-tH-xTu" id="ZtA-LF-dYo"/>
                         <outlet property="_username" destination="Mus-SG-1Sz" id="Jjh-q1-7K1"/>
+                        <outlet property="showFPSLabelSwitch" destination="9rw-qG-ctZ" id="4BY-vi-kkL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0tk-5d-BCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
