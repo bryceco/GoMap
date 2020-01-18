@@ -1016,6 +1016,33 @@
                                             <segue destination="bSZ-Mq-pv6" kind="push" id="OGd-Mm-hmm"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Xa5-4Y-LXj">
+                                        <rect key="frame" x="0.0" y="507.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xa5-4Y-LXj" id="SzZ-TU-SvQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show FPS label on map" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4w-dG-hGk">
+                                                    <rect key="frame" x="20" y="11" width="185" height="21.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9rw-qG-ctZ">
+                                                    <rect key="frame" x="251" y="6.5" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="u4w-dG-hGk" secondAttribute="bottom" constant="11.5" id="2AE-Ws-2mK"/>
+                                                <constraint firstItem="u4w-dG-hGk" firstAttribute="top" secondItem="SzZ-TU-SvQ" secondAttribute="top" constant="11" id="560-hQ-yLh"/>
+                                                <constraint firstItem="9rw-qG-ctZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="u4w-dG-hGk" secondAttribute="trailing" constant="8" id="5Vd-wQ-LBh"/>
+                                                <constraint firstItem="u4w-dG-hGk" firstAttribute="leading" secondItem="SzZ-TU-SvQ" secondAttribute="leading" constant="20" symbolic="YES" id="5yH-hQ-6XG"/>
+                                                <constraint firstAttribute="trailing" secondItem="9rw-qG-ctZ" secondAttribute="trailing" constant="20" symbolic="YES" id="W65-g1-euA"/>
+                                                <constraint firstItem="9rw-qG-ctZ" firstAttribute="centerY" secondItem="SzZ-TU-SvQ" secondAttribute="centerY" id="jmM-Xl-pnw"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
