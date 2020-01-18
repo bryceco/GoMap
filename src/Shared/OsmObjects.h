@@ -24,38 +24,6 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 BOOL IsOsmBooleanTrue( NSString * value );
 BOOL IsOsmBooleanFalse( NSString * value );
 
-@interface OsmWay : OsmBaseObject <NSCoding>
-{
-	NSMutableArray	*	_nodes;
-}
-@property (readonly,nonatomic)	NSArray *	nodes;
-
--(void)constructNode:(NSNumber *)node;
--(void)constructNodeList:(NSMutableArray *)nodes;
--(void)removeNodeAtIndex:(NSInteger)index undo:(UndoManager *)undo;
--(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo;
-
--(void)resolveToMapData:(OsmMapData *)mapData;
--(OSMPoint)centerPoint;
--(OSMPoint)centerPointWithArea:(double *)area;
--(double)lengthInMeters;
--(ONEWAY)computeIsOneWay;
--(BOOL)sharesNodesWithWay:(OsmWay *)way;
--(BOOL)isArea;
--(BOOL)isClosed;
--(BOOL)isClockwise;
--(double)wayArea;
--(BOOL)isMultipolygonMember;
--(BOOL)isSimpleMultipolygonOuterMember;
-+(BOOL)isClockwiseArrayOfNodes:(NSArray *)nodes;
-+(CGPathRef)shapePathForNodes:(NSArray *)nodes forward:(BOOL)forward withRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
--(BOOL)hasDuplicatedNode;
--(OsmNode *)connectsToWay:(OsmWay *)way;
--(NSInteger)segmentClosestToPoint:(OSMPoint)point;
-@end
-
-
-
 @interface OsmRelation : OsmBaseObject <NSCoding>
 {
 	NSMutableArray	*	_members;

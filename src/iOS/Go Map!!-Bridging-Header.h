@@ -10,3 +10,4 @@
 #import "OsmMapData.h"
 #import "SettingsViewController.h"
 #import "OsmNode.h"
+#import "OsmWay.h"
