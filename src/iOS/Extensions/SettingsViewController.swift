@@ -23,7 +23,7 @@ extension SettingsViewController {
     
     // MARK: Settings - Show FPS Label
     
-    private static let showFPSLabelUserDefaultsKey = "showFPSLabel"
+    @objc static let showFPSLabelUserDefaultsKey = "showFPSLabel"
     
     var showFPSLabel: Bool {
         get { return UserDefaults.standard.bool(forKey: Self.showFPSLabelUserDefaultsKey) }
