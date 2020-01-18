@@ -17,4 +17,7 @@
 	IBOutlet UILabel			*	_username;
 	IBOutlet UILabel			*	_language;
 }
+
+@property (nonatomic, readonly) IBOutlet UISwitch *showFPSLabelSwitch;
+
 @end

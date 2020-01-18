@@ -28,6 +28,9 @@
 	
 	self.tableView.estimatedRowHeight = 44.0;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    /// Make sure that the UI reflects the state of the configuration from the `UserDefaults`.
+    [self updateShowFPSLabelSwitchFromUserDefaults];
 }
 
 - (void)viewWillAppear:(BOOL)animated
