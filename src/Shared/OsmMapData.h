@@ -26,7 +26,6 @@
 @class QuadMapC;
 
 
-BOOL IsOsmBooleanTrue( NSString * value );
 BOOL IsOsmBooleanFalse( NSString * value );
 extern NSString * OsmValueForBoolean( BOOL b );
 

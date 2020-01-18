@@ -124,6 +124,16 @@ static NSString * PrettyTag( NSString * tag )
 }
 
 
+BOOL IsOsmBooleanTrue( NSString * value )
+{
+    if ( [value isEqualToString:@"true"] )
+        return YES;
+    if ( [value isEqualToString:@"yes"] )
+        return YES;
+    if ( [value isEqualToString:@"1"] )
+        return YES;
+    return NO;
+}
 
 @implementation CommonTagValue
 -(instancetype)initWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value

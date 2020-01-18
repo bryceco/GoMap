@@ -19,17 +19,6 @@
 
 extern const double PATH_SCALING;
 
-
-BOOL IsOsmBooleanTrue( NSString * value )
-{
-	if ( [value isEqualToString:@"true"] )
-		return YES;
-	if ( [value isEqualToString:@"yes"] )
-		return YES;
-	if ( [value isEqualToString:@"1"] )
-		return YES;
-	return NO;
-}
 BOOL IsOsmBooleanFalse( NSString * value )
 {
 	if ( [value respondsToSelector:@selector(boolValue)] ) {
