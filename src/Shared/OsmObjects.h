@@ -8,15 +8,6 @@
 
 #import "OsmBaseObject.h"
 
-@class CAShapeLayer;
-@class CurvedTextLayer;
-@class OsmBaseObject;
-@class OsmMapData;
-@class OsmMember;
-@class OsmNode;
-@class OsmWay;
-@class UndoManager;
-
 NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOnConflict);
 
 
