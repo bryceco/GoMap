@@ -17,7 +17,6 @@
 @class OsmWay;
 @class UndoManager;
 
-BOOL IsInterestingTag(NSString * key);
 NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOnConflict);
 
 
