@@ -16,6 +16,7 @@
 #import "OsmMapData.h"
 #import "PushPinView.h"
 #import "SpeechBalloonView.h"
+#import "FpsLabel.h"
 
 @interface MapViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
@@ -139,6 +140,8 @@
 	[speech setTargetView:_toolbar];
 	[self.view addSubview:speech];
 #endif
+    
+    self.mapView.fpsLabel.showFPS = [NSUserDefaults.standardUserDefaults boolForKey:SettingsViewController.showFPSLabelUserDefaultsKey];
 }
 
 -(void)setGpsState:(GPS_STATE)state
