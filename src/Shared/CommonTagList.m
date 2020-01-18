@@ -12,7 +12,6 @@
 #import "iosapi.h"
 #import "CommonTagList.h"
 #import "DLog.h"
-#import "OsmObjects.h"
 #import "TagInfo.h"
 
 

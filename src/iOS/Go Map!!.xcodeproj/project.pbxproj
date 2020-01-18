@@ -148,7 +148,6 @@
 		02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8016713F2A00BB4414 /* MapView.m */; };
 		02ACBBCB16713F2B00BB4414 /* MercatorTileLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8216713F2A00BB4414 /* MercatorTileLayer.m */; };
 		02ACBBCC16713F2B00BB4414 /* OsmMapData.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8416713F2A00BB4414 /* OsmMapData.m */; };
-		02ACBBCD16713F2B00BB4414 /* OsmObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8616713F2A00BB4414 /* OsmObjects.m */; };
 		02ACBBCE16713F2B00BB4414 /* accommodation_alpinehut.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA8816713F2A00BB4414 /* accommodation_alpinehut.p.64.png */; };
 		02ACBBCF16713F2B00BB4414 /* accommodation_bed_and_breakfast.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA8916713F2A00BB4414 /* accommodation_bed_and_breakfast.p.64.png */; };
 		02ACBBD016713F2B00BB4414 /* accommodation_bed_and_breakfast2.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA8A16713F2A00BB4414 /* accommodation_bed_and_breakfast2.p.64.png */; };
@@ -739,8 +738,6 @@
 		02ACBA8216713F2A00BB4414 /* MercatorTileLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MercatorTileLayer.m; path = ../Shared/MercatorTileLayer.m; sourceTree = "<group>"; };
 		02ACBA8316713F2A00BB4414 /* OsmMapData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OsmMapData.h; path = ../Shared/OsmMapData.h; sourceTree = "<group>"; };
 		02ACBA8416713F2A00BB4414 /* OsmMapData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OsmMapData.m; path = ../Shared/OsmMapData.m; sourceTree = "<group>"; };
-		02ACBA8516713F2A00BB4414 /* OsmObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OsmObjects.h; path = ../Shared/OsmObjects.h; sourceTree = "<group>"; };
-		02ACBA8616713F2A00BB4414 /* OsmObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OsmObjects.m; path = ../Shared/OsmObjects.m; sourceTree = "<group>"; };
 		02ACBA8816713F2A00BB4414 /* accommodation_alpinehut.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accommodation_alpinehut.p.64.png; sourceTree = "<group>"; };
 		02ACBA8916713F2A00BB4414 /* accommodation_bed_and_breakfast.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accommodation_bed_and_breakfast.p.64.png; sourceTree = "<group>"; };
 		02ACBA8A16713F2A00BB4414 /* accommodation_bed_and_breakfast2.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accommodation_bed_and_breakfast2.p.64.png; sourceTree = "<group>"; };
@@ -1861,8 +1858,6 @@
 				021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */,
 				02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */,
 				02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */,
-				02ACBA8516713F2A00BB4414 /* OsmObjects.h */,
-				02ACBA8616713F2A00BB4414 /* OsmObjects.m */,
 				024ADF3A16B1B38A00875658 /* PathUtil.h */,
 				024ADF3B16B1B38B00875658 /* PathUtil.m */,
 				02ACBA8716713F2A00BB4414 /* png */,
@@ -2545,7 +2540,6 @@
 				02ACBBCC16713F2B00BB4414 /* OsmMapData.m in Sources */,
 				027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */,
 				02BF745420793F0A0028ED6A /* TurnRestrictController.m in Sources */,
-				02ACBBCD16713F2B00BB4414 /* OsmObjects.m in Sources */,
 				02ACBCF816713F2B00BB4414 /* QuadMap.m in Sources */,
 				6453776A23D38FA200656A1C /* OsmNode.m in Sources */,
 				02ACBCF916713F2B00BB4414 /* RulerLayer.m in Sources */,

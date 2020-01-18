@@ -6,7 +6,6 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-#import "OsmObjects.h"
 
 @interface OsmRelation : OsmBaseObject <NSCoding>
 {
