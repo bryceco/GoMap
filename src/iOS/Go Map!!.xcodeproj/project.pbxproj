@@ -506,6 +506,7 @@
 		6453776D23D3904E00656A1C /* OsmWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776C23D3904E00656A1C /* OsmWay.m */; };
 		6453777023D3913100656A1C /* OsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776F23D3913100656A1C /* OsmRelation.m */; };
 		6453777323D391CC00656A1C /* OsmMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453777223D391CC00656A1C /* OsmMember.m */; };
+		6453777623D3959500656A1C /* IsOsmBooleanFalse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453777523D3959500656A1C /* IsOsmBooleanFalse.m */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64C968452261ED3100351C0C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64C968442261ED3100351C0C /* Media.xcassets */; };
@@ -1138,6 +1139,8 @@
 		6453776F23D3913100656A1C /* OsmRelation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmRelation.m; sourceTree = "<group>"; };
 		6453777123D391CC00656A1C /* OsmMember.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmMember.h; sourceTree = "<group>"; };
 		6453777223D391CC00656A1C /* OsmMember.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmMember.m; sourceTree = "<group>"; };
+		6453777423D3959500656A1C /* IsOsmBooleanFalse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IsOsmBooleanFalse.h; sourceTree = "<group>"; };
+		6453777523D3959500656A1C /* IsOsmBooleanFalse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IsOsmBooleanFalse.m; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64C968442261ED3100351C0C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -1886,6 +1889,8 @@
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
 				021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */,
 				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
+				6453777423D3959500656A1C /* IsOsmBooleanFalse.h */,
+				6453777523D3959500656A1C /* IsOsmBooleanFalse.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -2582,6 +2587,7 @@
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
 				02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */,
 				02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */,
+				6453777623D3959500656A1C /* IsOsmBooleanFalse.m in Sources */,
 				6453777023D3913100656A1C /* OsmRelation.m in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,

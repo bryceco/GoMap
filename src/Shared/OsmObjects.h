@@ -9,6 +9,5 @@
 #import "OsmBaseObject.h"
 
 
-BOOL IsOsmBooleanFalse( NSString * value );
 
 
