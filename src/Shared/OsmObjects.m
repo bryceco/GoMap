@@ -19,8 +19,3 @@
 
 extern const double PATH_SCALING;
 
-NSString * OsmValueForBoolean( BOOL b )
-{
-	return b ? @"true" : @"false";
-}
-

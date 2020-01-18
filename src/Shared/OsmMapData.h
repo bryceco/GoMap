@@ -27,7 +27,6 @@
 
 
 BOOL IsOsmBooleanFalse( NSString * value );
-extern NSString * OsmValueForBoolean( BOOL b );
 
 extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
