@@ -10,6 +10,8 @@ import Foundation
 
 extension SettingsViewController {
     
+    // MARK: UITableViewDataSource
+    
     open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         let isLastSection = tableView.numberOfSections == section + 1
         if isLastSection {
