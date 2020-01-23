@@ -17,12 +17,8 @@
 #import "MercatorTileLayer.h"
 #import "DisplayViewController.h"
 
-
 static const NSInteger BACKGROUND_SECTION		= 0;
-//static const NSInteger INTERACTION_SECTION	= 1;
-static const NSInteger OVERLAY_SECTION			= 2;
-static const NSInteger CACHE_SECTION			= 3;
-
+static const NSInteger FILTER_SECTION = 3;
 
 @interface CustomBackgroundCell : UITableViewCell
 @property IBOutlet UIButton * button;
@@ -145,11 +141,9 @@ static const NSInteger CACHE_SECTION			= 3;
 		}
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 
-	} else if ( indexPath.section == OVERLAY_SECTION ) {
-
-	} else if ( indexPath.section == CACHE_SECTION ) {
-
-	}
+    } else if (indexPath.section == FILTER_SECTION && indexPath.row == 1) {
+        [self presentOverpassQueryViewController];
+    }
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 	// automatically dismiss settings when a new background is selected

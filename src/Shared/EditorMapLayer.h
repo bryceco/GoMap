@@ -103,4 +103,6 @@ extern const double MinIconSizeInPixels;
 
 - (void)save;
 
+- (void)resetDisplayLayers;
+
 @end
