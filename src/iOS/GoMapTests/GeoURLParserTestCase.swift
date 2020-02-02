@@ -36,6 +36,28 @@ class GeoURLParserTestCase: XCTestCase {
         XCTAssertNil(result)
     }
 
+    func testParseURL_withNonNumericalLatitude_shouldResultInNil() {
+        /// Given
+        let url = URL(string: "geo:foo,1?z=2").require()
+        
+        /// When
+        let result = parser.parseURL(url)
+        
+        /// Then
+        XCTAssertNil(result)
+    }
+
+    func testParseURL_withNonNumericalLongitude_shouldResultInNil() {
+        /// Given
+        let url = URL(string: "geo:1,bar?z=2").require()
+        
+        /// When
+        let result = parser.parseURL(url)
+        
+        /// Then
+        XCTAssertNil(result)
+    }
+
     func testParseURL_withProperURL_shouldReturnProperResult() {
         /// Given
         let latitude: Double = 1

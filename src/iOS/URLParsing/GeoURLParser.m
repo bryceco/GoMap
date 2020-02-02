@@ -18,9 +18,15 @@
         double lat = 0, lon = 0, zoom = 0;
         NSScanner * scanner = [NSScanner scannerWithString:url.absoluteString];
         [scanner scanString:@"geo:" intoString:NULL];
-        [scanner scanDouble:&lat];
+        if (![scanner scanDouble:&lat]) {
+            /// Invalid latitude
+            return nil;
+        }
         [scanner scanString:@"," intoString:NULL];
-        [scanner scanDouble:&lon];
+        if (![scanner scanDouble:&lon]) {
+            /// Invalid longitude
+            return nil;
+        }
         while ( [scanner scanString:@";" intoString:NULL] ) {
             NSMutableCharacterSet * nonSemicolon = [[NSCharacterSet characterSetWithCharactersInString:@";"] mutableCopy];
             [nonSemicolon invert];
