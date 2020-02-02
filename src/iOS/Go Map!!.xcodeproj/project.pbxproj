@@ -494,6 +494,7 @@
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		64305F6F23E71F6A00232BB9 /* URLParserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F6E23E71F6A00232BB9 /* URLParserResult.m */; };
 		64305F7223E7224E00232BB9 /* GeoURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* GeoURLParser.m */; };
+		64305F7423E723B200232BB9 /* GeoURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
 		64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */; };
 		64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */; };
@@ -1116,6 +1117,7 @@
 		64305F6E23E71F6A00232BB9 /* URLParserResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLParserResult.m; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* GeoURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeoURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* GeoURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeoURLParser.m; sourceTree = "<group>"; };
+		64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoURLParserTestCase.swift; sourceTree = "<group>"; };
 		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
 		64348CEE225E7CD900ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1904,6 +1906,7 @@
 				64C072FC22622B9C00598078 /* Vendor */,
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
 				64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */,
+				64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -2605,6 +2608,7 @@
 				64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
+				64305F7423E723B200232BB9 /* GeoURLParserTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
