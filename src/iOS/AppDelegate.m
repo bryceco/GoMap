@@ -113,7 +113,10 @@
 		if ( [scanner scanString:@"?" intoString:NULL] && [scanner scanString:@"z=" intoString:NULL] ) {
 			[scanner scanDouble:&zoom];
 		}
-		[self setMapLatitude:lat longitude:lon zoom:zoom view:MAPVIEW_NONE];
+		[self setMapLatitude:lat
+                   longitude:lon
+                        zoom:zoom
+                        view:MAPVIEW_NONE];
 	}
 
 	// open to longitude/latitude
