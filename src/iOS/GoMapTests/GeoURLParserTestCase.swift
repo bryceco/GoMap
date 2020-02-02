@@ -86,6 +86,17 @@ class GeoURLParserTestCase: XCTestCase {
         XCTAssertNotNil(result)
     }
 
+    func testParseURL_withURLThatHasANonNumericalZoomParameter_shouldDefaultToZoom0() {
+        /// Given
+        let url = URL(string: "geo:1,2?z=loremipsum").require()
+        
+        /// When
+        let result = parser.parseURL(url).require()
+        
+        /// Then
+        XCTAssertEqual(result.zoom, 0)
+    }
+
     func testParseURL_withURLThatDoesNotHaveTheZoomParameter_shouldDefaultToZoom0() {
         /// Given
         let url = URL(string: "geo:1,2").require()
