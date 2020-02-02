@@ -97,6 +97,7 @@
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
+    URLParserResult *parserResult;
 	if ( [url.absoluteString hasPrefix:@"geo:"] ) {
 		// geo:47.75538,-122.15979?z=18
 		double lat = 0, lon = 0, zoom = 0;
@@ -113,11 +114,19 @@
 		if ( [scanner scanString:@"?" intoString:NULL] && [scanner scanString:@"z=" intoString:NULL] ) {
 			[scanner scanDouble:&zoom];
 		}
-		[self setMapLatitude:lat
-                   longitude:lon
-                        zoom:zoom
-                        view:MAPVIEW_NONE];
+        
+        parserResult = [[URLParserResult alloc] initWithLatitude:lat
+                                                       longitude:lon
+                                                            zoom:zoom
+                                                       viewState:MAPVIEW_NONE];
 	}
+    
+    if (parserResult) {
+        [self setMapLatitude:parserResult.latitude
+                   longitude:parserResult.longitude
+                        zoom:parserResult.zoom
+                        view:parserResult.viewState];
+    }
 
 	// open to longitude/latitude
 	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] ) {
