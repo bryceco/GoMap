@@ -16,7 +16,7 @@
 #import "OsmMapData.h"
 #import "MapView.h"
 #import "MapViewController.h"
-
+#import "URLParserResult.h"
 
 @implementation AppDelegate
 
