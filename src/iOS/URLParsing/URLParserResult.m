@@ -10,13 +10,13 @@
 
 @implementation URLParserResult
 
-- (instancetype)initWithLatitude:(double)latitude
-                       longitude:(double)longitude
-                            zoom:(double)zoom
-                       viewState:(MapViewState)viewState{
+- (instancetype)initWithLongitude:(double)longitude
+                         latitude:(double)latitude
+                             zoom:(double)zoom
+                        viewState:(MapViewState)viewState{
     if (self = [super init]) {
-        _latitude = latitude;
         _longitude = longitude;
+        _latitude = latitude;
         _zoom = zoom;
         _viewState = viewState;
     }

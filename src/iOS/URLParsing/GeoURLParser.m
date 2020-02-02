@@ -30,10 +30,10 @@
             [scanner scanDouble:&zoom];
         }
         
-        parserResult = [[URLParserResult alloc] initWithLatitude:lat
-                                                       longitude:lon
-                                                            zoom:zoom
-                                                       viewState:MAPVIEW_NONE];
+        parserResult = [[URLParserResult alloc] initWithLongitude:lon
+                                                         latitude:lat
+                                                             zoom:zoom
+                                                        viewState:MAPVIEW_NONE];
     }
     
     return parserResult;
