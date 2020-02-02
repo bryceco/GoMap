@@ -53,4 +53,26 @@ class GeoURLParserTestCase: XCTestCase {
         XCTAssertEqual(result.viewState, MAPVIEW_NONE)
     }
 
+    func testParseURL_withURLThatContainsSemicolonsBetweenCoordinatesAndZoom_shouldNotResultInNil() {
+        /// Given
+        let url = URL(string: "geo:1,2;;;;;;;;;;;;;;;;;;;;;?z=3").require()
+        
+        /// When
+        let result = parser.parseURL(url)
+        
+        /// Then
+        XCTAssertNotNil(result)
+    }
+
+    func testParseURL_withURLThatDoesNotHaveTheZoomParameter_shouldDefaultToZoom0() {
+        /// Given
+        let url = URL(string: "geo:1,2").require()
+        
+        /// When
+        let result = parser.parseURL(url).require()
+        
+        /// Then
+        XCTAssertEqual(result.zoom, 0)
+    }
+
 }
