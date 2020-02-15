@@ -220,11 +220,20 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ( [sender isKindOfClass:[OsmNote class]] ) {
-		NotesTableViewController * con = segue.destinationViewController;
-		if ( [con isKindOfClass:[NotesTableViewController class]] ) {
-			con.note = sender;
-			con.mapView = _mapView;
-		}
+        NotesTableViewController *con;
+        if ([segue.destinationViewController isKindOfClass:[NotesTableViewController class]]) {
+            /// The `NotesTableViewController` is presented directly.
+            con = segue.destinationViewController;
+        } else if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *navigationController = segue.destinationViewController;
+            if ([navigationController.viewControllers.firstObject isKindOfClass:[NotesTableViewController class]]) {
+                /// The `NotesTableViewController` is wrapped in an `UINavigationController´.
+                con = navigationController.viewControllers.firstObject;
+            }
+        }
+        
+		con.note = sender;
+        con.mapView = _mapView;
 	}
 }
 
