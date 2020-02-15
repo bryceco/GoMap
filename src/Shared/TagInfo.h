@@ -10,14 +10,6 @@
 
 @class OsmBaseObject;
 
-@interface KeyValue : NSObject
-@property (strong,nonatomic)	NSString *	key;
-@property (strong,nonatomic)	NSString *	value;
-+(id)keyValueWithKey:(NSString *)key value:(id)value;
-@end
-
-
-
 @interface TagInfo : NSObject
 {
 	NSImage *	_icon;
