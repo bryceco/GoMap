@@ -492,6 +492,9 @@
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		64305F6F23E71F6A00232BB9 /* URLParserResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F6E23E71F6A00232BB9 /* URLParserResult.m */; };
+		64305F7223E7224E00232BB9 /* GeoURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* GeoURLParser.m */; };
+		64305F7423E723B200232BB9 /* GeoURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
 		64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */; };
 		64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */; };
@@ -1110,6 +1113,11 @@
 		02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo256.png"; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
+		64305F6D23E71F6A00232BB9 /* URLParserResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLParserResult.h; sourceTree = "<group>"; };
+		64305F6E23E71F6A00232BB9 /* URLParserResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLParserResult.m; sourceTree = "<group>"; };
+		64305F7023E7224E00232BB9 /* GeoURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeoURLParser.h; sourceTree = "<group>"; };
+		64305F7123E7224E00232BB9 /* GeoURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeoURLParser.m; sourceTree = "<group>"; };
+		64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoURLParserTestCase.swift; sourceTree = "<group>"; };
 		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
 		64348CEE225E7CD900ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1372,6 +1380,7 @@
 			children = (
 				64981F1D22667D7700178476 /* Extensions */,
 				64D74BF02253DF39004FFD20 /* Direction */,
+				64305F6C23E71F5700232BB9 /* URLParsing */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
 				02C3C73619A5D679003B6783 /* AerialEditViewController.m */,
 				02C3C73219A5A40C003B6783 /* AerialListViewController.h */,
@@ -1874,6 +1883,17 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
+		64305F6C23E71F5700232BB9 /* URLParsing */ = {
+			isa = PBXGroup;
+			children = (
+				64305F6D23E71F6A00232BB9 /* URLParserResult.h */,
+				64305F6E23E71F6A00232BB9 /* URLParserResult.m */,
+				64305F7023E7224E00232BB9 /* GeoURLParser.h */,
+				64305F7123E7224E00232BB9 /* GeoURLParser.m */,
+			);
+			path = URLParsing;
+			sourceTree = "<group>";
+		};
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1886,6 +1906,7 @@
 				64C072FC22622B9C00598078 /* Vendor */,
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
 				64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */,
+				64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -2524,6 +2545,7 @@
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
+				64305F7223E7224E00232BB9 /* GeoURLParser.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
 				024C323D1DEEA97100AD62AB /* OsmServerViewController.m in Sources */,
 				02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */,
@@ -2549,6 +2571,7 @@
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
+				64305F6F23E71F6A00232BB9 /* URLParserResult.m in Sources */,
 				027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */,
 				02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */,
 				02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */,
@@ -2585,6 +2608,7 @@
 				64C072FA226227D500598078 /* CommonTagKeyTestCase.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
+				64305F7423E723B200232BB9 /* GeoURLParserTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
