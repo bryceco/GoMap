@@ -33,6 +33,7 @@
 #import "TagInfo.h"
 #import "VectorMath.h"
 #import "Go_Map__-Swift.h"
+#import "GeekbenchScoreProvider.h"
 
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
@@ -68,6 +69,8 @@ static const CGFloat Pixels_Per_Character = 8.0;
 @end
 
 @interface EditorMapLayer ()
+
+@property (nonatomic) id<GeekbenchScoreProviding> geekbenchScoreProvider;
 
 @end
 
