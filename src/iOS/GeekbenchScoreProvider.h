@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface GeekbenchScoreProvider : NSObject
+@interface GeekbenchScoreProvider : NSObject <GeekbenchScoreProviding>
 
 @end
 
