@@ -504,6 +504,7 @@
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
+		6463E3CB23F948FE00E4F6ED /* GeekbenchScoreProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64C968452261ED3100351C0C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64C968442261ED3100351C0C /* Media.xcassets */; };
@@ -1131,6 +1132,8 @@
 		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		6463E3C923F948FE00E4F6ED /* GeekbenchScoreProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeekbenchScoreProvider.h; sourceTree = "<group>"; };
+		6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeekbenchScoreProvider.m; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64C968442261ED3100351C0C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -1467,6 +1470,8 @@
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
 				64C968442261ED3100351C0C /* Media.xcassets */,
+				6463E3C923F948FE00E4F6ED /* GeekbenchScoreProvider.h */,
+				6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -2578,6 +2583,7 @@
 				64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
+				6463E3CB23F948FE00E4F6ED /* GeekbenchScoreProvider.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
 				028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */,
