@@ -67,6 +67,9 @@ static const CGFloat Pixels_Per_Character = 8.0;
 }
 @end
 
+@interface EditorMapLayer ()
+
+@end
 
 @implementation EditorMapLayer
 
