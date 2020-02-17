@@ -237,7 +237,12 @@ static const CGFloat GradientHeight = 20.0;
 				// add completion table to tableview
 				CGRect rect = [self frameForCompletionTableView];
 				_completionTableView = [[UITableView alloc] initWithFrame:rect style:UITableViewStylePlain];
-				_completionTableView.backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
+                
+                UIColor *backgroundColor = [UIColor colorWithWhite:0.88 alpha:1.0];
+                if (@available(iOS 13.0, *)) {
+                    backgroundColor = UIColor.systemBackgroundColor;
+                }
+                _completionTableView.backgroundColor = backgroundColor;
 				_completionTableView.separatorColor = [UIColor colorWithWhite:0.7 alpha:1.0];
 				_completionTableView.dataSource = self;
 				_completionTableView.delegate = self;

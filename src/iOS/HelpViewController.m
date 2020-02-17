@@ -21,6 +21,13 @@
 
 	NSAttributedString * s = _textView.attributedText;
 	NSMutableAttributedString * m = [s mutableCopy];
+    
+    if (@available(iOS 13.0, *)) {
+        [m addAttribute:NSForegroundColorAttributeName
+                  value:[UIColor labelColor]
+                  range:NSMakeRange(0, s.length)];
+    }
+    
 	NSString * s2 = m.string;
 	NSRange range = [s2 rangeOfString:@"<version>"];
 	if ( range.length ) {
