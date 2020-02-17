@@ -148,7 +148,6 @@
 		02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8016713F2A00BB4414 /* MapView.m */; };
 		02ACBBCB16713F2B00BB4414 /* MercatorTileLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8216713F2A00BB4414 /* MercatorTileLayer.m */; };
 		02ACBBCC16713F2B00BB4414 /* OsmMapData.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8416713F2A00BB4414 /* OsmMapData.m */; };
-		02ACBBCD16713F2B00BB4414 /* OsmObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8616713F2A00BB4414 /* OsmObjects.m */; };
 		02ACBBCE16713F2B00BB4414 /* accommodation_alpinehut.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA8816713F2A00BB4414 /* accommodation_alpinehut.p.64.png */; };
 		02ACBBCF16713F2B00BB4414 /* accommodation_bed_and_breakfast.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA8916713F2A00BB4414 /* accommodation_bed_and_breakfast.p.64.png */; };
 		02ACBBD016713F2B00BB4414 /* accommodation_bed_and_breakfast2.p.64.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA8A16713F2A00BB4414 /* accommodation_bed_and_breakfast2.p.64.png */; };
@@ -506,6 +505,12 @@
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
 		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
+		6453776623D38D4600656A1C /* OsmBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776523D38D4600656A1C /* OsmBaseObject.m */; };
+		6453776A23D38FA200656A1C /* OsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776923D38FA200656A1C /* OsmNode.m */; };
+		6453776D23D3904E00656A1C /* OsmWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776C23D3904E00656A1C /* OsmWay.m */; };
+		6453777023D3913100656A1C /* OsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776F23D3913100656A1C /* OsmRelation.m */; };
+		6453777323D391CC00656A1C /* OsmMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453777223D391CC00656A1C /* OsmMember.m */; };
+		6453777623D3959500656A1C /* IsOsmBooleanFalse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453777523D3959500656A1C /* IsOsmBooleanFalse.m */; };
 		6463E3CB23F948FE00E4F6ED /* GeekbenchScoreProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
@@ -737,8 +742,6 @@
 		02ACBA8216713F2A00BB4414 /* MercatorTileLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MercatorTileLayer.m; path = ../Shared/MercatorTileLayer.m; sourceTree = "<group>"; };
 		02ACBA8316713F2A00BB4414 /* OsmMapData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OsmMapData.h; path = ../Shared/OsmMapData.h; sourceTree = "<group>"; };
 		02ACBA8416713F2A00BB4414 /* OsmMapData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OsmMapData.m; path = ../Shared/OsmMapData.m; sourceTree = "<group>"; };
-		02ACBA8516713F2A00BB4414 /* OsmObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OsmObjects.h; path = ../Shared/OsmObjects.h; sourceTree = "<group>"; };
-		02ACBA8616713F2A00BB4414 /* OsmObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OsmObjects.m; path = ../Shared/OsmObjects.m; sourceTree = "<group>"; };
 		02ACBA8816713F2A00BB4414 /* accommodation_alpinehut.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accommodation_alpinehut.p.64.png; sourceTree = "<group>"; };
 		02ACBA8916713F2A00BB4414 /* accommodation_bed_and_breakfast.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accommodation_bed_and_breakfast.p.64.png; sourceTree = "<group>"; };
 		02ACBA8A16713F2A00BB4414 /* accommodation_bed_and_breakfast2.p.64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accommodation_bed_and_breakfast2.p.64.png; sourceTree = "<group>"; };
@@ -1134,6 +1137,18 @@
 		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		6453776423D38D4600656A1C /* OsmBaseObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmBaseObject.h; sourceTree = "<group>"; };
+		6453776523D38D4600656A1C /* OsmBaseObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmBaseObject.m; sourceTree = "<group>"; };
+		6453776823D38FA200656A1C /* OsmNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmNode.h; sourceTree = "<group>"; };
+		6453776923D38FA200656A1C /* OsmNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmNode.m; sourceTree = "<group>"; };
+		6453776B23D3904E00656A1C /* OsmWay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmWay.h; sourceTree = "<group>"; };
+		6453776C23D3904E00656A1C /* OsmWay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmWay.m; sourceTree = "<group>"; };
+		6453776E23D3913100656A1C /* OsmRelation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmRelation.h; sourceTree = "<group>"; };
+		6453776F23D3913100656A1C /* OsmRelation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmRelation.m; sourceTree = "<group>"; };
+		6453777123D391CC00656A1C /* OsmMember.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OsmMember.h; sourceTree = "<group>"; };
+		6453777223D391CC00656A1C /* OsmMember.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OsmMember.m; sourceTree = "<group>"; };
+		6453777423D3959500656A1C /* IsOsmBooleanFalse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IsOsmBooleanFalse.h; sourceTree = "<group>"; };
+		6453777523D3959500656A1C /* IsOsmBooleanFalse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IsOsmBooleanFalse.m; sourceTree = "<group>"; };
 		6463E3C923F948FE00E4F6ED /* GeekbenchScoreProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeekbenchScoreProvider.h; sourceTree = "<group>"; };
 		6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeekbenchScoreProvider.m; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
@@ -1810,6 +1825,7 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6453776323D38D1F00656A1C /* OSMModels */,
 				6442666322540EDF00C0D545 /* Observable */,
 				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				02C3C73819A6DCEA003B6783 /* AerialList.h */,
@@ -1856,8 +1872,6 @@
 				021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */,
 				02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */,
 				02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */,
-				02ACBA8516713F2A00BB4414 /* OsmObjects.h */,
-				02ACBA8616713F2A00BB4414 /* OsmObjects.m */,
 				024ADF3A16B1B38A00875658 /* PathUtil.h */,
 				024ADF3B16B1B38B00875658 /* PathUtil.m */,
 				02ACBA8716713F2A00BB4414 /* png */,
@@ -1884,6 +1898,8 @@
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
 				021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */,
 				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
+				6453777423D3959500656A1C /* IsOsmBooleanFalse.h */,
+				6453777523D3959500656A1C /* IsOsmBooleanFalse.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1944,6 +1960,23 @@
 			);
 			name = Observable;
 			path = ../Shared/Observable;
+			sourceTree = "<group>";
+		};
+		6453776323D38D1F00656A1C /* OSMModels */ = {
+			isa = PBXGroup;
+			children = (
+				6453776423D38D4600656A1C /* OsmBaseObject.h */,
+				6453776523D38D4600656A1C /* OsmBaseObject.m */,
+				6453776823D38FA200656A1C /* OsmNode.h */,
+				6453776923D38FA200656A1C /* OsmNode.m */,
+				6453776B23D3904E00656A1C /* OsmWay.h */,
+				6453776C23D3904E00656A1C /* OsmWay.m */,
+				6453776E23D3913100656A1C /* OsmRelation.h */,
+				6453776F23D3913100656A1C /* OsmRelation.m */,
+				6453777123D391CC00656A1C /* OsmMember.h */,
+				6453777223D391CC00656A1C /* OsmMember.m */,
+			);
+			path = OSMModels;
 			sourceTree = "<group>";
 		};
 		64981F1D22667D7700178476 /* Extensions */ = {
@@ -2520,6 +2553,7 @@
 				02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */,
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
 				02ACBBC216713F2B00BB4414 /* CurvedTextLayer.m in Sources */,
+				6453776623D38D4600656A1C /* OsmBaseObject.m in Sources */,
 				02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */,
 				02A194B019C69701002338DA /* Database.m in Sources */,
 				02ACBBC416713F2B00BB4414 /* EditorMapLayer.m in Sources */,
@@ -2532,8 +2566,8 @@
 				02ACBBCC16713F2B00BB4414 /* OsmMapData.m in Sources */,
 				027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */,
 				02BF745420793F0A0028ED6A /* TurnRestrictController.m in Sources */,
-				02ACBBCD16713F2B00BB4414 /* OsmObjects.m in Sources */,
 				02ACBCF816713F2B00BB4414 /* QuadMap.m in Sources */,
+				6453776A23D38FA200656A1C /* OsmNode.m in Sources */,
 				02ACBCF916713F2B00BB4414 /* RulerLayer.m in Sources */,
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
 				025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */,
@@ -2544,6 +2578,7 @@
 				0225A36A19B63F0D008B63BA /* DisplayViewController.m in Sources */,
 				024233101674FDB4008A3B6A /* VectorMath.m in Sources */,
 				0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */,
+				6453777323D391CC00656A1C /* OsmMember.m in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */,
 				0205460616766808004A2A23 /* POIPresetViewController.m in Sources */,
@@ -2573,6 +2608,8 @@
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
 				02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */,
 				02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */,
+				6453777623D3959500656A1C /* IsOsmBooleanFalse.m in Sources */,
+				6453777023D3913100656A1C /* OsmRelation.m in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
@@ -2583,6 +2620,7 @@
 				64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
+				6453776D23D3904E00656A1C /* OsmWay.m in Sources */,
 				6463E3CB23F948FE00E4F6ED /* GeekbenchScoreProvider.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,

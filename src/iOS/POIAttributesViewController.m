@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
-#import "OsmObjects.h"
 #import "POIAttributesViewController.h"
 #import "POITabBarController.h"
 #import "WebPageViewController.h"

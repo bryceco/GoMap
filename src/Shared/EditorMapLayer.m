@@ -25,7 +25,7 @@
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "PathUtil.h"
 #import "QuadMap.h"
 #import "SpeechBalloonLayer.h"

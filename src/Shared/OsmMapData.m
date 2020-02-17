@@ -19,7 +19,7 @@
 #import "NetworkStatus.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "QuadMap.h"
 #import "UndoManager.h"
 #import "VectorMath.h"

@@ -13,7 +13,6 @@
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
 #import "POICommonTagsViewController.h"
 #import "POIPresetViewController.h"
 #import "POITabBarController.h"

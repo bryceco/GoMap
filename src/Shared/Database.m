@@ -10,7 +10,7 @@
 
 #import "DLog.h"
 #import "Database.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 
 
 #define DoAssert(condition)	\

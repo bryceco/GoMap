@@ -8,7 +8,6 @@
 
 #include <vector>
 
-#import "OsmObjects.h"
 #import "QuadMap.h"
 #import "UndoManager.h"
 

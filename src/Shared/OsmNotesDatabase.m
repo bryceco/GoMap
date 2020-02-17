@@ -12,7 +12,6 @@
 
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
 
 
 static NSArray * FixMeList = nil;
