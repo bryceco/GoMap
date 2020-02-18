@@ -1555,6 +1555,11 @@
 		},
 		"amenity/drinking_water": {
 			"icon": "drinking-water",
+			"fields": [
+						 "operator",
+						 "fee",
+						 "wheelchair"
+						],
 			"geometry": [
 						 "point"
 						 ],
