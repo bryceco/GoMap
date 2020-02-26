@@ -34,8 +34,6 @@ extern const double MinIconSizeInPixels;
 	CGSize					_iconSize;
 	double					_highwayScale;
 
-	NSMutableSet		*	_nameDrawSet;
-
 	NSMutableArray<OsmBaseObject *>		*	_shownObjects;
 	NSMutableSet<OsmBaseObject *>		*	_fadingOutSet;
 
