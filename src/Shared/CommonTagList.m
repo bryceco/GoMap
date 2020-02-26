@@ -96,6 +96,11 @@ static void InitializeDictionaries()
 		g_presetsDict		= DictionaryForFile(@"presets.json");
 		g_fieldsDict		= DictionaryForFile(@"fields.json");
 
+		g_defaultsDict		= g_defaultsDict[@"defaults"];
+		g_categoriesDict	= g_categoriesDict[@"categories"];
+		g_presetsDict		= g_presetsDict[@"presets"];
+		g_fieldsDict		= g_fieldsDict[@"fields"];
+		
 		PresetLanguages * presetLanguages = [PresetLanguages new];	// don't need to save this, it doesn't get used again unless user changes the language
 		NSString * code = presetLanguages.preferredLanguageCode;
 		NSString * code2 = [code stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
@@ -521,17 +526,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 			return group;
 
-		} else if ( stringsOptionsDict ) {
-
-			// a multiple selection
-			NSMutableArray * presets = [NSMutableArray new];
-			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull val, BOOL * _Nonnull stop) {
-				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
-			}];
-			CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
-			return group;
-
 		} else {
 #if DEBUG
 			assert(NO);
@@ -698,7 +692,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
 		NSArray * keys = nil;
-		for ( NSDictionary * localeDict in g_addressFormatsDict ) {
+		for ( NSDictionary * localeDict in g_addressFormatsDict[ @"dataAddressFormats" ] ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
 			if ( countryCodeList == nil ) {
 				// default
@@ -730,8 +724,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	} else if ( [type isEqualToString:@"text"] ||
 			    [type isEqualToString:@"number"] ||
-			    [type isEqualToString:@"email"] ||
-			    [type isEqualToString:@"identifier"] ||
 			    [type isEqualToString:@"textarea"] ||
 			    [type isEqualToString:@"tel"] ||
 			    [type isEqualToString:@"url"] ||
@@ -745,8 +737,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypePhonePad doesn't have Done Button
 		else if ( [type isEqualToString:@"url"] )
 			keyboard = UIKeyboardTypeURL;
-		else if ( [ type isEqualToString:@"email"] )
-			keyboard = UIKeyboardTypeEmailAddress;
 		else if ( [type isEqualToString:@"textarea"] )
 			capitalize = UITextAutocapitalizationTypeSentences;
 		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
@@ -923,41 +913,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 
 
--(void)presetsForFeature:(NSString *)featureName geometry:(NSString *)geometry field:(NSString *)fieldType allFields:(NSMutableSet *)fieldSet update:(void (^)(void))update
-{
-	NSDictionary * featureDict = g_presetsDict[ featureName ];
-	NSArray * fields = featureDict[fieldType];
-	if ( fields == nil ) {
-		// inherit from parent
-		NSRange slash = [featureName rangeOfString:@"/"];
-		if ( slash.length ) {
-			NSString * parent = [featureName substringToIndex:slash.location];
-			[self presetsForFeature:parent geometry:geometry field:fieldType allFields:fieldSet update:update];
-		}
-		return;
-	}
-
-	for ( NSString * field in fields ) {
-
-		if ( [fieldSet containsObject:field] )
-			continue;
-		[fieldSet addObject:field];
-
-		CommonTagGroup * group = [self groupForField:field geometry:geometry update:update];
-		if ( group == nil )
-			continue;
-		// if both this group and the previous don't have a name then merge them
-		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
-			CommonTagGroup * prev = _sectionList.lastObject;
-			if ( prev.name == nil ) {
-				[prev mergeTagsFromGroup:group];
-				continue;
-			}
-		}
-		[_sectionList addObject:group];
-	}
-}
-
 -(void)setPresetsForDict:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
 {
 	NSString * featureName = [CommonTagList featureNameForObjectDict:objectTags geometry:geometry];
@@ -991,22 +946,34 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	// Add presets specific to the type
 	NSMutableSet * fieldSet = [NSMutableSet new];
-	[self presetsForFeature:featureName geometry:geometry field:@"fields"     allFields:fieldSet update:update];
-	[_sectionList addObject:[CommonTagGroup groupWithName:nil tags:nil]];	// Create a break between the common items and the rare items
-	[self presetsForFeature:featureName geometry:geometry field:@"moreFields" allFields:fieldSet update:update];
+	for ( NSString * field in featureDict[@"fields"] ) {
 
-#if 0 // not sure we still need these since ID presets cover most of these now
+		if ( [fieldSet containsObject:field] )
+			continue;
+		[fieldSet addObject:field];
+
+		CommonTagGroup * group = [self groupForField:field geometry:geometry update:update];
+		if ( group == nil )
+			continue;
+		// if both this group and the previous don't have a name then merge them
+		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
+			CommonTagGroup * prev = _sectionList.lastObject;
+			if ( prev.name == nil ) {
+				[prev mergeTagsFromGroup:group];
+				continue;
+			}
+		}
+		[_sectionList addObject:group];
+	}
+
 	// Add generic presets
 	NSArray * extras = @[ @"elevation", @"note", @"phone", @"website", @"wheelchair", @"wikipedia" ];
 	CommonTagGroup * extraGroup = [CommonTagGroup groupWithName:@"Other" tags:nil];
 	for ( NSString * field in extras ) {
-		if ( [fieldSet containsObject:field] )
-			continue;
 		CommonTagGroup * group = [self groupForField:field geometry:geometry update:update];
 		[extraGroup mergeTagsFromGroup:group];
 	}
 	[_sectionList addObject:extraGroup];
-#endif
 }
 
 -(instancetype)init
