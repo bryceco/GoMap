@@ -74,7 +74,7 @@ extern const double MinIconSizeInPixels;
 - (void)didReceiveMemoryWarning;
 
 - (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray<OsmBaseObject *> *)ignoreList segment:(NSInteger *)segment;
-- (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius ;
+- (NSArray<OsmBaseObject *> *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius ;
 - (OsmNode *)osmHitTestNodeInSelectedWay:(CGPoint)point radius:(CGFloat)radius ;
 
 - (void)updateMapLocation;

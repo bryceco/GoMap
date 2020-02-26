@@ -2729,13 +2729,13 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // return all nearby objects
-- (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
+- (NSArray<OsmBaseObject *> *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
 {
-	NSMutableSet * objectSet = [NSMutableSet new];
+	NSMutableSet<OsmBaseObject *> * objectSet = [NSMutableSet new];
 	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
 		[objectSet addObject:obj];
 	}];
-	NSMutableArray * objectList = [objectSet.allObjects mutableCopy];
+	NSMutableArray<OsmBaseObject *> * objectList = [objectSet.allObjects mutableCopy];
 	[objectList sortUsingComparator:^NSComparisonResult(OsmBaseObject * o1, OsmBaseObject * o2) {
 		int diff = (o1.isRelation?2:o1.isWay?1:0) - (o2.isRelation?2:o2.isWay?1:0);
 		if ( diff )
