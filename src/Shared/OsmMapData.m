@@ -1106,7 +1106,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		// store new nodes in database
 		if ( downloaded ) {
-			[self sqlSaveNodes:newNodes saveWays:newWays saveRelations:newRelations deleteNodes:nil deleteWays:nil deleteRelations:nil isUpdate:NO];
+			[self sqlSaveNodes:newNodes
+                      saveWays:newWays
+                 saveRelations:newRelations
+                   deleteNodes:nil
+                    deleteWays:nil
+               deleteRelations:nil
+                      isUpdate:NO];
 
 			// purge old data
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -2110,9 +2116,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return ok;
 }
 
--(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray<OsmRelation *> *)saveRelations
-		deleteNodes:(NSArray<OsmNode *> *)deleteNodes deleteWays:(NSArray<OsmWay *> *)deleteWays deleteRelations:(NSArray<OsmRelation *> *)deleteRelations
-		   isUpdate:(BOOL)isUpdate
+-(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes
+           saveWays:(NSArray<OsmWay *> *)saveWays
+      saveRelations:(NSArray<OsmRelation *> *)saveRelations
+        deleteNodes:(NSArray<OsmNode *> *)deleteNodes
+         deleteWays:(NSArray<OsmWay *> *)deleteWays
+    deleteRelations:(NSArray<OsmRelation *> *)deleteRelations
+           isUpdate:(BOOL)isUpdate
 {
 	if ( saveNodes.count + saveWays.count + saveRelations.count + deleteNodes.count + deleteWays.count + deleteRelations.count == 0 )
 		return;
@@ -2123,7 +2133,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		{
 			Database * db = [Database new];
 			[db createTables];
-			ok = [db saveNodes:saveNodes saveWays:saveWays saveRelations:saveRelations deleteNodes:deleteNodes deleteWays:deleteWays deleteRelations:deleteRelations isUpdate:isUpdate];
+			ok = [db saveNodes:saveNodes
+                      saveWays:saveWays
+                 saveRelations:saveRelations
+                   deleteNodes:deleteNodes
+                    deleteWays:deleteWays
+               deleteRelations:deleteRelations
+                      isUpdate:isUpdate];
 			if ( !ok ) {
 				[Database deleteDatabaseWithName:nil];
 			}
@@ -2296,8 +2312,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			Database * db2 = [[Database alloc] initWithName:@"tmp"];
 			tmpPath = db2.path;
 			[db2 createTables];
-			[db2 saveNodes:saveNodes saveWays:saveWays saveRelations:saveRelations
-			   deleteNodes:nil deleteWays:nil deleteRelations:nil isUpdate:NO];
+			[db2 saveNodes:saveNodes
+                  saveWays:saveWays
+             saveRelations:saveRelations
+               deleteNodes:nil
+                deleteWays:nil
+           deleteRelations:nil
+                  isUpdate:NO];
 		}
 		
 		NSString * realPath = [Database databasePathWithName:nil];
@@ -2348,7 +2369,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			assert(NO);
 		}
 	}];
-	[self sqlSaveNodes:insertNode saveWays:insertWay saveRelations:insertRelation deleteNodes:deleteNode deleteWays:deleteWay deleteRelations:deleteRelation isUpdate:YES];
+	[self sqlSaveNodes:insertNode
+              saveWays:insertWay
+         saveRelations:insertRelation
+           deleteNodes:deleteNode
+            deleteWays:deleteWay
+       deleteRelations:deleteRelation
+              isUpdate:YES];
 }
 
 
