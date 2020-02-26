@@ -540,7 +540,7 @@ retry:
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
--(BOOL)deleteWays:(NSArray *)ways
+-(BOOL)deleteWays:(NSArray<OsmWay *> *)ways
 {
 	if ( ways.count == 0 )
 		return YES;
@@ -595,7 +595,7 @@ retry:
 #pragma mark update
 
 -(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray<OsmRelation *> *)saveRelations
-		deleteNodes:(NSArray<OsmNode *> *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
+		deleteNodes:(NSArray<OsmNode *> *)deleteNodes deleteWays:(NSArray<OsmWay *> *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate
 {
 #if 0 && DEBUG
