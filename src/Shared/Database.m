@@ -802,7 +802,7 @@ retry:
 }
 
 
--(NSMutableDictionary *)querySqliteRelations
+-(NSMutableDictionary<NSNumber *, OsmRelation *> *)querySqliteRelations
 {
 	if ( _db == NULL )
 		return nil;
@@ -814,7 +814,7 @@ retry:
 	if ( rc != SQLITE_OK )
 		return nil;
 
-	NSMutableDictionary * relations = [NSMutableDictionary new];
+	NSMutableDictionary<NSNumber *, OsmRelation *> * relations = [NSMutableDictionary new];
 	while ( (rc = sqlite3_step(relationStatement)) == SQLITE_ROW )  {
 		int64_t			ident		= sqlite3_column_int64(relationStatement, 0);
 		const uint8_t *	user		= sqlite3_column_text(relationStatement, 1);

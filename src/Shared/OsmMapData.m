@@ -2402,7 +2402,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSAssert(newNodes,nil);
 			NSMutableDictionary<NSNumber *, OsmWay *> * newWays		= [db querySqliteWays];
 			NSAssert(newWays,nil);
-			NSMutableDictionary * newRelations	= [db querySqliteRelations];
+			NSMutableDictionary<NSNumber *, OsmRelation *> * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
 
 			OsmMapData * newData = [[OsmMapData alloc] init];

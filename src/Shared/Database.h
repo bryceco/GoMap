@@ -33,6 +33,6 @@
 
 -(NSMutableDictionary<NSNumber *, OsmNode *> *)querySqliteNodes;
 -(NSMutableDictionary<NSNumber *, OsmWay *> *)querySqliteWays;
--(NSMutableDictionary *)querySqliteRelations;
+-(NSMutableDictionary<NSNumber *, OsmRelation *> *)querySqliteRelations;
 
 @end
