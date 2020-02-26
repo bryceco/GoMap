@@ -720,14 +720,14 @@ retry:
 	return rc == SQLITE_OK ? nodes : nil;
 }
 
--(NSMutableDictionary *)querySqliteWays
+-(NSMutableDictionary<NSNumber *, OsmWay *> *)querySqliteWays
 {
 	if ( _db == NULL )
 		return nil;
 
 	int rc = SQLITE_OK;
 	sqlite3_stmt * wayStatement = NULL;
-	NSMutableDictionary * ways = [NSMutableDictionary new];
+	NSMutableDictionary<NSNumber *, OsmWay *> * ways = [NSMutableDictionary new];
 
 	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways", -1, &wayStatement, nil );
 	if ( rc != SQLITE_OK )

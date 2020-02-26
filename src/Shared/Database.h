@@ -32,7 +32,7 @@
 		isUpdate:(BOOL)isUpdate;
 
 -(NSMutableDictionary<NSNumber *, OsmNode *> *)querySqliteNodes;
--(NSMutableDictionary *)querySqliteWays;
+-(NSMutableDictionary<NSNumber *, OsmWay *> *)querySqliteWays;
 -(NSMutableDictionary *)querySqliteRelations;
 
 @end

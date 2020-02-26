@@ -2400,7 +2400,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			Database * db = [Database new];
 			NSMutableDictionary<NSNumber *, OsmNode *> * newNodes		= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
-			NSMutableDictionary * newWays		= [db querySqliteWays];
+			NSMutableDictionary<NSNumber *, OsmWay *> * newWays		= [db querySqliteWays];
 			NSAssert(newWays,nil);
 			NSMutableDictionary * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
