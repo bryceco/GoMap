@@ -2603,7 +2603,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 
 // distance is in units of the hit test radius (WayHitTestRadius)
 + (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray<OsmBaseObject *> *)objects testNodes:(BOOL)testNodes
-				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
+				 ignoreList:(NSArray<OsmBaseObject *> *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
 	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OSMRect viewCoord = [mapView screenLongitudeLatitude];
@@ -2680,7 +2680,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // default hit test when clicking on the map, or drag-connecting
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray<OsmBaseObject *> *)ignoreList segment:(NSInteger *)pSegment
 {
 	if ( self.hidden )
 		return nil;

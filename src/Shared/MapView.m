@@ -2559,7 +2559,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		return nil;
 #endif
 
-	NSArray * ignoreList = nil;
+	NSArray<OsmBaseObject *> * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
 	NSArray * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
 	if ( way.nodes.count < 3 ) {
