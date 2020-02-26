@@ -1037,7 +1037,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	if ( newData ) {
 
-		NSMutableArray * newNodes = [NSMutableArray new];
+		NSMutableArray<OsmNode *> * newNodes = [NSMutableArray new];
 		NSMutableArray * newWays = [NSMutableArray new];
 		NSMutableArray * newRelations = [NSMutableArray new];
 
@@ -2110,7 +2110,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return ok;
 }
 
--(void)sqlSaveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
+-(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		   isUpdate:(BOOL)isUpdate
 {
@@ -2282,7 +2282,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	NSLog(@"Discard sweep time = %f\n",t);
 
 	// make a copy of items to save because the dictionary might get updated by the time the Database block runs
-	NSArray * saveNodes 	= [_nodes allValues];
+	NSArray<OsmNode *> * saveNodes 	= [_nodes allValues];
 	NSArray * saveWays 		= [_ways allValues];
 	NSArray * saveRelations = [_relations allValues];
 	
@@ -2322,7 +2322,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 // after uploading a changeset we have to update the SQL database to reflect the changes the server replied with
 -(void)updateSql:(NSDictionary *)sqlUpdate
 {
-	NSMutableArray * insertNode		= [NSMutableArray new];
+	NSMutableArray<OsmNode *> * insertNode		= [NSMutableArray new];
 	NSMutableArray * insertWay		= [NSMutableArray new];
 	NSMutableArray * insertRelation	= [NSMutableArray new];
 	NSMutableArray * deleteNode		= [NSMutableArray new];
@@ -2331,7 +2331,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[sqlUpdate enumerateKeysAndObjectsUsingBlock:^(OsmBaseObject * object, NSNumber * insert, BOOL *stop) {
 		if ( object.isNode ) {
 			if ( insert.boolValue )
-				[insertNode addObject:object];
+				[insertNode addObject:object.isNode];
 			else
 				[deleteNode addObject:object];
 		} else if ( object.isWay ) {
