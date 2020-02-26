@@ -433,7 +433,7 @@ retry:
 }
 
 
--(BOOL)saveRelations:(NSArray *)relations
+-(BOOL)saveRelations:(NSArray<OsmRelation *> *)relations
 {
 	__block int rc = SQLITE_OK;
 
@@ -594,7 +594,7 @@ retry:
 
 #pragma mark update
 
--(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray *)saveRelations
+-(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray<OsmRelation *> *)saveRelations
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate
 {

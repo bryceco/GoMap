@@ -1039,7 +1039,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		NSMutableArray<OsmNode *> * newNodes = [NSMutableArray new];
 		NSMutableArray<OsmWay *> * newWays = [NSMutableArray new];
-		NSMutableArray * newRelations = [NSMutableArray new];
+		NSMutableArray<OsmRelation *> * newRelations = [NSMutableArray new];
 
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			OsmNode * current = [_nodes objectForKey:key];
@@ -2110,7 +2110,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return ok;
 }
 
--(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray *)saveRelations
+-(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray<OsmRelation *> *)saveRelations
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		   isUpdate:(BOOL)isUpdate
 {
@@ -2284,7 +2284,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	// make a copy of items to save because the dictionary might get updated by the time the Database block runs
 	NSArray<OsmNode *> * saveNodes 	= [_nodes allValues];
 	NSArray<OsmWay *> * saveWays 		= [_ways allValues];
-	NSArray * saveRelations = [_relations allValues];
+	NSArray<OsmRelation *> * saveRelations = [_relations allValues];
 	
 	dispatch_async(Database.dispatchQueue, ^{
 		
@@ -2324,7 +2324,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	NSMutableArray<OsmNode *> * insertNode		= [NSMutableArray new];
 	NSMutableArray<OsmWay *> * insertWay		= [NSMutableArray new];
-	NSMutableArray * insertRelation	= [NSMutableArray new];
+    NSMutableArray<OsmRelation *> * insertRelation    = [NSMutableArray new];
 	NSMutableArray * deleteNode		= [NSMutableArray new];
 	NSMutableArray * deleteWay		= [NSMutableArray new];
 	NSMutableArray * deleteRelation	= [NSMutableArray new];
@@ -2341,7 +2341,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[deleteWay addObject:object];
 		} else if ( object.isRelation ) {
 			if ( insert.boolValue )
-				[insertRelation addObject:object];
+				[insertRelation addObject:object.isRelation];
 			else
 				[deleteRelation addObject:object];
 		} else {
