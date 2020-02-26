@@ -36,8 +36,8 @@ extern const double MinIconSizeInPixels;
 
 	NSMutableSet		*	_nameDrawSet;
 
-	NSMutableArray		*	_shownObjects;
-	NSMutableSet		*	_fadingOutSet;
+	NSMutableArray<OsmBaseObject *>		*	_shownObjects;
+	NSMutableSet<OsmBaseObject *>		*	_fadingOutSet;
 
 	NSMutableArray		*	_highlightLayers;
 

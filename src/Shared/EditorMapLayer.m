@@ -723,13 +723,12 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	}
 }
 
--(CAShapeLayer *)getOceanLayer:(NSArray *)objectList
+-(CAShapeLayer *)getOceanLayer:(NSArray<OsmBaseObject *> *)objectList
 {
 	// get all coastline ways
 	NSMutableArray * outerSegments = [NSMutableArray new];
 	NSMutableArray * innerSegments = [NSMutableArray new];
-	for ( id obj in objectList ) {
-		OsmBaseObject * object = obj;
+	for ( OsmBaseObject * object in objectList ) {
 		if ( object.isWay.isClosed && [object.tags[@"natural"] isEqualToString:@"water"] ) {
 			continue;	// lakes are not a concern of this function
 		}
@@ -2237,7 +2236,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 #endif
 }
 
-- (NSMutableArray *)getObjectsToDisplay
+- (NSMutableArray<OsmBaseObject *> *)getObjectsToDisplay
 {
 #if TARGET_OS_IPHONE
 	double geekScore = [self.geekbenchScoreProvider geekbenchScore];
@@ -2355,13 +2354,13 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		_baseLayer.sublayerTransform	= CATransform3DIdentity;
 	}
 
-	NSArray * previousObjects = _shownObjects;
+	NSArray<OsmBaseObject *> * previousObjects = _shownObjects;
 
 	_shownObjects = [self getObjectsToDisplay];
 	[_shownObjects addObjectsFromArray:_fadingOutSet.allObjects];
 
 	// remove layers no longer visible
-	NSMutableSet * removals = [NSMutableSet setWithArray:previousObjects];
+	NSMutableSet<OsmBaseObject *> * removals = [NSMutableSet setWithArray:previousObjects];
 	for ( OsmBaseObject * object in _shownObjects ) {
 		[removals removeObject:object];
 	}
@@ -2603,7 +2602,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // distance is in units of the hit test radius (WayHitTestRadius)
-+ (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
++ (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray<OsmBaseObject *> *)objects testNodes:(BOOL)testNodes
 				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
 	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
