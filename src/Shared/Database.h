@@ -27,9 +27,13 @@
 -(void)createTables;
 -(void)dropTables;
 
--(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray<OsmRelation *> *)saveRelations
-		deleteNodes:(NSArray<OsmNode *> *)deleteNodes deleteWays:(NSArray<OsmWay *> *)deleteWays deleteRelations:(NSArray<OsmRelation *> *)deleteRelations
-		isUpdate:(BOOL)isUpdate;
+-(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes
+        saveWays:(NSArray<OsmWay *> *)saveWays
+   saveRelations:(NSArray<OsmRelation *> *)saveRelations
+     deleteNodes:(NSArray<OsmNode *> *)deleteNodes
+      deleteWays:(NSArray<OsmWay *> *)deleteWays
+ deleteRelations:(NSArray<OsmRelation *> *)deleteRelations
+        isUpdate:(BOOL)isUpdate;
 
 -(NSMutableDictionary<NSNumber *, OsmNode *> *)querySqliteNodes;
 -(NSMutableDictionary<NSNumber *, OsmWay *> *)querySqliteWays;
