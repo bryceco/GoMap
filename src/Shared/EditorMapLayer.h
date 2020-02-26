@@ -37,7 +37,7 @@ extern const double MinIconSizeInPixels;
 	NSMutableArray<OsmBaseObject *>		*	_shownObjects;
 	NSMutableSet<OsmBaseObject *>		*	_fadingOutSet;
 
-	NSMutableArray		*	_highlightLayers;
+	NSMutableArray<CALayer *>		*	_highlightLayers;
 
 	BOOL					_isPerformingLayout;
 

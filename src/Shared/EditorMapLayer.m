@@ -1723,7 +1723,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     return degrees * M_PI / 180;
 }
 
--(NSMutableArray *)getShapeLayersForHighlights
+-(NSMutableArray<CALayer *> *)getShapeLayersForHighlights
 {
 	double				geekScore	= [self.geekbenchScoreProvider geekbenchScore];
 	NSInteger			nameLimit	= 5 + (geekScore - 500) / 200;	// 500 -> 5, 2500 -> 10
