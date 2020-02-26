@@ -2111,7 +2111,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 
 -(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray<OsmRelation *> *)saveRelations
-		deleteNodes:(NSArray<OsmNode *> *)deleteNodes deleteWays:(NSArray<OsmWay *> *)deleteWays deleteRelations:(NSArray *)deleteRelations
+		deleteNodes:(NSArray<OsmNode *> *)deleteNodes deleteWays:(NSArray<OsmWay *> *)deleteWays deleteRelations:(NSArray<OsmRelation *> *)deleteRelations
 		   isUpdate:(BOOL)isUpdate
 {
 	if ( saveNodes.count + saveWays.count + saveRelations.count + deleteNodes.count + deleteWays.count + deleteRelations.count == 0 )
@@ -2327,7 +2327,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
     NSMutableArray<OsmRelation *> * insertRelation    = [NSMutableArray new];
 	NSMutableArray<OsmNode *> * deleteNode		= [NSMutableArray new];
 	NSMutableArray<OsmWay *> * deleteWay		= [NSMutableArray new];
-	NSMutableArray * deleteRelation	= [NSMutableArray new];
+	NSMutableArray<OsmRelation *> * deleteRelation	= [NSMutableArray new];
 	[sqlUpdate enumerateKeysAndObjectsUsingBlock:^(OsmBaseObject * object, NSNumber * insert, BOOL *stop) {
 		if ( object.isNode ) {
 			if ( insert.boolValue )
@@ -2343,7 +2343,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			if ( insert.boolValue )
 				[insertRelation addObject:object.isRelation];
 			else
-				[deleteRelation addObject:object];
+				[deleteRelation addObject:object.isRelation];
 		} else {
 			assert(NO);
 		}
