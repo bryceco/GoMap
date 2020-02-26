@@ -27,7 +27,7 @@
 -(void)createTables;
 -(void)dropTables;
 
--(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
+-(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray *)saveRelations
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate;
 

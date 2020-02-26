@@ -1038,7 +1038,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	if ( newData ) {
 
 		NSMutableArray<OsmNode *> * newNodes = [NSMutableArray new];
-		NSMutableArray * newWays = [NSMutableArray new];
+		NSMutableArray<OsmWay *> * newWays = [NSMutableArray new];
 		NSMutableArray * newRelations = [NSMutableArray new];
 
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
@@ -2110,7 +2110,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return ok;
 }
 
--(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
+-(void)sqlSaveNodes:(NSArray<OsmNode *> *)saveNodes saveWays:(NSArray<OsmWay *> *)saveWays saveRelations:(NSArray *)saveRelations
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		   isUpdate:(BOOL)isUpdate
 {
@@ -2283,7 +2283,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	// make a copy of items to save because the dictionary might get updated by the time the Database block runs
 	NSArray<OsmNode *> * saveNodes 	= [_nodes allValues];
-	NSArray * saveWays 		= [_ways allValues];
+	NSArray<OsmWay *> * saveWays 		= [_ways allValues];
 	NSArray * saveRelations = [_relations allValues];
 	
 	dispatch_async(Database.dispatchQueue, ^{
@@ -2323,7 +2323,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 -(void)updateSql:(NSDictionary *)sqlUpdate
 {
 	NSMutableArray<OsmNode *> * insertNode		= [NSMutableArray new];
-	NSMutableArray * insertWay		= [NSMutableArray new];
+	NSMutableArray<OsmWay *> * insertWay		= [NSMutableArray new];
 	NSMutableArray * insertRelation	= [NSMutableArray new];
 	NSMutableArray * deleteNode		= [NSMutableArray new];
 	NSMutableArray * deleteWay		= [NSMutableArray new];
@@ -2336,7 +2336,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				[deleteNode addObject:object];
 		} else if ( object.isWay ) {
 			if ( insert.boolValue )
-				[insertWay addObject:object];
+				[insertWay addObject:object.isWay];
 			else
 				[deleteWay addObject:object];
 		} else if ( object.isRelation ) {
