@@ -31,7 +31,7 @@
 		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
 		isUpdate:(BOOL)isUpdate;
 
--(NSMutableDictionary *)querySqliteNodes;
+-(NSMutableDictionary<NSNumber *, OsmNode *> *)querySqliteNodes;
 -(NSMutableDictionary *)querySqliteWays;
 -(NSMutableDictionary *)querySqliteRelations;
 

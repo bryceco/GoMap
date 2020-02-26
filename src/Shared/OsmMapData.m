@@ -2398,7 +2398,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		BOOL databaseFailure = NO;
 		@try {
 			Database * db = [Database new];
-			NSMutableDictionary * newNodes		= [db querySqliteNodes];
+			NSMutableDictionary<NSNumber *, OsmNode *> * newNodes		= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
 			NSMutableDictionary * newWays		= [db querySqliteWays];
 			NSAssert(newWays,nil);

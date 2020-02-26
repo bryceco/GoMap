@@ -677,7 +677,7 @@ retry:
 	return rc == SQLITE_OK;
 }
 
--(NSMutableDictionary *)querySqliteNodes
+-(NSMutableDictionary<NSNumber *, OsmNode *> *)querySqliteNodes
 {
 	if ( _db == NULL )
 		return nil;
@@ -688,7 +688,7 @@ retry:
 	if ( rc != SQLITE_OK )
 		return nil;
 
-	NSMutableDictionary * nodes = [NSMutableDictionary new];
+	NSMutableDictionary<NSNumber *, OsmNode *> * nodes = [NSMutableDictionary new];
 	
 	while ( (rc = sqlite3_step(nodeStatement)) == SQLITE_ROW )  {
 		int64_t			ident		= sqlite3_column_int64(nodeStatement, 0);
