@@ -2559,7 +2559,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		return nil;
 #endif
 
-	NSArray * ignoreList = nil;
+	NSArray<OsmBaseObject *> * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
 	NSArray * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
 	if ( way.nodes.count < 3 ) {
@@ -3456,13 +3456,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
 		CGPoint point = [longPress locationInView:self];
 
-		NSArray * objects = [self.editorLayer osmHitTestMultiple:point radius:DefaultHitTestRadius];
+		NSArray<OsmBaseObject *> * objects = [self.editorLayer osmHitTestMultiple:point radius:DefaultHitTestRadius];
 		if ( objects.count == 0 )
 			return;
 
 		// special case for adding members to relations:
 		if ( _editorLayer.selectedPrimary.isRelation.isMultipolygon ) {
-			NSArray * ways = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmBaseObject * obj, id bindings) {
+			NSArray<OsmBaseObject *> * ways = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmBaseObject * obj, id bindings) {
 				return obj.isWay != nil;
 			}]];
 			if ( ways.count == 1 ) {

@@ -723,13 +723,12 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	}
 }
 
--(CAShapeLayer *)getOceanLayer:(NSArray *)objectList
+-(CAShapeLayer *)getOceanLayer:(NSArray<OsmBaseObject *> *)objectList
 {
 	// get all coastline ways
 	NSMutableArray * outerSegments = [NSMutableArray new];
 	NSMutableArray * innerSegments = [NSMutableArray new];
-	for ( id obj in objectList ) {
-		OsmBaseObject * object = obj;
+	for ( OsmBaseObject * object in objectList ) {
 		if ( object.isWay.isClosed && [object.tags[@"natural"] isEqualToString:@"water"] ) {
 			continue;	// lakes are not a concern of this function
 		}
@@ -1724,7 +1723,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     return degrees * M_PI / 180;
 }
 
--(NSMutableArray *)getShapeLayersForHighlights
+-(NSMutableArray<CALayer *> *)getShapeLayersForHighlights
 {
 	double				geekScore	= [self.geekbenchScoreProvider geekbenchScore];
 	NSInteger			nameLimit	= 5 + (geekScore - 500) / 200;	// 500 -> 5, 2500 -> 10
@@ -2237,7 +2236,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 #endif
 }
 
-- (NSMutableArray *)getObjectsToDisplay
+- (NSMutableArray<OsmBaseObject *> *)getObjectsToDisplay
 {
 #if TARGET_OS_IPHONE
 	double geekScore = [self.geekbenchScoreProvider geekbenchScore];
@@ -2355,13 +2354,13 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		_baseLayer.sublayerTransform	= CATransform3DIdentity;
 	}
 
-	NSArray * previousObjects = _shownObjects;
+	NSArray<OsmBaseObject *> * previousObjects = _shownObjects;
 
 	_shownObjects = [self getObjectsToDisplay];
 	[_shownObjects addObjectsFromArray:_fadingOutSet.allObjects];
 
 	// remove layers no longer visible
-	NSMutableSet * removals = [NSMutableSet setWithArray:previousObjects];
+	NSMutableSet<OsmBaseObject *> * removals = [NSMutableSet setWithArray:previousObjects];
 	for ( OsmBaseObject * object in _shownObjects ) {
 		[removals removeObject:object];
 	}
@@ -2603,8 +2602,8 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // distance is in units of the hit test radius (WayHitTestRadius)
-+ (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
-				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
++ (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray<OsmBaseObject *> *)objects testNodes:(BOOL)testNodes
+				 ignoreList:(NSArray<OsmBaseObject *> *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
 	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OSMRect viewCoord = [mapView screenLongitudeLatitude];
@@ -2681,7 +2680,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // default hit test when clicking on the map, or drag-connecting
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray<OsmBaseObject *> *)ignoreList segment:(NSInteger *)pSegment
 {
 	if ( self.hidden )
 		return nil;
@@ -2730,13 +2729,13 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // return all nearby objects
-- (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
+- (NSArray<OsmBaseObject *> *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
 {
-	NSMutableSet * objectSet = [NSMutableSet new];
+	NSMutableSet<OsmBaseObject *> * objectSet = [NSMutableSet new];
 	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
 		[objectSet addObject:obj];
 	}];
-	NSMutableArray * objectList = [objectSet.allObjects mutableCopy];
+	NSMutableArray<OsmBaseObject *> * objectList = [objectSet.allObjects mutableCopy];
 	[objectList sortUsingComparator:^NSComparisonResult(OsmBaseObject * o1, OsmBaseObject * o2) {
 		int diff = (o1.isRelation?2:o1.isWay?1:0) - (o2.isRelation?2:o2.isWay?1:0);
 		if ( diff )
