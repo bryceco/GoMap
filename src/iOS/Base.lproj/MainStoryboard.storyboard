@@ -107,6 +107,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="openHelp" destination="2" eventType="touchUpInside" id="Kic-Mj-660"/>
+                                        </connections>
                                     </button>
                                     <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
