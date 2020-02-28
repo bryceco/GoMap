@@ -522,6 +522,7 @@
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
+		64F59A50240915840093DCDB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A4F240915840093DCDB /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1159,6 +1160,7 @@
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
+		64F59A4F240915840093DCDB /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1979,6 +1981,7 @@
 			children = (
 				64981F1E22667D7700178476 /* SettingsViewController.swift */,
 				64E21EB222651620004605D7 /* LoginViewController.swift */,
+				64F59A4F240915840093DCDB /* MapViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2633,6 +2636,7 @@
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				02A8613D20A95C16008C465F /* NetworkStatus.m in Sources */,
 				025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */,
+				64F59A50240915840093DCDB /* MapViewController.swift in Sources */,
 				0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */,
 				0219563216DDC26E00074D15 /* GpxViewController.m in Sources */,
 			);
