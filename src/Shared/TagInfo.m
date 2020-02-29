@@ -442,51 +442,6 @@ static TagInfo * g_DefaultRender = nil;
 	return [self tagsBelongTo:nil type:@"node"];
 }
 
--(NSSet *)allTagKeys
-{
-	static NSMutableSet * set = nil;
-	if ( set == nil ) {
-		set = [NSMutableSet set];
-		for ( TagInfo * tag in _allTags ) {
-			[set addObject:tag.key];
-		}
-		[set addObjectsFromArray:@[
-			@"access",
-			@"admin_level",
-			@"addr:housenumber",
-			@"addr:street",
-			@"addr:city",
-			@"addr:country",
-			@"addr:postcode",
-			@"addr:state",
-			@"addr:housename",
-			@"addr:interpolation",
-			@"alt_name",
-			@"area",
-			@"bicycle",
-			@"bridge",
-			@"crossing",
-			@"cuisine",
-			@"designation",
-			@"ele",
-			@"fixme",
-			@"foot",
-			@"height",
-			@"lanes",
-			@"layer",
-			@"maxspeed",
-			@"name",
-			@"note",
-			@"operator",
-			@"ref",
-			@"source",
-			@"website",
-			@"width",
-		 ]];
-	}
-	return set;
-}
-
 -(NSSet *)allTagValuesForKey:(NSString *)key
 {
 	NSMutableSet * set = [NSMutableSet set];

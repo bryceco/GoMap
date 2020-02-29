@@ -53,7 +53,6 @@
 }
 +(TagInfoDatabase *)sharedTagInfoDatabase;
 
--(NSSet *)allTagKeys;
 -(NSSet *)allTagValuesForKey:(NSString *)key;
 
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
