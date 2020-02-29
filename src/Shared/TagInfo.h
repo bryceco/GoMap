@@ -32,7 +32,6 @@
 @property (strong,nonatomic)	NSImage		*	scaledIcon;
 
 -(NSImage *)icon;
--(CGImageRef)cgIcon;
 
 -(BOOL)isAddressPoint;
 
