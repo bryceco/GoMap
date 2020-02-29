@@ -314,19 +314,6 @@ static TagInfo * g_DefaultRender = nil;
 	return self;
 }
 
-- (NSArray *)itemsForTag:(NSString *)type matching:(NSString *)searchText
-{
-	return [_allTags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(TagInfo * tag, NSDictionary *bindings) {
-		if ( [tag.value rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
-			return YES;
-		if ( [tag.key rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
-			return YES;
-		if ( tag.summary && [tag.summary rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound )
-			return YES;
-		return NO;
-	}]];
-}
-
 #if TARGET_OS_IPHONE
 #else
 -(NSMenu *)menuWithTag:(NSString *)key target:(id)target action:(SEL)action
