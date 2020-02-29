@@ -52,7 +52,6 @@
 	NSMutableDictionary *	_keyDict;
 }
 +(TagInfoDatabase *)sharedTagInfoDatabase;
-+(NSMutableArray *)readXml;
 
 -(NSSet *)allTagKeys;
 -(NSSet *)allTagValuesForKey:(NSString *)key;
