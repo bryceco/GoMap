@@ -56,6 +56,4 @@
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
 
--(NSArray *)sourceValues;
-
 @end

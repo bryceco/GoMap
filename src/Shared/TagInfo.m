@@ -398,14 +398,4 @@ static TagInfo * g_DefaultRender = nil;
 	return g_DefaultRender;
 }
 
--(NSArray *)sourceValues
-{
-	return @[
-			@"survey",
-			@"local_knowledge",
-			@"Bing",
-			@"Yahoo",
-	 ];
-}
-
 @end
