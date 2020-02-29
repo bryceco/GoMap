@@ -398,44 +398,6 @@ static TagInfo * g_DefaultRender = nil;
 	return g_DefaultRender;
 }
 
--(NSArray *)cuisineStyleValues
-{
-	NSArray * _cuisineStyleArray = nil;
-	if ( _cuisineStyleArray == nil ) {
-		_cuisineStyleArray = @[
-			@"bagel",
-			@"barbecue",
-			@"bougatsa",
-			@"burger",
-			@"cake",
-			@"chicken",
-			@"coffee_shop",
-			@"crepe",
-			@"couscous",
-			@"curry",
-			@"doughnut",
-			@"fish_and_chips",
-			@"fried_food",
-			@"friture",
-			@"ice_cream",
-			@"kebab",
-			@"mediterranean",
-			@"noodle",
-			@"pasta",
-			@"pie",
-			@"pizza",
-			@"regional",
-			@"sandwich",
-			@"sausage",
-			//		@"savory_pancakes",
-			@"seafood",
-			@"steak_house",
-			@"sushi",
-			];
-	}
-	return _cuisineStyleArray;
-}
-
 -(NSArray *)cuisineEthnicValues
 {
 	static NSArray * _ethnicArray = nil;
