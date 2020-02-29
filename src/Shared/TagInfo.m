@@ -316,54 +316,6 @@ static TagInfo * g_DefaultRender = nil;
 
 #if TARGET_OS_IPHONE
 #else
--(NSMenu *)menuWithTag:(NSString *)key target:(id)target action:(SEL)action
-{
-	NSMenu * menu = [[NSMenu alloc] initWithTitle:key];
-
-	// if other tags belong to this tag then add them as submenus
-	NSArray * childTags = [self tagsBelongTo:key type:nil];
-	if ( childTags.count ) {
-
-		// get set of key values for children
-		NSMutableSet * set = [NSMutableSet new];
-		for ( TagInfo * child in childTags ) {
-			[set addObject:child.key];
-		}
-
-		NSArray * keyArray = [set allObjects];
-		keyArray = [keyArray sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
-			return [obj1 caseInsensitiveCompare:obj2];
-		}];
-		for ( NSString * key in keyArray ) {
-
-			NSMenu * subMenu = [self menuWithTag:key target:target action:action];
-			assert( subMenu.numberOfItems > 0 );
-			if ( subMenu.numberOfItems > 0 ) {
-				NSString * name = [key capitalizedString];
-				NSMenuItem * item = [[NSMenuItem alloc] initWithTitle:name action:NULL keyEquivalent:@""];
-				[item setSubmenu:subMenu];
-				[menu addItem:item];
-			}
-		}
-
-	} else {
-
-		// get values for key
-		NSDictionary * valueDict = [_keyDict objectForKey:key];
-		NSArray * valueArray = [valueDict allValues];
-		valueArray = [valueArray sortedArrayUsingComparator:^NSComparisonResult(TagInfo * obj1, TagInfo * obj2) {
-			return [obj1.friendlyName caseInsensitiveCompare:obj2.friendlyName];
-		}];
-		for ( TagInfo * tagInfo in valueArray ) {
-			NSString * name = tagInfo.friendlyName ? tagInfo.friendlyName : [NSString stringWithFormat:@"%@=%@",tagInfo.key,tagInfo.value];
-			NSMenuItem * item = [[NSMenuItem alloc] initWithTitle:name action:action keyEquivalent:@""];
-			item.target = target;
-			item.representedObject = tagInfo;
-			[menu addItem:item];
-		};
-	}
-	return menu;
-}
 #endif
 
 
