@@ -442,30 +442,6 @@ static TagInfo * g_DefaultRender = nil;
 	return [self tagsBelongTo:nil type:@"node"];
 }
 
--(NSSet *)allTagValuesForKey:(NSString *)key
-{
-	NSMutableSet * set = [NSMutableSet set];
-	for ( TagInfo * tag in _allTags ) {
-		if ( [tag.key isEqualToString:key] ) {
-			[set addObject:tag.value];
-		}
-	}
-	if ( [key isEqualToString:@"wifi"] ) {
-		[set addObjectsFromArray:[self wifiValues]];
-	} else if ( [key isEqualToString:@"cuisine"] ) {
-		[set addObjectsFromArray:[self cuisineEthnicValues]];
-		[set addObjectsFromArray:[self cuisineStyleValues]];
-	} else if ( [key isEqualToString:@"fixme"] || [key isEqualToString:@"FIXME"] ) {
-		[set addObjectsFromArray:[self fixmeValues]];
-	} else if ( [key isEqualToString:@"source"] ) {
-		[set addObjectsFromArray:[self sourceValues]];
-	}
-
-
-	return set;
-}
-
-
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {
 	NSDictionary * valDict = [_keyDict objectForKey:key];

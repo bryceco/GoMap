@@ -53,8 +53,6 @@
 }
 +(TagInfoDatabase *)sharedTagInfoDatabase;
 
--(NSSet *)allTagValuesForKey:(NSString *)key;
-
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
 
