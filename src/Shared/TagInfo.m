@@ -365,10 +365,6 @@ static TagInfo * g_DefaultRender = nil;
 	return menu;
 }
 
--(NSMenu *)tagNodeMenuWithTarget:(id)target action:(SEL)action
-{
-	return [self menuWithTag:@"node" target:target action:action];
-}
 -(NSMenu *)tagWayMenuWithTarget:(id)target action:(SEL)action
 {
 	return nil;

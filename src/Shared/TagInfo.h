@@ -58,7 +58,6 @@
 
 #if TARGET_OS_IPHONE
 #else
--(NSMenu *)tagNodeMenuWithTarget:(id)target action:(SEL)action;
 -(NSMenu *)tagWayMenuWithTarget:(id)target action:(SEL)action;
 #endif
 -(NSArray *)tagsForNodes;
