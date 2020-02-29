@@ -330,11 +330,6 @@ static TagInfo * g_DefaultRender = nil;
 	return list;
 }
 
--(NSArray *)tagsForNodes
-{
-	return [self tagsBelongTo:nil type:@"node"];
-}
-
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {
 	NSDictionary * valDict = [_keyDict objectForKey:key];
