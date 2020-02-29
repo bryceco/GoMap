@@ -314,11 +314,6 @@ static TagInfo * g_DefaultRender = nil;
 	return self;
 }
 
-#if TARGET_OS_IPHONE
-#else
-#endif
-
-
 -(NSArray *)tagsBelongTo:(NSString *)parentItem type:(NSString *)type
 {
 	__block NSMutableArray * list = [NSMutableArray new];

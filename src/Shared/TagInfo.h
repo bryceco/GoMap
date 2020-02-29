@@ -56,9 +56,6 @@
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
 
-#if TARGET_OS_IPHONE
-#else
-#endif
 -(NSArray *)tagsForNodes;
 
 -(NSArray *)cuisineStyleValues;
