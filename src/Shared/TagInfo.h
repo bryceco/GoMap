@@ -38,7 +38,6 @@
 
 -(NSInteger)renderSize:(OsmBaseObject *)object;
 
-+(NSColor *)colorForString:(NSString *)text;
 +(NSString *)stringForColor:(NSColor *)color;
 
 @end
