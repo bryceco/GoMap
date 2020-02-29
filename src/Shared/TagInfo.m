@@ -398,15 +398,6 @@ static TagInfo * g_DefaultRender = nil;
 	return g_DefaultRender;
 }
 
--(NSArray *)wifiValues
-{
-	return @[
-			@"free",
-			@"yes",
-			@"no",
-	  ];
-}
-
 -(NSArray *)fixmeValues
 {
 	return @[
