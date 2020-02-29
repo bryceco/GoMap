@@ -57,7 +57,6 @@
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
 
 #if TARGET_OS_IPHONE
-- (NSArray *)subitemsOfType:(NSString *)type belongTo:(NSString *)belongTo;
 - (NSArray *)itemsForTag:(NSString *)type matching:(NSString *)searchText;
 #else
 -(NSMenu *)tagNodeMenuWithTarget:(id)target action:(SEL)action;

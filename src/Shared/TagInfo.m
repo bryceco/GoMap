@@ -314,38 +314,6 @@ static TagInfo * g_DefaultRender = nil;
 	return self;
 }
 
-// belongTo means that the text appears either as the key or the belongTo field
--(NSArray *)subitemsOfType:(NSString *)type belongTo:(NSString *)belongTo
-{
-	// get set of key values for children (creates an array of strings)
-	NSArray * childTags = [self tagsBelongTo:belongTo type:type];
-	NSMutableSet * set = [NSMutableSet new];
-	for ( TagInfo * child in childTags ) {
-		[set addObject:child.key];
-	}
-	NSArray * tags = [set allObjects];
-	NSDictionary * featureKeys = [OsmBaseObject featureKeys];
-	tags = [tags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * key, NSDictionary *bindings) {
-		return featureKeys[ key ] != nil;
-	}]];
-
-	// get values for key (creates an array of TagInfo)
-	NSDictionary * valueDict = [_keyDict objectForKey:belongTo];
-	NSArray * valueArray = [valueDict allValues];
-	valueArray = [valueArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(TagInfo * tagInfo, NSDictionary *bindings) {
-		return [tagInfo.type rangeOfString:type].length > 0;
-	}]];
-
-	tags = [tags arrayByAddingObjectsFromArray:valueArray];
-
-	tags = [tags sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
-		NSString * s1 = [obj1 isKindOfClass:[NSString class]] ? obj1 : ((TagInfo *)obj1).friendlyName;
-		NSString * s2 = [obj2 isKindOfClass:[NSString class]] ? obj2 : ((TagInfo *)obj2).friendlyName;
-		return [s1 caseInsensitiveCompare:s2];
-	}];
-	return tags;
-}
-
 - (NSArray *)itemsForTag:(NSString *)type matching:(NSString *)searchText
 {
 	return [_allTags filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(TagInfo * tag, NSDictionary *bindings) {
