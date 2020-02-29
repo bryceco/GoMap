@@ -398,15 +398,6 @@ static TagInfo * g_DefaultRender = nil;
 	return g_DefaultRender;
 }
 
--(NSArray *)fixmeValues
-{
-	return @[
-			@"resurvey",
-			@"name",
-			@"continue",
-	];
-}
-
 -(NSArray *)sourceValues
 {
 	return @[
