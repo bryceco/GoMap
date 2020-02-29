@@ -314,22 +314,6 @@ static TagInfo * g_DefaultRender = nil;
 	return self;
 }
 
--(NSArray *)tagsBelongTo:(NSString *)parentItem type:(NSString *)type
-{
-	__block NSMutableArray * list = [NSMutableArray new];
-	[_keyDict enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSDictionary * valDict, BOOL *stop1) {
-		[valDict enumerateKeysAndObjectsUsingBlock:^(NSString * value, TagInfo * tagInfo, BOOL *stop2) {
-			if ( [tagInfo.type rangeOfString:type].length > 0 ) {
-				if ( parentItem ? [tagInfo.belongsTo rangeOfString:parentItem].length > 0 : tagInfo.belongsTo.length == 0 ) {
-					[list addObject:tagInfo];
-					*stop2 = YES;
-				}
-			}
-		}];
-	}];
-	return list;
-}
-
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {
 	NSDictionary * valDict = [_keyDict objectForKey:key];
