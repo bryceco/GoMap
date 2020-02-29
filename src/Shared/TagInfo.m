@@ -87,14 +87,6 @@ static TagInfo * g_DefaultRender = nil;
 	return _cgIcon;
 }
 
--(NSString *)friendlyName2
-{
-	NSString * text = [NSString stringWithFormat:@"%@ (%@)", _value, _key];
-	text = [text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-	text = text.capitalizedString;
-	return text;
-}
-
 +(NSColor *)colorForString:(NSString *)text
 {
 	if ( text == nil )

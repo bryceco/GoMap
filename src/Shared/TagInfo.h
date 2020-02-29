@@ -33,7 +33,6 @@
 
 -(NSImage *)icon;
 -(CGImageRef)cgIcon;
--(NSString *)friendlyName2;
 
 -(BOOL)isAddressPoint;
 
