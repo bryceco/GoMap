@@ -56,7 +56,6 @@
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
 
--(NSArray *)cuisineEthnicValues;
 -(NSArray *)wifiValues;
 -(NSArray *)fixmeValues;
 -(NSArray *)sourceValues;

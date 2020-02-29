@@ -398,45 +398,6 @@ static TagInfo * g_DefaultRender = nil;
 	return g_DefaultRender;
 }
 
--(NSArray *)cuisineEthnicValues
-{
-	static NSArray * _ethnicArray = nil;
-	if ( _ethnicArray == nil ) {
-		_ethnicArray = @[
-			@"african",
-			@"american",
-			@"arab",
-			@"argentinian",
-			@"asian",
-			@"balkan",
-			@"basque",
-			@"brazilian",
-			@"chinese",
-			@"croatian",
-			@"czech",
-			@"french",
-			@"german",
-			@"greek",
-			@"hawaiian",
-			@"indian",
-			@"iranian",
-			@"italian",
-			@"japanese",
-			@"korean",
-			@"latin_american",
-			@"lebanese",
-			@"mexican",
-			@"peruvian",
-			@"portuguese",
-			@"spanish",
-			@"thai",
-			@"turkish",
-			@"vietnamese"
-		];
-	}
-	return _ethnicArray;
-}
-
 -(NSArray *)wifiValues
 {
 	return @[
