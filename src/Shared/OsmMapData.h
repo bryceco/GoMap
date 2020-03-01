@@ -105,11 +105,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(void)registerUndoCommentString:(NSString *)comment;
 -(void)registerUndoCommentContext:(NSDictionary *)context;
 
-
--(void)setConstructed:(OsmBaseObject *)object;
-
 -(NSInteger)modificationCount;
--(OsmMapData *)modifiedObjects;
 
 -(BOOL)discardStaleData;
 
@@ -118,7 +114,6 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(int32_t)relationCount;
 
 -(NSArray<OsmWay *> *)waysContainingNode:(OsmNode *)node;
--(NSArray *)objectsContainingObject:(OsmBaseObject *)object;
 
 -(OsmNode *)nodeForRef:(NSNumber *)ref;
 -(OsmWay *)wayForRef:(NSNumber *)ref;
@@ -141,16 +136,12 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node;
 -(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object;
--(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
-
 
 - (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
 
 // upload changeset
 - (NSAttributedString *)changesetAsAttributedString;
-- (NSArray *)createChangeset;
 - (NSString *)changesetAsXml;
-- (NSString *)changesetAsHtml;
 - (void)uploadChangesetWithComment:(NSString *)comment imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
 - (void)uploadChangesetXml:(NSXMLDocument *)xmlDoc comment:(NSString *)comment imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion;
@@ -158,6 +149,5 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 +(NSString *)encodeBase64:(NSString *)plainText;
 
 -(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect;
--(OSMRect)rootRect;
 
 @end
