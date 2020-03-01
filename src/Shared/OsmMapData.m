@@ -1862,28 +1862,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return [xml XMLStringWithOptions:NSXMLNodePrettyPrint];
 }
 
--(NSString *)changesetAsHtml
-{
-#if 1 || TARGET_OS_IPHONE
-	return nil;
-#else
-	NSXMLDocument * xml = [self createXmlWithChangeset:@"0"];
-	if ( xml == nil )
-		return nil;
-	// get XSLT code
-	// http://www.w3schools.com/xml/tryxslt.asp?xmlfile=simple&xsltfile=simple
-	NSString *xsltPath = [[NSBundle mainBundle] pathForResource:@"changeset" ofType:@"xsl"];
-	assert(xsltPath);
-	NSURL * xsltUrl = [NSURL fileURLWithPath:xsltPath];
-	// transform through XSLT
-	NSXMLDocument * htmlDoc = (NSXMLDocument *)[xml objectByApplyingXSLTAtURL:xsltUrl arguments:nil error:nil];
-	// put in WebFrame
-	NSString * html = htmlDoc.XMLString;
-	return html;
-#endif
-}
-
-
 #pragma mark Save/Restore
 
 
