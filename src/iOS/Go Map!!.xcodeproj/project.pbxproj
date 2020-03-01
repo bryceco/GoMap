@@ -523,6 +523,7 @@
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
+		64F59A5E240BA18A0093DCDB /* OsmUserStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A5D240BA18A0093DCDB /* OsmUserStatistics.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1162,6 +1163,8 @@
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
+		64F59A5C240BA18A0093DCDB /* OsmUserStatistics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OsmUserStatistics.h; path = ../Shared/OsmUserStatistics.h; sourceTree = "<group>"; };
+		64F59A5D240BA18A0093DCDB /* OsmUserStatistics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OsmUserStatistics.m; path = ../Shared/OsmUserStatistics.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1900,6 +1903,8 @@
 				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
 				6453777423D3959500656A1C /* IsOsmBooleanFalse.h */,
 				6453777523D3959500656A1C /* IsOsmBooleanFalse.m */,
+				64F59A5C240BA18A0093DCDB /* OsmUserStatistics.h */,
+				64F59A5D240BA18A0093DCDB /* OsmUserStatistics.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -2627,6 +2632,7 @@
 				028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */,
 				0259E4081BCAEC88006C354C /* MyApplication.m in Sources */,
 				022ABCA120C1AACF002D4977 /* MultilineTableViewCell.m in Sources */,
+				64F59A5E240BA18A0093DCDB /* OsmUserStatistics.m in Sources */,
 				02F371B416A4F3E6003E9548 /* HelpViewController.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
 				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,

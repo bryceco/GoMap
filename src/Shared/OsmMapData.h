@@ -36,18 +36,6 @@ typedef void 		(^EditActionWithNode)(OsmNode * node);
 typedef OsmWay    * (^EditActionReturnWay)(void);
 typedef OsmNode   * (^EditActionReturnNode)(void);
 
-
-
-@interface OsmUserStatistics : NSObject
-@property (strong,nonatomic)	NSString	*	user;
-@property (strong,nonatomic)	NSDate		*	lastEdit;
-@property (assign,nonatomic)	NSInteger		editCount;
-@property (strong,nonatomic)	NSMutableSet *	changeSets;
-@property (assign,nonatomic)	NSInteger		changeSetsCount;
-@end
-
-
-
 @interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate>
 {
 	NSString			*	_parserCurrentElementText;

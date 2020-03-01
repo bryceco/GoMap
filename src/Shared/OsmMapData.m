@@ -26,19 +26,11 @@
 
 #import "Database.h"
 #import "EditorMapLayer.h"
+#import "OsmUserStatistics.h"
 
 #define OSM_SERVER_KEY	@"OSM Server"
 
 NSString * OSM_API_URL;
-
-@implementation OsmUserStatistics
-@synthesize changeSetsCount = _changeSetsCount;
--(id)copyWithZone:(NSZone *)zone
-{
-	return self;
-}
-@end
-
 
 @interface ServerQuery : NSObject
 @property (strong,nonatomic)	NSMutableArray *	quadList;

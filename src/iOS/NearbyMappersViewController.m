@@ -12,7 +12,7 @@
 #import "MapView.h"
 #import "NearbyMappersViewController.h"
 #import "WebPageViewController.h"
-
+#import "OsmUserStatistics.h"
 
 @implementation NearbyMappersViewController
 
