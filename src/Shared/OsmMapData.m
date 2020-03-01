@@ -281,7 +281,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmNode * node,BOOL * stop){
 		block( node );
 	}];
-	[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmWay * way,BOOL * stop) {
+	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmWay * way,BOOL * stop) {
 		block( way );
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmRelation * relation,BOOL * stop){
@@ -314,7 +314,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 			[set addObject:value];
 		}
 	}];
-	[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 		NSString * value = [object.tags objectForKey:key];
 		if ( value ) {
 			[set addObject:value];
@@ -329,7 +329,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 	// special case for street names
 	if ( [key isEqualToString:@"addr:street"] ) {
-		[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 			NSString * value = [object.tags objectForKey:@"highway"];
 			if ( value ) {
 				value = [object.tags objectForKey:@"name"];
@@ -2050,7 +2050,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			if ( object.isNode ) {
 				[_nodes setObject:object forKey:object.ident];
 			} else if ( object.isWay ) {
-				[_ways setObject:object forKey:object.ident];
+				[_ways setObject:object.isWay forKey:object.ident];
 			} else if ( object.isRelation ) {
 				[_relations setObject:object.isRelation forKey:object.ident];
 			} else {
