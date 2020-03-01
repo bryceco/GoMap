@@ -106,7 +106,6 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(void)registerUndoCommentContext:(NSDictionary *)context;
 
 -(NSInteger)modificationCount;
--(OsmMapData *)modifiedObjects;
 
 -(BOOL)discardStaleData;
 
