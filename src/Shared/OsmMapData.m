@@ -436,7 +436,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return newDict;
 }
 
--(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object
 {
 	dict = DictWithTagsTruncatedTo255( dict );
 

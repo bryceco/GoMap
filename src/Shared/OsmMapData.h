@@ -140,7 +140,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 
 
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node;
--(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object;
 -(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects;
 
 
