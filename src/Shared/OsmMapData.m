@@ -249,9 +249,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	}
 }
 
--(NSArray *)waysContainingNode:(OsmNode *)node
+-(NSArray<OsmWay *> *)waysContainingNode:(OsmNode *)node
 {
-	__block NSMutableArray * a = [NSMutableArray new];
+	__block NSMutableArray<OsmWay *> * a = [NSMutableArray new];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * w, BOOL *stop) {
 		if ( [w.nodes containsObject:node] )
 			[a addObject:w];

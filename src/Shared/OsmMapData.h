@@ -117,7 +117,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(int32_t)nodeCount;
 -(int32_t)relationCount;
 
--(NSArray *)waysContainingNode:(OsmNode *)node;
+-(NSArray<OsmWay *> *)waysContainingNode:(OsmNode *)node;
 -(NSArray *)objectsContainingObject:(OsmBaseObject *)object;
 
 -(OsmNode *)nodeForRef:(NSNumber *)ref;
