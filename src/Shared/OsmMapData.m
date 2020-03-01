@@ -305,9 +305,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 
--(NSMutableSet *)tagValuesForKey:(NSString *)key
+-(NSMutableSet<NSString *> *)tagValuesForKey:(NSString *)key
 {
-	NSMutableSet * set = [NSMutableSet set];
+	NSMutableSet<NSString *> * set = [NSMutableSet set];
 	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 		NSString * value = [object.tags objectForKey:key];
 		if ( value ) {

@@ -130,7 +130,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 
 - (void)clearCachedProperties;
 
--(NSMutableSet *)tagValuesForKey:(NSString *)key;
+-(NSMutableSet<NSString *> *)tagValuesForKey:(NSString *)key;
 
 // editing
 +(NSSet<NSString *> *)tagsToAutomaticallyStrip;
