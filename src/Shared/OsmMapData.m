@@ -178,10 +178,10 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 
-+(NSSet *)tagsToAutomaticallyStrip
++(NSSet<NSString *> *)tagsToAutomaticallyStrip
 {
 	static dispatch_once_t onceToken;
-	static NSSet * s_ignoreSet = nil;
+	static NSSet<NSString *> * s_ignoreSet = nil;
 	dispatch_once(&onceToken, ^{
 		s_ignoreSet = [NSSet setWithObjects:
 				@"tiger:upload_uuid", @"tiger:tlid", @"tiger:source", @"tiger:separated",
