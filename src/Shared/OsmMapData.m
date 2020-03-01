@@ -27,18 +27,11 @@
 #import "Database.h"
 #import "EditorMapLayer.h"
 #import "OsmUserStatistics.h"
+#import "ServerQuery.h"
 
 #define OSM_SERVER_KEY	@"OSM Server"
 
 NSString * OSM_API_URL;
-
-@interface ServerQuery : NSObject
-@property (strong,nonatomic)	NSMutableArray *	quadList;
-@property (assign,nonatomic)	OSMRect				rect;
-@end
-@implementation ServerQuery
-@end
-
 
 #pragma mark OsmMapData
 

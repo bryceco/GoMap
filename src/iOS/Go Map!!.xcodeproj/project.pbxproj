@@ -524,6 +524,7 @@
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
 		64F59A5E240BA18A0093DCDB /* OsmUserStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A5D240BA18A0093DCDB /* OsmUserStatistics.m */; };
+		64F59A64240BA27C0093DCDB /* ServerQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A63240BA27B0093DCDB /* ServerQuery.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1165,6 +1166,8 @@
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
 		64F59A5C240BA18A0093DCDB /* OsmUserStatistics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OsmUserStatistics.h; path = ../Shared/OsmUserStatistics.h; sourceTree = "<group>"; };
 		64F59A5D240BA18A0093DCDB /* OsmUserStatistics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = OsmUserStatistics.m; path = ../Shared/OsmUserStatistics.m; sourceTree = "<group>"; };
+		64F59A62240BA27B0093DCDB /* ServerQuery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ServerQuery.h; path = ../Shared/ServerQuery.h; sourceTree = "<group>"; };
+		64F59A63240BA27B0093DCDB /* ServerQuery.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ServerQuery.m; path = ../Shared/ServerQuery.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1905,6 +1908,8 @@
 				6453777523D3959500656A1C /* IsOsmBooleanFalse.m */,
 				64F59A5C240BA18A0093DCDB /* OsmUserStatistics.h */,
 				64F59A5D240BA18A0093DCDB /* OsmUserStatistics.m */,
+				64F59A62240BA27B0093DCDB /* ServerQuery.h */,
+				64F59A63240BA27B0093DCDB /* ServerQuery.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -2605,6 +2610,7 @@
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
+				64F59A64240BA27C0093DCDB /* ServerQuery.m in Sources */,
 				02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
