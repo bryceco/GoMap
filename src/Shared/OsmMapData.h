@@ -24,7 +24,7 @@
 @class QuadBox;
 @class QuadMap;
 @class QuadMapC;
-
+@class OsmUserStatistics;
 
 BOOL IsOsmBooleanFalse( NSString * value );
 
@@ -157,7 +157,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 - (void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion;
 +(NSString *)encodeBase64:(NSString *)plainText;
 
--(NSArray *)userStatisticsForRegion:(OSMRect)rect;
+-(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect;
 -(OSMRect)rootRect;
 
 @end

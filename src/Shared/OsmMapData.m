@@ -343,9 +343,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 
--(NSArray *)userStatisticsForRegion:(OSMRect)rect
+-(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect
 {
-	NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, OsmUserStatistics *> * dict = [NSMutableDictionary dictionary];
 
 	[self enumerateObjectsInRegion:rect block:^(OsmBaseObject * base) {
 		NSDate * date = [base dateForTimestamp];
