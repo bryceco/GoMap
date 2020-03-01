@@ -53,7 +53,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 	NSString			*	_parserCurrentElementText;
 	NSMutableArray		*	_parserStack;
 	NSError				*	_parseError;
-	NSMutableDictionary	*	_nodes;
+	NSMutableDictionary<NSNumber *, OsmNode *>	*	_nodes;
 	NSMutableDictionary<NSNumber *, OsmWay *>	*	_ways;
 	NSMutableDictionary<NSNumber *, OsmRelation *>	*	_relations;
 	QuadMap				*	_region;	// currently downloaded region

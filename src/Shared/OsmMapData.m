@@ -278,7 +278,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 - (void)enumerateObjectsUsingBlock:(void (^)(OsmBaseObject * obj))block
 {
-	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmNode * node,BOOL * stop){
+	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmNode * node,BOOL * stop){
 		block( node );
 	}];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmWay * way,BOOL * stop) {
@@ -308,7 +308,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 -(NSMutableSet *)tagValuesForKey:(NSString *)key
 {
 	NSMutableSet * set = [NSMutableSet set];
-	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 		NSString * value = [object.tags objectForKey:key];
 		if ( value ) {
 			[set addObject:value];
@@ -2048,7 +2048,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
 
 			if ( object.isNode ) {
-				[_nodes setObject:object forKey:object.ident];
+				[_nodes setObject:object.isNode forKey:object.ident];
 			} else if ( object.isWay ) {
 				[_ways setObject:object.isWay forKey:object.ident];
 			} else if ( object.isRelation ) {
