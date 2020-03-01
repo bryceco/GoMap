@@ -392,7 +392,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 {
     return _tags;
 }
--(void)setTags:(NSDictionary *)tags undo:(UndoManager *)undo
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)tags undo:(UndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);

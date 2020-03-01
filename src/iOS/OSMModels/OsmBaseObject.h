@@ -95,7 +95,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 
 -(void)incrementModifyCount:(UndoManager *)undo;
 -(void)resetModifyCount:(UndoManager *)undo;
--(void)setTags:(NSDictionary *)tags undo:(UndoManager *)undo;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)tags undo:(UndoManager *)undo;
 -(void)setTimestamp:(NSDate *)date undo:(UndoManager *)undo;
 -(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo;
 
