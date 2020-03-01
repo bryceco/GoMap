@@ -44,7 +44,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 @protected
     int32_t                _modifyCount;
     BOOL                _constructed;
-    NSDictionary    *    _tags;
+    NSDictionary<NSString *, NSString *>    *    _tags;
     NSNumber        *    _ident;
     NSArray            *    _parentRelations;
 
@@ -65,7 +65,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 
 
 // attributes
-@property (readonly,nonatomic)    NSDictionary    *    tags;
+@property (readonly,nonatomic)    NSDictionary<NSString *, NSString *>    *    tags;
 @property (readonly,nonatomic)    NSNumber        *    ident;
 @property (readonly,nonatomic)    NSString        *    user;
 @property (readonly,nonatomic)    NSString        *    timestamp;

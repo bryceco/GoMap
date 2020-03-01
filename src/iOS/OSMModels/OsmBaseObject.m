@@ -388,7 +388,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     _deleted = deleted;
 }
 
--(NSDictionary *)tags
+-(NSDictionary<NSString *, NSString *> *)tags
 {
     return _tags;
 }
