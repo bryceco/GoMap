@@ -399,11 +399,6 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 #pragma mark Editing
 
--(void)registerUndoWithTarget:(id)target selector:(SEL)selector objects:(NSArray *)objects
-{
-	[_undoManager registerUndoWithTarget:target selector:selector objects:objects];
-}
-
 -(void)incrementModifyCount:(OsmBaseObject *)object
 {
 	[_undoManager registerUndoWithTarget:self selector:@selector(incrementModifyCount:) objects:@[object]];
