@@ -170,14 +170,6 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	[appDelegate.mapView save];	// this will also invalidate the timer
 }
 
-
-
--(OSMRect)rootRect
-{
-	return _spatial.rootQuad.rect;
-}
-
-
 +(NSSet *)tagsToAutomaticallyStrip
 {
 	static dispatch_once_t onceToken;

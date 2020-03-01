@@ -149,6 +149,5 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 +(NSString *)encodeBase64:(NSString *)plainText;
 
 -(NSArray *)userStatisticsForRegion:(OSMRect)rect;
--(OSMRect)rootRect;
 
 @end
