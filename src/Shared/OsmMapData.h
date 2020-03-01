@@ -141,7 +141,6 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 
 // upload changeset
 - (NSAttributedString *)changesetAsAttributedString;
-- (NSArray *)createChangeset;
 - (NSString *)changesetAsXml;
 - (NSString *)changesetAsHtml;
 - (void)uploadChangesetWithComment:(NSString *)comment imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
