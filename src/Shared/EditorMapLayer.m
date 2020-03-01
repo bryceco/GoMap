@@ -1575,7 +1575,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  @param node The `OsmNode` instance to get the layers for.
  @return A list of `CALayer` instances that are used to represent the given `node` on the map.
  */
-- (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node {
+- (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node
+{
     NSMutableArray<CALayer *> *layers = [NSMutableArray array];
     
     CALayer *directionLayer = [self directionShapeLayerWithNode:node];
@@ -1605,14 +1606,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     }
     if ( icon ) {
         CALayer * layer = [CALayer new];
-        layer.bounds        = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        layer.anchorPoint    = CGPointMake(0.5, 0.5);
-        layer.position        = CGPointMake(pt.x,pt.y);
-        layer.contents        = (id)icon.CGImage;
-        layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-        layer.cornerRadius    = 5;
-        layer.masksToBounds = YES;
-        layer.zPosition        = Z_NODE;
+        layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        layer.anchorPoint    	= CGPointMake(0.5, 0.5);
+        layer.position        	= CGPointMake(pt.x,pt.y);
+        layer.contents        	= (id)icon.CGImage;
+        layer.backgroundColor 	= [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+        layer.cornerRadius    	= 5;
+        layer.masksToBounds 	= YES;
+        layer.zPosition        	= Z_NODE;
         
         LayerProperties * props = [LayerProperties new];
         [layer setValue:props forKey:@"properties"];
@@ -1628,9 +1629,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         if ( houseNumber ) {
             
             CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
-            layer.anchorPoint    = CGPointMake(0.5, 0.5);
-            layer.position        = CGPointMake(pt.x, pt.y);
-            layer.zPosition        = Z_NODE;
+            layer.anchorPoint	= CGPointMake(0.5, 0.5);
+            layer.position      = CGPointMake(pt.x, pt.y);
+            layer.zPosition     = Z_NODE;
             LayerProperties * props = [LayerProperties new];
             [layer setValue:props forKey:@"properties"];
             props->position = pt;
@@ -1643,17 +1644,17 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
             CAShapeLayer * layer = [CAShapeLayer new];
             CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
                                      round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
-            CGPathRef path        = CGPathCreateWithRect( rect, NULL );
-            layer.path            = path;
-            layer.frame         = CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
-                                             MinIconSizeInPixels, MinIconSizeInPixels);
-            layer.position            = CGPointMake(pt.x,pt.y);
-            layer.strokeColor        = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
-            layer.fillColor            = nil;
-            layer.lineWidth            = 2.0;
-            layer.backgroundColor    = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
-            layer.cornerRadius        = 5.0;
-            layer.zPosition            = Z_NODE;
+            CGPathRef path        	= CGPathCreateWithRect( rect, NULL );
+            layer.path            	= path;
+            layer.frame         	= CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
+												  MinIconSizeInPixels, MinIconSizeInPixels);
+            layer.position          = CGPointMake(pt.x,pt.y);
+            layer.strokeColor       = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
+            layer.fillColor         = nil;
+            layer.lineWidth         = 2.0;
+            layer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+            layer.cornerRadius      = 5.0;
+            layer.zPosition         = Z_NODE;
             
             LayerProperties * props = [LayerProperties new];
             [layer setValue:props forKey:@"properties"];
@@ -1673,8 +1674,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  @param node The node to get the layer for.
  @return A `CALayer` instance for rendering the given node's direction.
  */
-- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node {
-    CGFloat direction = node.direction;
+- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node
+{
+    NSInteger direction = node.direction;
     if (direction == NSNotFound) {
         // Without a direction, there's nothing we could display.
         return nil;
@@ -1719,7 +1721,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     return layer;
 }
 
-- (CGFloat)radiansFromDegrees:(CGFloat)degrees {
+- (CGFloat)radiansFromDegrees:(CGFloat)degrees
+{
     return degrees * M_PI / 180;
 }
 

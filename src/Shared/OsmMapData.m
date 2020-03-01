@@ -170,10 +170,11 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	[appDelegate.mapView save];	// this will also invalidate the timer
 }
 
-+(NSSet *)tagsToAutomaticallyStrip
+
++(NSSet<NSString *> *)tagsToAutomaticallyStrip
 {
 	static dispatch_once_t onceToken;
-	static NSSet * s_ignoreSet = nil;
+	static NSSet<NSString *> * s_ignoreSet = nil;
 	dispatch_once(&onceToken, ^{
 		s_ignoreSet = [NSSet setWithObjects:
 				@"tiger:upload_uuid", @"tiger:tlid", @"tiger:source", @"tiger:separated",
@@ -241,9 +242,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	}
 }
 
--(NSArray *)waysContainingNode:(OsmNode *)node
+-(NSArray<OsmWay *> *)waysContainingNode:(OsmNode *)node
 {
-	__block NSMutableArray * a = [NSMutableArray new];
+	__block NSMutableArray<OsmWay *> * a = [NSMutableArray new];
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * w, BOOL *stop) {
 		if ( [w.nodes containsObject:node] )
 			[a addObject:w];
@@ -270,14 +271,14 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 - (void)enumerateObjectsUsingBlock:(void (^)(OsmBaseObject * obj))block
 {
-	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmNode * node,BOOL * stop){
+	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmNode * node,BOOL * stop){
 		block( node );
 	}];
-	[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmWay * way,BOOL * stop) {
+	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmWay * way,BOOL * stop) {
 		block( way );
 	}];
-	[_relations enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmNode * node,BOOL * stop){
-		block( node );
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmRelation * relation,BOOL * stop){
+		block( relation );
 	}];
 }
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
@@ -297,22 +298,22 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 
--(NSMutableSet *)tagValuesForKey:(NSString *)key
+-(NSMutableSet<NSString *> *)tagValuesForKey:(NSString *)key
 {
-	NSMutableSet * set = [NSMutableSet set];
-	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+	NSMutableSet<NSString *> * set = [NSMutableSet set];
+	[_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 		NSString * value = [object.tags objectForKey:key];
 		if ( value ) {
 			[set addObject:value];
 		}
 	}];
-	[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+	[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 		NSString * value = [object.tags objectForKey:key];
 		if ( value ) {
 			[set addObject:value];
 		}
 	}];
-	[_relations enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 		NSString * value = [object.tags objectForKey:key];
 		if ( value ) {
 			[set addObject:value];
@@ -321,7 +322,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 	// special case for street names
 	if ( [key isEqualToString:@"addr:street"] ) {
-		[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 			NSString * value = [object.tags objectForKey:@"highway"];
 			if ( value ) {
 				value = [object.tags objectForKey:@"name"];
@@ -335,9 +336,9 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 
 
--(NSArray *)userStatisticsForRegion:(OSMRect)rect
+-(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect
 {
-	NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, OsmUserStatistics *> * dict = [NSMutableDictionary dictionary];
 
 	[self enumerateObjectsInRegion:rect block:^(OsmBaseObject * base) {
 		NSDate * date = [base dateForTimestamp];
@@ -423,7 +424,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return newDict;
 }
 
--(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object
 {
 	dict = DictWithTagsTruncatedTo255( dict );
 
@@ -2013,11 +2014,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		if ( [object isKindOfClass:[OsmBaseObject class]] ) {
 
 			if ( object.isNode ) {
-				[_nodes setObject:object forKey:object.ident];
+				[_nodes setObject:object.isNode forKey:object.ident];
 			} else if ( object.isWay ) {
-				[_ways setObject:object forKey:object.ident];
+				[_ways setObject:object.isWay forKey:object.ident];
 			} else if ( object.isRelation ) {
-				[_relations setObject:object forKey:object.ident];
+				[_relations setObject:object.isRelation forKey:object.ident];
 			} else {
 				assert(NO);
 			}

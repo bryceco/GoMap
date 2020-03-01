@@ -388,11 +388,11 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     _deleted = deleted;
 }
 
--(NSDictionary *)tags
+-(NSDictionary<NSString *, NSString *> *)tags
 {
     return _tags;
 }
--(void)setTags:(NSDictionary *)tags undo:(UndoManager *)undo
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)tags undo:(UndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);

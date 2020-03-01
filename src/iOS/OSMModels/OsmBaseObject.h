@@ -44,7 +44,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 @protected
     int32_t                _modifyCount;
     BOOL                _constructed;
-    NSDictionary    *    _tags;
+    NSDictionary<NSString *, NSString *>    *    _tags;
     NSNumber        *    _ident;
     NSArray            *    _parentRelations;
 
@@ -65,7 +65,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 
 
 // attributes
-@property (readonly,nonatomic)    NSDictionary    *    tags;
+@property (readonly,nonatomic)    NSDictionary<NSString *, NSString *>    *    tags;
 @property (readonly,nonatomic)    NSNumber        *    ident;
 @property (readonly,nonatomic)    NSString        *    user;
 @property (readonly,nonatomic)    NSString        *    timestamp;
@@ -95,7 +95,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 
 -(void)incrementModifyCount:(UndoManager *)undo;
 -(void)resetModifyCount:(UndoManager *)undo;
--(void)setTags:(NSDictionary *)tags undo:(UndoManager *)undo;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)tags undo:(UndoManager *)undo;
 -(void)setTimestamp:(NSDate *)date undo:(UndoManager *)undo;
 -(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo;
 

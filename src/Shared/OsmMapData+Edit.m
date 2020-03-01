@@ -314,7 +314,7 @@
 
 	// gather restrictions for parent ways
 	for ( OsmNode * node in nodes ) {
-		NSArray * parents = [self waysContainingNode:node];
+		NSArray<OsmWay *> * parents = [self waysContainingNode:node];
 		for ( OsmWay * parent in parents ) {
 			for ( OsmRelation * relation in parent.parentRelations ) {
 				if ( relation.isRestriction ) {
@@ -1065,7 +1065,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		return nil;	// must be endpoint node
 	}
 
-	NSArray * ways = [self waysContainingNode:selectedNode];
+	NSArray<OsmWay *> * ways = [self waysContainingNode:selectedNode];
 	OsmWay * otherWay = nil;
 	for ( OsmWay * way in ways ) {
 		if ( way == selectedWay )

@@ -1257,6 +1257,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	
 	NSString * iconName = _dict[ @"icon" ];
 	if ( iconName ) {
+		if ( [iconName hasPrefix:@"maki-"] )
+			iconName = [iconName substringFromIndex:5];
 		NSString * path = [NSString stringWithFormat:@"poi/%@-24", iconName];
 		_icon = [UIImage imageNamed:path];
 		if ( _icon )

@@ -24,7 +24,7 @@
 @class QuadBox;
 @class QuadMap;
 @class QuadMapC;
-
+@class OsmUserStatistics;
 
 BOOL IsOsmBooleanFalse( NSString * value );
 
@@ -53,9 +53,9 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 	NSString			*	_parserCurrentElementText;
 	NSMutableArray		*	_parserStack;
 	NSError				*	_parseError;
-	NSMutableDictionary	*	_nodes;
-	NSMutableDictionary	*	_ways;
-	NSMutableDictionary	*	_relations;
+	NSMutableDictionary<NSNumber *, OsmNode *>	*	_nodes;
+	NSMutableDictionary<NSNumber *, OsmWay *>	*	_ways;
+	NSMutableDictionary<NSNumber *, OsmRelation *>	*	_relations;
 	QuadMap				*	_region;	// currently downloaded region
 	QuadMap				*	_spatial;	// spatial index of osm data
 	UndoManager			*	_undoManager;
@@ -113,7 +113,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(int32_t)nodeCount;
 -(int32_t)relationCount;
 
--(NSArray *)waysContainingNode:(OsmNode *)node;
+-(NSArray<OsmWay *> *)waysContainingNode:(OsmNode *)node;
 
 -(OsmNode *)nodeForRef:(NSNumber *)ref;
 -(OsmWay *)wayForRef:(NSNumber *)ref;
@@ -125,17 +125,17 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 
 - (void)clearCachedProperties;
 
--(NSMutableSet *)tagValuesForKey:(NSString *)key;
+-(NSMutableSet<NSString *> *)tagValuesForKey:(NSString *)key;
 
 // editing
-+(NSSet *)tagsToAutomaticallyStrip;
++(NSSet<NSString *> *)tagsToAutomaticallyStrip;
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
 -(OsmWay *)createWay;
 -(OsmRelation *)createRelation;
 
 
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node;
--(void)setTags:(NSDictionary *)dict forObject:(OsmBaseObject *)object;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object;
 
 - (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
 
@@ -148,6 +148,6 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 - (void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion;
 +(NSString *)encodeBase64:(NSString *)plainText;
 
--(NSArray *)userStatisticsForRegion:(OSMRect)rect;
+-(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect;
 
 @end
