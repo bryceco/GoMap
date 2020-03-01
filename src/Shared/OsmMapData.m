@@ -284,8 +284,8 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	[_ways enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmWay * way,BOOL * stop) {
 		block( way );
 	}];
-	[_relations enumerateKeysAndObjectsUsingBlock:^(NSString * ident,OsmNode * node,BOOL * stop){
-		block( node );
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident,OsmRelation * relation,BOOL * stop){
+		block( relation );
 	}];
 }
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
@@ -320,7 +320,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 			[set addObject:value];
 		}
 	}];
-	[_relations enumerateKeysAndObjectsUsingBlock:^(NSString * ident, OsmBaseObject * object, BOOL *stop) {
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmBaseObject * object, BOOL *stop) {
 		NSString * value = [object.tags objectForKey:key];
 		if ( value ) {
 			[set addObject:value];
@@ -2052,7 +2052,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			} else if ( object.isWay ) {
 				[_ways setObject:object forKey:object.ident];
 			} else if ( object.isRelation ) {
-				[_relations setObject:object forKey:object.ident];
+				[_relations setObject:object.isRelation forKey:object.ident];
 			} else {
 				assert(NO);
 			}

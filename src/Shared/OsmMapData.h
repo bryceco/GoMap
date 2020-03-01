@@ -55,7 +55,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 	NSError				*	_parseError;
 	NSMutableDictionary	*	_nodes;
 	NSMutableDictionary	*	_ways;
-	NSMutableDictionary	*	_relations;
+	NSMutableDictionary<NSNumber *, OsmRelation *>	*	_relations;
 	QuadMap				*	_region;	// currently downloaded region
 	QuadMap				*	_spatial;	// spatial index of osm data
 	UndoManager			*	_undoManager;
