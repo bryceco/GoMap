@@ -50,42 +50,6 @@ static TagInfo * g_DefaultRender = nil;
 	return self == g_AddressRender;
 }
 
--(NSImage *)icon
-{
-	if ( _icon == nil ) {
-		NSString * name = self.iconName;
-		if ( name.length ) {
-			if ( ![name hasSuffix:@".png"] )
-				name = [name stringByAppendingString:@".p.64.png"];
-			_icon = [NSImage imageNamed:name];
-			if ( _icon == nil ) {
-				DLog(@"missing icon for path '%@'", name);
-			}
-		}
-	}
-	return _icon;
-}
--(CGImageRef)cgIcon
-{
-	if ( _cgIcon == NULL ) {
-#if TARGET_OS_IPHONE
-		NSImage * image = [self icon];
-		_cgIcon = image.CGImage;
-#else
-		NSString * name = self.iconName;
-		if ( name.length ) {
-			name = [name stringByAppendingString:@".p.64.png"];
-			name = [[NSBundle mainBundle] pathForImageResource:name];
-			CGDataProviderRef provider = CGDataProviderCreateWithFilename(name.UTF8String);
-			if ( provider )  {
-				_cgIcon = CGImageCreateWithPNGDataProvider( provider, nil, true, kCGRenderingIntentDefault );
-				CGDataProviderRelease( provider );
-			}
-		}
-#endif
-	}
-	return _cgIcon;
-}
 
 +(NSColor *)colorForString:(NSString *)text
 {
@@ -127,17 +91,6 @@ static TagInfo * g_DefaultRender = nil;
 -(void)setAreaColorText:(NSString *)areaColorText
 {
 	self.areaColor = [TagInfo colorForString:areaColorText];
-}
-
--(NSString *)iconName
-{
-	return _iconName;
-}
--(void)setIconName:(NSString *)iconName
-{
-	_iconName = iconName;
-	_icon = nil;
-	_cgIcon = NULL;
 }
 
 

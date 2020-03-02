@@ -398,7 +398,7 @@
 			return;	// should never happen
 		NSSet * set = [CommonTagList allTagValuesForKey:key];
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+		NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];
 		NSArray * list = [values allObjects];
 		[(AutocompleteTextField *)textField setCompletions:list];

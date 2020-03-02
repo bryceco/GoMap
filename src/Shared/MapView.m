@@ -2148,7 +2148,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	if ( _editorLayer.selectedWay ) {
 		if ( _editorLayer.selectedNode ) {
 			// node in way
-			NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
+			NSArray<OsmWay *> * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
             BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
 			BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
 			BOOL join 			= parentWays.count > 1;
@@ -2561,7 +2561,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 	NSArray<OsmBaseObject *> * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
-	NSArray * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
+	NSArray<OsmWay *> * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
 	if ( way.nodes.count < 3 ) {
 		ignoreList = [parentWays arrayByAddingObjectsFromArray:way.nodes];
 	} else if ( index == 0 ) {
