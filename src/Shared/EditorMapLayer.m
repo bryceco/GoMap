@@ -1586,24 +1586,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
     
-    // first use TagInfo database
-    UIImage * icon = node.tagInfo.scaledIcon;
-    if ( icon == nil ) {
-        icon = node.tagInfo.icon;
-        if ( icon ) {
-            CGFloat uiScaling = [[UIScreen mainScreen] scale];
-            UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-            [icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
-            icon = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            node.tagInfo.scaledIcon = icon;
-        }
-    }
-    if ( icon == nil ) {
-        NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
-        CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
-        icon = feature.icon;
-    }
+    // fetch icon
+    NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
+    CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+	UIImage * icon = feature.icon;
     if ( icon ) {
         CALayer * layer = [CALayer new];
         layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);

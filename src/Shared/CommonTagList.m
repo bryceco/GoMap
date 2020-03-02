@@ -1245,39 +1245,28 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return tagInfo.summary;
 }
 
--(UIImage *)iconUnscaled
-{
-	if ( _icon )
-		return _icon;
 
-	TagInfo * tagInfo = [self tagInfo];
-	_icon = tagInfo.icon;
-	if ( _icon )
-		return _icon;
-	
+// Icons and names are synced to the iD presets.json file.
+// SVG icons can be found in Maki/Temaki and the iD source tree
+// To convert from SVG to PDF use: /Volumes/Inkscape/Inkscape.app/Contents/MacOS/inkscape  --export-type=pdf *.svg
+// To rename files with the proper prefix use: for f in `ls *.pdf`; do echo mv $f `echo $f | sed 's/^/maki-/;s/-15//'`; done | bash
+-(UIImage *)iconUncached
+{
 	NSString * iconName = _dict[ @"icon" ];
 	if ( iconName ) {
-		if ( [iconName hasPrefix:@"maki-"] )
-			iconName = [iconName substringFromIndex:5];
-		NSString * path = [NSString stringWithFormat:@"poi/%@-24", iconName];
-		_icon = [UIImage imageNamed:path];
-		if ( _icon )
-			return _icon;
-		
-		_icon = [UIImage imageNamed:iconName];
-		if ( _icon ) {
-			return _icon;
+		UIImage * icon = [UIImage imageNamed:iconName];
+		if ( icon ) {
+			return icon;
 		}
 	}
-	_icon = (id)[NSNull null];
-	return _icon;
+	return (id)[NSNull null];
 }
 
 -(UIImage *)icon
 {
 	extern const double MinIconSizeInPixels;
 	if ( _icon == nil ) {
-		[self iconUnscaled];
+		_icon = [self iconUncached];
 		if ( ![_icon isKindOfClass:[NSNull class]] ) {
 #if TARGET_OS_IPHONE
 			CGFloat uiScaling = [[UIScreen mainScreen] scale];

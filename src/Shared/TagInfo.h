@@ -28,11 +28,7 @@
 @property (assign,nonatomic)	CGFloat			lineWidth;
 @property (strong,nonatomic)	NSColor		*	areaColor;
 @property (assign,nonatomic)	NSString	*	areaColorText;
-// to cache scaled icon:
-@property (strong,nonatomic)	NSImage		*	scaledIcon;
 
--(NSImage *)icon;
--(CGImageRef)cgIcon;
 -(NSString *)friendlyName2;
 
 -(BOOL)isAddressPoint;
