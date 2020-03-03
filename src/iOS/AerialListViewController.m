@@ -108,7 +108,8 @@
 	else if ( [detail hasPrefix:@"http://"] )
 		detail = [detail substringFromIndex:7];
 	cell.textLabel.text = title;
-	cell.detailTextLabel.text = detail;
+	cell.detailTextLabel.text = aerial.isMaxar ? nil : detail;
+
 	return cell;
 }
 
@@ -200,7 +201,7 @@
 				editRow = indexPath;
 			}
 			c.name = service.name;
-			c.url = service.url;
+			c.url = service.isMaxar ? nil : service.url;
 			c.zoom = @(service.maxZoom);
 		}
 

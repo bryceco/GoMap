@@ -31,7 +31,7 @@
 -(BOOL)isBingAerial;
 -(BOOL)isMapnik;
 -(BOOL)isOsmGpxOverlay;
-
+-(BOOL)isMaxar;
 
 -(void)scaleAttributionIconToHeight:(CGFloat)height;
 -(void)loadIconFromWeb:(NSString *)url;

@@ -77,6 +77,7 @@
 		0259E4081BCAEC88006C354C /* MyApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259E4071BCAEC88006C354C /* MyApplication.m */; };
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
+		025B99A3240DEF1D007E0342 /* aes.m in Sources */ = {isa = PBXBuildFile; fileRef = 025B99A2240DEF1D007E0342 /* aes.m */; };
 		025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */; };
 		0260484219E66C8700415CB1 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0260484119E66C8700415CB1 /* DisplayLink.m */; };
 		02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02695B8C1A08C1DB0028D95E /* NotesTableViewController.m */; };
@@ -319,6 +320,8 @@
 		025A1CFA1690B96E002B60CB /* OSM-Logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo57.png"; sourceTree = "<group>"; };
 		025A1CFB1690B96E002B60CB /* OSM-Logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo114.png"; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		025B99A1240DEF1D007E0342 /* aes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aes.h; path = ../Shared/aes.h; sourceTree = "<group>"; };
+		025B99A2240DEF1D007E0342 /* aes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = aes.m; path = ../Shared/aes.m; sourceTree = "<group>"; };
 		025F1CF21BCD9B070097D7FE /* TapAndDragGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TapAndDragGesture.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TapAndDragGesture.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0260484019E66C8700415CB1 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; };
@@ -928,6 +931,8 @@
 				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
 				6453777423D3959500656A1C /* IsOsmBooleanFalse.h */,
 				6453777523D3959500656A1C /* IsOsmBooleanFalse.m */,
+				025B99A1240DEF1D007E0342 /* aes.h */,
+				025B99A2240DEF1D007E0342 /* aes.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1329,6 +1334,7 @@
 				64981F1F22667D7700178476 /* SettingsViewController.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
+				025B99A3240DEF1D007E0342 /* aes.m in Sources */,
 				6453776D23D3904E00656A1C /* OsmWay.m in Sources */,
 				6463E3CB23F948FE00E4F6ED /* GeekbenchScoreProvider.m in Sources */,
 				02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */,

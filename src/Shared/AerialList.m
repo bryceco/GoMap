@@ -8,6 +8,7 @@
 
 #import "iosapi.h"
 #import "AerialList.h"
+#import "aes.h"
 #import <CommonCrypto/CommonDigest.h>
 
 static NSString * CUSTOMAERIALLIST_KEY = @"AerialList";
@@ -18,6 +19,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 #define OSM_GPS_TRACE_IDENTIFIER	@"OsmGpsTraceIdentifier"
 #define MAPBOX_LOCATOR_IDENTIFIER	@"MapboxLocatorIdentifier"
 #define NO_NAME_IDENTIFIER          @"No Name Identifier"
+#define MAXAR_PREMIUM_IDENTIFIER	@"Maxar-Premium"
+#define MAXAR_STANDARD_IDENTIFIER	@"Maxar-Standard"
 
 
 
@@ -66,6 +69,11 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	return [self.identifier isEqualToString:OSM_GPS_TRACE_IDENTIFIER];
 }
+-(BOOL)isMaxar
+{
+	return [self.identifier isEqualToString:MAXAR_PREMIUM_IDENTIFIER] ||
+		   [self.identifier isEqualToString:MAXAR_STANDARD_IDENTIFIER];
+}
 
 +(AerialService *)defaultBingAerial
 {
@@ -84,6 +92,50 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 								   attribUrl:nil];
 	});
 	return bing;
+}
+
+
++(AerialService *)maxarPremiumAerial
+{
+	static AerialService * service = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		NSString * url = @"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9lQzmJACnINv3lFIonIZ1gY/yFVqi2FWnWCbTyFdy2+FlyrWqTfyeG8tstR+5wQsC+xmsaCmW8e41jROh1O0z+U";
+		service = [AerialService aerialWithName:@"Maxar Premium Aerial"
+								  identifier:MAXAR_PREMIUM_IDENTIFIER
+										 url:[aes decryptString:url]
+									 maxZoom:21
+									 roundUp:YES
+								  wmsProjection:nil
+									 polygon:NULL
+								attribString:@"Maxar Premium"
+								  attribIcon:nil
+								   attribUrl:@"https://wiki.openstreetmap.org/wiki/DigitalGlobe"];
+
+		[service loadIconFromWeb:@"https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png"];
+	});
+	return service;
+}
+
++(AerialService *)maxarStandardAerial
+{
+	static AerialService * service = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		NSString * url = @"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9mdAZEC5TmU3odUJQ0hNzczrKtUDmNujrTNfFVHhZZWPLEVZUC9cE94VF/AJkoIigdmXooJ+5UcPtH/uzc6NbOb";
+		service = [AerialService aerialWithName:MAXAR_STANDARD_IDENTIFIER
+								  identifier:@"Maxar-Standard"
+										 url:[aes decryptString:url]
+									 maxZoom:21
+									 roundUp:YES
+								  wmsProjection:nil
+									 polygon:NULL
+								attribString:@"Maxar Standard"
+								  attribIcon:nil
+								   attribUrl:@"https://wiki.openstreetmap.org/wiki/DigitalGlobe"];
+		[service loadIconFromWeb:@"https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png"];
+	});
+	return service;
 }
 
 +(instancetype)mapnik
@@ -228,7 +280,14 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	if ( _attributionIcon && fabs(_attributionIcon.size.height - height) > 0.1 ) {
 		CGFloat scale = _attributionIcon.size.height / height;
 #if TARGET_OS_IPHONE
-		_attributionIcon = [[UIImage alloc] initWithCGImage:_attributionIcon.CGImage scale:scale orientation:_attributionIcon.imageOrientation];
+		CGSize size = _attributionIcon.size;
+		size.height /= scale;
+		size.width  /= scale;
+		UIGraphicsBeginImageContext(size);
+		[_attributionIcon drawInRect:CGRectMake(0.0, 0.0, size.width, size.height)];
+		UIImage * imageCopy = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+		_attributionIcon = imageCopy;
 #else
 		NSSize size = { _attributionIcon.size.width * scale, _attributionIcon.size.height * scale };
 		NSImage * result = [[NSImage alloc] initWithSize:size];
@@ -284,6 +343,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	return @[
 			 [AerialService defaultBingAerial],
+			 [AerialService maxarPremiumAerial],
+			 [AerialService maxarStandardAerial]
 		 ];
 }
 
