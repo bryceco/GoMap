@@ -857,11 +857,10 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				6453776323D38D1F00656A1C /* OSMModels */,
-				6442666322540EDF00C0D545 /* Observable */,
-				02ACBD0016713FCF00BB4414 /* iosapi.h */,
 				02C3C73819A6DCEA003B6783 /* AerialList.h */,
 				02C3C73919A6DCEA003B6783 /* AerialList.m */,
+				025B99A1240DEF1D007E0342 /* aes.h */,
+				025B99A2240DEF1D007E0342 /* aes.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
 				022ABCA220C3750A002D4977 /* Buildings3DView.h */,
 				022ABCA320C3750A002D4977 /* Buildings3DView.m */,
@@ -884,6 +883,9 @@
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				0228442A16D8870C00A1C051 /* GpxLayer.h */,
 				0228442B16D8870C00A1C051 /* GpxLayer.m */,
+				02ACBD0016713FCF00BB4414 /* iosapi.h */,
+				6453777423D3959500656A1C /* IsOsmBooleanFalse.h */,
+				6453777523D3959500656A1C /* IsOsmBooleanFalse.m */,
 				02E6266E1997168800565D62 /* KeyChain.h */,
 				02E6266F1997168800565D62 /* KeyChain.m */,
 				02BED99A168CBC5300357B94 /* LocationBallLayer.h */,
@@ -898,10 +900,12 @@
 				02A8613C20A95C16008C465F /* NetworkStatus.m */,
 				02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */,
 				02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */,
+				6442666322540EDF00C0D545 /* Observable */,
 				02ACBA8316713F2A00BB4414 /* OsmMapData.h */,
 				02ACBA8416713F2A00BB4414 /* OsmMapData.m */,
 				021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */,
 				021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */,
+				6453776323D38D1F00656A1C /* OSMModels */,
 				02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */,
 				02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */,
 				024ADF3A16B1B38A00875658 /* PathUtil.h */,
@@ -929,10 +933,6 @@
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
 				021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */,
 				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
-				6453777423D3959500656A1C /* IsOsmBooleanFalse.h */,
-				6453777523D3959500656A1C /* IsOsmBooleanFalse.m */,
-				025B99A1240DEF1D007E0342 /* aes.h */,
-				025B99A2240DEF1D007E0342 /* aes.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
