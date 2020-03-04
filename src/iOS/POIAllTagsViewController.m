@@ -339,6 +339,17 @@
 	}
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	const int MAX_LENGTH = 256;
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
+    return newLength <= MAX_LENGTH || returnKey;
+}
+
 - (IBAction)toggleEditing:(id)sender
 {
 	POITabBarController * tabController = (id)self.tabBarController;

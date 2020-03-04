@@ -527,7 +527,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 			NSDate * endDate   = [AerialService dateFromString:endDateString];
 			if ( endDate && [endDate timeIntervalSinceNow] < -20*365.0*24*60*60 ) {
-				NSLog(@"Aerial: too old %@: %@\n",endDate,name);
+				NSLog(@"Aerial: too old %@: %@\n",endDateString,name);
 				continue;
 			}
 

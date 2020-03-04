@@ -435,6 +435,17 @@
     _saveButton.enabled = [tabController isTagDictChanged];
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	const int MAX_LENGTH = 256;
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
+    return newLength <= MAX_LENGTH || returnKey;
+}
+
 /**
  Determines whether the `DirectionViewController` can be used to measure the value for the tag with the given key.
  
