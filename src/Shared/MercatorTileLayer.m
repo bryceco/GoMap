@@ -690,9 +690,12 @@ typedef enum {
 	if ( minZoomLevel < 1 ) {
 		minZoomLevel = 1;
 	}
+	if ( minZoomLevel > 31 )	minZoomLevel = 31;	// shouldn't be necessary, except to shup up the Xcode analyzer
+
 	int32_t maxZoomLevel = self.aerialService.maxZoom;
 	if ( maxZoomLevel > minZoomLevel + 2 )
 		maxZoomLevel = minZoomLevel + 2;
+	if ( maxZoomLevel > 31 )	maxZoomLevel = 31;	// shouldn't be necessary, except to shup up the Xcode analyzer
 
 	NSMutableArray * neededTiles = [NSMutableArray new];
 	for ( int32_t zoomLevel = minZoomLevel; zoomLevel <= maxZoomLevel; ++zoomLevel ) {
@@ -716,9 +719,6 @@ typedef enum {
 	}
 	return neededTiles;
 }
-
-
-
 
 -(void)setTransform:(CATransform3D)transform
 {

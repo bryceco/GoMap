@@ -9,6 +9,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 
+#import "DDXML.h"
 #import "UndoManager.h"
 #import "VectorMath.h"
 
@@ -50,16 +51,16 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 
 @interface OsmMapData : NSObject <NSXMLParserDelegate, NSCoding, NSKeyedArchiverDelegate, NSKeyedUnarchiverDelegate>
 {
-	NSString			*	_parserCurrentElementText;
-	NSMutableArray		*	_parserStack;
-	NSError				*	_parseError;
-	NSMutableDictionary<NSNumber *, OsmNode *>	*	_nodes;
-	NSMutableDictionary<NSNumber *, OsmWay *>	*	_ways;
+	NSString										*	_parserCurrentElementText;
+	NSMutableArray									*	_parserStack;
+	NSError											*	_parseError;
+	NSMutableDictionary<NSNumber *, OsmNode *>		*	_nodes;
+	NSMutableDictionary<NSNumber *, OsmWay *>		*	_ways;
 	NSMutableDictionary<NSNumber *, OsmRelation *>	*	_relations;
-	QuadMap				*	_region;	// currently downloaded region
-	QuadMap				*	_spatial;	// spatial index of osm data
-	UndoManager			*	_undoManager;
-	NSTimer				*	_periodicSaveTimer;
+	QuadMap											*	_region;	// currently downloaded region
+	QuadMap											*	_spatial;	// spatial index of osm data
+	UndoManager										*	_undoManager;
+	NSTimer											*	_periodicSaveTimer;
 }
 
 /**
@@ -78,8 +79,8 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 +(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer; // only used when saving/restoring undo manager
 +(EditorMapLayer *)editorMapLayerForArchive; // only used when saving/restoring undo manager
 
--(id)initWithCachedData;
 -(void)save;
+-(instancetype)initWithCachedData NS_DESIGNATED_INITIALIZER;
 
 -(NSString *)getServer;
 -(void)setServer:(NSString *)hostname;

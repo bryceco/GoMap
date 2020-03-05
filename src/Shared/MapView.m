@@ -1965,7 +1965,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
     }
 
 	if ( _editorLayer.selectedPrimary.tags.count > 0 ) {
-		NSString * question = [NSString stringWithFormat:@"Pasting %lu tag(s)", copyPasteTags.count];
+		NSString * question = [NSString stringWithFormat:@"Pasting %ld tag(s)", (long)copyPasteTags.count];
 		UIAlertController * alertPaste = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Paste",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Merge Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {

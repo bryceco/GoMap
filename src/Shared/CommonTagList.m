@@ -525,7 +525,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 			// a multiple selection
 			NSMutableArray * presets = [NSMutableArray new];
-			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull val, BOOL * _Nonnull stop) {
+			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key2, NSString * _Nonnull val, BOOL * _Nonnull stop) {
 				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
 			}];
 			CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];

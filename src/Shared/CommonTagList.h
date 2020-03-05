@@ -139,8 +139,8 @@ typedef int UITextAutocapitalizationType;
 
 
 @interface CustomPreset : CommonTagKey
-@property NSString	*	appliesToKey;
-@property NSString	*	appliesToValue;
+@property (copy,nonatomic) NSString	*	appliesToKey;
+@property (copy,nonatomic) NSString	*	appliesToValue;
 -(instancetype)initWithCoder:(NSCoder *)coder;
 @end
 

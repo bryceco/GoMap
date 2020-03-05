@@ -19,8 +19,7 @@ extension OsmNode {
             for directionKey in keys {
                 if
                     let value = tags?[directionKey],
-                    let valueAsString = value as? String,
-                    let direction = direction(from: valueAsString) {
+                    let direction = direction(from: value) {
                     return direction
                 }
             }
