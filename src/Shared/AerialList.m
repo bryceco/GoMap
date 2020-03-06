@@ -602,6 +602,19 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 					}
 				}
 			}
+
+			// support for {apikey}
+			if ( [url containsString:@"{apikey}"] ) {
+				NSString * apikey = nil;
+				if ( [url containsString:@".thunderforest.com/"] ) {
+					apikey = @"be3dc024e3924c22beb5f841d098a8a3";	// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
+				} else {
+					NSLog(@"*** Aerial needs {apikey): %@",name);
+					continue;
+				}
+				url = [url stringByReplacingOccurrencesOfString:@"{apikey}" withString:apikey];
+			}
+
 			AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES startDate:startDateString endDate:endDateString wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 			[externalAerials addObject:service];
 			CGPathRelease( polygon );
