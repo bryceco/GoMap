@@ -1599,10 +1599,15 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         backgroundLayer.masksToBounds     = YES;
         backgroundLayer.anchorPoint = CGPointZero;
         
-        /// The actual icon image
+        /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
+        CALayer *iconMaskLayer = [CALayer new];
+        iconMaskLayer.frame            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        iconMaskLayer.contents            = (id)icon.CGImage;
+        
         CALayer *iconLayer = [CALayer new];
         iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        iconLayer.contents            = (id)icon.CGImage;
+        iconLayer.backgroundColor     = [UIColor blackColor].CGColor;
+        iconLayer.mask = iconMaskLayer;
         iconLayer.anchorPoint = CGPointZero;
         
         CALayer * layer = [CALayer new];
