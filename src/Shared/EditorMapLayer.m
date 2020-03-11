@@ -1591,14 +1591,20 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
 	UIImage * icon = feature.icon;
     if ( icon ) {
+        /// White box as the background
+        CALayer *backgroundLayer = [CALayer new];
+        backgroundLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        backgroundLayer.backgroundColor     = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+        backgroundLayer.cornerRadius        = 5;
+        backgroundLayer.masksToBounds     = YES;
+        backgroundLayer.anchorPoint = CGPointZero;
+        
         CALayer * layer = [CALayer new];
+        [layer addSublayer:backgroundLayer];
         layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
         layer.anchorPoint    	= CGPointMake(0.5, 0.5);
         layer.position        	= CGPointMake(pt.x,pt.y);
         layer.contents        	= (id)icon.CGImage;
-        layer.backgroundColor 	= [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-        layer.cornerRadius    	= 5;
-        layer.masksToBounds 	= YES;
         layer.zPosition        	= Z_NODE;
         
         LayerProperties * props = [LayerProperties new];
