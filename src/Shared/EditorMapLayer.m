@@ -1020,6 +1020,9 @@ typedef struct RGBAColor {
 		c.red = 0;
 		c.green = 0;
 		c.blue = 1;
+    } else if (object.tags.count > 0) {
+        /// Use `blackColor` for objects that have at least one tag.
+        c.red = c.green = c.blue = 0;
 	} else {
 		// gray for untagged nodes
 		c.alpha = 0.0;
