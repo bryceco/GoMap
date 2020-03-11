@@ -1599,12 +1599,18 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         backgroundLayer.masksToBounds     = YES;
         backgroundLayer.anchorPoint = CGPointZero;
         
+        /// The actual icon image
+        CALayer *iconLayer = [CALayer new];
+        iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        iconLayer.contents            = (id)icon.CGImage;
+        iconLayer.anchorPoint = CGPointZero;
+        
         CALayer * layer = [CALayer new];
         [layer addSublayer:backgroundLayer];
+        [layer addSublayer:iconLayer];
         layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
         layer.anchorPoint    	= CGPointMake(0.5, 0.5);
         layer.position        	= CGPointMake(pt.x,pt.y);
-        layer.contents        	= (id)icon.CGImage;
         layer.zPosition        	= Z_NODE;
         
         LayerProperties * props = [LayerProperties new];
