@@ -1606,7 +1606,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         
         CALayer *iconLayer = [CALayer new];
         iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        iconLayer.backgroundColor     = [UIColor blackColor].CGColor;
+        RGBAColor iconColor = [self defaultColorForObject:node];
+        iconLayer.backgroundColor     = [UIColor colorWithRed:iconColor.red
+                                                        green:iconColor.green
+                                                         blue:iconColor.blue
+                                                        alpha:iconColor.alpha].CGColor;
         iconLayer.mask = iconMaskLayer;
         iconLayer.anchorPoint = CGPointZero;
         
