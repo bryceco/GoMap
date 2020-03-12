@@ -1606,6 +1606,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         backgroundLayer.cornerRadius        = MinIconSizeInPixels / 2;
         backgroundLayer.masksToBounds     = YES;
         backgroundLayer.anchorPoint = CGPointZero;
+        backgroundLayer.borderColor = UIColor.darkGrayColor.CGColor;
+        backgroundLayer.borderWidth = 0.5;
         
         /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
         CALayer *iconMaskLayer = [CALayer new];
