@@ -1003,6 +1003,11 @@ typedef struct RGBAColor {
 		c.red = 0xAC/255.0;
 		c.green = 0x39/255.0;
 		c.blue = 0xAC/255.0;
+    } else if ([object.tags[@"natural"] isEqualToString:@"tree"]) {
+        /// #127A38
+        c.red = 18/255.0;
+        c.green = 122/255.0;
+        c.blue = 56/255.0;
 	} else if ( object.tags[@"amenity"] || object.tags[@"building"] || object.tags[@"leisure"] ) {
 		c.red = 0x73/255.0;
 		c.green = 0x4A/255.0;
