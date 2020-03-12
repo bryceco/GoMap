@@ -8,7 +8,6 @@
 
 #import "iosapi.h"
 #import "CommonTagList.h"
-#import "OsmObjects.h"
 #import "POITabBarController.h"
 #import "POITypeViewController.h"
 

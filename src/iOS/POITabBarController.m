@@ -10,7 +10,6 @@
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
 #import "POICommonTagsViewController.h"
 #import "POITabBarController.h"
 #import "POIAttributesViewController.h"

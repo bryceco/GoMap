@@ -15,7 +15,6 @@
 #endif
 #import "GpxLayer.h"
 #import "MapView.h"
-#import "OsmObjects.h"
 #import "PathUtil.h"
 
 extern const double PATH_SCALING;

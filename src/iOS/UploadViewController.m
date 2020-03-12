@@ -19,7 +19,6 @@
 #import "EditorMapLayer.h"
 #import "MercatorTileLayer.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
 #import "UploadViewController.h"
 
 

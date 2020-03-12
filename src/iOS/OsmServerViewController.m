@@ -35,6 +35,7 @@
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 	self.hostname.text = [mapData getServer];
+	self.originalHostname = self.hostname.text;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -43,7 +44,9 @@
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
-	[mapData setServer:self.hostname.text];
+	if (![self.hostname.text isEqualToString:self.originalHostname]) {
+		[mapData setServer:self.hostname.text];
+    }
 }
 
 @end

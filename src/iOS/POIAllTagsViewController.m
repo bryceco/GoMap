@@ -12,7 +12,7 @@
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
 #import "PushPinView.h"
@@ -298,7 +298,7 @@
 			NSString * key = kv[0];
 			NSSet * set = [CommonTagList allTagValuesForKey:key];
 			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-			NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
 			NSArray * list = [values allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
@@ -337,6 +337,17 @@
 		NSMutableDictionary * dict = [self keyValueDictionary];
 		_saveButton.enabled = [tabController isTagDictChanged:dict];
 	}
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	const int MAX_LENGTH = 256;
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
+    return newLength <= MAX_LENGTH || returnKey;
 }
 
 - (IBAction)toggleEditing:(id)sender

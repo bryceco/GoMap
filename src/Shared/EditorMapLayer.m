@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#import <sys/utsname.h>
 #import <CoreText/CoreText.h>
 
 #import "NSMutableArray+PartialSort.h"
@@ -26,13 +25,14 @@
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "PathUtil.h"
 #import "QuadMap.h"
 #import "SpeechBalloonLayer.h"
 #import "TagInfo.h"
 #import "VectorMath.h"
 #import "Go_Map__-Swift.h"
+#import "GeekbenchScoreProvider.h"
 
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
@@ -67,6 +67,11 @@ static const CGFloat Pixels_Per_Character = 8.0;
 }
 @end
 
+@interface EditorMapLayer ()
+
+@property (nonatomic) id<GeekbenchScoreProviding> geekbenchScoreProvider;
+
+@end
 
 @implementation EditorMapLayer
 
@@ -85,6 +90,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 	self = [super init];
 	if ( self ) {
 		_mapView = mapView;
+        _geekbenchScoreProvider = [[GeekbenchScoreProvider alloc] init];
 
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 
@@ -717,13 +723,12 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	}
 }
 
--(CAShapeLayer *)getOceanLayer:(NSArray *)objectList
+-(CAShapeLayer *)getOceanLayer:(NSArray<OsmBaseObject *> *)objectList
 {
 	// get all coastline ways
 	NSMutableArray * outerSegments = [NSMutableArray new];
 	NSMutableArray * innerSegments = [NSMutableArray new];
-	for ( id obj in objectList ) {
-		OsmBaseObject * object = obj;
+	for ( OsmBaseObject * object in objectList ) {
 		if ( object.isWay.isClosed && [object.tags[@"natural"] isEqualToString:@"water"] ) {
 			continue;	// lakes are not a concern of this function
 		}
@@ -957,65 +962,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 #pragma mark Common Drawing
 
--(double)geekbenchScore
-{
-	static double score = 0;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		struct utsname systemInfo = { 0 };
-		uname(&systemInfo);
-		NSString * name = [[NSString alloc] initWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-		NSDictionary * dict = @{
-								@"x86_64"    :	@4000,				// Simulator
-								@"i386"      :	@4000,				// Simulator
-
-								@"iPad5,4"	 :	@0,					// iPad Air 2
-								@"iPad4,5"   :	@2493,				// iPad Mini (2nd Generation iPad Mini - Cellular)
-								@"iPad4,4"   :	@2493,				// iPad Mini (2nd Generation iPad Mini - Wifi)
-								@"iPad4,2"   :	@2664,				// iPad Air 5th Generation iPad (iPad Air) - Cellular
-								@"iPad4,1"   :	@2664,				// iPad Air 5th Generation iPad (iPad Air) - Wifi
-								@"iPad3,6"   :	@1402,				// iPad 4 (4th Generation)
-								@"iPad3,5"   :	@1402,				// iPad 4 (4th Generation)
-								@"iPad3,4"   :	@1402,				// iPad 4 (4th Generation)
-								@"iPad3,3"   :	@492,				// iPad 3 (3rd Generation)
-								@"iPad3,2"   :	@492,				// iPad 3 (3rd Generation)
-								@"iPad3,1"   :	@492,				// iPad 3 (3rd Generation)
-								@"iPad2,7"   :	@490,				// iPad Mini (Original)
-								@"iPad2,6"   :	@490,				// iPad Mini (Original)
-								@"iPad2,5"   :	@490,				// iPad Mini (Original)
-								@"iPad2,4"   :	@492,				// iPad 2
-								@"iPad2,3"   :	@492,				// iPad 2
-								@"iPad2,2"   :	@492,				// iPad 2
-								@"iPad2,1"   :	@492,				// iPad 2
-
-								@"iPhone7,2" :	@2855,				// iPhone 6+
-								@"iPhone7,1" :	@2879,				// iPhone 6
-								@"iPhone6,2" :	@2523,				// iPhone 5s (model A1457, A1518, A1528 (China), A1530 | Global)
-								@"iPhone6,1" :	@2523,				// iPhone 5s model A1433, A1533 | GSM)
-								@"iPhone5,4" :	@1240,				// iPhone 5c (model A1507, A1516, A1526 (China), A1529 | Global)
-								@"iPhone5,3" :	@1240,				// iPhone 5c (model A1456, A1532 | GSM)
-								@"iPhone5,2" :	@1274,				// iPhone 5 (model A1429, everything else)
-								@"iPhone5,1" :	@1274,				// iPhone 5 (model A1428, AT&T/Canada)
-								@"iPhone4,1" :	@405,				// iPhone 4S
-								@"iPhone3,1" :	@206,				// iPhone 4
-								@"iPhone2,1" :	@150,				// iPhone 3GS
-
-								@"iPod4,1"   :	@410,				// iPod Touch (Fifth Generation)
-								@"iPod4,1"   :	@209,				// iPod Touch (Fourth Generation)
-							};
-		NSString * value = [dict objectForKey:name];
-		if ( [value isKindOfClass:[NSNumber class]] ) {
-			score = value.doubleValue;
-		}
-		if ( score == 0 ) {
-			score = 2500;
-		}
-	});
-	return score;
-}
-
-
-
 -(CGPathRef)pathForWay:(OsmWay *)way CF_RETURNS_RETAINED
 {
 	CGMutablePathRef path = CGPathCreateMutable();
@@ -1074,6 +1020,9 @@ typedef struct RGBAColor {
 		c.red = 0;
 		c.green = 0;
 		c.blue = 1;
+    } else if (object.tags.count > 0) {
+        /// Use `blackColor` for objects that have at least one tag.
+        c.red = c.green = c.blue = 0;
 	} else {
 		// gray for untagged nodes
 		c.alpha = 0.0;
@@ -1629,7 +1578,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  @param node The `OsmNode` instance to get the layers for.
  @return A list of `CALayer` instances that are used to represent the given `node` on the map.
  */
-- (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node {
+- (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node
+{
     NSMutableArray<CALayer *> *layers = [NSMutableArray array];
     
     CALayer *directionLayer = [self directionShapeLayerWithNode:node];
@@ -1639,34 +1589,41 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
     
-    // first use TagInfo database
-    UIImage * icon = node.tagInfo.scaledIcon;
-    if ( icon == nil ) {
-        icon = node.tagInfo.icon;
-        if ( icon ) {
-            CGFloat uiScaling = [[UIScreen mainScreen] scale];
-            UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-            [icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
-            icon = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            node.tagInfo.scaledIcon = icon;
-        }
-    }
-    if ( icon == nil ) {
-        NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
-        CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
-        icon = feature.icon;
-    }
+    // fetch icon
+    NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
+    CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+	UIImage * icon = feature.icon;
     if ( icon ) {
+        /// White box as the background
+        CALayer *backgroundLayer = [CALayer new];
+        backgroundLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        backgroundLayer.backgroundColor     = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+        backgroundLayer.cornerRadius        = 5;
+        backgroundLayer.masksToBounds     = YES;
+        backgroundLayer.anchorPoint = CGPointZero;
+        
+        /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
+        CALayer *iconMaskLayer = [CALayer new];
+        iconMaskLayer.frame            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        iconMaskLayer.contents            = (id)icon.CGImage;
+        
+        CALayer *iconLayer = [CALayer new];
+        iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        RGBAColor iconColor = [self defaultColorForObject:node];
+        iconLayer.backgroundColor     = [UIColor colorWithRed:iconColor.red
+                                                        green:iconColor.green
+                                                         blue:iconColor.blue
+                                                        alpha:iconColor.alpha].CGColor;
+        iconLayer.mask = iconMaskLayer;
+        iconLayer.anchorPoint = CGPointZero;
+        
         CALayer * layer = [CALayer new];
-        layer.bounds        = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        layer.anchorPoint    = CGPointMake(0.5, 0.5);
-        layer.position        = CGPointMake(pt.x,pt.y);
-        layer.contents        = (id)icon.CGImage;
-        layer.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-        layer.cornerRadius    = 5;
-        layer.masksToBounds = YES;
-        layer.zPosition        = Z_NODE;
+        [layer addSublayer:backgroundLayer];
+        [layer addSublayer:iconLayer];
+        layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        layer.anchorPoint    	= CGPointMake(0.5, 0.5);
+        layer.position        	= CGPointMake(pt.x,pt.y);
+        layer.zPosition        	= Z_NODE;
         
         LayerProperties * props = [LayerProperties new];
         [layer setValue:props forKey:@"properties"];
@@ -1682,9 +1639,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         if ( houseNumber ) {
             
             CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
-            layer.anchorPoint    = CGPointMake(0.5, 0.5);
-            layer.position        = CGPointMake(pt.x, pt.y);
-            layer.zPosition        = Z_NODE;
+            layer.anchorPoint	= CGPointMake(0.5, 0.5);
+            layer.position      = CGPointMake(pt.x, pt.y);
+            layer.zPosition     = Z_NODE;
             LayerProperties * props = [LayerProperties new];
             [layer setValue:props forKey:@"properties"];
             props->position = pt;
@@ -1697,17 +1654,17 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
             CAShapeLayer * layer = [CAShapeLayer new];
             CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
                                      round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
-            CGPathRef path        = CGPathCreateWithRect( rect, NULL );
-            layer.path            = path;
-            layer.frame         = CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
-                                             MinIconSizeInPixels, MinIconSizeInPixels);
-            layer.position            = CGPointMake(pt.x,pt.y);
-            layer.strokeColor        = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
-            layer.fillColor            = nil;
-            layer.lineWidth            = 2.0;
-            layer.backgroundColor    = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
-            layer.cornerRadius        = 5.0;
-            layer.zPosition            = Z_NODE;
+            CGPathRef path        	= CGPathCreateWithRect( rect, NULL );
+            layer.path            	= path;
+            layer.frame         	= CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
+												  MinIconSizeInPixels, MinIconSizeInPixels);
+            layer.position          = CGPointMake(pt.x,pt.y);
+            layer.strokeColor       = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
+            layer.fillColor         = nil;
+            layer.lineWidth         = 2.0;
+            layer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+            layer.cornerRadius      = 5.0;
+            layer.zPosition         = Z_NODE;
             
             LayerProperties * props = [LayerProperties new];
             [layer setValue:props forKey:@"properties"];
@@ -1727,8 +1684,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  @param node The node to get the layer for.
  @return A `CALayer` instance for rendering the given node's direction.
  */
-- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node {
-    CGFloat direction = node.direction;
+- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node
+{
+    NSInteger direction = node.direction;
     if (direction == NSNotFound) {
         // Without a direction, there's nothing we could display.
         return nil;
@@ -1773,13 +1731,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     return layer;
 }
 
-- (CGFloat)radiansFromDegrees:(CGFloat)degrees {
+- (CGFloat)radiansFromDegrees:(CGFloat)degrees
+{
     return degrees * M_PI / 180;
 }
 
--(NSMutableArray *)getShapeLayersForHighlights
+-(NSMutableArray<CALayer *> *)getShapeLayersForHighlights
 {
-	double				geekScore	= [self geekbenchScore];
+	double				geekScore	= [self.geekbenchScoreProvider geekbenchScore];
 	NSInteger			nameLimit	= 5 + (geekScore - 500) / 200;	// 500 -> 5, 2500 -> 10
 	NSMutableSet	*	nameSet		= [NSMutableSet new];
 	NSMutableArray	*	layers		= [NSMutableArray new];
@@ -1984,7 +1943,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
  @return The value to use for the text layer's `shouldRasterize` property.
  */
 - (BOOL)shouldRasterizeStreetNames {
-    return [self geekbenchScore] < 2500;
+    return [self.geekbenchScoreProvider geekbenchScore] < 2500;
 }
 
 -(void)resetDisplayLayers
@@ -2290,10 +2249,10 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 #endif
 }
 
-- (NSMutableArray *)getObjectsToDisplay
+- (NSMutableArray<OsmBaseObject *> *)getObjectsToDisplay
 {
 #if TARGET_OS_IPHONE
-	double geekScore = [self geekbenchScore];
+	double geekScore = [self.geekbenchScoreProvider geekbenchScore];
 	NSInteger objectLimit = 50 + (geekScore - 500) / 40;	// 500 -> 50, 2500 -> 100;
 #else
 	NSInteger objectLimit = 500;
@@ -2408,13 +2367,13 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		_baseLayer.sublayerTransform	= CATransform3DIdentity;
 	}
 
-	NSArray * previousObjects = _shownObjects;
+	NSArray<OsmBaseObject *> * previousObjects = _shownObjects;
 
 	_shownObjects = [self getObjectsToDisplay];
 	[_shownObjects addObjectsFromArray:_fadingOutSet.allObjects];
 
 	// remove layers no longer visible
-	NSMutableSet * removals = [NSMutableSet setWithArray:previousObjects];
+	NSMutableSet<OsmBaseObject *> * removals = [NSMutableSet setWithArray:previousObjects];
 	for ( OsmBaseObject * object in _shownObjects ) {
 		[removals removeObject:object];
 	}
@@ -2656,8 +2615,8 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // distance is in units of the hit test radius (WayHitTestRadius)
-+ (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray *)objects testNodes:(BOOL)testNodes
-				 ignoreList:(NSArray *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
++ (void)osmHitTestEnumerate:(CGPoint)point radius:(CGFloat)radius mapView:(MapView *)mapView objects:(NSArray<OsmBaseObject *> *)objects testNodes:(BOOL)testNodes
+				 ignoreList:(NSArray<OsmBaseObject *> *)ignoreList block:(void(^)(OsmBaseObject * obj,CGFloat dist,NSInteger segment))block
 {
 	CLLocationCoordinate2D location = [mapView longitudeLatitudeForScreenPoint:point birdsEye:YES];
 	OSMRect viewCoord = [mapView screenLongitudeLatitude];
@@ -2734,7 +2693,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // default hit test when clicking on the map, or drag-connecting
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray *)ignoreList segment:(NSInteger *)pSegment
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray<OsmBaseObject *> *)ignoreList segment:(NSInteger *)pSegment
 {
 	if ( self.hidden )
 		return nil;
@@ -2783,13 +2742,13 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 }
 
 // return all nearby objects
-- (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
+- (NSArray<OsmBaseObject *> *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius
 {
-	NSMutableSet * objectSet = [NSMutableSet new];
+	NSMutableSet<OsmBaseObject *> * objectSet = [NSMutableSet new];
 	[EditorMapLayer osmHitTestEnumerate:point radius:radius mapView:self.mapView objects:_shownObjects testNodes:YES ignoreList:nil block:^(OsmBaseObject *obj, CGFloat dist, NSInteger segment) {
 		[objectSet addObject:obj];
 	}];
-	NSMutableArray * objectList = [objectSet.allObjects mutableCopy];
+	NSMutableArray<OsmBaseObject *> * objectList = [objectSet.allObjects mutableCopy];
 	[objectList sortUsingComparator:^NSComparisonResult(OsmBaseObject * o1, OsmBaseObject * o2) {
 		int diff = (o1.isRelation?2:o1.isWay?1:0) - (o2.isRelation?2:o2.isWay?1:0);
 		if ( diff )

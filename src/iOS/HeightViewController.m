@@ -14,7 +14,6 @@
 #import "EditorMapLayer.h"
 #import "HeightViewController.h"
 #import "MapView.h"
-#import "OsmObjects.h"
 #import "VectorMath.h"
 
 
