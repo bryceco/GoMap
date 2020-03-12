@@ -687,6 +687,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( center ) {
 		[self centerOnTrack:newTrack];
 		self.selectedTrack = newTrack;
+		_mapView.enableGpxLogging = YES;	// ensure GPX tracks are visible
 	}
 	[self saveToDisk:newTrack];
 	return YES;
