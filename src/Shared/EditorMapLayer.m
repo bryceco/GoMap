@@ -1603,7 +1603,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         CALayer *backgroundLayer = [CALayer new];
         backgroundLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
         backgroundLayer.backgroundColor     = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-        backgroundLayer.cornerRadius        = 5;
+        backgroundLayer.cornerRadius        = MinIconSizeInPixels / 2;
         backgroundLayer.masksToBounds     = YES;
         backgroundLayer.anchorPoint = CGPointZero;
         
