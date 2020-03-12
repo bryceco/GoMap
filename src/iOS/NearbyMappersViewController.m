@@ -6,13 +6,12 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
 #import "OsmMapData.h"
 #import "MapView.h"
 #import "NearbyMappersViewController.h"
-#import "WebPageViewController.h"
-
 
 @implementation NearbyMappersViewController
 
@@ -46,6 +45,8 @@
     return 	_mappers.count;
 }
 
+#pragma mark - Table view delegate
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -59,21 +60,16 @@
     return cell;
 }
 
-#pragma mark - Table view delegate
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell * cell = sender;
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-	OsmUserStatistics * stats = [_mappers objectAtIndex:indexPath.row];
-	NSString * user = stats.user;
+    OsmUserStatistics * stats = [_mappers objectAtIndex:indexPath.row];
+    NSString * user = stats.user;
+    NSString * urlString = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", user];
+    NSString * encodedUrlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSURL * url = [NSURL URLWithString:encodedUrlString];
 
-	WebPageViewController * web = segue.destinationViewController;
-	web.title = NSLocalizedString(@"User",nil);
-	web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", user];
-
-	[super prepareForSegue:segue sender:sender];
+    SFSafariViewController * safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+    [self presentViewController:safariViewController animated:YES completion:nil];
 }
-
 
 @end
