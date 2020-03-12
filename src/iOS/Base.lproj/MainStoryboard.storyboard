@@ -995,6 +995,7 @@
                     <connections>
                         <outlet property="_language" destination="6Lj-wh-z9f" id="SZv-Dk-7jl"/>
                         <outlet property="_sendMailCell" destination="OR6-tH-xTu" id="ZtA-LF-dYo"/>
+                        <outlet property="_testFlightCell" destination="B8L-eY-Ou4" id="AQC-Cq-4Rx"/>
                         <outlet property="_username" destination="Mus-SG-1Sz" id="Jjh-q1-7K1"/>
                     </connections>
                 </tableViewController>
