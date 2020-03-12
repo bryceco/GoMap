@@ -224,6 +224,8 @@
 			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 			[self presentViewController:alert animated:YES completion:nil];
 		}
+    } else if (cell == _testFlightCell) {
+        [self openTestFlightURL];
 	}
 
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
