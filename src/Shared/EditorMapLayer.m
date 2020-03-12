@@ -1020,6 +1020,9 @@ typedef struct RGBAColor {
 		c.red = 0;
 		c.green = 0;
 		c.blue = 1;
+    } else if (object.tags.count > 0) {
+        /// Use `blackColor` for objects that have at least one tag.
+        c.red = c.green = c.blue = 0;
 	} else {
 		// gray for untagged nodes
 		c.alpha = 0.0;
@@ -1591,14 +1594,35 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
 	UIImage * icon = feature.icon;
     if ( icon ) {
+        /// White box as the background
+        CALayer *backgroundLayer = [CALayer new];
+        backgroundLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        backgroundLayer.backgroundColor     = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+        backgroundLayer.cornerRadius        = 5;
+        backgroundLayer.masksToBounds     = YES;
+        backgroundLayer.anchorPoint = CGPointZero;
+        
+        /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
+        CALayer *iconMaskLayer = [CALayer new];
+        iconMaskLayer.frame            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        iconMaskLayer.contents            = (id)icon.CGImage;
+        
+        CALayer *iconLayer = [CALayer new];
+        iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        RGBAColor iconColor = [self defaultColorForObject:node];
+        iconLayer.backgroundColor     = [UIColor colorWithRed:iconColor.red
+                                                        green:iconColor.green
+                                                         blue:iconColor.blue
+                                                        alpha:iconColor.alpha].CGColor;
+        iconLayer.mask = iconMaskLayer;
+        iconLayer.anchorPoint = CGPointZero;
+        
         CALayer * layer = [CALayer new];
+        [layer addSublayer:backgroundLayer];
+        [layer addSublayer:iconLayer];
         layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
         layer.anchorPoint    	= CGPointMake(0.5, 0.5);
         layer.position        	= CGPointMake(pt.x,pt.y);
-        layer.contents        	= (id)icon.CGImage;
-        layer.backgroundColor 	= [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-        layer.cornerRadius    	= 5;
-        layer.masksToBounds 	= YES;
         layer.zPosition        	= Z_NODE;
         
         LayerProperties * props = [LayerProperties new];
