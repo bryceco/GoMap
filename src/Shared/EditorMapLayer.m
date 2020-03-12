@@ -1611,7 +1611,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         
         /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
         CALayer *iconMaskLayer = [CALayer new];
-        iconMaskLayer.frame            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        CGFloat padding = 4;
+        iconMaskLayer.frame            = CGRectMake(padding, padding, MinIconSizeInPixels - padding * 2, MinIconSizeInPixels - padding * 2);
         iconMaskLayer.contents            = (id)icon.CGImage;
         
         CALayer *iconLayer = [CALayer new];
