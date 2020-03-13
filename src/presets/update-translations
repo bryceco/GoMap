@@ -34,5 +34,5 @@ languages=(
 for lang in ${languages[*]}; do
 	echo $lang
     curl --silent -L --user api:1/668af5e73d1ddd20e9434411ac8eed00e1852133 -X GET https://www.transifex.com/api/2/project/id-editor/resource/presets/translation/$lang |
-	ruby -r json -e 'puts(JSON.load(ARGF.read)["content"])' | ruby -r yaml -r json -e 'puts(YAML.load(ARGF.read).to_json)' > $lang.json
+	ruby -r json -e 'puts(JSON.load(ARGF.read)["content"])' | ruby -r yaml -r json -e 'puts(YAML.load(ARGF.read).to_json)' > translations/$lang.json
 done
