@@ -365,6 +365,8 @@
 
 - (void)resignAll
 {
+	if ( self.tableView.window == nil )
+		return;
 	for (CommonTagCell * cell in self.tableView.visibleCells) {
 		[cell.valueField resignFirstResponder];
 		[cell.valueField2 resignFirstResponder];
