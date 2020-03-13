@@ -670,7 +670,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
 	if ( cachedData == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
 		// download newer version periodically
-		NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
+		NSString * urlString = @"https://josm.openstreetmap.de/maps?format=geojson";
 		NSURL * downloadUrl = [NSURL URLWithString:urlString];
 		NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 			[[NSUserDefaults standardUserDefaults] setObject:now forKey:@"lastImageryDownloadDate"];
