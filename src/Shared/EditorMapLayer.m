@@ -1025,9 +1025,6 @@ typedef struct RGBAColor {
 		c.red = 0;
 		c.green = 0;
 		c.blue = 1;
-    } else if (object.tags.count > 0) {
-        /// Use `blackColor` for objects that have at least one tag.
-        c.red = c.green = c.blue = 0;
 	} else {
 		// gray for untagged nodes
 		c.alpha = 0.0;
@@ -1601,27 +1598,27 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     if ( icon ) {
         /// White box as the background
         CALayer *backgroundLayer = [CALayer new];
-        backgroundLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        backgroundLayer.backgroundColor     = [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-        backgroundLayer.cornerRadius        = MinIconSizeInPixels / 2;
-        backgroundLayer.masksToBounds     = YES;
-        backgroundLayer.anchorPoint = CGPointZero;
+        backgroundLayer.bounds          = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+        backgroundLayer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
+        backgroundLayer.cornerRadius    = MinIconSizeInPixels / 2;
+        backgroundLayer.masksToBounds   = YES;
+        backgroundLayer.anchorPoint 	= CGPointZero;
         backgroundLayer.borderColor = UIColor.darkGrayColor.CGColor;
         backgroundLayer.borderWidth = 0.5;
         
         /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
         CALayer *iconMaskLayer = [CALayer new];
         CGFloat padding = 4;
-        iconMaskLayer.frame            = CGRectMake(padding, padding, MinIconSizeInPixels - padding * 2, MinIconSizeInPixels - padding * 2);
-        iconMaskLayer.contents            = (id)icon.CGImage;
+        iconMaskLayer.frame            	= CGRectMake(padding, padding, MinIconSizeInPixels - padding * 2, MinIconSizeInPixels - padding * 2);
+        iconMaskLayer.contents        	= (id)icon.CGImage;
         
         CALayer *iconLayer = [CALayer new];
         iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        RGBAColor iconColor = [self defaultColorForObject:node];
-        iconLayer.backgroundColor     = [UIColor colorWithRed:iconColor.red
-                                                        green:iconColor.green
-                                                         blue:iconColor.blue
-                                                        alpha:iconColor.alpha].CGColor;
+        RGBAColor iconColor 		= [self defaultColorForObject:node];
+        iconLayer.backgroundColor   = [UIColor colorWithRed:iconColor.red
+													green:iconColor.green
+													   blue:iconColor.blue
+													  alpha:1.0].CGColor;
         iconLayer.mask = iconMaskLayer;
         iconLayer.anchorPoint = CGPointZero;
         
