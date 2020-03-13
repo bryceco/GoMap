@@ -243,7 +243,7 @@
 	};
 }
 
-#pragma mark canRemoveWayFromRelation
+#pragma mark canRemoveObject:fromRelation
 
 -(EditAction)canRemoveObject:(OsmBaseObject *)obj fromRelation:(OsmRelation *)relation error:(NSString **)error
 {
@@ -262,7 +262,7 @@
 	};
 }
 
-#pragma mark canReplaceNodeInWay
+#pragma mark canMergeNode:intoNode
 
 // used when dragging a node into another node
 -(EditActionReturnNode)canMergeNode:(OsmNode *)node1 intoNode:(OsmNode *)node2 error:(NSString **)error

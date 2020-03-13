@@ -2551,14 +2551,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 	OsmWay * way = _editorLayer.selectedWay;
 
-#if 0
-	// only do this checks if we want to be extra cautious
-	if ( node != way.nodes[0] && node != way.nodes.lastObject )
-		return nil;
-	if ( node.wayCount > 1 )
-		return nil;
-#endif
-
 	NSArray<OsmBaseObject *> * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
 	NSArray<OsmWay *> * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
@@ -2575,10 +2567,10 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		ignoreList = [way.nodes arrayByAddingObjectsFromArray:parentWays];
 	}
 	OsmBaseObject * hit = [_editorLayer osmHitTest:_pushpinView.arrowPoint
-											  radius:DragConnectHitTestRadius
-										   testNodes:YES
-										  ignoreList:ignoreList
-											 segment:segment];
+											radius:DragConnectHitTestRadius
+									 isDragConnect:YES
+										ignoreList:ignoreList
+										   segment:segment];
 	return hit;
 }
 
@@ -3616,7 +3608,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	} else {
 
 		// hit test anything
-		hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius testNodes:NO ignoreList:nil segment:NULL];
+		hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:NULL];
 		if ( hit ) {
 			if ( hit.isNode ) {
 				_editorLayer.selectedNode = (id)hit;

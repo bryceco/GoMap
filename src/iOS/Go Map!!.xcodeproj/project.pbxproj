@@ -744,9 +744,6 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
-				64981F1D22667D7700178476 /* Extensions */,
-				64D74BF02253DF39004FFD20 /* Direction */,
-				64305F6C23E71F5700232BB9 /* URLParsing */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
 				02C3C73619A5D679003B6783 /* AerialEditViewController.m */,
 				02C3C73219A5A40C003B6783 /* AerialListViewController.h */,
@@ -765,12 +762,16 @@
 				0230558A19B931B20041B151 /* CustomPresetController.m */,
 				024B4CA019BBE65F00BBA60B /* CustomPresetListViewController.h */,
 				024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */,
+				64D74BF02253DF39004FFD20 /* Direction */,
 				0225A36819B63EFE008B63BA /* DisplayViewController.h */,
 				0225A36919B63F0D008B63BA /* DisplayViewController.m */,
+				64981F1D22667D7700178476 /* Extensions */,
 				028E0C0A20B2182100CEC71F /* FilterObjectsViewController.h */,
 				028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */,
 				021D4E49194E0BCB002154B3 /* FpsLabel.h */,
 				021D4E4A194E0BCB002154B3 /* FpsLabel.m */,
+				6463E3C923F948FE00E4F6ED /* GeekbenchScoreProvider.h */,
+				6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */,
 				02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */,
 				02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
@@ -790,6 +791,7 @@
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
+				64C968442261ED3100351C0C /* Media.xcassets */,
 				022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */,
 				022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */,
 				02BED98C168BF87100357B94 /* NearbyMappersViewController.h */,
@@ -827,12 +829,10 @@
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
+				64305F6C23E71F5700232BB9 /* URLParsing */,
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
-				64C968442261ED3100351C0C /* Media.xcassets */,
-				6463E3C923F948FE00E4F6ED /* GeekbenchScoreProvider.h */,
-				6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
