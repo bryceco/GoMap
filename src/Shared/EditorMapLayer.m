@@ -2283,12 +2283,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	}
 
 	// sort from big to small objects
-#if 0
-	[objects partialSortK:2*objectLimit+1 compare:VisibleSizeLessStrict];
-#else
 	[objects partialSortOsmObjectVisibleSize:2*objectLimit+1];
-#endif
-
 
 	// adjust the list of objects so that we get all or none of the same type
 	if ( objects.count > objectLimit ) {
@@ -2319,19 +2314,12 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				lastIndex = objectLimit - removeCount;
 			}
 		}
-		// DLog( @"added %ld same", (long)lastIndex - objectLimit);
 		objectLimit = lastIndex;
 
 		// remove unwanted objects
 		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(objectLimit,objects.count-objectLimit)];
 		[objects removeObjectsAtIndexes:range];
 	}
-
-#if 0
-	for ( OsmBaseObject * o in objects ) {
-		NSLog(@"%ld -> %@\n", (long)o->renderPriorityCached, o );
-	}
-#endif
 
 	// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
 	objectLimit = objects.count;
@@ -2629,26 +2617,28 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.deleted )
 			continue;
-		if ( [ignoreList containsObject:object] )
-			continue;
 
 		if ( object.isNode ) {
 			OsmNode * node = (id)object;
-			if ( testNodes || node.wayCount == 0 ) {
-				CGFloat dist = [self osmHitTestNode:node location:location maxDegrees:maxDegrees];
-				dist *= NODE_BIAS;
-				if ( dist <= 1.0 ) {
-					block( node, dist, 0 );
-					[parentRelations addObjectsFromArray:node.parentRelations];
+			if ( ![ignoreList containsObject:node] ) {
+				if ( testNodes || node.wayCount == 0 ) {
+					CGFloat dist = [self osmHitTestNode:node location:location maxDegrees:maxDegrees];
+					dist *= NODE_BIAS;
+					if ( dist <= 1.0 ) {
+						block( node, dist, 0 );
+						[parentRelations addObjectsFromArray:node.parentRelations];
+					}
 				}
 			}
 		} else if ( object.isWay ) {
 			OsmWay * way = (id)object;
-			NSInteger seg = 0;
-			CGFloat distToWay = [self osmHitTestWay:way location:location maxDegrees:maxDegrees segment:&seg];
-			if ( distToWay <= 1.0 ) {
-				block( way, distToWay, seg );
-				[parentRelations addObjectsFromArray:way.parentRelations];
+			if ( ![ignoreList containsObject:way] ) {
+				NSInteger seg = 0;
+				CGFloat distToWay = [self osmHitTestWay:way location:location maxDegrees:maxDegrees segment:&seg];
+				if ( distToWay <= 1.0 ) {
+					block( way, distToWay, seg );
+					[parentRelations addObjectsFromArray:way.parentRelations];
+				}
 			}
 			if ( testNodes ) {
 				for ( OsmNode * node in way.nodes ) {
@@ -2664,22 +2654,24 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			}
 		} else if ( object.isRelation.isMultipolygon ) {
 			OsmRelation * relation = (id)object;
-			CGFloat bestDist = 10000.0;
-			for ( OsmMember * member in relation.members ) {
-				OsmWay * way = member.ref;
-				if ( [way isKindOfClass:[OsmWay class]] ) {
-					if ( ![ignoreList containsObject:way] ) {
-						if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {
-							NSInteger seg = 0;
-							CGFloat dist = [self osmHitTestWay:way location:location maxDegrees:maxDegrees segment:&seg];
-							if ( dist < bestDist )
-								bestDist = dist;
+			if ( ![ignoreList containsObject:relation] ) {
+				CGFloat bestDist = 10000.0;
+				for ( OsmMember * member in relation.members ) {
+					OsmWay * way = member.ref;
+					if ( [way isKindOfClass:[OsmWay class]] ) {
+						if ( ![ignoreList containsObject:way] ) {
+							if ( [member.role isEqualToString:@"inner"] || [member.role isEqualToString:@"outer"] ) {
+								NSInteger seg = 0;
+								CGFloat dist = [self osmHitTestWay:way location:location maxDegrees:maxDegrees segment:&seg];
+								if ( dist < bestDist )
+									bestDist = dist;
+							}
 						}
 					}
 				}
-			}
-			if ( bestDist <= 1.0 ) {
-				block( relation, bestDist, 0 );
+				if ( bestDist <= 1.0 ) {
+					block( relation, bestDist, 0 );
+				}
 			}
 		}
 	}
