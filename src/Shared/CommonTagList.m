@@ -735,7 +735,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			    [type isEqualToString:@"textarea"] ||
 			    [type isEqualToString:@"tel"] ||
 			    [type isEqualToString:@"url"] ||
-			    [type isEqualToString:@"wikipedia"] )
+			    [type isEqualToString:@"wikipedia"] ||
+				[type isEqualToString:@"wikidata"] )
 	{
 
 		// no presets
