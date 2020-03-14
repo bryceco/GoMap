@@ -1963,16 +1963,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 
 #pragma mark Select objects and draw
 
-static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
-{
-	NSInteger tagCount = tags.count;
-	if ( tagCount == 0 )
-		return NO;
-	if ( [tags objectForKey:@"source"] )
-		--tagCount;
-	return tagCount > 0;
-}
-
 
 -(NSMutableArray *)getVisibleObjects
 {
@@ -1983,7 +1973,7 @@ static BOOL inline ShouldDisplayNodeInWay( NSDictionary * tags )
 		if ( show == TRISTATE_UNKNOWN ) {
 			if ( !obj.deleted ) {
 				if ( obj.isNode ) {
-					if ( ((OsmNode *)obj).wayCount == 0 || ShouldDisplayNodeInWay( obj.tags ) ) {
+					if ( ((OsmNode *)obj).wayCount == 0 || [obj hasInterestingTags] ) {
 						show = TRISTATE_YES;
 					}
 				} else if ( obj.isWay ) {
