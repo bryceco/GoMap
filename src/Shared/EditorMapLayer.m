@@ -1603,8 +1603,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         backgroundLayer.cornerRadius    = MinIconSizeInPixels / 2;
         backgroundLayer.masksToBounds   = YES;
         backgroundLayer.anchorPoint 	= CGPointZero;
-        backgroundLayer.borderColor = UIColor.darkGrayColor.CGColor;
-        backgroundLayer.borderWidth = 0.5;
+        backgroundLayer.borderColor 	= UIColor.darkGrayColor.CGColor;
+        backgroundLayer.borderWidth 	= 0.5;
         
         /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
         CALayer *iconMaskLayer = [CALayer new];
@@ -1616,7 +1616,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
         RGBColor iconColor 			= [self defaultColorForObject:node];
         iconLayer.backgroundColor   = [UIColor colorWithRed:iconColor.red
-													green:iconColor.green
+													  green:iconColor.green
 													   blue:iconColor.blue
 													  alpha:1.0].CGColor;
         iconLayer.mask = iconMaskLayer;
@@ -1667,7 +1667,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
             layer.fillColor         = nil;
             layer.lineWidth         = 2.0;
             layer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
-            layer.cornerRadius      = 5.0;
+			layer.borderColor		= UIColor.darkGrayColor.CGColor;
+			layer.borderWidth		= 0.5;
+			layer.cornerRadius      = MinIconSizeInPixels/2;
             layer.zPosition         = Z_NODE;
             
             LayerProperties * props = [LayerProperties new];
