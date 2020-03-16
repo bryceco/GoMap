@@ -990,15 +990,15 @@ typedef struct RGBAColor {
 	CGFloat	red;
 	CGFloat	green;
 	CGFloat	blue;
-	CGFloat	alpha;
-} RGBAColor;
+	BOOL	hasColor;
+} RGBColor;
 
 
 
--(RGBAColor)defaultColorForObject:(OsmBaseObject *)object
+-(RGBColor)defaultColorForObject:(OsmBaseObject *)object
 {
-	RGBAColor c;
-	c.alpha = 1.0;
+	RGBColor c;
+	c.hasColor = YES;
 	if ( object.tags[@"shop"] ) {
 		c.red = 0xAC/255.0;
 		c.green = 0x39/255.0;
@@ -1026,9 +1026,9 @@ typedef struct RGBAColor {
 		c.green = 0;
 		c.blue = 1;
 	} else {
-		// gray for untagged nodes
-		c.alpha = 0.0;
-		c.red = c.green = c.blue = 0.5;
+		// black/gray for non-catagorized objects
+		c.hasColor = NO;
+		c.red = c.green = c.blue = 0.0;
 	}
 	return c;
 }
@@ -1360,14 +1360,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			CGPathRef path = [object shapePathForObjectWithRefPoint:&refPoint];
 			if ( path ) {
 				// draw
-				RGBAColor	fillColor;
-				[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:&fillColor.alpha];
-				fillColor.alpha = object.tags[@"landuse"] ? 0.15 : 0.25;
+				RGBColor	fillColor;
+				[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:NULL];
+				CGFloat alpha = object.tags[@"landuse"] ? 0.15 : 0.25;
 				CAShapeLayer * layer = [CAShapeLayer new];
 				layer.anchorPoint	= CGPointMake(0,0);
 				layer.path			= path;
 				layer.position		= CGPointFromOSMPoint(refPoint);
-				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:fillColor.alpha].CGColor;
+				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:alpha].CGColor;
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
@@ -1614,7 +1614,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
         
         CALayer *iconLayer = [CALayer new];
         iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        RGBAColor iconColor 		= [self defaultColorForObject:node];
+        RGBColor iconColor 			= [self defaultColorForObject:node];
         iconLayer.backgroundColor   = [UIColor colorWithRed:iconColor.red
 													green:iconColor.green
 													   blue:iconColor.blue
@@ -1638,10 +1638,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
     } else {
         
         // draw generic box
-        RGBAColor color = [self defaultColorForObject:node];
-        BOOL untagged = color.alpha == 0.0;
-        NSString * houseNumber = untagged ? DrawNodeAsHouseNumber( node.tags ) : nil;
-        if ( houseNumber ) {
+        RGBColor color = [self defaultColorForObject:node];
+		NSString * houseNumber = color.hasColor ? nil : DrawNodeAsHouseNumber( node.tags );
+		if ( houseNumber ) {
             
             CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
             layer.anchorPoint	= CGPointMake(0.5, 0.5);
