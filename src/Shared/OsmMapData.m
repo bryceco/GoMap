@@ -2212,7 +2212,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			if ( ! [_region nodesAreCovered:way.nodes] ) {
 				[removeWays addObject:ident];
 				for ( OsmNode * node in way.nodes ) {
-					assert( node.wayCount > 0 );
+					DbgAssert( node.wayCount > 0 );
 					[node setWayCount:node.wayCount-1 undo:nil];
 				}
 			}
