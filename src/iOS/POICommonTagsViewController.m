@@ -131,7 +131,7 @@
 		POITabBarController * tabController = (id)self.tabBarController;
 		if ( tabController.isTagDictChanged ) {
 			NSDictionary * dict = tabController.keyValueDict;
-			if ( dict.count == 1 && (dict[@"shop"] || dict[@"amenity"]) && dict[@"name"] == nil ) {
+			if ( dict.count == 1 && dict[@"shop"] && dict[@"name"] == nil ) {
 				// find name field and make it first responder
 				dispatch_async(dispatch_get_main_queue(), ^{
 					NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
