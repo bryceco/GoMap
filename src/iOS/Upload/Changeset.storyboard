@@ -122,5 +122,15 @@
             </objects>
             <point key="canvasLocation" x="293" y="1819"/>
         </scene>
+        <!--LoginViewController-->
+        <scene sceneID="fqc-N9-WPq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MainStoryboard" referencedIdentifier="LoginViewController" id="bhj-s0-pWf" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="cwI-VL-ubp"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6OR-sh-4U6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="911" y="1819"/>
+        </scene>
     </scenes>
 </document>
