@@ -828,8 +828,6 @@
 				02BF745220793F0A0028ED6A /* TurnRestrictController.h */,
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
 				647C150D24268DB7008A9366 /* Upload */,
-				02F373F716822C2C004614D4 /* UploadViewController.h */,
-				02F373F816822C2C004614D4 /* UploadViewController.m */,
 				64305F6C23E71F5700232BB9 /* URLParsing */,
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
@@ -1018,6 +1016,8 @@
 		647C150D24268DB7008A9366 /* Upload */ = {
 			isa = PBXGroup;
 			children = (
+				02F373F716822C2C004614D4 /* UploadViewController.h */,
+				02F373F816822C2C004614D4 /* UploadViewController.m */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
