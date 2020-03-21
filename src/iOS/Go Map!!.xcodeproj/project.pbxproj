@@ -827,6 +827,7 @@
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				02BF745220793F0A0028ED6A /* TurnRestrictController.h */,
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
+				647C150D24268DB7008A9366 /* Upload */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
 				64305F6C23E71F5700232BB9 /* URLParsing */,
@@ -1012,6 +1013,13 @@
 				6453777223D391CC00656A1C /* OsmMember.m */,
 			);
 			path = OSMModels;
+			sourceTree = "<group>";
+		};
+		647C150D24268DB7008A9366 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Upload;
 			sourceTree = "<group>";
 		};
 		64981F1D22667D7700178476 /* Extensions */ = {
