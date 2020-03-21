@@ -11,7 +11,7 @@
         <!--Upload-->
         <scene sceneID="NgG-JA-TiT">
             <objects>
-                <viewController id="JiF-ZR-a9h" customClass="UploadViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UploadViewController" id="JiF-ZR-a9h" customClass="UploadViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sJx-qy-KZQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
