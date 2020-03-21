@@ -116,6 +116,7 @@
                         <outlet property="_progressView" destination="5dM-Q8-dhs" id="Fus-wv-b9A"/>
                         <outlet property="_sendMailButton" destination="vil-di-LsT" id="o9E-KJ-6HS"/>
                         <outlet property="_xmlTextView" destination="2Ah-L8-Njz" id="NaF-Lb-44t"/>
+                        <segue destination="bhj-s0-pWf" kind="push" identifier="loginSegue" id="dks-8r-fMp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L4v-xV-NLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
