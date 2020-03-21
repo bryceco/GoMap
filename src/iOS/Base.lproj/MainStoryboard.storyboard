@@ -1227,7 +1227,9 @@
         <!--UploadViewController-->
         <scene sceneID="9QX-nj-PQG">
             <objects>
-                <viewControllerPlaceholder storyboardName="Changeset" referencedIdentifier="UploadViewController" id="C2P-Oq-1sh" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Changeset" referencedIdentifier="UploadViewController" id="C2P-Oq-1sh" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="F1f-nC-YCY"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o3I-Zw-xzg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-177" y="1726"/>
@@ -3006,6 +3008,9 @@ http://glyphish.com
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="C2P-Oq-1sh" kind="relationship" relationship="rootViewController" id="MnC-38-35g"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJz-Wh-cNi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
