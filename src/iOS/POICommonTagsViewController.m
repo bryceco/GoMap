@@ -125,24 +125,30 @@
 	if ( [self isMovingToParentViewController] ) {
 	} else {
 		[self updatePresets];
-
-		// special case: if this is a new object and the user just selected the feature to be shop/amenity,
-		// then automatically select the Name field as the first responder
-		POITabBarController * tabController = (id)self.tabBarController;
-		if ( tabController.isTagDictChanged ) {
-			NSDictionary * dict = tabController.keyValueDict;
-			if ( dict.count == 1 && dict[@"shop"] && dict[@"name"] == nil ) {
-				// find name field and make it first responder
-				dispatch_async(dispatch_get_main_queue(), ^{
-					NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
-					CommonTagCell * cell = [self.tableView cellForRowAtIndexPath:index];
-					if ( cell && [cell.commonTag.tagKey isEqualToString:@"name"] ) {
-						[cell.valueField becomeFirstResponder];
-					}
-				});
-			}
-		}
 	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (![self isMovingToParentViewController]) {
+        // special case: if this is a new object and the user just selected the feature to be shop/amenity,
+        // then automatically select the Name field as the first responder
+        POITabBarController * tabController = (id)self.tabBarController;
+        if ( tabController.isTagDictChanged ) {
+            NSDictionary * dict = tabController.keyValueDict;
+            if ( dict.count == 1 && dict[@"shop"] && dict[@"name"] == nil ) {
+                // find name field and make it first responder
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
+                    CommonTagCell * cell = [self.tableView cellForRowAtIndexPath:index];
+                    if ( cell && [cell.commonTag.tagKey isEqualToString:@"name"] ) {
+                        [cell.valueField becomeFirstResponder];
+                    }
+                });
+            }
+        }
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
