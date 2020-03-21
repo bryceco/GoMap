@@ -4,6 +4,123 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Upload-->
+        <scene sceneID="NgG-JA-TiT">
+            <objects>
+                <viewController id="JiF-ZR-a9h" customClass="UploadViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sJx-qy-KZQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sh6-Y0-XmB">
+                                <rect key="frame" x="20" y="167" width="72.5" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5dM-Q8-dhs">
+                                <rect key="frame" x="188.5" y="159" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Lorem ipsum dolor sit er elit lamet," translatesAutoresizingMaskIntoConstraints="NO" id="ZMj-dl-mn4">
+                                <rect key="frame" x="20" y="76" width="374" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="hSb-g8-a0t"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="JiF-ZR-a9h" id="58X-jh-1IP"/>
+                                </connections>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet," translatesAutoresizingMaskIntoConstraints="NO" id="2Ah-L8-Njz">
+                                <rect key="frame" x="20" y="188.5" width="374" height="653.5"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="JiF-ZR-a9h" id="M6P-JY-ZWU"/>
+                                </connections>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vil-di-LsT">
+                                <rect key="frame" x="361" y="161" width="33" height="33"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <state key="normal" title="Mail">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendMail:" destination="JiF-ZR-a9h" eventType="touchUpInside" id="e3V-ea-0b0"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Changeset comment:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APb-r0-HpA">
+                                <rect key="frame" x="20" y="52" width="374" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPt-FF-gvf">
+                                <rect key="frame" x="321" y="161" width="32" height="33"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editXml:" destination="JiF-ZR-a9h" eventType="touchUpInside" id="t0c-pQ-J4p"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="yid-is-wtA" firstAttribute="centerX" secondItem="5dM-Q8-dhs" secondAttribute="centerX" id="5hG-7u-g8m"/>
+                            <constraint firstItem="QPt-FF-gvf" firstAttribute="centerY" secondItem="vil-di-LsT" secondAttribute="centerY" id="5uC-1L-Vex"/>
+                            <constraint firstItem="APb-r0-HpA" firstAttribute="leading" secondItem="yid-is-wtA" secondAttribute="leading" constant="20" id="FoI-m2-LXL"/>
+                            <constraint firstItem="yid-is-wtA" firstAttribute="bottom" secondItem="2Ah-L8-Njz" secondAttribute="bottom" constant="20" id="JIi-jh-2M2"/>
+                            <constraint firstItem="5dM-Q8-dhs" firstAttribute="centerY" secondItem="Sh6-Y0-XmB" secondAttribute="centerY" id="KUE-1f-KN3"/>
+                            <constraint firstItem="Sh6-Y0-XmB" firstAttribute="top" secondItem="ZMj-dl-mn4" secondAttribute="bottom" constant="11" id="Kdk-9X-8c1"/>
+                            <constraint firstItem="QPt-FF-gvf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sh6-Y0-XmB" secondAttribute="trailing" constant="6" id="NDk-zy-3DA"/>
+                            <constraint firstItem="ZMj-dl-mn4" firstAttribute="top" secondItem="APb-r0-HpA" secondAttribute="bottom" constant="3" id="Shi-Mv-5kY"/>
+                            <constraint firstItem="APb-r0-HpA" firstAttribute="top" secondItem="yid-is-wtA" secondAttribute="top" constant="8" id="VZZ-4e-5qm"/>
+                            <constraint firstItem="yid-is-wtA" firstAttribute="trailing" secondItem="vil-di-LsT" secondAttribute="trailing" constant="20" id="fgA-xu-ga7"/>
+                            <constraint firstItem="vil-di-LsT" firstAttribute="leading" secondItem="QPt-FF-gvf" secondAttribute="trailing" constant="8" symbolic="YES" id="gcB-Zf-mgr"/>
+                            <constraint firstItem="QPt-FF-gvf" firstAttribute="centerY" secondItem="Sh6-Y0-XmB" secondAttribute="centerY" id="hW6-aX-Hn3"/>
+                            <constraint firstItem="2Ah-L8-Njz" firstAttribute="top" secondItem="Sh6-Y0-XmB" secondAttribute="bottom" constant="1" id="hmr-Iw-6Ym"/>
+                            <constraint firstItem="Sh6-Y0-XmB" firstAttribute="leading" secondItem="yid-is-wtA" secondAttribute="leading" constant="20" id="iRb-Tm-Orw"/>
+                            <constraint firstItem="yid-is-wtA" firstAttribute="trailing" secondItem="ZMj-dl-mn4" secondAttribute="trailing" constant="20" id="jPG-S7-Ecw"/>
+                            <constraint firstItem="ZMj-dl-mn4" firstAttribute="leading" secondItem="yid-is-wtA" secondAttribute="leading" constant="20" id="kxV-8i-fQp"/>
+                            <constraint firstItem="2Ah-L8-Njz" firstAttribute="leading" secondItem="yid-is-wtA" secondAttribute="leading" constant="20" id="v8i-Vk-Gie"/>
+                            <constraint firstItem="yid-is-wtA" firstAttribute="trailing" secondItem="APb-r0-HpA" secondAttribute="trailing" constant="20" id="vFO-lR-jrr"/>
+                            <constraint firstItem="yid-is-wtA" firstAttribute="trailing" secondItem="2Ah-L8-Njz" secondAttribute="trailing" constant="20" id="wQL-pt-hUl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yid-is-wtA"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Upload" id="ihI-RK-rwh">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6u9-vL-wOC">
+                            <connections>
+                                <action selector="cancel:" destination="JiF-ZR-a9h" id="7UG-NL-Pp9"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Commit" style="done" id="obI-r2-tOo">
+                            <connections>
+                                <action selector="commit:" destination="JiF-ZR-a9h" id="ebr-Zq-pv5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="_cancelButton" destination="6u9-vL-wOC" id="6PY-xt-HW5"/>
+                        <outlet property="_commentTextView" destination="ZMj-dl-mn4" id="UVr-Yq-d40"/>
+                        <outlet property="_commitButton" destination="obI-r2-tOo" id="GeV-hF-oVT"/>
+                        <outlet property="_editXmlButton" destination="QPt-FF-gvf" id="6MM-is-Ofc"/>
+                        <outlet property="_progressView" destination="5dM-Q8-dhs" id="Fus-wv-b9A"/>
+                        <outlet property="_sendMailButton" destination="vil-di-LsT" id="o9E-KJ-6HS"/>
+                        <outlet property="_xmlTextView" destination="2Ah-L8-Njz" id="NaF-Lb-44t"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L4v-xV-NLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="293" y="1819"/>
+        </scene>
+    </scenes>
 </document>
