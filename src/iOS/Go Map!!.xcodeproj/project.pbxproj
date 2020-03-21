@@ -1018,9 +1018,9 @@
 		647C150D24268DB7008A9366 /* Upload */ = {
 			isa = PBXGroup;
 			children = (
+				647C151024269011008A9366 /* Changeset.storyboard */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
-				647C151024269011008A9366 /* Changeset.storyboard */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
