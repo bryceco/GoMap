@@ -3006,9 +3006,6 @@ http://glyphish.com
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="cxn-YY-uLs" kind="relationship" relationship="rootViewController" id="cct-f2-Gee"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJz-Wh-cNi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
