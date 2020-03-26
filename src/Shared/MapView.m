@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+@import AVFoundation;
 
 #import "iosapi.h"
 
