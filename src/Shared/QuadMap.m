@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#import "OsmObjects.h"
 #import "QuadMap.h"
 #import "UndoManager.h"
 

@@ -58,12 +58,6 @@ static const NSInteger CACHE_SECTION			= 3;
 		// becoming visible the first time
 		self.navigationController.navigationBarHidden = NO;
 
-		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:mapView.viewState inSection:BACKGROUND_SECTION];
-		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-		cell.accessoryType = UITableViewCellAccessoryCheckmark;
-
-		[self setCustomAerialCellTitle];
-
 		_notesSwitch.on				= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
 		_gpsTraceSwitch.on			= !mapView.gpsTraceLayer.hidden;
 
@@ -74,13 +68,30 @@ static const NSInteger CACHE_SECTION			= 3;
 		_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
 		_objectFiltersSwitch.on		= mapView.editorLayer.enableObjectFilters;
 
-	} else {
-
-		// returning from child view
-		[self setCustomAerialCellTitle];
 	}
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// place a checkmark next to currently selected display
+	if ( indexPath.section == BACKGROUND_SECTION ) {
+		MapView * mapView = [AppDelegate getAppDelegate].mapView;
+		if ( indexPath.row == mapView.viewState ) {
+			cell.accessoryType = UITableViewCellAccessoryCheckmark;
+		}
+	}
+
+	// set the name of the aerial provider
+	if ( indexPath.section == BACKGROUND_SECTION && indexPath.row == 2 ) {
+		if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
+			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+			AerialList * aerials = appDelegate.mapView.customAerials;
+			CustomBackgroundCell * custom = (id)cell;
+			[custom.button setTitle:aerials.currentAerial.name forState:UIControlStateNormal];
+			[custom.button sizeToFit];
+		}
+	}
+}
 
 - (void)applyChanges
 {
@@ -118,17 +129,6 @@ static const NSInteger CACHE_SECTION			= 3;
 	}
 }
 
--(void)setCustomAerialCellTitle
-{
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	AerialList * aerials = appDelegate.mapView.customAerials;
-	NSIndexPath * path = [NSIndexPath indexPathForRow:2 inSection:BACKGROUND_SECTION];
-	CustomBackgroundCell * cell = [self.tableView cellForRowAtIndexPath:path];
-	if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
-		[cell.button setTitle:aerials.currentAerial.name forState:UIControlStateNormal];
-		[cell.button sizeToFit];
-	}
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

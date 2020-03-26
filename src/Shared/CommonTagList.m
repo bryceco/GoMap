@@ -12,7 +12,6 @@
 #import "iosapi.h"
 #import "CommonTagList.h"
 #import "DLog.h"
-#import "OsmObjects.h"
 #import "TagInfo.h"
 
 
@@ -97,11 +96,6 @@ static void InitializeDictionaries()
 		g_presetsDict		= DictionaryForFile(@"presets.json");
 		g_fieldsDict		= DictionaryForFile(@"fields.json");
 
-		g_defaultsDict		= g_defaultsDict[@"defaults"];
-		g_categoriesDict	= g_categoriesDict[@"categories"];
-		g_presetsDict		= g_presetsDict[@"presets"];
-		g_fieldsDict		= g_fieldsDict[@"fields"];
-		
 		PresetLanguages * presetLanguages = [PresetLanguages new];	// don't need to save this, it doesn't get used again unless user changes the language
 		NSString * code = presetLanguages.preferredLanguageCode;
 		NSString * code2 = [code stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
@@ -124,6 +118,16 @@ static NSString * PrettyTag( NSString * tag )
 }
 
 
+BOOL IsOsmBooleanTrue( NSString * value )
+{
+    if ( [value isEqualToString:@"true"] )
+        return YES;
+    if ( [value isEqualToString:@"yes"] )
+        return YES;
+    if ( [value isEqualToString:@"1"] )
+        return YES;
+    return NO;
+}
 
 @implementation CommonTagValue
 -(instancetype)initWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value
@@ -229,11 +233,11 @@ static NSString * PrettyTag( NSString * tag )
 					if ( i >= presets.count )
 						break;
 					CommonTagValue * p = presets[i];
-					if ( p.tagValue.length >= 20 )
+					if ( p.name.length >= 20 )
 						continue;
 					if ( s.length )
 						[s appendString:@", "];
-					[s appendString:p.tagValue];
+					[s appendString:p.name];
 				}
 				[s appendString:@"..."];
 				placeholder = s;
@@ -517,6 +521,17 @@ static NSString * PrettyTag( NSString * tag )
 			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
 			return group;
 
+		} else if ( stringsOptionsDict ) {
+
+			// a multiple selection
+			NSMutableArray * presets = [NSMutableArray new];
+			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key2, NSString * _Nonnull val, BOOL * _Nonnull stop) {
+				[presets addObject:[CommonTagValue presetWithName:nil details:nil tagValue:val]];
+			}];
+			CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonTagGroup * group = [CommonTagGroup groupWithName:nil tags:@[ tag ]];
+			return group;
+
 		} else {
 #if DEBUG
 			assert(NO);
@@ -592,8 +607,8 @@ static NSString * PrettyTag( NSString * tag )
 				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
 					NSString * cleanKey = isMulti ? [key stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]] : key;
 					NSString * urlText = isMulti ?
-						[NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/keys/all?query=%@&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc", cleanKey] :
-						[NSString stringWithFormat:@"http://taginfo.openstreetmap.org/api/4/key/values?key=%@&page=1&rp=25&sortname=count_all&sortorder=desc", key];
+						[NSString stringWithFormat:@"https://taginfo.openstreetmap.org/api/4/keys/all?query=%@&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc", cleanKey] :
+						[NSString stringWithFormat:@"https://taginfo.openstreetmap.org/api/4/key/values?key=%@&page=1&rp=25&sortname=count_all&sortorder=desc", key];
 					NSURL * url = [NSURL URLWithString:urlText];
 					NSData * data = [NSData dataWithContentsOfURL:url];
 					if ( data ) {
@@ -683,7 +698,7 @@ static NSString * PrettyTag( NSString * tag )
 
 		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
 		NSArray * keys = nil;
-		for ( NSDictionary * localeDict in g_addressFormatsDict[ @"dataAddressFormats" ] ) {
+		for ( NSDictionary * localeDict in g_addressFormatsDict ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
 			if ( countryCodeList == nil ) {
 				// default
@@ -715,10 +730,13 @@ static NSString * PrettyTag( NSString * tag )
 
 	} else if ( [type isEqualToString:@"text"] ||
 			    [type isEqualToString:@"number"] ||
+			    [type isEqualToString:@"email"] ||
+			    [type isEqualToString:@"identifier"] ||
 			    [type isEqualToString:@"textarea"] ||
 			    [type isEqualToString:@"tel"] ||
 			    [type isEqualToString:@"url"] ||
-			    [type isEqualToString:@"wikipedia"] )
+			    [type isEqualToString:@"wikipedia"] ||
+				[type isEqualToString:@"wikidata"] )
 	{
 
 		// no presets
@@ -728,6 +746,8 @@ static NSString * PrettyTag( NSString * tag )
 			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypePhonePad doesn't have Done Button
 		else if ( [type isEqualToString:@"url"] )
 			keyboard = UIKeyboardTypeURL;
+		else if ( [ type isEqualToString:@"email"] )
+			keyboard = UIKeyboardTypeEmailAddress;
 		else if ( [type isEqualToString:@"textarea"] )
 			capitalize = UITextAutocapitalizationTypeSentences;
 		CommonTagKey * tag = [CommonTagKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
@@ -904,6 +924,41 @@ static NSString * PrettyTag( NSString * tag )
 }
 
 
+-(void)presetsForFeature:(NSString *)featureName geometry:(NSString *)geometry field:(NSString *)fieldType allFields:(NSMutableSet *)fieldSet update:(void (^)(void))update
+{
+	NSDictionary * featureDict = g_presetsDict[ featureName ];
+	NSArray * fields = featureDict[fieldType];
+	if ( fields == nil ) {
+		// inherit from parent
+		NSRange slash = [featureName rangeOfString:@"/"];
+		if ( slash.length ) {
+			NSString * parent = [featureName substringToIndex:slash.location];
+			[self presetsForFeature:parent geometry:geometry field:fieldType allFields:fieldSet update:update];
+		}
+		return;
+	}
+
+	for ( NSString * field in fields ) {
+
+		if ( [fieldSet containsObject:field] )
+			continue;
+		[fieldSet addObject:field];
+
+		CommonTagGroup * group = [self groupForField:field geometry:geometry update:update];
+		if ( group == nil )
+			continue;
+		// if both this group and the previous don't have a name then merge them
+		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
+			CommonTagGroup * prev = _sectionList.lastObject;
+			if ( prev.name == nil ) {
+				[prev mergeTagsFromGroup:group];
+				continue;
+			}
+		}
+		[_sectionList addObject:group];
+	}
+}
+
 -(void)setPresetsForDict:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
 {
 	NSString * featureName = [CommonTagList featureNameForObjectDict:objectTags geometry:geometry];
@@ -937,34 +992,22 @@ static NSString * PrettyTag( NSString * tag )
 
 	// Add presets specific to the type
 	NSMutableSet * fieldSet = [NSMutableSet new];
-	for ( NSString * field in featureDict[@"fields"] ) {
+	[self presetsForFeature:featureName geometry:geometry field:@"fields"     allFields:fieldSet update:update];
+	[_sectionList addObject:[CommonTagGroup groupWithName:nil tags:nil]];	// Create a break between the common items and the rare items
+	[self presetsForFeature:featureName geometry:geometry field:@"moreFields" allFields:fieldSet update:update];
 
-		if ( [fieldSet containsObject:field] )
-			continue;
-		[fieldSet addObject:field];
-
-		CommonTagGroup * group = [self groupForField:field geometry:geometry update:update];
-		if ( group == nil )
-			continue;
-		// if both this group and the previous don't have a name then merge them
-		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
-			CommonTagGroup * prev = _sectionList.lastObject;
-			if ( prev.name == nil ) {
-				[prev mergeTagsFromGroup:group];
-				continue;
-			}
-		}
-		[_sectionList addObject:group];
-	}
-
+#if 0 // not sure we still need these since ID presets cover most of these now
 	// Add generic presets
 	NSArray * extras = @[ @"elevation", @"note", @"phone", @"website", @"wheelchair", @"wikipedia" ];
 	CommonTagGroup * extraGroup = [CommonTagGroup groupWithName:@"Other" tags:nil];
 	for ( NSString * field in extras ) {
+		if ( [fieldSet containsObject:field] )
+			continue;
 		CommonTagGroup * group = [self groupForField:field geometry:geometry update:update];
 		[extraGroup mergeTagsFromGroup:group];
 	}
 	[_sectionList addObject:extraGroup];
+#endif
 }
 
 -(instancetype)init
@@ -1203,37 +1246,28 @@ static NSString * PrettyTag( NSString * tag )
 	return tagInfo.summary;
 }
 
--(UIImage *)iconUnscaled
-{
-	if ( _icon )
-		return _icon;
 
-	TagInfo * tagInfo = [self tagInfo];
-	_icon = tagInfo.icon;
-	if ( _icon )
-		return _icon;
-	
+// Icons and names are synced to the iD presets.json file.
+// SVG icons can be found in Maki/Temaki and the iD source tree
+// To convert from SVG to PDF use: /Volumes/Inkscape/Inkscape.app/Contents/MacOS/inkscape  --export-type=pdf *.svg
+// To rename files with the proper prefix use: for f in `ls *.pdf`; do echo mv $f `echo $f | sed 's/^/maki-/;s/-15//'`; done | bash
+-(UIImage *)iconUncached
+{
 	NSString * iconName = _dict[ @"icon" ];
 	if ( iconName ) {
-		NSString * path = [NSString stringWithFormat:@"poi/%@-24", iconName];
-		_icon = [UIImage imageNamed:path];
-		if ( _icon )
-			return _icon;
-		
-		_icon = [UIImage imageNamed:iconName];
-		if ( _icon ) {
-			return _icon;
+		UIImage * icon = [UIImage imageNamed:iconName];
+		if ( icon ) {
+			return icon;
 		}
 	}
-	_icon = (id)[NSNull null];
-	return _icon;
+	return (id)[NSNull null];
 }
 
 -(UIImage *)icon
 {
 	extern const double MinIconSizeInPixels;
 	if ( _icon == nil ) {
-		[self iconUnscaled];
+		_icon = [self iconUncached];
 		if ( ![_icon isKindOfClass:[NSNull class]] ) {
 #if TARGET_OS_IPHONE
 			CGFloat uiScaling = [[UIScreen mainScreen] scale];

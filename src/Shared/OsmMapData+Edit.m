@@ -9,7 +9,7 @@
 #import "DLog.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "UndoManager.h"
 #import "VectorMath.h"
 
@@ -243,7 +243,7 @@
 	};
 }
 
-#pragma mark canRemoveWayFromRelation
+#pragma mark canRemoveObject:fromRelation
 
 -(EditAction)canRemoveObject:(OsmBaseObject *)obj fromRelation:(OsmRelation *)relation error:(NSString **)error
 {
@@ -262,7 +262,7 @@
 	};
 }
 
-#pragma mark canReplaceNodeInWay
+#pragma mark canMergeNode:intoNode
 
 // used when dragging a node into another node
 -(EditActionReturnNode)canMergeNode:(OsmNode *)node1 intoNode:(OsmNode *)node2 error:(NSString **)error
@@ -314,7 +314,7 @@
 
 	// gather restrictions for parent ways
 	for ( OsmNode * node in nodes ) {
-		NSArray * parents = [self waysContainingNode:node];
+		NSArray<OsmWay *> * parents = [self waysContainingNode:node];
 		for ( OsmWay * parent in parents ) {
 			for ( OsmRelation * relation in parent.parentRelations ) {
 				if ( relation.isRestriction ) {
@@ -1065,7 +1065,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		return nil;	// must be endpoint node
 	}
 
-	NSArray * ways = [self waysContainingNode:selectedNode];
+	NSArray<OsmWay *> * ways = [self waysContainingNode:selectedNode];
 	OsmWay * otherWay = nil;
 	for ( OsmWay * way in ways ) {
 		if ( way == selectedWay )

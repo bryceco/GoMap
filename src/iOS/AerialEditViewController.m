@@ -50,6 +50,8 @@
 																	url:url
 																maxZoom:[zoomField.text integerValue]
 																roundUp:YES
+															  startDate:nil
+																endDate:nil
 																wmsProjection:nil
 																polygon:NULL
 											   				attribString:nil

@@ -6,14 +6,12 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
-#import "OsmObjects.h"
 #import "POIAttributesViewController.h"
 #import "POITabBarController.h"
-#import "WebPageViewController.h"
-
 
 @interface AttributeCustomCell : UITableViewCell
 @property (assign,nonatomic)	IBOutlet UILabel		*	title;
@@ -33,6 +31,8 @@ enum {
 };
 
 @implementation POIAttributesViewController
+
+const NSInteger kCoordinateSection = 1;
 
 - (void)viewDidLoad
 {
@@ -121,7 +121,7 @@ enum {
 				assert(NO);
 		}
 
-	} else {
+	} else if (indexPath.section == kCoordinateSection) {
 
 		if ( object.isNode ) {
 			OsmNode * node = object.isNode;
@@ -168,44 +168,63 @@ enum {
 	return indexPath;
 }
 
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( [sender isKindOfClass:[UITableViewCell class]] ) {
-		UITableViewCell * cell = sender;
-		
-		WebPageViewController * web = segue.destinationViewController;
+    AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+    OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
+    if ( object == nil ) {
+        return;
+    }
 
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
-		if ( object == nil ) {
-			web.url = nil;
-			return;
-		}
+    NSString *urlString;
 
-		NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-		if ( indexPath && indexPath.section == 0 ) {
-			if ( indexPath.row == ROW_IDENTIFIER ) {
-				NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
-				web.title = type.capitalizedString;
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@", type, object.ident];
-			} else if ( indexPath.row == ROW_USER ) {
-				web.title = NSLocalizedString(@"User",nil);
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/user/%@", object.user];
-			} else if ( indexPath.row == ROW_VERSION ) {
-				web.title = NSLocalizedString(@"History",nil);
-				NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/%@/%@/history", type, object.ident];
-			} else if ( indexPath.row == ROW_CHANGESET ) {
-				web.title = NSLocalizedString(@"Changeset",nil);
-				web.url = [NSString stringWithFormat:@"http://www.openstreetmap.org/browse/changeset/%ld", (long)object.changeset];
-			} else {
-				assert( NO );
-			}
-		}
+    if ( indexPath.row == ROW_IDENTIFIER ) {
+        NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
+        urlString = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/%@/%@", type, object.ident];
+    } else if ( indexPath.row == ROW_USER ) {
+        urlString = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", object.user];
+    } else if ( indexPath.row == ROW_VERSION ) {
+        NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";
+        urlString = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/%@/%@/history", type, object.ident];
+    } else if ( indexPath.row == ROW_CHANGESET ) {
+        urlString = [NSString stringWithFormat:@"https://www.openstreetmap.org/browse/changeset/%ld", (long)object.changeset];
+    }
 
-	}
-	[super prepareForSegue:segue sender:sender];
+    if ( urlString != nil ) {
+        NSString * encodedUrlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSURL * url = [NSURL URLWithString:encodedUrlString];
+
+        SFSafariViewController * safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+        [self presentViewController:safariViewController animated:YES completion:nil];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Allow the user to copy the latitude/longitude.
+    return indexPath.section == kCoordinateSection;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+        // Allow users to copy latitude/longitude.
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (![cell isKindOfClass:[AttributeCustomCell class]]) {
+        // For cells other than `AttributeCustomCell`, we don't know how to get the value.
+        return;
+    }
+    
+    AttributeCustomCell *customCell = (AttributeCustomCell *)cell;
+    
+    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+        [UIPasteboard.generalPasteboard setString:customCell.value.text];
+    }
 }
 
 -(IBAction)cancel:(id)sender

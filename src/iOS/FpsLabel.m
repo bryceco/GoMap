@@ -94,7 +94,6 @@ const int FRAME_COUNT = 60;
 		self.text = [NSString stringWithFormat:@"%.1f FPS", average];
 	else
 		self.text = [NSString stringWithFormat:@"%.2f FPS", average];
-	NSLog(@"frame");
 }
 
 - (void)frameUpdated

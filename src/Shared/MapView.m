@@ -24,7 +24,7 @@
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "RulerLayer.h"
 #import "TurnRestrictController.h"
 
@@ -82,6 +82,7 @@ static const CGFloat Z_FLASH			= 110;
 @synthesize viewState			= _viewState;
 @synthesize screenFromMapTransform	= _screenFromMapTransform;
 
+const CGFloat kEditControlCornerRadius = 4;
 
 #pragma mark initialization
 
@@ -299,6 +300,7 @@ static const CGFloat Z_FLASH			= 110;
 	[_editControl setTitleTextAttributes:@{ NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] }
 									   forState:UIControlStateNormal];
 	_editControl.layer.zPosition = Z_TOOLBAR;
+    _editControl.layer.cornerRadius = kEditControlCornerRadius;
 
 	// long press for selecting from multiple objects
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
@@ -321,7 +323,7 @@ static const CGFloat Z_FLASH			= 110;
 	_notesViewDict			= [NSMutableDictionary new];
 
 	// make help button have rounded corners
-	_helpButton.layer.cornerRadius = 10.0;
+	_helpButton.layer.cornerRadius = _helpButton.bounds.size.width / 2;
 
 	// observe changes to aerial visibility so we can show/hide bing logo
 	[_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
@@ -537,7 +539,12 @@ static const CGFloat Z_FLASH			= 110;
 	AerialService * service = self.aerialLayer.aerialService;
 	_aerialServiceLogo.hidden = self.aerialLayer.hidden || (service.attributionString.length == 0 && service.attributionIcon == nil);
 	if ( !_aerialServiceLogo.hidden ) {
-		[service scaleAttributionIconToHeight:_aerialServiceLogo.frame.size.height];
+        // For Bing maps, the attribution icon is part of the app's assets and already has the desired size,
+        // so there's no need to scale it.
+        if (!service.isBingAerial) {
+            [service scaleAttributionIconToHeight:_aerialServiceLogo.frame.size.height];
+        }
+		
 		[_aerialServiceLogo setImage:service.attributionIcon forState:UIControlStateNormal];
 		[_aerialServiceLogo setTitle:service.attributionString forState:UIControlStateNormal];
 	}
@@ -1386,9 +1393,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		
 		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-			NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-			NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-			[self showAlert:title message:nil];
+            [self askUserToAllowLocationAccess];
+            
 			self.gpsState = GPS_STATE_NONE;
 			return;
 		}
@@ -1412,6 +1418,39 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationBallLayer removeFromSuperlayer];
 		_locationBallLayer = nil;
 	}
+}
+
+- (void)askUserToAllowLocationAccess {
+    NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+    
+    [self askUserToOpenSettingsWithAlertTitle:title message:nil];
+}
+
+- (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:nil];
+    UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self openAppSettings];
+                                                         }];
+    
+    [alertController addAction:openSettings];
+    [alertController addAction:okayAction];
+    
+    [self.viewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)openAppSettings {
+    NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if (openSettingsURL) {
+        [[UIApplication sharedApplication] openURL:openSettingsURL];
+    }
 }
 
 -(IBAction)centerOnGPS:(id)sender
@@ -1863,7 +1902,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
     }
 
 	if ( _editorLayer.selectedPrimary.tags.count > 0 ) {
-		NSString * question = [NSString stringWithFormat:@"Pasting %lu tag(s)", copyPasteTags.count];
+		NSString * question = [NSString stringWithFormat:@"Pasting %ld tag(s)", (long)copyPasteTags.count];
 		UIAlertController * alertPaste = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Paste",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Merge Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
@@ -2046,7 +2085,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	if ( _editorLayer.selectedWay ) {
 		if ( _editorLayer.selectedNode ) {
 			// node in way
-			NSArray * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
+			NSArray<OsmWay *> * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
             BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
 			BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
 			BOOL join 			= parentWays.count > 1;
@@ -2257,11 +2296,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			}
 			break;
 		case ACTION_HEIGHT:
-			if ( self.gpsState != GPS_STATE_NONE ) {
-				[self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
-			} else {
-				error = NSLocalizedString(@"This action requires GPS to be turned on",nil);
-			}
+            [self presentViewControllerForMeasuringHeight];
 			break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
@@ -2420,9 +2455,9 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 	OsmWay * way = _editorLayer.selectedWay;
 
-	NSArray * ignoreList = nil;
+	NSArray<OsmBaseObject *> * ignoreList = nil;
 	NSInteger index = [way.nodes indexOfObject:node];
-	NSArray * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
+	NSArray<OsmWay *> * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
 	if ( way.nodes.count < 3 ) {
 		ignoreList = [parentWays arrayByAddingObjectsFromArray:way.nodes];
 	} else if ( index == 0 ) {
@@ -2436,10 +2471,10 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		ignoreList = [way.nodes arrayByAddingObjectsFromArray:parentWays];
 	}
 	OsmBaseObject * hit = [_editorLayer osmHitTest:_pushpinView.arrowPoint
-											  radius:DragConnectHitTestRadius
-										   testNodes:YES
-										  ignoreList:ignoreList
-											 segment:segment];
+											radius:DragConnectHitTestRadius
+									 isDragConnect:YES
+										ignoreList:ignoreList
+										   segment:segment];
 	return hit;
 }
 
@@ -3274,13 +3309,13 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
 		CGPoint point = [longPress locationInView:self];
 
-		NSArray * objects = [self.editorLayer osmHitTestMultiple:point radius:DefaultHitTestRadius];
+		NSArray<OsmBaseObject *> * objects = [self.editorLayer osmHitTestMultiple:point radius:DefaultHitTestRadius];
 		if ( objects.count == 0 )
 			return;
 
 		// special case for adding members to relations:
 		if ( _editorLayer.selectedPrimary.isRelation.isMultipolygon ) {
-			NSArray * ways = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmBaseObject * obj, id bindings) {
+			NSArray<OsmBaseObject *> * ways = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmBaseObject * obj, id bindings) {
 				return obj.isWay != nil;
 			}]];
 			if ( ways.count == 1 ) {
@@ -3434,7 +3469,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	} else {
 
 		// hit test anything
-		hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius testNodes:NO ignoreList:nil segment:NULL];
+		hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:NULL];
 		if ( hit ) {
 			if ( hit.isNode ) {
 				_editorLayer.selectedNode = (id)hit;
@@ -3494,6 +3529,21 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
 		}
 	}
+}
+
+- (void)presentViewControllerForMeasuringHeight {
+    if ( self.gpsState == GPS_STATE_NONE ) {
+        NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
+        
+        [self showAlert:errorMessage message:nil];
+    } else if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusDenied) {
+        NSString *title = NSLocalizedString(@"Unable to access the camera", "");
+        NSString *message = NSLocalizedString(@"In order to measure height, please enable camera access in the app's settings.", "");
+        
+        [self askUserToOpenSettingsWithAlertTitle:title message:message];
+    } else {
+        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
+    }
 }
 
 @end

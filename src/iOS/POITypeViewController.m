@@ -8,7 +8,6 @@
 
 #import "iosapi.h"
 #import "CommonTagList.h"
-#import "OsmObjects.h"
 #import "POITabBarController.h"
 #import "POITypeViewController.h"
 
@@ -105,7 +104,8 @@ static NSInteger			mostRecentMaximum;
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		CommonTagFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
 		cell.textLabel.text			= feature.friendlyName;
-		cell.imageView.image		= feature.icon;
+		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [cell.imageView setupTintColorForDarkMode];
 		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 		cell.detailTextLabel.text	= feature.summary;
 		return cell;
@@ -116,7 +116,8 @@ static NSInteger			mostRecentMaximum;
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		CommonTagFeature * feature = mostRecentArray[ indexPath.row ];
 		cell.textLabel.text			= feature.friendlyName;
-		cell.imageView.image		= feature.icon;
+		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [cell.imageView setupTintColorForDarkMode];
 		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 		cell.detailTextLabel.text	= feature.summary;
 		cell.accessoryType			= UITableViewCellAccessoryNone;
@@ -133,7 +134,8 @@ static NSInteger			mostRecentMaximum;
 			CommonTagFeature * feature = tagInfo;
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 			cell.textLabel.text			= feature.friendlyName;
-			cell.imageView.image		= feature.icon;
+			cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            [cell.imageView setupTintColorForDarkMode];
 			cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 			cell.detailTextLabel.text	= feature.summary;
 

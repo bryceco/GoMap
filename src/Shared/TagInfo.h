@@ -10,14 +10,6 @@
 
 @class OsmBaseObject;
 
-@interface KeyValue : NSObject
-@property (strong,nonatomic)	NSString *	key;
-@property (strong,nonatomic)	NSString *	value;
-+(id)keyValueWithKey:(NSString *)key value:(id)value;
-@end
-
-
-
 @interface TagInfo : NSObject
 {
 	NSImage *	_icon;
@@ -36,19 +28,10 @@
 @property (assign,nonatomic)	CGFloat			lineWidth;
 @property (strong,nonatomic)	NSColor		*	areaColor;
 @property (assign,nonatomic)	NSString	*	areaColorText;
-// to cache scaled icon:
-@property (strong,nonatomic)	NSImage		*	scaledIcon;
-
--(NSImage *)icon;
--(CGImageRef)cgIcon;
--(NSString *)friendlyName2;
 
 -(BOOL)isAddressPoint;
 
 -(NSInteger)renderSize:(OsmBaseObject *)object;
-
-+(NSColor *)colorForString:(NSString *)text;
-+(NSString *)stringForColor:(NSColor *)color;
 
 @end
 
@@ -60,27 +43,8 @@
 	NSMutableDictionary *	_keyDict;
 }
 +(TagInfoDatabase *)sharedTagInfoDatabase;
-+(NSMutableArray *)readXml;
-
--(NSSet *)allTagKeys;
--(NSSet *)allTagValuesForKey:(NSString *)key;
 
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
 -(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
-
-#if TARGET_OS_IPHONE
-- (NSArray *)subitemsOfType:(NSString *)type belongTo:(NSString *)belongTo;
-- (NSArray *)itemsForTag:(NSString *)type matching:(NSString *)searchText;
-#else
--(NSMenu *)tagNodeMenuWithTarget:(id)target action:(SEL)action;
--(NSMenu *)tagWayMenuWithTarget:(id)target action:(SEL)action;
-#endif
--(NSArray *)tagsForNodes;
-
--(NSArray *)cuisineStyleValues;
--(NSArray *)cuisineEthnicValues;
--(NSArray *)wifiValues;
--(NSArray *)fixmeValues;
--(NSArray *)sourceValues;
 
 @end

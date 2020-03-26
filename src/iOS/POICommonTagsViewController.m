@@ -13,10 +13,8 @@
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
 #import "POICommonTagsViewController.h"
 #import "POIPresetViewController.h"
-#import "POITabBarController.h"
 #import "POITabBarController.h"
 #import "POITypeViewController.h"
 #import "TagInfo.h"
@@ -34,7 +32,9 @@
 @implementation CommonTagCell
 @end
 
+@interface POICommonTagsViewController() <DirectionViewControllerDelegate>
 
+@end
 
 @implementation POICommonTagsViewController
 
@@ -125,24 +125,30 @@
 	if ( [self isMovingToParentViewController] ) {
 	} else {
 		[self updatePresets];
-
-		// special case: if this is a new object and the user just selected the feature to be shop/amenity,
-		// then automatically select the Name field as the first responder
-		POITabBarController * tabController = (id)self.tabBarController;
-		if ( tabController.isTagDictChanged ) {
-			NSDictionary * dict = tabController.keyValueDict;
-			if ( dict.count == 1 && (dict[@"shop"] || dict[@"amenity"]) && dict[@"name"] == nil ) {
-				// find name field and make it first responder
-				dispatch_async(dispatch_get_main_queue(), ^{
-					NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
-					CommonTagCell * cell = [self.tableView cellForRowAtIndexPath:index];
-					if ( cell && [cell.commonTag.tagKey isEqualToString:@"name"] ) {
-						[cell.valueField becomeFirstResponder];
-					}
-				});
-			}
-		}
 	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (![self isMovingToParentViewController]) {
+        // special case: if this is a new object and the user just selected the feature to be shop/amenity,
+        // then automatically select the Name field as the first responder
+        POITabBarController * tabController = (id)self.tabBarController;
+        if ( tabController.isTagDictChanged ) {
+            NSDictionary * dict = tabController.keyValueDict;
+            if ( dict.count == 1 && (dict[@"shop"] || dict[@"amenity"]) && dict[@"name"] == nil ) {
+                // find name field and make it first responder
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
+                    CommonTagCell * cell = [self.tableView cellForRowAtIndexPath:index];
+                    if ( cell && [cell.commonTag.tagKey isEqualToString:@"name"] ) {
+                        [cell.valueField becomeFirstResponder];
+                    }
+                });
+            }
+        }
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -252,7 +258,6 @@
 		cell.nameLabel.text = commonTag.name;
 		cell.valueField.placeholder = commonTag.placeholder;
 		cell.valueField.delegate = self;
-		cell.valueField.textColor = [UIColor colorWithRed:0.22 green:0.33 blue:0.53 alpha:1.0];
 		cell.commonTag = commonTag;
 
 		cell.valueField.keyboardType = commonTag.keyboardType;
@@ -262,8 +267,15 @@
 		[cell.valueField addTarget:self action:@selector(textFieldChanged:)			forControlEvents:UIControlEventEditingChanged];
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
 		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
-
-		cell.accessoryType = commonTag.presetList.count ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+        
+        if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:commonTag.tagKey]) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else if (commonTag.presetList.count > 0) {
+            // The user can select from a list of presets.
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
 
 		POITabBarController	* tabController = (id)self.tabBarController;
 		NSDictionary * objectDict = tabController.keyValueDict;
@@ -303,9 +315,19 @@
 	CommonTagCell * cell = (id) [tableView cellForRowAtIndexPath:indexPath];
 	if ( cell.accessoryType == UITableViewCellAccessoryNone )
 		return;
+    
+    // This workaround is necessary because `tableView:cellForRowAtIndexPath:`
+    // currently sets `cell.commonTag` to an instance of `CommonTagGroup` by casting it to `id`.
+    CommonTagKey *commonTag;
+    if ([cell.commonTag isKindOfClass:[CommonTagKey class]]) {
+        commonTag = cell.commonTag;
+    }
 
 	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
+    } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:commonTag.tagKey]) {
+        [self presentDirectionViewControllerForTagWithKey:cell.commonTag.tagKey
+                                                    value:cell.valueField.text];
 	} else if ( [cell.commonTag isKindOfClass:[CommonTagGroup class]] ) {
 		// special case for drill down
 		CommonTagGroup * group = (id)cell.commonTag;
@@ -349,6 +371,8 @@
 
 - (void)resignAll
 {
+	if ( self.tableView.window == nil )
+		return;
 	for (CommonTagCell * cell in self.tableView.visibleCells) {
 		[cell.valueField resignFirstResponder];
 		[cell.valueField2 resignFirstResponder];
@@ -381,7 +405,7 @@
 			return;	// should never happen
 		NSSet * set = [CommonTagList allTagValuesForKey:key];
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-		NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+		NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];
 		NSArray * list = [values allObjects];
 		[(AutocompleteTextField *)textField setCompletions:list];
@@ -403,15 +427,56 @@
 	value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 	textField.text = value;
 
-	POITabBarController * tabController = (id)self.tabBarController;
+    [self updateTagWithValue:value forKey:key];
+}
 
-	if ( value.length ) {
-		[tabController.keyValueDict setObject:value forKey:key];
-	} else {
-		[tabController.keyValueDict removeObjectForKey:key];
-	}
+- (void)updateTagWithValue:(NSString *)value forKey:(NSString *)key {
+    POITabBarController * tabController = (id)self.tabBarController;
+    
+    if ( value.length ) {
+        [tabController.keyValueDict setObject:value forKey:key];
+    } else {
+        [tabController.keyValueDict removeObjectForKey:key];
+    }
+    
+    _saveButton.enabled = [tabController isTagDictChanged];
+}
 
-	_saveButton.enabled = [tabController isTagDictChanged];
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	const int MAX_LENGTH = 256;
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
+    return newLength <= MAX_LENGTH || returnKey;
+}
+
+/**
+ Determines whether the `DirectionViewController` can be used to measure the value for the tag with the given key.
+ 
+ @param key The key of the tag that should be measured.
+ @return YES if the key can be measured using the `DirectionViewController`, NO if not.
+ */
+- (BOOL)canUseDirectionViewControllerToMeasureValueForTagWithKey:(NSString *)key {
+    NSArray<NSString *> *keys = @[@"direction", @"camera:direction"];
+    
+    return [keys containsObject:key];
+}
+
+- (void)presentDirectionViewControllerForTagWithKey:(NSString *)key value:(NSString *)value {
+    DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:key
+                                                                                              value:value];
+    directionViewController.delegate = self;
+    
+    [self.navigationController pushViewController:directionViewController animated:YES];
+}
+
+#pragma mark - <DirectionViewControllerDelegate>
+
+- (void)directionViewControllerDidUpdateTagWithKey:(NSString *)key value:(NSString *)value {
+    [self updateTagWithValue:value forKey:key];
 }
 
 @end
