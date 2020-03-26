@@ -276,7 +276,7 @@ public:
 			if ( this->countBusy() == 0 ) {
 				delete this;
 			}
-			return;
+			//return;
 		}
 
 		if ( success ) {
@@ -524,9 +524,6 @@ public:
 };
 
 
-
-
-
 @implementation QuadBox
 
 #pragma mark Common
@@ -690,8 +687,6 @@ public:
 {
 	_cpp->deleteObjectsWithPredicate(predicate);
 }
-
-
 
 #pragma mark find sibling quadkeys
 

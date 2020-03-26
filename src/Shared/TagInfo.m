@@ -83,12 +83,9 @@
 }
 @end
 
-
 @implementation TagInfo
 
 @synthesize iconName = _iconName;
-
-
 
 -(TagInfo *)copy
 {
@@ -577,12 +574,8 @@ static TagInfo * g_DefaultRender = nil;
 	} else if ( [key isEqualToString:@"source"] ) {
 		[set addObjectsFromArray:[self sourceValues]];
 	}
-
-
 	return set;
 }
-
-
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {
 	NSDictionary * valDict = [_keyDict objectForKey:key];

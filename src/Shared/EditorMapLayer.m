@@ -297,7 +297,6 @@ const double MinIconSizeInMeters = 2.0;
 #endif
 }
 
-
 - (void)purgeCachedDataHard:(BOOL)hard
 {
     self.selectedNode    = nil;

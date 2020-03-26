@@ -8,7 +8,7 @@
 
 import XCTest
 
-@testable import Go_Map__
+//@testable import Go_Map__
 
 class CommonTagKeyTestCase: XCTestCase {
     

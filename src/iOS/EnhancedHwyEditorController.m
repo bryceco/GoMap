@@ -19,19 +19,25 @@
 #import "OsmMapData+Edit.h"
 #import "OsmObjects.h"
 
-
 typedef enum {
     EMPTY = -2,
     BACKWARD = -1,
     NONE = 0,
     FORWARD = 1
 } ONEWAY_STATES;
+typedef enum {
+		EMPTY_LANE = 0, //might need to change
+		PLUS_CLICKED = +1,
+		NO_LANES = -2,
+		MINUS_CLICKED = -1,
+} LANE_COUNT;
 
 @interface EnhancedHwyEditorController ()
 {
     NSMutableArray        *    _parentWays;
     NSMutableArray        *    _highwayViewArray; //    Array of EnhancedHwyEditorView to Store number of ways
-    
+
+	//	NSArray                * _laneCount;
     EnhancedHwyEditorView    *    _selectedFromHwy;
     UIButton            *   _uTurnButton;
     OsmRelation         *   _currentUTurnRelation;
@@ -40,18 +46,19 @@ typedef enum {
     NSMutableArray        *    _editedRelations;
     
     OsmWay              *   _selectedWay;
-    ONEWAY_STATES           _onewayState;
-    
+    ONEWAY_STATES         _onewayState;
+		LANE_COUNT           _laneCountState;
+
     MapView             *   _mapView;
     EditorMapLayer      *   _editorLayer;
     
     NSInteger               _reverseCount;
+		NSInteger               _laneCount;
+		NSInteger               _laneValues;
 }
 @end
 
-
 @implementation EnhancedHwyEditorController
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,9 +69,6 @@ typedef enum {
     
     [_editorLayer.mapData beginUndoGrouping];
 }
-
-
-
 - (void)loadState
 {
     self.keyValueDict = [NSMutableDictionary new];
@@ -76,14 +80,21 @@ typedef enum {
     _selectedWay = _editorLayer.selectedWay;
     _tags = [NSMutableArray arrayWithCapacity:_selectedWay.tags.count];
     NSMutableArray * nameTags = [[NSMutableArray alloc] init];
-    
+    //enumerating through the tags
     [_keyValueDict enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
         [_tags addObject:[NSMutableArray arrayWithObjects:tag, value, nil]];
         if ( [tag hasPrefix:@"name"] ){
             [nameTags addObject:[NSMutableArray arrayWithObjects:tag, value, nil]];
         }
-    }];
-    
+
+				if(![_keyValueDict objectForKey:@"lanes"]){
+						_laneCount = 0;
+				} else {
+						_laneCount = [[_keyValueDict valueForKey:@"lanes"] intValue];
+						_stepper.value = _laneCount;
+				}
+		}];
+		//RIGHT HERE
     if ( nameTags.count > 0 ){
         _nameTags = [[nameTags sortedArrayUsingComparator:^NSComparisonResult(NSArray * obj1,NSArray * obj2) {
             return [obj1[0] compare:obj2[0]];
@@ -95,7 +106,7 @@ typedef enum {
         _nameTags = nameTags;
         [_tags addObject:[NSMutableArray arrayWithObjects:@"name", @"", nil]];
     }
-    
+
     // Check for `name` presets and add them as options in the list
     for ( CustomPreset * custom in [CustomPresetList shared] ) {
         if ( custom.appliesToKey.length ) {
@@ -118,10 +129,19 @@ typedef enum {
     }
     
     [self setOnewayBtnStyle];
-    
+
+//lanecount for stepper
+		if (![_keyValueDict objectForKey:@"lanes"]){
+				_laneCount = EMPTY_LANE;
+				NSLog(@"LANES = TRUE");
+		} else {
+				_laneCount = (LANE_COUNT)_selectedWay.isModified;
+				NSLog(@"LANES = FALSE");
+		}
+		NSLog(@"LANESTEPPER: %f", _stepper.value);
+		[lblValue setText:[NSString stringWithFormat:@"%f", [laneStepper value]]];
     [tagTable reloadData];
-    
-    saveButton.enabled = [self isTagDictChanged:_keyValueDict];
+		saveButton.enabled = [self isTagDictChanged:[self keyValueDictionary]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -187,7 +207,7 @@ typedef enum {
 
 - (IBAction)textFieldEditingDidBegin:(UITextField *)textField
 {
-    UITableViewCell * cell = (id)textField.superview;
+     UITableViewCell * cell = (id)textField.superview;
     while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
         cell = (id)cell.superview;
     TextPair * pair = (id)cell;
@@ -375,9 +395,52 @@ typedef enum {
     }
 }
 
+- (IBAction)laneStepperPressed:(UIStepper *)sender {
+		NSString * error = nil;
+			EditAction laneAdded;
+			double value =  [sender value];
+		NSLog(@"LANE STEPPER VALUE: %d", (int) _stepper.value);
+			[lblValue setText:[NSString stringWithFormat:@"%d", (int)value]];
+			if(laneAdded)
+					[lblValue setText:[NSString stringWithFormat:@"%f", [laneStepper value]]];
+			if(error) {
+					UIAlertController * alertError = [UIAlertController alertControllerWithTitle:error message:nil preferredStyle:UIAlertControllerStyleAlert];
+					[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+					[self presentViewController:alertError animated:YES completion:nil];
+			}
+			[_editorLayer setNeedsLayout];
+			if ( ![self isTagDictChanged:[self keyValueDictionary]] ) {
+					 NSMutableArray * laneTag;
+						 NSInteger * index = 0;
+						 for ( NSMutableArray * kv in _tags ){
+								 if ( [kv[0] isEqualToString:@"lanes"] )
+										 laneTag = kv;
+								 index++;
+					}
+					switch (_laneCount) {
+								case EMPTY_LANE:
+									[_tags addObject:[NSMutableArray arrayWithObjects:@"lanes", "no" , nil]];
+									_laneCount = EMPTY_LANE;
+										break;
+
+								case MINUS_CLICKED:
+										_laneCount = MINUS_CLICKED;
+										break;
+
+								case PLUS_CLICKED:
+										_laneCount = PLUS_CLICKED;
+										break;
+
+								default:
+										break;
+					}
+			}
+		saveButton.enabled = [self isTagDictChanged:[self keyValueDictionary]];
+}
+
 - (IBAction)done {
     [self dismissViewControllerAnimated:true completion:nil];
-    [self saveState];
+		[self saveState];
     
     [self commitChanges];
 }

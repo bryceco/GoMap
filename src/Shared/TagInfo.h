@@ -16,8 +16,6 @@
 +(id)keyValueWithKey:(NSString *)key value:(id)value;
 @end
 
-
-
 @interface TagInfo : NSObject
 {
 	NSImage *	_icon;
@@ -52,8 +50,6 @@
 
 @end
 
-
-
 @interface TagInfoDatabase : NSObject
 {
 	NSArray				*	_allTags;
@@ -76,7 +72,6 @@
 -(NSMenu *)tagWayMenuWithTarget:(id)target action:(SEL)action;
 #endif
 -(NSArray *)tagsForNodes;
-
 -(NSArray *)cuisineStyleValues;
 -(NSArray *)cuisineEthnicValues;
 -(NSArray *)wifiValues;

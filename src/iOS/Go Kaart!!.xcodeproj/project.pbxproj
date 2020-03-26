@@ -135,7 +135,6 @@
 		02ACBA4616713CCB00BB4414 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4516713CCB00BB4414 /* Default.png */; };
 		02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4716713CCB00BB4414 /* Default@2x.png */; };
 		02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4916713CCB00BB4414 /* Default-568h@2x.png */; };
-		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
 		02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5216713CCB00BB4414 /* MapViewController.m */; };
 		02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5916713CCB00BB4414 /* SettingsViewController.m */; };
 		02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA6E16713F2A00BB4414 /* BingPlaceholderImage.png */; };
@@ -490,9 +489,10 @@
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		26D1047E22BBEA4800E2B493 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26D1047D22BBEA4800E2B493 /* Images.xcassets */; };
+		0E19F60C240D704300339457 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E19F608240D704300339457 /* MainStoryboard_iPad.storyboard */; };
+		0E19F60D240D704300339457 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E19F60A240D704300339457 /* MainStoryboard.storyboard */; };
+		0ECB35FF240973590063B61B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ECB35FE240973590063B61B /* Images.xcassets */; };
 		26D1048022BBEB7800E2B493 /* TagInfo_Kaart.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26D1047F22BBEB7800E2B493 /* TagInfo_Kaart.xml */; };
-		26D1048822BC3D4600E2B493 /* EnhancedHwyEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D1048722BC3D4600E2B493 /* EnhancedHwyEditorView.m */; };
 		26D1048B22BC40AD00E2B493 /* EnhancedHwyEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D1048A22BC40AD00E2B493 /* EnhancedHwyEditorController.m */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
 		64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */; };
@@ -1096,7 +1096,6 @@
 		02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OsmNotesDatabase.h; path = ../Shared/OsmNotesDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = OsmNotesDatabase.m; path = ../Shared/OsmNotesDatabase.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02E8436E19B407C40044AC1D /* WebPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPageView.xib; sourceTree = "<group>"; };
-		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		02E8438219B4DF960044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GpxConfigureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1110,11 +1109,11 @@
 		02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo256.png"; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
-		26D1047D22BBEA4800E2B493 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Go Kaart!!/Images.xcassets"; sourceTree = "<group>"; };
+		0E19F609240D704300339457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		0E19F60B240D704300339457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		0ECB35FE240973590063B61B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0EE76D60240F21BB00A0AA4D /* EnhancedHwyEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnhancedHwyEditorController.h; sourceTree = "<group>"; };
 		26D1047F22BBEB7800E2B493 /* TagInfo_Kaart.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = TagInfo_Kaart.xml; path = ../Shared/TagInfo_Kaart.xml; sourceTree = "<group>"; };
-		26D1048622BC3D1600E2B493 /* EnhancedHwyEditorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnhancedHwyEditorView.h; sourceTree = "<group>"; };
-		26D1048722BC3D4600E2B493 /* EnhancedHwyEditorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnhancedHwyEditorView.m; sourceTree = "<group>"; };
-		26D1048922BC402D00E2B493 /* EnhancedHwyEditorController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnhancedHwyEditorController.h; sourceTree = "<group>"; };
 		26D1048A22BC40AD00E2B493 /* EnhancedHwyEditorController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnhancedHwyEditorController.m; sourceTree = "<group>"; };
 		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64348CEC225E7CD900ADE7FB /* GoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapTests.swift; sourceTree = "<group>"; };
@@ -1328,7 +1327,7 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
-				26D1047D22BBEA4800E2B493 /* Images.xcassets */,
+				0ECB35FE240973590063B61B /* Images.xcassets */,
 				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
 				64348CEB225E7CD900ADE7FB /* GoMapTests */,
@@ -1420,7 +1419,8 @@
 				02E8437E19B4DE510044AC1D /* Localizable.strings */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
-				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
+				0E19F608240D704300339457 /* MainStoryboard_iPad.storyboard */,
+				0E19F60A240D704300339457 /* MainStoryboard.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
 				022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */,
@@ -1457,7 +1457,7 @@
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				02BF745220793F0A0028ED6A /* TurnRestrictController.h */,
-				26D1048922BC402D00E2B493 /* EnhancedHwyEditorController.h */,
+				0EE76D60240F21BB00A0AA4D /* EnhancedHwyEditorController.h */,
 				26D1048A22BC40AD00E2B493 /* EnhancedHwyEditorController.m */,
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
@@ -1861,8 +1861,6 @@
 				02ACBBB516713F2A00BB4414 /* RulerLayer.m */,
 				02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */,
 				02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */,
-				26D1048622BC3D1600E2B493 /* EnhancedHwyEditorView.h */,
-				26D1048722BC3D4600E2B493 /* EnhancedHwyEditorView.m */,
 				02C4255116796B5800761C54 /* SpeechBalloonView.h */,
 				02C4255216796B5800761C54 /* SpeechBalloonView.m */,
 				02ACBD2216717D6F00BB4414 /* TagInfo.h */,
@@ -2030,7 +2028,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Bryce;
 				TargetAttributes = {
 					02ACBA2E16713CCB00BB4414 = {
@@ -2055,10 +2053,9 @@
 			};
 			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Kaart!!" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 				"zh-Hant",
@@ -2086,7 +2083,6 @@
 				02ACBA4816713CCB00BB4414 /* Default@2x.png in Resources */,
 				02DAB7D71BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@3x.png in Resources */,
 				02ACBA4A16713CCB00BB4414 /* Default-568h@2x.png in Resources */,
-				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
 				02E8437C19B4DE510044AC1D /* Localizable.strings in Resources */,
 				02ACBBBF16713F2B00BB4414 /* BingPlaceholderImage.png in Resources */,
 				02ACBBC016713F2B00BB4414 /* BlueBall.png in Resources */,
@@ -2131,15 +2127,16 @@
 				64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */,
 				02ACBBF116713F2B00BB4414 /* amenity_toilets_disabled.p.64.png in Resources */,
 				02ACBBF216713F2B00BB4414 /* amenity_toilets_men.p.64.png in Resources */,
+				0ECB35FF240973590063B61B /* Images.xcassets in Resources */,
 				02ACBBF316713F2B00BB4414 /* amenity_toilets_women.p.64.png in Resources */,
 				02ACBBF416713F2B00BB4414 /* amenity_town_hall.p.64.png in Resources */,
 				02ACBBF516713F2B00BB4414 /* amenity_town_hall2.p.64.png in Resources */,
 				02ACBBF616713F2B00BB4414 /* amenity_waste_bin.p.64.png in Resources */,
 				02ACBBF716713F2B00BB4414 /* barrier_blocks.p.64.png in Resources */,
 				02ACBBF816713F2B00BB4414 /* barrier_bollard.p.64.png in Resources */,
-				26D1047E22BBEA4800E2B493 /* Images.xcassets in Resources */,
 				02ACBBF916713F2B00BB4414 /* barrier_cattle_grid.p.64.png in Resources */,
 				02ACBBFA16713F2B00BB4414 /* barrier_cycle_barrier.p.64.png in Resources */,
+				0E19F60C240D704300339457 /* MainStoryboard_iPad.storyboard in Resources */,
 				02ACBBFB16713F2B00BB4414 /* barrier_entrance.p.64.png in Resources */,
 				02ACBBFC16713F2B00BB4414 /* barrier_exit.p.64.png in Resources */,
 				02ACBBFD16713F2B00BB4414 /* barrier_gate.p.64.png in Resources */,
@@ -2158,6 +2155,7 @@
 				02ACBC0816713F2B00BB4414 /* education_school.p.64.png in Resources */,
 				26D1048022BBEB7800E2B493 /* TagInfo_Kaart.xml in Resources */,
 				02ACBC0916713F2B00BB4414 /* education_school_primary.p.64.png in Resources */,
+				0E19F60D240D704300339457 /* MainStoryboard.storyboard in Resources */,
 				02ACBC0A16713F2B00BB4414 /* education_school_secondary.p.64.png in Resources */,
 				02ACBC0B16713F2B00BB4414 /* education_university.p.64.png in Resources */,
 				02ACBC0C16713F2B00BB4414 /* food_bar.p.64.png in Resources */,
@@ -2532,7 +2530,6 @@
 				0223DB531675D53200D6F825 /* POITypeViewController.m in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */,
-				26D1048822BC3D4600E2B493 /* EnhancedHwyEditorView.m in Sources */,
 				0205460616766808004A2A23 /* POIPresetViewController.m in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
@@ -2639,20 +2636,28 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				02E8437919B4DD730044AC1D /* Base */,
-			);
-			name = MainStoryboard.storyboard;
-			sourceTree = "<group>";
-		};
 		02E8437E19B4DE510044AC1D /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				02E8438219B4DF960044AC1D /* Base */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		0E19F608240D704300339457 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0E19F609240D704300339457 /* Base */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		0E19F60A240D704300339457 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0E19F60B240D704300339457 /* Base */,
+			);
+			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2760,6 +2765,7 @@
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2774,6 +2780,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 2STHX823T6;
 				DISPLAY_NAME = "Go Kaart!! Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2786,6 +2793,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Go Map!!-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2800,6 +2808,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 2STHX823T6;
 				DISPLAY_NAME = "Go Kaart!!";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2811,6 +2820,7 @@
 				PRODUCT_NAME = "Go Kaart!!";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Go Map!!-Bridging-Header.h";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				WRAPPER_EXTENSION = app;
 			};

@@ -46,21 +46,29 @@
     NSMutableArray    * _tags;
     NSMutableArray    * _nameTags;
     NSMutableArray    * _namePresets;
+		NSMutableArray    * _laneTags; 
     IBOutlet UIButton * oneWayButton;
     IBOutlet UIButton * reverseButton;
     IBOutlet UITableView * tagTable;
-    IBOutlet UIButton * saveButton;
-    __weak IBOutlet NSLayoutConstraint *bottomViewConstraint;
+		IBOutlet UIButton * saveButton;
+		IBOutlet UILabel * lblValue;
+		IBOutlet UIStepper * laneStepper;
+		__weak IBOutlet NSLayoutConstraint *bottomViewConstraint;
 }
 
 +(CustomPresetList *)shared;
 
 @property (strong,nonatomic)    NSMutableDictionary *    keyValueDict;
+
+@property (weak, nonatomic) IBOutlet UIStepper *stepper;
+
 @property (strong, nonatomic) IBOutlet EnhancedHwyEditorView * highwayEditorView;
 @property (strong, nonatomic) IBOutlet UILabel * highwayEditorLabel;
 - (IBAction)onewayPressed;
 - (IBAction)reversePressed;
+- (IBAction)laneStepperPressed:(UIStepper *)sender;
 - (IBAction)done;
+
 
 // these are used for screen calculations:
 @property (assign,nonatomic)    CGPoint                parentViewCenter;

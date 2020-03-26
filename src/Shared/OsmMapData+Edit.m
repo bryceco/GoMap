@@ -585,7 +585,6 @@ NSString * reverseValue( NSString * key, NSString * value)
 	}
 }
 
-
 - (EditAction)canReverseWay:(OsmWay *)way error:(NSString **)error
 {
 	NSDictionary * roleReversals = @{
@@ -698,7 +697,6 @@ NSString * reverseValue( NSString * key, NSString * value)
 	}
 	return YES;
 }
-
 
 -(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way error:(NSString **)error
 {
@@ -816,7 +814,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	return idxB;
 }
-
 
 -(EditActionReturnWay)canSplitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node error:(NSString **)error
 {
@@ -965,7 +962,6 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		return wayB;
 	};
 }
-
 
 #pragma mark Turn-restriction relations
 
@@ -1122,7 +1118,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	}
 
 	return ^{
-
+		
 		// join nodes, preserving selected way
 		NSInteger index = 0;
 		NSString * dummy = nil;
