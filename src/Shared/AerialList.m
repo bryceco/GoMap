@@ -642,16 +642,21 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		if ( json == nil )
 			return nil;
 		if ( [json isKindOfClass:[NSArray class]] ) {
-			// unversioned variety
+			// unversioned (old ELI) variety
 			return [self processOsmLabAerialsList:json isGeoJSON:NO];
 		} else {
 			NSDictionary * meta = json[@"meta"];
-			NSString * formatVersion = meta[@"format_version"];
-			if ( ![formatVersion isEqualToString:@"1.0"] )
-				return nil;
-			NSString * metaType = json[@"type"];
-			if ( ![metaType isEqualToString:@"FeatureCollection"] )
-				return nil;
+			if ( meta == nil ) {
+				// josm variety
+			} else {
+				// new ELI variety
+				NSString * formatVersion = meta[@"format_version"];
+				if ( ![formatVersion isEqualToString:@"1.0"] )
+					return nil;
+				NSString * metaType = json[@"type"];
+				if ( ![metaType isEqualToString:@"FeatureCollection"] )
+					return nil;
+			}
 			NSArray * features = json[@"features"];
 			return [self processOsmLabAerialsList:features isGeoJSON:YES];
 		}
@@ -665,7 +670,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	// get cached data
 	NSData * cachedData = [NSData dataWithContentsOfFile:[self pathToExternalAerialsCache]];
-
 	NSDate * now = [NSDate date];
 	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
 	if ( cachedData == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
