@@ -101,12 +101,6 @@
 
 #pragma mark - Navigation
 
-#if 0
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-}
-#endif
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	UITableViewController * controller = [segue destinationViewController];

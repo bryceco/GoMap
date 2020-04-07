@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+@import AVFoundation;
 
 #import "iosapi.h"
 
@@ -18,7 +19,6 @@
 #import "EditorMapLayer.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
-#import "HtmlAlertViewController.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "MyApplication.h"
@@ -27,10 +27,7 @@
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 #import "RulerLayer.h"
-#import "SpeechBalloonView.h"
-#import "TapAndDragGesture.h"
 #import "TurnRestrictController.h"
-#import "VoiceAnnouncement.h"
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
@@ -223,19 +220,6 @@ const CGFloat kEditControlCornerRadius = 4;
 			[self.layer addSublayer:_crossHairs];
 		}
 
-#if 0
-		_voiceAnnouncement = [VoiceAnnouncement new];
-		_voiceAnnouncement.mapView = self;
-		_voiceAnnouncement.radius = 30;	// meters
-#endif
-
-#if 0	// no evidence this help things
-		for ( CALayer * layer in _backgroundLayers ) {
-			layer.drawsAsynchronously = YES;
-		}
-		_rulerLayer.drawsAsynchronously	= YES;
-#endif
-
 #if !TARGET_OS_IPHONE
 		[self setFrame:frame];
 #endif
@@ -362,38 +346,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	//self.compassButton.hidden = YES;
 	self.compassButton.clipsToBounds = NO;
 	self.compassButton.contentMode = UIViewContentModeCenter;
-
-#if 0
-	// Support zoom via tap and drag
-	_tapAndDragGesture = [[TapAndDragGesture alloc] initWithTarget:self action:@selector(handleTapAndDragGesture:)];
-	_tapAndDragGesture.delegate = self;
-	[self addGestureRecognizer:_tapAndDragGesture];
-#endif
-
-#if 0
-	// check for mail periodically and update application badge
-	_mailTimer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue() );
-	if ( _mailTimer ) {
-		dispatch_source_set_event_handler(_mailTimer, ^{
-
-			NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/user/details"];
-			[_editorLayer.mapData putRequest:url method:@"GET" xml:nil completion:^(NSData *postData,NSString * postErrorMessage) {
-				if ( postData && postErrorMessage == nil ) {
-					NSString * xmlText = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-					NSError * error = nil;
-					NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
-					for ( NSXMLElement * element in [xmlDoc.rootElement nodesForXPath:@"./user/messages/received" error:nil] ) {
-						NSString * unread = [element attributeForName:@"unread"].stringValue;
-						[UIApplication sharedApplication].applicationIconBadgeNumber = unread.integerValue +1;
-						NSLog(@"update badge");
-					}
-				}
-			}];
-		} );
-		dispatch_source_set_timer( _mailTimer, DISPATCH_TIME_NOW, 120*NSEC_PER_SEC, 10*NSEC_PER_SEC );
-		dispatch_resume( _mailTimer );
-	}
-#endif
 }
 
 
@@ -529,7 +481,6 @@ const CGFloat kEditControlCornerRadius = 4;
 }
 -(void)applicationWillTerminate :(NSNotification *)notification
 {
-	[_voiceAnnouncement removeAll];
 	[self save];
 }
 
@@ -684,12 +635,6 @@ const CGFloat kEditControlCornerRadius = 4;
 			_lastErrorDate = [NSDate date];
 			return;
 		}
-
-#if 0
-		id ignorable = [error.userInfo objectForKey:@"Ignorable"];
-		if ( ignorable )
-			return;
-#endif
 
 #if TARGET_OS_IPHONE
 		BOOL isNetworkError = NO;
@@ -1398,9 +1343,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 		if ( gpsState == GPS_STATE_NONE ) {
 			_centerOnGPSButton.hidden = YES;
-			_voiceAnnouncement.enabled = NO;
-		} else {
-			_voiceAnnouncement.enabled = YES;
 		}
 
 		_gpsState = gpsState;
@@ -1639,10 +1581,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( _locationBallLayer && delta < 0.1 && fabs(newLocation.horizontalAccuracy - _currentLocation.horizontalAccuracy) < 1.0 )
 		return;
 	_currentLocation = [newLocation copy];
-
-	if ( _voiceAnnouncement && !_editorLayer.hidden ) {
-		[_voiceAnnouncement announceForLocation:newLocation.coordinate];
-	}
 
 	if ( _gpxLayer.activeTrack ) {
 		[_gpxLayer addPoint:newLocation];
@@ -2401,11 +2339,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Multipolygon", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action2) {
 					create(@"multipolygon");
 				}]];
-#if 0
-				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Building", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action2) {
-					create(@"building");
-				}]];
-#endif
 				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 
 				// compute location for action sheet to originate. This will be the uppermost node in the polygon
@@ -2507,35 +2440,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	}
 }
 
-
-#if 0 // Used to clean up data corruption bug: if a node appears in a way twice consequetively remove the 2nd instance
-- (void)deleteDuplicateNodes
-{
-	[_editorLayer.mapData enumerateObjectsUsingBlock:^(OsmBaseObject *obj) {
-		OsmWay * way = obj.isWay;
-		if ( way ) {
-		retry:
-			if ( way.hasDuplicatedNode ) {
-				NSLog(@"way %@ has duplicate nodes",way.ident);
-				OsmNode * prev = nil;
-				NSInteger index = 0;
-				for ( OsmNode * node in way.nodes ) {
-					if ( node == prev ) {
-						[_editorLayer.mapData deleteNodeInWay:way index:index];
-						goto retry;
-					}
-					prev = node;
-					++index;
-				}
-			}
-		}
-	}];
-}
-#endif
-
-
 #pragma mark PushPin
-
 
 #if TARGET_OS_IPHONE
 
@@ -3218,31 +3123,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		OsmNoteComment * comment = note.comments.lastObject;
 		NSString * title = note.isWaypoint ? @"Waypoint" : @"Keep Right";
 
-#if 0
-		// use our custom alertview
-		HtmlAlertViewController * alert = [self.viewController.storyboard instantiateViewControllerWithIdentifier:@"HtmlAlert"];
-		[self.window addSubview:alert.view];
-		alert.heading.text			= title;
-		alert.htmlText				= comment.text;
-		_alertKeepRight = (id)alert;	// so we don't get deallocated
-		__weak HtmlAlertViewController * weakAlert = alert;
-		[alert addButton:@"OK" callback:^{
-			[weakAlert.view removeFromSuperview];
-			_alertKeepRight = nil;
-		}];
-		[alert addButton:@"Ignore" callback:^{
-			// they want to hide this button from now on
-			[_notesDatabase ignoreNote:_currentNote];
-			[self refreshNoteButtonsFromDatabase];
-			_editorLayer.selectedNode = nil;
-			_editorLayer.selectedWay = nil;
-			_editorLayer.selectedRelation = nil;
-			[self removePin];
-			[weakAlert.view removeFromSuperview];
-			_alertKeepRight = nil;
-		}];
-#else
-		// use regular alertview
 		NSString * text = comment.text;
 		NSRange r1 = [text rangeOfString:@"<a "];
 		if ( r1.length > 0 ) {
@@ -3266,7 +3146,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			[self removePin];
  		}]];
 		[self.viewController presentViewController:alertKeepRight animated:YES completion:nil];
-#endif
 	} else if ( note.isFixme ) {
 		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
 		_editorLayer.selectedNode		= object.isNode;
@@ -3389,24 +3268,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self updateNotesFromServerWithDelay:0];
 	}
 }
-- (void)handleTapAndDragGesture:(TapAndDragGesture *)tapAndDrag
-{
-	// do single-finger zooming
-	if ( tapAndDrag.state == UIGestureRecognizerStateChanged ) {
-		self.userOverrodeLocationZoom = YES;
 
-		DisplayLink * displayLink = [DisplayLink shared];
-		[displayLink removeName:DisplayLinkPanning];
-
-		CGPoint delta = [tapAndDrag translationInView:self];
-		double scale = 1 + delta.y * 0.01;
-		CGPoint zoomCenter = CGRectCenter( [self bounds] );
-		[self adjustZoomBy:scale aroundScreenPoint:zoomCenter];
-
-	} else if ( tapAndDrag.state == UIGestureRecognizerStateEnded ) {
-		[self updateNotesFromServerWithDelay:0];
-	}
-}
 - (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap
 {
 	if ( tap.state == UIGestureRecognizerStateEnded ) {

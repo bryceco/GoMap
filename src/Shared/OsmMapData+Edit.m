@@ -1400,13 +1400,6 @@ static OSMPoint calcMotion(OSMPoint b, NSInteger i, OSMPoint array[], NSInteger 
 		return nil;
 	}
 
-#if 0
-	if ( squareness(points,count) == 0.0 ) {
-		// already square
-		return NO;
-	}
-#endif
-
 	return ^{
 		[self registerUndoCommentString:NSLocalizedString(@"Make Rectangular",nil)];
 

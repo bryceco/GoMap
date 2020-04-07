@@ -285,9 +285,6 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 - (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block
 {
-#if 0 && DEBUG
-	NSLog(@"box = %@",NSStringFromCGRect(CGRectFromOSMRect(bbox)));
-#endif
 	if ( bbox.origin.x < 180 && bbox.origin.x + bbox.size.width > 180 ) {
 		OSMRect left = { bbox.origin.x, bbox.origin.y, 180-bbox.origin.x, bbox.size.height };
 		OSMRect right = { -180, bbox.origin.y, bbox.origin.x + bbox.size.width - 180, bbox.size.height };
@@ -588,12 +585,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	for ( NSInteger i = 0; i < parents.count; ++i ) {
 		OsmBaseObject * parent = parents[i];
 		OSMRectBoxed * box = parentBoxes[i];
-#if 0
-		// mark parent as modified when child node changes
-		[self incrementModifyCount:parent];
-#else
 		[self clearCachedProperties:parent undo:_undoManager];
-#endif
 		[parent computeBoundingBox];
 		[_spatial updateMember:parent fromBox:box.rect undo:_undoManager];
 	}
@@ -702,11 +694,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	NSMutableArray * queries = [NSMutableArray new];
 
-#if 0
-	DLog(@"\nquad list:");
-	for ( QuadBox * q in quadList ) DLog(@"  %@", NSStringFromRect(q.rect));
-#endif
-
 	// sort by row
 	quadList = [quadList sortedArrayUsingComparator:^NSComparisonResult(QuadBox * q1, QuadBox * q2) {
 		double diff = q1.rect.origin.y - q2.rect.origin.y;
@@ -769,12 +756,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[queries addObject:query];
 	}
 
-#if 0
-	DLog(@"\nquery list:");
-	for ( ServerQuery * q in queries )
-		DLog(@"  %@", NSStringFromCGRect(CGRectFromOSMRect(q.rect)));
-#endif
-
 	return queries;
 }
 
@@ -795,14 +776,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			NSError * error = nil;
 			BOOL ok = [mapData parseXmlStream:stream error:&error];
 			if ( !ok ) {
-				if ( 0 /*agent.dataHeader.length*/ ) {
-#if 0
-					// probably some html-encoded error message from the server, or if cancelled then the leading portion of the xml download
-					//NSString * s = [[NSString alloc] initWithBytes:agent.dataHeader.bytes length:agent.dataHeader.length encoding:NSUTF8StringEncoding];
-					//error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : s }];
-					error = [[NSError alloc] initWithDomain:@"parser" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Data not available",nil) }];
-#endif
-				} else if ( stream.streamError ) {
+                if ( stream.streamError ) {
 					error = stream.streamError;
 				} else if ( error ) {
 					// use the parser's reported error
@@ -949,12 +923,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[_parserStack addObject:@"osm"];
 
 	} else if ( [elementName isEqualToString:@"bounds"] ) {
-#if 0
-		double minLat = [[attributeDict objectForKey:@"minlat"] doubleValue];
-		double minLon = [[attributeDict objectForKey:@"minlon"] doubleValue];
-		double maxLat = [[attributeDict objectForKey:@"maxlat"] doubleValue];
-		double maxLon = [[attributeDict objectForKey:@"maxlon"] doubleValue];
-#endif
 		[_parserStack addObject:@"bounds"];
 
 	} else if ( [elementName isEqualToString:@"note"] ) {
@@ -971,10 +939,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 		DLog(@"OSM parser: Unknown tag '%@'", elementName);
 		[_parserStack addObject:elementName];
-#if 0
-		_parseError = [[NSError alloc] initWithDomain:@"Parser" code:102 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"OSM parser: Unknown tag '%@'", elementName]}];
-		[parser abortParsing];
-#endif
 
 	}
 }

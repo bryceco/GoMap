@@ -482,8 +482,7 @@ typedef enum {
 				if ( error ) {
 					data = nil;
 				} else if ( [self isPlaceholderImage:data] ) {
-					error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"No image data at current zoom level",nil),
-																								@"Ignorable" : @(YES)}];
+					error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"No image data at current zoom level",nil)}];
 				} else {
 					image = [[NSImage alloc] initWithData:data];
 				}

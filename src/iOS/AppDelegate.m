@@ -56,8 +56,6 @@
 
 	[self removePlaintextCredentialsFromUserDefaults];
 
-	[DownloadThreadPool setUserAgent:[NSString stringWithFormat:@"%@/%@", self.appName, self.appVersion]];
-
 	// self.externalGPS = [[ExternalGPS alloc] init];
 
 	NSURL * url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];

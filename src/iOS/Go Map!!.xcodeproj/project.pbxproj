@@ -43,7 +43,6 @@
 		02130E85196CF58500498297 /* MenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 02130E84196CF58500498297 /* MenuIcon.png */; };
 		0219563216DDC26E00074D15 /* GpxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0219563116DDC26E00074D15 /* GpxViewController.m */; };
 		021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */; };
-		021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */ = {isa = PBXBuildFile; fileRef = 021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */; };
 		021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C6AA71686145C00FB17B0 /* UndoManager.m */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 021D4E4A194E0BCB002154B3 /* FpsLabel.m */; };
@@ -78,7 +77,6 @@
 		025A1CFC1690B96E002B60CB /* OSM-Logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFA1690B96E002B60CB /* OSM-Logo57.png */; };
 		025A1CFD1690B96E002B60CB /* OSM-Logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 025A1CFB1690B96E002B60CB /* OSM-Logo114.png */; };
 		025B99A3240DEF1D007E0342 /* aes.m in Sources */ = {isa = PBXBuildFile; fileRef = 025B99A2240DEF1D007E0342 /* aes.m */; };
-		025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */; };
 		0260484219E66C8700415CB1 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0260484119E66C8700415CB1 /* DisplayLink.m */; };
 		02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02695B8C1A08C1DB0028D95E /* NotesTableViewController.m */; };
 		0277E29416A673CC00456BED /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0277E29316A673CC00456BED /* OpenGLES.framework */; };
@@ -136,7 +134,6 @@
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
 		02ACBD2416717D7000BB4414 /* TagInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBD2316717D7000BB4414 /* TagInfo.m */; };
-		02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */; };
 		02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */; };
 		02BCC5A2206AEDDE00B4478B /* compass.png in Resources */ = {isa = PBXBuildFile; fileRef = 02BCC5A1206AEDDC00B4478B /* compass.png */; };
 		02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED989168B6F2F00357B94 /* WebPageViewController.m */; };
@@ -149,7 +146,6 @@
 		02C3C73419A5A40C003B6783 /* AerialListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73319A5A40C003B6783 /* AerialListViewController.m */; };
 		02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73619A5D679003B6783 /* AerialEditViewController.m */; };
 		02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C3C73919A6DCEA003B6783 /* AerialList.m */; };
-		02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C4255216796B5800761C54 /* SpeechBalloonView.m */; };
 		02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */; };
 		02DAB7D51BFA4BBC00360AED /* 723-location-arrow-toolbar-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 02DAB7D21BFA4BBC00360AED /* 723-location-arrow-toolbar-selected.png */; };
 		02DAB7D61BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02DAB7D31BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@2x.png */; };
@@ -266,8 +262,6 @@
 		0219563116DDC26E00074D15 /* GpxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GpxViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Edit.h"; path = "../Shared/OsmMapData+Edit.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "OsmMapData+Edit.m"; path = "../Shared/OsmMapData+Edit.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VoiceAnnouncement.h; path = ../Shared/VoiceAnnouncement.h; sourceTree = "<group>"; };
-		021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VoiceAnnouncement.m; path = ../Shared/VoiceAnnouncement.m; sourceTree = "<group>"; };
 		021C6AA61686145C00FB17B0 /* UndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UndoManager.h; path = ../Shared/UndoManager.h; sourceTree = "<group>"; };
 		021C6AA71686145C00FB17B0 /* UndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UndoManager.m; path = ../Shared/UndoManager.m; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -323,8 +317,6 @@
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025B99A1240DEF1D007E0342 /* aes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aes.h; path = ../Shared/aes.h; sourceTree = "<group>"; };
 		025B99A2240DEF1D007E0342 /* aes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = aes.m; path = ../Shared/aes.m; sourceTree = "<group>"; };
-		025F1CF21BCD9B070097D7FE /* TapAndDragGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TapAndDragGesture.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TapAndDragGesture.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0260484019E66C8700415CB1 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; };
 		0260484119E66C8700415CB1 /* DisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DisplayLink.m; path = ../Shared/DisplayLink.m; sourceTree = "<group>"; };
 		02695B8B1A08C1DB0028D95E /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NotesTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -419,8 +411,6 @@
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02ACBD2216717D6F00BB4414 /* TagInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagInfo.h; path = ../Shared/TagInfo.h; sourceTree = "<group>"; };
 		02ACBD2316717D7000BB4414 /* TagInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagInfo.m; path = ../Shared/TagInfo.m; sourceTree = "<group>"; };
-		02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HtmlAlertViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HtmlAlertViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LanguageTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LanguageTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -446,8 +436,6 @@
 		02C3C73619A5D679003B6783 /* AerialEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AerialEditViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02C3C73819A6DCEA003B6783 /* AerialList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AerialList.h; path = ../Shared/AerialList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C3C73919A6DCEA003B6783 /* AerialList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = AerialList.m; path = ../Shared/AerialList.m; sourceTree = "<group>"; };
-		02C4255116796B5800761C54 /* SpeechBalloonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonView.h; path = ../Shared/SpeechBalloonView.h; sourceTree = "<group>"; };
-		02C4255216796B5800761C54 /* SpeechBalloonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonView.m; path = ../Shared/SpeechBalloonView.m; sourceTree = "<group>"; };
 		02CB5B6316BF1F9C00432914 /* AutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AutocompleteTextField.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AutocompleteTextField.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02DAB7D21BFA4BBC00360AED /* 723-location-arrow-toolbar-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "723-location-arrow-toolbar-selected.png"; sourceTree = "<group>"; };
@@ -778,8 +766,6 @@
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
 				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
 				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
-				02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */,
-				02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */,
 				025A1D001690DC32002B60CB /* Images */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
@@ -919,22 +905,16 @@
 				02ACBBB516713F2A00BB4414 /* RulerLayer.m */,
 				02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */,
 				02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */,
-				02C4255116796B5800761C54 /* SpeechBalloonView.h */,
-				02C4255216796B5800761C54 /* SpeechBalloonView.m */,
 				02ACBD2216717D6F00BB4414 /* TagInfo.h */,
 				02ACBD2316717D7000BB4414 /* TagInfo.m */,
 				02ACBBBA16713F2A00BB4414 /* TagInfo.menu.xml */,
 				02ACBBBB16713F2A00BB4414 /* TagInfo.xml */,
-				025F1CF21BCD9B070097D7FE /* TapAndDragGesture.h */,
-				025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */,
 				02BF744F20793EE10028ED6A /* TurnRestrictHwyView.h */,
 				02BF745020793EE20028ED6A /* TurnRestrictHwyView.m */,
 				021C6AA61686145C00FB17B0 /* UndoManager.h */,
 				021C6AA71686145C00FB17B0 /* UndoManager.m */,
 				02ACBBBD16713F2A00BB4414 /* VectorMath.h */,
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
-				021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */,
-				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1287,9 +1267,7 @@
 				6453776A23D38FA200656A1C /* OsmNode.m in Sources */,
 				02ACBCF916713F2B00BB4414 /* RulerLayer.m in Sources */,
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
-				025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */,
 				024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */,
-				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				02ACBD2416717D7000BB4414 /* TagInfo.m in Sources */,
 				0225A36A19B63F0D008B63BA /* DisplayViewController.m in Sources */,
@@ -1300,12 +1278,10 @@
 				0223DB5716765C9000D6F825 /* POICommonTagsViewController.m in Sources */,
 				0205460616766808004A2A23 /* POIPresetViewController.m in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
-				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				64305F7223E7224E00232BB9 /* GeoURLParser.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
 				024C323D1DEEA97100AD62AB /* OsmServerViewController.m in Sources */,
-				02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */,
 				022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */,
 				6455AC29241ACB7C00B3AFB3 /* UIImageView+DarkMode.swift in Sources */,
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,

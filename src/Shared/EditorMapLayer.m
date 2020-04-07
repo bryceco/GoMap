@@ -776,18 +776,6 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	OSMRect viewRect = { cgViewRect.origin.x, cgViewRect.origin.y, cgViewRect.size.width, cgViewRect.size.height };
 	CGPoint viewCenter = CGRectCenter(cgViewRect);
 
-#if 0
-	// discard any segments that begin or end inside the view rectangle
-	NSArray * innerInvalid = [innerSegments filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * way, NSDictionary *bindings) {
-		return way[0] != way.lastObject && (OSMRectContainsPoint(viewRect, [way[0] point]) || OSMRectContainsPoint(viewRect, [(OsmWay *)way.lastObject point]) );
-	}]];
-	NSArray * outerInvalid = [innerSegments filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray * way, NSDictionary *bindings) {
-		return way[0] != way.lastObject && (OSMRectContainsPoint(viewRect, [way[0] point]) || OSMRectContainsPoint(viewRect, [way.lastObject point]) );
-	}]];
-	[innerSegments removeObjectsInArray:innerInvalid];
-	[outerSegments removeObjectsInArray:outerInvalid];
-#endif
-
 	// ensure that outer ways are clockwise and inner ways are counterclockwise
 	for ( NSMutableArray * way in outerSegments ) {
 		if ( way[0] == way.lastObject ) {
@@ -1339,13 +1327,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 			[layer setValue:props forKey:@"properties"];
 			props->position		= refPoint;
 			props->lineWidth	= layer.lineWidth;
-
-#if 0	// Enable to show motorway_link with dashed lines. Looks kind of ugly and reduces framerate by up to 30%f
-			BOOL link = [object.tags[@"highway"] hasSuffix:@"_link"];
-			if ( link ) {
-				props->lineDashes = @[@(10 * _highwayScale), @(10 * _highwayScale)];
-			}
-#endif
 
 			CGPathRelease(path);
 			[layers addObject:layer];
@@ -1991,22 +1972,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 11 * ZSCALE;
 	}];
 	return a;
 }
-
-#if 0
-static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	NSInteger diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
-	return diff > 0;	// sort descending
-}
-static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	long long diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
-	if ( diff == 0 )
-		diff = obj1.ident.longLongValue - obj2.ident.longLongValue;	// older objects are bigger
-	return diff > 0;	// sort descending
-}
-#endif
-
 
 - (void)filterObjects:(NSMutableArray *)objects
 {

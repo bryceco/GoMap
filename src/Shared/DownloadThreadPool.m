@@ -11,10 +11,6 @@
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 
-
-static NSString * g_UserAgent = nil;
-
-
 @implementation DownloadThreadPool
 
 -(id)initWithMaxConnections:(NSInteger)max
@@ -28,11 +24,6 @@ static NSString * g_UserAgent = nil;
 		_downloadCount = 0;
 	}
 	return self;
-}
-
-+(void)setUserAgent:(NSString *)userAgent
-{
-	g_UserAgent = [userAgent copy];
 }
 
 +(DownloadThreadPool *)osmPool;
@@ -57,18 +48,6 @@ static NSString * g_UserAgent = nil;
 	return pool;
 }
 
-#if 0
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
-{
-	completionHandler(NSURLSessionResponseAllow);
-}
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable cachedResponse))completionHandler
-{
-	NSLog(@"will cache\n");
-	completionHandler(proposedResponse);
-}
-#endif
-
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
 	[data enumerateByteRangesUsingBlock:^(const void * _Nonnull bytes, NSRange byteRange, BOOL * _Nonnull stop) {
@@ -87,12 +66,6 @@ static NSString * g_UserAgent = nil;
 	[request setHTTPMethod:@"GET"];
 	[request addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-	
-#if 0 // don't set user agent because it causes some tile servers to reject us:
-	if ( g_UserAgent ) {
-		[request setValue:g_UserAgent forHTTPHeaderField:@"User-Agent"];
-	}
-#endif
 	
 	OSAtomicIncrement32(&_downloadCount);
 
