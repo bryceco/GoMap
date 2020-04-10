@@ -830,7 +830,9 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		if ( keyvals.count == 0 )
 			return;
 
+		NSMutableSet * seen = [NSMutableSet new];
 		[keyvals enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop2) {
+			[seen addObject:key];
 			NSString * v = objectTags[ key ];
 			if ( v ) {
 				if ( [value isEqualToString:v] ) {
@@ -845,6 +847,14 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			totalScore = -1;
 			*stop2 = YES;
 		}];
+
+		// boost score for additional matches in addTags
+		[dict[@"addTags"] enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * _Nonnull val, BOOL *stop3) {
+			if ( ![seen containsObject:key] && [objectTags[key] isEqualToString:val] ) {
+				totalScore += matchScore;
+			}
+		}];
+
 		if ( totalScore > bestMatchScore ) {
 			bestMatchName = featureName;
 			bestMatchScore = totalScore;
