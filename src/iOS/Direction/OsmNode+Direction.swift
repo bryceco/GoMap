@@ -32,17 +32,28 @@ extension OsmNode {
         if let direction = Int(string) {
             return direction
         }
-        
-        let cardinalDirectionToDegree: [String: Int] = ["N": 0,
-                                                        "NE": 45,
-                                                        "E": 90,
-                                                        "SE": 135,
-                                                        "S": 180,
-                                                        "SW": 225,
-                                                        "W": 270,
-                                                        "NW": 315]
+
+        let cardinalDirectionToDegree: [String: Float] = ["north": 0,
+														  "N": 0,
+														  "NNE": 22.5,
+														  "NE": 45,
+														  "ENE": 67.5,
+														  "east": 90,
+														  "E": 90,
+														  "ESE": 112.5,
+														  "SE": 135,
+														  "SSE": 157.5,
+														  "south": 180,
+														  "S": 180,
+														  "SSW": 202.5,
+														  "SW": 225,
+														  "WSW": 247.5,
+														  "west": 270,
+														  "W": 270,
+														  "WNW": 292.5,
+														  "NW": 315]
         if let direction = cardinalDirectionToDegree[string] {
-            return direction
+            return Int(direction)
         }
         
         return nil
