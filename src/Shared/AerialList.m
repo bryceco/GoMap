@@ -492,6 +492,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	for ( NSDictionary * entry in featureArray ) {
 
 		@try {
+
 			if ( isGeoJSON && ![entry[@"type"] isEqualToString:@"Feature"] ) {
 				NSLog(@"Aerial: skipping type %@", entry[@"type"]);
 				continue;
@@ -545,6 +546,13 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				NSLog(@"Aerial: bad url %@: %@\n",url,name);
 				continue;
 			}
+
+			if ( [name hasPrefix:@"Maxar "] ) {
+				// we special case their imagery because they require a special key
+				NSLog(@"Aerial: skip Maxar %@: %@\n",url,name);
+				continue;
+			}
+
 
 			// we only support some types of WMS projections
 			NSString * projection = nil;
