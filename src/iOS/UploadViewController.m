@@ -83,10 +83,8 @@
 {
 	AppDelegate * appDelegate = (id)[[UIApplication sharedApplication] delegate];
 	if ( appDelegate.userName.length == 0 || appDelegate.userPassword.length == 0 ) {
-		if ( appDelegate.userName.length == 0 || appDelegate.userPassword.length == 0 ) {
-			[self performSegueWithIdentifier:@"loginSegue" sender:self];
-			return;
-		}
+		[self performSegueWithIdentifier:@"loginSegue" sender:self];
+		return;
 	}
 
 	if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"userDidPreviousUpload"] ) {
