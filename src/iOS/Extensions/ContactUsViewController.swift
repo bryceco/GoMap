@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.swift
+//  ContactUsViewController.swift
 //  Go Map!!
 //
 //  Created by Wolfgang Timme on 4/16/19.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension SettingsViewController {
+extension ContactUsViewController {
     
     open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         let isLastSection = tableView.numberOfSections == section + 1

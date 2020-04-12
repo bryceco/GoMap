@@ -7,7 +7,7 @@
 #import "KeyChain.h"
 #import "AppDelegate.h"
 #import "OsmMapData.h"
-#import "SettingsViewController.h"
+#import "ContactUsViewController.h"
 #import "OsmNode.h"
 #import "OsmWay.h"
 #import "OsmRelation.h"
