@@ -98,6 +98,9 @@
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
 		02912D46168504AC00A541BC /* move.png in Resources */ = {isa = PBXBuildFile; fileRef = 02912D45168504AC00A541BC /* move.png */; };
 		02912D4D16852AEC00A541BC /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 02912D4C16852AEC00A541BC /* question.png */; };
+		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
+		0291D8392442815100F793BE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D8382442815100F793BE /* Settings.storyboard */; };
+		0291D83C24428CBB00F793BE /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83B24428CBB00F793BE /* POI.storyboard */; };
 		0296873F167E30C700B8FF2C /* PushPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0296873E167E30C700B8FF2C /* PushPinView.m */; };
 		0296876B1680D57800B8FF2C /* bullseye.png in Resources */ = {isa = PBXBuildFile; fileRef = 0296876A1680D57700B8FF2C /* bullseye.png */; };
 		0296876E1680D5D400B8FF2C /* redo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 0296876C1680D5D400B8FF2C /* redo32.png */; };
@@ -359,6 +362,9 @@
 		029043A21682797A00BE3480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		02912D45168504AC00A541BC /* move.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = move.png; sourceTree = "<group>"; };
 		02912D4C16852AEC00A541BC /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
+		0291D83624427AFA00F793BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
+		0291D8382442815100F793BE /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		0291D83B24428CBB00F793BE /* POI.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = POI.storyboard; sourceTree = "<group>"; };
 		0296873D167E30C700B8FF2C /* PushPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPinView.h; sourceTree = "<group>"; };
 		0296873E167E30C700B8FF2C /* PushPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushPinView.m; sourceTree = "<group>"; };
 		0296876A1680D57700B8FF2C /* bullseye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bullseye.png; sourceTree = "<group>"; };
@@ -693,6 +699,17 @@
 			name = Launch;
 			sourceTree = "<group>";
 		};
+		0291D83A2442822300F793BE /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				0291D83524427AFA00F793BE /* Display.storyboard */,
+				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
+				0291D8382442815100F793BE /* Settings.storyboard */,
+				0291D83B24428CBB00F793BE /* POI.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
@@ -788,7 +805,6 @@
 				02E8437E19B4DE510044AC1D /* Localizable.strings */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
-				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
 				64C968442261ED3100351C0C /* Media.xcassets */,
@@ -824,6 +840,7 @@
 				02ACBA5816713CCB00BB4414 /* SettingsViewController.h */,
 				02ACBA5916713CCB00BB4414 /* SettingsViewController.m */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
+				0291D83A2442822300F793BE /* Storyboards */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
 				02BF745220793F0A0028ED6A /* TurnRestrictController.h */,
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
@@ -1177,6 +1194,8 @@
 				02ACBBC016713F2B00BB4414 /* BlueBall.png in Resources */,
 				02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */,
 				02072AE81BD5E99B00F1CAB4 /* 709-plus-toolbar@3x.png in Resources */,
+				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
+				0291D8392442815100F793BE /* Settings.storyboard in Resources */,
 				02072ACC1BD4546F00F1CAB4 /* 710-folder.png in Resources */,
 				64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */,
 				02072AB01BD446F500F1CAB4 /* 852-map-toolbar@3x.png in Resources */,
@@ -1217,6 +1236,7 @@
 				02130E85196CF58500498297 /* MenuIcon.png in Resources */,
 				02DAB7D61BFA4BBC00360AED /* 723-location-arrow-toolbar-selected@2x.png in Resources */,
 				02072AC21BD44B2800F1CAB4 /* 1200-file-type-settings-toolbar@3x.png in Resources */,
+				0291D83C24428CBB00F793BE /* POI.storyboard in Resources */,
 				02072AD31BD454E800F1CAB4 /* 751-eye-toolbar@2x.png in Resources */,
 				02ACBCFC16713F2B00BB4414 /* TagInfo.menu.xml in Resources */,
 				02ACBCFD16713F2B00BB4414 /* TagInfo.xml in Resources */,
@@ -1405,6 +1425,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0291D83524427AFA00F793BE /* Display.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0291D83624427AFA00F793BE /* Base */,
+			);
+			name = Display.storyboard;
+			sourceTree = "<group>";
+		};
 		02ACBA3C16713CCB00BB4414 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
