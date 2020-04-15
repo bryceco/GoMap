@@ -369,7 +369,9 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 		if ( data ) {
 			UIImage * image = [[NSImage alloc] initWithData:data];
-			_attributionIcon = image;
+			dispatch_async(dispatch_get_main_queue(), ^{
+				_attributionIcon = image;
+			});
 		}
 	}];
 	[task resume];
