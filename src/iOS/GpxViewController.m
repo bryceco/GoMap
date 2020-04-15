@@ -348,28 +348,30 @@
 //		DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
 
 		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-			[progress dismissViewControllerAnimated:YES completion:nil];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[progress dismissViewControllerAnimated:YES completion:nil];
 
-			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
-			if ( httpResponse.statusCode == 200 ) {
-				// ok
-				UIAlertController * success = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Complete",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-				[success addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self presentViewController:success animated:YES completion:nil];
-			} else {
-				DLog(@"response = %@\n",response);
-				DLog(@"data = %s", (char *)data.bytes);
-				NSString * errorMessage = nil;
-				if ( data.length > 0 ) {
-					errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+				NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
+				if ( httpResponse.statusCode == 200 ) {
+					// ok
+					UIAlertController * success = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Complete",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+					[success addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+					[self presentViewController:success animated:YES completion:nil];
 				} else {
-					errorMessage = error.localizedDescription;
+					DLog(@"response = %@\n",response);
+					DLog(@"data = %s", (char *)data.bytes);
+					NSString * errorMessage = nil;
+					if ( data.length > 0 ) {
+						errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+					} else {
+						errorMessage = error.localizedDescription;
+					}
+					// failure
+					UIAlertController * failure = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Failed",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+					[failure addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+					[self presentViewController:failure animated:YES completion:nil];
 				}
-				// failure
-				UIAlertController * failure = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Failed",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-				[failure addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self presentViewController:failure animated:YES completion:nil];
-			}
+			});
 		}];
 		[task resume];
 	});
