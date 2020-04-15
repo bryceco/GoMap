@@ -1273,28 +1273,15 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return (id)[NSNull null];
 }
 
+
 -(UIImage *)icon
 {
-	extern const double MinIconSizeInPixels;
+	extern UIImage * IconScaledForDisplay(UIImage *icon);
+
 	if ( _icon == nil ) {
 		_icon = [self iconUncached];
 		if ( ![_icon isKindOfClass:[NSNull class]] ) {
-#if TARGET_OS_IPHONE
-			CGFloat uiScaling = [[UIScreen mainScreen] scale];
-			UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-			[_icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
-			_icon = UIGraphicsGetImageFromCurrentImageContext();
-			UIGraphicsEndImageContext();
-#else
-			NSSize newSize = { MinIconSizeInPixels, MinIconSizeInPixels };
-			NSImage *smallImage = [[NSImage alloc] initWithSize: newSize];
-			[smallImage lockFocus];
-			[_icon setSize:newSize];
-			[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
-			[_icon drawAtPoint:NSZeroPoint fromRect:CGRectMake(0, 0, newSize.width, newSize.height) operation:NSCompositeCopy fraction:1.0];
-			[smallImage unlockFocus];
-			_icon = smallImage;
-#endif
+			_icon = IconScaledForDisplay( _icon );
 		}
 	}
 	if ( [_icon isKindOfClass:[NSNull class]] )

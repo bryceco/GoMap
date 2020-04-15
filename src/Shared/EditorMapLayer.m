@@ -962,6 +962,29 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 #pragma mark Common Drawing
 
+UIImage * IconScaledForDisplay(UIImage *icon)
+{
+extern const double MinIconSizeInPixels;
+#if TARGET_OS_IPHONE
+	CGFloat uiScaling = [[UIScreen mainScreen] scale];
+	UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
+	[icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+	UIImage * newIcon = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	return newIcon;
+#else
+	NSSize newSize = { MinIconSizeInPixels, MinIconSizeInPixels };
+	NSImage *smallImage = [[NSImage alloc] initWithSize: newSize];
+	[smallImage lockFocus];
+	[_icon setSize:newSize];
+	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+	[_icon drawAtPoint:NSZeroPoint fromRect:CGRectMake(0, 0, newSize.width, newSize.height) operation:NSCompositeCopy fraction:1.0];
+	[smallImage unlockFocus];
+	return smallImage;
+#endif
+}
+
+
 -(CGPathRef)pathForWay:(OsmWay *)way CF_RETURNS_RETAINED
 {
 	CGMutablePathRef path = CGPathCreateMutable();
@@ -1574,6 +1597,18 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	return layers;
 }
 
+- (UIImage *)genericIcon
+{
+	// use the "marker" icon
+	static dispatch_once_t onceToken;
+	static UIImage * markerIcon = nil;
+	dispatch_once(&onceToken, ^{
+		markerIcon = [UIImage imageNamed:@"maki-marker"];
+		markerIcon = IconScaledForDisplay( markerIcon );
+	});
+	return markerIcon;
+}
+
 /**
  Determines the `CALayer` instances required to present the given `node` on the map.
  
@@ -1595,6 +1630,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
     CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
 	UIImage * icon = feature.icon;
+	if ( icon == nil && node.tags[@"amenity"] ) {
+		icon = [self genericIcon];
+	}
     if ( icon ) {
         /// White box as the background
         CALayer *backgroundLayer = [CALayer new];
