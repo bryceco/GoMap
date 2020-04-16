@@ -70,7 +70,7 @@ const NSInteger kCoordinateSection = 1;
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 	if ( object.isNode )
-		return 2;	// longitude/latitude
+		return 1;	// longitude/latitude
 	if ( object.isWay )
 		return object.isWay.nodes.count;	// all nodes
 	if ( object.isRelation )
@@ -127,13 +127,8 @@ const NSInteger kCoordinateSection = 1;
 			OsmNode * node = object.isNode;
 			switch ( indexPath.row ) {
 				case 0:
-					cell.title.text = NSLocalizedString(@"Latitude",nil);
-					cell.value.text = @(node.lat).stringValue;
-					cell.accessoryType	= UITableViewCellAccessoryNone;
-					break;
-				case 1:
-					cell.title.text = NSLocalizedString(@"Longitude",nil);
-					cell.value.text = @(node.lon).stringValue;
+					cell.title.text = NSLocalizedString(@"Lat/Lon",nil);
+					cell.value.text = [NSString stringWithFormat:@"%f,%f", node.lat, node.lon];
 				default:
 					break;
 			}
