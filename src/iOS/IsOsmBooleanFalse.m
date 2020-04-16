@@ -10,10 +10,6 @@
 
 BOOL IsOsmBooleanFalse( NSString * value )
 {
-    if ( [value respondsToSelector:@selector(boolValue)] ) {
-        BOOL b = [value boolValue];
-        return !b;
-    }
     if ( [value isEqualToString:@"false"] )
         return YES;
     if ( [value isEqualToString:@"no"] )
