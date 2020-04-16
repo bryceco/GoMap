@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <zlib.h>
+
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
 #import "../iOS/AppDelegate.h"
@@ -1172,6 +1174,31 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return output;
 }
 
+
+- (NSData *)gzippedData:(NSData *)input
+{
+	const int CHUNK = 65536;
+	z_stream stream = { 0 };
+    stream.avail_in = (uint)input.length;
+    stream.next_in = (unsigned char *)input.bytes;
+    if ( deflateInit2(&stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY) != Z_OK )
+		return nil;
+	NSMutableData *output = [NSMutableData dataWithLength:CHUNK];
+	while ( stream.avail_out == 0 ) {
+		if ( stream.total_out >= output.length ) {
+			output.length += CHUNK;
+		}
+		stream.next_out = (uint8_t *)output.mutableBytes + stream.total_out;
+		stream.avail_out = (uInt)(output.length - stream.total_out);
+		deflate(&stream, Z_FINISH);
+	}
+	deflateEnd(&stream);
+	output.length = stream.total_out;
+
+    return output;
+}
+
+
 -(void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion
 {
 	if ( [url hasPrefix:@"http:"] ) {
@@ -1182,8 +1209,10 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[request setHTTPMethod:method];
 	if ( xml ) {
 		NSData * data = [xml XMLDataWithOptions:0];
+		data = [self gzippedData:data];
 		[request setHTTPBody:data];
-		[request setValue:@"application/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+		[request setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+		[request setValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
 	}
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 	// request.timeoutInterval = 15*60;
