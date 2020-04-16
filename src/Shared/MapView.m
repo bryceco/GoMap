@@ -2170,15 +2170,15 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_CIRCULARIZE), @(ACTION_RECTANGULARIZE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_RECTANGULARIZE), @(ACTION_CIRCULARIZE), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_REVERSE), @(ACTION_HEIGHT), @(ACTION_CREATE_RELATION) ];
 			} else {
 				// line
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_DUPLICATE), @(ACTION_HEIGHT), @(ACTION_CREATE_RELATION) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_HEIGHT), @(ACTION_DUPLICATE) ];
+		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_DUPLICATE), @(ACTION_HEIGHT) ];
 	} else if ( _editorLayer.selectedRelation ) {
 		// relation
 		if ( _editorLayer.selectedRelation.isMultipolygon ) {
