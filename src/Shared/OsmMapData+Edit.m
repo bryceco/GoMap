@@ -81,7 +81,11 @@
 
 -(EditAction)canDeleteRelation:(OsmRelation *)relation error:(NSString **)error
 {
-	if ( !relation.isMultipolygon ) {
+	if ( relation.isMultipolygon ) {
+		// okay
+	} else if ( relation.isRestriction ) {
+		// okay
+	} else {
 		*error = NSLocalizedString(@"Can't delete relation that is not a multipolygon", nil);
 		return nil;
 	}
