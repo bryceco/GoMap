@@ -143,8 +143,8 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 // upload changeset
 - (NSAttributedString *)changesetAsAttributedString;
 - (NSString *)changesetAsXml;
-- (void)uploadChangesetWithComment:(NSString *)comment imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
-- (void)uploadChangesetXml:(NSXMLDocument *)xmlDoc comment:(NSString *)comment imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
+- (void)uploadChangesetWithComment:(NSString *)comment source:(NSString *)source imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
+- (void)uploadChangesetXml:(NSXMLDocument *)xmlDoc comment:(NSString *)comment source:(NSString *)source imagery:(NSString *)imagery completion:(void(^)(NSString * error))completion;
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion;
 - (void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion;
 +(NSString *)encodeBase64:(NSString *)plainText;

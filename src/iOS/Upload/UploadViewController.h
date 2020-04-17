@@ -15,6 +15,7 @@
 	OsmMapData							*	_mapData;
 	IBOutlet UITextView					*	_xmlTextView;
 	IBOutlet UITextView					*	_commentTextView;
+	IBOutlet UITextField				*	_sourceTextField;
 	IBOutlet UIBarButtonItem			*	_commitButton;
 	IBOutlet UIBarButtonItem			*	_cancelButton;
 	IBOutlet UIActivityIndicatorView	*	_progressView;

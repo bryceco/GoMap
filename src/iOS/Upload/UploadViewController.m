@@ -34,6 +34,10 @@
 	_commentTextView.layer.borderWidth = 2.0;
 	_commentTextView.layer.cornerRadius = 10.0;
 
+	_sourceTextField.layer.borderColor = color.CGColor;
+	_sourceTextField.layer.borderWidth = 2.0;
+	_sourceTextField.layer.cornerRadius = 10.0;
+
 	_xmlTextView.layer.borderColor = color.CGColor;
 	_xmlTextView.layer.borderWidth = 2.0;
 	_xmlTextView.layer.cornerRadius = 10.0;
@@ -48,6 +52,9 @@
 
 	NSString * comment = [[NSUserDefaults standardUserDefaults] objectForKey:@"uploadComment"];
 	_commentTextView.text = comment;
+
+	NSString * source = [[NSUserDefaults standardUserDefaults] objectForKey:@"uploadSource"];
+	_sourceTextField.text = source;
 
 	NSAttributedString * text = [_mapData changesetAsAttributedString];
 	if ( text == nil ) {
@@ -67,6 +74,7 @@
 {
 	[super viewDidDisappear:animated];
 	[[NSUserDefaults standardUserDefaults] setObject:_commentTextView.text forKey:@"uploadComment"];
+	[[NSUserDefaults standardUserDefaults] setObject:_sourceTextField.text forKey:@"uploadSource"];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -115,6 +123,9 @@
 	NSString * comment = _commentTextView.text;
 	comment = [comment stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
+	NSString * source = _sourceTextField.text;
+	source = [source stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
 	void (^completion)(NSString *) = ^void(NSString * error) {
 		[_progressView stopAnimating];
 		[_commitButton setEnabled:YES];
@@ -161,11 +172,11 @@
 			completion( NSLocalizedString( @"The XML is improperly formed", nil ) );
 			return;
 		}
-		[_mapData uploadChangesetXml:xmlDoc comment:comment imagery:imagery completion:completion];
+		[_mapData uploadChangesetXml:xmlDoc comment:comment source:source imagery:imagery completion:completion];
 
 	} else {
 		// normal upload
-		[_mapData uploadChangesetWithComment:comment imagery:imagery completion:completion];
+		[_mapData uploadChangesetWithComment:comment source:source imagery:imagery completion:completion];
 	}
 }
 
