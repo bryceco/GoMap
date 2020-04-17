@@ -57,7 +57,8 @@
 	NSArray			*	_downloadedList;	// downloaded on each launch
 }
 
-@property (nonatomic) AerialService	*	currentAerial;
+@property (nonatomic) 	AerialService	*	currentAerial;
+@property (readonly) 	NSDate			*	lastDownloadDate;
 
 -(void)load;
 -(void)save;

@@ -681,8 +681,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	// get cached data
 	NSData * cachedData = [NSData dataWithContentsOfFile:[self pathToExternalAerialsCache]];
 	NSDate * now = [NSDate date];
-	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
-	if ( cachedData == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
+	_lastDownloadDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
+	if ( cachedData == nil || (_lastDownloadDate && [now timeIntervalSinceDate:_lastDownloadDate] >= 60*60*24*7) ) {
 		// download newer version periodically
 		NSString * urlString = @"https://josm.openstreetmap.de/maps?format=geojson";
 		NSURL * downloadUrl = [NSURL URLWithString:urlString];
@@ -700,6 +700,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			}
 		}];
 	   	[downloadTask resume];
+		_lastDownloadDate = now;
 	}
 
    	// read cached version

@@ -70,9 +70,22 @@
 		return NSLocalizedString(@"Standard imagery",nil);
 	if ( section == SECTION_USER )
 		return NSLocalizedString(@"User-defined imagery",nil);
-	if ( section == SECTION_EXTERNAL )
-		return NSLocalizedString(@"Additional imagery sources",nil);
+	if ( section == SECTION_EXTERNAL ) {
+		return NSLocalizedString(@"Additional imagery",nil);
+	}
 	return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if ( section == SECTION_EXTERNAL ) {
+		NSDateFormatter * dateFormatter = [NSDateFormatter new];
+		dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+		dateFormatter.timeStyle = NSDateFormatterNoStyle;
+		NSString * date = [dateFormatter stringFromDate:_aerials.lastDownloadDate];
+		return [NSString stringWithFormat:NSLocalizedString(@"Last updated %@",nil),date];
+	}
+	return nil;;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
