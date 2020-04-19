@@ -1619,9 +1619,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 {
     NSMutableArray<CALayer *> *layers = [NSMutableArray array];
     
-    CALayer *directionLayer = [self directionShapeLayerWithNode:node];
-    if (directionLayer) {
-        [layers addObject:directionLayer];
+    NSArray<CALayer *> *directionLayers = [self directionShapeLayersWithNode:node];
+    if (directionLayers) {
+		[layers addObjectsFromArray:directionLayers];
     }
 
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
@@ -1722,35 +1722,24 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     return layers;
 }
 
-/**
- Determines the `CALayer` instance required to draw the direction of the given `node`.
 
- @param node The node to get the layer for.
- @return A `CALayer` instance for rendering the given node's direction.
- */
-- (CALayer *)directionShapeLayerWithNode:(OsmNode *)node
+- (CALayer *)directionShapeLayerForNode:(OsmNode *)node withDirection:(NSInteger)direction
 {
-    NSInteger direction = node.direction;
-    if (direction == NSNotFound) {
-        // Without a direction, there's nothing we could display.
-        return nil;
-    }
-    
     CGFloat heading = direction - 90;
-    
+
     CAShapeLayer *layer = [CAShapeLayer layer];
-    
+
     layer.fillColor = [UIColor colorWithWhite:0.2 alpha:0.9].CGColor;
     layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.9].CGColor;
     layer.lineWidth = 0.5;
-    
+
     layer.zPosition = Z_NODE;
-    
+
     OSMPoint pt = MapPointForLatitudeLongitude(node.lat, node.lon);
-    
+
     double screenAngle = OSMTransformRotation(self.mapView.screenFromMapTransform);
     layer.affineTransform = CGAffineTransformMakeRotation(screenAngle);
-    
+
     CGFloat radius = 30.0;
     CGFloat fieldOfViewRadius = 55;
     CGMutablePathRef path = CGPathCreateMutable();
@@ -1759,26 +1748,85 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
                  0.0,
                  0.0,
                  radius,
-                 [self radiansFromDegrees:heading - fieldOfViewRadius / 2],
-                 [self radiansFromDegrees:heading + fieldOfViewRadius / 2],
+                 radiansFromDegrees(heading - fieldOfViewRadius / 2),
+                 radiansFromDegrees(heading + fieldOfViewRadius / 2),
                  NO);
     CGPathAddLineToPoint(path, NULL, 0, 0);
     CGPathCloseSubpath(path);
     layer.path = path;
     CGPathRelease(path);
-    
+
     LayerProperties *layerProperties = [LayerProperties new];
     layerProperties->position = pt;
     [layer setValue:@"direction" forKey:@"key"];
     [layer setValue:layerProperties forKey:@"properties"];
-    
+
     return layer;
 }
 
-- (CGFloat)radiansFromDegrees:(CGFloat)degrees
+-(CALayer *)directionLayerForNodeInWay:(OsmWay *)way node:(OsmNode *)node facing:(NSInteger)second
 {
-    return degrees * M_PI / 180;
+	if ( second < 0 || second >= way.nodes.count )
+		return nil;
+	OsmNode * nextNode = way.nodes[second];
+	// compute angle to next node
+	OSMPoint p1 = MapPointForLatitudeLongitude(node.lat, node.lon);
+	OSMPoint p2 = MapPointForLatitudeLongitude(nextNode.lat, nextNode.lon);
+	double angle = atan2(p2.y-p1.y,p2.x-p1.x);
+	NSInteger direction = 90 + (int)round(angle * 180/M_PI);	// convert to north-facing clockwise direction
+	return [self directionShapeLayerForNode:node withDirection:direction];
 }
+
+/**
+ Determines the `CALayer` instance required to draw the direction of the given `node`.
+
+ @param node The node to get the layer for.
+ @return A `CALayer` instance for rendering the given node's direction.
+ */
+- (NSArray<CALayer *> *)directionShapeLayersWithNode:(OsmNode *)node
+{
+    NSInteger direction = node.direction;
+    if (direction != NSNotFound) {
+		return @[ [self directionShapeLayerForNode:node withDirection:direction] ];
+	}
+
+	NSString * value = node.tags[@"traffic_signals:direction"];
+	if ( value && [node.tags[@"highway"] isEqualToString:@"traffic_signals"] ) {
+		enum { IS_NONE, IS_FORWARD, IS_BACKWARD, IS_BOTH, IS_ALL } isDirection =
+			[value isEqualToString:@"forward"] ? IS_FORWARD :
+			[value isEqualToString:@"backward"] ? IS_BACKWARD :
+			[value isEqualToString:@"both"] ? IS_BOTH :
+			[value isEqualToString:@"all"] ? IS_ALL :
+			IS_NONE;
+		if ( isDirection != IS_NONE ) {
+			NSArray<OsmWay *> * wayList = [self.mapData waysContainingNode:node];	// this is expensive, only do if necessary
+			wayList = [wayList filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmWay * way, NSDictionary<NSString *,id> * _Nullable bindings) {
+				return way.tags[@"highway"] != nil;
+			}]];
+			if ( wayList.count > 0 ) {
+				if ( wayList.count > 1 && isDirection != IS_ALL )
+					return nil;	// the direction isn't well defined
+				NSMutableArray * list = [NSMutableArray arrayWithCapacity:2*wayList.count];	// sized for worst case
+				for ( OsmWay * way in wayList ) {
+					NSInteger pos = [way.nodes indexOfObject:node];
+					if ( isDirection != IS_BACKWARD ) {
+						CALayer * layer = [self directionLayerForNodeInWay:way node:node facing:pos+1];
+						if ( layer )
+							[list addObject:layer];
+					}
+					if ( isDirection != IS_FORWARD ) {
+						CALayer * layer = [self directionLayerForNodeInWay:way node:node facing:pos-1];
+						if ( layer )
+							[list addObject:layer];
+					}
+				}
+				return list;;
+			}
+		}
+	}
+	return nil;
+}
+
 
 -(NSMutableArray<CALayer *> *)getShapeLayersForHighlights
 {
