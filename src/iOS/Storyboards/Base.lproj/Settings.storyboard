@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -152,7 +152,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="293" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="OSM Server" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="gec-8l-k4H">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Advanced Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="gec-8l-k4H">
                                                     <rect key="frame" x="16" y="0.0" width="269" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -162,7 +162,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="bSZ-Mq-pv6" kind="push" id="OGd-Mm-hmm"/>
+                                            <segue destination="bSZ-Mq-pv6" kind="push" id="23x-hT-dLx"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -212,7 +212,7 @@
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" translatesAutoresizingMaskIntoConstraints="NO" id="YQ4-05-lQz">
-                                                    <rect key="frame" x="142" y="11.5" width="159" height="21"/>
+                                                    <rect key="frame" x="142" y="11" width="159" height="22"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
@@ -388,7 +388,7 @@
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHr-ta-k6F">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <mutableString key="text">Copyright © 2012-2020 Bryce Cogswell. 
+                                <string key="text">Copyright © 2012-2020 Bryce Cogswell. 
 All rights reserved.
 
 OpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):
@@ -407,7 +407,7 @@ http://www.sjjb.co.uk/mapicons
 
 Other icons by Glyphish:
 http://glyphish.com
-</mutableString>
+</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -564,7 +564,7 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0LN-5K-8UA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1609" y="1698"/>
+            <point key="canvasLocation" x="859" y="1675"/>
         </scene>
         <!--Language-->
         <scene sceneID="pTc-KX-a6R">
@@ -609,12 +609,12 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpJ-Bg-Ilb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2318" y="1698"/>
+            <point key="canvasLocation" x="1534" y="1675"/>
         </scene>
-        <!--OSM Server-->
+        <!--Advanced Settings-->
         <scene sceneID="e3S-XZ-uPh">
             <objects>
-                <tableViewController id="bSZ-Mq-pv6" customClass="OsmServerViewController" sceneMemberID="viewController">
+                <tableViewController id="bSZ-Mq-pv6" customClass="AdvancedSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="44" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="fOz-c3-DCE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -636,7 +636,7 @@ http://glyphish.com
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="api.openstreetmap.org" translatesAutoresizingMaskIntoConstraints="NO" id="66J-ih-Lfh">
-                                                    <rect key="frame" x="109" y="12" width="192" height="20"/>
+                                                    <rect key="frame" x="109" y="11.5" width="192" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
@@ -658,22 +658,84 @@ http://glyphish.com
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Developer settings" id="yAO-9B-CTd">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="QRb-MZ-ZLs">
+                                        <rect key="frame" x="0.0" y="199.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QRb-MZ-ZLs" id="C3b-mV-Gif">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show FPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeH-ME-EV8">
+                                                    <rect key="frame" x="17" y="11.5" width="80" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gpb-Pt-4ii">
+                                                    <rect key="frame" x="253" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchFPS:" destination="bSZ-Mq-pv6" eventType="valueChanged" id="vaU-d0-HiF"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Gpb-Pt-4ii" secondAttribute="trailing" constant="18" id="YPF-my-Kx9"/>
+                                                <constraint firstItem="Gpb-Pt-4ii" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UeH-ME-EV8" secondAttribute="trailing" constant="4" id="nXa-ag-kWk"/>
+                                                <constraint firstItem="Gpb-Pt-4ii" firstAttribute="centerY" secondItem="C3b-mV-Gif" secondAttribute="centerY" id="qut-Ut-4yO"/>
+                                                <constraint firstItem="UeH-ME-EV8" firstAttribute="leading" secondItem="C3b-mV-Gif" secondAttribute="leading" constant="17" id="svJ-Mh-B2x"/>
+                                                <constraint firstItem="UeH-ME-EV8" firstAttribute="centerY" secondItem="C3b-mV-Gif" secondAttribute="centerY" id="tky-Zy-GIj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9vC-qJ-lmS">
+                                        <rect key="frame" x="0.0" y="243.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9vC-qJ-lmS" id="csd-bd-m3P">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Touches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0tl-bZ-z4l">
+                                                    <rect key="frame" x="17" y="11.5" width="116" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eeu-dh-YPQ">
+                                                    <rect key="frame" x="253" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchTouch:" destination="bSZ-Mq-pv6" eventType="valueChanged" id="LBr-cl-8py"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="eeu-dh-YPQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0tl-bZ-z4l" secondAttribute="trailing" constant="4" id="dKJ-dS-Wqb"/>
+                                                <constraint firstAttribute="trailing" secondItem="eeu-dh-YPQ" secondAttribute="trailing" constant="18" id="n8g-Xt-nfh"/>
+                                                <constraint firstItem="0tl-bZ-z4l" firstAttribute="centerY" secondItem="csd-bd-m3P" secondAttribute="centerY" id="otm-Yr-r92"/>
+                                                <constraint firstItem="eeu-dh-YPQ" firstAttribute="centerY" secondItem="csd-bd-m3P" secondAttribute="centerY" id="qFN-fv-ghm"/>
+                                                <constraint firstItem="0tl-bZ-z4l" firstAttribute="leading" secondItem="csd-bd-m3P" secondAttribute="leading" constant="17" id="rhv-w4-1Ju"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="bSZ-Mq-pv6" id="JCs-qN-0yO"/>
                             <outlet property="delegate" destination="bSZ-Mq-pv6" id="rwT-hz-GH4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="OSM Server" id="Gxc-44-SzR">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="Eda-AV-Gth"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Advanced Settings" id="Gxc-44-SzR"/>
                     <connections>
                         <outlet property="hostname" destination="66J-ih-Lfh" id="bTT-Se-3df"/>
+                        <outlet property="switchFPS" destination="Gpb-Pt-4ii" id="x2l-85-Y6m"/>
+                        <outlet property="switchTouches" destination="eeu-dh-YPQ" id="y1U-Yh-Q99"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HSE-dn-0YR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3086" y="1689"/>
+            <point key="canvasLocation" x="2231" y="1675"/>
         </scene>
         <!--Contact Us-->
         <scene sceneID="n62-E6-mWo">

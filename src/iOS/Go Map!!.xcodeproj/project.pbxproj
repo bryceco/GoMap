@@ -72,7 +72,7 @@
 		024AB090240C9202004A3B5B /* TNP Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 024AB08F240C9202004A3B5B /* TNP Icons.xcassets */; };
 		024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3B16B1B38B00875658 /* PathUtil.m */; };
 		024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */; };
-		024C323D1DEEA97100AD62AB /* OsmServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024C323C1DEEA97100AD62AB /* OsmServerViewController.m */; };
+		024C323D1DEEA97100AD62AB /* AdvancedSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024C323C1DEEA97100AD62AB /* AdvancedSettingsViewController.m */; };
 		024CAB2724429C8200EFB7CA /* ContactUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024CAB2624429C8200EFB7CA /* ContactUsViewController.m */; };
 		025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 025224E716D7292E00B6FD53 /* RotatingNavigationController.m */; };
 		0259E4081BCAEC88006C354C /* MyApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0259E4071BCAEC88006C354C /* MyApplication.m */; };
@@ -315,8 +315,8 @@
 		024ADF3B16B1B38B00875658 /* PathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PathUtil.m; path = ../Shared/PathUtil.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		024B4CA019BBE65F00BBA60B /* CustomPresetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CustomPresetListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		024C323B1DEEA97100AD62AB /* OsmServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OsmServerViewController.h; sourceTree = "<group>"; };
-		024C323C1DEEA97100AD62AB /* OsmServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OsmServerViewController.m; sourceTree = "<group>"; };
+		024C323B1DEEA97100AD62AB /* AdvancedSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedSettingsViewController.h; sourceTree = "<group>"; };
+		024C323C1DEEA97100AD62AB /* AdvancedSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedSettingsViewController.m; sourceTree = "<group>"; };
 		024CAB2524429C8200EFB7CA /* ContactUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactUsViewController.h; sourceTree = "<group>"; };
 		024CAB2624429C8200EFB7CA /* ContactUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactUsViewController.m; sourceTree = "<group>"; };
 		025224E616D7292E00B6FD53 /* RotatingNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RotatingNavigationController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -762,6 +762,8 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
+				024C323B1DEEA97100AD62AB /* AdvancedSettingsViewController.h */,
+				024C323C1DEEA97100AD62AB /* AdvancedSettingsViewController.m */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
 				02C3C73619A5D679003B6783 /* AerialEditViewController.m */,
 				02C3C73219A5A40C003B6783 /* AerialListViewController.h */,
@@ -774,6 +776,8 @@
 				02C19B341699E8C000F75E3C /* BingMetadataViewController.m */,
 				022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */,
 				022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */,
+				024CAB2524429C8200EFB7CA /* ContactUsViewController.h */,
+				024CAB2624429C8200EFB7CA /* ContactUsViewController.m */,
 				020C2A8E168A7688003F2C2A /* CreditsViewController.h */,
 				020C2A8F168A7688003F2C2A /* CreditsViewController.m */,
 				0230558919B931A50041B151 /* CustomPresetController.h */,
@@ -818,8 +822,6 @@
 				02695B8C1A08C1DB0028D95E /* NotesTableViewController.m */,
 				02BED99D168D102600357B94 /* OfflineViewController.h */,
 				02BED99E168D102600357B94 /* OfflineViewController.m */,
-				024C323B1DEEA97100AD62AB /* OsmServerViewController.h */,
-				024C323C1DEEA97100AD62AB /* OsmServerViewController.m */,
 				02A077D0167A77A400686261 /* POIAllTagsViewController.h */,
 				02A077D1167A77A400686261 /* POIAllTagsViewController.m */,
 				023D1721168A36B00011FABC /* POIAttributesViewController.h */,
@@ -849,8 +851,6 @@
 				02E8436E19B407C40044AC1D /* WebPageView.xib */,
 				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
 				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
-				024CAB2524429C8200EFB7CA /* ContactUsViewController.h */,
-				024CAB2624429C8200EFB7CA /* ContactUsViewController.m */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -1335,7 +1335,7 @@
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,
 				64305F7223E7224E00232BB9 /* GeoURLParser.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
-				024C323D1DEEA97100AD62AB /* OsmServerViewController.m in Sources */,
+				024C323D1DEEA97100AD62AB /* AdvancedSettingsViewController.m in Sources */,
 				02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */,
 				022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */,
 				6455AC29241ACB7C00B3AFB3 /* UIImageView+DarkMode.swift in Sources */,

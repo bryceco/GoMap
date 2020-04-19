@@ -2588,17 +2588,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	// drop in center of screen
 	[self removePin];
 
-#if 1
-	for ( NSString * feature in [object.tags[@"GoMap"] componentsSeparatedByString:@";"] ) {
-		if ( [feature isEqualToString:@"showtouchcircles"] ) {
-			MyApplication * app = (id)[UIApplication sharedApplication];
-			app.showTouchCircles = YES;
-		} else if ( [feature isEqualToString:@"fps"] ) {
-			self.fpsLabel.showFPS = YES;
-		}
-	}
-#endif
-
 	_confirmDrag = NO;
 
 	_pushpinView = [PushPinView new];

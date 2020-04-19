@@ -6,13 +6,15 @@
 //  Copyright © 2016 Bryce Cogswell. All rights reserved.
 //
 
-#import "OsmServerViewController.h"
+#import "AdvancedSettingsViewController.h"
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
+#import "FpsLabel.h"
+#import "MyApplication.h"
 #import "OsmMapData.h"
 #import "MapView.h"
 
-@implementation OsmServerViewController
+@implementation AdvancedSettingsViewController
 
 - (void)viewDidLoad
 {
@@ -36,6 +38,10 @@
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 	self.hostname.text = [mapData getServer];
 	self.originalHostname = self.hostname.text;
+
+	MyApplication * app = (id)[UIApplication sharedApplication];
+	self.switchFPS.on		= appDelegate.mapView.fpsLabel.showFPS;
+	self.switchTouches.on 	= app.showTouchCircles;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -47,6 +53,20 @@
 	if (![self.hostname.text isEqualToString:self.originalHostname]) {
 		[mapData setServer:self.hostname.text];
     }
+}
+
+- (IBAction)switchFPS:(id)sender
+{
+	UISwitch * toggle = sender;
+	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	appDelegate.mapView.fpsLabel.showFPS = toggle.on;
+}
+
+- (IBAction)switchTouch:(id)sender
+{
+	UISwitch * toggle = sender;
+	MyApplication * app = (id)[UIApplication sharedApplication];
+	app.showTouchCircles = toggle.on;
 }
 
 @end

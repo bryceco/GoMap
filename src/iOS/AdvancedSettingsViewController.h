@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OsmServerViewController : UITableViewController
+@interface AdvancedSettingsViewController : UITableViewController
 
 @property (assign,nonatomic) IBOutlet UITextField	*	hostname;
-@property (retain, nonatomic) NSString	*	originalHostname;
+@property (retain, nonatomic) NSString				*	originalHostname;
+
+@property (assign)	IBOutlet	UISwitch			*	switchFPS;
+@property (assign)	IBOutlet	UISwitch			*	switchTouches;
 
 @end
