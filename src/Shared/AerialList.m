@@ -363,9 +363,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 -(void)loadIconFromWeb:(NSString *)url
 {
-	// don't use https because some providers are using expired certs and the request will fail
-	url = [url stringByReplacingOccurrencesOfString:@"https://" withString:@"http://"];
-
 	NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
 											  cachePolicy:NSURLRequestReturnCacheDataElseLoad
 										  timeoutInterval:60];
@@ -375,8 +372,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			dispatch_async(dispatch_get_main_queue(), ^{
 				_attributionIcon = image;
 			});
-		} else {
-			NSLog(@"Fetch icon failed: %@",url);
 		}
 	}];
 	[task resume];
