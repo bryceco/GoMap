@@ -625,7 +625,32 @@ const CGFloat kEditControlCornerRadius = 4;
 		[self addSubview:_flashLabel];
 	}
 
-	_flashLabel.text = message;
+	NSAttributedString * attrText = nil;
+	if ( [message hasPrefix:@"<"] ) {
+		NSDictionary<NSAttributedStringDocumentReadingOptionKey,id> * d1 = @{
+			NSDocumentTypeDocumentAttribute 		:	NSHTMLTextDocumentType,
+			NSCharacterEncodingDocumentAttribute	: 	@(NSUTF8StringEncoding)
+		};
+		attrText = [[NSAttributedString alloc] initWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
+																  options:d1
+													   documentAttributes:NULL
+																	error:NULL];
+		if ( attrText ) {
+			NSMutableAttributedString * s = [[NSMutableAttributedString alloc] initWithAttributedString:attrText];
+			// change text color to white
+			[s addAttribute:NSForegroundColorAttributeName value:UIColor.whiteColor range:NSMakeRange(0, s.length)];
+			// center align
+			NSMutableParagraphStyle * paragraphStyle = [NSMutableParagraphStyle new];
+			[paragraphStyle setAlignment:NSTextAlignmentCenter];
+			[s addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,s.length)];
+			attrText = s;
+		}
+	}
+	if ( attrText.length > 0 ) {
+		_flashLabel.attributedText = attrText;
+	} else {
+		_flashLabel.text = message;
+	}
 
 	// set size/position
 	[_flashLabel sizeToFit];
