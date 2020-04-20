@@ -421,7 +421,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	
 	_countryCodeForLocation = [[NSUserDefaults standardUserDefaults] objectForKey:@"countryCodeForLocation"];
 
-#if 1
 	if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
 		[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 	} else {
@@ -430,7 +429,6 @@ const CGFloat kEditControlCornerRadius = 4;
 		// turn on GPS which will move us to current location
 		self.gpsState = GPS_STATE_LOCATION;
 	}
-#endif
 
 	// get notes
 	[self updateNotesFromServerWithDelay:0];
@@ -618,11 +616,21 @@ const CGFloat kEditControlCornerRadius = 4;
 		_flashLabel.textAlignment = NSTextAlignmentCenter;
 		_flashLabel.textColor = UIColor.whiteColor;
 		_flashLabel.backgroundColor = UIColor.blackColor;
-		_flashLabel.layer.cornerRadius = 15;
+		_flashLabel.layer.cornerRadius = 5;
 		_flashLabel.layer.masksToBounds = YES;
 		_flashLabel.layer.zPosition = Z_FLASH;
 		_flashLabel.hidden = YES;
+		_flashLabel.numberOfLines = 0;
+
 		[self addSubview:_flashLabel];
+
+		_flashLabel.translatesAutoresizingMaskIntoConstraints = NO;
+		CGRect rc = self.bounds;
+		[_flashLabel.topAnchor	 	constraintEqualToAnchor:self.topAnchor 						constant:round(rc.size.height*0.75)].active = YES;
+		[_flashLabel.bottomAnchor 	constraintLessThanOrEqualToAnchor:self.bottomAnchor			constant:-40].active = YES;
+		[_flashLabel.leadingAnchor	constraintGreaterThanOrEqualToAnchor:self.leadingAnchor 	constant:round(rc.size.width*0.2)].active = YES;
+		[_flashLabel.trailingAnchor	constraintLessThanOrEqualToAnchor:self.trailingAnchor 		constant:-round(rc.size.width*0.2)].active = YES;
+		[_flashLabel.centerXAnchor	constraintEqualToAnchor:self.centerXAnchor].active = YES;
 	}
 
 	NSAttributedString * attrText = nil;
@@ -641,8 +649,9 @@ const CGFloat kEditControlCornerRadius = 4;
 			[s addAttribute:NSForegroundColorAttributeName value:UIColor.whiteColor range:NSMakeRange(0, s.length)];
 			// center align
 			NSMutableParagraphStyle * paragraphStyle = [NSMutableParagraphStyle new];
-			[paragraphStyle setAlignment:NSTextAlignmentCenter];
+			paragraphStyle.alignment = NSTextAlignmentCenter;
 			[s addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,s.length)];
+
 			attrText = s;
 		}
 	}
@@ -651,14 +660,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	} else {
 		_flashLabel.text = message;
 	}
-
-	// set size/position
-	[_flashLabel sizeToFit];
-	CGRect rc = _flashLabel.frame;
-	rc.origin.x = self.bounds.origin.x + (self.bounds.size.width - rc.size.width) / 2;
-	rc.origin.y = self.bounds.origin.y + self.bounds.size.height/4 + (self.bounds.size.height - rc.size.height) / 2;
-	rc = CGRectInset(rc, -20, -20);
-	_flashLabel.frame = rc;
 
 	if ( _flashLabel.hidden ) {
 		// animate in
@@ -675,7 +676,7 @@ const CGFloat kEditControlCornerRadius = 4;
 
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC);
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		[UIView animateWithDuration:0.25 animations:^{
+		[UIView animateWithDuration:0.35 animations:^{
 			_flashLabel.alpha = 0.0;
 		} completion:^(BOOL finished){
 			if ( finished && ((CALayer *)_flashLabel.layer.presentationLayer).opacity == 0.0 ) {
