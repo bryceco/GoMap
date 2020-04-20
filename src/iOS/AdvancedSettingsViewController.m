@@ -40,7 +40,7 @@
 	self.originalHostname = self.hostname.text;
 
 	MyApplication * app = (id)[UIApplication sharedApplication];
-	self.switchFPS.on		= appDelegate.mapView.fpsLabel.showFPS;
+	self.switchFPS.on		= appDelegate.mapView.automatedFramerateTestActive;
 	self.switchTouches.on 	= app.showTouchCircles;
 }
 
@@ -59,7 +59,7 @@
 {
 	UISwitch * toggle = sender;
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	appDelegate.mapView.fpsLabel.showFPS = toggle.on;
+	appDelegate.mapView.automatedFramerateTestActive = toggle.on;
 }
 
 - (IBAction)switchTouch:(id)sender

@@ -43,8 +43,6 @@
 #endif
 
 
-#define FRAMERATE_TEST	0
-
 
 static const CGFloat Z_AERIAL			= -100;
 static const CGFloat Z_NONAME           = -99;
@@ -434,37 +432,56 @@ const CGFloat kEditControlCornerRadius = 4;
 	[self updateNotesFromServerWithDelay:0];
 
 	[self updateAerialAttributionButton];
-	
-#if FRAMERATE_TEST
-	// automaatically scroll view for frame rate testing
-	OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
-	self.screenFromMapTransform = t;
-	__block int side = 0, distance = 0;
-	__weak MapView * weakSelf = self;
+}
+
+
+-(BOOL)automatedFramerateTestActive
+{
+	NSString * NAME = @"autoScroll";
 	DisplayLink * displayLink = [DisplayLink shared];
-	[displayLink addName:@"autoScroll" block:^{
-		int dx = 0, dy = 0;
-		switch ( side ) {
-			case 0:
-				dx = 1;
-				break;
-			case 1:
-				dy = 1;
-				break;
-			case 2:
-				dx = -1;
-				break;
-			case 3:
-				dy = -1;
-				break;
-		}
-		if ( ++distance > 30 ) {
-			side = (side+1) % 4;
-			distance = 0;
-		}
-		[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
-	}];
-#endif
+	return [displayLink hasName:NAME];
+}
+-(void)setAutomatedFramerateTestActive:(BOOL)enable
+{
+	NSString * NAME = @"autoScroll";
+	DisplayLink * displayLink = [DisplayLink shared];
+
+	if ( enable == [displayLink hasName:NAME] ) {
+		// nothing to do
+	} else if ( enable ) {
+		// automaatically scroll view for frame rate testing
+		self.fpsLabel.showFPS = YES;
+
+		OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
+		self.screenFromMapTransform = t;
+		__block int side = 0, distance = 0;
+		__weak MapView * weakSelf = self;
+		[displayLink addName:NAME block:^{
+			int dx = 0, dy = 0;
+			switch ( side ) {
+				case 0:
+					dx = 1;
+					break;
+				case 1:
+					dy = 1;
+					break;
+				case 2:
+					dx = -1;
+					break;
+				case 3:
+					dy = -1;
+					break;
+			}
+			if ( ++distance > 50 ) {
+				side = (side+1) % 4;
+				distance = 0;
+			}
+			[weakSelf adjustOriginBy:CGPointMake(2*dx,2*dy)];
+		}];
+	} else {
+		self.fpsLabel.showFPS = NO;
+		[displayLink removeName:NAME];
+	}
 }
 
 - (BOOL)acceptsFirstResponder
@@ -3575,10 +3592,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	if ( self.enableRotation ) {
 		if ( rotationGesture.state == UIGestureRecognizerStateBegan ) {
 			// ignore
-#if FRAMERATE_TEST
-			DisplayLink * displayLink = [DisplayLink shared];
-			[displayLink removeName:@"autoScroll"];
-#endif
 		} else if ( rotationGesture.state == UIGestureRecognizerStateChanged ) {
 			CGPoint centerPoint = [rotationGesture locationInView:self];
 			CGFloat angle = rotationGesture.rotation;
