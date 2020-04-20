@@ -105,7 +105,7 @@
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	double metersPerDegree = MetersPerDegree( lat1 );
 	double minMeters = 50;
-	double widthDegrees = widthDegrees = minMeters / metersPerDegree;
+	double widthDegrees = minMeters / metersPerDegree;
 
 	// disable GPS
 	while ( appDelegate.mapView.gpsState != GPS_STATE_NONE ) {

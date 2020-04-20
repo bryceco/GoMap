@@ -84,7 +84,7 @@
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
 		double metersPerDegree = MetersPerDegree( lat );
 		double minMeters = 50;
-		double widthDegrees = widthDegrees = minMeters / metersPerDegree;
+		double widthDegrees = minMeters / metersPerDegree;
 		if ( zoom != 0 ) {
 			widthDegrees = 360.0 / pow(2,zoom);
 		}
