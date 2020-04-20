@@ -2232,9 +2232,9 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	static BOOL (^predBuildings)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
 		NSString * v;
 		return object.tags[ @"building:part" ] ||
-		((v = object.tags[@"building"]) && ![v isEqualToString:@"no"]) ||
-		[object.tags[@"amenity"] isEqualToString:@"shelter"] ||
-		parking_buildings[ object.tags[@"parking"] ];
+				((v = object.tags[@"building"]) && ![v isEqualToString:@"no"]) ||
+				[object.tags[@"amenity"] isEqualToString:@"shelter"] ||
+				parking_buildings[ object.tags[@"parking"] ];
 	};
 	static BOOL (^predWater)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
 		return object.tags[@"waterway"] ||
@@ -2312,10 +2312,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	
 	// filter everything
 	[objects filterUsingPredicate:predicate];
-	
-	// if we are showing relations we need to ensure the members are visible too
-	NSMutableSet * add = [NSMutableSet new];
+
+	NSMutableSet * add 		= [NSMutableSet new];
+	NSMutableSet * remove 	= [NSMutableSet new];
 	for ( OsmBaseObject * obj in objects ) {
+		// if we are showing relations we need to ensure the members are visible too
 		if ( obj.isRelation.isMultipolygon ) {
 			NSSet * set = [obj.isRelation allMemberObjects];
 			for ( OsmBaseObject * o in set ) {
@@ -2324,6 +2325,22 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 				}
 			}
 		}
+		// if a way belongs to relations which are hidden, and it has no other tags itself, then hide it as well
+		if ( obj.isWay && obj.parentRelations.count > 0 && !obj.hasInterestingTags ) {
+			BOOL hidden = YES;
+			for ( OsmRelation * parent in obj.parentRelations ) {
+				if ( !parent.isMultipolygon || [objects containsObject:parent] ) {
+					hidden = NO;
+					break;
+				}
+			}
+			if ( hidden ) {
+				[remove addObject:obj];
+			}
+		}
+	}
+	for ( OsmBaseObject * o in remove ) {
+		[objects removeObject:o];
 	}
 	for ( OsmBaseObject * o in add ) {
 		[objects addObject:o];
