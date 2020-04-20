@@ -1,5 +1,5 @@
 //
-//  NominatumViewController.h
+//  NominatimViewController.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 1/3/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NominatumViewController : UIViewController <UISearchBarDelegate>
+@interface NominatimViewController : UIViewController <UISearchBarDelegate>
 {
 	IBOutlet UISearchBar				*	_searchBar;
 	NSMutableArray						*	_resultsArray;

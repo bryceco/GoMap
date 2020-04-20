@@ -1,5 +1,5 @@
 //
-//  NominatumViewController.m
+//  NominatimViewController.m
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 1/3/13.
@@ -11,7 +11,7 @@
 #import "BingMapsGeometry.h"
 #import "MapView.h"
 #import "MapViewController.h"
-#import "NominatumViewController.h"
+#import "NominatimViewController.h"
 
 @interface NominatimViewController() <UITableViewDelegate>
 @end
