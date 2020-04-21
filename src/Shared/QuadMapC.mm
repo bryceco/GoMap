@@ -634,6 +634,10 @@ public:
 // If the download succeeded we can mark this region and its children as whole.
 -(void)makeWhole:(BOOL)success
 {
+	if ( _cpp == NULL ) {
+		// this should only happen if the user cleared the cache while data was downloading?
+		return;
+	}
 	_cpp->makeWhole(success);
 }
 
