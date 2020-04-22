@@ -833,7 +833,19 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSMutableSet * seen = [NSMutableSet new];
 		[keyvals enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop2) {
 			[seen addObject:key];
-			NSString * v = objectTags[ key ];
+
+			__block NSString * v = nil;
+			if ( [key hasSuffix:@"*"] ) {
+				NSString * c = [key stringByReplacingCharactersInRange:NSMakeRange(key.length-1,1) withString:@""];
+				[objectTags enumerateKeysAndObjectsUsingBlock:^(NSString * k2, NSString * v2, BOOL * stop3) {
+					if ( [k2 hasPrefix:c] ) {
+						v = v2;
+						*stop3 = YES;
+					}
+				}];
+			} else {
+				v = objectTags[ key ];
+			}
 			if ( v ) {
 				if ( [value isEqualToString:v] ) {
 					totalScore += matchScore;
@@ -969,9 +981,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 }
 
--(void)setPresetsForDict:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
+-(void)setPresetsForFeature:(NSString *)featureName tags:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
 {
-	NSString * featureName = [CommonTagList featureNameForObjectDict:objectTags geometry:geometry];
 	NSDictionary * featureDict = g_presetsDict[ featureName ];
 
 	_featureName = featureDict[ @"name" ];

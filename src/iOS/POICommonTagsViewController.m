@@ -94,7 +94,7 @@
 		NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
 
 		// update most recent feature
-		NSString * featureName = [CommonTagList featureNameForObjectDict:dict geometry:geometry];
+		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [CommonTagList featureNameForObjectDict:dict geometry:geometry];
 		if ( featureName ) {
 			CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
 			[POITypeViewController loadMostRecentForGeometry:geometry];
@@ -103,11 +103,11 @@
 
 		__weak POICommonTagsViewController * weakSelf = self;
 		__weak CommonTagList * weakTags = _tags;
-		[_tags setPresetsForDict:dict geometry:geometry update:^{
+		[_tags setPresetsForFeature:featureName tags:dict geometry:geometry update:^{
 			// this may complete much later, even after we've been dismissed
 			POICommonTagsViewController * mySelf = weakSelf;
 			if ( mySelf && !mySelf->_keyboardShowing ) {
-				[weakTags setPresetsForDict:dict geometry:geometry update:nil];
+				[weakTags setPresetsForFeature:featureName tags:dict geometry:geometry update:nil];
 				[mySelf.tableView reloadData];
 			}
 		}];
@@ -155,10 +155,12 @@
 {
 	[self resignAll];
 	[super viewWillDisappear:animated];
+	_selectedFeature = nil;
 }
 
 -(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonTagFeature *)feature
 {
+	_selectedFeature = feature;
 	POITabBarController * tabController = (id) self.tabBarController;
 	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
 	NSString * oldFeatureName = [CommonTagList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
