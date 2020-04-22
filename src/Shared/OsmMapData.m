@@ -18,7 +18,6 @@
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 #import "MapView.h"
-#import "NetworkStatus.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
@@ -140,9 +139,6 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	
 	[self.userDefaults setObject:hostname forKey:OSM_SERVER_KEY];
 	OSM_API_URL = hostname;
-	
-	NSURL * url = [NSURL URLWithString:OSM_API_URL];
-	_serverNetworkStatus = [NetworkStatus networkStatusWithHostName:url.host];
 }
 
 -(NSString *)getServer

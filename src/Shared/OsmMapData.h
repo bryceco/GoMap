@@ -74,8 +74,6 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 @property (copy,nonatomic)	NSString *	credentialsUserName;
 @property (copy,nonatomic)	NSString *	credentialsPassword;
 
-@property (readonly,nonatomic)	NetworkStatus	*	serverNetworkStatus;
-
 +(void)setEditorMapLayerForArchive:(EditorMapLayer *)editorLayer; // only used when saving/restoring undo manager
 +(EditorMapLayer *)editorMapLayerForArchive; // only used when saving/restoring undo manager
 
