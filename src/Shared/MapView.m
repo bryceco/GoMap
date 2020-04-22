@@ -2428,8 +2428,11 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			{
 				void (^create)(NSString * type) = ^(NSString * type){
 					OsmRelation * relation = [_editorLayer.mapData createRelation];
-					NSDictionary * tags = @{ @"type" : type };
+					NSMutableDictionary * tags = [_editorLayer.selectedPrimary.tags mutableCopy];
+					tags[ @"type"] = type;
 					[_editorLayer.mapData setTags:tags forObject:relation];
+					[_editorLayer.mapData setTags:nil forObject:_editorLayer.selectedPrimary];
+
 					EditAction add = [_editorLayer.mapData canAddObject:_editorLayer.selectedPrimary toRelation:relation withRole:@"outer" error:nil];
 					add();
 					_editorLayer.selectedNode = nil;
@@ -2444,11 +2447,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Multipolygon", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action2) {
 					create(@"multipolygon");
 				}]];
-#if 0
-				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Building", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action2) {
-					create(@"building");
-				}]];
-#endif
 				[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 
 				// compute location for action sheet to originate. This will be the uppermost node in the polygon
