@@ -95,6 +95,7 @@ typedef int UITextAutocapitalizationType;
 @property (readonly,nonatomic)	NSArray			*	members;
 @property (readonly,nonatomic)	NSDictionary	*	addTags;
 @property (readonly,nonatomic)	NSDictionary	*	removeTags;
+@property (readonly,nonatomic)	BOOL				suggestion;
 +(instancetype)commonTagFeatureWithName:(NSString *)name;
 -(BOOL)matchesSearchText:(NSString *)text;
 -(NSDictionary *)defaultValuesForGeometry:(NSString *)geometry;

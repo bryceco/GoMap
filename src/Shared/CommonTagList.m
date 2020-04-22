@@ -14,6 +14,7 @@
 #import "DLog.h"
 #import "TagInfo.h"
 
+#define USE_SUGGESTIONS	1
 
 #if !TARGET_OS_IPHONE
 const int UIKeyboardTypeDefault					= 0;
@@ -398,8 +399,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}
 	} else {
 		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
+#if !USE_SUGGESTIONS
 			if ( dict[@"suggestion"] )
 				return;
+#endif
 			id searchable = dict[@"searchable"];
 			if ( searchable && [searchable boolValue] == NO )
 				return;
@@ -809,9 +812,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL * stop) {
 
 		__block double totalScore = 0;
+#if !USE_SUGGESTIONS
 		id suggestion = dict[@"suggestion"];
 		if ( suggestion )
 			return;
+#endif
 
 		NSArray * geom = dict[@"geometry"];
 		for ( NSString * g in geom ) {
@@ -952,7 +957,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	NSArray * fields = featureDict[fieldType];
 	if ( fields == nil ) {
 		// inherit from parent
-		NSRange slash = [featureName rangeOfString:@"/"];
+		NSRange slash = [featureName rangeOfString:@"/" options:NSBackwardsSearch];
 		if ( slash.length ) {
 			NSString * parent = [featureName substringToIndex:slash.location];
 			[self presetsForFeature:parent geometry:geometry field:fieldType allFields:fieldSet update:update];
@@ -1327,6 +1332,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		tags = self.tags;
 	return tags;
 }
+-(BOOL)suggestion
+{
+	return _dict[ @"suggestion" ] != nil;
+}
+
 -(NSDictionary *)defaultValuesForGeometry:(NSString *)geometry
 {
 	NSMutableDictionary * result = nil;

@@ -100,6 +100,15 @@ static NSInteger			mostRecentMaximum;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	UIColor *regularColor, *suggestionColor;
+	if ( @available(iOS 13.0, *) ) {
+		regularColor 	= [UIColor systemBackgroundColor];
+		suggestionColor = [UIColor tertiarySystemBackgroundColor];
+	} else {
+		regularColor	= [UIColor whiteColor];
+		suggestionColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
+	}
+
 	if ( _searchArrayAll ) {
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		CommonTagFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
@@ -108,6 +117,7 @@ static NSInteger			mostRecentMaximum;
         [cell.imageView setupTintColorForDarkMode];
 		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 		cell.detailTextLabel.text	= feature.summary;
+		cell.backgroundColor		= feature.suggestion ? suggestionColor : regularColor;
 		return cell;
 	}
 
@@ -121,6 +131,7 @@ static NSInteger			mostRecentMaximum;
 		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 		cell.detailTextLabel.text	= feature.summary;
 		cell.accessoryType			= UITableViewCellAccessoryNone;
+		cell.backgroundColor		= feature.suggestion ? suggestionColor : regularColor;
 		return cell;
 	} else {
 		// type array
@@ -138,6 +149,7 @@ static NSInteger			mostRecentMaximum;
             [cell.imageView setupTintColorForDarkMode];
 			cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 			cell.detailTextLabel.text	= feature.summary;
+			cell.backgroundColor		= regularColor;
 
 			POITabBarController * tabController = (id)self.tabBarController;
 			NSString * geometry = [self currentSelectionGeometry];
