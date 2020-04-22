@@ -398,8 +398,20 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			}
 		}
 	} else {
+		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
 		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
-#if !USE_SUGGESTIONS
+#if USE_SUGGESTIONS
+			NSArray<NSString *> * a = dict[@"countryCodes"];
+			BOOL found = NO;
+			for ( NSString * s in a ) {
+				if ( [countryCode isEqualToString:s] ) {
+					found = YES;
+					break;
+				}
+			}
+			if ( !found )
+				return;
+#else
 			if ( dict[@"suggestion"] )
 				return;
 #endif
@@ -809,10 +821,24 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	__block double bestMatchScore = 0.0;
 	__block NSString * bestMatchName = nil;
 
+	NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
+
 	[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL * stop) {
 
 		__block double totalScore = 0;
-#if !USE_SUGGESTIONS
+#if USE_SUGGESTIONS
+		NSArray<NSString *> * a = dict[@"countryCodes"];
+		BOOL found = NO;
+		for ( NSString * s in a ) {
+			if ( [countryCode isEqualToString:s] ) {
+				found = YES;
+				break;
+			}
+		}
+		if ( !found )
+			return;
+#else
+
 		id suggestion = dict[@"suggestion"];
 		if ( suggestion )
 			return;

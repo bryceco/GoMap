@@ -103,7 +103,7 @@ static NSInteger			mostRecentMaximum;
 	UIColor *regularColor, *suggestionColor;
 	if ( @available(iOS 13.0, *) ) {
 		regularColor 	= [UIColor systemBackgroundColor];
-		suggestionColor = [UIColor tertiarySystemBackgroundColor];
+		suggestionColor = [UIColor secondarySystemBackgroundColor];
 	} else {
 		regularColor	= [UIColor whiteColor];
 		suggestionColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
