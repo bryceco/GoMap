@@ -1737,22 +1737,23 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
 	MapViewController * controller = self.viewController;
-	[controller setGpsState:GPS_STATE_NONE];
-	
-	if ( ![self isLocationSpecified] ) {
-		// go home
-		[self setTransformForLatitude:47.6858 longitude:-122.1917 width:0.01];
-	}
-	
-	NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",nil),
-					   error ? error.localizedDescription : NSLocalizedString(@"Location services timed out.",nil)];
-	text = [NSLocalizedString(@"The current location cannot be determined: ",nil) stringByAppendingString:text];
-	if ( error ) {
-		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text, NSUnderlyingErrorKey : error} ];
-	} else {
+	if ( error.code == kCLErrorDenied ) {
+		[controller setGpsState:GPS_STATE_NONE];
+		if ( ![self isLocationSpecified] ) {
+			// go home
+			[self setTransformForLatitude:47.6858 longitude:-122.1917 width:0.01];
+		}
+		NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",nil),
+						   error ? error.localizedDescription : NSLocalizedString(@"Location services timed out.",nil)];
+		text = [NSLocalizedString(@"The current location cannot be determined: ",nil) stringByAppendingString:text];
 		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text} ];
+		[self presentError:error flash:NO];
+	} else {
+		// driving through a tunnel or something
+		NSString * text = NSLocalizedString(@"Location unavailable",nil);
+		error = [NSError errorWithDomain:@"Location" code:100 userInfo:@{ NSLocalizedDescriptionKey : text} ];
+		[self presentError:error flash:YES];
 	}
-	[self presentError:error flash:NO];
 }
 
 
