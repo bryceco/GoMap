@@ -279,7 +279,10 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 {
 	return [NSString stringWithFormat:@"%.3f.track", self.creationDate.timeIntervalSince1970];
 }
-
+-(NSString *)name
+{
+	return _name ?: [self fileName];
+}
 
 -(NSTimeInterval)duration
 {
@@ -351,6 +354,12 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		// observe changes to geometry
 		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 
+		_uploadedTracks = [[NSUserDefaults standardUserDefaults] objectForKey:@"GpxUploads"];
+		if ( _uploadedTracks )
+			_uploadedTracks = [_uploadedTracks mutableCopy];
+		else
+			_uploadedTracks = [NSMutableDictionary new];
+
 		[self setNeedsLayout];
 	}
 	return self;
@@ -418,8 +427,18 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[_previousTracks removeObject:track];
 	[track.shapeLayer removeFromSuperlayer];
 	[self setNeedsLayout];
+
+	if ( _uploadedTracks[track.name] ) {
+		[self.uploadedTracks removeObjectForKey:track.name];
+		[[NSUserDefaults standardUserDefaults] setObject:_uploadedTracks forKey:@"GpxUploads"];
+	}
 }
 
+-(void)markTrackUploaded:(GpxTrack *)track
+{
+	_uploadedTracks[track.name] = @YES;
+	[[NSUserDefaults standardUserDefaults] setObject:_uploadedTracks forKey:@"GpxUploads"];
+}
 
 -(void)trimTracksOlderThan:(NSDate *)date
 {

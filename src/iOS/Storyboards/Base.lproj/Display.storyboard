@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -100,6 +100,7 @@
                                     <outlet property="details" destination="h1O-06-ApF" id="dru-3F-5j2"/>
                                     <outlet property="duration" destination="EHa-L5-Hcz" id="FAx-mQ-aho"/>
                                     <outlet property="startDate" destination="v6h-g5-fka" id="jwm-cN-wh6"/>
+                                    <outlet property="uploadButton" destination="EEr-ao-8x1" id="jMP-Er-ykz"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GpxTrackExpirationCell" id="7Mm-nQ-f8R" customClass="GpxTrackExpirationCell">
@@ -1490,10 +1491,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             <point key="canvasLocation" x="-4116" y="558"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="702-share.png" width="21" height="28"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="KuK-gp-RBs"/>
     </inferredMetricsTieBreakers>
+    <resources>
+        <image name="702-share.png" width="21" height="28"/>
+    </resources>
 </document>

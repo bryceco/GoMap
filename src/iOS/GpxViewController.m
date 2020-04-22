@@ -27,6 +27,7 @@
 @property (assign,nonatomic)	IBOutlet	UILabel				*	startDate;
 @property (assign,nonatomic)	IBOutlet	UILabel				*	duration;
 @property (assign,nonatomic)	IBOutlet	UILabel				*	details;
+@property (assign,nonatomic)	IBOutlet	UIButton			*	uploadButton;
 @property (strong,nonatomic)				GpxTrack			*	gpxTrack;
 @property (assign,nonatomic)				GpxViewController	*	tableView;
 @end
@@ -242,6 +243,14 @@
 	cell.details.text = meters;
 	cell.gpxTrack = track;
 	cell.tableView = self;
+	if ( gpxLayer.uploadedTracks[track.name] ) {
+		[cell.uploadButton setImage:nil forState:UIControlStateNormal];
+		[cell.uploadButton setTitle:@"\u2714" forState:UIControlStateNormal];
+	} else {
+		UIImage * image = [UIImage imageNamed:@"702-share"];
+		[cell.uploadButton setImage:image forState:UIControlStateNormal];
+		[cell.uploadButton setTitle:nil forState:UIControlStateNormal];
+	}
 	return cell;
 }
 
@@ -345,8 +354,6 @@
 		auth = [NSString stringWithFormat:@"Basic %@", auth];
 		[request setValue:auth forHTTPHeaderField:@"Authorization"];
 
-//		DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
-
 		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[progress dismissViewControllerAnimated:YES completion:nil];
@@ -357,6 +364,12 @@
 					UIAlertController * success = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Complete",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
 					[success addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 					[self presentViewController:success animated:YES completion:nil];
+
+					// mark track as uploaded in UI
+					GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+					[gpxLayer markTrackUploaded:track];
+					[self.tableView reloadData];
+
 				} else {
 					DLog(@"response = %@\n",response);
 					DLog(@"data = %s", (char *)data.bytes);
