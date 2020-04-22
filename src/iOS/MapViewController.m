@@ -97,20 +97,27 @@
 	}
 }
 
+-(void)addNodeQuick:(UILongPressGestureRecognizer *)recognizer
+{
+	if ( recognizer.state == UIGestureRecognizerStateBegan ) {
+		NSLog(@"go");
+	}
+}
+
+- (void)installGestureRecognizer:(UIGestureRecognizer *)gesture onBarButtonItem:(UIBarButtonItem *)button
+{
+	if ( [button respondsToSelector:@selector(view)] ) {
+		UIView * view = [(id)button view];
+		if ( view.gestureRecognizers.count == 0 ) {
+			[view addGestureRecognizer:gesture];
+		}
+	}
+}
 
 - (void)installLocationLongPressGestureRecognizer:(BOOL)install
 {
-	if ( [self.locationButton respondsToSelector:@selector(view)] ) {
-		UIView * view = [(id)self.locationButton view];
-		if ( install ) {
-			if ( view.gestureRecognizers.count == 0 ) {
-				UILongPressGestureRecognizer * gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(search:)];
-				[view addGestureRecognizer:gesture];
-			}
-		} else {
-			view.gestureRecognizers = nil;
-		}
-	}
+	UILongPressGestureRecognizer * gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(search:)];
+	[self installGestureRecognizer:gesture onBarButtonItem:self.locationButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,6 +137,8 @@
 	CGRect rc = self.view.bounds;
 	self.mapView.frame = rc;
 	[self.mapView viewDidAppear];
+
+	// install long-press gesture recognizers
 	[self installLocationLongPressGestureRecognizer:YES];
 
 	_toolbar.layer.zPosition = 9000;
