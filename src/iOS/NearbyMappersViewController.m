@@ -33,6 +33,21 @@
 	}];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	if ( _mappers.count == 0 ) {
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"No Data"
+																		message:@"Ensure the editor view is visible and displays objects in the local area"
+																 preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+			[self.navigationController popViewControllerAnimated:YES];
+		}]];
+		[self presentViewController:alert animated:YES completion:^{
+		}];
+	}
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
