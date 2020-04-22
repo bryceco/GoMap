@@ -563,7 +563,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		_previousTracks = [NSMutableArray new];
 
 		NSNumber * expiration = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
-		NSDate * cutoff = [NSDate dateWithTimeIntervalSinceNow:-expiration.doubleValue*24*60*60];
+		NSDate * deleteIfCreatedBefore = expiration.doubleValue == 0 ? [NSDate distantPast] : [NSDate dateWithTimeIntervalSinceNow:-expiration.doubleValue*24*60*60];
 
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
 			NSString * dir = [self saveDirectory];
@@ -575,7 +575,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 				if ( [file hasSuffix:@".track"] ) {
 					NSString * path = [dir stringByAppendingPathComponent:file];
 					GpxTrack * track = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-					if ( [track.creationDate timeIntervalSinceDate:cutoff] < 0 ) {
+					if ( [track.creationDate timeIntervalSinceDate:deleteIfCreatedBefore] < 0 ) {
 						// skip because its too old
 						dispatch_async(dispatch_get_main_queue(), ^{
 							[self deleteTrack:track];
