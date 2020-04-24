@@ -362,10 +362,15 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		OSMPoint minXmaxY = TileToWMSCoords( tileX, tileY, zoom, projection );
 		OSMPoint maxXminY = TileToWMSCoords( tileX+1, tileY+1, zoom, projection );
 		NSString * bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",minXmaxY.x,maxXminY.y,maxXminY.x,minXmaxY.y];
-		[url replaceOccurrencesOfString:@"{width}" withString:@"256" options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{width}"	withString:@"256" options:0 range:NSMakeRange(0, url.length)];
 		[url replaceOccurrencesOfString:@"{height}" withString:@"256" options:0 range:NSMakeRange(0, url.length)];
-		[url replaceOccurrencesOfString:@"{proj}" withString:projection options:0 range:NSMakeRange(0, url.length)];
-		[url replaceOccurrencesOfString:@"{bbox}" withString:bbox options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{proj}" 	withString:projection options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{bbox}" 	withString:bbox options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{wkid}" 	withString:[projection stringByReplacingOccurrencesOfString:@"EPSG:" withString:@""] options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{w}" 		withString:@(minXmaxY.x).stringValue options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{s}" 		withString:@(maxXminY.y).stringValue options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{n}" 		withString:@(maxXminY.x).stringValue options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{e}" 		withString:@(minXmaxY.y).stringValue options:0 range:NSMakeRange(0, url.length)];
 
 	} else {
 		// TMS
