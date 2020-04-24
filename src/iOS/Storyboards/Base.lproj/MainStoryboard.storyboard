@@ -481,7 +481,7 @@
                         <viewLayoutGuide key="safeArea" id="gog-wr-wAd"/>
                     </view>
                     <navigationItem key="navigationItem" title="Note" id="MBY-TK-Wuy">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="cancel" id="uMQ-Rj-wEm">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="uMQ-Rj-wEm">
                             <connections>
                                 <action selector="done:" destination="S30-cU-QcE" id="85d-qs-S5A"/>
                             </connections>
@@ -575,7 +575,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="Pk8-tA-qKi">
-                            <rect key="frame" x="0.0" y="0.0" width="226" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <items>
                                 <navigationItem title="Upload" id="7Ua-cx-BHI">
