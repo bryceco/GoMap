@@ -828,15 +828,17 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		__block double totalScore = 0;
 #if USE_SUGGESTIONS
 		NSArray<NSString *> * a = dict[@"countryCodes"];
-		BOOL found = NO;
-		for ( NSString * s in a ) {
-			if ( [countryCode isEqualToString:s] ) {
-				found = YES;
-				break;
+		if ( a.count > 0 ) {
+			BOOL found = NO;
+			for ( NSString * s in a ) {
+				if ( [countryCode isEqualToString:s] ) {
+					found = YES;
+					break;
+				}
 			}
+			if ( !found )
+				return;
 		}
-		if ( !found )
-			return;
 #else
 
 		id suggestion = dict[@"suggestion"];
