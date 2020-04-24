@@ -26,14 +26,14 @@ const int UITextAutocapitalizationTypeSentences = 1;
 const int UITextAutocapitalizationTypeWords		= 2;
 #endif
 
-static NSDictionary * g_addressFormatsDict;
-static NSDictionary * g_defaultsDict;
-static NSDictionary * g_categoriesDict;
-static NSDictionary * g_presetsDict;
-static NSDictionary * g_fieldsDict;
-static NSDictionary * g_translationDict;
-static NSMutableDictionary 	* g_taginfoCache;
-static NSMutableDictionary 	* g_FeatureRepository;
+static NSDictionary<NSString *,NSDictionary *> 				* g_addressFormatsDict;
+static NSDictionary<NSString *,NSArray *> 					* g_defaultsDict;
+static NSDictionary<NSString *,NSDictionary *> 				* g_categoriesDict;
+static NSDictionary<NSString *,NSDictionary *> 				* g_presetsDict;
+static NSDictionary<NSString *,NSDictionary *> 				* g_fieldsDict;
+static NSDictionary<NSString *,NSDictionary *> 				* g_translationDict;
+static NSMutableDictionary<NSString *,NSMutableArray *> 	* g_taginfoCache;
+static NSMutableDictionary<NSString *,CommonTagFeature *> 	* g_FeatureRepository;
 
 static NSDictionary * DictionaryForFile( NSString * file )
 {
@@ -390,7 +390,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 +(NSArray *)featuresInCategory:(CommonTagCategory *)category matching:(NSString *)searchText;
 {
-	NSMutableArray * list = [NSMutableArray new];
+	NSMutableArray<CommonTagFeature *> * list = [NSMutableArray new];
 	if ( category ) {
 		for ( CommonTagFeature * tag in category.members ) {
 			if ( [tag matchesSearchText:searchText] ) {
@@ -402,15 +402,17 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
 #if USE_SUGGESTIONS
 			NSArray<NSString *> * a = dict[@"countryCodes"];
-			BOOL found = NO;
-			for ( NSString * s in a ) {
-				if ( [countryCode isEqualToString:s] ) {
-					found = YES;
-					break;
+			if ( a.count > 0 ) {
+				BOOL found = NO;
+				for ( NSString * s in a ) {
+					if ( [countryCode isEqualToString:s] ) {
+						found = YES;
+						break;
+					}
 				}
+				if ( !found )
+					return;
 			}
-			if ( !found )
-				return;
 #else
 			if ( dict[@"suggestion"] )
 				return;
@@ -440,6 +442,22 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			}
 		}];
 	}
+	// sort so that regular items come before suggestions
+	[list sortUsingComparator:^NSComparisonResult(CommonTagFeature * obj1, CommonTagFeature * obj2) {
+		NSString * name1 = obj1.friendlyName;
+		NSString * name2 = obj2.friendlyName;
+#if USE_SUGGESTIONS
+		int diff = obj1.suggestion - obj2.suggestion;
+		if ( diff )
+			return diff;
+#endif
+		// prefer exact matches of primary name over alternate terms
+		BOOL p1 = [name1 hasPrefix:searchText];
+		BOOL p2 = [name2 hasPrefix:searchText];
+		if ( p1 != p2 )
+			return p2 - p1;
+ 		return [name1 compare:name2];
+	}];
 	return list;
 }
 
@@ -1274,6 +1292,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 	return self;
 }
+-(NSString *)description
+{
+	return self.friendlyName;
+}
 
 -(NSString	*)friendlyName
 {
@@ -1296,8 +1318,23 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 -(NSString *)summary
 {
+	NSString * feature = _featureName;
+	for (;;) {
+		NSRange slash = [feature rangeOfString:@"/" options:NSBackwardsSearch];
+		if ( slash.length == 0 )
+			break;
+		feature = [feature substringToIndex:slash.location];
+		NSDictionary * p = g_presetsDict[feature];
+		NSString * s = p[@"name"];
+		if ( s )
+			return s;
+	}
+
 	TagInfo * tagInfo = [self tagInfo];
-	return tagInfo.summary;
+	if ( tagInfo.summary )
+		return tagInfo.summary;
+
+	return nil;
 }
 
 

@@ -231,13 +231,6 @@ static NSInteger			mostRecentMaximum;
 	} else {
 		// searching
 		_searchArrayAll = [[CommonTagList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
-		_searchArrayAll = [_searchArrayAll sortedArrayUsingComparator:^NSComparisonResult(CommonTagFeature * t1, CommonTagFeature * t2) {
-			BOOL p1 = [t1.friendlyName hasPrefix:searchText];
-			BOOL p2 = [t2.friendlyName hasPrefix:searchText];
-			if ( p1 != p2 )
-				return p2 - p1;
-			return [t1.friendlyName compare:t2.friendlyName];
-		}];
 
 		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonTagFeature * tagInfo, NSDictionary *bindings) {
 			return [tagInfo matchesSearchText:searchText];
