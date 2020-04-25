@@ -3032,7 +3032,8 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		
 		if ( _editorLayer.selectedWay && _editorLayer.selectedNode ) {
 			// already editing a way so try to extend it
-			if ( offscreenWarning() )
+			NSInteger index = [_editorLayer.selectedWay.nodes indexOfObject:_editorLayer.selectedNode];
+			if ( (_editorLayer.selectedWay.isClosed || !(index == 0 || index == _editorLayer.selectedWay.nodes.count-1)) && offscreenWarning() )
 				return;
 			[self extendSelectedWayToPoint:dropPoint];
 		} else if ( _editorLayer.selectedPrimary == nil && _pushpinView ) {
