@@ -160,7 +160,9 @@
 		}
 	};
 
-	NSString * imagery = appDelegate.mapView.aerialLayer.aerialService.name;
+	NSString * imagery = nil;
+	if ( appDelegate.mapView.viewState == MAPVIEW_EDITORAERIAL || appDelegate.mapView.viewState == MAPVIEW_AERIAL )
+		imagery = appDelegate.mapView.aerialLayer.aerialService.name;
 
 	if ( _xmlTextView.editable ) {
 		
