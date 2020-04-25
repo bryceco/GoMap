@@ -125,6 +125,15 @@
 	[super viewWillDisappear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	if ( _tags.count == 0 && _members.count == 0 ) {
+		// if there are no tags then start editing the first one
+		[self addTagCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+	}
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -407,12 +416,8 @@
 
 #pragma mark - Table view delegate
 
-- (void)addTagCell:(id)sender
+- (void)addTagCellAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell * cell = sender;	// starts out as UIButton
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
-		cell = (id)[cell superview];
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
 	if ( indexPath.section == 0 ) {
 		[_tags addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
 	} else if ( indexPath.section == 2 ) {
@@ -425,6 +430,15 @@
 	// set new cell to show keyboard
 	TextPair * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
 	[newCell.text1 becomeFirstResponder];
+}
+
+- (void)addTagCell:(id)sender
+{
+	UITableViewCell * cell = sender;	// starts out as UIButton
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
+		cell = (id)[cell superview];
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	[self addTagCellAtIndexPath:indexPath];
 }
 
 -(IBAction)cancel:(id)sender
