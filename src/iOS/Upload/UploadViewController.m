@@ -30,9 +30,9 @@
     [super viewDidLoad];
 
 	UIColor * color = [UIColor.grayColor colorWithAlphaComponent:0.5];
-	_commentTextView.layer.borderColor = color.CGColor;
-	_commentTextView.layer.borderWidth = 2.0;
-	_commentTextView.layer.cornerRadius = 10.0;
+	_commentContainerView.layer.borderColor = color.CGColor;
+	_commentContainerView.layer.borderWidth = 2.0;
+	_commentContainerView.layer.cornerRadius = 10.0;
 
 	_sourceTextField.layer.borderColor = color.CGColor;
 	_sourceTextField.layer.borderWidth = 2.0;
@@ -68,6 +68,8 @@
 
 	_sendMailButton.enabled = (text != nil);
 	_editXmlButton.enabled = (text != nil);
+
+	_clearCommentButton.hidden = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -84,6 +86,13 @@
 		return NO;
 	}
 	return YES;
+}
+
+
+- (IBAction)clearCommentText:(id)sender
+{
+	_commentTextView.text = @"";
+	_clearCommentButton.hidden = YES;
 }
 
 
@@ -229,6 +238,26 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(void)textViewDidChange:(UITextView *)textView
+{
+	if ( textView == _commentTextView ) {
+		_clearCommentButton.hidden  = _commentTextView.text.length == 0;
+	}
+}
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+	if ( textView == _commentTextView ) {
+		_clearCommentButton.hidden  = _commentTextView.text.length == 0;
+	}
+}
+-(void)textViewDidEndEditing:(UITextView *)textView
+{
+	if ( textView == _commentTextView ) {
+		_clearCommentButton.hidden  = YES;
+	}
+}
+
+// this is for navigating from the changeset back to the location of the modified object
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
 {
 	AppDelegate	*	appDelegate = AppDelegate.getAppDelegate;

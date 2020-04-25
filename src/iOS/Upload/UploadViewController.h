@@ -13,6 +13,7 @@
 @interface UploadViewController : UIViewController <UITextViewDelegate,MFMailComposeViewControllerDelegate,UIAlertViewDelegate>
 {
 	OsmMapData							*	_mapData;
+	IBOutlet UIView						*	_commentContainerView;
 	IBOutlet UITextView					*	_xmlTextView;
 	IBOutlet UITextView					*	_commentTextView;
 	IBOutlet UITextField				*	_sourceTextField;
@@ -21,6 +22,7 @@
 	IBOutlet UIActivityIndicatorView	*	_progressView;
 	IBOutlet UIButton					*	_sendMailButton;
 	IBOutlet UIButton					*	_editXmlButton;
+	IBOutlet UIButton					*	_clearCommentButton;
 }
 -(IBAction)editXml:(id)sender;
 -(IBAction)sendMail:(id)sender;
