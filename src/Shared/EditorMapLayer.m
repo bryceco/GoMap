@@ -2978,10 +2978,13 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 			action = [_mapData canDeleteNode:_selectedNode error:error];
 		}
 		if ( action ) {
+			OsmWay * way = _selectedWay;
 			return ^{
 				// deselect node after we've removed it from ways
 				action();
 				[self setSelectedNode:nil];
+				if ( way.deleted )
+					[self setSelectedWay:nil];
 				[self setNeedsLayout];
 			};
 		}

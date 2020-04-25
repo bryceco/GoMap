@@ -256,6 +256,8 @@ const CGFloat kEditControlCornerRadius = 4;
 			_editorLayer.selectedRelation 	= context[ @"selectedRelation" ];
 			_editorLayer.selectedWay 		= context[ @"selectedWay" ];
 			_editorLayer.selectedNode		= context[ @"selectedNode" ];
+			if ( _editorLayer.selectedNode.deleted )
+				_editorLayer.selectedNode = nil;
 
 			NSString * pushpin = context[@"pushpin"];
 			if ( pushpin && _editorLayer.selectedPrimary ) {
