@@ -104,10 +104,12 @@ static void InitializeDictionaries()
 		g_translationDict	= DictionaryForFile(file);
 		g_translationDict	= g_translationDict[ code2 ][ @"presets" ];
 
+#ifndef __clang_analyzer__	// this confuses the analyzer because it doesn't know that top-level return values are always NSDictionary
 		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[@"defaults"] );
 		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[@"categories"] );
 		g_presetsDict		= Translate( g_presetsDict,		g_translationDict[@"presets"] );
 		g_fieldsDict		= Translate( g_fieldsDict,		g_translationDict[@"fields"] );
+#endif
 	}
 }
 

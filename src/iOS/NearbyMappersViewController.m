@@ -37,10 +37,10 @@
 {
 	[super viewDidAppear:animated];
 	if ( _mappers.count == 0 ) {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"No Data"
-																		message:@"Ensure the editor view is visible and displays objects in the local area"
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"No Data",nil)
+																		message:NSLocalizedString(@"Ensure the editor view is visible and displays objects in the local area",nil)
 																 preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 			[self.navigationController popViewControllerAnimated:YES];
 		}]];
 		[self presentViewController:alert animated:YES completion:^{

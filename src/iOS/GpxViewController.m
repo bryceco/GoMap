@@ -108,7 +108,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-	[super viewWillAppear:animated];
+	[super viewDidAppear:animated];
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	if ( appDelegate.mapView.gpxLayer.activeTrack ) {
