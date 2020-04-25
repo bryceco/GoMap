@@ -127,6 +127,13 @@
 		[self updatePresets];
 	}
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+	[self resignAll];
+	[super viewWillDisappear:animated];
+	_selectedFeature = nil;
+	_childPushed = YES;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -134,7 +141,7 @@
     if (![self isMovingToParentViewController]) {
         // special case: if this is a new object and the user just selected the feature to be shop/amenity,
         // then automatically select the Name field as the first responder
-        POITabBarController * tabController = (id)self.tabBarController;
+		POITabBarController * tabController = (id)self.tabBarController;
         if ( tabController.isTagDictChanged ) {
             NSDictionary * dict = tabController.keyValueDict;
             if ( dict.count == 1 && (dict[@"shop"] || dict[@"amenity"]) && dict[@"name"] == nil ) {
@@ -147,15 +154,11 @@
                     }
                 });
             }
-        }
-    }
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-	[self resignAll];
-	[super viewWillDisappear:animated];
-	_selectedFeature = nil;
+		} else if ( !_childPushed && tabController.keyValueDict.count == 0 ) {
+			// if we're being displayed for a newly created node then go straight to the Type picker
+			[self performSegueWithIdentifier:@"POITypeSegue" sender:nil];
+		}
+	}
 }
 
 -(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonTagFeature *)feature

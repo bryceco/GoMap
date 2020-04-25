@@ -19,6 +19,7 @@
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	BOOL							_keyboardShowing;
 	CommonTagFeature			*	_selectedFeature;	// the feature selected by the user, not derived from tags (e.g. Address)
+	BOOL							_childPushed;
 }
 @property (nonatomic) 	CommonTagGroup	*	drillDownGroup;
 
