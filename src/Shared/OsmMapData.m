@@ -407,13 +407,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 static NSString * StringTruncatedTo255( NSString * s )
 {
 	if ( s.length > 255 )
-		s = [s substringToIndex:256];
-#if 0
-	// only necessary if we're truncating to 256 UTF-8 characters, which it turns out is unnecessary
-	while ( [s lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > 255 ) {
-		s = [s substringToIndex:s.length-1];
-	}
-#endif
+		s = [s substringToIndex:255];
 	return s;
 }
 static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
