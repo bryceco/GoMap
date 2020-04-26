@@ -1723,9 +1723,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 }
 
 
-- (CALayer *)directionShapeLayerForNode:(OsmNode *)node withDirection:(NSInteger)direction
+- (CALayer *)directionShapeLayerForNode:(OsmNode *)node withDirection:(NSRange)direction
 {
-    CGFloat heading = direction - 90;
+	CGFloat heading = direction.location - 90.0;
+	if ( direction.length )
+		heading += direction.length/2;
 
     CAShapeLayer *layer = [CAShapeLayer layer];
 
@@ -1741,7 +1743,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     layer.affineTransform = CGAffineTransformMakeRotation(screenAngle);
 
     CGFloat radius = 30.0;
-    CGFloat fieldOfViewRadius = 55;
+	CGFloat fieldOfViewRadius = direction.length ?: 55;
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddArc(path,
                  NULL,
@@ -1774,7 +1776,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	OSMPoint p2 = MapPointForLatitudeLongitude(nextNode.lat, nextNode.lon);
 	double angle = atan2(p2.y-p1.y,p2.x-p1.x);
 	NSInteger direction = 90 + (int)round(angle * 180/M_PI);	// convert to north-facing clockwise direction
-	return [self directionShapeLayerForNode:node withDirection:direction];
+	return [self directionShapeLayerForNode:node withDirection:NSMakeRange(direction,0)];
 }
 
 /**
@@ -1785,8 +1787,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
  */
 - (NSArray<CALayer *> *)directionShapeLayersWithNode:(OsmNode *)node
 {
-    NSInteger direction = node.direction;
-    if (direction != NSNotFound) {
+    NSRange direction = node.direction;
+	if (direction.location != NSNotFound) {
 		return @[ [self directionShapeLayerForNode:node withDirection:direction] ];
 	}
 
