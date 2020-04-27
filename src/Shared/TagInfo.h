@@ -12,7 +12,6 @@
 
 @interface TagInfo : NSObject
 {
-	CGImageRef	_cgIcon;
 	NSInteger	_renderSize;
 }
 @property (strong,nonatomic)	NSString	*	key;
