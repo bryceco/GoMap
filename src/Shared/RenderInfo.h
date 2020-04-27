@@ -18,10 +18,8 @@
 @property (strong,nonatomic)	NSString	*	value;
 @property (strong,nonatomic)	NSString	*	geometry;
 @property (strong,nonatomic)	NSColor		*	lineColor;
-@property (assign,nonatomic)	NSString	*	lineColorText;
 @property (assign,nonatomic)	CGFloat			lineWidth;
 @property (strong,nonatomic)	NSColor		*	areaColor;
-@property (assign,nonatomic)	NSString	*	areaColorText;
 
 -(BOOL)isAddressPoint;
 

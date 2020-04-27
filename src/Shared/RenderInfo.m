@@ -27,9 +27,7 @@ static RenderInfo * g_DefaultRender = nil;
 	copy.geometry		= self.geometry;
 	copy.lineColor		= self.lineColor;
 	copy.lineWidth		= self.lineWidth;
-	copy.lineColorText	= self.lineColorText;
 	copy.areaColor		= self.areaColor;
-	copy.areaColorText	= self.areaColorText;
 	return copy;
 }
 
@@ -56,7 +54,6 @@ static RenderInfo * g_DefaultRender = nil;
 	return [NSColor colorWithCalibratedRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 #endif
 }
-
 
 
 -(NSInteger)renderPriority:(OsmBaseObject *)object
