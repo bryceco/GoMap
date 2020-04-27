@@ -12,14 +12,12 @@
 
 @interface TagInfo : NSObject
 {
-	NSImage *	_icon;
 	CGImageRef	_cgIcon;
 	NSInteger	_renderSize;
 }
 @property (strong,nonatomic)	NSString	*	key;
 @property (strong,nonatomic)	NSString	*	value;
 @property (strong,nonatomic)	NSString	*	type;
-@property (strong,nonatomic)	NSString	*	iconName;
 @property (strong,nonatomic)	NSColor		*	lineColor;
 @property (assign,nonatomic)	NSString	*	lineColorText;
 @property (assign,nonatomic)	CGFloat			lineWidth;

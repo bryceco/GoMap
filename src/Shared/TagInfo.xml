@@ -10,12 +10,12 @@
 	<tag key="aerialway" value="pylon" type="way" areaColor="663300"/>
 	<tag key="aerialway" value="station" type="way" areaColor="663300"/>
 
-	<tag key="aeroway" value="aerodrome" type="node;area" iconName="transport_aerodrome2" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
-	<tag key="aeroway" value="airport" iconName="transport_airport"/>
+	<tag key="aeroway" value="aerodrome" type="node;area" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
+	<tag key="aeroway" value="airport"/>
 	<tag key="aeroway" value="apron" areaColor="990000"/>
-	<tag key="aeroway" value="gate" iconName="transport_airport_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Key:aeroway"/>
+	<tag key="aeroway" value="gate" wikiPage="https://wiki.openstreetmap.org/wiki/Key:aeroway"/>
 	<tag key="aeroway" value="hangar" areaColor="990000"/>
-	<tag key="aeroway" value="helipad" iconName="transport_helicopter_pad" areaColor="330000"/>
+	<tag key="aeroway" value="helipad" areaColor="330000"/>
 	<tag key="aeroway" value="navigationaid"/>
 	<tag key="aeroway" value="runway" lineColor="330000" lineWidth="3.000000"/>
 	<tag key="aeroway" value="taxiway" lineColor="660000" lineWidth="2.000000"/>
@@ -31,103 +31,103 @@
 	<tag key="amenity" value="animal_shelter" type="node;area"/>
 	<tag key="amenity" value="architect_office" type="node;area"/>
 	<tag key="amenity" value="arts_centre" type="node;area" />
-	<tag key="amenity" value="atm" type="node;area" iconName="money_atm" />
+	<tag key="amenity" value="atm" type="node;area" />
 	<tag key="amenity" value="audiologist" type="node;area"/>
 	<tag key="amenity" value="baby_hatch" type="node;area" areaColor="EEEEEE"/>
-	<tag key="amenity" value="bank" type="node;area" iconName="money_bank2" />
-	<tag key="amenity" value="bar" type="node;area" iconName="food_bar" areaColor="ECBA52"/>
-	<tag key="amenity" value="bbq" type="node;area" iconName="tourist_picnic" />
-	<tag key="amenity" value="bench" type="node;area" iconName="amenity_bench" lineColor="F7EFB7"/>
-	<tag key="amenity" value="bicycle_parking" type="node;area" iconName="transport_parking_bicycle" />
-	<tag key="amenity" value="bicycle_rental" type="node;area" iconName="transport_rental_bicycle" />
-	<tag key="amenity" value="biergarten" type="node;area" iconName="food_biergarten" areaColor="ECBA52"/>
+	<tag key="amenity" value="bank" type="node;area" />
+	<tag key="amenity" value="bar" type="node;area" areaColor="ECBA52"/>
+	<tag key="amenity" value="bbq" type="node;area" />
+	<tag key="amenity" value="bench" type="node;area" lineColor="F7EFB7"/>
+	<tag key="amenity" value="bicycle_parking" type="node;area" />
+	<tag key="amenity" value="bicycle_rental" type="node;area" />
+	<tag key="amenity" value="biergarten" type="node;area" areaColor="ECBA52"/>
 	<tag key="amenity" value="bikeshed" type="node;area"/>
 	<tag key="amenity" value="boat_storage" type="node;area"/>
 	<tag key="amenity" value="brothel" type="node;area" areaColor="ECBA52"/>
-	<tag key="amenity" value="bureau_de_change" type="node;area" iconName="money_currency_exchange" />
-	<tag key="amenity" value="bus_station" type="node;area" iconName="transport_bus_station" />
-	<tag key="amenity" value="cafe" type="node;area" iconName="food_cafe" areaColor="ECBA52"/>
-	<tag key="amenity" value="car_rental" type="node;area" iconName="transport_rental_car" />
+	<tag key="amenity" value="bureau_de_change" type="node;area" />
+	<tag key="amenity" value="bus_station" type="node;area" />
+	<tag key="amenity" value="cafe" type="node;area" areaColor="ECBA52"/>
+	<tag key="amenity" value="car_rental" type="node;area" />
 	<tag key="amenity" value="car_sharing" type="node;area" />
-	<tag key="amenity" value="car_wash" type="node;area" iconName="transport_car_wash" />
-	<tag key="amenity" value="casino" type="node;area" iconName="tourist_casino"/>
+	<tag key="amenity" value="car_wash" type="node;area" />
+	<tag key="amenity" value="casino" type="node;area"/>
 	<tag key="amenity" value="charging_station" type="node;area"/>
-	<tag key="amenity" value="cinema" type="node;area" iconName="tourist_cinema" />
-	<tag key="amenity" value="clinic" type="node;area" iconName="health_doctors"/>
-	<tag key="amenity" value="clock" type="node;area" iconName="tourist_clock"/>
+	<tag key="amenity" value="cinema" type="node;area" />
+	<tag key="amenity" value="clinic" type="node;area"/>
+	<tag key="amenity" value="clock" type="node;area"/>
 	<tag key="amenity" value="coast_guard" type="node;area"/>
 	<tag key="amenity" value="coast_radar_station" type="node;area"/>
-	<tag key="amenity" value="college" type="node;area" iconName="education_university" />
+	<tag key="amenity" value="college" type="node;area" />
 	<tag key="amenity" value="community_centre" type="node;area" />
 	<tag key="amenity" value="compressed_air" type="node;area"/>
-	<tag key="amenity" value="courthouse" type="node;area" iconName="amenity_court" />
+	<tag key="amenity" value="courthouse" type="node;area" />
 	<tag key="amenity" value="crematorium" type="node;area" />
 	<tag key="amenity" value="crematory" type="node;area"/>
 	<tag key="amenity" value="crucifix" type="node;area"/>
 	<tag key="amenity" value="crypt" type="node;area"/>
 	<tag key="amenity" value="customs" type="node;area"/>
-	<tag key="amenity" value="dentist" type="node;area" iconName="health_dentist" areaColor="EEEEEE"/>
-	<tag key="amenity" value="doctors" type="node;area" iconName="health_doctors2"/>
+	<tag key="amenity" value="dentist" type="node;area" areaColor="EEEEEE"/>
+	<tag key="amenity" value="doctors" type="node;area"/>
 	<tag key="amenity" value="dojo" type="node;area"/>
-	<tag key="amenity" value="drinking_water" type="node;area" iconName="food_drinkingtap" areaColor="00005F"/>
+	<tag key="amenity" value="drinking_water" type="node;area" areaColor="00005F"/>
 	<tag key="amenity" value="driving_school" type="node;area" />
-	<tag key="amenity" value="embassy" type="node;area" iconName="poi_embassy" />
-	<tag key="amenity" value="emergency_phone" type="node;area" iconName="transport_emergency_phone" />
+	<tag key="amenity" value="embassy" type="node;area" />
+	<tag key="amenity" value="emergency_phone" type="node;area" />
 	<tag key="amenity" value="ev_charging" type="node;area"/>
-	<tag key="amenity" value="fast_food" type="node;area" iconName="food_fastfood" areaColor="ECBA52"/>
+	<tag key="amenity" value="fast_food" type="node;area" areaColor="ECBA52"/>
 	<tag key="amenity" value="feeding_place" type="node;area"/>
-	<tag key="amenity" value="ferry_terminal" type="node;area" iconName="transport_port" />
+	<tag key="amenity" value="ferry_terminal" type="node;area" />
 	<tag key="amenity" value="festival_grounds" type="node;area"/>
 	<tag key="amenity" value="fire_hydrant" type="node;area"/>
-	<tag key="amenity" value="fire_station" type="node;area" iconName="amenity_firestation2" />
+	<tag key="amenity" value="fire_station" type="node;area" />
 	<tag key="amenity" value="fitness_station" type="node;area"/>
 	<tag key="amenity" value="food_court" type="node;area" areaColor="ECBA52"/>
-	<tag key="amenity" value="fountain" type="node;area" iconName="amenity_fountain2" areaColor="00005F"/>
-	<tag key="amenity" value="fuel" type="node;area" iconName="transport_fuel" />
+	<tag key="amenity" value="fountain" type="node;area" areaColor="00005F"/>
+	<tag key="amenity" value="fuel" type="node;area" />
 	<tag key="amenity" value="game_feeding" type="node;area"/>
-	<tag key="amenity" value="grave_yard" type="node;area" iconName="place_of_worship_unknown3" />
+	<tag key="amenity" value="grave_yard" type="node;area" />
 	<tag key="amenity" value="grit_bin" type="node;area"/>
 	<tag key="amenity" value="harbourmaster" type="node;area"/>
-	<tag key="amenity" value="hospital" type="node;area" iconName="health_hospital" areaColor="EEEEEE"/>
-	<tag key="amenity" value="hunting_stand" type="node;area" iconName="sport_shooting" />
-	<tag key="amenity" value="ice_cream" type="node;area" iconName="food_ice_cream" areaColor="ECBA52"/>
+	<tag key="amenity" value="hospital" type="node;area" areaColor="EEEEEE"/>
+	<tag key="amenity" value="hunting_stand" type="node;area" />
+	<tag key="amenity" value="ice_cream" type="node;area" areaColor="ECBA52"/>
 	<tag key="amenity" value="jail" type="node;area"/>
-	<tag key="amenity" value="kindergarten" type="node;area" iconName="education_nursery3" />
+	<tag key="amenity" value="kindergarten" type="node;area" />
 	<tag key="amenity" value="kiosk" type="node;area"/>
 	<tag key="amenity" value="kneipp_water_cure" type="node;area"/>
-	<tag key="amenity" value="library" type="node;area" iconName="amenity_library" />
+	<tag key="amenity" value="library" type="node;area" />
 	<tag key="amenity" value="life_ring" type="node;area"/>
 	<tag key="amenity" value="lifeboat_station" type="node;area"/>
 	<tag key="amenity" value="love_hotel" type="node;area"/>
-	<tag key="amenity" value="marketplace" type="node;area" iconName="shopping_marketplace" />
+	<tag key="amenity" value="marketplace" type="node;area" />
 	<tag key="amenity" value="milk_dispenser" type="node;area"/>
 	<tag key="amenity" value="monastery" type="node;area"/>
 	<tag key="amenity" value="nightclub" type="node;area" areaColor="ECBA52"/>
 	<tag key="amenity" value="nursing_home" type="node;area"/>
-	<tag key="amenity" value="parking" type="node;area" iconName="transport_parking_car" />
+	<tag key="amenity" value="parking" type="node;area" />
 	<tag key="amenity" value="parking_entrance" type="node;area"/>
 	<tag key="amenity" value="parking_space" type="node;area"/>
 	<tag key="amenity" value="payment_terminal" type="node;area"/>
-	<tag key="amenity" value="pharmacy" type="node;area" iconName="health_pharmacy" areaColor="EEEEEE"/>
-	<tag key="amenity" value="place_of_worship" type="node;area" iconName="place_of_worship_unknown" />
-	<tag key="amenity" value="police" type="node;area" iconName="amenity_police2" />
-	<tag key="amenity" value="post_box" type="node;area" iconName="amenity_post_box" />
-	<tag key="amenity" value="post_office" type="node;area" iconName="amenity_post_office" />
+	<tag key="amenity" value="pharmacy" type="node;area" areaColor="EEEEEE"/>
+	<tag key="amenity" value="place_of_worship" type="node;area" />
+	<tag key="amenity" value="police" type="node;area" />
+	<tag key="amenity" value="post_box" type="node;area" />
+	<tag key="amenity" value="post_office" type="node;area" />
 	<tag key="amenity" value="prison" type="node;area" />
-	<tag key="amenity" value="pub" type="node;area" iconName="food_pub" areaColor="ECBA52"/>
+	<tag key="amenity" value="pub" type="node;area" areaColor="ECBA52"/>
 	<tag key="amenity" value="public_bath" type="node;area"/>
-	<tag key="amenity" value="public_building" type="node;area" iconName="amenity_public_building2" />
-	<tag key="amenity" value="recycling" type="node;area" iconName="amenity_recycling" />
+	<tag key="amenity" value="public_building" type="node;area" />
+	<tag key="amenity" value="recycling" type="node;area" />
 	<tag key="amenity" value="register_office" type="node;area"/>
 	<tag key="amenity" value="rescue_box" type="node;area"/>
-	<tag key="amenity" value="restaurant" type="node;area" iconName="food_restaurant" areaColor="ECBA52"/>
+	<tag key="amenity" value="restaurant" type="node;area" areaColor="ECBA52"/>
 	<tag key="amenity" value="retirement_home" type="node;area"/>
 	<tag key="amenity" value="sauna" type="node;area"/>
 	<tag key="amenity" value="sceptic_tank" type="node;area"/>
-	<tag key="amenity" value="school" type="node;area" iconName="education_school" />
+	<tag key="amenity" value="school" type="node;area" />
 	<tag key="amenity" value="security_booth" type="node;area"/>
 	<tag key="amenity" value="septic_tank" type="node;area"/>
-	<tag key="amenity" value="shelter" type="node;area" iconName="accommodation_shelter2" />
+	<tag key="amenity" value="shelter" type="node;area" />
 	<tag key="amenity" value="shower" type="node;area"/>
 	<tag key="amenity" value="social_centre" type="node;area"/>
 	<tag key="amenity" value="social_facility" type="node;area"/>
@@ -136,50 +136,50 @@
 	<tag key="amenity" value="studio" type="node;area" />
 	<tag key="amenity" value="swimming_pool" type="node;area"/>
 	<tag key="amenity" value="swingerclub" type="node;area"/>
-	<tag key="amenity" value="taxi" type="node;area" iconName="transport_taxi_rank" />
+	<tag key="amenity" value="taxi" type="node;area" />
 	<tag key="amenity" value="taxi_point" type="node;area"/>
-	<tag key="amenity" value="telephone" type="node;area" iconName="amenity_telephone" />
-	<tag key="amenity" value="theatre" type="node;area" iconName="tourist_theatre" />
-	<tag key="amenity" value="toilets" type="node;area" iconName="amenity_toilets" />
-	<tag key="amenity" value="townhall" type="node;area" iconName="amenity_town_hall" />
+	<tag key="amenity" value="telephone" type="node;area" />
+	<tag key="amenity" value="theatre" type="node;area" />
+	<tag key="amenity" value="toilets" type="node;area" />
+	<tag key="amenity" value="townhall" type="node;area" />
 	<tag key="amenity" value="training" type="node;area"/>
-	<tag key="amenity" value="university" type="node;area" iconName="education_university" />
-	<tag key="amenity" value="vending_machine" type="node;area" iconName="shopping_vending_machine" />
-	<tag key="amenity" value="veterinary" type="node;area" iconName="health_veterinary" areaColor="EEEEEE"/>
-	<tag key="amenity" value="waste_basket" type="node;area" iconName="amenity_waste_bin" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
+	<tag key="amenity" value="university" type="node;area" />
+	<tag key="amenity" value="vending_machine" type="node;area" />
+	<tag key="amenity" value="veterinary" type="node;area" areaColor="EEEEEE"/>
+	<tag key="amenity" value="waste_basket" type="node;area" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
 	<tag key="amenity" value="waste_disposal" type="node;area"/>
 	<tag key="amenity" value="waste_transfer_station" type="node;area"/>
 	<tag key="amenity" value="watering_place" type="node;area"/>
 
-	<tag key="barrier" value="block" type="node_in_way" iconName="barrier_blocks" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="bollard" type="node_in_way" iconName="barrier_bollard" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="block" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="bollard" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="bus_trap" type="node_in_way"/>
-	<tag key="barrier" value="cattle_grid" type="way;node_in_way" iconName="barrier_cattle_grid" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
+	<tag key="barrier" value="cattle_grid" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
 	<tag key="barrier" value="chain" type="way;node_in_way"/>
 	<tag key="barrier" value="chicane" type="node_in_way"/>
 	<tag key="barrier" value="city_wall" type="way;node_in_way" lineColor="F0F050" lineWidth="2.000000"/>
-	<tag key="barrier" value="cycle_barrier" type="way;node_in_way" iconName="barrier_cycle_barrier" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
+	<tag key="barrier" value="cycle_barrier" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
 	<tag key="barrier" value="ditch" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dditch"/>
-	<tag key="barrier" value="entrance" type="node_in_way" iconName="barrier_entrance"/>
+	<tag key="barrier" value="entrance" type="node_in_way"/>
 	<tag key="barrier" value="fence" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="gate" type="node_in_way" iconName="barrier_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
+	<tag key="barrier" value="gate" type="node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
 	<tag key="barrier" value="hedge" type="way;node_in_way" lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
 	<tag key="barrier" value="hedge_bank" type="node_in_way"/>
 	<tag key="barrier" value="horse_stile" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gap" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gate" type="node_in_way"/>
-	<tag key="barrier" value="kissing_gate" type="node_in_way" iconName="barrier_kissing_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
-	<tag key="barrier" value="lift_gate" type="way;node_in_way" iconName="barrier_lift_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
+	<tag key="barrier" value="kissing_gate" type="node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
+	<tag key="barrier" value="lift_gate" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
 	<tag key="barrier" value="motorcycle_barrier" type="way;node_in_way"/>
 	<tag key="barrier" value="retaining_wall" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="sally_port" type="node_in_way"/>
 	<tag key="barrier" value="spikes" type="node_in_way"/>
-	<tag key="barrier" value="stile" type="node_in_way" iconName="barrier_stile" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
+	<tag key="barrier" value="stile" type="node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
 	<tag key="barrier" value="sump_buster" type="node_in_way"/>
-	<tag key="barrier" value="toll_booth" type="node_in_way" iconName="barrier_toll_booth" areaColor="F0F050"/>
+	<tag key="barrier" value="toll_booth" type="node_in_way" areaColor="F0F050"/>
 	<tag key="barrier" value="turnstile" type="node_in_way"/>
 	<tag key="barrier" value="wall" type="way;node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="wire_fence" type="way;node_in_way" iconName="barrier_generic" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwire_fence"/>
+	<tag key="barrier" value="wire_fence" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwire_fence"/>
 
 	<default key="building" areaColor="D9AD64"/>
 	<tag key="building" value="apartments" type="node;area" />
@@ -217,13 +217,13 @@
 	<tag key="building" value="shed" type="node;area" />
 	<tag key="building" value="stable" type="node;area" />
 	<tag key="building" value="terrace" type="node;area" />
-	<tag key="building" value="train_station" type="node;area" iconName="transport_train_station2" />
+	<tag key="building" value="train_station" type="node;area" />
 	<tag key="building" value="transportation" type="node;area" />
 	<tag key="building" value="university" type="node;area" />
 	<tag key="building" value="warehouse" type="node;area" />
 	<tag key="building" value="yes" type="node;area" />
 
-	<tag key="boundary" value="administrative" type="way" iconName="poi_boundary_administrative" lineColor="B100FF" lineWidth="1.000000"/>
+	<tag key="boundary" value="administrative" type="way" lineColor="B100FF" lineWidth="1.000000"/>
 	<tag key="boundary" value="national_park" type="way" lineColor="FF6600" lineWidth="1.000000"/>
 	<tag key="boundary" value="protected_area" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
 	<tag key="boundary" value="town" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
@@ -254,7 +254,7 @@
 	<tag key="craft" value="key_cutter" type="node;area"/>
 	<tag key="craft" value="locksmith" type="node;area"/>
 	<tag key="craft" value="metal_construction" type="node;area"/>
-	<tag key="craft" value="optician" type="node;area" iconName="health_opticians"/>
+	<tag key="craft" value="optician" type="node;area"/>
 	<tag key="craft" value="painter" type="node;area"/>
 	<tag key="craft" value="parquet_layer" type="node;area"/>
 	<tag key="craft" value="photographer" type="node;area"/>
@@ -274,7 +274,7 @@
 	<tag key="craft" value="stonemason" type="node;area"/>
 	<tag key="craft" value="sun_protection" type="node;area"/>
 	<tag key="craft" value="sweep" type="node;area"/>
-	<tag key="craft" value="tailor" type="node;area" iconName="poi/tailor-24.png"/>
+	<tag key="craft" value="tailor" type="node;area"/>
 	<tag key="craft" value="tiler" type="node;area"/>
 	<tag key="craft" value="tinsmith" type="node;area"/>
 	<tag key="craft" value="upholsterer" type="node;area"/>
@@ -321,7 +321,7 @@
 	<tag key="emergency" value="life_ring" type="node"/>
 	<tag key="emergency" value="lifeboat_station" type="node;area"/>
 	<tag key="emergency" value="marine_refuge" type="node;area"/>
-	<tag key="emergency" value="phone" type="node" iconName="transport_emergency_phone"/>
+	<tag key="emergency" value="phone" type="node"/>
 	<tag key="emergency" value="ses_station" type="node;area"/>
 	<tag key="emergency" value="siren" type="node"/>
 	<tag key="emergency" value="suction_point" type="node"/>
@@ -338,19 +338,19 @@
 	<tag key="highway" value="Bus_guideway" type="way"/>
 	<tag key="highway" value="bridleway" type="way" lineColor="C08000" lineWidth="1.000000"/>
 	<tag key="highway" value="bus_guideway" type="way" lineColor="404040" lineWidth="1.000000"/>
-	<tag key="highway" value="bus_stop" type="way" iconName="transport_bus_stop2"/>
+	<tag key="highway" value="bus_stop" type="way"/>
 	<tag key="highway" value="byway" type="way"/>
 	<tag key="highway" value="cattle_grid" type="node"/>
 	<tag key="highway" value="construction" type="way" lineColor="ffff00" lineWidth="2.000000"/>
 	<tag key="highway" value="conveyor" type="way"/>
 	<tag key="highway" value="corridor" type="way" lineColor="A52A2A" lineWidth="1.000000"/>
 
-	<tag key="highway" value="crossing" type="node" iconName="transport_zebra_crossing"/>
+	<tag key="highway" value="crossing" type="node"/>
 	<tag key="highway" value="cycleway" type="way" lineColor="b100ff" lineWidth="1.000000"/>
 	<tag key="highway" value="elevator" type="node"/>
 	<tag key="highway" value="emergency_access_point" type="node" areaColor="C0C0C0"/>
 	<tag key="highway" value="footway" type="way" lineColor="aa3311" areaColor="00FF00" lineWidth="0.5"/>
-	<tag key="highway" value="ford" type="way" iconName="transport_ford" lineColor="FF0000" lineWidth="2.000000"/>
+	<tag key="highway" value="ford" type="way" lineColor="FF0000" lineWidth="2.000000"/>
 	<tag key="highway" value="gate" type="node"/>
 	<tag key="highway" value="give_way" type="node"/>
 	<tag key="highway" value="incline" type="way"/>
@@ -358,7 +358,7 @@
 	<tag key="highway" value="lane" type="way"/>
 	<tag key="highway" value="living_street" type="way" lineColor="DDDDDD" lineWidth="2.000000"/>
 	<tag key="highway" value="milestone" type="node"/>
-	<tag key="highway" value="mini_roundabout" type="node" iconName="transport_miniroundabout_anticlockwise" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
+	<tag key="highway" value="mini_roundabout" type="node" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
 	<tag key="highway" value="minor" type="way"/>
 	<tag key="highway" value="motorway" type="way" lineColor="CF2081" lineWidth="3.000000"/>
 	<tag key="highway" value="motorway_junction" type="way"/>
@@ -381,52 +381,52 @@
 	<tag key="highway" value="service" type="way" lineColor="45588c" lineWidth="1.000000"/>
 	<tag key="highway" value="services" type="way" areaColor="C0C0C0"/>
 	<tag key="highway" value="speed_camera" type="node_in_way"/>
-	<tag key="highway" value="steps" type="way" iconName="barrier_steps" lineColor="aa3311" lineWidth="1.75000"/>
+	<tag key="highway" value="steps" type="way" lineColor="aa3311" lineWidth="1.75000"/>
 	<tag key="highway" value="stile" type="way"/>
-	<tag key="highway" value="stop" type="way" iconName="transport_stop"/>
-	<tag key="highway" value="street_lamp" type="node" iconName="poi/street_lamp-24.png"/>
+	<tag key="highway" value="stop" type="way"/>
+	<tag key="highway" value="street_lamp" type="node"/>
 	<tag key="highway" value="tertiary" type="way" lineColor="fcfc83" lineWidth="2.000000"/>
 	<tag key="highway" value="tertiary_link" type="way" lineColor="fcfc83" lineWidth="1.500000"/>
 	<tag key="highway" value="toll_booth" type="node"/>
 	<tag key="highway" value="track" type="way" lineColor="996644" lineWidth="1.000000"/>
-	<tag key="highway" value="traffic_calming" type="node_in_way" iconName="transport_speedbump"/>
+	<tag key="highway" value="traffic_calming" type="node_in_way"/>
 	<tag key="highway" value="traffic_mirror" type="way"/>
-	<tag key="highway" value="traffic_signals" type="node_in_way" iconName="transport_traffic_lights"/>
+	<tag key="highway" value="traffic_signals" type="node_in_way"/>
 	<tag key="highway" value="trail" type="way"/>
 	<tag key="highway" value="trunk" type="way" lineColor="DD2F22" lineWidth="3.000000"/>
 	<tag key="highway" value="trunk_link" type="way" lineColor="DD2F22" lineWidth="2.000000"/>
-	<tag key="highway" value="turning_circle" type="way;node_in_way" iconName="transport_turning_circle" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
-	<tag key="highway" value="turning_loop" type="way;node_in_way" iconName="transport_turning_circle"/>
+	<tag key="highway" value="turning_circle" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
+	<tag key="highway" value="turning_loop" type="way;node_in_way"/>
 	<tag key="highway" value="unclassified" type="way" lineColor="96795d" lineWidth="2.000000"/>
 	<tag key="highway" value="unsurfaced" type="way" lineColor="C0C0C0" lineWidth="1.000000"/>
 	<tag key="highway" value="yield" type="way"/>
 
 	<tag key="historic" value="aqueduct"/>
-	<tag key="historic" value="archaeological_site" iconName="tourist_archaeological" areaColor="663300"/>
-	<tag key="historic" value="battlefield" iconName="tourist_battlefield" areaColor="663300"/>
+	<tag key="historic" value="archaeological_site" areaColor="663300"/>
+	<tag key="historic" value="battlefield" areaColor="663300"/>
 	<tag key="historic" value="boundary_stone" areaColor="663300"/>
-	<tag key="historic" value="castle" iconName="tourist_castle" areaColor="663300"/>
+	<tag key="historic" value="castle" areaColor="663300"/>
 	<tag key="historic" value="city_gate"/>
 	<tag key="historic" value="cross_stone"/>
 	<tag key="historic" value="event"/>
 	<tag key="historic" value="farm"/>
 	<tag key="historic" value="fort"/>
 	<tag key="historic" value="manor"/>
-	<tag key="historic" value="memorial" iconName="tourist_memorial" areaColor="663300"/>
+	<tag key="historic" value="memorial" areaColor="663300"/>
 	<tag key="historic" value="milestone"/>
-	<tag key="historic" value="mine" iconName="poi_mine"/>
+	<tag key="historic" value="mine"/>
 	<tag key="historic" value="monastery"/>
-	<tag key="historic" value="monument" iconName="tourist_monument" areaColor="663300"/>
+	<tag key="historic" value="monument" areaColor="663300"/>
 	<tag key="historic" value="pa"/>
 	<tag key="historic" value="paleontological_site"/>
-	<tag key="historic" value="ruins" iconName="tourist_ruin" areaColor="663300"/>
+	<tag key="historic" value="ruins" areaColor="663300"/>
 	<tag key="historic" value="rune_stone"/>
 	<tag key="historic" value="ship"/>
 	<tag key="historic" value="tomb"/>
 	<tag key="historic" value="tree_shrine"/>
 	<tag key="historic" value="wayside_cross" areaColor="663300"/>
 	<tag key="historic" value="wayside_shrine" areaColor="663300"/>
-	<tag key="historic" value="wreck" iconName="tourist_wreck"/>
+	<tag key="historic" value="wreck"/>
 	<tag key="historic" value="yes"/>
 
 	<tag key="horse" value="designated"/>
@@ -447,16 +447,16 @@
 	<tag key="industrial" value="auto_wrecker"/>
 	<tag key="industrial" value="well_cluster"/>
 
-	<tag key="information" value="board" iconName="tourist_map"/>
-	<tag key="information" value="guidepost" iconName="tourist_guidepost"/>
-	<tag key="information" value="tactile_map" iconName="tourist_map"/>
+	<tag key="information" value="board"/>
+	<tag key="information" value="guidepost"/>
+	<tag key="information" value="tactile_map"/>
 	<tag key="information" value="tactile_model"/>
 	<tag key="intermittent" value="yes"/>
 
 	<tag key="junction" value="crossing"/>
 	<tag key="junction" value="filter"/>
 	<tag key="junction" value="jughandle"/>
-	<tag key="junction" value="roundabout" iconName="transport_roundabout_anticlockwise"/>
+	<tag key="junction" value="roundabout"/>
 
 	<tag key="landform" value="esker"/>
 	<tag key="landform" value="raised_beach"/>
@@ -480,7 +480,7 @@
 	<tag key="landmark" value="rock_pinnacle" type="node;area"/>
 	<tag key="landmark" value="spire" type="node;area"/>
 	<tag key="landmark" value="statue" type="node;area"/>
-	<tag key="landmark" value="tower" type="node;area" iconName="poi_tower_lookout"/>
+	<tag key="landmark" value="tower" type="node;area"/>
 	<tag key="landmark" value="windmill" type="node;area"/>
 	<tag key="landmark" value="windmotor" type="node;area"/>
 	<tag key="landmark" value="windsock" type="node;area"/>
@@ -492,48 +492,48 @@
 	<tag key="landuse" value="basin" type="area" areaColor="0000BF"/>
 	<tag key="landuse" value="brownfield" type="area" areaColor="ECBA32"/>
 	<tag key="landuse" value="building_site" type="area"/>
-	<tag key="landuse" value="cemetery" type="area" iconName="place_of_worship_unknown3" areaColor="B1EFC8"/>
-	<tag key="landuse" value="commercial" type="area" iconName="building_generic" areaColor="DBDBDB"/>
+	<tag key="landuse" value="cemetery" type="area" areaColor="B1EFC8"/>
+	<tag key="landuse" value="commercial" type="area" areaColor="DBDBDB"/>
 	<tag key="landuse" value="conservation" type="area"/>
-	<tag key="landuse" value="construction" type="area" iconName="building_generic" lineColor="FFFF00" areaColor="FFFF00" lineWidth="1.000000"/>
+	<tag key="landuse" value="construction" type="area" lineColor="FFFF00" areaColor="FFFF00" lineWidth="1.000000"/>
 	<tag key="landuse" value="depot" type="area"/>
-	<tag key="landuse" value="farm" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
-	<tag key="landuse" value="farmland" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
-	<tag key="landuse" value="farmyard" type="area" iconName="landuse_grass" areaColor="F0F0F0"/>
+	<tag key="landuse" value="farm" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="farmland" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="farmyard" type="area" areaColor="F0F0F0"/>
 	<tag key="landuse" value="farmyards" type="area"/>
 	<tag key="landuse" value="field" type="area"/>
 	<tag key="landuse" value="fishfarm" type="area"/>
-	<tag key="landuse" value="forest" type="area" iconName="landuse_coniferous" areaColor="B1EFC8"/>
+	<tag key="landuse" value="forest" type="area" areaColor="B1EFC8"/>
 	<tag key="landuse" value="garages" type="area" areaColor="F0F0F0"/>
-	<tag key="landuse" value="grass" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
+	<tag key="landuse" value="grass" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="grave_yard" type="area"/>
 	<tag key="landuse" value="greenfield" type="area" areaColor="B1EC5C"/>
 	<tag key="landuse" value="greenhouse_horticulture" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="harbour" type="area"/>
 	<tag key="landuse" value="highway" type="area"/>
-	<tag key="landuse" value="industrial" type="area" iconName="building_generic" areaColor="ECD8FF"/>
+	<tag key="landuse" value="industrial" type="area" areaColor="ECD8FF"/>
 	<tag key="landuse" value="landfill" type="area" areaColor="663300"/>
 	<tag key="landuse" value="meadow" type="area" areaColor="B1E0C2"/>
-	<tag key="landuse" value="military" type="area" iconName="poi_military_bunker" areaColor="B62C2C"/>
+	<tag key="landuse" value="military" type="area" areaColor="B62C2C"/>
 	<tag key="landuse" value="observatory" type="area"/>
-	<tag key="landuse" value="orchard" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
+	<tag key="landuse" value="orchard" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="peat_cutting" type="area"/>
 	<tag key="landuse" value="piste" type="area"/>
 	<tag key="landuse" value="plant_nursery" type="area"/>
 	<tag key="landuse" value="pond" type="area"/>
-	<tag key="landuse" value="quarry" type="area" iconName="poi_mine" areaColor="888888"/>
+	<tag key="landuse" value="quarry" type="area" areaColor="888888"/>
 	<tag key="landuse" value="railway" type="area" areaColor="888888"/>
 	<tag key="landuse" value="recreation_ground" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="reservoir" type="area" areaColor="0000BF"/>
-	<tag key="landuse" value="residential" type="area" iconName="building_generic" areaColor="F0F0F0"/>
-	<tag key="landuse" value="retail" type="area" iconName="building_generic" areaColor="DBDBDB"/>
+	<tag key="landuse" value="residential" type="area" areaColor="F0F0F0"/>
+	<tag key="landuse" value="retail" type="area" areaColor="DBDBDB"/>
 	<tag key="landuse" value="salt_pond" type="area"/>
 	<tag key="landuse" value="street" type="area"/>
 	<tag key="landuse" value="traffic_island" type="area"/>
 	<tag key="landuse" value="trees" type="area"/>
 	<tag key="landuse" value="utility" type="area"/>
 	<tag key="landuse" value="village_green" type="area" areaColor="B1E0C2"/>
-	<tag key="landuse" value="vineyard" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
+	<tag key="landuse" value="vineyard" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="wasteland" type="area"/>
 	<tag key="landuse" value="well" type="area"/>
 	<tag key="landuse" value="wellsite" type="area"/>
@@ -548,7 +548,7 @@
 	<tag key="leisure" value="arena" type="node;area"/>
 	<tag key="leisure" value="bathing_place" type="node;area"/>
 	<tag key="leisure" value="bbq" type="node;area"/>
-	<tag key="leisure" value="beach_resort" type="node;area" iconName="tourist_beach"/>
+	<tag key="leisure" value="beach_resort" type="node;area"/>
 	<tag key="leisure" value="bird_hide" type="node;area"/>
 	<tag key="leisure" value="common" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="dance" type="node;area"/>
@@ -558,12 +558,12 @@
 	<tag key="leisure" value="fitness_station" type="node;area"/>
 	<tag key="leisure" value="foot_bath" type="node;area"/>
 	<tag key="leisure" value="garden" type="node;area" areaColor="C7F1A3"/>
-	<tag key="leisure" value="golf_course" type="node;area" iconName="sport_golf" areaColor="C7F1A3"/>
+	<tag key="leisure" value="golf_course" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="hackerspace" type="node;area"/>
 	<tag key="leisure" value="horse_riding" type="node;area"/>
 	<tag key="leisure" value="ice_rink" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="landscape_reserve" type="node;area"/>
-	<tag key="leisure" value="marina" type="node;area" iconName="transport_marina" areaColor="0070CF"/>
+	<tag key="leisure" value="marina" type="node;area" areaColor="0070CF"/>
 	<tag key="leisure" value="maze" type="node;area"/>
 	<tag key="leisure" value="miniature_golf" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="nature_reserve" type="node;area" areaColor="C7F1A3"/>
@@ -572,16 +572,16 @@
 	<tag key="leisure" value="picnic" type="node;area"/>
 	<tag key="leisure" value="picnic_site" type="node;area"/>
 	<tag key="leisure" value="picnic_table" type="node;area"/>
-	<tag key="leisure" value="pitch" type="node;area" iconName="sport_leisure_centre" areaColor="C7F1A3"/>
-	<tag key="leisure" value="playground" type="node;area" iconName="amenity_playground" areaColor="C7F1A3"/>
-	<tag key="leisure" value="recreation_ground" iconName="sport_leisure_centre"/>
+	<tag key="leisure" value="pitch" type="node;area" areaColor="C7F1A3"/>
+	<tag key="leisure" value="playground" type="node;area" areaColor="C7F1A3"/>
+	<tag key="leisure" value="recreation_ground"/>
 	<tag key="leisure" value="sailing_club" type="node;area"/>
 	<tag key="leisure" value="ski_playground" type="node;area"/>
-	<tag key="leisure" value="slipway" type="node;area" iconName="transport_slipway" areaColor="C7F1A3"/>
-	<tag key="leisure" value="sports_centre" type="node;area" iconName="sport_leisure_centre" areaColor="C7F1A3"/>
-	<tag key="leisure" value="stadium" type="node;area" iconName="sport_stadium" areaColor="C7F1A3"/>
+	<tag key="leisure" value="slipway" type="node;area" areaColor="C7F1A3"/>
+	<tag key="leisure" value="sports_centre" type="node;area" areaColor="C7F1A3"/>
+	<tag key="leisure" value="stadium" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="swimming_pool" type="node;area" areaColor="C7F1A3"/>
-	<tag key="leisure" value="track" type="node;area" iconName="sport_leisure_centre" lineColor="C7F1A3" areaColor="C7F1A3" lineWidth="2.000000"/>
+	<tag key="leisure" value="track" type="node;area" lineColor="C7F1A3" areaColor="C7F1A3" lineWidth="2.000000"/>
 	<tag key="leisure" value="video_arcade" type="node;area"/>
 	<tag key="leisure" value="water_park" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="wildlife_hide" type="node;area"/>
@@ -611,9 +611,9 @@
 	<tag key="man_made" value="cairn" type="node;area"/>
 	<tag key="man_made" value="campanile" type="node;area"/>
 	<tag key="man_made" value="chimney" type="node;area" areaColor="D8D8D8"/>
-	<tag key="man_made" value="communications_tower" type="node;area" iconName="poi_tower_communications"/>
+	<tag key="man_made" value="communications_tower" type="node;area"/>
 	<tag key="man_made" value="compass_rose" type="node;area"/>
-	<tag key="man_made" value="crane" type="node;area" iconName="poi_crane" areaColor="D8D8D8"/>
+	<tag key="man_made" value="crane" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="cross" type="node;area"/>
 	<tag key="man_made" value="cutline" type="node;area"/>
 	<tag key="man_made" value="dike" type="node;area"/>
@@ -630,9 +630,9 @@
 	<tag key="man_made" value="jetty" type="node;area"/>
 	<tag key="man_made" value="kiln" type="node;area"/>
 	<tag key="man_made" value="levee" type="node;area"/>
-	<tag key="man_made" value="lighthouse" type="node;area" iconName="transport_lighthouse" areaColor="D8D8D8"/>
+	<tag key="man_made" value="lighthouse" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="mast" type="node;area"/>
-	<tag key="man_made" value="mineshaft" type="node;area" iconName="poi_mine" areaColor="D8D8D8"/>
+	<tag key="man_made" value="mineshaft" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="monitoring_station" type="node;area"/>
 	<tag key="man_made" value="obelisk" type="node;area"/>
 	<tag key="man_made" value="offshore_platform" type="node;area"/>
@@ -648,17 +648,17 @@
 	<tag key="man_made" value="reservoir_covered" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="riverbank" type="node;area"/>
 	<tag key="man_made" value="septic_tank" type="node;area"/>
-	<tag key="man_made" value="silo" type="node;area" iconName="manmade_silo"/>
+	<tag key="man_made" value="silo" type="node;area"/>
 	<tag key="man_made" value="snow_fence" type="node;area"/>
 	<tag key="man_made" value="storage_tank" type="node;area"/>
 	<tag key="man_made" value="submarine_cable" type="node;area"/>
 	<tag key="man_made" value="surveillance" type="node;area" areaColor="D8D8D8"/>
-	<tag key="man_made" value="survey_point" type="node;area" iconName="amenity_survey_point" areaColor="D8D8D8"/>
+	<tag key="man_made" value="survey_point" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="telescope" type="node;area"/>
-	<tag key="man_made" value="tower" type="node;area" iconName="poi_tower_lookout" areaColor="D8D8D8"/>
+	<tag key="man_made" value="tower" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="utility_pole" type="node;area"/>
 	<tag key="man_made" value="wastewater_plant" type="node;area" areaColor="D8D8D8"/>
-	<tag key="man_made" value="water_tower" type="node;area" iconName="water_tower" areaColor="D8D8D8"/>
+	<tag key="man_made" value="water_tower" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="water_well" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="water_works" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="watermill" type="node;area" areaColor="D8D8D8"/>
@@ -674,7 +674,7 @@
 
 	<tag key="military" value="airfield" type="node;area" areaColor="B62C2C"/>
 	<tag key="military" value="barracks" type="node;area" areaColor="B62C2C"/>
-	<tag key="military" value="bunker" type="node;area" iconName="poi_military_bunker" areaColor="B62C2C"/>
+	<tag key="military" value="bunker" type="node;area" areaColor="B62C2C"/>
 	<tag key="military" value="checkpoint" type="node;area"/>
 	<tag key="military" value="danger_area" type="node;area" areaColor="B62C2C"/>
 	<tag key="military" value="naval_base" type="node;area"/>
@@ -691,7 +691,7 @@
 
 	<tag key="motorroad" value="yes"/>
 
-	<tag key="mountain_pass" value="yes" iconName="poi_mountain_pass"/>
+	<tag key="mountain_pass" value="yes"/>
 
 	<tag key="natural" value="arete" type="node;area"/>
 	<tag key="natural" value="avalanche_dam" type="node;area"/>
@@ -701,7 +701,7 @@
 	<tag key="natural" value="bedrock" type="node;area"/>
 	<tag key="natural" value="breaker" type="node;area"/>
 	<tag key="natural" value="cape" type="node;area"/>
-	<tag key="natural" value="cave_entrance" type="node;area" iconName="poi_cave" areaColor="002F00"/>
+	<tag key="natural" value="cave_entrance" type="node;area" areaColor="002F00"/>
 	<tag key="natural" value="cliff" type="node;area" lineColor="002F00" areaColor="002F00" lineWidth="2.000000"/>
 	<tag key="natural" value="coastline" type="node;area" lineColor="0000FF" lineWidth="1.000000"/>
 	<tag key="natural" value="coastline_deprecation" type="node;area"/>
@@ -723,7 +723,7 @@
 	<tag key="natural" value="moraine" type="node;area"/>
 	<tag key="natural" value="mud" type="node;area" areaColor="CBA762"/>
 	<tag key="natural" value="palaeontological_site" type="node;area"/>
-	<tag key="natural" value="peak" type="node;area" iconName="poi_peak2" areaColor="663300"/>
+	<tag key="natural" value="peak" type="node;area" areaColor="663300"/>
 	<tag key="natural" value="reef" type="node;area"/>
 	<tag key="natural" value="ridge" type="node;area"/>
 	<tag key="natural" value="riverbank" type="node;area"/>
@@ -737,7 +737,7 @@
 	<tag key="natural" value="sinkhole" type="node;area"/>
 	<tag key="natural" value="spring" type="node;area" areaColor="00005F"/>
 	<tag key="natural" value="stone" type="node;area"/>
-	<tag key="natural" value="tree" type="node;area" iconName="tree"/>
+	<tag key="natural" value="tree" type="node;area"/>
 	<tag key="natural" value="tree_row" type="node;area"/>
 	<tag key="natural" value="tundra" type="node;area"/>
 	<tag key="natural" value="volcano" type="node;area" areaColor="5F0000"/>
@@ -773,7 +773,7 @@
 	<tag key="office" value="company" type="node;area"/>
 	<tag key="office" value="educational_institution" type="node;area"/>
 	<tag key="office" value="employment_agency" type="node;area"/>
-	<tag key="office" value="estate_agent" type="node;area" iconName="shopping_estateagent2"/>
+	<tag key="office" value="estate_agent" type="node;area"/>
 	<tag key="office" value="foundation" type="node;area"/>
 	<tag key="office" value="government" type="node;area"/>
 	<tag key="office" value="insurance" type="node;area"/>
@@ -839,13 +839,13 @@
 
 	<tag key="place" value="allotments" type="area"/>
 	<tag key="place" value="area" type="area"/>
-	<tag key="place" value="city" type="area" iconName="poi_place_city" />
+	<tag key="place" value="city" type="area" />
 	<tag key="place" value="continent" type="area" />
 	<tag key="place" value="country" type="area" />
 	<tag key="place" value="county" type="area" />
 	<tag key="place" value="district" type="area"/>
 	<tag key="place" value="farm" type="area"/>
-	<tag key="place" value="hamlet" type="area" iconName="poi_place_hamlet" />
+	<tag key="place" value="hamlet" type="area" />
 	<tag key="place" value="island" type="area" />
 	<tag key="place" value="islet" type="area" />
 	<tag key="place" value="isolated_dwelling" type="area" areaColor="8DE3CB"/>
@@ -857,20 +857,20 @@
 	<tag key="place" value="region" type="area" />
 	<tag key="place" value="sea" type="area"/>
 	<tag key="place" value="state" type="area" />
-	<tag key="place" value="suburb" type="area" iconName="poi_place_suburb" />
-	<tag key="place" value="town" type="area" iconName="poi_place_town" />
-	<tag key="place" value="village" type="area" iconName="poi_place_village" />
+	<tag key="place" value="suburb" type="area" />
+	<tag key="place" value="town" type="area" />
+	<tag key="place" value="village" type="area" />
 
 	<tag key="power" value="cable" type="way"/>
 	<tag key="power" value="cable_distribution_cabinet" type="node"/>
-	<tag key="power" value="generator" type="node" iconName="power_station_gas" areaColor="EEEEEE"/>
+	<tag key="power" value="generator" type="node" areaColor="EEEEEE"/>
 	<tag key="power" value="heliostat" type="node"/>
 	<tag key="power" value="line" type="way" lineColor="FFAC26" lineWidth="1.000000"/>
-	<tag key="power" value="minor_line" type="way" iconName="power_low" lineColor="EEEEEE" lineWidth="1.000000"/>
-	<tag key="power" value="pole" type="node" iconName="power_tower_low"/>
-	<tag key="power" value="station" type="node;area" iconName="power_substation" areaColor="EEEEEE"/>
-	<tag key="power" value="sub_station" type="node;area" iconName="power_transformer" areaColor="EEEEEE"/>
-	<tag key="power" value="tower" type="node" iconName="power_tower_high2" areaColor="EEEEEE"/>
+	<tag key="power" value="minor_line" type="way" lineColor="EEEEEE" lineWidth="1.000000"/>
+	<tag key="power" value="pole" type="node"/>
+	<tag key="power" value="station" type="node;area" areaColor="EEEEEE"/>
+	<tag key="power" value="sub_station" type="node;area" areaColor="EEEEEE"/>
+	<tag key="power" value="tower" type="node" areaColor="EEEEEE"/>
 	<tag key="power" value="transformer" type="node;area" areaColor="EEEEEE"/>
 	<tag key="power" value="underground_cable" type="way"/>
 
@@ -929,13 +929,13 @@
 	<tag key="railway" value="rail" type="way" lineColor="404040" lineWidth="2.000000"/>
 	<tag key="railway" value="razed"/>
 	<tag key="railway" value="roundhouse" type="node;area"/>
-	<tag key="railway" value="station" type="node;area" iconName="transport_train_station" areaColor="F7EFB7"/>
+	<tag key="railway" value="station" type="node;area" areaColor="F7EFB7"/>
 	<tag key="railway" value="stop" type="node"/>
 	<tag key="railway" value="subway" type="way" lineColor="606060" lineWidth="1.000000"/>
 	<tag key="railway" value="subway_entrance" type="node" areaColor="F7EFB7"/>
 	<tag key="railway" value="switch" type="node"/>
 	<tag key="railway" value="tram" type="way" lineColor="808080" lineWidth="1.000000"/>
-	<tag key="railway" value="tram_stop" type="node" iconName="transport_tram_stop"/>
+	<tag key="railway" value="tram_stop" type="node"/>
 	<tag key="railway" value="turntable" type="node;area" areaColor="404040"/>
 
 
@@ -1222,19 +1222,19 @@
 	<tag key="seamark:topmark:shape" value="upright-cross"/>
 	<tag key="seamark:topmark:shape" value="upright_cross"/>
 	<tag key="seamark:topmark:shape" value="x-shape"/>
-	<tag key="seamark:type" value="anchorage" iconName="seamark_anchorage"/>
-	<tag key="seamark:type" value="beacon_cardinal" iconName="seamark_beacon_cardinal"/>
-	<tag key="seamark:type" value="beacon_isolated_danger" iconName="seamark_beacon_isolated"/>
-	<tag key="seamark:type" value="beacon_lateral" iconName="seamark_beacon_lateral"/>
-	<tag key="seamark:type" value="beacon_safe_water" iconName="seamark_beacon_safe_water"/>
-	<tag key="seamark:type" value="beacon_special_purpose" iconName="seamark_beacon_special_purpose"/>
+	<tag key="seamark:type" value="anchorage"/>
+	<tag key="seamark:type" value="beacon_cardinal"/>
+	<tag key="seamark:type" value="beacon_isolated_danger"/>
+	<tag key="seamark:type" value="beacon_lateral"/>
+	<tag key="seamark:type" value="beacon_safe_water"/>
+	<tag key="seamark:type" value="beacon_special_purpose"/>
 	<tag key="seamark:type" value="berth"/>
 	<tag key="seamark:type" value="bridge"/>
-	<tag key="seamark:type" value="buoy_cardinal" iconName="seamark_buoy_cardinal"/>
-	<tag key="seamark:type" value="buoy_isolated_danger" iconName="seamark_buoy_isolated_danger"/>
-	<tag key="seamark:type" value="buoy_lateral" iconName="seamark_buoy_lateral"/>
-	<tag key="seamark:type" value="buoy_safe_water" iconName="seamark_buoy_safe_water"/>
-	<tag key="seamark:type" value="buoy_special_purpose" iconName="seamark_buoy_special_purpose"/>
+	<tag key="seamark:type" value="buoy_cardinal"/>
+	<tag key="seamark:type" value="buoy_isolated_danger"/>
+	<tag key="seamark:type" value="buoy_lateral"/>
+	<tag key="seamark:type" value="buoy_safe_water"/>
+	<tag key="seamark:type" value="buoy_special_purpose"/>
 	<tag key="seamark:type" value="cable_overhead"/>
 	<tag key="seamark:type" value="cable_submarine"/>
 	<tag key="seamark:type" value="calling-in_point"/>
@@ -1245,13 +1245,13 @@
 	<tag key="seamark:type" value="exclusive_economic_zone"/>
 	<tag key="seamark:type" value="fairway"/>
 	<tag key="seamark:type" value="landmark"/>
-	<tag key="seamark:type" value="light_float" iconName="seamark_light_float"/>
-	<tag key="seamark:type" value="light_major" iconName="seamark_light_major"/>
-	<tag key="seamark:type" value="light_minor" iconName="seamark_light_minor"/>
-	<tag key="seamark:type" value="light_vessel" iconName="seamark_light_vessel"/>
+	<tag key="seamark:type" value="light_float"/>
+	<tag key="seamark:type" value="light_major"/>
+	<tag key="seamark:type" value="light_minor"/>
+	<tag key="seamark:type" value="light_vessel"/>
 	<tag key="seamark:type" value="mooring"/>
 	<tag key="seamark:type" value="navigation_line"/>
-	<tag key="seamark:type" value="notice" iconName="seamark_notice"/>
+	<tag key="seamark:type" value="notice"/>
 	<tag key="seamark:type" value="pilot_boarding"/>
 	<tag key="seamark:type" value="pipeline_submarine"/>
 	<tag key="seamark:type" value="platform"/>
@@ -1270,10 +1270,10 @@
 	<tag key="seamark:type" value="separation_zone"/>
 	<tag key="seamark:type" value="shoreline_construction"/>
 	<tag key="seamark:type" value="signal_station_traffic"/>
-	<tag key="seamark:type" value="signal_station_warning" iconName="seamark_fog_signal"/>
+	<tag key="seamark:type" value="signal_station_warning"/>
 	<tag key="seamark:type" value="small_craft_facility"/>
 	<tag key="seamark:type" value="waterway_gauge"/>
-	<tag key="seamark:type" value="wreck" iconName="seamark_wreck"/>
+	<tag key="seamark:type" value="wreck"/>
 
 	<tag key="service" value="parts"/>
 	<tag key="service" value="tyres"/>
@@ -1288,7 +1288,7 @@
 
 	<tag key="shop" value="Alko" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="SpotColor" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="alcohol" type="node;area" iconName="shopping_alcohol" areaColor="7D81FF"/>
+	<tag key="shop" value="alcohol" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="anime" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="antiques" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="appliance" type="node;area" areaColor="7D81FF"/>
@@ -1297,115 +1297,115 @@
 	<tag key="shop" value="auto_parts" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="baby_goods" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="bag" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="bakery" type="node;area" iconName="shopping_bakery" areaColor="7D81FF"/>
+	<tag key="shop" value="bakery" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="bathroom_furnishing" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="beauty" type="node;area" iconName="shopping_hairdresser" areaColor="7D81FF"/>
+	<tag key="shop" value="beauty" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="bed" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="beverages" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="bicycle" type="node;area" iconName="shopping_bicycle" areaColor="7D81FF"/>
-	<tag key="shop" value="books" type="node;area" iconName="shopping_book" areaColor="7D81FF"/>
+	<tag key="shop" value="bicycle" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="books" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="boutique" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="butcher" type="node;area" iconName="shopping_butcher" areaColor="7D81FF"/>
+	<tag key="shop" value="butcher" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="camera" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="canoe_hire" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="car" type="node;area" iconName="shopping_car" areaColor="7D81FF"/>
+	<tag key="shop" value="car" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="car_bodyshop" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="car_parts" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="car_repair" type="node;area" iconName="shopping_car_repair" areaColor="7D81FF"/>
+	<tag key="shop" value="car_repair" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="carpet" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="chandler" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="charity" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="chemist" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="clothes" type="node;area" iconName="shopping_clothes" areaColor="7D81FF"/>
+	<tag key="shop" value="clothes" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="communication" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="computer" type="node;area" iconName="shopping_computer" areaColor="7D81FF"/>
-	<tag key="shop" value="confectionery" type="node;area" iconName="shopping_confectionery" areaColor="7D81FF"/>
-	<tag key="shop" value="convenience" type="node;area" iconName="shopping_convenience" areaColor="7D81FF"/>
-	<tag key="shop" value="copyshop" type="node;area" iconName="shopping_copyshop" areaColor="7D81FF"/>
+	<tag key="shop" value="computer" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="confectionery" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="convenience" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="copyshop" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="curtain" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="deli" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="delicatessen" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="department_store" type="node;area" iconName="shopping_department_store" areaColor="7D81FF"/>
+	<tag key="shop" value="department_store" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="dive" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="doityourself" type="node;area" iconName="shopping_diy" areaColor="7D81FF"/>
+	<tag key="shop" value="doityourself" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="dry_cleaning" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="electronics" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="erotic" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="fabric" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="fabrics" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="farm" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="fishmonger" iconName="shopping_fish"/>
-	<tag key="shop" value="florist" type="node;area" iconName="shopping_florist" areaColor="7D81FF"/>
+	<tag key="shop" value="fishmonger"/>
+	<tag key="shop" value="florist" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="flower" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="food" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="frame" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="funeral_directors" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="furnace" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="furniture" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="garden_centre" type="node;area" iconName="shopping_garden_centre" areaColor="7D81FF"/>
+	<tag key="shop" value="garden_centre" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="gas" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="general" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="general_store" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="general_stores" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="gift" type="node;area" iconName="shopping_gift" areaColor="7D81FF"/>
+	<tag key="shop" value="gift" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="glaziery" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="greengrocer" type="node;area" iconName="shopping_greengrocer" areaColor="7D81FF"/>
+	<tag key="shop" value="greengrocer" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="haberdashery" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="hairdresser" type="node;area" iconName="shopping_hairdresser" areaColor="7D81FF"/>
+	<tag key="shop" value="hairdresser" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="hairdresser_supply" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="hardware" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="hearing_aid_dispenser" type="node;area" iconName="shopping_hearing_aids" areaColor="7D81FF"/>
-	<tag key="shop" value="hearing_aids" type="node;area" iconName="shopping_hearing_aids" areaColor="7D81FF"/>
+	<tag key="shop" value="hearing_aid_dispenser" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="hearing_aids" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="herbalist" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="hifi" type="node;area" iconName="shopping_hifi" areaColor="7D81FF"/>
+	<tag key="shop" value="hifi" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="houseware" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="hunting" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="ice_cream" type="node;area" iconName="food_ice_cream" areaColor="7D81FF"/>
+	<tag key="shop" value="ice_cream" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="insurance" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="interior_decoration" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="jewelry" type="node;area" iconName="shopping_jewelry" areaColor="7D81FF"/>
-	<tag key="shop" value="kiosk" type="node;area" iconName="shopping_kiosk" areaColor="7D81FF"/>
+	<tag key="shop" value="jewelry" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="kiosk" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="kitchen" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="laundromat" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="laundry" type="node;area" iconName="shopping_laundrette" areaColor="7D81FF"/>
+	<tag key="shop" value="laundry" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="locksmith" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="mall" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="massage" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="medical_supply" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="mobile_phone" type="node;area" iconName="shopping_mobile_phone" areaColor="7D81FF"/>
+	<tag key="shop" value="mobile_phone" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="money_lender" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="motorcycle" type="node;area" iconName="shopping_motorcycle" areaColor="7D81FF"/>
+	<tag key="shop" value="motorcycle" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="motorcycle_repair" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="music" type="node;area" iconName="shopping_music" areaColor="7D81FF"/>
+	<tag key="shop" value="music" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="musical_instrument" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="newsagent" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="optician" type="node;area" iconName="health_opticians" areaColor="7D81FF"/>
+	<tag key="shop" value="optician" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="organic" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="outdoor" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="paint" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="pawnbroker" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="pet" type="node;area" iconName="shopping_pet2" areaColor="7D81FF"/>
-	<tag key="shop" value="photo" type="node;area" iconName="shopping_photo" areaColor="7D81FF"/>
-	<tag key="shop" value="photo_studio" type="node;area" iconName="shopping_photo" areaColor="7D81FF"/>
+	<tag key="shop" value="pet" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="photo" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="photo_studio" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="radiotechnics" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="seafood" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="second_hand" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="ship_chandler" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="shoes" type="node;area" iconName="shopping_clothes" areaColor="7D81FF" />
+	<tag key="shop" value="shoes" type="node;area" areaColor="7D81FF" />
 	<tag key="shop" value="sports" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="stationery" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="supermarket" type="node;area" iconName="shopping_supermarket" areaColor="7D81FF"/>
+	<tag key="shop" value="supermarket" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="systembolaget" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="tattoo" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="ticket" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="tobacco" type="node;area" iconName="shopping_tobacco" areaColor="7D81FF"/>
-	<tag key="shop" value="toys" type="node;area" iconName="shopping_toys" areaColor="7D81FF"/>
+	<tag key="shop" value="tobacco" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="toys" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="trade" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="travel_agency" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="vacant" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="vacuum_cleaner" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="variety_store" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="video" type="node;area" iconName="shopping_video_rental" areaColor="7D81FF"/>
+	<tag key="shop" value="video" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="window_blind" type="node;area" areaColor="7D81FF"/>
 
 	<tag key="sign" value="no"/>
@@ -1452,12 +1452,12 @@
 	<tag key="sport" value="Swimming" type="node;area"/>
 	<tag key="sport" value="aikido" type="node;area"/>
 	<tag key="sport" value="american_football" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="archery" type="node;area" iconName="sport_archery" areaColor="BDE3CB"/>
+	<tag key="sport" value="archery" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="association_football" type="node;area"/>
 	<tag key="sport" value="athletics" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="australian_football" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="badminton" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="baseball" type="node;area" iconName="sport_baseball" areaColor="BDE3CB"/>
+	<tag key="sport" value="baseball" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="basketball" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="beachvolleyball" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="billard" type="node;area"/>
@@ -1466,26 +1466,26 @@
 	<tag key="sport" value="boules" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="bowls" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="canadian_football" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="canoe" type="node;area" iconName="sport_canoe" areaColor="BDE3CB"/>
+	<tag key="sport" value="canoe" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="chess" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="cliff_diving" type="node;area"/>
 	<tag key="sport" value="climbing" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="cricket" type="node;area" iconName="sport_cricket" areaColor="BDE3CB"/>
+	<tag key="sport" value="cricket" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="cricket_nets" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="croquet" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="cycling" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="darts" type="node;area"/>
-	<tag key="sport" value="diving" type="node;area" iconName="sport_diving" areaColor="BDE3CB"/>
+	<tag key="sport" value="diving" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="dog_racing" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="equestrian" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="football" type="node;area"/>
 	<tag key="sport" value="free_flying" type="node;area"/>
 	<tag key="sport" value="gaelic_football" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="gaelic_games" type="node;area"/>
-	<tag key="sport" value="golf" type="node;area" iconName="sport_golf" areaColor="BDE3CB"/>
-	<tag key="sport" value="gymnastics" type="node;area" iconName="sport_gymnasium" areaColor="BDE3CB"/>
+	<tag key="sport" value="golf" type="node;area" areaColor="BDE3CB"/>
+	<tag key="sport" value="gymnastics" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="hockey" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="horse_racing" type="node;area" iconName="sport_horse_racing" areaColor="BDE3CB"/>
+	<tag key="sport" value="horse_racing" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="horseshoes" type="node;area"/>
 	<tag key="sport" value="ice_stock" type="node;area"/>
 	<tag key="sport" value="korfball" type="node;area"/>
@@ -1501,18 +1501,18 @@
 	<tag key="sport" value="rugby_league" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="rugby_union" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="scuba_diving" type="node;area"/>
-	<tag key="sport" value="shooting" type="node;area" iconName="sport_shooting" areaColor="BDE3CB"/>
+	<tag key="sport" value="shooting" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="shooting_range" type="node;area"/>
 	<tag key="sport" value="skateboard" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="skating" type="node;area" iconName="sport_iceskating" areaColor="BDE3CB"/>
-	<tag key="sport" value="skiing" type="node;area" iconName="sport_skiing_downhill" areaColor="BDE3CB"/>
-	<tag key="sport" value="soccer" type="node;area" iconName="sport_soccer" areaColor="BDE3CB"/>
+	<tag key="sport" value="skating" type="node;area" areaColor="BDE3CB"/>
+	<tag key="sport" value="skiing" type="node;area" areaColor="BDE3CB"/>
+	<tag key="sport" value="soccer" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="surfing" type="node;area"/>
-	<tag key="sport" value="swimming" type="node;area" iconName="sport_swimming_outdoor" areaColor="BDE3CB"/>
+	<tag key="sport" value="swimming" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="table_soccer" type="node;area"/>
 	<tag key="sport" value="table_tennis" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="team_handball" type="node;area"/>
-	<tag key="sport" value="tennis" type="node;area" iconName="sport_tennis" areaColor="BDE3CB"/>
+	<tag key="sport" value="tennis" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="toboggan" type="node;area"/>
 	<tag key="sport" value="volleyball" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="water_ski" type="node;area"/>
@@ -1526,27 +1526,27 @@
 	<tag key="supervised" value="yes"/>
 
 
-	<tag key="tourism" value="alpine_hut" type="node;area" iconName="accommodation_alpinehut" areaColor="E1A0A2"/>
+	<tag key="tourism" value="alpine_hut" type="node;area" areaColor="E1A0A2"/>
 	<tag key="tourism" value="aquarium" type="node;area"/>
-	<tag key="tourism" value="artwork" type="node;area" iconName="tourist_art_gallery2" lineColor="E180A2" areaColor="E180A2" lineWidth="2.000000"/>
-	<tag key="tourism" value="attraction" type="node;area" iconName="tourist_attraction" areaColor="E180A2"/>
-	<tag key="tourism" value="bed_and_breakfast" iconName="accommodation_bed_and_breakfast"/>
-	<tag key="tourism" value="camp_site" type="node;area" iconName="accommodation_camping" areaColor="E1A0A2"/>
-	<tag key="tourism" value="caravan_site" type="node;area" iconName="accommodation_caravan_park" areaColor="E1A0A2"/>
-	<tag key="tourism" value="chalet" type="node;area" iconName="accommodation_chalet" areaColor="E1A0A2"/>
-	<tag key="tourism" value="guest_house" type="node;area" iconName="accommodation_bed_and_breakfast" areaColor="E1A0A2"/>
-	<tag key="tourism" value="hostel" type="node;area" iconName="accommodation_youth_hostel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="hotel" type="node;area" iconName="accommodation_hotel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="information" type="node;area" iconName="tourist_information" areaColor="E180A2"/>
-	<tag key="tourism" value="motel" type="node;area" iconName="accommodation_motel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="museum" type="node;area" iconName="tourist_museum" areaColor="E180A2"/>
-	<tag key="tourism" value="picnic_site" type="node;area" iconName="tourist_picnic" areaColor="E180A2"/>
-	<tag key="tourism" value="theme_park" type="node;area" iconName="tourist_theme_park" areaColor="E180A2"/>
+	<tag key="tourism" value="artwork" type="node;area" lineColor="E180A2" areaColor="E180A2" lineWidth="2.000000"/>
+	<tag key="tourism" value="attraction" type="node;area" areaColor="E180A2"/>
+	<tag key="tourism" value="bed_and_breakfast"/>
+	<tag key="tourism" value="camp_site" type="node;area" areaColor="E1A0A2"/>
+	<tag key="tourism" value="caravan_site" type="node;area" areaColor="E1A0A2"/>
+	<tag key="tourism" value="chalet" type="node;area" areaColor="E1A0A2"/>
+	<tag key="tourism" value="guest_house" type="node;area" areaColor="E1A0A2"/>
+	<tag key="tourism" value="hostel" type="node;area" areaColor="E1A0A2"/>
+	<tag key="tourism" value="hotel" type="node;area" areaColor="E1A0A2"/>
+	<tag key="tourism" value="information" type="node;area" areaColor="E180A2"/>
+	<tag key="tourism" value="motel" type="node;area" areaColor="E1A0A2"/>
+	<tag key="tourism" value="museum" type="node;area" areaColor="E180A2"/>
+	<tag key="tourism" value="picnic_site" type="node;area" areaColor="E180A2"/>
+	<tag key="tourism" value="theme_park" type="node;area" areaColor="E180A2"/>
 	<tag key="tourism" value="tourism-attraction" type="node;area"/>
-	<tag key="tourism" value="viewpoint" type="node;area" iconName="tourist_view_point" areaColor="E180A2"/>
+	<tag key="tourism" value="viewpoint" type="node;area" areaColor="E180A2"/>
 	<tag key="tourism" value="wilderness_hut" type="node;area"/>
 	<tag key="tourism" value="yes" type="node;area"/>
-	<tag key="tourism" value="zoo" type="node;area" iconName="tourist_zoo" areaColor="E180A2"/>
+	<tag key="tourism" value="zoo" type="node;area" areaColor="E180A2"/>
 
 	<tag key="tower:construction" value="dish"/>
 	<tag key="tower:construction" value="dome"/>
@@ -1614,7 +1614,7 @@
 	<tag key="waterway" value="boatyard" areaColor="D8D8D8"/>
 	<tag key="waterway" value="brook"/>
 	<tag key="waterway" value="canal" lineColor="0000FF" lineWidth="2.000000"/>
-	<tag key="waterway" value="dam" iconName="water_dam" lineColor="D8D8D8" areaColor="D8D8D8" lineWidth="2.000000"/>
+	<tag key="waterway" value="dam" lineColor="D8D8D8" areaColor="D8D8D8" lineWidth="2.000000"/>
 	<tag key="waterway" value="deep_well"/>
 	<tag key="waterway" value="derelict_canal"/>
 	<tag key="waterway" value="ditch" lineColor="0000FF" lineWidth="1.000000"/>
@@ -1636,7 +1636,7 @@
 	<tag key="waterway" value="turning_point"/>
 	<tag key="waterway" value="water_point"/>
 	<tag key="waterway" value="waterfall" lineColor="D8D8D8" lineWidth="2.000000"/>
-	<tag key="waterway" value="weir" iconName="water_weir" lineColor="D8D8D8" lineWidth="2.000000"/>
+	<tag key="waterway" value="weir" lineColor="D8D8D8" lineWidth="2.000000"/>
 
 
 	<tag key="wheelchair" value="limited"/>

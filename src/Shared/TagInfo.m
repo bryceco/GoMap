@@ -15,8 +15,6 @@
 
 @implementation TagInfo
 
-@synthesize iconName = _iconName;
-
 
 
 -(TagInfo *)copy
@@ -25,7 +23,6 @@
 	copy.key			= self.key;
 	copy.value			= self.value;
 	copy.type			= self.type;
-	copy.iconName		= self.iconName;
 	copy.lineColor		= self.lineColor;
 	copy.lineWidth		= self.lineWidth;
 	copy.lineColorText	= self.lineColorText;
@@ -196,7 +193,6 @@ static TagInfo * g_DefaultRender = nil;
 		tagType.key				= [tag attributeForName:@"key"].stringValue;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
 		tagType.type			= [tag attributeForName:@"type"].stringValue;
-		tagType.iconName		= [tag attributeForName:@"iconName"].stringValue;
 		tagType.lineColor		= [TagInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
 		tagType.areaColor		= [TagInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
 		tagType.lineWidth		= [tag attributeForName:@"lineWidth"].stringValue.doubleValue;
@@ -213,8 +209,6 @@ static TagInfo * g_DefaultRender = nil;
 	for ( TagInfo * def in defaults ) {
 		for ( TagInfo * tag in tagList ) {
 			if ( [tag.key isEqualToString:def.key] ) {
-				if ( tag.iconName == nil )
-					tag.iconName = def.iconName;
 				if ( tag.areaColor == nil )
 					tag.areaColor = def.areaColor;
 				if ( tag.lineColor == nil )
@@ -269,9 +263,9 @@ static TagInfo * g_DefaultRender = nil;
 			TagInfo * render = [valDict objectForKey:value];
 			if ( render == nil )
 				return;
-			if ( best == nil || (best.lineColor == nil && render.lineColor) || (!best.iconName && render.iconName) )
+			if ( best == nil || (best.lineColor == nil && render.lineColor) )
 				best = render;
-			if ( render.lineColor == nil && render.iconName == nil )
+			if ( render.lineColor == nil )
 				return;
 			// DLog(@"render %@=%@",key,value);
 			*stop = YES;
