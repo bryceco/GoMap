@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Common Tags-->
+        <!--POI Feature Presets-->
         <scene sceneID="gM4-dB-RnE">
             <objects>
-                <tableViewController storyboardIdentifier="PoiCommonTagsViewController" title="Point of Interest" modalTransitionStyle="crossDissolve" id="6VA-gm-L0S" userLabel="Common Tags" customClass="POIFeaturePresetsViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PoiCommonTagsViewController" title="Point of Interest" modalTransitionStyle="crossDissolve" id="6VA-gm-L0S" userLabel="POI Feature Presets" customClass="POIFeaturePresetsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="VZH-ZU-gFu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -175,10 +175,10 @@
             </objects>
             <point key="canvasLocation" x="2303" y="-429"/>
         </scene>
-        <!--POI Type-->
+        <!--POI Feature Picker-->
         <scene sceneID="FoV-QD-xDb">
             <objects>
-                <tableViewController storyboardIdentifier="PoiTypeViewController" id="Mkl-sm-LxO" customClass="POIFeaturePickerViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PoiTypeViewController" id="Mkl-sm-LxO" userLabel="POI Feature Picker" customClass="POIFeaturePickerViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="cz9-rj-bsD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,10 +252,10 @@
             </objects>
             <point key="canvasLocation" x="3797" y="-1103"/>
         </scene>
-        <!--POI Presets-->
+        <!--POI Preset Values-->
         <scene sceneID="Jm0-pc-0xm">
             <objects>
-                <tableViewController id="Bw2-cG-bAN" userLabel="POI Presets" customClass="POIPresetValuesViewController" sceneMemberID="viewController">
+                <tableViewController id="Bw2-cG-bAN" userLabel="POI Preset Values" customClass="POIPresetValuesViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="OSZ-4N-bs6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -531,10 +531,10 @@
             </objects>
             <point key="canvasLocation" x="1770" y="490"/>
         </scene>
-        <!--Attributes-->
+        <!--Tab Bar Controller-->
         <scene sceneID="dmH-vW-qrr">
             <objects>
-                <tabBarController storyboardIdentifier="poiTabBar" title="Attributes" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f5t-25-IXF" customClass="POITabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="poiTabBar" title="Attributes" useStoryboardIdentifierAsRestorationIdentifier="YES" id="f5t-25-IXF" userLabel="Tab Bar Controller" customClass="POITabBarController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Olj-ld-aOm"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -623,10 +623,10 @@
             </objects>
             <point key="canvasLocation" x="2580" y="-1598"/>
         </scene>
-        <!--Attributes-->
+        <!--Attributes Nav-->
         <scene sceneID="l4j-z4-dwi">
             <objects>
-                <navigationController definesPresentationContext="YES" id="FlW-lL-gMm" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="FlW-lL-gMm" userLabel="Attributes Nav" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Attributes" image="751-eye-toolbar.png" id="2cB-FV-ozw"/>
                     <navigationItem key="navigationItem" id="cqT-tG-52T"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="67Q-Qp-h2y">
@@ -641,10 +641,10 @@
             </objects>
             <point key="canvasLocation" x="1508" y="-1584"/>
         </scene>
-        <!--Common Tags-->
+        <!--POI Feature Presets Nav-->
         <scene sceneID="tzU-uW-JLs">
             <objects>
-                <navigationController id="zi5-R9-6sw" sceneMemberID="viewController">
+                <navigationController id="zi5-R9-6sw" userLabel="POI Feature Presets Nav" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Common Tags" image="982-food-toolbar.png" id="lPv-s6-uEz"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mfX-v7-In3">
@@ -660,10 +660,10 @@
             </objects>
             <point key="canvasLocation" x="1433" y="-428"/>
         </scene>
-        <!--All Tags-->
+        <!--All Tags Nav-->
         <scene sceneID="11t-cg-Ot4">
             <objects>
-                <navigationController id="FaM-5m-E92" sceneMemberID="viewController">
+                <navigationController id="FaM-5m-E92" userLabel="All Tags Nav" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="All Tags" image="710-folder.png" id="19J-sp-UTX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="itI-bf-xph">

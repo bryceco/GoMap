@@ -22,11 +22,8 @@
 
 @interface FeaturePresetCell : UITableViewCell
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel;
-@property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel2;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
-@property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField2;
 @property (strong,nonatomic)				CommonPresetKey				*	commonTag;
-@property (strong,nonatomic)				CommonPresetKey				*	commonTag2;
 @end
 
 @implementation FeaturePresetCell
@@ -380,7 +377,6 @@
 		return;
 	for (FeaturePresetCell * cell in self.tableView.visibleCells) {
 		[cell.valueField resignFirstResponder];
-		[cell.valueField2 resignFirstResponder];
 	}
 }
 
