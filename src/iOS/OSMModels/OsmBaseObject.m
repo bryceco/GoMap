@@ -487,9 +487,9 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     if ( name.length )
         return name;
 
-    NSString * featureName = [CommonTagList featureNameForObjectDict:self.tags geometry:self.geometryName];
+    NSString * featureName = [CommonPresetList featureNameForObjectDict:self.tags geometry:self.geometryName];
     if ( featureName ) {
-        CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+        CommonPresetFeature * feature = [CommonPresetFeature commonTagFeatureWithName:featureName];
         name = feature.friendlyName;
         if ( name.length > 0 )
             return name;

@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "AerialList.h"
 #import "AerialListViewController.h"
-#import "CommonTagList.h"
+#import "CommonPresetList.h"
 #import "EditorMapLayer.h"
 #import "OsmMapData.h"
 #import "MapView.h"

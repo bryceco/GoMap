@@ -7,21 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CommonTagList.h"
+#import "CommonPresetList.h"
 #import "POITypeViewController.h"
 
 @class OsmBaseObject;
-@class CommonTagList;
+@class CommonPresetList;
 
 @interface POICommonTagsViewController : UITableViewController<UITextFieldDelegate,POITypeViewControllerDelegate>
 {
-	CommonTagList				*	_tags;
+	CommonPresetList				*	_tags;
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	BOOL							_keyboardShowing;
-	CommonTagFeature			*	_selectedFeature;	// the feature selected by the user, not derived from tags (e.g. Address)
+	CommonPresetFeature			*	_selectedFeature;	// the feature selected by the user, not derived from tags (e.g. Address)
 	BOOL							_childPushed;
 }
-@property (nonatomic) 	CommonTagGroup	*	drillDownGroup;
+@property (nonatomic) 	CommonPresetGroup	*	drillDownGroup;
 
 - (IBAction)textFieldReturn:(id)sender;
 

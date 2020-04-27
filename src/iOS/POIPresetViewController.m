@@ -7,7 +7,7 @@
 //
 
 #import "iosapi.h"
-#import "CommonTagList.h"
+#import "CommonPresetList.h"
 #import "POIPresetViewController.h"
 #import "POITabBarController.h"
 #import "RenderInfo.h"
@@ -43,7 +43,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell;
-	CommonTagValue * preset = _valueDefinitions[ indexPath.row ];
+	CommonPresetValue * preset = _valueDefinitions[ indexPath.row ];
 
 	if ( preset.details )
 		cell = [tableView dequeueReusableCellWithIdentifier:@"SubtitleCell" forIndexPath:indexPath];
@@ -69,7 +69,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	CommonTagValue * preset = _valueDefinitions[ indexPath.row ];
+	CommonPresetValue * preset = _valueDefinitions[ indexPath.row ];
 	POITabBarController * tab = (id)self.tabBarController;
 	[tab.keyValueDict setObject:preset.tagValue forKey:self.tag];
 

@@ -27,7 +27,7 @@ typedef int UITextAutocapitalizationType;
 
 
 // A possible value for a tag
-@interface CommonTagValue : NSObject
+@interface CommonPresetValue : NSObject
 @property (readonly,nonatomic) NSString	*	name;
 @property (readonly,nonatomic) NSString *	details;
 @property (readonly,nonatomic) NSString	*	tagValue;
@@ -37,7 +37,7 @@ typedef int UITextAutocapitalizationType;
 
 
 // A key along with information about possible values
-@interface CommonTagKey : NSObject
+@interface CommonPresetKey : NSObject
 @property (readonly,nonatomic) NSString					*	name;
 @property (readonly,nonatomic) NSString					*	tagKey;
 @property (readonly,nonatomic) NSString					*	defaultValue;
@@ -58,7 +58,7 @@ typedef int UITextAutocapitalizationType;
 
 
 // A group of related tags, such as address tags, organized for display purposes
-@interface CommonTagGroup : NSObject
+@interface CommonPresetGroup : NSObject
 @property (readonly,nonatomic) 	NSString	*	name;
 @property (readonly,nonatomic) 	NSArray		*	tags;	// array of CommonTagKey
 @property (assign,nonatomic)	BOOL			isDrillDown;
@@ -68,7 +68,7 @@ typedef int UITextAutocapitalizationType;
 
 
 // A top-level group such as road, building, for building hierarchical menus
-@interface CommonTagCategory : NSObject
+@interface CommonPresetCategory : NSObject
 {
 	NSString	*	_categoryName;
 }
@@ -80,7 +80,7 @@ typedef int UITextAutocapitalizationType;
 
 
 // A feature-defining tag such as amenity=shop
-@interface CommonTagFeature : NSObject
+@interface CommonPresetFeature : NSObject
 {
 	NSDictionary	*	_dict;
 	RenderInfo		*	_renderInfo;
@@ -111,7 +111,7 @@ typedef int UITextAutocapitalizationType;
 @end
 
 
-@interface CommonTagList : NSObject
+@interface CommonPresetList : NSObject
 {
 	NSString		*	_featureName;
 	NSMutableArray	*	_sectionList;	// array of CommonTagGroup
@@ -120,7 +120,7 @@ typedef int UITextAutocapitalizationType;
 +(instancetype)sharedList;
 +(NSString *)featureNameForObjectDict:(NSDictionary *)tagDict geometry:(NSString *)geometry;
 +(NSArray *)featuresForGeometry:(NSString *)geometry;
-+(NSArray *)featuresInCategory:(CommonTagCategory *)category matching:(NSString *)searchText;
++(NSArray *)featuresInCategory:(CommonPresetCategory *)category matching:(NSString *)searchText;
 +(NSSet *)allTagKeys;
 +(NSSet *)allTagValuesForKey:(NSString *)key;
 +(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry;
@@ -131,15 +131,15 @@ typedef int UITextAutocapitalizationType;
 -(NSString *)featureName;
 -(NSInteger)sectionCount;
 -(NSInteger)tagsInSection:(NSInteger)index;
--(CommonTagGroup *)groupAtIndex:(NSInteger)index;
--(CommonTagKey *)tagAtSection:(NSInteger)section row:(NSInteger)row;
--(CommonTagKey *)tagAtIndexPath:(NSIndexPath *)indexPath;
+-(CommonPresetGroup *)groupAtIndex:(NSInteger)index;
+-(CommonPresetKey *)tagAtSection:(NSInteger)section row:(NSInteger)row;
+-(CommonPresetKey *)tagAtIndexPath:(NSIndexPath *)indexPath;
 
 +(BOOL)isArea:(OsmWay *)way;
 @end
 
 
-@interface CustomPreset : CommonTagKey
+@interface CustomPreset : CommonPresetKey
 @property (copy,nonatomic) NSString	*	appliesToKey;
 @property (copy,nonatomic) NSString	*	appliesToValue;
 -(instancetype)initWithCoder:(NSCoder *)coder;

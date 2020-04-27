@@ -86,7 +86,7 @@
 
 -(BOOL)isArea
 {
-    return [CommonTagList isArea:self];
+    return [CommonPresetList isArea:self];
 }
 
 -(BOOL)isClosed

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class CommonTagCategory;
-@class CommonTagFeature;
+@class CommonPresetCategory;
+@class CommonPresetFeature;
 @class POITypeViewController;
 
 @protocol POITypeViewControllerDelegate <NSObject>
--(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonTagFeature *)feature;
+-(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature;
 @end
 
 @interface POITypeViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
@@ -24,7 +24,7 @@
 	IBOutlet UISearchBar    *	_searchBar;
 	BOOL						_isTopLevel;
 }
-@property (strong,nonatomic) CommonTagCategory					*	parentCategory;
+@property (strong,nonatomic) CommonPresetCategory					*	parentCategory;
 @property (assign,nonatomic) id<POITypeViewControllerDelegate>		delegate;
 
 -(IBAction)back:(id)sender;
@@ -32,6 +32,6 @@
 
 
 +(void)loadMostRecentForGeometry:(NSString *)geometry;
-+(void)updateMostRecentArrayWithSelection:(CommonTagFeature *)feature geometry:(NSString *)geometry;
++(void)updateMostRecentArrayWithSelection:(CommonPresetFeature *)feature geometry:(NSString *)geometry;
 
 @end

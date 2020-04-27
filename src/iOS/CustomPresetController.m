@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-#import "CommonTagList.h"
+#import "CommonPresetList.h"
 #import "CustomPresetController.h"
 #import "POICommonTagsViewController.h"
 
@@ -31,7 +31,7 @@
 	for ( UITextField * textField in _valueFieldList ) {
 		if ( idx >= _customPreset.presetList.count )
 			break;
-		CommonTagValue * preset = _customPreset.presetList[ idx ];
+		CommonPresetValue * preset = _customPreset.presetList[ idx ];
 		textField.text = preset.tagValue;
 		++idx;
 	}
@@ -51,7 +51,7 @@
 	for ( UITextField * field in _valueFieldList ) {
 		NSString * value = [field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if ( value.length ) {
-			CommonTagValue * preset = [CommonTagValue presetWithName:nil details:nil tagValue:value];
+			CommonPresetValue * preset = [CommonPresetValue presetWithName:nil details:nil tagValue:value];
 			[presets addObject:preset];
 		}
 	}

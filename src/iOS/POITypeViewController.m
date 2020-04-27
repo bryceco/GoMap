@@ -7,7 +7,7 @@
 //
 
 #import "iosapi.h"
-#import "CommonTagList.h"
+#import "CommonPresetList.h"
 #import "POITabBarController.h"
 #import "POITypeViewController.h"
 
@@ -30,7 +30,7 @@ static NSInteger			mostRecentMaximum;
 	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
 	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
 	for ( NSString * featureName in a ) {
-		CommonTagFeature * tagInfo = [CommonTagFeature commonTagFeatureWithName:featureName];
+		CommonPresetFeature * tagInfo = [CommonPresetFeature commonTagFeatureWithName:featureName];
 		if ( tagInfo ) {
 			[mostRecentArray addObject:tagInfo];
 		}
@@ -63,7 +63,7 @@ static NSInteger			mostRecentMaximum;
 
 	if ( _parentCategory == nil ) {
 		_isTopLevel = YES;
-		_typeArray = [CommonTagList featuresForGeometry:geometry];
+		_typeArray = [CommonPresetList featuresForGeometry:geometry];
 	} else {
 		_typeArray = _parentCategory.members;
 	}
@@ -111,7 +111,7 @@ static NSInteger			mostRecentMaximum;
 
 	if ( _searchArrayAll ) {
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-		CommonTagFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+		CommonPresetFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
 		cell.textLabel.text			= feature.friendlyName;
 		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [cell.imageView setupTintColorForDarkMode];
@@ -124,7 +124,7 @@ static NSInteger			mostRecentMaximum;
 	if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-		CommonTagFeature * feature = mostRecentArray[ indexPath.row ];
+		CommonPresetFeature * feature = mostRecentArray[ indexPath.row ];
 		cell.textLabel.text			= feature.friendlyName;
 		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [cell.imageView setupTintColorForDarkMode];
@@ -136,13 +136,13 @@ static NSInteger			mostRecentMaximum;
 	} else {
 		// type array
 		id tagInfo = _typeArray[ indexPath.row ];
-		if ( [tagInfo isKindOfClass:[CommonTagCategory class]] ) {
-			CommonTagCategory * category = tagInfo;
+		if ( [tagInfo isKindOfClass:[CommonPresetCategory class]] ) {
+			CommonPresetCategory * category = tagInfo;
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SubCell" forIndexPath:indexPath];
 			cell.textLabel.text = category.friendlyName;
 			return cell;
 		} else {
-			CommonTagFeature * feature = tagInfo;
+			CommonPresetFeature * feature = tagInfo;
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 			cell.textLabel.text			= feature.friendlyName;
 			cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -153,7 +153,7 @@ static NSInteger			mostRecentMaximum;
 
 			POITabBarController * tabController = (id)self.tabBarController;
 			NSString * geometry = [self currentSelectionGeometry];
-			NSString * currentFeature = [CommonTagList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+			NSString * currentFeature = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
 			BOOL selected = [currentFeature isEqualToString:feature.featureName];
 			cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 			return cell;
@@ -161,7 +161,7 @@ static NSInteger			mostRecentMaximum;
 	}
 }
 
-+(void)updateMostRecentArrayWithSelection:(CommonTagFeature *)feature geometry:(NSString *)geometry
++(void)updateMostRecentArrayWithSelection:(CommonPresetFeature *)feature geometry:(NSString *)geometry
 {
 	[mostRecentArray removeObject:feature];
 	[mostRecentArray insertObject:feature atIndex:0];
@@ -170,7 +170,7 @@ static NSInteger			mostRecentMaximum;
 	}
 
 	NSMutableArray * a = [[NSMutableArray alloc] initWithCapacity:mostRecentArray.count];
-	for ( CommonTagFeature * f in mostRecentArray ) {
+	for ( CommonPresetFeature * f in mostRecentArray ) {
 		[a addObject:f.featureName];
 	}
 
@@ -179,7 +179,7 @@ static NSInteger			mostRecentMaximum;
 }
 
 
--(void)updateTagsWithFeature:(CommonTagFeature *)feature
+-(void)updateTagsWithFeature:(CommonPresetFeature *)feature
 {
 	NSString * geometry = [self currentSelectionGeometry];
 	[self.delegate typeViewController:self didChangeFeatureTo:feature];
@@ -189,7 +189,7 @@ static NSInteger			mostRecentMaximum;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( _searchArrayAll ) {
-		CommonTagFeature * tagInfo = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+		CommonPresetFeature * tagInfo = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
 		[self updateTagsWithFeature:tagInfo];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 		return;
@@ -197,21 +197,21 @@ static NSInteger			mostRecentMaximum;
 
 	if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
-		CommonTagFeature * tagInfo = mostRecentArray[ indexPath.row ];
+		CommonPresetFeature * tagInfo = mostRecentArray[ indexPath.row ];
 		[self updateTagsWithFeature:tagInfo];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else {
 		// type list
 		id entry = _typeArray[ indexPath.row ];
-		if ( [entry isKindOfClass:[CommonTagCategory class]] ) {
-			CommonTagCategory * category = entry;
+		if ( [entry isKindOfClass:[CommonPresetCategory class]] ) {
+			CommonPresetCategory * category = entry;
 			POITypeViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiTypeViewController"];
 			sub.parentCategory	= category;
 			sub.delegate		= self.delegate;
 			[_searchBar resignFirstResponder];
 			[self.navigationController pushViewController:sub animated:YES];
 		} else {
-			CommonTagFeature * feature = entry;
+			CommonPresetFeature * feature = entry;
 			[self updateTagsWithFeature:feature];
 			[self.navigationController popToRootViewControllerAnimated:YES];
 		}
@@ -230,9 +230,9 @@ static NSInteger			mostRecentMaximum;
 #endif
 	} else {
 		// searching
-		_searchArrayAll = [[CommonTagList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
+		_searchArrayAll = [[CommonPresetList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
 
-		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonTagFeature * tagInfo, NSDictionary *bindings) {
+		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonPresetFeature * tagInfo, NSDictionary *bindings) {
 			return [tagInfo matchesSearchText:searchText];
 		}]];
 	}

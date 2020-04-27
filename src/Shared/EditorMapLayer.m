@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "Buildings3DView.h"
-#import "CommonTagList.h"
+#import "CommonPresetList.h"
 #import "CurvedTextLayer.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
@@ -1009,7 +1009,7 @@ extern const double MinIconSizeInPixels;
 }
 
 
-typedef struct RGBAColor {
+typedef struct RGBColor {
 	CGFloat	red;
 	CGFloat	green;
 	CGFloat	blue;
@@ -1627,8 +1627,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
     
     // fetch icon
-    NSString * featureName = [CommonTagList featureNameForObjectDict:node.tags geometry:node.geometryName];
-    CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+    NSString * featureName = [CommonPresetList featureNameForObjectDict:node.tags geometry:node.geometryName];
+    CommonPresetFeature * feature = [CommonPresetFeature commonTagFeatureWithName:featureName];
 	UIImage * icon = feature.icon;
 	if ( icon == nil && node.tags[@"amenity"] ) {
 		icon = [self genericIcon];

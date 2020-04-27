@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
-#import "CommonTagList.h"
+#import "CommonPresetList.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
@@ -25,8 +25,8 @@
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel2;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField2;
-@property (strong,nonatomic)				CommonTagKey				*	commonTag;
-@property (strong,nonatomic)				CommonTagKey				*	commonTag2;
+@property (strong,nonatomic)				CommonPresetKey				*	commonTag;
+@property (strong,nonatomic)				CommonPresetKey				*	commonTag2;
 @end
 
 @implementation CommonTagCell
@@ -49,7 +49,7 @@
 	self.tableView.estimatedRowHeight = 44.0; // or could use UITableViewAutomaticDimension;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
-	_tags = [CommonTagList sharedList];
+	_tags = [CommonPresetList sharedList];
 
 	if ( _drillDownGroup ) {
 		self.navigationItem.leftItemsSupplementBackButton = YES;
@@ -94,15 +94,15 @@
 		NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
 
 		// update most recent feature
-		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [CommonTagList featureNameForObjectDict:dict geometry:geometry];
+		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [CommonPresetList featureNameForObjectDict:dict geometry:geometry];
 		if ( featureName ) {
-			CommonTagFeature * feature = [CommonTagFeature commonTagFeatureWithName:featureName];
+			CommonPresetFeature * feature = [CommonPresetFeature commonTagFeatureWithName:featureName];
 			[POITypeViewController loadMostRecentForGeometry:geometry];
 			[POITypeViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
 		}
 
 		__weak POICommonTagsViewController * weakSelf = self;
-		__weak CommonTagList * weakTags = _tags;
+		__weak CommonPresetList * weakTags = _tags;
 		[_tags setPresetsForFeature:featureName tags:dict geometry:geometry update:^{
 			// this may complete much later, even after we've been dismissed
 			POICommonTagsViewController * mySelf = weakSelf;
@@ -161,13 +161,13 @@
 	}
 }
 
--(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonTagFeature *)feature
+-(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature
 {
 	_selectedFeature = feature;
 	POITabBarController * tabController = (id) self.tabBarController;
 	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
-	NSString * oldFeatureName = [CommonTagList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-	CommonTagFeature * oldFeature = [CommonTagFeature commonTagFeatureWithName:oldFeatureName];
+	NSString * oldFeatureName = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+	CommonPresetFeature * oldFeature = [CommonPresetFeature commonTagFeatureWithName:oldFeatureName];
 
 	// remove previous feature tags
 	[oldFeature.removeTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
@@ -228,7 +228,7 @@
 		return nil;
 	if ( section > _tags.sectionCount )
 		return nil;
-	CommonTagGroup * group = [_tags groupAtIndex:section];
+	CommonPresetGroup * group = [_tags groupAtIndex:section];
 	return group.name;
 }
 
@@ -253,9 +253,9 @@
 	}
 
 	id rowObject = _drillDownGroup ? _drillDownGroup.tags[ indexPath.row ] : [_tags tagAtIndexPath:indexPath];
-	if ( [rowObject isKindOfClass:[CommonTagKey class]] ) {
+	if ( [rowObject isKindOfClass:[CommonPresetKey class]] ) {
 
-		CommonTagKey 	* commonTag	= rowObject;
+		CommonPresetKey 	* commonTag	= rowObject;
 		NSString * key = commonTag.tagKey;
 		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";
 
@@ -295,7 +295,7 @@
 		} else {
 			// Regular cell
 			NSString * value = objectDict[ commonTag.tagKey ];
-			value = [CommonTagList friendlyValueNameForKey:commonTag.tagKey value:value geometry:nil];
+			value = [CommonPresetList friendlyValueNameForKey:commonTag.tagKey value:value geometry:nil];
 			cell.valueField.text = value;
 			cell.valueField.enabled = YES;
 		}
@@ -305,7 +305,7 @@
 	} else {
 
 		// drill down cell
-		CommonTagGroup * drillDownGroup = rowObject;
+		CommonPresetGroup * drillDownGroup = rowObject;
 		CommonTagCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
 		cell.nameLabel.text = drillDownGroup.name;
 		cell.commonTag = (id)drillDownGroup;
@@ -323,8 +323,8 @@
     
     // This workaround is necessary because `tableView:cellForRowAtIndexPath:`
     // currently sets `cell.commonTag` to an instance of `CommonTagGroup` by casting it to `id`.
-    CommonTagKey *commonTag;
-    if ([cell.commonTag isKindOfClass:[CommonTagKey class]]) {
+    CommonPresetKey *commonTag;
+    if ([cell.commonTag isKindOfClass:[CommonPresetKey class]]) {
         commonTag = cell.commonTag;
     }
 
@@ -333,9 +333,9 @@
     } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:commonTag.tagKey]) {
         [self presentDirectionViewControllerForTagWithKey:cell.commonTag.tagKey
                                                     value:cell.valueField.text];
-	} else if ( [cell.commonTag isKindOfClass:[CommonTagGroup class]] ) {
+	} else if ( [cell.commonTag isKindOfClass:[CommonPresetGroup class]] ) {
 		// special case for drill down
-		CommonTagGroup * group = (id)cell.commonTag;
+		CommonPresetGroup * group = (id)cell.commonTag;
 		POICommonTagsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
 		sub.drillDownGroup = group;
 		[self.navigationController pushViewController:sub animated:YES];
@@ -408,7 +408,7 @@
 		NSString * key = cell.commonTag.tagKey;
 		if ( key == nil )
 			return;	// should never happen
-		NSSet * set = [CommonTagList allTagValuesForKey:key];
+		NSSet * set = [CommonPresetList allTagValuesForKey:key];
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];
