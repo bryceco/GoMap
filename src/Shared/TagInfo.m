@@ -26,7 +26,6 @@
 	copy.value			= self.value;
 	copy.type			= self.type;
 	copy.iconName		= self.iconName;
-	copy.summary		= self.summary;
 	copy.lineColor		= self.lineColor;
 	copy.lineWidth		= self.lineWidth;
 	copy.lineColorText	= self.lineColorText;
@@ -196,7 +195,6 @@ static TagInfo * g_DefaultRender = nil;
 		TagInfo * tagType = [TagInfo new];
 		tagType.key				= [tag attributeForName:@"key"].stringValue;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
-		tagType.summary			= [tag attributeForName:@"description"].stringValue;
 		tagType.type			= [tag attributeForName:@"type"].stringValue;
 		tagType.iconName		= [tag attributeForName:@"iconName"].stringValue;
 		tagType.lineColor		= [TagInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];

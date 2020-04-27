@@ -1,189 +1,189 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <tags version="1">
-	<tag key="aerialway" value="cable_car" type="way" description="A cable car run. Aerial tramways that are just one pair of big cars that go in alternating directions" lineColor="663300" lineWidth="1.000000"/>
+	<tag key="aerialway" value="cable_car" type="way" lineColor="663300" lineWidth="1.000000"/>
 	<tag key="aerialway" value="canopy" type="way"/>
-	<tag key="aerialway" value="chair_lift" type="way" description="An open chairlift run. These have a single seat to sit on and are open to the outside air" lineColor="663300" lineWidth="1.000000"/>
-	<tag key="aerialway" value="drag_lift" type="way" description="An overhead tow-line for skiers and riders." lineColor="663300" lineWidth="1.000000"/>
-	<tag key="aerialway" value="gondola" type="way" description="An aerialway where the cabins go around in a circle" lineColor="663300" lineWidth="1.000000"/>
-	<tag key="aerialway" value="goods" type="way" description="A lift for goods. Passenger transport is usually not allowed" lineColor="663300" lineWidth="1.000000"/>
-	<tag key="aerialway" value="mixed_lift" type="way" description="A mixed lift, containing both gondolas and chairs."/>
-	<tag key="aerialway" value="pylon" type="way" description="A pylon supporting the aerialway cable." areaColor="663300"/>
-	<tag key="aerialway" value="station" type="way" description="A station where passengers can enter and/or leave the aerialway" areaColor="663300"/>
+	<tag key="aerialway" value="chair_lift" type="way" lineColor="663300" lineWidth="1.000000"/>
+	<tag key="aerialway" value="drag_lift" type="way" lineColor="663300" lineWidth="1.000000"/>
+	<tag key="aerialway" value="gondola" type="way" lineColor="663300" lineWidth="1.000000"/>
+	<tag key="aerialway" value="goods" type="way" lineColor="663300" lineWidth="1.000000"/>
+	<tag key="aerialway" value="mixed_lift" type="way"/>
+	<tag key="aerialway" value="pylon" type="way" areaColor="663300"/>
+	<tag key="aerialway" value="station" type="way" areaColor="663300"/>
 
-	<tag key="aeroway" value="aerodrome" type="node;area" description="An Aerodrome (UK), Airport (US)" iconName="transport_aerodrome2" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
+	<tag key="aeroway" value="aerodrome" type="node;area" iconName="transport_aerodrome2" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
 	<tag key="aeroway" value="airport" iconName="transport_airport"/>
-	<tag key="aeroway" value="apron" description="An '''apron''' is the surfaced part of an airport where planes park." areaColor="990000"/>
-	<tag key="aeroway" value="gate" description="Used to mark the gate numbers at the airports." iconName="transport_airport_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Key:aeroway"/>
+	<tag key="aeroway" value="apron" areaColor="990000"/>
+	<tag key="aeroway" value="gate" iconName="transport_airport_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Key:aeroway"/>
 	<tag key="aeroway" value="hangar" areaColor="990000"/>
-	<tag key="aeroway" value="helipad" description="A place where helicopters can land." iconName="transport_helicopter_pad" areaColor="330000"/>
-	<tag key="aeroway" value="navigationaid" description="Used to mark air navigation aid land stations (NDB, VOR, VOR/DME, WAAS, etc.)."/>
-	<tag key="aeroway" value="runway" description="A strip of land kept clear and set aside for airplanes to take off from and land on." lineColor="330000" lineWidth="3.000000"/>
-	<tag key="aeroway" value="taxiway" description="Where airplanes manouevre between runways and parking areas." lineColor="660000" lineWidth="2.000000"/>
-	<tag key="aeroway" value="terminal" description="Airport passenger building" areaColor="BB0000"/>
-	<tag key="aeroway" value="windsock" description="Shows pilots wind direction and speed."/>
+	<tag key="aeroway" value="helipad" iconName="transport_helicopter_pad" areaColor="330000"/>
+	<tag key="aeroway" value="navigationaid"/>
+	<tag key="aeroway" value="runway" lineColor="330000" lineWidth="3.000000"/>
+	<tag key="aeroway" value="taxiway" lineColor="660000" lineWidth="2.000000"/>
+	<tag key="aeroway" value="terminal" areaColor="BB0000"/>
+	<tag key="aeroway" value="windsock"/>
 
-	<tag key="airmark" value="beacon" description="Base tag for beacons used in aerial navigation"/>
+	<tag key="airmark" value="beacon"/>
 
 	<default key="amenity" type="node;area" areaColor="F7EFB7" />
 	<tag key="amenity" value="Kneippbecken" type="node;area"/>
 	<tag key="amenity" value="air_filling" type="node;area"/>
-	<tag key="amenity" value="animal_boarding" type="node;area" description="A facility where one can bring his/her pet to be taken care of for a specific time (e.g. holiday)"/>
-	<tag key="amenity" value="animal_shelter" type="node;area" description="A shelter for animal recovery"/>
+	<tag key="amenity" value="animal_boarding" type="node;area"/>
+	<tag key="amenity" value="animal_shelter" type="node;area"/>
 	<tag key="amenity" value="architect_office" type="node;area"/>
-	<tag key="amenity" value="arts_centre" type="node;area" description="An arts centre. A venue where a variety of arts are performed or conducted" />
-	<tag key="amenity" value="atm" type="node;area" description="A device that provides the clients of a financial institution with access to financial transactions." iconName="money_atm" />
-	<tag key="amenity" value="audiologist" type="node;area" description="healthcare professional specialized in identifying, diagnosing, treating and monitoring diseases of the audition"/>
+	<tag key="amenity" value="arts_centre" type="node;area" />
+	<tag key="amenity" value="atm" type="node;area" iconName="money_atm" />
+	<tag key="amenity" value="audiologist" type="node;area"/>
 	<tag key="amenity" value="baby_hatch" type="node;area" areaColor="EEEEEE"/>
-	<tag key="amenity" value="bank" type="node;area" description="Shows the location of a bank branch." iconName="money_bank2" />
-	<tag key="amenity" value="bar" type="node;area" description="A location for 'party' drinking" iconName="food_bar" areaColor="ECBA52"/>
-	<tag key="amenity" value="bbq" type="node;area" description="A permanently built place for having a BBQ" iconName="tourist_picnic" />
-	<tag key="amenity" value="bench" type="node;area" description="A place for people to sit; allows room for several people." iconName="amenity_bench" lineColor="F7EFB7"/>
-	<tag key="amenity" value="bicycle_parking" type="node;area" description="A place for parking bicycles." iconName="transport_parking_bicycle" />
-	<tag key="amenity" value="bicycle_rental" type="node;area" description="A place where you can pick up and drop off rented bikes." iconName="transport_rental_bicycle" />
-	<tag key="amenity" value="biergarten" type="node;area" description="A place where beverages (beer) and prepared food are served." iconName="food_biergarten" areaColor="ECBA52"/>
+	<tag key="amenity" value="bank" type="node;area" iconName="money_bank2" />
+	<tag key="amenity" value="bar" type="node;area" iconName="food_bar" areaColor="ECBA52"/>
+	<tag key="amenity" value="bbq" type="node;area" iconName="tourist_picnic" />
+	<tag key="amenity" value="bench" type="node;area" iconName="amenity_bench" lineColor="F7EFB7"/>
+	<tag key="amenity" value="bicycle_parking" type="node;area" iconName="transport_parking_bicycle" />
+	<tag key="amenity" value="bicycle_rental" type="node;area" iconName="transport_rental_bicycle" />
+	<tag key="amenity" value="biergarten" type="node;area" iconName="food_biergarten" areaColor="ECBA52"/>
 	<tag key="amenity" value="bikeshed" type="node;area"/>
-	<tag key="amenity" value="boat_storage" type="node;area" description="A place to store boats out of the water."/>
-	<tag key="amenity" value="brothel" type="node;area" description="An establishment specifically dedicated to prostitution." areaColor="ECBA52"/>
-	<tag key="amenity" value="bureau_de_change" type="node;area" description="A Bureau de Change (using the widest accepted international name) is a generally small office or kiosk that changes foreign bank notes and travellers cheques and usually does nothing else." iconName="money_currency_exchange" />
-	<tag key="amenity" value="bus_station" type="node;area" description="A &quot;bus stop&quot; would be a place on a particular bus route where the bus regularly stops to pick up / drop off passengers." iconName="transport_bus_station" />
-	<tag key="amenity" value="cafe" type="node;area" description="Is for a generally informal place with sit-down facilities selling beverages and light meals and/or snacks." iconName="food_cafe" areaColor="ECBA52"/>
-	<tag key="amenity" value="car_rental" type="node;area" description="Marks a place from which motor cars / automobiles can be rented." iconName="transport_rental_car" />
-	<tag key="amenity" value="car_sharing" type="node;area" description="Carsharing station, where you get your booked car, often separate areas on parking places." />
-	<tag key="amenity" value="car_wash" type="node;area" description="A place where you can wash your car." iconName="transport_car_wash" />
+	<tag key="amenity" value="boat_storage" type="node;area"/>
+	<tag key="amenity" value="brothel" type="node;area" areaColor="ECBA52"/>
+	<tag key="amenity" value="bureau_de_change" type="node;area" iconName="money_currency_exchange" />
+	<tag key="amenity" value="bus_station" type="node;area" iconName="transport_bus_station" />
+	<tag key="amenity" value="cafe" type="node;area" iconName="food_cafe" areaColor="ECBA52"/>
+	<tag key="amenity" value="car_rental" type="node;area" iconName="transport_rental_car" />
+	<tag key="amenity" value="car_sharing" type="node;area" />
+	<tag key="amenity" value="car_wash" type="node;area" iconName="transport_car_wash" />
 	<tag key="amenity" value="casino" type="node;area" iconName="tourist_casino"/>
-	<tag key="amenity" value="charging_station" type="node;area" description="A place to plug in your electrical car"/>
-	<tag key="amenity" value="cinema" type="node;area" description="Used to mark a cinema (movie theater)." iconName="tourist_cinema" />
-	<tag key="amenity" value="clinic" type="node;area" description="Medium-sized medical centres with tens of staff; smaller than a hospital and larger than a doctor's practice." iconName="health_doctors"/>
-	<tag key="amenity" value="clock" type="node;area" description="Publicly visible clock." iconName="tourist_clock"/>
+	<tag key="amenity" value="charging_station" type="node;area"/>
+	<tag key="amenity" value="cinema" type="node;area" iconName="tourist_cinema" />
+	<tag key="amenity" value="clinic" type="node;area" iconName="health_doctors"/>
+	<tag key="amenity" value="clock" type="node;area" iconName="tourist_clock"/>
 	<tag key="amenity" value="coast_guard" type="node;area"/>
-	<tag key="amenity" value="coast_radar_station" type="node;area" description="A station doing radar surveillance of coastal areas and waterways."/>
-	<tag key="amenity" value="college" type="node;area" description="A College campus or buildings" iconName="education_university" />
-	<tag key="amenity" value="community_centre" type="node;area" description="A place mostly used for local events and festivities." />
-	<tag key="amenity" value="compressed_air" type="node;area" description="A device to inflate tyres (e.g. motorcar, bicycle)."/>
-	<tag key="amenity" value="courthouse" type="node;area" description="Used to mark a courthouse." iconName="amenity_court" />
-	<tag key="amenity" value="crematorium" type="node;area" description="A tag for crematoria." />
+	<tag key="amenity" value="coast_radar_station" type="node;area"/>
+	<tag key="amenity" value="college" type="node;area" iconName="education_university" />
+	<tag key="amenity" value="community_centre" type="node;area" />
+	<tag key="amenity" value="compressed_air" type="node;area"/>
+	<tag key="amenity" value="courthouse" type="node;area" iconName="amenity_court" />
+	<tag key="amenity" value="crematorium" type="node;area" />
 	<tag key="amenity" value="crematory" type="node;area"/>
 	<tag key="amenity" value="crucifix" type="node;area"/>
-	<tag key="amenity" value="crypt" type="node;area" description="Crypt is a stone chamber or vault beneath the floor of a burial vault possibly containing sarcophagi, coffins or relics."/>
-	<tag key="amenity" value="customs" type="node;area" description="A structure near or at an international boundary where travelers and vehicles crossing the border are inspected."/>
-	<tag key="amenity" value="dentist" type="node;area" description="A dentist practice / surgery." iconName="health_dentist" areaColor="EEEEEE"/>
-	<tag key="amenity" value="doctors" type="node;area" description="A Doctor's Office is a place you can go to get medical attention or a check up." iconName="health_doctors2"/>
-	<tag key="amenity" value="dojo" type="node;area" description="Used to mark a dojo."/>
-	<tag key="amenity" value="drinking_water" type="node;area" description="For showing the location of a tap or other source of drinking water" iconName="food_drinkingtap" areaColor="00005F"/>
-	<tag key="amenity" value="driving_school" type="node;area" description="Driving School" />
-	<tag key="amenity" value="embassy" type="node;area" description="A representation of a country in another country." iconName="poi_embassy" />
+	<tag key="amenity" value="crypt" type="node;area"/>
+	<tag key="amenity" value="customs" type="node;area"/>
+	<tag key="amenity" value="dentist" type="node;area" iconName="health_dentist" areaColor="EEEEEE"/>
+	<tag key="amenity" value="doctors" type="node;area" iconName="health_doctors2"/>
+	<tag key="amenity" value="dojo" type="node;area"/>
+	<tag key="amenity" value="drinking_water" type="node;area" iconName="food_drinkingtap" areaColor="00005F"/>
+	<tag key="amenity" value="driving_school" type="node;area" />
+	<tag key="amenity" value="embassy" type="node;area" iconName="poi_embassy" />
 	<tag key="amenity" value="emergency_phone" type="node;area" iconName="transport_emergency_phone" />
-	<tag key="amenity" value="ev_charging" type="node;area" description="A place where electric vehicles can recharge their batteries"/>
-	<tag key="amenity" value="fast_food" type="node;area" description="Is for a place concentrating on very fast counter-only service and take-away food." iconName="food_fastfood" areaColor="ECBA52"/>
+	<tag key="amenity" value="ev_charging" type="node;area"/>
+	<tag key="amenity" value="fast_food" type="node;area" iconName="food_fastfood" areaColor="ECBA52"/>
 	<tag key="amenity" value="feeding_place" type="node;area"/>
-	<tag key="amenity" value="ferry_terminal" type="node;area" description="A place where people/cars/etc. can board and leave a [[ferries" iconName="transport_port" />
-	<tag key="amenity" value="festival_grounds" type="node;area" description="A place dedicated for festivals - like song and dance festivals"/>
-	<tag key="amenity" value="fire_hydrant" type="node;area" description="A fire hydrant is an active fire protection measure, and a source of water provided in most urban, suburban and rural areas with municipal water service to enable firefighters to tap into the municipal water supply to assist in extinguishing a fire."/>
-	<tag key="amenity" value="fire_station" type="node;area" description="Used to mark a fire station." iconName="amenity_firestation2" />
+	<tag key="amenity" value="ferry_terminal" type="node;area" iconName="transport_port" />
+	<tag key="amenity" value="festival_grounds" type="node;area"/>
+	<tag key="amenity" value="fire_hydrant" type="node;area"/>
+	<tag key="amenity" value="fire_station" type="node;area" iconName="amenity_firestation2" />
 	<tag key="amenity" value="fitness_station" type="node;area"/>
-	<tag key="amenity" value="food_court" type="node;area" description="Is for a generally informal place with sit-down facilities that is contiguous with the counters of multiple food vendors and provides" areaColor="ECBA52"/>
-	<tag key="amenity" value="fountain" type="node;area" description="A fountain for cultural / decorational / recreational purposes." iconName="amenity_fountain2" areaColor="00005F"/>
-	<tag key="amenity" value="fuel" type="node;area" description="Used to mark filling (gas/petrol) stations" iconName="transport_fuel" />
-	<tag key="amenity" value="game_feeding" type="node;area" description="a game feeding place"/>
-	<tag key="amenity" value="grave_yard" type="node;area" description="To mark places where people, or sometimes animals are buried which is close to a amenity=place_of_worship ." iconName="place_of_worship_unknown3" />
-	<tag key="amenity" value="grit_bin" type="node;area" description="A container that hold grit or a mixture from salt and grit"/>
+	<tag key="amenity" value="food_court" type="node;area" areaColor="ECBA52"/>
+	<tag key="amenity" value="fountain" type="node;area" iconName="amenity_fountain2" areaColor="00005F"/>
+	<tag key="amenity" value="fuel" type="node;area" iconName="transport_fuel" />
+	<tag key="amenity" value="game_feeding" type="node;area"/>
+	<tag key="amenity" value="grave_yard" type="node;area" iconName="place_of_worship_unknown3" />
+	<tag key="amenity" value="grit_bin" type="node;area"/>
 	<tag key="amenity" value="harbourmaster" type="node;area"/>
-	<tag key="amenity" value="hospital" type="node;area" description="Used to mark a hospital. Image shows mapnik rendering" iconName="health_hospital" areaColor="EEEEEE"/>
-	<tag key="amenity" value="hunting_stand" type="node;area" description="Hunting stands are open or enclosed platforms used by hunters to place themselves at an elevated height above the terrain." iconName="sport_shooting" />
-	<tag key="amenity" value="ice_cream" type="node;area" description="A place that sells ice cream and frozen yoghurt over the counter." iconName="food_ice_cream" areaColor="ECBA52"/>
+	<tag key="amenity" value="hospital" type="node;area" iconName="health_hospital" areaColor="EEEEEE"/>
+	<tag key="amenity" value="hunting_stand" type="node;area" iconName="sport_shooting" />
+	<tag key="amenity" value="ice_cream" type="node;area" iconName="food_ice_cream" areaColor="ECBA52"/>
 	<tag key="amenity" value="jail" type="node;area"/>
-	<tag key="amenity" value="kindergarten" type="node;area" description="Used to mark a kindergarten." iconName="education_nursery3" />
+	<tag key="amenity" value="kindergarten" type="node;area" iconName="education_nursery3" />
 	<tag key="amenity" value="kiosk" type="node;area"/>
-	<tag key="amenity" value="kneipp_water_cure" type="node;area" description="A foot bath is a shallow pool, often with handrail."/>
-	<tag key="amenity" value="library" type="node;area" description="Used to mark a library." iconName="amenity_library" />
-	<tag key="amenity" value="life_ring" type="node;area" description="A floating ring to throw out to someone who is struggling in water"/>
+	<tag key="amenity" value="kneipp_water_cure" type="node;area"/>
+	<tag key="amenity" value="library" type="node;area" iconName="amenity_library" />
+	<tag key="amenity" value="life_ring" type="node;area"/>
 	<tag key="amenity" value="lifeboat_station" type="node;area"/>
 	<tag key="amenity" value="love_hotel" type="node;area"/>
-	<tag key="amenity" value="marketplace" type="node;area" description="A place where trade is regulated." iconName="shopping_marketplace" />
-	<tag key="amenity" value="milk_dispenser" type="node;area" description="Describing the position of a milk dispenser."/>
+	<tag key="amenity" value="marketplace" type="node;area" iconName="shopping_marketplace" />
+	<tag key="amenity" value="milk_dispenser" type="node;area"/>
 	<tag key="amenity" value="monastery" type="node;area"/>
-	<tag key="amenity" value="nightclub" type="node;area" description="A nightclub is a place to dance and drink at night." areaColor="ECBA52"/>
-	<tag key="amenity" value="nursing_home" type="node;area" description="A home for disabled/elderly persons who need permanent care."/>
-	<tag key="amenity" value="parking" type="node;area" description="A place for parking cars" iconName="transport_parking_car" />
-	<tag key="amenity" value="parking_entrance" type="node;area" description="A entrance to an underground or multi storey parking facility"/>
-	<tag key="amenity" value="parking_space" type="node;area" description="A single parking space on a parking lot"/>
+	<tag key="amenity" value="nightclub" type="node;area" areaColor="ECBA52"/>
+	<tag key="amenity" value="nursing_home" type="node;area"/>
+	<tag key="amenity" value="parking" type="node;area" iconName="transport_parking_car" />
+	<tag key="amenity" value="parking_entrance" type="node;area"/>
+	<tag key="amenity" value="parking_space" type="node;area"/>
 	<tag key="amenity" value="payment_terminal" type="node;area"/>
-	<tag key="amenity" value="pharmacy" type="node;area" description="A shop where a pharmacist sells medications (drugstore)" iconName="health_pharmacy" areaColor="EEEEEE"/>
-	<tag key="amenity" value="place_of_worship" type="node;area" description="All places of worship independently of the religion or denomination get the tag amenity=place_of_worship (church,temple,mosque)." iconName="place_of_worship_unknown" />
-	<tag key="amenity" value="police" type="node;area" description="Used to mark a police station." iconName="amenity_police2" />
-	<tag key="amenity" value="post_box" type="node;area" description="Used to mark the location of a postbox." iconName="amenity_post_box" />
-	<tag key="amenity" value="post_office" type="node;area" description="A place where letters and parcels may be sent or collected." iconName="amenity_post_office" />
-	<tag key="amenity" value="prison" type="node;area" description="A prison (jail)." />
-	<tag key="amenity" value="pub" type="node;area" description="A pub" iconName="food_pub" areaColor="ECBA52"/>
+	<tag key="amenity" value="pharmacy" type="node;area" iconName="health_pharmacy" areaColor="EEEEEE"/>
+	<tag key="amenity" value="place_of_worship" type="node;area" iconName="place_of_worship_unknown" />
+	<tag key="amenity" value="police" type="node;area" iconName="amenity_police2" />
+	<tag key="amenity" value="post_box" type="node;area" iconName="amenity_post_box" />
+	<tag key="amenity" value="post_office" type="node;area" iconName="amenity_post_office" />
+	<tag key="amenity" value="prison" type="node;area" />
+	<tag key="amenity" value="pub" type="node;area" iconName="food_pub" areaColor="ECBA52"/>
 	<tag key="amenity" value="public_bath" type="node;area"/>
-	<tag key="amenity" value="public_building" type="node;area" description="Used to mark a public building." iconName="amenity_public_building2" />
-	<tag key="amenity" value="recycling" type="node;area" description="Container or centre where you can take waste for recycling." iconName="amenity_recycling" />
-	<tag key="amenity" value="register_office" type="node;area" description="Used to mark a register of births, marriages and deaths."/>
+	<tag key="amenity" value="public_building" type="node;area" iconName="amenity_public_building2" />
+	<tag key="amenity" value="recycling" type="node;area" iconName="amenity_recycling" />
+	<tag key="amenity" value="register_office" type="node;area"/>
 	<tag key="amenity" value="rescue_box" type="node;area"/>
-	<tag key="amenity" value="restaurant" type="node;area" description="Is for a generally formal place with sit-down facilities selling full meals served by waiters and often licensed (where allowed) to sell alcoholic drinks." iconName="food_restaurant" areaColor="ECBA52"/>
-	<tag key="amenity" value="retirement_home" type="node;area" description="A home for elderly persons."/>
-	<tag key="amenity" value="sauna" type="node;area" description="Small room or house to experience dry or wet heat sessions."/>
+	<tag key="amenity" value="restaurant" type="node;area" iconName="food_restaurant" areaColor="ECBA52"/>
+	<tag key="amenity" value="retirement_home" type="node;area"/>
+	<tag key="amenity" value="sauna" type="node;area"/>
 	<tag key="amenity" value="sceptic_tank" type="node;area"/>
-	<tag key="amenity" value="school" type="node;area" description="Institution designed for learning under the supervision of teachers." iconName="education_school" />
+	<tag key="amenity" value="school" type="node;area" iconName="education_school" />
 	<tag key="amenity" value="security_booth" type="node;area"/>
 	<tag key="amenity" value="septic_tank" type="node;area"/>
-	<tag key="amenity" value="shelter" type="node;area" description="Small place to protect against bad weather conditions" iconName="accommodation_shelter2" />
-	<tag key="amenity" value="shower" type="node;area" description="Public showers"/>
+	<tag key="amenity" value="shelter" type="node;area" iconName="accommodation_shelter2" />
+	<tag key="amenity" value="shower" type="node;area"/>
 	<tag key="amenity" value="social_centre" type="node;area"/>
-	<tag key="amenity" value="social_facility" type="node;area" description="A facility that provides social services"/>
+	<tag key="amenity" value="social_facility" type="node;area"/>
 	<tag key="amenity" value="spa" type="node;area"/>
-	<tag key="amenity" value="stripclub" type="node;area" description="A place that offer striptease and lapdances." areaColor="ECBA52"/>
-	<tag key="amenity" value="studio" type="node;area" description="A studio used for creating radio or television programmes and broadcasting them.  It can also be used to mark a music recording studio." />
-	<tag key="amenity" value="swimming_pool" type="node;area" description="A place built for swimming"/>
-	<tag key="amenity" value="swingerclub" type="node;area" description="."/>
-	<tag key="amenity" value="taxi" type="node;area" description="A place where taxis wait for passengers. Often found at airports, hotels, railway/bus/subway stations, large shopping centers..." iconName="transport_taxi_rank" />
+	<tag key="amenity" value="stripclub" type="node;area" areaColor="ECBA52"/>
+	<tag key="amenity" value="studio" type="node;area" />
+	<tag key="amenity" value="swimming_pool" type="node;area"/>
+	<tag key="amenity" value="swingerclub" type="node;area"/>
+	<tag key="amenity" value="taxi" type="node;area" iconName="transport_taxi_rank" />
 	<tag key="amenity" value="taxi_point" type="node;area"/>
-	<tag key="amenity" value="telephone" type="node;area" description="A Public telephone" iconName="amenity_telephone" />
-	<tag key="amenity" value="theatre" type="node;area" description="Used to mark a theatre." iconName="tourist_theatre" />
-	<tag key="amenity" value="toilets" type="node;area" description="Public toilets" iconName="amenity_toilets" />
-	<tag key="amenity" value="townhall" type="node;area" description="A building where the administration of a village, town or city may be located, or it may just serve as a community meeting place." iconName="amenity_town_hall" />
+	<tag key="amenity" value="telephone" type="node;area" iconName="amenity_telephone" />
+	<tag key="amenity" value="theatre" type="node;area" iconName="tourist_theatre" />
+	<tag key="amenity" value="toilets" type="node;area" iconName="amenity_toilets" />
+	<tag key="amenity" value="townhall" type="node;area" iconName="amenity_town_hall" />
 	<tag key="amenity" value="training" type="node;area"/>
-	<tag key="amenity" value="university" type="node;area" description="An educational institution designed for instruction, examination, or both, of students in many branches of advanced learning." iconName="education_university" />
-	<tag key="amenity" value="vending_machine" type="node;area" description="A machine to vend goods, tickets and so on" iconName="shopping_vending_machine" />
-	<tag key="amenity" value="veterinary" type="node;area" description="A place where a veterinary surgeon (vet) practices." iconName="health_veterinary" areaColor="EEEEEE"/>
-	<tag key="amenity" value="waste_basket" type="node;area" description="A single small container for depositing garbage that is easily accesible for pedestrians." iconName="amenity_waste_bin" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
-	<tag key="amenity" value="waste_disposal" type="node;area" description="A place where canal boaters, caravaners etc. can dispose of rubbish (trash/waste)."/>
-	<tag key="amenity" value="waste_transfer_station" type="node;area" description="Location that accepts a variety of waste, consolidates and transfers it"/>
-	<tag key="amenity" value="watering_place" type="node;area" description="Place where water is contained and animals can drink."/>
+	<tag key="amenity" value="university" type="node;area" iconName="education_university" />
+	<tag key="amenity" value="vending_machine" type="node;area" iconName="shopping_vending_machine" />
+	<tag key="amenity" value="veterinary" type="node;area" iconName="health_veterinary" areaColor="EEEEEE"/>
+	<tag key="amenity" value="waste_basket" type="node;area" iconName="amenity_waste_bin" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
+	<tag key="amenity" value="waste_disposal" type="node;area"/>
+	<tag key="amenity" value="waste_transfer_station" type="node;area"/>
+	<tag key="amenity" value="watering_place" type="node;area"/>
 
-	<tag key="barrier" value="block" type="node_in_way" description="Large immobile block(s) barring free access along a way." iconName="barrier_blocks" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="bollard" type="node_in_way" description="Solid (usually concrete or metal) pillar or pillars in the middle of the road to prevent passage by some traffic." iconName="barrier_bollard" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="bus_trap" type="node_in_way" description="A short section of the roadway where there is a deep dip in the middle to prevent passage by some traffic."/>
-	<tag key="barrier" value="cattle_grid" type="way;node_in_way" description="A hole in the road surface covered in a series of bars that allow wheeled vehicles but not animals to cross." iconName="barrier_cattle_grid" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
-	<tag key="barrier" value="chain" type="way;node_in_way" description="A chain used to prevent motorised vehicles."/>
+	<tag key="barrier" value="block" type="node_in_way" iconName="barrier_blocks" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="bollard" type="node_in_way" iconName="barrier_bollard" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="bus_trap" type="node_in_way"/>
+	<tag key="barrier" value="cattle_grid" type="way;node_in_way" iconName="barrier_cattle_grid" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
+	<tag key="barrier" value="chain" type="way;node_in_way"/>
 	<tag key="barrier" value="chicane" type="node_in_way"/>
-	<tag key="barrier" value="city_wall" type="way;node_in_way" description="is a fortification used to defend a city or settlement from potential aggressors. In ancient to modern times, they were used to enclose settlements." lineColor="F0F050" lineWidth="2.000000"/>
-	<tag key="barrier" value="cycle_barrier" type="way;node_in_way" description="Barriers along paths that slow or prevent access for bicycle users." iconName="barrier_cycle_barrier" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
-	<tag key="barrier" value="ditch" type="way;node_in_way" description="A ditch, trench or ravine" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dditch"/>
-	<tag key="barrier" value="entrance" type="node_in_way" description="An entrance in the middle of a barrier. The type of entrance barrier plus the [[Key:entrance]] tag." iconName="barrier_entrance"/>
-	<tag key="barrier" value="fence" type="node_in_way" description="A fence is a freestanding structure designed to restrict or prevent movement across a boundary. It is generally distinguished from a wall by the lightness of its construction." lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow access." iconName="barrier_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
-	<tag key="barrier" value="hedge" type="way;node_in_way" description="A hedge is a line of closely spaced shrubs and tree species, which form a barrier or mark the boundary of an area." lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
+	<tag key="barrier" value="city_wall" type="way;node_in_way" lineColor="F0F050" lineWidth="2.000000"/>
+	<tag key="barrier" value="cycle_barrier" type="way;node_in_way" iconName="barrier_cycle_barrier" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
+	<tag key="barrier" value="ditch" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dditch"/>
+	<tag key="barrier" value="entrance" type="node_in_way" iconName="barrier_entrance"/>
+	<tag key="barrier" value="fence" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="gate" type="node_in_way" iconName="barrier_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
+	<tag key="barrier" value="hedge" type="way;node_in_way" lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
 	<tag key="barrier" value="hedge_bank" type="node_in_way"/>
 	<tag key="barrier" value="horse_stile" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gap" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gate" type="node_in_way"/>
-	<tag key="barrier" value="kissing_gate" type="node_in_way" description="A section in a wall or fence which can be opened to allow restricted access." iconName="barrier_kissing_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
-	<tag key="barrier" value="lift_gate" type="way;node_in_way" description="A lift gate (boom barrier) is a bar, or pole pivoted in such a way as to allow the boom to block vehicular access through a controlled point." iconName="barrier_lift_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
-	<tag key="barrier" value="motorcycle_barrier" type="way;node_in_way" description="Barriers along paths that prevent access to motorcycles."/>
-	<tag key="barrier" value="retaining_wall" type="node_in_way" description="A retaining wall is a structure that holds back soil or rock from a building, structure or area. Retaining walls prevent downslope movement or erosion and provide support for vertical or near-vertical grade changes. Right side is bottom, left side is top" lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="kissing_gate" type="node_in_way" iconName="barrier_kissing_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
+	<tag key="barrier" value="lift_gate" type="way;node_in_way" iconName="barrier_lift_gate" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
+	<tag key="barrier" value="motorcycle_barrier" type="way;node_in_way"/>
+	<tag key="barrier" value="retaining_wall" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="sally_port" type="node_in_way"/>
 	<tag key="barrier" value="spikes" type="node_in_way"/>
-	<tag key="barrier" value="stile" type="node_in_way" description="A structure which provides people a passage through or over a boundary via steps, ladders or narrow gaps." iconName="barrier_stile" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
-	<tag key="barrier" value="sump_buster" type="node_in_way" description="A barrier to stop cars (two tracked vehicles with less than a certain ground clearance and width between tracks)."/>
-	<tag key="barrier" value="toll_booth" type="node_in_way" description="A place where a road usage toll or fee is collected." iconName="barrier_toll_booth" areaColor="F0F050"/>
-	<tag key="barrier" value="turnstile" type="node_in_way" description="A passage on foot through a fence"/>
-	<tag key="barrier" value="wall" type="way;node_in_way" description="A wall is a freestanding structure, designed to restrict or prevent movement across a boundary, typically made from solid brick, concrete or rocks, and almost always built so that it is opaque to vision." lineColor="F0F050" lineWidth="1.000000"/>
+	<tag key="barrier" value="stile" type="node_in_way" iconName="barrier_stile" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
+	<tag key="barrier" value="sump_buster" type="node_in_way"/>
+	<tag key="barrier" value="toll_booth" type="node_in_way" iconName="barrier_toll_booth" areaColor="F0F050"/>
+	<tag key="barrier" value="turnstile" type="node_in_way"/>
+	<tag key="barrier" value="wall" type="way;node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="wire_fence" type="way;node_in_way" iconName="barrier_generic" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwire_fence"/>
 
 	<default key="building" areaColor="D9AD64"/>
 	<tag key="building" value="apartments" type="node;area" />
-	<tag key="building" value="barn" type="node;area" description="An agricultural building used for storage and as a covered workplace." />
+	<tag key="building" value="barn" type="node;area" />
 	<tag key="building" value="bridge" type="node;area" />
 	<tag key="building" value="bunker" type="node;area" />
 	<tag key="building" value="cabin" type="node;area" />
@@ -193,8 +193,8 @@
 	<tag key="building" value="commercial" type="node;area" />
 	<tag key="building" value="construction" type="node;area" />
 	<tag key="building" value="detached" type="node;area" />
-	<tag key="building" value="dormitory" type="node;area" description="College or university dorm." />
-	<tag key="building" value="entrance" type="node;area" description="To mark the location of a building entrance."/>
+	<tag key="building" value="dormitory" type="node;area" />
+	<tag key="building" value="entrance" type="node;area"/>
 	<tag key="building" value="exit" type="node;area"/>
 	<tag key="building" value="farm_auxiliary" type="node;area" />
 	<tag key="building" value="garage" type="node;area" />
@@ -212,80 +212,80 @@
 	<tag key="building" value="public" type="node;area" />
 	<tag key="building" value="residential" type="node;area" />
 	<tag key="building" value="retail" type="node;area" />
-	<tag key="building" value="roof" type="node;area" description="To enter roofs opened on at least two sides." />
+	<tag key="building" value="roof" type="node;area" />
 	<tag key="building" value="school" type="node;area" />
 	<tag key="building" value="shed" type="node;area" />
-	<tag key="building" value="stable" type="node;area" description="A building or part of a building that is used as a stable for horses" />
+	<tag key="building" value="stable" type="node;area" />
 	<tag key="building" value="terrace" type="node;area" />
-	<tag key="building" value="train_station" type="node;area" description="A train station building" iconName="transport_train_station2" />
+	<tag key="building" value="train_station" type="node;area" iconName="transport_train_station2" />
 	<tag key="building" value="transportation" type="node;area" />
 	<tag key="building" value="university" type="node;area" />
 	<tag key="building" value="warehouse" type="node;area" />
 	<tag key="building" value="yes" type="node;area" />
 
-	<tag key="boundary" value="administrative" type="way" description="An administrative boundary" iconName="poi_boundary_administrative" lineColor="B100FF" lineWidth="1.000000"/>
-	<tag key="boundary" value="national_park" type="way" description="Used for boundaries of national parks" lineColor="FF6600" lineWidth="1.000000"/>
-	<tag key="boundary" value="protected_area" description="Used to  mark the boundaries of protected areas including national parks, marine protection areas, heritage sites and indigenous areas" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
+	<tag key="boundary" value="administrative" type="way" iconName="poi_boundary_administrative" lineColor="B100FF" lineWidth="1.000000"/>
+	<tag key="boundary" value="national_park" type="way" lineColor="FF6600" lineWidth="1.000000"/>
+	<tag key="boundary" value="protected_area" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
 	<tag key="boundary" value="town" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
 	<tag key="boundary" value="census" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=census"/>
 
-	<tag key="craft" value="agricultural_engines" type="node;area" description="Planning, and Constructing engines and tools for agricultural use."/>
-	<tag key="craft" value="basket_maker" type="node;area" description="Producing baskets, often made from Willow."/>
-	<tag key="craft" value="beekeeper" type="node;area" description="A place where honey bees are kept for the purposes of securing commodities such as honey, beeswax or pollen."/>
-	<tag key="craft" value="blacksmith" type="node;area" description="A place where a blacksmith forges tools, horseshoes, etc. from iron."/>
-	<tag key="craft" value="boatbuilder" type="node;area" description="Planning, and Contructing boats."/>
-	<tag key="craft" value="bonfires" type="node;area" description="Workplace or office of a craftsman or craftswoman that designs and/or constructs bonfires for celebrations or events."/>
-	<tag key="craft" value="bookbinder" type="node;area" description="Physically assembling a book from a number of sheets of paper."/>
-	<tag key="craft" value="brewery" type="node;area" description="A brewery is a dedicated building for the making of beer"/>
-	<tag key="craft" value="carpenter" type="node;area" description="Workplace or office of Carpenters that work with timber to construct, install and maintain buildings, furniture, and other objects."/>
-	<tag key="craft" value="carpet_layer" type="node;area" description="Workplace or office of carpet layers that bring carpet on your floor."/>
-	<tag key="craft" value="caterer" type="node;area" description="Workplace or office of one who prepares customized meals for takeout, or provides prepared meals or supplies to a group at social gatherings"/>
-	<tag key="craft" value="clockmaker" type="node;area" description="Workplace or office of a clockmaker that is building, repairing or engraving clocks of all sorts."/>
-	<tag key="craft" value="confectionery" type="node;area" description="A place where the set of food items that are rich in sugar, any one or type of which is called a confection is produced."/>
-	<tag key="craft" value="dressmaker" type="node;area" description="A place where clothes are created, repaired or altered to fit personal needs."/>
-	<tag key="craft" value="electrician" type="node;area" description="Workplace or office of an electrician which is a tradesman specialized in electrical wiring of buildings, stationary machines and related equipment."/>
-	<tag key="craft" value="falles" type="node;area" description="Workplace or office of a craftsman or craftswoman that designs and/or constructs Valencian falles ([[Wikipedia:Falles"/>
-	<tag key="craft" value="gardener" type="node;area" description="Workplace or office of a garden designer or a landscape gardener."/>
-	<tag key="craft" value="glaziery" type="node;area" description="A place where residential, commercial, and artistic glass is selected, cutted, installed, replaced, and removed"/>
-	<tag key="craft" value="handicraft" type="node;area" description="A place where useful and decorative devices are made completely by hand or using only simple tools"/>
-	<tag key="craft" value="hvac" type="node;area" description="Workplace or office of an HVAC system designer (Heating, Ventilating, and Air Conditioning)"/>
-	<tag key="craft" value="insulation" type="node;area" description="Workplace or office of of a person who does thermal insulation in buildings."/>
-	<tag key="craft" value="jeweller" type="node;area" description="A place where necklaces, rings, brooches, earrings and bracelets and other personal adornments are created or repaired."/>
-	<tag key="craft" value="key_cutter" type="node;area" description="A place where keys can be duplicated from originals."/>
-	<tag key="craft" value="locksmith" type="node;area" description="A place where locks and keys are created or repaired."/>
-	<tag key="craft" value="metal_construction" type="node;area" description="A place where handrails, gates, ramps and similar things from metal are made."/>
-	<tag key="craft" value="optician" type="node;area" description="A place where lenses for the correction of a person's vision are designed, fitted and dispensed." iconName="health_opticians"/>
-	<tag key="craft" value="painter" type="node;area" description="Workplace or office of a house painter which is a tradesman responsible for the painting and decorating of buildings."/>
-	<tag key="craft" value="parquet_layer" type="node;area" description="Workplace or office of a parquet layer."/>
-	<tag key="craft" value="photographer" type="node;area" description="Workplace or office of a person who takes photographs using a camera."/>
-	<tag key="craft" value="photographic_laboratory" type="node;area" description="A place where photos taken on a film or digital images are transformed into a more permanent form, often on paper or plastic foil."/>
-	<tag key="craft" value="plasterer" type="node;area" description="Workplace or office of a tradesman who works with plaster, such as forming a layer of plaster on an interior wall or plaster decorative moldings on ceilings or walls."/>
-	<tag key="craft" value="plumber" type="node;area" description="Workplace or office of a tradesman who specializes in installing and maintaining systems used for potable (drinking) water, sewage, and drainage."/>
-	<tag key="craft" value="pottery" type="node;area" description="A place where earthenware, stoneware and porcelain and other ceramic ware is made by potters."/>
-	<tag key="craft" value="rigger" type="node;area" description="Workplace or office of a person who makes masts, yards, sails, and cordage for sailboats and sailing ships."/>
-	<tag key="craft" value="roofer" type="node;area" description="Workplace or office of a tradesman who is specialized in roof construction."/>
-	<tag key="craft" value="saddler" type="node;area" description="A place where saddles or accessories for cars and boats are produced or repaired."/>
-	<tag key="craft" value="sailmaker" type="node;area" description="Workplace or office of sailmakers who cleans, repairs and makes sails."/>
-	<tag key="craft" value="sawmill" type="node;area" description="A workplace where logs are cut into boards."/>
-	<tag key="craft" value="scaffolder" type="node;area" description="Workplace or office of a tradesman who builds temporary structure used to support people and material in the construction or repair of buildings and other large structures."/>
-	<tag key="craft" value="sculptor" type="node;area" description="A place where Sculpture are made."/>
-	<tag key="craft" value="shoemaker" type="node;area" description="A place where shoes, boots, sandals, clogs and moccasins are created, repaired or altered to fit personal needs."/>
-	<tag key="craft" value="stand_builder" type="node;area" description="Workplace of a company that builds stands/booths for fairs."/>
-	<tag key="craft" value="stonemason" type="node;area" description="A place where rough pieces of rock are shaped into accurate geometrical shapes."/>
-	<tag key="craft" value="sun_protection" type="node;area" description="A place where sun protection is made, repaired, or delivered for assembly, especially awnings and shutters."/>
-	<tag key="craft" value="sweep" type="node;area" description="Workplace or office of a person who cleans chimneys for a living."/>
-	<tag key="craft" value="tailor" type="node;area" description="A place where clothing is made, repaired, or altered professionally, especially suits and men's clothing." iconName="poi/tailor-24.png"/>
-	<tag key="craft" value="tiler" type="node;area" description="Workplace or office of a person who lays tiles on floors, swimming pools and such."/>
-	<tag key="craft" value="tinsmith" type="node;area" description="A tinsmith, or tinner or tinker or tinplate worker. Workplace or office of a person who makes and repairs things made of light-coloured metal, particularly tinware."/>
-	<tag key="craft" value="upholsterer" type="node;area" description="A place where furniture, especially seats are provided with padding, springs, webbing, and fabric or leather covers."/>
-	<tag key="craft" value="watchmaker" type="node;area" description="A watchmaker is an artisan who makes and repairs watches. Today due to industrial production they mostly repair watches."/>
-	<tag key="craft" value="window_construction" type="node;area" description="Construct windows"/>
+	<tag key="craft" value="agricultural_engines" type="node;area"/>
+	<tag key="craft" value="basket_maker" type="node;area"/>
+	<tag key="craft" value="beekeeper" type="node;area"/>
+	<tag key="craft" value="blacksmith" type="node;area"/>
+	<tag key="craft" value="boatbuilder" type="node;area"/>
+	<tag key="craft" value="bonfires" type="node;area"/>
+	<tag key="craft" value="bookbinder" type="node;area"/>
+	<tag key="craft" value="brewery" type="node;area"/>
+	<tag key="craft" value="carpenter" type="node;area"/>
+	<tag key="craft" value="carpet_layer" type="node;area"/>
+	<tag key="craft" value="caterer" type="node;area"/>
+	<tag key="craft" value="clockmaker" type="node;area"/>
+	<tag key="craft" value="confectionery" type="node;area"/>
+	<tag key="craft" value="dressmaker" type="node;area"/>
+	<tag key="craft" value="electrician" type="node;area"/>
+	<tag key="craft" value="falles" type="node;area"/>
+	<tag key="craft" value="gardener" type="node;area"/>
+	<tag key="craft" value="glaziery" type="node;area"/>
+	<tag key="craft" value="handicraft" type="node;area"/>
+	<tag key="craft" value="hvac" type="node;area"/>
+	<tag key="craft" value="insulation" type="node;area"/>
+	<tag key="craft" value="jeweller" type="node;area"/>
+	<tag key="craft" value="key_cutter" type="node;area"/>
+	<tag key="craft" value="locksmith" type="node;area"/>
+	<tag key="craft" value="metal_construction" type="node;area"/>
+	<tag key="craft" value="optician" type="node;area" iconName="health_opticians"/>
+	<tag key="craft" value="painter" type="node;area"/>
+	<tag key="craft" value="parquet_layer" type="node;area"/>
+	<tag key="craft" value="photographer" type="node;area"/>
+	<tag key="craft" value="photographic_laboratory" type="node;area"/>
+	<tag key="craft" value="plasterer" type="node;area"/>
+	<tag key="craft" value="plumber" type="node;area"/>
+	<tag key="craft" value="pottery" type="node;area"/>
+	<tag key="craft" value="rigger" type="node;area"/>
+	<tag key="craft" value="roofer" type="node;area"/>
+	<tag key="craft" value="saddler" type="node;area"/>
+	<tag key="craft" value="sailmaker" type="node;area"/>
+	<tag key="craft" value="sawmill" type="node;area"/>
+	<tag key="craft" value="scaffolder" type="node;area"/>
+	<tag key="craft" value="sculptor" type="node;area"/>
+	<tag key="craft" value="shoemaker" type="node;area"/>
+	<tag key="craft" value="stand_builder" type="node;area"/>
+	<tag key="craft" value="stonemason" type="node;area"/>
+	<tag key="craft" value="sun_protection" type="node;area"/>
+	<tag key="craft" value="sweep" type="node;area"/>
+	<tag key="craft" value="tailor" type="node;area" iconName="poi/tailor-24.png"/>
+	<tag key="craft" value="tiler" type="node;area"/>
+	<tag key="craft" value="tinsmith" type="node;area"/>
+	<tag key="craft" value="upholsterer" type="node;area"/>
+	<tag key="craft" value="watchmaker" type="node;area"/>
+	<tag key="craft" value="window_construction" type="node;area"/>
 
 
 	<tag key="cutting" value="yes"/>
 
-	<tag key="cycleway" value="asl" description="On-road Advanced Stop Line for cyclists"/>
-	<tag key="cycleway" value="bike_box" description="For securing cyclists in front of traffic signal"/>
+	<tag key="cycleway" value="asl"/>
+	<tag key="cycleway" value="bike_box"/>
 	<tag key="cycleway" value="crossing"/>
 	<tag key="cycleway" value="lane"/>
 	<tag key="cycleway" value="opposite"/>
@@ -309,154 +309,154 @@
 	<tag key="dock" value="floating"/>
 	<tag key="dock" value="tidal"/>
 
-	<tag key="emergency" value="ambulance_station" type="node;area" description="A ambulance station is a structure or other area set aside for storage of ambulance vehicles, medical equipment, personal protective equipment, and other medical supplies. Most stations are made up of garage bays or a parking area, normally undercover."/>
+	<tag key="emergency" value="ambulance_station" type="node;area"/>
 	<tag key="emergency" value="coast_guard" type="node;area"/>
 	<tag key="emergency" value="destination" type="node;area"/>
 	<tag key="emergency" value="fire_detection_system" type="node;area"/>
-	<tag key="emergency" value="fire_extinguisher" type="node" description="A fire extinguisher is an active fire protection device used to extinguish or control small fires, often in emergency situations."/>
+	<tag key="emergency" value="fire_extinguisher" type="node"/>
 	<tag key="emergency" value="fire_flapper" type="node"/>
-	<tag key="emergency" value="fire_hose" type="node" description="A fire hose is a high-pressure hose used to carry water or other fire retardant (such as foam) to a fire to extinguish it."/>
-	<tag key="emergency" value="fire_hydrant" type="node" description="A fire hydrant is an active fire protection measure, and a source of water provided in most urban, suburban and rural areas with municipal water service to enable firefighters to tap into the municipal water supply to assist in extinguishing a fire."/>
+	<tag key="emergency" value="fire_hose" type="node"/>
+	<tag key="emergency" value="fire_hydrant" type="node"/>
 	<tag key="emergency" value="fire_water_pond" type="node;area"/>
 	<tag key="emergency" value="life_ring" type="node"/>
 	<tag key="emergency" value="lifeboat_station" type="node;area"/>
-	<tag key="emergency" value="marine_refuge" type="node;area" description="Refuge for shipwrecked mariners"/>
-	<tag key="emergency" value="phone" type="node" description="A telephone dedicated to emergency calls" iconName="transport_emergency_phone"/>
-	<tag key="emergency" value="ses_station" type="node;area" description="The State Emergency Service is an Australian volunteer organisation that provides emergency help during and after declared (natural or otherwise) disasters."/>
-	<tag key="emergency" value="siren" type="node" description="A siren is a loud noise maker."/>
+	<tag key="emergency" value="marine_refuge" type="node;area"/>
+	<tag key="emergency" value="phone" type="node" iconName="transport_emergency_phone"/>
+	<tag key="emergency" value="ses_station" type="node;area"/>
+	<tag key="emergency" value="siren" type="node"/>
 	<tag key="emergency" value="suction_point" type="node"/>
 	<tag key="emergency" value="water_rescue_station" type="node;area"/>
 	<tag key="emergency" value="water_tank" type="node;area"/>
 	<tag key="emergency" value="yes"/>
 
-	<tag key="entrance" value="yes" type="node" description="An entrance exists at this position"/>
-	<tag key="entrance" value="main" type="node" description="The main entrance of a building or enclosed area, where the shoppers or clients go inside. A shopping mall have often more than one main entrance."/>
-	<tag key="entrance" value="staircase" type="node" description="Door to staircase."/>
-	<tag key="entrance" value="service" type="node" description="A backdoor to a building or enclosed area often only for employees or for delivering."/>
-	<tag key="entrance" value="emergency" type="node" description="An emergency exit is a one-way out of a building in case of fire. It is often combined with a fire alarm box."/>
+	<tag key="entrance" value="yes" type="node"/>
+	<tag key="entrance" value="main" type="node"/>
+	<tag key="entrance" value="staircase" type="node"/>
+	<tag key="entrance" value="service" type="node"/>
+	<tag key="entrance" value="emergency" type="node"/>
 
 	<tag key="highway" value="Bus_guideway" type="way"/>
-	<tag key="highway" value="bridleway" type="way" description="A way intended for use by equestrians." lineColor="C08000" lineWidth="1.000000"/>
-	<tag key="highway" value="bus_guideway" type="way" description="A busway that is side guided &quot;rails like&quot;, not suitable for other traffic." lineColor="404040" lineWidth="1.000000"/>
-	<tag key="highway" value="bus_stop" type="way" description="A bus stop is a place where public buses stop." iconName="transport_bus_stop2"/>
-	<tag key="highway" value="byway" type="way" description="an UK-only minor road"/>
+	<tag key="highway" value="bridleway" type="way" lineColor="C08000" lineWidth="1.000000"/>
+	<tag key="highway" value="bus_guideway" type="way" lineColor="404040" lineWidth="1.000000"/>
+	<tag key="highway" value="bus_stop" type="way" iconName="transport_bus_stop2"/>
+	<tag key="highway" value="byway" type="way"/>
 	<tag key="highway" value="cattle_grid" type="node"/>
 	<tag key="highway" value="construction" type="way" lineColor="ffff00" lineWidth="2.000000"/>
 	<tag key="highway" value="conveyor" type="way"/>
-	<tag key="highway" value="corridor" type="way" description="A corridor inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="highway" value="corridor" type="way" lineColor="A52A2A" lineWidth="1.000000"/>
 
-	<tag key="highway" value="crossing" type="node" description="Pedestrians can cross a street here - e.g. zebra crossing" iconName="transport_zebra_crossing"/>
-	<tag key="highway" value="cycleway" type="way" description="For designated cycleways, i.e. mainly/exclusively for bicycles." lineColor="b100ff" lineWidth="1.000000"/>
-	<tag key="highway" value="elevator" type="node" description="A elevator (or lift) is used to travel vertically, providing passenger and freight access between pathways at different floor levels."/>
-	<tag key="highway" value="emergency_access_point" type="node" description="Sign number which can be used to define you current position in case of an emergency" areaColor="C0C0C0"/>
-	<tag key="highway" value="footway" type="way" description="For designated footpaths, i.e. mainly/exclusively for pedestrians." lineColor="aa3311" areaColor="00FF00" lineWidth="0.5"/>
-	<tag key="highway" value="ford" type="way" description="A point where a path or road crosses a river or stream which is at times covered by shallow water." iconName="transport_ford" lineColor="FF0000" lineWidth="2.000000"/>
+	<tag key="highway" value="crossing" type="node" iconName="transport_zebra_crossing"/>
+	<tag key="highway" value="cycleway" type="way" lineColor="b100ff" lineWidth="1.000000"/>
+	<tag key="highway" value="elevator" type="node"/>
+	<tag key="highway" value="emergency_access_point" type="node" areaColor="C0C0C0"/>
+	<tag key="highway" value="footway" type="way" lineColor="aa3311" areaColor="00FF00" lineWidth="0.5"/>
+	<tag key="highway" value="ford" type="way" iconName="transport_ford" lineColor="FF0000" lineWidth="2.000000"/>
 	<tag key="highway" value="gate" type="node"/>
-	<tag key="highway" value="give_way" type="node" description="Used to mark give way signs"/>
+	<tag key="highway" value="give_way" type="node"/>
 	<tag key="highway" value="incline" type="way"/>
 	<tag key="highway" value="incline_steep" type="way"/>
 	<tag key="highway" value="lane" type="way"/>
-	<tag key="highway" value="living_street" type="way" description="Living streets &amp;mdash; compared to residential streets &amp;mdash; have special regulations like lower speed limits, special parking restrictions, special traffic rules, etc." lineColor="DDDDDD" lineWidth="2.000000"/>
+	<tag key="highway" value="living_street" type="way" lineColor="DDDDDD" lineWidth="2.000000"/>
 	<tag key="highway" value="milestone" type="node"/>
-	<tag key="highway" value="mini_roundabout" type="node" description="A road junction where the traffic goes around a painted circle or traversable island and has right of way." iconName="transport_miniroundabout_anticlockwise" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
+	<tag key="highway" value="mini_roundabout" type="node" iconName="transport_miniroundabout_anticlockwise" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
 	<tag key="highway" value="minor" type="way"/>
-	<tag key="highway" value="motorway" type="way" description="High capacity highways designed to safely carry fast motor traffic." lineColor="CF2081" lineWidth="3.000000"/>
-	<tag key="highway" value="motorway_junction" type="way" description="Indicates a junction/exit."/>
-	<tag key="highway" value="motorway_link" type="way" description="The link roads (sliproads / ramps) leading to and from a motorway." lineColor="CF2081" lineWidth="2.000000"/>
+	<tag key="highway" value="motorway" type="way" lineColor="CF2081" lineWidth="3.000000"/>
+	<tag key="highway" value="motorway_junction" type="way"/>
+	<tag key="highway" value="motorway_link" type="way" lineColor="CF2081" lineWidth="2.000000"/>
 	<tag key="highway" value="moving_walkway" type="way"/>
-	<tag key="highway" value="passing_place" type="way" description="A passing place on a single track road."/>
-	<tag key="highway" value="path" type="way" description="A generic path" lineColor="A52A2A" lineWidth="0.5"/>
-	<tag key="highway" value="pedestrian" type="way" description="For Roads , i.e. mainly / exclusively for pedestrians (often Shopping Areas)." lineColor="008000" areaColor="aa3311" lineWidth="2.000000"/>
+	<tag key="highway" value="passing_place" type="way"/>
+	<tag key="highway" value="path" type="way" lineColor="A52A2A" lineWidth="0.5"/>
+	<tag key="highway" value="pedestrian" type="way" lineColor="008000" areaColor="aa3311" lineWidth="2.000000"/>
 	<tag key="highway" value="piste" type="way"/>
-	<tag key="highway" value="platform" type="node;area" description="A platform of a bus station." lineColor="C0C0C0" areaColor="C0C0C0" lineWidth="2.000000"/>
-	<tag key="highway" value="primary" type="way" description="A highway linking large towns." lineColor="FFA500" lineWidth="3.000000"/>
+	<tag key="highway" value="platform" type="node;area" lineColor="C0C0C0" areaColor="C0C0C0" lineWidth="2.000000"/>
+	<tag key="highway" value="primary" type="way" lineColor="FFA500" lineWidth="3.000000"/>
 	<tag key="highway" value="primary_link" type="way" lineColor="FFA500" lineWidth="2.000000"/>
 	<tag key="highway" value="proposed" type="way"/>
 	<tag key="highway" value="raceway" type="way"/>
-	<tag key="highway" value="residential" type="way" description="Road in a residential area" lineColor="FFFFFF" lineWidth="2.000000"/>
-	<tag key="highway" value="rest_area" type="way;node_in_way" description="Place where drivers can leave the road to rest, but not refuel." areaColor="C0C0C0"/>
-	<tag key="highway" value="road" type="way" description="Road with unknown classification." lineColor="808080" lineWidth="2.000000"/>
-	<tag key="highway" value="secondary" type="way" description="A highway linking large towns." lineColor="FFFF00" lineWidth="3.000000"/>
+	<tag key="highway" value="residential" type="way" lineColor="FFFFFF" lineWidth="2.000000"/>
+	<tag key="highway" value="rest_area" type="way;node_in_way" areaColor="C0C0C0"/>
+	<tag key="highway" value="road" type="way" lineColor="808080" lineWidth="2.000000"/>
+	<tag key="highway" value="secondary" type="way" lineColor="FFFF00" lineWidth="3.000000"/>
 	<tag key="highway" value="secondary_link" type="way" lineColor="FFFF00" lineWidth="2.000000"/>
-	<tag key="highway" value="service" type="way" description="Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc." lineColor="45588c" lineWidth="1.000000"/>
-	<tag key="highway" value="services" type="way" description="Place where drivers can leave a road to refuel, rest, or take refreshments." areaColor="C0C0C0"/>
-	<tag key="highway" value="speed_camera" type="node_in_way" description="A fixed road-side or overhead speed camera"/>
-	<tag key="highway" value="steps" type="way" description="For flights of steps/stairs on footways." iconName="barrier_steps" lineColor="aa3311" lineWidth="1.75000"/>
+	<tag key="highway" value="service" type="way" lineColor="45588c" lineWidth="1.000000"/>
+	<tag key="highway" value="services" type="way" areaColor="C0C0C0"/>
+	<tag key="highway" value="speed_camera" type="node_in_way"/>
+	<tag key="highway" value="steps" type="way" iconName="barrier_steps" lineColor="aa3311" lineWidth="1.75000"/>
 	<tag key="highway" value="stile" type="way"/>
-	<tag key="highway" value="stop" type="way" description="Used to mark stop signs" iconName="transport_stop"/>
-	<tag key="highway" value="street_lamp" type="node" description="A single pole with one or more lights to illuminate the street." iconName="poi/street_lamp-24.png"/>
-	<tag key="highway" value="tertiary" type="way" description="A tertiary road in Germany. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads." lineColor="fcfc83" lineWidth="2.000000"/>
+	<tag key="highway" value="stop" type="way" iconName="transport_stop"/>
+	<tag key="highway" value="street_lamp" type="node" iconName="poi/street_lamp-24.png"/>
+	<tag key="highway" value="tertiary" type="way" lineColor="fcfc83" lineWidth="2.000000"/>
 	<tag key="highway" value="tertiary_link" type="way" lineColor="fcfc83" lineWidth="1.500000"/>
 	<tag key="highway" value="toll_booth" type="node"/>
-	<tag key="highway" value="track" type="way" description="Roads '''for agricultural use''': farm roads, forest tracks, etc." lineColor="996644" lineWidth="1.000000"/>
+	<tag key="highway" value="track" type="way" lineColor="996644" lineWidth="1.000000"/>
 	<tag key="highway" value="traffic_calming" type="node_in_way" iconName="transport_speedbump"/>
 	<tag key="highway" value="traffic_mirror" type="way"/>
-	<tag key="highway" value="traffic_signals" type="node_in_way" description="A traffic signal for regulating circulation." iconName="transport_traffic_lights"/>
-	<tag key="highway" value="trail" type="way" description="For hiking trails etc"/>
-	<tag key="highway" value="trunk" type="way" description="Important roads that aren’t motorways." lineColor="DD2F22" lineWidth="3.000000"/>
+	<tag key="highway" value="traffic_signals" type="node_in_way" iconName="transport_traffic_lights"/>
+	<tag key="highway" value="trail" type="way"/>
+	<tag key="highway" value="trunk" type="way" lineColor="DD2F22" lineWidth="3.000000"/>
 	<tag key="highway" value="trunk_link" type="way" lineColor="DD2F22" lineWidth="2.000000"/>
-	<tag key="highway" value="turning_circle" type="way;node_in_way" description="A widened area of road that allows vehicles to turn more easily." iconName="transport_turning_circle" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
-	<tag key="highway" value="turning_loop" type="way;node_in_way" description="A widened area of a highway with a non-traversable island for turning around, often circular and at the end of a road." iconName="transport_turning_circle"/>
-	<tag key="highway" value="unclassified" type="way" description="Public access road, non-residential." lineColor="96795d" lineWidth="2.000000"/>
+	<tag key="highway" value="turning_circle" type="way;node_in_way" iconName="transport_turning_circle" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
+	<tag key="highway" value="turning_loop" type="way;node_in_way" iconName="transport_turning_circle"/>
+	<tag key="highway" value="unclassified" type="way" lineColor="96795d" lineWidth="2.000000"/>
 	<tag key="highway" value="unsurfaced" type="way" lineColor="C0C0C0" lineWidth="1.000000"/>
 	<tag key="highway" value="yield" type="way"/>
 
 	<tag key="historic" value="aqueduct"/>
-	<tag key="historic" value="archaeological_site" description="a place in which evidence of past activity is preserved" iconName="tourist_archaeological" areaColor="663300"/>
-	<tag key="historic" value="battlefield" description="The site of a battle or military skirmish in the past. this could be on land or at sea." iconName="tourist_battlefield" areaColor="663300"/>
-	<tag key="historic" value="boundary_stone" description="A physical marker that identifies a boundary" areaColor="663300"/>
-	<tag key="historic" value="castle" description="fortified building in medieval and modern times" iconName="tourist_castle" areaColor="663300"/>
-	<tag key="historic" value="city_gate" description="A city gate within a city wall."/>
+	<tag key="historic" value="archaeological_site" iconName="tourist_archaeological" areaColor="663300"/>
+	<tag key="historic" value="battlefield" iconName="tourist_battlefield" areaColor="663300"/>
+	<tag key="historic" value="boundary_stone" areaColor="663300"/>
+	<tag key="historic" value="castle" iconName="tourist_castle" areaColor="663300"/>
+	<tag key="historic" value="city_gate"/>
 	<tag key="historic" value="cross_stone"/>
 	<tag key="historic" value="event"/>
 	<tag key="historic" value="farm"/>
 	<tag key="historic" value="fort"/>
-	<tag key="historic" value="manor" description="Historic manors/mansions having different use today"/>
-	<tag key="historic" value="memorial" description="Small memorials, usually remembering special persons, peoples lost their lives in the world wars" iconName="tourist_memorial" areaColor="663300"/>
-	<tag key="historic" value="milestone" description="A historic marker that shows the distance to important destinations"/>
-	<tag key="historic" value="mine" description="Location of abandoned underground mine workings for minerals such as coal or lead." iconName="poi_mine"/>
-	<tag key="historic" value="monastery" description="Building/place that was a monastery."/>
-	<tag key="historic" value="monument" description="An object, especially large and made of stone, built to remember/show respect to a person or group of people" iconName="tourist_monument" areaColor="663300"/>
+	<tag key="historic" value="manor"/>
+	<tag key="historic" value="memorial" iconName="tourist_memorial" areaColor="663300"/>
+	<tag key="historic" value="milestone"/>
+	<tag key="historic" value="mine" iconName="poi_mine"/>
+	<tag key="historic" value="monastery"/>
+	<tag key="historic" value="monument" iconName="tourist_monument" areaColor="663300"/>
 	<tag key="historic" value="pa"/>
-	<tag key="historic" value="paleontological_site" description="A paleontological site is a place (or group of physical sites) in which remains of ancient living forms is preserved. Area under the study of the forms of life existing in prehistoric times, as represented by the fossils of plants, animals, and other organisms investigated using the discipline of paleontology."/>
-	<tag key="historic" value="ruins" description="Remains of structures that were once complete, but have fallen into partial or complete disrepair." iconName="tourist_ruin" areaColor="663300"/>
+	<tag key="historic" value="paleontological_site"/>
+	<tag key="historic" value="ruins" iconName="tourist_ruin" areaColor="663300"/>
 	<tag key="historic" value="rune_stone"/>
-	<tag key="historic" value="ship" description="A tag for a de-commissioned ship/submarine which generally remains in one place"/>
+	<tag key="historic" value="ship"/>
 	<tag key="historic" value="tomb"/>
-	<tag key="historic" value="tree_shrine" description="A tree with a religious image on it"/>
-	<tag key="historic" value="wayside_cross" description="Cross, symbol of christian faith." areaColor="663300"/>
-	<tag key="historic" value="wayside_shrine" description="Historical shrine often showing a religious depiction." areaColor="663300"/>
-	<tag key="historic" value="wreck" description="A a nautical craft that has unintentionally been sunk or destroyed." iconName="tourist_wreck"/>
+	<tag key="historic" value="tree_shrine"/>
+	<tag key="historic" value="wayside_cross" areaColor="663300"/>
+	<tag key="historic" value="wayside_shrine" areaColor="663300"/>
+	<tag key="historic" value="wreck" iconName="tourist_wreck"/>
 	<tag key="historic" value="yes"/>
 
 	<tag key="horse" value="designated"/>
 	<tag key="horse" value="no"/>
 
-	<tag key="hunting" value="raised_hide" description="A raised hide."/>
+	<tag key="hunting" value="raised_hide"/>
 
 	<tag key="ice_road" value="yes"/>
 
 	<tag key="incline" value="down"/>
 	<tag key="incline" value="up"/>
 
-	<tag key="indoor" value="area" type="way" description="An area inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
-	<tag key="indoor" value="corridor" type="way" description="A corridor inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
-	<tag key="indoor" value="room" type="way" description="A room inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
-	<tag key="indoor" value="wall" type="way" description="A wall inside a building" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="indoor" value="area" type="way" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="indoor" value="corridor" type="way" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="indoor" value="room" type="way" lineColor="A52A2A" lineWidth="1.000000"/>
+	<tag key="indoor" value="wall" type="way" lineColor="A52A2A" lineWidth="1.000000"/>
 
-	<tag key="industrial" value="auto_wrecker" description="long term disposal site for wrecked vehicles."/>
+	<tag key="industrial" value="auto_wrecker"/>
 	<tag key="industrial" value="well_cluster"/>
 
 	<tag key="information" value="board" iconName="tourist_map"/>
-	<tag key="information" value="guidepost" description="Used to mark a guidepost/signpost" iconName="tourist_guidepost"/>
+	<tag key="information" value="guidepost" iconName="tourist_guidepost"/>
 	<tag key="information" value="tactile_map" iconName="tourist_map"/>
 	<tag key="information" value="tactile_model"/>
 	<tag key="intermittent" value="yes"/>
 
 	<tag key="junction" value="crossing"/>
-	<tag key="junction" value="filter" description="A special type of junction"/>
+	<tag key="junction" value="filter"/>
 	<tag key="junction" value="jughandle"/>
-	<tag key="junction" value="roundabout" description="A road junction where the traffic goes around a non-traversable island and has right of way." iconName="transport_roundabout_anticlockwise"/>
+	<tag key="junction" value="roundabout" iconName="transport_roundabout_anticlockwise"/>
 
 	<tag key="landform" value="esker"/>
 	<tag key="landform" value="raised_beach"/>
@@ -486,54 +486,54 @@
 	<tag key="landmark" value="windsock" type="node;area"/>
 
 	<tag key="landuse" value="agriculture" type="area"/>
-	<tag key="landuse" value="allotments" type="area" description="An allotment site." areaColor="B1E0C2"/>
+	<tag key="landuse" value="allotments" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="animal_keeping" type="area"/>
-	<tag key="landuse" value="aquaculture" type="area" description="Area on land or sea, where fish, shellfish, or shells are breed"/>
-	<tag key="landuse" value="basin" type="area" description="An area of land artificially graded to hold water." areaColor="0000BF"/>
-	<tag key="landuse" value="brownfield" type="area" description="Land scheduled for new development" areaColor="ECBA32"/>
+	<tag key="landuse" value="aquaculture" type="area"/>
+	<tag key="landuse" value="basin" type="area" areaColor="0000BF"/>
+	<tag key="landuse" value="brownfield" type="area" areaColor="ECBA32"/>
 	<tag key="landuse" value="building_site" type="area"/>
-	<tag key="landuse" value="cemetery" type="area" description="Used to mark a cemetery area" iconName="place_of_worship_unknown3" areaColor="B1EFC8"/>
-	<tag key="landuse" value="commercial" type="area" description="Predominantly offices, business parks, etc." iconName="building_generic" areaColor="DBDBDB"/>
+	<tag key="landuse" value="cemetery" type="area" iconName="place_of_worship_unknown3" areaColor="B1EFC8"/>
+	<tag key="landuse" value="commercial" type="area" iconName="building_generic" areaColor="DBDBDB"/>
 	<tag key="landuse" value="conservation" type="area"/>
-	<tag key="landuse" value="construction" type="area" description="An area being built on." iconName="building_generic" lineColor="FFFF00" areaColor="FFFF00" lineWidth="1.000000"/>
-	<tag key="landuse" value="depot" type="area" description="An area used as a depot for trains, buses or trams."/>
-	<tag key="landuse" value="farm" type="area" description="Area of farmland used for tillage and pasture (animals, vegetables, flowers, fruit growing)." iconName="landuse_grass" areaColor="B1E0C2"/>
+	<tag key="landuse" value="construction" type="area" iconName="building_generic" lineColor="FFFF00" areaColor="FFFF00" lineWidth="1.000000"/>
+	<tag key="landuse" value="depot" type="area"/>
+	<tag key="landuse" value="farm" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
 	<tag key="landuse" value="farmland" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
-	<tag key="landuse" value="farmyard" type="area" description="Area of land with farm buildings (farmhouse, dwellings, farmsteads, sheeds, stables, barns, equipment sheds, feed bunker)" iconName="landuse_grass" areaColor="F0F0F0"/>
+	<tag key="landuse" value="farmyard" type="area" iconName="landuse_grass" areaColor="F0F0F0"/>
 	<tag key="landuse" value="farmyards" type="area"/>
 	<tag key="landuse" value="field" type="area"/>
 	<tag key="landuse" value="fishfarm" type="area"/>
-	<tag key="landuse" value="forest" type="area" description="Managed woodland or woodland plantation. See also natural=wood ." iconName="landuse_coniferous" areaColor="B1EFC8"/>
-	<tag key="landuse" value="garages" type="area" description="Garages" areaColor="F0F0F0"/>
-	<tag key="landuse" value="grass" type="area" description="area where grass grows" iconName="landuse_grass" areaColor="B1E0C2"/>
+	<tag key="landuse" value="forest" type="area" iconName="landuse_coniferous" areaColor="B1EFC8"/>
+	<tag key="landuse" value="garages" type="area" areaColor="F0F0F0"/>
+	<tag key="landuse" value="grass" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
 	<tag key="landuse" value="grave_yard" type="area"/>
-	<tag key="landuse" value="greenfield" type="area" description="A greenfield is scheduled to turn into a construction site." areaColor="B1EC5C"/>
-	<tag key="landuse" value="greenhouse_horticulture" type="area" description="Land area used for growing plants in greenhouses." areaColor="B1E0C2"/>
-	<tag key="landuse" value="harbour" type="area" description="The harbour land, consisting of queys, wharfs, piers, warehouses, storage areas, stockpiles, service roads, railway tracks, and much more. Often behind a fence with its own access control."/>
+	<tag key="landuse" value="greenfield" type="area" areaColor="B1EC5C"/>
+	<tag key="landuse" value="greenhouse_horticulture" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="harbour" type="area"/>
 	<tag key="landuse" value="highway" type="area"/>
-	<tag key="landuse" value="industrial" type="area" description="Predominantly workshops, factories or warehouses" iconName="building_generic" areaColor="ECD8FF"/>
-	<tag key="landuse" value="landfill" type="area" description="Where waste is collected, sorted or covered over" areaColor="663300"/>
-	<tag key="landuse" value="meadow" type="area" description="Wildflower Grassland where plants set seed" areaColor="B1E0C2"/>
-	<tag key="landuse" value="military" type="area" description="Area used for military purposes" iconName="poi_military_bunker" areaColor="B62C2C"/>
+	<tag key="landuse" value="industrial" type="area" iconName="building_generic" areaColor="ECD8FF"/>
+	<tag key="landuse" value="landfill" type="area" areaColor="663300"/>
+	<tag key="landuse" value="meadow" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="military" type="area" iconName="poi_military_bunker" areaColor="B62C2C"/>
 	<tag key="landuse" value="observatory" type="area"/>
-	<tag key="landuse" value="orchard" type="area" description="Used to mark intentional planting of trees or shrubs maintained for food production" iconName="landuse_grass" areaColor="B1E0C2"/>
-	<tag key="landuse" value="peat_cutting" type="area" description="An excavation created by the removal of peat"/>
+	<tag key="landuse" value="orchard" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
+	<tag key="landuse" value="peat_cutting" type="area"/>
 	<tag key="landuse" value="piste" type="area"/>
-	<tag key="landuse" value="plant_nursery" type="area" description="Represents land that is used solely for plant nursery's"/>
-	<tag key="landuse" value="pond" type="area" description="A man made area of water used for various processes such as sewage treatment, oxidation, etc."/>
-	<tag key="landuse" value="quarry" type="area" description="Surface mineral extraction" iconName="poi_mine" areaColor="888888"/>
-	<tag key="landuse" value="railway" type="area" description="for marshalling yards and sidings, railway sheds, bits of grass with old rails and hardware strewn around, train washes, etc..." areaColor="888888"/>
-	<tag key="landuse" value="recreation_ground" type="area" description="An open green space for general recreation, which often include formal or informal pitches, nets and so on. Often municipally owned, but sometimes also part of colleges or companies." areaColor="B1E0C2"/>
-	<tag key="landuse" value="reservoir" type="area" description="Man made body of stored water. May be covered or uncovered." areaColor="0000BF"/>
-	<tag key="landuse" value="residential" type="area" description="Predominantly houses or apartment buildings." iconName="building_generic" areaColor="F0F0F0"/>
-	<tag key="landuse" value="retail" type="area" description="Predominantly shops" iconName="building_generic" areaColor="DBDBDB"/>
-	<tag key="landuse" value="salt_pond" type="area" description="A place where sea water is evaporated to extract its salt"/>
+	<tag key="landuse" value="plant_nursery" type="area"/>
+	<tag key="landuse" value="pond" type="area"/>
+	<tag key="landuse" value="quarry" type="area" iconName="poi_mine" areaColor="888888"/>
+	<tag key="landuse" value="railway" type="area" areaColor="888888"/>
+	<tag key="landuse" value="recreation_ground" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="reservoir" type="area" areaColor="0000BF"/>
+	<tag key="landuse" value="residential" type="area" iconName="building_generic" areaColor="F0F0F0"/>
+	<tag key="landuse" value="retail" type="area" iconName="building_generic" areaColor="DBDBDB"/>
+	<tag key="landuse" value="salt_pond" type="area"/>
 	<tag key="landuse" value="street" type="area"/>
-	<tag key="landuse" value="traffic_island" type="area" description="Usually a pedestrian refuge in the middle of highways linked by crossings."/>
+	<tag key="landuse" value="traffic_island" type="area"/>
 	<tag key="landuse" value="trees" type="area"/>
 	<tag key="landuse" value="utility" type="area"/>
-	<tag key="landuse" value="village_green" type="area" description="A village green is a distinctive part of a village centre; [[wiktionary:village green]], [[wikipedia:Village green]]" areaColor="B1E0C2"/>
-	<tag key="landuse" value="vineyard" type="area" description="Used to tag vineyards, a piece of land where grapes are grown." iconName="landuse_grass" areaColor="B1E0C2"/>
+	<tag key="landuse" value="village_green" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="vineyard" type="area" iconName="landuse_grass" areaColor="B1E0C2"/>
 	<tag key="landuse" value="wasteland" type="area"/>
 	<tag key="landuse" value="well" type="area"/>
 	<tag key="landuse" value="wellsite" type="area"/>
@@ -548,42 +548,42 @@
 	<tag key="leisure" value="arena" type="node;area"/>
 	<tag key="leisure" value="bathing_place" type="node;area"/>
 	<tag key="leisure" value="bbq" type="node;area"/>
-	<tag key="leisure" value="beach_resort" type="node;area" description="A managed beach, including within the boundary any associated facilities. Entry may also require payment of a fee." iconName="tourist_beach"/>
-	<tag key="leisure" value="bird_hide" type="node;area" description="A bird hide is a place that is used to observe wildlife, especially birds."/>
-	<tag key="leisure" value="common" type="node;area" description="An area where the public can walk anywhere." areaColor="C7F1A3"/>
-	<tag key="leisure" value="dance" type="node;area" description="Places to go dancing."/>
+	<tag key="leisure" value="beach_resort" type="node;area" iconName="tourist_beach"/>
+	<tag key="leisure" value="bird_hide" type="node;area"/>
+	<tag key="leisure" value="common" type="node;area" areaColor="C7F1A3"/>
+	<tag key="leisure" value="dance" type="node;area"/>
 	<tag key="leisure" value="dancing" type="node;area"/>
-	<tag key="leisure" value="dog_park" type="node;area" description="Designated area, with or without a fenced boundary, where dog-owners are permitted to exercise their pets unrestrained" areaColor="C7F1A3"/>
+	<tag key="leisure" value="dog_park" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="fishing" type="node;area" areaColor="C7F1A3"/>
-	<tag key="leisure" value="fitness_station" type="node;area" description="An outdoor facility where people can practise typical fitness excercises"/>
+	<tag key="leisure" value="fitness_station" type="node;area"/>
 	<tag key="leisure" value="foot_bath" type="node;area"/>
-	<tag key="leisure" value="garden" type="node;area" description="Place where flowers and other plants are grown in a decorative and structured manner or for scientific purposes." areaColor="C7F1A3"/>
-	<tag key="leisure" value="golf_course" type="node;area" description="A place or area that you can play golf." iconName="sport_golf" areaColor="C7F1A3"/>
-	<tag key="leisure" value="hackerspace" type="node;area" description="The location of a hackerspace"/>
+	<tag key="leisure" value="garden" type="node;area" areaColor="C7F1A3"/>
+	<tag key="leisure" value="golf_course" type="node;area" iconName="sport_golf" areaColor="C7F1A3"/>
+	<tag key="leisure" value="hackerspace" type="node;area"/>
 	<tag key="leisure" value="horse_riding" type="node;area"/>
-	<tag key="leisure" value="ice_rink" type="node;area" description="A place where you can skate or play ice hockey." areaColor="C7F1A3"/>
+	<tag key="leisure" value="ice_rink" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="landscape_reserve" type="node;area"/>
-	<tag key="leisure" value="marina" type="node;area" description="For mooring leisure yachts and motor boats" iconName="transport_marina" areaColor="0070CF"/>
+	<tag key="leisure" value="marina" type="node;area" iconName="transport_marina" areaColor="0070CF"/>
 	<tag key="leisure" value="maze" type="node;area"/>
-	<tag key="leisure" value="miniature_golf" type="node;area" description="A place or area that you can play miniature golf." areaColor="C7F1A3"/>
+	<tag key="leisure" value="miniature_golf" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="nature_reserve" type="node;area" areaColor="C7F1A3"/>
-	<tag key="leisure" value="paddling_pool" type="node;area" description="A paddling pool"/>
-	<tag key="leisure" value="park" type="node;area" description="A park. Open, green area for recreation, usually municipal" areaColor="C7F1A3"/>
+	<tag key="leisure" value="paddling_pool" type="node;area"/>
+	<tag key="leisure" value="park" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="picnic" type="node;area"/>
 	<tag key="leisure" value="picnic_site" type="node;area"/>
 	<tag key="leisure" value="picnic_table" type="node;area"/>
-	<tag key="leisure" value="pitch" type="node;area" description="An area designed for playing a particular sport, normally designated with appropriate markings." iconName="sport_leisure_centre" areaColor="C7F1A3"/>
-	<tag key="leisure" value="playground" type="node;area" description="Marks a children's playground." iconName="amenity_playground" areaColor="C7F1A3"/>
+	<tag key="leisure" value="pitch" type="node;area" iconName="sport_leisure_centre" areaColor="C7F1A3"/>
+	<tag key="leisure" value="playground" type="node;area" iconName="amenity_playground" areaColor="C7F1A3"/>
 	<tag key="leisure" value="recreation_ground" iconName="sport_leisure_centre"/>
 	<tag key="leisure" value="sailing_club" type="node;area"/>
-	<tag key="leisure" value="ski_playground" type="node;area" description="a designated location developed specially for kids"/>
-	<tag key="leisure" value="slipway" type="node;area" description="A slipway is a ramp into the water for launching a boat." iconName="transport_slipway" areaColor="C7F1A3"/>
-	<tag key="leisure" value="sports_centre" type="node;area" description="A distinct facility where a range of sports take place within an enclosed area (gym)" iconName="sport_leisure_centre" areaColor="C7F1A3"/>
+	<tag key="leisure" value="ski_playground" type="node;area"/>
+	<tag key="leisure" value="slipway" type="node;area" iconName="transport_slipway" areaColor="C7F1A3"/>
+	<tag key="leisure" value="sports_centre" type="node;area" iconName="sport_leisure_centre" areaColor="C7F1A3"/>
 	<tag key="leisure" value="stadium" type="node;area" iconName="sport_stadium" areaColor="C7F1A3"/>
-	<tag key="leisure" value="swimming_pool" type="node;area" description="A place built for swimming" areaColor="C7F1A3"/>
+	<tag key="leisure" value="swimming_pool" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="track" type="node;area" iconName="sport_leisure_centre" lineColor="C7F1A3" areaColor="C7F1A3" lineWidth="2.000000"/>
 	<tag key="leisure" value="video_arcade" type="node;area"/>
-	<tag key="leisure" value="water_park" type="node;area" description="An amusement area with water slides, recreational swimming pools and dressing rooms." areaColor="C7F1A3"/>
+	<tag key="leisure" value="water_park" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="wildlife_hide" type="node;area"/>
 
 	<tag key="lines" value="phone"/>
@@ -602,83 +602,83 @@
 
 	<tag key="lock" value="yes"/>
 
-	<tag key="man_made" value="adit" type="node;area" description="From wikipedia: An adit is a type of entrance to an underground mine which is horizontal or nearly horizontal" areaColor="D8D8D8"/>
-	<tag key="man_made" value="antenna" type="node;area" description="Used for some kind of antennas."/>
-	<tag key="man_made" value="archimedes_screw" type="node;area" description="The Archimedes screw, also known as Archimedes' screw, the Archimedean screw or the screwpump is a machine historically used for transferring water from a low-lying body of water into irrigation ditches."/>
+	<tag key="man_made" value="adit" type="node;area" areaColor="D8D8D8"/>
+	<tag key="man_made" value="antenna" type="node;area"/>
+	<tag key="man_made" value="archimedes_screw" type="node;area"/>
 	<tag key="man_made" value="beacon" type="node;area" areaColor="D8D8D8"/>
-	<tag key="man_made" value="breakwater" type="node;area" description="A man-made structure designed to protect a shore or harbour from the sea and waves."/>
+	<tag key="man_made" value="breakwater" type="node;area"/>
 	<tag key="man_made" value="buoy" type="node;area"/>
-	<tag key="man_made" value="cairn" type="node;area" description="A mound of stones, usually conical or pyramidal, raised as a landmark or to designate a point of importance in surveying."/>
+	<tag key="man_made" value="cairn" type="node;area"/>
 	<tag key="man_made" value="campanile" type="node;area"/>
 	<tag key="man_made" value="chimney" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="communications_tower" type="node;area" iconName="poi_tower_communications"/>
-	<tag key="man_made" value="compass_rose" type="node;area" description="This item marks a compass rose or wind rose."/>
-	<tag key="man_made" value="crane" type="node;area" description="A tag for a stationary, permanent crane." iconName="poi_crane" areaColor="D8D8D8"/>
+	<tag key="man_made" value="compass_rose" type="node;area"/>
+	<tag key="man_made" value="crane" type="node;area" iconName="poi_crane" areaColor="D8D8D8"/>
 	<tag key="man_made" value="cross" type="node;area"/>
-	<tag key="man_made" value="cutline" type="node;area" description="Used to mark cut lines in forests."/>
+	<tag key="man_made" value="cutline" type="node;area"/>
 	<tag key="man_made" value="dike" type="node;area"/>
 	<tag key="man_made" value="dovecote" type="node;area"/>
-	<tag key="man_made" value="dyke" type="node;area" description="A dyke is a an embankment built to restrict the flow of water or other liquids"/>
-	<tag key="man_made" value="embankment" type="node;area" description="An embankment."/>
+	<tag key="man_made" value="dyke" type="node;area"/>
+	<tag key="man_made" value="embankment" type="node;area"/>
 	<tag key="man_made" value="flagpole" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="flare" type="node;area"/>
 	<tag key="man_made" value="floating_storage" type="node;area"/>
 	<tag key="man_made" value="gasometer" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="goods_conveyor" type="node;area"/>
-	<tag key="man_made" value="ground_station" type="node;area" description="A building containing receiving devices to record information from satellites."/>
-	<tag key="man_made" value="groyne" type="node;area" description="A rigid structure built from an shoreline or from a bank (in rivers) that interrupts water flow and limits the movement of sediment" areaColor="D8D8D8"/>
-	<tag key="man_made" value="jetty" type="node;area" description="A structure of wood or stone extended into the sea to influence the current or tide, or to protect a harbor; [[wiktionary:jetty]]; [[wikipedia:Jetty]]"/>
-	<tag key="man_made" value="kiln" type="node;area" description="A thermally insulated chamber in which temperature is controlled in order to change the state of the item placed inside, usually though the process of burning, baking, drying or smelting."/>
+	<tag key="man_made" value="ground_station" type="node;area"/>
+	<tag key="man_made" value="groyne" type="node;area" areaColor="D8D8D8"/>
+	<tag key="man_made" value="jetty" type="node;area"/>
+	<tag key="man_made" value="kiln" type="node;area"/>
 	<tag key="man_made" value="levee" type="node;area"/>
-	<tag key="man_made" value="lighthouse" type="node;area" description="A light signal assisting navigation on sea." iconName="transport_lighthouse" areaColor="D8D8D8"/>
+	<tag key="man_made" value="lighthouse" type="node;area" iconName="transport_lighthouse" areaColor="D8D8D8"/>
 	<tag key="man_made" value="mast" type="node;area"/>
-	<tag key="man_made" value="mineshaft" type="node;area" description="a vertical tunnel" iconName="poi_mine" areaColor="D8D8D8"/>
+	<tag key="man_made" value="mineshaft" type="node;area" iconName="poi_mine" areaColor="D8D8D8"/>
 	<tag key="man_made" value="monitoring_station" type="node;area"/>
 	<tag key="man_made" value="obelisk" type="node;area"/>
 	<tag key="man_made" value="offshore_platform" type="node;area"/>
 	<tag key="man_made" value="oil_well" type="node;area"/>
 	<tag key="man_made" value="petroleum_well" type="node;area"/>
-	<tag key="man_made" value="pier" type="node;area" description="A pier is a raised walkway over water, supported by widely spread piles or pillars." lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
-	<tag key="man_made" value="pipeline" type="node;area" description="A tag for major pipelines - gas, water, oil, etc." lineColor="660000" lineWidth="2.000000"/>
+	<tag key="man_made" value="pier" type="node;area" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
+	<tag key="man_made" value="pipeline" type="node;area" lineColor="660000" lineWidth="2.000000"/>
 	<tag key="man_made" value="power_fossil" type="node;area"/>
 	<tag key="man_made" value="power_hydro" type="node;area"/>
 	<tag key="man_made" value="power_nuclear" type="node;area"/>
 	<tag key="man_made" value="power_wind" type="node;area"/>
-	<tag key="man_made" value="pumping_rig" type="node;area" description="A tag for pumping platforms - gas, oil, etc.."/>
-	<tag key="man_made" value="reservoir_covered" type="node;area" description="A covered reservoir is a large man-made tank for holding fresh water" areaColor="D8D8D8"/>
+	<tag key="man_made" value="pumping_rig" type="node;area"/>
+	<tag key="man_made" value="reservoir_covered" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="riverbank" type="node;area"/>
-	<tag key="man_made" value="septic_tank" type="node;area" description="Septic Tank"/>
+	<tag key="man_made" value="septic_tank" type="node;area"/>
 	<tag key="man_made" value="silo" type="node;area" iconName="manmade_silo"/>
 	<tag key="man_made" value="snow_fence" type="node;area"/>
 	<tag key="man_made" value="storage_tank" type="node;area"/>
 	<tag key="man_made" value="submarine_cable" type="node;area"/>
-	<tag key="man_made" value="surveillance" type="node;area" description="This Item marks a surveillance camera. This can be used to illustrate the omnipresence of Big Brother." areaColor="D8D8D8"/>
-	<tag key="man_made" value="survey_point" type="node;area" description="Triangulation pillars, geodetic vertices, and fixed equipment used by topographers (e.g. DGPS radio stations)." iconName="amenity_survey_point" areaColor="D8D8D8"/>
+	<tag key="man_made" value="surveillance" type="node;area" areaColor="D8D8D8"/>
+	<tag key="man_made" value="survey_point" type="node;area" iconName="amenity_survey_point" areaColor="D8D8D8"/>
 	<tag key="man_made" value="telescope" type="node;area"/>
 	<tag key="man_made" value="tower" type="node;area" iconName="poi_tower_lookout" areaColor="D8D8D8"/>
-	<tag key="man_made" value="utility_pole" type="node;area" description="A single pole supporting elevation of any of various and unspecified public utilities, such as power transmission, lighting or telephony."/>
-	<tag key="man_made" value="wastewater_plant" type="node;area" description="Facilities used to treat wastewater." areaColor="D8D8D8"/>
-	<tag key="man_made" value="water_tower" type="node;area" description="An elevated storage container for drinking water." iconName="water_tower" areaColor="D8D8D8"/>
-	<tag key="man_made" value="water_well" type="node;area" description="A water well is an excavation or structure created in the ground by digging, driving, boring or drilling to access groundwater  in underground aquifers." areaColor="D8D8D8"/>
-	<tag key="man_made" value="water_works" type="node;area" description="Place where drinking water is found and applied to the local waterpipes network." areaColor="D8D8D8"/>
-	<tag key="man_made" value="watermill" type="node;area" description="A watermill is a mill driven by water power." areaColor="D8D8D8"/>
+	<tag key="man_made" value="utility_pole" type="node;area"/>
+	<tag key="man_made" value="wastewater_plant" type="node;area" areaColor="D8D8D8"/>
+	<tag key="man_made" value="water_tower" type="node;area" iconName="water_tower" areaColor="D8D8D8"/>
+	<tag key="man_made" value="water_well" type="node;area" areaColor="D8D8D8"/>
+	<tag key="man_made" value="water_works" type="node;area" areaColor="D8D8D8"/>
+	<tag key="man_made" value="watermill" type="node;area" areaColor="D8D8D8"/>
 	<tag key="man_made" value="well" type="node;area"/>
 	<tag key="man_made" value="wildlife_crossing" type="node;area"/>
-	<tag key="man_made" value="windmill" type="node;area" description="A traditional windmill." areaColor="D8D8D8"/>
-	<tag key="man_made" value="windpump" type="node;area" description="Some windpumps in Loeriesfontein, South Africa."/>
-	<tag key="man_made" value="works" type="node;area" description="Industrial building to produce something." areaColor="D8D8D8"/>
+	<tag key="man_made" value="windmill" type="node;area" areaColor="D8D8D8"/>
+	<tag key="man_made" value="windpump" type="node;area"/>
+	<tag key="man_made" value="works" type="node;area" areaColor="D8D8D8"/>
 
 	<tag key="maritime" value="yes"/>
 
-	<tag key="microbrewery" value="yes" description="location houses a microbrewery"/>
+	<tag key="microbrewery" value="yes"/>
 
-	<tag key="military" value="airfield" type="node;area" description="A place where military planes take off and land." areaColor="B62C2C"/>
-	<tag key="military" value="barracks" type="node;area" description="Buildings where soldiers live and work" areaColor="B62C2C"/>
-	<tag key="military" value="bunker" type="node;area" description="A building reinforced to withstand attack" iconName="poi_military_bunker" areaColor="B62C2C"/>
+	<tag key="military" value="airfield" type="node;area" areaColor="B62C2C"/>
+	<tag key="military" value="barracks" type="node;area" areaColor="B62C2C"/>
+	<tag key="military" value="bunker" type="node;area" iconName="poi_military_bunker" areaColor="B62C2C"/>
 	<tag key="military" value="checkpoint" type="node;area"/>
-	<tag key="military" value="danger_area" type="node;area" description="An exclusion zone around something like a firing range" areaColor="B62C2C"/>
-	<tag key="military" value="naval_base" type="node;area" description="A tag for navy bases."/>
-	<tag key="military" value="range" type="node;area" description="A place where soldiers practice" areaColor="B62C2C"/>
+	<tag key="military" value="danger_area" type="node;area" areaColor="B62C2C"/>
+	<tag key="military" value="naval_base" type="node;area"/>
+	<tag key="military" value="range" type="node;area" areaColor="B62C2C"/>
 
 
 	<tag key="motor_vehicle" value="destination"/>
@@ -693,57 +693,57 @@
 
 	<tag key="mountain_pass" value="yes" iconName="poi_mountain_pass"/>
 
-	<tag key="natural" value="arete" type="node;area" description="Used to tag a peaked ridge."/>
-	<tag key="natural" value="avalanche_dam" type="node;area" description="dam used for protection from avalanches"/>
-	<tag key="natural" value="bare_rock" type="node;area" description="For areas of solid visible rock."/>
-	<tag key="natural" value="bay" type="node;area" description="Area of water mostly surrounded by land." areaColor="002F00"/>
-	<tag key="natural" value="beach" type="node;area" description="Area of shore which is fairly open, slopes smoothly to the water, and is free of trees" areaColor="F8DBA2"/>
-	<tag key="natural" value="bedrock" type="node;area" description="Native consolidated rock."/>
+	<tag key="natural" value="arete" type="node;area"/>
+	<tag key="natural" value="avalanche_dam" type="node;area"/>
+	<tag key="natural" value="bare_rock" type="node;area"/>
+	<tag key="natural" value="bay" type="node;area" areaColor="002F00"/>
+	<tag key="natural" value="beach" type="node;area" areaColor="F8DBA2"/>
+	<tag key="natural" value="bedrock" type="node;area"/>
 	<tag key="natural" value="breaker" type="node;area"/>
-	<tag key="natural" value="cape" type="node;area" description="A piece of elevated land sticking out into the sea or large lake."/>
-	<tag key="natural" value="cave_entrance" type="node;area" description="The entrance to a cave." iconName="poi_cave" areaColor="002F00"/>
-	<tag key="natural" value="cliff" type="node;area" description="Used to tag a natural cliff." lineColor="002F00" areaColor="002F00" lineWidth="2.000000"/>
-	<tag key="natural" value="coastline" type="node;area" description="Used to mark a coastline." lineColor="0000FF" lineWidth="1.000000"/>
+	<tag key="natural" value="cape" type="node;area"/>
+	<tag key="natural" value="cave_entrance" type="node;area" iconName="poi_cave" areaColor="002F00"/>
+	<tag key="natural" value="cliff" type="node;area" lineColor="002F00" areaColor="002F00" lineWidth="2.000000"/>
+	<tag key="natural" value="coastline" type="node;area" lineColor="0000FF" lineWidth="1.000000"/>
 	<tag key="natural" value="coastline_deprecation" type="node;area"/>
 	<tag key="natural" value="continental_shelf" type="node;area"/>
 	<tag key="natural" value="desert" type="node;area"/>
 	<tag key="natural" value="dune" type="node;area"/>
 	<tag key="natural" value="esker" type="node;area"/>
-	<tag key="natural" value="fell" type="node;area" description="Bare upper lying uncultivated land principally covered with grass and often grazed." areaColor="002F00"/>
-	<tag key="natural" value="glacier" type="node;area" description="Glaciers are a prominent feature in many northern countries." areaColor="FFFFFF"/>
-	<tag key="natural" value="grassland" type="node;area" description="Natural areas where the vegetation is dominated by grasses (Poaceae) and other herbaceous (non-woody) plants."/>
-	<tag key="natural" value="heath" type="node;area" description="A dwarf-shrub habitat, characterised by open, low growing woody vegetation, often dominated by plants of the Ericaceae." areaColor="FFFFC0"/>
-	<tag key="natural" value="lake" type="node;area" description="Used to mark a body of standing water."/>
+	<tag key="natural" value="fell" type="node;area" areaColor="002F00"/>
+	<tag key="natural" value="glacier" type="node;area" areaColor="FFFFFF"/>
+	<tag key="natural" value="grassland" type="node;area"/>
+	<tag key="natural" value="heath" type="node;area" areaColor="FFFFC0"/>
+	<tag key="natural" value="lake" type="node;area"/>
 	<tag key="natural" value="lakebank" type="node;area"/>
-	<tag key="natural" value="land" type="node;area" description="land within a water body. Redundant tag, should no longer be used." areaColor="002F00"/>
+	<tag key="natural" value="land" type="node;area" areaColor="002F00"/>
 	<tag key="natural" value="landform" type="node;area"/>
-	<tag key="natural" value="lava" type="node;area" description="Lava field close to vulcano."/>
+	<tag key="natural" value="lava" type="node;area"/>
 	<tag key="natural" value="marsh" type="node;area"/>
 	<tag key="natural" value="meadow" type="node;area"/>
 	<tag key="natural" value="moraine" type="node;area"/>
 	<tag key="natural" value="mud" type="node;area" areaColor="CBA762"/>
 	<tag key="natural" value="palaeontological_site" type="node;area"/>
-	<tag key="natural" value="peak" type="node;area" description="The the top (summit) of a hill or mountain." iconName="poi_peak2" areaColor="663300"/>
+	<tag key="natural" value="peak" type="node;area" iconName="poi_peak2" areaColor="663300"/>
 	<tag key="natural" value="reef" type="node;area"/>
-	<tag key="natural" value="ridge" type="node;area" description="Used to tag a mountain or hill ridge."/>
+	<tag key="natural" value="ridge" type="node;area"/>
 	<tag key="natural" value="riverbank" type="node;area"/>
-	<tag key="natural" value="rock" type="node;area" description="This tag has been suggested for mapping areas of rocks and small skerries that can be used for navigation or that might be a potential danger for navigation."/>
+	<tag key="natural" value="rock" type="node;area"/>
 	<tag key="natural" value="rocks" type="node;area"/>
-	<tag key="natural" value="saddle" type="node;area" description="This property marks a saddle point."/>
-	<tag key="natural" value="sand" type="node;area" description="Large area covered with sand" areaColor="F8DBA2"/>
-	<tag key="natural" value="scree" type="node;area" description="An accumulation of loose rocks" areaColor="002F00"/>
-	<tag key="natural" value="scrub" type="node;area" description="Uncultivated land covered with bushes or stunted trees." areaColor="007000"/>
-	<tag key="natural" value="shoal" type="node;area" description="An area of the sea floor which nears the sea surface (literally, becomes shallow) and can lie completely below it or be exposed at low tide.; [[wiktionary:shoal]]; [[wikipedia:Shoal]]"/>
-	<tag key="natural" value="sinkhole" type="node;area" description="a natural depression"/>
-	<tag key="natural" value="spring" type="node;area" description="A spring is a point where groundwater naturaly flows out of the ground." areaColor="00005F"/>
-	<tag key="natural" value="stone" type="node;area" description="A single notable freestanding rock, which may differ from the composition of the terrain it lies in."/>
-	<tag key="natural" value="tree" type="node;area" description="a single tree, often significant." iconName="tree"/>
-	<tag key="natural" value="tree_row" type="node;area" description="a line of trees"/>
+	<tag key="natural" value="saddle" type="node;area"/>
+	<tag key="natural" value="sand" type="node;area" areaColor="F8DBA2"/>
+	<tag key="natural" value="scree" type="node;area" areaColor="002F00"/>
+	<tag key="natural" value="scrub" type="node;area" areaColor="007000"/>
+	<tag key="natural" value="shoal" type="node;area"/>
+	<tag key="natural" value="sinkhole" type="node;area"/>
+	<tag key="natural" value="spring" type="node;area" areaColor="00005F"/>
+	<tag key="natural" value="stone" type="node;area"/>
+	<tag key="natural" value="tree" type="node;area" iconName="tree"/>
+	<tag key="natural" value="tree_row" type="node;area"/>
 	<tag key="natural" value="tundra" type="node;area"/>
 	<tag key="natural" value="volcano" type="node;area" areaColor="5F0000"/>
-	<tag key="natural" value="water" type="node;area" description="Used to mark body of standing water, such as a lake or pond." areaColor="0000FF"/>
-	<tag key="natural" value="wetland" type="node;area" description="The wetland tag is used for natural areas subject to inundation or with waterlogged ground" areaColor="4F4FF3"/>
-	<tag key="natural" value="wood" type="node;area" description="Woodland with no forestry. See also landuse=forest" areaColor="008000"/>
+	<tag key="natural" value="water" type="node;area" areaColor="0000FF"/>
+	<tag key="natural" value="wetland" type="node;area" areaColor="4F4FF3"/>
+	<tag key="natural" value="wood" type="node;area" areaColor="008000"/>
 
 	<tag key="network" value="VélôToulouse"/>
 	<tag key="network" value="fr_tamtam"/>
@@ -764,28 +764,28 @@
 	<tag key="noname" value="no"/>
 	<tag key="noname" value="yes"/>
 
-	<tag key="odbl" value="clean" description="Used to indicate that there is no non-odbl IPR associated with the feature. Only used in situations where doubt may occur."/>
+	<tag key="odbl" value="clean"/>
 
-	<tag key="office" value="accountant" type="node;area" description="An office for an accountant."/>
-	<tag key="office" value="administrative" type="node;area" description="Local authorities, administrative and supervising institutions that are not related to state government."/>
-	<tag key="office" value="architect" type="node;area" description="An office for an architect or group of architects."/>
-	<tag key="office" value="camping" type="node;area" description="An office at a camping or recreational park. Also called reception."/>
+	<tag key="office" value="accountant" type="node;area"/>
+	<tag key="office" value="administrative" type="node;area"/>
+	<tag key="office" value="architect" type="node;area"/>
+	<tag key="office" value="camping" type="node;area"/>
 	<tag key="office" value="company" type="node;area"/>
-	<tag key="office" value="educational_institution" type="node;area" description="An office for an educational institution."/>
-	<tag key="office" value="employment_agency" type="node;area" description="An office for an employment service."/>
+	<tag key="office" value="educational_institution" type="node;area"/>
+	<tag key="office" value="employment_agency" type="node;area"/>
 	<tag key="office" value="estate_agent" type="node;area" iconName="shopping_estateagent2"/>
-	<tag key="office" value="foundation" type="node;area" description="An office for a foundation."/>
-	<tag key="office" value="government" type="node;area" description="An office of a government agency or department."/>
-	<tag key="office" value="insurance" type="node;area" description="An office for an insurance agent or company."/>
-	<tag key="office" value="it" type="node;area" description="An office for an IT specialist."/>
-	<tag key="office" value="lawyer" type="node;area" description="An office for a lawyer."/>
+	<tag key="office" value="foundation" type="node;area"/>
+	<tag key="office" value="government" type="node;area"/>
+	<tag key="office" value="insurance" type="node;area"/>
+	<tag key="office" value="it" type="node;area"/>
+	<tag key="office" value="lawyer" type="node;area"/>
 	<tag key="office" value="newspaper" type="node;area"/>
-	<tag key="office" value="ngo" type="node;area" description="An office for an non-government organisation."/>
+	<tag key="office" value="ngo" type="node;area"/>
 	<tag key="office" value="non-governmental_organization" type="node;area"/>
-	<tag key="office" value="political_party" type="node;area" description="An office for a Political Party."/>
-	<tag key="office" value="quango" type="node;area" description="An office of a Quango."/>
+	<tag key="office" value="political_party" type="node;area"/>
+	<tag key="office" value="quango" type="node;area"/>
 	<tag key="office" value="research" type="node;area"/>
-	<tag key="office" value="surveyor" type="node;area" description="Office of a company or person doing surveys, this can be land survey, risk and damage evaluations of properties and equipment, opinion surveys or statistics."/>
+	<tag key="office" value="surveyor" type="node;area"/>
 	<tag key="office" value="telecommunication" type="node;area"/>
 	<tag key="office" value="travel_agent" type="node;area"/>
 
@@ -834,44 +834,44 @@
 	<tag key="pilotage" value="boarding_point"/>
 	<tag key="pilotage" value="office"/>
 
-	<tag key="pipeline" value="marker" description="Marker sticks and labels for underground pipelines"/>
-	<tag key="pipeline" value="valve" description="Schieber(-kasten)"/>
+	<tag key="pipeline" value="marker"/>
+	<tag key="pipeline" value="valve"/>
 
 	<tag key="place" value="allotments" type="area"/>
 	<tag key="place" value="area" type="area"/>
-	<tag key="place" value="city" type="area" description="A large populated place, usually over 100,000 inhabitants." iconName="poi_place_city" />
-	<tag key="place" value="continent" type="area" description="Identifies the world's continents" />
-	<tag key="place" value="country" type="area" description="Nation states and other high-level national political/administrative areas." />
+	<tag key="place" value="city" type="area" iconName="poi_place_city" />
+	<tag key="place" value="continent" type="area" />
+	<tag key="place" value="country" type="area" />
 	<tag key="place" value="county" type="area" />
 	<tag key="place" value="district" type="area"/>
 	<tag key="place" value="farm" type="area"/>
-	<tag key="place" value="hamlet" type="area" description="A settlement with less than 100-200 inhabitants." iconName="poi_place_hamlet" />
-	<tag key="place" value="island" type="area" description="An island is any piece of land that is completely surrounded by water and isolated from other significant landmasses." />
-	<tag key="place" value="islet" type="area" description="An islet is any hamlet sized piece of land that is completely surrounded by water and isolated from other landmasses." />
+	<tag key="place" value="hamlet" type="area" iconName="poi_place_hamlet" />
+	<tag key="place" value="island" type="area" />
+	<tag key="place" value="islet" type="area" />
 	<tag key="place" value="isolated_dwelling" type="area" areaColor="8DE3CB"/>
-	<tag key="place" value="locality" type="area" description="A Locality is a named place that has no population." />
+	<tag key="place" value="locality" type="area" />
 	<tag key="place" value="municipality" type="area"/>
-	<tag key="place" value="neighbourhood" type="area" description="A neighbourhood is a smaller named, geographically localised place within a suburb of a larger city or within a town or village" />
-	<tag key="place" value="ocean" type="area" description="The world's five main major oceanic divisions."/>
+	<tag key="place" value="neighbourhood" type="area" />
+	<tag key="place" value="ocean" type="area"/>
 	<tag key="place" value="quarter" type="area"/>
 	<tag key="place" value="region" type="area" />
-	<tag key="place" value="sea" type="area" description="A part of an ocean."/>
-	<tag key="place" value="state" type="area" description="A large sub-national political/administrative area." />
-	<tag key="place" value="suburb" type="area" description="A part of a town or city with a well-known name and often a distinct identity." iconName="poi_place_suburb" />
-	<tag key="place" value="town" type="area" description="A settlement with between 10,000 and 100,000 inhabitants." iconName="poi_place_town" />
-	<tag key="place" value="village" type="area" description="A settlement with between 1,000 and 10,000 inhabitants." iconName="poi_place_village" />
+	<tag key="place" value="sea" type="area"/>
+	<tag key="place" value="state" type="area" />
+	<tag key="place" value="suburb" type="area" iconName="poi_place_suburb" />
+	<tag key="place" value="town" type="area" iconName="poi_place_town" />
+	<tag key="place" value="village" type="area" iconName="poi_place_village" />
 
-	<tag key="power" value="cable" type="way" description="Cabling of low / high voltage lines"/>
-	<tag key="power" value="cable_distribution_cabinet" type="node" description="Cable distribution cabinet"/>
-	<tag key="power" value="generator" type="node" description="A Place where power is generated." iconName="power_station_gas" areaColor="EEEEEE"/>
-	<tag key="power" value="heliostat" type="node" description="A heliostat at the THÉMIS experimental station in France."/>
-	<tag key="power" value="line" type="way" description="A way following the path of power cables." lineColor="FFAC26" lineWidth="1.000000"/>
-	<tag key="power" value="minor_line" type="way" description="Minor power cables, supported by poles and not towers/pylons." iconName="power_low" lineColor="EEEEEE" lineWidth="1.000000"/>
-	<tag key="power" value="pole" type="node" description="Power line pole or small mast" iconName="power_tower_low"/>
-	<tag key="power" value="station" type="node;area" description="Forest Hill Substation" iconName="power_substation" areaColor="EEEEEE"/>
-	<tag key="power" value="sub_station" type="node;area" description="Forest Hill Substation" iconName="power_transformer" areaColor="EEEEEE"/>
-	<tag key="power" value="tower" type="node" description="For towers or pylons carrying high voltage electricity cables. Normally constructed from steel latticework." iconName="power_tower_high2" areaColor="EEEEEE"/>
-	<tag key="power" value="transformer" type="node;area" description="A tag for transformer within a substation." areaColor="EEEEEE"/>
+	<tag key="power" value="cable" type="way"/>
+	<tag key="power" value="cable_distribution_cabinet" type="node"/>
+	<tag key="power" value="generator" type="node" iconName="power_station_gas" areaColor="EEEEEE"/>
+	<tag key="power" value="heliostat" type="node"/>
+	<tag key="power" value="line" type="way" lineColor="FFAC26" lineWidth="1.000000"/>
+	<tag key="power" value="minor_line" type="way" iconName="power_low" lineColor="EEEEEE" lineWidth="1.000000"/>
+	<tag key="power" value="pole" type="node" iconName="power_tower_low"/>
+	<tag key="power" value="station" type="node;area" iconName="power_substation" areaColor="EEEEEE"/>
+	<tag key="power" value="sub_station" type="node;area" iconName="power_transformer" areaColor="EEEEEE"/>
+	<tag key="power" value="tower" type="node" iconName="power_tower_high2" areaColor="EEEEEE"/>
+	<tag key="power" value="transformer" type="node;area" areaColor="EEEEEE"/>
 	<tag key="power" value="underground_cable" type="way"/>
 
 	<tag key="power_source" value="biofuel"/>
@@ -888,13 +888,13 @@
 	<tag key="psv" value="designated"/>
 	<tag key="psv" value="yes"/>
 
-	<tag key="public_transport" value="pay_scale_area" description="Used for NaPTAN imported PlusBus zones."/>
-	<tag key="public_transport" value="platform" description="The place where passengers are waiting for the public transport vehicles." lineColor="809BC0" lineWidth="1.000000"/>
+	<tag key="public_transport" value="pay_scale_area"/>
+	<tag key="public_transport" value="platform" lineColor="809BC0" lineWidth="1.000000"/>
 	<tag key="public_transport" value="station"/>
-	<tag key="public_transport" value="stop_area" description="A relation that contains all elements of a train, subway, monorail, tram, bus, trolleybus, aerialway, or ferry stop."/>
-	<tag key="public_transport" value="stop_position" description="A stop position is the place where public transport vehicle stop."/>
+	<tag key="public_transport" value="stop_area"/>
+	<tag key="public_transport" value="stop_position"/>
 
-	<tag key="radar_transponder" value="ramark" description="Objects with active transponders of type '''ramark'''"/>
+	<tag key="radar_transponder" value="ramark"/>
 	<tag key="radar_transponder:band" value="S"/>
 	<tag key="radar_transponder:band" value="X"/>
 
@@ -907,36 +907,36 @@
 	<tag key="radio_transponder:category" value="directional"/>
 	<tag key="radio_transponder:category" value="rotating_pattern"/>
 
-	<tag key="railway" value="PRT" type="way" description="Used to describe sections of ''personal rapid transport'' track."/>
-	<tag key="railway" value="abandoned" type="way" description="abandoned rails; track has been removed and the line may have been reused or left to decay" lineColor="404040" lineWidth="1.000000"/>
+	<tag key="railway" value="PRT" type="way"/>
+	<tag key="railway" value="abandoned" type="way" lineColor="404040" lineWidth="1.000000"/>
 	<tag key="railway" value="buffer_stop" type="node" areaColor="404040"/>
 	<tag key="railway" value="construction" type="way"/>
-	<tag key="railway" value="crossing" type="node" description="Pedestrians can cross a railway here" areaColor="F7EFB7"/>
-	<tag key="railway" value="derail" description="Derails uncontrolled vehicles to protect the main track"/>
-	<tag key="railway" value="disused" type="way" description="railway which present but no longer used" lineColor="404040" lineWidth="1.000000"/>
-	<tag key="railway" value="funicular" type="way" description="Cable driven inclined railway." lineColor="404040" lineWidth="1.000000"/>
-	<tag key="railway" value="halt" description="A small station, may not have a platform, trains may only stop on request."/>
-	<tag key="railway" value="level_crossing" type="node" description="A crossing between a railway and a road." areaColor="F7EFB7"/>
+	<tag key="railway" value="crossing" type="node" areaColor="F7EFB7"/>
+	<tag key="railway" value="derail"/>
+	<tag key="railway" value="disused" type="way" lineColor="404040" lineWidth="1.000000"/>
+	<tag key="railway" value="funicular" type="way" lineColor="404040" lineWidth="1.000000"/>
+	<tag key="railway" value="halt"/>
+	<tag key="railway" value="level_crossing" type="node" areaColor="F7EFB7"/>
 	<tag key="railway" value="light_rail" type="way" lineColor="808080" lineWidth="2.000000"/>
 	<tag key="railway" value="milestone" type="node"/>
 	<tag key="railway" value="miniature" type="way"/>
-	<tag key="railway" value="monorail" type="way" description="A railway with only a single rail." lineColor="404040" lineWidth="1.000000"/>
-	<tag key="railway" value="narrow_gauge" type="way" description="Passenger or freight trains on narrower tracks than the standard gauge for the country or state." lineColor="404040" lineWidth="1.000000"/>
+	<tag key="railway" value="monorail" type="way" lineColor="404040" lineWidth="1.000000"/>
+	<tag key="railway" value="narrow_gauge" type="way" lineColor="404040" lineWidth="1.000000"/>
 	<tag key="railway" value="obliterated"/>
-	<tag key="railway" value="platform" type="node;area" description="A railway or bus platform." lineColor="404040" areaColor="404040" lineWidth="2.000000"/>
+	<tag key="railway" value="platform" type="node;area" lineColor="404040" areaColor="404040" lineWidth="2.000000"/>
 	<tag key="railway" value="preserved" lineColor="404040" lineWidth="1.000000"/>
 	<tag key="railway" value="proposed"/>
-	<tag key="railway" value="rail" type="way" description="Full sized passenger or freight trains in the standard gauge for the country or state." lineColor="404040" lineWidth="2.000000"/>
+	<tag key="railway" value="rail" type="way" lineColor="404040" lineWidth="2.000000"/>
 	<tag key="railway" value="razed"/>
-	<tag key="railway" value="roundhouse" type="node;area" description="A characteristic semi-circular building used by railroads to service engines"/>
-	<tag key="railway" value="station" type="node;area" description="A railway station" iconName="transport_train_station" areaColor="F7EFB7"/>
-	<tag key="railway" value="stop" type="node" description="The spot on a railway track where a train stops at a station"/>
-	<tag key="railway" value="subway" type="way" description="city passenger rail service" lineColor="606060" lineWidth="1.000000"/>
-	<tag key="railway" value="subway_entrance" type="node" description="The entrance point of a subway" areaColor="F7EFB7"/>
-	<tag key="railway" value="switch" type="node" description="Connections between railways"/>
-	<tag key="railway" value="tram" type="way" description="Tram rails or tracks" lineColor="808080" lineWidth="1.000000"/>
-	<tag key="railway" value="tram_stop" type="node" description="A tram stop is a place where a passenger can embark / disembark a tram." iconName="transport_tram_stop"/>
-	<tag key="railway" value="turntable" type="node;area" description="These are used for changing the direction, that part of a train is pointing in." areaColor="404040"/>
+	<tag key="railway" value="roundhouse" type="node;area"/>
+	<tag key="railway" value="station" type="node;area" iconName="transport_train_station" areaColor="F7EFB7"/>
+	<tag key="railway" value="stop" type="node"/>
+	<tag key="railway" value="subway" type="way" lineColor="606060" lineWidth="1.000000"/>
+	<tag key="railway" value="subway_entrance" type="node" areaColor="F7EFB7"/>
+	<tag key="railway" value="switch" type="node"/>
+	<tag key="railway" value="tram" type="way" lineColor="808080" lineWidth="1.000000"/>
+	<tag key="railway" value="tram_stop" type="node" iconName="transport_tram_stop"/>
+	<tag key="railway" value="turntable" type="node;area" areaColor="404040"/>
 
 
 	<tag key="recycling_type" value=""/>
@@ -966,11 +966,11 @@
 
 	<tag key="route" value="aqueduct" type="way"/>
 	<tag key="route" value="bicycle" type="way"/>
-	<tag key="route" value="bus" type="way" description="The route of a bus service (eg 'No. 38')." lineColor="809BC0" lineWidth="1.000000"/>
-	<tag key="route" value="canal" type="way" description="many ways of a canal"/>
-	<tag key="route" value="detour" type="way" description="named, permanent detour"/>
-	<tag key="route" value="ferry" type="way" description="ferry routes" lineColor="809BC0" lineWidth="1.000000"/>
-	<tag key="route" value="fitness_trail" type="way" description="route relations for fitness trails"/>
+	<tag key="route" value="bus" type="way" lineColor="809BC0" lineWidth="1.000000"/>
+	<tag key="route" value="canal" type="way"/>
+	<tag key="route" value="detour" type="way"/>
+	<tag key="route" value="ferry" type="way" lineColor="809BC0" lineWidth="1.000000"/>
+	<tag key="route" value="fitness_trail" type="way"/>
 	<tag key="route" value="foot" type="way"/>
 	<tag key="route" value="hiking" type="way" />
 	<tag key="route" value="historic" type="way"/>
@@ -980,14 +980,14 @@
 	<tag key="route" value="pipeline" type="way"/>
 	<tag key="route" value="piste" type="way"/>
 	<tag key="route" value="power" type="way"/>
-	<tag key="route" value="railway" type="way" description="The route of a railway (eg the ''Channel Tunnel''). Not to be confused with the route of a train service (see route=train )."/>
-	<tag key="route" value="road" type="way" description="many ways or a road"/>
-	<tag key="route" value="share_taxi" type="way" description="The route of a share taxi service (eg 'No. 777')."/>
-	<tag key="route" value="ski" type="way" description="ski route" lineColor="809BC0" lineWidth="1.000000"/>
+	<tag key="route" value="railway" type="way"/>
+	<tag key="route" value="road" type="way"/>
+	<tag key="route" value="share_taxi" type="way"/>
+	<tag key="route" value="ski" type="way" lineColor="809BC0" lineWidth="1.000000"/>
 	<tag key="route" value="subway" type="way"/>
-	<tag key="route" value="train" type="way" description="The route of a train service (eg London-Paris Eurostar). Not to be confused with a named stretch of railroad track (see route=railway )." />
-	<tag key="route" value="tram" type="way" description="The route of a tram service" />
-	<tag key="route" value="trolleybus" type="way" description="The route of a trolleybus service (eg 'No. 12')."/>
+	<tag key="route" value="train" type="way" />
+	<tag key="route" value="tram" type="way" />
+	<tag key="route" value="trolleybus" type="way"/>
 
 	<tag key="ruins" value="yes"/>
 
@@ -995,18 +995,18 @@
 
 	<tag key="seamark" value="ACHBRT"/>
 	<tag key="seamark" value="anchorage" />
-	<tag key="seamark" value="beacon" description="Base tag for beacons used for marine navigation"/>
-	<tag key="seamark" value="buoy" description="Base tag for navigational buoys"/>
+	<tag key="seamark" value="beacon"/>
+	<tag key="seamark" value="buoy"/>
 	<tag key="seamark" value="day_beacon"/>
 	<tag key="seamark" value="landmark"/>
 	<tag key="seamark" value="light_float"/>
 	<tag key="seamark" value="light_vessel"/>
 	<tag key="seamark" value="lighthouse"/>
 	<tag key="seamark" value="pillar"/>
-	<tag key="seamark:ais" value="AtoN" description="Navigation marks transmitting AIS information"/>
+	<tag key="seamark:ais" value="AtoN"/>
 	<tag key="seamark:beacon_cardinal:colour_pattern" value="horizontal"/>
 	<tag key="seamark:beacon_cardinal:shape" value="tower"/>
-	<tag key="seamark:beacon_isolated_danger:colour" value="black;red;black" description="Colors of an Isolated Danger beacon should '''always''' be ''black;red;black''"/>
+	<tag key="seamark:beacon_isolated_danger:colour" value="black;red;black"/>
 	<tag key="seamark:beacon_isolated_danger:colour_pattern" value="horizontal"/>
 	<tag key="seamark:beacon_isolated_danger:shape" value="tower"/>
 	<tag key="seamark:beacon_lateral:colour" value="green"/>
@@ -1020,7 +1020,7 @@
 	<tag key="seamark:beacon_lateral:shape" value="pole"/>
 	<tag key="seamark:beacon_lateral:shape" value="tower"/>
 	<tag key="seamark:beacon_lateral:shape" value="withy"/>
-	<tag key="seamark:beacon_safe_water:colour" value="red;white" description="Colors of an Safe Water beacon should '''always''' be ''red;white''"/>
+	<tag key="seamark:beacon_safe_water:colour" value="red;white"/>
 	<tag key="seamark:beacon_safe_water:colour_pattern" value="vertical"/>
 	<tag key="seamark:beacon_safe_water:shape" value="tower"/>
 	<tag key="seamark:beacon_special_purpose:category" value="cable"/>
@@ -1044,7 +1044,7 @@
 	<tag key="seamark:buoy_cardinal:shape" value="pillar"/>
 	<tag key="seamark:buoy_cardinal:shape" value="spar"/>
 	<tag key="seamark:buoy_cardinal:shape" value="spherical"/>
-	<tag key="seamark:buoy_isolated_danger:colour" value="black;red;black" description="Colors of an Isolated Danger buoy should '''always''' be ''black;red;black''"/>
+	<tag key="seamark:buoy_isolated_danger:colour" value="black;red;black"/>
 	<tag key="seamark:buoy_isolated_danger:colour_pattern" value="horizontal"/>
 	<tag key="seamark:buoy_isolated_danger:shape" value="can"/>
 	<tag key="seamark:buoy_isolated_danger:shape" value="conical"/>
@@ -1063,7 +1063,7 @@
 	<tag key="seamark:buoy_lateral:shape" value="pillar"/>
 	<tag key="seamark:buoy_lateral:shape" value="spar"/>
 	<tag key="seamark:buoy_lateral:shape" value="spherical"/>
-	<tag key="seamark:buoy_safe_water:colour" value="red;white" description="Colors of an Safe Water buoy should '''always''' be ''red;white''"/>
+	<tag key="seamark:buoy_safe_water:colour" value="red;white"/>
 	<tag key="seamark:buoy_safe_water:colour_pattern" value="vertical"/>
 	<tag key="seamark:buoy_safe_water:shape" value="can"/>
 	<tag key="seamark:buoy_safe_water:shape" value="conical"/>
@@ -1118,16 +1118,16 @@
 	<tag key="seamark:light:category" value="striplight"/>
 	<tag key="seamark:light:category" value="subsidiary"/>
 	<tag key="seamark:light:category" value="upper"/>
-	<tag key="seamark:light:character" value="Al" description="Alternating light"/>
-	<tag key="seamark:light:character" value="F" description="Fixed light"/>
-	<tag key="seamark:light:character" value="Fl" description="Flashing light"/>
-	<tag key="seamark:light:character" value="Iso" description="Isophased light"/>
-	<tag key="seamark:light:character" value="LFl" description="Long Flash light"/>
-	<tag key="seamark:light:character" value="Mo" description="Morse light"/>
-	<tag key="seamark:light:character" value="Oc" description="Occulting light"/>
-	<tag key="seamark:light:character" value="Q" description="Quick flashing light"/>
-	<tag key="seamark:light:character" value="UQ" description="Ultra Quick flashing light"/>
-	<tag key="seamark:light:character" value="VQ" description="Very Quick flashing light"/>
+	<tag key="seamark:light:character" value="Al"/>
+	<tag key="seamark:light:character" value="F"/>
+	<tag key="seamark:light:character" value="Fl"/>
+	<tag key="seamark:light:character" value="Iso"/>
+	<tag key="seamark:light:character" value="LFl"/>
+	<tag key="seamark:light:character" value="Mo"/>
+	<tag key="seamark:light:character" value="Oc"/>
+	<tag key="seamark:light:character" value="Q"/>
+	<tag key="seamark:light:character" value="UQ"/>
+	<tag key="seamark:light:character" value="VQ"/>
 	<tag key="seamark:light:colour" value="amber"/>
 	<tag key="seamark:light:colour" value="blue"/>
 	<tag key="seamark:light:colour" value="green"/>
@@ -1277,153 +1277,153 @@
 
 	<tag key="service" value="parts"/>
 	<tag key="service" value="tyres"/>
-	<tag key="service" value="yard" description="Tracks within railway company operated marshaling yards" lineColor="552200" lineWidth="1.000000"/>
+	<tag key="service" value="yard" lineColor="552200" lineWidth="1.000000"/>
 
 	<tag key="shelter" value="no"/>
 	<tag key="shelter" value="yes"/>
 
 	<tag key="shelter_type" value=""/>
-	<tag key="shelter_type" value="basic_hut" description="A basic hut is a small building intended to provide basic shelter and sleeping accommodation."/>
-	<tag key="shelter_type" value="lean_to" description="A lean-to is a shed with typically three walls located in the countryside intended to provide shelter."/>
+	<tag key="shelter_type" value="basic_hut"/>
+	<tag key="shelter_type" value="lean_to"/>
 
 	<tag key="shop" value="Alko" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="SpotColor" type="node;area" description="Una Tienda de Impresiones" areaColor="7D81FF"/>
-	<tag key="shop" value="alcohol" type="node;area" description="Government owned or licensed shop selling alcohol." iconName="shopping_alcohol" areaColor="7D81FF"/>
-	<tag key="shop" value="anime" type="node;area" description="A shop anime stuff" areaColor="7D81FF"/>
-	<tag key="shop" value="antiques" type="node;area" description="A shop, where you can buy antiques" areaColor="7D81FF"/>
+	<tag key="shop" value="SpotColor" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="alcohol" type="node;area" iconName="shopping_alcohol" areaColor="7D81FF"/>
+	<tag key="shop" value="anime" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="antiques" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="appliance" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="art" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="audiologist" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="auto_parts" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="baby_goods" type="node;area" description="A shop where you can buy objects for babies, like clothes, prams, cots or baby's baths" areaColor="7D81FF"/>
+	<tag key="shop" value="baby_goods" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="bag" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="bakery" type="node;area" description="A shop selling bread." iconName="shopping_bakery" areaColor="7D81FF"/>
-	<tag key="shop" value="bathroom_furnishing" type="node;area" description="A shop selling bathroom furnishings" areaColor="7D81FF"/>
-	<tag key="shop" value="beauty" type="node;area" description="A non-hairdresser beauty shop, spa, nail salon, etc." iconName="shopping_hairdresser" areaColor="7D81FF"/>
-	<tag key="shop" value="bed" type="node;area" description="A shop that specalises in selling mattresses and other bedding products." areaColor="7D81FF"/>
-	<tag key="shop" value="beverages" type="node;area" description="Shop focused on selling alcoholic and non-alcoholic beverages." areaColor="7D81FF"/>
-	<tag key="shop" value="bicycle" type="node;area" description="A store where you can buy and/or repair your bike and buy accessories." iconName="shopping_bicycle" areaColor="7D81FF"/>
-	<tag key="shop" value="books" type="node;area" description="A shop selling books" iconName="shopping_book" areaColor="7D81FF"/>
-	<tag key="shop" value="boutique" type="node;area" description="a small shopping outlet, especially one that specializes in elite and fashionable items" areaColor="7D81FF"/>
-	<tag key="shop" value="butcher" type="node;area" description="Used to mark a butcher." iconName="shopping_butcher" areaColor="7D81FF"/>
+	<tag key="shop" value="bakery" type="node;area" iconName="shopping_bakery" areaColor="7D81FF"/>
+	<tag key="shop" value="bathroom_furnishing" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="beauty" type="node;area" iconName="shopping_hairdresser" areaColor="7D81FF"/>
+	<tag key="shop" value="bed" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="beverages" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="bicycle" type="node;area" iconName="shopping_bicycle" areaColor="7D81FF"/>
+	<tag key="shop" value="books" type="node;area" iconName="shopping_book" areaColor="7D81FF"/>
+	<tag key="shop" value="boutique" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="butcher" type="node;area" iconName="shopping_butcher" areaColor="7D81FF"/>
 	<tag key="shop" value="camera" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="canoe_hire" type="node;area" description="Place where you can rent kajaks, qayaks or canoes. Not always all of them." areaColor="7D81FF"/>
-	<tag key="shop" value="car" type="node;area" description="A shop for cars" iconName="shopping_car" areaColor="7D81FF"/>
+	<tag key="shop" value="canoe_hire" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="car" type="node;area" iconName="shopping_car" areaColor="7D81FF"/>
 	<tag key="shop" value="car_bodyshop" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="car_parts" type="node;area" description="Shop for auto parts, auto accessories, motor oil, car chemicals, etc." areaColor="7D81FF"/>
-	<tag key="shop" value="car_repair" type="node;area" description="Business where cars are repaired." iconName="shopping_car_repair" areaColor="7D81FF"/>
-	<tag key="shop" value="carpet" type="node;area" description="A shop selling carpet." areaColor="7D81FF"/>
-	<tag key="shop" value="chandler" type="node;area" description="A chandler, or also ship chandler are shops or agents specialized in offering a wide range of services towards ships" areaColor="7D81FF"/>
-	<tag key="shop" value="charity" type="node;area" description="Shop operated by a charity" areaColor="7D81FF"/>
+	<tag key="shop" value="car_parts" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="car_repair" type="node;area" iconName="shopping_car_repair" areaColor="7D81FF"/>
+	<tag key="shop" value="carpet" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="chandler" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="charity" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="chemist" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="clothes" type="node;area" description="A shop to get clothes" iconName="shopping_clothes" areaColor="7D81FF"/>
+	<tag key="shop" value="clothes" type="node;area" iconName="shopping_clothes" areaColor="7D81FF"/>
 	<tag key="shop" value="communication" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="computer" type="node;area" description="A shop selling computers, peripherals, software, ..." iconName="shopping_computer" areaColor="7D81FF"/>
-	<tag key="shop" value="confectionery" type="node;area" description="Confectionery. A shop selling sweets and pastry" iconName="shopping_confectionery" areaColor="7D81FF"/>
-	<tag key="shop" value="convenience" type="node;area" description="A convenience store. A small local shop carrying a small subset of the items you would find in a supermarket" iconName="shopping_convenience" areaColor="7D81FF"/>
-	<tag key="shop" value="copyshop" type="node;area" description="A shop that offers photocopying and printing services." iconName="shopping_copyshop" areaColor="7D81FF"/>
+	<tag key="shop" value="computer" type="node;area" iconName="shopping_computer" areaColor="7D81FF"/>
+	<tag key="shop" value="confectionery" type="node;area" iconName="shopping_confectionery" areaColor="7D81FF"/>
+	<tag key="shop" value="convenience" type="node;area" iconName="shopping_convenience" areaColor="7D81FF"/>
+	<tag key="shop" value="copyshop" type="node;area" iconName="shopping_copyshop" areaColor="7D81FF"/>
 	<tag key="shop" value="curtain" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="deli" type="node;area" description="Used to mark a delicatessen store." areaColor="7D81FF"/>
+	<tag key="shop" value="deli" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="delicatessen" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="department_store" type="node;area" description="A large store with multiple clothing and other general merchandise departments." iconName="shopping_department_store" areaColor="7D81FF"/>
-	<tag key="shop" value="dive" type="node;area" description="a shop selling diving equipment." areaColor="7D81FF"/>
-	<tag key="shop" value="doityourself" type="node;area" description="A ''Do-it-Yourself''-store offers supplies for doing things yourself - household repairs and improvements, making things from wood and other materials." iconName="shopping_diy" areaColor="7D81FF"/>
-	<tag key="shop" value="dry_cleaning" type="node;area" description="A shop or kiosk offering a clothes dry cleaning service." areaColor="7D81FF"/>
-	<tag key="shop" value="electronics" type="node;area" description="Shop selling consumer electronics (TV, radio, fridge)" areaColor="7D81FF"/>
-	<tag key="shop" value="erotic" type="node;area" description="a sex shop." areaColor="7D81FF"/>
-	<tag key="shop" value="fabric" type="node;area" description="A shop that sell fabric" areaColor="7D81FF"/>
+	<tag key="shop" value="department_store" type="node;area" iconName="shopping_department_store" areaColor="7D81FF"/>
+	<tag key="shop" value="dive" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="doityourself" type="node;area" iconName="shopping_diy" areaColor="7D81FF"/>
+	<tag key="shop" value="dry_cleaning" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="electronics" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="erotic" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="fabric" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="fabrics" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="farm" type="node;area" description="A shop at a farm that sells the farm produce." areaColor="7D81FF"/>
+	<tag key="shop" value="farm" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="fishmonger" iconName="shopping_fish"/>
-	<tag key="shop" value="florist" type="node;area" description="Shop selling bouquets of flowers" iconName="shopping_florist" areaColor="7D81FF"/>
+	<tag key="shop" value="florist" type="node;area" iconName="shopping_florist" areaColor="7D81FF"/>
 	<tag key="shop" value="flower" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="food" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="frame" type="node;area" description="A shop where you can buy frames." areaColor="7D81FF"/>
-	<tag key="shop" value="funeral_directors" type="node;area" description="Providing services related to funeral arrangements, may also be known as a &quot;funeral parlour&quot; or &quot;undertakers&quot;." areaColor="7D81FF"/>
+	<tag key="shop" value="frame" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="funeral_directors" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="furnace" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="furniture" type="node;area" description="A shop to buy furniture" areaColor="7D81FF"/>
-	<tag key="shop" value="garden_centre" type="node;area" description="Shop selling potted flowers, maybe even trees." iconName="shopping_garden_centre" areaColor="7D81FF"/>
+	<tag key="shop" value="furniture" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="garden_centre" type="node;area" iconName="shopping_garden_centre" areaColor="7D81FF"/>
 	<tag key="shop" value="gas" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="general" type="node;area" description="A general store. Selling various things." areaColor="7D81FF"/>
+	<tag key="shop" value="general" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="general_store" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="general_stores" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="gift" type="node;area" description="Shop selling gifts, greeting cards, or tourist gifts (souvenirs)." iconName="shopping_gift" areaColor="7D81FF"/>
+	<tag key="shop" value="gift" type="node;area" iconName="shopping_gift" areaColor="7D81FF"/>
 	<tag key="shop" value="glaziery" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="greengrocer" type="node;area" description="A shop which sells fruits and vegetables" iconName="shopping_greengrocer" areaColor="7D81FF"/>
+	<tag key="shop" value="greengrocer" type="node;area" iconName="shopping_greengrocer" areaColor="7D81FF"/>
 	<tag key="shop" value="haberdashery" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="hairdresser" type="node;area" description="A hairdressers shop where you can get your hair cut (barber)" iconName="shopping_hairdresser" areaColor="7D81FF"/>
-	<tag key="shop" value="hairdresser_supply" type="node;area" description="A shop, where you can buy hairdressing supplies" areaColor="7D81FF"/>
-	<tag key="shop" value="hardware" type="node;area" description="A shop which sells timber, tools and other building products" areaColor="7D81FF"/>
+	<tag key="shop" value="hairdresser" type="node;area" iconName="shopping_hairdresser" areaColor="7D81FF"/>
+	<tag key="shop" value="hairdresser_supply" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="hardware" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="hearing_aid_dispenser" type="node;area" iconName="shopping_hearing_aids" areaColor="7D81FF"/>
-	<tag key="shop" value="hearing_aids" type="node;area" description="A shop specialized in selling hearing aids devices" iconName="shopping_hearing_aids" areaColor="7D81FF"/>
+	<tag key="shop" value="hearing_aids" type="node;area" iconName="shopping_hearing_aids" areaColor="7D81FF"/>
 	<tag key="shop" value="herbalist" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="hifi" type="node;area" description="Shop selling high fidelity audio components (music players, amplifiers, speakers, cables)" iconName="shopping_hifi" areaColor="7D81FF"/>
+	<tag key="shop" value="hifi" type="node;area" iconName="shopping_hifi" areaColor="7D81FF"/>
 	<tag key="shop" value="houseware" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="hunting" type="node;area" description="Shop where you can buy gun and hunting equipment." areaColor="7D81FF"/>
+	<tag key="shop" value="hunting" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="ice_cream" type="node;area" iconName="food_ice_cream" areaColor="7D81FF"/>
 	<tag key="shop" value="insurance" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="interior_decoration" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="jewelry" type="node;area" iconName="shopping_jewelry" areaColor="7D81FF"/>
-	<tag key="shop" value="kiosk" type="node;area" description="A small shop on the pavement that sells magazines, tobacco, newspapers, sweets and stamps." iconName="shopping_kiosk" areaColor="7D81FF"/>
-	<tag key="shop" value="kitchen" type="node;area" description="A shop where you can plan and buy your kitchen." areaColor="7D81FF"/>
+	<tag key="shop" value="kiosk" type="node;area" iconName="shopping_kiosk" areaColor="7D81FF"/>
+	<tag key="shop" value="kitchen" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="laundromat" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="laundry" type="node;area" description="A shop to get your normal clothes washed." iconName="shopping_laundrette" areaColor="7D81FF"/>
-	<tag key="shop" value="locksmith" type="node;area" description="A shop where you can get keys cut" areaColor="7D81FF"/>
-	<tag key="shop" value="mall" type="node;area" description="A group of stores, typically associated with a single building structure." areaColor="7D81FF"/>
-	<tag key="shop" value="massage" type="node;area" description="Massage shop" areaColor="7D81FF"/>
-	<tag key="shop" value="medical_supply" type="node;area" description="A store where you can buy medical equipment for private persons." areaColor="7D81FF"/>
+	<tag key="shop" value="laundry" type="node;area" iconName="shopping_laundrette" areaColor="7D81FF"/>
+	<tag key="shop" value="locksmith" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="mall" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="massage" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="medical_supply" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="mobile_phone" type="node;area" iconName="shopping_mobile_phone" areaColor="7D81FF"/>
 	<tag key="shop" value="money_lender" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="motorcycle" type="node;area" iconName="shopping_motorcycle" areaColor="7D81FF"/>
-	<tag key="shop" value="motorcycle_repair" type="node;area" description="A place where you can get your motorcycles repaired" areaColor="7D81FF"/>
+	<tag key="shop" value="motorcycle_repair" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="music" type="node;area" iconName="shopping_music" areaColor="7D81FF"/>
-	<tag key="shop" value="musical_instrument" type="node;area" description="Shop selling musical instruments, lyrics, scores." areaColor="7D81FF"/>
-	<tag key="shop" value="newsagent" type="node;area" description="Shop selling newspapers, cigarettes, other goods" areaColor="7D81FF"/>
-	<tag key="shop" value="optician" type="node;area" description="A shop that sells, fits, and repairs prescription eyeglasses and contact lenses." iconName="health_opticians" areaColor="7D81FF"/>
+	<tag key="shop" value="musical_instrument" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="newsagent" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="optician" type="node;area" iconName="health_opticians" areaColor="7D81FF"/>
 	<tag key="shop" value="organic" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="outdoor" type="node;area" description="Shop selling trekking, climbing, camping equipment (and GPSes)." areaColor="7D81FF"/>
-	<tag key="shop" value="paint" type="node;area" description="A shop where you can buy paints." areaColor="7D81FF"/>
+	<tag key="shop" value="outdoor" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="paint" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="pawnbroker" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="pet" type="node;area" iconName="shopping_pet2" areaColor="7D81FF"/>
-	<tag key="shop" value="photo" type="node;area" description="A shop dealing with photos or video in any way." iconName="shopping_photo" areaColor="7D81FF"/>
+	<tag key="shop" value="photo" type="node;area" iconName="shopping_photo" areaColor="7D81FF"/>
 	<tag key="shop" value="photo_studio" type="node;area" iconName="shopping_photo" areaColor="7D81FF"/>
 	<tag key="shop" value="radiotechnics" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="seafood" type="node;area" description="A shop selling fish/seafood." areaColor="7D81FF"/>
-	<tag key="shop" value="second_hand" type="node;area" description="A shop selling second hand goods" areaColor="7D81FF"/>
+	<tag key="shop" value="seafood" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="second_hand" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="ship_chandler" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="shoes" type="node;area" description="Selling shoes." iconName="shopping_clothes" areaColor="7D81FF" />
+	<tag key="shop" value="shoes" type="node;area" iconName="shopping_clothes" areaColor="7D81FF" />
 	<tag key="shop" value="sports" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="stationery" type="node;area" description="A shop selling office supplies" areaColor="7D81FF"/>
-	<tag key="shop" value="supermarket" type="node;area" description="A large store for groceries and other goods." iconName="shopping_supermarket" areaColor="7D81FF"/>
-	<tag key="shop" value="systembolaget" type="node;area" description="The only stores in Sweden allowed to sell alcohol." areaColor="7D81FF"/>
+	<tag key="shop" value="stationery" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="supermarket" type="node;area" iconName="shopping_supermarket" areaColor="7D81FF"/>
+	<tag key="shop" value="systembolaget" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="tattoo" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="ticket" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="tobacco" type="node;area" description="Tabaccaio" iconName="shopping_tobacco" areaColor="7D81FF"/>
-	<tag key="shop" value="toys" type="node;area" description="A toy store." iconName="shopping_toys" areaColor="7D81FF"/>
+	<tag key="shop" value="tobacco" type="node;area" iconName="shopping_tobacco" areaColor="7D81FF"/>
+	<tag key="shop" value="toys" type="node;area" iconName="shopping_toys" areaColor="7D81FF"/>
 	<tag key="shop" value="trade" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="travel_agency" type="node;area" description="A shop selling travel related products and services" areaColor="7D81FF"/>
+	<tag key="shop" value="travel_agency" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="vacant" type="node;area" areaColor="7D81FF"/>
 	<tag key="shop" value="vacuum_cleaner" type="node;area" areaColor="7D81FF"/>
-	<tag key="shop" value="variety_store" type="node;area" description="A en=variety store or price-point retailer is a retail store that sells inexpensive items" areaColor="7D81FF"/>
-	<tag key="shop" value="video" type="node;area" description="A shop that sells or rents out videos/DVDs" iconName="shopping_video_rental" areaColor="7D81FF"/>
-	<tag key="shop" value="window_blind" type="node;area" description="A shop that sells window blinds." areaColor="7D81FF"/>
+	<tag key="shop" value="variety_store" type="node;area" areaColor="7D81FF"/>
+	<tag key="shop" value="video" type="node;area" iconName="shopping_video_rental" areaColor="7D81FF"/>
+	<tag key="shop" value="window_blind" type="node;area" areaColor="7D81FF"/>
 
 	<tag key="sign" value="no"/>
 	<tag key="sign" value="yes"/>
 
-	<tag key="signal_station" value="bridge" description="A signal station showing bridge status, and whether it is approved to pass ships under or not"/>
+	<tag key="signal_station" value="bridge"/>
 	<tag key="signal_station" value="control"/>
 	<tag key="signal_station" value="danger"/>
 	<tag key="signal_station" value="distress"/>
 	<tag key="signal_station" value="firing"/>
 	<tag key="signal_station" value="ice"/>
 	<tag key="signal_station" value="international_port_traffic"/>
-	<tag key="signal_station" value="lock" description="Signal station describing activities, and conditions of locks in a canal, or at an entry/exit point of a locked port"/>
+	<tag key="signal_station" value="lock"/>
 	<tag key="signal_station" value="storm"/>
 	<tag key="signal_station" value="stream"/>
 	<tag key="signal_station" value="telegraph"/>
 	<tag key="signal_station" value="tide"/>
-	<tag key="signal_station" value="tide_gauge" description="A signal station with a tide gauge"/>
+	<tag key="signal_station" value="tide_gauge"/>
 	<tag key="signal_station" value="tide_scale"/>
 	<tag key="signal_station" value="time"/>
 	<tag key="signal_station" value="traffic"/>
@@ -1439,15 +1439,15 @@
 	<tag key="smoothness" value="very_bad"/>
 	<tag key="smoothness" value="very_horrible"/>
 
-	<tag key="social_facility" value="assisted_living" description="A residential facility like group_home, but the looked after are more independent. Usually conceived for people with &quot;slight&quot; disabilities (retirement home)"/>
-	<tag key="social_facility" value="food_bank" description="A non-residential facility that provides pre-packaged food or prepared meals"/>
-	<tag key="social_facility" value="group_home" description="A group residential home organized around a certain demographic and provides social and medical services, such as leisure activities or meals"/>
-	<tag key="social_facility" value="outreach" description="A non-residential facility that provides social welfare services such as advocacy, counseling, job placement, veterans services, housing placement, wellness programs, leisure activities"/>
-	<tag key="social_facility" value="shelter" description="A facility that provides temporary sleeping facilities or refuge from exposure to the environment"/>
+	<tag key="social_facility" value="assisted_living"/>
+	<tag key="social_facility" value="food_bank"/>
+	<tag key="social_facility" value="group_home"/>
+	<tag key="social_facility" value="outreach"/>
+	<tag key="social_facility" value="shelter"/>
 
 	<tag key="sport" value="10pin" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="9pin" type="node;area" description="bowling game played in Europe with only 9 pins" areaColor="BDE3CB"/>
-	<tag key="sport" value="BASE" type="node;area" description="Site suitable for BASE-jumping"/>
+	<tag key="sport" value="9pin" type="node;area" areaColor="BDE3CB"/>
+	<tag key="sport" value="BASE" type="node;area"/>
 	<tag key="sport" value="Skispringen" type="node;area"/>
 	<tag key="sport" value="Swimming" type="node;area"/>
 	<tag key="sport" value="aikido" type="node;area"/>
@@ -1455,34 +1455,34 @@
 	<tag key="sport" value="archery" type="node;area" iconName="sport_archery" areaColor="BDE3CB"/>
 	<tag key="sport" value="association_football" type="node;area"/>
 	<tag key="sport" value="athletics" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="australian_football" type="node;area" description="To mark the location of Australian rules football fields." areaColor="BDE3CB"/>
-	<tag key="sport" value="badminton" type="node;area" description="Badminton also known as shuttle" areaColor="BDE3CB"/>
+	<tag key="sport" value="australian_football" type="node;area" areaColor="BDE3CB"/>
+	<tag key="sport" value="badminton" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="baseball" type="node;area" iconName="sport_baseball" areaColor="BDE3CB"/>
 	<tag key="sport" value="basketball" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="beachvolleyball" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="billard" type="node;area"/>
 	<tag key="sport" value="billards" type="node;area"/>
 	<tag key="sport" value="bmx" type="node;area"/>
-	<tag key="sport" value="boules" type="node;area" description="To mark the location of Pétanque (french game similar to bowls) fields." areaColor="BDE3CB"/>
-	<tag key="sport" value="bowls" type="node;area" description="A place where you can play lawn bowls/lawn bowling" areaColor="BDE3CB"/>
+	<tag key="sport" value="boules" type="node;area" areaColor="BDE3CB"/>
+	<tag key="sport" value="bowls" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="canadian_football" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="canoe" type="node;area" iconName="sport_canoe" areaColor="BDE3CB"/>
 	<tag key="sport" value="chess" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="cliff_diving" type="node;area" description="To mark a spot for cliff diving"/>
+	<tag key="sport" value="cliff_diving" type="node;area"/>
 	<tag key="sport" value="climbing" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="cricket" type="node;area" iconName="sport_cricket" areaColor="BDE3CB"/>
 	<tag key="sport" value="cricket_nets" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="croquet" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="cycling" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="darts" type="node;area"/>
-	<tag key="sport" value="diving" type="node;area" description="To mark a spot for scuba diving" iconName="sport_diving" areaColor="BDE3CB"/>
+	<tag key="sport" value="diving" type="node;area" iconName="sport_diving" areaColor="BDE3CB"/>
 	<tag key="sport" value="dog_racing" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="equestrian" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="football" type="node;area"/>
-	<tag key="sport" value="free_flying" type="node;area" description="Provides a way to tag landing and takeoff for free flying aircrafts with additionnal related amenities."/>
+	<tag key="sport" value="free_flying" type="node;area"/>
 	<tag key="sport" value="gaelic_football" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="gaelic_games" type="node;area" description="Gaelic Games as played within the GAA[http://www.gaa.ie/about-the-gaa/our-games/] in Ireland, including Gaelic Football, Hurling, Ladies Gaelic Football, Camogie, Handball and Rounders"/>
-	<tag key="sport" value="golf" type="node;area" description="A place where you can play golf" iconName="sport_golf" areaColor="BDE3CB"/>
+	<tag key="sport" value="gaelic_games" type="node;area"/>
+	<tag key="sport" value="golf" type="node;area" iconName="sport_golf" areaColor="BDE3CB"/>
 	<tag key="sport" value="gymnastics" type="node;area" iconName="sport_gymnasium" areaColor="BDE3CB"/>
 	<tag key="sport" value="hockey" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="horse_racing" type="node;area" iconName="sport_horse_racing" areaColor="BDE3CB"/>
@@ -1491,62 +1491,62 @@
 	<tag key="sport" value="korfball" type="node;area"/>
 	<tag key="sport" value="motor" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="multi" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="orienteering" type="node;area" description="Orienteering club or centre"/>
+	<tag key="sport" value="orienteering" type="node;area"/>
 	<tag key="sport" value="paddle_tennis" type="node;area"/>
 	<tag key="sport" value="paragliding" type="node;area"/>
 	<tag key="sport" value="pelota" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="racquet" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="rowing" type="node;area" description="Sites connected to the sport of rowing" areaColor="BDE3CB"/>
+	<tag key="sport" value="rowing" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="rugby" type="node;area"/>
 	<tag key="sport" value="rugby_league" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="rugby_union" type="node;area" areaColor="BDE3CB"/>
-	<tag key="sport" value="scuba_diving" type="node;area" description="To mark a spot for scuba diving"/>
-	<tag key="sport" value="shooting" type="node;area" description="To mark the area for shooting." iconName="sport_shooting" areaColor="BDE3CB"/>
+	<tag key="sport" value="scuba_diving" type="node;area"/>
+	<tag key="sport" value="shooting" type="node;area" iconName="sport_shooting" areaColor="BDE3CB"/>
 	<tag key="sport" value="shooting_range" type="node;area"/>
 	<tag key="sport" value="skateboard" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="skating" type="node;area" iconName="sport_iceskating" areaColor="BDE3CB"/>
 	<tag key="sport" value="skiing" type="node;area" iconName="sport_skiing_downhill" areaColor="BDE3CB"/>
-	<tag key="sport" value="soccer" type="node;area" description="Association football, more commonly known as football or soccer" iconName="sport_soccer" areaColor="BDE3CB"/>
-	<tag key="sport" value="surfing" type="node;area" description="To mark a spot for surfing"/>
-	<tag key="sport" value="swimming" type="node;area" description="A place where people do swimming" iconName="sport_swimming_outdoor" areaColor="BDE3CB"/>
-	<tag key="sport" value="table_soccer" type="node;area" description="Table Soccer/Football (Foosball, Tecball)"/>
+	<tag key="sport" value="soccer" type="node;area" iconName="sport_soccer" areaColor="BDE3CB"/>
+	<tag key="sport" value="surfing" type="node;area"/>
+	<tag key="sport" value="swimming" type="node;area" iconName="sport_swimming_outdoor" areaColor="BDE3CB"/>
+	<tag key="sport" value="table_soccer" type="node;area"/>
 	<tag key="sport" value="table_tennis" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="team_handball" type="node;area"/>
-	<tag key="sport" value="tennis" type="node;area" description="A tennis court is where the game of tennis is played." iconName="sport_tennis" areaColor="BDE3CB"/>
-	<tag key="sport" value="toboggan" type="node;area" description="Public toboggan run"/>
-	<tag key="sport" value="volleyball" type="node;area" description="Volleyball" areaColor="BDE3CB"/>
+	<tag key="sport" value="tennis" type="node;area" iconName="sport_tennis" areaColor="BDE3CB"/>
+	<tag key="sport" value="toboggan" type="node;area"/>
+	<tag key="sport" value="volleyball" type="node;area" areaColor="BDE3CB"/>
 	<tag key="sport" value="water_ski" type="node;area"/>
 	<tag key="sports" value="aikido"/>
 	<tag key="sports" value="athletics"/>
 
-	<tag key="sub_sea" value="reef" description="A rock formation that is alternatively covered and uncovered by the tide."/>
+	<tag key="sub_sea" value="reef"/>
 
-	<tag key="summit:cross" value="yes" description="Describes wheter a summit cross is built on that peak."/>
+	<tag key="summit:cross" value="yes"/>
 
 	<tag key="supervised" value="yes"/>
 
 
-	<tag key="tourism" value="alpine_hut" type="node;area" description="An alpine hut is a remote building located in the mountains intended to provide board and lodging." iconName="accommodation_alpinehut" areaColor="E1A0A2"/>
-	<tag key="tourism" value="aquarium" type="node;area" description="A display of live aquatic flora and/or fauna."/>
-	<tag key="tourism" value="artwork" type="node;area" description="Used to tag a public piece of art." iconName="tourist_art_gallery2" lineColor="E180A2" areaColor="E180A2" lineWidth="2.000000"/>
+	<tag key="tourism" value="alpine_hut" type="node;area" iconName="accommodation_alpinehut" areaColor="E1A0A2"/>
+	<tag key="tourism" value="aquarium" type="node;area"/>
+	<tag key="tourism" value="artwork" type="node;area" iconName="tourist_art_gallery2" lineColor="E180A2" areaColor="E180A2" lineWidth="2.000000"/>
 	<tag key="tourism" value="attraction" type="node;area" iconName="tourist_attraction" areaColor="E180A2"/>
 	<tag key="tourism" value="bed_and_breakfast" iconName="accommodation_bed_and_breakfast"/>
-	<tag key="tourism" value="camp_site" type="node;area" description="Used to mark a campsite / campground." iconName="accommodation_camping" areaColor="E1A0A2"/>
-	<tag key="tourism" value="caravan_site" type="node;area" description="A place where you can stay in a caravan overnight or for longer periods." iconName="accommodation_caravan_park" areaColor="E1A0A2"/>
-	<tag key="tourism" value="chalet" type="node;area" description="Detached cottages with self-contained cooking/bathroom/toilet facilities" iconName="accommodation_chalet" areaColor="E1A0A2"/>
-	<tag key="tourism" value="guest_house" type="node;area" description="Guest House and Bed&amp;Breakfast" iconName="accommodation_bed_and_breakfast" areaColor="E1A0A2"/>
-	<tag key="tourism" value="hostel" type="node;area" description="Cheap accommodation with shared bedrooms." iconName="accommodation_youth_hostel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="hotel" type="node;area" description="Used to tag a hotel." iconName="accommodation_hotel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="information" type="node;area" description="Information for tourists and visitors, including information offices" iconName="tourist_information" areaColor="E180A2"/>
-	<tag key="tourism" value="motel" type="node;area" description="Short term accommodation, particularly for people travelling by car." iconName="accommodation_motel" areaColor="E1A0A2"/>
-	<tag key="tourism" value="museum" type="node;area" description="A museum." iconName="tourist_museum" areaColor="E180A2"/>
-	<tag key="tourism" value="picnic_site" type="node;area" description="A picnic site" iconName="tourist_picnic" areaColor="E180A2"/>
+	<tag key="tourism" value="camp_site" type="node;area" iconName="accommodation_camping" areaColor="E1A0A2"/>
+	<tag key="tourism" value="caravan_site" type="node;area" iconName="accommodation_caravan_park" areaColor="E1A0A2"/>
+	<tag key="tourism" value="chalet" type="node;area" iconName="accommodation_chalet" areaColor="E1A0A2"/>
+	<tag key="tourism" value="guest_house" type="node;area" iconName="accommodation_bed_and_breakfast" areaColor="E1A0A2"/>
+	<tag key="tourism" value="hostel" type="node;area" iconName="accommodation_youth_hostel" areaColor="E1A0A2"/>
+	<tag key="tourism" value="hotel" type="node;area" iconName="accommodation_hotel" areaColor="E1A0A2"/>
+	<tag key="tourism" value="information" type="node;area" iconName="tourist_information" areaColor="E180A2"/>
+	<tag key="tourism" value="motel" type="node;area" iconName="accommodation_motel" areaColor="E1A0A2"/>
+	<tag key="tourism" value="museum" type="node;area" iconName="tourist_museum" areaColor="E180A2"/>
+	<tag key="tourism" value="picnic_site" type="node;area" iconName="tourist_picnic" areaColor="E180A2"/>
 	<tag key="tourism" value="theme_park" type="node;area" iconName="tourist_theme_park" areaColor="E180A2"/>
 	<tag key="tourism" value="tourism-attraction" type="node;area"/>
-	<tag key="tourism" value="viewpoint" type="node;area" description="A place worth visiting, often high, with a good view of surrounding countryside or notable buildings." iconName="tourist_view_point" areaColor="E180A2"/>
-	<tag key="tourism" value="wilderness_hut" type="node;area" description="A wilderness hut is a remote building with fireplace intended to provide shelter and sleeping accommodation."/>
+	<tag key="tourism" value="viewpoint" type="node;area" iconName="tourist_view_point" areaColor="E180A2"/>
+	<tag key="tourism" value="wilderness_hut" type="node;area"/>
 	<tag key="tourism" value="yes" type="node;area"/>
-	<tag key="tourism" value="zoo" type="node;area" description="To mark the location of public zoos and zoological gardens." iconName="tourist_zoo" areaColor="E180A2"/>
+	<tag key="tourism" value="zoo" type="node;area" iconName="tourist_zoo" areaColor="E180A2"/>
 
 	<tag key="tower:construction" value="dish"/>
 	<tag key="tower:construction" value="dome"/>
@@ -1568,29 +1568,29 @@
 
 	<tag key="trolley_wire" value="yes"/>
 
-	<tag key="tunnel" value="culvert" description="For a stream passing under a road. Use it on the section of stream passing under the road."/>
+	<tag key="tunnel" value="culvert"/>
 	<tag key="tunnel" value="yes"/>
 
 	<tag key="two_sided" value="yes"/>
 
 	<tag key="type" value="area"/>
 	<tag key="type" value="associatedStreet"/>
-	<tag key="type" value="benchmark" description="Used with man_made=survey_point to indicate a benchmark point"/>
+	<tag key="type" value="benchmark"/>
 	<tag key="type" value="boundary"/>
 	<tag key="type" value="broad-leaved"/>
 	<tag key="type" value="broad_leaved"/>
-	<tag key="type" value="fixed_point" description="Used with man_made=survey_point to indicate a fixed point"/>
+	<tag key="type" value="fixed_point"/>
 	<tag key="type" value="lane_restriction"/>
 	<tag key="type" value="leading_light"/>
 	<tag key="type" value="leading_line"/>
 	<tag key="type" value="network"/>
-	<tag key="type" value="observation_spot" description="Used with man_made=survey_point to indicate a observation spot"/>
-	<tag key="type" value="public_transport" description="Represents a public transport related relation."/>
+	<tag key="type" value="observation_spot"/>
+	<tag key="type" value="public_transport"/>
 	<tag key="type" value="restriction" wikiPage="https://wiki.openstreetmap.org/wiki/Turn_restrictions"/>
 	<tag key="type" value="route_master"/>
-	<tag key="type" value="site" description="Used for grouping several features together as one conceptual 'site' (eg a convention complex)."/>
+	<tag key="type" value="site"/>
 	<tag key="type" value="street"/>
-	<tag key="type" value="triangulation" description="Used with man_made=survey_point to indicate a triangulation point"/>
+	<tag key="type" value="triangulation"/>
 	<tag key="type" value="watershed"/>
 	<tag key="type" value="waterway"/>
 
@@ -1599,10 +1599,10 @@
 
 	<tag key="vehicle" value="destination"/>
 
-	<tag key="vending" value="bicycle_tube" description="A machine to vend inner tubes for cycles"/>
+	<tag key="vending" value="bicycle_tube"/>
 	<tag key="vending" value="bycicle_tube"/>
 
-	<tag key="wall" value="no" description="slight construction like a shed or balcony opened on one side at least or without foundation"/>
+	<tag key="wall" value="no"/>
 	<tag key="wall" value="seawall"/>
 	<tag key="wall" value="training_wall"/>
 
@@ -1611,32 +1611,32 @@
 	<tag key="water" value="tidal"/>
 
 	<tag key="waterway" value="boat_lift"/>
-	<tag key="waterway" value="boatyard" description="Boatyard - a place for constructing, repairing and storing vessels out of the water." areaColor="D8D8D8"/>
-	<tag key="waterway" value="brook" description="Tiny waterway, often, but not always, dry part of the year."/>
-	<tag key="waterway" value="canal" description="An artificial open waterway used for transportation, waterpower, or irrigation." lineColor="0000FF" lineWidth="2.000000"/>
-	<tag key="waterway" value="dam" description="A wall built across a river or stream to impound the water. A dam normally does not have water flowing over the top of it." iconName="water_dam" lineColor="D8D8D8" areaColor="D8D8D8" lineWidth="2.000000"/>
+	<tag key="waterway" value="boatyard" areaColor="D8D8D8"/>
+	<tag key="waterway" value="brook"/>
+	<tag key="waterway" value="canal" lineColor="0000FF" lineWidth="2.000000"/>
+	<tag key="waterway" value="dam" iconName="water_dam" lineColor="D8D8D8" areaColor="D8D8D8" lineWidth="2.000000"/>
 	<tag key="waterway" value="deep_well"/>
-	<tag key="waterway" value="derelict_canal" description="A derelict artificial open waterway used for transportation, waterpower, or irrigation."/>
-	<tag key="waterway" value="ditch" description="Small man-made draining waterway, often found along roads." lineColor="0000FF" lineWidth="1.000000"/>
-	<tag key="waterway" value="dock" description="A dock is an enclosed area of water for ships and other craft within which the height of the water can be managed." areaColor="0000CF"/>
-	<tag key="waterway" value="drain" description="Artificial waterway used for carrying storm water or industrial discharge." lineColor="0000FF" lineWidth="1.000000"/>
+	<tag key="waterway" value="derelict_canal"/>
+	<tag key="waterway" value="ditch" lineColor="0000FF" lineWidth="1.000000"/>
+	<tag key="waterway" value="dock" areaColor="0000CF"/>
+	<tag key="waterway" value="drain" lineColor="0000FF" lineWidth="1.000000"/>
 	<tag key="waterway" value="dredged_area"/>
 	<tag key="waterway" value="estuary"/>
 	<tag key="waterway" value="fish_pass"/>
 	<tag key="waterway" value="lakebank"/>
-	<tag key="waterway" value="lock_gate" description="A thing to raise/lower the water level for vessels, often found in canals."/>
+	<tag key="waterway" value="lock_gate"/>
 	<tag key="waterway" value="milestone"/>
 	<tag key="waterway" value="offshore_field"/>
 	<tag key="waterway" value="rapids" lineColor="8080FF" lineWidth="2.000000"/>
-	<tag key="waterway" value="river" description="For narrow rivers which will be rendered as a line." lineColor="0000FF" lineWidth="2.000000"/>
-	<tag key="waterway" value="riverbank" description="For tagging wide rivers which need to be defined by an area rather than just shown as a linear way." lineColor="0000CF" areaColor="0000CF" lineWidth="1.000000"/>
+	<tag key="waterway" value="river" lineColor="0000FF" lineWidth="2.000000"/>
+	<tag key="waterway" value="riverbank" lineColor="0000CF" areaColor="0000CF" lineWidth="1.000000"/>
 	<tag key="waterway" value="seaway"/>
-	<tag key="waterway" value="stream" description="a naturally-forming waterway that is too thin to be classed as a river. Maybe you can just jump over it." lineColor="9090FF" lineWidth="1.000000"/>
+	<tag key="waterway" value="stream" lineColor="9090FF" lineWidth="1.000000"/>
 	<tag key="waterway" value="swept_area"/>
-	<tag key="waterway" value="turning_point" description="A place to turn the driving direction for vessels, where the boats are longer than the river/canal is wide."/>
-	<tag key="waterway" value="water_point" description="A place to get fresh water e.g. for caravans."/>
+	<tag key="waterway" value="turning_point"/>
+	<tag key="waterway" value="water_point"/>
 	<tag key="waterway" value="waterfall" lineColor="D8D8D8" lineWidth="2.000000"/>
-	<tag key="waterway" value="weir" description="A barrier built across a river, sometimes to divert water for industrial purposes. Water can still flow over the top." iconName="water_weir" lineColor="D8D8D8" lineWidth="2.000000"/>
+	<tag key="waterway" value="weir" iconName="water_weir" lineColor="D8D8D8" lineWidth="2.000000"/>
 
 
 	<tag key="wheelchair" value="limited"/>
@@ -1652,6 +1652,6 @@
 
 	<tag key="wires" value="double"/>
 
-	<tag key="zoo" value="petting_zoo" description="Small zoo or garden for kids to touch and play with animals"/>
+	<tag key="zoo" value="petting_zoo"/>
 
 </tags>

@@ -1332,10 +1332,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			return s;
 	}
 
-	TagInfo * tagInfo = [self tagInfo];
-	if ( tagInfo.summary )
-		return tagInfo.summary;
-
 	return nil;
 }
 

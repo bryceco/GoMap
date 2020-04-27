@@ -20,7 +20,6 @@
 @property (strong,nonatomic)	NSString	*	value;
 @property (strong,nonatomic)	NSString	*	type;
 @property (strong,nonatomic)	NSString	*	iconName;
-@property (strong,nonatomic)	NSString	*	summary;
 @property (strong,nonatomic)	NSColor		*	lineColor;
 @property (assign,nonatomic)	NSString	*	lineColorText;
 @property (assign,nonatomic)	CGFloat			lineWidth;
