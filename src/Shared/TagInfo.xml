@@ -13,7 +13,7 @@
 	<tag key="aeroway" value="aerodrome" type="node;area" lineColor="660000" areaColor="660000" lineWidth="2.000000"/>
 	<tag key="aeroway" value="airport"/>
 	<tag key="aeroway" value="apron" areaColor="990000"/>
-	<tag key="aeroway" value="gate" wikiPage="https://wiki.openstreetmap.org/wiki/Key:aeroway"/>
+	<tag key="aeroway" value="gate"/>
 	<tag key="aeroway" value="hangar" areaColor="990000"/>
 	<tag key="aeroway" value="helipad" areaColor="330000"/>
 	<tag key="aeroway" value="navigationaid"/>
@@ -146,7 +146,7 @@
 	<tag key="amenity" value="university" type="node;area" />
 	<tag key="amenity" value="vending_machine" type="node;area" />
 	<tag key="amenity" value="veterinary" type="node;area" areaColor="EEEEEE"/>
-	<tag key="amenity" value="waste_basket" type="node;area" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:amenity=waste_basket"/>
+	<tag key="amenity" value="waste_basket" type="node;area"/>
 	<tag key="amenity" value="waste_disposal" type="node;area"/>
 	<tag key="amenity" value="waste_transfer_station" type="node;area"/>
 	<tag key="amenity" value="watering_place" type="node;area"/>
@@ -154,32 +154,32 @@
 	<tag key="barrier" value="block" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="bollard" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="bus_trap" type="node_in_way"/>
-	<tag key="barrier" value="cattle_grid" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcattle_grid"/>
+	<tag key="barrier" value="cattle_grid" type="way;node_in_way"/>
 	<tag key="barrier" value="chain" type="way;node_in_way"/>
 	<tag key="barrier" value="chicane" type="node_in_way"/>
 	<tag key="barrier" value="city_wall" type="way;node_in_way" lineColor="F0F050" lineWidth="2.000000"/>
-	<tag key="barrier" value="cycle_barrier" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dcycle_barrier"/>
-	<tag key="barrier" value="ditch" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dditch"/>
+	<tag key="barrier" value="cycle_barrier" type="way;node_in_way"/>
+	<tag key="barrier" value="ditch" type="way;node_in_way"/>
 	<tag key="barrier" value="entrance" type="node_in_way"/>
 	<tag key="barrier" value="fence" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="gate" type="node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dgate"/>
+	<tag key="barrier" value="gate" type="node_in_way"/>
 	<tag key="barrier" value="hedge" type="way;node_in_way" lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
 	<tag key="barrier" value="hedge_bank" type="node_in_way"/>
 	<tag key="barrier" value="horse_stile" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gap" type="node_in_way"/>
 	<tag key="barrier" value="kent_carriage_gate" type="node_in_way"/>
-	<tag key="barrier" value="kissing_gate" type="node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dkissing_gate"/>
-	<tag key="barrier" value="lift_gate" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dlift_gate"/>
+	<tag key="barrier" value="kissing_gate" type="node_in_way"/>
+	<tag key="barrier" value="lift_gate" type="way;node_in_way"/>
 	<tag key="barrier" value="motorcycle_barrier" type="way;node_in_way"/>
 	<tag key="barrier" value="retaining_wall" type="node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 	<tag key="barrier" value="sally_port" type="node_in_way"/>
 	<tag key="barrier" value="spikes" type="node_in_way"/>
-	<tag key="barrier" value="stile" type="node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dstile"/>
+	<tag key="barrier" value="stile" type="node_in_way"/>
 	<tag key="barrier" value="sump_buster" type="node_in_way"/>
 	<tag key="barrier" value="toll_booth" type="node_in_way" areaColor="F0F050"/>
 	<tag key="barrier" value="turnstile" type="node_in_way"/>
 	<tag key="barrier" value="wall" type="way;node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
-	<tag key="barrier" value="wire_fence" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:barrier%3Dwire_fence"/>
+	<tag key="barrier" value="wire_fence" type="way;node_in_way"/>
 
 	<default key="building" areaColor="D9AD64"/>
 	<tag key="building" value="apartments" type="node;area" />
@@ -225,9 +225,9 @@
 
 	<tag key="boundary" value="administrative" type="way" lineColor="B100FF" lineWidth="1.000000"/>
 	<tag key="boundary" value="national_park" type="way" lineColor="FF6600" lineWidth="1.000000"/>
-	<tag key="boundary" value="protected_area" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=protected_area"/>
-	<tag key="boundary" value="town" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
-	<tag key="boundary" value="census" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=census"/>
+	<tag key="boundary" value="protected_area"/>
+	<tag key="boundary" value="town"/>
+	<tag key="boundary" value="census"/>
 
 	<tag key="craft" value="agricultural_engines" type="node;area"/>
 	<tag key="craft" value="basket_maker" type="node;area"/>
@@ -358,7 +358,7 @@
 	<tag key="highway" value="lane" type="way"/>
 	<tag key="highway" value="living_street" type="way" lineColor="DDDDDD" lineWidth="2.000000"/>
 	<tag key="highway" value="milestone" type="node"/>
-	<tag key="highway" value="mini_roundabout" type="node" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dmini_roundabout"/>
+	<tag key="highway" value="mini_roundabout" type="node"/>
 	<tag key="highway" value="minor" type="way"/>
 	<tag key="highway" value="motorway" type="way" lineColor="CF2081" lineWidth="3.000000"/>
 	<tag key="highway" value="motorway_junction" type="way"/>
@@ -395,7 +395,7 @@
 	<tag key="highway" value="trail" type="way"/>
 	<tag key="highway" value="trunk" type="way" lineColor="DD2F22" lineWidth="3.000000"/>
 	<tag key="highway" value="trunk_link" type="way" lineColor="DD2F22" lineWidth="2.000000"/>
-	<tag key="highway" value="turning_circle" type="way;node_in_way" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:highway%3Dturning_circle"/>
+	<tag key="highway" value="turning_circle" type="way;node_in_way"/>
 	<tag key="highway" value="turning_loop" type="way;node_in_way"/>
 	<tag key="highway" value="unclassified" type="way" lineColor="96795d" lineWidth="2.000000"/>
 	<tag key="highway" value="unsurfaced" type="way" lineColor="C0C0C0" lineWidth="1.000000"/>
@@ -1586,7 +1586,7 @@
 	<tag key="type" value="network"/>
 	<tag key="type" value="observation_spot"/>
 	<tag key="type" value="public_transport"/>
-	<tag key="type" value="restriction" wikiPage="https://wiki.openstreetmap.org/wiki/Turn_restrictions"/>
+	<tag key="type" value="restriction"/>
 	<tag key="type" value="route_master"/>
 	<tag key="type" value="site"/>
 	<tag key="type" value="street"/>
