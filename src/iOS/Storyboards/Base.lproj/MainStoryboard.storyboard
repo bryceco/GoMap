@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Zh9-uC-62t">
-                                        <rect key="frame" x="141.5" y="6" width="37" height="37"/>
+                                        <rect key="frame" x="141.5" y="40" width="37" height="37"/>
                                         <gestureRecognizers/>
                                     </activityIndicatorView>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GTv-eT-l7q">
@@ -179,7 +179,7 @@
                                     <constraint firstItem="9t5-wq-j1u" firstAttribute="centerX" secondItem="GTv-eT-l7q" secondAttribute="centerX" constant="7.5" id="MKk-qF-9MP"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="bottom" secondItem="4gw-jH-T1o" secondAttribute="top" id="N4A-fY-zCd"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="centerX" secondItem="Zh9-uC-62t" secondAttribute="centerX" id="Oun-QH-4xK"/>
-                                    <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="4gw-jH-T1o" secondAttribute="top" constant="6" id="PTj-zH-igC"/>
+                                    <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="4gw-jH-T1o" secondAttribute="top" constant="40" id="PTj-zH-igC"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="trailing" secondItem="fss-Ag-fKJ" secondAttribute="trailing" id="T60-8I-jog"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="11" id="VKx-lR-ejS"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="9t5-wq-j1u" secondAttribute="bottom" constant="55" id="WDm-wY-ec4"/>
