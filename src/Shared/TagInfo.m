@@ -22,7 +22,7 @@
 	TagInfo * copy = [TagInfo new];
 	copy.key			= self.key;
 	copy.value			= self.value;
-	copy.type			= self.type;
+	copy.geometry		= self.geometry;
 	copy.lineColor		= self.lineColor;
 	copy.lineWidth		= self.lineWidth;
 	copy.lineColorText	= self.lineColorText;
@@ -33,7 +33,7 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _type];
+	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _geometry];
 }
 
 static TagInfo * g_AddressRender = nil;
@@ -192,7 +192,7 @@ static TagInfo * g_DefaultRender = nil;
 		TagInfo * tagType = [TagInfo new];
 		tagType.key				= [tag attributeForName:@"key"].stringValue;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
-		tagType.type			= [tag attributeForName:@"type"].stringValue;
+		tagType.geometry		= [tag attributeForName:@"type"].stringValue;
 		tagType.lineColor		= [TagInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
 		tagType.areaColor		= [TagInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
 		tagType.lineWidth		= [tag attributeForName:@"lineWidth"].stringValue.doubleValue;
