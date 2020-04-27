@@ -1304,20 +1304,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return _dict[ @"name" ];
 }
 
--(RenderInfo *)tagInfo
-{
-	if ( _tagInfo == nil ) {
-		[self.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-			RenderInfo * info = [[RenderInfoDatabase sharedRenderInfoDatabase] tagInfoForKey:key value:value];
-			if ( info ) {
-				_tagInfo = info;
-				*stop = YES;
-			}
-		}];
-	}
-	return _tagInfo;
-}
-
 -(NSString *)summary
 {
 	NSString * feature = _featureName;

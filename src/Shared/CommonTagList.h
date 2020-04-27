@@ -83,7 +83,7 @@ typedef int UITextAutocapitalizationType;
 @interface CommonTagFeature : NSObject
 {
 	NSDictionary	*	_dict;
-	RenderInfo			*	_tagInfo;
+	RenderInfo		*	_renderInfo;
 }
 @property (readonly,nonatomic)	NSString		*	featureName;
 @property (readonly,nonatomic)	NSString		*	friendlyName;

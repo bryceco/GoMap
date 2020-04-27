@@ -36,7 +36,6 @@
 }
 +(RenderInfoDatabase *)sharedRenderInfoDatabase;
 
--(RenderInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
--(RenderInfo *)tagInfoForObject:(OsmBaseObject *)object;
+-(RenderInfo *)renderInfoForObject:(OsmBaseObject *)object;
 
 @end

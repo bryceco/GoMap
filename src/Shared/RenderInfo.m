@@ -149,7 +149,6 @@ static RenderInfo * g_DefaultRender = nil;
 {
 	NSError * error = nil;
 	NSMutableArray * tagList = [NSMutableArray new];
-	NSMutableArray * defaults = [NSMutableArray new];
 	NSString * text = [NSString stringWithContentsOfFile:@"RenderInfo.xml" encoding:NSUTF8StringEncoding error:&error];
 	if ( text == nil ) {
 		NSString * path = [[NSBundle mainBundle] pathForResource:@"RenderInfo" ofType:@"xml"];
@@ -171,21 +170,10 @@ static RenderInfo * g_DefaultRender = nil;
 			[tagList addObject:tagType];
 		} else if ( [tag.name isEqualToString:@"default"] ) {
 			assert( tagType.value == nil );	// not implemented
-			[defaults addObject:tagType];
+			tagType.value = @"";
+			[tagList addObject:tagType];
 		} else {
 			assert(NO);
-		}
-	}
-	for ( RenderInfo * def in defaults ) {
-		for ( RenderInfo * tag in tagList ) {
-			if ( [tag.key isEqualToString:def.key] ) {
-				if ( tag.areaColor == nil )
-					tag.areaColor = def.areaColor;
-				if ( tag.lineColor == nil )
-					tag.lineColor = def.lineColor;
-				if ( tag.lineWidth == 0.0 )
-					tag.lineWidth = def.lineWidth;
-			}
 		}
 	}
 	return tagList;
@@ -217,29 +205,28 @@ static RenderInfo * g_DefaultRender = nil;
 	return self;
 }
 
--(RenderInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
-{
-	NSDictionary * valDict = [_keyDict objectForKey:key];
-	return [valDict objectForKey:value];
-}
-
--(RenderInfo *)tagInfoForObject:(OsmBaseObject *)object
+-(RenderInfo *)renderInfoForObject:(OsmBaseObject *)object
 {
 	// try exact match
 	__block RenderInfo * best = nil;
+	__block BOOL isDefault = NO;
 	[object.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
 		NSDictionary * valDict = [_keyDict objectForKey:key];
-		if ( valDict ) {
-			RenderInfo * render = [valDict objectForKey:value];
-			if ( render == nil )
-				return;
-			if ( best == nil || (best.lineColor == nil && render.lineColor) )
-				best = render;
-			if ( render.lineColor == nil )
-				return;
-			// DLog(@"render %@=%@",key,value);
-			*stop = YES;
+		RenderInfo * render = valDict[value];
+		if ( render == nil ) {
+			render = valDict[@""];
+			if ( render )
+				isDefault = YES;
 		}
+
+		if ( render == nil )
+			return;
+		if ( best == nil || isDefault || (best.lineColor == nil && render.lineColor) )
+			best = render;
+		if ( render.lineColor == nil )
+			return;
+		// DLog(@"render %@=%@",key,value);
+		*stop = YES;
 	}];
 	if ( best ) {
 		return best;
