@@ -29,7 +29,7 @@
 #import "PathUtil.h"
 #import "QuadMap.h"
 #import "SpeechBalloonLayer.h"
-#import "TagInfo.h"
+#import "RenderInfo.h"
 #import "VectorMath.h"
 #import "Go_Map__-Swift.h"
 #import "GeekbenchScoreProvider.h"
@@ -1240,7 +1240,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	if ( object.shapeLayers )
 		return object.shapeLayers;
 
-	TagInfo * tagInfo = object.tagInfo;
+	RenderInfo * tagInfo = object.tagInfo;
 	NSMutableArray * layers = [NSMutableArray new];
 
     OsmNode *node = object.isNode;
@@ -2376,7 +2376,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	// get taginfo for objects
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.tagInfo == nil ) {
-			object.tagInfo = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForObject:object];
+			object.tagInfo = [[RenderInfoDatabase sharedTagInfoDatabase] tagInfoForObject:object];
 		}
 		
 		if ( object->renderPriorityCached == 0 ) {

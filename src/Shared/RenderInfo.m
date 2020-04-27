@@ -7,19 +7,21 @@
 //
 
 #import "DLog.h"
-#import "TagInfo.h"
+#import "RenderInfo.h"
 
 #if TARGET_OS_IPHONE
 #include "DDXML.h"
 #endif
 
-@implementation TagInfo
+@implementation RenderInfo
+
+static RenderInfo * g_AddressRender = nil;
+static RenderInfo * g_DefaultRender = nil;
 
 
-
--(TagInfo *)copy
+-(RenderInfo *)copy
 {
-	TagInfo * copy = [TagInfo new];
+	RenderInfo * copy = [RenderInfo new];
 	copy.key			= self.key;
 	copy.value			= self.value;
 	copy.geometry		= self.geometry;
@@ -35,9 +37,6 @@
 {
 	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _geometry];
 }
-
-static TagInfo * g_AddressRender = nil;
-static TagInfo * g_DefaultRender = nil;
 
 -(BOOL)isAddressPoint
 {
@@ -57,35 +56,7 @@ static TagInfo * g_DefaultRender = nil;
 	return [NSColor colorWithCalibratedRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 #endif
 }
-+(NSString *)stringForColor:(NSColor *)color
-{
-	if ( color == nil )
-		return nil;
-	CGFloat r,g,b,a;
-	[color getRed:&r green:&g blue:&b alpha:&a];
-	return [NSString stringWithFormat:@"%02lX%02lX%02lX",lround(r*255),lround(g*255),lround(b*255)];
-}
 
--(NSString *)lineColorText
-{
-	if ( self.lineColor == nil )
-		return nil;
-	return [TagInfo stringForColor:self.lineColor];
-}
--(void)setLineColorText:(NSString *)lineColorText
-{
-	self.lineColor = [TagInfo colorForString:lineColorText];
-}
--(NSString *)areaColorText
-{
-	if ( self.areaColor == nil )
-		return nil;
-	return [TagInfo stringForColor:self.areaColor];
-}
--(void)setAreaColorText:(NSString *)areaColorText
-{
-	self.areaColor = [TagInfo colorForString:areaColorText];
-}
 
 
 -(NSInteger)renderSize:(OsmBaseObject *)object
@@ -164,11 +135,13 @@ static TagInfo * g_DefaultRender = nil;
 @end
 
 
-@implementation TagInfoDatabase
 
-+(TagInfoDatabase *)sharedTagInfoDatabase
+
+@implementation RenderInfoDatabase
+
++(RenderInfoDatabase *)sharedTagInfoDatabase
 {
-	static TagInfoDatabase * _database = nil;
+	static RenderInfoDatabase * _database = nil;
 	if ( _database == nil ) {
 		_database = [self new];
 	}
@@ -189,12 +162,12 @@ static TagInfo * g_DefaultRender = nil;
 	NSXMLElement * root = [doc rootElement];
 	for ( NSXMLElement * tag in root.children ) {
 
-		TagInfo * tagType = [TagInfo new];
+		RenderInfo * tagType = [RenderInfo new];
 		tagType.key				= [tag attributeForName:@"key"].stringValue;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
 		tagType.geometry		= [tag attributeForName:@"type"].stringValue;
-		tagType.lineColor		= [TagInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
-		tagType.areaColor		= [TagInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
+		tagType.lineColor		= [RenderInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
+		tagType.areaColor		= [RenderInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
 		tagType.lineWidth		= [tag attributeForName:@"lineWidth"].stringValue.doubleValue;
 
 		if ( [tag.name isEqualToString:@"tag"] ) {
@@ -206,8 +179,8 @@ static TagInfo * g_DefaultRender = nil;
 			assert(NO);
 		}
 	}
-	for ( TagInfo * def in defaults ) {
-		for ( TagInfo * tag in tagList ) {
+	for ( RenderInfo * def in defaults ) {
+		for ( RenderInfo * tag in tagList ) {
 			if ( [tag.key isEqualToString:def.key] ) {
 				if ( tag.areaColor == nil )
 					tag.areaColor = def.areaColor;
@@ -225,9 +198,9 @@ static TagInfo * g_DefaultRender = nil;
 {
 	self = [super init];
 	if ( self ) {
-		_allTags = [TagInfoDatabase readXml];
+		_allTags = [RenderInfoDatabase readXml];
 		_keyDict = [NSMutableDictionary new];
-		for ( TagInfo * tag in _allTags ) {
+		for ( RenderInfo * tag in _allTags ) {
 			NSMutableDictionary * valDict = [_keyDict objectForKey:tag.key];
 			if ( valDict == nil ) {
 				valDict = [NSMutableDictionary dictionaryWithObject:tag forKey:tag.value];
@@ -240,27 +213,20 @@ static TagInfo * g_DefaultRender = nil;
 	return self;
 }
 
--(id)init
-{
-	NSString * path = [[NSBundle mainBundle] pathForResource:@"TagInfo.menu" ofType:@"xml"];
-	self = [self initWithXmlFile:path];
-	return self;
-}
-
--(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
+-(RenderInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {
 	NSDictionary * valDict = [_keyDict objectForKey:key];
 	return [valDict objectForKey:value];
 }
 
--(TagInfo *)tagInfoForObject:(OsmBaseObject *)object
+-(RenderInfo *)tagInfoForObject:(OsmBaseObject *)object
 {
 	// try exact match
-	__block TagInfo * best = nil;
+	__block RenderInfo * best = nil;
 	[object.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
 		NSDictionary * valDict = [_keyDict objectForKey:key];
 		if ( valDict ) {
-			TagInfo * render = [valDict objectForKey:value];
+			RenderInfo * render = [valDict objectForKey:value];
 			if ( render == nil )
 				return;
 			if ( best == nil || (best.lineColor == nil && render.lineColor) )
@@ -286,7 +252,7 @@ static TagInfo * g_DefaultRender = nil;
 		}
 		if ( isAddress ) {
 			if ( g_AddressRender == nil ) {
-				g_AddressRender = [TagInfo new];
+				g_AddressRender = [RenderInfo new];
 				g_AddressRender.key = @"ADDRESS";
 				g_AddressRender.lineWidth = 0.0;
 			}
@@ -295,7 +261,7 @@ static TagInfo * g_DefaultRender = nil;
 	}
 
 	if ( g_DefaultRender == nil ) {
-		g_DefaultRender = [TagInfo new];
+		g_DefaultRender = [RenderInfo new];
 		g_DefaultRender.key = @"DEFAULT";
 #if TARGET_OS_IPHONE
 		g_DefaultRender.lineColor = [NSColor colorWithRed:0 green:0 blue:0 alpha:1];

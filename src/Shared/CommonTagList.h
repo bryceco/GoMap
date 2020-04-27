@@ -22,7 +22,7 @@ typedef int UITextAutocapitalizationType;
 #define GEOMETRY_NODE	@"point"
 #define GEOMETRY_VERTEX	@"vertex"
 
-@class TagInfo;
+@class RenderInfo;
 @class OsmWay;
 
 
@@ -83,7 +83,7 @@ typedef int UITextAutocapitalizationType;
 @interface CommonTagFeature : NSObject
 {
 	NSDictionary	*	_dict;
-	TagInfo			*	_tagInfo;
+	RenderInfo			*	_tagInfo;
 }
 @property (readonly,nonatomic)	NSString		*	featureName;
 @property (readonly,nonatomic)	NSString		*	friendlyName;

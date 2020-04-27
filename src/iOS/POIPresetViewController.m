@@ -10,7 +10,7 @@
 #import "CommonTagList.h"
 #import "POIPresetViewController.h"
 #import "POITabBarController.h"
-#import "TagInfo.h"
+#import "RenderInfo.h"
 
 
 @implementation POIPresetViewController

@@ -12,7 +12,7 @@
 #import "iosapi.h"
 #import "CommonTagList.h"
 #import "DLog.h"
-#import "TagInfo.h"
+#import "RenderInfo.h"
 
 #define USE_SUGGESTIONS	1
 
@@ -1304,11 +1304,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return _dict[ @"name" ];
 }
 
--(TagInfo *)tagInfo
+-(RenderInfo *)tagInfo
 {
 	if ( _tagInfo == nil ) {
 		[self.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-			TagInfo * info = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForKey:key value:value];
+			RenderInfo * info = [[RenderInfoDatabase sharedTagInfoDatabase] tagInfoForKey:key value:value];
 			if ( info ) {
 				_tagInfo = info;
 				*stop = YES;

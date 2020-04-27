@@ -11,7 +11,7 @@
 #import "VectorMath.h"
 #import "iosapi.h"
 
-@class TagInfo;
+@class RenderInfo;
 @class UndoManager;
 @class OsmNode;
 @class OsmWay;
@@ -54,7 +54,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
     NSInteger            renderPriorityCached;
 }
 @property (readonly,nonatomic)    BOOL                    deleted;
-@property (strong,nonatomic)    TagInfo                *    tagInfo;
+@property (strong,nonatomic)    RenderInfo                *    tagInfo;
 @property (readonly,nonatomic)    int32_t                    modifyCount;
 @property (readonly,nonatomic)    NSArray                *    parentRelations;
 @property (readonly,nonatomic)    OsmIdentifier            extendedIdentifier;

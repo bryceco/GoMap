@@ -16,7 +16,7 @@
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
 #import "PushPinView.h"
-#import "TagInfo.h"
+#import "RenderInfo.h"
 
 
 #define EDIT_RELATIONS 0

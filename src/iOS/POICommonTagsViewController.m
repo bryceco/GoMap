@@ -17,7 +17,7 @@
 #import "POIPresetViewController.h"
 #import "POITabBarController.h"
 #import "POITypeViewController.h"
-#import "TagInfo.h"
+#import "RenderInfo.h"
 
 
 @interface CommonTagCell : UITableViewCell

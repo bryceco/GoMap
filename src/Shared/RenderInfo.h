@@ -10,7 +10,7 @@
 
 @class OsmBaseObject;
 
-@interface TagInfo : NSObject
+@interface RenderInfo : NSObject
 {
 	NSInteger	_renderSize;
 }
@@ -31,14 +31,14 @@
 
 
 
-@interface TagInfoDatabase : NSObject
+@interface RenderInfoDatabase : NSObject
 {
 	NSArray				*	_allTags;
 	NSMutableDictionary *	_keyDict;
 }
-+(TagInfoDatabase *)sharedTagInfoDatabase;
++(RenderInfoDatabase *)sharedTagInfoDatabase;
 
--(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
--(TagInfo *)tagInfoForObject:(OsmBaseObject *)object;
+-(RenderInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
+-(RenderInfo *)tagInfoForObject:(OsmBaseObject *)object;
 
 @end
