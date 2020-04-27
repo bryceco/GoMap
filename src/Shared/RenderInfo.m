@@ -59,7 +59,7 @@ static RenderInfo * g_DefaultRender = nil;
 
 
 
--(NSInteger)renderSize:(OsmBaseObject *)object
+-(NSInteger)renderPriority:(OsmBaseObject *)object
 {
 	static NSDictionary * highwayDict = nil;
 	if ( highwayDict == nil ) {
@@ -93,43 +93,43 @@ static RenderInfo * g_DefaultRender = nil;
 		};
 	}
 
-	if ( _renderSize ) {
+	if ( _renderPriority ) {
 		if ( object.isWay || object.isRelation.isMultipolygon )
-			return _renderSize + 2;
+			return _renderPriority + 2;
 		if ( object.isRelation )
-			return _renderSize + 1;
-		return _renderSize;
+			return _renderPriority + 1;
+		return _renderPriority;
 	}
 
 	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"coastline"] ) {
-		return _renderSize = 10000;
+		return _renderPriority = 10000;
 	}
 	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"water"] ) {
-		return _renderSize = 9000;
+		return _renderPriority = 9000;
 	}
 	if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
-		return _renderSize = 5000;
+		return _renderPriority = 5000;
 	}
 	if ( [_key isEqualToString:@"highway"] ) {
 		if ( _value ) {
 			id priority = highwayDict[_value];
-			_renderSize = [priority integerValue];
-			if ( _renderSize )
-				return _renderSize;
+			_renderPriority = [priority integerValue];
+			if ( _renderPriority )
+				return _renderPriority;
 		}
 	}
 	if ( [_key isEqualToString:@"railway"] ) {
-		return _renderSize = 1250;
+		return _renderPriority = 1250;
 	}
 
 	// address points are extra low priority
 	if ( self == g_AddressRender ) {
-		return _renderSize = 40;
+		return _renderPriority = 40;
 	}
 
 	// get a default value
-	_renderSize = 50;
-	return [self renderSize:object];
+	_renderPriority = 50;
+	return [self renderPriority:object];
 }
 
 @end

@@ -12,7 +12,7 @@
 
 @interface RenderInfo : NSObject
 {
-	NSInteger	_renderSize;
+	NSInteger	_renderPriority;
 }
 @property (strong,nonatomic)	NSString	*	key;
 @property (strong,nonatomic)	NSString	*	value;
@@ -25,7 +25,7 @@
 
 -(BOOL)isAddressPoint;
 
--(NSInteger)renderSize:(OsmBaseObject *)object;
+-(NSInteger)renderPriority:(OsmBaseObject *)object;
 
 @end
 

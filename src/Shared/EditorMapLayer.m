@@ -2383,7 +2383,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 			if ( object.modifyCount ) {
 				object->renderPriorityCached = 1000000;
 			} else {
-				object->renderPriorityCached = [object.tagInfo renderSize:object];
+				object->renderPriorityCached = [object.tagInfo renderPriority:object];
 			}
 		}
 	}
