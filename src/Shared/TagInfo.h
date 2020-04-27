@@ -18,7 +18,6 @@
 }
 @property (strong,nonatomic)	NSString	*	key;
 @property (strong,nonatomic)	NSString	*	value;
-@property (strong,nonatomic)	NSString	*	friendlyName;
 @property (strong,nonatomic)	NSString	*	type;
 @property (strong,nonatomic)	NSString	*	iconName;
 @property (strong,nonatomic)	NSString	*	summary;

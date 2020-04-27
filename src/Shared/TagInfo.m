@@ -24,7 +24,6 @@
 	TagInfo * copy = [TagInfo new];
 	copy.key			= self.key;
 	copy.value			= self.value;
-	copy.friendlyName	= self.friendlyName;
 	copy.type			= self.type;
 	copy.iconName		= self.iconName;
 	copy.summary		= self.summary;
@@ -197,7 +196,6 @@ static TagInfo * g_DefaultRender = nil;
 		TagInfo * tagType = [TagInfo new];
 		tagType.key				= [tag attributeForName:@"key"].stringValue;
 		tagType.value			= [tag attributeForName:@"value"].stringValue;
-		tagType.friendlyName	= [tag attributeForName:@"name"].stringValue;
 		tagType.summary			= [tag attributeForName:@"description"].stringValue;
 		tagType.type			= [tag attributeForName:@"type"].stringValue;
 		tagType.iconName		= [tag attributeForName:@"iconName"].stringValue;
