@@ -326,7 +326,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TagCell" id="V3V-d0-DLx" customClass="TextPair">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TagCell" id="V3V-d0-DLx" customClass="TextPairTableCell">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V3V-d0-DLx" id="sNa-Uq-eZb">
@@ -373,12 +373,11 @@
                                     <constraint firstItem="cP3-lR-lzM" firstAttribute="leading" secondItem="X1y-nK-nVJ" secondAttribute="trailing" constant="13" id="vqt-5E-Wez"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="_fixContstraintView" destination="X1y-nK-nVJ" id="4bo-9u-HUo"/>
                                     <outlet property="text1" destination="X1y-nK-nVJ" id="ayI-fI-Sgz"/>
                                     <outlet property="text2" destination="cP3-lR-lzM" id="oAt-ph-jQD"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RelationCell" id="t3b-01-7U2" customClass="TextPair">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RelationCell" id="t3b-01-7U2" customClass="TextPairTableCell">
                                 <rect key="frame" x="0.0" y="99.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t3b-01-7U2" id="7MN-vj-ZSm">
@@ -427,7 +426,7 @@
                                     <segue destination="f5t-25-IXF" kind="push" splitViewControllerTargetIndex="1" id="ZKT-be-rhK"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MemberCell" id="hyI-ld-GDE" customClass="TextPair">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MemberCell" id="hyI-ld-GDE" customClass="TextPairTableCell">
                                 <rect key="frame" x="0.0" y="143.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hyI-ld-GDE" id="41v-lC-obU">
@@ -473,7 +472,6 @@
                                     <constraint firstItem="aCs-vS-YXj" firstAttribute="baseline" secondItem="sVp-1S-TjJ" secondAttribute="baseline" id="uKH-4N-AKa"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="_fixContstraintView" destination="sVp-1S-TjJ" id="Yfh-l7-s4P"/>
                                     <outlet property="text1" destination="sVp-1S-TjJ" id="Kdn-2w-pA6"/>
                                     <outlet property="text2" destination="aCs-vS-YXj" id="ZSF-G8-s9v"/>
                                 </connections>

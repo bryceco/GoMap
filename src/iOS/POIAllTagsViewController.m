@@ -22,7 +22,7 @@
 #define EDIT_RELATIONS 0
 
 
-@implementation TextPair
+@implementation TextPairTableCell
 
 - (void)willTransitionToState:(UITableViewCellStateMask)state
 {
@@ -190,7 +190,7 @@
 			return cell;
 		}
 
-		TextPair * cell = [tableView dequeueReusableCellWithIdentifier:@"TagCell" forIndexPath:indexPath];
+		TextPairTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TagCell" forIndexPath:indexPath];
 		NSArray * kv = _tags[ indexPath.row ];
 		// assign text contents of fields
 		cell.text1.enabled = YES;
@@ -210,7 +210,7 @@
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
 			return cell;
 		}
-		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath];
+		TextPairTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath];
 		cell.text1.enabled = NO;
 		cell.text2.enabled = NO;
 		OsmRelation	* relation = _relations[ indexPath.row ];
@@ -228,7 +228,7 @@
 			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
 			return cell;
 		}
-		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
+		TextPairTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
 #if EDIT_RELATIONS
 		cell.text1.enabled = YES;
 		cell.text2.enabled = YES;
@@ -284,7 +284,7 @@
 	UITableViewCell * cell = (id)textField.superview;
 	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
 		cell = (id)cell.superview;
-	TextPair * pair = (id)cell;
+	TextPairTableCell * pair = (id)cell;
 	BOOL isValue = textField == pair.text2;
 
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
@@ -316,7 +316,7 @@
 	UITableViewCell * cell = (id)textField.superview;
 	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
 		cell = (id)cell.superview;
-	TextPair * pair = (id)cell;
+	TextPairTableCell * pair = (id)cell;
 	BOOL isValue = textField == pair.text2;
 
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
@@ -371,7 +371,7 @@
 
 	if ( indexPath.section == 0 ) {
 		// edited tags
-		TextPair * pair = (id)cell;
+		TextPairTableCell * pair = (id)cell;
 		NSMutableArray * kv = _tags[ indexPath.row ];
 		BOOL isValue = textField == pair.text2;
 
@@ -468,7 +468,7 @@
 	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
 
 	// set new cell to show keyboard
-	TextPair * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+	TextPairTableCell * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
 	[newCell.text1 becomeFirstResponder];
 }
 
