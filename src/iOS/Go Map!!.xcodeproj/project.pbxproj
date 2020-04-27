@@ -91,7 +91,6 @@
 		02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */; };
 		02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */; };
 		02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */; };
-		02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED989168B6F2F00357B94 /* WebPageViewController.m */; };
 		02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED98D168BF87200357B94 /* NearbyMappersViewController.m */; };
 		02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99B168CBC5400357B94 /* LocationBallLayer.m */; };
 		02BED99F168D102700357B94 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99E168D102600357B94 /* OfflineViewController.m */; };
@@ -108,7 +107,6 @@
 		02E626701997168800565D62 /* KeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E6266F1997168800565D62 /* KeyChain.m */; };
 		02E6267219973A0700565D62 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E6267119973A0700565D62 /* Security.framework */; };
 		02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */; };
-		02E8436F19B407C40044AC1D /* WebPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02E8436E19B407C40044AC1D /* WebPageView.xib */; };
 		02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */; };
 		02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02EDCC071683EC2D007F9934 /* CFNetwork.framework */; };
 		02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */; };
@@ -321,8 +319,6 @@
 		02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LanguageTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "Go Map!!/Go Map!!.entitlements"; sourceTree = "<group>"; };
-		02BED988168B6F2F00357B94 /* WebPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebPageViewController.h; sourceTree = "<group>"; };
-		02BED989168B6F2F00357B94 /* WebPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebPageViewController.m; sourceTree = "<group>"; };
 		02BED98C168BF87100357B94 /* NearbyMappersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyMappersViewController.h; sourceTree = "<group>"; };
 		02BED98D168BF87200357B94 /* NearbyMappersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyMappersViewController.m; sourceTree = "<group>"; };
 		02BED99A168CBC5300357B94 /* LocationBallLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationBallLayer.h; path = ../Shared/LocationBallLayer.h; sourceTree = "<group>"; };
@@ -354,7 +350,6 @@
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
 		02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OsmNotesDatabase.h; path = ../Shared/OsmNotesDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = OsmNotesDatabase.m; path = ../Shared/OsmNotesDatabase.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		02E8436E19B407C40044AC1D /* WebPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebPageView.xib; sourceTree = "<group>"; };
 		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -655,9 +650,6 @@
 				02BF745320793F0A0028ED6A /* TurnRestrictController.m */,
 				647C150D24268DB7008A9366 /* Upload */,
 				64305F6C23E71F5700232BB9 /* URLParsing */,
-				02E8436E19B407C40044AC1D /* WebPageView.xib */,
-				02BED988168B6F2F00357B94 /* WebPageViewController.h */,
-				02BED989168B6F2F00357B94 /* WebPageViewController.m */,
 			);
 			name = "Go Map!";
 			sourceTree = "<group>";
@@ -998,7 +990,6 @@
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
 				0291D8392442815100F793BE /* Settings.storyboard in Resources */,
 				64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */,
-				02E8436F19B407C40044AC1D /* WebPageView.xib in Resources */,
 				024AB090240C9202004A3B5B /* TNP Icons.xcassets in Resources */,
 				024AB08B240C80FD004A3B5B /* Temaki Icons.xcassets in Resources */,
 				027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */,
@@ -1095,7 +1086,6 @@
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
 				02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */,
-				02BED98A168B6F2F00357B94 /* WebPageViewController.m in Sources */,
 				6453777623D3959500656A1C /* IsOsmBooleanFalse.m in Sources */,
 				6453777023D3913100656A1C /* OsmRelation.m in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,

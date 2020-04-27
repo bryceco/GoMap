@@ -171,7 +171,7 @@ const NSInteger kCoordinateSection = 1;
         return;
     }
 
-    NSString *urlString;
+    NSString *urlString = nil;
 
     if ( indexPath.row == ROW_IDENTIFIER ) {
         NSString * type = object.isNode ? @"node" : object.isWay ? @"way" : object.isRelation ? @"relation" : @"?";

@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <SafariServices/SafariServices.h>
 
 #import "iosapi.h"
 
@@ -37,7 +38,6 @@
 #import "LocationBallLayer.h"
 #import "MapViewController.h"
 #import "PushPinView.h"
-#import "WebPageViewController.h"
 #else
 #import "HtmlErrorWindow.h"
 #endif
@@ -369,31 +369,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	_tapAndDragGesture.delegate = self;
 	[self addGestureRecognizer:_tapAndDragGesture];
 #endif
-
-#if 0
-	// check for mail periodically and update application badge
-	_mailTimer = dispatch_source_create( DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue() );
-	if ( _mailTimer ) {
-		dispatch_source_set_event_handler(_mailTimer, ^{
-
-			NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/user/details"];
-			[_editorLayer.mapData putRequest:url method:@"GET" xml:nil completion:^(NSData *postData,NSString * postErrorMessage) {
-				if ( postData && postErrorMessage == nil ) {
-					NSString * xmlText = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
-					NSError * error = nil;
-					NSXMLDocument * xmlDoc = [[NSXMLDocument alloc] initWithXMLString:xmlText options:0 error:&error];
-					for ( NSXMLElement * element in [xmlDoc.rootElement nodesForXPath:@"./user/messages/received" error:nil] ) {
-						NSString * unread = [element attributeForName:@"unread"].stringValue;
-						[UIApplication sharedApplication].applicationIconBadgeNumber = unread.integerValue +1;
-						NSLog(@"update badge");
-					}
-				}
-			}];
-		} );
-		dispatch_source_set_timer( _mailTimer, DISPATCH_TIME_NOW, 120*NSEC_PER_SEC, 10*NSEC_PER_SEC );
-		dispatch_resume( _mailTimer );
-	}
-#endif
 }
 
 
@@ -624,6 +599,31 @@ const CGFloat kEditControlCornerRadius = 4;
 	[self.viewController presentViewController:alertError animated:YES completion:nil];
 }
 
+-(NSAttributedString *)htmlAsAttributedString:(NSString *)html textColor:(UIColor *)textColor
+{
+	if ( [html hasPrefix:@"<"] ) {
+		NSDictionary<NSAttributedStringDocumentReadingOptionKey,id> * d1 = @{
+			NSDocumentTypeDocumentAttribute 		:	NSHTMLTextDocumentType,
+			NSCharacterEncodingDocumentAttribute	: 	@(NSUTF8StringEncoding)
+		};
+		NSAttributedString * attrText = [[NSAttributedString alloc] initWithData:[html dataUsingEncoding:NSUTF8StringEncoding]
+																		 options:d1
+															  documentAttributes:NULL
+																		   error:NULL];
+		if ( attrText ) {
+			NSMutableAttributedString * s = [[NSMutableAttributedString alloc] initWithAttributedString:attrText];
+			// change text color
+			[s addAttribute:NSForegroundColorAttributeName value:textColor range:NSMakeRange(0, s.length)];
+			// center align
+			NSMutableParagraphStyle * paragraphStyle = [NSMutableParagraphStyle new];
+			paragraphStyle.alignment = NSTextAlignmentCenter;
+			[s addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,s.length)];
+
+			return s;
+		}
+	}
+	return nil;
+}
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration
 {
 #if TARGET_OS_IPHONE
@@ -652,28 +652,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		[_flashLabel.centerXAnchor	constraintEqualToAnchor:self.centerXAnchor].active = YES;
 	}
 
-	NSAttributedString * attrText = nil;
-	if ( [message hasPrefix:@"<"] ) {
-		NSDictionary<NSAttributedStringDocumentReadingOptionKey,id> * d1 = @{
-			NSDocumentTypeDocumentAttribute 		:	NSHTMLTextDocumentType,
-			NSCharacterEncodingDocumentAttribute	: 	@(NSUTF8StringEncoding)
-		};
-		attrText = [[NSAttributedString alloc] initWithData:[message dataUsingEncoding:NSUTF8StringEncoding]
-																  options:d1
-													   documentAttributes:NULL
-																	error:NULL];
-		if ( attrText ) {
-			NSMutableAttributedString * s = [[NSMutableAttributedString alloc] initWithAttributedString:attrText];
-			// change text color to white
-			[s addAttribute:NSForegroundColorAttributeName value:UIColor.whiteColor range:NSMakeRange(0, s.length)];
-			// center align
-			NSMutableParagraphStyle * paragraphStyle = [NSMutableParagraphStyle new];
-			paragraphStyle.alignment = NSTextAlignmentCenter;
-			[s addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,s.length)];
-
-			attrText = s;
-		}
-	}
+	NSAttributedString * attrText = [self htmlAsAttributedString:message textColor:UIColor.whiteColor];
 	if ( attrText.length > 0 ) {
 		_flashLabel.attributedText = attrText;
 	} else {
@@ -717,19 +696,6 @@ const CGFloat kEditControlCornerRadius = 4;
 
 		NSString * text = error.localizedDescription;
 
-		if ( [error.domain isEqualToString:@"HTTP"] && error.code >= 400 && error.code < 500
-			&& error.localizedDescription.length > 0 && [error.localizedDescription hasPrefix:@"<"] )
-		{
-			// present HTML error code
-			WebPageViewController * webController = [[WebPageViewController alloc] initWithNibName:@"WebPageView" bundle:nil];
-			[webController view];
-			[[webController.navBar.items lastObject] setTitle:NSLocalizedString(@"Error",nil)];
-			[webController.webView loadHTMLString:error.localizedDescription baseURL:nil];
-			[self.viewController presentViewController:webController animated:YES completion:nil];
-			_lastErrorDate = [NSDate date];
-			return;
-		}
-
 #if 0
 		id ignorable = [error.userInfo objectForKey:@"Ignorable"];
 		if ( ignorable )
@@ -767,7 +733,11 @@ const CGFloat kEditControlCornerRadius = 4;
 		if ( flash ) {
 			[self flashMessage:text duration:0.9];
 		} else {
+			NSAttributedString * attrText = [self htmlAsAttributedString:text textColor:UIColor.blackColor];
 			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:UIAlertControllerStyleAlert];
+			if ( attrText ) {
+				[alertError setValue:attrText forKey:@"attributedMessage"];
+			}
 			[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 			if ( ignoreButton ) {
 				[alertError addAction:[UIAlertAction actionWithTitle:ignoreButton style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -836,10 +806,9 @@ const CGFloat kEditControlCornerRadius = 4;
 		[self.viewController performSegueWithIdentifier:@"BingMetadataSegue" sender:self];
 	} else if ( aerial.attributionUrl.length > 0 ) {
 		// open the attribution url
-		WebPageViewController * webController = [[WebPageViewController alloc] initWithNibName:@"WebPageView" bundle:nil];
-		webController.url = aerial.attributionUrl;
-		webController.title = NSLocalizedString(@"Imagery Attribution",nil);
-		[self.viewController presentViewController:webController animated:YES completion:nil];
+		NSURL * url = [NSURL URLWithString:aerial.attributionUrl];
+		SFSafariViewController * safariViewController = [[SFSafariViewController alloc] initWithURL:url];
+		[self.viewController presentViewController:safariViewController animated:YES completion:nil];
 	}
 }
 
