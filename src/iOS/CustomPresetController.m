@@ -8,7 +8,7 @@
 
 #import "CommonPresetList.h"
 #import "CustomPresetController.h"
-#import "POICommonTagsViewController.h"
+#import "POIFeaturePresetsViewController.h"
 
 @interface CustomPresetController ()
 @end

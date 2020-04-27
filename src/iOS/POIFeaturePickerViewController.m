@@ -9,13 +9,13 @@
 #import "iosapi.h"
 #import "CommonPresetList.h"
 #import "POITabBarController.h"
-#import "POITypeViewController.h"
+#import "POIFeaturePickerViewController.h"
 
 
 static const NSInteger MOST_RECENT_DEFAULT_COUNT = 5;
 static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
-@implementation POITypeViewController
+@implementation POIFeaturePickerViewController
 
 static NSMutableArray	*	mostRecentArray;
 static NSInteger			mostRecentMaximum;
@@ -205,7 +205,7 @@ static NSInteger			mostRecentMaximum;
 		id entry = _typeArray[ indexPath.row ];
 		if ( [entry isKindOfClass:[CommonPresetCategory class]] ) {
 			CommonPresetCategory * category = entry;
-			POITypeViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiTypeViewController"];
+			POIFeaturePickerViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiTypeViewController"];
 			sub.parentCategory	= category;
 			sub.delegate		= self.delegate;
 			[_searchBar resignFirstResponder];

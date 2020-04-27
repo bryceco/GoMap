@@ -8,12 +8,12 @@
 
 #import "iosapi.h"
 #import "CommonPresetList.h"
-#import "POIPresetViewController.h"
+#import "POIPresetValuesViewController.h"
 #import "POITabBarController.h"
 #import "RenderInfo.h"
 
 
-@implementation POIPresetViewController
+@implementation POIPresetValuesViewController
 
 - (void)viewDidLoad
 {

@@ -10,13 +10,13 @@
 
 @class CommonPresetCategory;
 @class CommonPresetFeature;
-@class POITypeViewController;
+@class POIFeaturePickerViewController;
 
 @protocol POITypeViewControllerDelegate <NSObject>
--(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature;
+-(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature;
 @end
 
-@interface POITypeViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
+@interface POIFeaturePickerViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
 {
 	NSArray					*	_typeArray;
 	NSArray					*	_searchArrayRecent;

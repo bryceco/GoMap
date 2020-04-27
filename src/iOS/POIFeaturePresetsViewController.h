@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonPresetList.h"
-#import "POITypeViewController.h"
+#import "POIFeaturePickerViewController.h"
 
 @class OsmBaseObject;
 @class CommonPresetList;
 
-@interface POICommonTagsViewController : UITableViewController<UITextFieldDelegate,POITypeViewControllerDelegate>
+@interface POIFeaturePresetsViewController : UITableViewController<UITextFieldDelegate,POITypeViewControllerDelegate>
 {
-	CommonPresetList				*	_tags;
+	CommonPresetList			*	_tags;
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	BOOL							_keyboardShowing;
 	CommonPresetFeature			*	_selectedFeature;	// the feature selected by the user, not derived from tags (e.g. Address)

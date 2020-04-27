@@ -13,14 +13,14 @@
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "POICommonTagsViewController.h"
-#import "POIPresetViewController.h"
+#import "POIFeaturePresetsViewController.h"
+#import "POIPresetValuesViewController.h"
 #import "POITabBarController.h"
-#import "POITypeViewController.h"
+#import "POIFeaturePickerViewController.h"
 #import "RenderInfo.h"
 
 
-@interface CommonTagCell : UITableViewCell
+@interface FeaturePresetCell : UITableViewCell
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel;
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel2;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
@@ -29,14 +29,14 @@
 @property (strong,nonatomic)				CommonPresetKey				*	commonTag2;
 @end
 
-@implementation CommonTagCell
+@implementation FeaturePresetCell
 @end
 
-@interface POICommonTagsViewController() <DirectionViewControllerDelegate>
+@interface POIFeaturePresetsViewController() <DirectionViewControllerDelegate>
 
 @end
 
-@implementation POICommonTagsViewController
+@implementation POIFeaturePresetsViewController
 
 
 - (void)viewDidLoad
@@ -97,15 +97,15 @@
 		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [CommonPresetList featureNameForObjectDict:dict geometry:geometry];
 		if ( featureName ) {
 			CommonPresetFeature * feature = [CommonPresetFeature commonTagFeatureWithName:featureName];
-			[POITypeViewController loadMostRecentForGeometry:geometry];
-			[POITypeViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
+			[POIFeaturePickerViewController loadMostRecentForGeometry:geometry];
+			[POIFeaturePickerViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
 		}
 
-		__weak POICommonTagsViewController * weakSelf = self;
+		__weak POIFeaturePresetsViewController * weakSelf = self;
 		__weak CommonPresetList * weakTags = _tags;
 		[_tags setPresetsForFeature:featureName tags:dict geometry:geometry update:^{
 			// this may complete much later, even after we've been dismissed
-			POICommonTagsViewController * mySelf = weakSelf;
+			POIFeaturePresetsViewController * mySelf = weakSelf;
 			if ( mySelf && !mySelf->_keyboardShowing ) {
 				[weakTags setPresetsForFeature:featureName tags:dict geometry:geometry update:nil];
 				[mySelf.tableView reloadData];
@@ -148,7 +148,7 @@
                 // find name field and make it first responder
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
-                    CommonTagCell * cell = [self.tableView cellForRowAtIndexPath:index];
+                    FeaturePresetCell * cell = [self.tableView cellForRowAtIndexPath:index];
                     if ( cell && [cell.commonTag.tagKey isEqualToString:@"name"] ) {
                         [cell.valueField becomeFirstResponder];
                     }
@@ -161,7 +161,7 @@
 	}
 }
 
--(void)typeViewController:(POITypeViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature
+-(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature
 {
 	_selectedFeature = feature;
 	POITabBarController * tabController = (id) self.tabBarController;
@@ -259,7 +259,7 @@
 		NSString * key = commonTag.tagKey;
 		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";
 
-		CommonTagCell * cell = [tableView dequeueReusableCellWithIdentifier:cellName forIndexPath:indexPath];
+		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:cellName forIndexPath:indexPath];
 		cell.nameLabel.text = commonTag.name;
 		cell.valueField.placeholder = commonTag.placeholder;
 		cell.valueField.delegate = self;
@@ -306,7 +306,7 @@
 
 		// drill down cell
 		CommonPresetGroup * drillDownGroup = rowObject;
-		CommonTagCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
+		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
 		cell.nameLabel.text = drillDownGroup.name;
 		cell.commonTag = (id)drillDownGroup;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -317,7 +317,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	CommonTagCell * cell = (id) [tableView cellForRowAtIndexPath:indexPath];
+	FeaturePresetCell * cell = (id) [tableView cellForRowAtIndexPath:indexPath];
 	if ( cell.accessoryType == UITableViewCellAccessoryNone )
 		return;
     
@@ -336,7 +336,7 @@
 	} else if ( [cell.commonTag isKindOfClass:[CommonPresetGroup class]] ) {
 		// special case for drill down
 		CommonPresetGroup * group = (id)cell.commonTag;
-		POICommonTagsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
+		POIFeaturePresetsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
 		sub.drillDownGroup = group;
 		[self.navigationController pushViewController:sub animated:YES];
 	} else {
@@ -345,14 +345,14 @@
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	CommonTagCell * cell = sender;
-	if ( [segue.destinationViewController isKindOfClass:[POIPresetViewController class]] ) {
-		POIPresetViewController * preset = segue.destinationViewController;
+	FeaturePresetCell * cell = sender;
+	if ( [segue.destinationViewController isKindOfClass:[POIPresetValuesViewController class]] ) {
+		POIPresetValuesViewController * preset = segue.destinationViewController;
 		preset.tag = cell.commonTag.tagKey;
 		preset.valueDefinitions = cell.commonTag.presetList;
 		preset.navigationItem.title = cell.commonTag.name;
-	} else if ( [segue.destinationViewController isKindOfClass:[POITypeViewController class]] ) {
-		POITypeViewController * dest = (id)segue.destinationViewController;
+	} else if ( [segue.destinationViewController isKindOfClass:[POIFeaturePickerViewController class]] ) {
+		POIFeaturePickerViewController * dest = (id)segue.destinationViewController;
 		dest.delegate = self;
 	}
 }
@@ -378,7 +378,7 @@
 {
 	if ( self.tableView.window == nil )
 		return;
-	for (CommonTagCell * cell in self.tableView.visibleCells) {
+	for (FeaturePresetCell * cell in self.tableView.visibleCells) {
 		[cell.valueField resignFirstResponder];
 		[cell.valueField2 resignFirstResponder];
 	}
@@ -390,10 +390,10 @@
 	[sender resignFirstResponder];
 }
 
--(CommonTagCell *)cellForTextField:(UITextField *)textField
+-(FeaturePresetCell *)cellForTextField:(UITextField *)textField
 {
-	CommonTagCell * cell = (id) [textField superview];
-	while ( cell && ![cell isKindOfClass:[CommonTagCell class]] ) {
+	FeaturePresetCell * cell = (id) [textField superview];
+	while ( cell && ![cell isKindOfClass:[FeaturePresetCell class]] ) {
 		cell = (id)cell.superview;
 	}
 	return cell;
@@ -404,7 +404,7 @@
 	if ( [textField isKindOfClass:[AutocompleteTextField class]] ) {
 
 		// get list of values for current key
-		CommonTagCell * cell = [self cellForTextField:textField];
+		FeaturePresetCell * cell = [self cellForTextField:textField];
 		NSString * key = cell.commonTag.tagKey;
 		if ( key == nil )
 			return;	// should never happen
@@ -424,7 +424,7 @@
 
 - (IBAction)textFieldDidEndEditing:(UITextField *)textField
 {
-	CommonTagCell * cell = [self cellForTextField:textField];
+	FeaturePresetCell * cell = [self cellForTextField:textField];
 	NSString * key = cell.commonTag.tagKey;
 	if ( key == nil )
 		return;	// should never happen
