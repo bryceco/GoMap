@@ -2376,7 +2376,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	// get taginfo for objects
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.tagInfo == nil ) {
-			object.tagInfo = [[RenderInfoDatabase sharedTagInfoDatabase] tagInfoForObject:object];
+			object.tagInfo = [[RenderInfoDatabase sharedRenderInfoDatabase] tagInfoForObject:object];
 		}
 		
 		if ( object->renderPriorityCached == 0 ) {

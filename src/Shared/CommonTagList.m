@@ -1308,7 +1308,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	if ( _tagInfo == nil ) {
 		[self.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-			RenderInfo * info = [[RenderInfoDatabase sharedTagInfoDatabase] tagInfoForKey:key value:value];
+			RenderInfo * info = [[RenderInfoDatabase sharedRenderInfoDatabase] tagInfoForKey:key value:value];
 			if ( info ) {
 				_tagInfo = info;
 				*stop = YES;

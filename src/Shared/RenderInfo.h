@@ -1,5 +1,5 @@
 //
-//  TagInfo.h
+//  RenderInfo.h
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 10/4/12.
@@ -34,7 +34,7 @@
 	NSArray				*	_allTags;
 	NSMutableDictionary *	_keyDict;
 }
-+(RenderInfoDatabase *)sharedTagInfoDatabase;
++(RenderInfoDatabase *)sharedRenderInfoDatabase;
 
 -(RenderInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value;
 -(RenderInfo *)tagInfoForObject:(OsmBaseObject *)object;

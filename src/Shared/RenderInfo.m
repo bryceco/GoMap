@@ -1,5 +1,5 @@
 //
-//  TagInfo.m
+//  RenderInfo.m
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 10/4/12.
@@ -136,7 +136,7 @@ static RenderInfo * g_DefaultRender = nil;
 
 @implementation RenderInfoDatabase
 
-+(RenderInfoDatabase *)sharedTagInfoDatabase
++(RenderInfoDatabase *)sharedRenderInfoDatabase
 {
 	static RenderInfoDatabase * _database = nil;
 	if ( _database == nil ) {
@@ -150,9 +150,9 @@ static RenderInfo * g_DefaultRender = nil;
 	NSError * error = nil;
 	NSMutableArray * tagList = [NSMutableArray new];
 	NSMutableArray * defaults = [NSMutableArray new];
-	NSString * text = [NSString stringWithContentsOfFile:@"TagInfo.xml" encoding:NSUTF8StringEncoding error:&error];
+	NSString * text = [NSString stringWithContentsOfFile:@"RenderInfo.xml" encoding:NSUTF8StringEncoding error:&error];
 	if ( text == nil ) {
-		NSString * path = [[NSBundle mainBundle] pathForResource:@"TagInfo" ofType:@"xml"];
+		NSString * path = [[NSBundle mainBundle] pathForResource:@"RenderInfo" ofType:@"xml"];
 		text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
 	}
 	NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:text options:0 error:&error];
@@ -191,7 +191,14 @@ static RenderInfo * g_DefaultRender = nil;
 	return tagList;
 }
 
--(id)initWithXmlFile:(NSString *)file
+
+-(id)init
+{
+	self = [self initWithXmlFile];
+	return self;
+}
+
+-(id)initWithXmlFile
 {
 	self = [super init];
 	if ( self ) {
