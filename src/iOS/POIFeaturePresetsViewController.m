@@ -426,6 +426,7 @@
 		return;	// should never happen
 	NSString * value = textField.text;
 	value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
 	textField.text = value;
 
     [self updateTagWithValue:value forKey:key];

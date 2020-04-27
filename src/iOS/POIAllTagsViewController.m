@@ -176,10 +176,6 @@
 	}
 }
 
--(void)textFieldEditingDidEnd:(id)sender
-{
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -205,12 +201,6 @@
 		cell.text1.didSelect = ^{ [cell.text2 becomeFirstResponder]; };
 		cell.text2.didSelect = ^{};
 
-#if 0
-		if ( [kv[0] length] == 0 && [kv[1] length] == 0 ) {
-			// empty key/value so set keyboard focus to it
-			[cell.text1 becomeFirstResponder];
-		}
-#endif
 		return cell;
 
 	} else if ( indexPath.section == 1 ) {
@@ -282,6 +272,7 @@
 	return dict;
 }
 
+#pragma mark Cell editing
 
 - (IBAction)textFieldReturn:(id)sender
 {
@@ -316,6 +307,55 @@
 			NSSet * set = [CommonPresetList allTagKeys];
 			NSArray * list = [set allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
+		}
+	}
+}
+
+-(void)textFieldEditingDidEnd:(UITextField *)textField
+{
+	UITableViewCell * cell = (id)textField.superview;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
+		cell = (id)cell.superview;
+	TextPair * pair = (id)cell;
+	BOOL isValue = textField == pair.text2;
+
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	if ( indexPath.section == 0 ) {
+		if ( isValue ) {
+			NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
+			if ( [kv[0] hasPrefix:@"wikipedia"] ) {
+				// if the value is for wikipedia then convert the a URL to the correct format
+				// format is https://en.wikipedia.org/wiki/Nova_Scotia
+				NSScanner * scanner = [NSScanner scannerWithString:kv[1]];
+				NSString *languageCode, *pageName;
+				if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
+					[scanner scanUpToString:@"." intoString:&languageCode] &&
+					([scanner scanString:@".m" intoString:nil] || YES) &&
+					[scanner scanString:@".wikipedia.org/wiki/" intoString:nil] &&
+					[scanner scanUpToString:@"/" intoString:&pageName] &&
+					[scanner isAtEnd] &&
+					languageCode.length == 2 &&
+					pageName.length > 0 )
+				{
+					kv[1] = [NSString stringWithFormat:@"%@:%@",languageCode,pageName];
+					pair.text2.text = kv[1];
+				}
+			} else if ( [kv[0] hasPrefix:@"wikidata"] ) {
+				// https://www.wikidata.org/wiki/Q90000000
+				NSScanner * scanner = [NSScanner scannerWithString:kv[1]];
+				NSString *pageName;
+				if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
+					([scanner scanString:@"www.wikidata.org/wiki/" intoString:nil] || [scanner scanString:@"m.wikidata.org/wiki/" intoString:nil]) &&
+					[scanner scanUpToString:@"/" intoString:&pageName] &&
+					[scanner isAtEnd] &&
+					pageName.length > 0 )
+				{
+					kv[1] = pageName;
+					pair.text2.text = kv[1];
+				}
+			}
+		} else {
+			// editing key
 		}
 	}
 }
