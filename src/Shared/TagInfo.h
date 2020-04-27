@@ -20,7 +20,6 @@
 @property (strong,nonatomic)	NSString	*	value;
 @property (strong,nonatomic)	NSString	*	friendlyName;
 @property (strong,nonatomic)	NSString	*	type;
-@property (strong,nonatomic)	NSString	*	belongsTo;
 @property (strong,nonatomic)	NSString	*	iconName;
 @property (strong,nonatomic)	NSString	*	summary;
 @property (strong,nonatomic)	NSColor		*	lineColor;

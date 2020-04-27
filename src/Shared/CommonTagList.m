@@ -1309,7 +1309,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	if ( _tagInfo == nil ) {
 		[self.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 			TagInfo * info = [[TagInfoDatabase sharedTagInfoDatabase] tagInfoForKey:key value:value];
-			if ( info && info.belongsTo == nil ) {
+			if ( info ) {
 				_tagInfo = info;
 				*stop = YES;
 			}

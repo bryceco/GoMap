@@ -229,8 +229,6 @@
 	<tag key="boundary" value="town" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=town"/>
 	<tag key="boundary" value="census" wikiPage="https://wiki.openstreetmap.org/wiki/Tag:boundary=census"/>
 
-	<tag key="center_turn_lane" value="yes" name="Yes" belongsTo="highway"/>
-
 	<tag key="craft" value="agricultural_engines" name="Agricultural Engines" type="node;area" description="Planning, and Constructing engines and tools for agricultural use."/>
 	<tag key="craft" value="basket_maker" name="Basket Maker" type="node;area" description="Producing baskets, often made from Willow."/>
 	<tag key="craft" value="beekeeper" name="Beekeeper" type="node;area" description="A place where honey bees are kept for the purposes of securing commodities such as honey, beeswax or pollen."/>
@@ -283,26 +281,6 @@
 	<tag key="craft" value="watchmaker" name="Watchmaker" type="node;area" description="A watchmaker is an artisan who makes and repairs watches. Today due to industrial production they mostly repair watches."/>
 	<tag key="craft" value="window_construction" name="Window Construction" type="node;area" description="Construct windows"/>
 
-	<tag key="crop" value="asparagus" name="Asparagus" belongsTo="landuse=farm"/>
-	<tag key="crop" value="bananas" name="Bananas" belongsTo="landuse=farm"/>
-	<tag key="crop" value="barley" name="Barley" belongsTo="landuse=farm"/>
-	<tag key="crop" value="coffee" name="Coffee" belongsTo="landuse=farm"/>
-	<tag key="crop" value="corn" name="Corn" belongsTo="landuse=farm"/>
-	<tag key="crop" value="flowers" name="Flowers" belongsTo="landuse=farm"/>
-	<tag key="crop" value="grape" name="Grape" belongsTo="landuse=farm"/>
-	<tag key="crop" value="grass" name="Grass" belongsTo="landuse=farm"/>
-	<tag key="crop" value="hay" name="Hay" belongsTo="landuse=farm"/>
-	<tag key="crop" value="maize" name="Maize" belongsTo="landuse=farm"/>
-	<tag key="crop" value="no" name="No" belongsTo="landuse=farm"/>
-	<tag key="crop" value="oats" name="Oats" belongsTo="landuse=farm"/>
-	<tag key="crop" value="rape" name="Rape" belongsTo="landuse=farm"/>
-	<tag key="crop" value="rice" name="Rice" belongsTo="landuse=farm"/>
-	<tag key="crop" value="rye" name="Rye" belongsTo="landuse=farm"/>
-	<tag key="crop" value="strawberry" name="Strawberry" belongsTo="landuse=farm"/>
-	<tag key="crop" value="sugar" name="Sugar" belongsTo="landuse=farm"/>
-	<tag key="crop" value="tea" name="Tea" belongsTo="landuse=farm"/>
-	<tag key="crop" value="wheat" name="Wheat" belongsTo="landuse=farm"/>
-	<tag key="crop" value="yes" name="Yes" belongsTo="landuse=farm"/>
 
 	<tag key="cutting" value="yes" name="Yes"/>
 
@@ -315,79 +293,6 @@
 	<tag key="cycleway" value="opposite_track" name="Opposite Track"/>
 	<tag key="cycleway" value="proposed" name="Proposed"/>
 	<tag key="cycleway" value="track" name="Track"/>
-
-	<tag key="denomination" value="EVKdFSMiD" name="Evkdfsmid" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="ahmadiya" name="Ahmadiya" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="alaouite" name="Alaouite" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="alternative" name="Alternative" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="anglican" name="Anglican" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="apostolic" name="Apostolic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="armenian_apostolic" name="Armenian Apostolic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="ashkenazi" name="Ashkenazi" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="baptist" name="Baptist" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="catholic" name="Catholic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="christ_scientist" name="Christ Scientist" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="christian_community" name="Christian Community" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="church_of_scotland" name="Church Of Scotland" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="conservative" name="Conservative" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="coptic_orthodox" name="Coptic Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="czechoslovak_hussite" name="Czechoslovak Hussite" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="druze" name="Druze" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="dutch_reformed" name="Dutch Reformed" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="evangelical" name="Evangelical" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="evangelical_lutheran" name="Evangelical Lutheran" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="exclusive_brethren" name="Exclusive Brethren" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="foursquare" name="Foursquare" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="greek_catholic" name="Greek Catholic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="greek_orthodox" name="Greek Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="hasidic" name="Hasidic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="humanistic" name="Humanistic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="ibadi" name="Ibadi" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="ismaili" name="Ismaili" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="jehovahs_witness" name="Jehovahs Witness" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="kabbalah" name="Kabbalah" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="karaite" name="Karaite" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="liberal" name="Liberal" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="living_waters_church" name="Living Waters Church" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="lutheran" name="Lutheran" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="mariavite" name="Mariavite" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="maronite" name="Maronite" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="mennonite" name="Mennonite" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="methodist" name="Methodist" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="modern_orthodox" name="Modern Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="moravian" name="Moravian" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="mormon" name="Mormon" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="nazarene" name="Nazarene" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="neo_orthodox" name="Neo Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="new_apostolic" name="New Apostolic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="nondenominational" name="Nondenominational" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="old_believers" name="Old Believers" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="old_catholic" name="Old Catholic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="orthodox" name="Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="pentecostal" name="Pentecostal" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="presbyterian" name="Presbyterian" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="progressive" name="Progressive" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="protestant" name="Protestant" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="quaker" name="Quaker" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="reconstructionist" name="Reconstructionist" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="reform" name="Reform" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="reformed" name="Reformed" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="renewal" name="Renewal" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="roman_catholic" name="Roman Catholic" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="russian_orthodox" name="Russian Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="salvation_army" name="Salvation Army" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="samaritan" name="Samaritan" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="scottish_episcopal_church" name="Scottish Episcopal Church" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="serbian_orthodox" name="Serbian Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="seventh_day_adventist" name="Seventh Day Adventist" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="shia" name="Shia" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="sunni" name="Sunni" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="ultra_orthodox" name="Ultra Orthodox" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="united" name="United" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="united_church_of_christ" name="United Church Of Christ" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="united_free_church_of_scotland" name="United Free Church Of Scotland" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="united_reformed" name="United Reformed" belongsTo="amenity=place_of_worship"/>
-	<tag key="denomination" value="uniting" name="Uniting" belongsTo="amenity=place_of_worship"/>
 
 	<tag key="denotation" value="landmark" name="Landmark"/>
 
@@ -765,26 +670,6 @@
 
 	<tag key="maritime" value="yes" name="Yes"/>
 
-	<tag key="maxheight" value="*" name="*" belongsTo="bridge=*"/>
-
-	<tag key="maxspeed" value="10" name="10" belongsTo="highway"/>
-	<tag key="maxspeed" value="100" name="100" belongsTo="highway"/>
-	<tag key="maxspeed" value="120" name="120" belongsTo="highway"/>
-	<tag key="maxspeed" value="130" name="130" belongsTo="highway"/>
-	<tag key="maxspeed" value="20" name="20" belongsTo="highway"/>
-	<tag key="maxspeed" value="30" name="30" belongsTo="highway"/>
-	<tag key="maxspeed" value="4" name="4" belongsTo="highway"/>
-	<tag key="maxspeed" value="40" name="40" belongsTo="highway"/>
-	<tag key="maxspeed" value="50" name="50" belongsTo="highway"/>
-	<tag key="maxspeed" value="60" name="60" belongsTo="highway"/>
-	<tag key="maxspeed" value="70" name="70" belongsTo="highway"/>
-	<tag key="maxspeed" value="80" name="80" belongsTo="highway"/>
-	<tag key="maxspeed" value="90" name="90" belongsTo="highway"/>
-	<tag key="maxspeed" value="no" name="No" belongsTo="highway"/>
-	<tag key="maxspeed" value="none" name="None" belongsTo="highway"/>
-	<tag key="maxspeed" value="signals" name="Signals" belongsTo="highway"/>
-	<tag key="maxspeed" value="walk" name="Walk" belongsTo="highway"/>
-
 	<tag key="microbrewery" value="yes" name="Yes" description="location houses a microbrewery"/>
 
 	<tag key="military" value="airfield" name="Airfield" type="node;area" description="A place where military planes take off and land." areaColor="B62C2C"/>
@@ -795,17 +680,6 @@
 	<tag key="military" value="naval_base" name="Naval Base" type="node;area" description="A tag for navy bases."/>
 	<tag key="military" value="range" name="Range" type="node;area" description="A place where soldiers practice" areaColor="B62C2C"/>
 
-	<tag key="mooring" value="commercial" name="Commercial" belongsTo="water"/>
-	<tag key="mooring" value="cruise" name="Cruise" belongsTo="water"/>
-	<tag key="mooring" value="declaration" name="Declaration" belongsTo="water"/>
-	<tag key="mooring" value="ferry" name="Ferry" belongsTo="water"/>
-	<tag key="mooring" value="guest" name="Guest" belongsTo="water"/>
-	<tag key="mooring" value="monobuoy" name="Monobuoy" belongsTo="water"/>
-	<tag key="mooring" value="ring" name="Ring" belongsTo="water"/>
-	<tag key="mooring" value="sbm" name="Sbm" belongsTo="water"/>
-	<tag key="mooring" value="spm" name="Spm" belongsTo="water"/>
-	<tag key="mooring" value="visitor" name="Visitor" belongsTo="water"/>
-	<tag key="mooring" value="yes" name="Yes" belongsTo="water"/>
 
 	<tag key="motor_vehicle" value="destination" name="Destination"/>
 
@@ -955,14 +829,7 @@
 	<tag key="operator" value="UEM" name="Uem"/>
 	<tag key="operator" value="WOSM" name="Wosm"/>
 
-	<tag key="overtaking" value="backward" name="Backward" belongsTo="highway"/>
-	<tag key="overtaking" value="both" name="Both" belongsTo="highway"/>
-	<tag key="overtaking" value="forward" name="Forward" belongsTo="highway"/>
-	<tag key="overtaking" value="no" name="No" belongsTo="highway"/>
-	<tag key="overtaking" value="yes" name="Yes" belongsTo="highway"/>
 
-	<tag key="passing_places" value="no" name="No" belongsTo="highway"/>
-	<tag key="passing_places" value="yes" name="Yes" belongsTo="highway"/>
 
 	<tag key="pilotage" value="boarding_point" name="Boarding Point"/>
 	<tag key="pilotage" value="office" name="Office"/>
@@ -1071,8 +938,6 @@
 	<tag key="railway" value="tram_stop" name="Tram Stop" type="node" description="A tram stop is a place where a passenger can embark / disembark a tram." iconName="transport_tram_stop"/>
 	<tag key="railway" value="turntable" name="Turntable" type="node;area" description="These are used for changing the direction, that part of a train is pointing in." areaColor="404040"/>
 
-	<tag key="ramp" value="no" name="No" belongsTo="highway"/>
-	<tag key="ramp" value="yes" name="Yes" belongsTo="highway"/>
 
 	<tag key="recycling_type" value=""/>
 
@@ -1410,16 +1275,7 @@
 	<tag key="seamark:type" value="waterway_gauge" name="Waterway Gauge"/>
 	<tag key="seamark:type" value="wreck" name="Wreck" iconName="seamark_wreck"/>
 
-	<tag key="service" value="alley" name="Alley" belongsTo="highway=service" description="An alley is a service road usually located between properties for access to utilities."/>
-	<tag key="service" value="dealer" name="Dealer" belongsTo="highway=service"/>
-	<tag key="service" value="drive_through" name="Drive Through" belongsTo="highway=service"/>
-	<tag key="service" value="driveway" name="Driveway" belongsTo="highway=service" description="A driveway is a service road leading to a residence or business, usually with access=private"/>
-	<tag key="service" value="emergency_access" name="Emergency Access" belongsTo="highway=service" description="A way for firefighters to reach a building"/>
-	<tag key="service" value="parking_aisle" name="Parking Aisle" belongsTo="highway=service" description="A parking aisle is an area in a parking lot between rows of parking spaces that vehicles use to drive into and out of the spaces."/>
 	<tag key="service" value="parts" name="Parts"/>
-	<tag key="service" value="repair" name="Repair" belongsTo="highway=service"/>
-	<tag key="service" value="siding" name="Siding" belongsTo="highway=service" description="Relatively short lengths of track, running parallel to (and connected to) a main route" lineColor="404040" lineWidth="1.000000"/>
-	<tag key="service" value="spur" name="Spur" belongsTo="highway=service" description="Relatively short lengths of track, built to give one company or entity access to the main line, normally for freight-only use." lineColor="552200" lineWidth="1.000000"/>
 	<tag key="service" value="tyres" name="Tyres"/>
 	<tag key="service" value="yard" name="Yard" description="Tracks within railway company operated marshaling yards" lineColor="552200" lineWidth="1.000000"/>
 
@@ -1669,32 +1525,6 @@
 
 	<tag key="supervised" value="yes" name="Yes"/>
 
-	<tag key="surface" value="asphalt" name="Asphalt" belongsTo="highway"/>
-	<tag key="surface" value="cobblestone" name="Cobblestone" belongsTo="highway"/>
-	<tag key="surface" value="cobblestone:flattened" name="Cobblestone:Flattened" belongsTo="highway"/>
-	<tag key="surface" value="compacted" name="Compacted" belongsTo="highway"/>
-	<tag key="surface" value="concrete" name="Concrete" belongsTo="highway"/>
-	<tag key="surface" value="concrete:lanes" name="Concrete:Lanes" belongsTo="highway"/>
-	<tag key="surface" value="dirt" name="Dirt" belongsTo="highway"/>
-	<tag key="surface" value="earth" name="Earth" belongsTo="highway"/>
-	<tag key="surface" value="fine_gravel" name="Fine Gravel" belongsTo="highway"/>
-	<tag key="surface" value="grass" name="Grass" belongsTo="highway"/>
-	<tag key="surface" value="grass_paver" name="Grass Paver" belongsTo="highway"/>
-	<tag key="surface" value="gravel" name="Gravel" belongsTo="highway"/>
-	<tag key="surface" value="ground" name="Ground" belongsTo="highway"/>
-	<tag key="surface" value="ice_road" name="Ice Road" belongsTo="highway"/>
-	<tag key="surface" value="metal" name="Metal" belongsTo="highway"/>
-	<tag key="surface" value="mud" name="Mud" belongsTo="highway"/>
-	<tag key="surface" value="paved" name="Paved" belongsTo="highway"/>
-	<tag key="surface" value="paving_stones" name="Paving Stones" belongsTo="highway"/>
-	<tag key="surface" value="paving_stones:20" name="Paving Stones:20" belongsTo="highway"/>
-	<tag key="surface" value="paving_stones:30" name="Paving Stones:30" belongsTo="highway"/>
-	<tag key="surface" value="pebbles" name="Pebbles" belongsTo="highway"/>
-	<tag key="surface" value="pebblestone" name="Pebblestone" belongsTo="highway"/>
-	<tag key="surface" value="sand" name="Sand" belongsTo="highway"/>
-	<tag key="surface" value="sett" name="Sett" belongsTo="highway"/>
-	<tag key="surface" value="unpaved" name="Unpaved" belongsTo="highway"/>
-	<tag key="surface" value="wood" name="Wood" belongsTo="highway"/>
 
 	<tag key="tourism" value="alpine_hut" name="Alpine Hut" type="node;area" description="An alpine hut is a remote building located in the mountains intended to provide board and lodging." iconName="accommodation_alpinehut" areaColor="E1A0A2"/>
 	<tag key="tourism" value="aquarium" name="Aquarium" type="node;area" description="A display of live aquatic flora and/or fauna."/>
@@ -1732,16 +1562,6 @@
 	<tag key="tracktype" value="grade4" name="Grade4" areaColor="006600" lineWidth="3.000000"/>
 	<tag key="tracktype" value="grade5" name="Grade5" areaColor="006600" lineWidth="3.000000"/>
 
-	<tag key="traffic_calming" value="bump" name="Bump" belongsTo="highway=traffic_calming" iconName="transport_speedbump"/>
-	<tag key="traffic_calming" value="chicane" name="Chicane" belongsTo="highway=traffic_calming"/>
-	<tag key="traffic_calming" value="chikane" name="Chikane" belongsTo="highway=traffic_calming"/>
-	<tag key="traffic_calming" value="choker" name="Choker" belongsTo="highway=traffic_calming"/>
-	<tag key="traffic_calming" value="cushion" name="Cushion" belongsTo="highway=traffic_calming"/>
-	<tag key="traffic_calming" value="hump" name="Hump" belongsTo="highway=traffic_calming" iconName="transport_speedbump"/>
-	<tag key="traffic_calming" value="island" name="Island" belongsTo="highway=traffic_calming" description="An island is a small area that temporarily separates two different directions of traffic."/>
-	<tag key="traffic_calming" value="rumble_strip" name="Rumble Strip" belongsTo="highway=traffic_calming" iconName="transport_speedbump"/>
-	<tag key="traffic_calming" value="table" name="Table" belongsTo="highway=traffic_calming"/>
-	<tag key="traffic_calming" value="yes" name="Yes" belongsTo="highway=traffic_calming" iconName="transport_speedbump"/>
 
 	<tag key="traffic_sign" value="city_limit" name="City Limit"/>
 	<tag key="traffic_sign" value="maxspeed" name="Maxspeed"/>
@@ -1818,14 +1638,6 @@
 	<tag key="waterway" value="waterfall" name="Waterfall" lineColor="D8D8D8" lineWidth="2.000000"/>
 	<tag key="waterway" value="weir" name="Weir" description="A barrier built across a river, sometimes to divert water for industrial purposes. Water can still flow over the top." iconName="water_weir" lineColor="D8D8D8" lineWidth="2.000000"/>
 
-	<tag key="wetland" value="bog" name="Bog" belongsTo="natural=wetland"/>
-	<tag key="wetland" value="mangrove" name="Mangrove" belongsTo="natural=wetland"/>
-	<tag key="wetland" value="marsh" name="Marsh" belongsTo="natural=wetland"/>
-	<tag key="wetland" value="reedbed" name="Reedbed" belongsTo="natural=wetland"/>
-	<tag key="wetland" value="saltern" name="Saltern" belongsTo="natural=wetland"/>
-	<tag key="wetland" value="saltmarsh" name="Saltmarsh" belongsTo="natural=wetland"/>
-	<tag key="wetland" value="swamp" name="Swamp" belongsTo="natural=wetland"/>
-	<tag key="wetland" value="tidalflat" name="Tidalflat" belongsTo="natural=wetland"/>
 
 	<tag key="wheelchair" value="limited" name="Limited"/>
 	<tag key="wheelchair" value="no" name="No"/>
@@ -1839,18 +1651,6 @@
 	<tag key="winter_road" value="yes" name="Yes"/>
 
 	<tag key="wires" value="double" name="Double"/>
-
-	<tag key="wood" value="broad-leaved" name="Broad-Leaved" belongsTo="natural=wood;landuse=forest"/>
-	<tag key="wood" value="broad_leaved" name="Broad Leaved" belongsTo="natural=wood;landuse=forest" description="Describes the type of woodland"/>
-	<tag key="wood" value="casuarina" name="Casuarina" belongsTo="natural=wood;landuse=forest"/>
-	<tag key="wood" value="coniferous" name="Coniferous" belongsTo="natural=wood;landuse=forest" iconName="landuse_coniferous"/>
-	<tag key="wood" value="deciduous" name="Deciduous" belongsTo="natural=wood;landuse=forest" iconName="landuse_deciduous"/>
-	<tag key="wood" value="eucalypt" name="Eucalypt" belongsTo="natural=wood;landuse=forest"/>
-	<tag key="wood" value="evergreen" name="Evergreen" belongsTo="natural=wood;landuse=forest"/>
-	<tag key="wood" value="filao" name="Filao" belongsTo="natural=wood;landuse=forest"/>
-	<tag key="wood" value="mixed" name="Mixed" belongsTo="natural=wood;landuse=forest" iconName="landuse_coniferous_and_deciduous"/>
-	<tag key="wood" value="nipa_palm" name="Nipa Palm" belongsTo="natural=wood;landuse=forest"/>
-	<tag key="wood" value="palm" name="Palm" belongsTo="natural=wood;landuse=forest"/>
 
 	<tag key="zoo" value="petting_zoo" name="Petting Zoo" description="Small zoo or garden for kids to touch and play with animals"/>
 

@@ -26,7 +26,6 @@
 	copy.value			= self.value;
 	copy.friendlyName	= self.friendlyName;
 	copy.type			= self.type;
-	copy.belongsTo		= self.belongsTo;
 	copy.iconName		= self.iconName;
 	copy.summary		= self.summary;
 	copy.lineColor		= self.lineColor;
@@ -201,7 +200,6 @@ static TagInfo * g_DefaultRender = nil;
 		tagType.friendlyName	= [tag attributeForName:@"name"].stringValue;
 		tagType.summary			= [tag attributeForName:@"description"].stringValue;
 		tagType.type			= [tag attributeForName:@"type"].stringValue;
-		tagType.belongsTo		= [tag attributeForName:@"belongsTo"].stringValue;
 		tagType.iconName		= [tag attributeForName:@"iconName"].stringValue;
 		tagType.lineColor		= [TagInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
 		tagType.areaColor		= [TagInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
