@@ -12,12 +12,12 @@
 #define ENABLE_FPS	0
 
 
-const int FRAME_COUNT = 60;
+const int FRAME_COUNT = 2*60;
 
 @implementation FpsLabel
 {
 	int					_historyPos;
-	CFTimeInterval		_history[ FRAME_COUNT ];	// average last 60 frames
+	CFTimeInterval		_frameTimestamp[ FRAME_COUNT ];	// average last 60 frames
 	dispatch_source_t	_timer;
 }
 
@@ -52,7 +52,7 @@ const int FRAME_COUNT = 60;
 			dispatch_queue_t queue = dispatch_get_main_queue();
 			_timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
 			if ( _timer ) {
-				dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, NSEC_PER_SEC/2, NSEC_PER_SEC/5);
+				dispatch_source_set_timer(_timer, DISPATCH_TIME_NOW, NSEC_PER_SEC/2, FRAME_COUNT*NSEC_PER_SEC/60);
 				dispatch_source_set_event_handler(_timer, ^{
 					[self updateText];
 				} );
@@ -76,16 +76,17 @@ const int FRAME_COUNT = 60;
 - (void)updateText
 {
 	// scan backward to see how many frames were drawn in the last second
+	const double seconds = FRAME_COUNT/60;
 	int frameCount = 0;
 	int pos = (_historyPos + FRAME_COUNT - 1) % FRAME_COUNT;
-	CFTimeInterval last = _history[ pos ];
+	CFTimeInterval last = _frameTimestamp[ pos ];
 	CFTimeInterval prev = 0.0;
 	do {
 		if ( --pos < 0 )
 			pos = FRAME_COUNT - 1;
-		prev = _history[pos];
+		prev = _frameTimestamp[pos];
 		++frameCount;
-		if ( last - prev >= 1.0 )
+		if ( last - prev >= seconds )
 			break;
 	} while ( pos != _historyPos );
 
@@ -100,7 +101,7 @@ const int FRAME_COUNT = 60;
 {
 	// add to history
 	CFTimeInterval now = CACurrentMediaTime();
-	_history[_historyPos++] = now;
+	_frameTimestamp[_historyPos++] = now;
 	if ( _historyPos >= FRAME_COUNT )
 		_historyPos = 0;
 }
