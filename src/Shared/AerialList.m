@@ -48,7 +48,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		_endDate			= endDate;
 		_wmsProjection		= projection;
 		_polygon			= CGPathCreateCopy( polygon );
-		_attributionString 	= attribString;
+		_attributionString 	= attribString.length ? attribString : name;
 		_attributionIcon	= attribIcon;
 		_attributionUrl		= attribUrl;
 	}
