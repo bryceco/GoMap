@@ -668,7 +668,7 @@ http://glyphish.com
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show FPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeH-ME-EV8">
-                                                    <rect key="frame" x="17" y="11.5" width="80" height="21"/>
+                                                    <rect key="frame" x="17" y="3" width="80" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -679,13 +679,22 @@ http://glyphish.com
                                                         <action selector="switchFPS:" destination="bSZ-Mq-pv6" eventType="valueChanged" id="vaU-d0-HiF"/>
                                                     </connections>
                                                 </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frames/Second" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UvN-Qa-roL">
+                                                    <rect key="frame" x="17" y="24" width="95" height="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="UeH-ME-EV8" firstAttribute="leading" secondItem="C3b-mV-Gif" secondAttribute="leading" constant="17" id="1m5-Kc-1b8"/>
+                                                <constraint firstItem="UeH-ME-EV8" firstAttribute="top" secondItem="C3b-mV-Gif" secondAttribute="top" constant="3" id="OHM-l0-VcV"/>
+                                                <constraint firstItem="Gpb-Pt-4ii" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UvN-Qa-roL" secondAttribute="trailing" constant="4" id="VmD-jr-McK"/>
                                                 <constraint firstAttribute="trailing" secondItem="Gpb-Pt-4ii" secondAttribute="trailing" constant="18" id="YPF-my-Kx9"/>
+                                                <constraint firstItem="UvN-Qa-roL" firstAttribute="top" secondItem="UeH-ME-EV8" secondAttribute="bottom" id="mLH-rG-jGe"/>
+                                                <constraint firstItem="UvN-Qa-roL" firstAttribute="leading" secondItem="UeH-ME-EV8" secondAttribute="leading" id="mts-bT-yLh"/>
                                                 <constraint firstItem="Gpb-Pt-4ii" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UeH-ME-EV8" secondAttribute="trailing" constant="4" id="nXa-ag-kWk"/>
                                                 <constraint firstItem="Gpb-Pt-4ii" firstAttribute="centerY" secondItem="C3b-mV-Gif" secondAttribute="centerY" id="qut-Ut-4yO"/>
-                                                <constraint firstItem="UeH-ME-EV8" firstAttribute="leading" secondItem="C3b-mV-Gif" secondAttribute="leading" constant="17" id="svJ-Mh-B2x"/>
-                                                <constraint firstItem="UeH-ME-EV8" firstAttribute="centerY" secondItem="C3b-mV-Gif" secondAttribute="centerY" id="tky-Zy-GIj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -696,25 +705,34 @@ http://glyphish.com
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Touches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0tl-bZ-z4l">
-                                                    <rect key="frame" x="17" y="11.5" width="116" height="21"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eeu-dh-YPQ">
                                                     <rect key="frame" x="253" y="6.5" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="switchTouch:" destination="bSZ-Mq-pv6" eventType="valueChanged" id="LBr-cl-8py"/>
                                                     </connections>
                                                 </switch>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show Touches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Zi-cz-7Va">
+                                                    <rect key="frame" x="17" y="3" width="285" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="100" text="Touches for screen recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Gcr-zK-nDq">
+                                                    <rect key="frame" x="17" y="24" width="177.5" height="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="eeu-dh-YPQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0tl-bZ-z4l" secondAttribute="trailing" constant="4" id="dKJ-dS-Wqb"/>
+                                                <constraint firstItem="eeu-dh-YPQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gcr-zK-nDq" secondAttribute="trailing" constant="4" id="C3S-PO-RMk"/>
+                                                <constraint firstItem="2Zi-cz-7Va" firstAttribute="top" secondItem="csd-bd-m3P" secondAttribute="top" constant="3" id="M3E-0x-Tjq"/>
+                                                <constraint firstItem="Gcr-zK-nDq" firstAttribute="leading" secondItem="2Zi-cz-7Va" secondAttribute="leading" id="YeC-Vx-i9y"/>
+                                                <constraint firstItem="Gcr-zK-nDq" firstAttribute="top" secondItem="2Zi-cz-7Va" secondAttribute="bottom" id="dXZ-He-fti"/>
                                                 <constraint firstAttribute="trailing" secondItem="eeu-dh-YPQ" secondAttribute="trailing" constant="18" id="n8g-Xt-nfh"/>
-                                                <constraint firstItem="0tl-bZ-z4l" firstAttribute="centerY" secondItem="csd-bd-m3P" secondAttribute="centerY" id="otm-Yr-r92"/>
                                                 <constraint firstItem="eeu-dh-YPQ" firstAttribute="centerY" secondItem="csd-bd-m3P" secondAttribute="centerY" id="qFN-fv-ghm"/>
-                                                <constraint firstItem="0tl-bZ-z4l" firstAttribute="leading" secondItem="csd-bd-m3P" secondAttribute="leading" constant="17" id="rhv-w4-1Ju"/>
+                                                <constraint firstItem="2Zi-cz-7Va" firstAttribute="trailing" secondItem="eeu-dh-YPQ" secondAttribute="trailing" id="wVV-5R-JfF"/>
+                                                <constraint firstItem="2Zi-cz-7Va" firstAttribute="leading" secondItem="csd-bd-m3P" secondAttribute="leading" constant="17" id="y9m-3E-550"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -735,7 +753,7 @@ http://glyphish.com
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HSE-dn-0YR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2231" y="1675"/>
+            <point key="canvasLocation" x="2229.375" y="1675"/>
         </scene>
         <!--Contact Us-->
         <scene sceneID="n62-E6-mWo">
