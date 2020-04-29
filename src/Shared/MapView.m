@@ -431,29 +431,18 @@ const CGFloat kEditControlCornerRadius = 4;
 
 		OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
 		self.screenFromMapTransform = t;
-		__block int side = 0, distance = 0;
+		__block int angle = 0;
 		__weak MapView * weakSelf = self;
 		[displayLink addName:NAME block:^{
-			int dx = 0, dy = 0;
-			switch ( side ) {
-				case 0:
-					dx = 1;
-					break;
-				case 1:
-					dy = 1;
-					break;
-				case 2:
-					dx = -1;
-					break;
-				case 3:
-					dy = -1;
-					break;
-			}
-			if ( ++distance > 50 ) {
-				side = (side+1) % 4;
-				distance = 0;
-			}
-			[weakSelf adjustOriginBy:CGPointMake(2*dx,2*dy)];
+			// circle
+			CGFloat x1 = cos(angle*M_PI/180);
+			CGFloat y1 = sin(angle*M_PI/180);
+			angle += 360/60/2; // 360 degrees/60 FPS = 1 roation/second
+			CGFloat x2 = cos(angle*M_PI/180);
+			CGFloat y2 = sin(angle*M_PI/180);
+			CGFloat dx = (x2 - x1) * 100;
+			CGFloat dy = (y2 - y1) * 100;
+			[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
 		}];
 	} else {
 		self.fpsLabel.showFPS = NO;
