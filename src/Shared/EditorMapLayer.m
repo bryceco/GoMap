@@ -1626,11 +1626,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     NSString * featureName = [CommonPresetList featureNameForObjectDict:node.tags geometry:node.geometryName];
     CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
 	UIImage * icon = feature.icon;
-	if ( icon == nil && node.tags[@"amenity"] ) {
-		icon = [self genericIcon];
+	if ( icon == nil ) {
+		if ( node.tags[@"amenity"] || node.tags[@"name"] )
+			icon = [self genericIcon];
 	}
     if ( icon ) {
-        /// White box as the background
+        /// White circle as the background
         CALayer *backgroundLayer = [CALayer new];
         backgroundLayer.bounds          = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
 		backgroundLayer.backgroundColor	= UIColor.whiteColor.CGColor;
@@ -1638,7 +1639,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
         backgroundLayer.masksToBounds   = YES;
         backgroundLayer.anchorPoint 	= CGPointZero;
         backgroundLayer.borderColor 	= UIColor.darkGrayColor.CGColor;
-        backgroundLayer.borderWidth 	= 0.5;
+		backgroundLayer.borderWidth 	= 1.0;
 		backgroundLayer.opaque			= YES;
 
         /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
@@ -1703,9 +1704,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
             layer.strokeColor       = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
             layer.fillColor         = nil;
             layer.lineWidth         = 2.0;
-            layer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+			layer.backgroundColor	= UIColor.whiteColor.CGColor;
 			layer.borderColor		= UIColor.darkGrayColor.CGColor;
-			layer.borderWidth		= 0.5;
+			layer.borderWidth		= 1.0;
 			layer.cornerRadius      = MinIconSizeInPixels/2;
             layer.zPosition         = Z_NODE;
             
