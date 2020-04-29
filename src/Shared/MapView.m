@@ -431,15 +431,15 @@ const CGFloat kEditControlCornerRadius = 4;
 
 		OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
 		self.screenFromMapTransform = t;
-		__block int angle = 0;
+		__block CGFloat angle = 1.5*M_PI;
 		__weak MapView * weakSelf = self;
 		[displayLink addName:NAME block:^{
 			// circle
-			CGFloat x1 = cos(angle*M_PI/180);
-			CGFloat y1 = sin(angle*M_PI/180);
-			angle += 360/60/2; // 360 degrees/60 FPS = 1 roation/second
-			CGFloat x2 = cos(angle*M_PI/180);
-			CGFloat y2 = sin(angle*M_PI/180);
+			CGFloat x1 = cos(angle);
+			CGFloat y1 = sin(angle);
+			angle += M_PI/60;
+			CGFloat x2 = cos(angle);
+			CGFloat y2 = sin(angle);
 			CGFloat dx = (x2 - x1) * 100;
 			CGFloat dy = (y2 - y1) * 100;
 			[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
