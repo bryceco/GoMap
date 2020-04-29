@@ -58,7 +58,7 @@
 	UIKeyboardType keyboard = UIKeyboardTypeDefault;
 	UITextAutocapitalizationType capitalize = UITextAutocapitalizationTypeNone;
 	
-	_customPreset = [[CustomPreset alloc] initWithName:name tagKey:key defaultValue:nil placeholder:nil keyboard:keyboard capitalize:capitalize presets:presets];
+	_customPreset = [[CustomPreset alloc] initWithName:name featureKey:key defaultValue:nil placeholder:nil keyboard:keyboard capitalize:capitalize presets:presets];
 	_customPreset.appliesToKey = appliesToKey;
 	_customPreset.appliesToValue = appliesToVal;
 	if ( _completion ) {

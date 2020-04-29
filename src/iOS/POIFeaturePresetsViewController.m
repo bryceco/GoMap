@@ -23,7 +23,7 @@
 @interface FeaturePresetCell : UITableViewCell
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
-@property (strong,nonatomic)				CommonPresetKey				*	commonTag;
+@property (strong,nonatomic)				CommonPresetKey				*	presetKeyInfo;
 @end
 
 @implementation FeaturePresetCell
@@ -93,7 +93,7 @@
 		// update most recent feature
 		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [CommonPresetList featureNameForObjectDict:dict geometry:geometry];
 		if ( featureName ) {
-			CommonPresetFeature * feature = [CommonPresetFeature commonTagFeatureWithName:featureName];
+			CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
 			[POIFeaturePickerViewController loadMostRecentForGeometry:geometry];
 			[POIFeaturePickerViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
 		}
@@ -146,7 +146,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
                     FeaturePresetCell * cell = [self.tableView cellForRowAtIndexPath:index];
-                    if ( cell && [cell.commonTag.tagKey isEqualToString:@"name"] ) {
+                    if ( cell && [cell.presetKeyInfo.tagKey isEqualToString:@"name"] ) {
                         [cell.valueField becomeFirstResponder];
                     }
                 });
@@ -164,7 +164,7 @@
 	POITabBarController * tabController = (id) self.tabBarController;
 	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
 	NSString * oldFeatureName = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-	CommonPresetFeature * oldFeature = [CommonPresetFeature commonTagFeatureWithName:oldFeatureName];
+	CommonPresetFeature * oldFeature = [CommonPresetFeature commonPresetFeatureWithName:oldFeatureName];
 
 	// remove previous feature tags
 	[oldFeature.removeTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
@@ -232,7 +232,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	if ( _drillDownGroup )
-		return _drillDownGroup.tags.count;
+		return _drillDownGroup.presetKeys.count;
 	if ( section == _tags.sectionCount )
 		return 1;
 	if ( section > _tags.sectionCount )
@@ -249,30 +249,30 @@
 		}
 	}
 
-	id rowObject = _drillDownGroup ? _drillDownGroup.tags[ indexPath.row ] : [_tags tagAtIndexPath:indexPath];
+	id rowObject = _drillDownGroup ? _drillDownGroup.presetKeys[ indexPath.row ] : [_tags tagAtIndexPath:indexPath];
 	if ( [rowObject isKindOfClass:[CommonPresetKey class]] ) {
 
-		CommonPresetKey 	* commonTag	= rowObject;
-		NSString * key = commonTag.tagKey;
+		CommonPresetKey 	* presetKey	= rowObject;
+		NSString * key = presetKey.tagKey;
 		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";
 
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:cellName forIndexPath:indexPath];
-		cell.nameLabel.text = commonTag.name;
-		cell.valueField.placeholder = commonTag.placeholder;
+		cell.nameLabel.text = presetKey.name;
+		cell.valueField.placeholder = presetKey.placeholder;
 		cell.valueField.delegate = self;
-		cell.commonTag = commonTag;
+		cell.presetKeyInfo = presetKey;
 
-		cell.valueField.keyboardType = commonTag.keyboardType;
-		cell.valueField.autocapitalizationType = commonTag.autocapitalizationType;
+		cell.valueField.keyboardType = presetKey.keyboardType;
+		cell.valueField.autocapitalizationType = presetKey.autocapitalizationType;
 		[cell.valueField removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 		[cell.valueField addTarget:self action:@selector(textFieldReturn:)			forControlEvents:UIControlEventEditingDidEndOnExit];
 		[cell.valueField addTarget:self action:@selector(textFieldChanged:)			forControlEvents:UIControlEventEditingChanged];
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
 		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
         
-        if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:commonTag.tagKey]) {
+        if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:presetKey.tagKey]) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else if (commonTag.presetList.count > 0) {
+        } else if (presetKey.presetList.count > 0) {
             // The user can select from a list of presets.
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else {
@@ -291,8 +291,8 @@
 			cell.valueField.enabled = NO;
 		} else {
 			// Regular cell
-			NSString * value = objectDict[ commonTag.tagKey ];
-			value = [CommonPresetList friendlyValueNameForKey:commonTag.tagKey value:value geometry:nil];
+			NSString * value = objectDict[ presetKey.tagKey ];
+			value = [CommonPresetList friendlyValueNameForKey:presetKey.tagKey value:value geometry:nil];
 			cell.valueField.text = value;
 			cell.valueField.enabled = YES;
 		}
@@ -305,7 +305,7 @@
 		CommonPresetGroup * drillDownGroup = rowObject;
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
 		cell.nameLabel.text = drillDownGroup.name;
-		cell.commonTag = (id)drillDownGroup;
+		cell.presetKeyInfo = (id)drillDownGroup;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 		return cell;
@@ -319,20 +319,20 @@
 		return;
     
     // This workaround is necessary because `tableView:cellForRowAtIndexPath:`
-    // currently sets `cell.commonTag` to an instance of `CommonTagGroup` by casting it to `id`.
-    CommonPresetKey *commonTag;
-    if ([cell.commonTag isKindOfClass:[CommonPresetKey class]]) {
-        commonTag = cell.commonTag;
+    // currently sets `cell.commonPreset` to an instance of `CommonPresetGroup` by casting it to `id`.
+    CommonPresetKey *presetKey = nil;
+    if ([cell.presetKeyInfo isKindOfClass:[CommonPresetKey class]]) {
+        presetKey = cell.presetKeyInfo;
     }
 
 	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
-    } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:commonTag.tagKey]) {
-        [self presentDirectionViewControllerForTagWithKey:cell.commonTag.tagKey
+    } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:presetKey.tagKey]) {
+        [self presentDirectionViewControllerForTagWithKey:cell.presetKeyInfo.tagKey
                                                     value:cell.valueField.text];
-	} else if ( [cell.commonTag isKindOfClass:[CommonPresetGroup class]] ) {
+	} else if ( [cell.presetKeyInfo isKindOfClass:[CommonPresetGroup class]] ) {
 		// special case for drill down
-		CommonPresetGroup * group = (id)cell.commonTag;
+		CommonPresetGroup * group = (id)cell.presetKeyInfo;
 		POIFeaturePresetsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
 		sub.drillDownGroup = group;
 		[self.navigationController pushViewController:sub animated:YES];
@@ -345,9 +345,9 @@
 	FeaturePresetCell * cell = sender;
 	if ( [segue.destinationViewController isKindOfClass:[POIPresetValuesViewController class]] ) {
 		POIPresetValuesViewController * preset = segue.destinationViewController;
-		preset.tag = cell.commonTag.tagKey;
-		preset.valueDefinitions = cell.commonTag.presetList;
-		preset.navigationItem.title = cell.commonTag.name;
+		preset.tag = cell.presetKeyInfo.tagKey;
+		preset.valueDefinitions = cell.presetKeyInfo.presetList;
+		preset.navigationItem.title = cell.presetKeyInfo.name;
 	} else if ( [segue.destinationViewController isKindOfClass:[POIFeaturePickerViewController class]] ) {
 		POIFeaturePickerViewController * dest = (id)segue.destinationViewController;
 		dest.delegate = self;
@@ -401,7 +401,7 @@
 
 		// get list of values for current key
 		FeaturePresetCell * cell = [self cellForTextField:textField];
-		NSString * key = cell.commonTag.tagKey;
+		NSString * key = cell.presetKeyInfo.tagKey;
 		if ( key == nil )
 			return;	// should never happen
 		NSSet * set = [CommonPresetList allTagValuesForKey:key];
@@ -421,7 +421,7 @@
 - (IBAction)textFieldDidEndEditing:(UITextField *)textField
 {
 	FeaturePresetCell * cell = [self cellForTextField:textField];
-	NSString * key = cell.commonTag.tagKey;
+	NSString * key = cell.presetKeyInfo.tagKey;
 	if ( key == nil )
 		return;	// should never happen
 	NSString * value = textField.text;

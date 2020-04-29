@@ -179,7 +179,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 								   [tags.lastObject isKindOfClass:[CommonPresetGroup class]] );	// second case for drill down group
 #endif
 		_name = name;
-		_tags = tags;
+		_presetKeys = tags;
 	}
 	return self;
 }
@@ -189,10 +189,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 -(void)mergeTagsFromGroup:(CommonPresetGroup *)other
 {
-	if ( _tags == nil )
-		_tags = other.tags;
+	if ( _presetKeys == nil )
+		_presetKeys = other.presetKeys;
 	else
-		_tags = [_tags arrayByAddingObjectsFromArray:other.tags];
+		_presetKeys = [_presetKeys arrayByAddingObjectsFromArray:other.presetKeys];
 }
 @end
 
@@ -222,7 +222,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return self;
 }
 
--(instancetype)initWithName:(NSString *)name tagKey:(NSString *)tag defaultValue:(NSString *)defaultValue placeholder:(NSString *)placeholder
+-(instancetype)initWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:(NSString *)defaultValue placeholder:(NSString *)placeholder
 				   keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
 					presets:(NSArray *)presets
 {
@@ -259,11 +259,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 	return self;
 }
-+(instancetype)tagWithName:(NSString *)name tagKey:(NSString *)tag defaultValue:(NSString *)defaultValue placeholder:(NSString *)placeholder
++(instancetype)tagWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:(NSString *)defaultValue placeholder:(NSString *)placeholder
 				  keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
 				   presets:(NSArray *)presets
 {
-	return [[CommonPresetKey alloc] initWithName:name tagKey:tag defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
+	return [[CommonPresetKey alloc] initWithName:name featureKey:tag defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 }
 @end
 
@@ -373,7 +373,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 		} else {
 
-			CommonPresetFeature * tag = [CommonPresetFeature commonTagFeatureWithName:featureName];
+			CommonPresetFeature * tag = [CommonPresetFeature commonPresetFeatureWithName:featureName];
 			if ( tag == nil )
 				continue;
 			[list addObject:tag];
@@ -437,7 +437,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 				}
 			}
 			if ( add ) {
-				CommonPresetFeature * tag = [CommonPresetFeature commonTagFeatureWithName:featureName];
+				CommonPresetFeature * tag = [CommonPresetFeature commonPresetFeatureWithName:featureName];
 				if ( tag ) {
 					[list addObject:tag];
 				}
@@ -525,7 +525,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 		NSArray * presets = @[ [CommonPresetValue presetWithName:[CommonPresetList yesForLocale] details:nil tagValue:@"yes"],
 							   [CommonPresetValue presetWithName:[CommonPresetList noForLocale]  details:nil tagValue:@"no"] ];
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
 		return group;
 
@@ -539,7 +539,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 								   [CommonPresetValue presetWithName:[CommonPresetList noForLocale]  details:nil tagValue:@"no"] ];
 			for ( NSString * k in keysArray ) {
 				NSString * name = stringsOptionsDict[ k ];
-				CommonPresetKey * tag = [CommonPresetKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+				CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 				[tags addObject:tag];
 			}
 			CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
@@ -552,7 +552,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			for ( NSString * v in optionsArray ) {
 				[presets addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:v]];
 			}
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
 			return group;
 
@@ -563,7 +563,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key2, NSString * _Nonnull val, BOOL * _Nonnull stop) {
 				[presets addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:val]];
 			}];
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
 			return group;
 
@@ -584,7 +584,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 								   [CommonPresetValue presetWithName:[CommonPresetList noForLocale]  details:nil tagValue:@"no"] ];
 			for ( NSString * k in keysArray ) {
 				NSString * name = stringsOptionsDict[ k ];
-				CommonPresetKey * tag = [CommonPresetKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+				CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 				[tags addObject:tag];
 			}
 			CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
@@ -597,7 +597,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			for ( NSString * v in optionsArray ) {
 				[presets addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:v]];
 			}
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
 			return group;
 			
@@ -660,7 +660,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 									continue; // it's a very uncommon value, so ignore it
 								NSString * k = v[@"key"];
 								NSString * name = k;
-								CommonPresetKey * tag = [CommonPresetKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:yesNo];
+								CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:yesNo];
 								[tags addObject:tag];
 							}
 							CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
@@ -696,7 +696,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			group2.isDrillDown = YES;
 			return group2;
 		} else {
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
 			return group;
 		}
@@ -713,7 +713,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 				NSString * d = v[@"description"];
 				[presets addObject:[CommonPresetValue presetWithName:n details:d tagValue:k]];
 			}];
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:stringsTypesDict[key] tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			CommonPresetKey * tag = [CommonPresetKey tagWithName:stringsTypesDict[key] featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			[tagList addObject:tag];
 		}
 
@@ -756,7 +756,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 					name = placeholder;
 				keyboard = [numericFields containsObject:k] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
 				NSString * tagKey = [@"addr:" stringByAppendingString:k];
-				CommonPresetKey * tag = [CommonPresetKey tagWithName:name tagKey:tagKey defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
+				CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:tagKey defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 				[addrs addObject:tag];
 			}
 		}
@@ -785,14 +785,14 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			keyboard = UIKeyboardTypeEmailAddress;
 		else if ( [type isEqualToString:@"textarea"] )
 			capitalize = UITextAutocapitalizationTypeSentences;
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[tag]];
 		return group;
 
 	} else if ( [type isEqualToString:@"maxspeed"] ) {
 
 		// special case
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[tag]];
 		return group;
 
@@ -808,7 +808,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSMutableArray * tags = [NSMutableArray new];
 		for ( NSString * k in keysArray ) {
 			NSString * name = stringsTypesDict[ k ];
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:name tagKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
+			CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 			[tags addObject:tag];
 		}
 		CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
@@ -829,7 +829,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 #if DEBUG
 		assert(NO);
 #endif
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label tagKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[tag]];
 		return group;
 
@@ -1041,8 +1041,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	_featureName = featureDict[ @"name" ];
 
 	// Always start with Type and Name
-	CommonPresetKey * typeTag = [CommonPresetKey tagWithName:@"Type" tagKey:nil defaultValue:nil placeholder:@"" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeNone presets:@[@"",@""]];
-	CommonPresetKey * nameTag = [CommonPresetKey tagWithName:g_fieldsDict[@"name"][@"label"] tagKey:@"name" defaultValue:nil placeholder:g_fieldsDict[@"name"][@"placeholder"] keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeWords presets:nil];
+	CommonPresetKey * typeTag = [CommonPresetKey tagWithName:@"Type" featureKey:nil defaultValue:nil placeholder:@"" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeNone presets:@[@"",@""]];
+	CommonPresetKey * nameTag = [CommonPresetKey tagWithName:g_fieldsDict[@"name"][@"label"] featureKey:@"name" defaultValue:nil placeholder:g_fieldsDict[@"name"][@"placeholder"] keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeWords presets:nil];
 	CommonPresetGroup * typeGroup = [CommonPresetGroup groupWithName:@"Type" tags:@[ typeTag, nameTag ] ];
 	_sectionList = [NSMutableArray arrayWithArray:@[ typeGroup ]];
 
@@ -1092,13 +1092,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 -(NSInteger)tagsInSection:(NSInteger)index
 {
 	CommonPresetGroup * group = _sectionList[ index ];
-	return group.tags.count;
+	return group.presetKeys.count;
 }
 
 -(CommonPresetKey *)tagAtSection:(NSInteger)section row:(NSInteger)row
 {
 	CommonPresetGroup * group = _sectionList[ section ];
-	CommonPresetKey * tag = group.tags[ row ];
+	CommonPresetKey * tag = group.presetKeys[ row ];
 	return tag;
 }
 
@@ -1120,7 +1120,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 @implementation CustomPreset
 -(instancetype)initWithName:(NSString *)name tagKey:(NSString *)key placeholder:(NSString *)placeholder keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize presets:(NSArray *)presets
 {
-	return [super initWithName:name tagKey:key defaultValue:nil placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
+	return [super initWithName:name featureKey:key defaultValue:nil placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 }
 +(instancetype)tagWithName:(NSString *)name tagKey:(NSString *)key placeholder:(NSString *)placeholder keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize presets:(NSArray *)presets
 {
@@ -1231,13 +1231,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	return nil;
 }
--(NSArray *)members
+-(NSArray<CommonPresetFeature *> *)members
 {
 	NSDictionary * dict = g_categoriesDict[ _categoryName ];
-	NSArray * m = dict[ @"members" ];
-	NSMutableArray * m2 = [NSMutableArray new];
+	NSArray<CommonPresetFeature *> * m = dict[ @"members" ];
+	NSMutableArray<CommonPresetFeature *> * m2 = [NSMutableArray new];
 	for ( NSString * p in m ) {
-		CommonPresetFeature * t = [CommonPresetFeature commonTagFeatureWithName:p];
+		CommonPresetFeature * t = [CommonPresetFeature commonPresetFeatureWithName:p];
 		if ( p ) {
 			[m2 addObject:t];
 		}
@@ -1250,7 +1250,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 @implementation CommonPresetFeature
 @synthesize icon = _icon;
 
-+(instancetype)commonTagFeatureWithName:(NSString *)name
++(instancetype)commonPresetFeatureWithName:(NSString *)name
 {
 	if ( name == nil )
 		return nil;

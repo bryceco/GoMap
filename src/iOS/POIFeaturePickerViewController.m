@@ -30,7 +30,7 @@ static NSInteger			mostRecentMaximum;
 	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
 	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
 	for ( NSString * featureName in a ) {
-		CommonPresetFeature * tagInfo = [CommonPresetFeature commonTagFeatureWithName:featureName];
+		CommonPresetFeature * tagInfo = [CommonPresetFeature commonPresetFeatureWithName:featureName];
 		if ( tagInfo ) {
 			[mostRecentArray addObject:tagInfo];
 		}

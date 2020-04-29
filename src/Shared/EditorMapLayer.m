@@ -1624,7 +1624,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     
     // fetch icon
     NSString * featureName = [CommonPresetList featureNameForObjectDict:node.tags geometry:node.geometryName];
-    CommonPresetFeature * feature = [CommonPresetFeature commonTagFeatureWithName:featureName];
+    CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
 	UIImage * icon = feature.icon;
 	if ( icon == nil && node.tags[@"amenity"] ) {
 		icon = [self genericIcon];

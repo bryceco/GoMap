@@ -1,5 +1,5 @@
 //
-//  CommonTagList.h
+//  CommonPresetList.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/4/14.
@@ -26,7 +26,7 @@ typedef int UITextAutocapitalizationType;
 @class OsmWay;
 
 
-// A possible value for a tag
+// A possible value for a preset key
 @interface CommonPresetValue : NSObject
 @property (readonly,nonatomic) NSString	*	name;
 @property (readonly,nonatomic) NSString *	details;
@@ -38,18 +38,18 @@ typedef int UITextAutocapitalizationType;
 
 // A key along with information about possible values
 @interface CommonPresetKey : NSObject
-@property (readonly,nonatomic) NSString					*	name;
-@property (readonly,nonatomic) NSString					*	tagKey;
-@property (readonly,nonatomic) NSString					*	defaultValue;
-@property (readonly,nonatomic) NSString					*	placeholder;
-@property (readonly,nonatomic) NSArray					*	presetList;		// array of CommonTagValue
-@property (readonly,nonatomic) UIKeyboardType				keyboardType;
+@property (readonly,nonatomic) NSString						*	name;
+@property (readonly,nonatomic) NSString						*	tagKey;
+@property (readonly,nonatomic) NSString						*	defaultValue;
+@property (readonly,nonatomic) NSString						*	placeholder;
+@property (readonly,nonatomic) NSArray<CommonPresetValue *>	*	presetList;
+@property (readonly,nonatomic) UIKeyboardType					keyboardType;
 @property (readonly,nonatomic) UITextAutocapitalizationType	autocapitalizationType;
 
--(instancetype)initWithName:(NSString *)name tagKey:(NSString *)tag defaultValue:defaultValue placeholder:(NSString *)placeholder
+-(instancetype)initWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:defaultValue placeholder:(NSString *)placeholder
 				   keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
 					presets:(NSArray *)presets;
-+(instancetype)tagWithName:(NSString *)name tagKey:(NSString *)tag defaultValue:defaultValue placeholder:(NSString *)placeholder
++(instancetype)tagWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:defaultValue placeholder:(NSString *)placeholder
 				   keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
 				   presets:(NSArray *)presets;
 -(instancetype)initWithCoder:(NSCoder *)coder;
@@ -59,23 +59,10 @@ typedef int UITextAutocapitalizationType;
 
 // A group of related tags, such as address tags, organized for display purposes
 @interface CommonPresetGroup : NSObject
-@property (readonly,nonatomic) 	NSString	*	name;
-@property (readonly,nonatomic) 	NSArray		*	tags;	// array of CommonTagKey
-@property (assign,nonatomic)	BOOL			isDrillDown;
+@property (readonly,nonatomic) 	NSString					*	name;
+@property (readonly,nonatomic) 	NSArray<CommonPresetKey *>	*	presetKeys;
+@property (assign,nonatomic)	BOOL							isDrillDown;
 +(instancetype)groupWithName:(NSString *)name tags:(NSArray *)tags;
-@end
-
-
-
-// A top-level group such as road, building, for building hierarchical menus
-@interface CommonPresetCategory : NSObject
-{
-	NSString	*	_categoryName;
-}
-@property (readonly,nonatomic)	NSString	*	friendlyName;
-@property (readonly,nonatomic)	UIImage		*	icon;
-@property (readonly,nonatomic)	NSArray		*	members;
--(instancetype)initWithCategoryName:(NSString *)name;
 @end
 
 
@@ -96,9 +83,21 @@ typedef int UITextAutocapitalizationType;
 @property (readonly,nonatomic)	NSDictionary	*	addTags;
 @property (readonly,nonatomic)	NSDictionary	*	removeTags;
 @property (readonly,nonatomic)	BOOL				suggestion;
-+(instancetype)commonTagFeatureWithName:(NSString *)name;
++(instancetype)commonPresetFeatureWithName:(NSString *)name;
 -(BOOL)matchesSearchText:(NSString *)text;
 -(NSDictionary *)defaultValuesForGeometry:(NSString *)geometry;
+@end
+
+
+// A top-level group such as road, building, for building hierarchical menus
+@interface CommonPresetCategory : NSObject
+{
+	NSString	*	_categoryName;
+}
+@property (readonly,nonatomic)	NSString						*	friendlyName;
+@property (readonly,nonatomic)	UIImage							*	icon;
+@property (readonly,nonatomic)	NSArray<CommonPresetFeature *>	*	members;
+-(instancetype)initWithCategoryName:(NSString *)name;
 @end
 
 
@@ -113,8 +112,8 @@ typedef int UITextAutocapitalizationType;
 
 @interface CommonPresetList : NSObject
 {
-	NSString		*	_featureName;
-	NSMutableArray	*	_sectionList;	// array of CommonTagGroup
+	NSString								*	_featureName;
+	NSMutableArray<CommonPresetGroup *>		*	_sectionList;
 }
 
 +(instancetype)sharedList;
