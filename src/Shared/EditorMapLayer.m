@@ -1339,8 +1339,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
 
 		if ( path ) {
-			CGFloat red = 0, green = 0, blue = 0, alpha = 1;
-			[tagInfo.lineColor getRed:&red green:&green blue:&blue alpha:&alpha];
 			CGFloat lineWidth = tagInfo.lineWidth*_highwayScale;
 			if ( lineWidth == 0 )
 				lineWidth = 1;
@@ -1351,7 +1349,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			layer.bounds		= CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
 			layer.position		= CGPointFromOSMPoint( refPoint );
 			layer.path			= path;
-			layer.strokeColor	= [UIColor colorWithRed:red green:green blue:blue alpha:alpha].CGColor;
+			layer.strokeColor	= tagInfo.lineColor.CGColor;
 			layer.fillColor		= nil;
 			layer.lineWidth		= lineWidth;
 			layer.lineCap		= DEFAULT_LINECAP;
@@ -1383,14 +1381,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			CGPathRef path = [object shapePathForObjectWithRefPoint:&refPoint];
 			if ( path ) {
 				// draw
-				RGBColor	fillColor;
-				[tagInfo.areaColor getRed:&fillColor.red green:&fillColor.green blue:&fillColor.blue alpha:NULL];
 				CGFloat alpha = object.tags[@"landuse"] ? 0.15 : 0.25;
 				CAShapeLayer * layer = [CAShapeLayer new];
 				layer.anchorPoint	= CGPointMake(0,0);
 				layer.path			= path;
 				layer.position		= CGPointFromOSMPoint(refPoint);
-				layer.fillColor		= [UIColor colorWithRed:fillColor.red green:fillColor.green blue:fillColor.blue alpha:alpha].CGColor;
+				layer.fillColor		= [tagInfo.areaColor colorWithAlphaComponent:alpha].CGColor;
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
@@ -1637,13 +1633,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
         /// White box as the background
         CALayer *backgroundLayer = [CALayer new];
         backgroundLayer.bounds          = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        backgroundLayer.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.75].CGColor;
-        backgroundLayer.cornerRadius    = MinIconSizeInPixels / 2;
+		backgroundLayer.backgroundColor	= UIColor.whiteColor.CGColor;
+		backgroundLayer.cornerRadius    = MinIconSizeInPixels / 2;
         backgroundLayer.masksToBounds   = YES;
         backgroundLayer.anchorPoint 	= CGPointZero;
         backgroundLayer.borderColor 	= UIColor.darkGrayColor.CGColor;
         backgroundLayer.borderWidth 	= 0.5;
-        
+		backgroundLayer.opaque			= YES;
+
         /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
         CALayer *iconMaskLayer = [CALayer new];
         CGFloat padding = 4;
@@ -1658,8 +1655,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 													   blue:iconColor.blue
 													  alpha:1.0].CGColor;
         iconLayer.mask = iconMaskLayer;
-        iconLayer.anchorPoint = CGPointZero;
-        
+		iconLayer.anchorPoint = CGPointZero;
+		iconLayer.opaque = YES;
+
         CALayer * layer = [CALayer new];
         [layer addSublayer:backgroundLayer];
         [layer addSublayer:iconLayer];
@@ -1667,7 +1665,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
         layer.anchorPoint    	= CGPointMake(0.5, 0.5);
         layer.position        	= CGPointMake(pt.x,pt.y);
         layer.zPosition        	= Z_NODE;
-        
+		layer.opaque			= YES;
+
         LayerProperties * props = [LayerProperties new];
         [layer setValue:props forKey:@"properties"];
         props->position = pt;
@@ -1731,9 +1730,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
     CAShapeLayer *layer = [CAShapeLayer layer];
 
-    layer.fillColor = [UIColor colorWithWhite:0.2 alpha:0.9].CGColor;
-    layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.9].CGColor;
-    layer.lineWidth = 0.5;
+    layer.fillColor = [UIColor colorWithWhite:0.2 alpha:0.5].CGColor;
+	layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
+	layer.lineWidth = 1.0;
 
     layer.zPosition = Z_NODE;
 
@@ -1940,7 +1939,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
 		} else if ( object.isNode ) {
 
-#if 1 // draw square around selected node
+			// draw square around selected node
 			OsmNode * node = (id)object;
 			CGPoint pt = [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
 
@@ -1956,18 +1955,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			layer.fillColor		= UIColor.clearColor.CGColor;
 			layer.lineWidth		= 2.0;
 
-			CGPathRef shadowPath = CGPathCreateWithRect( CGRectInset( rect, -3, -3), NULL);
-			layer.shadowPath	= shadowPath;
-			layer.shadowColor	= UIColor.blackColor.CGColor;
-			layer.shadowRadius	= 0.0;
-			layer.shadowOffset	= CGSizeMake(0,0);
-			layer.shadowOpacity	= 0.25;
-
 			layer.zPosition		= Z_HIGHLIGHT_NODE;
 			[layers addObject:layer];
 			CGPathRelease(path);
-			CGPathRelease(shadowPath);
-#endif
 		}
 	}
 
