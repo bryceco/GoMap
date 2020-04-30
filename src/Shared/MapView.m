@@ -2772,6 +2772,13 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 							scrolly = SCROLL_SPEED;
 
 						if ( scrollx || scrolly ) {
+
+							// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
+							CGPoint center = CGRectCenter(strongSelf.bounds);
+							OSMPoint v = UnitVector(Sub(OSMPointFromCGPoint(arrow),OSMPointFromCGPoint(center)));
+							scrollx = SCROLL_SPEED * v.x;
+							scrolly = SCROLL_SPEED * v.y;
+
 							// scroll the screen to keep pushpin centered
 							DisplayLink * displayLink = [DisplayLink shared];
 							__block NSTimeInterval prevTime = CACurrentMediaTime();
