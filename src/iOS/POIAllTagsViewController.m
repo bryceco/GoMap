@@ -239,7 +239,7 @@
 		OsmMember	* member = _members[ indexPath.row ];
 		if ( [member isKindOfClass:[OsmMember class]] ) {
 			OsmBaseObject * ref = member.ref;
-			NSString * memberName = [ref isKindOfClass:[OsmBaseObject class]] ? ref.friendlyDescription : [NSString stringWithFormat:@"%@ %@",member.type, member.ref];
+			NSString * memberName = [ref isKindOfClass:[OsmBaseObject class]] ? ref.friendlyDescriptionWithDetails : [NSString stringWithFormat:@"%@ %@",member.type, member.ref];
 			cell.text1.text = member.role;
 			cell.text2.text = memberName;
 		} else {

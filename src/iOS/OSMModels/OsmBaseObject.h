@@ -122,6 +122,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 -(OSMRect)boundingBox;
 -(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2;
 -(NSString *)friendlyDescription;
+-(NSString *)friendlyDescriptionWithDetails;
 
 -(NSString *)geometryName;
 

@@ -481,7 +481,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     return keyDict;
 }
 
--(NSString *)friendlyDescription
+-(NSString *)friendlyDescriptionWithDetails:(BOOL)details
 {
     NSString * name = [_tags objectForKey:@"name"];
     if ( name.length )
@@ -554,15 +554,18 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
         return tagDescription;
 
     if ( self.isNode && self.isNode.wayCount > 0 )
-        return NSLocalizedString(@"(node in way)",nil);
+		return details ? [NSString stringWithFormat:NSLocalizedString(@"node %@ (in way)",nil),self.ident]
+						: NSLocalizedString(@"(node in way)",nil);
 
     if ( self.isNode )
-        return NSLocalizedString(@"(node)",nil);
+		return details ? [NSString stringWithFormat:NSLocalizedString(@"node %@",nil),self.ident]
+						: NSLocalizedString(@"(node)",nil);
 
-    if ( self.isWay )
-        return NSLocalizedString(@"(way)",nil);
+	if ( self.isWay )
+		return details ? [NSString stringWithFormat:NSLocalizedString(@"way %@",nil),self.ident]
+						: NSLocalizedString(@"(way)",nil);
 
-    if ( self.isRelation ) {
+	if ( self.isRelation ) {
         OsmRelation * relation = self.isRelation;
         NSString * type = relation.tags[@"type"];
         if ( type.length ) {
@@ -579,6 +582,14 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     return NSLocalizedString(@"other object",nil);
 }
 
+-(NSString *)friendlyDescription
+{
+	return [self friendlyDescriptionWithDetails:NO];
+}
+-(NSString *)friendlyDescriptionWithDetails
+{
+	return [self friendlyDescriptionWithDetails:YES];
+}
 
 - (id)copyWithZone:(NSZone *)zone
 {
