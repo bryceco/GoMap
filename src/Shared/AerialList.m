@@ -509,7 +509,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			if ( identifier.length == 0 || blacklist[identifier] )
 				continue;
 			NSString *  category			= properties[@"category"];
-			if ( [category isEqualToString:@"osmbasedmap"] )
+			if ( category && ![category isEqualToString:@"photo"] )
 				continue;
 			NSString *	startDateString		= properties[@"start_date"];
 			NSString *	endDateString		= properties[@"end_date"];
@@ -554,13 +554,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			// we only support some types of WMS projections
 			NSString * projection = nil;
 			if ( [type isEqualToString:@"wms"] ) {
-#if 1 // temporary fix until imagery databases are updated
-				if ( [identifier hasPrefix:@"Kanton-Zürich"] ) {
-					projections = [projections filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * proj, NSDictionary<NSString *,id> * _Nullable bindings) {
-						return ![proj isEqualToString:@"EPSG:4326"];
-					}]];
-				}
-#endif
 				for ( NSString * proj in projections ) {
 					if ( supportedProjections[proj] ) {
 						projection = proj;

@@ -361,7 +361,13 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		// WMS
 		OSMPoint minXmaxY = TileToWMSCoords( tileX, tileY, zoom, projection );
 		OSMPoint maxXminY = TileToWMSCoords( tileX+1, tileY+1, zoom, projection );
-		NSString * bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",minXmaxY.x,maxXminY.y,maxXminY.x,minXmaxY.y];
+		NSString * bbox;
+		if ( [projection isEqualToString:@"EPSG:4326"] && [[url lowercaseString] containsString:@"crs=epsg:4326"] ) {
+			// reverse lat/lon for EPSG:4326 when WMS version is 1.3 (WMS 1.1 uses srs=epsg:4326 instead
+			bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",maxXminY.y,minXmaxY.x,minXmaxY.y,maxXminY.x];	// lat,lon
+		} else {
+			bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",minXmaxY.x,maxXminY.y,maxXminY.x,minXmaxY.y];	// lon,lat
+		}
 		[url replaceOccurrencesOfString:@"{width}"	withString:@"256" options:0 range:NSMakeRange(0, url.length)];
 		[url replaceOccurrencesOfString:@"{height}" withString:@"256" options:0 range:NSMakeRange(0, url.length)];
 		[url replaceOccurrencesOfString:@"{proj}" 	withString:projection options:0 range:NSMakeRange(0, url.length)];
@@ -385,6 +391,7 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		[url replaceOccurrencesOfString:@"{-y}" withString:negY options:0 range:NSMakeRange(0,url.length)];
 		[url replaceOccurrencesOfString:@"{z}" withString:z options:0 range:NSMakeRange(0,url.length)];
 	}
+	NSLog(@"%@ = %@",projection,url);
 
 	return [url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
 }
@@ -481,6 +488,7 @@ typedef enum {
 
 			// fetch image from server
 			NSString * url = [self urlForZoom:zoomLevel	tileX:tileModX tileY:tileModY];
+			NSLog(@"%@",url);
 			[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:NO completion:^(NSData * data,NSError * error) {
 
 				NSImage * image = nil;
