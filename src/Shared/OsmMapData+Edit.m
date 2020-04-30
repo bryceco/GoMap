@@ -1070,24 +1070,32 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	}
 
 	NSArray<OsmWay *> * ways = [self waysContainingNode:selectedNode];
-	OsmWay * otherWay = nil;
+	NSMutableArray * otherWays = [NSMutableArray new];
+	NSMutableArray * otherMatchingTags = [NSMutableArray new];
 	for ( OsmWay * way in ways ) {
 		if ( way == selectedWay )
 			continue;
 		if ( way.nodes[0] == selectedNode || way.nodes.lastObject == selectedNode ) {
-			if ( otherWay ) {
-				// ambigious connection
-				*error = NSLocalizedString(@"The target way is ambiguous",nil);
-				return nil;
+			if ( [way.tags isEqualToDictionary:selectedWay.tags] ) {
+				[otherMatchingTags addObject:way];
+			} else {
+				[otherWays addObject:way];
 			}
-			otherWay = way;
 		}
 	}
-	if ( otherWay == nil ) {
+	if ( otherMatchingTags.count ) {
+		otherWays = otherMatchingTags;
+	}
+	if ( otherWays.count > 1 ) {
+		// ambigious connection
+		*error = NSLocalizedString(@"The target way is ambiguous",nil);
+		return nil;
+	} else if ( otherWays.count == 0 ) {
 		*error = NSLocalizedString(@"Missing way to connect to",nil);
 		return nil;
 	}
 
+	OsmWay * otherWay = otherWays.firstObject;
 	NSMutableSet * relations = [NSMutableSet setWithArray:selectedWay.parentRelations];
 	[relations intersectSet:[NSSet setWithArray:otherWay.parentRelations]];
 	for ( OsmRelation * relation in relations ) {
