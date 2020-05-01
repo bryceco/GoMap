@@ -433,16 +433,19 @@ const CGFloat kEditControlCornerRadius = 4;
 		self.screenFromMapTransform = t;
 		__block CGFloat angle = 1.5*M_PI;
 		__weak MapView * weakSelf = self;
+		__block CFTimeInterval prev = CACurrentMediaTime();
 		[displayLink addName:NAME block:^{
+			CFTimeInterval delta = CACurrentMediaTime() - prev;
 			// circle
 			CGFloat x1 = cos(angle);
 			CGFloat y1 = sin(angle);
-			angle += M_PI/60;
+			angle += M_PI * delta;
 			CGFloat x2 = cos(angle);
 			CGFloat y2 = sin(angle);
 			CGFloat dx = (x2 - x1) * 100;
 			CGFloat dy = (y2 - y1) * 100;
 			[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
+			prev = CACurrentMediaTime();
 		}];
 	} else {
 		self.fpsLabel.showFPS = NO;
