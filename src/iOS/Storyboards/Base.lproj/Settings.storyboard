@@ -8,10 +8,26 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="ETC-It-CVX">
+            <objects>
+                <navigationController storyboardIdentifier="SettingsViewController" id="gJ9-uY-RwT" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="393-ep-ucc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="dn9-E8-wB3" kind="relationship" relationship="rootViewController" id="gBx-Ky-dBL"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RoJ-Xu-EqZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="146" y="789"/>
+        </scene>
         <!--Settings-->
         <scene sceneID="mHT-hb-82h">
             <objects>
-                <tableViewController storyboardIdentifier="SettingsViewController" modalTransitionStyle="partialCurl" id="dn9-E8-wB3" customClass="SettingsViewController" sceneMemberID="viewController">
+                <tableViewController id="dn9-E8-wB3" customClass="SettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="GH2-oq-Ngh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -430,7 +446,7 @@ http://glyphish.com
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8R-Of-HLg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="148" y="1676"/>
+            <point key="canvasLocation" x="126" y="2391"/>
         </scene>
         <!--Prepare for Offline-->
         <scene sceneID="GPb-Zw-mXf">
@@ -880,7 +896,7 @@ http://glyphish.com
                 </tableViewCell>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hQB-Ra-u3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="126" y="789"/>
+            <point key="canvasLocation" x="58" y="1675"/>
         </scene>
     </scenes>
 </document>

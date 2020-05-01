@@ -254,7 +254,7 @@
 
 		CommonPresetKey 	* presetKey	= rowObject;
 		NSString * key = presetKey.tagKey;
-		NSString * cellName = key == nil || [key isEqualToString:@"name"] ? @"CommonTagType" : @"CommonTagSingle";
+		NSString * cellName = key == nil ? @"CommonTagType" : [key isEqualToString:@"name"] ? @"CommonTagName" : @"CommonTagSingle";
 
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:cellName forIndexPath:indexPath];
 		cell.nameLabel.text = presetKey.name;

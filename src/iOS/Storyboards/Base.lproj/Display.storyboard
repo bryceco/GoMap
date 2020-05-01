@@ -1098,10 +1098,26 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             </objects>
             <point key="canvasLocation" x="-2968" y="1685"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="O7x-MG-6Ue">
+            <objects>
+                <navigationController storyboardIdentifier="DisplayViewController" id="3il-wo-nAN" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="DisplayViewController" insetsLayoutMarginsFromSafeArea="NO" id="6od-EN-7Ax">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="UfZ-fJ-hyB" kind="relationship" relationship="rootViewController" id="EEa-oU-hid"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XEh-O3-wcm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5004" y="558"/>
+        </scene>
         <!--Display-->
         <scene sceneID="6Mc-SX-nIf">
             <objects>
-                <tableViewController storyboardIdentifier="DisplayViewController" modalTransitionStyle="partialCurl" id="UfZ-fJ-hyB" customClass="DisplayViewController" sceneMemberID="viewController">
+                <tableViewController id="UfZ-fJ-hyB" customClass="DisplayViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="BGf-jB-aPS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

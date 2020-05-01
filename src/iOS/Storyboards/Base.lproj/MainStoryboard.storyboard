@@ -60,7 +60,7 @@
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="mpB-2g-Apf"/>
                                             <barButtonItem image="1200-file-type-settings-toolbar.png" style="plain" id="npa-P4-nL0" userLabel="Settings Button">
                                                 <connections>
-                                                    <segue destination="RAU-rp-HqB" kind="push" id="PyF-kU-QQE"/>
+                                                    <segue destination="RAU-rp-HqB" kind="modal" id="PyF-kU-QQE"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="gKC-Gr-cf8"/>
@@ -72,7 +72,7 @@
                                             <barButtonItem systemItem="flexibleSpace" id="4kg-8e-lu7"/>
                                             <barButtonItem image="852-map-toolbar.png" style="plain" id="43k-EH-kfB" userLabel="Display Button">
                                                 <connections>
-                                                    <segue destination="VRD-TY-VqB" kind="push" id="e6o-7n-OaV"/>
+                                                    <segue destination="VRD-TY-VqB" kind="modal" id="e6o-7n-OaV"/>
                                                 </connections>
                                             </barButtonItem>
                                         </items>
