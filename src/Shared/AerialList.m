@@ -26,6 +26,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 @implementation AerialService
 
+@synthesize placeholderImage = _placeholderImage;
+
 -(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url
 					maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
 				  startDate:(NSString *)startDate
@@ -323,14 +325,26 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 }
 -(NSData *)placeholderImage
 {
-	if ( self.isBingAerial ) {
-		static NSData * data;
-		static dispatch_once_t onceToken;
-		dispatch_once(&onceToken, ^{
-			data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"BingPlaceholderImage" ofType:@"png"]];
-		});
-		return data;
+	if ( _placeholderImage ) {
+		return _placeholderImage.length ? _placeholderImage : nil;
 	}
+	NSString * name = nil;
+	if ( self.isBingAerial ) {
+		name = @"BingPlaceholderImage";
+	} else if ( [_identifier isEqualToString:@"EsriWorldImagery"] ) {
+		name = @"EsriPlaceholderImage";
+	}
+	if ( name ) {
+		NSString * path = [[NSBundle mainBundle] pathForResource:name ofType:@"png"];
+		if ( path == nil )
+			path = [[NSBundle mainBundle] pathForResource:name ofType:@"jpg"];
+		NSData * data = [NSData dataWithContentsOfFile:path];
+		if ( data.length ) {
+			_placeholderImage = data;
+			return _placeholderImage;
+		}
+	}
+	_placeholderImage = [NSData new];
 	return nil;
 }
 

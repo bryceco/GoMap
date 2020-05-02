@@ -92,6 +92,7 @@
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */; };
 		02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */; };
+		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED98D168BF87200357B94 /* NearbyMappersViewController.m */; };
 		02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99B168CBC5400357B94 /* LocationBallLayer.m */; };
 		02BED99F168D102700357B94 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99E168D102600357B94 /* OfflineViewController.m */; };
@@ -319,6 +320,7 @@
 		02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HtmlAlertViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LanguageTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LanguageTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = ../Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "Go Map!!/Go Map!!.entitlements"; sourceTree = "<group>"; };
 		02BED98C168BF87100357B94 /* NearbyMappersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyMappersViewController.h; sourceTree = "<group>"; };
@@ -660,6 +662,7 @@
 			isa = PBXGroup;
 			children = (
 				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
+				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
 				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
 				02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */,
 				023B892A19C148790060CDB5 /* Images.xcassets */,
@@ -988,22 +991,23 @@
 			files = (
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
+				02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */,
 				02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */,
+				02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */,
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
 				02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */,
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
 				0291D8392442815100F793BE /* Settings.storyboard in Resources */,
 				64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */,
+				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
+				02A229E824454838000DA9F4 /* Changeset.storyboard in Resources */,
+				0291D83C24428CBB00F793BE /* POI.storyboard in Resources */,
+				024AB08D240C86FF004A3B5B /* Font Awesome Icons.xcassets in Resources */,
+				027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */,
 				024AB090240C9202004A3B5B /* TNP Icons.xcassets in Resources */,
 				024AB08B240C80FD004A3B5B /* Temaki Icons.xcassets in Resources */,
 				027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */,
-				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
-				02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */,
-				02A229E824454838000DA9F4 /* Changeset.storyboard in Resources */,
-				024AB08D240C86FF004A3B5B /* Font Awesome Icons.xcassets in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
-				027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */,
-				0291D83C24428CBB00F793BE /* POI.storyboard in Resources */,
 				02ACBCFD16713F2B00BB4414 /* RenderInfo.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
