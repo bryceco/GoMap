@@ -32,10 +32,7 @@
 {
 	[super viewWillAppear:animated];
 
-	if ( [self isMovingToParentViewController] ) {
-		// becoming visible the first time
-		self.navigationController.navigationBarHidden = NO;
-	}
+	self.navigationController.navigationBarHidden = NO;
 
 	PresetLanguages * presetLanguages = [PresetLanguages new];
 	NSString * preferredLanguageCode = presetLanguages.preferredLanguageCode;

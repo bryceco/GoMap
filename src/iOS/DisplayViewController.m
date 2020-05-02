@@ -54,21 +54,18 @@ static const NSInteger CACHE_SECTION			= 3;
 
 	MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
 
-	if ( [self isMovingToParentViewController] ) {
-		// becoming visible the first time
-		self.navigationController.navigationBarHidden = NO;
+	// becoming visible the first time
+	self.navigationController.navigationBarHidden = NO;
 
-		_notesSwitch.on				= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
-		_gpsTraceSwitch.on			= !mapView.gpsTraceLayer.hidden;
+	_notesSwitch.on				= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
+	_gpsTraceSwitch.on			= !mapView.gpsTraceLayer.hidden;
 
-		_birdsEyeSwitch.on			= mapView.enableBirdsEye;
-		_rotationSwitch.on			= mapView.enableRotation;
-		_unnamedRoadSwitch.on		= mapView.enableUnnamedRoadHalo;
-		_gpxLoggingSwitch.on		= mapView.enableGpxLogging;
-		_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
-		_objectFiltersSwitch.on		= mapView.editorLayer.enableObjectFilters;
-
-	}
+	_birdsEyeSwitch.on			= mapView.enableBirdsEye;
+	_rotationSwitch.on			= mapView.enableRotation;
+	_unnamedRoadSwitch.on		= mapView.enableUnnamedRoadHalo;
+	_gpxLoggingSwitch.on		= mapView.enableGpxLogging;
+	_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
+	_objectFiltersSwitch.on		= mapView.editorLayer.enableObjectFilters;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
