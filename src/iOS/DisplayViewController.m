@@ -123,10 +123,7 @@ static const NSInteger CACHE_SECTION			= 3;
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-
-	if ( [self isMovingFromParentViewController] ) {
-		[self applyChanges];
-	}
+	[self applyChanges];
 }
 
 - (IBAction)onDone:(id)sender
@@ -158,7 +155,7 @@ static const NSInteger CACHE_SECTION			= 3;
 
 	// automatically dismiss settings when a new background is selected
 	if ( indexPath.section == BACKGROUND_SECTION ) {
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self onDone:nil];
 	}
 }
 
