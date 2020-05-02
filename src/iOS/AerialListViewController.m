@@ -196,7 +196,7 @@
 
 	// if popping all the way up we need to tell Settings to save changes
 	[self.displayViewController applyChanges];
-	[self.navigationController popToRootViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

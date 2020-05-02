@@ -119,7 +119,7 @@ enum {
 			[appDelegate.mapView.gpsTraceLayer purgeTileCache];
 			break;
 	}
-	[self.navigationController popToRootViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
