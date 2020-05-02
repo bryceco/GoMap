@@ -1106,6 +1106,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbm-5N-YoL">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="UfZ-fJ-hyB" kind="relationship" relationship="rootViewController" id="EEa-oU-hid"/>
                     </connections>
@@ -1489,7 +1492,13 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             <outlet property="delegate" destination="UfZ-fJ-hyB" id="adF-6Y-749"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Display" id="186-0W-Nrr"/>
+                    <navigationItem key="navigationItem" title="Display" id="186-0W-Nrr">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="6KG-zz-i4a">
+                            <connections>
+                                <action selector="onDone:" destination="UfZ-fJ-hyB" id="nQi-WM-gLE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="_birdsEyeSwitch" destination="IuS-7H-TV3" id="qn2-l1-Fvx"/>

@@ -129,6 +129,10 @@ static const NSInteger CACHE_SECTION			= 3;
 	}
 }
 
+- (IBAction)onDone:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

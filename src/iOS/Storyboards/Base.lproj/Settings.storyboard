@@ -189,7 +189,13 @@
                             <outlet property="delegate" destination="dn9-E8-wB3" id="mbf-DM-oPt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="AHZ-L8-yUA"/>
+                    <navigationItem key="navigationItem" title="Settings" id="AHZ-L8-yUA">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="2I9-n5-uzU">
+                            <connections>
+                                <action selector="onDone:" destination="dn9-E8-wB3" id="mip-8z-277"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="_language" destination="6Lj-wh-z9f" id="SZv-Dk-7jl"/>

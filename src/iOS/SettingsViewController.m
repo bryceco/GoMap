@@ -68,6 +68,11 @@
 {
 }
 
+- (IBAction)onDone:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
