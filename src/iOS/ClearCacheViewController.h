@@ -10,12 +10,6 @@
 
 @interface ClearCacheViewController : UITableViewController <UIAlertViewDelegate>
 {
-	IBOutlet UILabel *	_osmDetail;
-	IBOutlet UILabel *	_aerialDetail;
-	IBOutlet UILabel *	_mapnikDetail;
-	IBOutlet UILabel *	_breadcrumbDetail;
-	IBOutlet UILabel *	_locatorDetail;
-	IBOutlet UILabel *	_gpsTraceDetail;
 	IBOutlet UISwitch *	_automaticCacheManagement;
 }
 @end

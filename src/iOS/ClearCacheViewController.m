@@ -15,16 +15,22 @@
 #import "OsmMapData.h"
 
 
+@interface ClearCacheCell : UITableViewCell
+@property (assign) IBOutlet UILabel * titleLabel;
+@property (assign) IBOutlet UILabel * detailLabel;
+@end
+@implementation ClearCacheCell
+@end
+
 
 
 @implementation ClearCacheViewController
 
-
 enum {
 	ROW_OSM_DATA	= 0,
 	ROW_MAPNIK		= 1,
-	ROW_BREADCRUMB	= 2,
-	ROW_AERIAL		= 3,
+	ROW_AERIAL		= 2,
+	ROW_BREADCRUMB	= 3,
 	ROW_LOCATOR		= 4,
 	ROW_GPS			= 5
 };
@@ -32,37 +38,51 @@ enum {
 
 #pragma mark - Table view data source
 
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+
+	self.tableView.rowHeight = UITableViewAutomaticDimension;
+	self.tableView.estimatedRowHeight = 44;
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	_automaticCacheManagement.on = appDelegate.mapView.enableAutomaticCacheManagement;
 
-	NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
-	_osmDetail.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
-
 	NSArray * layers = @[
-						 @[ _aerialDetail, appDelegate.mapView.aerialLayer ],
-						 @[ _mapnikDetail, appDelegate.mapView.mapnikLayer ],
-						 @[ _breadcrumbDetail, appDelegate.mapView.gpxLayer ],
-						 @[ _locatorDetail, appDelegate.mapView.locatorLayer ],
-						 @[ _gpsTraceDetail, appDelegate.mapView.gpsTraceLayer ]
+						 @[ NSLocalizedString(@"Clear OSM Data",nil),					@(ROW_OSM_DATA),	[NSNull null] ],
+						 @[ NSLocalizedString(@"Clear Mapnik Tiles",nil),				@(ROW_MAPNIK), 		appDelegate.mapView.mapnikLayer ],
+						 @[ NSLocalizedString(@"Clear GPX Tracks",nil),					@(ROW_BREADCRUMB), 	appDelegate.mapView.gpxLayer ],
+						 @[ NSLocalizedString(@"Clear Aerial Tiles",nil),				@(ROW_AERIAL), 		appDelegate.mapView.aerialLayer ],
+						 @[ NSLocalizedString(@"Clear Locator Overlay Tiles",nil),		@(ROW_LOCATOR),		appDelegate.mapView.locatorLayer ],
+						 @[ NSLocalizedString(@"Clear GPS Overlay Tiles",nil),			@(ROW_GPS),			appDelegate.mapView.gpsTraceLayer ]
 					];
 
-	for ( NSArray * a in layers ) {
-		UILabel				*	label = a[0];
-		MercatorTileLayer	*	layer = a[1];
-		label.text = NSLocalizedString(@"computing size...",nil);
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			NSInteger size, count;
-			[layer diskCacheSize:&size count:&count];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				label.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %d files",nil), (double)size/(1024*1024), count];
+	for ( NSArray * layerInfo in layers ) {
+		NSString	* title = layerInfo[0];
+		NSNumber	* row   = layerInfo[1];
+		NSObject	* object = layerInfo[2];
+
+		ClearCacheCell 	* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row.integerValue inSection:1]];
+
+		cell.titleLabel.text = title;
+		cell.detailLabel.text = @"";
+
+		if ( row.integerValue == ROW_OSM_DATA ) {
+			NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
+			cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
+		} else {
+			cell.detailLabel.text = NSLocalizedString(@"computing size...",nil);
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+				NSInteger size, count;
+				[(id)object diskCacheSize:&size count:&count];
+				dispatch_async(dispatch_get_main_queue(), ^{
+					cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %d files",nil), (double)size/(1024*1024), count];
+				});
 			});
-		});
+		}
 	}
 }
 
