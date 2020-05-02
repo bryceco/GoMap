@@ -100,24 +100,16 @@ static NSInteger			mostRecentMaximum;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UIColor *regularColor, *suggestionColor;
-	if ( @available(iOS 13.0, *) ) {
-		regularColor 	= [UIColor systemBackgroundColor];
-		suggestionColor = [UIColor secondarySystemBackgroundColor];
-	} else {
-		regularColor	= [UIColor whiteColor];
-		suggestionColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
-	}
+	NSString * brand = @"☆ ";
 
 	if ( _searchArrayAll ) {
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		CommonPresetFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
-		cell.textLabel.text			= feature.friendlyName;
+		cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
 		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [cell.imageView setupTintColorForDarkMode];
 		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 		cell.detailTextLabel.text	= feature.summary;
-		cell.backgroundColor		= feature.suggestion ? suggestionColor : regularColor;
 		return cell;
 	}
 
@@ -125,13 +117,13 @@ static NSInteger			mostRecentMaximum;
 		// most recents
 		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 		CommonPresetFeature * feature = mostRecentArray[ indexPath.row ];
-		cell.textLabel.text			= feature.friendlyName;
+		cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
+		cell.textLabel.text			= feature.suggestion ? [feature.friendlyName stringByAppendingString:brand] : feature.friendlyName;
 		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [cell.imageView setupTintColorForDarkMode];
 		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 		cell.detailTextLabel.text	= feature.summary;
 		cell.accessoryType			= UITableViewCellAccessoryNone;
-		cell.backgroundColor		= feature.suggestion ? suggestionColor : regularColor;
 		return cell;
 	} else {
 		// type array
@@ -144,12 +136,11 @@ static NSInteger			mostRecentMaximum;
 		} else {
 			CommonPresetFeature * feature = tagInfo;
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-			cell.textLabel.text			= feature.friendlyName;
+			cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
 			cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             [cell.imageView setupTintColorForDarkMode];
 			cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 			cell.detailTextLabel.text	= feature.summary;
-			cell.backgroundColor		= regularColor;
 
 			POITabBarController * tabController = (id)self.tabBarController;
 			NSString * geometry = [self currentSelectionGeometry];
