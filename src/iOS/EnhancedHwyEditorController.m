@@ -122,7 +122,7 @@ typedef enum {
         }
     }
 
-    if ( ![_keyValueDict objectForKey:@"oneway"]){
+    if ( ![_keyValueDict objectForKey:@"on eway"]){
         _onewayState = EMPTY;
     } else {
         _onewayState = (ONEWAY_STATES)_selectedWay.isOneWay;
