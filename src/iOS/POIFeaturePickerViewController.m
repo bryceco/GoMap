@@ -100,31 +100,12 @@ static NSInteger			mostRecentMaximum;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString * brand = @"☆ ";
-
+	CommonPresetFeature * feature = nil;
 	if ( _searchArrayAll ) {
-		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-		CommonPresetFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
-		cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
-		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        [cell.imageView setupTintColorForDarkMode];
-		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
-		cell.detailTextLabel.text	= feature.summary;
-		return cell;
-	}
-
-	if ( _isTopLevel && indexPath.section == 0 ) {
+		feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+	} else if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
-		UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-		CommonPresetFeature * feature = mostRecentArray[ indexPath.row ];
-		cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
-		cell.textLabel.text			= feature.suggestion ? [feature.friendlyName stringByAppendingString:brand] : feature.friendlyName;
-		cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        [cell.imageView setupTintColorForDarkMode];
-		cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
-		cell.detailTextLabel.text	= feature.summary;
-		cell.accessoryType			= UITableViewCellAccessoryNone;
-		return cell;
+		feature = mostRecentArray[ indexPath.row ];
 	} else {
 		// type array
 		id tagInfo = _typeArray[ indexPath.row ];
@@ -134,22 +115,22 @@ static NSInteger			mostRecentMaximum;
 			cell.textLabel.text = category.friendlyName;
 			return cell;
 		} else {
-			CommonPresetFeature * feature = tagInfo;
-			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-			cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
-			cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            [cell.imageView setupTintColorForDarkMode];
-			cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
-			cell.detailTextLabel.text	= feature.summary;
-
-			POITabBarController * tabController = (id)self.tabBarController;
-			NSString * geometry = [self currentSelectionGeometry];
-			NSString * currentFeature = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-			BOOL selected = [currentFeature isEqualToString:feature.featureName];
-			cell.accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-			return cell;
+			feature = tagInfo;
 		}
 	}
+
+	NSString * brand = @"☆ ";
+	POITabBarController * tabController = (id)self.tabBarController;
+	NSString * geometry = [self currentSelectionGeometry];
+	NSString * currentFeature = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+	UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
+	cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
+	cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	[cell.imageView setupTintColorForDarkMode];
+	cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
+	cell.detailTextLabel.text	= feature.summary;
+	cell.accessoryType = [currentFeature isEqualToString:feature.featureName] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	return cell;
 }
 
 +(void)updateMostRecentArrayWithSelection:(CommonPresetFeature *)feature geometry:(NSString *)geometry
