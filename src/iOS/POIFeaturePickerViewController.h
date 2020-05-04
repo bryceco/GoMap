@@ -24,7 +24,7 @@
 	IBOutlet UISearchBar    *	_searchBar;
 	BOOL						_isTopLevel;
 }
-@property (strong,nonatomic) CommonPresetCategory					*	parentCategory;
+@property (strong,nonatomic) CommonPresetCategory				*	parentCategory;
 @property (assign,nonatomic) id<POITypeViewControllerDelegate>		delegate;
 
 -(IBAction)back:(id)sender;

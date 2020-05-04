@@ -10,6 +10,7 @@
 #import "CommonPresetList.h"
 #import "POITabBarController.h"
 #import "POIFeaturePickerViewController.h"
+#import "PersistentWebCache.h"
 
 
 static const NSInteger MOST_RECENT_DEFAULT_COUNT = 5;
@@ -19,6 +20,8 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 static NSMutableArray	*	mostRecentArray;
 static NSInteger			mostRecentMaximum;
+
+static PersistentWebCache * logoCache;	// static so memory cache persists each time we appear
 
 
 +(void)loadMostRecentForGeometry:(NSString *)geometry
@@ -51,6 +54,10 @@ static NSInteger			mostRecentMaximum;
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
+	if ( logoCache == nil ) {
+		logoCache = [[PersistentWebCache alloc] initWithName:@"presetLogoCache" memorySize:5*1000000];
+	}
 
 	self.tableView.estimatedRowHeight = 44.0; // or could use UITableViewAutomaticDimension;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -121,30 +128,25 @@ static NSInteger			mostRecentMaximum;
 
 	if ( feature.suggestion && feature.logoImage == nil && feature.logoURL ) {
 		feature.logoImage = feature.icon;
-		dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
-			NSURL * url = [NSURL URLWithString:feature.logoURL];
-			NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:url
-																	cachePolicy:NSURLRequestReturnCacheDataElseLoad
-																timeoutInterval:60];
-			if (@available(iOS 13.0, *)) {
-				request.allowsConstrainedNetworkAccess = NO;
-			}
 
-			NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
-				if ( data ) {
-					UIImage * image = [[UIImage alloc] initWithData:data];
-					if ( image ) {
-						extern UIImage * IconScaledForDisplay(UIImage *icon);
-						image = IconScaledForDisplay(image);
-						dispatch_async(dispatch_get_main_queue(), ^{
-							feature.logoImage = image;
-							[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-						});
-					}
-				}
+		void(^completion)(UIImage * image) = ^(UIImage * image){
+			extern UIImage * IconScaledForDisplay(UIImage *icon);
+			image = IconScaledForDisplay(image);
+			dispatch_async(dispatch_get_main_queue(), ^{
+				feature.logoImage = image;
+				[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+			});
+		};
+		UIImage * logo = [logoCache objectWithKey:feature.featureName
+			fallbackURL:^{
+				return feature.logoURL;
+			} objectForData:^id _Nonnull(NSData * data) {
+				return [UIImage imageWithData:data];
+			} completion:^(id image) {
+				completion(image);
 			}];
-			[task resume];
-		});
+		if ( logo )
+			completion(logo);
 	}
 
 	NSString * brand = @"☆ ";

@@ -13,9 +13,16 @@
 
 @implementation PersistentWebCache
 
++(NSString *)filesystemRepresentation:(NSString *)string
+{
+	string = [string stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+	string = [string stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+	return string;
+}
+
 -(instancetype)initWithName:(NSString *)name memorySize:(NSInteger)memorySize
 {
-	name = [name stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+	name = [PersistentWebCache filesystemRepresentation:name];
 
 	_memoryCache = [NSCache new];
 	_memoryCache.countLimit = 10000;
@@ -58,9 +65,6 @@
 			NSDate * date = [NSDate dateWithTimeIntervalSince1970:status.st_mtimespec.tv_sec];
 			if ( [date compare:expiration] < 0 ) {
 				[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[_memoryCache removeObjectForKey:file];
-				});
 			}
 		}
 	});
@@ -117,7 +121,8 @@
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
 
 		// check disk cache
-		NSString * filePath = [_cacheDirectory stringByAppendingPathComponent:cacheKey];
+		NSString * fileName = [PersistentWebCache filesystemRepresentation:cacheKey];
+		NSString * filePath = [_cacheDirectory stringByAppendingPathComponent:fileName];
 		NSData * fileData = [[NSData alloc] initWithContentsOfFile:filePath];
 		if ( fileData ) {
 			gotData( fileData );
