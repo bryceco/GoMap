@@ -104,7 +104,7 @@
 	}
 	_pending[cacheKey] = [NSMutableArray arrayWithObject:completion];
 
-	void (^gotData)(NSData * data) = ^(NSData * data){
+	BOOL (^gotData)(NSData * data) = ^BOOL(NSData * data){
 		id obj = objectForData ? objectForData(data) : data;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			if ( obj ) {
@@ -116,10 +116,10 @@
 			}
 			[_pending removeObjectForKey:cacheKey];
 		});
+		return obj != nil;
 	};
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
-
 		// check disk cache
 		NSString * fileName = [PersistentWebCache filesystemRepresentation:cacheKey];
 		NSString * filePath = [_cacheDirectory stringByAppendingPathComponent:fileName];
@@ -131,10 +131,11 @@
 			NSURL * url = [NSURL URLWithString:urlFunction()];
 			NSURLRequest * request = [NSURLRequest requestWithURL:url];
 			NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
-				gotData(data);
-				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-					[data writeToFile:filePath atomically:YES];
-				});
+				if ( gotData(data) ) {
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+						[data writeToFile:filePath atomically:YES];
+					});
+				}
 			}];
 			[task resume];
 		}
