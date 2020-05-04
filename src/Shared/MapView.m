@@ -638,7 +638,7 @@ const CGFloat kEditControlCornerRadius = 4;
 	[self.viewController presentViewController:alertError animated:YES completion:nil];
 }
 
--(NSAttributedString *)htmlAsAttributedString:(NSString *)html textColor:(UIColor *)textColor
+-(NSAttributedString *)htmlAsAttributedString:(NSString *)html textColor:(UIColor *)textColor backgroundColor:(UIColor *)backColor
 {
 	if ( [html hasPrefix:@"<"] ) {
 		NSDictionary<NSAttributedStringDocumentReadingOptionKey,id> * d1 = @{
@@ -653,6 +653,7 @@ const CGFloat kEditControlCornerRadius = 4;
 			NSMutableAttributedString * s = [[NSMutableAttributedString alloc] initWithAttributedString:attrText];
 			// change text color
 			[s addAttribute:NSForegroundColorAttributeName value:textColor range:NSMakeRange(0, s.length)];
+			[s addAttribute:NSBackgroundColorAttributeName value:backColor range:NSMakeRange(0, s.length)];
 			// center align
 			NSMutableParagraphStyle * paragraphStyle = [NSMutableParagraphStyle new];
 			paragraphStyle.alignment = NSTextAlignmentCenter;
@@ -691,7 +692,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		[_flashLabel.centerXAnchor	constraintEqualToAnchor:self.centerXAnchor].active = YES;
 	}
 
-	NSAttributedString * attrText = [self htmlAsAttributedString:message textColor:UIColor.whiteColor];
+	NSAttributedString * attrText = [self htmlAsAttributedString:message textColor:UIColor.whiteColor backgroundColor:UIColor.blackColor];
 	if ( attrText.length > 0 ) {
 		_flashLabel.attributedText = attrText;
 	} else {
@@ -772,7 +773,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		if ( flash ) {
 			[self flashMessage:text duration:0.9];
 		} else {
-			NSAttributedString * attrText = [self htmlAsAttributedString:text textColor:UIColor.blackColor];
+			NSAttributedString * attrText = [self htmlAsAttributedString:text textColor:UIColor.blackColor backgroundColor:UIColor.whiteColor];
 			UIAlertController * alertError = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:UIAlertControllerStyleAlert];
 			if ( attrText ) {
 				[alertError setValue:attrText forKey:@"attributedMessage"];
