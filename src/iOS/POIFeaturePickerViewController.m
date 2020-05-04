@@ -119,13 +119,43 @@ static NSInteger			mostRecentMaximum;
 		}
 	}
 
+	if ( feature.suggestion && feature.logoImage == nil && feature.logoURL ) {
+		feature.logoImage = feature.icon;
+		dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+			NSURL * url = [NSURL URLWithString:feature.logoURL];
+			NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:url
+																	cachePolicy:NSURLRequestReturnCacheDataElseLoad
+																timeoutInterval:60];
+			if (@available(iOS 13.0, *)) {
+				request.allowsConstrainedNetworkAccess = NO;
+			}
+
+			NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
+				if ( data ) {
+					UIImage * image = [[UIImage alloc] initWithData:data];
+					if ( image ) {
+						extern UIImage * IconScaledForDisplay(UIImage *icon);
+						image = IconScaledForDisplay(image);
+						dispatch_async(dispatch_get_main_queue(), ^{
+							feature.logoImage = image;
+							[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+						});
+					}
+				}
+			}];
+			[task resume];
+		});
+	}
+
 	NSString * brand = @"☆ ";
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = [self currentSelectionGeometry];
 	NSString * currentFeature = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
 	UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 	cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
-	cell.imageView.image		= [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	cell.imageView.image		= feature.logoImage && feature.logoImage != feature.icon
+									? feature.logoImage
+									: [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	[cell.imageView setupTintColorForDarkMode];
 	cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 	cell.detailTextLabel.text	= feature.summary;
