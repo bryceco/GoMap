@@ -26,7 +26,7 @@ typedef enum {
     FORWARD = 1
 } ONEWAY_STATES;
 typedef enum {
-		EMPTY_LANE = 0, //might need to change
+		EMPTY_LANE = 0,
 		PLUS_CLICKED = +1,
 		NO_LANES = -2,
 		MINUS_CLICKED = -1,
