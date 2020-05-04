@@ -1325,7 +1325,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return (id)[NSNull null];
 }
 
-
 -(UIImage *)icon
 {
 	extern UIImage * IconScaledForDisplay(UIImage *icon);
@@ -1341,6 +1340,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return _icon;
 }
 
+-(NSString *)logoURL
+{
+	return _dict[@"imageURL"];
+}
 
 -(NSArray *)terms
 {
