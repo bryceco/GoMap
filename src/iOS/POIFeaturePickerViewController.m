@@ -143,7 +143,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			} objectForData:^id _Nonnull(NSData * data) {
 				return [UIImage imageWithData:data];
 			} completion:^(id image) {
-				completion(image);
+				if ( image )
+					completion(image);
 			}];
 		if ( logo )
 			completion(logo);
