@@ -127,10 +127,6 @@
 	}
 }
 
-- (void)cache:(NSCache *)cache willEvictObject:(id)obj
-{
-}
-
 -(void)purgeTileCache
 {
 	[_webCache removeAllObjects];
