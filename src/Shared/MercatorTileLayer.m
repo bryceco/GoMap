@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#include <sys/stat.h>
 #import <QuartzCore/QuartzCore.h>
 #include <dirent.h>
 #include <libkern/OSAtomic.h>
@@ -19,6 +18,7 @@
 #import "DownloadThreadPool.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
+#import "PersistentWebCache.h"
 
 
 #define CUSTOM_TRANSFORM 1
@@ -58,15 +58,6 @@
 
 		_layerDict = [NSMutableDictionary dictionary];
 
-		_memoryTileCache = [[NSCache alloc] init];
-		_memoryTileCache.delegate = self;
-#if TARGET_OS_IPHONE
-		_memoryTileCache.totalCostLimit = 20*1000*1000; // 20 MB
-		_memoryTileCache.countLimit = _memoryTileCache.totalCostLimit / 4000;
-#else
-		_memoryTileCache.totalCostLimit = 100*1000*1000; // 100 MB
-#endif
-
 		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 	}
 	return self;
@@ -84,22 +75,12 @@
 
 	// remove previous data
 	self.sublayers = nil;
-	[_memoryTileCache removeAllObjects];
+	_webCache = nil;
 	[_layerDict removeAllObjects];
 
 	// update service
 	_aerialService = service;
-
-	// get tile cache folder
-	_tileCacheDirectory = nil;
-	NSArray *paths = NSSearchPathForDirectoriesInDomains( NSCachesDirectory, NSUserDomainMask, YES );
-	if ( [paths count] ) {
-		NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-		_tileCacheDirectory = [[[paths objectAtIndex:0]
-								stringByAppendingPathComponent:bundleName]
-							   stringByAppendingPathComponent:service.cacheName];
-		[[NSFileManager defaultManager] createDirectoryAtPath:_tileCacheDirectory withIntermediateDirectories:YES attributes:NULL error:NULL];
-	}
+	_webCache = [[PersistentWebCache alloc] initWithName:service.identifier memorySize:20*1000*1000];
 
 	NSDate * expirationDate = [NSDate dateWithTimeIntervalSinceNow:-7*24*60*60];
 	[self purgeOldCacheItemsAsync:expirationDate];
@@ -152,55 +133,22 @@
 
 -(void)purgeTileCache
 {
-	NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_tileCacheDirectory error:NULL];
-	for ( NSString * file in files ) {
-		NSString * path = [_tileCacheDirectory stringByAppendingPathComponent:file];
-		[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
-	}
-	[_memoryTileCache removeAllObjects];
+	[_webCache removeAllObjects];
 	[_layerDict removeAllObjects];
 	self.sublayers = nil;
 	[[NSURLCache sharedURLCache] removeAllCachedResponses];
-	DLog(@"purge");
 	[self setNeedsLayout];
 }
 
 -(void)purgeOldCacheItemsAsync:(NSDate *)expiration
 {
-	NSString * cacheDir = _tileCacheDirectory;
-	if ( cacheDir.length == 0 )
-		return;
-
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-		NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:cacheDir error:NULL];
-		for ( NSString * file in files ) {
-			NSString * path = [cacheDir stringByAppendingPathComponent:file];
-			struct stat status = { 0 };
-			stat( path.UTF8String, &status );
-			NSDate * date = [NSDate dateWithTimeIntervalSince1970:status.st_mtimespec.tv_sec];
-			if ( [date compare:expiration] < 0 ) {
-				[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
-				NSString * key = [file stringByDeletingPathExtension];
-				[_memoryTileCache removeObjectForKey:key];
-			}
-		}
-	});
+	[_webCache removeObjectsAsyncOlderThan:expiration];
 }
 
 -(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
-	NSInteger size = 0;
-	NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_tileCacheDirectory error:NULL];
-	for ( NSString * file in files ) {
-		NSString * path = [_tileCacheDirectory stringByAppendingPathComponent:file];
-		struct stat status = { 0 };
-		stat( path.fileSystemRepresentation, &status );
-		size += (status.st_size + 511) & -512;
-	}
-	*pSize  = size;
-	*pCount = files.count;
+	[_webCache diskCacheSize:pSize count:pCount];
 }
-
 
 -(BOOL)layerOverlapsScreen:(CALayer *)layer
 {
@@ -394,12 +342,6 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 	return [url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
 }
 
-
-typedef enum {
-	DOWNLOAD_STATUS_DISK_FETCH,
-	DOWNLOAD_STATUS_NETWORK_FETCH,
-} DOWNLOAD_STATUS;
-
 -(BOOL)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY
 				 minZoom:(int32_t)minZoom
 			   zoomLevel:(int32_t)zoomLevel
@@ -437,7 +379,63 @@ typedef enum {
 
 	// check memory cache
 	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
-	NSImage * cachedImage = [_memoryTileCache objectForKey:cacheKey];
+	NSImage * cachedImage = [_webCache objectWithKey:cacheKey
+										 fallbackURL:^{ return [self urlForZoom:zoomLevel tileX:tileModX tileY:tileModY]; }
+									   objectForData:^NSObject *(NSData * data) {
+		if ( data.length == 0 || [self isPlaceholderImage:data] )
+			return nil;
+		return [UIImage imageWithData:data];
+	} completion:^(UIImage * image) {
+		if ( image ) {
+			if ( layer.superlayer ) {
+#if TARGET_OS_IPHONE
+				layer.contents = (__bridge id) image.CGImage;
+#else
+				layer.contents = image;
+#endif
+				layer.hidden = NO;
+#if CUSTOM_TRANSFORM
+				[self setSublayerPositions:@{ tileKey : layer }];
+#else
+				OSMRect rc = [_mapView boundingMapRectForScreen];
+				[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
+#endif
+			} else {
+				// no longer needed
+			}
+			if ( completion ) {
+				completion(nil);
+			}
+		} else if ( zoomLevel > minZoom ) {
+			// try to show tile at one zoom level higher
+			dispatch_async(dispatch_get_main_queue(), ^(void){
+				[self fetchTileForTileX:tileX>>1 tileY:tileY>>1
+								minZoom:minZoom
+							  zoomLevel:zoomLevel-1
+							 completion:completion];
+
+			});
+		} else {
+			// report error
+#if 0
+			if ( data ) {
+				id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+				if ( json ) {
+					text = [json description];
+				} else {
+					text = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+				}
+			}
+#endif
+			NSError * error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"No image data available",nil)}];
+			if ( completion ) {
+				dispatch_async(dispatch_get_main_queue(), ^(void){
+					completion(error);
+				});
+			}
+		}
+	}];
+
 	if ( cachedImage ) {
 #if TARGET_OS_IPHONE
 		layer.contents = (__bridge id)cachedImage.CGImage;
@@ -450,123 +448,6 @@ typedef enum {
 		return YES;
 	}
 
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
-
-		// check disk cache
-		NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
-		NSData * fileData = [[NSData alloc] initWithContentsOfFile:cachePath];
-		NSImage * fileImage = fileData ? [[NSImage alloc] initWithData:fileData] : nil;	// force read of data from disk prior to adding image to layer
-		if ( fileImage ) {
-
-			// image is in disk cache
-			dispatch_async(dispatch_get_main_queue(), ^(void) {
-				[_memoryTileCache setObject:fileImage forKey:cacheKey cost:fileData.length];
-				if ( layer.superlayer ) {
-#if TARGET_OS_IPHONE
-					layer.contents = (__bridge id)fileImage.CGImage;
-#else
-					layer.contents = fileImage;
-#endif
-					layer.hidden = NO;
-#if CUSTOM_TRANSFORM
-					[self setSublayerPositions:@{ tileKey : layer }];
-#else
-					OSMRect rc = [_mapView boundingMapRectForScreen];
-					[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
-#endif
-				} else {
-					// layer no longer needed
-				}
-				if ( completion ) {
-					completion(nil);
-				}
-			});
-
-		} else {
-
-			// fetch image from server
-			NSString * url = [self urlForZoom:zoomLevel	tileX:tileModX tileY:tileModY];
-			[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:NO completion:^(NSData * data,NSError * error) {
-
-				NSImage * image = nil;
-				if ( error ) {
-					data = nil;
-				} else if ( [self isPlaceholderImage:data] ) {
-					error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"No image data at current zoom level",nil),
-																								@"Ignorable" : @(YES)}];
-				} else {
-					image = [[NSImage alloc] initWithData:data];
-				}
-
-				if ( image ) {
-
-					dispatch_async(dispatch_get_main_queue(), ^(void){
-						[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
-						if ( layer.superlayer ) {
-#if TARGET_OS_IPHONE
-							layer.contents = (__bridge id) image.CGImage;
-#else
-							layer.contents = image;
-#endif
-							layer.hidden = NO;
-#if CUSTOM_TRANSFORM
-							[self setSublayerPositions:@{ tileKey : layer }];
-#else
-							OSMRect rc = [_mapView boundingMapRectForScreen];
-							[self removeUnneededTilesForRect:rc zoomLevel:zoomLevel];
-#endif
-						} else {
-							// no longer needed
-							[_memoryTileCache setObject:image forKey:cacheKey cost:data.length];
-						}
-						if ( completion ) {
-							completion(nil);
-						}
-					});
-
-					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-						[data writeToFile:cachePath atomically:YES];
-					});
-
-				} else if ( zoomLevel > minZoom ) {
-
-					// try to show tile at one zoom level higher
-					dispatch_async(dispatch_get_main_queue(), ^(void){
-						[self fetchTileForTileX:tileX>>1 tileY:tileY>>1
-								  minZoom:minZoom
-									  zoomLevel:zoomLevel-1
-									 completion:completion];
-					});
-
-				} else {
-					
-					// report error
-					if ( error == nil ) {
-						NSString * text = nil;
-						if ( data ) {
-							id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-							if ( json ) {
-								text = [json description];
-							} else {
-								text = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
-							}
-						}
-						if ( text.length < 5 ) {
-							text = NSLocalizedString(@"No image data available",nil);
-						}
-						error = [NSError errorWithDomain:@"Image" code:100 userInfo:@{NSLocalizedDescriptionKey:text}];
-					}
-
-					if ( completion ) {
-						dispatch_async(dispatch_get_main_queue(), ^(void){
-							completion(error);
-						});
-					}
-				}
-			
-			}];
-		}
-	});
 	return NO;	// not immediately satisfied
 }
 
@@ -663,35 +544,26 @@ typedef enum {
 	OSAtomicDecrement32( &_isPerformingLayout );
 }
 
-
-
 -(void)downloadTileForKey:(NSString *)cacheKey completion:(void(^)(void))completion
 {
 	int tileX, tileY, zoomLevel;
 	QuadKeyToTileXY( cacheKey, &tileX, &tileY, &zoomLevel );
-
-	// fetch image from server
-	NSString * url = [self urlForZoom:zoomLevel	tileX:tileX tileY:tileY];
-	[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:NO completion:^(NSData * data,NSError * error) {
-		if ( data == nil || error || [self isPlaceholderImage:data] ) {
-			// skip
-		} else {
-			NSImage * image = [[NSImage alloc] initWithData:data];
-			if ( image ) {
-				NSString * cachePath = [[_tileCacheDirectory stringByAppendingPathComponent:cacheKey] stringByAppendingPathExtension:@"jpg"];
-				[data writeToFile:cachePath atomically:YES];
-			}
-		}
-		dispatch_async(dispatch_get_main_queue(), ^(void){
-			completion();
-		});
+	NSString * (^url)(void) = ^{ return [self urlForZoom:zoomLevel tileX:tileX tileY:tileY]; };
+	NSData * data2 = [_webCache objectWithKey:cacheKey fallbackURL:url objectForData:^NSObject *(NSData * data) {
+		if ( data.length == 0 || [self isPlaceholderImage:data] )
+			return nil;
+		return data;
+	} completion:^(NSData * data) {
+		completion();
 	}];
+	if ( data2 )
+		completion();
 }
 
 // Used for bulk downloading tiles for offline use
 -(NSMutableArray *)allTilesIntersectingVisibleRect
 {
-	NSArray * currentTiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_tileCacheDirectory error:NULL];
+	NSArray * currentTiles = _webCache.allFiles;
 	NSSet * currentSet = [NSSet setWithArray:currentTiles];
 
 	OSMRect	rect			= [_mapView boundingMapRectForScreen];

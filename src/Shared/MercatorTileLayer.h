@@ -11,12 +11,11 @@
 
 @class AerialService;
 @class MapView;
-
+@class PersistentWebCache;
 
 @interface MercatorTileLayer : CALayer <NSCacheDelegate>
 {
-	NSString						*	_tileCacheDirectory;	// location of tile files
-	NSCache							*	_memoryTileCache;		// cache of tiles kept in memory
+	PersistentWebCache						*	_webCache;
 	NSString						*	_logoUrl;
 
 	NSMutableDictionary				*	_layerDict;				// map of tiles currently displayed

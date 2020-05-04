@@ -305,17 +305,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 }
 
 
--(NSString *)cacheName
-{
-	if ( self.isBingAerial )
-		return @"BingAerialTiles";
-
-	const char *cstr = [_url cStringUsingEncoding:NSUTF8StringEncoding];
-	NSData * data = [NSData dataWithBytes:cstr length:_url.length];
-	uint8_t digest[CC_SHA1_DIGEST_LENGTH];
-	CC_SHA1(data.bytes, (CC_LONG)data.length, digest);
-	return [NSString stringWithFormat:@"%08x", *(uint32_t *)digest];
-}
 -(NSString *)metadataUrl
 {
 	if ( self.isBingAerial ) {
