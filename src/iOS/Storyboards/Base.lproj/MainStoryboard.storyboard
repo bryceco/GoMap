@@ -153,11 +153,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
-                                        <rect key="frame" x="273.5" y="52" width="44" height="44"/>
+                                        <rect key="frame" x="277.5" y="47" width="36" height="36"/>
                                         <accessibility key="accessibilityConfiguration" hint="Reorient map north" identifier="compass_button" label="Compass"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="Umo-8r-F7i"/>
-                                            <constraint firstAttribute="height" constant="44" id="rLd-DR-Gbp"/>
+                                            <constraint firstAttribute="width" constant="36" id="Umo-8r-F7i"/>
+                                            <constraint firstAttribute="height" constant="36" id="rLd-DR-Gbp"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal" image="compass.png"/>
@@ -174,7 +174,7 @@
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="leading" secondItem="fss-Ag-fKJ" secondAttribute="leading" id="3Ky-eD-XUk"/>
                                     <constraint firstItem="GTv-eT-l7q" firstAttribute="bottom" secondItem="4gw-jH-T1o" secondAttribute="bottom" id="9Hd-Fq-OZd"/>
                                     <constraint firstItem="4gw-jH-T1o" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Ka-IT-DQC" secondAttribute="trailing" constant="32" id="Cns-A0-cqV"/>
-                                    <constraint firstItem="E22-sL-sNt" firstAttribute="top" secondItem="TnL-YC-BCg" secondAttribute="bottom" constant="20" id="Ehg-gk-Zac"/>
+                                    <constraint firstItem="E22-sL-sNt" firstAttribute="top" secondItem="TnL-YC-BCg" secondAttribute="bottom" constant="15" id="Ehg-gk-Zac"/>
                                     <constraint firstItem="E22-sL-sNt" firstAttribute="centerX" secondItem="TnL-YC-BCg" secondAttribute="centerX" id="Gub-GY-j0P"/>
                                     <constraint firstItem="9t5-wq-j1u" firstAttribute="centerX" secondItem="GTv-eT-l7q" secondAttribute="centerX" constant="7.5" id="MKk-qF-9MP"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="bottom" secondItem="4gw-jH-T1o" secondAttribute="top" id="N4A-fY-zCd"/>

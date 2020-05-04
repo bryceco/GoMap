@@ -359,9 +359,11 @@ const CGFloat kEditControlCornerRadius = 4;
 	_centerOnGPSButton.hidden = YES;
 
 	// compass button
-	//self.compassButton.hidden = YES;
 	self.compassButton.clipsToBounds = NO;
 	self.compassButton.contentMode = UIViewContentModeCenter;
+	[self.compassButton setImage:nil forState:UIControlStateNormal];
+	CALayer * compass = [self compassLayerWithRadius:self.compassButton.bounds.size.width/2];
+	[self.compassButton.layer addSublayer:compass];
 
 #if 0
 	// Support zoom via tap and drag
@@ -411,7 +413,51 @@ const CGFloat kEditControlCornerRadius = 4;
 	[self updateAerialAttributionButton];
 }
 
-
+-(CALayer *)compassLayerWithRadius:(CGFloat)radius
+{
+	CALayer * compass = [CALayer new];
+	CGFloat width = round(radius/5);
+	compass.bounds = CGRectMake(0, 0, 2*radius, 2*radius);
+	compass.backgroundColor = UIColor.whiteColor.CGColor;
+	compass.borderColor = UIColor.darkGrayColor.CGColor;
+	compass.borderWidth = 1.0;
+	compass.cornerRadius = radius;
+	compass.position = CGPointMake(radius, radius);
+	{
+		CAShapeLayer * north = [CAShapeLayer new];
+		UIBezierPath * path = [UIBezierPath bezierPath];
+		[path moveToPoint:CGPointMake(-width,0)];
+		[path addLineToPoint:CGPointMake(width,0)];
+		[path addLineToPoint:CGPointMake(0,-round(radius*0.9))];
+		[path closePath];
+		north.path = path.CGPath;
+		north.fillColor = UIColor.systemRedColor.CGColor;
+		north.position = CGPointMake(radius, radius);
+		[compass addSublayer:north];
+	}
+	{
+		CAShapeLayer * south = [CAShapeLayer new];
+		UIBezierPath * path = [UIBezierPath bezierPath];
+		[path moveToPoint:CGPointMake(-width,0)];
+		[path addLineToPoint:CGPointMake(width,0)];
+		[path addLineToPoint:CGPointMake(0,round(radius*0.9))];
+		[path closePath];
+		south.path = path.CGPath;
+		south.fillColor = UIColor.lightGrayColor.CGColor;
+		south.position = CGPointMake(radius, radius);
+		[compass addSublayer:south];
+	}
+	{
+		CALayer * pivot = [CALayer new];
+		pivot.bounds = CGRectMake(radius-width/2, radius-width/2, width, width);
+		pivot.backgroundColor = UIColor.whiteColor.CGColor;
+		pivot.borderColor = UIColor.blackColor.CGColor;
+		pivot.cornerRadius = width/2;
+		pivot.position = CGPointMake(radius, radius);
+		[compass addSublayer:pivot];
+	}
+	return compass;
+}
 -(BOOL)automatedFramerateTestActive
 {
 	NSString * NAME = @"autoScroll";
