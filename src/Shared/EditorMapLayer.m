@@ -964,6 +964,8 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 UIImage * IconScaledForDisplay(UIImage *icon)
 {
+	if ( icon == nil )
+		return nil;
 extern const double MinIconSizeInPixels;
 #if TARGET_OS_IPHONE
 	CGFloat uiScaling = [[UIScreen mainScreen] scale];

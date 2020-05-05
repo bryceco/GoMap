@@ -138,8 +138,6 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		feature.logoImage = feature.icon;
 
 		void(^completion)(UIImage * image) = ^(UIImage * image){
-			extern UIImage * IconScaledForDisplay(UIImage *icon);
-			image = IconScaledForDisplay(image);
 			dispatch_async(dispatch_get_main_queue(), ^{
 				feature.logoImage = image;
 				UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -150,7 +148,9 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			fallbackURL:^{
 				return feature.logoURL;
 			} objectForData:^id _Nonnull(NSData * data) {
-				return [UIImage imageWithData:data];
+				extern UIImage * IconScaledForDisplay(UIImage *icon);
+				UIImage * image = [UIImage imageWithData:data];
+				return IconScaledForDisplay(image);
 			} completion:^(id image) {
 				if ( image )
 					completion(image);
