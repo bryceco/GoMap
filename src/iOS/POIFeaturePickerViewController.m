@@ -70,9 +70,9 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	if ( _parentCategory == nil ) {
 		_isTopLevel = YES;
-		_typeArray = [CommonPresetList featuresForGeometry:geometry];
+		_featureList = [CommonPresetList featuresForGeometry:geometry];
 	} else {
-		_typeArray = _parentCategory.members;
+		_featureList = _parentCategory.members;
 	}
 }
 
@@ -100,7 +100,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			NSInteger count = mostRecentArray.count;
 			return count < mostRecentMaximum ? count : mostRecentMaximum;
 		} else {
-			return _typeArray.count;
+			return _featureList.count;
 		}
 	}
 }
@@ -115,7 +115,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		feature = mostRecentArray[ indexPath.row ];
 	} else {
 		// type array
-		id tagInfo = _typeArray[ indexPath.row ];
+		id tagInfo = _featureList[ indexPath.row ];
 		if ( [tagInfo isKindOfClass:[CommonPresetCategory class]] ) {
 			CommonPresetCategory * category = tagInfo;
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SubCell" forIndexPath:indexPath];
@@ -134,7 +134,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			image = IconScaledForDisplay(image);
 			dispatch_async(dispatch_get_main_queue(), ^{
 				feature.logoImage = image;
-				[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+				UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+				cell.imageView.image = image;
 			});
 		};
 		UIImage * logo = [logoCache objectWithKey:feature.featureName
@@ -146,8 +147,9 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 				if ( image )
 					completion(image);
 			}];
-		if ( logo )
-			completion(logo);
+		if ( logo ) {
+			feature.logoImage = logo;
+		}
 	}
 
 	NSString * brand = @"☆ ";
@@ -207,7 +209,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else {
 		// type list
-		id entry = _typeArray[ indexPath.row ];
+		id entry = _featureList[ indexPath.row ];
 		if ( [entry isKindOfClass:[CommonPresetCategory class]] ) {
 			CommonPresetCategory * category = entry;
 			POIFeaturePickerViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiTypeViewController"];
@@ -230,13 +232,9 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		// no search
 		_searchArrayAll = nil;
 		_searchArrayRecent = nil;
-#if 0
-		[_searchBar performSelector:@selector(resignFirstResponder) withObject:nil afterDelay:0.1];
-#endif
 	} else {
 		// searching
 		_searchArrayAll = [[CommonPresetList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
-
 		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonPresetFeature * tagInfo, NSDictionary *bindings) {
 			return [tagInfo matchesSearchText:searchText];
 		}]];

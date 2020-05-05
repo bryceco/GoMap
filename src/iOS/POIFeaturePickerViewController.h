@@ -18,7 +18,7 @@
 
 @interface POIFeaturePickerViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
 {
-	NSArray					*	_typeArray;
+	NSArray					*	_featureList;
 	NSArray					*	_searchArrayRecent;
 	NSArray					*	_searchArrayAll;
 	IBOutlet UISearchBar    *	_searchBar;
