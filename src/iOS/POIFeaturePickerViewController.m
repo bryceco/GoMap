@@ -90,6 +90,14 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	}
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if ( _isTopLevel && section == 1 ) {
+		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
+		return [NSString stringWithFormat:NSLocalizedString(@"Results for country code: %@",nil),countryCode.uppercaseString];
+	}
+	return nil;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
