@@ -6,51 +6,58 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-#include <sys/stat.h>
-
 #import "DLog.h"
 #import "PersistentWebCache.h"
 
 @implementation PersistentWebCache
 
-+(NSString *)filesystemRepresentation:(NSString *)string
++(NSString *)encodeKeyForFilesystem:(NSString *)string
 {
-	string = [string stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-	string = [string stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+	NSCharacterSet * allowed = [[NSCharacterSet characterSetWithCharactersInString:@"/"] invertedSet];
+	string = [string stringByAddingPercentEncodingWithAllowedCharacters:allowed];
 	return string;
+}
+
+-(NSDirectoryEnumerator<NSURL *> *)fileEnumeratorWithAttributes:(NSArray *)attr
+{
+	return [[NSFileManager defaultManager] enumeratorAtURL:_cacheDirectory
+								includingPropertiesForKeys:attr
+												   options:NSDirectoryEnumerationSkipsSubdirectoryDescendants|NSDirectoryEnumerationSkipsPackageDescendants|NSDirectoryEnumerationSkipsHiddenFiles
+											  errorHandler:NULL];
+}
+
+-(NSArray *)allKeys
+{
+	NSMutableArray * a = [NSMutableArray new];
+	for ( NSURL * url in [self fileEnumeratorWithAttributes:nil] ) {
+		NSString * s = url.lastPathComponent;	// automatically removes escape encoding
+		[a addObject:s];
+	}
+	return a;
 }
 
 -(instancetype)initWithName:(NSString *)name memorySize:(NSInteger)memorySize
 {
-	name = [PersistentWebCache filesystemRepresentation:name];
+	if ( self = [super init] ) {
+		name = [PersistentWebCache encodeKeyForFilesystem:name];
 
-	_memoryCache = [NSCache new];
-	_memoryCache.countLimit = 10000;
-	_memoryCache.totalCostLimit = memorySize;
+		_memoryCache = [NSCache new];
+		_memoryCache.countLimit = 10000;
+		_memoryCache.totalCostLimit = memorySize;
 
-	_pending = [NSMutableDictionary new];
+		_pending = [NSMutableDictionary new];
 
-	NSArray * paths = NSSearchPathForDirectoriesInDomains( NSCachesDirectory, NSUserDomainMask, YES );
-	if ( [paths count] ) {
 		NSString * bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
-		_cacheDirectory = [[paths.firstObject stringByAppendingPathComponent:bundleName] stringByAppendingPathComponent:name];
-		[[NSFileManager defaultManager] createDirectoryAtPath:_cacheDirectory withIntermediateDirectories:YES attributes:NULL error:NULL];
-	} else {
-		return nil;
+		_cacheDirectory = [[[[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:bundleName isDirectory:YES] URLByAppendingPathComponent:name isDirectory:YES];
+		[[NSFileManager defaultManager] createDirectoryAtURL:_cacheDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
 	}
 	return self;
 }
 
--(NSArray *)allFiles
-{
-	return [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_cacheDirectory error:NULL];
-}
-
 -(void)removeAllObjects
 {
-	for ( NSString * file in self.allFiles ) {
-		NSString * path = [_cacheDirectory stringByAppendingPathComponent:file];
-		[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+	for ( NSURL * url in [self fileEnumeratorWithAttributes:nil] ) {
+		[[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
 	}
 	[_memoryCache removeAllObjects];
 }
@@ -58,13 +65,12 @@
 -(void)removeObjectsAsyncOlderThan:(NSDate *)expiration
 {
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-		for ( NSString * file in self.allFiles ) {
-			NSString * path = [_cacheDirectory stringByAppendingPathComponent:file];
-			struct stat status = { 0 };
-			stat( path.fileSystemRepresentation, &status );
-			NSDate * date = [NSDate dateWithTimeIntervalSince1970:status.st_mtimespec.tv_sec];
-			if ( [date compare:expiration] < 0 ) {
-				[[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+		for ( NSURL * url in [self fileEnumeratorWithAttributes:@[NSURLContentModificationDateKey]] ) {
+			NSDate * date = nil;
+			if ( ![url getResourceValue:&date forKey:NSURLContentModificationDateKey error:NULL]
+				|| [date compare:expiration] < 0 )
+			{
+				[[NSFileManager defaultManager] removeItemAtURL:url error:NULL];
 			}
 		}
 	});
@@ -72,16 +78,16 @@
 
 -(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
+	NSInteger count = 0;
 	NSInteger size = 0;
-	NSArray * files = self.allFiles;
-	for ( NSString * file in files ) {
-		NSString * path = [_cacheDirectory stringByAppendingPathComponent:file];
-		struct stat status = { 0 };
-		stat( path.fileSystemRepresentation, &status );
-		size += (status.st_size + 511) & -512;
+	for ( NSURL * url in [self fileEnumeratorWithAttributes:@[NSURLFileAllocatedSizeKey]] ) {
+		NSNumber * len = nil;
+		[url getResourceValue:&len forKey:NSURLFileAllocatedSizeKey error:NULL];
+		count ++;
+		size += len.integerValue;
 	}
 	*pSize  = size;
-	*pCount = files.count;
+	*pCount = count;
 }
 
 -(id)objectWithKey:(NSString *)cacheKey
@@ -121,9 +127,9 @@
 
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
 		// check disk cache
-		NSString * fileName = [PersistentWebCache filesystemRepresentation:cacheKey];
-		NSString * filePath = [_cacheDirectory stringByAppendingPathComponent:fileName];
-		NSData * fileData = [[NSData alloc] initWithContentsOfFile:filePath];
+		NSString * fileName = [PersistentWebCache encodeKeyForFilesystem:cacheKey];
+		NSURL * filePath = [_cacheDirectory URLByAppendingPathComponent:fileName];
+		NSData * fileData = [[NSData alloc] initWithContentsOfURL:filePath];
 		if ( fileData ) {
 			gotData( fileData );
 		} else {
@@ -133,7 +139,7 @@
 			NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 				if ( gotData(data) ) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-						[data writeToFile:filePath atomically:YES];
+						[data writeToURL:filePath atomically:YES];
 					});
 				}
 			}];

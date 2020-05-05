@@ -559,7 +559,7 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 // Used for bulk downloading tiles for offline use
 -(NSMutableArray *)allTilesIntersectingVisibleRect
 {
-	NSArray * currentTiles = _webCache.allFiles;
+	NSArray * currentTiles = _webCache.allKeys;
 	NSSet * currentSet = [NSSet setWithArray:currentTiles];
 
 	OSMRect	rect			= [_mapView boundingMapRectForScreen];
