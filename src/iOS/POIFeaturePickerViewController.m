@@ -16,6 +16,14 @@
 static const NSInteger MOST_RECENT_DEFAULT_COUNT = 5;
 static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
+
+@interface FeaturePickerCell : UITableViewCell
+@property (strong,atomic)	NSString * featureName;
+@end
+@implementation FeaturePickerCell
+@end
+
+
 @implementation POIFeaturePickerViewController
 
 static NSMutableArray	*	mostRecentArray;
@@ -135,15 +143,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	}
 
 	if ( feature.suggestion && feature.logoImage == nil && feature.logoURL ) {
+		// download brand logo for name suggestion
 		feature.logoImage = feature.icon;
-
-		void(^completion)(UIImage * image) = ^(UIImage * image){
-			dispatch_async(dispatch_get_main_queue(), ^{
-				feature.logoImage = image;
-				UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-				cell.imageView.image = image;
-			});
-		};
 		UIImage * logo = [logoCache objectWithKey:feature.featureName
 			fallbackURL:^{
 				return feature.logoURL;
@@ -152,8 +153,18 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 				UIImage * image = [UIImage imageWithData:data];
 				return IconScaledForDisplay(image);
 			} completion:^(id image) {
-				if ( image )
-					completion(image);
+				if ( image ) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						feature.logoImage = image;
+						for ( FeaturePickerCell * cell in self.tableView.visibleCells ) {
+							if ( [cell isKindOfClass:[FeaturePickerCell class]] ) {
+								if ( cell.featureName == feature.featureName ) {
+									cell.imageView.image = image;
+								}
+							}
+						}
+					});
+				}
 			}];
 		if ( logo ) {
 			feature.logoImage = logo;
@@ -164,15 +175,20 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = [self currentSelectionGeometry];
 	NSString * currentFeature = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-	UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
+	FeaturePickerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 	cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
 	cell.imageView.image		= feature.logoImage && feature.logoImage != feature.icon
 									? feature.logoImage
 									: [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-	[cell.imageView setupTintColorForDarkMode];
+	if (@available(iOS 13.0, *)) {
+		cell.imageView.tintColor = UIColor.labelColor;
+	} else {
+		cell.imageView.tintColor = UIColor.blackColor;
+	}
 	cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
 	cell.detailTextLabel.text	= feature.summary;
 	cell.accessoryType = [currentFeature isEqualToString:feature.featureName] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.featureName = feature.featureName;
 	return cell;
 }
 

@@ -231,7 +231,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FinalCell" textLabel="LUc-68-Anl" detailTextLabel="X7U-Pa-WCn" style="IBUITableViewCellStyleSubtitle" id="rRF-a2-sIn" customClass="MultilineTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FinalCell" textLabel="LUc-68-Anl" detailTextLabel="X7U-Pa-WCn" style="IBUITableViewCellStyleSubtitle" id="rRF-a2-sIn" customClass="FeaturePickerCell">
                                 <rect key="frame" x="0.0" y="99.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rRF-a2-sIn" id="OBB-T0-Ocb">
