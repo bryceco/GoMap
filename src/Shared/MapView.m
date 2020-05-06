@@ -854,7 +854,17 @@ const CGFloat kEditControlCornerRadius = 4;
 
 -(void)updateCountryCodeForLocationUsingNominatim
 {
+	if ( self.viewStateZoomedOut )
+		return;
+
+	// if we moved a significant distance then check our country location
 	CLLocationCoordinate2D loc = [self longitudeLatitudeForScreenPoint:self.center birdsEye:YES];
+	double distance = GreatCircleDistance(OSMPointMake(loc.longitude,loc.latitude), OSMPointMake(_countryCodeLocation.longitude,_countryCodeLocation.latitude));
+	if ( distance < 10*1000 ) {
+		return;
+	}
+	_countryCodeLocation = loc;
+
 	NSString * url = [NSString stringWithFormat:@"https://nominatim.openstreetmap.org/reverse?zoom=13&addressdetails=1&format=json&lat=%f&lon=%f",loc.latitude,loc.longitude];
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		if ( data.length ) {
@@ -1120,8 +1130,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_screenFromMapTransform = t;
 
 	// determine if we've zoomed out enough to disable editing
-	CGPoint center = CGRectCenter(self.bounds);
-	CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:center birdsEye:YES];
+	CGPoint screenCenter = CGRectCenter(self.bounds);
+	CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:screenCenter birdsEye:YES];
 	double area = MetersPerDegree( latLon.latitude );
 	OSMRect rcMap = [self boundingMapRectForScreen];
 	area = area*area * rcMap.size.width * rcMap.size.height;
@@ -1130,6 +1140,8 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator:nil];
+
+	[self updateCountryCodeForLocationUsingNominatim];
 
 #if TARGET_OS_IPHONE
 	// update pushpin location
@@ -1875,11 +1887,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	[self refreshNoteButtonsFromDatabase];
 
-	if ( log2(scale) < 13 && log2(ratio*scale) >= 13 ) {
-		// we zoomed in, so fetch local country code
-		[self updateCountryCodeForLocationUsingNominatim];
-	}
-	
 	OSMPoint offset = [self mapPointFromScreenPoint:OSMPointFromCGPoint(zoomCenter) birdsEye:NO];
 	OSMTransform t = _screenFromMapTransform;
 	t = OSMTransformTranslate( t, offset.x, offset.y );

@@ -181,6 +181,7 @@ typedef enum {
 @property (readonly,nonatomic)	CAShapeLayer				*	crossHairs;
 
 @property (readonly,nonatomic)	NSString					*	countryCodeForLocation;
+@property (readonly,nonatomic)	CLLocationCoordinate2D			countryCodeLocation;
 
 @property (readonly,nonatomic)	CGPoint							pushpinPosition;
 
