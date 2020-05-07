@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#import <CoreText/CoreText.h>
-
 #import "NSMutableArray+PartialSort.h"
 
 #import "iosapi.h"
@@ -15,7 +13,6 @@
 #import "BingMapsGeometry.h"
 #import "Buildings3DView.h"
 #import "CommonPresetList.h"
-#import "CurvedTextLayer.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
 #if TARGET_OS_IPHONE

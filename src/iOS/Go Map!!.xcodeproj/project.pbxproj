@@ -27,6 +27,7 @@
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		02354F782462526A00878A04 /* PersistentWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 02354F772462526A00878A04 /* PersistentWebCache.m */; };
+		02354F7A246349E100878A04 /* CurvedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedText.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -75,7 +76,6 @@
 		02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5216713CCB00BB4414 /* MapViewController.m */; };
 		02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5916713CCB00BB4414 /* SettingsViewController.m */; };
 		02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA7016713F2A00BB4414 /* changeset.xsl */; };
-		02ACBBC216713F2B00BB4414 /* CurvedTextLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */; };
 		02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA7416713F2A00BB4414 /* DownloadThreadPool.m */; };
 		02ACBBC416713F2B00BB4414 /* EditorMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */; };
 		02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA8016713F2A00BB4414 /* MapView.m */; };
@@ -204,6 +204,7 @@
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CustomPresetController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02354F772462526A00878A04 /* PersistentWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistentWebCache.m; path = ../Shared/PersistentWebCache.m; sourceTree = "<group>"; };
+		02354F79246349E100878A04 /* CurvedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CurvedText.swift; path = ../Shared/CurvedText.swift; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
@@ -289,8 +290,6 @@
 		02ACBA5916713CCB00BB4414 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BingMapsGeometry.h; path = ../Shared/BingMapsGeometry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02ACBA7016713F2A00BB4414 /* changeset.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = changeset.xsl; path = ../Shared/changeset.xsl; sourceTree = "<group>"; };
-		02ACBA7116713F2A00BB4414 /* CurvedTextLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CurvedTextLayer.h; path = ../Shared/CurvedTextLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CurvedTextLayer.m; path = ../Shared/CurvedTextLayer.m; sourceTree = "<group>"; };
 		02ACBA7316713F2A00BB4414 /* DownloadThreadPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DownloadThreadPool.h; path = ../Shared/DownloadThreadPool.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02ACBA7416713F2A00BB4414 /* DownloadThreadPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = DownloadThreadPool.m; path = ../Shared/DownloadThreadPool.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02ACBA7516713F2A00BB4414 /* EditorMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EditorMapLayer.h; path = ../Shared/EditorMapLayer.h; sourceTree = "<group>"; };
@@ -686,8 +685,7 @@
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				028F504319B949780093C423 /* CommonPresetList.h */,
 				028F504419B949780093C423 /* CommonPresetList.m */,
-				02ACBA7116713F2A00BB4414 /* CurvedTextLayer.h */,
-				02ACBA7216713F2A00BB4414 /* CurvedTextLayer.m */,
+				02354F79246349E100878A04 /* CurvedText.swift */,
 				02A194AE19C69701002338DA /* Database.h */,
 				02A194AF19C69701002338DA /* Database.m */,
 				0260484019E66C8700415CB1 /* DisplayLink.h */,
@@ -1041,7 +1039,6 @@
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
 				02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */,
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
-				02ACBBC216713F2B00BB4414 /* CurvedTextLayer.m in Sources */,
 				6453776623D38D4600656A1C /* OsmBaseObject.m in Sources */,
 				02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */,
 				02A194B019C69701002338DA /* Database.m in Sources */,
@@ -1093,6 +1090,7 @@
 				02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
+				02354F7A246349E100878A04 /* CurvedText.swift in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
