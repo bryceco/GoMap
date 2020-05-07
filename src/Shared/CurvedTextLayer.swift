@@ -1,5 +1,5 @@
 //
-//  CurvedText.swift
+//  CurvedTextLayer.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 5/6/20.
