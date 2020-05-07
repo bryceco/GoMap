@@ -58,7 +58,7 @@ required init?(coder: NSCoder) {
 	let textColor   = whiteOnBlack ? UIColor.white : UIColor.black
 	let shadowColor = whiteOnBlack ? UIColor.black : UIColor.white
 
-	let attrString = NSAttributedString(string: string as String,
+	let attrString = NSAttributedString(string: string,
 										attributes: [
 											NSAttributedString.Key.foregroundColor: textColor.cgColor,
 											NSAttributedString.Key.font: font])
@@ -161,7 +161,7 @@ private func IsRTL(_ typesetter: CTTypesetter) -> Bool
 	return false
 }
 
-private func framesetter(for attrString: NSAttributedString) -> CTFramesetter?
+private func framesetter(for attrString: NSAttributedString) -> CTFramesetter
 {
 	if let framesetter = framesetterCache.object(forKey: attrString.string as NSString) {
 		return framesetter
@@ -171,19 +171,17 @@ private func framesetter(for attrString: NSAttributedString) -> CTFramesetter?
 	return framesetter
 }
 
-private func sizeOfText(_ string: NSAttributedString) -> CGSize?
+private func sizeOfText(_ string: NSAttributedString) -> CGSize
 {
 	if let size = textSizeCache.object(forKey: string.string as NSString) {
 		return size.cgSizeValue
 	}
 
-	if let framesetter = self.framesetter(for: string) {
-		let suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(CFIndex(0), CFIndex(0)), nil, CGSize(width: 70, height: CGFloat.greatestFiniteMagnitude), nil)
-		let value = NSValue(cgSize: suggestedSize)
-		textSizeCache.setObject(value, forKey: string.string as NSString)
-		return suggestedSize
-	}
-	return nil
+	let framesetter = self.framesetter(for: string)
+	let suggestedSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter, CFRangeMake(CFIndex(0), CFIndex(0)), nil, CGSize(width: 70, height: CGFloat.greatestFiniteMagnitude), nil)
+	let value = NSValue(cgSize: suggestedSize)
+	textSizeCache.setObject(value, forKey: string.string as NSString)
+	return suggestedSize
 }
 
 private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRasterize: Bool) -> CATextLayer?
@@ -204,9 +202,7 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 	let attrString = NSAttributedString.init(string: string as String,
 											 attributes: [ NSAttributedString.Key.font: uiFont,
 														   NSAttributedString.Key.foregroundColor: textColor.cgColor])
-	guard let framesetter = self.framesetter(for: attrString) else {
-		return nil;
-	}
+	let framesetter = self.framesetter(for: attrString)
 	let charCount = string.length
 	let typesetter = CTFramesetterGetTypesetter(framesetter)
 
