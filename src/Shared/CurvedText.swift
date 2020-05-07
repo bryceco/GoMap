@@ -257,7 +257,11 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 		var pos = CGPoint.zero
 		var angle : CGFloat = 0
 		var length : CGFloat = 0
-		if !PositionAndAngleForOffset(points: pathPoints, offset: currentPixelOffset, baselineOffsetDistance: lineHeight, pPos: &pos, pAngle: &angle, pLength: &length) {
+		if !PositionAndAngleForOffset(points: pathPoints,
+									  offset: currentPixelOffset,
+									  baselineOffsetDistance: lineHeight,
+									  pPos: &pos, pAngle: &angle, pLength: &length)
+		{
 			return nil;
 		}
 		let count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, Double(length) )
