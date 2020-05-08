@@ -114,8 +114,12 @@ private func EliminatePointsOnStraightSegments(points: inout [CGPoint])
 	points.removeSubrange(dst+1..<points.count)
 }
 
-
-private func PositionAndAngleForOffset( points: [CGPoint], offset: CGFloat, baselineOffsetDistance: CGFloat, pPos: inout CGPoint, pAngle: inout CGFloat, pLength: inout CGFloat) -> Bool
+struct TextLoc {
+	var pos: CGPoint
+	var angle: CGFloat
+	var length: CGFloat
+}
+private func PositionAndAngleForOffset( points: [CGPoint], offset: CGFloat, baselineOffsetDistance: CGFloat) -> TextLoc?
 {
 	var	previous = points[0]
 	var newOffset = offset;
@@ -133,16 +137,14 @@ private func PositionAndAngleForOffset( points: [CGPoint], offset: CGFloat, base
 			dy /= len;
 			let baselineOffset2 = CGPoint( x: dy * baselineOffsetDistance, y: -dx * baselineOffsetDistance );
 
-			pPos = CGPoint(x: previous.x + newOffset * dx + baselineOffset2.x, y: previous.y + newOffset * dy + baselineOffset2.y)
-			pAngle = a;
-			pLength = len - newOffset;
-			return true;
+			return TextLoc(pos: CGPoint(x: previous.x + newOffset * dx + baselineOffset2.x, y: previous.y + newOffset * dy + baselineOffset2.y),
+						   angle: a,
+						   length: len - newOffset)
 		}
 		newOffset -= len;
 		previous = pt;
 	}
-	pLength = 0;
-	return false;
+	return nil
 }
 
 private func IsRTL(_ typesetter: CTTypesetter) -> Bool
@@ -226,7 +228,8 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 	// center the text along the path
 	var pathLength : CGFloat = 0.0;
 	for i in 1 ..< pathPoints.count {
-		pathLength += hypot( pathPoints[i].x - pathPoints[i-1].x, pathPoints[i].y - pathPoints[i-1].y )
+		pathLength += hypot( pathPoints[i].x - pathPoints[i-1].x,
+							 pathPoints[i].y - pathPoints[i-1].y )
 	}
 	let textSize = CTFramesetterSuggestFrameSizeWithConstraints(framesetter,
 																CFRangeMake(0,string.length),
@@ -236,7 +239,7 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 	if textSize.width+8 >= pathLength {
 		return nil;
 	}
-	let offset = (pathLength - textSize.width) / 2;
+	let offset = (pathLength - textSize.width) / 2
 
 	var layers : [CALayer] = []
 	let lineHeight = uiFont.lineHeight
@@ -244,26 +247,21 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 	var currentPixelOffset = offset
 	while currentCharacter < charCount {
 
-		if ( currentCharacter > 0 && isRTL ) {
+		if ( currentCharacter > 0 && isRTL && false ) {
 			// doesn't fit on one segment so give up
 			return  nil
 		}
 
 		// get the number of characters that fit in the current path segment and create a text layer for it
-		var pos = CGPoint.zero
-		var angle : CGFloat = 0
-		var length : CGFloat = 0
-		if !PositionAndAngleForOffset(points: pathPoints,
-									  offset: currentPixelOffset,
-									  baselineOffsetDistance: lineHeight,
-									  pPos: &pos, pAngle: &angle, pLength: &length)
-		{
+		guard var loc = PositionAndAngleForOffset(points: pathPoints,
+												  offset: currentPixelOffset,
+												  baselineOffsetDistance: lineHeight) else {
 			return nil;
 		}
-		let count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, Double(length) )
+		let count = CTTypesetterSuggestLineBreak( typesetter, currentCharacter, Double(loc.length) )
 
 		let s = string.substring(with: NSMakeRange(currentCharacter, count))
-		let angleString = String(format: "%.4f", angle)
+		let angleString = String(format: "%.4f", loc.angle)
 		let cacheKey : String = "\(s):\(angleString)"
 		var layer = self.getCachedLayer(for: cacheKey, whiteOnBlack: whiteOnBlack, shouldRasterize: shouldRasterize)
 
@@ -282,16 +280,16 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 																		   nil);
 				layer.actions = [ "position": NSNull() ]
 				pixelLength = bounds.size.width;
-				layer.bounds			= bounds;
+				layer.bounds = bounds;
 				if ( isRTL ) {
-					pos.x += cos(angle)*pixelLength;
-					pos.y += sin(angle)*pixelLength;
-					pos.x -= sin(angle)*2*lineHeight;
-					pos.y += cos(angle)*2*lineHeight;
-					angle -= CGFloat.pi
+					loc.pos.x += cos(loc.angle)*pixelLength;
+					loc.pos.y += sin(loc.angle)*pixelLength;
+					loc.pos.x -= sin(loc.angle)*2*lineHeight;
+					loc.pos.y += cos(loc.angle)*2*lineHeight;
+					loc.angle -= CGFloat.pi
 				}
-				layer.setAffineTransform( CGAffineTransform(rotationAngle: angle))
-				layer.position			= pos;
+				layer.setAffineTransform( CGAffineTransform(rotationAngle: loc.angle))
+				layer.position			= loc.pos
 				layer.anchorPoint		= CGPoint.zero
 				layer.truncationMode	= .none
 				layer.isWrapped			= false
@@ -314,13 +312,13 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 		} else {
 			pixelLength	= layer!.bounds.size.width;
 			if ( isRTL ) {
-				pos.x += cos(angle)*pixelLength;
-				pos.y += sin(angle)*pixelLength;
-				pos.x -= sin(angle)*2*lineHeight;
-				pos.y += cos(angle)*2*lineHeight;
-				angle -= CGFloat.pi
+				loc.pos.x += cos(loc.angle)*pixelLength;
+				loc.pos.y += sin(loc.angle)*pixelLength;
+				loc.pos.x -= sin(loc.angle)*2*lineHeight;
+				loc.pos.y += cos(loc.angle)*2*lineHeight;
+				loc.angle -= CGFloat.pi
 			}
-			layer!.position	= pos;
+			layer!.position	= loc.pos;
 		}
 
 //		NSLog(@"-> \"%@\"",[layer.string string]);
