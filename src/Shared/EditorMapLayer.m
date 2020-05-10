@@ -1518,7 +1518,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				OSMPoint point = object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
 				OSMPoint pt = MapPointForLatitudeLongitude( point.y, point.x );
 
-				CALayer * layer = [CurvedTextLayer.shared layerWithString:name whiteOnBlock:self.whiteText];
+				CALayer * layer = [CurvedTextLayer layerWithString:name whiteOnBlock:self.whiteText];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
@@ -1679,7 +1679,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		NSString * houseNumber = color.hasColor ? nil : DrawNodeAsHouseNumber( node.tags );
 		if ( houseNumber ) {
             
-            CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
+            CALayer * layer = [CurvedTextLayer layerWithString:houseNumber whiteOnBlock:self.whiteText];
             layer.anchorPoint	= CGPointMake(0.5, 0.5);
             layer.position      = CGPointMake(pt.x, pt.y);
             layer.zPosition     = Z_TEXT;
@@ -2002,14 +2002,15 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						double length = 0.0;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						if ( length >= name.length * Pixels_Per_Character ) {
-							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path
-                                                                      whiteOnBlock:self.whiteText
-                                                                   shouldRasterize:[self shouldRasterizeStreetNames]];
-							if ( a.count ) {
-								[layers addObjectsFromArray:a];
+							CurvedTextLayer.whiteOnBlack = self.whiteText;
+							CurvedTextLayer.shouldRasterize = [self shouldRasterizeStreetNames];
+							CurvedTextLayer * layer = [CurvedTextLayer layerWithString:name alongPath:path];
+							if ( layer ) {
+								[layers addObject:layer];
 								--nameLimit;
 								[nameSet addObject:name];
 							}
+
 						}
 						CGPathRelease(path);
 					}
