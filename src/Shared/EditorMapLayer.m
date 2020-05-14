@@ -1008,7 +1008,7 @@ extern const double MinIconSizeInPixels;
 }
 
 
-typedef struct RGBColor {
+typedef struct RGBAColor {
 	CGFloat	red;
 	CGFloat	green;
 	CGFloat	blue;
@@ -2003,7 +2003,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						if ( length >= name.length * Pixels_Per_Character ) {
 							CurvedTextLayer.whiteOnBlack = self.whiteText;
-							CurvedTextLayer.shouldRasterize = [self shouldRasterizeStreetNames];
 							CurvedTextLayer * layer = [CurvedTextLayer layerWithString:name alongPath:path];
 							if ( layer ) {
 								[layers addObject:layer];
