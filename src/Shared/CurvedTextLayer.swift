@@ -10,7 +10,7 @@ import CoreText
 import Foundation
 import QuartzCore
 
-@objc class CurvedTextLayer : CALayer {
+@objc class CurvedTextLayer : NSObject {
 
 	@objc public static let shared = CurvedTextLayer()
 
