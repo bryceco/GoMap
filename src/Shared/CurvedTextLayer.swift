@@ -252,9 +252,11 @@ class StringGlyphs {
 		pathPoints.resetOffset()
 		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return }
 
-		context.setFillColor(CurvedTextLayer.whiteOnBlack ? UIColor.white.cgColor : UIColor.black.cgColor)
 		context.textMatrix = CGAffineTransform.identity
 		context.scaleBy(x: 1.0, y: -1.0);
+
+		let textColor = CurvedTextLayer.whiteOnBlack ? UIColor.white : UIColor.black
+		let backColor = (!CurvedTextLayer.whiteOnBlack ? UIColor.white : UIColor.black).withAlphaComponent(0.3)
 
 		let baselineOffset = 3 - stringGlyphs.rect.origin.y
 
@@ -268,11 +270,16 @@ class StringGlyphs {
 				guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else { return }
 				let p = CGPoint(x: loc.pos.x - self.position.x, y: loc.pos.y - self.position.y )
 
-				let glyph = runGlyphs.glyphs[glyphIndex]
-
 				context.saveGState()
 				context.translateBy(x: p.x, y: -p.y )
 				context.rotate(by: -loc.angle)
+
+				context.setFillColor(backColor.cgColor)
+				let rc = CGRect(x: 0, y: stringGlyphs.rect.origin.y, width: runGlyphs.advances[glyphIndex].width, height: stringGlyphs.rect.height)
+				context.fill(rc)
+
+				context.setFillColor(textColor.cgColor)
+				let glyph = runGlyphs.glyphs[glyphIndex]
 				CTFontDrawGlyphs(runFont, [glyph], [CGPoint.zero], 1, context)
 				context.restoreGState()
 
