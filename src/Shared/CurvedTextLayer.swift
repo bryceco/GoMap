@@ -186,7 +186,7 @@ private func sizeOfText(_ string: NSAttributedString) -> CGSize
 	return suggestedSize
 }
 
-private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRasterize: Bool) -> CATextLayer?
+private func getCachedLayer(for string: String, whiteOnBlack: Bool) -> CATextLayer?
 {
 	if cachedColorIsWhiteOnBlack != whiteOnBlack {
 		layerCache.removeAllObjects()
@@ -196,7 +196,7 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 	return layerCache.object(forKey: string as NSString)
 }
 
-@objc func layersWithString(_ string: NSString, alongPath path: CGPath, whiteOnBlock whiteOnBlack: Bool, shouldRasterize: Bool) -> [CALayer]?
+@objc func layersWithString(_ string: NSString, alongPath path: CGPath, whiteOnBlock whiteOnBlack: Bool) -> [CALayer]?
 {
 	let uiFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
 
@@ -263,7 +263,7 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 		let s = string.substring(with: NSMakeRange(currentCharacter, count))
 		let angleString = String(format: "%.4f", loc.angle)
 		let cacheKey : String = "\(s):\(angleString)"
-		var layer = self.getCachedLayer(for: cacheKey, whiteOnBlack: whiteOnBlack, shouldRasterize: shouldRasterize)
+		var layer = self.getCachedLayer(for: cacheKey, whiteOnBlack: whiteOnBlack)
 
 		var pixelLength : CGFloat = 0
 		if layer == nil {
@@ -294,7 +294,6 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool, shouldRaster
 				layer.truncationMode	= .none
 				layer.isWrapped			= false
 				layer.alignmentMode		= .center
-				layer.shouldRasterize   = shouldRasterize;
 				layer.contentsScale		= UIScreen.main.scale;
 
 				let	shadowPath	= CGPath(rect: bounds, transform: nil)

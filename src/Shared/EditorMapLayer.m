@@ -2002,9 +2002,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						double length = 0.0;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						if ( length >= name.length * Pixels_Per_Character ) {
-							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path
-                                                                      whiteOnBlock:self.whiteText
-                                                                   shouldRasterize:[self shouldRasterizeStreetNames]];
+							NSArray * a = [CurvedTextLayer.shared layersWithString:name
+																		 alongPath:path
+                                                                      whiteOnBlock:self.whiteText];
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;
