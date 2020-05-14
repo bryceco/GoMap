@@ -3433,6 +3433,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)pinch
 {
 	if ( pinch.state == UIGestureRecognizerStateChanged ) {
+
+		if ( isnan(pinch.scale) )
+			return;
+
 		self.userOverrodeLocationZoom = YES;
 
 		DisplayLink * displayLink = [DisplayLink shared];
