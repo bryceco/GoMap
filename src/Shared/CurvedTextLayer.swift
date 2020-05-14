@@ -141,7 +141,7 @@ class StringGlyphs {
 
 	// objects
 
-	public  let size : CGSize
+	public  let rect : CGRect
 	public  let runGlyphs : [GlyphList]
 	public	let runFonts : [CTFont]
 
@@ -180,7 +180,7 @@ class StringGlyphs {
 
 		self.runGlyphs = glyphs
 		self.runFonts = fonts
-		self.size = CTLineGetBoundsWithOptions(ctLine, CTLineBoundsOptions.useGlyphPathBounds).size
+		self.rect = CTLineGetBoundsWithOptions(ctLine, CTLineBoundsOptions.useGlyphPathBounds)
 	}
 
 	static public func glyphsForString(string:NSString) -> StringGlyphs?
@@ -234,7 +234,7 @@ class StringGlyphs {
 		guard let glyphRuns = StringGlyphs.glyphsForString(string:string) else { return nil }
 		let pathPoints = PathPoints(WithPath: path)
 
-		if glyphRuns.size.width+8 >= pathPoints.length() {
+		if glyphRuns.rect.size.width+8 >= pathPoints.length() {
 			return nil	// doesn't fit
 		}
 
@@ -250,11 +250,13 @@ class StringGlyphs {
 	@objc override func draw(in context: CGContext)
 	{
 		pathPoints.resetOffset()
-		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.size.width) / 2 ) else { return }
+		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return }
 
 		context.setFillColor(CurvedTextLayer.whiteOnBlack ? UIColor.white.cgColor : UIColor.black.cgColor)
 		context.textMatrix = CGAffineTransform.identity
 		context.scaleBy(x: 1.0, y: -1.0);
+
+		let baselineOffset = 3 - stringGlyphs.rect.origin.y
 
 		for runIndex in 0 ..< stringGlyphs.runGlyphs.count {
 
@@ -263,7 +265,7 @@ class StringGlyphs {
 
 			for glyphIndex in 0 ..< runGlyphs.glyphs.count {
 
-				guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: 10) else { return }
+				guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else { return }
 				let p = CGPoint(x: loc.pos.x - self.position.x, y: loc.pos.y - self.position.y )
 
 				let glyph = runGlyphs.glyphs[glyphIndex]
