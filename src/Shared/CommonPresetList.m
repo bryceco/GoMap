@@ -908,6 +908,9 @@ BOOL IsOsmBooleanTrue( NSString * value )
 					totalScore += matchScore/2;
 					return;
 				}
+			} else if ( [key isEqualToString:@"area"] && [value isEqualToString:@"yes"] && [geometry isEqualToString:@"area"] ) {
+				totalScore += 0.1;
+				return;
 			}
 			totalScore = -1;
 			*stop2 = YES;
