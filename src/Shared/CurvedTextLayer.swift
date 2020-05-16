@@ -130,7 +130,8 @@ class GlyphList {
 class StringGlyphs {
 
 	// static stuff
-	public static var uiFont = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
+	public static var uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
+
 	private static let cache 	= { () -> NSCache<NSString, StringGlyphs> in
 		NotificationCenter.default.addObserver(StringGlyphs.self, selector: #selector(StringGlyphs.fontSizeDidChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
 								let c = NSCache<NSString, StringGlyphs>()
@@ -218,13 +219,18 @@ class StringGlyphs {
 
 	private let stringGlyphs : StringGlyphs
 	private let pathPoints : PathPoints
+#if DEBUG
+	private var string : NSString?
+#endif
 
 	// calling init() on a CALayer subclass from Obj-C doesn't work on iOS 9
 	private init(withGlyphs stringGlyphs:StringGlyphs, frame:CGRect, pathPoints:PathPoints)
 	{
 		self.stringGlyphs = stringGlyphs
 		self.pathPoints = pathPoints
-
+#if DEBUG
+		self.string = nil
+#endif
 		super.init()
 
 		self.contentsScale 		= UIScreen.main.scale;
@@ -245,14 +251,17 @@ class StringGlyphs {
 
 		let frame = path.boundingBox.insetBy(dx: -20, dy: -20)
 
-		return CurvedTextLayer.init(withGlyphs:glyphRuns, frame:frame, pathPoints: pathPoints)
+		let layer = CurvedTextLayer.init(withGlyphs:glyphRuns, frame:frame, pathPoints: pathPoints)
+#if DEBUG
+		layer.string = string
+#endif
+		return layer
 	}
 
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-#if false
 	@objc override func draw(in context: CGContext)
 	{
 		pathPoints.resetOffset()
@@ -293,10 +302,15 @@ class StringGlyphs {
 			}
 		}
 	}
-#endif
 
 	@objc func glyphLayers() -> [GlyphLayer]?
 	{
+#if DEBUG
+		if self.string!.isEqual("15th Avenue") {
+			print( "\(string!)" )
+		}
+#endif
+
 		pathPoints.resetOffset()
 		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return nil }
 
@@ -314,40 +328,40 @@ class StringGlyphs {
 
 			var glyphIndex = 0
 			while glyphIndex < runGlyphs.glyphs.count {
-				guard let start = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else {
-					return nil
-				}
-
-				var layerGlyphs = [runGlyphs.glyphs[glyphIndex]]
-				var layerPositions = [CGPoint.zero]
-
-				_ = pathPoints.advanceOffsetBy( runGlyphs.advances[glyphIndex].width )
-				glyphIndex += 1
+				var layerGlyphs : [CGGlyph] = []
+				var layerPositions : [CGPoint] = []
+				var position : CGFloat = 0.0
+				var start : TextLoc? = nil
 
 				while glyphIndex < runGlyphs.glyphs.count {
 
 					guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else {
 						break
 					}
-					if loc.angle != start.angle {
+					if start == nil {
+						start = loc
+					} else if loc.angle != start!.angle {
 						break
 					}
-					layerGlyphs.append(runGlyphs.glyphs[glyphIndex])
-					layerPositions.append(CGPoint(x: loc.pos.x-start.pos.x, y: 0.0))
 
-					guard pathPoints.advanceOffsetBy( runGlyphs.advances[glyphIndex].width ) else {
-						break
-					}
+					let glyphWidth = runGlyphs.advances[glyphIndex].width
+					layerGlyphs.append(runGlyphs.glyphs[glyphIndex])
+					layerPositions.append(CGPoint(x: position, y: 0.0))
+					position += glyphWidth
+
+					_ = pathPoints.advanceOffsetBy( glyphWidth )
 					glyphIndex += 1
 				}
+				layerPositions.append(CGPoint(x: position, y: 0.0))
 
 				let glyphLayer = GlyphLayer.layer(withFont: runFont,
 												  foreColor: textColor,
 												  backColor: backColor,
 												  glyphs: layerGlyphs,
 												  positions:layerPositions)
-				glyphLayer.position = start.pos
-//				glyphLayer.setAffineTransform( CGAffineTransform(rotationAngle: start.angle) )
+				glyphLayer.position = start!.pos
+				glyphLayer.anchorPoint = CGPoint(x:0,y:1)
+				glyphLayer.setAffineTransform( CGAffineTransform(rotationAngle: start!.angle) )
 
 				layers.append(glyphLayer)
 
@@ -367,8 +381,7 @@ class StringGlyphs {
 		let layer = CATextLayer()
 		layer.contentsScale = UIScreen.main.scale;
 
-		let font = UIFont.preferredFont(forTextStyle: .subheadline)
-
+		let font = StringGlyphs.uiFont
 		let textColor   = whiteOnBlack ? UIColor.white : UIColor.black
 		let shadowColor = whiteOnBlack ? UIColor.black : UIColor.white
 
@@ -395,12 +408,7 @@ class StringGlyphs {
 		layer.isWrapped			= true;
 		layer.alignmentMode		= CATextLayerAlignmentMode.left;	// because our origin is -3 this is actually centered
 
-		let shadowPath			= CGPath(rect: bounds, transform: nil)
-		layer.shadowPath		= shadowPath;
-		layer.shadowColor		= shadowColor.cgColor;
-		layer.shadowRadius		= 0.0;
-		layer.shadowOffset		= CGSize.zero
-		layer.shadowOpacity		= 0.3;
+		layer.backgroundColor	= shadowColor.withAlphaComponent(0.3).cgColor;
 
 		return layer;
 	}
@@ -410,9 +418,41 @@ class StringGlyphs {
 
 class GlyphLayer : CALayer {
 
+	private static let cache 	= { () -> NSCache<NSData, GlyphLayer> in
+		NotificationCenter.default.addObserver(StringGlyphs.self, selector: #selector(GlyphLayer.fontSizeDidChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
+								let c = NSCache<NSData, GlyphLayer>()
+								c.countLimit = 200
+								return c
+								}()
+
 	private let glyphs:[CGGlyph]
 	private let positions:[CGPoint]
 	private let font:CTFont
+
+	private init(withCopy copy:GlyphLayer) {
+		self.glyphs 			= copy.glyphs
+		self.positions 			= copy.positions
+		self.font 				= copy.font
+		super.init()
+		self.contentsScale 		= copy.contentsScale
+		self.anchorPoint		= copy.anchorPoint
+		self.bounds				= copy.bounds
+		self.backgroundColor	= copy.backgroundColor
+		self.contents 			= copy.contents	// use existing backing store so we don't have to redraw
+	}
+
+	private func copy() -> GlyphLayer {
+		return GlyphLayer(withCopy: self)
+	}
+
+	@objc static func fontSizeDidChange() {
+		cache.removeAllObjects()
+	}
+
+	@objc override func action(forKey event: String) -> CAAction? {
+		// we don't want any animated actions
+		return NSNull()
+	}
 
 	// calling init() on a CALayer subclass from Obj-C doesn't work on iOS 9
 	private init(withFont font:CTFont, foreColor:UIColor, backColor:UIColor, glyphs:[CGGlyph], positions:[CGPoint])
@@ -423,22 +463,33 @@ class GlyphLayer : CALayer {
 
 		super.init()
 
-		 let bounds				= CGRect(x: 0, y: 0, width: positions.last!.x+20, height: 20)
-
-		self.contentsScale 		= UIScreen.main.scale;
-		self.actions			= [ "position": NSNull() ]
+		let size = CTFontGetBoundingBox( font ).size
+		let descent = CTFontGetDescent( font )
+		let bounds				= CGRect(x:0, y:descent, width: positions.last!.x, height: size.height)
+		self.contentsScale 		= UIScreen.main.scale
 		self.anchorPoint		= CGPoint.zero
 		self.bounds				= bounds
-
-		self.shadowColor		= backColor.cgColor
-		self.shadowPath			= CGPath(rect: bounds, transform: nil)
+		self.backgroundColor	= backColor.cgColor
 
 		self.setNeedsDisplay()
 	}
 
 	static public func layer(withFont font:CTFont, foreColor:UIColor, backColor:UIColor, glyphs:[CGGlyph], positions:[CGPoint]) -> GlyphLayer
 	{
-		return GlyphLayer.init(withFont: font, foreColor: foreColor, backColor: backColor, glyphs: glyphs, positions: positions)
+		let key = glyphs.withUnsafeBytes { a in
+			return NSData(bytes: a.baseAddress, length: a.count)
+		}
+		if let layer = cache.object(forKey: key) {
+			return layer.copy()
+		} else {
+			let layer = GlyphLayer.init(withFont: font,
+							   foreColor: foreColor,
+							   backColor: backColor,
+							   glyphs: glyphs,
+							   positions: positions)
+			cache.setObject(layer, forKey: key)
+			return layer
+		}
 	}
 
 	required init?(coder: NSCoder) {
@@ -446,9 +497,14 @@ class GlyphLayer : CALayer {
 	}
 
 	override func draw(in context: CGContext) {
+
+		context.saveGState()
 		context.textMatrix = CGAffineTransform.identity
+		context.translateBy(x: 0, y: self.bounds.size.height)
 		context.scaleBy(x: 1.0, y: -1.0);
+		context.setFillColor(CurvedTextLayer.whiteOnBlack ? UIColor.white.cgColor : UIColor.black.cgColor)
 		CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
+		context.restoreGState()
 	}
 }
 

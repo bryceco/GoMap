@@ -2004,15 +2004,16 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						if ( length >= name.length * Pixels_Per_Character ) {
 							CurvedTextLayer.whiteOnBlack = self.whiteText;
 							CurvedTextLayer * layer = [CurvedTextLayer layerWithString:name alongPath:path];
-							if ( layer ) {
-								NSArray * a = [layer glyphLayers];
-								if ( a.count ) {
-									[layers addObjectsFromArray:a];
-									--nameLimit;
-									[nameSet addObject:name];
-								}
+#if 0
+							NSArray * a = layer ? @[ layer ] : nil;
+#else
+							NSArray * a = [layer glyphLayers];
+#endif
+							if ( a.count ) {
+								[layers addObjectsFromArray:a];
+								--nameLimit;
+								[nameSet addObject:name];
 							}
-
 						}
 						CGPathRelease(path);
 					}
