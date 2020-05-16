@@ -335,6 +335,13 @@ const CGFloat kEditControlCornerRadius = 4;
 	_addNodeButtonLongPressGestureRecognizer.delegate = self;
 	[self.addNodeButton addGestureRecognizer:_addNodeButtonLongPressGestureRecognizer];
 
+#if 0
+	// pan gesture to recognize mouse-wheel scrolling (zoom)
+	UIPanGestureRecognizer * scrollWheelGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollWheelGesture:)];
+	scrollWheelGesture.allowedScrollTypesMask = UIScrollTypeMaskDiscrete;	// only accept scroll-wheel, not track-pad
+	[self addGestureRecognizer:scrollWheelGesture];
+#endif
+	
 	_notesDatabase			= [OsmNotesDatabase new];
 	_notesDatabase.mapData	= _editorLayer.mapData;
 	_notesViewDict			= [NSMutableDictionary new];
@@ -3644,6 +3651,14 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 
 #pragma mark Mouse movment
+
+- (void)handleScrollWheelGesture:(UIPanGestureRecognizer *)pan
+{
+	CGPoint delta = [pan translationInView:self];
+	CGPoint center = CGRectCenter( self.bounds );
+	CGFloat zoom = (1000 + delta.y) / 1000;
+	[self adjustZoomBy:zoom aroundScreenPoint:center];
+}
 
 - (void)singleClick:(CGPoint)point
 {
