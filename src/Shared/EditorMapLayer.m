@@ -2005,9 +2005,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 							CurvedTextLayer.whiteOnBlack = self.whiteText;
 							CurvedTextLayer * layer = [CurvedTextLayer layerWithString:name alongPath:path];
 							if ( layer ) {
-								[layers addObject:layer];
-								--nameLimit;
-								[nameSet addObject:name];
+								NSArray * a = [layer glyphLayers];
+								if ( a.count ) {
+									[layers addObjectsFromArray:a];
+									--nameLimit;
+									[nameSet addObject:name];
+								}
 							}
 
 						}
