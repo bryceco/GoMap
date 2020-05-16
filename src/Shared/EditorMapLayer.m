@@ -1008,7 +1008,7 @@ extern const double MinIconSizeInPixels;
 }
 
 
-typedef struct RGBColor {
+typedef struct RGBAColor {
 	CGFloat	red;
 	CGFloat	green;
 	CGFloat	blue;
@@ -1518,7 +1518,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				OSMPoint point = object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
 				OSMPoint pt = MapPointForLatitudeLongitude( point.y, point.x );
 
-				CALayer * layer = [CurvedTextLayer.shared layerWithString:name whiteOnBlock:self.whiteText];
+				CALayer * layer = [CurvedGlyphLayer layerWithString:name whiteOnBlock:self.whiteText];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
@@ -1679,7 +1679,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		NSString * houseNumber = color.hasColor ? nil : DrawNodeAsHouseNumber( node.tags );
 		if ( houseNumber ) {
             
-            CALayer * layer = [CurvedTextLayer.shared layerWithString:houseNumber whiteOnBlock:self.whiteText];
+            CALayer * layer = [CurvedGlyphLayer layerWithString:houseNumber whiteOnBlock:self.whiteText];
             layer.anchorPoint	= CGPointMake(0.5, 0.5);
             layer.position      = CGPointMake(pt.x, pt.y);
             layer.zPosition     = Z_TEXT;
@@ -2002,9 +2002,13 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						double length = 0.0;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						if ( length >= name.length * Pixels_Per_Character ) {
-							NSArray * a = [CurvedTextLayer.shared layersWithString:name
-																		 alongPath:path
-                                                                      whiteOnBlock:self.whiteText];
+							CurvedGlyphLayer.whiteOnBlack = self.whiteText;
+							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
+#if 0
+							NSArray * a = layer ? @[ layer ] : nil;
+#else
+							NSArray * a = [layer glyphLayers];
+#endif
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;

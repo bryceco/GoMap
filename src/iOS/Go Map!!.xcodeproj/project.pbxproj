@@ -27,7 +27,7 @@
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
 		02354F782462526A00878A04 /* PersistentWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 02354F772462526A00878A04 /* PersistentWebCache.m */; };
-		02354F7A246349E100878A04 /* CurvedTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedTextLayer.swift */; };
+		02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02354F79246349E100878A04 /* CurvedGlyphLayer.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 023D1722168A36B10011FABC /* POIAttributesViewController.m */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
@@ -204,7 +204,7 @@
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CustomPresetController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02354F772462526A00878A04 /* PersistentWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistentWebCache.m; path = ../Shared/PersistentWebCache.m; sourceTree = "<group>"; };
-		02354F79246349E100878A04 /* CurvedTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CurvedTextLayer.swift; path = ../Shared/CurvedTextLayer.swift; sourceTree = "<group>"; };
+		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CurvedGlyphLayer.swift; path = ../Shared/CurvedGlyphLayer.swift; sourceTree = "<group>"; };
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		023D1721168A36B00011FABC /* POIAttributesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAttributesViewController.h; sourceTree = "<group>"; };
 		023D1722168A36B10011FABC /* POIAttributesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAttributesViewController.m; sourceTree = "<group>"; };
@@ -685,7 +685,7 @@
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				028F504319B949780093C423 /* CommonPresetList.h */,
 				028F504419B949780093C423 /* CommonPresetList.m */,
-				02354F79246349E100878A04 /* CurvedTextLayer.swift */,
+				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
 				02A194AE19C69701002338DA /* Database.h */,
 				02A194AF19C69701002338DA /* Database.m */,
 				0260484019E66C8700415CB1 /* DisplayLink.h */,
@@ -1090,7 +1090,7 @@
 				02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
 				022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */,
-				02354F7A246349E100878A04 /* CurvedTextLayer.swift in Sources */,
+				02354F7A246349E100878A04 /* CurvedGlyphLayer.swift in Sources */,
 				020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
