@@ -1,5 +1,5 @@
 //
-//  CurvedTextLayer.swift
+//  CurvedGlyphLayer.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 5/6/20.
@@ -205,7 +205,7 @@ class StringGlyphs {
 
 
 
-@objc class CurvedTextLayer : CALayer {
+@objc class CurvedGlyphLayer : CALayer {
 
 	// static stuff
 	@objc static var whiteOnBlack: Bool = true {
@@ -240,7 +240,7 @@ class StringGlyphs {
 		self.setNeedsDisplay()
 	}
 
-	@objc static public func layer(WithString string:NSString, alongPath path:CGPath) -> CurvedTextLayer?
+	@objc static public func layer(WithString string:NSString, alongPath path:CGPath) -> CurvedGlyphLayer?
 	{
 		guard let glyphRuns = StringGlyphs.glyphsForString(string:string) else { return nil }
 		let pathPoints = PathPoints(WithPath: path)
@@ -251,7 +251,7 @@ class StringGlyphs {
 
 		let frame = path.boundingBox.insetBy(dx: -20, dy: -20)
 
-		let layer = CurvedTextLayer.init(withGlyphs:glyphRuns, frame:frame, pathPoints: pathPoints)
+		let layer = CurvedGlyphLayer.init(withGlyphs:glyphRuns, frame:frame, pathPoints: pathPoints)
 #if DEBUG
 		layer.string = string
 #endif
@@ -270,8 +270,8 @@ class StringGlyphs {
 		context.textMatrix = CGAffineTransform.identity
 		context.scaleBy(x: 1.0, y: -1.0);
 
-		let textColor = CurvedTextLayer.whiteOnBlack ? UIColor.white : UIColor.black
-		let backColor = (!CurvedTextLayer.whiteOnBlack ? UIColor.white : UIColor.black).withAlphaComponent(0.3)
+		let textColor = CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black
+		let backColor = (!CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black).withAlphaComponent(0.3)
 
 		let baselineOffset = 3 - stringGlyphs.rect.origin.y
 
@@ -314,8 +314,8 @@ class StringGlyphs {
 		pathPoints.resetOffset()
 		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return nil }
 
-		let textColor = CurvedTextLayer.whiteOnBlack ? UIColor.white : UIColor.black
-		let backColor = (!CurvedTextLayer.whiteOnBlack ? UIColor.white : UIColor.black).withAlphaComponent(0.3)
+		let textColor = CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black
+		let backColor = (!CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black).withAlphaComponent(0.3)
 
 		let baselineOffset = 3 - stringGlyphs.rect.origin.y
 
@@ -502,7 +502,7 @@ class GlyphLayer : CALayer {
 		context.textMatrix = CGAffineTransform.identity
 		context.translateBy(x: 0, y: self.bounds.size.height)
 		context.scaleBy(x: 1.0, y: -1.0);
-		context.setFillColor(CurvedTextLayer.whiteOnBlack ? UIColor.white.cgColor : UIColor.black.cgColor)
+		context.setFillColor(CurvedGlyphLayer.whiteOnBlack ? UIColor.white.cgColor : UIColor.black.cgColor)
 		CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
 		context.restoreGState()
 	}
