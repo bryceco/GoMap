@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0205460616766808004A2A23 /* POIPresetValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0205460516766808004A2A23 /* POIPresetValuesViewController.m */; };
 		020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8F168A7688003F2C2A /* CreditsViewController.m */; };
+		0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */; };
 		0219563216DDC26E00074D15 /* GpxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0219563116DDC26E00074D15 /* GpxViewController.m */; };
 		021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */; };
 		021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */ = {isa = PBXBuildFile; fileRef = 021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */; };
@@ -173,6 +174,7 @@
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		020C2A8E168A7688003F2C2A /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CreditsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		020C2A8F168A7688003F2C2A /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CreditsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurvedTextLayer.swift; path = ../Shared/CurvedTextLayer.swift; sourceTree = "<group>"; };
 		0219563016DDC26E00074D15 /* GpxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GpxViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0219563116DDC26E00074D15 /* GpxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GpxViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Edit.h"; path = "../Shared/OsmMapData+Edit.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -686,6 +688,7 @@
 				028F504319B949780093C423 /* CommonPresetList.h */,
 				028F504419B949780093C423 /* CommonPresetList.m */,
 				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
+				0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */,
 				02A194AE19C69701002338DA /* Database.h */,
 				02A194AF19C69701002338DA /* Database.m */,
 				0260484019E66C8700415CB1 /* DisplayLink.h */,
@@ -724,11 +727,11 @@
 				021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */,
 				6453776323D38D1F00656A1C /* OSMModels */,
 				02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */,
-				02354F772462526A00878A04 /* PersistentWebCache.m */,
 				02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */,
 				024ADF3A16B1B38A00875658 /* PathUtil.h */,
 				024ADF3B16B1B38B00875658 /* PathUtil.m */,
 				02BE6194245FEC4C00E92662 /* PersistentWebCache.h */,
+				02354F772462526A00878A04 /* PersistentWebCache.m */,
 				02ACBBB216713F2A00BB4414 /* QuadMap.h */,
 				02ACBBB316713F2A00BB4414 /* QuadMap.m */,
 				022B09A619BD3F7B0041687B /* QuadMapC.mm */,
@@ -1125,6 +1128,7 @@
 				027EDC70206F3EED00D349D6 /* DDXMLElement.m in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
 				024CAB2724429C8200EFB7CA /* ContactUsViewController.m in Sources */,
+				0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */,
 				025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */,
 				64F59A50240915840093DCDB /* MapViewController.swift in Sources */,
 				0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */,
