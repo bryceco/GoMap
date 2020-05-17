@@ -26,13 +26,13 @@ const int UITextAutocapitalizationTypeSentences = 1;
 const int UITextAutocapitalizationTypeWords		= 2;
 #endif
 
-static NSDictionary<NSString *,NSDictionary *> 				* g_addressFormatsDict;
-static NSDictionary<NSString *,NSArray *> 					* g_defaultsDict;
-static NSDictionary<NSString *,NSDictionary *> 				* g_categoriesDict;
-static NSDictionary<NSString *,NSDictionary *> 				* g_presetsDict;
-static NSDictionary<NSString *,NSDictionary *> 				* g_fieldsDict;
-static NSDictionary<NSString *,NSDictionary *> 				* g_translationDict;
-static NSMutableDictionary<NSString *,NSMutableArray *> 	* g_taginfoCache;
+static NSDictionary<NSString *,NSDictionary *> 					* g_addressFormatsDict;
+static NSDictionary<NSString *,NSArray *> 						* g_defaultsDict;
+static NSDictionary<NSString *,NSDictionary *> 					* g_categoriesDict;
+static NSDictionary<NSString *,NSDictionary *> 					* g_presetsDict;
+static NSDictionary<NSString *,NSDictionary *> 					* g_fieldsDict;
+static NSDictionary<NSString *,NSDictionary *> 					* g_translationDict;
+static NSMutableDictionary<NSString *,NSMutableArray *> 		* g_taginfoCache;		// OSM TagInfo database in the cloud
 static NSMutableDictionary<NSString *,CommonPresetFeature *> 	* g_FeatureRepository;
 
 static NSDictionary * DictionaryForFile( NSString * file )

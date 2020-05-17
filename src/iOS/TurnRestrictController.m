@@ -199,7 +199,7 @@
 		highwayLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH;
 		highwayLayer.lineCap 		= kCALineCapRound;
 		highwayLayer.path 	  		= bezierPath.CGPath;
-		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.tagInfo.lineColor.CGColor ?: UIColor.blackColor.CGColor;
+		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.renderInfo.lineColor.CGColor ?: UIColor.blackColor.CGColor;
 		highwayLayer.bounds 		= _detailView.bounds;
 		highwayLayer.position	 	= detailViewCenter;
 		highwayLayer.masksToBounds 	= NO;

@@ -1239,7 +1239,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	if ( object.shapeLayers )
 		return object.shapeLayers;
 
-	RenderInfo * tagInfo = object.tagInfo;
+	RenderInfo * renderInfo = object.renderInfo;
 	NSMutableArray * layers = [NSMutableArray new];
 
     OsmNode *node = object.isNode;
@@ -1249,7 +1249,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
 	// casing
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
-		if ( tagInfo.lineWidth && !object.isWay.isArea ) {
+		if ( renderInfo.lineWidth && !object.isWay.isArea ) {
 			OSMPoint refPoint;
 			CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
 			if ( path ) {
@@ -1261,7 +1261,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 					layer.path			= path;
 					layer.strokeColor	= UIColor.blackColor.CGColor;
 					layer.fillColor		= nil;
-					layer.lineWidth		= (1+tagInfo.lineWidth)*_highwayScale;
+					layer.lineWidth		= (1+renderInfo.lineWidth)*_highwayScale;
 					layer.lineCap		= DEFAULT_LINECAP;
 					layer.lineJoin		= DEFAULT_LINEJOIN;
 					layer.zPosition		= Z_CASING;
@@ -1311,7 +1311,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 									haloLayer.path			= path;
 									haloLayer.strokeColor	= UIColor.redColor.CGColor;
 									haloLayer.fillColor		= nil;
-									haloLayer.lineWidth		= (2+tagInfo.lineWidth)*_highwayScale;
+									haloLayer.lineWidth		= (2+renderInfo.lineWidth)*_highwayScale;
 									haloLayer.lineCap		= DEFAULT_LINECAP;
 									haloLayer.lineJoin		= DEFAULT_LINEJOIN;
 									haloLayer.zPosition		= Z_HALO;
@@ -1338,7 +1338,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		CGPathRef path = [object linePathForObjectWithRefPoint:&refPoint];
 
 		if ( path ) {
-			CGFloat lineWidth = tagInfo.lineWidth*_highwayScale;
+			CGFloat lineWidth = renderInfo.lineWidth*_highwayScale;
 			if ( lineWidth == 0 )
 				lineWidth = 1;
 
@@ -1348,7 +1348,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			layer.bounds		= CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
 			layer.position		= CGPointFromOSMPoint( refPoint );
 			layer.path			= path;
-			layer.strokeColor	= (tagInfo.lineColor ?: UIColor.blackColor).CGColor;
+			layer.strokeColor	= (renderInfo.lineColor ?: UIColor.blackColor).CGColor;
 			layer.fillColor		= nil;
 			layer.lineWidth		= lineWidth;
 			layer.lineCap		= DEFAULT_LINECAP;
@@ -1374,7 +1374,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
 	// Area
 	if ( object.isWay.isArea || object.isRelation.isMultipolygon ) {
-		if ( tagInfo.areaColor && !object.isCoastline ) {
+		if ( renderInfo.areaColor && !object.isCoastline ) {
 
 			OSMPoint refPoint;
 			CGPathRef path = [object shapePathForObjectWithRefPoint:&refPoint];
@@ -1385,7 +1385,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				layer.anchorPoint	= CGPointMake(0,0);
 				layer.path			= path;
 				layer.position		= CGPointFromOSMPoint(refPoint);
-				layer.fillColor		= [tagInfo.areaColor colorWithAlphaComponent:alpha].CGColor;
+				layer.fillColor		= [renderInfo.areaColor colorWithAlphaComponent:alpha].CGColor;
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
@@ -1900,7 +1900,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 									else
 										haloLayer.strokeColor  	= [UIColor.orangeColor colorWithAlphaComponent:0.75].CGColor;	// some other kind of restriction
 									haloLayer.fillColor        	= nil;
-									haloLayer.lineWidth        	= (way.tagInfo.lineWidth + 6) * _highwayScale;
+									haloLayer.lineWidth        	= (way.renderInfo.lineWidth + 6) * _highwayScale;
 									haloLayer.lineCap        	= kCALineCapRound;
 									haloLayer.lineJoin        	= kCALineJoinRound;
 									haloLayer.zPosition        	= Z_HALO;
@@ -2003,16 +2003,16 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						if ( length >= name.length * Pixels_Per_Character ) {
 #if 0
-							// uses CATextLayers with caching
+							// uses CATextLayers with caching (14.5)
 							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path whiteOnBlock:self.whiteText];
 #else
 							CurvedGlyphLayer.whiteOnBlack = self.whiteText;
 							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
 #if 0
-							// Uses a single curving CurvedGlyphLayer (no caching)
+							// Uses a single curving CurvedGlyphLayer (no caching) (13.6)
 							NSArray * a = layer ? @[ layer ] : nil;
 #else
-							// Uses multiple GlyphLayers with caching
+							// Uses multiple GlyphLayers with caching (14.7)
 							NSArray * a = [layer glyphLayers];
 #endif
 #endif
@@ -2374,17 +2374,17 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		[self filterObjects:objects];
 	}
 	
-	// get taginfo for objects
+	// get renderInfo for objects
 	for ( OsmBaseObject * object in objects ) {
-		if ( object.tagInfo == nil ) {
-			object.tagInfo = [[RenderInfoDatabase sharedRenderInfoDatabase] renderInfoForObject:object];
+		if ( object.renderInfo == nil ) {
+			object.renderInfo = [[RenderInfoDatabase sharedRenderInfoDatabase] renderInfoForObject:object];
 		}
 		
 		if ( object->renderPriorityCached == 0 ) {
 			if ( object.modifyCount ) {
 				object->renderPriorityCached = 1000000;
 			} else {
-				object->renderPriorityCached = [object.tagInfo renderPriority:object];
+				object->renderPriorityCached = [object.renderInfo renderPriority:object];
 			}
 		}
 	}
@@ -2433,7 +2433,7 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	NSInteger addressCount = 0;
 	while ( addressCount < objectLimit ) {
 		OsmBaseObject * obj = objects[objectLimit-addressCount-1];
-		if ( ![obj.tagInfo isAddressPoint] )
+		if ( ![obj.renderInfo isAddressPoint] )
 			break;
 		++addressCount;
 	}

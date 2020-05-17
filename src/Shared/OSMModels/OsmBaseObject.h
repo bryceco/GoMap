@@ -53,12 +53,12 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
     OSMRect                _boundingBox;
     NSInteger            renderPriorityCached;
 }
-@property (readonly,nonatomic)    BOOL                    deleted;
-@property (strong,nonatomic)    RenderInfo                *    tagInfo;
-@property (readonly,nonatomic)    int32_t                    modifyCount;
-@property (readonly,nonatomic)    NSArray                *    parentRelations;
-@property (readonly,nonatomic)    OsmIdentifier            extendedIdentifier;
-@property (readonly,nonatomic)    OSM_TYPE                extendedType;
+@property (readonly,nonatomic)  BOOL               	deleted;
+@property (strong,nonatomic)    RenderInfo		*	renderInfo;
+@property (readonly,nonatomic)  int32_t         	modifyCount;
+@property (readonly,nonatomic)	NSArray     	*	parentRelations;
+@property (readonly,nonatomic)  OsmIdentifier    	extendedIdentifier;
+@property (readonly,nonatomic)	OSM_TYPE     		extendedType;
 
 +(OsmIdentifier)extendedIdentifierForType:(OSM_TYPE)type identifier:(OsmIdentifier)identifier;
 +(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *)pType ident:(OsmIdentifier *)pIdent;

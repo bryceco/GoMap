@@ -299,7 +299,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
 -(void)clearCachedProperties
 {
-    _tagInfo                    = nil;
+    _renderInfo                    = nil;
     renderPriorityCached        = 0;
     _isOneWay                    = nil;
     _isShown                    = TRISTATE_UNKNOWN;

@@ -41,9 +41,9 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
 	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
 	for ( NSString * featureName in a ) {
-		CommonPresetFeature * tagInfo = [CommonPresetFeature commonPresetFeatureWithName:featureName];
-		if ( tagInfo ) {
-			[mostRecentArray addObject:tagInfo];
+		CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
+		if ( feature ) {
+			[mostRecentArray addObject:feature];
 		}
 	}
 }
@@ -222,16 +222,16 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( _searchArrayAll ) {
-		CommonPresetFeature * tagInfo = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
-		[self updateTagsWithFeature:tagInfo];
+		CommonPresetFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+		[self updateTagsWithFeature:feature];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 		return;
 	}
 
 	if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
-		CommonPresetFeature * tagInfo = mostRecentArray[ indexPath.row ];
-		[self updateTagsWithFeature:tagInfo];
+		CommonPresetFeature * feature = mostRecentArray[ indexPath.row ];
+		[self updateTagsWithFeature:feature];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else {
 		// type list
@@ -261,8 +261,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	} else {
 		// searching
 		_searchArrayAll = [[CommonPresetList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
-		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonPresetFeature * tagInfo, NSDictionary *bindings) {
-			return [tagInfo matchesSearchText:searchText];
+		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonPresetFeature * feature, NSDictionary *bindings) {
+			return [feature matchesSearchText:searchText];
 		}]];
 	}
 	[self.tableView reloadData];
