@@ -382,8 +382,8 @@ class StringGlyphs {
 		layer.contentsScale = UIScreen.main.scale;
 
 		let font = StringGlyphs.uiFont
-		let textColor   = whiteOnBlack ? UIColor.white : UIColor.black
-		let shadowColor = whiteOnBlack ? UIColor.black : UIColor.white
+		let textColor = whiteOnBlack ? UIColor.white : UIColor.black
+		let backColor = (whiteOnBlack ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
 
 		let attrString = NSAttributedString(string: string,
 											attributes: [
@@ -408,7 +408,7 @@ class StringGlyphs {
 		layer.isWrapped			= true;
 		layer.alignmentMode		= CATextLayerAlignmentMode.left;	// because our origin is -3 this is actually centered
 
-		layer.backgroundColor	= shadowColor.withAlphaComponent(0.3).cgColor;
+		layer.backgroundColor	= backColor.cgColor;
 
 		return layer;
 	}

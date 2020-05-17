@@ -55,8 +55,8 @@ required init?(coder: NSCoder) {
 
 	let font = UIFont.preferredFont(forTextStyle: .subheadline)
 
-	let textColor   = whiteOnBlack ? UIColor.white : UIColor.black
-	let shadowColor = whiteOnBlack ? UIColor.black : UIColor.white
+	let textColor = whiteOnBlack ? UIColor.white : UIColor.black
+	let backColor = (whiteOnBlack ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
 
 	let attrString = NSAttributedString(string: string,
 										attributes: [
@@ -80,13 +80,7 @@ required init?(coder: NSCoder) {
 	layer.truncationMode	= CATextLayerTruncationMode.none;
 	layer.isWrapped			= true;
 	layer.alignmentMode		= CATextLayerAlignmentMode.left;	// because our origin is -3 this is actually centered
-
-	let shadowPath			= CGPath(rect: bounds, transform: nil)
-	layer.shadowPath		= shadowPath;
-	layer.shadowColor		= shadowColor.cgColor;
-	layer.shadowRadius		= 0.0;
-	layer.shadowOffset		= CGSize.zero
-	layer.shadowOpacity		= 0.3;
+	layer.backgroundColor	= backColor.cgColor
 
 	return layer;
 }
@@ -295,13 +289,7 @@ private func getCachedLayer(for string: String, whiteOnBlack: Bool) -> CATextLay
 				layer.isWrapped			= false
 				layer.alignmentMode		= .center
 				layer.contentsScale		= UIScreen.main.scale;
-
-				let	shadowPath	= CGPath(rect: bounds, transform: nil)
-				layer.shadowColor		= whiteOnBlack ? UIColor.black.cgColor : UIColor.white.cgColor;
-				layer.shadowRadius		= 0.0;
-				layer.shadowOffset		= CGSize.zero
-				layer.shadowOpacity		= 0.3;
-				layer.shadowPath		= shadowPath;
+				layer.backgroundColor	= (whiteOnBlack ? UIColor.black : UIColor.white).withAlphaComponent(0.3).cgColor
 
 				layerCache.setObject(layer, forKey:cacheKey as NSString)
 			} else {
