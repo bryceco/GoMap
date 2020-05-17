@@ -289,6 +289,11 @@
     return [_tags[@"type"] isEqualToString:@"multipolygon"];
 }
 
+-(BOOL)isBoundary
+{
+    return [_tags[@"type"] isEqualToString:@"boundary"];
+}
+
 -(BOOL)isRoute
 {
     return [_tags[@"type"] isEqualToString:@"route"];

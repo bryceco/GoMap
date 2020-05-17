@@ -23,6 +23,7 @@
 -(void)assignMembers:(NSArray *)members undo:(UndoManager *)undo;
 
 -(BOOL)isMultipolygon;
+-(BOOL)isBoundary;
 -(BOOL)isRestriction;
 -(BOOL)isRoute;
 
