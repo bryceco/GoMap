@@ -206,9 +206,9 @@ const CGFloat kEditControlCornerRadius = 4;
 			_crossHairs.zPosition	= Z_CROSSHAIRS;
 
 			path = [UIBezierPath new];
-			CGFloat shadowWidth = 1.0;
-			UIBezierPath * p1 = [UIBezierPath bezierPathWithRect:CGRectMake(-(radius+shadowWidth), -shadowWidth, 2*(radius+shadowWidth), 2*shadowWidth)];
-			UIBezierPath * p2 = [UIBezierPath bezierPathWithRect:CGRectMake(-shadowWidth, -(radius+shadowWidth), 2*shadowWidth, 2*(radius+shadowWidth))];
+			CGFloat shadowWidth = 2.0;
+			UIBezierPath * p1 = [UIBezierPath bezierPathWithRect:CGRectMake(-(radius+shadowWidth-1), -shadowWidth, 2*(radius+shadowWidth-1), 2*shadowWidth)];
+			UIBezierPath * p2 = [UIBezierPath bezierPathWithRect:CGRectMake(-shadowWidth, -(radius+shadowWidth-1), 2*shadowWidth, 2*(radius+shadowWidth-1))];
 			[path appendPath:p1];
 			[path appendPath:p2];
 			_crossHairs.shadowColor		= UIColor.blackColor.CGColor;
