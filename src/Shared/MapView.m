@@ -3687,14 +3687,14 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				_editorLayer.selectedWay = nil;
 				_editorLayer.selectedRelation = nil;
 			} else if ( hit.isWay ) {
-				if ( _editorLayer.selectedRelation.isMultipolygon && [hit.isWay.parentRelations containsObject:_editorLayer.selectedRelation] ) {
+				if ( _editorLayer.selectedRelation && [hit.isWay.parentRelations containsObject:_editorLayer.selectedRelation] ) {
 					// selecting way inside previously selected relation
 					_editorLayer.selectedNode = nil;
 					_editorLayer.selectedWay = (id)hit;
 				} else if ( hit.parentRelations.count > 0 ) {
 					// select relation the way belongs to
 					NSArray * relations = [hit.parentRelations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
-						return relation.isMultipolygon;
+						return relation.isMultipolygon || relation.isBoundary;
 					}]];
 					OsmRelation * relation = relations.count > 0 ? relations[0] : nil;
 					if ( relation ) {
