@@ -3553,6 +3553,17 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		UIAlertController * multiSelectSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Select Object",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 		for ( OsmBaseObject * object in objects ) {
 			NSString * title = object.friendlyDescription;
+			if ( ![title hasPrefix:@"("] ) {
+				// indicate what type of object it is
+				if ( object.isNode )
+					title = [title stringByAppendingString:@" (node)"];
+				else if ( object.isWay )
+					title = [title stringByAppendingString:@" (way)"];
+				else if ( object.isRelation ) {
+					NSString * type = object.tags[@"type"] ?: @"relation";
+					title = [title stringByAppendingFormat:@" (%@)",type];
+				}
+			}
 			[multiSelectSheet addAction:[UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 				// processing for selecting one of multipe objects
 				[_editorLayer setSelectedNode:nil];
