@@ -109,8 +109,8 @@ private class StringGlyphs {
 
 	private init?(withString string:NSString)
 	{
-		let attrString = NSAttributedString.init(string:string as String,
-												 attributes: [ NSAttributedString.Key.font: StringGlyphs.uiFont ])
+		let attrString = NSAttributedString(string:string as String,
+											attributes: [ NSAttributedString.Key.font: StringGlyphs.uiFont ])
 		let ctLine = CTLineCreateWithAttributedString( attrString )
 		guard let runs = (CTLineGetGlyphRuns(ctLine) as? [CTRun]) else {
 			return nil
@@ -209,7 +209,7 @@ private class StringGlyphs {
 		}
 
 		let frame = path.boundingBox.insetBy(dx: -20, dy: -20)
-		let layer = CurvedGlyphLayer.init(withGlyphs:glyphRuns, frame:frame, pathPoints: pathPoints)
+		let layer = CurvedGlyphLayer(withGlyphs:glyphRuns, frame:frame, pathPoints: pathPoints)
 		return layer
 	}
 
@@ -335,20 +335,9 @@ class GlyphLayer : CALayer {
 	private let glyphs:[CGGlyph]
 	private let positions:[CGPoint]
 	private let font:CTFont
-	private var inUse:Bool
-
-	private init(withCopy copy:GlyphLayer) {
-		self.glyphs 			= copy.glyphs
-		self.positions 			= copy.positions
-		self.font 				= copy.font
-		self.inUse				= true
-		super.init()
-		self.contentsScale 		= copy.contentsScale
-		self.anchorPoint		= copy.anchorPoint
-		self.bounds				= copy.bounds
-		self.backgroundColor	= copy.backgroundColor
-		self.contents 			= copy.contents	// use existing backing store so we don't have to redraw
-	}
+	// Calling super.init() on a CALayer subclass that contains a var doesn't work on iOS 9
+	// Declaring it NSManaged avoids this bug
+	@NSManaged var inUse : Bool
 
 	private func copy() -> GlyphLayer {
 		return GlyphLayer(withCopy: self)
@@ -368,14 +357,13 @@ class GlyphLayer : CALayer {
 		return NSNull()
 	}
 
-	// calling init() on a CALayer subclass from Obj-C doesn't work on iOS 9
 	private init(withFont font:CTFont, glyphs:[CGGlyph], positions:[CGPoint])
 	{
 		self.glyphs 			= glyphs
 		self.positions 			= positions
 		self.font 				= font
-		self.inUse 				= true
 		super.init()
+		self.inUse				= true
 		let size = CTFontGetBoundingBox( font ).size
 		let descent = CTFontGetDescent( font )
 		let bounds				= CGRect(x:0, y:descent, width: positions.last!.x, height: size.height)
@@ -387,9 +375,17 @@ class GlyphLayer : CALayer {
 		self.setNeedsDisplay()
 	}
 
-	deinit
-	{
-		print("deinit")
+	private init(withCopy copy:GlyphLayer) {
+		self.glyphs 			= copy.glyphs
+		self.positions 			= copy.positions
+		self.font 				= copy.font
+		super.init()
+		self.inUse				= true
+		self.contentsScale 		= copy.contentsScale
+		self.anchorPoint		= copy.anchorPoint
+		self.bounds				= copy.bounds
+		self.backgroundColor	= copy.backgroundColor
+		self.contents 			= copy.contents	// use existing backing store so we don't have to redraw
 	}
 
 	static public func layer(withFont font:CTFont, glyphs:[CGGlyph], positions:[CGPoint]) -> GlyphLayer?
@@ -404,9 +400,7 @@ class GlyphLayer : CALayer {
 			layer.inUse = true
 			return layer
 		} else {
-			let layer = GlyphLayer.init(withFont: font,
-										glyphs: glyphs,
-										positions: positions)
+			let layer = GlyphLayer(withFont: font, glyphs: glyphs, positions: positions)
 			cache.setObject(layer, forKey: key)
 			return layer
 		}
