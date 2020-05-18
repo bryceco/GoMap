@@ -1975,18 +1975,18 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		// street names
 		if ( nameLimit > 0 ) {
 
-			__block OsmRelation * parentBoundary = nil;
+			__block OsmRelation * parentRelation = nil;
 			[object.isWay.parentRelations enumerateObjectsUsingBlock:^(OsmRelation * parent, NSUInteger idx, BOOL * _Nonnull stop) {
-				if ( parent.isBoundary ) {
-					parentBoundary = parent;
+				if ( parent.isBoundary || parent.isWaterway ) {
+					parentRelation = parent;
 					*stop = YES;
 				}
 			}];
 
-			if ( (object.isWay && !object.isWay.isArea) || parentBoundary ) {
+			if ( (object.isWay && !object.isWay.isArea) || parentRelation ) {
 				NSString * name = object.tags[ @"name" ];
 				if ( name == nil )
-					name = parentBoundary.tags[ @"name" ];
+					name = parentRelation.tags[ @"name" ];
 				if ( name ) {
 					if ( ![nameSet containsObject:name] ) {
 						double length = 0.0;

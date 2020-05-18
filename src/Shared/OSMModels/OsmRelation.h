@@ -24,6 +24,7 @@
 
 -(BOOL)isMultipolygon;
 -(BOOL)isBoundary;
+-(BOOL)isWaterway;
 -(BOOL)isRestriction;
 -(BOOL)isRoute;
 

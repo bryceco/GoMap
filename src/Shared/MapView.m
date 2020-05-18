@@ -3694,7 +3694,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				} else if ( hit.parentRelations.count > 0 ) {
 					// select relation the way belongs to
 					NSArray * relations = [hit.parentRelations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
-						return relation.isMultipolygon || relation.isBoundary;
+						return relation.isMultipolygon || relation.isBoundary || relation.isWaterway;
 					}]];
 					if ( relations.count == 0 && !hit.hasInterestingTags )
 						relations = hit.parentRelations;	// if the way doesn't have tags then always promote to containing relation

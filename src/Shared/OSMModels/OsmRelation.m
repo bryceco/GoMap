@@ -291,7 +291,12 @@
 
 -(BOOL)isBoundary
 {
-    return [_tags[@"type"] isEqualToString:@"boundary"];
+	return [_tags[@"type"] isEqualToString:@"boundary"];
+}
+
+-(BOOL)isWaterway
+{
+	return [_tags[@"type"] isEqualToString:@"waterway"];
 }
 
 -(BOOL)isRoute
