@@ -200,7 +200,7 @@ private class StringGlyphs {
 			if ( newValue != whiteOnBlack ) {
 				GlyphLayer.fontSizeDidChange()
 				CurvedGlyphLayer.foreColor = newValue ? UIColor.white : UIColor.black
-				CurvedGlyphLayer.backColor = (newValue ? UIColor.black : UIColor.black).withAlphaComponent(0.3)
+				CurvedGlyphLayer.backColor = (newValue ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
 			}
 		}
 	}
