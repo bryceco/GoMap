@@ -26,34 +26,10 @@ class PathPoints {
 
 	init(WithPath path:CGPath)
 	{
-		// get line segments
-		points = Array(repeating: CGPoint.zero, count: CGPathPointCount( path ))
-		points.withUnsafeMutableBufferPointer { a in
-			_ = CGPathGetPoints( path, a.baseAddress )
+		let count = CGPathPointCount( path )
+		self.points = Array<CGPoint>(unsafeUninitializedCapacity: count) { buffer, initializedCount in
+			initializedCount = CGPathGetPoints( path, buffer.baseAddress )
 		}
-	}
-
-	func eliminatePointsOnStraightSegments()
-	{
-		if points.count < 3 {
-			return
-		}
-		var dst = 1
-		for src in 1 ..< points.count-1 {
-			var dir : OSMPoint = OSMPoint( x: Double(points[src+1].x - points[dst-1].x),
-										   y: Double(points[src+1].y - points[dst-1].y) )
-			dir = UnitVector(dir);
-			let dist = DistanceFromLineToPoint( OSMPointFromCGPoint(points[dst-1]), dir, OSMPointFromCGPoint(points[src]) );
-			if ( dist < 2.0 ) {
-				// essentially a straight line, so remove point
-			} else {
-				points[ dst ] = points[ src ]
-				dst += 1
-			}
-		}
-		points[ dst ] = points.last!
-		points.removeSubrange(dst+1 ..< points.count)
-		_length = nil
 	}
 
 	func length() -> CGFloat
@@ -147,49 +123,60 @@ class StringGlyphs {
 
 	// objects
 
-	public  let rect : CGRect
-	public  let runGlyphs : [GlyphList]
-	public	let runFonts : [CTFont]
+	public let runs : [CTRun]
+	public let rect : CGRect
 
 	private init?(withString string:NSString)
 	{
 		let attrString = NSAttributedString.init(string:string as String,
 												 attributes: [ NSAttributedString.Key.font: StringGlyphs.uiFont ])
 		let ctLine = CTLineCreateWithAttributedString( attrString )
-		guard let runs = CTLineGetGlyphRuns(ctLine) as? [CTRun] else { return nil }
-
-		var glyphs = [GlyphList]()
-		var fonts = [CTFont]()
-
-		for run : CTRun in runs {
-
-			// get glyphs for run
-			let glyphCount = CTRunGetGlyphCount(run)
-			var runGlyphs = Array(repeating: CGGlyph.zero, count: glyphCount)
-			runGlyphs.withUnsafeMutableBufferPointer { buffer in
-				CTRunGetGlyphs(run, CFRangeMake(0,glyphCount), buffer.baseAddress!)
-			}
-
-			// get advances for run
-			var runAdvances = Array(repeating: CGSize.zero, count: glyphCount)
-			runAdvances.withUnsafeMutableBufferPointer { buffer in
-				CTRunGetAdvances(run, CFRangeMake(0,glyphCount), buffer.baseAddress!)
-			}
-
-			let attr = CTRunGetAttributes(run) as Dictionary
-			let value = attr["NSFont" as NSString]
-			let font = value as! CTFont
-			fonts.append(font)
-
-			glyphs.append(GlyphList(glyphs: runGlyphs, advances: runAdvances))
+		guard let runs = (CTLineGetGlyphRuns(ctLine) as? [CTRun]) else {
+			return nil
 		}
-
-		self.runGlyphs = glyphs
-		self.runFonts = fonts
-		self.rect = CTLineGetBoundsWithOptions(ctLine, CTLineBoundsOptions.useGlyphPathBounds)
+		self.runs = runs
+		self.rect = CTLineGetBoundsWithOptions( ctLine, CTLineBoundsOptions.useGlyphPathBounds )
 	}
 
-	static public func glyphsForString(string:NSString) -> StringGlyphs?
+	public static func glyphsForRun( _ run : CTRun ) -> [CGGlyph]
+	{
+		let count = CTRunGetGlyphCount(run)
+		let glyphs = Array<CGGlyph>(unsafeUninitializedCapacity: count) { buffer, initializedCount in
+			CTRunGetGlyphs(run, CFRangeMake(0,count), buffer.baseAddress!)
+			initializedCount = count
+		}
+		return glyphs
+	}
+
+	public static func advancesForRun( _ run : CTRun ) -> [CGSize]
+	{
+		let count = CTRunGetGlyphCount(run)
+		let advances = Array<CGSize>(unsafeUninitializedCapacity: count) { buffer, initializedCount in
+			CTRunGetAdvances(run, CFRangeMake(0,count), buffer.baseAddress!)
+			initializedCount = count
+		}
+		return advances
+	}
+
+	public static func stringIndicesForRun( _ run : CTRun ) -> [CFIndex]
+	{
+		let count = CTRunGetGlyphCount(run)
+		let advances = Array<CFIndex>(unsafeUninitializedCapacity: count) { buffer, initializedCount in
+			CTRunGetStringIndices( run, CFRangeMake(0,count), buffer.baseAddress! )
+			initializedCount = count
+		}
+		return advances
+	}
+
+	public static func fontForRun( _ run : CTRun ) -> CTFont
+	{
+		let attr = CTRunGetAttributes(run) as Dictionary
+		let value = attr["NSFont" as NSString]
+		let font = value as! CTFont
+		return font
+	}
+
+	public static func stringGlyphsForString(string:NSString) -> StringGlyphs?
 	{
 		if let glyphs = StringGlyphs.cache.object(forKey:string) {
 			return glyphs
@@ -201,8 +188,6 @@ class StringGlyphs {
 		}
 	}
 }
-
-
 
 
 @objc class CurvedGlyphLayer : CALayer {
@@ -242,7 +227,7 @@ class StringGlyphs {
 
 	@objc static public func layer(WithString string:NSString, alongPath path:CGPath) -> CurvedGlyphLayer?
 	{
-		guard let glyphRuns = StringGlyphs.glyphsForString(string:string) else { return nil }
+		guard let glyphRuns = StringGlyphs.stringGlyphsForString(string:string) else { return nil }
 		let pathPoints = PathPoints(WithPath: path)
 
 		if glyphRuns.rect.size.width+8 >= pathPoints.length() {
@@ -275,12 +260,14 @@ class StringGlyphs {
 
 		let baselineOffset = 3 - stringGlyphs.rect.origin.y
 
-		for runIndex in 0 ..< stringGlyphs.runGlyphs.count {
+		for run in stringGlyphs.runs {
 
-			let runGlyphs = stringGlyphs.runGlyphs[runIndex]
-			let runFont = stringGlyphs.runFonts[runIndex]
+			let glyphs 		= StringGlyphs.glyphsForRun( run )
+			let advances 	= StringGlyphs.advancesForRun( run )
+			let runFont 	= StringGlyphs.fontForRun( run)
+			let count 		= CTRunGetGlyphCount( run )
 
-			for glyphIndex in 0 ..< runGlyphs.glyphs.count {
+			for glyphIndex in 0 ..< count {
 
 				guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else { return }
 				let p = CGPoint(x: loc.pos.x - self.position.x, y: loc.pos.y - self.position.y )
@@ -290,27 +277,21 @@ class StringGlyphs {
 				context.rotate(by: -loc.angle)
 
 				context.setFillColor(backColor.cgColor)
-				let rc = CGRect(x: 0, y: stringGlyphs.rect.origin.y, width: runGlyphs.advances[glyphIndex].width, height: stringGlyphs.rect.height)
+				let rc = CGRect(x: 0, y: stringGlyphs.rect.origin.y, width: advances[glyphIndex].width, height: stringGlyphs.rect.height)
 				context.fill(rc)
 
 				context.setFillColor(textColor.cgColor)
-				let glyph = runGlyphs.glyphs[glyphIndex]
+				let glyph = glyphs[glyphIndex]
 				CTFontDrawGlyphs(runFont, [glyph], [CGPoint.zero], 1, context)
 				context.restoreGState()
 
-				guard pathPoints.advanceOffsetBy( runGlyphs.advances[glyphIndex].width ) else { return }
+				guard pathPoints.advanceOffsetBy( advances[glyphIndex].width ) else { return }
 			}
 		}
 	}
 
 	@objc func glyphLayers() -> [GlyphLayer]?
 	{
-#if DEBUG
-		if self.string!.isEqual("15th Avenue") {
-			print( "\(string!)" )
-		}
-#endif
-
 		pathPoints.resetOffset()
 		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return nil }
 
@@ -321,31 +302,33 @@ class StringGlyphs {
 
 		var layers : [GlyphLayer] = []
 
-		for runIndex in 0 ..< stringGlyphs.runGlyphs.count {
+		for run in stringGlyphs.runs {
 
-			let runGlyphs = stringGlyphs.runGlyphs[runIndex]
-			let runFont = stringGlyphs.runFonts[runIndex]
+			let count 		= CTRunGetGlyphCount(run)
+			let glyphs 		= StringGlyphs.glyphsForRun( run )
+			let advances 	= StringGlyphs.advancesForRun( run )
+			let runFont 	= StringGlyphs.fontForRun( run )
 
 			var glyphIndex = 0
-			while glyphIndex < runGlyphs.glyphs.count {
+			while glyphIndex < count {
 				var layerGlyphs : [CGGlyph] = []
 				var layerPositions : [CGPoint] = []
 				var position : CGFloat = 0.0
 				var start : TextLoc? = nil
 
-				while glyphIndex < runGlyphs.glyphs.count {
+				while glyphIndex < count {
 
 					guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else {
 						break
 					}
 					if start == nil {
 						start = loc
-					} else if loc.angle != start!.angle {
+					} else if 360.0 * abs(loc.angle-start!.angle) > 5.0 {
 						break
 					}
 
-					let glyphWidth = runGlyphs.advances[glyphIndex].width
-					layerGlyphs.append(runGlyphs.glyphs[glyphIndex])
+					let glyphWidth = advances[glyphIndex].width
+					layerGlyphs.append(glyphs[glyphIndex])
 					layerPositions.append(CGPoint(x: position, y: 0.0))
 					position += glyphWidth
 
@@ -428,11 +411,13 @@ class GlyphLayer : CALayer {
 	private let glyphs:[CGGlyph]
 	private let positions:[CGPoint]
 	private let font:CTFont
+	private var inUse:Bool
 
 	private init(withCopy copy:GlyphLayer) {
 		self.glyphs 			= copy.glyphs
 		self.positions 			= copy.positions
 		self.font 				= copy.font
+		self.inUse				= true
 		super.init()
 		self.contentsScale 		= copy.contentsScale
 		self.anchorPoint		= copy.anchorPoint
@@ -443,6 +428,11 @@ class GlyphLayer : CALayer {
 
 	private func copy() -> GlyphLayer {
 		return GlyphLayer(withCopy: self)
+	}
+
+	override func removeFromSuperlayer() {
+		inUse = false
+		super.removeFromSuperlayer()
 	}
 
 	@objc static func fontSizeDidChange() {
@@ -460,6 +450,7 @@ class GlyphLayer : CALayer {
 		self.glyphs = glyphs
 		self.positions = positions
 		self.font = font
+		self.inUse = true
 
 		super.init()
 
@@ -480,7 +471,11 @@ class GlyphLayer : CALayer {
 			return NSData(bytes: a.baseAddress, length: a.count)
 		}
 		if let layer = cache.object(forKey: key) {
-			return layer.copy()
+			if layer.inUse {
+				return layer.copy()
+			}
+			layer.inUse = true
+			return layer
 		} else {
 			let layer = GlyphLayer.init(withFont: font,
 							   foreColor: foreColor,
