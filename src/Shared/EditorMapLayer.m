@@ -1284,46 +1284,26 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				}
 
 				// provide a halo for streets that don't have a name
-				if ( _mapView.enableUnnamedRoadHalo ) {
-					if ( object.tags[@"name"] == nil && ![object.tags[@"noname"] isEqualToString:@"yes"] ) {
+				if ( _mapView.enableUnnamedRoadHalo  &&  object.tags[@"highway"] ) {
+					NSString * name = [object givenName];
+					if ( name == nil && ![object.tags[@"noname"] isEqualToString:@"yes"] ) {
 						// it lacks a name
-						static NSDictionary * highwayTypes = nil;
-						enum { USES_NAME = 1, USES_REF = 2 };
-						if ( highwayTypes == nil )
-							highwayTypes = @{ @"motorway":@(USES_REF),
-											  @"trunk":@(USES_REF),
-											  @"primary":@(USES_REF),
-											  @"secondary":@(USES_REF),
-											  @"tertiary":@(USES_NAME),
-											  @"unclassified":@(USES_NAME),
-											  @"residential":@(USES_NAME),
-											  @"road":@(USES_NAME),
-											  @"living_street":@(USES_NAME) };
-						NSString * highway = object.tags[@"highway"];
-						if ( highway ) {
-							// it is a highway
-							NSInteger uses = [highwayTypes[highway] integerValue];
-							if ( uses ) {
-								if ( (uses & USES_REF) ? object.tags[@"ref"] == nil : YES ) {
-									CAShapeLayer * haloLayer = [CAShapeLayer new];
-									haloLayer.anchorPoint	= CGPointMake(0, 0);
-									haloLayer.position		= CGPointFromOSMPoint( refPoint );
-									haloLayer.path			= path;
-									haloLayer.strokeColor	= UIColor.redColor.CGColor;
-									haloLayer.fillColor		= nil;
-									haloLayer.lineWidth		= (2+renderInfo.lineWidth)*_highwayScale;
-									haloLayer.lineCap		= DEFAULT_LINECAP;
-									haloLayer.lineJoin		= DEFAULT_LINEJOIN;
-									haloLayer.zPosition		= Z_HALO;
-									LayerProperties * haloProps = [LayerProperties new];
-									[haloLayer setValue:haloProps forKey:@"properties"];
-									haloProps->position = refPoint;
-									haloProps->lineWidth = haloLayer.lineWidth;
+						CAShapeLayer * haloLayer = [CAShapeLayer new];
+						haloLayer.anchorPoint	= CGPointMake(0, 0);
+						haloLayer.position		= CGPointFromOSMPoint( refPoint );
+						haloLayer.path			= path;
+						haloLayer.strokeColor	= UIColor.redColor.CGColor;
+						haloLayer.fillColor		= nil;
+						haloLayer.lineWidth		= (2+renderInfo.lineWidth)*_highwayScale;
+						haloLayer.lineCap		= DEFAULT_LINECAP;
+						haloLayer.lineJoin		= DEFAULT_LINEJOIN;
+						haloLayer.zPosition		= Z_HALO;
+						LayerProperties * haloProps = [LayerProperties new];
+						[haloLayer setValue:haloProps forKey:@"properties"];
+						haloProps->position = refPoint;
+						haloProps->lineWidth = haloLayer.lineWidth;
 
-									[layers addObject:haloLayer];
-								}
-							}
-						}
+						[layers addObject:haloLayer];
 					}
 				}
 

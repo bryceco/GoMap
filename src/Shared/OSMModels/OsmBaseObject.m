@@ -481,9 +481,41 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     return keyDict;
 }
 
--(NSString *)friendlyDescriptionWithDetails:(BOOL)details
+-(NSString *)givenName
 {
     NSString * name = [_tags objectForKey:@"name"];
+    if ( name.length )
+        return name;
+
+	if ( self.isWay ) {
+		NSString * highway = _tags[@"highway"];
+		if ( highway ) {
+			enum { USES_NAME = 1, USES_REF = 2 };
+			static NSDictionary * highwayTypes = nil;
+			if ( highwayTypes == nil )
+				highwayTypes = @{ @"motorway":@(USES_REF),
+								  @"trunk":@(USES_REF),
+								  @"primary":@(USES_REF),
+								  @"secondary":@(USES_REF),
+								  @"tertiary":@(USES_NAME),
+								  @"unclassified":@(USES_NAME),
+								  @"residential":@(USES_NAME),
+								  @"road":@(USES_NAME),
+								  @"living_street":@(USES_NAME) };
+			NSInteger uses = [highwayTypes[highway] integerValue];
+			if ( uses & USES_REF) {
+				name = _tags[@"ref"];
+				if ( name.length )
+					return name;
+			}
+		}
+	}
+	return nil;;
+}
+
+-(NSString *)friendlyDescriptionWithDetails:(BOOL)details
+{
+    NSString * name = [self givenName];
     if ( name.length )
         return name;
 
