@@ -11,13 +11,13 @@ import Foundation
 import QuartzCore
 
 
-struct TextLoc {
+private struct TextLoc {
 	var pos: CGPoint
 	var angle: CGFloat
 	var length: CGFloat
 }
 
-class PathPoints {
+private class PathPoints {
 
 	public var 	points : [CGPoint]
 	private var _length : CGFloat? = nil
@@ -93,7 +93,7 @@ class PathPoints {
 
 
 
-class GlyphList {
+private class GlyphList {
 	let glyphs : [CGGlyph]
 	let advances : [CGSize]
 	init(glyphs:[CGGlyph],advances:[CGSize])
@@ -103,7 +103,7 @@ class GlyphList {
 	}
 }
 
-class StringGlyphs {
+private class StringGlyphs {
 
 	// static stuff
 	public static var uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
@@ -204,18 +204,13 @@ class StringGlyphs {
 
 	private let stringGlyphs : StringGlyphs
 	private let pathPoints : PathPoints
-#if DEBUG
-	private var string : NSString?
-#endif
 
 	// calling init() on a CALayer subclass from Obj-C doesn't work on iOS 9
 	private init(withGlyphs stringGlyphs:StringGlyphs, frame:CGRect, pathPoints:PathPoints)
 	{
 		self.stringGlyphs = stringGlyphs
 		self.pathPoints = pathPoints
-#if DEBUG
-		self.string = nil
-#endif
+
 		super.init()
 
 		self.contentsScale 		= UIScreen.main.scale;
@@ -235,11 +230,7 @@ class StringGlyphs {
 		}
 
 		let frame = path.boundingBox.insetBy(dx: -20, dy: -20)
-
 		let layer = CurvedGlyphLayer.init(withGlyphs:glyphRuns, frame:frame, pathPoints: pathPoints)
-#if DEBUG
-		layer.string = string
-#endif
 		return layer
 	}
 
@@ -372,15 +363,22 @@ class StringGlyphs {
 											attributes: [
 												NSAttributedString.Key.foregroundColor: textColor.cgColor,
 												NSAttributedString.Key.font: font])
-
 		let framesetter = CTFramesetterCreateWithAttributedString(attrString)
 
+
 		var bounds = CGRect.zero
-		bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter,
-																   CFRangeMake(0, 0),
-																   nil,
-																   CGSize(width: MAX_TEXT_WIDTH, height: CGFloat.greatestFiniteMagnitude),
-																   nil)
+		var maxWidth = MAX_TEXT_WIDTH
+		while true {
+			bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter,
+																	   CFRangeMake(0, 0),
+																	   nil,
+																	   CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude),
+																	   nil)
+			if bounds.height < maxWidth {
+				break
+			}
+			maxWidth *= 2
+		}
 		bounds = bounds.insetBy( dx: -3, dy: -1 );
 		bounds.size.width  = 2 * ceil( bounds.size.width/2 );	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
 		bounds.size.height = 2 * ceil( bounds.size.height/2 );
