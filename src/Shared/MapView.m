@@ -3157,7 +3157,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	_blinkLayer.lineWidth	= 3.0;
 	_blinkLayer.frame		= self.bounds;
 	_blinkLayer.zPosition	= Z_BLINK;
-	_blinkLayer.strokeColor	= NSColor.whiteColor.CGColor;
+	_blinkLayer.strokeColor	= self.editorLayer.whiteText ? NSColor.whiteColor.CGColor : NSColor.blueColor.CGColor;
 	_blinkLayer.lineDashPhase = 0.0;
 	_blinkLayer.lineDashPattern = @[ @(3), @(3) ];
 	[self.layer addSublayer:_blinkLayer];
