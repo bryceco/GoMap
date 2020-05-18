@@ -19,8 +19,8 @@ private struct TextLoc {
 
 private class PathPoints {
 
-	public var 	points : [CGPoint]
-	private var _length : CGFloat? = nil
+	public let 	points : [CGPoint]
+	public let length : CGFloat
 	private var offset : CGFloat = 0.0
 	private var segment : Int = 0
 
@@ -30,19 +30,12 @@ private class PathPoints {
 		self.points = Array<CGPoint>(unsafeUninitializedCapacity: count) { buffer, initializedCount in
 			initializedCount = CGPathGetPoints( path, buffer.baseAddress )
 		}
-	}
-
-	func length() -> CGFloat
-	{
-		if ( _length == nil ) {
-			var len : CGFloat = 0.0;
-			for i in 1 ..< points.count {
-				len += hypot( points[i].x - points[i-1].x,
-							  points[i].y - points[i-1].y )
-			}
-			_length = len
+		var len : CGFloat = 0.0;
+		for i in 1 ..< points.count {
+			len += hypot( points[i].x - points[i-1].x,
+						  points[i].y - points[i-1].y )
 		}
-		return _length!
+		self.length = len
 	}
 
 	func resetOffset()
@@ -54,10 +47,9 @@ private class PathPoints {
 	func advanceOffsetBy(_ delta2 : CGFloat ) -> Bool
 	{
 		var delta = delta2
-		var previous = points[ segment ]
 		while segment < points.count-1 {
-			let pt = points[ segment+1 ]
-			let len = hypot(pt.x - previous.x, pt.y - previous.y)
+			let len = hypot( points[segment+1].x - points[segment].x,
+							 points[segment+1].y - points[segment].y )
 			if offset+delta < len {
 				offset += delta
 				return true
@@ -65,7 +57,6 @@ private class PathPoints {
 			delta -= len - offset
 			segment += 1
 			offset = 0.0
-			previous = pt
 		}
 		return false
 	}
@@ -92,16 +83,6 @@ private class PathPoints {
 }
 
 
-
-private class GlyphList {
-	let glyphs : [CGGlyph]
-	let advances : [CGSize]
-	init(glyphs:[CGGlyph],advances:[CGSize])
-	{
-		self.glyphs = glyphs
-		self.advances = advances
-	}
-}
 
 private class StringGlyphs {
 
@@ -223,7 +204,7 @@ private class StringGlyphs {
 		guard let glyphRuns = StringGlyphs.stringGlyphsForString(string:string) else { return nil }
 		let pathPoints = PathPoints(WithPath: path)
 
-		if glyphRuns.rect.size.width+8 >= pathPoints.length() {
+		if glyphRuns.rect.size.width+8 >= pathPoints.length {
 			return nil	// doesn't fit
 		}
 
@@ -232,14 +213,10 @@ private class StringGlyphs {
 		return layer
 	}
 
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
 	@objc func glyphLayers() -> [GlyphLayer]?
 	{
 		pathPoints.resetOffset()
-		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return nil }
+		guard pathPoints.advanceOffsetBy( (pathPoints.length - stringGlyphs.rect.width) / 2 ) else { return nil }
 
 		let baselineOffset = 3 - stringGlyphs.rect.origin.y
 
@@ -266,7 +243,7 @@ private class StringGlyphs {
 					}
 					if start == nil {
 						start = loc
-					} else if 360.0 * abs(loc.angle-start!.angle) > 5.0 {
+					} else if abs(loc.angle-start!.angle) > 5.0 * CGFloat.pi/180.0 {
 						break
 					}
 
@@ -280,11 +257,11 @@ private class StringGlyphs {
 				}
 				layerPositions.append(CGPoint(x: position, y: 0.0))
 
-				let glyphLayer = GlyphLayer.layer(withFont: runFont,
-												  foreColor: CurvedGlyphLayer.foreColor,
-												  backColor: CurvedGlyphLayer.backColor,
+				guard let glyphLayer = GlyphLayer.layer(withFont: runFont,
 												  glyphs: layerGlyphs,
-												  positions:layerPositions)
+												  positions:layerPositions) else {
+													return nil
+				}
 				glyphLayer.position = start!.pos
 				glyphLayer.anchorPoint = CGPoint(x:0,y:1)
 				glyphLayer.setAffineTransform( CGAffineTransform(rotationAngle: start!.angle) )
@@ -392,7 +369,7 @@ class GlyphLayer : CALayer {
 	}
 
 	// calling init() on a CALayer subclass from Obj-C doesn't work on iOS 9
-	private init(withFont font:CTFont, foreColor:UIColor, backColor:UIColor, glyphs:[CGGlyph], positions:[CGPoint])
+	private init(withFont font:CTFont, glyphs:[CGGlyph], positions:[CGPoint])
 	{
 		self.glyphs 			= glyphs
 		self.positions 			= positions
@@ -405,12 +382,17 @@ class GlyphLayer : CALayer {
 		self.contentsScale 		= UIScreen.main.scale
 		self.anchorPoint		= CGPoint.zero
 		self.bounds				= bounds
-		self.backgroundColor	= backColor.cgColor
+		self.backgroundColor	= CurvedGlyphLayer.backColor.cgColor
 
 		self.setNeedsDisplay()
 	}
 
-	static public func layer(withFont font:CTFont, foreColor:UIColor, backColor:UIColor, glyphs:[CGGlyph], positions:[CGPoint]) -> GlyphLayer
+	deinit
+	{
+		print("deinit")
+	}
+
+	static public func layer(withFont font:CTFont, glyphs:[CGGlyph], positions:[CGPoint]) -> GlyphLayer?
 	{
 		let key = glyphs.withUnsafeBytes { a in
 			return NSData(bytes: a.baseAddress, length: a.count)
@@ -423,10 +405,8 @@ class GlyphLayer : CALayer {
 			return layer
 		} else {
 			let layer = GlyphLayer.init(withFont: font,
-							   foreColor: foreColor,
-							   backColor: backColor,
-							   glyphs: glyphs,
-							   positions: positions)
+										glyphs: glyphs,
+										positions: positions)
 			cache.setObject(layer, forKey: key)
 			return layer
 		}
@@ -442,7 +422,7 @@ class GlyphLayer : CALayer {
 		context.textMatrix = CGAffineTransform.identity
 		context.translateBy(x: 0, y: self.bounds.size.height)
 		context.scaleBy(x: 1.0, y: -1.0);
-		context.setFillColor(CurvedGlyphLayer.whiteOnBlack ? UIColor.white.cgColor : UIColor.black.cgColor)
+		context.setFillColor(CurvedGlyphLayer.foreColor.cgColor)
 		CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
 		context.restoreGState()
 	}
