@@ -3696,7 +3696,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 					NSArray * relations = [hit.parentRelations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmRelation * relation, id bindings) {
 						return relation.isMultipolygon || relation.isBoundary;
 					}]];
-					OsmRelation * relation = relations.count > 0 ? relations[0] : nil;
+					if ( relations.count == 0 && !hit.hasInterestingTags )
+						relations = hit.parentRelations;	// if the way doesn't have tags then always promote to containing relation
+					OsmRelation * relation = relations.count > 0 ? relations.firstObject : nil;
 					if ( relation ) {
 						hit = relation;	// convert hit to relation
 						_editorLayer.selectedNode = nil;

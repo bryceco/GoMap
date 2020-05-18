@@ -35,22 +35,22 @@
 
 BOOL IsInterestingTag(NSString * key)
 {
-    if ( [key isEqualToString:@"attribution"] )
-        return NO;
-    if ( [key isEqualToString:@"created_by"] )
-        return NO;
-    if ( [key isEqualToString:@"source"] )
-        return NO;
-    if ( [key isEqualToString:@"odbl"] )
-        return NO;
-    if ( [key rangeOfString:@"tiger:"].location == 0 )
-        return NO;
-    return YES;
+	if ( [key isEqualToString:@"attribution"] )
+		return NO;
+	if ( [key isEqualToString:@"created_by"] )
+		return NO;
+	if ( [key isEqualToString:@"source"] )
+		return NO;
+	if ( [key isEqualToString:@"odbl"] )
+		return NO;
+	if ( [key hasPrefix:@"tiger:"] )
+		return NO;
+	return YES;
 }
 
 -(BOOL)hasInterestingTags
 {
-    for ( NSString * key in self.tags ) {
+    for ( NSString * key in _tags ) {
         if ( IsInterestingTag(key) )
             return YES;
     }
