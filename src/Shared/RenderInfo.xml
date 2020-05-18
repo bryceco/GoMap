@@ -26,8 +26,9 @@
 
 	<default key="building" areaColor="D9AD64"/>
 
-	<tag key="boundary" value="administrative" type="way" lineColor="B100FF" lineWidth="1.000000"/>
+	<tag key="boundary" value="administrative" type="way" lineColor="B100FF" lineWidth="2.000000"/>
 	<tag key="boundary" value="national_park" type="way" lineColor="FF6600" lineWidth="1.000000"/>
+	<default key="boundary" lineColor="B100FF" lineWidth="1.0"/>
 
 	<tag key="highway" value="bridleway" type="way" lineColor="C08000" lineWidth="1.000000"/>
 	<tag key="highway" value="bus_guideway" type="way" lineColor="404040" lineWidth="1.000000"/>
