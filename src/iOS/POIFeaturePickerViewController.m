@@ -78,7 +78,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	if ( _parentCategory == nil ) {
 		_isTopLevel = YES;
-		_featureList = [CommonPresetList featuresForGeometry:geometry];
+		_featureList = [CommonPresetList featuresAndCategoriesForGeometry:geometry];
 	} else {
 		_featureList = _parentCategory.members;
 	}

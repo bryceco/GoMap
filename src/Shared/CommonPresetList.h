@@ -120,10 +120,11 @@ typedef int UITextAutocapitalizationType;
 
 +(instancetype)sharedList;
 +(NSString *)featureNameForObjectDict:(NSDictionary *)tagDict geometry:(NSString *)geometry;
-+(NSArray *)featuresForGeometry:(NSString *)geometry;
++(NSArray *)featuresAndCategoriesForGeometry:(NSString *)geometry;
 +(NSArray *)featuresInCategory:(CommonPresetCategory *)category matching:(NSString *)searchText;
 +(NSSet *)allTagKeys;
 +(NSSet *)allTagValuesForKey:(NSString *)key;
++(NSSet *)allFeatureKeys;
 +(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry;
 
 

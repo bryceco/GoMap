@@ -434,57 +434,6 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     return OSMRectIntersectsRect( self.boundingBox, box );
 }
 
-+(NSDictionary *)featureKeys
-{
-    static NSDictionary * keyDict = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        keyDict = @{
-                        @"building" : @YES,
-                        @"landuse" : @YES,
-                        @"highway" : @YES,
-                        @"railway" : @YES,
-                        @"amenity" : @YES,
-                        @"shop" : @YES,
-                        @"natural" : @YES,
-                        @"waterway" : @YES,
-                        @"power" : @YES,
-                        @"barrier" : @YES,
-                        @"leisure" : @YES,
-                        @"man_made" : @YES,
-                        @"tourism" : @YES,
-                        @"boundary" : @YES,
-                        @"public_transport" : @YES,
-                        @"sport" : @YES,
-                        @"emergency" : @YES,
-                        @"historic" : @YES,
-                        @"route" : @YES,
-                        @"aeroway" : @YES,
-                        @"place" : @YES,
-                        @"craft" : @YES,
-                        @"entrance" : @YES,
-                        @"playground" : @YES,
-                        @"aerialway" : @YES,
-                        @"healthcare" : @YES,
-                        @"military" : @YES,
-                        @"building:part" : @YES,
-                        @"training" : @YES,
-                        @"traffic_sign" : @YES,
-                        @"xmas:feature" : @YES,
-                        @"seamark:type" : @YES,
-                        @"waterway:sign" : @YES,
-                        @"university" : @YES,
-                        @"pipeline" : @YES,
-                        @"club" : @YES,
-                        @"golf" : @YES,
-                        @"junction" : @YES,
-                        @"office" : @YES,
-                        @"piste:type" : @YES,
-                        @"harbour" : @YES,
-                        };
-    });
-    return keyDict;
-}
 
 -(NSString *)givenName
 {
@@ -567,10 +516,10 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 #endif
 
     __block NSString * tagDescription = nil;
-    NSDictionary * featureKeys = [OsmBaseObject featureKeys];
-    // look for feature key
+    NSSet * featureKeys = [CommonPresetList allFeatureKeys];
+    // look for a feature key
     [_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
-        if ( featureKeys[key] ) {
+        if ( [featureKeys containsObject:key] ) {
             *stop = YES;
             tagDescription = [NSString stringWithFormat:@"%@ = %@",key,value];
         }

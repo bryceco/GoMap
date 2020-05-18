@@ -359,9 +359,23 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return set;
 }
 
++(NSSet *)allFeatureKeys
+{
+	static NSMutableSet * set = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		set = [NSMutableSet new];
+		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSDictionary * dict, BOOL * _Nonnull stop) {
+			NSRange slash = [key rangeOfString:@"/"];
+			NSString * feature = slash.location != NSNotFound ? [key substringToIndex:slash.location] : key;
+			[set addObject:feature];
+		}];
+	});
+	return set;
+}
 
 
-+(NSArray *)featuresForMembersList:(NSArray *)memberList
++(NSArray *)featuresAndCategoriesForMemberList:(NSArray *)memberList
 {
 	NSMutableArray * list = [NSMutableArray new];
 	for ( NSString * featureName in memberList ) {
@@ -383,10 +397,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return list;
 }
 
-+(NSArray *)featuresForGeometry:(NSString *)geometry
++(NSArray *)featuresAndCategoriesForGeometry:(NSString *)geometry
 {
 	NSArray * list = g_defaultsDict[geometry];
-	NSArray * featureList = [self featuresForMembersList:list];
+	NSArray * featureList = [self featuresAndCategoriesForMemberList:list];
 	return featureList;
 }
 

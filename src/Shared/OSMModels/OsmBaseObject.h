@@ -80,7 +80,6 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 @property (readonly,nonatomic)    ONEWAY                isOneWay;
 @property (assign,nonatomic)    TRISTATE            isShown;
 
-+(NSDictionary *)featureKeys;
 +(NSDateFormatter *)rfc3339DateFormatter;
 
 -(void)constructTag:(NSString *)tag value:(NSString *)value;

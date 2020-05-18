@@ -186,29 +186,6 @@
 	}];
 }
 
-- (NSString *)featureKeyForDict:(NSDictionary *)dict
-{
-	for ( NSString * tag in [OsmBaseObject featureKeys] ) {
-		NSString * value = dict[ tag ];
-		if ( value.length ) {
-			return tag;
-		}
-	}
-	return nil;
-}
-- (NSString *)featureStringForDict:(NSDictionary *)dict
-{
-	NSString * key = [self featureKeyForDict:dict];
-	NSString * value = dict[ key ];
-	if ( value.length ) {
-		NSString * text = [NSString stringWithFormat:@"%@ (%@)", value, key];
-		text = [text stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-		text = text.capitalizedString;
-		return text;
-	}
-	return nil;
-}
-
 #pragma mark - Table view data source
 
 
@@ -285,8 +262,6 @@
 		if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 			// Type cell
 			NSString * text = [_tags featureName];
-			if ( text == nil )
-				text = [self featureStringForDict:objectDict];
 			cell.valueField.text = text;
 			cell.valueField.enabled = NO;
 		} else {
