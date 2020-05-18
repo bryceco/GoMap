@@ -190,12 +190,17 @@ private class StringGlyphs {
 }
 
 
-@objc class CurvedGlyphLayer : CALayer {
+@objc class CurvedGlyphLayer : NSObject {
 
 	// static stuff
+	public static var foreColor = UIColor.white
+	public static var backColor = UIColor.black
 	@objc static var whiteOnBlack: Bool = true {
 		willSet(newValue) {
 			if ( newValue != whiteOnBlack ) {
+				GlyphLayer.fontSizeDidChange()
+				CurvedGlyphLayer.foreColor = newValue ? UIColor.white : UIColor.black
+				CurvedGlyphLayer.backColor = (newValue ? UIColor.black : UIColor.black).withAlphaComponent(0.3)
 			}
 		}
 	}
@@ -210,14 +215,7 @@ private class StringGlyphs {
 	{
 		self.stringGlyphs = stringGlyphs
 		self.pathPoints = pathPoints
-
 		super.init()
-
-		self.contentsScale 		= UIScreen.main.scale;
-		self.actions			= [ "position": NSNull() ]
-		self.anchorPoint		= CGPoint.zero
-		self.frame				= frame
-		self.setNeedsDisplay()
 	}
 
 	@objc static public func layer(WithString string:NSString, alongPath path:CGPath) -> CurvedGlyphLayer?
@@ -238,56 +236,10 @@ private class StringGlyphs {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	@objc override func draw(in context: CGContext)
-	{
-		pathPoints.resetOffset()
-		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return }
-
-		context.textMatrix = CGAffineTransform.identity
-		context.scaleBy(x: 1.0, y: -1.0);
-
-		let textColor = CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black
-		let backColor = (!CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black).withAlphaComponent(0.3)
-
-		let baselineOffset = 3 - stringGlyphs.rect.origin.y
-
-		for run in stringGlyphs.runs {
-
-			let glyphs 		= StringGlyphs.glyphsForRun( run )
-			let advances 	= StringGlyphs.advancesForRun( run )
-			let runFont 	= StringGlyphs.fontForRun( run)
-			let count 		= CTRunGetGlyphCount( run )
-
-			for glyphIndex in 0 ..< count {
-
-				guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else { return }
-				let p = CGPoint(x: loc.pos.x - self.position.x, y: loc.pos.y - self.position.y )
-
-				context.saveGState()
-				context.translateBy(x: p.x, y: -p.y )
-				context.rotate(by: -loc.angle)
-
-				context.setFillColor(backColor.cgColor)
-				let rc = CGRect(x: 0, y: stringGlyphs.rect.origin.y, width: advances[glyphIndex].width, height: stringGlyphs.rect.height)
-				context.fill(rc)
-
-				context.setFillColor(textColor.cgColor)
-				let glyph = glyphs[glyphIndex]
-				CTFontDrawGlyphs(runFont, [glyph], [CGPoint.zero], 1, context)
-				context.restoreGState()
-
-				guard pathPoints.advanceOffsetBy( advances[glyphIndex].width ) else { return }
-			}
-		}
-	}
-
 	@objc func glyphLayers() -> [GlyphLayer]?
 	{
 		pathPoints.resetOffset()
 		guard pathPoints.advanceOffsetBy( (pathPoints.length() - stringGlyphs.rect.width) / 2 ) else { return nil }
-
-		let textColor = CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black
-		let backColor = (!CurvedGlyphLayer.whiteOnBlack ? UIColor.white : UIColor.black).withAlphaComponent(0.3)
 
 		let baselineOffset = 3 - stringGlyphs.rect.origin.y
 
@@ -329,8 +281,8 @@ private class StringGlyphs {
 				layerPositions.append(CGPoint(x: position, y: 0.0))
 
 				let glyphLayer = GlyphLayer.layer(withFont: runFont,
-												  foreColor: textColor,
-												  backColor: backColor,
+												  foreColor: CurvedGlyphLayer.foreColor,
+												  backColor: CurvedGlyphLayer.backColor,
 												  glyphs: layerGlyphs,
 												  positions:layerPositions)
 				glyphLayer.position = start!.pos
@@ -347,7 +299,7 @@ private class StringGlyphs {
 	}
 
 	// return a non-curved rectangular layer
-	@objc static func layerWithString(_ string: String, whiteOnBlock whiteOnBlack: Bool) -> CALayer?
+	@objc static func layerWithString(_ string: String) -> CALayer?
 	{
 		let MAX_TEXT_WIDTH : CGFloat = 100.0
 
@@ -356,15 +308,12 @@ private class StringGlyphs {
 		layer.contentsScale = UIScreen.main.scale;
 
 		let font = StringGlyphs.uiFont
-		let textColor = whiteOnBlack ? UIColor.white : UIColor.black
-		let backColor = (whiteOnBlack ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
 
 		let attrString = NSAttributedString(string: string,
 											attributes: [
-												NSAttributedString.Key.foregroundColor: textColor.cgColor,
+												NSAttributedString.Key.foregroundColor: CurvedGlyphLayer.foreColor.cgColor,
 												NSAttributedString.Key.font: font])
 		let framesetter = CTFramesetterCreateWithAttributedString(attrString)
-
 
 		var bounds = CGRect.zero
 		var maxWidth = MAX_TEXT_WIDTH
@@ -445,13 +394,11 @@ class GlyphLayer : CALayer {
 	// calling init() on a CALayer subclass from Obj-C doesn't work on iOS 9
 	private init(withFont font:CTFont, foreColor:UIColor, backColor:UIColor, glyphs:[CGGlyph], positions:[CGPoint])
 	{
-		self.glyphs = glyphs
-		self.positions = positions
-		self.font = font
-		self.inUse = true
-
+		self.glyphs 			= glyphs
+		self.positions 			= positions
+		self.font 				= font
+		self.inUse 				= true
 		super.init()
-
 		let size = CTFontGetBoundingBox( font ).size
 		let descent = CTFontGetDescent( font )
 		let bounds				= CGRect(x:0, y:descent, width: positions.last!.x, height: size.height)

@@ -1518,7 +1518,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				OSMPoint point = object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
 				OSMPoint pt = MapPointForLatitudeLongitude( point.y, point.x );
 
-				CALayer * layer = [CurvedGlyphLayer layerWithString:name whiteOnBlock:self.whiteText];
+				CALayer * layer = [CurvedGlyphLayer layerWithString:name];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
@@ -1679,7 +1679,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		NSString * houseNumber = color.hasColor ? nil : DrawNodeAsHouseNumber( node.tags );
 		if ( houseNumber ) {
             
-            CALayer * layer = [CurvedGlyphLayer layerWithString:houseNumber whiteOnBlock:self.whiteText];
+            CALayer * layer = [CurvedGlyphLayer layerWithString:houseNumber];
             layer.anchorPoint	= CGPointMake(0.5, 0.5);
             layer.position      = CGPointMake(pt.x, pt.y);
             layer.zPosition     = Z_TEXT;
@@ -2016,13 +2016,13 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 							// uses CATextLayers with caching (14.5)
 							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path whiteOnBlock:self.whiteText];
 #else
-							CurvedGlyphLayer.whiteOnBlack = self.whiteText;
-							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
 #if 0
 							// Uses a single curving CurvedGlyphLayer (no caching) (13.6)
+							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
 							NSArray * a = layer ? @[ layer ] : nil;
 #else
 							// Uses multiple GlyphLayers with caching (14.7)
+							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
 							NSArray * a = [layer glyphLayers];
 #endif
 #endif
@@ -3101,6 +3101,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 {
 	if ( _whiteText != whiteText ) {
 		_whiteText = whiteText;
+		CurvedGlyphLayer.whiteOnBlack = _whiteText;
 		[self resetDisplayLayers];
 	}
 }
