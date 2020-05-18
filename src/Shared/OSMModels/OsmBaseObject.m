@@ -45,6 +45,11 @@ BOOL IsInterestingTag(NSString * key)
 		return NO;
 	if ( [key hasPrefix:@"tiger:"] )
 		return NO;
+
+	NSSet * stripTags = [OsmMapData tagsToAutomaticallyStrip];
+	if ( [stripTags containsObject:key] )
+		return NO;
+
 	return YES;
 }
 
@@ -561,9 +566,6 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     }
 #endif
 
-    // if the object has any tags that aren't throw-away tags then use one of them
-    NSSet * ignoreTags = [OsmMapData tagsToAutomaticallyStrip];
-    
     __block NSString * tagDescription = nil;
     NSDictionary * featureKeys = [OsmBaseObject featureKeys];
     // look for feature key
@@ -576,7 +578,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     if ( tagDescription == nil ) {
         // any non-ignored key
         [_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
-            if ( ![ignoreTags containsObject:key] ) {
+			if ( IsInterestingTag(key) ) {
                 *stop = YES;
                 tagDescription = [NSString stringWithFormat:@"%@ = %@",key,value];
             }
