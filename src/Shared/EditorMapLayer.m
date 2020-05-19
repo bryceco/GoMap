@@ -2296,17 +2296,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 {
 #if TARGET_OS_IPHONE
 	double geekScore = [self.geekbenchScoreProvider geekbenchScore];
-	NSInteger objectLimit = 50 + (geekScore - 500) / 40;	// 500 -> 50, 2500 -> 100;
+	NSInteger minObj = 50;	// score = 500
+	NSInteger maxObj = 300;	// score = 2500
+	NSInteger objectLimit = minObj + (maxObj-minObj)*(geekScore - 500)/2000;
 #else
 	NSInteger objectLimit = 500;
 #endif
-	objectLimit *= 3;
-
-	double metersPerPixel = [_mapView metersPerPixel];
-	if ( metersPerPixel < 0.05 ) {
-		// we're zoomed in very far, so show everything
-		objectLimit = 1000000;
-	}
 
 	// get objects in visible rect
 	NSMutableArray * objects = [self getVisibleObjects];
