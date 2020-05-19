@@ -75,7 +75,7 @@ enum {
 			cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
 		} else {
 			cell.detailLabel.text = NSLocalizedString(@"computing size...",nil);
-			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
 				NSInteger size, count;
 				[(id)object diskCacheSize:&size count:&count];
 				dispatch_async(dispatch_get_main_queue(), ^{

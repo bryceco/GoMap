@@ -64,7 +64,7 @@
 
 -(void)removeObjectsAsyncOlderThan:(NSDate *)expiration
 {
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+	dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
 		for ( NSURL * url in [self fileEnumeratorWithAttributes:@[NSURLContentModificationDateKey]] ) {
 			NSDate * date = nil;
 			if ( ![url getResourceValue:&date forKey:NSURLContentModificationDateKey error:NULL]
@@ -125,7 +125,7 @@
 		return obj != nil;
 	};
 
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^(void){
+	dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^(void){
 		// check disk cache
 		NSString * fileName = [PersistentWebCache encodeKeyForFilesystem:cacheKey];
 		NSURL * filePath = [_cacheDirectory URLByAppendingPathComponent:fileName];
@@ -138,7 +138,7 @@
 			NSURLRequest * request = [NSURLRequest requestWithURL:url];
 			NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 				if ( gotData(data) ) {
-					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+					dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
 						[data writeToURL:filePath atomically:YES];
 					});
 				}

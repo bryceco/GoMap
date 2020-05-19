@@ -584,7 +584,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		NSNumber * expiration = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
 		NSDate * deleteIfCreatedBefore = expiration.doubleValue == 0 ? [NSDate distantPast] : [NSDate dateWithTimeIntervalSinceNow:-expiration.doubleValue*24*60*60];
 
-		dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+		dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
 			NSString * dir = [self saveDirectory];
 			NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:NULL];
 			files = [files sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];	// file names are timestamps, so sort increasing

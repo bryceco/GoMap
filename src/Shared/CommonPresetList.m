@@ -653,7 +653,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 					return (CommonPresetGroup *)presets;	// hack for multi-combo: we already created the group and stashed it in presets
 				}
 			} else if ( update ) {
-				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+				dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
 					NSString * cleanKey = isMulti ? [key stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]] : key;
 					NSString * urlText = isMulti ?
 						[NSString stringWithFormat:@"https://taginfo.openstreetmap.org/api/4/keys/all?query=%@&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc", cleanKey] :
