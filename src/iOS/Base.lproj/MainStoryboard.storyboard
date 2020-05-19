@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -51,7 +51,7 @@
                                             <barButtonItem style="plain" systemItem="flexibleSpace" id="9sY-7x-Af0"/>
                                             <barButtonItem title="Add node" style="plain" id="Ceq-eN-yV5" userLabel="Add Button">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uWA-Q5-QJr">
-                                                    <rect key="frame" x="234" y="5" width="66" height="44"/>
+                                                    <rect key="frame" x="199.33333333333334" y="5" width="66.000000000000028" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <gestureRecognizers/>
                                                     <state key="normal" image="709-plus-toolbar.png"/>
@@ -78,7 +78,7 @@
                                         </items>
                                     </toolbar>
                                     <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="800" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="fill" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-IT-DQC">
-                                        <rect key="frame" x="9" y="50" width="299" height="24"/>
+                                        <rect key="frame" x="9" y="50" width="211.66666666666666" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="SkQ-sE-D6j"/>
                                         </constraints>
@@ -294,7 +294,7 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7" customClass="AutocompleteTextField">
-                                            <rect key="frame" x="120" y="11.666666666666664" width="260" height="21"/>
+                                            <rect key="frame" x="120" y="11" width="260" height="22"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                         </textField>
@@ -332,7 +332,7 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Yes" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Nw-ha-JK5" customClass="AutocompleteTextField">
-                                            <rect key="frame" x="176" y="11.666666666666664" width="202" height="21"/>
+                                            <rect key="frame" x="176" y="11" width="202" height="22"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                         </textField>
@@ -1062,7 +1062,7 @@
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" translatesAutoresizingMaskIntoConstraints="NO" id="YQ4-05-lQz">
-                                                    <rect key="frame" x="142" y="11.666666666666664" width="253" height="21"/>
+                                                    <rect key="frame" x="142" y="11" width="253" height="22"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
@@ -5410,7 +5410,7 @@ This Privacy Policy may be updated from time to time for any reason. We will not
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="api.openstreetmap.org" translatesAutoresizingMaskIntoConstraints="NO" id="66J-ih-Lfh">
-                                                    <rect key="frame" x="109" y="12" width="286" height="20"/>
+                                                    <rect key="frame" x="109" y="11.666666666666664" width="286" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <connections>
@@ -5738,6 +5738,13 @@ This Privacy Policy may be updated from time to time for any reason. We will not
             <point key="canvasLocation" x="-3704.347826086957" y="-175.44642857142856"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="g2g-Jn-Tdv"/>
+        <segue reference="OEI-9h-7td"/>
+        <segue reference="KuK-gp-RBs"/>
+        <segue reference="FTo-kL-oAC"/>
+        <segue reference="mrH-5v-JIV"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="1200-file-type-settings-toolbar.png" width="16" height="22"/>
         <image name="702-share.png" width="21" height="28"/>
@@ -5754,11 +5761,4 @@ This Privacy Policy may be updated from time to time for any reason. We will not
         <image name="redo32.png" width="32" height="26"/>
         <image name="undo32.png" width="32" height="26"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="g2g-Jn-Tdv"/>
-        <segue reference="OEI-9h-7td"/>
-        <segue reference="KuK-gp-RBs"/>
-        <segue reference="FTo-kL-oAC"/>
-        <segue reference="mrH-5v-JIV"/>
-    </inferredMetricsTieBreakers>
 </document>
