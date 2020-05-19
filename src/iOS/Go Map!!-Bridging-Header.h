@@ -7,6 +7,7 @@
 #import "ContactUsViewController.h"
 #import "GeoURLParser.h"
 #import "KeyChain.h"
+#import "LayerProperties.h"
 #import "LoginViewController.h"
 #import "MapViewController.h"
 #import "OsmMapData.h"

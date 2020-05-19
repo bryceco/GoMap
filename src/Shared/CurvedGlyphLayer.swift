@@ -276,12 +276,12 @@ private class StringGlyphs {
 	}
 
 	// return a non-curved rectangular layer
-	@objc static func layerWithString(_ string: String) -> CALayer?
+	@objc static func layerWithString(_ string: String) -> CATextLayerWithProperties?
 	{
 		let MAX_TEXT_WIDTH : CGFloat = 100.0
 
 		// Don't cache these here because they are cached by the objects they are attached to
-		let layer = CATextLayer()
+		let layer = CATextLayerWithProperties()
 		layer.contentsScale = UIScreen.main.scale;
 
 		let font = StringGlyphs.uiFont
@@ -323,7 +323,7 @@ private class StringGlyphs {
 
 
 
-class GlyphLayer : CALayer {
+class GlyphLayer : CALayerWithProperties {
 
 	private static let cache 	= { () -> NSCache<NSData, GlyphLayer> in
 		NotificationCenter.default.addObserver(StringGlyphs.self, selector: #selector(GlyphLayer.fontSizeDidChange), name: UIContentSizeCategory.didChangeNotification, object: nil)

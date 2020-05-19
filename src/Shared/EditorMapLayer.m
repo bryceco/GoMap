@@ -43,26 +43,6 @@ const double PATH_SCALING = (256*256.0);		// scale up sizes in paths so Core Ani
 static const CGFloat Pixels_Per_Character = 8.0;
 
 
-@interface LayerProperties : NSObject
-{
-@public
-	OSMPoint		position;
-	double			lineWidth;
-	NSArray		*	lineDashes;
-	CATransform3D	transform;
-	BOOL			is3D;
-}
-@end
-@implementation LayerProperties
--(instancetype)init
-{
-	self = [super init];
-	if ( self ) {
-		transform = CATransform3DIdentity;
-	}
-	return self;
-}
-@end
 
 @interface EditorMapLayer ()
 
@@ -1204,7 +1184,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		++intensity;
 	UIColor	* color = [UIColor colorWithHue:(37+hue)/360.0 saturation:0.61 brightness:0.5+intensity/2 alpha:1.0];
 
-	CALayer * wall = [CALayer new];
+	CALayerWithProperties * wall = [CALayerWithProperties new];
 	wall.anchorPoint	= CGPointMake(0, 0);
 	wall.zPosition		= Z_BUILDING_WALL;
 #if SINGLE_SIDED_WALLS
@@ -1224,8 +1204,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	CATransform3D t = CATransform3DConcat( t2, t1 );
 	wall.transform = t;
 
-	LayerProperties * props = [LayerProperties new];
-	[wall setValue:props forKey:@"properties"];
+	LayerProperties * props = wall.properties;
 	props->transform	= t;
 	props->position		= p1;
 	props->lineWidth	= 1.0;
@@ -1255,7 +1234,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			if ( path ) {
 
 				{
-					CAShapeLayer * layer = [CAShapeLayer new];
+					CAShapeLayerWithProperties * layer = [CAShapeLayerWithProperties new];
 					layer.anchorPoint	= CGPointMake(0, 0);
 					layer.position		= CGPointFromOSMPoint( refPoint );
 					layer.path			= path;
@@ -1265,8 +1244,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 					layer.lineCap		= DEFAULT_LINECAP;
 					layer.lineJoin		= DEFAULT_LINEJOIN;
 					layer.zPosition		= Z_CASING;
-					LayerProperties * props = [LayerProperties new];
-					[layer setValue:props forKey:@"properties"];
+					LayerProperties * props = layer.properties;
 					props->position = refPoint;
 					props->lineWidth = layer.lineWidth;
 					NSString * bridge = object.tags[@"bridge"];
@@ -1288,7 +1266,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 					NSString * name = [object givenName];
 					if ( name == nil && ![object.tags[@"noname"] isEqualToString:@"yes"] ) {
 						// it lacks a name
-						CAShapeLayer * haloLayer = [CAShapeLayer new];
+						CAShapeLayerWithProperties * haloLayer = [CAShapeLayerWithProperties new];
 						haloLayer.anchorPoint	= CGPointMake(0, 0);
 						haloLayer.position		= CGPointFromOSMPoint( refPoint );
 						haloLayer.path			= path;
@@ -1298,8 +1276,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						haloLayer.lineCap		= DEFAULT_LINECAP;
 						haloLayer.lineJoin		= DEFAULT_LINEJOIN;
 						haloLayer.zPosition		= Z_HALO;
-						LayerProperties * haloProps = [LayerProperties new];
-						[haloLayer setValue:haloProps forKey:@"properties"];
+						LayerProperties * haloProps = haloLayer.properties;
 						haloProps->position = refPoint;
 						haloProps->lineWidth = haloLayer.lineWidth;
 
@@ -1322,7 +1299,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			if ( lineWidth == 0 )
 				lineWidth = 1;
 
-			CAShapeLayer * layer = [CAShapeLayer new];
+			CAShapeLayerWithProperties * layer = [CAShapeLayerWithProperties new];
 			layer.anchorPoint	= CGPointMake(0, 0);
 			CGRect bbox			= CGPathGetPathBoundingBox( path );
 			layer.bounds		= CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
@@ -1335,8 +1312,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			layer.lineJoin		= DEFAULT_LINEJOIN;
 			layer.zPosition		= Z_LINE;
 
-			LayerProperties * props = [LayerProperties new];
-			[layer setValue:props forKey:@"properties"];
+			LayerProperties * props = layer.properties;
 			props->position		= refPoint;
 			props->lineWidth	= layer.lineWidth;
 
@@ -1361,7 +1337,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			if ( path ) {
 				// draw
 				CGFloat alpha = object.tags[@"landuse"] ? 0.15 : 0.25;
-				CAShapeLayer * layer = [CAShapeLayer new];
+				CAShapeLayerWithProperties * layer = [CAShapeLayerWithProperties new];
 				layer.anchorPoint	= CGPointMake(0,0);
 				layer.path			= path;
 				layer.position		= CGPointFromOSMPoint(refPoint);
@@ -1369,8 +1345,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				layer.lineCap		= DEFAULT_LINECAP;
 				layer.lineJoin		= DEFAULT_LINEJOIN;
 				layer.zPosition		= Z_AREA;
-				LayerProperties * props = [LayerProperties new];
-				[layer setValue:props forKey:@"properties"];
+				LayerProperties * props = layer.properties;
 				props->position = refPoint;
 
 				[layers addObject:layer];
@@ -1445,7 +1420,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 					if ( YES ) {
 						// get roof
 						UIColor	* color = [UIColor colorWithHue:0 saturation:0.05 brightness:0.75+hue/100 alpha:1.0];
-						CAShapeLayer * roof = [CAShapeLayer new];
+						CAShapeLayerWithProperties * roof = [CAShapeLayerWithProperties new];
 						roof.anchorPoint	= CGPointMake(0, 0);
 						CGRect bbox			= CGPathGetPathBoundingBox( path );
 						roof.bounds			= CGRectMake( 0, 0, bbox.size.width, bbox.size.height );
@@ -1460,8 +1435,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						roof.doubleSided	= YES;
 
 						CATransform3D t = CATransform3DMakeTranslation( 0, 0, height );
-						props = [LayerProperties new];
-						[roof setValue:props forKey:@"properties"];
+						props = roof.properties;
 						props->position		= refPoint;
 						props->transform	= t;
 						props->is3D			= YES;
@@ -1498,13 +1472,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				OSMPoint point = object.isWay ? object.isWay.centerPoint : object.isRelation.centerPoint;
 				OSMPoint pt = MapPointForLatitudeLongitude( point.y, point.x );
 
-				CALayer * layer = [CurvedGlyphLayer layerWithString:name];
+				CATextLayerWithProperties * layer = [CurvedGlyphLayer layerWithString:name];
 				layer.anchorPoint	= CGPointMake(0.5, 0.5);
 				layer.position		= CGPointMake(pt.x, pt.y);
 				layer.zPosition		= Z_TEXT;
 
-				LayerProperties * props = [LayerProperties new];
-				[layer setValue:props forKey:@"properties"];
+				LayerProperties * props = layer.properties;
 				props->position = pt;
 
 				[layers addObject:layer];
@@ -1523,7 +1496,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						OSMPoint latLon = viaMemberObject.selectionPoint;
 						OSMPoint pt = MapPointForLatitudeLongitude(latLon.y, latLon.x);
 
-						CALayer * restrictionLayerIcon 		= [CALayer new];
+						CALayerWithProperties * restrictionLayerIcon 		= [CALayerWithProperties new];
 						restrictionLayerIcon.bounds 		= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
 						restrictionLayerIcon.anchorPoint 	= CGPointMake(0.5,0.5);
 						restrictionLayerIcon.position 		= CGPointMake(pt.x, pt.y);
@@ -1533,8 +1506,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 							restrictionLayerIcon.contents 	= (id)[UIImage imageNamed:@"restriction_sign"].CGImage;
 						}
 						restrictionLayerIcon.zPosition		= Z_TURN;
-						LayerProperties * restrictionIconProps = [LayerProperties new];
-						[restrictionLayerIcon setValue:restrictionIconProps forKey:@"properties"];
+						LayerProperties * restrictionIconProps = restrictionLayerIcon.properties;
 						restrictionIconProps->position = pt;
 
 						[layers addObject:restrictionLayerIcon];
@@ -1638,7 +1610,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		iconLayer.anchorPoint = CGPointZero;
 		iconLayer.opaque = YES;
 
-        CALayer * layer = [CALayer new];
+        CALayerWithProperties * layer = [CALayerWithProperties new];
         [layer addSublayer:backgroundLayer];
         [layer addSublayer:iconLayer];
         layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
@@ -1647,9 +1619,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
         layer.zPosition        	= Z_NODE;
 		layer.opaque			= YES;
 
-        LayerProperties * props = [LayerProperties new];
-        [layer setValue:props forKey:@"properties"];
-        props->position = pt;
+		LayerProperties * props = layer.properties;
+		props->position = pt;
         [layers addObject:layer];
         
     } else {
@@ -1659,12 +1630,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		NSString * houseNumber = color.hasColor ? nil : DrawNodeAsHouseNumber( node.tags );
 		if ( houseNumber ) {
             
-            CALayer * layer = [CurvedGlyphLayer layerWithString:houseNumber];
+			CATextLayerWithProperties * layer = [CurvedGlyphLayer layerWithString:houseNumber];
             layer.anchorPoint	= CGPointMake(0.5, 0.5);
             layer.position      = CGPointMake(pt.x, pt.y);
             layer.zPosition     = Z_TEXT;
-			LayerProperties * props = [LayerProperties new];
-            [layer setValue:props forKey:@"properties"];
+			LayerProperties * props = layer.properties;
             props->position = pt;
             
             [layers addObject:layer];
@@ -1672,7 +1642,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
         } else {
             
             // generic box
-            CAShapeLayer * layer = [CAShapeLayer new];
+            CAShapeLayerWithProperties * layer = [CAShapeLayerWithProperties new];
             CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
                                      round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
             CGPathRef path        	= CGPathCreateWithRect( rect, NULL );
@@ -1689,8 +1659,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			layer.cornerRadius      = MinIconSizeInPixels/2;
             layer.zPosition         = Z_NODE;
             
-            LayerProperties * props = [LayerProperties new];
-            [layer setValue:props forKey:@"properties"];
+			LayerProperties * props = layer.properties;
             props->position = pt;
             
             [layers addObject:layer];
@@ -1708,7 +1677,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	if ( direction.length )
 		heading += direction.length/2;
 
-    CAShapeLayer *layer = [CAShapeLayer layer];
+    CAShapeLayerWithProperties *layer = [CAShapeLayerWithProperties layer];
 
     layer.fillColor = [UIColor colorWithWhite:0.2 alpha:0.5].CGColor;
 	layer.strokeColor = [UIColor colorWithWhite:1.0 alpha:0.5].CGColor;
@@ -1737,10 +1706,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     layer.path = path;
     CGPathRelease(path);
 
-    LayerProperties *layerProperties = [LayerProperties new];
+	LayerProperties *layerProperties = layer.properties;
     layerProperties->position = pt;
     [layer setValue:@"direction" forKey:@"key"];
-    [layer setValue:layerProperties forKey:@"properties"];
 
     return layer;
 }
@@ -1843,15 +1811,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				lineWidth = 1;
 			lineWidth += 2;	// since we're drawing highlight 2-wide we don't want it to intrude inward on way
 
-			CAShapeLayer * layer = [CAShapeLayer new];
+			CAShapeLayerWithProperties * layer = [CAShapeLayerWithProperties new];
 			layer.strokeColor	= wayColor.CGColor;
 			layer.lineWidth		= lineWidth;
 			layer.path			= path;
 			layer.fillColor		= UIColor.clearColor.CGColor;
 			layer.zPosition		= Z_HIGHLIGHT_WAY;
 
-			LayerProperties * props = [LayerProperties new];
-			[layer setValue:props forKey:@"properties"];
+			LayerProperties * props = layer.properties;
 			props->lineWidth = layer.lineWidth;
 
 			[layers addObject:layer];
@@ -1868,7 +1835,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 								if ( member.isWay && [member.ref isKindOfClass:[OsmWay class]] ) {
 									OsmWay * way = member.ref;
 									CGPathRef turnPath = [self pathForWay:way];
-									CAShapeLayer * haloLayer	= [CAShapeLayer new];
+									CAShapeLayerWithProperties * haloLayer	= [CAShapeLayerWithProperties new];
 									haloLayer.anchorPoint    	= CGPointMake(0, 0);
 									haloLayer.path            	= turnPath;
 									if ( member.ref == object && ![member.role isEqualToString:@"to"] )
@@ -1884,8 +1851,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 									haloLayer.lineCap        	= kCALineCapRound;
 									haloLayer.lineJoin        	= kCALineJoinRound;
 									haloLayer.zPosition        	= Z_HALO;
-									LayerProperties * haloProps	= [LayerProperties new];
-									[haloLayer setValue:haloProps forKey:@"properties"];
+									LayerProperties * haloProps	= haloLayer.properties;
 									haloProps->lineWidth = haloLayer.lineWidth;
 
 									if ( ([member.role isEqualToString:@"to"] && member.ref == object) || ([member.role isEqualToString:@"via"] && member.isWay) ) {
@@ -1904,16 +1870,16 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			// draw nodes of way
 			NSSet * nodes = object == _selectedWay ? object.nodeSet : nil;
 			for ( OsmNode * node in nodes ) {
-				layer				= [CAShapeLayer new];
+				CAShapeLayer * layer2 = [CAShapeLayer new];
 				CGRect		rect	= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
-				layer.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-				layer.strokeColor	= node == _selectedNode ? UIColor.yellowColor.CGColor : UIColor.greenColor.CGColor;
-				layer.fillColor		= UIColor.clearColor.CGColor;
-				layer.lineWidth		= 2.0;
+				layer2.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
+				layer2.strokeColor	= node == _selectedNode ? UIColor.yellowColor.CGColor : UIColor.greenColor.CGColor;
+				layer2.fillColor		= UIColor.clearColor.CGColor;
+				layer2.lineWidth		= 2.0;
 				path = [node hasInterestingTags] ? CGPathCreateWithRect(rect, NULL) : CGPathCreateWithEllipseInRect(rect, NULL);
-				layer.path			= path;
-				layer.zPosition		= Z_HIGHLIGHT_NODE + (node == _selectedNode ? 0.1*ZSCALE : 0);
-				[layers addObject:layer];
+				layer2.path			= path;
+				layer2.zPosition		= Z_HIGHLIGHT_NODE + (node == _selectedNode ? 0.1*ZSCALE : 0);
+				[layers addObject:layer2];
 				CGPathRelease(path);
 			}
 
@@ -2503,11 +2469,11 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 
 		NSArray * layers = [self getShapeLayersForObject:object];
 
-		for ( CALayer * layer in layers ) {
+		for ( CALayerWithProperties * layer in layers ) {
 
 			// configure the layer for presentation
 			BOOL isShapeLayer = [layer isKindOfClass:[CAShapeLayer class]];
-			LayerProperties * props = [layer valueForKey:@"properties"];
+			LayerProperties * props = layer.properties;
 			OSMPoint pt = props->position;
 			OSMPoint pt2 = [_mapView screenPointFromMapPoint:pt birdsEye:NO];
 
