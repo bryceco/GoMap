@@ -42,16 +42,16 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 @interface OsmBaseObject : NSObject <NSCoding,NSCopying>
 {
 @protected
-    int32_t                _modifyCount;
-    BOOL                _constructed;
-    NSDictionary<NSString *, NSString *>    *    _tags;
-    NSNumber        *    _ident;
-    NSArray            *    _parentRelations;
+	int32_t                						_modifyCount;
+	BOOL                						_constructed;
+	NSDictionary<NSString *, NSString *>    *	_tags;
+	NSNumber        						*  	_ident;
+	NSArray						            *  	_parentRelations;
 
-    NSNumber        *    _isOneWay;
+	NSNumber        						*	_isOneWay;
 @public
-    OSMRect                _boundingBox;
-    NSInteger            renderPriorityCached;
+	OSMRect                						_boundingBox;
+	NSInteger						           	renderPriorityCached;
 }
 @property (readonly,nonatomic)  BOOL               	deleted;
 @property (strong,nonatomic)    RenderInfo		*	renderInfo;
@@ -62,7 +62,6 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 
 +(OsmIdentifier)extendedIdentifierForType:(OSM_TYPE)type identifier:(OsmIdentifier)identifier;
 +(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *)pType ident:(OsmIdentifier *)pIdent;
-
 
 // attributes
 @property (readonly,nonatomic)    NSDictionary<NSString *, NSString *>    *    tags;

@@ -10,7 +10,7 @@
 #import <algorithm>
 
 #import "NSMutableArray+PartialSort.h"
-
+#import "RenderInfo.h"
 
 
 @implementation NSMutableArray (PartialSort)
@@ -69,6 +69,46 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	if ( diff == 0 )
 		diff = obj1.ident.longLongValue - obj2.ident.longLongValue;	// older objects are bigger
 	return diff > 0;	// sort descending
+}
+
+
+-(void)countSortOsmObjectVisibleSizeWithLargest:(NSInteger)k
+{
+	NSInteger objCount = self.count;
+
+	std::vector<id>	v;
+	v.reserve( objCount );
+
+	int countOfPriority[ RenderInfoMaxPriority ] = { 0 };
+
+	for ( OsmBaseObject * obj in self ) {
+		v.push_back( obj );
+		++countOfPriority[ (RenderInfoMaxPriority-1) - obj->renderPriorityCached ];
+	}
+
+	NSInteger max = objCount;
+	for ( int i = 1; i < RenderInfoMaxPriority; ++i ) {
+		int prevSum = countOfPriority[i-1];
+		int newSum = countOfPriority[i] += prevSum;
+		if ( newSum >= k && max == objCount ) {
+			max = prevSum;
+		}
+	}
+
+	for ( int i = 0; i < v.size(); ++i ) {
+		OsmBaseObject * obj = v[i];
+		NSInteger index = (RenderInfoMaxPriority-1) - obj->renderPriorityCached;
+		int dest = --countOfPriority[index];
+#if 1
+		self[ dest ] = v[i];
+#else
+		if ( dest < max ) {
+			self[ dest ] = v[i];
+		}
+#endif
+	}
+	NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(max,objCount-max)];
+	[self removeObjectsAtIndexes:range];
 }
 
 -(void)partialSortOsmObjectVisibleSize:(NSInteger)k

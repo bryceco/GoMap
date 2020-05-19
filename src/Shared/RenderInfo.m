@@ -18,7 +18,6 @@
 static RenderInfo * g_AddressRender = nil;
 static RenderInfo * g_DefaultRender = nil;
 
-
 -(RenderInfo *)copy
 {
 	RenderInfo * copy = [RenderInfo new];
@@ -56,77 +55,78 @@ static RenderInfo * g_DefaultRender = nil;
 }
 
 
--(NSInteger)renderPriority:(OsmBaseObject *)object
+
+-(NSInteger)renderPriorityForObject:(OsmBaseObject *)object
 {
 	static NSDictionary * highwayDict = nil;
-	if ( highwayDict == nil ) {
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
 		highwayDict = @{
-			@"motorway"			: @4000,
-			@"trunk"			: @3000,
-			@"motorway_link"	: @2100,
-			@"primary"			: @2000,
-			@"trunk_link"		: @1000,
-			@"primary_link"		: @1200,
-			@"secondary"		: @1500,
-			@"tertiary"			: @1400,
-			@"residential"		: @1200,
-			@"raceway"			: @1110,
-			@"secondary_link"	: @1100,
-			@"tertiary_link"	: @1050,
-			@"living_street"	: @1020,
-			@"road"				: @1000,
-			@"unclassified"		: @900,
-			@"service"			: @710,
-			@"bus_guideway"		: @700,
-			@"track"			: @500,
-			@"pedestrian"		: @200,
-			@"cycleway"			: @130,
-			@"path"				: @120,
-			@"bridleway"		: @110,
-			@"footway"			: @100,
-			@"steps"			: @90,
-			@"construction"		: @80,
-			@"proposed"			: @70,
+			@"motorway"			: @29,
+			@"trunk"			: @28,
+			@"motorway_link"	: @27,
+			@"primary"			: @26,
+			@"trunk_link"		: @25,
+			@"secondary"		: @24,
+			@"tertiary"			: @23,
+			// railway
+			@"primary_link"		: @21,
+			@"residential"		: @20,
+			@"raceway"			: @19,
+			@"secondary_link"	: @10,
+			@"tertiary_link"	: @17,
+			@"living_street"	: @16,
+			@"road"				: @15,
+			@"unclassified"		: @14,
+			@"service"			: @13,
+			@"bus_guideway"		: @12,
+			@"track"			: @11,
+			@"pedestrian"		: @10,
+			@"cycleway"			: @9,
+			@"path"				: @8,
+			@"bridleway"		: @7,
+			@"footway"			: @6,
+			@"steps"			: @5,
+			@"construction"		: @4,
+			@"proposed"			: @3,
 		};
-	}
+	});
 
-	if ( _renderPriority ) {
-		if ( object.isWay || object.isRelation.isMultipolygon )
-			return _renderPriority + 2;
-		if ( object.isRelation )
-			return _renderPriority + 1;
-		return _renderPriority;
-	}
-
-	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"coastline"] ) {
-		return _renderPriority = 10000;
-	}
-	if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"water"] ) {
-		return _renderPriority = 9000;
-	}
-	if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
-		return _renderPriority = 5000;
-	}
-	if ( [_key isEqualToString:@"highway"] ) {
-		if ( _value ) {
-			id priority = highwayDict[_value];
-			_renderPriority = [priority integerValue];
-			if ( _renderPriority )
-				return _renderPriority;
+	NSInteger priority;
+	if ( object.modifyCount ) {
+		priority = 33;
+	} else {
+		if ( _renderPriority == 0 ) {
+			if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"coastline"] ) {
+				_renderPriority = 32;
+			} else if ( [_key isEqualToString:@"natural"] && [_value isEqualToString:@"water"] ) {
+				_renderPriority = 31;
+			} else if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
+				_renderPriority = 30;
+			} else if ( [_key isEqualToString:@"highway"] && _value  && (_renderPriority = [highwayDict[_value] integerValue]) > 0 ) {
+				(void)0;
+			} else if ( [_key isEqualToString:@"railway"] ) {
+				_renderPriority = 22;
+			} else if ( self == g_AddressRender ) {
+				_renderPriority = 1;
+			} else {
+				_renderPriority = 2;
+			}
 		}
-	}
-	if ( [_key isEqualToString:@"railway"] ) {
-		return _renderPriority = 1250;
+		priority = _renderPriority;
 	}
 
-	// address points are extra low priority
-	if ( self == g_AddressRender ) {
-		return _renderPriority = 40;
+	NSInteger bonus;
+	if ( object.isWay || object.isRelation.isMultipolygon ) {
+		bonus = 2;
+	} else if ( object.isRelation ) {
+		bonus = 1;
+	} else {
+		bonus = 0;
 	}
-
-	// get a default value
-	_renderPriority = 50;
-	return [self renderPriority:object];
+	priority = 3*priority + bonus;
+	assert( priority < RenderInfoMaxPriority );
+	return priority;
 }
 
 @end

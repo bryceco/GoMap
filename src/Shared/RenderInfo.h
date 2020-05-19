@@ -10,6 +10,9 @@
 
 @class OsmBaseObject;
 
+static const NSInteger RenderInfoMaxPriority = (33+1)*3;
+
+
 @interface RenderInfo : NSObject
 {
 	NSInteger	_renderPriority;
@@ -23,7 +26,7 @@
 
 -(BOOL)isAddressPoint;
 
--(NSInteger)renderPriority:(OsmBaseObject *)object;
+-(NSInteger)renderPriorityForObject:(OsmBaseObject *)object;
 
 @end
 

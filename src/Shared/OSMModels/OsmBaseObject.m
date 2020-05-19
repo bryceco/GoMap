@@ -304,16 +304,16 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
 -(void)clearCachedProperties
 {
-    _renderInfo                    = nil;
-    renderPriorityCached        = 0;
-    _isOneWay                    = nil;
-    _isShown                    = TRISTATE_UNKNOWN;
-    _boundingBox                = OSMRectZero();
+	_renderInfo            	= nil;
+	renderPriorityCached	= 0;
+	_isOneWay               = nil;
+	_isShown               	= TRISTATE_UNKNOWN;
+	_boundingBox         	= OSMRectZero();
 
-    for ( CALayer * layer in _shapeLayers ) {
-        [layer removeFromSuperlayer];
-    }
-    _shapeLayers            = nil;
+	for ( CALayer * layer in _shapeLayers ) {
+		[layer removeFromSuperlayer];
+	}
+	_shapeLayers      		= nil;
 }
 
 -(BOOL)isModified

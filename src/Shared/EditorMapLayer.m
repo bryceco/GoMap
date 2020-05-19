@@ -2037,21 +2037,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	return a;
 }
 
-#if 0
-static BOOL VisibleSizeLess( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	NSInteger diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
-	return diff > 0;	// sort descending
-}
-static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
-{
-	long long diff = obj1->renderPriorityCached - obj2->renderPriorityCached;
-	if ( diff == 0 )
-		diff = obj1.ident.longLongValue - obj2.ident.longLongValue;	// older objects are bigger
-	return diff > 0;	// sort descending
-}
-#endif
-
 
 - (void)filterObjects:(NSMutableArray *)objects
 {
@@ -2335,54 +2320,13 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 		if ( object.renderInfo == nil ) {
 			object.renderInfo = [[RenderInfoDatabase sharedRenderInfoDatabase] renderInfoForObject:object];
 		}
-		
 		if ( object->renderPriorityCached == 0 ) {
-			if ( object.modifyCount ) {
-				object->renderPriorityCached = 1000000;
-			} else {
-				object->renderPriorityCached = [object.renderInfo renderPriority:object];
-			}
+			object->renderPriorityCached = [object.renderInfo renderPriorityForObject:object];
 		}
 	}
 
-	// sort from big to small objects
-	[objects partialSortOsmObjectVisibleSize:2*objectLimit+1];
-
-	// adjust the list of objects so that we get all or none of the same type
-	if ( objects.count > objectLimit ) {
-		// We have more objects available than we want to display. If some of the objects are the same size as the last visible object then include those too.
-		NSInteger lastIndex = objectLimit;
-		OsmBaseObject * last = objects[ objectLimit-1 ];
-		NSInteger lastRenderPriority = last->renderPriorityCached;
-		for ( NSInteger i = objectLimit, e = MIN(objects.count,2*objectLimit); i < e; ++i ) {
-			OsmBaseObject * o = objects[ i ];
-			if ( o->renderPriorityCached == lastRenderPriority ) {
-				lastIndex++;
-			} else {
-				break;
-			}
-		}
-		if ( lastIndex >= 2*objectLimit ) {
-			// we doubled the number of objects, so back off instead
-			NSInteger removeCount = 0;
-			for ( NSInteger i = objectLimit-1; i >= 0; --i ) {
-				OsmBaseObject * o = objects[ i ];
-				if ( o->renderPriorityCached == lastRenderPriority ) {
-					++removeCount;
-				} else {
-					break;
-				}
-			}
-			if ( removeCount < objectLimit ) {
-				lastIndex = objectLimit - removeCount;
-			}
-		}
-		objectLimit = lastIndex;
-
-		// remove unwanted objects
-		NSIndexSet * range = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(objectLimit,objects.count-objectLimit)];
-		[objects removeObjectsAtIndexes:range];
-	}
+	// sort from big to small objects, and remove excess objects
+	[objects countSortOsmObjectVisibleSizeWithLargest:2*objectLimit];
 
 	// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
 	objectLimit = objects.count;
