@@ -228,7 +228,10 @@
 			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
 			return cell;
 		}
-		TextPairTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
+		OsmMember	* member = _members[ indexPath.row ];
+		BOOL		isResolved = [member.ref isKindOfClass:[OsmBaseObject class]];
+		TextPairTableCell *cell = isResolved ? [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath]
+											 :  [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
 #if EDIT_RELATIONS
 		cell.text1.enabled = YES;
 		cell.text2.enabled = YES;
@@ -236,7 +239,6 @@
 		cell.text1.enabled = NO;
 		cell.text2.enabled = NO;
 #endif
-		OsmMember	* member = _members[ indexPath.row ];
 		if ( [member isKindOfClass:[OsmMember class]] ) {
 			OsmBaseObject * ref = member.ref;
 			NSString * memberName = [ref isKindOfClass:[OsmBaseObject class]] ? ref.friendlyDescriptionWithDetails : [NSString stringWithFormat:@"%@ %@",member.type, member.ref];
@@ -324,7 +326,7 @@
 		if ( isValue ) {
 			NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
 			if ( [kv[0] hasPrefix:@"wikipedia"] ) {
-				// if the value is for wikipedia then convert the a URL to the correct format
+				// if the value is for wikipedia then convert the URL to the correct format
 				// format is https://en.wikipedia.org/wiki/Nova_Scotia
 				NSScanner * scanner = [NSScanner scannerWithString:kv[1]];
 				NSString *languageCode, *pageName;
@@ -511,25 +513,42 @@
 		return NO;
 	}
 
-	// switch to relation
+	// switch to relation or relation member
 	UITableViewCell * cell = sender;
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-	if ( indexPath.section != 1 ) {
+	OsmBaseObject	* object = nil;
+	if ( indexPath.section == 1 ) {
+		// change the selected object in the editor to the relation
+		object = _relations[ indexPath.row ];
+	} else if ( indexPath.section == 2 ) {
+		OsmMember	* member = _members[ indexPath.row ];
+		object = member.ref;
+		if ( ![object isKindOfClass:[OsmBaseObject class]] ) {
+			return NO;
+		}
+	} else {
 		return NO;
 	}
+	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	[mapView.editorLayer setSelectedNode:object.isNode];
+	[mapView.editorLayer setSelectedWay:object.isWay];
+	[mapView.editorLayer setSelectedRelation:object.isRelation];
 
-	// change the selected object in the editor to the relation
-	OsmRelation	* relation = _relations[ indexPath.row ];
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	[appDelegate.mapView.editorLayer setSelectedNode:nil];
-	[appDelegate.mapView.editorLayer setSelectedWay:nil];
-	[appDelegate.mapView.editorLayer setSelectedRelation:relation];
-
-	[appDelegate.mapView placePushpinAtPoint:appDelegate.mapView.pushpinView.arrowPoint object:relation];
+	CGPoint newPoint = mapView.pushpinView.arrowPoint;
+	CLLocationCoordinate2D clLatLon = [mapView longitudeLatitudeForScreenPoint:newPoint birdsEye:YES];
+	OSMPoint latLon = { clLatLon.longitude, clLatLon.latitude };
+	latLon = [object pointOnObjectForPoint:latLon];
+	newPoint = [mapView screenPointForLatitude:latLon.y longitude:latLon.x birdsEye:YES];
+	if ( !CGRectContainsPoint( mapView.bounds, newPoint ) ) {
+		// new object is far away
+		[mapView placePushpinForSelection];
+	} else {
+		[mapView placePushpinAtPoint:newPoint object:object];
+	}
 
 	// dismiss ourself and switch to the relation
-	UIViewController * topController = (id)appDelegate.mapView.viewController;
-	[appDelegate.mapView refreshPushpinText];	// update pushpin description to the relation
+	UIViewController * topController = (id)mapView.viewController;
+	[mapView refreshPushpinText];	// update pushpin description to the relation
 	[self dismissViewControllerAnimated:YES completion:^{
 		[topController performSegueWithIdentifier:@"poiSegue" sender:nil];
 	}];

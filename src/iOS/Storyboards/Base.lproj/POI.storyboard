@@ -438,7 +438,7 @@
                                             </connections>
                                         </textField>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="type" translatesAutoresizingMaskIntoConstraints="NO" id="0zS-QM-zwQ" customClass="AutocompleteTextField">
-                                            <rect key="frame" x="154" y="8" width="233" height="34"/>
+                                            <rect key="frame" x="154" y="8" width="221" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
@@ -456,7 +456,7 @@
                                     <constraint firstItem="Urd-9O-Mte" firstAttribute="top" secondItem="7MN-vj-ZSm" secondAttribute="top" constant="8" id="dzG-vN-e20"/>
                                     <constraint firstItem="0zS-QM-zwQ" firstAttribute="leading" secondItem="Urd-9O-Mte" secondAttribute="trailing" constant="13" id="hwn-3D-NLa"/>
                                     <constraint firstItem="0zS-QM-zwQ" firstAttribute="bottom" secondItem="Urd-9O-Mte" secondAttribute="bottom" id="jji-pl-Q6N"/>
-                                    <constraint firstItem="7MN-vj-ZSm" firstAttribute="trailing" secondItem="0zS-QM-zwQ" secondAttribute="trailing" constant="-4" id="rSO-2I-AeB"/>
+                                    <constraint firstItem="7MN-vj-ZSm" firstAttribute="trailing" secondItem="0zS-QM-zwQ" secondAttribute="trailing" constant="8" id="rSO-2I-AeB"/>
                                     <constraint firstItem="Urd-9O-Mte" firstAttribute="baseline" secondItem="0zS-QM-zwQ" secondAttribute="baseline" id="wK2-4e-E9V"/>
                                 </constraints>
                                 <connections>
@@ -566,7 +566,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A3u-2n-bZx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1770" y="490"/>
+            <point key="canvasLocation" x="1769.5652173913045" y="489.50892857142856"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dmH-vW-qrr">
