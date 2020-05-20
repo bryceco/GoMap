@@ -1223,7 +1223,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
     OsmNode *node = object.isNode;
 	if (node) {
-        [layers addObjectsFromArray:[self shapeLayersForForNode:node]];
+        [layers addObjectsFromArray:[self shapeLayersForNode:node]];
 	}
 
 	// casing
@@ -1562,7 +1562,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
  @param node The `OsmNode` instance to get the layers for.
  @return A list of `CALayer` instances that are used to represent the given `node` on the map.
  */
-- (NSArray<CALayer *> *)shapeLayersForForNode:(OsmNode *)node
+- (NSArray<CALayer *> *)shapeLayersForNode:(OsmNode *)node
 {
     NSMutableArray<CALayer *> *layers = [NSMutableArray array];
     
@@ -2296,9 +2296,14 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 {
 #if TARGET_OS_IPHONE
 	double geekScore = [self.geekbenchScoreProvider geekbenchScore];
+#if 1 || DEBUG
+	NSInteger objectLimit = 50 + (geekScore - 500) / 40;	// 500 -> 50, 2500 -> 10
+	objectLimit *= 3;
+#else
 	NSInteger minObj = 50;	// score = 500
 	NSInteger maxObj = 300;	// score = 2500
 	NSInteger objectLimit = minObj + (maxObj-minObj)*(geekScore - 500)/2000;
+#endif
 #else
 	NSInteger objectLimit = 500;
 #endif
@@ -2469,10 +2474,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						}
 					}
 
-                } else if ([[layer valueForKey:@"key"] isEqualToString:@"direction"]) {
-                    // This layer draws the `direction` of an object, so it needs to rotate along with the map.
-                    layer.affineTransform = CGAffineTransformMakeRotation(tRotation);
-                } else {
+				} else if ([[layer valueForKey:@"key"] isEqualToString:@"direction"]) {
+					// This layer draws the `direction` of an object, so it needs to rotate along with the map.
+					layer.affineTransform = CGAffineTransformMakeRotation(tRotation);
+				} else {
 
 					// its an icon or a generic box
 				}
@@ -2493,7 +2498,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			}
 		}
 	}
-
 
 #if USE_SCENEKIT
 	{

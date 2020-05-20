@@ -472,6 +472,35 @@ public:
 		return NO;
 	}
 
+	static void findObjectsInAreaNonRecurse( const QuadBoxCC * top, const OSMRect & bbox, void (^block)(OsmBaseObject *) )
+	{
+		std::vector<const QuadBoxCC *>	stack;
+		stack.reserve(32);
+		stack.push_back(top);
+
+		while ( !stack.empty() ) {
+
+			const QuadBoxCC * q = stack.back();
+			stack.pop_back();
+
+			for ( const auto & obj : q->_members ) {
+				// need to do this because we aren't using the accessor (for perf reasons) which would do it for us
+				if ( obj->_boundingBox.origin.x == 0 && obj->_boundingBox.origin.y == 0 && obj->_boundingBox.size.width == 0 && obj->_boundingBox.size.height == 0 ) {
+					[obj computeBoundingBox];
+				}
+				if ( OSMRectIntersectsRect( obj->_boundingBox, bbox ) ) {
+					block( obj );
+				}
+			}
+			for ( int c = 0; c <= QUAD_LAST; ++c ) {
+				QuadBoxCC * child = q->_children[ c ];
+				if ( child && OSMRectIntersectsRect( bbox, child->_rect ) ) {
+					stack.push_back(child);
+				}
+			}
+		}
+	}
+
 	void findObjectsInArea( const OSMRect & bbox, void (^block)(OsmBaseObject *) ) const
 	{
 		for ( const auto & obj : _members ) {
@@ -676,7 +705,7 @@ public:
 
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
 {
-	_cpp->findObjectsInArea(bbox, block);
+	_cpp->findObjectsInAreaNonRecurse(_cpp,bbox,block);
 }
 
 #pragma mark Discard objects
