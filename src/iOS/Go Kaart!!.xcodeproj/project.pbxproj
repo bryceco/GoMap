@@ -489,7 +489,6 @@
 		02F8F4341696004B002A0820 /* NominatumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatumViewController.m */; };
 		02F9A4551BC8348C0013BFBD /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		0E19F60C240D704300339457 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E19F608240D704300339457 /* MainStoryboard_iPad.storyboard */; };
 		0E19F60D240D704300339457 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E19F60A240D704300339457 /* MainStoryboard.storyboard */; };
 		0ECB35FF240973590063B61B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0ECB35FE240973590063B61B /* Images.xcassets */; };
 		26D1048022BBEB7800E2B493 /* TagInfo_Kaart.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26D1047F22BBEB7800E2B493 /* TagInfo_Kaart.xml */; };
@@ -1109,7 +1108,6 @@
 		02F9A4541BC8348C0013BFBD /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "OSM-Logo256.png"; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
-		0E19F609240D704300339457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		0E19F60B240D704300339457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		0ECB35FE240973590063B61B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0EE76D60240F21BB00A0AA4D /* EnhancedHwyEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnhancedHwyEditorController.h; sourceTree = "<group>"; };
@@ -1419,7 +1417,6 @@
 				02E8437E19B4DE510044AC1D /* Localizable.strings */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
-				0E19F608240D704300339457 /* MainStoryboard_iPad.storyboard */,
 				0E19F60A240D704300339457 /* MainStoryboard.storyboard */,
 				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
@@ -2136,7 +2133,6 @@
 				02ACBBF816713F2B00BB4414 /* barrier_bollard.p.64.png in Resources */,
 				02ACBBF916713F2B00BB4414 /* barrier_cattle_grid.p.64.png in Resources */,
 				02ACBBFA16713F2B00BB4414 /* barrier_cycle_barrier.p.64.png in Resources */,
-				0E19F60C240D704300339457 /* MainStoryboard_iPad.storyboard in Resources */,
 				02ACBBFB16713F2B00BB4414 /* barrier_entrance.p.64.png in Resources */,
 				02ACBBFC16713F2B00BB4414 /* barrier_exit.p.64.png in Resources */,
 				02ACBBFD16713F2B00BB4414 /* barrier_gate.p.64.png in Resources */,
@@ -2642,14 +2638,6 @@
 				02E8438219B4DF960044AC1D /* Base */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		0E19F608240D704300339457 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0E19F609240D704300339457 /* Base */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		0E19F60A240D704300339457 /* MainStoryboard.storyboard */ = {

@@ -122,7 +122,7 @@ typedef enum {
         }
     }
 
-    if ( ![_keyValueDict objectForKey:@"on eway"]){
+    if ( ![_keyValueDict objectForKey:@"oneway"]){
         _onewayState = EMPTY;
     } else {
         _onewayState = (ONEWAY_STATES)_selectedWay.isOneWay;
@@ -300,7 +300,7 @@ typedef enum {
     }
 }
 
-// Close the window if user touches outside it
+/* Close the window if user touches outside it
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch * touch = [touches anyObject];
@@ -331,7 +331,7 @@ typedef enum {
         [self dismissViewControllerAnimated:true completion:nil];
     }
 }
-
+*/
 // Convert location point to CGPoint
 -(CGPoint)screenPointForLatitude:(double)latitude longitude:(double)longitude
 {
@@ -435,7 +435,12 @@ typedef enum {
 										break;
 					}
 			}
-		saveButton.enabled = [self isTagDictChanged:[self keyValueDictionary]];
+		saveButton.enabled = _laneCount %2 != 0;
+		//saveButton.enabled = [self isTagDictChanged:[self keyValueDictionary]];
+}
+
+- (IBAction)closeBtnPressed:(id)sender {
+		[self dismissViewControllerAnimated:true completion:nil];
 }
 
 - (IBAction)done {

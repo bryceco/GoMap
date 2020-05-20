@@ -53,6 +53,7 @@
 		IBOutlet UIButton * saveButton;
 		IBOutlet UILabel * lblValue;
 		IBOutlet UIStepper * laneStepper;
+		IBOutlet UIButton *closeBtn;
 		__weak IBOutlet NSLayoutConstraint *bottomViewConstraint;
 }
 
@@ -66,6 +67,7 @@
 @property (strong, nonatomic) IBOutlet UILabel * highwayEditorLabel;
 - (IBAction)onewayPressed;
 - (IBAction)reversePressed;
+- (IBAction)closeBtnPressed:(id)sender;
 - (IBAction)laneStepperPressed:(UIStepper *)sender;
 - (IBAction)done;
 
