@@ -423,7 +423,7 @@ typedef enum {
 									_laneCount = EMPTY_LANE;
 										break;
 
-								casex MINUS_CLICKED:
+								case MINUS_CLICKED:
 										_laneCount = MINUS_CLICKED;
 										break;
 
