@@ -879,7 +879,6 @@ const CGFloat kEditControlCornerRadius = 4;
 			if ( json ) {
 				NSString * code = json[ @"address" ][ @"country_code" ];
 				if ( code ) {
-					NSLog(@"country = %@\n",code);
 					dispatch_async(dispatch_get_main_queue(), ^{
 						_countryCodeForLocation = code;
 					});
