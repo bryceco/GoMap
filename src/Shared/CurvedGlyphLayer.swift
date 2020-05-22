@@ -243,7 +243,7 @@ private class StringGlyphs {
 					}
 					if start == nil {
 						start = loc
-					} else if abs(loc.angle-start!.angle) > 5.0 * CGFloat.pi/180.0 {
+					} else if abs(loc.angle-start!.angle) > 1.0 * CGFloat.pi/180.0 {
 						break
 					}
 
