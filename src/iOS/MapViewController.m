@@ -141,8 +141,16 @@
 	// install long-press gesture recognizers
 	[self installLocationLongPressGestureRecognizer:YES];
 
+#if 1 // FIXME
+	// fixes a weird bug where Settings bar button item doesn't respond until after another modal has appeared
+	NSMutableArray * a = [_toolbar.items mutableCopy];
+	UIBarButtonItem * orig = a[7];
+	a[7] = [[UIBarButtonItem alloc] initWithImage:orig.image style:orig.style target:orig.target action:orig.action];
+	_toolbar.items = a;
+#endif
+
 	_toolbar.layer.zPosition = 9000;
-	
+
 #if 0 && DEBUG
 	SpeechBalloonView * speech = [[SpeechBalloonView alloc] initWithText:@"Press here to create a new node,\nor to begin a way"];
 	[speech setTargetView:_toolbar];
