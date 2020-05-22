@@ -73,8 +73,10 @@ static const NSInteger CACHE_SECTION			= 3;
 	// place a checkmark next to currently selected display
 	if ( indexPath.section == BACKGROUND_SECTION ) {
 		MapView * mapView = [AppDelegate getAppDelegate].mapView;
-		if ( indexPath.row == mapView.viewState ) {
+		if ( cell.tag == mapView.viewState ) {
 			cell.accessoryType = UITableViewCellAccessoryCheckmark;
+		} else {
+			cell.accessoryType = UITableViewCellAccessoryNone;
 		}
 	}
 
@@ -99,7 +101,7 @@ static const NSInteger CACHE_SECTION			= 3;
 		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:BACKGROUND_SECTION];
 		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
 		if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
-			mapView.viewState = (MapViewState)row;
+			mapView.viewState = (MapViewState) cell.tag;
 			[mapView setAerialTileService:mapView.customAerials.currentAerial];
 			break;
 		}

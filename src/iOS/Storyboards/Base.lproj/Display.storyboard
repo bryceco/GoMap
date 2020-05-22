@@ -1163,7 +1163,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             <objects>
                 <navigationController storyboardIdentifier="DisplayViewController" id="3il-wo-nAN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="DisplayViewController" insetsLayoutMarginsFromSafeArea="NO" id="6od-EN-7Ax">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbm-5N-YoL">
@@ -1188,7 +1188,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                         <sections>
                             <tableViewSection headerTitle="Background" id="lwG-AE-nIZ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="MPq-PX-jf0" style="IBUITableViewCellStyleDefault" id="6cv-BB-mEr">
+                                    <tableViewCell tag="1" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="MPq-PX-jf0" style="IBUITableViewCellStyleDefault" id="6cv-BB-mEr">
                                         <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6cv-BB-mEr" id="uCE-gp-snt">
@@ -1222,7 +1222,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WlG-f2-MfA" customClass="CustomBackgroundCell">
+                                    <tableViewCell tag="2" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WlG-f2-MfA" customClass="CustomBackgroundCell">
                                         <rect key="frame" x="0.0" y="143.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WlG-f2-MfA" id="Xmp-oM-reK">
@@ -1256,7 +1256,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <outlet property="button" destination="eac-Db-EaW" id="Txv-j0-qpA"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="9L3-JO-Whj" style="IBUITableViewCellStyleDefault" id="Dck-eH-FTh">
+                                    <tableViewCell tag="3" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="9L3-JO-Whj" style="IBUITableViewCellStyleDefault" id="Dck-eH-FTh">
                                         <rect key="frame" x="0.0" y="187.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dck-eH-FTh" id="1iz-ya-alQ">
