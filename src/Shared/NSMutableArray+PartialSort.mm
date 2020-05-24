@@ -90,16 +90,18 @@ static BOOL VisibleSizeLessStrict( OsmBaseObject * obj1, OsmBaseObject * obj2 )
 	for ( int i = 1; i < RenderInfoMaxPriority; ++i ) {
 		int prevSum = countOfPriority[i-1];
 		int newSum = countOfPriority[i] += prevSum;
-		if ( newSum >= k && max == objCount ) {
-			max = prevSum;
+		if ( max == objCount ) {
+			if ( prevSum >= k || newSum >= 2*k ) {
+				max = prevSum;
+			}
 		}
 	}
 
-	for ( int i = 0; i < v.size(); ++i ) {
+	for ( int i = 0; i < objCount; ++i ) {
 		OsmBaseObject * obj = v[i];
 		NSInteger index = (RenderInfoMaxPriority-1) - obj->renderPriorityCached;
 		int dest = --countOfPriority[index];
-#if 1
+#if 0
 		self[ dest ] = v[i];
 #else
 		if ( dest < max ) {
