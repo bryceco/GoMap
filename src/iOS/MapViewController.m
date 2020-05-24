@@ -134,9 +134,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	CGRect rc = self.view.bounds;
-	self.mapView.frame = rc;
-	[self.mapView viewDidAppear];
 
 	// install long-press gesture recognizers
 	[self installLocationLongPressGestureRecognizer:YES];

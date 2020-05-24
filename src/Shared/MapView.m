@@ -234,10 +234,6 @@ const CGFloat kEditControlCornerRadius = 4;
 		_rulerLayer.drawsAsynchronously	= YES;
 #endif
 
-#if !TARGET_OS_IPHONE
-		[self setFrame:frame];
-#endif
-
 #if TARGET_OS_IPHONE
 		_editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSDictionary * context) {
 
@@ -571,14 +567,15 @@ const CGFloat kEditControlCornerRadius = 4;
 	[self save];
 }
 
--(void)setFrame:(CGRect)rect
+-(void)layoutSubviews
 {
-	[super setFrame:rect];
+	[super layoutSubviews];
+	NSLog(@"layoutSubview = %@",NSStringFromCGRect(self.bounds));
 
-	[CATransaction begin];
-	[CATransaction setAnimationDuration:0.0];
+	CGRect rect = self.bounds;
+
 #if TARGET_OS_IPHONE
-	CGRect rc = CGRectMake(10, rect.size.height - 80, 150, 30);
+	CGRect rc = CGRectMake(10, rect.size.height - 40, 150, 30);
 	if (@available(iOS 11.0, *)) {
 		rc.origin.y -= self.safeAreaInsets.bottom;
 		rc.origin.x += self.safeAreaInsets.left;
@@ -611,8 +608,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	_crossHairs.position = CGRectCenter( rect );
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
-
-	[CATransaction commit];
 }
 
 #pragma mark Utility
