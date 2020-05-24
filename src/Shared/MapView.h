@@ -188,7 +188,6 @@ typedef enum {
 -(void)updateAerialAttributionButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
 
--(void)viewDidAppear;
 -(void)save;
 -(void)discardStaleData;
 

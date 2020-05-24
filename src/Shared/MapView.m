@@ -374,15 +374,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	_tapAndDragGesture.delegate = self;
 	[self addGestureRecognizer:_tapAndDragGesture];
 #endif
-}
-
-
--(void)viewDidAppear
-{
-	static BOOL first = YES;
-	if ( !first )
-		return;
-	first = NO;
 
 	// these need to be loaded late because assigning to them changes the view
 	self.viewState				= (MapViewState)	[[NSUserDefaults standardUserDefaults] integerForKey:@"mapViewState"];
@@ -478,10 +469,20 @@ const CGFloat kEditControlCornerRadius = 4;
 		// automaatically scroll view for frame rate testing
 		self.fpsLabel.showFPS = YES;
 
+#if 0
+		// this set's the location of the (0,0) screen point (upper left), not the center point
 		OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
 		self.screenFromMapTransform = t;
+#else
+		// this set's center point
+		OSMPoint latLon = { -122.205831, 47.675024 };	// return from above
+		double zoom = 17.302591;
+		[self setTransformForLatitude:latLon.y longitude:latLon.x zoom:zoom];
+#endif
+		const double radius = 100;
 		__block CGFloat angle = 1.5*M_PI;
 		__weak MapView * weakSelf = self;
+
 		__block CFTimeInterval prev = CACurrentMediaTime();
 		[displayLink addName:NAME block:^{
 			CFTimeInterval now = CACurrentMediaTime();
@@ -492,8 +493,8 @@ const CGFloat kEditControlCornerRadius = 4;
 			angle += M_PI * delta;
 			CGFloat x2 = cos(angle);
 			CGFloat y2 = sin(angle);
-			CGFloat dx = (x2 - x1) * 100;
-			CGFloat dy = (y2 - y1) * 100;
+			CGFloat dx = (x2 - x1) * radius;
+			CGFloat dy = (y2 - y1) * radius;
 			[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
 			prev = now;
 		}];
@@ -532,8 +533,7 @@ const CGFloat kEditControlCornerRadius = 4;
 -(void)save
 {
 	// save defaults first
-	CGRect rc = self.layer.bounds;
-	OSMPoint center = { rc.origin.x + rc.size.width/2, rc.origin.y + rc.size.height/2 };
+	OSMPoint center = OSMPointFromCGPoint( self.crossHairs.position );
 	center = [self mapPointFromScreenPoint:center birdsEye:NO];
 	center = LongitudeLatitudeFromMapPoint( center );
 	double scale = OSMTransformScaleX(self.screenFromMapTransform);
@@ -570,7 +570,6 @@ const CGFloat kEditControlCornerRadius = 4;
 -(void)layoutSubviews
 {
 	[super layoutSubviews];
-	NSLog(@"layoutSubview = %@",NSStringFromCGRect(self.bounds));
 
 	CGRect rect = self.bounds;
 
@@ -597,10 +596,10 @@ const CGFloat kEditControlCornerRadius = 4;
 	for ( CALayer * layer in _backgroundLayers ) {
 		if ( [layer isKindOfClass:[MercatorTileLayer class]] ) {
 			layer.anchorPoint = CGPointMake(0.5,0.5);
-			layer.frame = self.layer.bounds;
+			layer.frame = rect;
 		} else {
 			layer.position = self.layer.position;
-			layer.bounds = self.layer.bounds;
+			layer.bounds = rect;
 		}
 	}
 	_buildings3D.frame = self.layer.bounds;
