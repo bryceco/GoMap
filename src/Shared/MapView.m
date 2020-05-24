@@ -1378,6 +1378,19 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 }
 
+-(void)setTransformForLatitude:(double)latitude longitude:(double)longitude zoom:(double)zoom
+{
+	double scale = pow(2,zoom);
+	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
+
+}
+
+-(double)zoom
+{
+	double scaleX = OSMTransformScaleX( _screenFromMapTransform );
+	return log2(scaleX);
+}
+
 
 -(CGPoint)pointOnObject:(OsmBaseObject *)object forPoint:(CGPoint)point
 {
@@ -3495,7 +3508,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		case UIGestureRecognizerStateEnded:
 			if ( CACurrentMediaTime() - _addNodeButtonTimestamp < 0.5 ) {
 				// treat as tap
-				CGPoint point = CGRectCenter( self.bounds );
+				CGPoint point = _crossHairs.position;
 				[self dropPinAtPoint:point];
 			}
 			_addNodeButtonTimestamp = 0.0;

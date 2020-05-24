@@ -984,7 +984,7 @@ extern const double MinIconSizeInPixels;
 
 -(NSInteger)zoomLevel
 {
-	return (NSInteger)floor( log2( OSMTransformScaleX(_mapView.screenFromMapTransform) ) );
+	return (NSInteger)floor( _mapView.zoom );
 }
 
 
@@ -2326,7 +2326,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	}
 
 	// sort from big to small objects, and remove excess objects
-	[objects countSortOsmObjectVisibleSizeWithLargest:2*objectLimit];
+	[objects countSortOsmObjectVisibleSizeWithLargest:objectLimit];
 
 	// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
 	objectLimit = objects.count;

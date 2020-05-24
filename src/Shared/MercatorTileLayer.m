@@ -105,9 +105,8 @@
 
 -(int32_t)zoomLevel
 {
-	double scaleX = OSMTransformScaleX( _mapView.screenFromMapTransform );
-	return self.aerialService.roundZoomUp	? (int32_t)ceil(log2(scaleX))
-											: (int32_t)floor(log2(scaleX));
+	return self.aerialService.roundZoomUp	? (int32_t)ceil(_mapView.zoom)
+											: (int32_t)floor(_mapView.zoom);
 }
 
 
@@ -563,8 +562,8 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 	NSSet * currentSet = [NSSet setWithArray:currentTiles];
 
 	OSMRect	rect			= [_mapView boundingMapRectForScreen];
-	int32_t	minZoomLevel	= self.aerialService.roundZoomUp ? (int32_t)ceil(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)))
-															 : (int32_t)floor(log2(OSMTransformScaleX(_mapView.screenFromMapTransform)));
+	int32_t	minZoomLevel	= [self zoomLevel];
+
 	if ( minZoomLevel < 1 ) {
 		minZoomLevel = 1;
 	}
