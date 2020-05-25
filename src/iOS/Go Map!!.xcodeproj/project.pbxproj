@@ -93,7 +93,6 @@
 		02ACBD2416717D7000BB4414 /* RenderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBD2316717D7000BB4414 /* RenderInfo.m */; };
 		02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
-		02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */; };
 		02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED98D168BF87200357B94 /* NearbyMappersViewController.m */; };
@@ -321,8 +320,6 @@
 		02ACBD2316717D7000BB4414 /* RenderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RenderInfo.m; path = ../Shared/RenderInfo.m; sourceTree = "<group>"; };
 		02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "OSM-Logo256.png"; path = "../OSM-Logo256.png"; sourceTree = "<group>"; };
 		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
-		02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HtmlAlertViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HtmlAlertViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = LanguageTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LanguageTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = ../Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
@@ -612,8 +609,6 @@
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
 				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
 				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
-				02B69D0A1BF42411002605A3 /* HtmlAlertViewController.h */,
-				02B69D0B1BF42411002605A3 /* HtmlAlertViewController.m */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
 				02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */,
@@ -1082,7 +1077,6 @@
 				64305F7223E7224E00232BB9 /* GeoURLParser.m in Sources */,
 				02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */,
 				024C323D1DEEA97100AD62AB /* AdvancedSettingsViewController.m in Sources */,
-				02B69D0C1BF42411002605A3 /* HtmlAlertViewController.m in Sources */,
 				022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */,
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,

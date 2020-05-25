@@ -19,7 +19,6 @@
 #import "EditorMapLayer.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
-#import "HtmlAlertViewController.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "MyApplication.h"
@@ -332,11 +331,13 @@ const CGFloat kEditControlCornerRadius = 4;
 	[self.addNodeButton addGestureRecognizer:_addNodeButtonLongPressGestureRecognizer];
 
 	// pan gesture to recognize mouse-wheel scrolling (zoom)
-	UIPanGestureRecognizer * scrollWheelGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollWheelGesture:)];
-	scrollWheelGesture.allowedScrollTypesMask = UIScrollTypeMaskDiscrete;	// only accept scroll-wheel, not track-pad
-	scrollWheelGesture.maximumNumberOfTouches = 0;
-	[self addGestureRecognizer:scrollWheelGesture];
-	
+	if (@available(iOS 13.4, *)) {
+		UIPanGestureRecognizer * scrollWheelGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollWheelGesture:)];
+		scrollWheelGesture.allowedScrollTypesMask = UIScrollTypeMaskDiscrete;
+		scrollWheelGesture.maximumNumberOfTouches = 0;
+		[self addGestureRecognizer:scrollWheelGesture];
+	}
+
 	_notesDatabase			= [OsmNotesDatabase new];
 	_notesDatabase.mapData	= _editorLayer.mapData;
 	_notesViewDict			= [NSMutableDictionary new];
@@ -3287,30 +3288,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		OsmNoteComment * comment = note.comments.lastObject;
 		NSString * title = note.isWaypoint ? @"Waypoint" : @"Keep Right";
 
-#if 0
-		// use our custom alertview
-		HtmlAlertViewController * alert = [self.viewController.storyboard instantiateViewControllerWithIdentifier:@"HtmlAlert"];
-		[self.window addSubview:alert.view];
-		alert.heading.text			= title;
-		alert.htmlText				= comment.text;
-		_alertKeepRight = (id)alert;	// so we don't get deallocated
-		__weak HtmlAlertViewController * weakAlert = alert;
-		[alert addButton:@"OK" callback:^{
-			[weakAlert.view removeFromSuperview];
-			_alertKeepRight = nil;
-		}];
-		[alert addButton:@"Ignore" callback:^{
-			// they want to hide this button from now on
-			[_notesDatabase ignoreNote:_currentNote];
-			[self refreshNoteButtonsFromDatabase];
-			_editorLayer.selectedNode = nil;
-			_editorLayer.selectedWay = nil;
-			_editorLayer.selectedRelation = nil;
-			[self removePin];
-			[weakAlert.view removeFromSuperview];
-			_alertKeepRight = nil;
-		}];
-#else
 		// use regular alertview
 		NSString * text = comment.text;
 		NSRange r1 = [text rangeOfString:@"<a "];
@@ -3335,7 +3312,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			[self removePin];
  		}]];
 		[self.viewController presentViewController:alertKeepRight animated:YES completion:nil];
-#endif
+
 	} else if ( note.isFixme ) {
 		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
 		_editorLayer.selectedNode		= object.isNode;
