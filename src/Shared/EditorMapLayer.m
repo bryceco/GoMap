@@ -1028,6 +1028,14 @@ typedef struct RGBAColor {
 		c.green = 0;
 		c.blue = 1;
 	} else {
+		if ( object.isNode ) {
+			if ( [object.tags[@"highway"] isEqualToString:@"stop"] ) {
+				c.red = 1.0;
+				c.green = 28.0/255;
+				c.blue = 36.0/255;
+				return c;
+			}
+		}
 		// black/gray for non-catagorized objects
 		c.hasColor = NO;
 		c.red = c.green = c.blue = 0.0;
