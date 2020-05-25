@@ -988,59 +988,35 @@ extern const double MinIconSizeInPixels;
 }
 
 
-typedef struct RGBAColor {
-	CGFloat	red;
-	CGFloat	green;
-	CGFloat	blue;
-	BOOL	hasColor;
-} RGBColor;
-
-
-
--(RGBColor)defaultColorForObject:(OsmBaseObject *)object
+-(UIColor *)defaultColorForObject:(OsmBaseObject *)object
 {
-	RGBColor c;
-	c.hasColor = YES;
+	static UIColor *shopColor, *treeColor, *amenityColor, *tourismColor, *medicalColor, *poiColor, *stopColor;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		shopColor	 = [UIColor colorWithRed:0xAC/255.0 green:0x39/255.0 blue:0xAC/255 alpha:1.0];
+		treeColor	 = [UIColor colorWithRed:18/255.0   green:122/255.0  blue:56/255   alpha:1.0];
+		amenityColor = [UIColor colorWithRed:0x73/255.0 green:0x4A/255.0 blue:0x08/255 alpha:1.0];
+		tourismColor = [UIColor colorWithRed:0x00/255.0 green:0x92/255.0 blue:0xDA/255 alpha:1.0];
+		medicalColor = [UIColor colorWithRed:0xDA/255.0 green:0x00/255.0 blue:0x92/255 alpha:1.0];
+		poiColor	 = [UIColor blueColor];
+		stopColor	 = [UIColor colorWithRed:1.0        green:28/255.0   blue:36/255   alpha:1.0];
+	});
 	if ( object.tags[@"shop"] ) {
-		c.red = 0xAC/255.0;
-		c.green = 0x39/255.0;
-		c.blue = 0xAC/255.0;
-    } else if ([object.tags[@"natural"] isEqualToString:@"tree"]) {
-        /// #127A38
-        c.red = 18/255.0;
-        c.green = 122/255.0;
-        c.blue = 56/255.0;
+		return shopColor;
 	} else if ( object.tags[@"amenity"] || object.tags[@"building"] || object.tags[@"leisure"] ) {
-		c.red = 0x73/255.0;
-		c.green = 0x4A/255.0;
-		c.blue = 0x08/255.0;
+		return amenityColor;
 	} else if ( object.tags[@"tourism"] || object.tags[@"transport"] ) {
-		c.red = 0x00/255.0;
-		c.green = 0x92/255.0;
-		c.blue = 0xDA/255.0;
+		return tourismColor;
 	} else if ( object.tags[@"medical"] ) {
-		c.red = 0xDA/255.0;
-		c.green = 0x00/255.0;
-		c.blue = 0x92/255.0;
+		return medicalColor;
 	} else if ( object.tags[@"name"] ) {
-		// blue for generic interesting nodes
-		c.red = 0;
-		c.green = 0;
-		c.blue = 1;
-	} else {
-		if ( object.isNode ) {
-			if ( [object.tags[@"highway"] isEqualToString:@"stop"] ) {
-				c.red = 1.0;
-				c.green = 28.0/255;
-				c.blue = 36.0/255;
-				return c;
-			}
-		}
-		// black/gray for non-catagorized objects
-		c.hasColor = NO;
-		c.red = c.green = c.blue = 0.0;
+		return poiColor;
+	} else if ([object.tags[@"natural"] isEqualToString:@"tree"]) {
+		return treeColor;
+	} else if ( object.isNode && [object.tags[@"highway"] isEqualToString:@"stop"] ) {
+		return stopColor;
 	}
-	return c;
+	return nil;
 }
 
 static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
@@ -1609,12 +1585,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
         
         CALayer *iconLayer = [CALayer new];
         iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        RGBColor iconColor 			= [self defaultColorForObject:node];
-        iconLayer.backgroundColor   = [UIColor colorWithRed:iconColor.red
-													  green:iconColor.green
-													   blue:iconColor.blue
-													  alpha:1.0].CGColor;
-        iconLayer.mask = iconMaskLayer;
+        UIColor * iconColor			= [self defaultColorForObject:node];
+		iconLayer.backgroundColor   = (iconColor ?: UIColor.blackColor).CGColor;
+		iconLayer.mask = iconMaskLayer;
 		iconLayer.anchorPoint = CGPointZero;
 		iconLayer.opaque = YES;
 
@@ -1634,8 +1607,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     } else {
         
         // draw generic box
-        RGBColor color = [self defaultColorForObject:node];
-		NSString * houseNumber = color.hasColor ? nil : DrawNodeAsHouseNumber( node.tags );
+        UIColor * color = [self defaultColorForObject:node];
+		NSString * houseNumber = color ? nil : DrawNodeAsHouseNumber( node.tags );
 		if ( houseNumber ) {
             
 			CATextLayerWithProperties * layer = [CurvedGlyphLayer layerWithString:houseNumber];
@@ -1658,7 +1631,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
             layer.frame         	= CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
 												  MinIconSizeInPixels, MinIconSizeInPixels);
             layer.position          = CGPointMake(pt.x,pt.y);
-            layer.strokeColor       = [UIColor colorWithRed:color.red green:color.green blue:color.blue alpha:1.0].CGColor;
+			layer.strokeColor       = (color ?: UIColor.blackColor).CGColor;
             layer.fillColor         = nil;
             layer.lineWidth         = 2.0;
 			layer.backgroundColor	= UIColor.whiteColor.CGColor;
