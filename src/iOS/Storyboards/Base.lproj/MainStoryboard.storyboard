@@ -95,7 +95,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TnL-YC-BCg">
-                                        <rect key="frame" x="283" y="8" width="25" height="24"/>
+                                        <rect key="frame" x="283" y="9" width="25" height="24"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <state key="normal">
@@ -147,7 +147,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt">
-                                        <rect key="frame" x="277.5" y="40" width="36" height="36"/>
+                                        <rect key="frame" x="277.5" y="48" width="36" height="36"/>
                                         <accessibility key="accessibilityConfiguration" hint="Reorient map north" identifier="compass_button" label="Compass"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="36" id="Umo-8r-F7i"/>
@@ -172,7 +172,7 @@
                                     <constraint firstItem="N5Q-nV-TPG" firstAttribute="centerX" secondItem="fss-Ag-fKJ" secondAttribute="centerX" id="09V-8L-qI6"/>
                                     <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" secondItem="4gw-jH-T1o" secondAttribute="leading" constant="9" id="0BL-mM-7or"/>
                                     <constraint firstItem="4gw-jH-T1o" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Ka-IT-DQC" secondAttribute="trailing" constant="32" id="Cns-A0-cqV"/>
-                                    <constraint firstItem="E22-sL-sNt" firstAttribute="top" secondItem="TnL-YC-BCg" secondAttribute="bottom" constant="8" id="Ehg-gk-Zac"/>
+                                    <constraint firstItem="E22-sL-sNt" firstAttribute="top" secondItem="TnL-YC-BCg" secondAttribute="bottom" constant="15" id="Ehg-gk-Zac"/>
                                     <constraint firstItem="E22-sL-sNt" firstAttribute="centerX" secondItem="TnL-YC-BCg" secondAttribute="centerX" id="Gub-GY-j0P"/>
                                     <constraint firstItem="g4c-aL-FjW" firstAttribute="bottom" secondItem="4gw-jH-T1o" secondAttribute="top" id="N4A-fY-zCd"/>
                                     <constraint firstItem="Zh9-uC-62t" firstAttribute="top" secondItem="4gw-jH-T1o" secondAttribute="top" constant="40" id="PTj-zH-igC"/>
@@ -212,7 +212,7 @@
                             <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="9" id="L9d-iV-Ktx"/>
                             <constraint firstItem="GTv-eT-l7q" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="bottom" id="LqE-sQ-U1Q"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="GTv-eT-l7q" secondAttribute="bottom" id="NOm-fg-d2A"/>
-                            <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="8" id="NYU-xa-AsV"/>
+                            <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="9" id="NYU-xa-AsV"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="ZUW-Zx-W4g"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="jfH-he-UaM"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="trailing" secondItem="GTv-eT-l7q" secondAttribute="trailing" id="kwH-yP-YAZ"/>
@@ -828,7 +828,7 @@
                 <navigationController id="Fx1-V2-8uJ" customClass="RotatingNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y5O-uv-8Kt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
