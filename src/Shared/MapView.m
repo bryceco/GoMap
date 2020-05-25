@@ -234,7 +234,6 @@ const CGFloat kEditControlCornerRadius = 4;
 		_rulerLayer.drawsAsynchronously	= YES;
 #endif
 
-#if TARGET_OS_IPHONE
 		_editorLayer.mapData.undoCommentCallback = ^(BOOL undo,NSDictionary * context) {
 
 			if ( self.silentUndo )
@@ -255,6 +254,7 @@ const CGFloat kEditControlCornerRadius = 4;
 			if ( _editorLayer.selectedNode.deleted )
 				_editorLayer.selectedNode = nil;
 
+#if TARGET_OS_IPHONE
 			NSString * pushpin = context[@"pushpin"];
 			if ( pushpin && _editorLayer.selectedPrimary ) {
 				// since we don't record the pushpin location until after a drag has begun we need to re-center on the object:
@@ -267,10 +267,10 @@ const CGFloat kEditControlCornerRadius = 4;
 			} else {
 				[self removePin];
 			}
+#endif
 			NSString * message = [NSString stringWithFormat:@"%@ %@", title, action];
 			[self flashMessage:message];
 		};
-#endif
 	}
 	return self;
 }
