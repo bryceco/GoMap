@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <SafariServices/SafariServices.h>
+
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
 #import "CommonPresetList.h"
@@ -17,6 +19,7 @@
 #import "POITabBarController.h"
 #import "PushPinView.h"
 #import "RenderInfo.h"
+#import "WikiPage.h"
 
 
 #define EDIT_RELATIONS 0
@@ -34,6 +37,12 @@
 		[_text2 resignFirstResponder];
 	}
 }
+
+-(IBAction)accessorySelected:(id)sender
+{
+
+}
+
 
 @end
 
@@ -499,6 +508,33 @@
 
 	POITabBarController * tabController = (id)self.tabBarController;
 	[tabController commitChanges];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.section == 0 ) {
+		// show OSM wiki page
+		TextPairTableCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+		NSString * key = cell.text1.text;
+		NSString * value = cell.text2.text;
+		if ( key.length == 0 )
+			return;
+		PresetLanguages * presetLanguages = [PresetLanguages new];
+		NSString * languageCode = presetLanguages.preferredLanguageCode;
+
+		UIActivityIndicatorView * progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+		progress.bounds = CGRectMake(0, 0, 24, 24);
+		cell.accessoryView = progress;
+		[progress startAnimating];
+		WikiPage * wiki = [WikiPage shared];
+		[wiki bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
+			cell.accessoryView = nil;
+			if ( url && self.view.window ) {
+				UIViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+				[self presentViewController:viewController animated:YES completion:nil];
+			}
+		}];
+	}
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
