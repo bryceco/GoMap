@@ -1237,7 +1237,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 					}
 					NSString * tunnel = object.tags[@"tunnel"];
 					if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
-						// props->lineDashes = @[@(6), @(3)];					// doesn't work because dashes get rounded off due to path scaling
 						props->lineWidth += 2;
 						layer.strokeColor = UIColor.brownColor.CGColor;
 					}
@@ -1299,13 +1298,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			LayerProperties * props = layer.properties;
 			props->position		= refPoint;
 			props->lineWidth	= layer.lineWidth;
-
-#if 0	// Enable to show motorway_link with dashed lines. Looks kind of ugly and reduces framerate by up to 30%f
-			BOOL link = [object.tags[@"highway"] hasSuffix:@"_link"];
-			if ( link ) {
-				props->lineDashes = @[@(10 * _highwayScale), @(10 * _highwayScale)];
-			}
-#endif
 
 			CGPathRelease(path);
 			[layers addObject:layer];
@@ -2433,7 +2425,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				if ( isShapeLayer ) {
 					CAShapeLayer * shape = (id)layer;
 					shape.lineWidth = props->lineWidth / pScale;
-					shape.lineDashPattern = props->lineDashes ? @[ @([props->lineDashes[0] doubleValue]/pScale), @([props->lineDashes[1] doubleValue]/pScale) ] : nil;
 				}
 
 			} else {

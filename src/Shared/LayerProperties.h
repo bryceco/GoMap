@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 @public
 	OSMPoint		position;
 	double			lineWidth;
-	NSArray		*	lineDashes;
 	CATransform3D	transform;
 	BOOL			is3D;
 }
