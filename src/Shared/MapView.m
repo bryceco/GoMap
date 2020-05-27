@@ -495,7 +495,12 @@ const CGFloat kEditControlCornerRadius = 4;
 			CGFloat y2 = sin(angle);
 			CGFloat dx = (x2 - x1) * radius;
 			CGFloat dy = (y2 - y1) * radius;
+#if 0
 			[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
+#else
+			double zoom = dy >= 0 ? 1.01 : 1/1.01;
+			[weakSelf adjustZoomBy:zoom aroundScreenPoint:_crossHairs.position];
+#endif
 			prev = now;
 		}];
 	} else {
