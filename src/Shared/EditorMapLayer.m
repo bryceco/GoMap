@@ -1923,9 +1923,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			}];
 
 			if ( (object.isWay && !object.isWay.isArea) || parentRelation ) {
-				NSString * name = object.tags[ @"name" ];
+				NSString * name = object.givenName;
 				if ( name == nil )
-					name = parentRelation.tags[ @"name" ];
+					name = parentRelation.givenName;
 				if ( name ) {
 					if ( ![nameSet containsObject:name] ) {
 						double length = 0.0;
