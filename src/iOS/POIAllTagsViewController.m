@@ -137,6 +137,18 @@
 	}
 }
 
+- (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments
+{
+	if ( @available( macCatalyst 13,*) ) {
+		// On Mac Catalyst set the focus to something other than a text field (which brings up the keyboard)
+		// The Cancel button would be ideal but it isn't clear how to implement that, so select the Add button instead
+		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:_tags.count inSection:0];
+		AddNewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+		return @[ cell.button ];
+	}
+	return nil;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
