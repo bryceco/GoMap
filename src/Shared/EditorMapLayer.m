@@ -1681,9 +1681,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
 	LayerProperties *layerProperties = layer.properties;
     layerProperties->position = pt;
-    [layer setValue:@"direction" forKey:@"key"];
+	layerProperties->isDirectional = YES;
 
-    return layer;
+	return layer;
 }
 
 -(CALayer *)directionLayerForNodeInWay:(OsmWay *)way node:(OsmNode *)node facing:(NSInteger)second
@@ -2446,9 +2446,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						}
 					}
 
-				} else if ([[layer valueForKey:@"key"] isEqualToString:@"direction"]) {
-					// This layer draws the `direction` of an object, so it needs to rotate along with the map.
+				} else if ( layer.properties->isDirectional ) {
+
+					// a direction layer (direction=*), so it needs to rotate with the map
 					layer.affineTransform = CGAffineTransformMakeRotation(tRotation);
+
 				} else {
 
 					// its an icon or a generic box

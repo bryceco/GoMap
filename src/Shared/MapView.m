@@ -3657,7 +3657,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		CGPoint center 	= [pan locationInView:self];
 		center.y -= delta.y;
 		CGFloat zoom = delta.y >= 0 ? (1000 + delta.y) / 1000 : 1000/(1000-delta.y);
-		NSLog(@"%f",zoom);
 		[self adjustZoomBy:zoom aroundScreenPoint:center];
 	}
 }

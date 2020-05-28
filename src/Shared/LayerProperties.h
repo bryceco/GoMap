@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 	double			lineWidth;
 	CATransform3D	transform;
 	BOOL			is3D;
+	BOOL			isDirectional;
 }
 @end
 
