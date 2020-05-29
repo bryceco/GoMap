@@ -488,12 +488,9 @@ const CGFloat kEditControlCornerRadius = 4;
 			CFTimeInterval now = CACurrentMediaTime();
 			CFTimeInterval delta = now - prev;
 			// circle
-			CGFloat x1 = cos(angle);
 			CGFloat y1 = sin(angle);
 			angle += M_PI * delta;
-			CGFloat x2 = cos(angle);
 			CGFloat y2 = sin(angle);
-			CGFloat dx = (x2 - x1) * radius;
 			CGFloat dy = (y2 - y1) * radius;
 #if 0
 			[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
