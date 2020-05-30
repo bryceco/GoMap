@@ -22,7 +22,7 @@
 #endif
 
 // Don't query the server for regions smaller than this:
-static const double MinRectSize = 360.0 / (1 << 18);
+static const double MinRectSize = 360.0 / (1 << 16);
 
 static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
@@ -234,34 +234,34 @@ public:
 
 #pragma mark Region
 
-	void missingPieces( std::vector<QuadBoxCC *> & pieces, const OSMRect & target )
+	void missingPieces( std::vector<QuadBoxCC *> & missing, const OSMRect & needed )
 	{
 		if ( _whole || _busy )
 			return;
-		if ( ! OSMRectIntersectsRect(target, _rect ) )
+		if ( ! OSMRectIntersectsRect(needed, _rect ) )
 			return;
-		if ( _rect.size.width <= MinRectSize || _rect.size.width <= target.size.width/8 ) {
+		if ( _rect.size.width <= MinRectSize || _rect.size.width <= needed.size.width/2 || _rect.size.height <= needed.size.height/2 ) {
 			_busy = YES;
-			pieces.push_back(this);
+			missing.push_back(this);
 			return;
 		}
-		if ( OSMRectContainsRect(target, _rect) ) {
+		if ( OSMRectContainsRect(needed, _rect) ) {
 			if ( !hasChildren() ) {
 				_busy = YES;
-				pieces.push_back(this);
+				missing.push_back(this);
 				return;
 			}
 		}
 
 		for ( int child = 0; child <= QUAD_LAST; ++child ) {
 			OSMRect rc = ChildRect( (QUAD_ENUM)child, _rect );
-			if ( OSMRectIntersectsRect( target, rc ) ) {
+			if ( OSMRectIntersectsRect( needed, rc ) ) {
 
 				if ( _children[child] == nil ) {
 					_children[child] = new QuadBoxCC( rc, this, nil );
 				}
 
-				_children[child]->missingPieces(pieces,target);
+				_children[child]->missingPieces(missing,needed);
 			}
 		}
 	}

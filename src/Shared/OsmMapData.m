@@ -2176,8 +2176,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	// don't discard too frequently
 	NSDate * now = [NSDate date];
-	if ( [now timeIntervalSinceDate:_previousDiscardDate] < 15 ) {
-		NSLog(@"skip\n");
+	if ( [now timeIntervalSinceDate:_previousDiscardDate] < 60 ) {
 		return NO;
 	}
 	
