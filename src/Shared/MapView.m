@@ -479,7 +479,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		const CGFloat startAngle = 1.5 * M_PI;
 		const CGFloat rpm = 2.0;
 		const CGFloat zoomTotal = 1.1; // 10% larger
-		const CGFloat zoomDelta = 1.0 + pow(zoomTotal,-60.0);
+		const CGFloat zoomDelta = pow(zoomTotal,1/60.0);
 
 		__block CGFloat angle = startAngle;
 		__block CFTimeInterval prevTime = CACurrentMediaTime();
