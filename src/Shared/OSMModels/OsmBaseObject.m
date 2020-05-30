@@ -45,6 +45,10 @@ BOOL IsInterestingTag(NSString * key)
 		return NO;
 	if ( [key hasPrefix:@"tiger:"] )
 		return NO;
+	if ( [key hasPrefix:@"source:"] )
+		return NO;
+	if ( [key hasPrefix:@"source_ref"] )
+		return NO;
 
 	NSSet * stripTags = [OsmMapData tagsToAutomaticallyStrip];
 	if ( [stripTags containsObject:key] )

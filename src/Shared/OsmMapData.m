@@ -177,9 +177,21 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	static NSSet<NSString *> * s_ignoreSet = nil;
 	dispatch_once(&onceToken, ^{
 		s_ignoreSet = [NSSet setWithObjects:
-				@"tiger:upload_uuid", @"tiger:tlid", @"tiger:source", @"tiger:separated",
-				@"geobase:datasetName", @"geobase:uuid", @"sub_sea:type", @"odbl", @"odbl:note",
-				@"yh:LINE_NAME", @"yh:LINE_NUM", @"yh:STRUCTURE", @"yh:TOTYUMONO", @"yh:TYPE", @"yh:WIDTH_RANK",
+				@"tiger:upload_uuid",
+				@"tiger:tlid",
+				@"tiger:source",
+				@"tiger:separated",
+				@"geobase:datasetName",
+				@"geobase:uuid",
+				@"sub_sea:type",
+				@"odbl",
+				@"odbl:note",
+				@"yh:LINE_NAME",
+				@"yh:LINE_NUM",
+				@"yh:STRUCTURE",
+				@"yh:TOTYUMONO",
+				@"yh:TYPE",
+				@"yh:WIDTH_RANK",
 				nil];
 	});
 	return s_ignoreSet;
@@ -544,7 +556,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 {
 	[self registerUndoCommentString:NSLocalizedString(@"delete node from way",nil)];
 	OsmNode * node = way.nodes[ index ];
-	assert( node.wayCount > 0 );
+	DbgAssert( node.wayCount > 0 );
 
 	OSMRect bbox = way.boundingBox;
 	[way removeNodeAtIndex:index undo:_undoManager];
@@ -554,7 +566,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_spatial updateMember:way fromBox:bbox undo:_undoManager];
 
 	if ( node.wayCount == 0 ) {
-		[self deleteNodeUnsafe:node];
+		if ( !node.hasInterestingTags ) {
+			[self deleteNodeUnsafe:node];
+		} else {
+			[_spatial addMember:node undo:_undoManager];
+		}
 	}
 }
 
