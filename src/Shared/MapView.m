@@ -469,39 +469,46 @@ const CGFloat kEditControlCornerRadius = 4;
 		// automaatically scroll view for frame rate testing
 		self.fpsLabel.showFPS = YES;
 
-#if 0
-		// this set's the location of the (0,0) screen point (upper left), not the center point
-		OSMTransform t = { 161658.59853698246, 0, 0, 161658.59853698246, -6643669.8581485003, -14441173.300930388 };
-		self.screenFromMapTransform = t;
-#else
-		// this set's center point
-		OSMPoint latLon = { -122.205831, 47.675024 };	// return from above
-		double zoom = 17.302591;
-		[self setTransformForLatitude:latLon.y longitude:latLon.x zoom:zoom];
-#endif
+		// this set's the starting center point
+		const OSMPoint startLatLon = { -122.205831, 47.675024 };
+		const double startZoom = 17.302591;
+		[self setTransformForLatitude:startLatLon.y longitude:startLatLon.x zoom:startZoom];
+
+		// sets the size of the circle
 		const double radius = 100;
-		__block CGFloat angle = 1.5*M_PI;
+		const CGFloat startAngle = 1.5 * M_PI;
+		const CGFloat rpm = 2.0;
+		const CGFloat zoomTotal = 1.1; // 10% larger
+		const CGFloat zoomDelta = 1.0 + pow(zoomTotal,-60.0);
+
+		__block CGFloat angle = startAngle;
+		__block CFTimeInterval prevTime = CACurrentMediaTime();
 		__weak MapView * weakSelf = self;
 
-		__block CFTimeInterval prev = CACurrentMediaTime();
 		[displayLink addName:NAME block:^{
-			CFTimeInterval now = CACurrentMediaTime();
-			CFTimeInterval delta = now - prev;
-			// circle
-			CGFloat x1 = cos(angle);
-			CGFloat y1 = sin(angle);
-			angle += M_PI * delta;
-			CGFloat x2 = cos(angle);
-			CGFloat y2 = sin(angle);
-			CGFloat dx = (x2 - x1) * radius;
-			CGFloat dy = (y2 - y1) * radius;
-#if 0
-			[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
-#else
-			double zoom = dy >= 0 ? 1.01 : 1/1.01;
-			[weakSelf adjustZoomBy:zoom aroundScreenPoint:_crossHairs.position];
-#endif
-			prev = now;
+			CFTimeInterval time = CACurrentMediaTime();
+			CFTimeInterval delta = time - prevTime;
+			CGFloat newAngle = angle + (2*M_PI)/rpm * delta;	// angle change depends on framerate to maintain 2/RPM
+
+			if ( angle < startAngle && newAngle >= startAngle ) {
+				// reset to start position
+				[self setTransformForLatitude:startLatLon.y longitude:startLatLon.x zoom:startZoom];
+				angle = startAngle;
+			} else {
+				// move along circle
+				CGFloat x1 = cos(angle);
+				CGFloat y1 = sin(angle);
+				CGFloat x2 = cos(newAngle);
+				CGFloat y2 = sin(newAngle);
+				CGFloat dx = (x2 - x1) * radius;
+				CGFloat dy = (y2 - y1) * radius;
+
+				[weakSelf adjustOriginBy:CGPointMake(dx,dy)];
+				double zoomRatio = dy >= 0 ? zoomDelta : 1/zoomDelta;
+				[weakSelf adjustZoomBy:zoomRatio aroundScreenPoint:_crossHairs.position];
+				angle = fmod( newAngle, 2*M_PI );
+			}
+			prevTime = time;
 		}];
 	} else {
 		self.fpsLabel.showFPS = NO;
