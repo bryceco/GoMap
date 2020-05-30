@@ -999,7 +999,7 @@ extern const double MinIconSizeInPixels;
 		tourismColor = [UIColor colorWithRed:0x00/255.0 green:0x92/255.0 blue:0xDA/255 alpha:1.0];
 		medicalColor = [UIColor colorWithRed:0xDA/255.0 green:0x00/255.0 blue:0x92/255 alpha:1.0];
 		poiColor	 = [UIColor blueColor];
-		stopColor	 = [UIColor colorWithRed:1.0        green:28/255.0   blue:36/255   alpha:1.0];
+		stopColor	 = [UIColor colorWithRed:196/255.0  green:4/255.0    blue:4/255    alpha:1.0];
 	});
 	if ( object.tags[@"shop"] ) {
 		return shopColor;
@@ -1205,9 +1205,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	RenderInfo * renderInfo = object.renderInfo;
 	NSMutableArray * layers = [NSMutableArray new];
 
-    OsmNode *node = object.isNode;
-	if (node) {
-        [layers addObjectsFromArray:[self shapeLayersForNode:node]];
+	if ( object.isNode ) {
+		[layers addObjectsFromArray:[self shapeLayersForNode:object.isNode]];
 	}
 
 	// casing
