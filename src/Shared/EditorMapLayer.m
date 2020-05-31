@@ -165,18 +165,6 @@ static const CGFloat NodeHighlightRadius = 6.0;
 		_baseLayer = [CATransformLayer new];
 		[self addSublayer:_baseLayer];
 
-		self.actions = @{
-						  @"onOrderIn"	: [NSNull null],
-						  @"onOrderOut" : [NSNull null],
-						  @"hidden"		: [NSNull null],
-						  @"sublayers"	: [NSNull null],
-						  @"contents"	: [NSNull null],
-						  @"bounds"		: [NSNull null],
-						  @"position"	: [NSNull null],
-						  @"transform"	: [NSNull null],
-						  @"lineWidth"	: [NSNull null],
-		};
-		_baseLayer.actions = self.actions;
 #if TARGET_OS_IPHONE
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fontSizeDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
 #endif
@@ -1490,31 +1478,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			}
 		}
 	}
-	
-	static NSDictionary * actions = nil;
-	if ( actions == nil )  {
-		actions = @{
-					  @"onOrderIn"			: [NSNull null],
-					  @"onOrderOut"			: [NSNull null],
-					  @"sublayers"			: [NSNull null],
-					  @"contents"			: [NSNull null],
-					  @"bounds"				: [NSNull null],
-					  @"position"			: [NSNull null],
-					  @"transform"			: [NSNull null],
-					  @"affineTransform"	: [NSNull null],
-					  @"lineWidth"			: [NSNull null],
-					  @"borderWidth"		: [NSNull null],
-#if FADE_INOUT
-#else
-					  @"hidden"				: [NSNull null],
-					  @"opacity"			: [NSNull null],
-#endif
-					  };
-	}
-	for ( CALayer * layer in layers ) {
-		layer.actions = actions;
-	}
-
 	object.shapeLayers = layers;
 	return layers;
 }
@@ -2517,7 +2480,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	}
 
 	_isPerformingLayout = YES;
+	[CATransaction begin];
+	[CATransaction setDisableActions:YES];
 	[self layoutSublayersSafe];
+	[CATransaction commit];
 	_isPerformingLayout = NO;
 }
 
