@@ -47,43 +47,7 @@ enum {
 	self.tableView.estimatedRowHeight = 44;
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
-
 	_automaticCacheManagement.on = appDelegate.mapView.enableAutomaticCacheManagement;
-
-	NSArray * layers = @[
-						 @[ NSLocalizedString(@"Clear OSM Data",nil),					@(ROW_OSM_DATA),	[NSNull null] ],
-						 @[ NSLocalizedString(@"Clear Mapnik Tiles",nil),				@(ROW_MAPNIK), 		appDelegate.mapView.mapnikLayer ],
-						 @[ NSLocalizedString(@"Clear GPX Tracks",nil),					@(ROW_BREADCRUMB), 	appDelegate.mapView.gpxLayer ],
-						 @[ NSLocalizedString(@"Clear Aerial Tiles",nil),				@(ROW_AERIAL), 		appDelegate.mapView.aerialLayer ],
-						 @[ NSLocalizedString(@"Clear Locator Overlay Tiles",nil),		@(ROW_LOCATOR),		appDelegate.mapView.locatorLayer ],
-						 @[ NSLocalizedString(@"Clear GPS Overlay Tiles",nil),			@(ROW_GPS),			appDelegate.mapView.gpsTraceLayer ]
-					];
-
-	for ( NSArray * layerInfo in layers ) {
-		NSString	* title = layerInfo[0];
-		NSNumber	* row   = layerInfo[1];
-		NSObject	* object = layerInfo[2];
-
-		ClearCacheCell 	* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row.integerValue inSection:1]];
-
-		cell.titleLabel.text = title;
-		cell.detailLabel.text = @"";
-
-		if ( row.integerValue == ROW_OSM_DATA ) {
-			NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
-			cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
-		} else {
-			cell.detailLabel.text = NSLocalizedString(@"computing size...",nil);
-			dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-				NSInteger size, count;
-				[(id)object diskCacheSize:&size count:&count];
-				dispatch_async(dispatch_get_main_queue(), ^{
-					cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %d files",nil), (double)size/(1024*1024), count];
-				});
-			});
-		}
-	}
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -95,6 +59,42 @@ enum {
 }
 
 #pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(ClearCacheCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.section != 1 )
+		return;
+
+	MapView * mapView = AppDelegate.getAppDelegate.mapView;
+	OsmMapData * mapData = mapView.editorLayer.mapData;
+
+	NSString	*title = nil;
+	id			 object = nil;
+	switch ( indexPath.row ) {
+		case ROW_OSM_DATA: 		title = NSLocalizedString(@"Clear OSM Data",nil);				object = nil;					break;
+		case ROW_MAPNIK:		title = NSLocalizedString(@"Clear Mapnik Tiles",nil);			object = mapView.mapnikLayer;	break;
+		case ROW_BREADCRUMB:	title = NSLocalizedString(@"Clear GPX Tracks",nil);				object = mapView.gpxLayer;		break;
+		case ROW_AERIAL:		title = NSLocalizedString(@"Clear Aerial Tiles",nil);			object = mapView.aerialLayer;	break;
+		case ROW_LOCATOR:		title = NSLocalizedString(@"Clear Locator Overlay Tiles",nil);	object = mapView.locatorLayer;	break;
+		case ROW_GPS: 			title = NSLocalizedString(@"Clear GPS Overlay Tiles",nil);		object = mapView.gpsTraceLayer;	break;
+	}
+	cell.titleLabel.text = title;
+	cell.detailLabel.text = @"";
+
+	if ( indexPath.row == ROW_OSM_DATA ) {
+		NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
+		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
+	} else {
+		cell.detailLabel.text = NSLocalizedString(@"computing size...",nil);
+		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+			NSInteger size, count;
+			[(id)object diskCacheSize:&size count:&count];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %d files",nil), (double)size/(1024*1024), count];
+			});
+		});
+	}
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
