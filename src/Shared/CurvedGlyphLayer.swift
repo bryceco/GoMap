@@ -224,27 +224,51 @@ private class StringGlyphs {
 
 		for run in stringGlyphs.runs {
 
-			let count 		= CTRunGetGlyphCount(run)
+			let runFont 	= StringGlyphs.fontForRun( run )	// every run potentially has a different font, due to font substitution
 			let glyphs 		= StringGlyphs.glyphsForRun( run )
 			let advances 	= StringGlyphs.advancesForRun( run )
-			let runFont 	= StringGlyphs.fontForRun( run )
+
+			let size 		= CTFontGetBoundingBox( runFont ).size
 
 			var glyphIndex = 0
-			while glyphIndex < count {
+			while glyphIndex < glyphs.count {
 				var layerGlyphs : [CGGlyph] = []
 				var layerPositions : [CGPoint] = []
 				var position : CGFloat = 0.0
 				var start : TextLoc? = nil
 
-				while glyphIndex < count {
+				while glyphIndex < glyphs.count {
 
 					guard let loc = pathPoints.positionAndAngleForCurrentOffset(withBaselineOffset: baselineOffset) else {
-						break
+						return nil
 					}
 					if start == nil {
 						start = loc
-					} else if abs(loc.angle-start!.angle) > 1.0 * CGFloat.pi/180.0 {
-						break
+					} else {
+						var a = loc.angle - start!.angle
+						if a < -CGFloat.pi {
+							a += 2*CGFloat.pi
+						} else if a > CGFloat.pi {
+							a -= 2*CGFloat.pi
+						}
+						if abs(a) * (180.0/CGFloat.pi) > 1.0 {
+							// hit an angle so stop the run
+							if a < 0 {
+								// If this is an acute angle then we need to advance a little extra so the next run doesn't overlap with this run
+								let h = baselineOffset/2 + size.height
+								if -a < CGFloat.pi/2 {
+									let d = h * sin(-a)
+									_ = pathPoints.advanceOffsetBy( d )
+								} else {
+									let a2 = CGFloat.pi - -a
+									let d1 = h / sin(a2)
+									let d2 = h / tan(a2)
+									let d3 = min( d1+d2, 3*h )
+									_ = pathPoints.advanceOffsetBy( d3 )
+								}
+							}
+							break
+						}
 					}
 
 					let glyphWidth = advances[glyphIndex].width
@@ -260,7 +284,7 @@ private class StringGlyphs {
 				guard let glyphLayer = GlyphLayer.layer(withFont: runFont,
 												  glyphs: layerGlyphs,
 												  positions:layerPositions) else {
-													return nil
+					return nil
 				}
 				glyphLayer.position = start!.pos
 				glyphLayer.anchorPoint = CGPoint(x:0,y:1)
@@ -364,14 +388,12 @@ class GlyphLayer : CALayerWithProperties {
 		self.font 				= font
 		super.init()
 		self.inUse				= true
-		let size = CTFontGetBoundingBox( font ).size
-		let descent = CTFontGetDescent( font )
-		let bounds				= CGRect(x:0, y:descent, width: positions.last!.x, height: size.height)
+		let size 				= CTFontGetBoundingBox( font ).size
+		let descent 			= CTFontGetDescent( font )
+		self.bounds				= CGRect(x:0, y:descent, width: positions.last!.x, height: size.height)
 		self.contentsScale 		= UIScreen.main.scale
 		self.anchorPoint		= CGPoint.zero
-		self.bounds				= bounds
 		self.backgroundColor	= CurvedGlyphLayer.backColor.cgColor
-
 		self.setNeedsDisplay()
 	}
 
