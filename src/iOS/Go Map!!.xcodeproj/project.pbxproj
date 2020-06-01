@@ -1328,7 +1328,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1760;
+				CURRENT_PROJECT_VERSION = 1770;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
@@ -1337,7 +1337,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.7.6;
+				MARKETING_VERSION = 1.7.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
@@ -1358,7 +1358,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1760;
+				CURRENT_PROJECT_VERSION = 1770;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
@@ -1367,7 +1367,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.7.6;
+				MARKETING_VERSION = 1.7.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
