@@ -2897,7 +2897,27 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	[self updateEditControl];
 
 	if ( object == nil ) {
-		_pushpinView.placeholderImage = [UIImage imageNamed:@"question.png"];
+		CALayer * layer = _pushpinView.placeholderLayer;
+		if ( layer.sublayers.count == 0 ) {
+			layer.bounds        	= CGRectMake(0, 0, 24, 24);
+			layer.cornerRadius  	= 12;
+			layer.backgroundColor	= UIColor.whiteColor.CGColor;
+			layer.masksToBounds   	= YES;
+			layer.anchorPoint	 	= CGPointZero;
+			layer.borderColor	 	= UIColor.darkGrayColor.CGColor;
+			layer.borderWidth	 	= 1.0;
+
+			CATextLayer * text = [CATextLayer new];
+			text.foregroundColor	= [UIColor colorWithRed:0 green:0 blue:0.5 alpha:1.0].CGColor;
+			text.string				= @"?";
+			text.fontSize			= 18;
+			text.font				= (__bridge CFTypeRef)[UIFont boldSystemFontOfSize:text.fontSize];
+			text.alignmentMode		= kCAAlignmentCenter;
+			text.bounds				= layer.bounds;
+			text.position			= CGPointMake(0,1);
+			text.anchorPoint		= CGPointZero;
+			[layer addSublayer:text];
+		}
 	}
 	
 	[self addSubview:_pushpinView];
