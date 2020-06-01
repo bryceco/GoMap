@@ -146,7 +146,7 @@
 		AddNewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
 		return @[ cell.button ];
 	}
-	return nil;
+	return @[];
 }
 
 #pragma mark - Table view data source
