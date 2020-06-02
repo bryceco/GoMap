@@ -21,6 +21,7 @@
 
 	<default key="amenity" type="node;area" areaColor="F7EFB7" />
 
+	<tag key="barrier" value="tree_row" type="way;node_in_way" lineColor="A0F0A0" lineWidth="1.000000" areaColor="008000"/>
 	<tag key="barrier" value="hedge" type="way;node_in_way" lineColor="A0F0A0" lineWidth="1.000000" areaColor="C0FFC0"/>
 	<default key="barrier" type="way;node_in_way" lineColor="F0F050" lineWidth="1.000000"/>
 
