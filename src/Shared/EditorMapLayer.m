@@ -1519,88 +1519,99 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		if ( node.tags[@"amenity"] || node.tags[@"name"] )
 			icon = [self genericIcon];
 	}
-    if ( icon ) {
-        /// White circle as the background
-        CALayer *backgroundLayer = [CALayer new];
-        backgroundLayer.bounds          = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+	if ( icon ) {
+		/// White circle as the background
+		CALayer *backgroundLayer = [CALayer new];
+		backgroundLayer.bounds          = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
 		backgroundLayer.backgroundColor	= UIColor.whiteColor.CGColor;
 		backgroundLayer.cornerRadius    = MinIconSizeInPixels / 2;
-        backgroundLayer.masksToBounds   = YES;
-        backgroundLayer.anchorPoint 	= CGPointZero;
-        backgroundLayer.borderColor 	= UIColor.darkGrayColor.CGColor;
+		backgroundLayer.masksToBounds   = YES;
+		backgroundLayer.anchorPoint 	= CGPointZero;
+		backgroundLayer.borderColor 	= UIColor.darkGrayColor.CGColor;
 		backgroundLayer.borderWidth 	= 1.0;
 		backgroundLayer.opaque			= YES;
 
-        /// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
-        CALayer *iconMaskLayer = [CALayer new];
-        CGFloat padding = 4;
-        iconMaskLayer.frame            	= CGRectMake(padding, padding, MinIconSizeInPixels - padding * 2, MinIconSizeInPixels - padding * 2);
-        iconMaskLayer.contents        	= (id)icon.CGImage;
-        
-        CALayer *iconLayer = [CALayer new];
-        iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        UIColor * iconColor			= [self defaultColorForObject:node];
+		/// The actual icon image serves as a `mask` for the icon's color layer, allowing for "tinting" of the icons.
+		CALayer *iconMaskLayer = [CALayer new];
+		CGFloat padding = 4;
+		iconMaskLayer.frame            	= CGRectMake(padding, padding, MinIconSizeInPixels - padding * 2, MinIconSizeInPixels - padding * 2);
+		iconMaskLayer.contents        	= (id)icon.CGImage;
+
+		CALayer *iconLayer = [CALayer new];
+		iconLayer.bounds            = CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+		UIColor * iconColor			= [self defaultColorForObject:node];
 		iconLayer.backgroundColor   = (iconColor ?: UIColor.blackColor).CGColor;
 		iconLayer.mask = iconMaskLayer;
 		iconLayer.anchorPoint = CGPointZero;
 		iconLayer.opaque = YES;
 
-        CALayerWithProperties * layer = [CALayerWithProperties new];
-        [layer addSublayer:backgroundLayer];
-        [layer addSublayer:iconLayer];
-        layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
-        layer.anchorPoint    	= CGPointMake(0.5, 0.5);
-        layer.position        	= CGPointMake(pt.x,pt.y);
-        layer.zPosition        	= Z_NODE;
+		CALayerWithProperties * layer = [CALayerWithProperties new];
+		[layer addSublayer:backgroundLayer];
+		[layer addSublayer:iconLayer];
+		layer.bounds        	= CGRectMake(0, 0, MinIconSizeInPixels, MinIconSizeInPixels);
+		layer.anchorPoint    	= CGPointMake(0.5, 0.5);
+		layer.position        	= CGPointMake(pt.x,pt.y);
+		layer.zPosition        	= Z_NODE;
 		layer.opaque			= YES;
 
 		LayerProperties * props = layer.properties;
 		props->position = pt;
-        [layers addObject:layer];
-        
-    } else {
-        
-        // draw generic box
-        UIColor * color = [self defaultColorForObject:node];
+		[layers addObject:layer];
+
+		NSString * ref = node.tags[@"ref"];
+		if ( ref ) {
+			CATextLayerWithProperties * label = [CurvedGlyphLayer layerWithString:ref];
+			label.anchorPoint	= CGPointMake(0.0, 0.5);
+			label.position      = CGPointMake(pt.x, pt.y);
+			label.zPosition     = Z_TEXT;
+			label.properties->position = pt;
+			label.properties->offset = CGPointMake(12,0);
+			[layers addObject:label];
+		}
+
+	} else {
+
+		// draw generic box
+		UIColor * color = [self defaultColorForObject:node];
 		NSString * houseNumber = color ? nil : DrawNodeAsHouseNumber( node.tags );
 		if ( houseNumber ) {
-            
+
 			CATextLayerWithProperties * layer = [CurvedGlyphLayer layerWithString:houseNumber];
-            layer.anchorPoint	= CGPointMake(0.5, 0.5);
-            layer.position      = CGPointMake(pt.x, pt.y);
-            layer.zPosition     = Z_TEXT;
+			layer.anchorPoint	= CGPointMake(0.5, 0.5);
+			layer.position      = CGPointMake(pt.x, pt.y);
+			layer.zPosition     = Z_TEXT;
 			LayerProperties * props = layer.properties;
-            props->position = pt;
-            
-            [layers addObject:layer];
-            
-        } else {
-            
-            // generic box
-            CAShapeLayerWithProperties * layer = [CAShapeLayerWithProperties new];
-            CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
-                                     round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
-            CGPathRef path        	= CGPathCreateWithRect( rect, NULL );
-            layer.path            	= path;
-            layer.frame         	= CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
+			props->position = pt;
+
+			[layers addObject:layer];
+
+		} else {
+
+			// generic box
+			CAShapeLayerWithProperties * layer = [CAShapeLayerWithProperties new];
+			CGRect rect = CGRectMake(round(MinIconSizeInPixels/4), round(MinIconSizeInPixels/4),
+									 round(MinIconSizeInPixels/2), round(MinIconSizeInPixels/2));
+			CGPathRef path        	= CGPathCreateWithRect( rect, NULL );
+			layer.path            	= path;
+			layer.frame         	= CGRectMake(-MinIconSizeInPixels/2, -MinIconSizeInPixels/2,
 												  MinIconSizeInPixels, MinIconSizeInPixels);
-            layer.position          = CGPointMake(pt.x,pt.y);
+			layer.position          = CGPointMake(pt.x,pt.y);
 			layer.strokeColor       = (color ?: UIColor.blackColor).CGColor;
-            layer.fillColor         = nil;
-            layer.lineWidth         = 2.0;
+			layer.fillColor         = nil;
+			layer.lineWidth         = 2.0;
 			layer.backgroundColor	= UIColor.whiteColor.CGColor;
 			layer.borderColor		= UIColor.darkGrayColor.CGColor;
 			layer.borderWidth		= 1.0;
 			layer.cornerRadius      = MinIconSizeInPixels/2;
-            layer.zPosition         = Z_NODE;
-            
+			layer.zPosition         = Z_NODE;
+
 			LayerProperties * props = layer.properties;
-            props->position = pt;
-            
-            [layers addObject:layer];
-            CGPathRelease(path);
-        }
-    }
+			props->position = pt;
+
+			[layers addObject:layer];
+			CGPathRelease(path);
+		}
+	}
 
     return layers;
 }
@@ -2421,7 +2432,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				CGFloat scale = [[UIScreen mainScreen] scale];
 				pt2.x = round(pt2.x * scale)/scale;
 				pt2.y = round(pt2.y * scale)/scale;
-				layer.position = CGPointFromOSMPoint(pt2);
+				layer.position = CGPointMake( pt2.x + props->offset.x, pt2.y + props->offset.y );
 			}
 
 			// add the layer if not already present

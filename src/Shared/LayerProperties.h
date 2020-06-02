@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 	OSMPoint		position;
 	double			lineWidth;
 	CATransform3D	transform;
+	CGPoint			offset;
 	BOOL			is3D;
 	BOOL			isDirectional;
 }
