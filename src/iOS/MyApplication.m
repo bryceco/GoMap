@@ -15,9 +15,6 @@
 	if ( self ) {
 		_touches 	= [NSMutableDictionary new];
 		_touchImage	= [UIImage imageNamed:@"Finger"];
-#if 0
-		self.showTouchCircles = YES;
-#endif
 	}
 	return self;
 }

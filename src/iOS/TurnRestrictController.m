@@ -14,7 +14,7 @@
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 
 
 @interface TurnRestrictController ()
@@ -65,7 +65,7 @@
 
 	// get highways that contain selection
 	OsmMapData * mapData = [AppDelegate getAppDelegate].mapView.editorLayer.mapData;
-	NSArray * parentWays = [mapData waysContainingNode:_centralNode];
+	NSArray<OsmWay *> * parentWays = [mapData waysContainingNode:_centralNode];
 	parentWays = [parentWays filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmWay * way, NSDictionary *bindings) {
 		return way.tags[@"highway"] != nil;
 	}]];

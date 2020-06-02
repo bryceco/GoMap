@@ -27,6 +27,7 @@
 @property (assign,nonatomic)	IBOutlet	UILabel				*	startDate;
 @property (assign,nonatomic)	IBOutlet	UILabel				*	duration;
 @property (assign,nonatomic)	IBOutlet	UILabel				*	details;
+@property (assign,nonatomic)	IBOutlet	UIButton			*	uploadButton;
 @property (strong,nonatomic)				GpxTrack			*	gpxTrack;
 @property (assign,nonatomic)				GpxViewController	*	tableView;
 @end
@@ -105,9 +106,9 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-	[super viewWillAppear:animated];
+	[super viewDidAppear:animated];
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	if ( appDelegate.mapView.gpxLayer.activeTrack ) {
@@ -242,6 +243,14 @@
 	cell.details.text = meters;
 	cell.gpxTrack = track;
 	cell.tableView = self;
+	if ( gpxLayer.uploadedTracks[track.name] ) {
+		[cell.uploadButton setImage:nil forState:UIControlStateNormal];
+		[cell.uploadButton setTitle:@"\u2714" forState:UIControlStateNormal];
+	} else {
+		UIImage * image = [UIImage imageNamed:@"702-share"];
+		[cell.uploadButton setImage:image forState:UIControlStateNormal];
+		[cell.uploadButton setTitle:nil forState:UIControlStateNormal];
+	}
 	return cell;
 }
 
@@ -345,31 +354,37 @@
 		auth = [NSString stringWithFormat:@"Basic %@", auth];
 		[request setValue:auth forHTTPHeaderField:@"Authorization"];
 
-//		DLog(@"body = %@",[NSString stringWithUTF8String:body.bytes] );
-
 		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-			[progress dismissViewControllerAnimated:YES completion:nil];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[progress dismissViewControllerAnimated:YES completion:nil];
 
-			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
-			if ( httpResponse.statusCode == 200 ) {
-				// ok
-				UIAlertController * success = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Complete",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-				[success addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self presentViewController:success animated:YES completion:nil];
-			} else {
-				DLog(@"response = %@\n",response);
-				DLog(@"data = %s", (char *)data.bytes);
-				NSString * errorMessage = nil;
-				if ( data.length > 0 ) {
-					errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+				NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
+				if ( httpResponse.statusCode == 200 ) {
+					// ok
+					UIAlertController * success = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Complete",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+					[success addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+					[self presentViewController:success animated:YES completion:nil];
+
+					// mark track as uploaded in UI
+					GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+					[gpxLayer markTrackUploaded:track];
+					[self.tableView reloadData];
+
 				} else {
-					errorMessage = error.localizedDescription;
+					DLog(@"response = %@\n",response);
+					DLog(@"data = %s", (char *)data.bytes);
+					NSString * errorMessage = nil;
+					if ( data.length > 0 ) {
+						errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
+					} else {
+						errorMessage = error.localizedDescription;
+					}
+					// failure
+					UIAlertController * failure = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Failed",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+					[failure addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+					[self presentViewController:failure animated:YES completion:nil];
 				}
-				// failure
-				UIAlertController * failure = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"GPX Upload Failed",nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-				[failure addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self presentViewController:failure animated:YES completion:nil];
-			}
+			});
 		}];
 		[task resume];
 	});

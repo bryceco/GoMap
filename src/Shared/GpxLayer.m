@@ -15,7 +15,6 @@
 #endif
 #import "GpxLayer.h"
 #import "MapView.h"
-#import "OsmObjects.h"
 #import "PathUtil.h"
 
 extern const double PATH_SCALING;
@@ -280,7 +279,10 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 {
 	return [NSString stringWithFormat:@"%.3f.track", self.creationDate.timeIntervalSince1970];
 }
-
+-(NSString *)name
+{
+	return _name ?: [self fileName];
+}
 
 -(NSTimeInterval)duration
 {
@@ -352,6 +354,12 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		// observe changes to geometry
 		[_mapView addObserver:self forKeyPath:@"screenFromMapTransform" options:0 context:NULL];
 
+		_uploadedTracks = [[NSUserDefaults standardUserDefaults] objectForKey:@"GpxUploads"];
+		if ( _uploadedTracks )
+			_uploadedTracks = [_uploadedTracks mutableCopy];
+		else
+			_uploadedTracks = [NSMutableDictionary new];
+
 		[self setNeedsLayout];
 	}
 	return self;
@@ -419,8 +427,18 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	[_previousTracks removeObject:track];
 	[track.shapeLayer removeFromSuperlayer];
 	[self setNeedsLayout];
+
+	if ( _uploadedTracks[track.name] ) {
+		[self.uploadedTracks removeObjectForKey:track.name];
+		[[NSUserDefaults standardUserDefaults] setObject:_uploadedTracks forKey:@"GpxUploads"];
+	}
 }
 
+-(void)markTrackUploaded:(GpxTrack *)track
+{
+	_uploadedTracks[track.name] = @YES;
+	[[NSUserDefaults standardUserDefaults] setObject:_uploadedTracks forKey:@"GpxUploads"];
+}
 
 -(void)trimTracksOlderThan:(NSDate *)date
 {
@@ -564,7 +582,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 		_previousTracks = [NSMutableArray new];
 
 		NSNumber * expiration = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
-		NSDate * cutoff = [NSDate dateWithTimeIntervalSinceNow:-expiration.doubleValue*24*60*60];
+		NSDate * deleteIfCreatedBefore = expiration.doubleValue == 0 ? [NSDate distantPast] : [NSDate dateWithTimeIntervalSinceNow:-expiration.doubleValue*24*60*60];
 
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
 			NSString * dir = [self saveDirectory];
@@ -576,7 +594,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 				if ( [file hasSuffix:@".track"] ) {
 					NSString * path = [dir stringByAppendingPathComponent:file];
 					GpxTrack * track = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-					if ( [track.creationDate timeIntervalSinceDate:cutoff] < 0 ) {
+					if ( [track.creationDate timeIntervalSinceDate:deleteIfCreatedBefore] < 0 ) {
 						// skip because its too old
 						dispatch_async(dispatch_get_main_queue(), ^{
 							[self deleteTrack:track];
@@ -688,6 +706,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	if ( center ) {
 		[self centerOnTrack:newTrack];
 		self.selectedTrack = newTrack;
+		_mapView.enableGpxLogging = YES;	// ensure GPX tracks are visible
 	}
 	[self saveToDisk:newTrack];
 	return YES;

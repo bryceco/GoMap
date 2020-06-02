@@ -179,6 +179,8 @@ typedef enum {
     (assign, nonatomic) BOOL
     enableEnhancedHwyEditor;
 
+@property (assign,nonatomic)	BOOL							automatedFramerateTestActive;
+
 @property (readonly,nonatomic)	CAShapeLayer				*	crossHairs;
 
 @property (readonly,nonatomic)	NSString					*	countryCodeForLocation;
