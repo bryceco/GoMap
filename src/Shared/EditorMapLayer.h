@@ -86,7 +86,7 @@ extern const double MinIconSizeInPixels;
 -(OsmWay *)createWayWithNode:(OsmNode *)node;
 
 -(void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
--(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;
+-(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset;
 
 // these are similar to OsmMapData methods but also update selections and refresh the layout
 -(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index error:(NSString **)error;

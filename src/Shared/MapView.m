@@ -2368,7 +2368,18 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			break;
 		case ACTION_DUPLICATE:
 			{
-				OsmBaseObject * newObject = [_editorLayer duplicateObject:_editorLayer.selectedPrimary];
+				CGPoint delta = { _crossHairs.position.x - _pushpinView.arrowPoint.x,
+								  _crossHairs.position.y - _pushpinView.arrowPoint.y };
+				OSMPoint offset;
+				if ( hypot( delta.x, delta.y ) > 20 ) {
+					// move to position of crosshairs
+					CLLocationCoordinate2D p1 = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:YES];
+					CLLocationCoordinate2D p2 = [self longitudeLatitudeForScreenPoint:_crossHairs.position birdsEye:YES];
+					offset = OSMPointMake( p2.longitude - p1.longitude, p2.latitude - p1.latitude );
+				} else {
+					offset = OSMPointMake( 0.00005, -0.00005 );
+				}
+				OsmBaseObject * newObject = [_editorLayer duplicateObject:_editorLayer.selectedPrimary withOffset:offset];
 				if ( newObject == nil ) {
 					error = NSLocalizedString(@"Could not duplicate object",nil);
 				} else {

@@ -2780,9 +2780,9 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	[self setNeedsLayout];
 }
 
--(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
+-(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset
 {
-	OsmBaseObject * newObject = [_mapData duplicateObject:object];
+	OsmBaseObject * newObject = [_mapData duplicateObject:object  withOffset:offset];
 	[self setNeedsLayout];
 	return newObject;
 }

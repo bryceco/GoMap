@@ -1267,38 +1267,36 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 
 #pragma mark Duplicate
 
--(OsmNode *)duplicateNode:(OsmNode *)node
+-(OsmNode *)duplicateNode:(OsmNode *)node withOffset:(OSMPoint)offset
 {
-	double offsetLat = -0.00005;
-	double offsetLon = 0.00005;
-	CLLocationCoordinate2D loc = { node.lat + offsetLat, node.lon + offsetLon };
+	CLLocationCoordinate2D loc = { node.lat + offset.y, node.lon + offset.x };
 	OsmNode * newNode = [self createNodeAtLocation:loc];
 	[self setTags:node.tags forObject:newNode];
 	return newNode;
 }
 
--(OsmWay *)duplicateWay:(OsmWay *)way
+-(OsmWay *)duplicateWay:(OsmWay *)way withOffset:(OSMPoint)offset
 {
 	OsmWay * newWay = [self createWay];
 	NSUInteger index = 0;
 	for ( OsmNode * node in way.nodes ) {
 		// check if node is a duplicate of previous node
 		NSInteger prev = [way.nodes indexOfObject:node];
-		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self duplicateNode:node];
+		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self duplicateNode:node withOffset:offset];
 		[self addNodeUnsafe:newNode toWay:newWay atIndex:index++];
 	}
 	[self setTags:way.tags forObject:newWay];
 	return newWay;
 }
 
-- (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
+- (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset
 {
 	if ( object.isNode ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
-		return [self duplicateNode:object.isNode];
+		return [self duplicateNode:object.isNode withOffset:offset];
 	} else if ( object.isWay ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
-		return [self duplicateWay:object.isWay];
+		return [self duplicateWay:object.isWay withOffset:offset];
 	} else if ( object.isRelation.isMultipolygon ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
 		OsmRelation * newRelation = [self createRelation];
@@ -1315,7 +1313,7 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 					}
 				}
 				if ( newWay == nil )
-					newWay = [self duplicateWay:way];
+					newWay = [self duplicateWay:way withOffset:offset];
 				OsmMember * newMember = [[OsmMember alloc] initWithType:member.type ref:(NSNumber *)newWay role:member.role];
 				[newRelation addMember:newMember atIndex:newRelation.members.count undo:_undoManager];
 			}
