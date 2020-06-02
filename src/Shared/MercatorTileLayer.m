@@ -361,11 +361,22 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		// WMS
 		OSMPoint minXmaxY = TileToWMSCoords( tileX, tileY, zoom, projection );
 		OSMPoint maxXminY = TileToWMSCoords( tileX+1, tileY+1, zoom, projection );
-		NSString * bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",minXmaxY.x,maxXminY.y,maxXminY.x,minXmaxY.y];
-		[url replaceOccurrencesOfString:@"{width}" withString:@"256" options:0 range:NSMakeRange(0, url.length)];
+		NSString * bbox;
+		if ( [projection isEqualToString:@"EPSG:4326"] && [[url lowercaseString] containsString:@"crs={proj}"] ) {
+			// reverse lat/lon for EPSG:4326 when WMS version is 1.3 (WMS 1.1 uses srs=epsg:4326 instead
+			bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",maxXminY.y,minXmaxY.x,minXmaxY.y,maxXminY.x];	// lat,lon
+		} else {
+			bbox = [NSString stringWithFormat:@"%f,%f,%f,%f",minXmaxY.x,maxXminY.y,maxXminY.x,minXmaxY.y];	// lon,lat
+		}
+		[url replaceOccurrencesOfString:@"{width}"	withString:@"256" options:0 range:NSMakeRange(0, url.length)];
 		[url replaceOccurrencesOfString:@"{height}" withString:@"256" options:0 range:NSMakeRange(0, url.length)];
-		[url replaceOccurrencesOfString:@"{proj}" withString:projection options:0 range:NSMakeRange(0, url.length)];
-		[url replaceOccurrencesOfString:@"{bbox}" withString:bbox options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{proj}" 	withString:projection options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{bbox}" 	withString:bbox options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{wkid}" 	withString:[projection stringByReplacingOccurrencesOfString:@"EPSG:" withString:@""] options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{w}" 		withString:@(minXmaxY.x).stringValue options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{s}" 		withString:@(maxXminY.y).stringValue options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{n}" 		withString:@(maxXminY.x).stringValue options:0 range:NSMakeRange(0, url.length)];
+		[url replaceOccurrencesOfString:@"{e}" 		withString:@(minXmaxY.y).stringValue options:0 range:NSMakeRange(0, url.length)];
 
 	} else {
 		// TMS
@@ -380,7 +391,6 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		[url replaceOccurrencesOfString:@"{-y}" withString:negY options:0 range:NSMakeRange(0,url.length)];
 		[url replaceOccurrencesOfString:@"{z}" withString:z options:0 range:NSMakeRange(0,url.length)];
 	}
-
 	return [url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
 }
 
@@ -690,9 +700,12 @@ typedef enum {
 	if ( minZoomLevel < 1 ) {
 		minZoomLevel = 1;
 	}
+	if ( minZoomLevel > 31 )	minZoomLevel = 31;	// shouldn't be necessary, except to shup up the Xcode analyzer
+
 	int32_t maxZoomLevel = self.aerialService.maxZoom;
 	if ( maxZoomLevel > minZoomLevel + 2 )
 		maxZoomLevel = minZoomLevel + 2;
+	if ( maxZoomLevel > 31 )	maxZoomLevel = 31;	// shouldn't be necessary, except to shup up the Xcode analyzer
 
 	NSMutableArray * neededTiles = [NSMutableArray new];
 	for ( int32_t zoomLevel = minZoomLevel; zoomLevel <= maxZoomLevel; ++zoomLevel ) {
@@ -716,9 +729,6 @@ typedef enum {
 	}
 	return neededTiles;
 }
-
-
-
 
 -(void)setTransform:(CATransform3D)transform
 {

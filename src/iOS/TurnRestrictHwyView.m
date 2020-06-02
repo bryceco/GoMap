@@ -7,7 +7,6 @@
 //
 
 #import "TurnRestrictHwyView.h"
-#import "OsmObjects.h"
 #import "VectorMath.h"
 
 static CGPoint MidPointOf(CGPoint p1, CGPoint p2)
