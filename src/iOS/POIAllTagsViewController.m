@@ -84,28 +84,29 @@
 	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
 	NSString * featureName = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
 	if ( featureName ) {
-		NSInteger tagCount = _tags.count;
 		[CommonPresetList.sharedList setPresetsForFeature:featureName tags:tabController.keyValueDict geometry:geometry update:^{}];
 		NSMutableArray * newKeys = [NSMutableArray new];
 		for ( NSInteger section = 0; section < CommonPresetList.sharedList.sectionCount; ++section ) {
 			for ( NSInteger row = 0; row < [CommonPresetList.sharedList tagsInSection:section]; ++row ) {
-				CommonPresetKey * preset = [CommonPresetList.sharedList tagAtSection:section row:row];
-				NSString * key = preset.tagKey;
-				if ( key.length == 0 )
-					continue;
-				BOOL exists = NO;
-				for ( NSInteger i = 0; i < tagCount; ++i ) {
-					NSArray * a = _tags[i];
-					if ( [key isEqualToString:a[0]] ) {
-						exists = YES;
-						break;
+				id preset = [CommonPresetList.sharedList tagAtSection:section row:row];
+				if ( [preset isKindOfClass:[CommonPresetGroup class]] ) {
+					CommonPresetGroup * group = preset;
+					for ( CommonPresetKey * presetKey in group.presetKeys ) {
+						if ( presetKey.tagKey.length == 0 )
+							continue;
+						[newKeys addObject:presetKey.tagKey];
 					}
-				}
-				if ( !exists ) {
-					[newKeys addObject:key];
+				} else {
+					CommonPresetKey * presetKey = preset;
+					if ( presetKey.tagKey.length == 0 )
+						continue;
+					[newKeys addObject:presetKey.tagKey];
 				}
 			}
 		}
+		[newKeys filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * key, NSDictionary<NSString *,id> * bindings) {
+			return [_tags containsObject:key] ? NO : YES;
+		}]];
 		[newKeys sortWithOptions:0 usingComparator:^NSComparisonResult(NSString * p1, NSString * p2) {
 			return [p1 compare:p2];
 		}];
