@@ -117,6 +117,8 @@ static const NSInteger CACHE_SECTION			= 3;
 	mapView.enableUnnamedRoadHalo	= _unnamedRoadSwitch.on;
 	mapView.enableGpxLogging		= _gpxLoggingSwitch.on;
 	mapView.enableTurnRestriction	= _turnRestrictionSwitch.on;
+
+	[mapView.editorLayer setNeedsLayout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
