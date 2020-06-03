@@ -1019,6 +1019,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	NSDictionary * featureDict = g_presetsDict[ featureName ];
 	NSArray * fields = featureDict[fieldType];
+
 	if ( fields == nil ) {
 		// inherit from parent
 		NSRange slash = [featureName rangeOfString:@"/" options:NSBackwardsSearch];
@@ -1030,6 +1031,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 
 	for ( NSString * field in fields ) {
+
+		if ( [field hasPrefix:@"{"] && [field hasSuffix:@"}"]) {
+			// copy fields from referenced item
+			NSString * ref = [field substringWithRange:NSMakeRange(1, field.length-2)];
+			[self presetsForFeature:ref geometry:geometry field:fieldType allFields:fieldSet update:update];
+			continue;
+		}
 
 		if ( [fieldSet containsObject:field] )
 			continue;
