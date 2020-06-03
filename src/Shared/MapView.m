@@ -3181,7 +3181,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	_blinkSegment = segment;
 
 	// create a layer for the object
-	_blinkLayer = [CAShapeLayer layer];
 	CGMutablePathRef path = CGPathCreateMutable();
 	if ( object.isNode ) {
 		OsmNode * node = (id)object;
@@ -3201,22 +3200,35 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	} else {
 		assert(NO);
 	}
-	_blinkLayer.path = path;
-	_blinkLayer.fillColor	= NULL;
+	_blinkLayer = [CAShapeLayer layer];
+	_blinkLayer.path 		= path;
+	_blinkLayer.fillColor	= nil;
 	_blinkLayer.lineWidth	= 3.0;
 	_blinkLayer.frame		= self.bounds;
 	_blinkLayer.zPosition	= Z_BLINK;
-	_blinkLayer.strokeColor	= self.editorLayer.whiteText ? NSColor.whiteColor.CGColor : NSColor.blueColor.CGColor;
-	_blinkLayer.lineDashPhase = 0.0;
-	_blinkLayer.lineDashPattern = @[ @(3), @(3) ];
-	[self.layer addSublayer:_blinkLayer];
+	_blinkLayer.strokeColor	= NSColor.blackColor.CGColor;
+
+	CAShapeLayer * dots = [CAShapeLayer layer];
+	dots.path 				= _blinkLayer.path;
+	dots.fillColor			= nil;
+	dots.lineWidth			= _blinkLayer.lineWidth;
+	dots.bounds				= _blinkLayer.bounds;
+	dots.position			= CGPointZero;
+	dots.anchorPoint		= CGPointZero;
+	dots.strokeColor		= NSColor.whiteColor.CGColor;
+	dots.lineDashPhase 		= 0.0;
+	dots.lineDashPattern 	= @[ @(3), @(3) ];
+	[_blinkLayer addSublayer:dots];
+
 	CABasicAnimation * dashAnimation = [CABasicAnimation animationWithKeyPath:@"lineDashPhase"];
 	dashAnimation.fromValue	= @(0.0);
 	dashAnimation.toValue	= @(10.0);
 	dashAnimation.duration	= 0.20;
 	dashAnimation.repeatCount = 100000;
-	[_blinkLayer addAnimation:dashAnimation forKey:@"linePhase"];
+	[dots addAnimation:dashAnimation forKey:@"linePhase"];
 	CGPathRelease(path);
+
+	[self.layer addSublayer:_blinkLayer];
 }
 
 
