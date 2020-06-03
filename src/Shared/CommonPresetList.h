@@ -127,7 +127,6 @@ typedef int UITextAutocapitalizationType;
 +(NSSet *)allFeatureKeys;
 +(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry;
 
-
 -(void)setPresetsForFeature:(NSString *)feature tags:(NSDictionary *)dict geometry:(NSString *)geometry  update:(void (^)(void))update;
 
 -(NSString *)featureName;

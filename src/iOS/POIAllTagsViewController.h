@@ -13,12 +13,6 @@
 @property (assign,nonatomic) IBOutlet	AutocompleteTextField *	text2;
 @end
 
-
-@interface AddNewCell : UITableViewCell
-@property (assign,nonatomic) IBOutlet	UIButton *	button;
-@end
-
-
 @interface POIAllTagsViewController : UITableViewController
 {
 	NSMutableArray				*	_tags;

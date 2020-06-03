@@ -514,32 +514,6 @@
                                     <outlet property="text2" destination="aCs-vS-YXj" id="ZSF-G8-s9v"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="AddCell" id="MWK-UU-xvx" customClass="AddNewCell">
-                                <rect key="frame" x="0.0" y="187.5" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MWK-UU-xvx" id="FVu-qC-Sky">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mws-V4-WER">
-                                            <rect key="frame" x="175.5" y="7" width="63" height="29"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="29" id="ZVU-NL-UDe"/>
-                                            </constraints>
-                                            <state key="normal" title="Add New">
-                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </state>
-                                        </button>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <constraints>
-                                    <constraint firstItem="Mws-V4-WER" firstAttribute="centerX" secondItem="MWK-UU-xvx" secondAttribute="centerX" id="Gpf-sS-etj"/>
-                                    <constraint firstItem="Mws-V4-WER" firstAttribute="top" secondItem="MWK-UU-xvx" secondAttribute="top" constant="7" id="Sa6-0h-TcN"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="button" destination="Mws-V4-WER" id="lgN-Hj-bbO"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="G5R-oP-lp3" id="V5V-x1-L7I"/>

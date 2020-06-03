@@ -38,16 +38,6 @@
 	}
 }
 
--(IBAction)accessorySelected:(id)sender
-{
-
-}
-
-
-@end
-
-
-@implementation AddNewCell
 @end
 
 
@@ -87,6 +77,43 @@
 		}
 	}];
 
+	// add new cell ready to be edited
+	[_tags addObject:[NSMutableArray arrayWithObjects:@"", @"", nil]];
+
+	// add placeholder keys
+	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
+	NSString * featureName = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+	if ( featureName ) {
+		NSInteger tagCount = _tags.count;
+		[CommonPresetList.sharedList setPresetsForFeature:featureName tags:tabController.keyValueDict geometry:geometry update:^{}];
+		NSMutableArray * newKeys = [NSMutableArray new];
+		for ( NSInteger section = 0; section < CommonPresetList.sharedList.sectionCount; ++section ) {
+			for ( NSInteger row = 0; row < [CommonPresetList.sharedList tagsInSection:section]; ++row ) {
+				CommonPresetKey * preset = [CommonPresetList.sharedList tagAtSection:section row:row];
+				NSString * key = preset.tagKey;
+				if ( key.length == 0 )
+					continue;
+				BOOL exists = NO;
+				for ( NSInteger i = 0; i < tagCount; ++i ) {
+					NSArray * a = _tags[i];
+					if ( [key isEqualToString:a[0]] ) {
+						exists = YES;
+						break;
+					}
+				}
+				if ( !exists ) {
+					[newKeys addObject:key];
+				}
+			}
+		}
+		[newKeys sortWithOptions:0 usingComparator:^NSComparisonResult(NSString * p1, NSString * p2) {
+			return [p1 compare:p2];
+		}];
+		for ( NSString * key in newKeys ) {
+			[_tags addObject:[NSMutableArray arrayWithObjects:key, @"", nil]];
+		}
+	}
+
 	[self.tableView reloadData];
 
 	if ( tabController.selection.isNode ) {
@@ -120,6 +147,8 @@
 {
 	[super viewWillAppear:animated];
 	[self loadState];
+
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -142,9 +171,12 @@
 	if ( @available( macCatalyst 13,*) ) {
 		// On Mac Catalyst set the focus to something other than a text field (which brings up the keyboard)
 		// The Cancel button would be ideal but it isn't clear how to implement that, so select the Add button instead
+#if 0
 		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:_tags.count inSection:0];
 		AddNewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-		return @[ cell.button ];
+		if ( cell.button )
+			return @[ cell.button ];
+#endif
 	}
 	return @[];
 }
@@ -186,7 +218,7 @@
 {
 	if ( section == 0 ) {
 		// tags
-		return _tags.count + 1;
+		return _tags.count;
 	} else if ( section == 1 ) {
 		// relations
 		return _relations.count;
@@ -205,14 +237,6 @@
 	if ( indexPath.section == 0 ) {
 
 		// Tags
-		if ( indexPath.row == _tags.count ) {
-			// Add new tag
-			AddNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
-			[cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
-			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
-			return cell;
-		}
-
 		TextPairTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TagCell" forIndexPath:indexPath];
 		NSArray * kv = _tags[ indexPath.row ];
 		// assign text contents of fields
@@ -245,12 +269,6 @@
 	} else {
 
 		// Members
-		if ( indexPath.row == _members.count ) {
-			AddNewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
-			[cell.button removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
-			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
-			return cell;
-		}
 		OsmMember	* member = _members[ indexPath.row ];
 		BOOL		isResolved = [member.ref isKindOfClass:[OsmBaseObject class]];
 		TextPairTableCell *cell = isResolved ? [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath]
@@ -336,51 +354,96 @@
 	}
 }
 
+-(NSString *)convertWikiUrlToReferenceWithKey:(NSString *)key value:(NSString *)url
+{
+	if ( [key hasPrefix:@"wikipedia"] ) {
+		// if the value is for wikipedia then convert the URL to the correct format
+		// format is https://en.wikipedia.org/wiki/Nova_Scotia
+		NSScanner * scanner = [NSScanner scannerWithString:url];
+		NSString *languageCode, *pageName;
+		if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
+			[scanner scanUpToString:@"." intoString:&languageCode] &&
+			([scanner scanString:@".m" intoString:nil] || YES) &&
+			[scanner scanString:@".wikipedia.org/wiki/" intoString:nil] &&
+			[scanner scanUpToString:@"/" intoString:&pageName] &&
+			[scanner isAtEnd] &&
+			languageCode.length == 2 &&
+			pageName.length > 0 )
+		{
+			return [NSString stringWithFormat:@"%@:%@",languageCode,pageName];
+		}
+	} else if ( [key hasPrefix:@"wikidata"] ) {
+		// https://www.wikidata.org/wiki/Q90000000
+		NSScanner * scanner = [NSScanner scannerWithString:url];
+		NSString *pageName;
+		if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
+			([scanner scanString:@"www.wikidata.org/wiki/" intoString:nil] || [scanner scanString:@"m.wikidata.org/wiki/" intoString:nil]) &&
+			[scanner scanUpToString:@"/" intoString:&pageName] &&
+			[scanner isAtEnd] &&
+			pageName.length > 0 )
+		{
+			return pageName;
+		}
+	}
+	return nil;
+}
+
 -(void)textFieldEditingDidEnd:(UITextField *)textField
 {
 	UITableViewCell * cell = (id)textField.superview;
 	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
 		cell = (id)cell.superview;
 	TextPairTableCell * pair = (id)cell;
-	BOOL isValue = textField == pair.text2;
 
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
 	if ( indexPath.section == 0 ) {
-		if ( isValue ) {
-			NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
-			if ( [kv[0] hasPrefix:@"wikipedia"] ) {
-				// if the value is for wikipedia then convert the URL to the correct format
-				// format is https://en.wikipedia.org/wiki/Nova_Scotia
-				NSScanner * scanner = [NSScanner scannerWithString:kv[1]];
-				NSString *languageCode, *pageName;
-				if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
-					[scanner scanUpToString:@"." intoString:&languageCode] &&
-					([scanner scanString:@".m" intoString:nil] || YES) &&
-					[scanner scanString:@".wikipedia.org/wiki/" intoString:nil] &&
-					[scanner scanUpToString:@"/" intoString:&pageName] &&
-					[scanner isAtEnd] &&
-					languageCode.length == 2 &&
-					pageName.length > 0 )
-				{
-					kv[1] = [NSString stringWithFormat:@"%@:%@",languageCode,pageName];
-					pair.text2.text = kv[1];
-				}
-			} else if ( [kv[0] hasPrefix:@"wikidata"] ) {
-				// https://www.wikidata.org/wiki/Q90000000
-				NSScanner * scanner = [NSScanner scannerWithString:kv[1]];
-				NSString *pageName;
-				if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
-					([scanner scanString:@"www.wikidata.org/wiki/" intoString:nil] || [scanner scanString:@"m.wikidata.org/wiki/" intoString:nil]) &&
-					[scanner scanUpToString:@"/" intoString:&pageName] &&
-					[scanner isAtEnd] &&
-					pageName.length > 0 )
-				{
-					kv[1] = pageName;
-					pair.text2.text = kv[1];
+		NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
+
+		// do wikipedia conversion
+		NSString * newValue = [self convertWikiUrlToReferenceWithKey:kv[0] value:kv[1]];
+		if ( newValue ) {
+			kv[1] = newValue;
+			pair.text2.text = newValue;
+		}
+
+		if ( kv[0].length && kv[1].length ) {
+			// move row so there are no blank rows above it
+			NSInteger row;
+			for ( row = indexPath.row - 1; row >= 0; --row ) {
+				NSArray<NSString *> * r = _tags[row];
+				if ( r[0].length && r[1].length )
+					break;
+			}
+			++row;
+			if ( row != indexPath.row ) {
+				[_tags removeObjectAtIndex:indexPath.row];
+				[_tags insertObject:kv atIndex:row];
+				NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
+				[self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+			}
+
+			// ensure there is a blank line to add the next tag
+			NSArray<NSString *> * r = nil;
+			while ( ++row < _tags.count ) {
+				r = _tags[row];
+				if ( r[0].length == 0 || r[1].length == 0 ) {
+					break;
 				}
 			}
-		} else {
-			// editing key
+			if ( row >= _tags.count || r[0].length || r[1].length ) {
+				[_tags insertObject:[NSMutableArray arrayWithObjects:@"", @"", nil] atIndex:row];
+				NSIndexPath * path = [NSIndexPath indexPathForRow:row inSection:0];
+				[self.tableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+			}
+
+			// if we created a row that defines a key that duplicates a row witht the same key elsewhere then delete the other row
+			for ( NSInteger i = 0; i < _tags.count; ++i ) {
+				NSArray<NSString *> * a = _tags[i];
+				if ( a != kv && [a[0] isEqualToString:kv[0]] ) {
+					[_tags removeObjectAtIndex:i];
+					[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+				}
+			}
 		}
 	}
 }
