@@ -129,6 +129,7 @@
 	<tag key="natural" value="water" type="node;area" areaColor="0000FF"/>
 	<tag key="natural" value="wetland" type="node;area" areaColor="4F4FF3"/>
 	<tag key="natural" value="wood" type="node;area" areaColor="008000"/>
+	<tag key="natural" value="tree_row" type="way;node_in_way" lineColor="A0F0A0" lineWidth="1.000000" areaColor="008000"/>
 
 	<tag key="place" value="isolated_dwelling" type="area" areaColor="8DE3CB"/>
 
