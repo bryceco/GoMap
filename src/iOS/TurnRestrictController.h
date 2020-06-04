@@ -10,7 +10,7 @@
 #import "TurnRestrictHwyView.h"
 #import "VectorMath.h"
 #import "EditorMapLayer.h"
-#import "RenderInfo.h"
+#import "TagInfo.h"
 
 //width of the way line e.g 12, 17, 18 AND shadow width is +4 e.g 16, 21, 22
 #define DEFAULT_POPUPLINEWIDTH        12

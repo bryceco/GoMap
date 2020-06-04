@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MapView.h"
-#import "CommonPresetList.h"
+#import "CommonTagList.h"
 #import "LanguageTableViewController.h"
 
 
@@ -70,7 +70,7 @@
 
 	[self.tableView reloadData];
 
-	[CommonPresetList initialize];	// reset tags
+	[CommonTagList initialize];	// reset tags
 	[[AppDelegate getAppDelegate].mapView refreshPushpinText];
 }
 

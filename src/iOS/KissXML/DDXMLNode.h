@@ -64,17 +64,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id)elementWithName:(NSString *)name children:(nullable NSArray<DDXMLNode *> *)children attributes:(nullable NSArray<DDXMLNode *> *)attributes;
 
-+ (id _Nullable)attributeWithName:(NSString *)name stringValue:(NSString *)stringValue;
++ (id)attributeWithName:(NSString *)name stringValue:(NSString *)stringValue;
 
-+ (id _Nullable)attributeWithName:(NSString *)name URI:(NSString *)URI stringValue:(NSString *)stringValue;
++ (id)attributeWithName:(NSString *)name URI:(NSString *)URI stringValue:(NSString *)stringValue;
 
-+ (id _Nullable)namespaceWithName:(NSString *)name stringValue:(NSString *)stringValue;
++ (id)namespaceWithName:(NSString *)name stringValue:(NSString *)stringValue;
 
-+ (id _Nullable)processingInstructionWithName:(NSString *)name stringValue:(NSString *)stringValue;
++ (id)processingInstructionWithName:(NSString *)name stringValue:(NSString *)stringValue;
 
-+ (id _Nullable)commentWithStringValue:(NSString *)stringValue;
++ (id)commentWithStringValue:(NSString *)stringValue;
 
-+ (id _Nullable)textWithStringValue:(NSString *)stringValue;
++ (id)textWithStringValue:(NSString *)stringValue;
 
 //+ (instancetype)DTDNodeWithXMLString:(NSString *)string;
 

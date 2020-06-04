@@ -8,21 +8,21 @@
 
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
-#import "CommonPresetList.h"
+#import "CommonTagList.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "OsmMember.h"
+#import "OsmObjects.h"
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
 #import "PushPinView.h"
-#import "RenderInfo.h"
+#import "TagInfo.h"
 
 
 #define EDIT_RELATIONS 0
 
 
-@implementation TextPairTableCell
+@implementation TextPair
 
 - (void)willTransitionToState:(UITableViewCellStateMask)state
 {
@@ -125,15 +125,6 @@
 	[super viewWillDisappear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-	if ( _tags.count == 0 && _members.count == 0 ) {
-		// if there are no tags then start editing the first one
-		[self addTagCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-	}
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -176,10 +167,11 @@
 	}
 }
 
-<<<<<<< HEAD
-=======
+-(void)textFieldEditingDidEnd:(id)sender
+{
+}
 
->>>>>>> master
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
@@ -193,7 +185,7 @@
 			return cell;
 		}
 
-		TextPairTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TagCell" forIndexPath:indexPath];
+		TextPair * cell = [tableView dequeueReusableCellWithIdentifier:@"TagCell" forIndexPath:indexPath];
 		NSArray * kv = _tags[ indexPath.row ];
 		// assign text contents of fields
 		cell.text1.enabled = YES;
@@ -204,6 +196,12 @@
 		cell.text1.didSelect = ^{ [cell.text2 becomeFirstResponder]; };
 		cell.text2.didSelect = ^{};
 
+#if 0
+		if ( [kv[0] length] == 0 && [kv[1] length] == 0 ) {
+			// empty key/value so set keyboard focus to it
+			[cell.text1 becomeFirstResponder];
+		}
+#endif
 		return cell;
 
 	} else if ( indexPath.section == 1 ) {
@@ -213,7 +211,7 @@
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"AddCell" forIndexPath:indexPath];
 			return cell;
 		}
-		TextPairTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath];
+		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"RelationCell" forIndexPath:indexPath];
 		cell.text1.enabled = NO;
 		cell.text2.enabled = NO;
 		OsmRelation	* relation = _relations[ indexPath.row ];
@@ -231,7 +229,7 @@
 			[cell.button addTarget:self action:@selector(addTagCell:) forControlEvents:UIControlEventTouchUpInside];
 			return cell;
 		}
-		TextPairTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
+		TextPair *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
 #if EDIT_RELATIONS
 		cell.text1.enabled = YES;
 		cell.text2.enabled = YES;
@@ -242,7 +240,7 @@
 		OsmMember	* member = _members[ indexPath.row ];
 		if ( [member isKindOfClass:[OsmMember class]] ) {
 			OsmBaseObject * ref = member.ref;
-			NSString * memberName = [ref isKindOfClass:[OsmBaseObject class]] ? ref.friendlyDescriptionWithDetails : [NSString stringWithFormat:@"%@ %@",member.type, member.ref];
+			NSString * memberName = [ref isKindOfClass:[OsmBaseObject class]] ? ref.friendlyDescription : [NSString stringWithFormat:@"%@ %@",member.type, member.ref];
 			cell.text1.text = member.role;
 			cell.text2.text = memberName;
 		} else {
@@ -275,7 +273,6 @@
 	return dict;
 }
 
-#pragma mark Cell editing
 
 - (IBAction)textFieldReturn:(id)sender
 {
@@ -287,7 +284,7 @@
 	UITableViewCell * cell = (id)textField.superview;
 	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
 		cell = (id)cell.superview;
-	TextPairTableCell * pair = (id)cell;
+	TextPair * pair = (id)cell;
 	BOOL isValue = textField == pair.text2;
 
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
@@ -299,66 +296,17 @@
 		if ( isValue ) {
 			// get list of values for current key
 			NSString * key = kv[0];
-			NSSet * set = [CommonPresetList allTagValuesForKey:key];
+			NSSet * set = [CommonTagList allTagValuesForKey:key];
 			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+			NSMutableSet * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
 			NSArray * list = [values allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
 		} else {
 			// get list of keys
-			NSSet * set = [CommonPresetList allTagKeys];
+			NSSet * set = [CommonTagList allTagKeys];
 			NSArray * list = [set allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
-		}
-	}
-}
-
--(void)textFieldEditingDidEnd:(UITextField *)textField
-{
-	UITableViewCell * cell = (id)textField.superview;
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
-		cell = (id)cell.superview;
-	TextPairTableCell * pair = (id)cell;
-	BOOL isValue = textField == pair.text2;
-
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-	if ( indexPath.section == 0 ) {
-		if ( isValue ) {
-			NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
-			if ( [kv[0] hasPrefix:@"wikipedia"] ) {
-				// if the value is for wikipedia then convert the a URL to the correct format
-				// format is https://en.wikipedia.org/wiki/Nova_Scotia
-				NSScanner * scanner = [NSScanner scannerWithString:kv[1]];
-				NSString *languageCode, *pageName;
-				if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
-					[scanner scanUpToString:@"." intoString:&languageCode] &&
-					([scanner scanString:@".m" intoString:nil] || YES) &&
-					[scanner scanString:@".wikipedia.org/wiki/" intoString:nil] &&
-					[scanner scanUpToString:@"/" intoString:&pageName] &&
-					[scanner isAtEnd] &&
-					languageCode.length == 2 &&
-					pageName.length > 0 )
-				{
-					kv[1] = [NSString stringWithFormat:@"%@:%@",languageCode,pageName];
-					pair.text2.text = kv[1];
-				}
-			} else if ( [kv[0] hasPrefix:@"wikidata"] ) {
-				// https://www.wikidata.org/wiki/Q90000000
-				NSScanner * scanner = [NSScanner scannerWithString:kv[1]];
-				NSString *pageName;
-				if ( ([scanner scanString:@"https://" intoString:nil] || [scanner scanString:@"http://" intoString:nil]) &&
-					([scanner scanString:@"www.wikidata.org/wiki/" intoString:nil] || [scanner scanString:@"m.wikidata.org/wiki/" intoString:nil]) &&
-					[scanner scanUpToString:@"/" intoString:&pageName] &&
-					[scanner isAtEnd] &&
-					pageName.length > 0 )
-				{
-					kv[1] = pageName;
-					pair.text2.text = kv[1];
-				}
-			}
-		} else {
-			// editing key
 		}
 	}
 }
@@ -374,7 +322,7 @@
 
 	if ( indexPath.section == 0 ) {
 		// edited tags
-		TextPairTableCell * pair = (id)cell;
+		TextPair * pair = (id)cell;
 		NSMutableArray * kv = _tags[ indexPath.row ];
 		BOOL isValue = textField == pair.text2;
 
@@ -389,17 +337,6 @@
 		NSMutableDictionary * dict = [self keyValueDictionary];
 		_saveButton.enabled = [tabController isTagDictChanged:dict];
 	}
-}
-
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-	const int MAX_LENGTH = 255;
-    NSUInteger oldLength = [textField.text length];
-    NSUInteger replacementLength = [string length];
-    NSUInteger rangeLength = range.length;
-    NSUInteger newLength = oldLength - rangeLength + replacementLength;
-    BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
-    return newLength <= MAX_LENGTH || returnKey;
 }
 
 - (IBAction)toggleEditing:(id)sender
@@ -459,8 +396,12 @@
 
 #pragma mark - Table view delegate
 
-- (void)addTagCellAtIndexPath:(NSIndexPath *)indexPath
+- (void)addTagCell:(id)sender
 {
+	UITableViewCell * cell = sender;	// starts out as UIButton
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
+		cell = (id)[cell superview];
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
 	if ( indexPath.section == 0 ) {
 		[_tags addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
 	} else if ( indexPath.section == 2 ) {
@@ -471,17 +412,8 @@
 	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
 
 	// set new cell to show keyboard
-	TextPairTableCell * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+	TextPair * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
 	[newCell.text1 becomeFirstResponder];
-}
-
-- (void)addTagCell:(id)sender
-{
-	UITableViewCell * cell = sender;	// starts out as UIButton
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
-		cell = (id)[cell superview];
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-	[self addTagCellAtIndexPath:indexPath];
 }
 
 -(IBAction)cancel:(id)sender

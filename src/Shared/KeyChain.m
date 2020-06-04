@@ -10,7 +10,7 @@
 #import <Security/Security.h>
 #import <CommonCrypto/CommonHMAC.h>
 
-static const NSString * APP_NAME = @"Go Kaart";
+static const NSString * APP_NAME = @"Go Map";
 
 @implementation KeyChain
 

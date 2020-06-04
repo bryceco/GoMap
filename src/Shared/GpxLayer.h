@@ -53,11 +53,9 @@
 	MapView			*	_mapView;
 	NSInteger			_stabilizingCount;
 }
-@property (readonly,nonatomic)	GpxTrack			*	activeTrack;		// track currently being recorded
-@property (weak,nonatomic)		GpxTrack			*	selectedTrack;		// track picked in view controller
-@property (strong,nonatomic)	NSMutableArray		*	previousTracks;		// sorted with most recent first
-@property (readonly)			NSMutableDictionary	*	uploadedTracks;		// track name -> upload date
-
+@property (readonly,nonatomic)	GpxTrack		*	activeTrack;		// track currently being recorded
+@property (weak,nonatomic)		GpxTrack		*	selectedTrack;		// track picked in view controller
+@property (strong,nonatomic)	NSMutableArray	*	previousTracks;		// sorted with most recent first
 
 -(instancetype)initWithMapView:(MapView *)mapView;
 -(void)addPoint:(CLLocation *)location;
@@ -68,7 +66,6 @@
 -(void)endActiveTrack;
 -(void)saveActiveTrack;
 -(void)deleteTrack:(GpxTrack *)track;
--(void)markTrackUploaded:(GpxTrack *)track;
 
 -(void)trimTracksOlderThan:(NSDate *)date;
 

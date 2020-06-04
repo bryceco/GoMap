@@ -8,6 +8,7 @@
 
 #include <vector>
 
+#import "OsmObjects.h"
 #import "QuadMap.h"
 #import "UndoManager.h"
 
@@ -275,7 +276,7 @@ public:
 			if ( this->countBusy() == 0 ) {
 				delete this;
 			}
-			//return;
+			return;
 		}
 
 		if ( success ) {
@@ -523,6 +524,9 @@ public:
 };
 
 
+
+
+
 @implementation QuadBox
 
 #pragma mark Common
@@ -631,10 +635,6 @@ public:
 // If the download succeeded we can mark this region and its children as whole.
 -(void)makeWhole:(BOOL)success
 {
-	if ( _cpp == NULL ) {
-		// this should only happen if the user cleared the cache while data was downloading?
-		return;
-	}
 	_cpp->makeWhole(success);
 }
 
@@ -690,6 +690,8 @@ public:
 {
 	_cpp->deleteObjectsWithPredicate(predicate);
 }
+
+
 
 #pragma mark find sibling quadkeys
 

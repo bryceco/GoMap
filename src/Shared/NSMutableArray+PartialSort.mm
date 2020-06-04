@@ -10,6 +10,7 @@
 #import <algorithm>
 
 #import "NSMutableArray+PartialSort.h"
+#import "OsmObjects.h"
 
 
 
