@@ -13,9 +13,10 @@
 #import "MapViewController.h"
 #import "NominatumViewController.h"
 
+@interface NominatimViewController() <UITableViewDelegate>
+@end
 
-
-@implementation NominatumViewController
+@implementation NominatimViewController
 
 
 - (void)viewDidLoad
@@ -51,6 +52,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	return _searchBar.text.length ? _resultsArray.count : _historyArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,7 +105,7 @@
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	double metersPerDegree = MetersPerDegree( lat1 );
 	double minMeters = 50;
-	double widthDegrees = widthDegrees = minMeters / metersPerDegree;
+	double widthDegrees = minMeters / metersPerDegree;
 
 	// disable GPS
 	while ( appDelegate.mapView.gpsState != GPS_STATE_NONE ) {

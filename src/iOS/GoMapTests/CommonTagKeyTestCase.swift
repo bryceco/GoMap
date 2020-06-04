@@ -15,8 +15,8 @@ class CommonTagKeyTestCase: XCTestCase {
     func testInitWithPresetsShouldPreferThePlaceholderParameterIfProvided() {
         let placeholder = "Lorem ipsum"
         
-        let firstPreset = CommonTagValue(name: "Ja", details: "", tagValue: "yes")
-        let secondPreset = CommonTagValue(name: "Nein", details: "", tagValue: "no")
+        let firstPreset = CommonTagValue(name: "Ja", details: "", tagValue: "yes").require()
+        let secondPreset = CommonTagValue(name: "Nein", details: "", tagValue: "no").require()
         
         let tagKey = CommonTagKey(name: "Rückenlehne",
                                   tagKey: "backreset",
@@ -31,10 +31,10 @@ class CommonTagKeyTestCase: XCTestCase {
     
     func testInitWithPresetsShouldUseTheirNamesForPlaceholder() {
         let firstPresetName = "Ja"
-        let firstPreset = CommonTagValue(name: firstPresetName, details: "", tagValue: "yes")
+        let firstPreset = CommonTagValue(name: firstPresetName, details: "", tagValue: "yes").require()
         
         let secondPresentName = "Nein"
-        let secondPreset = CommonTagValue(name: secondPresentName, details: "", tagValue: "no")
+        let secondPreset = CommonTagValue(name: secondPresentName, details: "", tagValue: "no").require()
         
         let tagKey = CommonTagKey(name: "Rückenlehne",
                                   tagKey: "backreset",

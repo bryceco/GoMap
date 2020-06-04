@@ -9,7 +9,7 @@
 #import "DLog.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 #import "UndoManager.h"
 #import "VectorMath.h"
 
@@ -81,7 +81,11 @@
 
 -(EditAction)canDeleteRelation:(OsmRelation *)relation error:(NSString **)error
 {
-	if ( !relation.isMultipolygon ) {
+	if ( relation.isMultipolygon ) {
+		// okay
+	} else if ( relation.isRestriction ) {
+		// okay
+	} else {
 		*error = NSLocalizedString(@"Can't delete relation that is not a multipolygon", nil);
 		return nil;
 	}
@@ -243,7 +247,7 @@
 	};
 }
 
-#pragma mark canRemoveWayFromRelation
+#pragma mark canRemoveObject:fromRelation
 
 -(EditAction)canRemoveObject:(OsmBaseObject *)obj fromRelation:(OsmRelation *)relation error:(NSString **)error
 {
@@ -262,7 +266,7 @@
 	};
 }
 
-#pragma mark canReplaceNodeInWay
+#pragma mark canMergeNode:intoNode
 
 // used when dragging a node into another node
 -(EditActionReturnNode)canMergeNode:(OsmNode *)node1 intoNode:(OsmNode *)node2 error:(NSString **)error
@@ -314,7 +318,7 @@
 
 	// gather restrictions for parent ways
 	for ( OsmNode * node in nodes ) {
-		NSArray * parents = [self waysContainingNode:node];
+		NSArray<OsmWay *> * parents = [self waysContainingNode:node];
 		for ( OsmWay * parent in parents ) {
 			for ( OsmRelation * relation in parent.parentRelations ) {
 				if ( relation.isRestriction ) {
@@ -1065,25 +1069,33 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		return nil;	// must be endpoint node
 	}
 
-	NSArray * ways = [self waysContainingNode:selectedNode];
-	OsmWay * otherWay = nil;
+	NSArray<OsmWay *> * ways = [self waysContainingNode:selectedNode];
+	NSMutableArray * otherWays = [NSMutableArray new];
+	NSMutableArray * otherMatchingTags = [NSMutableArray new];
 	for ( OsmWay * way in ways ) {
 		if ( way == selectedWay )
 			continue;
 		if ( way.nodes[0] == selectedNode || way.nodes.lastObject == selectedNode ) {
-			if ( otherWay ) {
-				// ambigious connection
-				*error = NSLocalizedString(@"The target way is ambiguous",nil);
-				return nil;
+			if ( [way.tags isEqualToDictionary:selectedWay.tags] ) {
+				[otherMatchingTags addObject:way];
+			} else {
+				[otherWays addObject:way];
 			}
-			otherWay = way;
 		}
 	}
-	if ( otherWay == nil ) {
+	if ( otherMatchingTags.count ) {
+		otherWays = otherMatchingTags;
+	}
+	if ( otherWays.count > 1 ) {
+		// ambigious connection
+		*error = NSLocalizedString(@"The target way is ambiguous",nil);
+		return nil;
+	} else if ( otherWays.count == 0 ) {
 		*error = NSLocalizedString(@"Missing way to connect to",nil);
 		return nil;
 	}
 
+	OsmWay * otherWay = otherWays.firstObject;
 	NSMutableSet * relations = [NSMutableSet setWithArray:selectedWay.parentRelations];
 	[relations intersectSet:[NSSet setWithArray:otherWay.parentRelations]];
 	for ( OsmRelation * relation in relations ) {
@@ -1255,38 +1267,36 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 
 #pragma mark Duplicate
 
--(OsmNode *)duplicateNode:(OsmNode *)node
+-(OsmNode *)duplicateNode:(OsmNode *)node withOffset:(OSMPoint)offset
 {
-	double offsetLat = -0.00005;
-	double offsetLon = 0.00005;
-	CLLocationCoordinate2D loc = { node.lat + offsetLat, node.lon + offsetLon };
+	CLLocationCoordinate2D loc = { node.lat + offset.y, node.lon + offset.x };
 	OsmNode * newNode = [self createNodeAtLocation:loc];
 	[self setTags:node.tags forObject:newNode];
 	return newNode;
 }
 
--(OsmWay *)duplicateWay:(OsmWay *)way
+-(OsmWay *)duplicateWay:(OsmWay *)way withOffset:(OSMPoint)offset
 {
 	OsmWay * newWay = [self createWay];
 	NSUInteger index = 0;
 	for ( OsmNode * node in way.nodes ) {
 		// check if node is a duplicate of previous node
 		NSInteger prev = [way.nodes indexOfObject:node];
-		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self duplicateNode:node];
+		OsmNode * newNode = prev < index ? newWay.nodes[prev] : [self duplicateNode:node withOffset:offset];
 		[self addNodeUnsafe:newNode toWay:newWay atIndex:index++];
 	}
 	[self setTags:way.tags forObject:newWay];
 	return newWay;
 }
 
-- (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object
+- (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset
 {
 	if ( object.isNode ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
-		return [self duplicateNode:object.isNode];
+		return [self duplicateNode:object.isNode withOffset:offset];
 	} else if ( object.isWay ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
-		return [self duplicateWay:object.isWay];
+		return [self duplicateWay:object.isWay withOffset:offset];
 	} else if ( object.isRelation.isMultipolygon ) {
 		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
 		OsmRelation * newRelation = [self createRelation];
@@ -1303,7 +1313,7 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 					}
 				}
 				if ( newWay == nil )
-					newWay = [self duplicateWay:way];
+					newWay = [self duplicateWay:way withOffset:offset];
 				OsmMember * newMember = [[OsmMember alloc] initWithType:member.type ref:(NSNumber *)newWay role:member.role];
 				[newRelation addMember:newMember atIndex:newRelation.members.count undo:_undoManager];
 			}

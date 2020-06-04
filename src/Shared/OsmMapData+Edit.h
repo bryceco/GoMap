@@ -38,7 +38,7 @@
 - (EditActionReturnWay)canSplitWay:(OsmWay *)way atNode:(OsmNode *)node error:(NSString **)error;	// returns the new other half
 - (EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode error:(NSString **)error;
 - (EditAction)canCircularizeWay:(OsmWay *)way error:(NSString **)error;
-- (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;
+- (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset;
 
 -(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)viaNode
 									  fromWay:(OsmWay *)fromWay

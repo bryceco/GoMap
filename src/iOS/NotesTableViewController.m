@@ -92,7 +92,6 @@
 		} else {
 			cell.commentBackground.hidden					= NO;
 			cell.commentBackground.layer.cornerRadius		= 5;
-			cell.commentBackground.layer.backgroundColor	= [UIColor colorWithRed:0.9 green:0.9 blue:1.0 alpha:1.0].CGColor;
 			cell.commentBackground.layer.borderColor		= UIColor.blackColor.CGColor;
 			cell.commentBackground.layer.borderWidth		= 1.0;
 			cell.commentBackground.layer.masksToBounds		= YES;

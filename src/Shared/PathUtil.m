@@ -55,7 +55,7 @@ void CGPathDump( CGPathRef path )
 	});
 }
 
-void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(OSMPoint pt, OSMPoint direction) )
+void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval, void(^callback)(CGPoint pt, CGPoint direction) )
 {
 	__block CGFloat offset = initialOffset;
 	__block CGPoint previous;
@@ -79,8 +79,8 @@ void InvokeBlockAlongPath( CGPathRef path, double initialOffset, double interval
 
 				while ( offset < len ) {
 					// found it
-					OSMPoint pos = { previous.x + offset * dx, previous.y + offset * dy };
-					OSMPoint dir = { dx, dy };
+					CGPoint pos = { previous.x + offset * dx, previous.y + offset * dy };
+					CGPoint dir = { dx, dy };
 					callback( pos, dir );
 					offset += interval;
 				}

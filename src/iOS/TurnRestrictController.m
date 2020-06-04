@@ -14,7 +14,7 @@
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 
 
 @interface TurnRestrictController ()
@@ -65,7 +65,7 @@
 
 	// get highways that contain selection
 	OsmMapData * mapData = [AppDelegate getAppDelegate].mapView.editorLayer.mapData;
-	NSArray * parentWays = [mapData waysContainingNode:_centralNode];
+	NSArray<OsmWay *> * parentWays = [mapData waysContainingNode:_centralNode];
 	parentWays = [parentWays filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmWay * way, NSDictionary *bindings) {
 		return way.tags[@"highway"] != nil;
 	}]];
@@ -199,7 +199,7 @@
 		highwayLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH;
 		highwayLayer.lineCap 		= kCALineCapRound;
 		highwayLayer.path 	  		= bezierPath.CGPath;
-		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.tagInfo.lineColor.CGColor ?: UIColor.blackColor.CGColor;
+		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.renderInfo.lineColor.CGColor ?: UIColor.blackColor.CGColor;
 		highwayLayer.bounds 		= _detailView.bounds;
 		highwayLayer.position	 	= detailViewCenter;
 		highwayLayer.masksToBounds 	= NO;
