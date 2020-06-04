@@ -385,12 +385,17 @@ const CGFloat kEditControlCornerRadius = 4;
 	self.enableGpxLogging		= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableBreadCrumb"];
 	self.enableTurnRestriction	= [[NSUserDefaults standardUserDefaults] boolForKey:@"mapViewEnableTurnRestriction"];
 
+	_countryCodeForLocation = [[NSUserDefaults standardUserDefaults] objectForKey:@"countryCodeForLocation"];
+
+	[self updateAerialAttributionButton];
+}
+
+-(void)viewDidAppear
+{
 	// get current location
 	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
 	double latitude		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.latitude"];
 	double longitude	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.longitude"];
-	
-	_countryCodeForLocation = [[NSUserDefaults standardUserDefaults] objectForKey:@"countryCodeForLocation"];
 
 	if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
 		[self setTransformForLatitude:latitude longitude:longitude scale:scale];
@@ -403,8 +408,6 @@ const CGFloat kEditControlCornerRadius = 4;
 
 	// get notes
 	[self updateNotesFromServerWithDelay:0];
-
-	[self updateAerialAttributionButton];
 }
 
 -(CALayer *)compassLayerWithRadius:(CGFloat)radius
@@ -1873,7 +1876,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	// translate
 	OSMPoint point = [self screenPointFromMapPoint:mapCenter birdsEye:NO];
-	CGPoint center = CGRectCenter( self.layer.bounds );
+	CGPoint center = CGRectCenter( self.editorLayer.bounds );
 
 	CGPoint delta = { center.x - point.x, center.y - point.y };
 	[self adjustOriginBy:delta];

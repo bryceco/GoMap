@@ -185,6 +185,8 @@ typedef enum {
 
 @property (readonly,nonatomic)	CGPoint							pushpinPosition;
 
+-(void)viewDidAppear;
+
 -(void)updateAerialAttributionButton;
 -(void)updateEditControl;				// show/hide edit control based on selection
 
