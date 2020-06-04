@@ -105,7 +105,11 @@
 			}
 		}
 		[newKeys filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * key, NSDictionary<NSString *,id> * bindings) {
-			return [_tags containsObject:key] ? NO : YES;
+			for ( NSArray<NSString *> * kv in _tags ) {
+				if ( [kv[0] isEqualToString:key] )
+					return NO;
+			}
+			return YES;
 		}]];
 		[newKeys sortWithOptions:0 usingComparator:^NSComparisonResult(NSString * p1, NSString * p2) {
 			return [p1 compare:p2];
