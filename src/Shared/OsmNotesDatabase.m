@@ -12,6 +12,7 @@
 
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
+#import "OsmObjects.h"
 
 
 static NSArray * FixMeList = nil;
@@ -404,7 +405,7 @@ static NSInteger g_nextTagID = 1;
 
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion
 {
-	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 
 	NSString * url;
 	if ( note.comments == nil ) {

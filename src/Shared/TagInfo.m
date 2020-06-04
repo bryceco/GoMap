@@ -83,9 +83,12 @@
 }
 @end
 
+
 @implementation TagInfo
 
 @synthesize iconName = _iconName;
+
+
 
 -(TagInfo *)copy
 {
@@ -309,10 +312,9 @@ static TagInfo * g_DefaultRender = nil;
 	NSError * error = nil;
 	NSMutableArray * tagList = [NSMutableArray new];
 	NSMutableArray * defaults = [NSMutableArray new];
-//    NSString * text = [NSString stringWithContentsOfFile:@"TagInfo.xml" encoding:NSUTF8StringEncoding error:&error];
-    NSString * text = [NSString stringWithContentsOfFile:@"TagInfo_Kaart.xml" encoding:NSUTF8StringEncoding error:&error];
+	NSString * text = [NSString stringWithContentsOfFile:@"TagInfo.xml" encoding:NSUTF8StringEncoding error:&error];
 	if ( text == nil ) {
-		NSString * path = [[NSBundle mainBundle] pathForResource:@"TagInfo_Kaart" ofType:@"xml"];
+		NSString * path = [[NSBundle mainBundle] pathForResource:@"TagInfo" ofType:@"xml"];
 		text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
 	}
 	NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:text options:0 error:&error];
@@ -574,8 +576,12 @@ static TagInfo * g_DefaultRender = nil;
 	} else if ( [key isEqualToString:@"source"] ) {
 		[set addObjectsFromArray:[self sourceValues]];
 	}
+
+
 	return set;
 }
+
+
 -(TagInfo *)tagInfoForKey:(NSString *)key value:(NSString *)value
 {
 	NSDictionary * valDict = [_keyDict objectForKey:key];

@@ -15,11 +15,6 @@
 {
     [super viewDidLoad];
 	_pickerView.delegate = self;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
 
 	[_pickerView selectRow:_expirationValue.integerValue inComponent:0 animated:NO];
 }

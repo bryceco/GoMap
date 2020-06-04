@@ -453,11 +453,6 @@ static inline double lat2latp(double a)
 	return 180/M_PI * log(tan(M_PI/4+a*(M_PI/180)/2));
 }
 
-#pragma mark miscellaneous
 
-static inline double radiansFromDegrees(double degrees)
-{
-	return degrees * (M_PI / 180);
-}
 
 #endif

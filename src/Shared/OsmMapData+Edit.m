@@ -9,7 +9,7 @@
 #import "DLog.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmMember.h"
+#import "OsmObjects.h"
 #import "UndoManager.h"
 #import "VectorMath.h"
 
@@ -81,11 +81,7 @@
 
 -(EditAction)canDeleteRelation:(OsmRelation *)relation error:(NSString **)error
 {
-	if ( relation.isMultipolygon ) {
-		// okay
-	} else if ( relation.isRestriction ) {
-		// okay
-	} else {
+	if ( !relation.isMultipolygon ) {
 		*error = NSLocalizedString(@"Can't delete relation that is not a multipolygon", nil);
 		return nil;
 	}
@@ -247,7 +243,7 @@
 	};
 }
 
-#pragma mark canRemoveObject:fromRelation
+#pragma mark canRemoveWayFromRelation
 
 -(EditAction)canRemoveObject:(OsmBaseObject *)obj fromRelation:(OsmRelation *)relation error:(NSString **)error
 {
@@ -266,7 +262,7 @@
 	};
 }
 
-#pragma mark canMergeNode:intoNode
+#pragma mark canReplaceNodeInWay
 
 // used when dragging a node into another node
 -(EditActionReturnNode)canMergeNode:(OsmNode *)node1 intoNode:(OsmNode *)node2 error:(NSString **)error
@@ -318,7 +314,7 @@
 
 	// gather restrictions for parent ways
 	for ( OsmNode * node in nodes ) {
-		NSArray<OsmWay *> * parents = [self waysContainingNode:node];
+		NSArray * parents = [self waysContainingNode:node];
 		for ( OsmWay * parent in parents ) {
 			for ( OsmRelation * relation in parent.parentRelations ) {
 				if ( relation.isRestriction ) {
@@ -589,6 +585,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 	}
 }
 
+
 - (EditAction)canReverseWay:(OsmWay *)way error:(NSString **)error
 {
 	NSDictionary * roleReversals = @{
@@ -701,6 +698,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 	}
 	return YES;
 }
+
 
 -(EditAction)canDeleteNode:(OsmNode *)node fromWay:(OsmWay *)way error:(NSString **)error
 {
@@ -818,6 +816,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 
 	return idxB;
 }
+
 
 -(EditActionReturnWay)canSplitWay:(OsmWay *)selectedWay atNode:(OsmNode *)node error:(NSString **)error
 {
@@ -967,6 +966,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	};
 }
 
+
 #pragma mark Turn-restriction relations
 
 -(OsmRelation *)updateTurnRestrictionRelation:(OsmRelation *)restriction viaNode:(OsmNode *)viaNode
@@ -1065,33 +1065,25 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		return nil;	// must be endpoint node
 	}
 
-	NSArray<OsmWay *> * ways = [self waysContainingNode:selectedNode];
-	NSMutableArray * otherWays = [NSMutableArray new];
-	NSMutableArray * otherMatchingTags = [NSMutableArray new];
+	NSArray * ways = [self waysContainingNode:selectedNode];
+	OsmWay * otherWay = nil;
 	for ( OsmWay * way in ways ) {
 		if ( way == selectedWay )
 			continue;
 		if ( way.nodes[0] == selectedNode || way.nodes.lastObject == selectedNode ) {
-			if ( [way.tags isEqualToDictionary:selectedWay.tags] ) {
-				[otherMatchingTags addObject:way];
-			} else {
-				[otherWays addObject:way];
+			if ( otherWay ) {
+				// ambigious connection
+				*error = NSLocalizedString(@"The target way is ambiguous",nil);
+				return nil;
 			}
+			otherWay = way;
 		}
 	}
-	if ( otherMatchingTags.count ) {
-		otherWays = otherMatchingTags;
-	}
-	if ( otherWays.count > 1 ) {
-		// ambigious connection
-		*error = NSLocalizedString(@"The target way is ambiguous",nil);
-		return nil;
-	} else if ( otherWays.count == 0 ) {
+	if ( otherWay == nil ) {
 		*error = NSLocalizedString(@"Missing way to connect to",nil);
 		return nil;
 	}
 
-	OsmWay * otherWay = otherWays.firstObject;
 	NSMutableSet * relations = [NSMutableSet setWithArray:selectedWay.parentRelations];
 	[relations intersectSet:[NSSet setWithArray:otherWay.parentRelations]];
 	for ( OsmRelation * relation in relations ) {
@@ -1130,7 +1122,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	}
 
 	return ^{
-		
+
 		// join nodes, preserving selected way
 		NSInteger index = 0;
 		NSString * dummy = nil;

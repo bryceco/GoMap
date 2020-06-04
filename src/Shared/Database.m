@@ -10,7 +10,7 @@
 
 #import "DLog.h"
 #import "Database.h"
-#import "OsmMember.h"
+#import "OsmObjects.h"
 
 
 #define DoAssert(condition)	\
@@ -292,7 +292,7 @@ retry:
 
 #pragma mark save
 
--(BOOL)saveNodes:(NSArray<OsmNode *> *)nodes
+-(BOOL)saveNodes:(NSArray *)nodes
 {
 	__block int rc = SQLITE_OK;
 
@@ -357,7 +357,7 @@ retry:
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
--(BOOL)saveWays:(NSArray<OsmWay *> *)ways
+-(BOOL)saveWays:(NSArray *)ways
 {
 	__block int rc = SQLITE_OK;
 
@@ -433,7 +433,7 @@ retry:
 }
 
 
--(BOOL)saveRelations:(NSArray<OsmRelation *> *)relations
+-(BOOL)saveRelations:(NSArray *)relations
 {
 	__block int rc = SQLITE_OK;
 
@@ -514,7 +514,7 @@ retry:
 
 #pragma mark delete
 
--(BOOL)deleteNodes:(NSArray<OsmNode *> *)nodes
+-(BOOL)deleteNodes:(NSArray *)nodes
 {
 	if ( nodes.count == 0 )
 		return YES;
@@ -540,7 +540,7 @@ retry:
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
--(BOOL)deleteWays:(NSArray<OsmWay *> *)ways
+-(BOOL)deleteWays:(NSArray *)ways
 {
 	if ( ways.count == 0 )
 		return YES;
@@ -566,7 +566,7 @@ retry:
 	return rc == SQLITE_OK || rc == SQLITE_DONE;
 }
 
--(BOOL)deleteRelations:(NSArray<OsmRelation *> *)relations
+-(BOOL)deleteRelations:(NSArray *)relations
 {
 	if ( relations.count == 0 )
 		return YES;
@@ -594,13 +594,9 @@ retry:
 
 #pragma mark update
 
--(BOOL)saveNodes:(NSArray<OsmNode *> *)saveNodes
-        saveWays:(NSArray<OsmWay *> *)saveWays
-   saveRelations:(NSArray<OsmRelation *> *)saveRelations
-     deleteNodes:(NSArray<OsmNode *> *)deleteNodes
-      deleteWays:(NSArray<OsmWay *> *)deleteWays
- deleteRelations:(NSArray<OsmRelation *> *)deleteRelations
-        isUpdate:(BOOL)isUpdate
+-(BOOL)saveNodes:(NSArray *)saveNodes saveWays:(NSArray *)saveWays saveRelations:(NSArray *)saveRelations
+		deleteNodes:(NSArray *)deleteNodes deleteWays:(NSArray *)deleteWays deleteRelations:(NSArray *)deleteRelations
+		isUpdate:(BOOL)isUpdate
 {
 #if 0 && DEBUG
 	assert( dispatch_get_current_queue() == Database.dispatchQueue );
@@ -681,7 +677,7 @@ retry:
 	return rc == SQLITE_OK;
 }
 
--(NSMutableDictionary<NSNumber *, OsmNode *> *)querySqliteNodes
+-(NSMutableDictionary *)querySqliteNodes
 {
 	if ( _db == NULL )
 		return nil;
@@ -692,7 +688,7 @@ retry:
 	if ( rc != SQLITE_OK )
 		return nil;
 
-	NSMutableDictionary<NSNumber *, OsmNode *> * nodes = [NSMutableDictionary new];
+	NSMutableDictionary * nodes = [NSMutableDictionary new];
 	
 	while ( (rc = sqlite3_step(nodeStatement)) == SQLITE_ROW )  {
 		int64_t			ident		= sqlite3_column_int64(nodeStatement, 0);
@@ -724,14 +720,14 @@ retry:
 	return rc == SQLITE_OK ? nodes : nil;
 }
 
--(NSMutableDictionary<NSNumber *, OsmWay *> *)querySqliteWays
+-(NSMutableDictionary *)querySqliteWays
 {
 	if ( _db == NULL )
 		return nil;
 
 	int rc = SQLITE_OK;
 	sqlite3_stmt * wayStatement = NULL;
-	NSMutableDictionary<NSNumber *, OsmWay *> * ways = [NSMutableDictionary new];
+	NSMutableDictionary * ways = [NSMutableDictionary new];
 
 	rc = sqlite3_prepare_v2( _db, "SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways", -1, &wayStatement, nil );
 	if ( rc != SQLITE_OK )
@@ -806,7 +802,7 @@ retry:
 }
 
 
--(NSMutableDictionary<NSNumber *, OsmRelation *> *)querySqliteRelations
+-(NSMutableDictionary *)querySqliteRelations
 {
 	if ( _db == NULL )
 		return nil;
@@ -818,7 +814,7 @@ retry:
 	if ( rc != SQLITE_OK )
 		return nil;
 
-	NSMutableDictionary<NSNumber *, OsmRelation *> * relations = [NSMutableDictionary new];
+	NSMutableDictionary * relations = [NSMutableDictionary new];
 	while ( (rc = sqlite3_step(relationStatement)) == SQLITE_ROW )  {
 		int64_t			ident		= sqlite3_column_int64(relationStatement, 0);
 		const uint8_t *	user		= sqlite3_column_text(relationStatement, 1);

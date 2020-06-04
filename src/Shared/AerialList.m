@@ -8,7 +8,6 @@
 
 #import "iosapi.h"
 #import "AerialList.h"
-#import "aes.h"
 #import <CommonCrypto/CommonDigest.h>
 
 static NSString * CUSTOMAERIALLIST_KEY = @"AerialList";
@@ -19,17 +18,12 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 #define OSM_GPS_TRACE_IDENTIFIER	@"OsmGpsTraceIdentifier"
 #define MAPBOX_LOCATOR_IDENTIFIER	@"MapboxLocatorIdentifier"
 #define NO_NAME_IDENTIFIER          @"No Name Identifier"
-#define MAXAR_PREMIUM_IDENTIFIER	@"Maxar-Premium"
-#define MAXAR_STANDARD_IDENTIFIER	@"Maxar-Standard"
 
 
 
 @implementation AerialService
 
--(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url
-					maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
-				  startDate:(NSString *)startDate
-					endDate:(NSString *)endDate
+-(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
 			  wmsProjection:(NSString *)projection polygon:(CGPathRef)polygon
 			   attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
@@ -44,25 +38,20 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		_url				= url ?: @"";
 		_maxZoom			= (int32_t)maxZoom ?: 21;
 		_roundZoomUp 		= roundUp;
-		_startDate			= startDate;
-		_endDate			= endDate;
 		_wmsProjection		= projection;
 		_polygon			= CGPathCreateCopy( polygon );
-		_attributionString 	= attribString.length ? attribString : name;
+		_attributionString 	= attribString;
 		_attributionIcon	= attribIcon;
 		_attributionUrl		= attribUrl;
 	}
 	return self;
 }
 
-+(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url
-					  maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
-					startDate:(NSString *)startDate
-					  endDate:(NSString *)endDate
++(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
 				wmsProjection:(NSString *)projection polygon:(CGPathRef)polygon
 				 attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
 {
-	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp startDate:startDate endDate:endDate wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
+	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 }
 
 -(BOOL)isBingAerial
@@ -77,46 +66,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	return [self.identifier isEqualToString:OSM_GPS_TRACE_IDENTIFIER];
 }
--(BOOL)isMaxar
-{
-	return [self.identifier isEqualToString:MAXAR_PREMIUM_IDENTIFIER] ||
-		   [self.identifier isEqualToString:MAXAR_STANDARD_IDENTIFIER];
-}
-
-
-+(NSDate *)dateFromString:(NSString *)string
-{
-	static NSArray * formatterList;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		NSDateFormatter * formatterYYYYMMDD = [NSDateFormatter new];
-		formatterYYYYMMDD.dateFormat = @"yyyy-MM-dd";
-		formatterYYYYMMDD.timeZone	 = [NSTimeZone timeZoneForSecondsFromGMT:0];
-
-		NSDateFormatter * formatterYYYYMM = [NSDateFormatter new];
-		formatterYYYYMM.dateFormat = @"yyyy-MM";
-		formatterYYYYMM.timeZone	 = [NSTimeZone timeZoneForSecondsFromGMT:0];
-
-		NSDateFormatter * formatterYYYY = [NSDateFormatter new];
-		formatterYYYY.dateFormat = @"yyyy";
-		formatterYYYY.timeZone	 = [NSTimeZone timeZoneForSecondsFromGMT:0];
-
-		formatterList = @[
-			formatterYYYYMMDD,
-			formatterYYYYMM,
-			formatterYYYY
-		];
-	});
-	if ( string == nil )
-		return nil;
-	for ( NSDateFormatter * formatter in formatterList ) {
-		NSDate * date = [formatter dateFromString:string];
-		if ( date )
-			return date;
-	}
-	return nil;
-}
-
 
 +(AerialService *)defaultBingAerial
 {
@@ -128,8 +77,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 										 url:@"https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=" BING_MAPS_KEY
 									 maxZoom:21
 									 roundUp:YES
-								   startDate:nil
-									 endDate:nil
 								  wmsProjection:nil
 									 polygon:NULL
 								attribString:@""
@@ -137,54 +84,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 								   attribUrl:nil];
 	});
 	return bing;
-}
-
-
-+(AerialService *)maxarPremiumAerial
-{
-	static AerialService * service = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		NSString * url = @"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9lQzmJACnINv3lFIonIZ1gY/yFVqi2FWnWCbTyFdy2+FlyrWqTfyeG8tstR+5wQsC+xmsaCmW8e41jROh1O0z+U";
-		service = [AerialService aerialWithName:@"Maxar Premium Aerial"
-								  identifier:MAXAR_PREMIUM_IDENTIFIER
-										 url:[aes decryptString:url]
-									 maxZoom:21
-									 roundUp:YES
-									  startDate:nil
-									 endDate:nil
-								  wmsProjection:nil
-									 polygon:NULL
-								attribString:@"Maxar Premium"
-								  attribIcon:nil
-								   attribUrl:@"https://wiki.openstreetmap.org/wiki/DigitalGlobe"];
-
-		[service loadIconFromWeb:@"https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png"];
-	});
-	return service;
-}
-
-+(AerialService *)maxarStandardAerial
-{
-	static AerialService * service = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		NSString * url = @"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9mdAZEC5TmU3odUJQ0hNzczrKtUDmNujrTNfFVHhZZWPLEVZUC9cE94VF/AJkoIigdmXooJ+5UcPtH/uzc6NbOb";
-		service = [AerialService aerialWithName:MAXAR_STANDARD_IDENTIFIER
-								  identifier:@"Maxar-Standard"
-										 url:[aes decryptString:url]
-									 maxZoom:21
-									 roundUp:YES
-								   startDate:nil
-									 endDate:nil
-								  wmsProjection:nil
-									 polygon:NULL
-								attribString:@"Maxar Standard"
-								  attribIcon:nil
-								   attribUrl:@"https://wiki.openstreetmap.org/wiki/DigitalGlobe"];
-		[service loadIconFromWeb:@"https://osmlab.github.io/editor-layer-index/sources/world/Maxar.png"];
-	});
-	return service;
 }
 
 +(instancetype)mapnik
@@ -197,8 +96,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"https://{switch:a,b,c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 									   maxZoom:19
 										roundUp:NO
-									  startDate:nil
-										endDate:nil
 									 wmsProjection:nil
 										polygon:NULL
 								   attribString:nil
@@ -217,8 +114,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"https://gps-{switch:a,b,c}.tile.openstreetmap.org/lines/{z}/{x}/{y}.png"
 										maxZoom:20
 										roundUp:NO
-									  startDate:nil
-										endDate:nil
 									 wmsProjection:nil
 										polygon:NULL
 								   attribString:nil
@@ -237,8 +132,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 											url:@"https://{switch:a,b,c,d}.tiles.mapbox.com/v4/openstreetmap.map-inh76ba2/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJjaml5MjVyb3MwMWV0M3hxYmUzdGdwbzE4In0.q548FjhsSJzvXsGlPsFxAQ"
 										maxZoom:20
 										roundUp:NO
-									  startDate:nil
-										endDate:nil
 									 wmsProjection:nil
 										polygon:NULL
 								   attribString:nil
@@ -257,8 +150,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
                                             url:@"https://tile{switch:2,3}.poole.ch/noname/{zoom}/{x}/{y}.png"
                                         maxZoom:25
                                         roundUp:NO
-										startDate:nil
-										endDate:nil
                                   wmsProjection:nil
                                         polygon:NULL
                                    attribString:nil
@@ -270,10 +161,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 -(NSDictionary *)dictionary
 {
-	return @{ @"name" 		: _name,
-			  @"url" 		: _url,
-			  @"zoom" 		: @(_maxZoom),
-			  @"roundUp" 	: @(_roundZoomUp),
+	return @{ @"name" : _name,
+			  @"url" : _url,
+			  @"zoom" : @(_maxZoom),
+			  @"roundUp" : @(_roundZoomUp)
 			  };
 }
 -(instancetype)initWithDictionary:(NSDictionary *)dict
@@ -293,8 +184,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 						  url:url
 					  maxZoom:[dict[@"zoom"] integerValue]
 					  roundUp:[dict[@"roundUp"] boolValue]
-					startDate:nil
-					  endDate:nil
 				   wmsProjection:nil
 					  polygon:NULL
 				 attribString:nil
@@ -339,14 +228,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	if ( _attributionIcon && fabs(_attributionIcon.size.height - height) > 0.1 ) {
 		CGFloat scale = _attributionIcon.size.height / height;
 #if TARGET_OS_IPHONE
-		CGSize size = _attributionIcon.size;
-		size.height /= scale;
-		size.width  /= scale;
-		UIGraphicsBeginImageContext(size);
-		[_attributionIcon drawInRect:CGRectMake(0.0, 0.0, size.width, size.height)];
-		UIImage * imageCopy = UIGraphicsGetImageFromCurrentImageContext();
-		UIGraphicsEndImageContext();
-		_attributionIcon = imageCopy;
+		_attributionIcon = [[UIImage alloc] initWithCGImage:_attributionIcon.CGImage scale:scale orientation:_attributionIcon.imageOrientation];
 #else
 		NSSize size = { _attributionIcon.size.width * scale, _attributionIcon.size.height * scale };
 		NSImage * result = [[NSImage alloc] initWithSize:size];
@@ -369,9 +251,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 		if ( data ) {
 			UIImage * image = [[NSImage alloc] initWithData:data];
-			dispatch_async(dispatch_get_main_queue(), ^{
-				_attributionIcon = image;
-			});
+			_attributionIcon = image;
 		}
 	}];
 	[task resume];
@@ -403,7 +283,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 -(NSArray *)builtinServices
 {
 	return @[
-			 [AerialService defaultBingAerial]
+			 [AerialService defaultBingAerial],
 		 ];
 }
 
@@ -494,28 +374,18 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	for ( NSDictionary * entry in featureArray ) {
 
 		@try {
-
 			if ( isGeoJSON && ![entry[@"type"] isEqualToString:@"Feature"] ) {
 				NSLog(@"Aerial: skipping type %@", entry[@"type"]);
 				continue;
 			}
 			NSDictionary * properties = isGeoJSON ? entry[@"properties"] : entry;
 			NSString * 	name 				= properties[@"name"];
-			if ( [name hasPrefix:@"Maxar "] ) {
-				// we special case their imagery because they require a special key
+			NSString * 	identifier			= properties[@"id"];
+			if ( identifier.length == 0 || blacklist[identifier] ) {
+				NSLog(@"Aerial: skipping %@", identifier);
 				continue;
 			}
-			NSString * 	identifier			= properties[@"id"];
-			if ( identifier.length == 0 || blacklist[identifier] )
-				continue;
-			NSString *  category			= properties[@"category"];
-			if ( category && ![category isEqualToString:@"photo"] )
-				continue;
-			NSString *	startDateString		= properties[@"start_date"];
-			NSString *	endDateString		= properties[@"end_date"];
-			NSDate 	 *  endDate   = [AerialService dateFromString:endDateString];
-			if ( endDate && [endDate timeIntervalSinceNow] < -20*365.0*24*60*60 )
-				continue;
+			NSString *	endDate				= properties[@"end_date"];
 			NSString * 	type 				= properties[@"type"];
 			NSArray  *	projections			= properties[@"available_projections"];
 			NSString * 	url 				= properties[@"url"];
@@ -536,9 +406,17 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 				polygonPoints = properties[@"extent"][@"polygon"];
 			}
 
+			if ( endDate.length ) {
+				NSInteger year = [endDate integerValue];
+				if ( year > 0 ) {
+					NSDate * date = [NSDate dateWithTimeIntervalSince1970:(year-1970)*365.25*24*60*60];
+					if ( date && [date timeIntervalSinceNow] < -20*365.0*24*60*60 )
+						continue;
+				}
+			}
 			if ( !([type isEqualToString:@"tms"] || [type isEqualToString:@"wms"]) ) {
 				if ( ![knownUnsupported containsObject:type] )
-					NSLog(@"Aerial: unsupported type %@: %@\n",type,name);
+					NSLog(@"unsupported %@\n",type);
 				continue;
 			}
 			if ( overlay ) {
@@ -547,7 +425,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			}
 			if ( !( [url hasPrefix:@"http:"] || [url hasPrefix:@"https:"]) ) {
 				// invalid url
-				NSLog(@"Aerial: bad url %@: %@\n",url,name);
+				NSLog(@"skip url = %@\n",url);
 				continue;
 			}
 
@@ -607,20 +485,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 					}
 				}
 			}
-
-			// support for {apikey}
-			if ( [url containsString:@"{apikey}"] ) {
-				NSString * apikey = nil;
-				if ( [url containsString:@".thunderforest.com/"] ) {
-					apikey = @"be3dc024e3924c22beb5f841d098a8a3";	// Please don't use in other apps. Sign up for a free account at Thunderforest.com insead.
-				} else {
-					NSLog(@"*** Aerial needs {apikey): %@",name);
-					continue;
-				}
-				url = [url stringByReplacingOccurrencesOfString:@"{apikey}" withString:apikey];
-			}
-
-			AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES startDate:startDateString endDate:endDateString wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
+			AerialService * service = [AerialService aerialWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:YES wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
 			[externalAerials addObject:service];
 			CGPathRelease( polygon );
 
@@ -647,21 +512,16 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		if ( json == nil )
 			return nil;
 		if ( [json isKindOfClass:[NSArray class]] ) {
-			// unversioned (old ELI) variety
+			// unversioned variety
 			return [self processOsmLabAerialsList:json isGeoJSON:NO];
 		} else {
 			NSDictionary * meta = json[@"meta"];
-			if ( meta == nil ) {
-				// josm variety
-			} else {
-				// new ELI variety
-				NSString * formatVersion = meta[@"format_version"];
-				if ( ![formatVersion isEqualToString:@"1.0"] )
-					return nil;
-				NSString * metaType = json[@"type"];
-				if ( ![metaType isEqualToString:@"FeatureCollection"] )
-					return nil;
-			}
+			NSString * formatVersion = meta[@"format_version"];
+			if ( ![formatVersion isEqualToString:@"1.0"] )
+				return nil;
+			NSString * metaType = json[@"type"];
+			if ( ![metaType isEqualToString:@"FeatureCollection"] )
+				return nil;
 			NSArray * features = json[@"features"];
 			return [self processOsmLabAerialsList:features isGeoJSON:YES];
 		}
@@ -675,12 +535,13 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 {
 	// get cached data
 	NSData * cachedData = [NSData dataWithContentsOfFile:[self pathToExternalAerialsCache]];
+
 	NSDate * now = [NSDate date];
-	_lastDownloadDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
-	if ( cachedData == nil || (_lastDownloadDate && [now timeIntervalSinceDate:_lastDownloadDate] >= 60*60*24*7) ) {
+	NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastImageryDownloadDate"];
+	if ( cachedData == nil || (lastDownload && [now timeIntervalSinceDate:lastDownload] >= 60*60*24*7) ) {
 		// download newer version periodically
-		NSString * urlString = @"https://josm.openstreetmap.de/maps?format=geojson";
-		//NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
+//		NSString * urlString = @"https://raw.githubusercontent.com/osmlab/editor-layer-index/gh-pages/imagery.json";
+		NSString * urlString = @"https://osmlab.github.io/editor-layer-index/imagery.geojson";
 		NSURL * downloadUrl = [NSURL URLWithString:urlString];
 		NSURLSessionDataTask * downloadTask = [[NSURLSession sharedSession] dataTaskWithURL:downloadUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 			[[NSUserDefaults standardUserDefaults] setObject:now forKey:@"lastImageryDownloadDate"];
@@ -696,7 +557,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			}
 		}];
 	   	[downloadTask resume];
-		_lastDownloadDate = now;
 	}
 
    	// read cached version
@@ -755,12 +615,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			[result addObject:service];
 		}
 	}
-	[result addObject: [AerialService maxarPremiumAerial]];
-	[result addObject: [AerialService maxarStandardAerial]];
-
-	[result sortUsingComparator:^NSComparisonResult(AerialService * _Nonnull obj1, AerialService * _Nonnull obj2) {
-		return [obj1.name compare:obj2.name];
-	}];
 	return result;
 }
 

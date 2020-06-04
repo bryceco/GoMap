@@ -6,12 +6,13 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
 #import "EditorMapLayer.h"
 #import "OsmMapData.h"
 #import "MapView.h"
 #import "NearbyMappersViewController.h"
+#import "WebPageViewController.h"
+
 
 @implementation NearbyMappersViewController
 
@@ -33,21 +34,6 @@
 	}];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-	if ( _mappers.count == 0 ) {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"No Data",nil)
-																		message:NSLocalizedString(@"Ensure the editor view is visible and displays objects in the local area",nil)
-																 preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-			[self.navigationController popViewControllerAnimated:YES];
-		}]];
-		[self presentViewController:alert animated:YES completion:^{
-		}];
-	}
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -59,8 +45,6 @@
 {
     return 	_mappers.count;
 }
-
-#pragma mark - Table view delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -75,16 +59,21 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    OsmUserStatistics * stats = [_mappers objectAtIndex:indexPath.row];
-    NSString * user = stats.user;
-    NSString * urlString = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", user];
-    NSString * encodedUrlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL * url = [NSURL URLWithString:encodedUrlString];
+#pragma mark - Table view delegate
 
-    SFSafariViewController * safariViewController = [[SFSafariViewController alloc] initWithURL:url];
-    [self presentViewController:safariViewController animated:YES completion:nil];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	UITableViewCell * cell = sender;
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	OsmUserStatistics * stats = [_mappers objectAtIndex:indexPath.row];
+	NSString * user = stats.user;
+
+	WebPageViewController * web = segue.destinationViewController;
+	web.title = NSLocalizedString(@"User",nil);
+	web.url = [NSString stringWithFormat:@"https://www.openstreetmap.org/user/%@", user];
+
+	[super prepareForSegue:segue sender:sender];
 }
+
 
 @end
