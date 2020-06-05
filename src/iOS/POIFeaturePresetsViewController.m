@@ -83,6 +83,9 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 
 	_saveButton.enabled = [tabController isTagDictChanged];
+	if (@available(iOS 13.0, *)) {
+		self.tabBarController.modalInPresentation = _saveButton.enabled;
+	}
 
 	if ( _drillDownGroup == nil ) {
 
@@ -394,6 +397,9 @@
 - (IBAction)textFieldChanged:(UITextField *)textField
 {
 	_saveButton.enabled = YES;
+	if (@available(iOS 13.0, *)) {
+		self.tabBarController.modalInPresentation = _saveButton.enabled;
+	}
 }
 
 - (IBAction)textFieldDidEndEditing:(UITextField *)textField
@@ -420,6 +426,9 @@
     }
     
     _saveButton.enabled = [tabController isTagDictChanged];
+	if (@available(iOS 13.0, *)) {
+		self.tabBarController.modalInPresentation = _saveButton.enabled;
+	}
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

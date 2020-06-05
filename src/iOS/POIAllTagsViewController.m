@@ -164,13 +164,15 @@
 	[self updateWithRecomendationsForFeature:YES];
 
 	_saveButton.enabled = [tabController isTagDictChanged];
+	if (@available(iOS 13.0, *)) {
+		self.tabBarController.modalInPresentation = _saveButton.enabled;
+	}
 }
 
 - (void)saveState
 {
-	NSMutableDictionary * dict = [self keyValueDictionary];
 	POITabBarController * tabController = (id)self.tabBarController;
-	tabController.keyValueDict = dict;
+	tabController.keyValueDict = [self keyValueDictionary];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -520,6 +522,9 @@
 		
 		NSMutableDictionary * dict = [self keyValueDictionary];
 		_saveButton.enabled = [tabController isTagDictChanged:dict];
+		if (@available(iOS 13.0, *)) {
+			self.tabBarController.modalInPresentation = _saveButton.enabled;
+		}
 	}
 }
 
@@ -583,6 +588,9 @@
 		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
 		_saveButton.enabled = [tabController isTagDictChanged];
+		if (@available(iOS 13.0, *)) {
+			self.tabBarController.modalInPresentation = _saveButton.enabled;
+		}
 
 	} else if ( editingStyle == UITableViewCellEditingStyleInsert ) {
 		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
