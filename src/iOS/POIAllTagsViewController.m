@@ -51,40 +51,52 @@
 	[editButton setTarget:self];
 	[editButton setAction:@selector(toggleEditing:)];
 	self.navigationItem.rightBarButtonItems = @[ self.navigationItem.rightBarButtonItem, editButton ];
+
+	POITabBarController * tabController = (id)self.tabBarController;
+
+	if ( tabController.selection.isNode ) {
+		self.title = NSLocalizedString(@"Node tags",nil);
+	} else if ( tabController.selection.isWay ) {
+		self.title = NSLocalizedString(@"Way tags",nil);
+	} else if ( tabController.selection.isRelation ) {
+		NSString * type = tabController.keyValueDict[ @"type" ];
+		if ( type.length ) {
+			type = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+			type = [type capitalizedString];
+			self.title = [NSString stringWithFormat:@"%@ tags",type];
+		} else {
+			self.title = NSLocalizedString(@"Relation tags",nil);
+		}
+	} else {
+		self.title = NSLocalizedString(@"All Tags",nil);
+	}
 }
 
-- (void)loadState
+// return -1 if unchanged, else row to set focus
+- (NSInteger)updateWithRecomendationsForFeature:(BOOL)forceReload
 {
-	// fetch values from tab controller
 	POITabBarController * tabController = (id)self.tabBarController;
-	_tags		= [NSMutableArray arrayWithCapacity:tabController.keyValueDict.count];
-	_relations	= [tabController.relationList mutableCopy];
-	_members	= tabController.selection.isRelation ? [((OsmRelation *)tabController.selection).members mutableCopy] : nil;
+	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
+	NSDictionary * dict = [self keyValueDictionary];
+	NSString * newFeature = [CommonPresetList featureNameForObjectDict:dict geometry:geometry];
 
-	[tabController.keyValueDict enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
-		[_tags addObject:[NSMutableArray arrayWithObjects:tag,value,nil]];
-	}];
+	if ( !forceReload && [newFeature isEqualToString:_featureName] )
+		return -1;
+	_featureName = newFeature;
 
-	[_tags sortUsingComparator:^NSComparisonResult( NSArray * obj1, NSArray * obj2 ) {
-		NSString * tag1 = obj1[0];
-		NSString * tag2 = obj2[0];
-		BOOL tiger1 = [tag1 hasPrefix:@"tiger:"] || [tag1 hasPrefix:@"gnis:"];
-		BOOL tiger2 = [tag2 hasPrefix:@"tiger:"] || [tag2 hasPrefix:@"gnis:"];
-		if ( tiger1 == tiger2 ) {
-			return [tag1 compare:tag2];
-		} else {
-			return tiger1 - tiger2;
-		}
-	}];
+	// remove all entries without key & value
+	[_tags filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray<NSString *> * kv, id bindings) {
+		return kv[0].length && kv[1].length;
+	}]];
+
+	NSInteger nextRow = _tags.count;
 
 	// add new cell ready to be edited
 	[_tags addObject:[NSMutableArray arrayWithObjects:@"", @"", nil]];
 
 	// add placeholder keys
-	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
-	NSString * featureName = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-	if ( featureName ) {
-		[CommonPresetList.sharedList setPresetsForFeature:featureName tags:tabController.keyValueDict geometry:geometry update:^{}];
+	if ( newFeature ) {
+		[CommonPresetList.sharedList setPresetsForFeature:newFeature tags:dict geometry:geometry update:^{}];
 		NSMutableArray * newKeys = [NSMutableArray new];
 		for ( NSInteger section = 0; section < CommonPresetList.sharedList.sectionCount; ++section ) {
 			for ( NSInteger row = 0; row < [CommonPresetList.sharedList tagsInSection:section]; ++row ) {
@@ -121,22 +133,35 @@
 
 	[self.tableView reloadData];
 
-	if ( tabController.selection.isNode ) {
-		self.title = NSLocalizedString(@"Node tags",nil);
-	} else if ( tabController.selection.isWay ) {
-		self.title = NSLocalizedString(@"Way tags",nil);
-	} else if ( tabController.selection.isRelation ) {
-		NSString * type = tabController.keyValueDict[ @"type" ];
-		if ( type.length ) {
-			type = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-			type = [type capitalizedString];
-			self.title = [NSString stringWithFormat:@"%@ tags",type];
+	return nextRow;
+}
+
+- (void)loadState
+{
+	POITabBarController * tabController = (id)self.tabBarController;
+
+	// fetch values from tab controller
+	_tags		= [NSMutableArray arrayWithCapacity:tabController.keyValueDict.count];
+	_relations	= [tabController.relationList mutableCopy];
+	_members	= tabController.selection.isRelation ? [((OsmRelation *)tabController.selection).members mutableCopy] : nil;
+
+	[tabController.keyValueDict enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
+		[_tags addObject:[NSMutableArray arrayWithObjects:tag,value,nil]];
+	}];
+
+	[_tags sortUsingComparator:^NSComparisonResult( NSArray * obj1, NSArray * obj2 ) {
+		NSString * tag1 = obj1[0];
+		NSString * tag2 = obj2[0];
+		BOOL tiger1 = [tag1 hasPrefix:@"tiger:"] || [tag1 hasPrefix:@"gnis:"];
+		BOOL tiger2 = [tag2 hasPrefix:@"tiger:"] || [tag2 hasPrefix:@"gnis:"];
+		if ( tiger1 == tiger2 ) {
+			return [tag1 compare:tag2];
 		} else {
-			self.title = NSLocalizedString(@"Relation tags",nil);
+			return tiger1 - tiger2;
 		}
-	} else {
-		self.title = NSLocalizedString(@"All Tags",nil);
-	}
+	}];
+
+	[self updateWithRecomendationsForFeature:YES];
 
 	_saveButton.enabled = [tabController isTagDictChanged];
 }
@@ -151,9 +176,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	[self loadState];
-
-
+	if ( _showingWikiLink ) {
+		_showingWikiLink = NO;
+	} else {
+		[self loadState];
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -165,9 +192,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	if ( _tags.count == 0 && _members.count == 0 ) {
-		// if there are no tags then start editing the first one
-		[self addTagCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+	POITabBarController * tabController = (id)self.tabBarController;
+	if ( tabController.selection == nil ) {
+		TextPairTableCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+		if ( cell.text1.text.length == 0 && cell.text2.text.length == 0 ) {
+			[cell.text1 becomeFirstResponder];
+		}
 	}
 }
 
@@ -251,7 +281,7 @@
 		cell.text2.text = kv[1];
 
 		cell.text1.didSelect = ^{ [cell.text2 becomeFirstResponder]; };
-		cell.text2.didSelect = ^{};
+		cell.text2.didSelect = ^{ [cell.text2 resignFirstResponder]; };
 
 		return cell;
 
@@ -324,21 +354,24 @@
 
 - (IBAction)textFieldReturn:(id)sender
 {
+	TextPairTableCell * cell = (id)sender;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
+		cell = (id)cell.superview;
+
 	[sender resignFirstResponder];
+	[self updateWithRecomendationsForFeature:YES];
 }
 
 - (IBAction)textFieldEditingDidBegin:(UITextField *)textField
 {
-	UITableViewCell * cell = (id)textField.superview;
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
-		cell = (id)cell.superview;
-	TextPairTableCell * pair = (id)cell;
-	BOOL isValue = textField == pair.text2;
-
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	TextPairTableCell * pair = (id)textField.superview;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:pair];
 
 	if ( indexPath.section == 0 ) {
 
+		BOOL isValue = textField == pair.text2;
 		NSMutableArray * kv = _tags[ indexPath.row ];
 
 		if ( isValue ) {
@@ -395,50 +428,32 @@
 
 -(void)textFieldEditingDidEnd:(UITextField *)textField
 {
-	UITableViewCell * cell = (id)textField.superview;
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
-		cell = (id)cell.superview;
-	TextPairTableCell * pair = (id)cell;
+	TextPairTableCell * pair = (id)textField.superview;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
 
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:pair];
 	if ( indexPath.section == 0 ) {
 		NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
 
-		// do wikipedia conversion
-		NSString * newValue = [self convertWikiUrlToReferenceWithKey:kv[0] value:kv[1]];
-		if ( newValue ) {
-			kv[1] = newValue;
-			pair.text2.text = newValue;
-		}
-
 		if ( kv[0].length && kv[1].length ) {
-			// move row so there are no blank rows above it
-			NSInteger row;
-			for ( row = indexPath.row - 1; row >= 0; --row ) {
-				NSArray<NSString *> * r = _tags[row];
-				if ( r[0].length && r[1].length )
-					break;
-			}
-			++row;
-			if ( row != indexPath.row ) {
-				[_tags removeObjectAtIndex:indexPath.row];
-				[_tags insertObject:kv atIndex:row];
-				NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
-				[self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+
+			// do wikipedia conversion
+			NSString * newValue = [self convertWikiUrlToReferenceWithKey:kv[0] value:kv[1]];
+			if ( newValue ) {
+				kv[1] = newValue;
+				pair.text2.text = newValue;
 			}
 
-			// ensure there is a blank line to add the next tag
-			NSArray<NSString *> * r = nil;
-			while ( ++row < _tags.count ) {
-				r = _tags[row];
-				if ( r[0].length == 0 || r[1].length == 0 ) {
+			// move the edited row up
+			for ( NSInteger i = 0; i < indexPath.row; ++i ) {
+				NSArray<NSString *> * a = _tags[i];
+				if ( a[0].length == 0 || a[1].length == 0 ) {
+					[_tags removeObjectAtIndex:indexPath.row];
+					[_tags insertObject:kv atIndex:i];
+					[self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
 					break;
 				}
-			}
-			if ( row >= _tags.count || r[0].length || r[1].length ) {
-				[_tags insertObject:[NSMutableArray arrayWithObjects:@"", @"", nil] atIndex:row];
-				NSIndexPath * path = [NSIndexPath indexPathForRow:row inSection:0];
-				[self.tableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 			}
 
 			// if we created a row that defines a key that duplicates a row witht the same key elsewhere then delete the other row
@@ -446,8 +461,35 @@
 				NSArray<NSString *> * a = _tags[i];
 				if ( a != kv && [a[0] isEqualToString:kv[0]] ) {
 					[_tags removeObjectAtIndex:i];
-					[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+					[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 				}
+			}
+
+			// update recommended tags
+			NSInteger nextRow = [self updateWithRecomendationsForFeature:NO];
+			if ( nextRow >= 0 ) {
+				// a new feature was defined
+				NSIndexPath * newPath = [NSIndexPath indexPathForRow:nextRow inSection:0];
+				[self.tableView scrollToRowAtIndexPath:newPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+
+				// move focus to next empty cell
+				TextPairTableCell * nextCell = [self.tableView cellForRowAtIndexPath:newPath];
+				[nextCell.text1 becomeFirstResponder];
+			}
+
+		} else if ( kv[0].length || kv[1].length ) {
+
+			// ensure there's a blank line either elsewhere, or create one below us
+			BOOL haveBlank = NO;
+			for ( NSArray<NSString *> * a in _tags ) {
+				haveBlank = a != kv && a[0].length == 0 && a[1].length == 0;
+				if ( haveBlank )
+					break;
+			}
+			if ( !haveBlank ) {
+				NSIndexPath * newPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
+				[_tags insertObject:[NSMutableArray arrayWithObjects:@"", @"", nil] atIndex:newPath.row];
+				[self.tableView insertRowsAtIndexPaths:@[newPath] withRowAnimation:UITableViewRowAnimationNone];
 			}
 		}
 	}
@@ -549,6 +591,7 @@
 
 #pragma mark - Table view delegate
 
+#if 0
 - (void)addTagCellAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
@@ -573,6 +616,7 @@
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
 	[self addTagCellAtIndexPath:indexPath];
 }
+#endif
 
 -(IBAction)cancel:(id)sender
 {
@@ -606,11 +650,11 @@
 		progress.bounds = CGRectMake(0, 0, 24, 24);
 		cell.accessoryView = progress;
 		[progress startAnimating];
-		WikiPage * wiki = [WikiPage shared];
-		[wiki bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
+		[WikiPage.shared bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
 			cell.accessoryView = nil;
 			if ( url && self.view.window ) {
-				UIViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+				SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+				_showingWikiLink = YES;
 				[self presentViewController:viewController animated:YES completion:nil];
 			}
 		}];

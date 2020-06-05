@@ -19,6 +19,8 @@
 	NSMutableArray				*	_relations;
 	NSMutableArray				*	_members;
 	IBOutlet UIBarButtonItem	*	_saveButton;
+	BOOL							_showingWikiLink;
+	NSString					*	_featureName;
 }
 
 - (IBAction)toggleEditing:(id)sender;
