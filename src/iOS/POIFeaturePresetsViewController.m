@@ -53,29 +53,6 @@
 		self.navigationItem.leftBarButtonItem = nil;
 		self.navigationItem.title = _drillDownGroup.name;
 	}
-
-	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-	[center addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
-	[center addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardWillHideNotification object:nil];
-}
-
--(void)dealloc
-{
-	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-	[center removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-	[center removeObserver:self name:UIKeyboardDidHideNotification object:nil];
-}
-
--(void)keyboardDidShow
-{
-	_keyboardShowing = YES;
-}
--(void)keyboardDidHide
-{
-	_keyboardShowing = NO;
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self updatePresets];
-	});
 }
 
 -(void)updatePresets
@@ -106,7 +83,7 @@
 		[_tags setPresetsForFeature:featureName tags:dict geometry:geometry update:^{
 			// this may complete much later, even after we've been dismissed
 			POIFeaturePresetsViewController * mySelf = weakSelf;
-			if ( mySelf && !mySelf->_keyboardShowing ) {
+			if ( mySelf && !mySelf->_isEditing ) {
 				[weakTags setPresetsForFeature:featureName tags:dict geometry:geometry update:nil];
 				[mySelf.tableView reloadData];
 			}
@@ -392,6 +369,7 @@
 		NSArray * list = [values allObjects];
 		[(AutocompleteTextField *)textField setCompletions:list];
 	}
+	_isEditing = YES;
 }
 
 - (IBAction)textFieldChanged:(UITextField *)textField
@@ -412,6 +390,8 @@
 	value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
 	textField.text = value;
+
+	_isEditing = NO;
 
     [self updateTagWithValue:value forKey:key];
 }
