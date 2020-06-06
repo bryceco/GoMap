@@ -3,7 +3,6 @@
 //
 
 #import "AppDelegate.h"
-#import "CommonPresetList.h"
 #import "ContactUsViewController.h"
 #import "GeoURLParser.h"
 #import "KeyChain.h"
@@ -15,5 +14,6 @@
 #import "OsmWay.h"
 #import "OsmRelation.h"
 #import "PathUtil.h"
+#import "PresetsDatabase.h"
 #import "URLParserResult.h"
 #import "VectorMath.h"

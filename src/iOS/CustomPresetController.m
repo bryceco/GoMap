@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-#import "CommonPresetList.h"
 #import "CustomPresetController.h"
 #import "POIFeaturePresetsViewController.h"
+#import "PresetsDatabase.h"
 
 @interface CustomPresetController ()
 @end
@@ -31,7 +31,7 @@
 	for ( UITextField * textField in _valueFieldList ) {
 		if ( idx >= _customPreset.presetList.count )
 			break;
-		CommonPresetValue * preset = _customPreset.presetList[ idx ];
+		PresetValue * preset = _customPreset.presetList[ idx ];
 		textField.text = preset.tagValue;
 		++idx;
 	}
@@ -51,7 +51,7 @@
 	for ( UITextField * field in _valueFieldList ) {
 		NSString * value = [field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if ( value.length ) {
-			CommonPresetValue * preset = [CommonPresetValue presetWithName:nil details:nil tagValue:value];
+			PresetValue * preset = [PresetValue presetValueWithName:nil details:nil tagValue:value];
 			[presets addObject:preset];
 		}
 	}

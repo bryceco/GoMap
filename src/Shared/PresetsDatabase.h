@@ -27,47 +27,54 @@ typedef int UITextAutocapitalizationType;
 
 
 // A possible value for a preset key
-@interface CommonPresetValue : NSObject
+@interface PresetValue : NSObject
 @property (readonly,nonatomic) NSString	*	name;
 @property (readonly,nonatomic) NSString *	details;
 @property (readonly,nonatomic) NSString	*	tagValue;
--(instancetype)initWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value;
-+(instancetype)presetWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value;
++(instancetype)presetValueWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value;
 @end
 
 
 // A key along with information about possible values
-@interface CommonPresetKey : NSObject
-@property (readonly,nonatomic) NSString						*	name;
-@property (readonly,nonatomic) NSString						*	tagKey;
-@property (readonly,nonatomic) NSString						*	defaultValue;
-@property (readonly,nonatomic) NSString						*	placeholder;
-@property (readonly,nonatomic) NSArray<CommonPresetValue *>	*	presetList;
-@property (readonly,nonatomic) UIKeyboardType					keyboardType;
+@interface PresetKey : NSObject
+@property (readonly,nonatomic) NSString					*	name;
+@property (readonly,nonatomic) NSString					*	tagKey;
+@property (readonly,nonatomic) NSString					*	defaultValue;
+@property (readonly,nonatomic) NSString					*	placeholder;
+@property (readonly,nonatomic) NSArray<PresetValue *>	*	presetList;
+@property (readonly,nonatomic) UIKeyboardType				keyboardType;
 @property (readonly,nonatomic) UITextAutocapitalizationType	autocapitalizationType;
 
--(instancetype)initWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:defaultValue placeholder:(NSString *)placeholder
-				   keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
+-(instancetype)initWithName:(NSString *)name
+				 featureKey:(NSString *)tag
+			   defaultValue:defaultValue
+				placeholder:(NSString *)placeholder
+				   keyboard:(UIKeyboardType)keyboard
+				 capitalize:(UITextAutocapitalizationType)capitalize
 					presets:(NSArray *)presets;
-+(instancetype)tagWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:defaultValue placeholder:(NSString *)placeholder
-				   keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
-				   presets:(NSArray *)presets;
++(instancetype)presetKeyWithName:(NSString *)name
+					  featureKey:(NSString *)tag
+					defaultValue:defaultValue
+					 placeholder:(NSString *)placeholder
+						keyboard:(UIKeyboardType)keyboard
+					  capitalize:(UITextAutocapitalizationType)capitalize
+						 presets:(NSArray *)presets;
 -(instancetype)initWithCoder:(NSCoder *)coder;
 -(void)encodeWithCoder:(NSCoder *)enCoder;
 @end
 
 
 // A group of related tags, such as address tags, organized for display purposes
-@interface CommonPresetGroup : NSObject
-@property (readonly,nonatomic) 	NSString					*	name;
-@property (readonly,nonatomic) 	NSArray<CommonPresetKey *>	*	presetKeys;
-@property (assign,nonatomic)	BOOL							isDrillDown;
-+(instancetype)groupWithName:(NSString *)name tags:(NSArray *)tags;
+@interface PresetGroup : NSObject
+@property (readonly,nonatomic) 	NSString				*	name;
+@property (readonly,nonatomic) 	NSArray<PresetKey *>	*	presetKeys;
+@property (assign,nonatomic)	BOOL						isDrillDown;
++(instancetype)presetGroupWithName:(NSString *)name tags:(NSArray *)tags;
 @end
 
 
 // A feature-defining tag such as amenity=shop
-@interface CommonPresetFeature : NSObject
+@interface PresetFeature : NSObject
 {
 	NSDictionary	*	_dict;
 	RenderInfo		*	_renderInfo;
@@ -85,20 +92,20 @@ typedef int UITextAutocapitalizationType;
 @property (readonly,nonatomic)	NSDictionary	*	addTags;
 @property (readonly,nonatomic)	NSDictionary	*	removeTags;
 @property (readonly,nonatomic)	BOOL				suggestion;
-+(instancetype)commonPresetFeatureWithName:(NSString *)name;
++(instancetype)presetFeatureForFeatureName:(NSString *)name;
 -(BOOL)matchesSearchText:(NSString *)text;
 -(NSDictionary *)defaultValuesForGeometry:(NSString *)geometry;
 @end
 
 
 // A top-level group such as road, building, for building hierarchical menus
-@interface CommonPresetCategory : NSObject
+@interface PresetCategory : NSObject
 {
 	NSString	*	_categoryName;
 }
-@property (readonly,nonatomic)	NSString						*	friendlyName;
-@property (readonly,nonatomic)	UIImage							*	icon;
-@property (readonly,nonatomic)	NSArray<CommonPresetFeature *>	*	members;
+@property (readonly,nonatomic)	NSString					*	friendlyName;
+@property (readonly,nonatomic)	UIImage						*	icon;
+@property (readonly,nonatomic)	NSArray<PresetFeature *>	*	members;
 -(instancetype)initWithCategoryName:(NSString *)name;
 @end
 
@@ -112,35 +119,40 @@ typedef int UITextAutocapitalizationType;
 @end
 
 
-@interface CommonPresetList : NSObject
+
+@interface PresetsForFeature : NSObject
 {
-	NSString								*	_featureName;
-	NSMutableArray<CommonPresetGroup *>		*	_sectionList;
+	NSString						*	_featureName;
+	NSMutableArray<PresetGroup *>	*	_sectionList;
 }
 
-+(instancetype)sharedList;
-+(NSString *)featureNameForObjectDict:(NSDictionary *)tagDict geometry:(NSString *)geometry;
-+(NSArray *)featuresAndCategoriesForGeometry:(NSString *)geometry;
-+(NSArray *)featuresInCategory:(CommonPresetCategory *)category matching:(NSString *)searchText;
-+(NSSet *)allTagKeys;
-+(NSSet *)allTagValuesForKey:(NSString *)key;
-+(NSSet *)allFeatureKeys;
-+(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry;
-
--(void)setPresetsForFeature:(NSString *)feature tags:(NSDictionary *)dict geometry:(NSString *)geometry  update:(void (^)(void))update;
++(instancetype)presetsForFeature:(NSString *)featureName objectTags:(NSDictionary *)dict geometry:(NSString *)geometry  update:(void (^)(void))update;
 
 -(NSString *)featureName;
+-(NSArray<PresetGroup *> *)sectionList;
 -(NSInteger)sectionCount;
 -(NSInteger)tagsInSection:(NSInteger)index;
--(CommonPresetGroup *)groupAtIndex:(NSInteger)index;
--(CommonPresetKey *)tagAtSection:(NSInteger)section row:(NSInteger)row;
--(CommonPresetKey *)tagAtIndexPath:(NSIndexPath *)indexPath;
 
+-(PresetGroup *)groupAtIndex:(NSInteger)index;
+-(PresetKey *)presetAtSection:(NSInteger)section row:(NSInteger)row;
+-(PresetKey *)presetAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
+
+
+@interface PresetsDatabase : NSObject
++(NSString *)featureNameForObjectDict:(NSDictionary *)tagDict geometry:(NSString *)geometry;
++(NSArray<PresetFeature *> *)featuresAndCategoriesForGeometry:(NSString *)geometry;
++(NSArray<PresetFeature *> *)featuresInCategory:(PresetCategory *)category matching:(NSString *)searchText;
++(NSSet<NSString *> *)allTagKeys;
++(NSSet<NSString *> *)allTagValuesForKey:(NSString *)key;
++(NSSet<NSString *> *)allFeatureKeys;
++(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry;
 +(BOOL)isArea:(OsmWay *)way;
 @end
 
 
-@interface CustomPreset : CommonPresetKey
+@interface CustomPreset : PresetKey
 @property (copy,nonatomic) NSString	*	appliesToKey;
 @property (copy,nonatomic) NSString	*	appliesToValue;
 -(instancetype)initWithCoder:(NSCoder *)coder;

@@ -58,7 +58,7 @@
 		027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */; };
 		028DADE4247DFB8F000A130A /* WikiPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 028DADE3247DFB8F000A130A /* WikiPage.m */; };
 		028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */; };
-		028F504519B949780093C423 /* CommonPresetList.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* CommonPresetList.m */; };
+		028F504519B949780093C423 /* PresetsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* PresetsDatabase.m */; };
 		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
@@ -265,8 +265,8 @@
 		028DADE3247DFB8F000A130A /* WikiPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WikiPage.m; path = ../Shared/WikiPage.m; sourceTree = "<group>"; };
 		028E0C0A20B2182100CEC71F /* FilterObjectsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterObjectsViewController.h; sourceTree = "<group>"; };
 		028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterObjectsViewController.m; sourceTree = "<group>"; };
-		028F504319B949780093C423 /* CommonPresetList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CommonPresetList.h; path = ../Shared/CommonPresetList.h; sourceTree = "<group>"; };
-		028F504419B949780093C423 /* CommonPresetList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = CommonPresetList.m; path = ../Shared/CommonPresetList.m; sourceTree = "<group>"; };
+		028F504319B949780093C423 /* PresetsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PresetsDatabase.h; path = ../Shared/PresetsDatabase.h; sourceTree = "<group>"; };
+		028F504419B949780093C423 /* PresetsDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PresetsDatabase.m; path = ../Shared/PresetsDatabase.m; sourceTree = "<group>"; };
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		029043A11682797A00BE3480 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		029043A21682797A00BE3480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -686,8 +686,6 @@
 				022ABCA220C3750A002D4977 /* Buildings3DView.h */,
 				022ABCA320C3750A002D4977 /* Buildings3DView.m */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
-				028F504319B949780093C423 /* CommonPresetList.h */,
-				028F504419B949780093C423 /* CommonPresetList.m */,
 				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
 				0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */,
 				02A194AE19C69701002338DA /* Database.h */,
@@ -735,6 +733,8 @@
 				024ADF3B16B1B38B00875658 /* PathUtil.m */,
 				02BE6194245FEC4C00E92662 /* PersistentWebCache.h */,
 				02354F772462526A00878A04 /* PersistentWebCache.m */,
+				028F504319B949780093C423 /* PresetsDatabase.h */,
+				028F504419B949780093C423 /* PresetsDatabase.m */,
 				02ACBBB216713F2A00BB4414 /* QuadMap.h */,
 				02ACBBB316713F2A00BB4414 /* QuadMap.m */,
 				022B09A619BD3F7B0041687B /* QuadMapC.mm */,
@@ -1126,7 +1126,7 @@
 				028DADE4247DFB8F000A130A /* WikiPage.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
 				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,
-				028F504519B949780093C423 /* CommonPresetList.m in Sources */,
+				028F504519B949780093C423 /* PresetsDatabase.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
 				02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */,

@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
-#import "CommonPresetList.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
@@ -17,13 +16,14 @@
 #import "POIPresetValuesViewController.h"
 #import "POITabBarController.h"
 #import "POIFeaturePickerViewController.h"
+#import "PresetsDatabase.h"
 #import "RenderInfo.h"
 
 
 @interface FeaturePresetCell : UITableViewCell
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
-@property (strong,nonatomic)				CommonPresetKey				*	presetKeyInfo;
+@property (strong,nonatomic)				PresetKey				*	presetKeyInfo;
 @end
 
 @implementation FeaturePresetCell
@@ -45,8 +45,6 @@
 
 	self.tableView.estimatedRowHeight = 44.0; // or could use UITableViewAutomaticDimension;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
-
-	_tags = [CommonPresetList sharedList];
 
 	if ( _drillDownGroup ) {
 		self.navigationItem.leftItemsSupplementBackButton = YES;
@@ -71,23 +69,23 @@
 		NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
 
 		// update most recent feature
-		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [CommonPresetList featureNameForObjectDict:dict geometry:geometry];
+		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [PresetsDatabase featureNameForObjectDict:dict geometry:geometry];
 		if ( featureName ) {
-			CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
+			PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
 			[POIFeaturePickerViewController loadMostRecentForGeometry:geometry];
 			[POIFeaturePickerViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
 		}
 
 		__weak POIFeaturePresetsViewController * weakSelf = self;
-		__weak CommonPresetList * weakTags = _tags;
-		[_tags setPresetsForFeature:featureName tags:dict geometry:geometry update:^{
-			// this may complete much later, even after we've been dismissed
-			POIFeaturePresetsViewController * mySelf = weakSelf;
-			if ( mySelf && !mySelf->_isEditing ) {
-				[weakTags setPresetsForFeature:featureName tags:dict geometry:geometry update:nil];
-				[mySelf.tableView reloadData];
-			}
-		}];
+
+		_presets = [PresetsForFeature presetsForFeature:featureName objectTags:dict geometry:geometry update:^{
+				// this may complete much later, even after we've been dismissed
+				POIFeaturePresetsViewController * mySelf = weakSelf;
+				if ( mySelf && !mySelf->_isEditing ) {
+					mySelf->_presets = [PresetsForFeature presetsForFeature:featureName objectTags:dict geometry:geometry update:nil];
+					[mySelf.tableView reloadData];
+				}
+			}];
 	}
 
 	[self.tableView reloadData];
@@ -141,13 +139,13 @@
 	}
 }
 
--(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature
+-(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(PresetFeature *)feature
 {
 	_selectedFeature = feature;
 	POITabBarController * tabController = (id) self.tabBarController;
 	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
-	NSString * oldFeatureName = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-	CommonPresetFeature * oldFeature = [CommonPresetFeature commonPresetFeatureWithName:oldFeatureName];
+	NSString * oldFeatureName = [PresetsDatabase featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+	PresetFeature * oldFeature = [PresetFeature presetFeatureForFeatureName:oldFeatureName];
 
 	// remove previous feature tags
 	NSDictionary * removeTags = oldFeature.removeTags;
@@ -175,18 +173,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return _drillDownGroup ? 1 : _tags.sectionCount + 1;
+	return _drillDownGroup ? 1 : _presets.sectionCount + 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( _drillDownGroup )
 		return _drillDownGroup.name;
-	if ( section == _tags.sectionCount )
+	if ( section == _presets.sectionCount )
 		return nil;
-	if ( section > _tags.sectionCount )
+	if ( section > _presets.sectionCount )
 		return nil;
-	CommonPresetGroup * group = [_tags groupAtIndex:section];
+	PresetGroup * group = [_presets groupAtIndex:section];
 	return group.name;
 }
 
@@ -194,26 +192,26 @@
 {
 	if ( _drillDownGroup )
 		return _drillDownGroup.presetKeys.count;
-	if ( section == _tags.sectionCount )
+	if ( section == _presets.sectionCount )
 		return 1;
-	if ( section > _tags.sectionCount )
+	if ( section > _presets.sectionCount )
 		return 0;
-	return [_tags tagsInSection:section];
+	return [_presets tagsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( _drillDownGroup == nil ) {
-		if ( indexPath.section == _tags.sectionCount ) {
+		if ( indexPath.section == _presets.sectionCount ) {
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CustomizePresets" forIndexPath:indexPath];
 			return cell;
 		}
 	}
 
-	id rowObject = _drillDownGroup ? _drillDownGroup.presetKeys[ indexPath.row ] : [_tags tagAtIndexPath:indexPath];
-	if ( [rowObject isKindOfClass:[CommonPresetKey class]] ) {
+	id rowObject = _drillDownGroup ? _drillDownGroup.presetKeys[ indexPath.row ] : [_presets presetAtIndexPath:indexPath];
+	if ( [rowObject isKindOfClass:[PresetKey class]] ) {
 
-		CommonPresetKey 	* presetKey	= rowObject;
+		PresetKey 	* presetKey	= rowObject;
 		NSString * key = presetKey.tagKey;
 		NSString * cellName = key == nil ? @"CommonTagType" : [key isEqualToString:@"name"] ? @"CommonTagName" : @"CommonTagSingle";
 
@@ -245,13 +243,13 @@
 
 		if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 			// Type cell
-			NSString * text = [_tags featureName];
+			NSString * text = [_presets featureName];
 			cell.valueField.text = text;
 			cell.valueField.enabled = NO;
 		} else {
 			// Regular cell
 			NSString * value = objectDict[ presetKey.tagKey ];
-			value = [CommonPresetList friendlyValueNameForKey:presetKey.tagKey value:value geometry:nil];
+			value = [PresetsDatabase friendlyValueNameForKey:presetKey.tagKey value:value geometry:nil];
 			cell.valueField.text = value;
 			cell.valueField.enabled = YES;
 		}
@@ -261,7 +259,7 @@
 	} else {
 
 		// drill down cell
-		CommonPresetGroup * drillDownGroup = rowObject;
+		PresetGroup * drillDownGroup = rowObject;
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
 		cell.nameLabel.text = drillDownGroup.name;
 		cell.presetKeyInfo = (id)drillDownGroup;
@@ -279,8 +277,8 @@
     
     // This workaround is necessary because `tableView:cellForRowAtIndexPath:`
     // currently sets `cell.commonPreset` to an instance of `CommonPresetGroup` by casting it to `id`.
-    CommonPresetKey *presetKey = nil;
-    if ([cell.presetKeyInfo isKindOfClass:[CommonPresetKey class]]) {
+    PresetKey *presetKey = nil;
+    if ([cell.presetKeyInfo isKindOfClass:[PresetKey class]]) {
         presetKey = cell.presetKeyInfo;
     }
 
@@ -289,9 +287,9 @@
     } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:presetKey.tagKey]) {
         [self presentDirectionViewControllerForTagWithKey:cell.presetKeyInfo.tagKey
                                                     value:cell.valueField.text];
-	} else if ( [cell.presetKeyInfo isKindOfClass:[CommonPresetGroup class]] ) {
+	} else if ( [cell.presetKeyInfo isKindOfClass:[PresetGroup class]] ) {
 		// special case for drill down
-		CommonPresetGroup * group = (id)cell.presetKeyInfo;
+		PresetGroup * group = (id)cell.presetKeyInfo;
 		POIFeaturePresetsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
 		sub.drillDownGroup = group;
 		[self.navigationController pushViewController:sub animated:YES];
@@ -363,7 +361,7 @@
 		NSString * key = cell.presetKeyInfo.tagKey;
 		if ( key == nil )
 			return;	// should never happen
-		NSSet * set = [CommonPresetList allTagValuesForKey:key];
+		NSSet * set = [PresetsDatabase allTagValuesForKey:key];
 		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 		NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];

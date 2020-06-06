@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-#import "CommonPresetList.h"
 #import "CustomPresetController.h"
 #import "CustomPresetListViewController.h"
+#import "PresetsDatabase.h"
 
 
 @implementation CustomPresetListViewController

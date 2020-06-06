@@ -7,10 +7,10 @@
 //
 
 #import "iosapi.h"
-#import "CommonPresetList.h"
+#import "PersistentWebCache.h"
 #import "POITabBarController.h"
 #import "POIFeaturePickerViewController.h"
-#import "PersistentWebCache.h"
+#import "PresetsDatabase.h"
 
 
 static const NSInteger MOST_RECENT_DEFAULT_COUNT = 5;
@@ -41,7 +41,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
 	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
 	for ( NSString * featureName in a ) {
-		CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
+		PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
 		if ( feature ) {
 			[mostRecentArray addObject:feature];
 		}
@@ -78,7 +78,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	if ( _parentCategory == nil ) {
 		_isTopLevel = YES;
-		_featureList = [CommonPresetList featuresAndCategoriesForGeometry:geometry];
+		_featureList = [PresetsDatabase featuresAndCategoriesForGeometry:geometry];
 	} else {
 		_featureList = _parentCategory.members;
 	}
@@ -125,7 +125,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	CommonPresetFeature * feature = nil;
+	PresetFeature * feature = nil;
 	if ( _searchArrayAll ) {
 		feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
 	} else if ( _isTopLevel && indexPath.section == 0 ) {
@@ -134,8 +134,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	} else {
 		// type array
 		id tagInfo = _featureList[ indexPath.row ];
-		if ( [tagInfo isKindOfClass:[CommonPresetCategory class]] ) {
-			CommonPresetCategory * category = tagInfo;
+		if ( [tagInfo isKindOfClass:[PresetCategory class]] ) {
+			PresetCategory * category = tagInfo;
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"SubCell" forIndexPath:indexPath];
 			cell.textLabel.text = category.friendlyName;
 			return cell;
@@ -176,7 +176,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSString * brand = @"☆ ";
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = [self currentSelectionGeometry];
-	NSString * currentFeature = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+	NSString * currentFeature = [PresetsDatabase featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
 	FeaturePickerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 	cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
 	cell.imageView.image		= feature.logoImage && feature.logoImage != feature.icon
@@ -194,16 +194,18 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	return cell;
 }
 
-+(void)updateMostRecentArrayWithSelection:(CommonPresetFeature *)feature geometry:(NSString *)geometry
++(void)updateMostRecentArrayWithSelection:(PresetFeature *)feature geometry:(NSString *)geometry
 {
-	[mostRecentArray removeObject:feature];
+	[mostRecentArray filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PresetFeature * f, id bindings) {
+		return ! [f.featureName isEqualToString:feature.featureName];
+	}]];
 	[mostRecentArray insertObject:feature atIndex:0];
 	if ( mostRecentArray.count > MOST_RECENT_SAVED_MAXIMUM ) {
 		[mostRecentArray removeLastObject];
 	}
 
 	NSMutableArray * a = [[NSMutableArray alloc] initWithCapacity:mostRecentArray.count];
-	for ( CommonPresetFeature * f in mostRecentArray ) {
+	for ( PresetFeature * f in mostRecentArray ) {
 		[a addObject:f.featureName];
 	}
 
@@ -212,7 +214,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 }
 
 
--(void)updateTagsWithFeature:(CommonPresetFeature *)feature
+-(void)updateTagsWithFeature:(PresetFeature *)feature
 {
 	NSString * geometry = [self currentSelectionGeometry];
 	[self.delegate typeViewController:self didChangeFeatureTo:feature];
@@ -222,7 +224,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( _searchArrayAll ) {
-		CommonPresetFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+		PresetFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
 		[self updateTagsWithFeature:feature];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 		return;
@@ -230,21 +232,21 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
-		CommonPresetFeature * feature = mostRecentArray[ indexPath.row ];
+		PresetFeature * feature = mostRecentArray[ indexPath.row ];
 		[self updateTagsWithFeature:feature];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else {
 		// type list
 		id entry = _featureList[ indexPath.row ];
-		if ( [entry isKindOfClass:[CommonPresetCategory class]] ) {
-			CommonPresetCategory * category = entry;
+		if ( [entry isKindOfClass:[PresetCategory class]] ) {
+			PresetCategory * category = entry;
 			POIFeaturePickerViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiTypeViewController"];
 			sub.parentCategory	= category;
 			sub.delegate		= self.delegate;
 			[_searchBar resignFirstResponder];
 			[self.navigationController pushViewController:sub animated:YES];
 		} else {
-			CommonPresetFeature * feature = entry;
+			PresetFeature * feature = entry;
 			[self updateTagsWithFeature:feature];
 			[self.navigationController popToRootViewControllerAnimated:YES];
 		}
@@ -260,8 +262,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		_searchArrayRecent = nil;
 	} else {
 		// searching
-		_searchArrayAll = [[CommonPresetList featuresInCategory:_parentCategory matching:searchText] mutableCopy];
-		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(CommonPresetFeature * feature, NSDictionary *bindings) {
+		_searchArrayAll = [[PresetsDatabase featuresInCategory:_parentCategory matching:searchText] mutableCopy];
+		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PresetFeature * feature, NSDictionary *bindings) {
 			return [feature matchesSearchText:searchText];
 		}]];
 	}

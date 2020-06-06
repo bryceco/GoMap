@@ -86,7 +86,7 @@
 
 -(BOOL)isArea
 {
-    return [CommonPresetList isArea:self];
+    return [PresetsDatabase isArea:self];
 }
 
 -(BOOL)isClosed

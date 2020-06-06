@@ -12,24 +12,24 @@
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "Buildings3DView.h"
-#import "CommonPresetList.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
 #if TARGET_OS_IPHONE
 #import "FilterObjectsViewController.h"
 #import "MapViewController.h"
 #endif
+#import "GeekbenchScoreProvider.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 #import "PathUtil.h"
+#import "PresetsDatabase.h"
 #import "QuadMap.h"
 #import "SpeechBalloonLayer.h"
 #import "RenderInfo.h"
 #import "VectorMath.h"
 #import "Go_Map__-Swift.h"
-#import "GeekbenchScoreProvider.h"
 
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
@@ -1512,8 +1512,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
     
     // fetch icon
-    NSString * featureName = [CommonPresetList featureNameForObjectDict:node.tags geometry:node.geometryName];
-    CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
+    NSString * featureName = [PresetsDatabase featureNameForObjectDict:node.tags geometry:node.geometryName];
+    PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
 	UIImage * icon = feature.icon;
 	if ( icon == nil ) {
 		if ( node.tags[@"amenity"] || node.tags[@"name"] )

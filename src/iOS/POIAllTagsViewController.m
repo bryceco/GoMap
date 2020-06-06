@@ -10,7 +10,6 @@
 
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
-#import "CommonPresetList.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
@@ -18,6 +17,7 @@
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
 #import "PushPinView.h"
+#import "PresetsDatabase.h"
 #import "RenderInfo.h"
 #import "WikiPage.h"
 
@@ -78,7 +78,7 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
 	NSDictionary * dict = [self keyValueDictionary];
-	NSString * newFeature = [CommonPresetList featureNameForObjectDict:dict geometry:geometry];
+	NSString * newFeature = [PresetsDatabase featureNameForObjectDict:dict geometry:geometry];
 
 	if ( !forceReload && [newFeature isEqualToString:_featureName] )
 		return -1;
@@ -96,20 +96,20 @@
 
 	// add placeholder keys
 	if ( newFeature ) {
-		[CommonPresetList.sharedList setPresetsForFeature:newFeature tags:dict geometry:geometry update:^{}];
+		PresetsForFeature * presets = [PresetsForFeature presetsForFeature:newFeature objectTags:dict geometry:geometry update:nil];
 		NSMutableArray * newKeys = [NSMutableArray new];
-		for ( NSInteger section = 0; section < CommonPresetList.sharedList.sectionCount; ++section ) {
-			for ( NSInteger row = 0; row < [CommonPresetList.sharedList tagsInSection:section]; ++row ) {
-				id preset = [CommonPresetList.sharedList tagAtSection:section row:row];
-				if ( [preset isKindOfClass:[CommonPresetGroup class]] ) {
-					CommonPresetGroup * group = preset;
-					for ( CommonPresetKey * presetKey in group.presetKeys ) {
+		for ( NSInteger section = 0; section < presets.sectionCount; ++section ) {
+			for ( NSInteger row = 0; row < [presets tagsInSection:section]; ++row ) {
+				id preset = [presets presetAtSection:section row:row];
+				if ( [preset isKindOfClass:[PresetGroup class]] ) {
+					PresetGroup * group = preset;
+					for ( PresetKey * presetKey in group.presetKeys ) {
 						if ( presetKey.tagKey.length == 0 )
 							continue;
 						[newKeys addObject:presetKey.tagKey];
 					}
 				} else {
-					CommonPresetKey * presetKey = preset;
+					PresetKey * presetKey = preset;
 					if ( presetKey.tagKey.length == 0 )
 						continue;
 					[newKeys addObject:presetKey.tagKey];
@@ -379,7 +379,7 @@
 		if ( isValue ) {
 			// get list of values for current key
 			NSString * key = kv[0];
-			NSSet * set = [CommonPresetList allTagValuesForKey:key];
+			NSSet * set = [PresetsDatabase allTagValuesForKey:key];
 			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
@@ -387,7 +387,7 @@
 			[(AutocompleteTextField *)textField setCompletions:list];
 		} else {
 			// get list of keys
-			NSSet * set = [CommonPresetList allTagKeys];
+			NSSet * set = [PresetsDatabase allTagKeys];
 			NSArray * list = [set allObjects];
 			[(AutocompleteTextField *)textField setCompletions:list];
 		}

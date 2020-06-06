@@ -477,9 +477,9 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     if ( name.length )
         return name;
 
-    NSString * featureName = [CommonPresetList featureNameForObjectDict:self.tags geometry:self.geometryName];
+    NSString * featureName = [PresetsDatabase featureNameForObjectDict:self.tags geometry:self.geometryName];
     if ( featureName ) {
-        CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
+        PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
         name = feature.friendlyName;
         if ( name.length > 0 )
             return name;
@@ -520,7 +520,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 #endif
 
     __block NSString * tagDescription = nil;
-    NSSet * featureKeys = [CommonPresetList allFeatureKeys];
+    NSSet * featureKeys = [PresetsDatabase allFeatureKeys];
     // look for a feature key
     [_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
         if ( [featureKeys containsObject:key] ) {

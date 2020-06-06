@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class CommonPresetCategory;
-@class CommonPresetFeature;
+@class PresetCategory;
+@class PresetFeature;
 @class POIFeaturePickerViewController;
 
 @protocol POITypeViewControllerDelegate <NSObject>
--(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(CommonPresetFeature *)feature;
+-(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(PresetFeature *)feature;
 @end
 
 @interface POIFeaturePickerViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
@@ -24,7 +24,7 @@
 	IBOutlet UISearchBar    *	_searchBar;
 	BOOL						_isTopLevel;
 }
-@property (strong,nonatomic) CommonPresetCategory				*	parentCategory;
+@property (strong,nonatomic) PresetCategory				*	parentCategory;
 @property (assign,nonatomic) id<POITypeViewControllerDelegate>		delegate;
 
 -(IBAction)back:(id)sender;
@@ -32,6 +32,6 @@
 
 
 +(void)loadMostRecentForGeometry:(NSString *)geometry;
-+(void)updateMostRecentArrayWithSelection:(CommonPresetFeature *)feature geometry:(NSString *)geometry;
++(void)updateMostRecentArrayWithSelection:(PresetFeature *)feature geometry:(NSString *)geometry;
 
 @end

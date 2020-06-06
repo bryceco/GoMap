@@ -10,8 +10,8 @@
 #import "MapView.h"
 
 #import "iosapi.h"
-#import "CommonPresetList.h"
 #import "DLog.h"
+#import "PresetsDatabase.h"
 #import "RenderInfo.h"
 
 #define USE_SUGGESTIONS	1
@@ -26,14 +26,15 @@ const int UITextAutocapitalizationTypeSentences = 1;
 const int UITextAutocapitalizationTypeWords		= 2;
 #endif
 
-static NSDictionary<NSString *,NSDictionary *> 					* g_addressFormatsDict;	// address formats for different countries
-static NSDictionary<NSString *,NSArray *> 						* g_defaultsDict;		// map a geometry to a set of features/categories
-static NSDictionary<NSString *,NSDictionary *> 					* g_categoriesDict;		// map a top-level category ("building") to a set of specific features ("building/retail")
-static NSDictionary<NSString *,NSDictionary *> 					* g_presetsDict;		// tags for a specific feature
-static NSDictionary<NSString *,NSDictionary *> 					* g_fieldsDict;			// possible values for a preset key ("oneway=")
-static NSDictionary<NSString *,NSDictionary *> 					* g_translationDict;	// translations of all preset text
-static NSMutableDictionary<NSString *,NSMutableArray *> 		* g_taginfoCache;		// OSM TagInfo database in the cloud
-static NSMutableDictionary<NSString *,CommonPresetFeature *> 	* g_FeatureCache;		// quickly map a featureName to a CommonPresetFeature
+static NSDictionary<NSString *,NSDictionary *> 				* g_jsonAddressFormatsDict;	// address formats for different countries
+static NSDictionary<NSString *,NSArray *> 					* g_jsonDefaultsDict;		// map a geometry to a set of features/categories
+static NSDictionary<NSString *,NSDictionary *> 				* g_jsonCategoriesDict;		// map a top-level category ("building") to a set of specific features ("building/retail")
+static NSDictionary<NSString *,NSDictionary *> 				* g_jsonPresetsDict;		// tags for a specific feature
+static NSDictionary<NSString *,NSDictionary *> 				* g_jsonFieldsDict;			// possible values for a preset key ("oneway=")
+static NSDictionary<NSString *,NSDictionary *> 				* g_jsonTranslationDict;	// translations of all preset text
+
+static NSMutableDictionary<NSString *,NSMutableArray *> 	* g_taginfoCache;			// OSM TagInfo database in the cloud: contains either a group or an array of values
+
 
 static NSDictionary * DictionaryForFile( NSString * file )
 {
@@ -89,26 +90,25 @@ static id Translate( id orig, id translation )
 
 static void InitializeDictionaries()
 {
-	if ( g_presetsDict == nil ) {
-		g_addressFormatsDict = DictionaryForFile(@"address-formats.json");
-
-		g_defaultsDict		= DictionaryForFile(@"defaults.json");
-		g_categoriesDict	= DictionaryForFile(@"categories.json");
-		g_presetsDict		= DictionaryForFile(@"presets.json");
-		g_fieldsDict		= DictionaryForFile(@"fields.json");
+	if ( g_jsonPresetsDict == nil ) {
+		g_jsonAddressFormatsDict = DictionaryForFile(@"address-formats.json");
+		g_jsonDefaultsDict		 = DictionaryForFile(@"defaults.json");
+		g_jsonCategoriesDict	 = DictionaryForFile(@"categories.json");
+		g_jsonPresetsDict		 = DictionaryForFile(@"presets.json");
+		g_jsonFieldsDict		 = DictionaryForFile(@"fields.json");
 
 		PresetLanguages * presetLanguages = [PresetLanguages new];	// don't need to save this, it doesn't get used again unless user changes the language
 		NSString * code = presetLanguages.preferredLanguageCode;
 		NSString * code2 = [code stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
 		NSString * file = [NSString stringWithFormat:@"translations/%@.json",code];
-		g_translationDict	= DictionaryForFile(file);
-		g_translationDict	= g_translationDict[ code2 ][ @"presets" ];
+		g_jsonTranslationDict	= DictionaryForFile(file);
+		g_jsonTranslationDict	= g_jsonTranslationDict[ code2 ][ @"presets" ];
 
 #ifndef __clang_analyzer__	// this confuses the analyzer because it doesn't know that top-level return values are always NSDictionary
-		g_defaultsDict		= Translate( g_defaultsDict,	g_translationDict[@"defaults"] );
-		g_categoriesDict	= Translate( g_categoriesDict,	g_translationDict[@"categories"] );
-		g_presetsDict		= Translate( g_presetsDict,		g_translationDict[@"presets"] );
-		g_fieldsDict		= Translate( g_fieldsDict,		g_translationDict[@"fields"] );
+		g_jsonDefaultsDict		= Translate( g_jsonDefaultsDict,	g_jsonTranslationDict[@"defaults"] );
+		g_jsonCategoriesDict	= Translate( g_jsonCategoriesDict,	g_jsonTranslationDict[@"categories"] );
+		g_jsonPresetsDict		= Translate( g_jsonPresetsDict,		g_jsonTranslationDict[@"presets"] );
+		g_jsonFieldsDict		= Translate( g_jsonFieldsDict,		g_jsonTranslationDict[@"fields"] );
 #endif
 	}
 }
@@ -132,7 +132,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
     return NO;
 }
 
-@implementation CommonPresetValue
+@implementation PresetValue
 -(instancetype)initWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value
 {
 	self = [super init];
@@ -143,9 +143,9 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 	return self;
 }
-+(instancetype)presetWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value
++(instancetype)presetValueWithName:(NSString *)name details:(NSString *)details tagValue:(NSString *)value
 {
-	return [[CommonPresetValue alloc] initWithName:name details:details tagValue:value];
+	return [[PresetValue alloc] initWithName:name details:details tagValue:value];
 }
 -(void)encodeWithCoder:(NSCoder *)coder
 {
@@ -168,36 +168,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 
 
-
-@implementation CommonPresetGroup
--(instancetype)initWithName:(NSString *)name tags:(NSArray *)tags
-{
-	self = [super init];
-	if ( self ) {
-#if DEBUG
-		if ( tags.count )	assert( [tags.lastObject isKindOfClass:[CommonPresetKey class]] ||
-								   [tags.lastObject isKindOfClass:[CommonPresetGroup class]] );	// second case for drill down group
-#endif
-		_name = name;
-		_presetKeys = tags;
-	}
-	return self;
-}
-+(instancetype)groupWithName:(NSString *)name tags:(NSArray *)tags
-{
-	return [[CommonPresetGroup alloc] initWithName:name tags:tags];
-}
--(void)mergeTagsFromGroup:(CommonPresetGroup *)other
-{
-	if ( _presetKeys == nil )
-		_presetKeys = other.presetKeys;
-	else
-		_presetKeys = [_presetKeys arrayByAddingObjectsFromArray:other.presetKeys];
-}
-@end
-
-
-@implementation CommonPresetKey
+@implementation PresetKey
 -(void)encodeWithCoder:(NSCoder *)coder
 {
 	[coder encodeObject:_name forKey:@"name"];
@@ -235,7 +206,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 				for ( NSInteger i = 0; i < 3; ++i ) {
 					if ( i >= presets.count )
 						break;
-					CommonPresetValue * p = presets[i];
+					PresetValue * p = presets[i];
 					if ( p.name.length >= 20 )
 						continue;
 					if ( s.length )
@@ -259,32 +230,60 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 	return self;
 }
-+(instancetype)tagWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:(NSString *)defaultValue placeholder:(NSString *)placeholder
++(instancetype)presetKeyWithName:(NSString *)name featureKey:(NSString *)tag defaultValue:(NSString *)defaultValue placeholder:(NSString *)placeholder
 				  keyboard:(UIKeyboardType)keyboard capitalize:(UITextAutocapitalizationType)capitalize
 				   presets:(NSArray *)presets
 {
-	return [[CommonPresetKey alloc] initWithName:name featureKey:tag defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
+	return [[PresetKey alloc] initWithName:name featureKey:tag defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 }
 @end
 
 
-@implementation CommonPresetList
+@implementation PresetGroup
+-(instancetype)initWithName:(NSString *)name tags:(NSArray *)tags
+{
+	self = [super init];
+	if ( self ) {
+#if DEBUG
+		if ( tags.count )	assert( [tags.lastObject isKindOfClass:[PresetKey class]] ||
+								   [tags.lastObject isKindOfClass:[PresetGroup class]] );	// second case for drill down group
+#endif
+		_name = name;
+		_presetKeys = tags;
+	}
+	return self;
+}
++(instancetype)presetGroupWithName:(NSString *)name tags:(NSArray *)tags
+{
+	return [[PresetGroup alloc] initWithName:name tags:tags];
+}
+-(void)mergeTagsFromGroup:(PresetGroup *)other
+{
+	if ( _presetKeys == nil )
+		_presetKeys = other.presetKeys;
+	else
+		_presetKeys = [_presetKeys arrayByAddingObjectsFromArray:other.presetKeys];
+}
+@end
+
+
+
+@implementation PresetsDatabase
 
 +(void)initialize
 {
-	g_presetsDict		= nil;
+	g_jsonPresetsDict		= nil;
 	g_taginfoCache		= nil;
-	g_FeatureCache	= nil;
 	InitializeDictionaries();
 }
 
 +(instancetype)sharedList
 {
 	static dispatch_once_t onceToken;
-	static CommonPresetList * list = nil;
+	static PresetsDatabase * list = nil;
 	dispatch_once(&onceToken, ^{
 		InitializeDictionaries();
-		list = [CommonPresetList new];
+		list = [PresetsDatabase new];
 	});
 	return list;
 }
@@ -292,7 +291,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 +(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry
 {
 	__block BOOL makePretty = NO;
-	[g_fieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+	[g_jsonFieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSString * k = dict[ @"key" ];
 		if ( [k isEqualToString:key] ) {
 			NSString * type = dict[ @"type" ];
@@ -315,7 +314,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 +(NSSet *)allTagValuesForKey:(NSString *)key
 {
 	NSMutableSet * set = [NSMutableSet new];
-	[g_fieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+	[g_jsonFieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSString * k = dict[ @"key" ];
 		if ( [k isEqualToString:key] ) {
 			NSDictionary * dict2 = dict[ @"strings" ];
@@ -326,7 +325,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			}
 		}
 	}];
-	[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSDictionary * dict2 = dict[ @"tags" ];
 		NSString * value = dict2[ key ];
 		if ( value ) {
@@ -340,7 +339,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 +(NSSet *)allTagKeys
 {
 	NSMutableSet * set = [NSMutableSet new];
-	[g_fieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+	[g_jsonFieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSString * key = dict[ @"key" ];
 		if ( key ) {
 			[set addObject:key];
@@ -350,7 +349,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[set addObject:key];
 		}
 	}];
-	[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSDictionary * dict2 = dict[ @"tags" ];
 		[dict2 enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop2) {
 			[set addObject:key];
@@ -359,13 +358,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return set;
 }
 
-+(NSSet *)allFeatureKeys
++(NSSet<NSString *> *)allFeatureKeys
 {
-	static NSMutableSet * set = nil;
+	static NSMutableSet<NSString *> * set = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		set = [NSMutableSet new];
-		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSDictionary * dict, BOOL * _Nonnull stop) {
+		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSDictionary * dict, BOOL * _Nonnull stop) {
 			NSRange slash = [key rangeOfString:@"/"];
 			NSString * feature = slash.location != NSNotFound ? [key substringToIndex:slash.location] : key;
 			[set addObject:feature];
@@ -375,19 +374,19 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 
 
-+(NSArray *)featuresAndCategoriesForMemberList:(NSArray *)memberList
++(NSArray<PresetFeature *> *)featuresAndCategoriesForMemberList:(NSArray *)memberList
 {
 	NSMutableArray * list = [NSMutableArray new];
 	for ( NSString * featureName in memberList ) {
 
 		if ( [featureName hasPrefix:@"category-"] ) {
 
-			CommonPresetCategory * category = [[CommonPresetCategory alloc] initWithCategoryName:featureName];
+			PresetCategory * category = [[PresetCategory alloc] initWithCategoryName:featureName];
 			[list addObject:category];
 
 		} else {
 
-			CommonPresetFeature * tag = [CommonPresetFeature commonPresetFeatureWithName:featureName];
+			PresetFeature * tag = [PresetFeature presetFeatureForFeatureName:featureName];
 			if ( tag == nil )
 				continue;
 			[list addObject:tag];
@@ -397,25 +396,25 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return list;
 }
 
-+(NSArray *)featuresAndCategoriesForGeometry:(NSString *)geometry
++(NSArray<PresetFeature *> *)featuresAndCategoriesForGeometry:(NSString *)geometry
 {
-	NSArray * list = g_defaultsDict[geometry];
+	NSArray * list = g_jsonDefaultsDict[geometry];
 	NSArray * featureList = [self featuresAndCategoriesForMemberList:list];
 	return featureList;
 }
 
-+(NSArray *)featuresInCategory:(CommonPresetCategory *)category matching:(NSString *)searchText;
++(NSArray<PresetFeature *> *)featuresInCategory:(PresetCategory *)category matching:(NSString *)searchText
 {
-	NSMutableArray<CommonPresetFeature *> * list = [NSMutableArray new];
+	NSMutableArray<PresetFeature *> * list = [NSMutableArray new];
 	if ( category ) {
-		for ( CommonPresetFeature * tag in category.members ) {
+		for ( PresetFeature * tag in category.members ) {
 			if ( [tag matchesSearchText:searchText] ) {
 				[list addObject:tag];
 			}
 		}
 	} else {
 		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
-		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
+		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
 #if USE_SUGGESTIONS
 			NSArray<NSString *> * a = dict[@"countryCodes"];
 			if ( a.count > 0 ) {
@@ -451,7 +450,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 				}
 			}
 			if ( add ) {
-				CommonPresetFeature * tag = [CommonPresetFeature commonPresetFeatureWithName:featureName];
+				PresetFeature * tag = [PresetFeature presetFeatureForFeatureName:featureName];
 				if ( tag ) {
 					[list addObject:tag];
 				}
@@ -459,7 +458,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}];
 	}
 	// sort so that regular items come before suggestions
-	[list sortUsingComparator:^NSComparisonResult(CommonPresetFeature * obj1, CommonPresetFeature * obj2) {
+	[list sortUsingComparator:^NSComparisonResult(PresetFeature * obj1, PresetFeature * obj2) {
 		NSString * name1 = obj1.friendlyName;
 		NSString * name2 = obj2.friendlyName;
 #if USE_SUGGESTIONS
@@ -479,7 +478,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 +(NSString *)yesForLocale
 {
-	NSDictionary * dict = g_translationDict[@"fields"][@"internet_access"][@"options"];
+	NSDictionary * dict = g_jsonTranslationDict[@"fields"][@"internet_access"][@"options"];
 	NSString * text = dict[ @"yes" ];
 	if ( text == nil )
 		text = @"Yes";
@@ -487,25 +486,20 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 +(NSString *)noForLocale
 {
-	NSDictionary * dict = g_translationDict[@"fields"][@"internet_access"][@"options"];
+	NSDictionary * dict = g_jsonTranslationDict[@"fields"][@"internet_access"][@"options"];
 	NSString * text = dict[ @"no" ];
 	if ( text == nil )
 		text = @"No";
 	return text;
 }
 
--(NSString *)featureName
-{
-	return _featureName;
-}
-
--(CommonPresetGroup *)groupForField:(NSString *)fieldName geometry:(NSString *)geometry update:(void (^)(void))update
++(PresetGroup *)groupForField:(NSString *)fieldName geometry:(NSString *)geometry update:(void (^)(void))update
 {
 	if ( g_taginfoCache == nil ) {
 		g_taginfoCache = [NSMutableDictionary new];
 	}
 
-	NSDictionary * dict = g_fieldsDict[ fieldName ];
+	NSDictionary * dict = g_jsonFieldsDict[ fieldName ];
 	if ( dict.count == 0 )
 		return nil;
 
@@ -537,10 +531,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	if ( [type isEqualToString:@"defaultcheck"] || [type isEqualToString:@"check"] || [type isEqualToString:@"onewayCheck"] ) {
 
-		NSArray * presets = @[ [CommonPresetValue presetWithName:[CommonPresetList yesForLocale] details:nil tagValue:@"yes"],
-							   [CommonPresetValue presetWithName:[CommonPresetList noForLocale]  details:nil tagValue:@"no"] ];
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
+		NSArray * presets = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
+							   [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
+		PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[ tag ]];
 		return group;
 
 	} else if ( [type isEqualToString:@"radio"] || [type isEqualToString:@"structureRadio"] ) {
@@ -549,14 +543,14 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 			// a list of booleans
 			NSMutableArray * tags = [NSMutableArray new];
-			NSArray * presets = @[ [CommonPresetValue presetWithName:[CommonPresetList yesForLocale] details:nil tagValue:@"yes"],
-								   [CommonPresetValue presetWithName:[CommonPresetList noForLocale]  details:nil tagValue:@"no"] ];
+			NSArray * presets = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
+								   [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
 			for ( NSString * k in keysArray ) {
 				NSString * name = stringsOptionsDict[ k ];
-				CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+				PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 				[tags addObject:tag];
 			}
-			CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
+			PresetGroup * group = [PresetGroup presetGroupWithName:label tags:tags];
 			return group;
 
 		} else if ( optionsArray ) {
@@ -564,10 +558,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			// a multiple selection
 			NSMutableArray * presets = [NSMutableArray new];
 			for ( NSString * v in optionsArray ) {
-				[presets addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:v]];
+				[presets addObject:[PresetValue presetValueWithName:nil details:nil tagValue:v]];
 			}
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
+			PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[ tag ]];
 			return group;
 
 		} else if ( stringsOptionsDict ) {
@@ -575,10 +569,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			// a multiple selection
 			NSMutableArray * presets = [NSMutableArray new];
 			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key2, NSString * _Nonnull val, BOOL * _Nonnull stop) {
-				[presets addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:val]];
+				[presets addObject:[PresetValue presetValueWithName:nil details:nil tagValue:val]];
 			}];
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
+			PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[ tag ]];
 			return group;
 
 		} else {
@@ -594,14 +588,14 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			
 			// a list of booleans
 			NSMutableArray * tags = [NSMutableArray new];
-			NSArray * presets = @[ [CommonPresetValue presetWithName:[CommonPresetList yesForLocale] details:nil tagValue:@"yes"],
-								   [CommonPresetValue presetWithName:[CommonPresetList noForLocale]  details:nil tagValue:@"no"] ];
+			NSArray * presets = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
+								   [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
 			for ( NSString * k in keysArray ) {
 				NSString * name = stringsOptionsDict[ k ];
-				CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+				PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 				[tags addObject:tag];
 			}
-			CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
+			PresetGroup * group = [PresetGroup presetGroupWithName:label tags:tags];
 			return group;
 			
 		} else if ( optionsArray ) {
@@ -609,10 +603,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			// a multiple selection
 			NSMutableArray * presets = [NSMutableArray new];
 			for ( NSString * v in optionsArray ) {
-				[presets addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:v]];
+				[presets addObject:[PresetValue presetValueWithName:nil details:nil tagValue:v]];
 			}
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
+			PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[ tag ]];
 			return group;
 			
 		} else {
@@ -631,26 +625,28 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		if ( stringsOptionsDict ) {
 
 			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
-				[presets addObject:[CommonPresetValue presetWithName:v details:nil tagValue:k]];
+				[presets addObject:[PresetValue presetValueWithName:v details:nil tagValue:k]];
 			}];
-			[presets sortUsingComparator:^NSComparisonResult(CommonPresetValue * obj1, CommonPresetValue * obj2) {
+			[presets sortUsingComparator:^NSComparisonResult(PresetValue * obj1, PresetValue * obj2) {
 				return [obj1.name compare:obj2.name];
 			}];
 
 		} else if ( optionsArray ) {
 
 			for ( NSString * v in optionsArray ) {
-				[presets addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:v]];
+				[presets addObject:[PresetValue presetValueWithName:nil details:nil tagValue:v]];
 			}
 
 		} else {
 
 			// check tagInfo
-			if ( g_taginfoCache[fieldName] ) {
+			if ( g_taginfoCache[ fieldName ] ) {
 				// already got them once
 				presets = g_taginfoCache[fieldName];
-				if ( [presets isKindOfClass:[CommonPresetGroup class]] ) {
-					return (CommonPresetGroup *)presets;	// hack for multi-combo: we already created the group and stashed it in presets
+				if ( [presets isKindOfClass:[PresetGroup class]] ) {
+					return (PresetGroup *)presets;	// hack for multi-combo: we already created the group and stashed it in presets
+				} else {
+					// its an array, and we'll convert it to a group below
 				}
 			} else if ( update ) {
 				dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
@@ -667,18 +663,18 @@ BOOL IsOsmBooleanTrue( NSString * value )
 						if ( isMulti ) {
 							// a list of booleans
 							NSMutableArray * tags = [NSMutableArray new];
-							NSArray * yesNo = @[ [CommonPresetValue presetWithName:[CommonPresetList yesForLocale] details:nil tagValue:@"yes"],
-											     [CommonPresetValue presetWithName:[CommonPresetList noForLocale]  details:nil tagValue:@"no"] ];
+							NSArray * yesNo = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
+											     [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
 							for ( NSDictionary * v in values ) {
 								if ( [v[@"count_all"] integerValue] < 1000 )
 									continue; // it's a very uncommon value, so ignore it
 								NSString * k = v[@"key"];
 								NSString * name = k;
-								CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:yesNo];
+								PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:yesNo];
 								[tags addObject:tag];
 							}
-							CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
-							CommonPresetGroup * group2 = [CommonPresetGroup groupWithName:nil tags:@[group]];
+							PresetGroup * group = [PresetGroup presetGroupWithName:label tags:tags];
+							PresetGroup * group2 = [PresetGroup presetGroupWithName:nil tags:@[group]];
 							group.isDrillDown = YES;
 							group2.isDrillDown = YES;
 							presets2 = (id)group2;
@@ -689,7 +685,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 								if ( [v[@"fraction"] doubleValue] < 0.01 )
 									continue; // it's a very uncommon value, so ignore it
 								NSString * val = v[@"value"];
-								[presets2 addObject:[CommonPresetValue presetWithName:nil details:nil tagValue:val]];
+								[presets2 addObject:[PresetValue presetValueWithName:nil details:nil tagValue:val]];
 							}
 						}
 						dispatch_async(dispatch_get_main_queue(), ^{
@@ -704,14 +700,14 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}
 
 		if ( isMulti ) {
-			CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:@[]];
-			CommonPresetGroup * group2 = [CommonPresetGroup groupWithName:nil tags:@[group]];
+			PresetGroup * group = [PresetGroup presetGroupWithName:label tags:@[]];
+			PresetGroup * group2 = [PresetGroup presetGroupWithName:nil tags:@[group]];
 			group.isDrillDown = YES;
 			group2.isDrillDown = YES;
 			return group2;
 		} else {
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
-			CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[ tag ]];
+			PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[ tag ]];
 			return group;
 		}
 
@@ -725,13 +721,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * v, BOOL *stop) {
 				NSString * n = v[@"title"];
 				NSString * d = v[@"description"];
-				[presets addObject:[CommonPresetValue presetWithName:n details:d tagValue:k]];
+				[presets addObject:[PresetValue presetValueWithName:n details:d tagValue:k]];
 			}];
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:stringsTypesDict[key] featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			PresetKey * tag = [PresetKey presetKeyWithName:stringsTypesDict[key] featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			[tagList addObject:tag];
 		}
 
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tagList];
+		PresetGroup * group = [PresetGroup presetGroupWithName:label tags:tagList];
 		return group;
 
 	} else if ( [type isEqualToString:@"address"] ) {
@@ -747,7 +743,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
 		NSArray * keys = nil;
-		for ( NSDictionary * localeDict in g_addressFormatsDict ) {
+		for ( NSDictionary * localeDict in g_jsonAddressFormatsDict ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
 			if ( countryCodeList == nil ) {
 				// default
@@ -770,11 +766,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 					name = placeholder;
 				keyboard = [numericFields containsObject:k] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
 				NSString * tagKey = [@"addr:" stringByAppendingString:k];
-				CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:tagKey defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
+				PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:tagKey defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 				[addrs addObject:tag];
 			}
 		}
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:addrs];
+		PresetGroup * group = [PresetGroup presetGroupWithName:label tags:addrs];
 		return group;
 
 	} else if ( [type isEqualToString:@"text"] ||
@@ -799,15 +795,15 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			keyboard = UIKeyboardTypeEmailAddress;
 		else if ( [type isEqualToString:@"textarea"] )
 			capitalize = UITextAutocapitalizationTypeSentences;
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[tag]];
+		PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[tag]];
 		return group;
 
 	} else if ( [type isEqualToString:@"maxspeed"] ) {
 
 		// special case
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[tag]];
+		PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[tag]];
 		return group;
 
 	} else if ( [type isEqualToString:@"access"] ) {
@@ -815,17 +811,17 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		// special case
 		NSMutableArray * presets = [NSMutableArray new];
 		[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSDictionary * info, BOOL * stop) {
-			CommonPresetValue * v = [CommonPresetValue presetWithName:info[@"title"] details:info[@"description"] tagValue:k];
+			PresetValue * v = [PresetValue presetValueWithName:info[@"title"] details:info[@"description"] tagValue:k];
 			[presets addObject:v];
 		}];
 
 		NSMutableArray * tags = [NSMutableArray new];
 		for ( NSString * k in keysArray ) {
 			NSString * name = stringsTypesDict[ k ];
-			CommonPresetKey * tag = [CommonPresetKey tagWithName:name featureKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
+			PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:k defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 			[tags addObject:tag];
 		}
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:label tags:tags];
+		PresetGroup * group = [PresetGroup presetGroupWithName:label tags:tags];
 		return group;
 
 	} else if ( [type isEqualToString:@"typeCombo"] ) {
@@ -843,8 +839,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 #if DEBUG
 		assert(NO);
 #endif
-		CommonPresetKey * tag = [CommonPresetKey tagWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:@[tag]];
+		PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
+		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[tag]];
 		return group;
 
 	}
@@ -857,7 +853,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	NSString * currentCountryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
 
-	[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL * stop) {
+	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL * stop) {
 
 		__block double totalScore = 0;
 #if USE_SUGGESTIONS
@@ -956,7 +952,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSArray * ignore = @[ @"barrier", @"highway", @"footway", @"railway", @"type" ];
 
 		// whitelist
-		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
+		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
 			if ( dict[@"suggestion"] )
 				return;
 			NSArray * geom = dict[@"geometry"];
@@ -973,7 +969,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}];
 
 		// blacklist
-		[g_presetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
+		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
 			if ( dict[@"suggestion"] )
 				return;
 			NSArray * geom = dict[ @"geometry"];
@@ -1012,129 +1008,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}
 	}];
 	return area;
-}
-
-
--(void)presetsForFeature:(NSString *)featureName geometry:(NSString *)geometry field:(NSString *)fieldType allFields:(NSMutableSet *)fieldSet update:(void (^)(void))update
-{
-	NSDictionary * featureDict = g_presetsDict[ featureName ];
-	NSArray * fields = featureDict[fieldType];
-
-	if ( fields == nil ) {
-		// inherit from parent
-		NSRange slash = [featureName rangeOfString:@"/" options:NSBackwardsSearch];
-		if ( slash.length ) {
-			NSString * parent = [featureName substringToIndex:slash.location];
-			[self presetsForFeature:parent geometry:geometry field:fieldType allFields:fieldSet update:update];
-		}
-		return;
-	}
-
-	for ( NSString * field in fields ) {
-
-		if ( [field hasPrefix:@"{"] && [field hasSuffix:@"}"]) {
-			// copy fields from referenced item
-			NSString * ref = [field substringWithRange:NSMakeRange(1, field.length-2)];
-			[self presetsForFeature:ref geometry:geometry field:fieldType allFields:fieldSet update:update];
-			continue;
-		}
-
-		if ( [fieldSet containsObject:field] )
-			continue;
-		[fieldSet addObject:field];
-
-		CommonPresetGroup * group = [self groupForField:field geometry:geometry update:update];
-		if ( group == nil )
-			continue;
-		// if both this group and the previous don't have a name then merge them
-		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
-			CommonPresetGroup * prev = _sectionList.lastObject;
-			if ( prev.name == nil ) {
-				[prev mergeTagsFromGroup:group];
-				continue;
-			}
-		}
-		[_sectionList addObject:group];
-	}
-}
-
--(void)setPresetsForFeature:(NSString *)featureName tags:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
-{
-	NSDictionary * featureDict = g_presetsDict[ featureName ];
-
-	_featureName = featureDict[ @"name" ];
-
-	// Always start with Type and Name
-	CommonPresetKey * typeTag = [CommonPresetKey tagWithName:@"Type" featureKey:nil defaultValue:nil placeholder:@"" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeNone presets:@[@"",@""]];
-	CommonPresetKey * nameTag = [CommonPresetKey tagWithName:g_fieldsDict[@"name"][@"label"] featureKey:@"name" defaultValue:nil placeholder:g_fieldsDict[@"name"][@"placeholder"] keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeWords presets:nil];
-	CommonPresetGroup * typeGroup = [CommonPresetGroup groupWithName:@"Type" tags:@[ typeTag, nameTag ] ];
-	_sectionList = [NSMutableArray arrayWithArray:@[ typeGroup ]];
-
-	// Add user-defined presets
-	NSMutableArray * customGroup = [NSMutableArray new];
-	for ( CustomPreset * custom in [CustomPresetList shared] ) {
-		if ( custom.appliesToKey.length ) {
-			NSString * v = objectTags[ custom.appliesToKey ];
-			if ( v && (custom.appliesToValue.length == 0 || [v isEqualToString:custom.appliesToValue]) ) {
-				// accept
-			} else {
-				continue;
-			}
-		}
-		[customGroup addObject:custom];
-	}
-	if ( customGroup.count ) {
-		CommonPresetGroup * group = [CommonPresetGroup groupWithName:nil tags:customGroup];
-		[_sectionList addObject:group];
-	}
-
-	// Add presets specific to the type
-	NSMutableSet * fieldSet = [NSMutableSet new];
-	[self presetsForFeature:featureName geometry:geometry field:@"fields"     allFields:fieldSet update:update];
-	[_sectionList addObject:[CommonPresetGroup groupWithName:nil tags:nil]];	// Create a break between the common items and the rare items
-	[self presetsForFeature:featureName geometry:geometry field:@"moreFields" allFields:fieldSet update:update];
-}
-
--(instancetype)init
-{
-	self = [super init];
-	if ( self ) {
-	}
-	return self;
-}
-
--(NSInteger)sectionCount
-{
-	return _sectionList.count;
-}
-
--(CommonPresetGroup *)groupAtIndex:(NSInteger)index
-{
-	return _sectionList[ index ];
-}
-
--(NSInteger)tagsInSection:(NSInteger)index
-{
-	CommonPresetGroup * group = _sectionList[ index ];
-	return group.presetKeys.count;
-}
-
--(CommonPresetKey *)tagAtSection:(NSInteger)section row:(NSInteger)row
-{
-	CommonPresetGroup * group = _sectionList[ section ];
-	CommonPresetKey * tag = group.presetKeys[ row ];
-	return tag;
-}
-
--(CommonPresetKey *)tagAtIndexPath:(NSIndexPath *)indexPath
-{
-#if TARGET_OS_IPHONE
-	return [self tagAtSection:indexPath.section row:indexPath.row];
-#else
-	NSUInteger section = [indexPath indexAtPosition:0];
-	NSUInteger row = [indexPath indexAtPosition:1];
-	return [self tagAtSection:section row:row];
-#endif
 }
 
 @end
@@ -1237,7 +1110,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 
 
-@implementation CommonPresetCategory
+@implementation PresetCategory
 -(instancetype)initWithCategoryName:(NSString *)name;
 {
 	self = [super init];
@@ -1248,20 +1121,20 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 -(NSString	*)friendlyName
 {
-	NSDictionary * dict = g_categoriesDict[ _categoryName ];
+	NSDictionary * dict = g_jsonCategoriesDict[ _categoryName ];
 	return dict[ @"name" ];
 }
 -(UIImage *)icon
 {
 	return nil;
 }
--(NSArray<CommonPresetFeature *> *)members
+-(NSArray<PresetFeature *> *)members
 {
-	NSDictionary * dict = g_categoriesDict[ _categoryName ];
-	NSArray<CommonPresetFeature *> * m = dict[ @"members" ];
-	NSMutableArray<CommonPresetFeature *> * m2 = [NSMutableArray new];
+	NSDictionary * dict = g_jsonCategoriesDict[ _categoryName ];
+	NSArray<PresetFeature *> * m = dict[ @"members" ];
+	NSMutableArray<PresetFeature *> * m2 = [NSMutableArray new];
 	for ( NSString * p in m ) {
-		CommonPresetFeature * t = [CommonPresetFeature commonPresetFeatureWithName:p];
+		PresetFeature * t = [PresetFeature presetFeatureForFeatureName:p];
 		if ( p ) {
 			[m2 addObject:t];
 		}
@@ -1271,40 +1144,156 @@ BOOL IsOsmBooleanTrue( NSString * value )
 @end
 
 
-@implementation CommonPresetFeature
-@synthesize icon = _icon;
 
-+(instancetype)commonPresetFeatureWithName:(NSString *)name
+@implementation PresetsForFeature
+
++(instancetype)presetsForFeature:(NSString *)featureName objectTags:(NSDictionary *)objectTags geometry:(NSString *)geometry  update:(void (^)(void))update
 {
-	if ( name == nil )
-		return nil;
-	// all tags are single-instanced, so we can easily compare them
-	if ( g_FeatureCache == nil ) {
-		g_FeatureCache = [NSMutableDictionary new];
-	}
-	CommonPresetFeature * tag = g_FeatureCache[ name ];
-	if ( tag == nil ) {
-		tag = [[CommonPresetFeature alloc] initWithName:name];
-		if ( tag == nil ) {
-			tag = (id)[NSNull null];
-		}
-		g_FeatureCache[ name ] = tag;
-	}
-	return [tag isKindOfClass:[NSNull class]] ? nil : tag;
+	PresetsForFeature * presentation = [PresetsForFeature new];
+	[presentation setFeature:featureName
+				  objectTags:objectTags
+					geometry:geometry
+					  update:update];
+	return presentation;
 }
 
--(instancetype)initWithName:(NSString *)name
+-(NSString *)featureName
+{
+	return _featureName;
+}
+-(NSArray *)sectionList
+{
+	return _sectionList;
+}
+
+-(NSInteger)sectionCount
+{
+	return _sectionList.count;
+}
+
+-(PresetGroup *)groupAtIndex:(NSInteger)index
+{
+	return _sectionList[ index ];
+}
+
+-(NSInteger)tagsInSection:(NSInteger)index
+{
+	PresetGroup * group = _sectionList[ index ];
+	return group.presetKeys.count;
+}
+
+-(PresetKey *)presetAtSection:(NSInteger)section row:(NSInteger)row
+{
+	PresetGroup * group = _sectionList[ section ];
+	PresetKey * tag = group.presetKeys[ row ];
+	return tag;
+}
+
+-(PresetKey *)presetAtIndexPath:(NSIndexPath *)indexPath
+{
+	return [self presetAtSection:indexPath.section row:indexPath.row];
+}
+
+-(void)addPresetsForFieldsInFeature:(NSString *)featureName geometry:(NSString *)geometry field:(NSString *)fieldType dupSet:(NSMutableSet *)dupSet update:(void (^)(void))update
+{
+	NSArray * fields = nil;
+	while ( (fields = g_jsonPresetsDict[ featureName ][ fieldType ]) == nil ) {
+		// check parent
+		NSRange slash = [featureName rangeOfString:@"/" options:NSBackwardsSearch];
+		if ( slash.length == 0  ||  slash.location == 0 )
+			break;
+		featureName = [featureName substringToIndex:slash.location];
+	}
+
+	for ( NSString * field in fields ) {
+
+		if ( [field hasPrefix:@"{"] && [field hasSuffix:@"}"]) {
+			// copy fields from referenced item
+			NSString * ref = [field substringWithRange:NSMakeRange(1, field.length-2)];
+			[self addPresetsForFieldsInFeature:ref geometry:geometry field:fieldType dupSet:dupSet update:update];
+			continue;
+		}
+
+		if ( [dupSet containsObject:field] )
+			continue;
+		[dupSet addObject:field];
+
+		PresetGroup * group = [PresetsDatabase groupForField:field geometry:geometry update:update];
+		if ( group == nil )
+			continue;
+		// if both this group and the previous don't have a name then merge them
+		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
+			PresetGroup * prev = _sectionList.lastObject;
+			if ( prev.name == nil ) {
+				[prev mergeTagsFromGroup:group];
+				continue;
+			}
+		}
+		[_sectionList addObject:group];
+	}
+}
+
+-(void)setFeature:(NSString *)featureName objectTags:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
+{
+	NSDictionary * featureDict = g_jsonPresetsDict[ featureName ];
+
+	_featureName = featureDict[ @"name" ];
+
+	// Always start with Type and Name
+	PresetKey * typeTag = [PresetKey presetKeyWithName:@"Type" featureKey:nil defaultValue:nil placeholder:@"" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeNone presets:@[@"",@""]];
+	PresetKey * nameTag = [PresetKey presetKeyWithName:g_jsonFieldsDict[@"name"][@"label"] featureKey:@"name" defaultValue:nil placeholder:g_jsonFieldsDict[@"name"][@"placeholder"] keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeWords presets:nil];
+	PresetGroup * typeGroup = [PresetGroup presetGroupWithName:@"Type" tags:@[ typeTag, nameTag ] ];
+	_sectionList = [NSMutableArray arrayWithArray:@[ typeGroup ]];
+
+	// Add user-defined presets
+	NSMutableArray * customGroup = [NSMutableArray new];
+	for ( CustomPreset * custom in [CustomPresetList shared] ) {
+		if ( custom.appliesToKey.length ) {
+			NSString * v = objectTags[ custom.appliesToKey ];
+			if ( v && (custom.appliesToValue.length == 0 || [v isEqualToString:custom.appliesToValue]) ) {
+				// accept
+			} else {
+				continue;
+			}
+		}
+		[customGroup addObject:custom];
+	}
+	if ( customGroup.count ) {
+		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:customGroup];
+		[_sectionList addObject:group];
+	}
+
+	// Add presets specific to the type
+	NSMutableSet * dupSet = [NSMutableSet new];
+	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"fields"     dupSet:dupSet update:update];
+	[_sectionList addObject:[PresetGroup presetGroupWithName:nil tags:nil]];	// Create a break between the common items and the rare items
+	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"moreFields" dupSet:dupSet update:update];
+}
+@end
+
+
+
+@implementation PresetFeature
+@synthesize icon = _icon;
+
+-(instancetype)initWithName:(NSString *)featureName presets:(NSDictionary *)dict
 {
 	self = [super init];
 	if ( self ) {
-		_featureName	= name;
-		_dict			= g_presetsDict[ name ];
-		if ( self.tags.count == 0 ) {
-			return nil;	// placeholder (line,area,point)
-		}
+		_featureName	= featureName;
+		_dict			= dict;
 	}
 	return self;
 }
+
++(instancetype)presetFeatureForFeatureName:(NSString *)name
+{
+	NSDictionary * dict = name.length ? g_jsonPresetsDict[ name ] : nil;
+	if ( dict.count == 0 )
+		return nil;
+	return [[PresetFeature alloc] initWithName:name presets:dict];
+}
+
 -(NSString *)description
 {
 	return self.friendlyName;
@@ -1323,7 +1312,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		if ( slash.length == 0 )
 			break;
 		feature = [feature substringToIndex:slash.location];
-		NSDictionary * p = g_presetsDict[feature];
+		NSDictionary * p = g_jsonPresetsDict[feature];
 		NSString * s = p[@"name"];
 		if ( s )
 			return s;
@@ -1408,7 +1397,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSRange slash = [self.featureName rangeOfString:@"/" options:NSBackwardsSearch];
 		if ( slash.length ) {
 			NSString * parentName = [self.featureName substringToIndex:slash.location];
-			CommonPresetFeature * parent = [CommonPresetFeature commonPresetFeatureWithName:parentName];
+			PresetFeature * parent = [PresetFeature presetFeatureForFeatureName:parentName];
 			return [parent inheritableField:field];
 		}
 	}
@@ -1429,7 +1418,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	NSMutableDictionary * result = nil;
 	for ( NSString * field in self.fields ) {
-		NSDictionary * fieldDict = g_fieldsDict[ field ];
+		NSDictionary * fieldDict = g_jsonFieldsDict[ field ];
 		NSString * value = fieldDict[ @"default" ];
 		if ( value == nil )
 			continue;
