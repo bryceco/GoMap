@@ -1392,7 +1392,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	NSDictionary * tags =  _dict[ @"removeTags" ];
 	if ( tags == nil )
-		tags = self.tags;
+		tags = self.addTags;
 	return tags;
 }
 -(BOOL)suggestion
@@ -1400,10 +1400,35 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return _dict[ @"suggestion" ] != nil;
 }
 
+-(NSArray *)inheritableField:(NSString *)field
+{
+	id result = _dict[ field ];
+	if ( result == nil ) {
+		// inherit from parent
+		NSRange slash = [self.featureName rangeOfString:@"/" options:NSBackwardsSearch];
+		if ( slash.length ) {
+			NSString * parentName = [self.featureName substringToIndex:slash.location];
+			CommonPresetFeature * parent = [CommonPresetFeature commonPresetFeatureWithName:parentName];
+			return [parent inheritableField:field];
+		}
+	}
+	return result;
+}
+
+-(NSArray *)fields
+{
+	return [self inheritableField:@"fields"];
+}
+
+-(NSArray *)moreFields
+{
+	return [self inheritableField:@"moreFields"];
+}
+
 -(NSDictionary *)defaultValuesForGeometry:(NSString *)geometry
 {
 	NSMutableDictionary * result = nil;
-	for ( NSString * field in _dict[@"fields"]  ) {
+	for ( NSString * field in self.fields ) {
 		NSDictionary * fieldDict = g_fieldsDict[ field ];
 		NSString * value = fieldDict[ @"default" ];
 		if ( value == nil )

@@ -150,7 +150,8 @@
 	CommonPresetFeature * oldFeature = [CommonPresetFeature commonPresetFeatureWithName:oldFeatureName];
 
 	// remove previous feature tags
-	[oldFeature.removeTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+	NSDictionary * removeTags = oldFeature.removeTags;
+	[removeTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 		[tabController setFeatureKey:key value:nil];
 	}];
 
@@ -161,8 +162,8 @@
 			[tabController setFeatureKey:key value:value];
 		}
 	}];
-	NSDictionary * addTags = feature.addTags;
-	[addTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+
+	[feature.addTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 		if ( [value isEqualToString:@"*"] )
 			value = @"yes";
 		[tabController setFeatureKey:key value:value];
