@@ -2264,7 +2264,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	// get renderInfo for objects
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.renderInfo == nil ) {
-			object.renderInfo = [[RenderInfoDatabase sharedRenderInfoDatabase] renderInfoForObject:object];
+			object.renderInfo = [RenderInfoDatabase.sharedRenderInfoDatabase renderInfoForObject:object];
 		}
 		if ( object->renderPriorityCached == 0 ) {
 			object->renderPriorityCached = [object.renderInfo renderPriorityForObject:object];

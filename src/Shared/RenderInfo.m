@@ -207,10 +207,21 @@ static RenderInfo * g_DefaultRender = nil;
 
 -(RenderInfo *)renderInfoForObject:(OsmBaseObject *)object
 {
+	NSDictionary * tags = object.tags;
+	// if the object is part of a rendered relation than inherit that relation's tags
+	if ( object.parentRelations.count && object.isWay && !object.hasInterestingTags ) {
+		for ( OsmRelation * parent in object.parentRelations ) {
+			if ( parent.isMultipolygon || parent.isBoundary ) {
+				tags = parent.tags;
+				break;
+			}
+		}
+	}
+
 	// try exact match
 	__block RenderInfo * best = nil;
 	__block BOOL isDefault = NO;
-	[object.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
+	[tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
 		NSDictionary * valDict = [_keyDict objectForKey:key];
 		RenderInfo * render = valDict[value];
 		if ( render == nil ) {
