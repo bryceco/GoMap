@@ -3220,14 +3220,14 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	dots.anchorPoint		= CGPointZero;
 	dots.strokeColor		= NSColor.whiteColor.CGColor;
 	dots.lineDashPhase 		= 0.0;
-	dots.lineDashPattern 	= @[ @(3), @(3) ];
+	dots.lineDashPattern 	= @[ @(4), @(4) ];
 	[_blinkLayer addSublayer:dots];
 
 	CABasicAnimation * dashAnimation = [CABasicAnimation animationWithKeyPath:@"lineDashPhase"];
-	dashAnimation.fromValue	= @(0.0);
-	dashAnimation.toValue	= @(10.0);
-	dashAnimation.duration	= 0.20;
-	dashAnimation.repeatCount = 100000;
+	dashAnimation.fromValue		= @(0.0);
+	dashAnimation.toValue		= @(-16.0);
+	dashAnimation.duration		= 0.6;
+	dashAnimation.repeatCount	= CGFLOAT_MAX;
 	[dots addAnimation:dashAnimation forKey:@"linePhase"];
 	CGPathRelease(path);
 
