@@ -2219,7 +2219,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		if ( obj.isWay && obj.parentRelations.count > 0 && !obj.hasInterestingTags ) {
 			BOOL hidden = YES;
 			for ( OsmRelation * parent in obj.parentRelations ) {
-				if ( !parent.isMultipolygon || [objects containsObject:parent] ) {
+				if ( !(parent.isMultipolygon || parent.isBoundary) || [objects containsObject:parent] ) {
 					hidden = NO;
 					break;
 				}
