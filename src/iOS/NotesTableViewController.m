@@ -61,9 +61,9 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( self.note.comments && section == 0 )
-		return @"Note History";
+		return NSLocalizedString(@"Note History",nil);
 	else
-		return @"Update";
+		return NSLocalizedString(@"Update",@"update an osm note");
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section

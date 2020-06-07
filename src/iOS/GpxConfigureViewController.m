@@ -27,10 +27,10 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
 	if ( row == 0 )
-		return @"Never";
+		return NSLocalizedString(@"Never",nil);
 	if ( row == 1 )
-		return @"1 Day";
-	return [NSString stringWithFormat:@"%ld Days",(long)row];
+		return NSLocalizedString(@"1 Day",nil);
+	return [NSString stringWithFormat:NSLocalizedString(@"%ld Days",nil),(long)row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component

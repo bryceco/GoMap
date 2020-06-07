@@ -105,8 +105,8 @@
 	}
 
 	if ( ![[NSUserDefaults standardUserDefaults] boolForKey:@"userDidPreviousUpload"] ) {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Attention"
-																		message:@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel."
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Attention",nil)
+																		message:NSLocalizedString(@"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel.",nil)
 																 preferredStyle:UIAlertControllerStyleAlert];
 		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Commit",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -197,7 +197,7 @@
 
 	MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 	mail.mailComposeDelegate = self;
-	[mail setSubject:[NSString stringWithFormat:@"%@ changeset", appDelegate.appName]];
+	[mail setSubject:[NSString stringWithFormat:NSLocalizedString(@"%@ changeset",nil), appDelegate.appName]];
 	NSString * xml = [_mapData changesetAsXml];
 	xml = [xml stringByAppendingString:@"\n\n\n\n\n\n\n\n\n\n\n\n"];
 	_xmlTextView.attributedText = nil;
@@ -220,7 +220,7 @@
 
 		MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 		mail.mailComposeDelegate = self;
-		[mail setSubject:[NSString stringWithFormat:@"%@ changeset", appDelegate.appName]];
+		[mail setSubject:[NSString stringWithFormat:NSLocalizedString(@"%@ changeset",nil), appDelegate.appName]];
 		NSString * xml = [_mapData changesetAsXml];
 		[mail addAttachmentData:[xml dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"application/xml" fileName:@"osmChange.osc"];
 		[self presentViewController:mail animated:YES completion:nil];

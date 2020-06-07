@@ -182,11 +182,11 @@
 {
 	switch (section) {
 		case SECTION_ACTIVE_TRACK:
-			return @"Current Track";
+			return NSLocalizedString(@"Current Track",nil);
 		case SECTION_PREVIOUS_TRACKS:
-			return @"Previous Tracks";
+			return NSLocalizedString(@"Previous Tracks",nil);
 		case SECTION_CONFIGURE:
-			return @"Configure";
+			return NSLocalizedString(@"Configure",nil);
 		default:
 			return nil;
 	}
@@ -195,7 +195,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
 	if ( section == SECTION_ACTIVE_TRACK ) {
-		return @"A GPX Track records your path as you travel along a road or trail";
+		return NSLocalizedString(@"A GPX Track records your path as you travel along a road or trail",nil);
 	}
 	return nil;
 }
@@ -236,7 +236,7 @@
 	NSInteger	dur = (NSInteger)round(track.duration);
 	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
-	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (long)track.distance, (long)track.points.count];
+	NSString * meters = [NSString stringWithFormat:NSLocalizedString(@"%ld meters, %ld points",@"length of a gpx track"), (long)track.distance, (long)track.points.count];
 	GpxTrackTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
 	cell.startDate.text = startDate;
 	cell.duration.text = duration;

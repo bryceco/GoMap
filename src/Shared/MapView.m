@@ -2055,7 +2055,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
     }
 
 	if ( _editorLayer.selectedPrimary.tags.count > 0 ) {
-		NSString * question = [NSString stringWithFormat:@"Pasting %ld tag(s)", (long)copyPasteTags.count];
+		NSString * question = [NSString stringWithFormat:NSLocalizedString(@"Pasting %ld tag(s)",nil), (long)copyPasteTags.count];
 		UIAlertController * alertPaste = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Paste",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Merge Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
@@ -2945,7 +2945,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 - (void)refreshPushpinText
 {
 	NSString * text = _editorLayer.selectedPrimary.friendlyDescription;
-	text = text ?: @"(new object)";
+	text = text ?: NSLocalizedString(@"(new object)",nil);
 	_pushpinView.text = text;
 }
 
@@ -3596,11 +3596,11 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			if ( ![title hasPrefix:@"("] ) {
 				// indicate what type of object it is
 				if ( object.isNode )
-					title = [title stringByAppendingString:@" (node)"];
+					title = [title stringByAppendingString:NSLocalizedString(@" (node)",@"")];
 				else if ( object.isWay )
-					title = [title stringByAppendingString:@" (way)"];
+					title = [title stringByAppendingString:NSLocalizedString(@" (way)",nil)];
 				else if ( object.isRelation ) {
-					NSString * type = object.tags[@"type"] ?: @"relation";
+					NSString * type = object.tags[@"type"] ?: NSLocalizedString(@"relation",nil);
 					title = [title stringByAppendingFormat:@" (%@)",type];
 				}
 			}

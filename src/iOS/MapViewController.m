@@ -76,11 +76,11 @@
 - (void)setupAccessibility {
     self.locationButton.accessibilityIdentifier = @"location_button";
     
-    _undoButton.accessibilityLabel = @"Undo";
-    _redoButton.accessibilityLabel = @"Redo";
-    _settingsBarButtonItem.accessibilityLabel = @"Settings";
-    _uploadButton.accessibilityLabel = @"Upload your changes";
-    _displayBarButtonItem.accessibilityLabel = @"Display options";
+    _undoButton.accessibilityLabel = NSLocalizedString(@"Undo",nil);
+    _redoButton.accessibilityLabel = NSLocalizedString(@"Redo",nil);
+    _settingsBarButtonItem.accessibilityLabel = NSLocalizedString(@"Settings",nil);
+    _uploadButton.accessibilityLabel = NSLocalizedString(@"Upload your changes",nil);
+    _displayBarButtonItem.accessibilityLabel = NSLocalizedString(@"Display options",nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated

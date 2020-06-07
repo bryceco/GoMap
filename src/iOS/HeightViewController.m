@@ -376,7 +376,7 @@ static const CGFloat InsetPercent = 0.15;
 		double height = height2 - height1;
 		double heightError =  height * distError / dist;
 		_currentHeight = [self distanceStringForFloat:height];
-		NSString * text = [NSString stringWithFormat:@"Height: %@ ± %@ meters", _currentHeight, [self distanceStringForFloat:heightError]];
+		NSString * text = [NSString stringWithFormat:NSLocalizedString(@"Height: %@ ± %@ meters",nil), _currentHeight, [self distanceStringForFloat:heightError]];
 		[UIView performWithoutAnimation:^{
 			[_heightLabel setTitle:text forState:UIControlStateNormal];
 			[_heightLabel layoutIfNeeded];
@@ -425,7 +425,7 @@ static const CGFloat InsetPercent = 0.15;
 					[label removeFromSuperview];
 				} else {
 					label.layer.anchorPoint = CGPointMake(0, 0.5);
-					label.text				= [NSString stringWithFormat:@"%@ meters", [self distanceStringForFloat:height-scrollHeight]];
+					label.text				= [NSString stringWithFormat:NSLocalizedString(@"%@ meters",nil), [self distanceStringForFloat:height-scrollHeight]];
 					label.font				= [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 					label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
 					label.textColor			= UIColor.blackColor;
@@ -498,7 +498,7 @@ static const CGFloat InsetPercent = 0.15;
 			textField.keyboardType	= UIKeyboardTypeNumbersAndPunctuation;
 		}];
 		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
-		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Set",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Set",@"set tag value") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 			UITextField	* textField = alert.textFields[0];
 			NSString * text = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 			[self setHeight:text];

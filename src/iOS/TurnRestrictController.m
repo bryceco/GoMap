@@ -258,7 +258,7 @@
 {
 	NSString * message = NSLocalizedString(@"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\n"
 						"Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.",nil);
-	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Turn Restrictions" message:message preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Turn Restrictions",nil) message:message preferredStyle:UIAlertControllerStyleAlert];
 	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 	[self presentViewController:alert animated:YES completion:nil];
 }
@@ -269,11 +269,11 @@
 	NSString * toName = toHwy.wayObj.friendlyDescription;
 	switch ( toHwy.restriction ) {
 		case TURN_RESTRICT_NONE:
-			return [NSString stringWithFormat:@"Travel ALLOWED from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:NSLocalizedString(@"Travel ALLOWED from %@ to %@",nil), fromName, toName];
 		case TURN_RESTRICT_NO:
-			return [NSString stringWithFormat:@"Travel PROHIBITED from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:NSLocalizedString(@"Travel PROHIBITED from %@ to %@",nil), fromName, toName];
 		case TURN_RESTRICT_ONLY:
-			return [NSString stringWithFormat:@"Travel ONLY from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:NSLocalizedString(@"Travel ONLY from %@ to %@",nil), fromName, toName];
 	}
 	return nil;
 }
@@ -299,7 +299,7 @@
 											 to:_selectedFromHwy.wayObj];
 	_uTurnButton.selected = (_currentUTurnRelation != nil);
 
-	self.detailText.text = [NSString stringWithFormat:@"Travel from %@",selectedHwy.wayObj.friendlyDescription];
+	self.detailText.text = [NSString stringWithFormat:NSLocalizedString(@"Travel from %@",nil),selectedHwy.wayObj.friendlyDescription];
 
 	// highway exits center one-way
 	BOOL selectedHwyIsOneWayExit = [selectedHwy isOneWayExitingCenter];
@@ -382,9 +382,9 @@
 	if (canDelete ) {
 		canDelete();
 	} else {
-		NSString * message = [NSString stringWithFormat:@"The restriction cannot be deleted: %@", error];
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Error deleting" message:message preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+		NSString * message = [NSString stringWithFormat:NSLocalizedString(@"The restriction cannot be deleted: %@",nil), error];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error deleting",nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[self presentViewController:alert animated:YES completion:nil];
 	}
 }
@@ -515,8 +515,8 @@
 		}
 	}
 
-	self.detailText.text = isRestricting ? [NSString stringWithFormat:@"U-Turn from %@ prohibited", _selectedFromHwy.wayObj.friendlyDescription]
-										 : [NSString stringWithFormat:@"U-Turn from %@ allowed", _selectedFromHwy.wayObj.friendlyDescription];
+	self.detailText.text = isRestricting ? [NSString stringWithFormat:NSLocalizedString(@"U-Turn from %@ prohibited",nil), _selectedFromHwy.wayObj.friendlyDescription]
+										 : [NSString stringWithFormat:NSLocalizedString(@"U-Turn from %@ allowed",nil), _selectedFromHwy.wayObj.friendlyDescription];
 
 	[appDelegate.mapView.editorLayer setNeedsLayout];
 }

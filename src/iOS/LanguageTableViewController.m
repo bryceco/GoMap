@@ -35,7 +35,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( section == 0 ) {
-		return @"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.";
+		return NSLocalizedString(@"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.",nil);
 	}
 	return nil;
 }
