@@ -12,8 +12,8 @@
 
 
 @interface AutocompleteTextFieldDelegate : NSObject<UITextFieldDelegate>
-@property (strong,nonatomic)	id<UITextFieldDelegate>		realDelegate;
-@property (weak,nonatomic)		AutocompleteTextField	*	owner;
+@property (weak,nonatomic)	id<UITextFieldDelegate>		realDelegate;
+@property (weak,nonatomic)	AutocompleteTextField	*	owner;
 @end
 
 @implementation AutocompleteTextFieldDelegate
@@ -289,8 +289,8 @@ static const CGFloat GradientHeight = 20.0;
 	[self sendActionsForControlEvents:UIControlEventEditingChanged];
 	// [[NSNotificationCenter defaultCenter] postNotificationName:UITextFieldTextDidChangeNotification object:self userInfo:nil];
 
-	if ( self.didSelect ) {
-		self.didSelect();
+	if ( self.didSelectAutocomplete ) {
+		self.didSelectAutocomplete();
 	}
 
 	// hide completion table view

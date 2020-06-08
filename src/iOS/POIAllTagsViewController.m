@@ -49,7 +49,7 @@
 
 	UIBarButtonItem * editButton = self.editButtonItem;
 	[editButton setTarget:self];
-	[editButton setAction:@selector(toggleEditing:)];
+	[editButton setAction:@selector(toggleTableRowEditing:)];
 	self.navigationItem.rightBarButtonItems = @[ self.navigationItem.rightBarButtonItem, editButton ];
 
 	POITabBarController * tabController = (id)self.tabBarController;
@@ -70,6 +70,10 @@
 	} else {
 		self.title = NSLocalizedString(@"All Tags",nil);
 	}
+}
+
+-(void)dealloc
+{
 }
 
 // return -1 if unchanged, else row to set focus
@@ -282,8 +286,9 @@
 		cell.text1.text = kv[0];
 		cell.text2.text = kv[1];
 
-		cell.text1.didSelect = ^{ [cell.text2 becomeFirstResponder]; };
-		cell.text2.didSelect = ^{ [cell.text2 resignFirstResponder]; };
+		__weak TextPairTableCell * weakCell = cell;
+		cell.text1.didSelectAutocomplete = ^{ [weakCell.text2 becomeFirstResponder]; };
+		cell.text2.didSelectAutocomplete = ^{ [weakCell.text2 resignFirstResponder]; };
 
 		return cell;
 
@@ -352,7 +357,7 @@
 	return dict;
 }
 
-#pragma mark Cell editing
+#pragma mark TextField delegate
 
 - (IBAction)textFieldReturn:(id)sender
 {
@@ -366,6 +371,8 @@
 
 - (IBAction)textFieldEditingDidBegin:(UITextField *)textField
 {
+	_currentTextField = textField;
+
 	TextPairTableCell * pair = (id)textField.superview;
 	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
 		pair = (id)pair.superview;
@@ -528,6 +535,61 @@
 	}
 }
 
+-(void)tabToNext:(BOOL)forward
+{
+	TextPairTableCell * pair = (id)_currentTextField.superview;
+	while ( pair && ![pair isKindOfClass:[TextPairTableCell class]])
+		pair = (id)pair.superview;
+	if ( pair == nil )
+		return;
+
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:pair];
+	UITextField * field = nil;
+	if ( forward ) {
+		if ( _currentTextField == pair.text1 ) {
+			field = pair.text2;
+		} else {
+			NSInteger max = [self tableView:self.tableView numberOfRowsInSection:indexPath.section];
+			NSInteger row = (indexPath.row+1) % max;
+			indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
+			pair = [self.tableView cellForRowAtIndexPath:indexPath];
+			field = pair.text1;
+		}
+	} else {
+		if ( _currentTextField == pair.text2 ) {
+			field = pair.text1;
+		} else {
+			NSInteger max = [self tableView:self.tableView numberOfRowsInSection:indexPath.section];
+			NSInteger row = (indexPath.row-1+max) % max;
+			indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
+			pair = [self.tableView cellForRowAtIndexPath:indexPath];
+			field = pair.text2;
+		}
+	}
+	[field becomeFirstResponder];
+	_currentTextField = field;
+}
+
+-(void)tabPrevious:(id)sender
+{
+	[self tabToNext:NO];
+}
+-(void)tabNext:(id)sender
+{
+	[self tabToNext:YES];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+	UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+	toolbar.items = @[
+		[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous", nil) style:UIBarButtonItemStylePlain target:self action:@selector(tabPrevious:)],
+		[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil)     style:UIBarButtonItemStylePlain target:self action:@selector(tabNext:)]
+	];
+	textField.inputAccessoryView = toolbar;
+	return YES;
+}
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
 	const int MAX_LENGTH = 255;
@@ -539,7 +601,9 @@
     return newLength <= MAX_LENGTH || returnKey;
 }
 
-- (IBAction)toggleEditing:(id)sender
+#pragma mark - Table view delegate
+
+- (IBAction)toggleTableRowEditing:(id)sender
 {
 	POITabBarController * tabController = (id)self.tabBarController;
 
@@ -596,35 +660,6 @@
 		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 	}
 }
-
-#pragma mark - Table view delegate
-
-#if 0
-- (void)addTagCellAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.section == 0 ) {
-		[_tags addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
-	} else if ( indexPath.section == 2 ) {
-		[_members addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
-	} else {
-		return;
-	}
-	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-
-	// set new cell to show keyboard
-	TextPairTableCell * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
-	[newCell.text1 becomeFirstResponder];
-}
-
-- (void)addTagCell:(id)sender
-{
-	UITableViewCell * cell = sender;	// starts out as UIButton
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
-		cell = (id)[cell superview];
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-	[self addTagCellAtIndexPath:indexPath];
-}
-#endif
 
 -(IBAction)cancel:(id)sender
 {

@@ -21,8 +21,9 @@
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	BOOL							_showingWikiLink;
 	NSString					*	_featureName;
+	UITextField					*	_currentTextField;
 }
 
-- (IBAction)toggleEditing:(id)sender;
+- (IBAction)toggleTableRowEditing:(id)sender;
 
 @end

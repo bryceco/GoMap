@@ -23,7 +23,7 @@
 }
 
 @property (copy,nonatomic)	NSArray * completions;
-@property (copy,nonatomic)	void (^didSelect)(void);
+@property (copy,nonatomic)	void (^didSelectAutocomplete)(void);
 
 -(void)clearFilteredCompletionsInternal;
 -(void)updateAutocompleteForString:(NSString *)text;
