@@ -369,7 +369,7 @@
 	[self updateWithRecomendationsForFeature:YES];
 }
 
-- (IBAction)textFieldEditingDidBegin:(UITextField *)textField
+- (IBAction)textFieldEditingDidBegin:(AutocompleteTextField *)textField
 {
 	_currentTextField = textField;
 
@@ -391,12 +391,12 @@
 			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
 			NSArray * list = [values allObjects];
-			[(AutocompleteTextField *)textField setCompletions:list];
+			textField.strings = list;
 		} else {
 			// get list of keys
 			NSSet * set = [PresetsDatabase allTagKeys];
 			NSArray * list = [set allObjects];
-			[(AutocompleteTextField *)textField setCompletions:list];
+			textField.strings = list;
 		}
 	}
 }

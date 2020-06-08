@@ -11,78 +11,15 @@
 #import "AutocompleteTextField.h"
 
 
-@interface AutocompleteTextFieldDelegate : NSObject<UITextFieldDelegate>
-@property (weak,nonatomic)	id<UITextFieldDelegate>		realDelegate;
-@property (weak,nonatomic)	AutocompleteTextField	*	owner;
-@end
 
-@implementation AutocompleteTextFieldDelegate
-
--(void)dealloc
-{
-	_realDelegate = nil;
-}
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldBeginEditing:)])
-		return [_realDelegate textFieldShouldBeginEditing:textField];
-	return YES;
-}
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-	if ( [_realDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)])
-		[_realDelegate textFieldDidBeginEditing:textField];
-#if 0
-	[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:self.owner.text];
-#endif
-}
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldEndEditing:)])
-		return [_realDelegate textFieldShouldEndEditing:textField];
-	return YES;
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-	[_owner clearFilteredCompletionsInternal];
-
-	if ( [_realDelegate respondsToSelector:@selector(textFieldDidEndEditing:)])
-		[_realDelegate textFieldDidEndEditing:textField];
-}
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-	BOOL result = [_realDelegate respondsToSelector:@selector(textFieldShouldClear:)] ? [_realDelegate textFieldShouldClear:textField] : YES;
-	if ( result ) {
-		[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:@""];
-	}
-	return result;
-}
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldReturn:)])
-		return [_realDelegate textFieldShouldReturn:textField];
-	return YES;
-}
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-	BOOL result = [_realDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)] ? [_realDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string] : YES;
-	if ( result ) {
-		NSString * newString = [self.owner.text stringByReplacingCharactersInRange:range withString:string];
-		[self.owner performSelector:@selector(updateAutocompleteForString:) withObject:newString];
-	}
-	return result;
-}
-
-@end
 
 // this needs to be shared, because sometimes we'll create a new autocomplete text field when the keyboard is already showing,
 // so it never gets a chance to retrieve the size:
 static CGRect	s_keyboardFrame;
 
 
-
 @implementation AutocompleteTextField
-@synthesize completions = _allCompletions;
+@synthesize strings = _allStrings;
 
 static const CGFloat GradientHeight = 20.0;
 
@@ -91,40 +28,35 @@ static const CGFloat GradientHeight = 20.0;
 	self = [super initWithCoder:coder];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)   name:UIKeyboardWillShowNotification object:nil];
-//	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:)   name:UIKeyboardDidShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
-	_myDelegate = [AutocompleteTextFieldDelegate new];
-	_myDelegate.owner = self;
-	super.delegate = _myDelegate;
-
+	super.delegate = self;
 	return self;
 }
 
 -(void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	_myDelegate = nil;
+	self.delegate = nil;
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
 	self = [super initWithFrame:frame];
 	if (self) {
-		assert(NO);
+		assert(NO);	// not supported
 	}
 	return self;
 }
 
 -(void)setDelegate:(id<UITextFieldDelegate>)delegate
 {
-	_myDelegate.realDelegate = delegate;
-	super.delegate = _myDelegate;
+	_realDelegate = delegate;
 }
 
 -(id<UITextFieldDelegate>)delegate
 {
-	return _myDelegate.realDelegate;
+	return _realDelegate;
 }
 
 -(void)clearFilteredCompletionsInternal
@@ -133,17 +65,14 @@ static const CGFloat GradientHeight = 20.0;
 	[self updateCompletionTableView];
 }
 
--(void)setCompletions:(NSArray *)completions
+-(void)setStrings:(NSArray *)strings
 {
-	_allCompletions = completions;
-	if ( self.delegate != _myDelegate ) {
-		_myDelegate.realDelegate = self.delegate;
-		super.delegate = _myDelegate;
-	}
+	_allStrings = strings;
+	assert( super.delegate == self );
 }
--(NSArray *)completions
+-(NSArray *)strings
 {
-	return _allCompletions;
+	return _allStrings;
 }
 
 
@@ -161,14 +90,6 @@ static const CGFloat GradientHeight = 20.0;
 	if ( self.editing && _filteredCompletions.count ) {
 		[self updateAutocomplete];
 	}
-}
-- (void)keyboardDidShow:(NSNotification *)notification
-{
-#if 0
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self updateAutocompleteForString:@""];
-	});
-#endif
 }
 
 // keyboard size can change if switching languages inside keyboard, etc.
@@ -203,7 +124,6 @@ static const CGFloat GradientHeight = 20.0;
 		tableView = (id)tableView.superview;
 	}
 
-//	CGRect cellRC = [self convertRect:self.frame toView:tableView];
 	CGRect cellRC = [cell convertRect:cell.bounds toView:tableView];
 	CGRect keyboardPos = [tableView convertRect:s_keyboardFrame fromView:nil];	// keyboard is in screen coordinates
 	CGRect rect;
@@ -321,11 +241,11 @@ static const CGFloat GradientHeight = 20.0;
 		text = @"";
 	// filter completion list by current text
 	if ( text.length ) {
-		_filteredCompletions = [_allCompletions filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * object, NSDictionary *bindings) {
+		_filteredCompletions = [_allStrings filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSString * object, NSDictionary *bindings) {
 			return [object rangeOfString:text options:NSCaseInsensitiveSearch].location == 0;
 		}]];
 	} else {
-		_filteredCompletions = _allCompletions;
+		_filteredCompletions = _allStrings;
 	}
 	// sort alphabetically
 	_filteredCompletions = [_filteredCompletions sortedArrayUsingComparator:^NSComparisonResult(NSString * s1, NSString * s2) {
@@ -337,6 +257,79 @@ static const CGFloat GradientHeight = 20.0;
 - (void)updateAutocomplete
 {
 	[self updateAutocompleteForString:self.text];
+}
+
+
+#pragma mark delegate
+
+// Forward any delegate messages to the real delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldBeginEditing:)])
+		return [_realDelegate textFieldShouldBeginEditing:textField];
+	return YES;
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+	if ( [_realDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)])
+		[_realDelegate textFieldDidBeginEditing:textField];
+}
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldEndEditing:)])
+		return [_realDelegate textFieldShouldEndEditing:textField];
+	return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+	[self clearFilteredCompletionsInternal];
+
+	if ( [_realDelegate respondsToSelector:@selector(textFieldDidEndEditing:)])
+		[_realDelegate textFieldDidEndEditing:textField];
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason
+{
+	[self clearFilteredCompletionsInternal];
+
+	if ( [_realDelegate respondsToSelector:@selector(textFieldDidEndEditing:reason:)])
+		[_realDelegate textFieldDidEndEditing:textField reason:reason];
+	else if ( [_realDelegate respondsToSelector:@selector(textFieldDidEndEditing:)])
+		[_realDelegate textFieldDidEndEditing:textField];
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+	BOOL result = [_realDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]
+		? [_realDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string]
+		: YES;
+	if ( result ) {
+		NSString * newString = [self.text stringByReplacingCharactersInRange:range withString:string];
+		[self updateAutocompleteForString:newString];
+	}
+	return result;
+}
+- (void)textFieldDidChangeSelection:(UITextField *)textField
+{
+	if (@available(iOS 13.0, *)) {
+		if ( [_realDelegate respondsToSelector:@selector(textFieldDidChangeSelection:)])
+			[_realDelegate textFieldDidChangeSelection:textField];
+	}
+}
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+	BOOL result = [_realDelegate respondsToSelector:@selector(textFieldShouldClear:)]
+		? [_realDelegate textFieldShouldClear:textField]
+		: YES;
+	if ( result ) {
+		[self updateAutocompleteForString:@""];
+	}
+	return result;
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	if ( [_realDelegate respondsToSelector:@selector(textFieldShouldReturn:)])
+		return [_realDelegate textFieldShouldReturn:textField];
+	return YES;
 }
 
 @end

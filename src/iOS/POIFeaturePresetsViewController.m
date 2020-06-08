@@ -352,7 +352,7 @@
 	return cell;
 }
 
-- (IBAction)textFieldEditingDidBegin:(UITextField *)textField
+- (IBAction)textFieldEditingDidBegin:(AutocompleteTextField *)textField
 {
 	if ( [textField isKindOfClass:[AutocompleteTextField class]] ) {
 
@@ -366,7 +366,7 @@
 		NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];
 		NSArray * list = [values allObjects];
-		[(AutocompleteTextField *)textField setCompletions:list];
+		textField.strings = list;
 	}
 	_isEditing = YES;
 }
