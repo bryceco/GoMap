@@ -2913,16 +2913,29 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	if ( object == nil ) {
 		CALayer * layer = _pushpinView.placeholderLayer;
 		if ( layer.sublayers.count == 0 ) {
+#if 0
+			layer.contents			= (id)[UIImage imageNamed:@"new_object"].CGImage;
+			layer.contentsScale 	= UIScreen.mainScreen.scale;
+			layer.bounds        	= CGRectMake(0, 0, 20, 20);
+#else
 			layer.bounds        	= CGRectMake(0, 0, 24, 24);
-			layer.cornerRadius  	= 12;
-			layer.backgroundColor	= UIColor.whiteColor.CGColor;
+			layer.cornerRadius  	= layer.bounds.size.width/2;
+			layer.backgroundColor	= [UIColor colorWithRed:0.0 green:150/255.0 blue:1.0 alpha:1.0].CGColor;
 			layer.masksToBounds   	= YES;
-			layer.anchorPoint	 	= CGPointZero;
-			layer.borderColor	 	= UIColor.darkGrayColor.CGColor;
+			layer.borderColor	 	= UIColor.whiteColor.CGColor;
 			layer.borderWidth	 	= 1.0;
+			layer.contentsScale 	= UIScreen.mainScreen.scale;
+			// shadow
+			layer.shadowColor		= UIColor.blackColor.CGColor;
+			layer.shadowOffset		= CGSizeMake(3,3);
+			layer.shadowRadius		= 3;
+			layer.shadowOpacity		= 0.5;
+			layer.masksToBounds		= NO;
 
 			CATextLayer * text = [CATextLayer new];
+			text.foregroundColor	= UIColor.whiteColor.CGColor;
 			text.foregroundColor	= [UIColor colorWithRed:0 green:0 blue:0.5 alpha:1.0].CGColor;
+			text.foregroundColor	= UIColor.whiteColor.CGColor;
 			text.string				= @"?";
 			text.fontSize			= 18;
 			text.font				= (__bridge CFTypeRef)[UIFont boldSystemFontOfSize:text.fontSize];
@@ -2930,7 +2943,9 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			text.bounds				= layer.bounds;
 			text.position			= CGPointMake(0,1);
 			text.anchorPoint		= CGPointZero;
+			text.contentsScale 		= UIScreen.mainScreen.scale;
 			[layer addSublayer:text];
+#endif
 		}
 	}
 	

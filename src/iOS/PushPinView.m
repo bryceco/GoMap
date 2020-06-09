@@ -222,7 +222,7 @@
 		rc = CGRectUnion( rc, buttonRect );
 	}
 
-	_placeholderLayer.frame = CGRectInset( CGRectMake(viewRect.size.width/2, _labelOnBottom ? topGap : viewRect.size.height, 0, 0), -12, -12);
+	_placeholderLayer.position = CGPointMake( viewRect.size.width/2, _labelOnBottom ? topGap : viewRect.size.height );
 
 	if ( _labelOnBottom ) {
 		self.frame = CGRectMake( _arrowPoint.x - viewRect.size.width/2, _arrowPoint.y - topGap, rc.size.width, rc.size.height);
