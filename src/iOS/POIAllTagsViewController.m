@@ -276,7 +276,9 @@
 -(void)setAssociatedColorForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"colour"] ||
-		 [cell.text1.text isEqualToString:@"color"] )
+		 [cell.text1.text isEqualToString:@"color"] ||
+		 [cell.text1.text hasSuffix:@":colour"] ||
+		 [cell.text1.text hasSuffix:@":color"] )
 	{
 		UIColor * color = [Colors colorForColorName:cell.text2.text];
 		if ( color ) {
