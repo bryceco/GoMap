@@ -273,6 +273,28 @@
 }
 
 
+-(void)setAssociatedColorForCell:(TextPairTableCell *)cell
+{
+	if ( [cell.text1.text isEqualToString:@"colour"] ||
+		 [cell.text1.text isEqualToString:@"color"] )
+	{
+		UIColor * color = [Colors colorForColorName:cell.text2.text];
+		if ( color ) {
+			CGFloat height = cell.text2.bounds.size.height;
+			height = round( height * 0.5 );
+			UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
+			view.backgroundColor = color;
+			view.layer.borderColor = UIColor.blackColor.CGColor;
+			view.layer.borderWidth = 1.0;
+			cell.text2.rightView = view;
+			cell.text2.rightViewMode = UITextFieldViewModeAlways;
+			return;
+		}
+	}
+	cell.text2.rightView = nil;
+	cell.text2.rightViewMode = UITextFieldViewModeNever;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
@@ -285,6 +307,8 @@
 		cell.text2.enabled = YES;
 		cell.text1.text = kv[0];
 		cell.text2.text = kv[1];
+
+		[self setAssociatedColorForCell:cell];
 
 		__weak TextPairTableCell * weakCell = cell;
 		cell.text1.didSelectAutocomplete = ^{ [weakCell.text2 becomeFirstResponder]; };
@@ -444,6 +468,8 @@
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:pair];
 	if ( indexPath.section == 0 ) {
 		NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
+
+		[self setAssociatedColorForCell:pair];
 
 		if ( kv[0].length && kv[1].length ) {
 
