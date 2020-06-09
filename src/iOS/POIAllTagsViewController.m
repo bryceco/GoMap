@@ -280,12 +280,15 @@
 	{
 		UIColor * color = [Colors colorForColorName:cell.text2.text];
 		if ( color ) {
-			CGFloat height = cell.text2.bounds.size.height;
-			height = round( height * 0.5 );
-			UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, height, height)];
-			view.backgroundColor = color;
-			view.layer.borderColor = UIColor.blackColor.CGColor;
-			view.layer.borderWidth = 1.0;
+			CGFloat size = cell.text2.bounds.size.height;
+			size = round( size * 0.5 );
+			UIView * square = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size, size)];
+			square.backgroundColor = color;
+			square.layer.borderColor = UIColor.blackColor.CGColor;
+			square.layer.borderWidth = 1.0;
+			UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size+6, size)];
+			view.backgroundColor = UIColor.clearColor;
+			[view addSubview:square];
 			cell.text2.rightView = view;
 			cell.text2.rightViewMode = UITextFieldViewModeAlways;
 			return;
