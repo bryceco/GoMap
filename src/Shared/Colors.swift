@@ -10,11 +10,25 @@ import Foundation
 
 class Colors : UIColor {
 
-	@objc static func colorForColorName(_ string : String) -> UIColor?
+	@objc static func cssColorForColorName(_ string : String) -> UIColor?
 	{
+		guard string.count > 0 else { return nil }
+
 		var hex : UInt32 = 0
-		var bits = 8
-		switch string {
+		let bits : UInt32
+
+		if string.hasPrefix("#") {
+			switch string.count-1 {
+				case 3: bits = 4
+				case 6: bits = 8
+				default: return nil
+			}
+			let scanner = Scanner(string:string)
+			guard scanner.scanString("#", into:nil),
+				  scanner.scanHexInt32(&hex),
+				  scanner.isAtEnd else { return nil }
+		} else {
+			switch string {
 			case "aliceblue": 				hex = 0xF0F8FF
 			case "antiquewhite": 			hex = 0xFAEBD7
 			case "aqua": 					hex = 0x00FFFF
@@ -163,15 +177,9 @@ class Colors : UIColor {
 			case "whitesmoke": 				hex = 0xF5F5F5
 			case "yellow": 					hex = 0xFFFF00
 			case "yellowgreen": 			hex = 0x9ACD32
-			default:
-				let scanner = Scanner(string:string)
-				guard scanner.scanString("#", into:nil) else { return nil }
-				guard scanner.scanHexInt32(&hex) && scanner.isAtEnd else { return nil }
-				switch string.count {
-					case 4: bits = 4
-					case 7: bits = 8
-					default: return nil
-				}
+			default:	return nil
+			}
+			bits = 8
 		}
 		let mask : UInt32 = (1 << bits) - 1;
 		return UIColor(red: 	CGFloat( (hex>>(2*bits)) & mask) / CGFloat(mask),

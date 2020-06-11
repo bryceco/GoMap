@@ -280,7 +280,7 @@
 		 [cell.text1.text hasSuffix:@":colour"] ||
 		 [cell.text1.text hasSuffix:@":color"] )
 	{
-		UIColor * color = [Colors colorForColorName:cell.text2.text];
+		UIColor * color = [Colors cssColorForColorName:cell.text2.text];
 		if ( color ) {
 			CGFloat size = cell.text2.bounds.size.height;
 			size = round( size * 0.5 );
