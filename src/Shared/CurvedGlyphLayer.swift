@@ -218,7 +218,7 @@ private class StringGlyphs {
 		pathPoints.resetOffset()
 		guard pathPoints.advanceOffsetBy( (pathPoints.length - stringGlyphs.rect.width) / 2 ) else { return nil }
 
-		let baselineOffset = 3 - stringGlyphs.rect.origin.y
+		let baselineOffset : CGFloat = 3
 
 		var layers : [GlyphLayer] = []
 
@@ -227,7 +227,6 @@ private class StringGlyphs {
 			let runFont 	= StringGlyphs.fontForRun( run )	// every run potentially has a different font, due to font substitution
 			let glyphs 		= StringGlyphs.glyphsForRun( run )
 			let advances 	= StringGlyphs.advancesForRun( run )
-
 			let size 		= CTFontGetBoundingBox( runFont ).size
 
 			var glyphIndex = 0
