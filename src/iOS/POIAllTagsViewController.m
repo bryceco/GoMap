@@ -272,7 +272,6 @@
 	}
 }
 
-
 -(void)setAssociatedColorForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"colour"] ||
@@ -300,6 +299,64 @@
 	cell.text2.rightViewMode = UITextFieldViewModeNever;
 }
 
+-(IBAction)openWebsite:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+
+	NSString * string = nil;
+	if ( [pair.text1.text isEqualToString:@"wikipedia"] ||
+		 [pair.text1.text hasSuffix:@":wikipedia"] )
+	{
+		NSArray<NSString *> * a = [pair.text2.text componentsSeparatedByString:@":"];
+		NSString * lang = [a[0] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+		NSString * page = [a[1] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+		string = [NSString stringWithFormat:@"https://%@.wikipedia.org/wiki/%@",lang,page];
+	} else if ( [pair.text1.text isEqualToString:@"wikidata"] ||
+				[pair.text1.text hasSuffix:@":wikidata"] )
+	{
+		NSString * page = [pair.text2.text stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+		string = [NSString stringWithFormat:@"https://www.wikidata.org/wiki/%@",page];
+	} else if ( [pair.text2.text hasPrefix:@"http://"] ||
+				[pair.text2.text hasPrefix:@"https://"] )
+	{
+		string = pair.text2.text;
+	}
+	if ( string ) {
+		NSURL * url = [NSURL URLWithString:string];
+		if ( url ) {
+			SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+			[self presentViewController:viewController animated:YES completion:nil];
+		} else {
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL", nil)
+																			message:nil
+																	 preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self presentViewController:alert animated:YES completion:nil];
+		}
+	}
+}
+
+-(void)setWebsiteButtonForCell:(TextPairTableCell *)cell
+{
+	if ( [cell.text1.text isEqualToString:@"wikipedia"] ||
+		 [cell.text1.text isEqualToString:@"wikidata"] ||
+		 [cell.text1.text hasSuffix:@":wikipedia"] ||
+		 [cell.text1.text hasSuffix:@":wikidata"] ||
+		 [cell.text2.text hasPrefix:@"http://"] ||
+	     [cell.text2.text hasPrefix:@"https://"] )
+	{
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeInfoLight];
+		[button addTarget:self action:@selector(openWebsite:) forControlEvents:UIControlEventTouchUpInside];
+		cell.text2.rightView	 = button;
+		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+	 } else {
+		cell.text2.rightView 	 = nil;
+		cell.text2.rightViewMode = UITextFieldViewModeNever;
+	}
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
@@ -314,6 +371,7 @@
 		cell.text2.text = kv[1];
 
 		[self setAssociatedColorForCell:cell];
+		[self setWebsiteButtonForCell:cell];
 
 		__weak TextPairTableCell * weakCell = cell;
 		cell.text1.didSelectAutocomplete = ^{ [weakCell.text2 becomeFirstResponder]; };
@@ -475,6 +533,7 @@
 		NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
 
 		[self setAssociatedColorForCell:pair];
+		[self setWebsiteButtonForCell:pair];
 
 		if ( kv[0].length && kv[1].length ) {
 
