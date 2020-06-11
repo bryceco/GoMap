@@ -65,19 +65,19 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 
 // attributes
 @property (readonly,nonatomic)    NSDictionary<NSString *, NSString *>    *    tags;
-@property (readonly,nonatomic)    NSNumber        *    ident;
-@property (readonly,nonatomic)    NSString        *    user;
-@property (readonly,nonatomic)    NSString        *    timestamp;
-@property (readonly,nonatomic)    int32_t                version;
-@property (readonly,nonatomic)    OsmIdentifier        changeset;
-@property (readonly,nonatomic)    int32_t                uid;
-@property (readonly,nonatomic)    BOOL                visible;
+@property (readonly,nonatomic)    NSNumber        *    	ident;
+@property (readonly,nonatomic)    NSString        *    	user;
+@property (readonly,nonatomic)    NSString        *    	timestamp;
+@property (readonly,nonatomic)    int32_t              	version;
+@property (readonly,nonatomic)    OsmIdentifier        	changeset;
+@property (readonly,nonatomic)    int32_t              	uid;
+@property (readonly,nonatomic)    BOOL                 	visible;
 
 // extra stuff
-@property (readonly,nonatomic)    OSMRect                boundingBox;
-@property (strong,nonatomic)    NSArray            *    shapeLayers;
-@property (readonly,nonatomic)    ONEWAY                isOneWay;
-@property (assign,nonatomic)    TRISTATE            isShown;
+@property (readonly,nonatomic)    OSMRect				boundingBox;
+@property (strong,nonatomic)    NSArray            *   	shapeLayers;
+@property (readonly,nonatomic)    ONEWAY               	isOneWay;
+@property (assign,nonatomic)    TRISTATE            	isShown;
 
 +(NSDateFormatter *)rfc3339DateFormatter;
 

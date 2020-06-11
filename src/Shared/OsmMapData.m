@@ -570,6 +570,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[self deleteNodeUnsafe:node];
 		} else {
 			[_spatial addMember:node undo:_undoManager];
+			[node clearCachedProperties];
 		}
 	}
 }
