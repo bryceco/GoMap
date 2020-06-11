@@ -202,8 +202,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="_saveButton" destination="Jjf-m4-Lqa" id="jhY-qR-o3A"/>
                         <segue destination="Mkl-sm-LxO" kind="push" identifier="POITypeSegue" id="N2O-bF-plb"/>
@@ -526,7 +525,7 @@
                                 <action selector="cancel:" destination="G5R-oP-lp3" id="SC1-2d-hyd"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="h4s-q7-HdU">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="h4s-q7-HdU">
                             <connections>
                                 <action selector="done:" destination="G5R-oP-lp3" id="MfH-Ct-NlN"/>
                             </connections>
@@ -619,7 +618,7 @@
                                 <action selector="cancel:" destination="3PW-ri-mOv" id="AL1-ic-uBK"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="bil-7t-DpX">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="bil-7t-DpX">
                             <connections>
                                 <action selector="done:" destination="3PW-ri-mOv" id="MR5-Tc-J0H"/>
                             </connections>
