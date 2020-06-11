@@ -286,7 +286,9 @@
 
 -(BOOL)isMultipolygon
 {
-    return [_tags[@"type"] isEqualToString:@"multipolygon"];
+	NSString * type = _tags[@"type"];
+	return [type isEqualToString:@"multipolygon"] ||
+		   [type isEqualToString:@"building"];
 }
 
 -(BOOL)isBoundary
