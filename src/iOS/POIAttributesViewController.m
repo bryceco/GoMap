@@ -206,12 +206,12 @@ enum {
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Allow the user to copy the latitude/longitude
-    return indexPath.section == SECTION_NODE_LATLON;
+    return indexPath.section != SECTION_METADATA;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
-    if (indexPath.section == SECTION_NODE_LATLON && action == @selector(copy:)) {
+    if (indexPath.section != SECTION_METADATA && action == @selector(copy:)) {
         // Allow users to copy latitude/longitude.
         return YES;
     }
@@ -229,7 +229,7 @@ enum {
     
     AttributeCustomCell *customCell = (AttributeCustomCell *)cell;
     
-    if (indexPath.section == SECTION_NODE_LATLON && action == @selector(copy:)) {
+    if (indexPath.section != SECTION_METADATA && action == @selector(copy:)) {
         [UIPasteboard.generalPasteboard setString:customCell.value.text];
     }
 }
