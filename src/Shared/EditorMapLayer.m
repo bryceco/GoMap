@@ -929,19 +929,19 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 UIImage * IconScaledForDisplay(UIImage *icon)
 {
+	extern const double MinIconSizeInPixels;
 	if ( icon == nil )
 		return nil;
-extern const double MinIconSizeInPixels;
 #if TARGET_OS_IPHONE
-	CGFloat uiScaling = [[UIScreen mainScreen] scale];
-	UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-	[icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+	CGFloat size = MinIconSizeInPixels * UIScreen.mainScreen.scale;
+	UIGraphicsBeginImageContext( CGSizeMake(size,size) );
+	[icon drawInRect:CGRectMake(0,0,size,size)];
 	UIImage * newIcon = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 	return newIcon;
 #else
-	NSSize newSize = { MinIconSizeInPixels, MinIconSizeInPixels };
-	NSImage *smallImage = [[NSImage alloc] initWithSize: newSize];
+	NSSize newSize = { size, size };
+	NSImage * smallImage = [[NSImage alloc] initWithSize: newSize];
 	[smallImage lockFocus];
 	[_icon setSize:newSize];
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];

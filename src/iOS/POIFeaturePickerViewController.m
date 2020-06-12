@@ -149,7 +149,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		feature.logoImage = feature.icon;
 		UIImage * logo = [logoCache objectWithKey:feature.featureName
 			fallbackURL:^{
-				return feature.logoURL;
+				return [NSURL URLWithString:feature.logoURL];
 			} objectForData:^id _Nonnull(NSData * data) {
 				extern UIImage * IconScaledForDisplay(UIImage *icon);
 				UIImage * image = [UIImage imageWithData:data];

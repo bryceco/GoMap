@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(instancetype)initWithName:(NSString *)name memorySize:(NSInteger)memorySize;
 
 -(id _Nullable)objectWithKey:(NSString * _Nonnull)cacheKey
-				 fallbackURL:(NSString *(^_Nonnull)(void))url
+				 fallbackURL:(NSURL *(^_Nonnull)(void))url
 			   objectForData:(id(^)(NSData *_Nullable))objectForData
 				  completion:(void(^_Nonnull)(id))completion;
 
