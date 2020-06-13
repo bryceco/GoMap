@@ -9,7 +9,6 @@
 
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
-#import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
 #import "GpxLayer.h"
 #import "KeyChain.h"
@@ -55,8 +54,6 @@
 	self.userPassword	= [KeyChain getStringForIdentifier:@"password"];
 
 	[self removePlaintextCredentialsFromUserDefaults];
-
-	[DownloadThreadPool setUserAgent:[NSString stringWithFormat:@"%@/%@", self.appName, self.appVersion]];
 
 	// self.externalGPS = [[ExternalGPS alloc] init];
 

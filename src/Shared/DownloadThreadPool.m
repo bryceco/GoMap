@@ -11,10 +11,6 @@
 #import "DLog.h"
 #import "DownloadThreadPool.h"
 
-
-static NSString * g_UserAgent = nil;
-
-
 @implementation DownloadThreadPool
 
 -(id)initWithMaxConnections:(NSInteger)max
@@ -28,11 +24,6 @@ static NSString * g_UserAgent = nil;
 		_downloadCount = 0;
 	}
 	return self;
-}
-
-+(void)setUserAgent:(NSString *)userAgent
-{
-	g_UserAgent = [userAgent copy];
 }
 
 +(DownloadThreadPool *)osmPool;
