@@ -73,47 +73,19 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
 }
 
--(void)setMapLatitude:(double)lat longitude:(double)lon zoom:(double)zoom view:(MapViewState)view
+-(void)setMapLocation:(MapLocation *)location
 {
 	double delayInSeconds = 0.1;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		double metersPerDegree = MetersPerDegree( lat );
-		double minMeters = 50;
-		double widthDegrees = minMeters / metersPerDegree;
-		if ( zoom != 0 ) {
-			widthDegrees = 360.0 / pow(2,zoom);
-		}
-		[self.mapView setTransformForLatitude:lat longitude:lon width:widthDegrees];
-		if ( view != MAPVIEW_NONE ) {
-			self.mapView.viewState = view;
-		}
+		[self.mapView setMapLocation:location];
 	});
 }
 
-
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
-	if ( url.absoluteString.length > 0 ) {
-		LocationURLParser * geoURLParser = [LocationURLParser new];
-		MapLocation * parserResult = [geoURLParser parseURL:url];
-		if ( parserResult ) {
-			[self setMapLatitude:parserResult.latitude
-					   longitude:parserResult.longitude
-							zoom:parserResult.zoom
-							view:parserResult.viewState];
-		} else {
-			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
-			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
-		}
-	}
-
-	// GPX support
 	if ( url.isFileURL && [url.pathExtension isEqualToString:@"gpx"] ) {
-
-		// Process the URL
-
+		// Load GPX 
 		double delayInSeconds = 1.0;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -127,10 +99,20 @@
 				[self.mapView.viewController presentViewController:alert animated:YES completion:nil];
 			}
 		});
-
-		// Indicate that we have successfully opened the URL
 		return YES;
+	} else if ( url.absoluteString.length > 0 ) {
+		// geo: and gomaposm: support
+		LocationURLParser * geoURLParser = [LocationURLParser new];
+		MapLocation * parserResult = [geoURLParser parseURL:url];
+		if ( parserResult ) {
+			[self setMapLocation:parserResult];
+		} else {
+			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
+			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
+		}
 	}
+
 	return NO;
 }
 

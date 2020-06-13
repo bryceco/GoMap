@@ -221,6 +221,7 @@ typedef enum {
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees;
 -(double)metersPerPixel;
+-(void)setMapLocation:(MapLocation *)location;
 
 -(double)zoom;
 

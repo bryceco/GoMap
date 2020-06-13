@@ -1394,6 +1394,20 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 }
 
+-(void)setMapLocation:(MapLocation *)location
+{
+	double metersPerDegree = MetersPerDegree( location.latitude );
+	double minMeters = 50;
+	double widthDegrees = minMeters / metersPerDegree;
+	if ( location.zoom != 0 ) {
+		widthDegrees = 360.0 / pow(2,location.zoom);
+	}
+	[self setTransformForLatitude:location.latitude longitude:location.longitude width:widthDegrees];
+	if ( location.viewState != MAPVIEW_NONE ) {
+		self.viewState = location.viewState;
+	}
+}
+
 -(double)zoom
 {
 	double scaleX = OSMTransformScaleX( _screenFromMapTransform );
