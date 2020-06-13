@@ -63,14 +63,13 @@
 
 		if ( data && !error ) {
 			NSInputStream * inputStream = [NSInputStream inputStreamWithData:data];
-			callback(inputStream,error);
+			callback(inputStream,nil);
 		} else {
 			callback(nil,error);
 		}
 	}];
 	[task resume];
 }
-
 
 -(void)cancelAllDownloads
 {
@@ -81,29 +80,5 @@
 {
 	return _downloadCount;
 }
-
-#if 0
-#pragma mark delegate
-
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
-{
-	completionHandler(NSURLSessionResponseAllow);
-}
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable cachedResponse))completionHandler
-{
-	NSLog(@"will cache\n");
-	completionHandler(proposedResponse);
-}
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
-{
-	[data enumerateByteRangesUsingBlock:^(const void * _Nonnull bytes, NSRange byteRange, BOOL * _Nonnull stop) {
-	}];
-	NSLog(@"download partial data\n");
-}
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error
-{
-	NSLog(@"download complete\n");
-}
-#endif
 
 @end
