@@ -16,11 +16,8 @@
 	NSURLSession	*	_urlSession;
 }
 
-
 +(DownloadThreadPool *)osmPool;
 
--(void)dataForUrl:(NSString *)url completion:(void(^)(NSData * data,NSError * error))completion;
--(void)dataForUrl:(NSString *)url completeOnMain:(BOOL)completeOnMain completion:(void(^)(NSData * data,NSError * error))completion;
 -(void)streamForUrl:(NSString *)url callback:(void(^)(NSInputStream * stream,NSError * error))callback;
 
 -(void)cancelAllDownloads;
