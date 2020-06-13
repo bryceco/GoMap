@@ -18,7 +18,7 @@
 @interface OsmMapData ()
 // private methods in main file
 -(void)addNodeUnsafe:(OsmNode *)node toWay:(OsmWay *)way atIndex:(NSInteger)index;
--(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index;
+-(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index preserveNode:(BOOL)preserveNode;
 -(void)deleteNodeUnsafe:(OsmNode *)node;
 -(void)deleteWayUnsafe:(OsmWay *)way;
 -(void)deleteRelationUnsafe:(OsmRelation *)relation;
@@ -448,7 +448,7 @@
 				for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
 					if ( way.nodes[index] == deadNode ) {
 						[self addNodeUnsafe:survivor toWay:way atIndex:index];
-						[self deleteNodeInWayUnsafe:way index:index+1];
+						[self deleteNodeInWayUnsafe:way index:index+1 preserveNode:NO];
 					}
 				}
 			}
@@ -610,7 +610,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 			[self addNodeUnsafe:newNodes[i] toWay:way atIndex:i];
 		}
 		while ( way.nodes.count > newNodes.count ) {
-			[self deleteNodeInWayUnsafe:way index:way.nodes.count-1];
+			[self deleteNodeInWayUnsafe:way index:way.nodes.count-1 preserveNode:NO];
 		}
 
 		// reverse tags
@@ -713,7 +713,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 		BOOL needAreaFixup = way.nodes.lastObject == node  &&  way.nodes[0] == node;
 		for ( NSInteger index = 0; index < way.nodes.count; ++index ) {
 			if ( way.nodes[index] == node ) {
-				[self deleteNodeInWayUnsafe:way index:index];
+				[self deleteNodeInWayUnsafe:way index:index preserveNode:NO];
 				--index;
 			}
 		}
@@ -760,7 +760,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 		NSInteger index;
 		while ( (index = [way.nodes indexOfObject:node]) != NSNotFound ) {
 			[self addNodeUnsafe:newNode toWay:way atIndex:index+1];
-			[self deleteNodeInWayUnsafe:way index:index];
+			[self deleteNodeInWayUnsafe:way index:index preserveNode:NO];
 		}
 		return newNode;
 	};
@@ -837,7 +837,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 		if (wayA.isClosed) {
 
 			// remove duplicated node
-			[self deleteNodeInWayUnsafe:wayA index:wayA.nodes.count-1];
+			[self deleteNodeInWayUnsafe:wayA index:wayA.nodes.count-1 preserveNode:NO];
 
 			// get segment indices
 			NSInteger idxA = [wayA.nodes indexOfObject:node];
@@ -851,13 +851,13 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			// delete moved nodes from original way
 			for ( OsmNode * n in wayB.nodes ) {
 				NSInteger i = [wayA.nodes indexOfObject:n];
-				[self deleteNodeInWayUnsafe:wayA index:i];
+				[self deleteNodeInWayUnsafe:wayA index:i preserveNode:NO];
 			}
 
 			// rebase A so it starts with selected node
 			while ( wayA.nodes[0] != node ) {
 				[self addNodeUnsafe:wayA.nodes[0] toWay:wayA atIndex:wayA.nodes.count];
-				[self deleteNodeInWayUnsafe:wayA index:0];
+				[self deleteNodeInWayUnsafe:wayA index:0 preserveNode:NO];
 			}
 
 			// add shared endpoints
@@ -873,7 +873,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 			const NSInteger idx = [wayA.nodes indexOfObject:node] + 1;
 			while ( idx < wayA.nodes.count ) {
 				[self addNodeUnsafe:wayA.nodes[idx] toWay:wayB atIndex:wayB.nodes.count];
-				[self deleteNodeInWayUnsafe:wayA index:idx];
+				[self deleteNodeInWayUnsafe:wayA index:idx preserveNode:NO];
 			}
 
 		}

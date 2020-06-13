@@ -521,7 +521,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self removeFromParentRelationsUnsafe:way];
 
 	while ( way.nodes.count ) {
-		[self deleteNodeInWayUnsafe:way index:way.nodes.count-1];
+		OsmNode * node = way.nodes.lastObject;
+		[self deleteNodeInWayUnsafe:way index:way.nodes.count-1 preserveNode:node.hasInterestingTags];
 	}
 	[way setDeleted:YES undo:_undoManager];
 }
@@ -552,7 +553,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_spatial updateMember:way fromBox:origBox undo:_undoManager];
 }
 
--(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index
+-(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index preserveNode:(BOOL)preserveNode
 {
 	[self registerUndoCommentString:NSLocalizedString(@"delete node from way",nil)];
 	OsmNode * node = way.nodes[ index ];
@@ -565,13 +566,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[way removeNodeAtIndex:index undo:_undoManager];
 	[_spatial updateMember:way fromBox:bbox undo:_undoManager];
 
-	if ( node.wayCount == 0 ) {
-		if ( !node.hasInterestingTags ) {
-			[self deleteNodeUnsafe:node];
-		} else {
-			[_spatial addMember:node undo:_undoManager];
-			[node clearCachedProperties];
-		}
+	if ( node.wayCount == 0 && !preserveNode ) {
+		[self deleteNodeUnsafe:node];
 	}
 }
 
