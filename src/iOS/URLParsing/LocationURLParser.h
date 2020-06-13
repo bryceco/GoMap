@@ -15,7 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// An object that parses `geo:` URLs
-@interface GeoURIParser : NSObject
+@interface LocationURLParser : NSObject
 
 /// Attempts to parse the given URL.
 /// @param url The URL to parse.

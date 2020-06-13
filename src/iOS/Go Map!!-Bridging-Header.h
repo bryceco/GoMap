@@ -4,7 +4,7 @@
 
 #import "AppDelegate.h"
 #import "ContactUsViewController.h"
-#import "GeoURIParser.h"
+#import "LocationURLParser.h"
 #import "KeyChain.h"
 #import "LayerProperties.h"
 #import "LoginViewController.h"

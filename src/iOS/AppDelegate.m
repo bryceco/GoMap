@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "EditorMapLayer.h"
-#import "GeoURIParser.h"
+#import "LocationURLParser.h"
 #import "GpxLayer.h"
 #import "KeyChain.h"
 #import "OsmMapData.h"
@@ -94,66 +94,14 @@
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
-    GeoURIParser *geoURLParser = [GeoURIParser new];
-    MapLocation *parserResult = [geoURLParser parseURL:url];
-    
-    if (parserResult) {
-        [self setMapLatitude:parserResult.latitude
-                   longitude:parserResult.longitude
-                        zoom:parserResult.zoom
-                        view:parserResult.viewState];
-    }
-
-	// open to longitude/latitude
-	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] ) {
-
-		NSArray * params = [url.query componentsSeparatedByString:@"&"];
-		BOOL hasCenter = NO, hasZoom = NO;
-		double lat = 0, lon = 0, zoom = 0;
-		MapViewState view = MAPVIEW_NONE;
-
-		for ( NSString * param in params ) {
-			NSScanner * scanner = [NSScanner scannerWithString:param];
-
-			if ( [scanner scanString:@"center=" intoString:NULL] ) {
-
-				// scan center
-				BOOL ok = YES;
-				if ( ![scanner scanDouble:&lat] )
-					ok = NO;
-				if ( ![scanner scanString:@"," intoString:NULL] )
-					ok = NO;
-				if ( ![scanner scanDouble:&lon] )
-					ok = NO;
-				hasCenter = ok;
-
-			} else if ( [scanner scanString:@"zoom=" intoString:NULL] ) {
-
-				// scan zoom
-				BOOL ok = YES;
-				if ( ![scanner scanDouble:&zoom] )
-					ok = NO;
-				hasZoom = ok;
-
-			} else if ( [scanner scanString:@"view=" intoString:NULL] ) {
-
-				// scan view
-				if ( [scanner scanString:@"aerial+editor" intoString:NULL] ) {
-					view = MAPVIEW_EDITORAERIAL;
-				} else if ( [scanner scanString:@"aerial" intoString:NULL] ) {
-					view = MAPVIEW_AERIAL;
-				} else if ( [scanner scanString:@"mapnik" intoString:NULL] ) {
-					view = MAPVIEW_MAPNIK;
-				} else if ( [scanner scanString:@"editor" intoString:NULL] ) {
-					view = MAPVIEW_EDITOR;
-				}
-
-			} else {
-				// unrecognized parameter
-			}
-		}
-		if ( hasCenter ) {
-			[self setMapLatitude:lat longitude:lon zoom:(hasZoom?zoom:0) view:view];
+	if ( url.absoluteString.length > 0 ) {
+		LocationURLParser * geoURLParser = [LocationURLParser new];
+		MapLocation * parserResult = [geoURLParser parseURL:url];
+		if ( parserResult ) {
+			[self setMapLatitude:parserResult.latitude
+					   longitude:parserResult.longitude
+							zoom:parserResult.zoom
+							view:parserResult.viewState];
 		} else {
 			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
 			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
