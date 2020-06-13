@@ -18,7 +18,6 @@
 
 
 +(DownloadThreadPool *)osmPool;
-+(DownloadThreadPool *)generalPool;
 
 +(void)setUserAgent:(NSString *)userAgent;
 

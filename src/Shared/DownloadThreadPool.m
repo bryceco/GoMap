@@ -46,17 +46,6 @@ static NSString * g_UserAgent = nil;
 	return pool;
 }
 
-+(DownloadThreadPool *)generalPool;
-{
-	static dispatch_once_t		onceToken = 0;
-	static DownloadThreadPool * pool = nil;
-
-	dispatch_once( &onceToken, ^{
-		pool = [[DownloadThreadPool alloc] initWithMaxConnections:5];
-	});
-	return pool;
-}
-
 #if 0
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
 {
@@ -98,7 +87,7 @@ static NSString * g_UserAgent = nil;
 
 	NSURLSessionDataTask * task = [_urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		OSAtomicDecrement32(&_downloadCount);
-		
+
 		NSHTTPURLResponse * httpResponse = (id)response;
 		if ( error ) {
 			DLog(@"Error: %@", error.localizedDescription);

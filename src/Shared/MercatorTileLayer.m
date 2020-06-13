@@ -122,7 +122,12 @@
 			zoomLevel = 21;
 		NSString * url = [NSString stringWithFormat:self.aerialService.metadataUrl, rc.origin.y+rc.size.height/2, rc.origin.x+rc.size.width/2, zoomLevel];
 
-		[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:YES completion:callback];
+		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				callback( data, error );
+			});
+		}];
+		[task resume];
 	}
 }
 
