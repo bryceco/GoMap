@@ -329,9 +329,11 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			path = [[NSBundle mainBundle] pathForResource:name ofType:@"jpg"];
 		NSData * data = [NSData dataWithContentsOfFile:path];
 		if ( data.length ) {
-			_placeholderImage = data;
-			return _placeholderImage;
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				_placeholderImage = data;
+			});
 		}
+		return _placeholderImage;
 	}
 	_placeholderImage = [NSData new];
 	return nil;
