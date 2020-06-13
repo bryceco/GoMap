@@ -10,13 +10,12 @@
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "EditorMapLayer.h"
+#import "GeoURIParser.h"
 #import "GpxLayer.h"
 #import "KeyChain.h"
 #import "OsmMapData.h"
 #import "MapView.h"
 #import "MapViewController.h"
-#import "URLParserResult.h"
-#import "GeoURLParser.h"
 
 @implementation AppDelegate
 
@@ -95,8 +94,8 @@
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
-    GeoURLParser *geoURLParser = [GeoURLParser new];
-    URLParserResult *parserResult = [geoURLParser parseURL:url];
+    GeoURIParser *geoURLParser = [GeoURIParser new];
+    MapLocation *parserResult = [geoURLParser parseURL:url];
     
     if (parserResult) {
         [self setMapLatitude:parserResult.latitude

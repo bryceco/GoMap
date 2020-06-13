@@ -65,8 +65,8 @@ static const CGFloat Z_CROSSHAIRS		= 100;
 static const CGFloat Z_FLASH			= 110;
 
 
-
-
+@implementation MapLocation
+@end
 
 
 @interface MapView ()

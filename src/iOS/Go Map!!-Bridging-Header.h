@@ -4,7 +4,7 @@
 
 #import "AppDelegate.h"
 #import "ContactUsViewController.h"
-#import "GeoURLParser.h"
+#import "GeoURIParser.h"
 #import "KeyChain.h"
 #import "LayerProperties.h"
 #import "LoginViewController.h"
@@ -15,5 +15,4 @@
 #import "OsmRelation.h"
 #import "PathUtil.h"
 #import "PresetsDatabase.h"
-#import "URLParserResult.h"
 #import "VectorMath.h"

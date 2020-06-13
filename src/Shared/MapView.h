@@ -60,6 +60,15 @@ typedef enum {
 	GPS_STATE_HEADING,
 } GPS_STATE;
 
+
+@interface MapLocation : NSObject
+@property (nonatomic) double longitude;
+@property (nonatomic) double latitude;
+@property (nonatomic) double zoom;
+@property (nonatomic) MapViewState viewState;
+@end
+
+
 #if TARGET_OS_IPHONE
 @interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate,SKStoreProductViewControllerDelegate>
 #else

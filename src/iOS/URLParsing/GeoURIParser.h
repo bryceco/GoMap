@@ -7,18 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MapView.h"
 
-@class URLParserResult;
+
+@class MapLocation;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// An object that parses `geo:` URLs
-@interface GeoURLParser : NSObject
+@interface GeoURIParser : NSObject
 
 /// Attempts to parse the given URL.
 /// @param url The URL to parse.
 /// @return The parser result, if the URL was parsed successfully, or `nil` if the parser was not able to process the URL.
-- (nullable URLParserResult *)parseURL:(NSURL *)url;
+- (nullable MapLocation *)parseURL:(NSURL *)url;
 
 @end
 
