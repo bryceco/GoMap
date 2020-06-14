@@ -1358,25 +1358,23 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude scale:(double)scale
 {
-#if 1
-	OSMPoint center = MapPointForLatitudeLongitude( latitude, longitude );
-	[self setMapCenter:center scale:scale];
-#else
-	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude];
-	CGPoint center = CGRectCenter( self.layer.bounds );
+	OSMPoint mapCenter = MapPointForLatitudeLongitude( latitude, longitude );
+
+	// translate
+	OSMPoint point = [self screenPointFromMapPoint:mapCenter birdsEye:NO];
+	CGPoint center = _crossHairs.position;
 
 	CGPoint delta = { center.x - point.x, center.y - point.y };
-	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
-
 	[self adjustOriginBy:delta];
+
+	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
 	[self adjustZoomBy:ratio aroundScreenPoint:center];
-#endif
 }
 
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
 {
 	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude birdsEye:NO];
-	CGPoint center = CGRectCenter( self.layer.bounds );
+	CGPoint center = _crossHairs.position;
 	CGPoint delta = { center.x - point.x, center.y - point.y };
 	[self adjustOriginBy:delta];
 }
@@ -1391,18 +1389,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 {
 	double scale = pow(2,zoom);
 	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
-
 }
 
 -(void)setMapLocation:(MapLocation *)location
 {
-	double metersPerDegree = MetersPerDegree( location.latitude );
-	double minMeters = 50;
-	double widthDegrees = minMeters / metersPerDegree;
-	if ( location.zoom != 0 ) {
-		widthDegrees = 360.0 / pow(2,location.zoom);
-	}
-	[self setTransformForLatitude:location.latitude longitude:location.longitude width:widthDegrees];
+	double zoom = location.zoom ?: 18.0;
+	double scale = pow(2,zoom);
+	[self setTransformForLatitude:location.latitude longitude:location.longitude scale:scale];
 	if ( location.viewState != MAPVIEW_NONE ) {
 		self.viewState = location.viewState;
 	}
@@ -1884,19 +1877,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(void)updateMouseCoordinates
 {
-}
-
--(void)setMapCenter:(OSMPoint)mapCenter scale:(double)newScale
-{
-	// translate
-	OSMPoint point = [self screenPointFromMapPoint:mapCenter birdsEye:NO];
-	CGPoint center = CGRectCenter( self.editorLayer.bounds );
-
-	CGPoint delta = { center.x - point.x, center.y - point.y };
-	[self adjustOriginBy:delta];
-
-	double ratio = newScale / OSMTransformScaleX(_screenFromMapTransform);
-	[self adjustZoomBy:ratio aroundScreenPoint:center];
 }
 
 -(void)adjustOriginBy:(CGPoint)delta
