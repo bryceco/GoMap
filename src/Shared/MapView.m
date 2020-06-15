@@ -993,20 +993,22 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 	switch (newState) {
 		case MAPVIEW_EDITOR:
-			_editorLayer.whiteText = NO;
 			_editorLayer.hidden = NO;
 			_aerialLayer.hidden = YES;
 			_mapnikLayer.hidden = YES;
 			_userInstructionLabel.hidden = YES;
+			_editorLayer.whiteText = YES;
+			self.backgroundColor = UIColor.lightGrayColor;
 			break;
 		case MAPVIEW_EDITORAERIAL:
-			_editorLayer.whiteText = YES;
 			_aerialLayer.aerialService = _customAerials.currentAerial;
 			_editorLayer.hidden = NO;
 			_aerialLayer.hidden = NO;
 			_mapnikLayer.hidden = YES;
 			_userInstructionLabel.hidden = YES;
 			_aerialLayer.opacity = 0.75;
+			_editorLayer.whiteText = YES;
+			self.backgroundColor = UIColor.whiteColor;
 			break;
 		case MAPVIEW_AERIAL:
 			_aerialLayer.aerialService = _customAerials.currentAerial;
