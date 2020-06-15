@@ -71,7 +71,7 @@
 	if ( [text isEqualToString:_textLayer.string] )
 		return;
 	_textLayer.string = text;
-	[self updateShape];
+	[self setNeedsLayout];
 }
 
 -(CGPoint)arrowPoint
@@ -101,7 +101,7 @@
 {
 	if ( labelOnBottom != _labelOnBottom ) {
 		_labelOnBottom = labelOnBottom;
-		[self updateShape];
+		[self setNeedsLayout];
 	}
 }
 
@@ -119,8 +119,10 @@
 	return nil;
 }
 
--(void)updateShape
+-(void)layoutSubviews
 {
+	[super layoutSubviews];
+
 	CGSize	textSize = _textLayer.preferredFrameSize;
 	if ( textSize.width > 300 )
 		textSize.width = 300;
@@ -258,7 +260,7 @@
 	[self addSubview:button];
 	[button addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
 
-	[self updateShape];
+	[self setNeedsLayout];
 }
 
 
