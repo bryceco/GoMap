@@ -586,10 +586,11 @@ const CGFloat kEditControlCornerRadius = 4;
 {
 	[super layoutSubviews];
 
-	CGRect rect = self.bounds;
+	CGRect bounds = self.bounds;
 
+	// update locatno of ruler
 #if TARGET_OS_IPHONE
-	CGRect rc = CGRectMake(10, rect.size.height - 40, 150, 30);
+	CGRect rc = CGRectMake(10, bounds.size.height - 40, 150, 30);
 	if (@available(iOS 11.0, *)) {
 		rc.origin.y -= self.safeAreaInsets.bottom;
 		rc.origin.x += self.safeAreaInsets.left;
@@ -599,27 +600,21 @@ const CGFloat kEditControlCornerRadius = 4;
 	_rulerLayer.frame = CGRectMake(10, rect.size.height - 40, 150, 30);
 #endif
 
-//	_buildingsLayer.frame = rect;
-
+	// make sure our view remains centered on the same point after rotation
 	CGSize oldSize = _editorLayer.bounds.size;
 	if ( oldSize.width ) {
-		CGSize newSize = rect.size;
+		CGSize newSize = bounds.size;
 		CGPoint delta = { (newSize.width - oldSize.width)/2, (newSize.height - oldSize.height)/2 };
-		[self adjustOriginBy:delta];
+//		[self adjustOriginBy:delta];
 	}
 
+	// update bounds of layers
 	for ( CALayer * layer in _backgroundLayers ) {
-		if ( [layer isKindOfClass:[MercatorTileLayer class]] ) {
-			layer.anchorPoint = CGPointMake(0.5,0.5);
-			layer.frame = rect;
-		} else {
-			layer.position = self.layer.position;
-			layer.bounds = rect;
-		}
+		layer.frame = self.bounds;
 	}
 	_buildings3D.frame = self.layer.bounds;
 
-	_crossHairs.position = CGRectCenter( rect );
+	_crossHairs.position = CGRectCenter( bounds );
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
 }
