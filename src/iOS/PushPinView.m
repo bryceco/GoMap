@@ -53,15 +53,13 @@
 		_placeholderLayer = [CALayer layer];
 		[_shapeLayer addSublayer:_placeholderLayer];
 
-		_panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(draggingGesture:)];
-		[self addGestureRecognizer:_panRecognizer];
+		[self addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(draggingGesture:)]];
 	}
 	return self;
 }
 
 -(void)dealloc
 {
-	CGPathRelease(_path);
 }
 
 -(NSString *)text
@@ -73,7 +71,7 @@
 	if ( [text isEqualToString:_textLayer.string] )
 		return;
 	_textLayer.string = text;
-	[self setNeedsLayout];
+	[self updateShape];
 }
 
 -(CGPoint)arrowPoint
@@ -87,7 +85,7 @@
 		return;
 	}
 	_arrowPoint = arrowPoint;
-	[self setNeedsLayout];
+	self.center = CGPointMake( arrowPoint.x, arrowPoint.y + self.bounds.size.height/2 );
 }
 
 -(CALayer *)placeholderLayer
@@ -103,7 +101,7 @@
 {
 	if ( labelOnBottom != _labelOnBottom ) {
 		_labelOnBottom = labelOnBottom;
-		[self setNeedsLayout];
+		[self updateShape];
 	}
 }
 
@@ -121,7 +119,7 @@
 	return nil;
 }
 
--(void)layoutSubviews
+-(void)updateShape
 {
 	CGSize	textSize = _textLayer.preferredFrameSize;
 	if ( textSize.width > 300 )
@@ -142,36 +140,36 @@
 
 	// creat path with arrow
 	const CGFloat cornerRadius = 4;
-	CGPathRelease(_path);
-	_path = CGPathCreateMutable();
+	CGMutablePathRef viewPath = CGPathCreateMutable();
 	if ( _labelOnBottom ) {
-		_hittestRect = CGRectMake( 0, topGap+arrowHeight, boxSize.width, boxSize.height );
-		CGAffineTransform trans = CGAffineTransformMakeTranslation(0, topGap);
-		CGPathMoveToPoint(_path, &trans, boxSize.width/2, 0);	// arrow top
-		CGPathAddLineToPoint(_path, &trans, boxSize.width/2-arrowWidth/2, arrowHeight);	// arrow top-left
-		CGPathAddArcToPoint(_path, &trans, 0, arrowHeight, 0, boxSize.height+arrowHeight, cornerRadius);	// bottom right corner
-		CGPathAddArcToPoint(_path, &trans, 0, boxSize.height+arrowHeight, boxSize.width, boxSize.height+arrowHeight, cornerRadius);	// top left corner
-		CGPathAddArcToPoint(_path, &trans, boxSize.width, boxSize.height+arrowHeight, boxSize.width, arrowHeight, cornerRadius); // top right corner
-		CGPathAddArcToPoint(_path, &trans, boxSize.width, arrowHeight, 0, arrowHeight, cornerRadius);	// bottom right corner
-		CGPathAddLineToPoint(_path, &trans, boxSize.width/2+arrowWidth/2, arrowHeight );	// arrow top-right
+		_hittestRect = CGRectMake( 0, arrowHeight, boxSize.width, boxSize.height );
+		CGPathMoveToPoint(viewPath, NULL, boxSize.width/2, 0);	// arrow top
+		CGPathAddLineToPoint(viewPath, NULL, boxSize.width/2-arrowWidth/2, arrowHeight);	// arrow top-left
+		CGPathAddArcToPoint(viewPath, NULL, 0, arrowHeight, 0, boxSize.height+arrowHeight, cornerRadius);	// bottom right corner
+		CGPathAddArcToPoint(viewPath, NULL, 0, boxSize.height+arrowHeight, boxSize.width, boxSize.height+arrowHeight, cornerRadius);	// top left corner
+		CGPathAddArcToPoint(viewPath, NULL, boxSize.width, boxSize.height+arrowHeight, boxSize.width, arrowHeight, cornerRadius); // top right corner
+		CGPathAddArcToPoint(viewPath, NULL, boxSize.width, arrowHeight, 0, arrowHeight, cornerRadius);	// bottom right corner
+		CGPathAddLineToPoint(viewPath, NULL, boxSize.width/2+arrowWidth/2, arrowHeight );	// arrow top-right
+		CGPathCloseSubpath(viewPath);
 	} else {
-		CGPathMoveToPoint(_path, NULL, boxSize.width/2, boxSize.height+arrowHeight);	// arrow bottom
-		CGPathAddLineToPoint(_path, NULL, boxSize.width/2-arrowWidth/2, boxSize.height);	// arrow top-left
-		CGPathAddArcToPoint(_path, NULL, 0, boxSize.height, 0, 0, cornerRadius);	// bottom right corner
-		CGPathAddArcToPoint(_path, NULL, 0, 0, boxSize.width, 0, cornerRadius);	// top left corner
-		CGPathAddArcToPoint(_path, NULL, boxSize.width, 0, boxSize.width, boxSize.height, cornerRadius); // top right corner
-		CGPathAddArcToPoint(_path, NULL, boxSize.width, boxSize.height, 0, boxSize.height, cornerRadius);	// bottom right corner
-		CGPathAddLineToPoint(_path, NULL, boxSize.width/2+arrowWidth/2, boxSize.height );	// arrow top-right
+		CGPathMoveToPoint(viewPath, NULL, boxSize.width/2, boxSize.height+arrowHeight);	// arrow bottom
+		CGPathAddLineToPoint(viewPath, NULL, boxSize.width/2-arrowWidth/2, boxSize.height);	// arrow top-left
+		CGPathAddArcToPoint(viewPath, NULL, 0, boxSize.height, 0, 0, cornerRadius);	// bottom right corner
+		CGPathAddArcToPoint(viewPath, NULL, 0, 0, boxSize.width, 0, cornerRadius);	// top left corner
+		CGPathAddArcToPoint(viewPath, NULL, boxSize.width, 0, boxSize.width, boxSize.height, cornerRadius); // top right corner
+		CGPathAddArcToPoint(viewPath, NULL, boxSize.width, boxSize.height, 0, boxSize.height, cornerRadius);	// bottom right corner
+		CGPathAddLineToPoint(viewPath, NULL, boxSize.width/2+arrowWidth/2, boxSize.height );	// arrow top-right
+		CGPathCloseSubpath(viewPath);
 	}
-	CGPathCloseSubpath(_path);
 
 	// make hit target a little larger
 	_hittestRect = CGRectInset( _hittestRect, -7, -7 );
 
-	CGRect viewRect = CGPathGetPathBoundingBox( _path );
+	CGRect viewRect = CGPathGetPathBoundingBox( viewPath );
 	_shapeLayer.frame = CGRectMake( 0, 0, 20, 20 );	// arbitrary since it is a shape
-	_shapeLayer.path = _path;
-	_shapeLayer.shadowPath = _path;
+	_shapeLayer.path = viewPath;
+	_shapeLayer.shadowPath = viewPath;
+	CGPathRelease( viewPath );
 
 	if ( _labelOnBottom ) {
 		_textLayer.frame = CGRectMake( textAlleyWidth, topGap+arrowHeight+textAlleyWidth,
@@ -183,7 +181,6 @@
 	} else {
 		_textLayer.frame = CGRectMake( textAlleyWidth, textAlleyWidth, boxSize.width - textAlleyWidth, boxSize.height - textAlleyWidth );
 	}
-
 
 	// place buttons
 	CGRect rc = viewRect;
@@ -203,7 +200,7 @@
 
 		// place line to button
 		CAShapeLayer * line = _lineLayers[i];
-		CGMutablePathRef path = CGPathCreateMutable();
+		CGMutablePathRef buttonPath = CGPathCreateMutable();
 		CGPoint start	= { viewRect.size.width/2, _labelOnBottom ? topGap : viewRect.size.height };
 		CGPoint end		= { buttonRect.origin.x + buttonRect.size.width/2, buttonRect.origin.y + buttonRect.size.height/2 };
 		double dx = end.x - start.x;
@@ -213,10 +210,10 @@
 		start.y += 15 * dy / dist;
 		end.x	-= 15 * dx / dist;
 		end.y	-= 15 * dy / dist;
-		CGPathMoveToPoint( path, NULL, start.x, start.y );
-		CGPathAddLineToPoint(path, NULL, end.x, end.y );
-		line.path = path;
-		CGPathRelease(path);
+		CGPathMoveToPoint( buttonPath, NULL, start.x, start.y );
+		CGPathAddLineToPoint(buttonPath, NULL, end.x, end.y );
+		line.path = buttonPath;
+		CGPathRelease(buttonPath);
 		
 		// get union of subviews
 		rc = CGRectUnion( rc, buttonRect );
@@ -230,8 +227,6 @@
 		self.frame = CGRectMake( _arrowPoint.x - viewRect.size.width/2, _arrowPoint.y - viewRect.size.height, rc.size.width, rc.size.height);
 	}
 }
-
-
 
 -(void)buttonPress:(id)sender
 {
@@ -262,7 +257,8 @@
 
 	[self addSubview:button];
 	[button addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-	[self setNeedsLayout];
+
+	[self updateShape];
 }
 
 
@@ -287,7 +283,6 @@
 	theAnimation.removedOnCompletion	= YES;
 	theAnimation.fillMode				= kCAFillModeBoth;
 	theAnimation.duration				= 0.5;
-	//	theAnimation.autoreverses			= YES;
 
 	// let us get notified when animation completes
 	theAnimation.delegate				= self;
@@ -297,7 +292,6 @@
 
 	CGPathRelease( path );
 }
-
 
 -(void)draggingGesture:(UIPanGestureRecognizer *)gesture
 {
@@ -311,17 +305,13 @@
 		dX = newCoord.x - _panCoord.x;
 		dY = newCoord.y - _panCoord.y;
 		_arrowPoint = CGPointMake( _arrowPoint.x + dX, _arrowPoint.y + dY );
-		gesture.view.frame = CGRectOffset( gesture.view.frame, dX, dY );
+
+		CGPoint newCenter = { self.center.x + dX, self.center.y + dY };
+		gesture.view.center = newCenter;
 	}
 
 	if ( _dragCallback ) {
-#if 0
-		CGPoint delta = [gesture translationInView:gesture.view.superview];
-		NSLog(@"dx,dy = %f,%f",delta.x,delta.y);
-		_dragCallback( gesture.state, delta.x, delta.y );
-#else
 		_dragCallback( gesture.state, dX, dY, gesture );
-#endif
 	}
 }
 
