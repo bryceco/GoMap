@@ -605,14 +605,14 @@ const CGFloat kEditControlCornerRadius = 4;
 	if ( oldSize.width ) {
 		CGSize newSize = bounds.size;
 		CGPoint delta = { (newSize.width - oldSize.width)/2, (newSize.height - oldSize.height)/2 };
-//		[self adjustOriginBy:delta];
+		[self adjustOriginBy:delta];
 	}
 
 	// update bounds of layers
 	for ( CALayer * layer in _backgroundLayers ) {
 		layer.frame = self.bounds;
 	}
-	_buildings3D.frame = self.layer.bounds;
+	_buildings3D.frame = bounds;
 
 	_crossHairs.position = CGRectCenter( bounds );
 
