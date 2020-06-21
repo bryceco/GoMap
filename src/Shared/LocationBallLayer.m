@@ -58,7 +58,7 @@
 	#else
 		imageLayer.contents = image;
 	#endif
-		imageLayer.frame = self.frame;
+		imageLayer.frame = self.bounds;
 		[self addSublayer:imageLayer];
 	}
 	return self;

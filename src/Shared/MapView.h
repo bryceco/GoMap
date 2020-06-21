@@ -101,7 +101,6 @@ typedef enum {
 
 #if TARGET_OS_IPHONE
 	PushPinView						*	_pushpinView;
-	UILabel							*	_flashLabel;
 #else
 	HtmlErrorWindow					*	_htmlErrorWindow;
 #endif
@@ -128,6 +127,7 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet FpsLabel			*	fpsLabel;
 @property (assign,nonatomic)	IBOutlet UILabel			*	userInstructionLabel;
 @property (assign,nonatomic)	IBOutlet UIButton			*	compassButton;
+@property (assign,nonatomic)	IBOutlet UILabel			*	flashLabel;
 
 @property (assign,nonatomic)	IBOutlet UIButton			*	aerialServiceLogo;
 @property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;

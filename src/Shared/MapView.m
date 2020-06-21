@@ -105,7 +105,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		self.wantsLayer = YES;
 #endif
 		self.layer.masksToBounds = YES;
-		self.backgroundColor = UIColor.whiteColor;
+		self.backgroundColor = UIColor.lightGrayColor;
 
 		_screenFromMapTransform = OSMTransformIdentity();
 		_birdsEyeDistance = 1000.0;
@@ -151,14 +151,12 @@ const CGFloat kEditControlCornerRadius = 4;
 		_aerialLayer.opacity = 0.75;
 		_aerialLayer.aerialService = self.customAerials.currentAerial;
 		_aerialLayer.hidden = YES;
-		_aerialLayer.backgroundColor = UIColor.lightGrayColor.CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_aerialLayer];
 
 		_mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
 		_mapnikLayer.aerialService = [AerialService mapnik];
 		_mapnikLayer.zPosition = Z_MAPNIK;
 		_mapnikLayer.hidden = YES;
-		_mapnikLayer.backgroundColor = UIColor.lightGrayColor.CGColor;	// this color is displayed while waiting for tiles to download
 		[bg addObject:_mapnikLayer];
 
 		_editorLayer = [[EditorMapLayer alloc] initWithMapView:self];
@@ -368,6 +366,13 @@ const CGFloat kEditControlCornerRadius = 4;
 	CALayer * compass = [self compassLayerWithRadius:self.compassButton.bounds.size.width/2];
 	[self.compassButton.layer addSublayer:compass];
 
+	// error message label
+	_flashLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
+	_flashLabel.layer.cornerRadius = 5;
+	_flashLabel.layer.masksToBounds = YES;
+	_flashLabel.layer.zPosition = Z_FLASH;
+	_flashLabel.hidden = YES;
+
 #if 0
 	// Support zoom via tap and drag
 	_tapAndDragGesture = [[TapAndDragGesture alloc] initWithTarget:self action:@selector(handleTapAndDragGesture:)];
@@ -400,7 +405,7 @@ const CGFloat kEditControlCornerRadius = 4;
 	if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
 		[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 	} else {
-		OSMRect rc = OSMRectFromCGRect( self.layer.frame );
+		OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
 		self.screenFromMapTransform = OSMTransformMakeTranslation( rc.origin.x+rc.size.width/2 - 128, rc.origin.y+rc.size.height/2 - 128);
 		// turn on GPS which will move us to current location
 		self.gpsState = GPS_STATE_LOCATION;
@@ -413,7 +418,7 @@ const CGFloat kEditControlCornerRadius = 4;
 -(CALayer *)compassLayerWithRadius:(CGFloat)radius
 {
 	CALayer * compass = [CALayer new];
-	CGFloat width = round(radius/5);
+	CGFloat needleWidth = round(radius/5);
 	compass.bounds = CGRectMake(0, 0, 2*radius, 2*radius);
 	compass.backgroundColor = UIColor.whiteColor.CGColor;
 	compass.borderColor = UIColor.darkGrayColor.CGColor;
@@ -423,8 +428,8 @@ const CGFloat kEditControlCornerRadius = 4;
 	{
 		CAShapeLayer * north = [CAShapeLayer new];
 		UIBezierPath * path = [UIBezierPath bezierPath];
-		[path moveToPoint:CGPointMake(-width,0)];
-		[path addLineToPoint:CGPointMake(width,0)];
+		[path moveToPoint:CGPointMake(-needleWidth,0)];
+		[path addLineToPoint:CGPointMake(needleWidth,0)];
 		[path addLineToPoint:CGPointMake(0,-round(radius*0.9))];
 		[path closePath];
 		north.path = path.CGPath;
@@ -435,8 +440,8 @@ const CGFloat kEditControlCornerRadius = 4;
 	{
 		CAShapeLayer * south = [CAShapeLayer new];
 		UIBezierPath * path = [UIBezierPath bezierPath];
-		[path moveToPoint:CGPointMake(-width,0)];
-		[path addLineToPoint:CGPointMake(width,0)];
+		[path moveToPoint:CGPointMake(-needleWidth,0)];
+		[path addLineToPoint:CGPointMake(needleWidth,0)];
 		[path addLineToPoint:CGPointMake(0,round(radius*0.9))];
 		[path closePath];
 		south.path = path.CGPath;
@@ -446,10 +451,10 @@ const CGFloat kEditControlCornerRadius = 4;
 	}
 	{
 		CALayer * pivot = [CALayer new];
-		pivot.bounds = CGRectMake(radius-width/2, radius-width/2, width, width);
+		pivot.bounds = CGRectMake(radius-needleWidth/2, radius-needleWidth/2, needleWidth, needleWidth);
 		pivot.backgroundColor = UIColor.whiteColor.CGColor;
 		pivot.borderColor = UIColor.blackColor.CGColor;
-		pivot.cornerRadius = width/2;
+		pivot.cornerRadius = needleWidth/2;
 		pivot.position = CGPointMake(radius, radius);
 		[compass addSublayer:pivot];
 	}
@@ -590,33 +595,32 @@ const CGFloat kEditControlCornerRadius = 4;
 
 	// update locatno of ruler
 #if TARGET_OS_IPHONE
-	CGRect rc = CGRectMake(10, bounds.size.height - 40, 150, 30);
+	CGRect rulerFrame = CGRectMake( bounds.origin.x + 10, bounds.origin.y + bounds.size.height - 40, 150, 30);
 	if (@available(iOS 11.0, *)) {
-		rc.origin.y -= self.safeAreaInsets.bottom;
-		rc.origin.x += self.safeAreaInsets.left;
+		rulerFrame.origin.y -= self.safeAreaInsets.bottom;
+		rulerFrame.origin.x += self.safeAreaInsets.left;
 	}
-	_rulerLayer.frame = rc;
+	_rulerLayer.frame = rulerFrame;
 #else
 	_rulerLayer.frame = CGRectMake(10, rect.size.height - 40, 150, 30);
 #endif
 
-	// make sure our view remains centered on the same point after rotation
-	CGSize oldSize = _editorLayer.bounds.size;
-	if ( oldSize.width ) {
-		CGSize newSize = bounds.size;
-		CGPoint delta = { (newSize.width - oldSize.width)/2, (newSize.height - oldSize.height)/2 };
-		[self adjustOriginBy:delta];
-	}
-
 	// update bounds of layers
 	for ( CALayer * layer in _backgroundLayers ) {
-		layer.frame = self.bounds;
+		layer.frame = CGRectMake(0, 0, bounds.size.width, bounds.size.height );
 	}
 	_buildings3D.frame = bounds;
 
 	_crossHairs.position = CGRectCenter( bounds );
 
 	_statusBarBackground.hidden = [UIApplication sharedApplication].statusBarHidden;
+}
+
+-(void)setBounds:(CGRect)bounds
+{
+	// adjust bounds so we're always centered on 0,0
+	bounds = CGRectMake( -bounds.size.width/2, -bounds.size.height/2, bounds.size.width, bounds.size.height );
+	[super setBounds:bounds];
 }
 
 #pragma mark Utility
@@ -679,29 +683,6 @@ const CGFloat kEditControlCornerRadius = 4;
 {
 #if TARGET_OS_IPHONE
 	const CGFloat MAX_ALPHA = 0.8;
-
-	if ( _flashLabel == nil ) {
-		_flashLabel = [UILabel new];
-		_flashLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
-		_flashLabel.textAlignment = NSTextAlignmentCenter;
-		_flashLabel.textColor = UIColor.whiteColor;
-		_flashLabel.backgroundColor = UIColor.blackColor;
-		_flashLabel.layer.cornerRadius = 5;
-		_flashLabel.layer.masksToBounds = YES;
-		_flashLabel.layer.zPosition = Z_FLASH;
-		_flashLabel.hidden = YES;
-		_flashLabel.numberOfLines = 0;
-
-		[self addSubview:_flashLabel];
-
-		_flashLabel.translatesAutoresizingMaskIntoConstraints = NO;
-		CGRect rc = self.bounds;
-		[_flashLabel.topAnchor	 	constraintEqualToAnchor:self.topAnchor 						constant:round(rc.size.height*0.75)].active = YES;
-		[_flashLabel.bottomAnchor 	constraintLessThanOrEqualToAnchor:self.bottomAnchor			constant:-40].active = YES;
-		[_flashLabel.leadingAnchor	constraintGreaterThanOrEqualToAnchor:self.leadingAnchor 	constant:round(rc.size.width*0.2)].active = YES;
-		[_flashLabel.trailingAnchor	constraintLessThanOrEqualToAnchor:self.trailingAnchor 		constant:-round(rc.size.width*0.2)].active = YES;
-		[_flashLabel.centerXAnchor	constraintEqualToAnchor:self.centerXAnchor].active = YES;
-	}
 
 	NSAttributedString * attrText = [self htmlAsAttributedString:message textColor:UIColor.whiteColor backgroundColor:UIColor.blackColor];
 	if ( attrText.length > 0 ) {
@@ -993,7 +974,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			_mapnikLayer.hidden = YES;
 			_userInstructionLabel.hidden = YES;
 			_editorLayer.whiteText = YES;
-			self.backgroundColor = UIColor.lightGrayColor;
 			break;
 		case MAPVIEW_EDITORAERIAL:
 			_aerialLayer.aerialService = _customAerials.currentAerial;
@@ -1003,7 +983,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 			_userInstructionLabel.hidden = YES;
 			_aerialLayer.opacity = 0.75;
 			_editorLayer.whiteText = YES;
-			self.backgroundColor = UIColor.whiteColor;
 			break;
 		case MAPVIEW_AERIAL:
 			_aerialLayer.aerialService = _customAerials.currentAerial;
@@ -1212,17 +1191,17 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		OSMPoint unitX = UnitX(_screenFromMapTransform);
 		OSMPoint unitY = { -unitX.y, unitX.x };
 		double mapSize = 256 * OSMTransformScaleX(_screenFromMapTransform);
-		if ( pt.x > rc.origin.x+rc.size.width ) {
+		if ( pt.x >= rc.origin.x+rc.size.width ) {
 			pt.x -= mapSize*unitX.x;
 			pt.y -= mapSize*unitX.y;
 		} else if ( pt.x < rc.origin.x ) {
 			pt.x += mapSize*unitX.x;
 			pt.y += mapSize*unitX.y;
 		}
-		if ( pt.y > rc.origin.y+rc.size.height ) {
+		if ( pt.y >= rc.origin.y+rc.size.height ) {
 			pt.x -= mapSize*unitY.x;
 			pt.y -= mapSize*unitY.y;
-		} else if ( pt.y < 0 ) {
+		} else if ( pt.y < rc.origin.y ) {
 			pt.x += mapSize*unitY.x;
 			pt.y += mapSize*unitY.y;
 		}
@@ -3213,7 +3192,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	_blinkLayer.path 		= path;
 	_blinkLayer.fillColor	= nil;
 	_blinkLayer.lineWidth	= 3.0;
-	_blinkLayer.frame		= self.bounds;
+	_blinkLayer.frame		= CGRectMake( 0, 0, self.bounds.size.width, self.bounds.size.height );
 	_blinkLayer.zPosition	= Z_BLINK;
 	_blinkLayer.strokeColor	= NSColor.blackColor.CGColor;
 
