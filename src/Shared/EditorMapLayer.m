@@ -289,9 +289,14 @@ const double MinIconSizeInMeters = 2.0;
 	if ( self.hidden )
 		return;
 
-	OSMRect box = [_mapView screenLongitudeLatitude];
+	if ( self.mapView.screenFromMapTransform.a == 1.0 )
+		return;	// identity, we haven't been initialized yet
+
+	const OSMRect box = [_mapView screenLongitudeLatitude];
 	if ( box.size.height <= 0 || box.size.width <= 0 )
 		return;
+
+	NSLog(@"box = %@",NSStringFromCGRect(CGRectFromOSMRect(box)));
 
 	[self updateIconSize];
 

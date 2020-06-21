@@ -7,15 +7,15 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "VectorMath.h"
 #import "iosapi.h"
 #import "OsmMapData.h"
+#import "VectorMath.h"
 
+@class OsmBaseObject;
 @class Buildings3DView;
 @class OsmMapData;
-@class OsmRenderInfo;
 @class MapView;
-@class OsmBaseObject;
+@class OsmRenderInfo;
 @class OsmNode;
 @class OsmWay;
 @class OsmRelation;
@@ -31,17 +31,13 @@ extern const double MinIconSizeInPixels;
 
 @interface EditorMapLayer : CALayer<NSCoding>
 {
-	CGSize					_iconSize;
-	double					_highwayScale;
-
+	CGSize									_iconSize;
+	double									_highwayScale;
 	NSMutableArray<OsmBaseObject *>		*	_shownObjects;
 	NSMutableSet<OsmBaseObject *>		*	_fadingOutSet;
-
-	NSMutableArray<CALayer *>		*	_highlightLayers;
-
-	BOOL					_isPerformingLayout;
-
-	CATransformLayer	*	_baseLayer;
+	NSMutableArray<CALayer *>			*	_highlightLayers;
+	BOOL									_isPerformingLayout;
+	CATransformLayer					*	_baseLayer;
 }
 
 @property (assign,nonatomic)	BOOL			enableObjectFilters;	// turn all filters on/on

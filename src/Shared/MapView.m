@@ -1169,7 +1169,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		point = FromBirdsEye( point, center, _birdsEyeDistance, _birdsEyeRotation );
 	}
 	point = OSMPointApplyTransform( point, self.mapFromScreenTransform );
-
 	return point;
 }
 
