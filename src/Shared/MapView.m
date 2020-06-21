@@ -35,7 +35,7 @@
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
 #import "LocationBallLayer.h"
-#import "MapViewController.h"
+#import "MainViewController.h"
 #import "PushPinView.h"
 #else
 #import "HtmlErrorWindow.h"
@@ -651,7 +651,7 @@ const CGFloat kEditControlCornerRadius = 4;
 {
 	UIAlertController * alertError = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
 	[alertError addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-	[self.viewController presentViewController:alertError animated:YES completion:nil];
+	[self.mainViewController presentViewController:alertError animated:YES completion:nil];
 }
 
 -(NSAttributedString *)htmlAsAttributedString:(NSString *)html textColor:(UIColor *)textColor backgroundColor:(UIColor *)backColor
@@ -778,7 +778,7 @@ const CGFloat kEditControlCornerRadius = 4;
 					_ignoreNetworkErrorsUntilDate = [[NSDate date] dateByAddingTimeInterval:5*60.0];
 				}]];
 			}
-			[self.viewController presentViewController:alertError animated:YES completion:nil];
+			[self.mainViewController presentViewController:alertError animated:YES completion:nil];
 		}
 #else
 		if ( [text.uppercaseString hasPrefix:@"<!DOCTYPE HTML"] ) {
@@ -806,7 +806,7 @@ const CGFloat kEditControlCornerRadius = 4;
         [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"I'll do it!",nil)    style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 			[self showInAppStore];
         }]];
-        [self.viewController presentViewController:alertViewRateApp animated:YES completion:nil];
+        [self.mainViewController presentViewController:alertViewRateApp animated:YES completion:nil];
 	}
 }
 -(void)showInAppStore
@@ -836,12 +836,12 @@ const CGFloat kEditControlCornerRadius = 4;
 	AerialService * aerial = self.aerialLayer.aerialService;
 	if ( aerial.isBingAerial ) {
 		// present bing metadata
-		[self.viewController performSegueWithIdentifier:@"BingMetadataSegue" sender:self];
+		[self.mainViewController performSegueWithIdentifier:@"BingMetadataSegue" sender:self];
 	} else if ( aerial.attributionUrl.length > 0 ) {
 		// open the attribution url
 		NSURL * url = [NSURL URLWithString:aerial.attributionUrl];
 		SFSafariViewController * safariViewController = [[SFSafariViewController alloc] initWithURL:url];
-		[self.viewController presentViewController:safariViewController animated:YES completion:nil];
+		[self.mainViewController presentViewController:safariViewController animated:YES completion:nil];
 	}
 }
 
@@ -1013,7 +1013,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[CATransaction commit];
 
 	// enable/disable editing buttons based on visibility
-	[_viewController updateUndoRedoButtonState];
+	[_mainViewController updateUndoRedoButtonState];
 	[self updateAerialAttributionButton];
 }
 -(MapViewState)viewState
@@ -1580,7 +1580,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
     [alertController addAction:openSettings];
     [alertController addAction:okayAction];
     
-    [self.viewController presentViewController:alertController animated:YES completion:nil];
+    [self.mainViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)openAppSettings {
@@ -1771,7 +1771,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-	MapViewController * controller = self.viewController;
+	MainViewController * controller = self.mainViewController;
 	if ( error.code == kCLErrorDenied ) {
 		[controller setGpsState:GPS_STATE_NONE];
 		if ( ![self isLocationSpecified] ) {
@@ -2037,7 +2037,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 			[_editorLayer replaceTags:_editorLayer.selectedPrimary];
 			[self refreshPushpinText];
 		}]];
-		[self.viewController presentViewController:alertPaste animated:YES completion:nil];
+		[self.mainViewController presentViewController:alertPaste animated:YES completion:nil];
 	} else {
 		[_editorLayer replaceTags:_editorLayer.selectedPrimary];
 		[self refreshPushpinText];
@@ -2097,7 +2097,7 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		[alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alertDelete addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete",nil) style:UIAlertActionStyleDestructive handler:deleteHandler]];
 	}
-	[self.viewController presentViewController:alertDelete animated:YES completion:nil];
+	[self.mainViewController presentViewController:alertDelete animated:YES completion:nil];
 }
 
 -(void)keyDown:(NSEvent *)event
@@ -2259,7 +2259,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		}]];
 	}
 	[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-	[self.viewController presentViewController:actionSheet animated:YES completion:nil];
+	[self.mainViewController presentViewController:actionSheet animated:YES completion:nil];
 
 	// compute location for action sheet to originate
 	CGRect button = self.editControl.bounds;
@@ -2440,7 +2440,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			{
 				CLLocationCoordinate2D pos = [self longitudeLatitudeForScreenPoint:_pushpinView.arrowPoint birdsEye:YES];
 				OsmNote * note = [[OsmNote alloc] initWithLat:pos.latitude lon:pos.longitude];
-				[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
+				[self.mainViewController performSegueWithIdentifier:@"NotesSegue" sender:note];
 				[self removePin];
 			}
 			break;
@@ -2484,7 +2484,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				OSMRect rc = [self boundingScreenRectForMapRect:box];
 				actionSheet.popoverPresentationController.sourceView = self;
 				actionSheet.popoverPresentationController.sourceRect = CGRectFromOSMRect(rc);
-				[self.viewController presentViewController:actionSheet animated:YES completion:nil];
+				[self.mainViewController presentViewController:actionSheet animated:YES completion:nil];
 				return;
 			}
 			break;
@@ -2499,7 +2499,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 -(IBAction)presentTagEditor:(id)sender
 {
-	[self.viewController performSegueWithIdentifier:@"poiSegue" sender:nil];
+	[self.mainViewController performSegueWithIdentifier:@"poiSegue" sender:nil];
 }
 
 
@@ -2507,12 +2507,12 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 -(void)restrictOptionSelected
 {
 	void (^showRestrictionEditor)(void) = ^{
-		TurnRestrictController * myVc = [_viewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
+		TurnRestrictController * myVc = [_mainViewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
 		myVc.centralNode 			= self.editorLayer.selectedNode;
 		myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);
 		myVc.screenFromMapTransform = _screenFromMapTransform;
 		myVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-		[_viewController presentViewController:myVc animated:YES completion:nil];
+		[_mainViewController presentViewController:myVc animated:YES completion:nil];
 
 		// if GPS is running don't keep moving around
 		self.userOverrodeLocationPosition = YES;
@@ -2545,7 +2545,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				showRestrictionEditor();
 			}]];
 			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.viewController presentViewController:alert animated:YES completion:nil];
+			[self.mainViewController presentViewController:alert animated:YES completion:nil];
 		} else {
 			showRestrictionEditor();
 		}
@@ -2760,7 +2760,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 							[alertMove addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Move",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 								// okay
 							}]];
-							[strongSelf.viewController presentViewController:alertMove animated:YES completion:nil];
+							[strongSelf.mainViewController presentViewController:alertMove animated:YES completion:nil];
 						}
 					}
 					break;
@@ -3355,7 +3355,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			_editorLayer.selectedRelation = nil;
 			[self removePin];
  		}]];
-		[self.viewController presentViewController:alertKeepRight animated:YES completion:nil];
+		[self.mainViewController presentViewController:alertKeepRight animated:YES completion:nil];
 
 	} else if ( note.isFixme ) {
 		OsmBaseObject * object = [_editorLayer.mapData objectWithExtendedIdentifier:note.noteId];
@@ -3364,7 +3364,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		_editorLayer.selectedRelation	= object.isRelation;
 		[self presentTagEditor:nil];
 	} else {
-		[self.viewController performSegueWithIdentifier:@"NotesSegue" sender:note];
+		[self.mainViewController performSegueWithIdentifier:@"NotesSegue" sender:note];
 	}
 }
 
@@ -3571,7 +3571,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 					addMmember(@"inner");
 				}]];
 				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self.viewController presentViewController:confirm animated:YES completion:nil];
+				[self.mainViewController presentViewController:confirm animated:YES completion:nil];
 			}
 			return;
 		}
@@ -3614,7 +3614,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			}]];
 		}
 		[multiSelectSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
-		[self.viewController presentViewController:multiSelectSheet animated:YES completion:nil];
+		[self.mainViewController presentViewController:multiSelectSheet animated:YES completion:nil];
 		// set position
 		CGRect rc = { point.x, point.y, 0, 0 };
 		multiSelectSheet.popoverPresentationController.sourceView = self;
@@ -3795,7 +3795,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
         
         [self askUserToOpenSettingsWithAlertTitle:title message:message];
     } else {
-        [self.viewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
+        [self.mainViewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
     }
 }
 

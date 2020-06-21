@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-extension MapViewController {
+extension MainViewController {
     @IBAction func openHelp() {
         let urlAsString = "https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!&mobileaction=toggle_view_mobile"
         guard let url = URL(string: urlAsString) else { return }

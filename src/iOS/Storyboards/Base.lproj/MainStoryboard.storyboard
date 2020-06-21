@@ -11,7 +11,7 @@
         <!--Main Map View Controller-->
         <scene sceneID="11">
             <objects>
-                <viewController title="First" modalTransitionStyle="flipHorizontal" id="2" userLabel="Main Map View Controller" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController title="First" modalTransitionStyle="flipHorizontal" id="2" userLabel="Main Map View Controller" customClass="MainViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j5Z-hB-i8A" userLabel="Main View">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

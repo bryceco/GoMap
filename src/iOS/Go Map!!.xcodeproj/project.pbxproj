@@ -76,7 +76,7 @@
 		02ACBA4016713CCB00BB4414 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA3F16713CCB00BB4414 /* main.m */; };
 		02ACBA4416713CCB00BB4414 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA4316713CCB00BB4414 /* AppDelegate.m */; };
 		02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */; };
-		02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5216713CCB00BB4414 /* MapViewController.m */; };
+		02ACBA5316713CCB00BB4414 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5216713CCB00BB4414 /* MainViewController.m */; };
 		02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA5916713CCB00BB4414 /* SettingsViewController.m */; };
 		02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBA7016713F2A00BB4414 /* changeset.xsl */; };
 		02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA7416713F2A00BB4414 /* DownloadThreadPool.m */; };
@@ -149,7 +149,7 @@
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
-		64F59A50240915840093DCDB /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A4F240915840093DCDB /* MapViewController.swift */; };
+		64F59A50240915840093DCDB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A4F240915840093DCDB /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -291,8 +291,8 @@
 		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
 		02ACBA4216713CCB00BB4414 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02ACBA4316713CCB00BB4414 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		02ACBA5116713CCB00BB4414 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
-		02ACBA5216713CCB00BB4414 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		02ACBA5116713CCB00BB4414 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		02ACBA5216713CCB00BB4414 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		02ACBA5816713CCB00BB4414 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		02ACBA5916713CCB00BB4414 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BingMapsGeometry.h; path = ../Shared/BingMapsGeometry.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -414,7 +414,7 @@
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
-		64F59A4F240915840093DCDB /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		64F59A4F240915840093DCDB /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -614,8 +614,8 @@
 				02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */,
 				029043A11682797A00BE3480 /* LoginViewController.h */,
 				029043A21682797A00BE3480 /* LoginViewController.m */,
-				02ACBA5116713CCB00BB4414 /* MapViewController.h */,
-				02ACBA5216713CCB00BB4414 /* MapViewController.m */,
+				02ACBA5116713CCB00BB4414 /* MainViewController.h */,
+				02ACBA5216713CCB00BB4414 /* MainViewController.m */,
 				022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */,
 				022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */,
 				02BED98C168BF87100357B94 /* NearbyMappersViewController.h */,
@@ -852,7 +852,7 @@
 			children = (
 				64981F1E22667D7700178476 /* ContactUsViewController.swift */,
 				64E21EB222651620004605D7 /* LoginViewController.swift */,
-				64F59A4F240915840093DCDB /* MapViewController.swift */,
+				64F59A4F240915840093DCDB /* MainViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1043,7 +1043,7 @@
 				02ACBA4016713CCB00BB4414 /* main.m in Sources */,
 				02ACBA4416713CCB00BB4414 /* AppDelegate.m in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
-				02ACBA5316713CCB00BB4414 /* MapViewController.m in Sources */,
+				02ACBA5316713CCB00BB4414 /* MainViewController.m in Sources */,
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
 				6453776623D38D4600656A1C /* OsmBaseObject.m in Sources */,
 				02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */,
@@ -1134,7 +1134,7 @@
 				024CAB2724429C8200EFB7CA /* ContactUsViewController.m in Sources */,
 				0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */,
 				025224E816D7292E00B6FD53 /* RotatingNavigationController.m in Sources */,
-				64F59A50240915840093DCDB /* MapViewController.swift in Sources */,
+				64F59A50240915840093DCDB /* MainViewController.swift in Sources */,
 				0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */,
 				0219563216DDC26E00074D15 /* GpxViewController.m in Sources */,
 			);

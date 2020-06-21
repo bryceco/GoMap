@@ -10,7 +10,6 @@
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "MapView.h"
-#import "MapViewController.h"
 #import "NominatimViewController.h"
 
 @interface NominatimViewController() <UITableViewDelegate>
@@ -109,7 +108,7 @@
 
 	// disable GPS
 	while ( appDelegate.mapView.gpsState != GPS_STATE_NONE ) {
-		[appDelegate.mapView.viewController toggleLocation:self];
+		[appDelegate.mapView.mainViewController toggleLocation:self];
 	}
 
 	[appDelegate.mapView setTransformForLatitude:lat1 longitude:lon1 width:widthDegrees];

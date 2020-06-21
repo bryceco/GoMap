@@ -9,20 +9,20 @@
 #import "AppDelegate.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
-#import "MapViewController.h"
+#import "MainViewController.h"
 #import "MapView.h"
-#import "OsmNotesDatabase.h"
 #import "NotesTableViewController.h"
+#import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "PushPinView.h"
 #import "SpeechBalloonView.h"
 
-@interface MapViewController ()
+@interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *displayBarButtonItem;
 @end
 
-@implementation MapViewController
+@implementation MainViewController
 
 
 - (void)updateUndoRedoButtonState
@@ -53,7 +53,7 @@
 {
     [super viewDidLoad];
 
-	self.mapView.viewController = self;
+	self.mapView.mainViewController = self;
 
 	AppDelegate * delegate = [AppDelegate getAppDelegate];
 	delegate.mapView = self.mapView;

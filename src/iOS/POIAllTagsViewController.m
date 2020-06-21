@@ -842,7 +842,7 @@
 	}
 
 	// dismiss ourself and switch to the relation
-	UIViewController * topController = (id)mapView.viewController;
+	UIViewController * topController = (id)mapView.mainViewController;
 	[mapView refreshPushpinText];	// update pushpin description to the relation
 	[self dismissViewControllerAnimated:YES completion:^{
 		[topController performSegueWithIdentifier:@"poiSegue" sender:nil];

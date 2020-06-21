@@ -12,7 +12,6 @@
 #import "EditorMapLayer.h"
 #import "OsmMapData.h"
 #import "MapView.h"
-#import "MapViewController.h"
 #import "MercatorTileLayer.h"
 #import "PresetsDatabase.h"
 #import "SettingsViewController.h"

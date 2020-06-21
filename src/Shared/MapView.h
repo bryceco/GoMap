@@ -28,7 +28,7 @@
 @class GpxLayer;
 @class HtmlErrorWindow;
 @class LocationBallLayer;
-@class MapViewController;
+@class MainViewController;
 @class MercatorTileLayer;
 @class OsmNote;
 @class OsmNotesDatabase;
@@ -123,7 +123,7 @@ typedef enum {
 }
 
 #if TARGET_OS_IPHONE
-@property (assign,nonatomic)	MapViewController			*	viewController;
+@property (assign,nonatomic)	MainViewController			*	mainViewController;
 @property (assign,nonatomic)	IBOutlet FpsLabel			*	fpsLabel;
 @property (assign,nonatomic)	IBOutlet UILabel			*	userInstructionLabel;
 @property (assign,nonatomic)	IBOutlet UIButton			*	compassButton;

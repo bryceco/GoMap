@@ -8,7 +8,7 @@
 #import "KeyChain.h"
 #import "LayerProperties.h"
 #import "LoginViewController.h"
-#import "MapViewController.h"
+#import "MainViewController.h"
 #import "OsmMapData.h"
 #import "OsmNode.h"
 #import "OsmWay.h"

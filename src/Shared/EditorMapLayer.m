@@ -16,7 +16,6 @@
 #import "EditorMapLayer.h"
 #if TARGET_OS_IPHONE
 #import "FilterObjectsViewController.h"
-#import "MapViewController.h"
 #endif
 #import "GeekbenchScoreProvider.h"
 #import "MapView.h"
@@ -128,7 +127,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 				NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.",nil);
 				UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text preferredStyle:UIAlertControllerStyleAlert];
 				[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
+				[self.mapView.mainViewController presentViewController:alertView animated:YES completion:nil];
 			});
 		}
 #endif

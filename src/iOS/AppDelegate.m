@@ -15,7 +15,7 @@
 #import "KeyChain.h"
 #import "OsmMapData.h"
 #import "MapView.h"
-#import "MapViewController.h"
+#import "MainViewController.h"
 
 @implementation AppDelegate
 
@@ -96,7 +96,7 @@
 																				message:NSLocalizedString(@"Sorry, an error occurred while loading the GPX file",nil)
 																		 preferredStyle:UIAlertControllerStyleAlert];
 				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self.mapView.viewController presentViewController:alert animated:YES completion:nil];
+				[self.mapView.mainViewController presentViewController:alert animated:YES completion:nil];
 			}
 		});
 		return YES;
@@ -109,7 +109,7 @@
 		} else {
 			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
 			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
+			[self.mapView.mainViewController presentViewController:alertView animated:YES completion:nil];
 		}
 	}
 

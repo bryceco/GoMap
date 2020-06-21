@@ -13,7 +13,6 @@
 #import "AerialListViewController.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
-#import "MapViewController.h"
 #import "MercatorTileLayer.h"
 #import "DisplayViewController.h"
 

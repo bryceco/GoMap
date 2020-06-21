@@ -13,7 +13,7 @@
 
 @class MapView;
 
-@interface MapViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate>
+@interface MainViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate>
 {
 	IBOutlet UIToolbar		*	_toolbar;
 	IBOutlet UIBarButtonItem *	_uploadButton;
