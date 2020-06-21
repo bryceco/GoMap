@@ -296,8 +296,6 @@ const double MinIconSizeInMeters = 2.0;
 	if ( box.size.height <= 0 || box.size.width <= 0 )
 		return;
 
-	NSLog(@"box = %@",NSStringFromCGRect(CGRectFromOSMRect(box)));
-
 	[self updateIconSize];
 
 	[_mapData updateWithBox:box mapView:_mapView completion:^(BOOL partial,NSError * error) {
