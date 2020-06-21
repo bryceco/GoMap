@@ -607,7 +607,8 @@ const CGFloat kEditControlCornerRadius = 4;
 
 	// update bounds of layers
 	for ( CALayer * layer in _backgroundLayers ) {
-		layer.frame = CGRectMake(0, 0, bounds.size.width, bounds.size.height );
+		layer.frame = bounds;
+		layer.bounds = bounds;
 	}
 	_buildings3D.frame = bounds;
 

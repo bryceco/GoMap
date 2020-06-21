@@ -195,6 +195,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 {
 	[super setBounds:bounds];
 	_baseLayer.frame = bounds;
+	_baseLayer.bounds = bounds;	// need to set both of these so bounds stays in sync with superlayer bounds
 	[self updateMapLocation];
 }
 
