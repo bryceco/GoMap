@@ -1622,7 +1622,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			[layers addObject:label];
 		}
 	}
-	
+
     return layers;
 }
 
@@ -1826,15 +1826,21 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			// draw nodes of way
 			NSSet * nodes = object == _selectedWay ? object.nodeSet : nil;
 			for ( OsmNode * node in nodes ) {
-				CAShapeLayer * layer2 = [CAShapeLayer new];
-				CGRect		rect	= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
-				layer2.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-				layer2.strokeColor	= node == _selectedNode ? UIColor.yellowColor.CGColor : UIColor.greenColor.CGColor;
+				CAShapeLayer * layer2 	= [CAShapeLayer new];
+				CGRect		rect		= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
+				layer2.position			= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
+				layer2.strokeColor		= node == _selectedNode ? UIColor.yellowColor.CGColor : UIColor.greenColor.CGColor;
 				layer2.fillColor		= UIColor.clearColor.CGColor;
-				layer2.lineWidth		= 2.0;
+				layer2.lineWidth		= 3.0;
+				layer2.shadowColor		= UIColor.blackColor.CGColor;
+				layer2.shadowRadius		= 2.0;
+				layer2.shadowOpacity	= 0.5;
+				layer2.shadowOffset		= CGSizeMake(0,0);
+				layer2.masksToBounds	= NO;
+
 				path = [node hasInterestingTags] ? CGPathCreateWithRect(rect, NULL) : CGPathCreateWithEllipseInRect(rect, NULL);
 				layer2.path			= path;
-				layer2.zPosition		= Z_HIGHLIGHT_NODE + (node == _selectedNode ? 0.1*ZSCALE : 0);
+				layer2.zPosition	= Z_HIGHLIGHT_NODE + (node == _selectedNode ? 0.1*ZSCALE : 0);
 				[layers addObject:layer2];
 				CGPathRelease(path);
 			}
