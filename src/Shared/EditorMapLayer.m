@@ -918,6 +918,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	CAShapeLayer * layer = [CAShapeLayer new];
 	layer.path = path;
 	layer.frame			= self.bounds;
+	layer.bounds		= self.bounds;
 	layer.fillColor		= [UIColor colorWithRed:0 green:0 blue:1 alpha:0.1].CGColor;
 	layer.strokeColor	= [UIColor blueColor].CGColor;
 	layer.lineJoin		= DEFAULT_LINEJOIN;
