@@ -2484,7 +2484,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	_highlightLayers = [self getShapeLayersForHighlights];
 	
 	// get ocean
-	CAShapeLayer * ocean = [self getOceanLayerSwift:_shownObjects];
+	CAShapeLayer * ocean = [self getOceanLayer:_shownObjects];
 	if ( ocean ) {
 		[_highlightLayers addObject:ocean];
 	}
