@@ -11,7 +11,7 @@
 {
     NSMutableArray    *    _members;
 }
-@property (readonly,nonatomic)    NSArray    *    members;
+@property (readonly,nonatomic)    NSArray<OsmMember *>    *    members;
 
 -(void)constructMember:(OsmMember *)member;
 

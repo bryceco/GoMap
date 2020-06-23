@@ -533,7 +533,7 @@
         if ( obj == object ) {
             return YES;
         }
-        if ( node && obj.isWay && [obj.isWay.nodes containsObject:object] ) {
+        if ( node && obj.isWay && [obj.isWay.nodes containsObject:(id)object] ) {
             return YES;
         }
     }

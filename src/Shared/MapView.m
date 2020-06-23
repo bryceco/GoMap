@@ -2624,16 +2624,16 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	NSInteger index = [way.nodes indexOfObject:node];
 	NSArray<OsmWay *> * parentWays = node.wayCount == 1 ? @[ way ] : [_editorLayer.mapData waysContainingNode:node];
 	if ( way.nodes.count < 3 ) {
-		ignoreList = [parentWays arrayByAddingObjectsFromArray:way.nodes];
+		ignoreList = [parentWays arrayByAddingObjectsFromArray:(id)way.nodes];
 	} else if ( index == 0 ) {
 		// if end-node then okay to connect to self-nodes except for adjacent
-		ignoreList = [parentWays arrayByAddingObjectsFromArray:@[ way.nodes[0], way.nodes[1], way.nodes[2] ]];
+		ignoreList = [parentWays arrayByAddingObjectsFromArray:(id)@[ way.nodes[0], way.nodes[1], way.nodes[2] ]];
 	} else if ( index == way.nodes.count-1 ) {
 		// if end-node then okay to connect to self-nodes except for adjacent
-		ignoreList = [parentWays arrayByAddingObjectsFromArray:@[ way.nodes[index], way.nodes[index-1], way.nodes[index-2] ]];
+		ignoreList = [parentWays arrayByAddingObjectsFromArray:(id)@[ way.nodes[index], way.nodes[index-1], way.nodes[index-2] ]];
 	} else {
 		// if middle node then never connect to self
-		ignoreList = [way.nodes arrayByAddingObjectsFromArray:parentWays];
+		ignoreList = [parentWays arrayByAddingObjectsFromArray:(id)way.nodes];
 	}
 	OsmBaseObject * hit = [_editorLayer osmHitTest:_pushpinView.arrowPoint
 											radius:DragConnectHitTestRadius
@@ -3596,7 +3596,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 				[_editorLayer setSelectedRelation:nil];
 				if ( object.isNode ) {
 					for ( OsmBaseObject * obj in objects ) {
-						if ( obj.isWay && [obj.isWay.nodes containsObject:object] ) {
+						if ( obj.isWay && [obj.isWay.nodes containsObject:(id)object] ) {
 							// select the way containing the node, then select the node in the way
 							[_editorLayer setSelectedWay:obj.isWay];
 							break;
