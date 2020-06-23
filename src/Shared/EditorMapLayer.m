@@ -916,7 +916,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	}
 
 	CAShapeLayer * layer = [CAShapeLayer new];
-	layer.path = path;
+	layer.path			= path;
 	layer.frame			= self.bounds;
 	layer.fillColor		= [UIColor colorWithRed:0 green:0 blue:1 alpha:0.1].CGColor;
 	layer.strokeColor	= [UIColor blueColor].CGColor;
@@ -925,6 +925,7 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	layer.lineWidth		= 2.0;
 	layer.zPosition		= Z_OCEAN;
 	CGPathRelease(path);
+	
 	return layer;
 }
 
@@ -2471,7 +2472,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	_highlightLayers = [self getShapeLayersForHighlights];
 	
 	// get ocean
-	CAShapeLayer * ocean = [self getOceanLayer:_shownObjects];
+	CAShapeLayer * ocean = [self getOceanLayerSwift:_shownObjects];
 	if ( ocean ) {
 		[_highlightLayers addObject:ocean];
 	}

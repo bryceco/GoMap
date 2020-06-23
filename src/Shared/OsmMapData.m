@@ -268,7 +268,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	__block NSMutableArray * a = [NSMutableArray new];
 	if ( object.isNode ) {
 		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-			if ( [way.nodes containsObject:object] )
+			if ( [way.nodes containsObject:(id)object] )
 				[a addObject:way];
 		}];
 	}

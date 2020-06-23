@@ -12,7 +12,7 @@
 {
     NSMutableArray    *    _nodes;
 }
-@property (readonly,nonatomic)    NSArray *    nodes;
+@property (readonly,nonatomic)    NSArray<OsmNode *> *    nodes;
 
 -(void)constructNode:(NSNumber *)node;
 -(void)constructNodeList:(NSMutableArray *)nodes;

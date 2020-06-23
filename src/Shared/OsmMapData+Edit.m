@@ -898,7 +898,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 						OsmBaseObject * via = member.ref;
 						if ( ![via isKindOfClass:[OsmBaseObject class]] )
 							continue;
-						if ( via.isNode && [wayB.nodes containsObject:via] ) {
+						if ( via.isNode && [wayB.nodes containsObject:via.isNode] ) {
 							keepB = YES;
 							break;
 						} else if ( via.isWay && [via.isWay connectsToWay:wayB] ) {
