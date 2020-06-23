@@ -1515,7 +1515,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
     }
 
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
-    
+	BOOL drawRef = YES;
+
     // fetch icon
     NSString * featureName = [PresetsDatabase featureNameForObjectDict:node.tags geometry:node.geometryName];
     PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
@@ -1563,17 +1564,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		props->position = pt;
 		[layers addObject:layer];
 
-		NSString * ref = node.tags[@"ref"];
-		if ( ref ) {
-			CATextLayerWithProperties * label = [CurvedGlyphLayer layerWithString:ref];
-			label.anchorPoint	= CGPointMake(0.0, 0.5);
-			label.position      = CGPointMake(pt.x, pt.y);
-			label.zPosition     = Z_TEXT;
-			label.properties->position = pt;
-			label.properties->offset = CGPointMake(12,0);
-			[layers addObject:label];
-		}
-
 	} else {
 
 		// draw generic box
@@ -1587,6 +1577,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			layer.zPosition     = Z_TEXT;
 			LayerProperties * props = layer.properties;
 			props->position = pt;
+
+			drawRef = NO;
 
 			[layers addObject:layer];
 
@@ -1618,6 +1610,19 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		}
 	}
 
+	if ( drawRef ) {
+		NSString * ref = node.tags[@"ref"];
+		if ( ref ) {
+			CATextLayerWithProperties * label = [CurvedGlyphLayer layerWithString:ref];
+			label.anchorPoint	= CGPointMake(0.0, 0.5);
+			label.position      = CGPointMake(pt.x, pt.y);
+			label.zPosition     = Z_TEXT;
+			label.properties->position = pt;
+			label.properties->offset = CGPointMake(12,0);
+			[layers addObject:label];
+		}
+	}
+	
     return layers;
 }
 
