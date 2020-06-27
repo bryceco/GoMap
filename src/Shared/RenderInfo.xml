@@ -77,16 +77,16 @@
 	<tag key="landuse" value="commercial" type="area" areaColor="DBDBDB"/>
 	<tag key="landuse" value="construction" type="area" lineColor="FFFF00" areaColor="FFFF00" lineWidth="1.000000"/>
 	<tag key="landuse" value="farm" type="area" areaColor="B1E0C2"/>
-	<tag key="landuse" value="farmland" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="farmland" type="area" areaColor="E2F300"/>
 	<tag key="landuse" value="farmyard" type="area" areaColor="F0F0F0"/>
-	<tag key="landuse" value="forest" type="area" areaColor="B1EFC8"/>
+	<tag key="landuse" value="forest" type="area" areaColor="008000"/>
 	<tag key="landuse" value="garages" type="area" areaColor="F0F0F0"/>
 	<tag key="landuse" value="grass" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="greenfield" type="area" areaColor="B1EC5C"/>
 	<tag key="landuse" value="greenhouse_horticulture" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="industrial" type="area" areaColor="ECD8FF"/>
 	<tag key="landuse" value="landfill" type="area" areaColor="663300"/>
-	<tag key="landuse" value="meadow" type="area" areaColor="B1E0C2"/>
+	<tag key="landuse" value="meadow" type="area" areaColor="BEE053"/>
 	<tag key="landuse" value="military" type="area" areaColor="B62C2C"/>
 	<tag key="landuse" value="orchard" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="quarry" type="area" areaColor="888888"/>
@@ -98,6 +98,7 @@
 	<tag key="landuse" value="village_green" type="area" areaColor="B1E0C2"/>
 	<tag key="landuse" value="vineyard" type="area" areaColor="B1E0C2"/>
 
+	<tag key="leisure" value="swimming_pool" type="area" areaColor="0000FF"/>
 	<tag key="leisure" value="golf_course" type="node;area" areaColor="C7F1A3"/>
 	<tag key="leisure" value="marina" type="node;area" areaColor="0070CF"/>
 	<tag key="leisure" value="track" type="node;area" lineColor="C7F1A3" areaColor="C7F1A3" lineWidth="2.000000"/>
