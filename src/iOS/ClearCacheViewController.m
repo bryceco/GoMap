@@ -90,7 +90,7 @@ enum {
 			NSInteger size, count;
 			[(id)object diskCacheSize:&size count:&count];
 			dispatch_async(dispatch_get_main_queue(), ^{
-				cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %d files",nil), (double)size/(1024*1024), count];
+				cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %ld files",nil), (double)size/(1024*1024), (long)count];
 			});
 		});
 	}
