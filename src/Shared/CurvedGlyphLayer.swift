@@ -309,36 +309,41 @@ private class StringGlyphs {
 
 		let font = StringGlyphs.uiFont
 
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.lineSpacing = font.lineHeight - font.ascender + font.descender + 6	// FIXME: 6 is a fudge factor so wrapped Chinese displays correctly, but English is now too large
+
 		let attrString = NSAttributedString(string: string,
 											attributes: [
 												NSAttributedString.Key.foregroundColor: CurvedGlyphLayer.foreColor.cgColor,
-												NSAttributedString.Key.font: font])
+												NSAttributedString.Key.font: font,
+												NSAttributedString.Key.paragraphStyle: paragraphStyle])
+
 		let framesetter = CTFramesetterCreateWithAttributedString(attrString)
 
 		var bounds = CGRect.zero
 		var maxWidth = MAX_TEXT_WIDTH
 		while true {
 			bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter,
-																	   CFRangeMake(0, 0),
+																	   CFRangeMake(0, attrString.length),
 																	   nil,
-																	   CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude),
+																	   CGSize(width: maxWidth, height: 1000.0),
 																	   nil)
 			if bounds.height < maxWidth {
 				break
 			}
 			maxWidth *= 2
 		}
-		bounds = bounds.insetBy( dx: -3, dy: -1 );
-		bounds.size.width  = 2 * ceil( bounds.size.width/2 );	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
-		bounds.size.height = 2 * ceil( bounds.size.height/2 );
-		layer.bounds = bounds;
+		bounds = bounds.insetBy( dx: -3, dy: -1 )
+		bounds.size.width  = 2 * ceil( bounds.size.width/2 )	// make divisible by 2 so when centered on anchor point at (0.5,0.5) everything still aligns
+		bounds.size.height = 2 * ceil( bounds.size.height/2 )
+		layer.bounds = bounds
 
-		layer.string			= attrString;
-		layer.truncationMode	= CATextLayerTruncationMode.none;
-		layer.isWrapped			= true;
-		layer.alignmentMode		= CATextLayerAlignmentMode.left;	// because our origin is -3 this is actually centered
+		layer.string			= attrString
+		layer.truncationMode	= CATextLayerTruncationMode.none
+		layer.isWrapped			= true
+		layer.alignmentMode		= CATextLayerAlignmentMode.left	// because our origin is -3 this is actually centered
 
-		layer.backgroundColor	= backColor.cgColor;
+		layer.backgroundColor	= backColor.cgColor
 
 		return layer;
 	}
