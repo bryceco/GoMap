@@ -23,7 +23,6 @@ static RenderInfo * g_DefaultRender = nil;
 	RenderInfo * copy = [RenderInfo new];
 	copy.key			= self.key;
 	copy.value			= self.value;
-	copy.geometry		= self.geometry;
 	copy.lineColor		= self.lineColor;
 	copy.lineWidth		= self.lineWidth;
 	copy.areaColor		= self.areaColor;
@@ -32,7 +31,7 @@ static RenderInfo * g_DefaultRender = nil;
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _geometry];
+	return [NSString stringWithFormat:@"%@ %@=%@", [super description], _key, _value];
 }
 
 -(BOOL)isAddressPoint
@@ -145,38 +144,28 @@ static RenderInfo * g_DefaultRender = nil;
 	return _database;
 }
 
-+(NSMutableArray *)readXml
++(NSMutableArray *)readConfiguration
 {
-	NSError * error = nil;
-	NSMutableArray * tagList = [NSMutableArray new];
-	NSString * text = [NSString stringWithContentsOfFile:@"RenderInfo.xml" encoding:NSUTF8StringEncoding error:&error];
+	NSData * text = [NSData dataWithContentsOfFile:@"RenderInfo.json"];
 	if ( text == nil ) {
-		NSString * path = [[NSBundle mainBundle] pathForResource:@"RenderInfo" ofType:@"xml"];
-		text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+		NSString * path = [[NSBundle mainBundle] pathForResource:@"RenderInfo" ofType:@"json"];
+		text = [NSData dataWithContentsOfFile:path];
 	}
-	NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:text options:0 error:&error];
-	NSXMLElement * root = [doc rootElement];
-	for ( NSXMLElement * tag in root.children ) {
+	NSDictionary * features = [NSJSONSerialization JSONObjectWithData:text options:0 error:NULL];
 
-		RenderInfo * tagType = [RenderInfo new];
-		tagType.key				= [tag attributeForName:@"key"].stringValue;
-		tagType.value			= [tag attributeForName:@"value"].stringValue;
-		tagType.geometry		= [tag attributeForName:@"type"].stringValue;
-		tagType.lineColor		= [RenderInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
-		tagType.areaColor		= [RenderInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
-		tagType.lineWidth		= [tag attributeForName:@"lineWidth"].stringValue.doubleValue;
+	NSMutableArray * renderList = [NSMutableArray new];
 
-		if ( [tag.name isEqualToString:@"tag"] ) {
-			[tagList addObject:tagType];
-		} else if ( [tag.name isEqualToString:@"default"] ) {
-			assert( tagType.value == nil );	// not implemented
-			tagType.value = @"";
-			[tagList addObject:tagType];
-		} else {
-			assert(NO);
-		}
-	}
-	return tagList;
+	[features enumerateKeysAndObjectsUsingBlock:^(NSString * feature, NSDictionary * dict, BOOL * _Nonnull stop) {
+		NSArray * keyValue = [feature componentsSeparatedByString:@"/"];
+		RenderInfo * render = [RenderInfo new];
+		render.key				= keyValue[0];
+		render.value			= keyValue.count > 1 ? keyValue[1] : @"";
+		render.lineColor		= [RenderInfo colorForString:dict[@"lineColor"]];
+		render.areaColor		= [RenderInfo colorForString:dict[@"areaColor"]];
+		render.lineWidth		= ((NSNumber *)dict[@"lineWidth"]).doubleValue;
+		[renderList addObject:render];
+	}];
+	return renderList;
 }
 
 
@@ -190,9 +179,9 @@ static RenderInfo * g_DefaultRender = nil;
 {
 	self = [super init];
 	if ( self ) {
-		_allTags = [RenderInfoDatabase readXml];
+		_allFeatures = [RenderInfoDatabase readConfiguration];
 		_keyDict = [NSMutableDictionary new];
-		for ( RenderInfo * tag in _allTags ) {
+		for ( RenderInfo * tag in _allFeatures ) {
 			NSMutableDictionary * valDict = [_keyDict objectForKey:tag.key];
 			if ( valDict == nil ) {
 				valDict = [NSMutableDictionary dictionaryWithObject:tag forKey:tag.value];

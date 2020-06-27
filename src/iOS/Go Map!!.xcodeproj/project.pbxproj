@@ -88,7 +88,7 @@
 		02ACBCF816713F2B00BB4414 /* QuadMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBB316713F2A00BB4414 /* QuadMap.m */; };
 		02ACBCF916713F2B00BB4414 /* RulerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBB516713F2A00BB4414 /* RulerLayer.m */; };
 		02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */; };
-		02ACBCFD16713F2B00BB4414 /* RenderInfo.xml in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBB16713F2A00BB4414 /* RenderInfo.xml */; };
+		02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 02ACBBBB16713F2A00BB4414 /* RenderInfo.json */; };
 		02ACBD191671737300BB4414 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD181671737300BB4414 /* libxml2.dylib */; };
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
@@ -315,7 +315,7 @@
 		02ACBBB516713F2A00BB4414 /* RulerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RulerLayer.m; path = ../Shared/RulerLayer.m; sourceTree = "<group>"; };
 		02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonLayer.h; path = ../Shared/SpeechBalloonLayer.h; sourceTree = "<group>"; };
 		02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonLayer.m; path = ../Shared/SpeechBalloonLayer.m; sourceTree = "<group>"; };
-		02ACBBBB16713F2A00BB4414 /* RenderInfo.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = RenderInfo.xml; path = ../Shared/RenderInfo.xml; sourceTree = "<group>"; };
+		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RenderInfo.json; path = ../Shared/RenderInfo.json; sourceTree = "<group>"; };
 		02ACBBBD16713F2A00BB4414 /* VectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VectorMath.h; path = ../Shared/VectorMath.h; sourceTree = "<group>"; };
 		02ACBD0016713FCF00BB4414 /* iosapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iosapi.h; path = ../Shared/iosapi.h; sourceTree = "<group>"; };
 		02ACBD181671737300BB4414 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -743,7 +743,7 @@
 				022B09A619BD3F7B0041687B /* QuadMapC.mm */,
 				02ACBD2216717D6F00BB4414 /* RenderInfo.h */,
 				02ACBD2316717D7000BB4414 /* RenderInfo.m */,
-				02ACBBBB16713F2A00BB4414 /* RenderInfo.xml */,
+				02ACBBBB16713F2A00BB4414 /* RenderInfo.json */,
 				02ACBBB416713F2A00BB4414 /* RulerLayer.h */,
 				02ACBBB516713F2A00BB4414 /* RulerLayer.m */,
 				02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */,
@@ -1018,7 +1018,7 @@
 				024AB08B240C80FD004A3B5B /* Temaki Icons.xcassets in Resources */,
 				027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
-				02ACBCFD16713F2B00BB4414 /* RenderInfo.xml in Resources */,
+				02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
