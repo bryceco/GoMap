@@ -45,11 +45,10 @@ enum {
 
 	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
-	if ( object ) {
-		self.title				= [NSString stringWithFormat:NSLocalizedString(@"%@ Attributes",nil), object.isNode ? NSLocalizedString(@"Node",nil) : object.isWay ? NSLocalizedString(@"Way",nil) : object.isRelation ? NSLocalizedString(@"Relation",nil) : @""];
-	} else {
-		self.title				= NSLocalizedString(@"No Object Selected",nil);
-	}
+	self.title	= object.isNode ? NSLocalizedString(@"Node attributes",nil)
+				: object.isWay ? NSLocalizedString(@"Way attributes",nil)
+				: object.isRelation ? NSLocalizedString(@"Relation attributes",nil)
+				: NSLocalizedString(@"Attributes",nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated

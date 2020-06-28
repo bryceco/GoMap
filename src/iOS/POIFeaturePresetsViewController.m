@@ -130,7 +130,7 @@
                 });
             }
 		} else if ( !_childPushed &&
-				   tabController.selection.ident.integerValue <= 0 &&
+				   tabController.selection.ident.longLongValue <= 0 &&
 				   tabController.keyValueDict.count == 0 )
 		{
 			// if we're being displayed for a newly created node then go straight to the Type picker
