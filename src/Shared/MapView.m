@@ -60,8 +60,8 @@ static const CGFloat Z_ROTATEGRAPHIC	= -3;
 static const CGFloat Z_BLINK			= 4;
 static const CGFloat Z_BALL				= 5;
 static const CGFloat Z_TOOLBAR			= 90;
-static const CGFloat Z_PUSHPIN			= 91;
 static const CGFloat Z_CROSSHAIRS		= 100;
+static const CGFloat Z_PUSHPIN			= 105;
 static const CGFloat Z_FLASH			= 110;
 
 
