@@ -411,7 +411,12 @@ class GlyphLayer : CALayerWithProperties {
 		self.anchorPoint		= copy.anchorPoint
 		self.bounds				= copy.bounds
 		self.backgroundColor	= copy.backgroundColor
+#if false
+		// BUG: apparently the contents can be invalidated without us being notified, resulting in missing glyphs
 		self.contents 			= copy.contents	// use existing backing store so we don't have to redraw
+#else
+		setNeedsDisplay()	// FIXME: need to either fix this problem or cache better
+#endif
 	}
 
 	static public func layer(withFont font:CTFont, glyphs:[CGGlyph], positions:[CGPoint]) -> GlyphLayer?
