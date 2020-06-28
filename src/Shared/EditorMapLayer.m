@@ -1920,20 +1920,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						double length = 0.0;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						if ( length >= name.length * Pixels_Per_Character ) {
-#if 0
-							// uses CATextLayers with caching (14.5)
-							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path whiteOnBlock:self.whiteText];
-#else
-#if 0
-							// Uses a single curving CurvedGlyphLayer (no caching) (13.6)
-							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
-							NSArray * a = layer ? @[ layer ] : nil;
-#else
-							// Uses multiple GlyphLayers with caching (14.7)
 							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
 							NSArray * a = [layer glyphLayers];
-#endif
-#endif
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;
