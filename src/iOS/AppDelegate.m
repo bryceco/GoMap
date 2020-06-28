@@ -102,17 +102,22 @@
 		return YES;
 	} else if ( url.absoluteString.length > 0 ) {
 		// geo: and gomaposm: support
-		LocationURLParser * geoURLParser = [LocationURLParser new];
-		MapLocation * parserResult = [geoURLParser parseURL:url];
+		LocationURLParser * urlParser = [LocationURLParser new];
+		MapLocation * parserResult = [urlParser parseURL:url];
 		if ( parserResult ) {
-			[self setMapLocation:parserResult];
+			double delayInSeconds = 1.0;
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				[self setMapLocation:parserResult];
+			});
+			return YES;
 		} else {
 			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
 			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 			[self.mapView.mainViewController presentViewController:alertView animated:YES completion:nil];
+			return NO;
 		}
 	}
-
 	return NO;
 }
 
