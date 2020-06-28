@@ -157,6 +157,7 @@
 			// flash success message
 			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC));
 			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				[appDelegate.mapView.editorLayer setNeedsLayout];
 				[appDelegate.mapView flashMessage:NSLocalizedString(@"Upload complete!",nil) duration:1.5];
 
 				// record number of uploads
