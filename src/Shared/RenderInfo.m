@@ -44,8 +44,9 @@ static RenderInfo * g_DefaultRender = nil;
 {
 	if ( text == nil )
 		return nil;
+	assert( text.length == 6 );
 	int r = 0, g = 0, b = 0;
-	sscanf( text.UTF8String, "%2x%2x%2x", &r, &g, &b);
+	assert( sscanf( text.UTF8String, "%2x%2x%2x", &r, &g, &b) == 3 );
 #if TARGET_OS_IPHONE
 	return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 #else
@@ -200,7 +201,7 @@ static RenderInfo * g_DefaultRender = nil;
 	// if the object is part of a rendered relation than inherit that relation's tags
 	if ( object.parentRelations.count && object.isWay && !object.hasInterestingTags ) {
 		for ( OsmRelation * parent in object.parentRelations ) {
-			if ( parent.isMultipolygon || parent.isBoundary ) {
+			if ( parent.isBoundary ) {
 				tags = parent.tags;
 				break;
 			}
