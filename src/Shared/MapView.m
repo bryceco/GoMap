@@ -1076,9 +1076,9 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_editorLayer setNeedsLayout];
 	}
 }
+
+
 #pragma mark Coordinate Transforms
-
-
 
 -(void)setScreenFromMapTransform:(OSMTransform)t
 {
@@ -1332,21 +1332,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	return CGPointFromOSMPoint(pt);
 }
 
--(void)setTransformForLatitude:(double)latitude longitude:(double)longitude scale:(double)scale
-{
-	OSMPoint mapCenter = MapPointForLatitudeLongitude( latitude, longitude );
-
-	// translate
-	OSMPoint point = [self screenPointFromMapPoint:mapCenter birdsEye:NO];
-	CGPoint center = _crossHairs.position;
-
-	CGPoint delta = { center.x - point.x, center.y - point.y };
-	[self adjustOriginBy:delta];
-
-	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
-	[self adjustZoomBy:ratio aroundScreenPoint:center];
-}
-
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude
 {
 	CGPoint point = [self screenPointForLatitude:latitude longitude:longitude birdsEye:NO];
@@ -1355,15 +1340,18 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	[self adjustOriginBy:delta];
 }
 
+-(void)setTransformForLatitude:(double)latitude longitude:(double)longitude scale:(double)scale
+{
+	// translate
+	[self setTransformForLatitude:latitude longitude:longitude];
+
+	double ratio = scale / OSMTransformScaleX(_screenFromMapTransform);
+	[self adjustZoomBy:ratio aroundScreenPoint:_crossHairs.position];
+}
+
 -(void)setTransformForLatitude:(double)latitude longitude:(double)longitude width:(double)widthDegrees
 {
 	double scale = 360/(widthDegrees / 2);
-	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
-}
-
--(void)setTransformForLatitude:(double)latitude longitude:(double)longitude zoom:(double)zoom
-{
-	double scale = pow(2,zoom);
 	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 }
 
@@ -1375,6 +1363,12 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( location.viewState != MAPVIEW_NONE ) {
 		self.viewState = location.viewState;
 	}
+}
+
+-(void)setTransformForLatitude:(double)latitude longitude:(double)longitude zoom:(double)zoom
+{
+	double scale = pow(2,zoom);
+	[self setTransformForLatitude:latitude longitude:longitude scale:scale];
 }
 
 -(double)zoom
