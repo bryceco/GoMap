@@ -25,6 +25,7 @@
   "aerialway/station" : {
 	"areaColor" : "663300"
   },
+
   "aeroway/aerodrome" : {
 	"areaColor" : "660000",
 	"lineColor" : "660000",
@@ -54,9 +55,11 @@
   "aeroway/terminal" : {
 	"areaColor" : "BB0000"
   },
+
   "amenity" : {
 	"areaColor" : "F7EFB7"
   },
+
   "barrier" : {
 	"lineColor" : "F0F050",
 	"lineWidth" : 1
@@ -66,6 +69,7 @@
 	"lineColor" : "A0F0A0",
 	"lineWidth" : 1
   },
+
   "boundary" : {
 	"lineColor" : "B100FF",
 	"lineWidth" : 1
@@ -78,9 +82,11 @@
 	"lineColor" : "FF6600",
 	"lineWidth" : 1
   },
+
   "building" : {
 	"areaColor" : "D9AD64"
   },
+
   "highway/bridleway" : {
 	"lineColor" : "C08000",
 	"lineWidth" : 1
@@ -205,9 +211,11 @@
 	"lineColor" : "C0C0C0",
 	"lineWidth" : 1
   },
+
   "historic" : {
 	"areaColor" : "663300"
   },
+
   "indoor/area" : {
 	"lineColor" : "A52A2A",
 	"lineWidth" : 1
@@ -224,6 +232,7 @@
 	"lineColor" : "A52A2A",
 	"lineWidth" : 1
   },
+
   "landuse/allotments" : {
 	"areaColor" : "B1E0C2"
   },
@@ -307,6 +316,7 @@
   "landuse/vineyard" : {
 	"areaColor" : "B1E0C2"
   },
+
   "leisure" : {
 	"areaColor" : "C7F1A3"
   },
@@ -324,6 +334,7 @@
 	"lineColor" : "C7F1A3",
 	"lineWidth" : 2
   },
+
   "man_made" : {
 	"areaColor" : "707070"
   },
@@ -336,9 +347,11 @@
 	"lineColor" : "660000",
 	"lineWidth" : 2
   },
+
   "military" : {
 	"areaColor" : "B62C2C"
   },
+
   "natural/bay" : {
 	"areaColor" : "002F00"
   },
@@ -373,7 +386,6 @@
 	"areaColor" : "CBA762"
   },
   "natural/palaeontological_site" : {
-
   },
   "natural/peak" : {
 	"areaColor" : "663300"
@@ -407,9 +419,11 @@
   "natural/wood" : {
 	"areaColor" : "008000"
   },
+
   "place/isolated_dwelling" : {
 	"areaColor" : "8DE3CB"
   },
+
   "power" : {
 	"areaColor" : "EEEEEE"
   },
@@ -424,10 +438,12 @@
 	"lineColor" : "EEEEEE",
 	"lineWidth" : 1
   },
+
   "public_transport/platform" : {
 	"lineColor" : "809BC0",
 	"lineWidth" : 1
   },
+
   "railway/abandoned" : {
 	"lineColor" : "404040",
 	"lineWidth" : 1
@@ -475,7 +491,6 @@
 	"lineWidth" : 2
   },
   "railway/roundhouse" : {
-
   },
   "railway/station" : {
 	"areaColor" : "F7EFB7"
@@ -494,6 +509,7 @@
   "railway/turntable" : {
 	"areaColor" : "404040"
   },
+
   "route/bus" : {
 	"lineColor" : "809BC0",
 	"lineWidth" : 1
@@ -506,16 +522,20 @@
 	"lineColor" : "809BC0",
 	"lineWidth" : 1
   },
+
   "service/yard" : {
 	"lineColor" : "552200",
 	"lineWidth" : 1
   },
+
   "shop" : {
 	"areaColor" : "7D81FF"
   },
+
   "sport" : {
 	"areaColor" : "BDE3CB"
   },
+
   "tourism" : {
 	"areaColor" : "E180A2"
   },
@@ -524,6 +544,7 @@
 	"lineColor" : "E180A2",
 	"lineWidth" : 2
   },
+
   "waterway/boatyard" : {
 	"areaColor" : "D8D8D8"
   },

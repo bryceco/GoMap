@@ -18,17 +18,6 @@
 static RenderInfo * g_AddressRender = nil;
 static RenderInfo * g_DefaultRender = nil;
 
--(RenderInfo *)copy
-{
-	RenderInfo * copy = [RenderInfo new];
-	copy.key			= self.key;
-	copy.value			= self.value;
-	copy.lineColor		= self.lineColor;
-	copy.lineWidth		= self.lineWidth;
-	copy.areaColor		= self.areaColor;
-	return copy;
-}
-
 -(NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ %@=%@", [super description], _key, _value];
@@ -40,7 +29,7 @@ static RenderInfo * g_DefaultRender = nil;
 }
 
 
-+(NSColor *)colorForString:(NSString *)text
++(NSColor *)colorForHexString:(NSString *)text
 {
 	if ( text == nil )
 		return nil;
@@ -103,6 +92,8 @@ static RenderInfo * g_DefaultRender = nil;
 				_renderPriority = 31;
 			} else if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
 				_renderPriority = 30;
+			} else if ( [_key isEqualToString:@"landuse"] ) {
+				_renderPriority = 29;
 			} else if ( [_key isEqualToString:@"highway"] && _value  && (_renderPriority = [highwayDict[_value] integerValue]) > 0 ) {
 				(void)0;
 			} else if ( [_key isEqualToString:@"railway"] ) {
@@ -161,8 +152,8 @@ static RenderInfo * g_DefaultRender = nil;
 		RenderInfo * render = [RenderInfo new];
 		render.key				= keyValue[0];
 		render.value			= keyValue.count > 1 ? keyValue[1] : @"";
-		render.lineColor		= [RenderInfo colorForString:dict[@"lineColor"]];
-		render.areaColor		= [RenderInfo colorForString:dict[@"areaColor"]];
+		render.lineColor		= [RenderInfo colorForHexString:dict[@"lineColor"]];
+		render.areaColor		= [RenderInfo colorForHexString:dict[@"areaColor"]];
 		render.lineWidth		= ((NSNumber *)dict[@"lineWidth"]).doubleValue;
 		[renderList addObject:render];
 	}];
@@ -171,12 +162,6 @@ static RenderInfo * g_DefaultRender = nil;
 
 
 -(id)init
-{
-	self = [self initWithXmlFile];
-	return self;
-}
-
--(id)initWithXmlFile
 {
 	self = [super init];
 	if ( self ) {

@@ -557,6 +557,9 @@ const CGFloat kEditControlCornerRadius = 4;
 	center = [self mapPointFromScreenPoint:center birdsEye:NO];
 	center = LongitudeLatitudeFromMapPoint( center );
 	double scale = OSMTransformScaleX(self.screenFromMapTransform);
+#if DEBUG
+	assert( scale > 1.0 );
+#endif
 	[[NSUserDefaults standardUserDefaults] setDouble:scale					forKey:@"view.scale"];
 	[[NSUserDefaults standardUserDefaults] setDouble:center.y				forKey:@"view.latitude"];
 	[[NSUserDefaults standardUserDefaults] setDouble:center.x				forKey:@"view.longitude"];
