@@ -40,7 +40,7 @@ extension OsmNode {
             for directionKey in keys {
                 if
                     let value = tags?[directionKey],
-					let direction = OsmNode.direction(from: value) {
+					let direction = OsmNode.directionFromString(value) {
                     return direction
                 }
             }
@@ -49,15 +49,17 @@ extension OsmNode {
         }
     }
     
-    private static func direction(from string: String) -> NSRange? {
+    private static func directionFromString(_ string: String) -> NSRange? {
 		if let direction = Float(string) ?? cardinalDictionary[string] {
 			return NSMakeRange(Int(direction),0)
 		} else {
-			let a = string.split(separator:"-")
+			let a : [String] = string.components(separatedBy: "-")
 			if a.count == 2 {
+				let a0 = String(a[0])
+				let a1 = String(a[1])
 				if
-					let d1 = Float(a[0]) ?? cardinalDictionary[String(a[0])],
-					let d2 = Float(a[1]) ?? cardinalDictionary[String(a[1])] {
+					let d1 = Float(a0) ?? cardinalDictionary[a0],
+					let d2 = Float(a1) ?? cardinalDictionary[a1] {
 					var angle = Int(d2-d1)
 					if ( angle < 0 ) {
 						angle += 360;
