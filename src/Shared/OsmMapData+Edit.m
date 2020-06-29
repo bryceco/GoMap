@@ -600,6 +600,10 @@ NSString * reverseValue( NSString * key, NSString * value)
 		@"east" : @"west",
 		@"west" : @"east"
 	};
+	NSDictionary * nodeReversals = @{
+		@"forward" : @"backward",
+		@"backward" : @"forward",
+	};
 
 	return ^{
 		[self registerUndoCommentString:NSLocalizedString(@"Reverse",nil)];
@@ -613,14 +617,25 @@ NSString * reverseValue( NSString * key, NSString * value)
 			[self deleteNodeInWayUnsafe:way index:way.nodes.count-1 preserveNode:NO];
 		}
 
-		// reverse tags
-		__block NSMutableDictionary * newTags = [NSMutableDictionary new];
+		// reverse tags on way
+		__block NSMutableDictionary * newWayTags = [NSMutableDictionary new];
 		[way.tags enumerateKeysAndObjectsUsingBlock:^(NSString * k, NSString * v, BOOL *stop) {
 			k = reverseKey(k);
 			v = reverseValue(k, v);
-			[newTags setObject:v forKey:k];
+			[newWayTags setObject:v forKey:k];
 		}];
-		[self setTags:newTags forObject:way];
+		[self setTags:newWayTags forObject:way];
+
+		// reverse direction tags on nodes in way
+		for ( OsmNode * node in way.nodes ) {
+			NSString * value = node.tags[@"direction"];
+			NSString * replacement = nodeReversals[ value ];
+			if ( replacement ) {
+				NSMutableDictionary * nodeTags = [node.tags mutableCopy];
+				nodeTags[ @"direction" ] = replacement;
+				[self setTags:nodeTags forObject:node];
+			}
+		}
 
 		// reverse roles in relations the way belongs to
 		for ( OsmRelation * relation in way.parentRelations ) {
