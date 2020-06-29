@@ -33,7 +33,7 @@
 
 
 
-BOOL IsInterestingTag(NSString * key)
+BOOL IsInterestingKey(NSString * key)
 {
 	if ( [key isEqualToString:@"attribution"] )
 		return NO;
@@ -60,7 +60,7 @@ BOOL IsInterestingTag(NSString * key)
 -(BOOL)hasInterestingTags
 {
     for ( NSString * key in _tags ) {
-        if ( IsInterestingTag(key) )
+        if ( IsInterestingKey(key) )
             return YES;
     }
     return NO;
@@ -210,7 +210,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
         NSString * ourValue = merged[otherKey];
         if ( ![ourValue isEqualToString:otherValue] ) {
             if ( !allowConflicts ) {
-                if ( IsInterestingTag(otherKey) ) {
+                if ( IsInterestingKey(otherKey) ) {
                     *stop = YES;
                     merged = nil;
                 }
@@ -531,7 +531,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     if ( tagDescription == nil ) {
         // any non-ignored key
         [_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
-			if ( IsInterestingTag(key) ) {
+			if ( IsInterestingKey(key) ) {
                 *stop = YES;
                 tagDescription = [NSString stringWithFormat:@"%@ = %@",key,value];
             }

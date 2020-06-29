@@ -194,35 +194,41 @@ static RenderInfo * g_DefaultRender = nil;
 	}
 
 	// try exact match
-	__block RenderInfo * best = nil;
-	__block BOOL isDefault = NO;
+	__block RenderInfo * bestRender = nil;
+	__block BOOL bestIsDefault = NO;
+	__block int bestCount = 0;
 	[tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
-		NSDictionary * valDict = [_keyDict objectForKey:key];
+		NSDictionary * valDict = _keyDict[key];
+		if ( valDict == nil )
+			return;
 		RenderInfo * render = valDict[value];
+		BOOL isDefault = NO;
 		if ( render == nil ) {
 			render = valDict[@""];
-			if ( render )
+			if ( render ) {
 				isDefault = YES;
+			}
 		}
-
 		if ( render == nil )
 			return;
-		if ( best == nil || isDefault || (best.lineColor == nil && render.lineColor) )
-			best = render;
-		if ( render.lineColor == nil )
+
+		int count = (render.lineColor != nil) + (render.areaColor != nil);
+		if ( bestRender == nil || (bestIsDefault && !isDefault) || (count > bestCount) ) {
+			bestRender = render;
+			bestCount = count;
+			bestIsDefault = isDefault;
 			return;
-		// DLog(@"render %@=%@",key,value);
-		*stop = YES;
+		}
 	}];
-	if ( best ) {
-		return best;
+	if ( bestRender ) {
+		return bestRender;
 	}
 
 	// check if it is an address point
 	BOOL isAddress = object.isNode && object.tags.count > 0;
 	if ( isAddress ) {
 		for ( NSString * key in object.tags ) {
-			if ( ![key hasPrefix:@"addr:"] ) {
+			if ( IsInterestingKey(key) && ![key hasPrefix:@"addr:"] ) {
 				isAddress = NO;
 				break;
 			}
@@ -241,7 +247,7 @@ static RenderInfo * g_DefaultRender = nil;
 		g_DefaultRender = [RenderInfo new];
 		g_DefaultRender.key = @"DEFAULT";
 #if TARGET_OS_IPHONE
-		g_DefaultRender.lineColor = [NSColor colorWithRed:0 green:0 blue:0 alpha:1];
+		g_DefaultRender.lineColor = UIColor.blackColor;
 #else
 		g_DefaultRender.lineColor = [NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:1];
 #endif
