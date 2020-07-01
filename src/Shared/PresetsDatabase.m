@@ -848,6 +848,23 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 +(NSString *)featureNameForObjectDict:(NSDictionary *)objectTags geometry:(NSString *)geometry
 {
+	if ( [objectTags[@"cuisine"] isEqualToString:@"thai"] ) {
+		NSLog(@"");
+	}
+	NSString * s1 = [PresetsDatabase featureNameForObjectDictSwift:g_jsonPresetsDict
+													   countryCode:AppDelegate.getAppDelegate.mapView.countryCodeForLocation
+														objectTags:objectTags
+														  geometry:geometry];
+	NSString * s2 = [PresetsDatabase featureNameForObjectDictObjc:objectTags
+														 geometry:geometry];
+	if ( (s1 != nil) != (s2 != nil) || (s1 && ![s1 isEqualToString:s2]) ) {
+		NSLog(@"");
+	}
+	return s2;
+}
+
++(NSString *)featureNameForObjectDictObjc:(NSDictionary *)objectTags geometry:(NSString *)geometry
+ {
 	__block double bestMatchScore = 0.0;
 	__block NSString * bestMatchName = nil;
 
@@ -855,6 +872,9 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL * stop) {
 
+		if ( [featureName containsString:@"Rosa"] ) {
+			NSLog(@"");
+		}
 		__block double totalScore = 0;
 #if USE_SUGGESTIONS
 		NSArray<NSString *> * countryList = dict[@"countryCodes"];

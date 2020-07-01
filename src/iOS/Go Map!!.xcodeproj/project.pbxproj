@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0205460616766808004A2A23 /* POIPresetValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0205460516766808004A2A23 /* POIPresetValuesViewController.m */; };
 		020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8F168A7688003F2C2A /* CreditsViewController.m */; };
+		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
 		0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */; };
 		0216637024738C9600B0B0F6 /* LayerProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0216636F24738C9600B0B0F6 /* LayerProperties.m */; };
 		0219563216DDC26E00074D15 /* GpxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0219563116DDC26E00074D15 /* GpxViewController.m */; };
@@ -176,6 +177,7 @@
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		020C2A8E168A7688003F2C2A /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CreditsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		020C2A8F168A7688003F2C2A /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CreditsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PresetsDatabase.swift; path = ../Shared/PresetsDatabase.swift; sourceTree = "<group>"; };
 		0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurvedTextLayer.swift; path = ../Shared/CurvedTextLayer.swift; sourceTree = "<group>"; };
 		0216636E24738C9600B0B0F6 /* LayerProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LayerProperties.h; path = ../Shared/LayerProperties.h; sourceTree = "<group>"; };
 		0216636F24738C9600B0B0F6 /* LayerProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LayerProperties.m; path = ../Shared/LayerProperties.m; sourceTree = "<group>"; };
@@ -736,6 +738,7 @@
 				02354F772462526A00878A04 /* PersistentWebCache.m */,
 				028F504319B949780093C423 /* PresetsDatabase.h */,
 				028F504419B949780093C423 /* PresetsDatabase.m */,
+				020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */,
 				0296873D167E30C700B8FF2C /* PushPinView.h */,
 				0296873E167E30C700B8FF2C /* PushPinView.m */,
 				02ACBBB216713F2A00BB4414 /* QuadMap.h */,
@@ -1055,6 +1058,7 @@
 				02C3C73419A5A40C003B6783 /* AerialListViewController.m in Sources */,
 				02E626701997168800565D62 /* KeyChain.m in Sources */,
 				02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */,
+				020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */,
 				02BF745120793EE20028ED6A /* TurnRestrictHwyView.m in Sources */,
 				64E21EB322651620004605D7 /* LoginViewController.swift in Sources */,
 				02ACBBCB16713F2B00BB4414 /* MercatorTileLayer.m in Sources */,
