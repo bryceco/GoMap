@@ -16,7 +16,7 @@ extension PresetsDatabase
 		let geometry : [ String ]?
 		let icon : String?
 		let imageURL : String?
-		let matchScore : Float?
+		let matchScore : Double?
 		let name : String?
 		let reference : [ String : String ]?
 		let suggestion : Int?
@@ -55,7 +55,7 @@ extension PresetsDatabase
 		let geometry = jsonDict["geometry"] as? [String]
 		let icon = jsonDict["icon"] as? String
 		let imageURL = jsonDict["imageURL"] as? String
-		let matchScore = jsonDict["matchScore"] as? Float
+		let matchScore = jsonDict["matchScore"] as? Double
 		let name = jsonDict["name"] as? String
 		let reference = convertStringDict( jsonDict["reference"] as? NSDictionary )
 		let suggestion = jsonDict["suggestion"] as? Int
@@ -78,6 +78,7 @@ extension PresetsDatabase
 	private static func convertToSwift( _ jsonDict : NSDictionary ) -> [ String : Feature ]
 	{
 		var featureDict = [String:Feature]()
+
 		for (name, dict) in jsonDict {
 			let name2 : String = name as! String
 			let dict2 : NSDictionary = dict as! NSDictionary
@@ -94,9 +95,9 @@ extension PresetsDatabase
 													 objectTags : [String:String]?,
 													 geometry:NSString) -> String?
 	{
-		guard let objectTags = objectTags else { return nil }
+		guard let objectTags = convertStringDict( objectTags as NSDictionary? ) else { return nil }
 
-		var bestMatchScore : Float = 0.0
+		var bestMatchScore = 0.0
 		var bestMatchName : String? = nil
 
 		if presetsDict == nil {
@@ -106,10 +107,6 @@ extension PresetsDatabase
 		nextFeature:
 		for ( featureName, dict ) in presetsDict! {
 
-			if featureName.contains("Rosa") {
-				print("")
-			}
-
 			if let countryCode = countryCode,
 				let countryCodes = dict.countryCodes,
 				!countryCodes.contains(countryCode)
@@ -117,7 +114,7 @@ extension PresetsDatabase
 				continue
 			}
 
-			var totalScore : Float = 0.0
+			var totalScore = 0.0
 			if let geom = dict.geometry,
 				geom.contains(geometry as String)
 			{

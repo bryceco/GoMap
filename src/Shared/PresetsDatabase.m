@@ -848,19 +848,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 +(NSString *)featureNameForObjectDict:(NSDictionary *)objectTags geometry:(NSString *)geometry
 {
-	if ( [objectTags[@"cuisine"] isEqualToString:@"thai"] ) {
-		NSLog(@"");
-	}
-	NSString * s1 = [PresetsDatabase featureNameForObjectDictSwift:g_jsonPresetsDict
-													   countryCode:AppDelegate.getAppDelegate.mapView.countryCodeForLocation
-														objectTags:objectTags
-														  geometry:geometry];
-	NSString * s2 = [PresetsDatabase featureNameForObjectDictObjc:objectTags
-														 geometry:geometry];
-	if ( (s1 != nil) != (s2 != nil) || (s1 && ![s1 isEqualToString:s2]) ) {
-		NSLog(@"");
-	}
-	return s2;
+	NSString * featureName = [PresetsDatabase featureNameForObjectDictSwift:g_jsonPresetsDict
+																countryCode:AppDelegate.getAppDelegate.mapView.countryCodeForLocation
+																 objectTags:objectTags
+																   geometry:geometry];
+	return featureName;
 }
 
 +(NSString *)featureNameForObjectDictObjc:(NSDictionary *)objectTags geometry:(NSString *)geometry
@@ -944,6 +936,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			totalScore = -1;
 			*stop2 = YES;
 		}];
+		if ( totalScore < 0 )
+			return;
 
 		// boost score for additional matches in addTags
 		[dict[@"addTags"] enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * _Nonnull val, BOOL *stop3) {
