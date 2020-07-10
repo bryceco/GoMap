@@ -237,7 +237,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" translatesAutoresizingMaskIntoConstraints="NO" id="YQ4-05-lQz">
                                                     <rect key="frame" x="142" y="11" width="159" height="22"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done" textContentType="username"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="5aR-9a-sW0"/>
                                                         <action selector="textFieldReturn:" destination="kl3-Fg-1QU" eventType="editingDidEndOnExit" id="HIT-FM-Ke9"/>
@@ -279,7 +279,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" translatesAutoresizingMaskIntoConstraints="NO" id="e7I-rE-dAW">
                                                     <rect key="frame" x="144" y="11.5" width="157" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES" textContentType="password"/>
                                                     <connections>
                                                         <action selector="textFieldDidChange:" destination="kl3-Fg-1QU" eventType="editingChanged" id="ahQ-2t-H75"/>
                                                         <action selector="textFieldReturn:" destination="kl3-Fg-1QU" eventType="editingDidEndOnExit" id="ltK-zh-K2l"/>
