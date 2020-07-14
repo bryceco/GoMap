@@ -932,15 +932,20 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 
 #pragma mark Common Drawing
 
-UIImage * IconScaledForDisplay(UIImage *icon)
+UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize )
 {
-	extern const double MinIconSizeInPixels;
-	if ( icon == nil )
+	if ( image == nil )
 		return nil;
 #if TARGET_OS_IPHONE
-	CGFloat size = MinIconSizeInPixels * UIScreen.mainScreen.scale;
-	UIGraphicsBeginImageContext( CGSizeMake(size,size) );
-	[icon drawInRect:CGRectMake(0,0,size,size)];
+	CGSize size = { iconSize * UIScreen.mainScreen.scale,
+					iconSize * UIScreen.mainScreen.scale };
+	CGFloat ratio = image.size.height / image.size.width;
+	if ( ratio < 1.0 )
+		size.height *= ratio;
+	else if ( ratio > 1.0 )
+		size.width /= ratio;
+	UIGraphicsBeginImageContext( size );
+	[image drawInRect:CGRectMake(0,0,size.width,size.height)];
 	UIImage * newIcon = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 	return newIcon;
@@ -956,6 +961,10 @@ UIImage * IconScaledForDisplay(UIImage *icon)
 #endif
 }
 
+UIImage * IconScaledForDisplay( UIImage *icon )
+{
+	return ImageScaledToSize( icon, MinIconSizeInPixels );
+}
 
 -(CGPathRef)pathForWay:(OsmWay *)way CF_RETURNS_RETAINED
 {

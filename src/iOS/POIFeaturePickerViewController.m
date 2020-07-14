@@ -151,9 +151,9 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			fallbackURL:^{
 				return [NSURL URLWithString:feature.logoURL];
 			} objectForData:^id _Nonnull(NSData * data) {
-				extern UIImage * IconScaledForDisplay(UIImage *icon);
+				extern UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize );
 				UIImage * image = [UIImage imageWithData:data];
-				return IconScaledForDisplay(image);
+				return ImageScaledToSize( image, 40.0 );
 			} completion:^(id image) {
 				if ( image ) {
 					dispatch_async(dispatch_get_main_queue(), ^{
