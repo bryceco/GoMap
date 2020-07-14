@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	_aerials = appDelegate.mapView.customAerials;
 
 	OSMRect viewport = [appDelegate.mapView screenLongitudeLatitude];
@@ -43,7 +43,7 @@
 	[super viewWillDisappear:animated];
 
 	if ( [self isMovingFromParentViewController] ) {
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 		MapView * mapView = appDelegate.mapView;
 		[mapView setAerialTileService:_aerials.currentAerial];
 	}
@@ -183,7 +183,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	MapView * mapView = appDelegate.mapView;
 
 	NSArray * list = [self aerialListForSection:indexPath.section];

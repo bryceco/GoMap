@@ -101,7 +101,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
 	if ( _isTopLevel && section == 1 ) {
-		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
+		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
 		NSLocale * locale = [NSLocale currentLocale];
 		NSString * countryName = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
 		return [NSString stringWithFormat:NSLocalizedString(@"Results for %@ (%@)",nil),countryName,countryCode.uppercaseString];

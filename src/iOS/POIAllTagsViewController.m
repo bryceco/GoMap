@@ -474,7 +474,7 @@
 			// get list of values for current key
 			NSString * key = kv[0];
 			NSSet * set = [PresetsDatabase allTagValuesForKey:key];
-			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+			AppDelegate * appDelegate = AppDelegate.shared;
 			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];
 			NSArray * list = [values allObjects];
@@ -824,7 +824,7 @@
 	} else {
 		return NO;
 	}
-	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 	[mapView.editorLayer setSelectedNode:object.isNode];
 	[mapView.editorLayer setSelectedWay:object.isWay];
 	[mapView.editorLayer setSelectedRelation:object.isRelation];

@@ -40,14 +40,14 @@
     _highwayViewArray = [NSMutableArray new];
 	[self createMapWindow];
 
-	[[AppDelegate getAppDelegate].mapView.editorLayer.mapData beginUndoGrouping];
+	[AppDelegate.shared.mapView.editorLayer.mapData beginUndoGrouping];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
 
-	[[AppDelegate getAppDelegate].mapView.editorLayer.mapData endUndoGrouping];
+	[AppDelegate.shared.mapView.editorLayer.mapData endUndoGrouping];
 }
 
 // To dray Popup window
@@ -64,7 +64,7 @@
 	_viewWithTitle.layer.cornerRadius 	= 3;
 
 	// get highways that contain selection
-	OsmMapData * mapData = [AppDelegate getAppDelegate].mapView.editorLayer.mapData;
+	OsmMapData * mapData = AppDelegate.shared.mapView.editorLayer.mapData;
 	NSArray<OsmWay *> * parentWays = [mapData waysContainingNode:_centralNode];
 	parentWays = [parentWays filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmWay * way, NSDictionary *bindings) {
 		return way.tags[@"highway"] != nil;
@@ -83,7 +83,7 @@
 		fromWay = [relation memberByRole:@"from"].ref;
 	} else {
 		// no relations or multiple relations, so select highway already selected by user
-		EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;
+		EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 		fromWay = editor.selectedWay;
 	}
 	if ( fromWay ) {
@@ -284,7 +284,7 @@
 {
 	_selectedFromHwy = selectedHwy;
 
-	EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;
+	EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 	editor.selectedWay = selectedHwy.wayObj;
 	
 	selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay;
@@ -437,7 +437,7 @@
 // Enable/disable a left/right/straight turn restriction
 -(void)toggleTurnRestrictionUnsafe:(TurnRestrictHwyView *)targetHwy
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	switch (targetHwy.restriction) {
@@ -496,7 +496,7 @@
 // Use clicked the U-Turn button
 -(void)uTurnButtonClicked:(UIButton *)sender
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	sender.selected = !sender.selected;

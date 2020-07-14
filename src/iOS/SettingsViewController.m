@@ -39,7 +39,7 @@
 	_language.text = preferredLanguage;
 
 	// set username, but then validate it
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	_username.text = @"";
 	if ( appDelegate.userName.length > 0 ) {

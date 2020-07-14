@@ -71,7 +71,7 @@
 	[self.tableView reloadData];
 
 	[PresetsDatabase initialize];	// reset tags
-	[[AppDelegate getAppDelegate].mapView refreshPushpinText];
+	[AppDelegate.shared.mapView refreshPushpinText];
 }
 
 @end

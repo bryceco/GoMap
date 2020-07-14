@@ -101,7 +101,7 @@
 	lat1 = (lat1+lat2)/2;
 	lon1 = (lon1+lon2)/2;
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	double metersPerDegree = MetersPerDegree( lat1 );
 	double minMeters = 50;
 	double widthDegrees = minMeters / metersPerDegree;

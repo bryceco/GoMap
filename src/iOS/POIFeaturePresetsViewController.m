@@ -23,14 +23,13 @@
 @interface FeaturePresetCell : UITableViewCell
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
-@property (strong,nonatomic)				PresetKey				*	presetKeyInfo;
+@property (strong,nonatomic)				PresetKey					*	presetKeyInfo;
 @end
 
 @implementation FeaturePresetCell
 @end
 
 @interface POIFeaturePresetsViewController() <DirectionViewControllerDelegate>
-
 @end
 
 @implementation POIFeaturePresetsViewController
@@ -362,7 +361,7 @@
 		if ( key == nil )
 			return;	// should never happen
 		NSSet * set = [PresetsDatabase allTagValuesForKey:key];
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 		NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 		[values addObjectsFromArray:[set allObjects]];
 		NSArray * list = [values allObjects];

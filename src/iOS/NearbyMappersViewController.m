@@ -23,7 +23,7 @@
 	self.tableView.estimatedRowHeight = 44;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	OSMRect rect = [appDelegate.mapView screenLongitudeLatitude];
 	_mappers = [appDelegate.mapView.editorLayer.mapData userStatisticsForRegion:rect];

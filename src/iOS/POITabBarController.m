@@ -26,7 +26,7 @@
 {
 	[super viewWillAppear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmBaseObject * selection = appDelegate.mapView.editorLayer.selectedPrimary;
 	self.selection = selection;
 	self.keyValueDict = [NSMutableDictionary new];
@@ -83,13 +83,13 @@
 
 - (void)commitChanges
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	[appDelegate.mapView setTagsForCurrentObject:self.keyValueDict];
 }
 
 - (BOOL)isTagDictChanged:(NSDictionary *)newDictionary
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	NSDictionary * tags = appDelegate.mapView.editorLayer.selectedPrimary.tags;
 	if ( tags.count == 0 )

@@ -68,7 +68,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 		_mapView = mapView;
         _geekbenchScoreProvider = [[GeekbenchScoreProvider alloc] init];
 
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 
 		self.whiteText = YES;
 

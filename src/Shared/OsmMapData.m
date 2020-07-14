@@ -166,7 +166,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 -(void)periodicSave:(NSTimer *)timer
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	[appDelegate.mapView save];	// this will also invalidate the timer
 }
 
@@ -1114,7 +1114,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 			// purge old data
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				[[AppDelegate getAppDelegate].mapView discardStaleData];
+				[AppDelegate.shared.mapView discardStaleData];
 			});
 		}
 	}
@@ -1384,7 +1384,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 
 #if TARGET_OS_IPHONE
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	NSString * text = [NSString stringWithFormat:@"<?xml version=\"1.0\"?>"
 												@"<osmChange generator=\"%@ %@\" version=\"0.6\"></osmChange>",
 												appDelegate.appName, appDelegate.appVersion];
@@ -1595,7 +1595,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 // create a new changeset to upload to
 -(void)createChangesetWithComment:(NSString *)comment source:(NSString *)source imagery:(NSString *)imagery completion:(void(^)(NSString * changesetID, NSString * errorMessage))completion
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	NSString * creator = [NSString stringWithFormat:@"%@ %@", appDelegate.appName, appDelegate.appVersion];
 	NSMutableDictionary * tags = [NSMutableDictionary dictionaryWithDictionary:@{ @"created_by" : creator }];
 	if ( comment.length )
@@ -1654,7 +1654,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	self.credentialsUserName = appDelegate.userName;
 	self.credentialsPassword = appDelegate.userPassword;

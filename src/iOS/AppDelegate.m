@@ -19,7 +19,7 @@
 
 @implementation AppDelegate
 
-+ (AppDelegate *)getAppDelegate
++ (AppDelegate *)shared
 {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }

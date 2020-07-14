@@ -413,7 +413,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			}
 		}
 	} else {
-		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
+		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
 		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
 #if USE_SUGGESTIONS
 			NSArray<NSString *> * a = dict[@"countryCodes"];
@@ -741,7 +741,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 									@"addr:unit"
 									];
 
-		NSString * countryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
+		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
 		NSArray * keys = nil;
 		for ( NSDictionary * localeDict in g_jsonAddressFormatsDict ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
@@ -849,7 +849,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 +(NSString *)featureNameForObjectDict:(NSDictionary *)objectTags geometry:(NSString *)geometry
 {
 	NSString * featureName = [PresetsDatabase featureNameForObjectDictSwift:g_jsonPresetsDict
-																countryCode:AppDelegate.getAppDelegate.mapView.countryCodeForLocation
+																countryCode:AppDelegate.shared.mapView.countryCodeForLocation
 																 objectTags:objectTags
 																   geometry:geometry];
 	return featureName;
@@ -860,7 +860,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	__block double bestMatchScore = 0.0;
 	__block NSString * bestMatchName = nil;
 
-	NSString * currentCountryCode = [AppDelegate getAppDelegate].mapView.countryCodeForLocation;
+	NSString * currentCountryCode = AppDelegate.shared.mapView.countryCodeForLocation;
 
 	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL * stop) {
 

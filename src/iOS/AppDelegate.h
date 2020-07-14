@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ExternalGPS.h"
-
+@class ExternalGPS;
 @class MapView;
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (class,readonly)		AppDelegate 		*	shared;
+
 
 @property (strong, nonatomic)	UIWindow			*	window;
 @property (weak,nonatomic)		MapView				*	mapView;
@@ -29,5 +31,4 @@
 -(NSString *)appVersion;
 - (NSString *)appBuildNumber;
 
-+(AppDelegate *) getAppDelegate;
 @end

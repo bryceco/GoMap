@@ -55,7 +55,7 @@
 
 	self.mapView.mainViewController = self;
 
-	AppDelegate * delegate = [AppDelegate getAppDelegate];
+	AppDelegate * delegate = AppDelegate.shared;
 	delegate.mapView = self.mapView;
 
 	// undo/redo buttons
@@ -202,7 +202,7 @@
 
 -(void)applicationDidEnterBackground:(id)sender
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	if ( appDelegate.mapView.gpsInBackground && appDelegate.mapView.enableGpxLogging ) {
 		// allow GPS collection in background
 	} else {

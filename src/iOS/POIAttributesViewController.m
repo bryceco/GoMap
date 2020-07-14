@@ -43,7 +43,7 @@ enum {
 {
     [super viewDidLoad];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 	self.title	= object.isNode ? NSLocalizedString(@"Node attributes",nil)
 				: object.isWay ? NSLocalizedString(@"Way attributes",nil)
@@ -61,13 +61,13 @@ enum {
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	OsmBaseObject * object = AppDelegate.getAppDelegate.mapView.editorLayer.selectedPrimary;
+	OsmBaseObject * object = AppDelegate.shared.mapView.editorLayer.selectedPrimary;
 	return object.isNode ? 2 : object.isWay ? 3 : 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	OsmBaseObject * object = AppDelegate.getAppDelegate.mapView.editorLayer.selectedPrimary;
+	OsmBaseObject * object = AppDelegate.shared.mapView.editorLayer.selectedPrimary;
 
 	if ( section == SECTION_METADATA ) {
 		return 6;
@@ -87,7 +87,7 @@ enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 
 	AttributeCustomCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -174,7 +174,7 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	OsmBaseObject * object = AppDelegate.getAppDelegate.mapView.editorLayer.selectedPrimary;
+	OsmBaseObject * object = AppDelegate.shared.mapView.editorLayer.selectedPrimary;
     if ( object == nil ) {
         return;
     }

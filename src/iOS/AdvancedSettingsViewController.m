@@ -1,5 +1,5 @@
 //
-//  OsmServerViewController.m
+//  AdvancedSettingsViewController.m
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 11/29/16.
@@ -34,7 +34,7 @@
 {
 	[super viewWillAppear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 	self.hostname.text = [mapData getServer];
 	self.originalHostname = self.hostname.text;
@@ -48,7 +48,7 @@
 {
 	[super viewWillDisappear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 	if (![self.hostname.text isEqualToString:self.originalHostname]) {
 		[mapData setServer:self.hostname.text];
@@ -58,7 +58,7 @@
 - (IBAction)switchFPS:(id)sender
 {
 	UISwitch * toggle = sender;
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	appDelegate.mapView.automatedFramerateTestActive = toggle.on;
 }
 

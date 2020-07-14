@@ -46,7 +46,7 @@ enum {
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 	self.tableView.estimatedRowHeight = 44;
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	_automaticCacheManagement.on = appDelegate.mapView.enableAutomaticCacheManagement;
 }
 
@@ -54,7 +54,7 @@ enum {
 {
 	[super viewWillDisappear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	appDelegate.mapView.enableAutomaticCacheManagement = _automaticCacheManagement.on;
 }
 
@@ -65,7 +65,7 @@ enum {
 	if ( indexPath.section != 1 )
 		return;
 
-	MapView * mapView = AppDelegate.getAppDelegate.mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 	OsmMapData * mapData = mapView.editorLayer.mapData;
 
 	NSString	*title = nil;
@@ -98,7 +98,7 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	if ( indexPath.section == 0 ) {
 		return;

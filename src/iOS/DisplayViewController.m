@@ -37,13 +37,13 @@ static const NSInteger CACHE_SECTION			= 3;
 -(IBAction)gpsSwitchChanged:(id)sender
 {
 	// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
-	MapView * mapView = AppDelegate.getAppDelegate.mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 	mapView.enableGpxLogging = _gpxLoggingSwitch.on;
 }
 
 -(IBAction)toggleObjectFilters:(UISwitch *)sender
 {
-	EditorMapLayer * editor = AppDelegate.getAppDelegate.mapView.editorLayer;
+	EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 	editor.enableObjectFilters = sender.on;
 }
 
@@ -71,7 +71,7 @@ static const NSInteger CACHE_SECTION			= 3;
 {
 	// place a checkmark next to currently selected display
 	if ( indexPath.section == BACKGROUND_SECTION ) {
-		MapView * mapView = [AppDelegate getAppDelegate].mapView;
+		MapView * mapView = AppDelegate.shared.mapView;
 		if ( cell.tag == mapView.viewState ) {
 			cell.accessoryType = UITableViewCellAccessoryCheckmark;
 		} else {
@@ -82,7 +82,7 @@ static const NSInteger CACHE_SECTION			= 3;
 	// set the name of the aerial provider
 	if ( indexPath.section == BACKGROUND_SECTION && indexPath.row == 2 ) {
 		if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
-			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+			AppDelegate * appDelegate = AppDelegate.shared;
 			AerialList * aerials = appDelegate.mapView.customAerials;
 			CustomBackgroundCell * custom = (id)cell;
 			[custom.button setTitle:aerials.currentAerial.name forState:UIControlStateNormal];
@@ -93,7 +93,7 @@ static const NSInteger CACHE_SECTION			= 3;
 
 - (void)applyChanges
 {
-	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 
 	NSInteger maxRow = [self.tableView numberOfRowsInSection:BACKGROUND_SECTION];
 	for ( NSInteger row = 0; row < maxRow; ++row ) {

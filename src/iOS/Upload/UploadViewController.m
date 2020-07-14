@@ -194,7 +194,7 @@
 
 -(IBAction)editXml:(id)sender
 {
-	AppDelegate * appDelegate = AppDelegate.getAppDelegate;
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
 	mail.mailComposeDelegate = self;
@@ -261,7 +261,7 @@
 // this is for navigating from the changeset back to the location of the modified object
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
 {
-	AppDelegate	*	appDelegate = AppDelegate.getAppDelegate;
+	AppDelegate	*	appDelegate = AppDelegate.shared;
 	NSString 	*	name = url.absoluteString;
 	if ( name.length == 0 )
 		return NO;
