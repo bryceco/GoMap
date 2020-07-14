@@ -240,6 +240,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	return [[PresetKey alloc] initWithName:name featureKey:tag defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 }
+-(NSString *)description
+{
+	return self.name;
+}
 @end
 
 
@@ -250,7 +254,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	if ( self ) {
 #if DEBUG
 		if ( tags.count )	assert( [tags.lastObject isKindOfClass:[PresetKey class]] ||
-								   [tags.lastObject isKindOfClass:[PresetGroup class]] );	// second case for drill down group
+									[tags.lastObject isKindOfClass:[PresetGroup class]] );	// second case for drill down group
 #endif
 		_name = name;
 		_presetKeys = tags;
@@ -261,12 +265,19 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	return [[PresetGroup alloc] initWithName:name tags:tags];
 }
--(void)mergeTagsFromGroup:(PresetGroup *)other
++(instancetype)presetGroupFromMerger:(PresetGroup *)p1 with:(PresetGroup *)p2
 {
-	if ( _presetKeys == nil )
-		_presetKeys = other.presetKeys;
-	else
-		_presetKeys = [_presetKeys arrayByAddingObjectsFromArray:other.presetKeys];
+	NSArray * merge = p1.presetKeys ? [p1.presetKeys arrayByAddingObjectsFromArray:p2.presetKeys] : p2.presetKeys;
+	return [PresetGroup presetGroupWithName:p1.name tags:merge];
+}
+-(NSString *)description
+{
+	NSMutableString * text = [NSMutableString new];
+	[text appendFormat:@"%@:\n",self.name ?: @"<unnamed>"];
+	for ( PresetKey * key in self.presetKeys ) {
+		[text appendFormat:@"   %@\n",[key description]];
+	}
+	return text;
 }
 @end
 
@@ -1243,7 +1254,9 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		if ( (group.name == nil || group.isDrillDown) && _sectionList.count > 1 ) {
 			PresetGroup * prev = _sectionList.lastObject;
 			if ( prev.name == nil ) {
-				[prev mergeTagsFromGroup:group];
+				prev = [PresetGroup presetGroupFromMerger:prev with:group];
+				[_sectionList removeLastObject];
+				[_sectionList addObject:prev];
 				continue;
 			}
 		}

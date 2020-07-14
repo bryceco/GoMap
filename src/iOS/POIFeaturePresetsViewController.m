@@ -109,7 +109,8 @@
 	_childPushed = YES;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
     
     if (![self isMovingToParentViewController]) {
