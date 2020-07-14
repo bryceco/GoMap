@@ -228,12 +228,12 @@
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
 		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
         
-        if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:presetKey.tagKey]) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else if (presetKey.presetList.count > 0) {
-            // The user can select from a list of presets.
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else {
+		if ( presetKey.presetList.count > 0 ) {
+			// The user can select from a list of presets.
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		} else if ( [self canUseDirectionViewControllerToMeasureValueForPresetKey:presetKey] ) {
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		} else {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
 
@@ -283,15 +283,15 @@
 
 	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
-    } else if ([self canUseDirectionViewControllerToMeasureValueForTagWithKey:presetKey.tagKey]) {
-        [self presentDirectionViewControllerForTagWithKey:cell.presetKeyInfo.tagKey
-                                                    value:cell.valueField.text];
 	} else if ( [cell.presetKeyInfo isKindOfClass:[PresetGroup class]] ) {
 		// special case for drill down
 		PresetGroup * group = (id)cell.presetKeyInfo;
 		POIFeaturePresetsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
 		sub.drillDownGroup = group;
 		[self.navigationController pushViewController:sub animated:YES];
+	} else if ([self canUseDirectionViewControllerToMeasureValueForPresetKey:presetKey]) {
+		[self presentDirectionViewControllerForTagWithKey:cell.presetKeyInfo.tagKey
+													value:cell.valueField.text];
 	} else {
 		[self performSegueWithIdentifier:@"POIPresetSegue" sender:cell];
 	}
@@ -426,13 +426,18 @@
  @param key The key of the tag that should be measured.
  @return YES if the key can be measured using the `DirectionViewController`, NO if not.
  */
-- (BOOL)canUseDirectionViewControllerToMeasureValueForTagWithKey:(NSString *)key {
+- (BOOL)canUseDirectionViewControllerToMeasureValueForPresetKey:(PresetKey *)key
+{
+	if ( key.presetList.count > 0 )
+		return NO;
     NSArray<NSString *> *keys = @[@"direction", @"camera:direction"];
-    
-    return [keys containsObject:key];
+    if ( [keys containsObject:key.tagKey] )
+		return YES;
+	return NO;
 }
 
-- (void)presentDirectionViewControllerForTagWithKey:(NSString *)key value:(NSString *)value {
+- (void)presentDirectionViewControllerForTagWithKey:(NSString *)key value:(NSString *)value
+{
     DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:key
                                                                                               value:value];
     directionViewController.delegate = self;
