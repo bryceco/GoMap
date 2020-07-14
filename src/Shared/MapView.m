@@ -2454,6 +2454,8 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				void (^create)(NSString * type) = ^(NSString * type){
 					OsmRelation * relation = [_editorLayer.mapData createRelation];
 					NSMutableDictionary * tags = [_editorLayer.selectedPrimary.tags mutableCopy];
+					if ( tags == nil )
+						tags = [NSMutableDictionary new];
 					tags[ @"type"] = type;
 					[_editorLayer.mapData setTags:tags forObject:relation];
 					[_editorLayer.mapData setTags:nil forObject:_editorLayer.selectedPrimary];
