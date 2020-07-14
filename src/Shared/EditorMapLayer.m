@@ -1147,13 +1147,16 @@ const static CGFloat Z_HALO				= Z_BASE + 3 * ZSCALE;
 const static CGFloat Z_CASING			= Z_BASE + 4 * ZSCALE;
 const static CGFloat Z_LINE				= Z_BASE + 5 * ZSCALE;
 const static CGFloat Z_TEXT				= Z_BASE + 6 * ZSCALE;
-const static CGFloat Z_NODE				= Z_BASE + 7 * ZSCALE;
-const static CGFloat Z_TURN             = Z_BASE + 8 * ZSCALE;	// higher than street signals, etc
-const static CGFloat Z_BUILDING_WALL	= Z_BASE + 9 * ZSCALE;
-const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 10 * ZSCALE;
-const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 11 * ZSCALE;
-const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 12 * ZSCALE;
-const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
+const static CGFloat Z_ARROW			= Z_BASE + 7 * ZSCALE;
+const static CGFloat Z_NODE				= Z_BASE + 8 * ZSCALE;
+const static CGFloat Z_TURN             = Z_BASE + 9 * ZSCALE;	// higher than street signals, etc
+const static CGFloat Z_BUILDING_WALL	= Z_BASE + 10 * ZSCALE;
+const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 11 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 12 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 13 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
+
+
 
 
 -(CALayer *)buildingWallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2 height:(double)height hue:(double)hue
@@ -1880,7 +1883,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
 	// Arrow heads and street names
 	for ( OsmBaseObject * object in _shownObjects ) {
-		if ( object.isOneWay || [highlights containsObject:object] ) {
+		BOOL isHighlight = [highlights containsObject:object];
+		if ( object.isOneWay || isHighlight ) {
 
 			// arrow heads
 			[self invokeAlongScreenClippedWay:object.isWay offset:50 interval:100 block:^(OSMPoint loc, OSMPoint dir){
@@ -1903,7 +1907,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				arrow.path = arrowPath;
 				arrow.lineWidth = 1;
 				arrow.fillColor = UIColor.blackColor.CGColor;
-				arrow.zPosition	= Z_ARROWS;
+				arrow.zPosition	= isHighlight ? Z_HIGHLIGHT_ARROW : Z_ARROW;
 				[layers addObject:arrow];
 				CGPathRelease(arrowPath);
 			}];
