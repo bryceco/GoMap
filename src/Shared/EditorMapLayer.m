@@ -1691,6 +1691,8 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	OSMPoint p2 = MapPointForLatitudeLongitude(nextNode.lat, nextNode.lon);
 	double angle = atan2(p2.y-p1.y,p2.x-p1.x);
 	NSInteger direction = 90 + (int)round(angle * 180/M_PI);	// convert to north-facing clockwise direction
+	if ( direction < 0 )
+		direction += 360;
 	return [self directionShapeLayerForNode:node withDirection:NSMakeRange(direction,0)];
 }
 
@@ -1707,13 +1709,21 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 		return @[ [self directionShapeLayerForNode:node withDirection:direction] ];
 	}
 
-	NSString * value = node.tags[@"traffic_signals:direction"];
-	if ( value && [node.tags[@"highway"] isEqualToString:@"traffic_signals"] ) {
+	NSString * highway = node.tags[@"highway"];
+	if ( highway == nil )
+		return nil;
+	NSString * directionValue = nil;
+	if ( [highway isEqualToString:@"traffic_signals"] ) {
+		directionValue = node.tags[@"traffic_signals:direction"];
+	} else if ( [highway isEqualToString:@"stop"] ) {
+		directionValue = node.tags[@"direction"];
+	}
+	if ( directionValue ) {
 		enum { IS_NONE, IS_FORWARD, IS_BACKWARD, IS_BOTH, IS_ALL } isDirection =
-			[value isEqualToString:@"forward"] ? IS_FORWARD :
-			[value isEqualToString:@"backward"] ? IS_BACKWARD :
-			[value isEqualToString:@"both"] ? IS_BOTH :
-			[value isEqualToString:@"all"] ? IS_ALL :
+			[directionValue isEqualToString:@"forward"] ? IS_FORWARD :
+			[directionValue isEqualToString:@"backward"] ? IS_BACKWARD :
+			[directionValue isEqualToString:@"both"] ? IS_BOTH :
+			[directionValue isEqualToString:@"all"] ? IS_ALL :
 			IS_NONE;
 		if ( isDirection != IS_NONE ) {
 			NSArray<OsmWay *> * wayList = [self.mapData waysContainingNode:node];	// this is expensive, only do if necessary
@@ -1726,12 +1736,12 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 				NSMutableArray * list = [NSMutableArray arrayWithCapacity:2*wayList.count];	// sized for worst case
 				for ( OsmWay * way in wayList ) {
 					NSInteger pos = [way.nodes indexOfObject:node];
-					if ( isDirection != IS_BACKWARD ) {
+					if ( isDirection != IS_FORWARD ) {
 						CALayer * layer = [self directionLayerForNodeInWay:way node:node facing:pos+1];
 						if ( layer )
 							[list addObject:layer];
 					}
-					if ( isDirection != IS_FORWARD ) {
+					if ( isDirection != IS_BACKWARD ) {
 						CALayer * layer = [self directionLayerForNodeInWay:way node:node facing:pos-1];
 						if ( layer )
 							[list addObject:layer];
