@@ -222,9 +222,12 @@ static const CGFloat NodeHighlightRadius = 6.0;
 
 #define SET_FILTER(name)\
 -(void)setShow##name:(BOOL)on {\
-if ( on != _show##name ) { _show##name = on;\
-[[NSUserDefaults standardUserDefaults] setBool:_show##name forKey:@"editor.show"#name];[_mapData clearCachedProperties];\
-}}
+	if ( on != _show##name ) {\
+		_show##name = on;\
+		[[NSUserDefaults standardUserDefaults] setBool:_show##name forKey:@"editor.show"#name];\
+		[_mapData clearCachedProperties];\
+	}\
+}
 SET_FILTER(Level)
 SET_FILTER(Points)
 SET_FILTER(TrafficRoads)
@@ -2135,7 +2138,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 			  };
 	}
 	static BOOL (^predPoints)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
-		return object.isNode != nil;
+		return object.isNode && object.isNode.wayCount == 0;
 	};
 	static BOOL (^predTrafficRoads)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
 		return object.isWay && traffic_roads[ object.tags[@"highway"] ];
