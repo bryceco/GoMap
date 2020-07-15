@@ -479,10 +479,15 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
     NSString * featureName = [PresetsDatabase featureNameForObjectDict:self.tags geometry:self.geometryName];
     if ( featureName ) {
-        PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
-        name = feature.friendlyName;
-        if ( name.length > 0 )
-            return name;
+		BOOL isGeneric = [featureName isEqualToString:@"point"] ||
+						 [featureName isEqualToString:@"line"] ||
+						 [featureName isEqualToString:@"area"];
+		if ( !isGeneric ) {
+			PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
+			name = feature.friendlyName;
+			if ( name.length > 0 )
+				return name;
+		}
     }
 
     if ( self.isRelation ) {

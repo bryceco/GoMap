@@ -95,7 +95,7 @@ extension PresetsDatabase
 													 objectTags : [String:String]?,
 													 geometry:NSString) -> String?
 	{
-		guard let objectTags = convertStringDict( objectTags as NSDictionary? ) else { return nil }
+		guard let objectTags = objectTags == nil ? [:] : convertStringDict( objectTags as NSDictionary? ) else { return nil }
 
 		var bestMatchScore = 0.0
 		var bestMatchName : String? = nil
