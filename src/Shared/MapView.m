@@ -2026,16 +2026,16 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 		UIAlertController * alertPaste = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Paste",nil) message:question preferredStyle:UIAlertControllerStyleAlert];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Merge Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
-			[_editorLayer mergeTags:_editorLayer.selectedPrimary];
+			[_editorLayer pasteTagsMerge:_editorLayer.selectedPrimary];
 			[self refreshPushpinText];
 		}]];
 		[alertPaste addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Replace Tags",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction) {
-			[_editorLayer replaceTags:_editorLayer.selectedPrimary];
+			[_editorLayer pasteTagsReplace:_editorLayer.selectedPrimary];
 			[self refreshPushpinText];
 		}]];
 		[self.mainViewController presentViewController:alertPaste animated:YES completion:nil];
 	} else {
-		[_editorLayer replaceTags:_editorLayer.selectedPrimary];
+		[_editorLayer pasteTagsReplace:_editorLayer.selectedPrimary];
 		[self refreshPushpinText];
 	}
 }

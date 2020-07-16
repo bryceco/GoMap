@@ -90,9 +90,9 @@ extern const double MinIconSizeInPixels;
 
 
 - (BOOL)copyTags:(OsmBaseObject *)object;
-- (void)mergeTags:(OsmBaseObject *)object;
+- (void)pasteTagsMerge:(OsmBaseObject *)object;
 - (BOOL)canPasteTags;
-- (void)replaceTags:(OsmBaseObject *)object;
+- (void)pasteTagsReplace:(OsmBaseObject *)object;
 
 
 - (void)save;

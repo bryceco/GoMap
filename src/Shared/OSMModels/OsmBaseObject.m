@@ -208,20 +208,20 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     __block NSMutableDictionary * merged = [ourTags mutableCopy];
     [otherTags enumerateKeysAndObjectsUsingBlock:^(NSString * otherKey, NSString * otherValue, BOOL * stop) {
         NSString * ourValue = merged[otherKey];
-        if ( ![ourValue isEqualToString:otherValue] ) {
-            if ( !allowConflicts ) {
-                if ( IsInterestingKey(otherKey) ) {
-                    *stop = YES;
-                    merged = nil;
-                }
-            } else {
-                merged[otherKey] = otherValue;
-            }
-        }
-    }];
-    if ( merged == nil )
-        return nil;    // conflict
-    return [NSDictionary dictionaryWithDictionary:merged];
+		if ( ourValue == nil || allowConflicts ) {
+			merged[otherKey] = otherValue;
+		} else if ( [ourValue isEqualToString:otherValue] ) {
+			// we already have it but replacement is the same
+		} else if ( IsInterestingKey(otherKey) ) {
+			*stop = YES;	// conflict
+			merged = nil;
+		} else {
+			// we don't allow conflicts, but its not an interesting key/value so just ignore the conflict
+		}
+	}];
+	if ( merged == nil )
+		return nil;    // conflict
+	return [NSDictionary dictionaryWithDictionary:merged];
 }
 
 #pragma mark Construction

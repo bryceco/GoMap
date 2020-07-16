@@ -2778,7 +2778,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
 	return copyPasteTags.count > 0;
 }
-- (void)mergeTags:(OsmBaseObject *)object
+- (void)pasteTagsMerge:(OsmBaseObject *)object
 {
     // Merge tags
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
@@ -2786,7 +2786,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	[self.mapData setTags:newTags forObject:object];
 	[self setNeedsLayout];
 }
-- (void)replaceTags:(OsmBaseObject *)object
+- (void)pasteTagsReplace:(OsmBaseObject *)object
 {
     // Replace all tags
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
