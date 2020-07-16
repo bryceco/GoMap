@@ -127,7 +127,8 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(NSMutableSet<NSString *> *)tagValuesForKey:(NSString *)key;
 
 // editing
-+(NSSet<NSString *> *)tagsToAutomaticallyStrip;
+@property (class,readonly) NSSet<NSString *> * tagsToAutomaticallyStrip;
+
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
 -(OsmWay *)createWay;
 -(OsmRelation *)createRelation;

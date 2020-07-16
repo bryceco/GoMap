@@ -50,8 +50,7 @@ BOOL IsInterestingKey(NSString * key)
 	if ( [key hasPrefix:@"source_ref"] )
 		return NO;
 
-	NSSet * stripTags = [OsmMapData tagsToAutomaticallyStrip];
-	if ( [stripTags containsObject:key] )
+	if ( [OsmMapData.tagsToAutomaticallyStrip containsObject:key] )
 		return NO;
 
 	return YES;
