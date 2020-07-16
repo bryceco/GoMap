@@ -109,7 +109,7 @@ typedef int UITextAutocapitalizationType;
 -(instancetype)initWithCategoryName:(NSString *)name;
 @end
 
-
+// languages supported by presets database
 @interface PresetLanguages : NSObject
 @property (strong,nonatomic) NSString * preferredLanguageCode;	// default or user's preferred languange
 
@@ -119,7 +119,7 @@ typedef int UITextAutocapitalizationType;
 @end
 
 
-
+// All presets for a feature, for presentation in Common Tags table view
 @interface PresetsForFeature : NSObject
 {
 	NSString						*	_featureName;
@@ -139,7 +139,7 @@ typedef int UITextAutocapitalizationType;
 @end
 
 
-
+// The entire presets database from iD
 @interface PresetsDatabase : NSObject
 +(NSString *)featureNameForObjectDict:(NSDictionary *)tagDict geometry:(NSString *)geometry;
 +(NSArray<PresetFeature *> *)featuresAndCategoriesForGeometry:(NSString *)geometry;
@@ -151,7 +151,7 @@ typedef int UITextAutocapitalizationType;
 +(BOOL)isArea:(OsmWay *)way;
 @end
 
-
+// A preset the user defined as a custom preset
 @interface CustomPreset : PresetKey
 @property (copy,nonatomic) NSString	*	appliesToKey;
 @property (copy,nonatomic) NSString	*	appliesToValue;
