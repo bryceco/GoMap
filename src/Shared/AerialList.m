@@ -28,12 +28,37 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 @synthesize placeholderImage = _placeholderImage;
 
--(instancetype)initWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url
-					maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
++(NSArray<NSString *> *)supportedProjections
+{
+	static NSArray<NSString *> * list = nil;
+	if ( list == nil ) {
+		list = @[
+			@"EPSG:3857",
+			@"EPSG:4326",
+			@"EPSG:900913",
+			@"EPSG:3587",
+			@"EPSG:54004",
+			@"EPSG:41001",
+			@"EPSG:102113",
+			@"EPSG:102100",
+			@"EPSG:3785"
+		];
+	}
+	return list;
+}
+
+-(instancetype)initWithName:(NSString *)name
+				 identifier:(NSString *)identifier
+						url:(NSString *)url
+					maxZoom:(NSInteger)maxZoom
+					roundUp:(BOOL)roundUp
 				  startDate:(NSString *)startDate
 					endDate:(NSString *)endDate
-			  wmsProjection:(NSString *)projection polygon:(CGPathRef)polygon
-			   attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
+			  wmsProjection:(NSString *)projection
+					polygon:(CGPathRef)polygon
+			   attribString:(NSString *)attribString
+				 attribIcon:(UIImage *)attribIcon
+				  attribUrl:(NSString *)attribUrl
 {
 	self = [super init];
 	if ( self ) {
@@ -57,14 +82,31 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	return self;
 }
 
-+(instancetype)aerialWithName:(NSString *)name identifier:(NSString *)identifier url:(NSString *)url
-					  maxZoom:(NSInteger)maxZoom roundUp:(BOOL)roundUp
++(instancetype)aerialWithName:(NSString *)name
+				   identifier:(NSString *)identifier
+						  url:(NSString *)url
+					  maxZoom:(NSInteger)maxZoom
+					  roundUp:(BOOL)roundUp
 					startDate:(NSString *)startDate
 					  endDate:(NSString *)endDate
-				wmsProjection:(NSString *)projection polygon:(CGPathRef)polygon
-				 attribString:(NSString *)attribString attribIcon:(UIImage *)attribIcon attribUrl:(NSString *)attribUrl
+				wmsProjection:(NSString *)projection
+					  polygon:(CGPathRef)polygon
+				 attribString:(NSString *)attribString
+				   attribIcon:(UIImage *)attribIcon
+					attribUrl:(NSString *)attribUrl
 {
-	return [[AerialService alloc] initWithName:name identifier:identifier url:url maxZoom:maxZoom roundUp:roundUp startDate:startDate endDate:endDate wmsProjection:projection polygon:polygon attribString:attribString attribIcon:attribIcon attribUrl:attribUrl];
+	return [[AerialService alloc] initWithName:name
+									identifier:identifier
+										   url:url
+									   maxZoom:maxZoom
+									   roundUp:roundUp
+									 startDate:startDate
+									   endDate:endDate
+								 wmsProjection:projection
+									   polygon:polygon
+								  attribString:attribString
+									attribIcon:attribIcon
+									 attribUrl:attribUrl];
 }
 
 -(BOOL)isBingAerial
@@ -276,6 +318,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			  @"url" 		: _url,
 			  @"zoom" 		: @(_maxZoom),
 			  @"roundUp" 	: @(_roundZoomUp),
+			  @"projection"	: _wmsProjection ?: @""
 			  };
 }
 -(instancetype)initWithDictionary:(NSDictionary *)dict
@@ -290,6 +333,10 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		url = [url stringByReplacingOccurrencesOfString:@"{t}" withString:s];
 	}
 
+	NSString * projection = dict[@"projection"];
+	if ( projection.length == 0 )
+		projection = nil;
+
 	return [self initWithName:dict[@"name"]
 				   identifier:url
 						  url:url
@@ -297,7 +344,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 					  roundUp:[dict[@"roundUp"] boolValue]
 					startDate:nil
 					  endDate:nil
-				   wmsProjection:nil
+				wmsProjection:projection
 					  polygon:NULL
 				 attribString:nil
 				   attribIcon:nil
@@ -455,18 +502,6 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	if ( ![featureArray isKindOfClass:[NSArray class]] )
 		return nil;
 
-	NSDictionary * supportedProjections = @{
-		@"EPSG:3857" 	: @(YES),
-		@"EPSG:4326" 	: @(YES),
-		@"EPSG:900913" 	: @(YES), // EPSG:3857 alternatives codes
-		@"EPSG:3587" 	: @(YES),
-		@"EPSG:54004" 	: @(YES),
-		@"EPSG:41001" 	: @(YES),
-		@"EPSG:102113" 	: @(YES),
-		@"EPSG:102100" 	: @(YES),
-		@"EPSG:3785" 	: @(YES)
-	};
-
 	NSDictionary * categories = @{
 		@"photo" 		: @YES,
 		@"elevation" 	: @YES
@@ -480,6 +515,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		@"wmts" 		: @NO,
 		@"bing" 		: @NO,
 	};
+
+	NSSet * supportedProjections = [NSSet setWithArray:AerialService.supportedProjections];
 
 	NSMutableArray * externalAerials = [NSMutableArray new];
 	for ( NSDictionary * entry in featureArray ) {
@@ -536,7 +573,7 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			NSString * projection = nil;
 			if ( [type isEqualToString:@"wms"] ) {
 				for ( NSString * proj in projections ) {
-					if ( supportedProjections[proj] ) {
+					if ( [supportedProjections containsObject:proj] ) {
 						projection = proj;
 						break;
 					}

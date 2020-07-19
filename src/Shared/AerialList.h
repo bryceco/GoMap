@@ -14,6 +14,9 @@
 
 
 @interface AerialService : NSObject
+
+@property (class,readonly)	NSArray<NSString *> *	supportedProjections;
+
 @property (readonly) NSString	*	name;
 @property (readonly) NSString	*	identifier;
 @property (readonly) NSString	*	url;

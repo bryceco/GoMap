@@ -227,6 +227,7 @@
 			c.name = service.name;
 			c.url = service.isMaxar ? nil : service.url;
 			c.zoom = @(service.maxZoom);
+			c.projection = service.wmsProjection;
 		}
 
 		c.completion = ^(AerialService * service) {
@@ -234,11 +235,13 @@
 				return;
 			if ( editRow.row == _aerials.userDefinedServices.count ) {
 				[_aerials addUserDefinedService:service atIndex:_aerials.userDefinedServices.count];
-			} else if ( editRow >= 0 ) {
+			} else {
 				[_aerials removeUserDefinedServiceAtIndex:editRow.row];
 				[_aerials addUserDefinedService:service atIndex:editRow.row];
 			}
 			[self.tableView reloadData];
+
+			[self tableView:self.tableView didSelectRowAtIndexPath:editRow];
 		};
 	}
 }
