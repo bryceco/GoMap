@@ -357,6 +357,50 @@
 	}
 }
 
+-(IBAction)setSurveyDate:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+
+	NSDate * now = [NSDate new];
+	NSISO8601DateFormatter * dateFormatter = [NSISO8601DateFormatter new];
+	dateFormatter.formatOptions = NSISO8601DateFormatWithYear | NSISO8601DateFormatWithMonth | NSISO8601DateFormatWithDay | NSISO8601DateFormatWithDashSeparatorInDate;
+	dateFormatter.timeZone = NSTimeZone.localTimeZone;
+	NSString * text = [dateFormatter stringFromDate:now];
+	pair.text2.text = text;
+	[self textFieldChanged:pair.text2];
+}
+
+-(void)setSurveyDateButtonForCell:(TextPairTableCell *)cell
+{
+	NSArray * synonyms = @[
+		@"check_date",
+		@"survey_date",
+		@"survey:date",
+		@"survey",
+		@"lastcheck",
+		@"last_checked",
+		@"updated"
+	];
+	if ( [synonyms containsObject:cell.text1.text] ) {
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		[button addTarget:self action:@selector(setSurveyDate:) forControlEvents:UIControlEventTouchUpInside];
+		cell.text2.rightView	 = button;
+		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+	 } else {
+		cell.text2.rightView 	 = nil;
+		cell.text2.rightViewMode = UITextFieldViewModeNever;
+	}
+}
+
+- (void)updateAssociatedContentForCell:(TextPairTableCell *)cell
+{
+	[self setAssociatedColorForCell:cell];
+	[self setWebsiteButtonForCell:cell];
+	[self setSurveyDateButtonForCell:cell];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
@@ -370,8 +414,7 @@
 		cell.text1.text = kv[0];
 		cell.text2.text = kv[1];
 
-		[self setAssociatedColorForCell:cell];
-		[self setWebsiteButtonForCell:cell];
+		[self updateAssociatedContentForCell:cell];
 
 		__weak TextPairTableCell * weakCell = cell;
 		cell.text1.didSelectAutocomplete = ^{ [weakCell.text2 becomeFirstResponder]; };
@@ -532,8 +575,7 @@
 	if ( indexPath.section == 0 ) {
 		NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
 
-		[self setAssociatedColorForCell:pair];
-		[self setWebsiteButtonForCell:pair];
+		[self updateAssociatedContentForCell:pair];
 
 		if ( kv[0].length && kv[1].length ) {
 
