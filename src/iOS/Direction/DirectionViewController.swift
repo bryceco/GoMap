@@ -8,21 +8,14 @@
 
 import UIKit
 
-@objc protocol DirectionViewControllerDelegate: class {
-    func directionViewControllerDidUpdateTag(key: String, value: String?)
-}
-
 @objc class DirectionViewController: UIViewController {
-    
-    // MARK: Public properties
-    
-    @objc weak var delegate: DirectionViewControllerDelegate?
     
     // MARK: Private properties
     
     private let viewModel: MeasureDirectionViewModel
     private var disposal = Disposal()
-    
+	private let callback: ((String?) -> Void)
+
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var oldValueLabel: UILabel!
     @IBOutlet weak var primaryActionButton: UIButton!
@@ -30,9 +23,10 @@ import UIKit
     
     // MARK: Initializer
     
-    @objc init(key: String, value: String?) {
+	@objc init(key: String, value: String?, setValue:@escaping (String?) -> Void) {
         self.viewModel = MeasureDirectionViewModel(key: key, value: value)
-        
+		self.callback = setValue
+
         super.init(nibName: nil, bundle: nil)
         
         self.viewModel.delegate = self
@@ -117,10 +111,11 @@ import UIKit
 }
 
 extension DirectionViewController: MeasureDirectionViewModelDelegate {
-    func didFinishUpdatingTag(key: String, value: String?) {
-        delegate?.directionViewControllerDidUpdateTag(key: key, value: value)
-        
-        navigationController?.popViewController(animated: true)
+    func didFinishUpdatingTag(key: String, value: String) {
+		callback(value)
+		if self.navigationController?.popViewController(animated: true) == nil {
+			self.dismiss(animated: true, completion: nil)
+		}
     }
 }
 
