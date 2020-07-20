@@ -19,7 +19,7 @@
 	NSMutableArray				*	_relations;
 	NSMutableArray				*	_members;
 	IBOutlet UIBarButtonItem	*	_saveButton;
-	BOOL							_showingWikiLink;
+	BOOL							_childViewPresented;
 	NSString					*	_featureName;
 	UITextField					*	_currentTextField;
 }

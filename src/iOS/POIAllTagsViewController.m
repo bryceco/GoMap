@@ -182,8 +182,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	if ( _showingWikiLink ) {
-		_showingWikiLink = NO;
+	if ( _childViewPresented ) {
+		_childViewPresented = NO;
 	} else {
 		[self loadState];
 	}
@@ -295,8 +295,6 @@
 			return;
 		}
 	}
-	cell.text2.rightView = nil;
-	cell.text2.rightViewMode = UITextFieldViewModeNever;
 }
 
 -(IBAction)openWebsite:(id)sender
@@ -351,9 +349,6 @@
 		[button addTarget:self action:@selector(openWebsite:) forControlEvents:UIControlEventTouchUpInside];
 		cell.text2.rightView	 = button;
 		cell.text2.rightViewMode = UITextFieldViewModeAlways;
-	 } else {
-		cell.text2.rightView 	 = nil;
-		cell.text2.rightViewMode = UITextFieldViewModeNever;
 	}
 }
 
@@ -388,17 +383,48 @@
 		[button addTarget:self action:@selector(setSurveyDate:) forControlEvents:UIControlEventTouchUpInside];
 		cell.text2.rightView	 = button;
 		cell.text2.rightViewMode = UITextFieldViewModeAlways;
-	 } else {
-		cell.text2.rightView 	 = nil;
-		cell.text2.rightViewMode = UITextFieldViewModeNever;
+	}
+}
+
+-(IBAction)setDirection:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+	DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:pair.text1.text
+																							  value:pair.text2.text
+																						   setValue:^(NSString * newValue) {
+		pair.text2.text = newValue;
+		[self textFieldChanged:pair.text2];
+	}];
+	_childViewPresented = YES;
+
+	[self presentViewController:directionViewController animated:YES completion:nil];
+}
+
+-(void)setDirectionButtonForCell:(TextPairTableCell *)cell
+{
+	NSArray * synonyms = @[
+		@"direction",
+		@"camera:direction"
+	];
+	if ( [synonyms containsObject:cell.text1.text] ) {
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		[button addTarget:self action:@selector(setDirection:) forControlEvents:UIControlEventTouchUpInside];
+		cell.text2.rightView	 = button;
+		cell.text2.rightViewMode = UITextFieldViewModeAlways;
 	}
 }
 
 - (void)updateAssociatedContentForCell:(TextPairTableCell *)cell
 {
+	cell.text2.rightView 	 = nil;
+	cell.text2.rightViewMode = UITextFieldViewModeNever;
+
 	[self setAssociatedColorForCell:cell];
 	[self setWebsiteButtonForCell:cell];
 	[self setSurveyDateButtonForCell:cell];
+	[self setDirectionButtonForCell:cell];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -829,7 +855,7 @@
 			cell.accessoryView = nil;
 			if ( url && self.view.window ) {
 				SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
-				_showingWikiLink = YES;
+				_childViewPresented = YES;
 				[self presentViewController:viewController animated:YES completion:nil];
 			}
 		}];

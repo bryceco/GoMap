@@ -29,9 +29,6 @@
 @implementation FeaturePresetCell
 @end
 
-@interface POIFeaturePresetsViewController() <DirectionViewControllerDelegate>
-@end
-
 @implementation POIFeaturePresetsViewController
 
 
@@ -440,16 +437,11 @@
 - (void)presentDirectionViewControllerForTagWithKey:(NSString *)key value:(NSString *)value
 {
     DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:key
-                                                                                              value:value];
-    directionViewController.delegate = self;
-    
+                                                                                              value:value
+																						   setValue:^(NSString * newValue) {
+		[self updateTagWithValue:newValue forKey:key];
+	}];
     [self.navigationController pushViewController:directionViewController animated:YES];
-}
-
-#pragma mark - <DirectionViewControllerDelegate>
-
-- (void)directionViewControllerDidUpdateTagWithKey:(NSString *)key value:(NSString *)value {
-    [self updateTagWithValue:value forKey:key];
 }
 
 @end
