@@ -365,6 +365,7 @@
 	NSString * text = [dateFormatter stringFromDate:now];
 	pair.text2.text = text;
 	[self textFieldChanged:pair.text2];
+	[self textFieldEditingDidEnd:pair.text2];
 }
 
 -(void)setSurveyDateButtonForCell:(TextPairTableCell *)cell
@@ -396,6 +397,7 @@
 																						   setValue:^(NSString * newValue) {
 		pair.text2.text = newValue;
 		[self textFieldChanged:pair.text2];
+		[self textFieldEditingDidEnd:pair.text2];
 	}];
 	_childViewPresented = YES;
 
