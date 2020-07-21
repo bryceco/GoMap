@@ -19,6 +19,7 @@
 #import "EditorMapLayer.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
+#import "HeightViewController.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "MyApplication.h"
@@ -3782,7 +3783,8 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	}
 }
 
-- (void)presentViewControllerForMeasuringHeight {
+- (void)presentViewControllerForMeasuringHeight
+{
     if ( self.gpsState == GPS_STATE_NONE ) {
         NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
         
@@ -3793,7 +3795,9 @@ static NSString * const DisplayLinkPanning	= @"Panning";
         
         [self askUserToOpenSettingsWithAlertTitle:title message:message];
     } else {
-        [self.mainViewController performSegueWithIdentifier:@"CalculateHeightSegue" sender:nil];
+		UIStoryboard * sb = [UIStoryboard storyboardWithName:@"Height" bundle:nil];
+		HeightViewController * vc = [sb instantiateViewControllerWithIdentifier:@"HeightViewController"];
+		[self.mainViewController presentViewController:vc animated:YES completion:nil];
     }
 }
 

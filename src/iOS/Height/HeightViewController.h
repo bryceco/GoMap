@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreMedia/CoreMedia.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class CLLocation;
-
+@class CMMotionManager;
 
 @interface HeightViewController : UIViewController <UIAlertViewDelegate>
 {

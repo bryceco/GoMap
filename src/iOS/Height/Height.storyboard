@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17132" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+    <dependencies>
+        <deployment version="2304" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17105.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Height View Controller-->
+        <scene sceneID="wYa-FF-TAZ">
+            <objects>
+                <viewController storyboardIdentifier="HeightViewController" id="Fhw-zr-ueA" customClass="HeightViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uz5-Hx-Irk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5O-tO-QFr">
+                                <rect key="frame" x="143" y="429" width="65" height="31"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancel:" destination="Fhw-zr-ueA" eventType="touchUpInside" id="CaW-Y4-fdC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QZK-2k-kEa">
+                                <rect key="frame" x="216" y="429" width="94" height="31"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                <state key="normal" title="Set Height">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="apply:" destination="Fhw-zr-ueA" eventType="touchUpInside" id="adc-Uk-KbR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SdH-uy-BuK">
+                                <rect key="frame" x="121.5" y="0.0" width="77" height="21"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="Distance">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="juy-LX-vDs">
+                                <rect key="frame" x="121.5" y="29" width="77" height="21"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                                <state key="normal" title="Height">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="oBt-sw-lRB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="oBt-sw-lRB" firstAttribute="bottom" secondItem="QZK-2k-kEa" secondAttribute="bottom" constant="20" id="2jQ-eZ-Mfs"/>
+                            <constraint firstItem="oBt-sw-lRB" firstAttribute="bottom" secondItem="l5O-tO-QFr" secondAttribute="bottom" constant="20" id="TqY-pW-y80"/>
+                            <constraint firstItem="l5O-tO-QFr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oBt-sw-lRB" secondAttribute="leading" id="VjX-Ja-wb7"/>
+                            <constraint firstItem="juy-LX-vDs" firstAttribute="centerX" secondItem="oBt-sw-lRB" secondAttribute="centerX" id="bnY-ZI-p5b"/>
+                            <constraint firstItem="QZK-2k-kEa" firstAttribute="trailing" secondItem="uz5-Hx-Irk" secondAttribute="trailingMargin" constant="6" id="bsI-EQ-d0B"/>
+                            <constraint firstItem="SdH-uy-BuK" firstAttribute="top" secondItem="oBt-sw-lRB" secondAttribute="top" id="cX0-1x-udZ"/>
+                            <constraint firstItem="QZK-2k-kEa" firstAttribute="leading" secondItem="l5O-tO-QFr" secondAttribute="trailing" constant="8" id="dAk-e6-sey"/>
+                            <constraint firstItem="SdH-uy-BuK" firstAttribute="centerX" secondItem="oBt-sw-lRB" secondAttribute="centerX" id="kgk-xS-8n9"/>
+                            <constraint firstItem="SdH-uy-BuK" firstAttribute="width" secondItem="juy-LX-vDs" secondAttribute="width" id="tNc-85-p1A"/>
+                            <constraint firstItem="juy-LX-vDs" firstAttribute="top" secondItem="SdH-uy-BuK" secondAttribute="bottom" constant="8" symbolic="YES" id="tnF-iK-WV7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_applyButton" destination="QZK-2k-kEa" id="S9q-Rs-tFe"/>
+                        <outlet property="_cancelButton" destination="l5O-tO-QFr" id="1Le-gp-TMF"/>
+                        <outlet property="_distanceLabel" destination="SdH-uy-BuK" id="PjD-X8-hhk"/>
+                        <outlet property="_heightLabel" destination="juy-LX-vDs" id="TRf-vg-uAb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mMW-XQ-UjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-673" y="-1369"/>
+        </scene>
+    </scenes>
+</document>

@@ -97,6 +97,7 @@
 		02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */; };
+		02BC04E824C6766100BFA5EF /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02BC04E724C6766100BFA5EF /* Height.storyboard */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED98D168BF87200357B94 /* NearbyMappersViewController.m */; };
 		02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99B168CBC5400357B94 /* LocationBallLayer.m */; };
@@ -332,6 +333,7 @@
 		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = ../Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "Go Map!!/Go Map!!.entitlements"; sourceTree = "<group>"; };
+		02BC04E724C6766100BFA5EF /* Height.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Height.storyboard; sourceTree = "<group>"; };
 		02BE6194245FEC4C00E92662 /* PersistentWebCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PersistentWebCache.h; path = ../Shared/PersistentWebCache.h; sourceTree = "<group>"; };
 		02BED98C168BF87100357B94 /* NearbyMappersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyMappersViewController.h; sourceTree = "<group>"; };
 		02BED98D168BF87200357B94 /* NearbyMappersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyMappersViewController.m; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
+				02BC04E924C6767100BFA5EF /* Height */,
 				024C323B1DEEA97100AD62AB /* AdvancedSettingsViewController.h */,
 				024C323C1DEEA97100AD62AB /* AdvancedSettingsViewController.m */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
@@ -611,8 +614,6 @@
 				02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
-				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
-				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
 				02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */,
@@ -767,6 +768,16 @@
 				028DADE3247DFB8F000A130A /* WikiPage.m */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		02BC04E924C6767100BFA5EF /* Height */ = {
+			isa = PBXGroup;
+			children = (
+				02BC04E724C6766100BFA5EF /* Height.storyboard */,
+				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
+				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
+			);
+			path = Height;
 			sourceTree = "<group>";
 		};
 		64305F6C23E71F5700232BB9 /* URLParsing */ = {
@@ -1016,6 +1027,7 @@
 				02A229E824454838000DA9F4 /* Changeset.storyboard in Resources */,
 				0291D83C24428CBB00F793BE /* POI.storyboard in Resources */,
 				024AB08D240C86FF004A3B5B /* Font Awesome Icons.xcassets in Resources */,
+				02BC04E824C6766100BFA5EF /* Height.storyboard in Resources */,
 				027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */,
 				024AB090240C9202004A3B5B /* TNP Icons.xcassets in Resources */,
 				024AB08B240C80FD004A3B5B /* Temaki Icons.xcassets in Resources */,
