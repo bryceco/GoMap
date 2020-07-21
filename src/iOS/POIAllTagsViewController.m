@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
 #import "EditorMapLayer.h"
+#import "HeightViewController.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMember.h"
@@ -418,6 +419,37 @@
 	}
 }
 
+
+-(IBAction)setHeight:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+
+	if ( [HeightViewController unableToInstantiateWithUserWarning:self] ) {
+		return;
+	}
+
+	HeightViewController * vc = [HeightViewController instantiate];
+	vc.callback = ^(NSString * newValue) {
+		pair.text2.text = newValue;
+		[self textFieldChanged:pair.text2];
+		[self textFieldEditingDidEnd:pair.text2];
+	};
+	[self presentViewController:vc animated:YES completion:nil];
+	_childViewPresented = YES;
+}
+
+-(void)setHeightButtonForCell:(TextPairTableCell *)cell
+{
+	if ( [cell.text1.text isEqualToString:@"height"] ) {
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		[button addTarget:self action:@selector(setHeight:) forControlEvents:UIControlEventTouchUpInside];
+		cell.text2.rightView	 = button;
+		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+	}
+}
+
 - (void)updateAssociatedContentForCell:(TextPairTableCell *)cell
 {
 	cell.text2.rightView 	 = nil;
@@ -427,6 +459,7 @@
 	[self setWebsiteButtonForCell:cell];
 	[self setSurveyDateButtonForCell:cell];
 	[self setDirectionButtonForCell:cell];
+	[self setHeightButtonForCell:cell];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

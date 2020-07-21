@@ -11,7 +11,7 @@
 
 @class CMMotionManager;
 
-@interface HeightViewController : UIViewController <UIAlertViewDelegate>
+@interface HeightViewController : UIViewController
 {
 	AVCaptureSession			*	_captureSession;
 	AVCaptureVideoPreviewLayer	*	_previewLayer;
@@ -34,6 +34,9 @@
 	NSString					*	_alertHeight;
 }
 
++ (BOOL)unableToInstantiateWithUserWarning:(UIViewController *)vc;
++ (instancetype)instantiate;
 
+@property (copy)				void(^callback)(NSString * newValue);
 
 @end

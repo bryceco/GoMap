@@ -14,6 +14,7 @@
 #import "EditorMapLayer.h"
 #import "HeightViewController.h"
 #import "MapView.h"
+#import "PushPinView.h"
 #import "VectorMath.h"
 
 
@@ -22,6 +23,32 @@
 static const CGFloat InsetPercent = 0.15;
 
 @implementation HeightViewController
+
+
++ (BOOL)unableToInstantiateWithUserWarning:(UIViewController *)vc
+{
+	if ( AppDelegate.shared.mapView.gpsState == GPS_STATE_NONE ) {
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error",nil)
+																		message:NSLocalizedString(@"This action requires GPS to be turned on",nil)
+																 preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+		[vc presentViewController:alert animated:YES completion:nil];
+		return YES;
+	}
+	if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusDenied) {
+		NSString * error = NSLocalizedString(@"In order to measure height, please enable camera access in the app's settings.", "");
+		[AppDelegate askUserToOpenSettingsWithAlertTitle:@"Error" message:error parentVC:vc];
+		return YES;
+	}
+	return NO;
+}
+
++ (instancetype)instantiate
+{
+	UIStoryboard * sb = [UIStoryboard storyboardWithName:@"Height" bundle:nil];
+	HeightViewController * vc = [sb instantiateViewControllerWithIdentifier:@"HeightViewController"];
+	return vc;
+}
 
 - (void)viewDidLoad
 {
@@ -300,18 +327,24 @@ static const CGFloat InsetPercent = 0.15;
 {
 	AppDelegate			*	delegate = AppDelegate.shared;
 	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
-	if ( object == nil ) {
+	if ( object == nil && delegate.mapView.pushpinView == nil ) {
 		*error = nan("");
 		*pDirection = 0;
 		return nan("");
 	}
+	if ( object == nil ) {
+		// brand new object, so fake it
+		CLLocationCoordinate2D latlon = [delegate.mapView longitudeLatitudeForScreenPoint:delegate.mapView.pushpinView.arrowPoint birdsEye:YES];
+		OsmNode * node = [OsmNode new];
+		[node setLongitude:latlon.longitude latitude:latlon.latitude undo:nil];
+		object = node;
+	}
 	CLLocation			*	location = delegate.mapView.currentLocation;
 	CLLocationCoordinate2D	userLoc = location.coordinate;
 	OSMPoint				userPt	= { userLoc.longitude, userLoc.latitude };
-
-
 	double dist = MAXFLOAT;
 	double bearing = 0;
+
 	for ( OsmNode * node in object.nodeSet ) {
 		OSMPoint nodePt = { node.lon, node.lat };
 		double d = GreatCircleDistance( userPt, nodePt );
@@ -322,6 +355,7 @@ static const CGFloat InsetPercent = 0.15;
 			bearing = atan2( dir.y, dir.x );
 		}
 	}
+
 	*error		= location.horizontalAccuracy;
 	*pDirection	= bearing;
 
@@ -476,24 +510,20 @@ static const CGFloat InsetPercent = 0.15;
 	}
 	self.view.layer.sublayers = nil;
 
-	[self dismissViewControllerAnimated:YES completion:^{
-	}];
+	if ( self.navigationController ) {
+		[self.navigationController popViewControllerAnimated:YES];
+	} else {
+		[self dismissViewControllerAnimated:YES completion:nil];
+	}
 }
 
 -(IBAction)apply:(id)sender
 {
 	if ( _canZoom ) {
-		NSString * height = _currentHeight;
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Height = %@ meters",nil),_currentHeight]
-																		message:NSLocalizedString(@"Set height tag?",nil)
-																 preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
-		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Set",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-			[self setHeight:height];
-		}]];
-		[self presentViewController:alert animated:YES completion:nil];
+		[self setHeight:_currentHeight];
 	} else {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Set Height Tag",nil) message:NSLocalizedString(@"meters",nil) preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Set Height Tag",nil)
+																		message:NSLocalizedString(@"meters",nil) preferredStyle:UIAlertControllerStyleAlert];
 		[alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
 			textField.keyboardType	= UIKeyboardTypeNumbersAndPunctuation;
 		}];
@@ -509,29 +539,10 @@ static const CGFloat InsetPercent = 0.15;
 
 -(void)setHeight:(NSString *)height
 {
-	AppDelegate			*	delegate = AppDelegate.shared;
-	OsmBaseObject		*	object	= delegate.mapView.editorLayer.selectedPrimary;
-	
-	// change selection to parent object
-	if ( object.tags.count == 0 && delegate.mapView.editorLayer.selectedRelation ) {
-		object = delegate.mapView.editorLayer.selectedRelation;
-		delegate.mapView.editorLayer.selectedNode = nil;
-		delegate.mapView.editorLayer.selectedWay = nil;
-	} else if ( object.tags.count == 0 && delegate.mapView.editorLayer.selectedWay ) {
-		object = delegate.mapView.editorLayer.selectedWay;
-		delegate.mapView.editorLayer.selectedNode = nil;
+	if ( self.callback ) {
+		self.callback( height );
 	}
-	
-	NSMutableDictionary *	tags = [object.tags mutableCopy];
-	if ( height.length > 0 ) {
-		[tags setObject:height forKey:@"height"];
-	} else {
-		[tags removeObjectForKey:@"height"];
-	}
-	[delegate.mapView setTagsForCurrentObject:tags];
-	
 	[self cancel:nil];
 }
-
 
 @end

@@ -19,7 +19,6 @@
 #import "EditorMapLayer.h"
 #import "FpsLabel.h"
 #import "GpxLayer.h"
-#import "HeightViewController.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "MyApplication.h"
@@ -1527,7 +1526,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		
 		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
 		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-            [self askUserToAllowLocationAccess];
+			[AppDelegate askUserToAllowLocationAccess:self.mainViewController];
             
 			self.gpsState = GPS_STATE_NONE;
 			return;
@@ -1552,39 +1551,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationBallLayer removeFromSuperlayer];
 		_locationBallLayer = nil;
 	}
-}
-
-- (void)askUserToAllowLocationAccess {
-    NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-    NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
-    
-    [self askUserToOpenSettingsWithAlertTitle:title message:nil];
-}
-
-- (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
-                                                                             message:message
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
-                                                         style:UIAlertActionStyleCancel
-                                                       handler:nil];
-    UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             [self openAppSettings];
-                                                         }];
-    
-    [alertController addAction:openSettings];
-    [alertController addAction:okayAction];
-    
-    [self.mainViewController presentViewController:alertController animated:YES completion:nil];
-}
-
-- (void)openAppSettings {
-    NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    if (openSettingsURL) {
-        [[UIApplication sharedApplication] openURL:openSettingsURL];
-    }
 }
 
 -(IBAction)centerOnGPS:(id)sender
@@ -2138,7 +2104,6 @@ typedef enum {
 	ACTION_JOIN,
 	ACTION_DISCONNECT,
 	ACTION_CIRCULARIZE,
-	ACTION_HEIGHT,
 	ACTION_COPYTAGS,
 	ACTION_PASTETAGS,
 	ACTION_RESTRICT,
@@ -2163,7 +2128,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", nil);
 		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
 		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
-		case ACTION_HEIGHT:			return NSLocalizedString(@"Measure Height", nil);
 		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", nil) : NSLocalizedString(@"Turn Restrictions", nil);
 		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", nil);
 	};
@@ -2223,20 +2187,19 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			[a addObject:@(ACTION_ROTATE)];
 			if ( restriction )
 				[a addObject:@(ACTION_RESTRICT)];
-			[a addObject:@(ACTION_HEIGHT)];
 			actionList = [NSArray arrayWithArray:a];
 		} else {
 			if ( _editorLayer.selectedWay.isClosed ) {
 				// polygon
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_RECTANGULARIZE), @(ACTION_CIRCULARIZE), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_REVERSE), @(ACTION_HEIGHT), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_RECTANGULARIZE), @(ACTION_CIRCULARIZE), @(ACTION_ROTATE), @(ACTION_DUPLICATE), @(ACTION_REVERSE), @(ACTION_CREATE_RELATION) ];
 			} else {
 				// line
-				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_DUPLICATE), @(ACTION_HEIGHT), @(ACTION_CREATE_RELATION) ];
+				actionList = @[ @(ACTION_COPYTAGS), @(ACTION_STRAIGHTEN), @(ACTION_REVERSE), @(ACTION_DUPLICATE), @(ACTION_CREATE_RELATION) ];
 			}
 		}
 	} else if ( _editorLayer.selectedNode ) {
 		// node
-		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_DUPLICATE), @(ACTION_HEIGHT) ];
+		actionList = @[ @(ACTION_COPYTAGS), @(ACTION_DUPLICATE) ];
 	} else if ( _editorLayer.selectedRelation ) {
 		// relation
 		if ( _editorLayer.selectedRelation.isMultipolygon ) {
@@ -2308,7 +2271,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			case ACTION_ADDNOTE:
 			case ACTION_DELETE:
 			case ACTION_MORE:
-			case ACTION_HEIGHT:
 				break;
 		}
 
@@ -2426,9 +2388,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				if ( circle )
 					circle();
 			}
-			break;
-		case ACTION_HEIGHT:
-            [self presentViewControllerForMeasuringHeight];
 			break;
 		case ACTION_EDITTAGS:
 			[self presentTagEditor:nil];
@@ -3781,24 +3740,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			_confirmDrag = (_editorLayer.selectedPrimary.modifyCount == 0);
 		}
 	}
-}
-
-- (void)presentViewControllerForMeasuringHeight
-{
-    if ( self.gpsState == GPS_STATE_NONE ) {
-        NSString *errorMessage = NSLocalizedString(@"This action requires GPS to be turned on",nil);
-        
-        [self showAlert:errorMessage message:nil];
-    } else if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusDenied) {
-        NSString *title = NSLocalizedString(@"Unable to access the camera", "");
-        NSString *message = NSLocalizedString(@"In order to measure height, please enable camera access in the app's settings.", "");
-        
-        [self askUserToOpenSettingsWithAlertTitle:title message:message];
-    } else {
-		UIStoryboard * sb = [UIStoryboard storyboardWithName:@"Height" bundle:nil];
-		HeightViewController * vc = [sb instantiateViewControllerWithIdentifier:@"HeightViewController"];
-		[self.mainViewController presentViewController:vc animated:YES completion:nil];
-    }
 }
 
 @end

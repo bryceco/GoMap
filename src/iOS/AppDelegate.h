@@ -29,6 +29,11 @@
 
 -(NSString *)appName;
 -(NSString *)appVersion;
-- (NSString *)appBuildNumber;
+-(NSString *)appBuildNumber;
+
+
++ (void)askUserToAllowLocationAccess:(UIViewController *)parentVC;
++ (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message parentVC:(UIViewController *)parentVC;
++ (void)openAppSettings;
 
 @end

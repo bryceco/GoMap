@@ -581,7 +581,6 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
-				02BC04E924C6767100BFA5EF /* Height */,
 				024C323B1DEEA97100AD62AB /* AdvancedSettingsViewController.h */,
 				024C323C1DEEA97100AD62AB /* AdvancedSettingsViewController.m */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
@@ -614,6 +613,7 @@
 				02F04AD11BC4D3B50044FD95 /* GpxConfigureViewController.m */,
 				0219563016DDC26E00074D15 /* GpxViewController.h */,
 				0219563116DDC26E00074D15 /* GpxViewController.m */,
+				02BC04E924C6767100BFA5EF /* Height */,
 				027EDC5D206F3EED00D349D6 /* KissXML */,
 				02B69D0E1BF5A66B002605A3 /* LanguageTableViewController.h */,
 				02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */,

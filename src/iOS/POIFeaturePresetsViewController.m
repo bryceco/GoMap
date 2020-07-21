@@ -10,6 +10,7 @@
 #import "AutocompleteTextField.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
+#import "HeightViewController.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "POIFeaturePresetsViewController.h"
@@ -229,7 +230,9 @@
 		if ( presetKey.presetList.count > 0 ) {
 			// The user can select from a list of presets.
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		} else if ( [self canUseDirectionViewControllerToMeasureValueForPresetKey:presetKey] ) {
+		} else if ( [self canMeasureDirectionForKey:presetKey] ) {
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		} else if ( [self canMeasureHeightForKey:presetKey] ) {
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		} else {
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -287,9 +290,11 @@
 		POIFeaturePresetsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
 		sub.drillDownGroup = group;
 		[self.navigationController pushViewController:sub animated:YES];
-	} else if ([self canUseDirectionViewControllerToMeasureValueForPresetKey:presetKey]) {
-		[self presentDirectionViewControllerForTagWithKey:cell.presetKeyInfo.tagKey
+	} else if ([self canMeasureDirectionForKey:presetKey]) {
+		[self measureDirectionForKey:cell.presetKeyInfo.tagKey
 													value:cell.valueField.text];
+	} else if ([self canMeasureHeightForKey:presetKey]) {
+		[self measureHeightForKey:cell.presetKeyInfo.tagKey];
 	} else {
 		[self performSegueWithIdentifier:@"POIPresetSegue" sender:cell];
 	}
@@ -424,7 +429,7 @@
  @param key The key of the tag that should be measured.
  @return YES if the key can be measured using the `DirectionViewController`, NO if not.
  */
-- (BOOL)canUseDirectionViewControllerToMeasureValueForPresetKey:(PresetKey *)key
+- (BOOL)canMeasureDirectionForKey:(PresetKey *)key
 {
 	if ( key.presetList.count > 0 )
 		return NO;
@@ -434,7 +439,7 @@
 	return NO;
 }
 
-- (void)presentDirectionViewControllerForTagWithKey:(NSString *)key value:(NSString *)value
+- (void)measureDirectionForKey:(NSString *)key value:(NSString *)value
 {
     DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:key
                                                                                               value:value
@@ -442,6 +447,22 @@
 		[self updateTagWithValue:newValue forKey:key];
 	}];
     [self.navigationController pushViewController:directionViewController animated:YES];
+}
+
+- (BOOL)canMeasureHeightForKey:(PresetKey *)key
+{
+	return key.presetList.count == 0 && [key.tagKey isEqualToString:@"height"];
+}
+- (void)measureHeightForKey:(NSString *)key
+{
+	if ( [HeightViewController unableToInstantiateWithUserWarning:self] ) {
+		return;
+	}
+	HeightViewController * vc = [HeightViewController instantiate];
+	vc.callback = ^(NSString *newValue) {
+		[self updateTagWithValue:newValue forKey:key];
+	};
+	[self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

@@ -16,7 +16,7 @@
 -(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(PresetFeature *)feature;
 @end
 
-@interface POIFeaturePickerViewController : UITableViewController <UISearchBarDelegate, UIAlertViewDelegate>
+@interface POIFeaturePickerViewController : UITableViewController <UISearchBarDelegate>
 {
 	NSArray					*	_featureList;
 	NSArray					*	_searchArrayRecent;

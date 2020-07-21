@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ClearCacheViewController : UITableViewController <UIAlertViewDelegate>
+@interface ClearCacheViewController : UITableViewController
 {
 	IBOutlet UISwitch *	_automaticCacheManagement;
 }

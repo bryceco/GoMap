@@ -179,4 +179,40 @@
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
++ (void)askUserToAllowLocationAccess:(UIViewController *)parentVC
+{
+	NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+	NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+
+	[AppDelegate askUserToOpenSettingsWithAlertTitle:title message:nil parentVC:parentVC];
+}
+
++ (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message parentVC:(UIViewController *)parentVC
+{
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+																			 message:message
+																	  preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
+														 style:UIAlertActionStyleCancel
+													   handler:nil];
+	UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+														   style:UIAlertActionStyleDefault
+														 handler:^(UIAlertAction * _Nonnull action) {
+															 [AppDelegate openAppSettings];
+														 }];
+
+	[alertController addAction:openSettings];
+	[alertController addAction:okayAction];
+
+	[parentVC presentViewController:alertController animated:YES completion:nil];
+}
+
++ (void)openAppSettings
+{
+	NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+	if (openSettingsURL) {
+		[[UIApplication sharedApplication] openURL:openSettingsURL];
+	}
+}
+
 @end
