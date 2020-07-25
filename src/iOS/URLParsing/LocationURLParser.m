@@ -45,12 +45,14 @@
 		return parserResult;
 	}
 
-	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] ) {
+	NSURLComponents * urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+
+	// https://gomaposm.com/edit?center=47.679056,-122.212559&zoom=21&view=aerial%2Beditor
+	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] || [urlComponents.host isEqualToString:@"gomaposm.com"] ) {
 		BOOL hasCenter = NO, hasZoom = NO;
 		double lat = 0, lon = 0, zoom = 0;
 		MapViewState view = MAPVIEW_NONE;
 
-		NSURLComponents * urlComponents = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
 		for ( NSURLQueryItem * queryItem in urlComponents.queryItems ) {
 
 			if ( [queryItem.name isEqualToString:@"center"] ) {

@@ -65,6 +65,15 @@
 	return YES;
 }
 
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+{
+	if ( [userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb] ) {
+		NSURL * url = userActivity.webpageURL;
+		return [self application:application openURL:url options:@{}];
+	}
+	return NO;
+}
+
 /**
  Makes sure that the user defaults do not contain plaintext credentials from previous app versions.
  */
