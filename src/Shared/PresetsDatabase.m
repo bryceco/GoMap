@@ -583,8 +583,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 			// a multiple selection
 			NSMutableArray * presets = [NSMutableArray new];
-			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key2, NSString * _Nonnull val, BOOL * _Nonnull stop) {
-				[presets addObject:[PresetValue presetValueWithName:nil details:nil tagValue:val]];
+			[stringsOptionsDict enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull val2, NSString * _Nonnull prettyName, BOOL * _Nonnull stop) {
+				[presets addObject:[PresetValue presetValueWithName:prettyName details:nil tagValue:val2]];
 			}];
 			PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[ tag ]];
