@@ -303,7 +303,7 @@ const double MinIconSizeInMeters = 2.0;
 
 	[self updateIconSize];
 
-	[_mapData updateWithBox:box mapView:_mapView completion:^(BOOL partial,NSError * error) {
+	[_mapData updateWithBox:box progressDelegate:_mapView completion:^(BOOL partial,NSError * error) {
 		if ( error ) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				// present error asynchrounously so we don't interrupt the current UI action

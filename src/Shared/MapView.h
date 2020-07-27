@@ -69,8 +69,15 @@ typedef enum {
 @end
 
 
+@protocol MapViewProgress <NSObject>
+-(void)progressIncrement;
+-(void)progressDecrement;
+-(void)progressAnimate;
+@end
+
+
 #if TARGET_OS_IPHONE
-@interface MapView : UIView <CLLocationManagerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate,SKStoreProductViewControllerDelegate>
+@interface MapView : UIView <MapViewProgress,CLLocationManagerDelegate,UIActionSheetDelegate,UIGestureRecognizerDelegate,SKStoreProductViewControllerDelegate>
 #else
 @interface MapView : NSView <CLLocationManagerDelegate>
 #endif
@@ -224,10 +231,6 @@ typedef enum {
 -(void)setMapLocation:(MapLocation *)location;
 
 -(double)zoom;
-
--(void)progressIncrement:(BOOL)animate;
--(void)progressDecrement;
--(void)progressAnimate;
 
 -(void)flashMessage:(NSString *)message;
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration;

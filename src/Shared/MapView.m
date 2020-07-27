@@ -1128,7 +1128,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	OSMRect bbox = [self screenLongitudeLatitude];
 	double area = SurfaceArea(bbox);
 	BOOL isZoomedOut = area > 2.0*1000*1000;
-	DLog(@"area = %f M",area/1000000.0);
 	if ( !_editorLayer.hidden && !_editorLayer.atVisibleObjectLimit && area < 200.0*1000*1000 )
 		isZoomedOut = NO;
 	self.viewStateZoomedOut = isZoomedOut;
@@ -1406,16 +1405,10 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 #pragma mark Progress indicator
 
--(void)progressIncrement:(BOOL)animate
+-(void)progressIncrement
 {
 	assert( _progressActive >= 0 );
-	if ( _progressActive++ == 0 && animate ) {
-#if TARGET_OS_IPHONE
-		[_progressIndicator startAnimating];
-#else
-		[_progressIndicator startAnimation:self];
-#endif
-	}
+	_progressActive++;
 }
 -(void)progressDecrement
 {

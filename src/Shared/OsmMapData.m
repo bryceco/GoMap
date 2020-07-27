@@ -834,12 +834,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self osmDataForUrl:url quads:query completion:completion];
 }
 
-- (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion
+- (void)updateWithBox:(OSMRect)box progressDelegate:(NSObject<MapViewProgress> *)progress completion:(void(^)(BOOL partial,NSError * error))completion
 {
 	__block int activeRequests = 0;
 
 	void(^mergePartialResults)(ServerQuery * query,OsmMapData * mapData,NSError * error) = ^(ServerQuery * query,OsmMapData * mapData,NSError * error){
-		[mapView progressDecrement];
+		[progress progressDecrement];
 		--activeRequests;
 		if ( activeRequests == 0 ) {
 		}
@@ -854,18 +854,18 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	if ( newQuads.count == 0 ) {
 		++activeRequests;
-		[mapView progressIncrement:NO];
+		[progress progressIncrement];
 		mergePartialResults( nil, nil, nil );
 	} else {
 		NSArray * queryList = [OsmMapData coalesceQuadQueries:newQuads];
 		for ( ServerQuery * query in queryList ) {
 			++activeRequests;
-			[mapView progressIncrement:NO];
+			[progress progressIncrement];
 			[OsmMapData osmDataForBox:query completion:mergePartialResults];
 		}
 	}
 
-	[mapView progressAnimate];
+	[progress progressAnimate];
 }
 
 -(void)cancelCurrentDownloads

@@ -138,7 +138,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object;
 
 // download data
-- (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
+- (void)updateWithBox:(OSMRect)box progressDelegate:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
 - (void)cancelCurrentDownloads;
 
 // upload changeset

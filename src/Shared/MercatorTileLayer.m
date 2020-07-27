@@ -511,7 +511,7 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 	for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {
 		for ( int32_t tileY = tileNorth; tileY < tileSouth; ++tileY ) {
 
-			[_mapView progressIncrement:NO];
+			[_mapView progressIncrement];
 			[self fetchTileForTileX:tileX tileY:tileY
 						minZoom:MAX(zoomLevel-8,1)
 						  zoomLevel:zoomLevel
