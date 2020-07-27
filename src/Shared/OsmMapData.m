@@ -849,25 +849,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		completion( activeRequests > 0, error );
 	};
 
-	// check how much area we're trying to download, and if too large complain
-	NSError * error = nil;
-	NSArray * newQuads = nil;
-	double area = SurfaceArea( box );
-	BOOL tooLarge = area > 10.0*1000*1000;	// square kilometer
-	if ( !tooLarge ) {
-		// get list of new quads to fetch
-		newQuads = [_region newQuadsForRect:box];
-	} else {
-		if ( [[DownloadThreadPool osmPool] downloadsInProgress] > 0 ) {
-			error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Edit download region is too large",nil) }];
-			[[DownloadThreadPool osmPool] cancelAllDownloads];
-		}
-	}
+	// get list of new quads to fetch
+	NSArray * newQuads = [_region newQuadsForRect:box];
 
 	if ( newQuads.count == 0 ) {
 		++activeRequests;
 		[mapView progressIncrement:NO];
-		mergePartialResults( nil, nil, error );
+		mergePartialResults( nil, nil, nil );
 	} else {
 		NSArray * queryList = [OsmMapData coalesceQuadQueries:newQuads];
 		for ( ServerQuery * query in queryList ) {
@@ -878,6 +866,13 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	}
 
 	[mapView progressAnimate];
+}
+
+-(void)cancelCurrentDownloads
+{
+	if ( [DownloadThreadPool.osmPool downloadsInProgress] > 0 ) {
+		[DownloadThreadPool.osmPool cancelAllDownloads];
+	}
 }
 
 #pragma mark Download parsing

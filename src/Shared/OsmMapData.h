@@ -137,7 +137,9 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node;
 -(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object;
 
+// download data
 - (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
+- (void)cancelCurrentDownloads;
 
 // upload changeset
 - (NSAttributedString *)changesetAsAttributedString;

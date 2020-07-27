@@ -289,8 +289,10 @@ const double MinIconSizeInMeters = 2.0;
 
 - (void)updateMapLocation
 {
-	if ( self.hidden )
+	if ( self.hidden ) {
+		[_mapData cancelCurrentDownloads];
 		return;
+	}
 
 	if ( self.mapView.screenFromMapTransform.a == 1.0 )
 		return;	// identity, we haven't been initialized yet
@@ -2286,6 +2288,8 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 
 	// get objects in visible rect
 	NSMutableArray * objects = [self getVisibleObjects];
+
+	_atVisibleObjectLimit = objects.count >= objectLimit;	// we want this to reflect the unfiltered count
 
 	if ( self.enableObjectFilters ) {
 		[self filterObjects:objects];

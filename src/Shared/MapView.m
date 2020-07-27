@@ -1125,12 +1125,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	_screenFromMapTransform = t;
 
 	// determine if we've zoomed out enough to disable editing
-	CGPoint screenCenter = CGRectCenter(self.bounds);
-	CLLocationCoordinate2D latLon = [self longitudeLatitudeForScreenPoint:screenCenter birdsEye:YES];
-	double area = MetersPerDegree( latLon.latitude );
-	OSMRect rcMap = [self boundingMapRectForScreen];
-	area = area*area * rcMap.size.width * rcMap.size.height;
-	self.viewStateZoomedOut = area > 2.0*1000*1000;
+	OSMRect bbox = [self screenLongitudeLatitude];
+	double area = SurfaceArea(bbox);
+	BOOL isZoomedOut = area > 2.0*1000*1000;
+	DLog(@"area = %f M",area/1000000.0);
+	if ( !_editorLayer.hidden && !_editorLayer.atVisibleObjectLimit && area < 200.0*1000*1000 )
+		isZoomedOut = NO;
+	self.viewStateZoomedOut = isZoomedOut;
 
 	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];

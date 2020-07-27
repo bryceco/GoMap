@@ -65,6 +65,7 @@ extern const double MinIconSizeInPixels;
 @property (readonly,nonatomic)	OsmBaseObject		*	selectedPrimary;	// way or node, but not a node in a selected way
 @property (readonly,nonatomic)	OsmMapData			*	mapData;
 @property (assign,nonatomic)	BOOL					addNodeInProgress;
+@property (readonly)			BOOL					atVisibleObjectLimit;
 
 - (id)initWithMapView:(MapView *)mapView;
 - (void)didReceiveMemoryWarning;

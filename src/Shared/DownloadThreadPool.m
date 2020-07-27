@@ -73,7 +73,11 @@
 
 -(void)cancelAllDownloads
 {
-	[_urlSession invalidateAndCancel];
+	[_urlSession getAllTasksWithCompletionHandler:^(NSArray<__kindof NSURLSessionTask *> * _Nonnull tasks) {
+		for ( NSURLSessionTask * task in tasks ) {
+			[task cancel];
+		}
+	}];
 }
 
 -(NSInteger)downloadsInProgress
