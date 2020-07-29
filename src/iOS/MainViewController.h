@@ -15,14 +15,13 @@
 
 @interface MainViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate>
 {
-	IBOutlet UIToolbar		*	_toolbar;
-	IBOutlet UIBarButtonItem *	_uploadButton;
-	IBOutlet UIBarButtonItem *	_undoButton;
-	IBOutlet UIBarButtonItem *	_redoButton;
+	IBOutlet UIButton		 *	_uploadButton;
+	IBOutlet UIButton		 *	_undoButton;
+	IBOutlet UIButton		 *	_redoButton;
 }
 
-@property (assign,nonatomic) IBOutlet MapView			*	_Nonnull mapView;
-@property (assign,nonatomic) IBOutlet UIBarButtonItem 	* 	_Nonnull locationButton;
+@property (assign,nonatomic) IBOutlet MapView	*	_Nonnull mapView;
+@property (assign,nonatomic) IBOutlet UIButton 	* 	_Nonnull locationButton;
 
 -(IBAction)toggleLocation:(_Nullable id)sender;
 -(void)setGpsState:(GPS_STATE)state;

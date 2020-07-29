@@ -18,8 +18,8 @@
 #import "SpeechBalloonView.h"
 
 @interface MainViewController ()
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *displayBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIButton *settingsButton;
+@property (weak, nonatomic) IBOutlet UIButton *displayButton;
 @end
 
 @implementation MainViewController
@@ -73,25 +73,106 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];
 }
 
-- (void)setupAccessibility {
+- (void)setupAccessibility
+{
     self.locationButton.accessibilityIdentifier = @"location_button";
     
     _undoButton.accessibilityLabel = NSLocalizedString(@"Undo",nil);
     _redoButton.accessibilityLabel = NSLocalizedString(@"Redo",nil);
-    _settingsBarButtonItem.accessibilityLabel = NSLocalizedString(@"Settings",nil);
+    _settingsButton.accessibilityLabel = NSLocalizedString(@"Settings",nil);
     _uploadButton.accessibilityLabel = NSLocalizedString(@"Upload your changes",nil);
-    _displayBarButtonItem.accessibilityLabel = NSLocalizedString(@"Display options",nil);
+    _displayButton.accessibilityLabel = NSLocalizedString(@"Display options",nil);
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
 	self.navigationController.navigationBarHidden = YES;
+
+	NSArray * buttons = @[
+		_locationButton,
+		_undoButton,
+		_redoButton,
+		_mapView.addNodeButton,
+		_settingsButton,
+		_uploadButton,
+		_displayButton
+	];
+	for ( UIButton * button in buttons ) {
+		button.tintColor = UIColor.blueColor;
+		button.layer.borderColor = UIColor.darkGrayColor.CGColor;
+		button.layer.borderWidth = 1.0;
+		button.layer.cornerRadius = button == _mapView.addNodeButton ? 30.0 : 10.0;
+
+		button.layer.shadowColor = UIColor.blackColor.CGColor;
+		button.layer.shadowOffset		= CGSizeMake(3,3);
+		button.layer.shadowRadius		= 3;
+		button.layer.shadowOpacity		= 0.5;
+		button.layer.masksToBounds		= NO;
+
+		[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
+		[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpInside];
+		[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpOutside];
+		[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchCancel];
+	}
+}
+-(void)buttonHighlight:(UIButton *)button
+{
+	button.backgroundColor = UIColor.lightGrayColor;
+}
+-(void)buttonNormal:(UIButton *)button
+{
+	button.backgroundColor = UIColor.whiteColor;
+}
+
+-(void)makeMovableButtons
+{
+	NSArray * buttons = @[
+		_locationButton,
+		_undoButton,
+		_redoButton,
+		_mapView.addNodeButton,
+		_settingsButton,
+		_uploadButton,
+		_displayButton,
+		_mapView.compassButton,
+		_mapView.helpButton,
+		_mapView.centerOnGPSButton
+	];
+	// remove layout constraints
+	for ( UIButton * button in buttons ) {
+		UIView * superview = button.superview;
+		while ( superview != nil ) {
+			for ( NSLayoutConstraint * c in superview.constraints ) {
+				if ( c.firstItem == button || c.secondItem == button ) {
+					[superview removeConstraint:c];
+				}
+			}
+			superview = superview.superview;
+		}
+		[button removeConstraints:button.constraints];
+		button.translatesAutoresizingMaskIntoConstraints = YES;
+	}
+	for ( UIButton * button in buttons ) {
+		UIPanGestureRecognizer * panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPan:)];
+		[button addGestureRecognizer:panGesture];
+	}
+}
+- (void)buttonPan:(UIPanGestureRecognizer *)pan
+{
+	if ( pan.state == UIGestureRecognizerStateBegan ) {
+	} else if ( pan.state == UIGestureRecognizerStateChanged ) {
+		pan.view.center = [pan locationInView:self.view];
+	} else {
+	}
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
+
+#if 1 // FIXME
+	[self makeMovableButtons];
+#endif
 
 	// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
 	[_mapView viewDidAppear];
@@ -99,21 +180,23 @@
 	// install long-press gesture recognizers
 	[self installLocationLongPressGestureRecognizer:YES];
 
-#if 1 // FIXME
-	// fixes a weird bug where Settings bar button item doesn't respond until after another modal has appeared
-	NSMutableArray * a = [_toolbar.items mutableCopy];
-	UIBarButtonItem * orig = a[7];
-	a[7] = [[UIBarButtonItem alloc] initWithImage:orig.image style:orig.style target:orig.target action:orig.action];
-	_toolbar.items = a;
-#endif
-
-	_toolbar.layer.zPosition = 9000;
-
 #if 0 && DEBUG
 	SpeechBalloonView * speech = [[SpeechBalloonView alloc] initWithText:@"Press here to create a new node,\nor to begin a way"];
 	[speech setTargetView:_toolbar];
 	[self.view addSubview:speech];
 #endif
+
+	NSString * message = @"This build has a temporary feature: Drag the buttons in the UI to new locations that looks and feel best for you.\n\n"
+						@"* Submit your preferred layouts either via email or on GitHub.\n\n"
+						@"* Positions reset when the app terminates\n\n"
+						@"* Orientation changes are not supported\n\n"
+						@"* Buttons won't move when they're disabled (undo/redo, upload)";
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Attention Testers!" message:message preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+		[alert dismissViewControllerAnimated:YES completion:nil];
+	}];
+	[alert addAction:ok];
+	[self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)search:(UILongPressGestureRecognizer *)recognizer
@@ -130,7 +213,7 @@
 	}
 }
 
-- (void)installGestureRecognizer:(UIGestureRecognizer *)gesture onBarButtonItem:(UIBarButtonItem *)button
+- (void)installGestureRecognizer:(UIGestureRecognizer *)gesture onButton:(UIButton *)button
 {
 	if ( [button respondsToSelector:@selector(view)] ) {
 		UIView * view = [(id)button view];
@@ -143,7 +226,7 @@
 - (void)installLocationLongPressGestureRecognizer:(BOOL)install
 {
 	UILongPressGestureRecognizer * gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(search:)];
-	[self installGestureRecognizer:gesture onBarButtonItem:self.locationButton];
+	[self installGestureRecognizer:gesture onButton:self.locationButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -164,12 +247,10 @@
 
 		if ( self.mapView.gpsState == GPS_STATE_NONE ) {
 			UIImage * image = [UIImage imageNamed:@"723-location-arrow-toolbar"];
-			UIButton * button = self.locationButton.customView;
-			[button setImage:image forState:UIControlStateNormal];
+			[self.locationButton setImage:image forState:UIControlStateNormal];
 		} else {
 			UIImage * image = [UIImage imageNamed:@"723-location-arrow-toolbar-selected"];
-			UIButton * button = self.locationButton.customView;
-			[button setImage:image forState:UIControlStateNormal];
+			[self.locationButton setImage:image forState:UIControlStateNormal];
 		}
 
 		// changing the button tint changes the view, so we have to install longpress again
@@ -221,6 +302,7 @@
 	}];
 }
 
+#if 0 // FIXME - not sure if we still need something like this after removing the toolbar
 // disable gestures inside toolbar buttons
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
@@ -232,6 +314,7 @@
 	}
     return YES; // handle the touch
 }
+#endif
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

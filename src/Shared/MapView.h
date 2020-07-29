@@ -139,9 +139,8 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet UIButton			*	aerialServiceLogo;
 @property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;
 @property (assign,nonatomic)	IBOutlet UIButton			*	centerOnGPSButton;
-
-@property (assign,nonatomic)	IBOutlet UIToolbar			*	toolbar;
 @property (assign,nonatomic)	IBOutlet UIButton			*	addNodeButton;
+
 @property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
 
 @property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
