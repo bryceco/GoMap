@@ -11,14 +11,12 @@
 @class MapView;
 
 
-@interface RulerLayer : CALayer
+@interface RulerView : UIView
 {
 	CAShapeLayer	*	_shapeLayer;
 	CATextLayer		*	_metricTextLayer;
 	CATextLayer		*	_britishTextLayer;
 }
 @property (assign,nonatomic) MapView	*	mapView;
-
--(void)updateDisplay;
 
 @end

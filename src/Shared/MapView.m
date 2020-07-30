@@ -26,7 +26,7 @@
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
-#import "RulerLayer.h"
+#import "RulerView.h"
 #import "SpeechBalloonView.h"
 #import "TapAndDragGesture.h"
 #import "TurnRestrictController.h"
@@ -54,7 +54,6 @@ static const CGFloat Z_BUILDINGS3D		= -30;
 static const CGFloat Z_EDITOR			= -20;
 static const CGFloat Z_GPX				= -15;
 //static const CGFloat Z_BUILDINGS		= -18;
-static const CGFloat Z_RULER			= -5;	// ruler is below buttons
 static const CGFloat Z_ROTATEGRAPHIC	= -3;
 //static const CGFloat Z_BING_LOGO		= 2;
 static const CGFloat Z_BLINK			= 4;
@@ -180,12 +179,6 @@ const CGFloat kEditControlCornerRadius = 4;
 			[self.layer addSublayer:layer];
 		}
 
-		_rulerLayer = [[RulerLayer alloc] init];
-		_rulerLayer.mapView = self;
-		_rulerLayer.zPosition = Z_RULER;
-		[self.layer addSublayer:_rulerLayer];
-
-
 		if ( YES ) {
 			// implement crosshairs
 			_crossHairs = [CAShapeLayer new];
@@ -302,6 +295,9 @@ const CGFloat kEditControlCornerRadius = 4;
 	}
 	_locationManager.activityType = CLActivityTypeOther;
 #endif
+
+	_rulerView.mapView = self;
+//	_rulerView.layer.zPosition = Z_RULER;
 
 	// set up action button
 	_editControl.hidden = YES;
@@ -595,18 +591,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	[super layoutSubviews];
 
 	CGRect bounds = self.bounds;
-
-	// update locatno of ruler
-#if TARGET_OS_IPHONE
-	CGRect rulerFrame = CGRectMake( bounds.origin.x + 10, bounds.origin.y + bounds.size.height - 40, 150, 30);
-	if (@available(iOS 11.0, *)) {
-		rulerFrame.origin.y -= self.safeAreaInsets.bottom;
-		rulerFrame.origin.x += self.safeAreaInsets.left;
-	}
-	_rulerLayer.frame = rulerFrame;
-#else
-	_rulerLayer.frame = CGRectMake(10, rect.size.height - 40, 150, 30);
-#endif
 
 	// update bounds of layers
 	for ( CALayer * layer in _backgroundLayers ) {
@@ -1132,7 +1116,6 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		isZoomedOut = NO;
 	self.viewStateZoomedOut = isZoomedOut;
 
-	[_rulerLayer updateDisplay];
 	[self updateMouseCoordinates];
 	[self updateUserLocationIndicator:nil];
 

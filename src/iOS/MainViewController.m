@@ -136,7 +136,8 @@
 		_displayButton,
 		_mapView.compassButton,
 		_mapView.helpButton,
-		_mapView.centerOnGPSButton
+		_mapView.centerOnGPSButton,
+		_mapView.rulerView
 	];
 	// remove layout constraints
 	for ( UIButton * button in buttons ) {
@@ -156,6 +157,18 @@
 		UIPanGestureRecognizer * panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPan:)];
 		[button addGestureRecognizer:panGesture];
 	}
+
+	NSString * message = @"This build has a temporary feature: Drag the buttons in the UI to new locations that looks and feel best for you.\n\n"
+						@"* Submit your preferred layouts either via email or on GitHub.\n\n"
+						@"* Positions reset when the app terminates\n\n"
+						@"* Orientation changes are not supported\n\n"
+						@"* Buttons won't move when they're disabled (undo/redo, upload)";
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Attention Testers!" message:message preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+		[alert dismissViewControllerAnimated:YES completion:nil];
+	}];
+	[alert addAction:ok];
+	[self presentViewController:alert animated:YES completion:nil];
 }
 - (void)buttonPan:(UIPanGestureRecognizer *)pan
 {
@@ -185,18 +198,6 @@
 	[speech setTargetView:_toolbar];
 	[self.view addSubview:speech];
 #endif
-
-	NSString * message = @"This build has a temporary feature: Drag the buttons in the UI to new locations that looks and feel best for you.\n\n"
-						@"* Submit your preferred layouts either via email or on GitHub.\n\n"
-						@"* Positions reset when the app terminates\n\n"
-						@"* Orientation changes are not supported\n\n"
-						@"* Buttons won't move when they're disabled (undo/redo, upload)";
-	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Attention Testers!" message:message preferredStyle:UIAlertControllerStyleAlert];
-	UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
-		[alert dismissViewControllerAnimated:YES completion:nil];
-	}];
-	[alert addAction:ok];
-	[self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)search:(UILongPressGestureRecognizer *)recognizer

@@ -31,6 +31,7 @@
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
                                     <outlet property="helpButton" destination="TnL-YC-BCg" id="hR9-Za-lMp"/>
                                     <outlet property="progressIndicator" destination="Zh9-uC-62t" id="GOZ-5L-yvO"/>
+                                    <outlet property="rulerView" destination="TJj-HW-GPO" id="hdg-PH-xwj"/>
                                     <outlet property="statusBarBackground" destination="g4c-aL-FjW" id="YBa-Op-9me"/>
                                     <outlet property="userInstructionLabel" destination="N5Q-nV-TPG" id="z8L-Lc-jxy"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
@@ -51,6 +52,14 @@
                                     <action selector="openHelp" destination="2" eventType="touchUpInside" id="Kic-Mj-660"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJj-HW-GPO" customClass="RulerView">
+                                <rect key="frame" x="10" y="440" width="150" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="9lX-7p-riE"/>
+                                    <constraint firstAttribute="width" constant="150" id="zyp-it-fPh"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E22-sL-sNt" userLabel="Compass">
                                 <rect key="frame" x="277.5" y="48" width="36" height="36"/>
                                 <accessibility key="accessibilityConfiguration" hint="Reorient map north" identifier="compass_button" label="Compass"/>
@@ -246,8 +255,10 @@
                             <constraint firstItem="g4c-aL-FjW" firstAttribute="trailing" secondItem="j5Z-hB-i8A" secondAttribute="trailing" id="Ox1-ec-TKp"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="9" id="Pfs-aC-Kfx"/>
                             <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="9" id="QvO-s0-CSk"/>
+                            <constraint firstItem="TJj-HW-GPO" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="10" id="R9J-xE-fdX"/>
                             <constraint firstItem="g4c-aL-FjW" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="YcC-0i-V1h"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="ZUW-Zx-W4g"/>
+                            <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="TJj-HW-GPO" secondAttribute="bottom" constant="10" id="aGs-K8-NSF"/>
                             <constraint firstItem="zrW-uc-hfQ" firstAttribute="centerX" secondItem="P70-Oz-du4" secondAttribute="centerX" id="c6c-uP-uxf"/>
                             <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="9" id="eic-UM-xsy"/>
                             <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="9" id="fJO-dR-3cL"/>

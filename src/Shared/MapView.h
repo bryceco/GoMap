@@ -34,7 +34,7 @@
 @class OsmNotesDatabase;
 @class OsmBaseObject;
 @class PushPinView;
-@class RulerLayer;
+@class RulerView;
 @class TapAndDragGesture;
 @class VoiceAnnouncement;
 
@@ -86,7 +86,6 @@ typedef enum {
 #else
 	CALayer							*	_bingMapsLogo;
 #endif
-	RulerLayer						*	_rulerLayer;
 
 	CGPoint								_lastMouseDragPos;
 
@@ -140,6 +139,7 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet UIButton			*	helpButton;
 @property (assign,nonatomic)	IBOutlet UIButton			*	centerOnGPSButton;
 @property (assign,nonatomic)	IBOutlet UIButton			*	addNodeButton;
+@property (assign,nonatomic)	IBOutlet RulerView			*	rulerView;
 
 @property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
 
