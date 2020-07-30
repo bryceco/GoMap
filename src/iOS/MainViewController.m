@@ -95,7 +95,8 @@
 		_mapView.addNodeButton,
 		_settingsButton,
 		_uploadButton,
-		_displayButton
+		_displayButton,
+		_searchButton
 	];
 	for ( UIButton * button in buttons ) {
 		button.layer.cornerRadius = button == _mapView.addNodeButton ? 30.0 : 10.0;

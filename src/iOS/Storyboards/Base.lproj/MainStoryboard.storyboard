@@ -80,7 +80,7 @@
                                     <constraint firstAttribute="height" constant="42" id="WqL-QM-oEq"/>
                                     <constraint firstAttribute="width" constant="38" id="uNF-sC-qo4"/>
                                 </constraints>
-                                <state key="normal" image="redo32"/>
+                                <state key="normal" image="arrow.uturn.right"/>
                                 <connections>
                                     <action selector="redo:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="Vpo-J9-35W"/>
                                 </connections>
@@ -97,14 +97,14 @@
                                     <segue destination="VRD-TY-VqB" kind="modal" id="ud2-hg-MB9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRw-Aj-GwS">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRw-Aj-GwS">
                                 <rect key="frame" x="260" y="434" width="42" height="42"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="42" id="9h3-Fp-3hJ"/>
                                     <constraint firstAttribute="height" constant="42" id="YbY-LD-sRc"/>
                                 </constraints>
-                                <state key="normal" image="732-cloud-upload-toolbar"/>
+                                <state key="normal" image="cloud_upload"/>
                                 <connections>
                                     <segue destination="Y81-Zz-B50" kind="modal" id="0xd-4m-acx"/>
                                 </connections>
@@ -116,20 +116,19 @@
                                     <constraint firstAttribute="height" constant="42" id="FmE-WO-XLq"/>
                                     <constraint firstAttribute="width" constant="42" id="sHr-km-niQ"/>
                                 </constraints>
-                                <state key="normal" image="1200-file-type-settings-toolbar"/>
+                                <state key="normal" image="gear"/>
                                 <connections>
                                     <segue destination="RAU-rp-HqB" kind="modal" id="uOK-TV-0mu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53z-ij-akY">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53z-ij-akY">
                                 <rect key="frame" x="142" y="425" width="60" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="4bn-6k-VhJ"/>
                                     <constraint firstAttribute="height" constant="60" id="ylC-8I-bSp"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="38"/>
-                                <state key="normal" title="+">
+                                <state key="normal" image="plus">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
@@ -140,7 +139,7 @@
                                     <constraint firstAttribute="height" constant="42" id="BYo-8q-YL1"/>
                                     <constraint firstAttribute="width" constant="38" id="HEW-SI-eki"/>
                                 </constraints>
-                                <state key="normal" image="undo32"/>
+                                <state key="normal" image="arrow.uturn.left"/>
                                 <connections>
                                     <action selector="undo:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="QQl-SU-i2i"/>
                                 </connections>
@@ -152,7 +151,7 @@
                                     <constraint firstAttribute="width" constant="42" id="BlX-m4-TZS"/>
                                     <constraint firstAttribute="height" constant="42" id="pqY-qY-k2m"/>
                                 </constraints>
-                                <state key="normal" image="723-location-arrow-toolbar"/>
+                                <state key="normal" image="location"/>
                                 <connections>
                                     <action selector="toggleLocation:" destination="2" eventType="touchUpInside" id="BkW-iz-Qsh"/>
                                 </connections>
@@ -917,14 +916,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1200-file-type-settings-toolbar" width="16" height="22"/>
-        <image name="723-location-arrow-toolbar" width="22" height="22"/>
-        <image name="732-cloud-upload-toolbar" width="22" height="22"/>
         <image name="852-map-toolbar" width="22" height="18"/>
+        <image name="arrow.uturn.left" width="16" height="16"/>
+        <image name="arrow.uturn.right" width="16" height="16"/>
         <image name="bing-logo-gray" width="78.5" height="17"/>
         <image name="bing-logo-white" width="78.5" height="17"/>
+        <image name="cloud_upload" width="112" height="102"/>
         <image name="compass.png" width="100" height="100"/>
-        <image name="redo32" width="32" height="26"/>
-        <image name="undo32" width="32" height="26"/>
+        <image name="gear" width="19" height="19"/>
+        <image name="location" width="17" height="17"/>
+        <image name="plus" width="14" height="14"/>
     </resources>
 </document>

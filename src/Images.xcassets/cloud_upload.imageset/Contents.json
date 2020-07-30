@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "undo32.png",
+      "filename" : "cloud_upload.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "undo32@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -18,5 +17,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }

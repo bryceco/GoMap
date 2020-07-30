@@ -18,6 +18,7 @@
 	IBOutlet UIButton		 *	_uploadButton;
 	IBOutlet UIButton		 *	_undoButton;
 	IBOutlet UIButton		 *	_redoButton;
+	IBOutlet UIButton		*	_searchButton;
 }
 
 @property (assign,nonatomic) IBOutlet MapView	*	_Nonnull mapView;
