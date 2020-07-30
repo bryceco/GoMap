@@ -1,12 +1,15 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "poi-binoculars.png"
+      "filename" : "poi-binoculars.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
