@@ -98,16 +98,17 @@
 		_displayButton
 	];
 	for ( UIButton * button in buttons ) {
-		button.tintColor = UIColor.blueColor;
-		button.layer.borderColor = UIColor.darkGrayColor.CGColor;
-		button.layer.borderWidth = 1.0;
 		button.layer.cornerRadius = button == _mapView.addNodeButton ? 30.0 : 10.0;
 
-		button.layer.shadowColor = UIColor.blackColor.CGColor;
-		button.layer.shadowOffset		= CGSizeMake(3,3);
-		button.layer.shadowRadius		= 3;
-		button.layer.shadowOpacity		= 0.5;
-		button.layer.masksToBounds		= NO;
+		button.layer.shadowColor 	= UIColor.blackColor.CGColor;
+		button.layer.shadowOffset	= CGSizeMake(0,0);
+		button.layer.shadowRadius	= 3;
+		button.layer.shadowOpacity	= 0.5;
+		button.layer.masksToBounds	= NO;
+
+		UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		[button setImage:image forState:UIControlStateNormal];
+		button.tintColor = UIColor.systemBlueColor;
 
 		[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
 		[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpInside];
