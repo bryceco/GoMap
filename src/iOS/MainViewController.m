@@ -89,6 +89,7 @@
 	self.navigationController.navigationBarHidden = YES;
 
 	NSArray * buttons = @[
+		_undoRedoView,
 		_locationButton,
 		_undoButton,
 		_redoButton,
@@ -99,22 +100,26 @@
 		_searchButton
 	];
 	for ( UIButton * button in buttons ) {
-		button.layer.cornerRadius = button == _mapView.addNodeButton ? 30.0 : 10.0;
 
-		button.layer.shadowColor 	= UIColor.blackColor.CGColor;
-		button.layer.shadowOffset	= CGSizeMake(0,0);
-		button.layer.shadowRadius	= 3;
-		button.layer.shadowOpacity	= 0.5;
-		button.layer.masksToBounds	= NO;
+		button.layer.cornerRadius	= button == _mapView.addNodeButton ? 30.0 : 10.0;
 
-		UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-		[button setImage:image forState:UIControlStateNormal];
-		button.tintColor = UIColor.systemBlueColor;
+		if ( button.superview != _undoRedoView ) {
+			button.layer.shadowColor 	= UIColor.blackColor.CGColor;
+			button.layer.shadowOffset	= CGSizeMake(0,0);
+			button.layer.shadowRadius	= 3;
+			button.layer.shadowOpacity	= 0.5;
+			button.layer.masksToBounds	= NO;
+		}
+		if ( button != _undoRedoView ) {
+			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+			[button setImage:image forState:UIControlStateNormal];
+			button.tintColor = UIColor.systemBlueColor;
 
-		[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
-		[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpInside];
-		[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpOutside];
-		[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchCancel];
+			[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
+			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpInside];
+			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpOutside];
+			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchCancel];
+		}
 	}
 }
 -(void)buttonHighlight:(UIButton *)button
@@ -129,9 +134,10 @@
 -(void)makeMovableButtons
 {
 	NSArray * buttons = @[
+//		_mapView.editControl,
+		_undoRedoView,
 		_locationButton,
-		_undoButton,
-		_redoButton,
+		_searchButton,
 		_mapView.addNodeButton,
 		_settingsButton,
 		_uploadButton,
@@ -139,7 +145,7 @@
 		_mapView.compassButton,
 		_mapView.helpButton,
 		_mapView.centerOnGPSButton,
-		_mapView.rulerView
+		_mapView.rulerView,
 	];
 	// remove layout constraints
 	for ( UIButton * button in buttons ) {
@@ -152,7 +158,13 @@
 			}
 			superview = superview.superview;
 		}
-		[button removeConstraints:button.constraints];
+		for ( NSLayoutConstraint * c in [button.constraints copy] ) {
+			if ( ((UIView *)c.firstItem).superview == button || ((UIView *)c.secondItem).superview == button ) {
+				// skip
+			} else {
+				[button removeConstraint:c];
+			}
+		}
 		button.translatesAutoresizingMaskIntoConstraints = YES;
 	}
 	for ( UIButton * button in buttons ) {
@@ -192,9 +204,6 @@
 	// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
 	[_mapView viewDidAppear];
 
-	// install long-press gesture recognizers
-	[self installLocationLongPressGestureRecognizer:YES];
-
 #if 0 && DEBUG
 	SpeechBalloonView * speech = [[SpeechBalloonView alloc] initWithText:@"Press here to create a new node,\nor to begin a way"];
 	[speech setTargetView:_toolbar];
@@ -226,12 +235,6 @@
 	}
 }
 
-- (void)installLocationLongPressGestureRecognizer:(BOOL)install
-{
-	UILongPressGestureRecognizer * gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(search:)];
-	[self installGestureRecognizer:gesture onButton:self.locationButton];
-}
-
 - (void)didReceiveMemoryWarning
 {
 	[super didReceiveMemoryWarning];
@@ -248,16 +251,11 @@
 	if ( self.mapView.gpsState != state ) {
 		self.mapView.gpsState = state;
 
-		if ( self.mapView.gpsState == GPS_STATE_NONE ) {
-			UIImage * image = [UIImage imageNamed:@"723-location-arrow-toolbar"];
-			[self.locationButton setImage:image forState:UIControlStateNormal];
-		} else {
-			UIImage * image = [UIImage imageNamed:@"723-location-arrow-toolbar-selected"];
-			[self.locationButton setImage:image forState:UIControlStateNormal];
-		}
-
-		// changing the button tint changes the view, so we have to install longpress again
-		[self installLocationLongPressGestureRecognizer:YES];
+		// update GPS icon
+		NSString * imageName = (self.mapView.gpsState == GPS_STATE_NONE) ? @"location" : @"location.fill";
+		UIImage * image = [UIImage imageNamed:imageName];
+		image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+		[self.locationButton setImage:image forState:UIControlStateNormal];
 	}
 }
 

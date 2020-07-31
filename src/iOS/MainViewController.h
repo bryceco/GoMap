@@ -15,9 +15,10 @@
 
 @interface MainViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate>
 {
-	IBOutlet UIButton		 *	_uploadButton;
-	IBOutlet UIButton		 *	_undoButton;
-	IBOutlet UIButton		 *	_redoButton;
+	IBOutlet UIButton		*	_uploadButton;
+	IBOutlet UIButton		*	_undoButton;
+	IBOutlet UIButton		*	_redoButton;
+	IBOutlet UIView			*	_undoRedoView;
 	IBOutlet UIButton		*	_searchButton;
 }
 
