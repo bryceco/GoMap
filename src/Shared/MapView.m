@@ -417,8 +417,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	CGFloat needleWidth = round(radius/5);
 	compass.bounds = CGRectMake(0, 0, 2*radius, 2*radius);
 	compass.backgroundColor = UIColor.whiteColor.CGColor;
-	compass.borderColor = UIColor.darkGrayColor.CGColor;
-	compass.borderWidth = 1.0;
 	compass.cornerRadius = radius;
 	compass.position = CGPointMake(radius, radius);
 	{

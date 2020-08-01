@@ -94,6 +94,7 @@
 		_undoButton,
 		_redoButton,
 		_mapView.addNodeButton,
+		_mapView.compassButton,
 		_settingsButton,
 		_uploadButton,
 		_displayButton,
@@ -101,8 +102,11 @@
 	];
 	for ( UIButton * button in buttons ) {
 
-		button.layer.cornerRadius	= button == _mapView.addNodeButton ? 30.0 : 10.0;
-
+		// corners
+		if ( button != _mapView.compassButton ) {
+			button.layer.cornerRadius	= button == _mapView.addNodeButton ? 30.0 : 10.0;
+		}
+		// shadows
 		if ( button.superview != _undoRedoView ) {
 			button.layer.shadowColor 	= UIColor.blackColor.CGColor;
 			button.layer.shadowOffset	= CGSizeMake(0,0);
@@ -110,11 +114,14 @@
 			button.layer.shadowOpacity	= 0.5;
 			button.layer.masksToBounds	= NO;
 		}
+		// image tint
 		if ( button != _undoRedoView ) {
 			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 			[button setImage:image forState:UIControlStateNormal];
 			button.tintColor = UIColor.systemBlueColor;
-
+		}
+		// background selection color
+		if ( button != _undoRedoView ) {
 			[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
 			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpInside];
 			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpOutside];
