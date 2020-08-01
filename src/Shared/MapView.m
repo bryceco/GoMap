@@ -356,11 +356,10 @@ const CGFloat kEditControlCornerRadius = 4;
 	_centerOnGPSButton.hidden = YES;
 
 	// compass button
-	self.compassButton.clipsToBounds = NO;
 	self.compassButton.contentMode = UIViewContentModeCenter;
 	[self.compassButton setImage:nil forState:UIControlStateNormal];
-	CALayer * compass = [self compassLayerWithRadius:self.compassButton.bounds.size.width/2];
-	[self.compassButton.layer addSublayer:compass];
+	self.compassButton.backgroundColor = UIColor.whiteColor;
+	[self compassOnLayer:self.compassButton.layer withRadius:self.compassButton.bounds.size.width/2];
 
 	// error message label
 	_flashLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
@@ -411,14 +410,11 @@ const CGFloat kEditControlCornerRadius = 4;
 	[self updateNotesFromServerWithDelay:0];
 }
 
--(CALayer *)compassLayerWithRadius:(CGFloat)radius
+-(void)compassOnLayer:(CALayer *)layer withRadius:(CGFloat)radius
 {
-	CALayer * compass = [CALayer new];
 	CGFloat needleWidth = round(radius/5);
-	compass.bounds = CGRectMake(0, 0, 2*radius, 2*radius);
-	compass.backgroundColor = UIColor.whiteColor.CGColor;
-	compass.cornerRadius = radius;
-	compass.position = CGPointMake(radius, radius);
+	layer.bounds = CGRectMake(0, 0, 2*radius, 2*radius);
+	layer.cornerRadius = radius;
 	{
 		CAShapeLayer * north = [CAShapeLayer new];
 		UIBezierPath * path = [UIBezierPath bezierPath];
@@ -429,7 +425,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		north.path = path.CGPath;
 		north.fillColor = UIColor.systemRedColor.CGColor;
 		north.position = CGPointMake(radius, radius);
-		[compass addSublayer:north];
+		[layer addSublayer:north];
 	}
 	{
 		CAShapeLayer * south = [CAShapeLayer new];
@@ -441,7 +437,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		south.path = path.CGPath;
 		south.fillColor = UIColor.lightGrayColor.CGColor;
 		south.position = CGPointMake(radius, radius);
-		[compass addSublayer:south];
+		[layer addSublayer:south];
 	}
 	{
 		CALayer * pivot = [CALayer new];
@@ -450,9 +446,8 @@ const CGFloat kEditControlCornerRadius = 4;
 		pivot.borderColor = UIColor.blackColor.CGColor;
 		pivot.cornerRadius = needleWidth/2;
 		pivot.position = CGPointMake(radius, radius);
-		[compass addSublayer:pivot];
+		[layer addSublayer:pivot];
 	}
-	return compass;
 }
 -(BOOL)automatedFramerateTestActive
 {

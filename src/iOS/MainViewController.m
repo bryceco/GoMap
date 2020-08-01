@@ -106,7 +106,7 @@
 		if ( button != _mapView.compassButton ) {
 			button.layer.cornerRadius	= button == _mapView.addNodeButton ? 30.0 : 10.0;
 		}
-		// shadows
+		// shadow
 		if ( button.superview != _undoRedoView ) {
 			button.layer.shadowColor 	= UIColor.blackColor.CGColor;
 			button.layer.shadowOffset	= CGSizeMake(0,0);
@@ -114,8 +114,8 @@
 			button.layer.shadowOpacity	= 0.5;
 			button.layer.masksToBounds	= NO;
 		}
-		// image tint
-		if ( button != _undoRedoView ) {
+		// image blue tint
+		if ( button != _undoRedoView && button != _mapView.compassButton ) {
 			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 			[button setImage:image forState:UIControlStateNormal];
 			button.tintColor = UIColor.systemBlueColor;
