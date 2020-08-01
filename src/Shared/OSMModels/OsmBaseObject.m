@@ -440,9 +440,9 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
 -(NSString *)givenName
 {
-    NSString * name = [_tags objectForKey:@"name"];
-    if ( name.length )
-        return name;
+	NSString * name = _tags[@"name"];
+	if ( name.length )
+		return name;
 
 	if ( self.isWay ) {
 		NSString * highway = _tags[@"highway"];
@@ -467,7 +467,8 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 			}
 		}
 	}
-	return nil;;
+
+	return _tags[@"brand"] ?: _tags[ @"operator" ] ?: nil;
 }
 
 -(NSString *)friendlyDescriptionWithDetails:(BOOL)details
