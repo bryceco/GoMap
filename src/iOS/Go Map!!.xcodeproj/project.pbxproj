@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0205460616766808004A2A23 /* POIPresetValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0205460516766808004A2A23 /* POIPresetValuesViewController.m */; };
+		0205460616766808004A2A23 /* POIPresetValuePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0205460516766808004A2A23 /* POIPresetValuePickerController.m */; };
 		020C2A90168A7688003F2C2A /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 020C2A8F168A7688003F2C2A /* CreditsViewController.m */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
 		0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */; };
@@ -173,8 +173,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0205460416766808004A2A23 /* POIPresetValuesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIPresetValuesViewController.h; sourceTree = "<group>"; };
-		0205460516766808004A2A23 /* POIPresetValuesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIPresetValuesViewController.m; sourceTree = "<group>"; };
+		0205460416766808004A2A23 /* POIPresetValuePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIPresetValuePickerController.h; sourceTree = "<group>"; };
+		0205460516766808004A2A23 /* POIPresetValuePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIPresetValuePickerController.m; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		020C2A8E168A7688003F2C2A /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CreditsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		020C2A8F168A7688003F2C2A /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CreditsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -641,8 +641,8 @@
 				0223DB521675D53200D6F825 /* POIFeaturePickerViewController.m */,
 				0223DB5516765C9000D6F825 /* POIFeaturePresetsViewController.h */,
 				0223DB5616765C9000D6F825 /* POIFeaturePresetsViewController.m */,
-				0205460416766808004A2A23 /* POIPresetValuesViewController.h */,
-				0205460516766808004A2A23 /* POIPresetValuesViewController.m */,
+				0205460416766808004A2A23 /* POIPresetValuePickerController.h */,
+				0205460516766808004A2A23 /* POIPresetValuePickerController.m */,
 				022A2A52167B8F1C00D7A5AC /* POITabBarController.h */,
 				022A2A53167B8F1C00D7A5AC /* POITabBarController.m */,
 				028F504619BA2F460093C423 /* presets */,
@@ -1094,7 +1094,7 @@
 				6453777323D391CC00656A1C /* OsmMember.m in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				0223DB5716765C9000D6F825 /* POIFeaturePresetsViewController.m in Sources */,
-				0205460616766808004A2A23 /* POIPresetValuesViewController.m in Sources */,
+				0205460616766808004A2A23 /* POIPresetValuePickerController.m in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				021D4E4B194E0BCB002154B3 /* FpsLabel.m in Sources */,

@@ -14,7 +14,7 @@
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "POIFeaturePresetsViewController.h"
-#import "POIPresetValuesViewController.h"
+#import "POIPresetValuePickerController.h"
 #import "POITabBarController.h"
 #import "POIFeaturePickerViewController.h"
 #import "PresetsDatabase.h"
@@ -302,8 +302,8 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	FeaturePresetCell * cell = sender;
-	if ( [segue.destinationViewController isKindOfClass:[POIPresetValuesViewController class]] ) {
-		POIPresetValuesViewController * preset = segue.destinationViewController;
+	if ( [segue.destinationViewController isKindOfClass:[POIPresetValuePickerController class]] ) {
+		POIPresetValuePickerController * preset = segue.destinationViewController;
 		preset.tag = cell.presetKeyInfo.tagKey;
 		preset.valueDefinitions = cell.presetKeyInfo.presetList;
 		preset.navigationItem.title = cell.presetKeyInfo.name;

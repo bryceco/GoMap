@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface POIPresetValuesViewController : UITableViewController
+@interface POIPresetValuePickerController : UITableViewController
 {
 }
 
