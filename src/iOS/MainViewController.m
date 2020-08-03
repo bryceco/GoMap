@@ -152,7 +152,7 @@
 		_mapView.compassButton,
 		_mapView.helpButton,
 		_mapView.centerOnGPSButton,
-		_mapView.rulerView,
+//		_mapView.rulerView,
 	];
 	// remove layout constraints
 	for ( UIButton * button in buttons ) {
@@ -176,6 +176,7 @@
 	}
 	for ( UIButton * button in buttons ) {
 		UIPanGestureRecognizer * panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPan:)];
+		panGesture.delegate = self;
 		[button addGestureRecognizer:panGesture];
 	}
 
@@ -310,7 +311,7 @@
 	}];
 }
 
-#if 0 // FIXME - not sure if we still need something like this after removing the toolbar
+#if 1 // FIXME - not sure if we still need something like this after removing the toolbar
 // disable gestures inside toolbar buttons
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
