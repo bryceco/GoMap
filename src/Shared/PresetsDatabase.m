@@ -240,6 +240,29 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	return [[PresetKey alloc] initWithName:name featureKey:tag defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 }
+
+-(NSString *)friendlyValueNameForValue:(NSString *)value
+{
+	for ( PresetValue * presetValue in self.presetList ) {
+		if ( [presetValue.tagValue isEqualToString:value] ) {
+			return presetValue.name;
+		}
+	}
+	if ( self.presetList.count > 0 ) {
+		return PrettyTag( value );
+	}
+	return value;
+}
+-(NSString *)rawValueForPrettyValue:(NSString *)value
+{
+	for ( PresetValue * presetValue in self.presetList ) {
+		if ( [presetValue.name isEqualToString:value] ) {
+			return presetValue.tagValue;
+		}
+	}
+	return value;
+}
+
 -(NSString *)description
 {
 	return self.name;
@@ -301,29 +324,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		list = [PresetsDatabase new];
 	});
 	return list;
-}
-
-+(NSString *)friendlyValueNameForKey:(NSString *)key value:(NSString *)value geometry:(NSString *)geometry
-{
-	__block BOOL makePretty = NO;
-	[g_jsonFieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
-		NSString * k = dict[ @"key" ];
-		if ( [k isEqualToString:key] ) {
-			NSString * type = dict[ @"type" ];
-			if ( [type isEqualToString:@"defaultcheck"] ||
-				 [type isEqualToString:@"check"] ||
-				 [type isEqualToString:@"radio"] ||
-				 [type isEqualToString:@"combo"] ||
-				 [type isEqualToString:@"typeCombo"] )
-			{
-				makePretty = YES;
-			}
-			*stop = YES;
-		}
-	}];
-	if ( makePretty )
-		return PrettyTag( value );
-	return value;
 }
 
 +(NSSet *)allTagValuesForKey:(NSString *)key

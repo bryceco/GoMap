@@ -24,7 +24,7 @@
 @interface FeaturePresetCell : UITableViewCell
 @property (assign,nonatomic)	IBOutlet	UILabel						*	nameLabel;
 @property (assign,nonatomic)	IBOutlet	AutocompleteTextField		*	valueField;
-@property (strong,nonatomic)				PresetKey					*	presetKeyInfo;
+@property (strong,nonatomic)				PresetKey					*	presetKey;
 @end
 
 @implementation FeaturePresetCell
@@ -122,7 +122,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSIndexPath * index = [NSIndexPath indexPathForRow:1 inSection:0];
                     FeaturePresetCell * cell = [self.tableView cellForRowAtIndexPath:index];
-                    if ( cell && [cell.presetKeyInfo.tagKey isEqualToString:@"name"] ) {
+                    if ( cell && [cell.presetKey.tagKey isEqualToString:@"name"] ) {
                         [cell.valueField becomeFirstResponder];
                     }
                 });
@@ -217,7 +217,7 @@
 		cell.nameLabel.text = presetKey.name;
 		cell.valueField.placeholder = presetKey.placeholder;
 		cell.valueField.delegate = self;
-		cell.presetKeyInfo = presetKey;
+		cell.presetKey = presetKey;
 
 		cell.valueField.keyboardType = presetKey.keyboardType;
 		cell.valueField.autocapitalizationType = presetKey.autocapitalizationType;
@@ -249,7 +249,7 @@
 		} else {
 			// Regular cell
 			NSString * value = objectDict[ presetKey.tagKey ];
-			value = [PresetsDatabase friendlyValueNameForKey:presetKey.tagKey value:value geometry:nil];
+			value = [presetKey friendlyValueNameForValue:value];
 			cell.valueField.text = value;
 			cell.valueField.enabled = YES;
 		}
@@ -262,7 +262,7 @@
 		PresetGroup * drillDownGroup = rowObject;
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
 		cell.nameLabel.text = drillDownGroup.name;
-		cell.presetKeyInfo = (id)drillDownGroup;
+		cell.presetKey = (id)drillDownGroup;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 		return cell;
@@ -278,23 +278,23 @@
     // This workaround is necessary because `tableView:cellForRowAtIndexPath:`
     // currently sets `cell.commonPreset` to an instance of `CommonPresetGroup` by casting it to `id`.
     PresetKey *presetKey = nil;
-    if ([cell.presetKeyInfo isKindOfClass:[PresetKey class]]) {
-        presetKey = cell.presetKeyInfo;
+    if ([cell.presetKey isKindOfClass:[PresetKey class]]) {
+        presetKey = cell.presetKey;
     }
 
 	if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 		[self performSegueWithIdentifier:@"POITypeSegue" sender:cell];
-	} else if ( [cell.presetKeyInfo isKindOfClass:[PresetGroup class]] ) {
+	} else if ( [cell.presetKey isKindOfClass:[PresetGroup class]] ) {
 		// special case for drill down
-		PresetGroup * group = (id)cell.presetKeyInfo;
+		PresetGroup * group = (id)cell.presetKey;
 		POIFeaturePresetsViewController * sub = [self.storyboard instantiateViewControllerWithIdentifier:@"PoiCommonTagsViewController"];
 		sub.drillDownGroup = group;
 		[self.navigationController pushViewController:sub animated:YES];
 	} else if ([self canMeasureDirectionForKey:presetKey]) {
-		[self measureDirectionForKey:cell.presetKeyInfo.tagKey
+		[self measureDirectionForKey:cell.presetKey.tagKey
 													value:cell.valueField.text];
 	} else if ([self canMeasureHeightForKey:presetKey]) {
-		[self measureHeightForKey:cell.presetKeyInfo.tagKey];
+		[self measureHeightForKey:cell.presetKey.tagKey];
 	} else {
 		[self performSegueWithIdentifier:@"POIPresetSegue" sender:cell];
 	}
@@ -304,9 +304,9 @@
 	FeaturePresetCell * cell = sender;
 	if ( [segue.destinationViewController isKindOfClass:[POIPresetValuePickerController class]] ) {
 		POIPresetValuePickerController * preset = segue.destinationViewController;
-		preset.tag = cell.presetKeyInfo.tagKey;
-		preset.valueDefinitions = cell.presetKeyInfo.presetList;
-		preset.navigationItem.title = cell.presetKeyInfo.name;
+		preset.tag = cell.presetKey.tagKey;
+		preset.valueDefinitions = cell.presetKey.presetList;
+		preset.navigationItem.title = cell.presetKey.name;
 	} else if ( [segue.destinationViewController isKindOfClass:[POIFeaturePickerViewController class]] ) {
 		POIFeaturePickerViewController * dest = (id)segue.destinationViewController;
 		dest.delegate = self;
@@ -360,7 +360,7 @@
 
 		// get list of values for current key
 		FeaturePresetCell * cell = [self cellForTextField:textField];
-		NSString * key = cell.presetKeyInfo.tagKey;
+		NSString * key = cell.presetKey.tagKey;
 		if ( key == nil )
 			return;	// should never happen
 		NSSet * set = [PresetsDatabase allTagValuesForKey:key];
@@ -384,17 +384,18 @@
 - (IBAction)textFieldDidEndEditing:(UITextField *)textField
 {
 	FeaturePresetCell * cell = [self cellForTextField:textField];
-	NSString * key = cell.presetKeyInfo.tagKey;
+	NSString * key = cell.presetKey.tagKey;
 	if ( key == nil )
 		return;	// should never happen
-	NSString * value = textField.text;
-	value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-	textField.text = value;
+	NSString * prettyValue = textField.text;
+	prettyValue = [prettyValue stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+	textField.text = prettyValue;
 
+	// convert to raw value if necessary
+	NSString * rawValue = [cell.presetKey rawValueForPrettyValue:prettyValue];
 	_isEditing = NO;
-
-    [self updateTagWithValue:value forKey:key];
+    [self updateTagWithValue:rawValue forKey:key];
 }
 
 - (void)updateTagWithValue:(NSString *)value forKey:(NSString *)key {
