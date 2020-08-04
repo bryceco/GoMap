@@ -186,7 +186,7 @@
 						@"* Orientation changes are not supported\n\n"
 						@"* Buttons won't move when they're disabled (undo/redo, upload)";
 	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Attention Testers!" message:message preferredStyle:UIAlertControllerStyleAlert];
-	UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+	UIAlertAction * ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
 		[alert dismissViewControllerAnimated:YES completion:nil];
 	}];
 	[alert addAction:ok];
