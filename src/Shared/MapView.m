@@ -69,7 +69,7 @@ static const CGFloat Z_FLASH			= 110;
 
 
 @interface MapView ()
-@property (strong,nonatomic) IBOutlet UIView	*	statusBarBackground;
+@property (strong,nonatomic) IBOutlet UIVisualEffectView	*	statusBarBackground;
 @end
 
 @implementation MapView

@@ -32,7 +32,7 @@
                                     <outlet property="helpButton" destination="TnL-YC-BCg" id="hR9-Za-lMp"/>
                                     <outlet property="progressIndicator" destination="Zh9-uC-62t" id="GOZ-5L-yvO"/>
                                     <outlet property="rulerView" destination="TJj-HW-GPO" id="hdg-PH-xwj"/>
-                                    <outlet property="statusBarBackground" destination="g4c-aL-FjW" id="YBa-Op-9me"/>
+                                    <outlet property="statusBarBackground" destination="NOu-1p-3jQ" id="ZSL-D1-rnW"/>
                                     <outlet property="userInstructionLabel" destination="N5Q-nV-TPG" id="z8L-Lc-jxy"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
                                 </connections>
@@ -62,6 +62,14 @@
                                     <action selector="compassPressed:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="j6f-G1-Ixj"/>
                                 </connections>
                             </button>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NOu-1p-3jQ" userLabel="Status Bar Blur View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Pi6-3v-UIw">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UQ6-Pa-U58">
                                 <rect key="frame" x="21" y="153" width="42" height="42"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -221,13 +229,6 @@
                                     <action selector="requestAerialServiceAttribution:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="tf2-Qn-bbX"/>
                                 </connections>
                             </button>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g4c-aL-FjW" userLabel="Status Bar Background">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" notEnabled="YES"/>
-                                </accessibility>
-                            </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-uc-hfQ" userLabel="Edit Toolbar">
                                 <rect key="frame" x="66" y="367" width="188" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -259,10 +260,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJj-HW-GPO" customClass="RulerView">
-                                <rect key="frame" x="166" y="393" width="142" height="30"/>
+                                <rect key="frame" x="166" y="385" width="142" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="9lX-7p-riE"/>
+                                    <constraint firstAttribute="width" constant="142" id="IbR-gh-YSN"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -271,7 +273,6 @@
                         <constraints>
                             <constraint firstItem="9t5-wq-j1u" firstAttribute="centerX" secondItem="P70-Oz-du4" secondAttribute="centerX" id="0ul-bY-jVz"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="top" secondItem="rdp-7O-8Ad" secondAttribute="bottom" constant="15" id="1xe-XV-uCA"/>
-                            <constraint firstItem="g4c-aL-FjW" firstAttribute="bottom" secondItem="P70-Oz-du4" secondAttribute="top" id="22t-lx-snP"/>
                             <constraint firstItem="X1d-Y3-CcW" firstAttribute="leading" secondItem="9O3-HG-HvC" secondAttribute="trailing" constant="15" id="2VS-mb-P1j"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="trailing" secondItem="rdp-7O-8Ad" secondAttribute="trailing" constant="12" id="2oq-dd-G4Q"/>
                             <constraint firstAttribute="bottom" secondItem="fss-Ag-fKJ" secondAttribute="bottom" id="2zA-Og-Chq"/>
@@ -279,7 +280,6 @@
                             <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="9O3-HG-HvC" secondAttribute="bottom" constant="10" id="3dS-wg-VtV"/>
                             <constraint firstItem="53z-ij-akY" firstAttribute="top" secondItem="UQ6-Pa-U58" secondAttribute="bottom" constant="15" id="53n-hh-QYd"/>
                             <constraint firstItem="9t5-wq-j1u" firstAttribute="bottom" secondItem="zrW-uc-hfQ" secondAttribute="top" constant="-9" id="8bu-LO-ZqN"/>
-                            <constraint firstItem="g4c-aL-FjW" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="DXS-UZ-oo5"/>
                             <constraint firstItem="nU5-T2-ADn" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="bottom" multiplier="0.7" id="Fhe-r4-MSI"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="trailing" secondItem="rdp-7O-8Ad" secondAttribute="trailing" id="FrU-Ie-xYw"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="trailing" secondItem="j5Z-hB-i8A" secondAttribute="trailing" id="H27-5O-hII"/>
@@ -287,16 +287,16 @@
                             <constraint firstItem="rdp-7O-8Ad" firstAttribute="top" secondItem="E22-sL-sNt" secondAttribute="bottom" constant="15" id="Knr-t7-Lp5"/>
                             <constraint firstItem="N5Q-nV-TPG" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="25" id="L7k-n3-wAc"/>
                             <constraint firstItem="UQ6-Pa-U58" firstAttribute="centerX" secondItem="53z-ij-akY" secondAttribute="centerX" id="LOe-DP-yFz"/>
-                            <constraint firstItem="g4c-aL-FjW" firstAttribute="trailing" secondItem="j5Z-hB-i8A" secondAttribute="trailing" id="Ox1-ec-TKp"/>
+                            <constraint firstItem="NOu-1p-3jQ" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="M8f-im-fNu"/>
+                            <constraint firstItem="P70-Oz-du4" firstAttribute="top" secondItem="NOu-1p-3jQ" secondAttribute="bottom" id="N2f-Si-qEl"/>
                             <constraint firstItem="9O3-HG-HvC" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="12" id="Q13-4n-waC"/>
                             <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="9" id="QvO-s0-CSk"/>
                             <constraint firstItem="53z-ij-akY" firstAttribute="centerY" secondItem="P70-Oz-du4" secondAttribute="centerY" id="VwN-nB-ehp"/>
-                            <constraint firstItem="g4c-aL-FjW" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="YcC-0i-V1h"/>
+                            <constraint firstAttribute="trailing" secondItem="NOu-1p-3jQ" secondAttribute="trailing" id="ZRJ-bF-j5o"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="ZUW-Zx-W4g"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="trailing" secondItem="rdp-7O-8Ad" secondAttribute="trailing" id="ZWB-Da-wU9"/>
                             <constraint firstItem="E22-sL-sNt" firstAttribute="top" secondItem="TnL-YC-BCg" secondAttribute="bottom" constant="15" id="aeQ-nk-vW4"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="trailing" secondItem="YRw-Aj-GwS" secondAttribute="trailing" constant="12" id="bGw-oa-eIq"/>
-                            <constraint firstItem="TJj-HW-GPO" firstAttribute="leading" secondItem="Wmz-dR-62m" secondAttribute="leading" id="bI9-36-PMd"/>
                             <constraint firstItem="zrW-uc-hfQ" firstAttribute="centerX" secondItem="P70-Oz-du4" secondAttribute="centerX" id="c6c-uP-uxf"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UQ6-Pa-U58" secondAttribute="trailing" constant="15" id="d1f-Gy-01W"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="70" id="d8b-kS-a2G"/>
@@ -307,8 +307,9 @@
                             <constraint firstItem="nU5-T2-ADn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="P70-Oz-du4" secondAttribute="centerX" multiplier="0.35" id="iYx-Jd-It7"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="jfH-he-UaM"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="top" secondItem="rdp-7O-8Ad" secondAttribute="bottom" constant="15" id="nLz-re-rFx"/>
-                            <constraint firstItem="YRw-Aj-GwS" firstAttribute="top" secondItem="TJj-HW-GPO" secondAttribute="bottom" constant="5" id="pK0-f4-5xc"/>
+                            <constraint firstItem="NOu-1p-3jQ" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="org-l3-ORG"/>
                             <constraint firstItem="E22-sL-sNt" firstAttribute="centerX" secondItem="TnL-YC-BCg" secondAttribute="centerX" id="pUq-T7-nwS"/>
+                            <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="TJj-HW-GPO" secondAttribute="bottom" constant="65" id="r2v-ah-zmD"/>
                             <constraint firstItem="rdp-7O-8Ad" firstAttribute="centerX" secondItem="E22-sL-sNt" secondAttribute="centerX" id="tKi-tD-6IT"/>
                             <constraint firstItem="X1d-Y3-CcW" firstAttribute="centerY" secondItem="9O3-HG-HvC" secondAttribute="centerY" id="tPF-w1-2Cd"/>
                             <constraint firstItem="Zh9-uC-62t" firstAttribute="centerX" secondItem="P70-Oz-du4" secondAttribute="centerX" id="uy0-IM-Kl8"/>
@@ -844,7 +845,7 @@
                 <navigationController id="Fx1-V2-8uJ" customClass="RotatingNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y5O-uv-8Kt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
