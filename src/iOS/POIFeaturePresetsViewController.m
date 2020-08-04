@@ -249,7 +249,7 @@
 		} else {
 			// Regular cell
 			NSString * value = objectDict[ presetKey.tagKey ];
-			value = [presetKey friendlyValueNameForValue:value];
+			value = [presetKey prettyNameForTagValue:value];
 			cell.valueField.text = value;
 			cell.valueField.enabled = YES;
 		}
@@ -393,9 +393,9 @@
 	textField.text = prettyValue;
 
 	// convert to raw value if necessary
-	NSString * rawValue = [cell.presetKey rawValueForPrettyValue:prettyValue];
+	NSString * tagValue = [cell.presetKey tagValueForPrettyName:prettyValue];
 	_isEditing = NO;
-    [self updateTagWithValue:rawValue forKey:key];
+    [self updateTagWithValue:tagValue forKey:key];
 }
 
 - (void)updateTagWithValue:(NSString *)value forKey:(NSString *)key {

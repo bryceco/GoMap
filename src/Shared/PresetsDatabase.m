@@ -115,8 +115,15 @@ static void InitializeDictionaries()
 
 static NSString * PrettyTag( NSString * tag )
 {
-	tag = [tag stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-	tag = [tag capitalizedString];
+	static NSRegularExpression * expr = nil;
+	if ( expr == nil )
+		expr = [NSRegularExpression regularExpressionWithPattern:@"^[abcdefghijklmnopqrstuvwxyz_:]+$"
+														 options:0
+														   error:NULL];
+	if ( [expr matchesInString:tag options:0 range:NSMakeRange(0,tag.length)] ) {
+		tag = [tag stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+		tag = [tag capitalizedString];
+	}
 	return tag;
 }
 
@@ -241,22 +248,21 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return [[PresetKey alloc] initWithName:name featureKey:tag defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:presets];
 }
 
--(NSString *)friendlyValueNameForValue:(NSString *)value
+-(NSString *)prettyNameForTagValue:(NSString *)value
 {
 	for ( PresetValue * presetValue in self.presetList ) {
 		if ( [presetValue.tagValue isEqualToString:value] ) {
 			return presetValue.name;
 		}
 	}
-	if ( self.presetList.count > 0 ) {
-		return PrettyTag( value );
-	}
 	return value;
 }
--(NSString *)rawValueForPrettyValue:(NSString *)value
+-(NSString *)tagValueForPrettyName:(NSString *)value
 {
 	for ( PresetValue * presetValue in self.presetList ) {
-		if ( [presetValue.name isEqualToString:value] ) {
+		NSComparisonResult diff = [presetValue.name compare:value
+													options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch|NSWidthInsensitiveSearch)];
+		if ( diff == NSOrderedSame ) {
 			return presetValue.tagValue;
 		}
 	}

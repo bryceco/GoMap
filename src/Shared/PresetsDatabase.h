@@ -61,8 +61,8 @@ typedef int UITextAutocapitalizationType;
 						 presets:(NSArray *)presets;
 -(instancetype)initWithCoder:(NSCoder *)coder;
 -(void)encodeWithCoder:(NSCoder *)enCoder;
--(NSString *)friendlyValueNameForValue:(NSString *)value;
--(NSString *)rawValueForPrettyValue:(NSString *)value;
+-(NSString *)prettyNameForTagValue:(NSString *)value;
+-(NSString *)tagValueForPrettyName:(NSString *)value;
 @end
 
 
