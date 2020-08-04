@@ -192,7 +192,7 @@
                                 <gestureRecognizers/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Error Message Flashing Z" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nU5-T2-ADn">
-                                <rect key="frame" x="94.5" y="360" width="131" height="41"/>
+                                <rect key="frame" x="94.5" y="336" width="131" height="41"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -229,7 +229,7 @@
                                 </accessibility>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-uc-hfQ" userLabel="Edit Toolbar">
-                                <rect key="frame" x="66" y="380" width="188" height="44"/>
+                                <rect key="frame" x="66" y="367" width="188" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="to3-dt-REX"/>
@@ -253,7 +253,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="66.6 FPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9t5-wq-j1u" customClass="FpsLabel">
-                                <rect key="frame" x="103" y="337.5" width="114" height="33.5"/>
+                                <rect key="frame" x="103" y="324.5" width="114" height="33.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="0.98692119121551514" green="0.18576183915138245" blue="0.14714117348194122" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -280,7 +280,7 @@
                             <constraint firstItem="53z-ij-akY" firstAttribute="top" secondItem="UQ6-Pa-U58" secondAttribute="bottom" constant="15" id="53n-hh-QYd"/>
                             <constraint firstItem="9t5-wq-j1u" firstAttribute="bottom" secondItem="zrW-uc-hfQ" secondAttribute="top" constant="-9" id="8bu-LO-ZqN"/>
                             <constraint firstItem="g4c-aL-FjW" firstAttribute="top" secondItem="j5Z-hB-i8A" secondAttribute="top" id="DXS-UZ-oo5"/>
-                            <constraint firstItem="nU5-T2-ADn" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="bottom" multiplier="0.75" id="Fhe-r4-MSI"/>
+                            <constraint firstItem="nU5-T2-ADn" firstAttribute="top" secondItem="fss-Ag-fKJ" secondAttribute="bottom" multiplier="0.7" id="Fhe-r4-MSI"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="trailing" secondItem="rdp-7O-8Ad" secondAttribute="trailing" id="FrU-Ie-xYw"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="trailing" secondItem="j5Z-hB-i8A" secondAttribute="trailing" id="H27-5O-hII"/>
                             <constraint firstItem="YRw-Aj-GwS" firstAttribute="bottom" secondItem="P70-Oz-du4" secondAttribute="bottom" constant="-10" id="I7y-94-ztw"/>
@@ -299,7 +299,7 @@
                             <constraint firstItem="TJj-HW-GPO" firstAttribute="leading" secondItem="Wmz-dR-62m" secondAttribute="leading" id="bI9-36-PMd"/>
                             <constraint firstItem="zrW-uc-hfQ" firstAttribute="centerX" secondItem="P70-Oz-du4" secondAttribute="centerX" id="c6c-uP-uxf"/>
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="UQ6-Pa-U58" secondAttribute="trailing" constant="15" id="d1f-Gy-01W"/>
-                            <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="57" id="d8b-kS-a2G"/>
+                            <constraint firstItem="P70-Oz-du4" firstAttribute="bottom" secondItem="zrW-uc-hfQ" secondAttribute="bottom" constant="70" id="d8b-kS-a2G"/>
                             <constraint firstItem="TnL-YC-BCg" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="10" id="dGm-pH-Mdm"/>
                             <constraint firstItem="YRw-Aj-GwS" firstAttribute="leading" secondItem="poU-5O-e7Y" secondAttribute="trailing" constant="15" id="ebY-VV-Eqh"/>
                             <constraint firstItem="2Ka-IT-DQC" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="9" id="fJO-dR-3cL"/>
@@ -844,7 +844,7 @@
                 <navigationController id="Fx1-V2-8uJ" customClass="RotatingNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y5O-uv-8Kt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
