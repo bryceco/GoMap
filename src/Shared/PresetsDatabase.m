@@ -744,7 +744,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 				NSString * d = v[@"description"];
 				[presets addObject:[PresetValue presetValueWithName:n details:d tagValue:k]];
 			}];
-			PresetKey * tag = [PresetKey presetKeyWithName:stringsTypesDict[key] featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
+			NSString * name = stringsTypesDict[key];
+			if ( name == nil )
+				name = PrettyTag(type);
+			PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 			[tagList addObject:tag];
 		}
 
