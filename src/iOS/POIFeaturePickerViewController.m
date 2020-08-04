@@ -18,7 +18,10 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 
 @interface FeaturePickerCell : UITableViewCell
-@property (strong,atomic)	NSString * featureName;
+@property (strong,atomic)		NSString	* featureName;
+@property (assign)	IBOutlet	UILabel 	* title;
+@property (assign)	IBOutlet	UILabel 	* details;
+@property (assign)	IBOutlet	UIImageView	* image;
 @end
 @implementation FeaturePickerCell
 @end
@@ -84,6 +87,11 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	}
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewAutomaticDimension;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	return _isTopLevel ? 2 : 1;
@@ -146,7 +154,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	if ( feature.suggestion && feature.logoImage == nil && feature.logoURL ) {
 		// download brand logo for name suggestion
-		feature.logoImage = feature.icon;
+		feature.logoImage = feature.imageUnscaled;
 		UIImage * logo = [logoCache objectWithKey:feature.featureName
 			fallbackURL:^{
 				return [NSURL URLWithString:feature.logoURL];
@@ -161,7 +169,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 						for ( FeaturePickerCell * cell in self.tableView.visibleCells ) {
 							if ( [cell isKindOfClass:[FeaturePickerCell class]] ) {
 								if ( cell.featureName == feature.featureName ) {
-									cell.imageView.image = image;
+									cell.image.image = image;
 								}
 							}
 						}
@@ -178,17 +186,18 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSString * geometry = [self currentSelectionGeometry];
 	NSString * currentFeature = [PresetsDatabase featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
 	FeaturePickerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-	cell.textLabel.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
-	cell.imageView.image		= feature.logoImage && feature.logoImage != feature.icon
+	cell.title.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
+	cell.image.image		= feature.logoImage && feature.logoImage != feature.imageUnscaled
 									? feature.logoImage
-									: [feature.icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+									: [feature.imageUnscaled imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	if (@available(iOS 13.0, *)) {
-		cell.imageView.tintColor = UIColor.labelColor;
+		cell.image.tintColor = UIColor.labelColor;
 	} else {
-		cell.imageView.tintColor = UIColor.blackColor;
+		cell.image.tintColor = UIColor.blackColor;
 	}
-	cell.imageView.contentMode	= UIViewContentModeScaleAspectFit;
-	cell.detailTextLabel.text	= feature.summary;
+	cell.image.contentMode = UIViewContentModeScaleAspectFit;
+	[cell setNeedsUpdateConstraints];
+	cell.details.text	= feature.summary;
 	cell.accessoryType = [currentFeature isEqualToString:feature.featureName] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	cell.featureName = feature.featureName;
 	return cell;

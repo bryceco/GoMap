@@ -1305,7 +1305,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 
 @implementation PresetFeature
-@synthesize icon = _icon;
+@synthesize imageScaled24 = _imageScaled24;
+@synthesize imageUnscaled = _imageUnscaled;
 
 -(instancetype)initWithName:(NSString *)featureName presets:(NSDictionary *)dict
 {
@@ -1357,31 +1358,35 @@ BOOL IsOsmBooleanTrue( NSString * value )
 // SVG icons can be found in Maki/Temaki and the iD source tree
 // To convert from SVG to PDF use: /Volumes/Inkscape/Inkscape.app/Contents/MacOS/inkscape  --export-type=pdf *.svg
 // To rename files with the proper prefix use: for f in `ls *.pdf`; do echo mv $f `echo $f | sed 's/^/maki-/;s/-15//'`; done | bash
--(UIImage *)iconUncached
+-(UIImage *)imageUnscaled
 {
+	if ( _imageUnscaled ) {
+		return [_imageUnscaled isKindOfClass:[NSNull class]] ? nil : _imageUnscaled;
+	}
 	NSString * iconName = _dict[ @"icon" ];
 	if ( iconName ) {
-		UIImage * icon = [UIImage imageNamed:iconName];
-		if ( icon ) {
-			return icon;
+		_imageUnscaled = [UIImage imageNamed:iconName];
+		if ( _imageUnscaled ) {
+			return _imageUnscaled;
 		}
 	}
-	return (id)[NSNull null];
+	_imageUnscaled = (id)[NSNull null];
+	return nil;
 }
 
--(UIImage *)icon
+-(UIImage *)imageScaled24
 {
 	extern UIImage * IconScaledForDisplay(UIImage *icon);
 
-	if ( _icon == nil ) {
-		_icon = [self iconUncached];
-		if ( ![_icon isKindOfClass:[NSNull class]] ) {
-			_icon = IconScaledForDisplay( _icon );
+	if ( _imageScaled24 == nil ) {
+		_imageScaled24 = self.imageUnscaled;
+		if ( _imageScaled24 ) {
+			_imageScaled24 = IconScaledForDisplay( _imageScaled24 );
+		} else {
+			_imageScaled24 = (id)[NSNull null];
 		}
 	}
-	if ( [_icon isKindOfClass:[NSNull class]] )
-		return nil;
-	return _icon;
+	return [_imageScaled24 isKindOfClass:[NSNull class]] ? nil : _imageScaled24;
 }
 
 -(NSString *)logoURL
