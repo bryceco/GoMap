@@ -176,7 +176,7 @@
 	}
 	for ( UIButton * button in buttons ) {
 		UIPanGestureRecognizer * panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPan:)];
-		panGesture.delegate = self;
+		// panGesture.delegate = self;
 		[button addGestureRecognizer:panGesture];
 	}
 
