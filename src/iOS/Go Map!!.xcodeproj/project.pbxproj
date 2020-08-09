@@ -121,6 +121,7 @@
 		02F373F916822C2C004614D4 /* UploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F373F816822C2C004614D4 /* UploadViewController.m */; };
 		02F8F4341696004B002A0820 /* NominatimViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatimViewController.m */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3E49F4B224DFA64800A347BB /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E49F4B124DFA64800A347BB /* RulerView.m */; };
 		3EED6DC224DF2920009D676D /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBB516713F2A00BB4414 /* RulerView.m */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* GeoURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */; };
@@ -379,6 +380,7 @@
 		02F8F4331696004B002A0820 /* NominatimViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NominatimViewController.m; sourceTree = "<group>"; };
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
+		3E49F4B124DFA64800A347BB /* RulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RulerView.m; path = ../Shared/RulerView.m; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* GeoURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -748,9 +750,10 @@
 				02ACBBB316713F2A00BB4414 /* QuadMap.m */,
 				022B09A619BD3F7B0041687B /* QuadMapC.mm */,
 				02ACBD2216717D6F00BB4414 /* RenderInfo.h */,
-				02ACBD2316717D7000BB4414 /* RenderInfo.m */,
 				02ACBBBB16713F2A00BB4414 /* RenderInfo.json */,
+				02ACBD2316717D7000BB4414 /* RenderInfo.m */,
 				02ACBBB416713F2A00BB4414 /* RulerView.h */,
+				3E49F4B124DFA64800A347BB /* RulerView.m */,
 				02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */,
 				02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */,
 				02C4255116796B5800761C54 /* SpeechBalloonView.h */,
@@ -1111,6 +1114,7 @@
 				02354F782462526A00878A04 /* PersistentWebCache.m in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
+				3E49F4B224DFA64800A347BB /* RulerView.m in Sources */,
 				021C6AA81686145C00FB17B0 /* UndoManager.m in Sources */,
 				02E8436519B39FAD0044AC1D /* OsmNotesDatabase.m in Sources */,
 				023D1723168A36B10011FABC /* POIAttributesViewController.m in Sources */,
@@ -1350,7 +1354,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1940;
+				CURRENT_PROJECT_VERSION = 1950;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1358,7 +1362,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.9.4;
+				MARKETING_VERSION = 1.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
@@ -1380,7 +1384,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1940;
+				CURRENT_PROJECT_VERSION = 1950;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1388,7 +1392,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.9.4;
+				MARKETING_VERSION = 1.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
