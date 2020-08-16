@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "60.png",
+      "filename" : "bing-logo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "120.png",
+      "filename" : "bing-logo@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "1024.png",
+      "filename" : "bing-logo@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
