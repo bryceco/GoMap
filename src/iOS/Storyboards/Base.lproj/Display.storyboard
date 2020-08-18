@@ -509,6 +509,41 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             <outlet property="titleLabel" destination="eFa-yZ-YZl" id="lkZ-Za-Aee"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClearCacheCell" id="V3W-W2-ea4" customClass="ClearCacheCell">
+                                        <rect key="frame" x="0.0" y="455" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="V3W-W2-ea4" id="3NO-xo-WvB">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6CG-6W-hvB">
+                                                    <rect key="frame" x="16" y="3" width="87" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZSU-Hu-gD7">
+                                                    <rect key="frame" x="16" y="24.5" width="47" height="17.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="6CG-6W-hvB" firstAttribute="top" secondItem="3NO-xo-WvB" secondAttribute="top" constant="3" id="8BY-XE-bfk"/>
+                                                <constraint firstAttribute="bottom" secondItem="ZSU-Hu-gD7" secondAttribute="bottom" constant="2" id="CcR-FI-FV0"/>
+                                                <constraint firstItem="6CG-6W-hvB" firstAttribute="leading" secondItem="3NO-xo-WvB" secondAttribute="leading" constant="16" id="I7X-mb-PyO"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6CG-6W-hvB" secondAttribute="trailing" constant="15" id="Ww0-4i-H3o"/>
+                                                <constraint firstItem="ZSU-Hu-gD7" firstAttribute="leading" secondItem="3NO-xo-WvB" secondAttribute="leading" constant="16" id="fYa-0x-Qfa"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZSU-Hu-gD7" secondAttribute="trailing" constant="15" id="lwj-m2-gg1"/>
+                                                <constraint firstItem="ZSU-Hu-gD7" firstAttribute="top" secondItem="6CG-6W-hvB" secondAttribute="bottom" constant="1" id="q8O-d7-OLI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="detailLabel" destination="ZSU-Hu-gD7" id="jUX-y8-T4H"/>
+                                            <outlet property="titleLabel" destination="6CG-6W-hvB" id="4TK-4a-OfN"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

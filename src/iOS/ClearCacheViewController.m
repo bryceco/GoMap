@@ -32,7 +32,8 @@ enum {
 	ROW_AERIAL		= 2,
 	ROW_BREADCRUMB	= 3,
 	ROW_LOCATOR		= 4,
-	ROW_GPS			= 5
+	ROW_GPS			= 5,
+    ROW_ALL         = 6
 };
 
 
@@ -77,6 +78,7 @@ enum {
 		case ROW_AERIAL:		title = NSLocalizedString(@"Clear Aerial Tiles",nil);			object = mapView.aerialLayer;	break;
 		case ROW_LOCATOR:		title = NSLocalizedString(@"Clear Locator Overlay Tiles",nil);	object = mapView.locatorLayer;	break;
 		case ROW_GPS: 			title = NSLocalizedString(@"Clear GPS Overlay Tiles",nil);		object = mapView.gpsTraceLayer;	break;
+        case ROW_ALL:             title = NSLocalizedString(@"Clear All Data, Tiles & Tracks",nil); object = nil;    break;
 	}
 	cell.titleLabel.text = title;
 	cell.detailLabel.text = @"";
@@ -84,7 +86,9 @@ enum {
 	if ( indexPath.row == ROW_OSM_DATA ) {
 		NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
 		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
-	} else {
+	}  else if ( indexPath.row == ROW_ALL ) {
+           cell.detailLabel.text = @"Clear all objects and files as listed above";
+    }  else {
 		cell.detailLabel.text = NSLocalizedString(@"computing size...",nil);
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
 			NSInteger size, count;
@@ -138,6 +142,29 @@ enum {
 		case ROW_GPS:	// GPS Overlay
 			[appDelegate.mapView.gpsTraceLayer purgeTileCache];
 			break;
+        case ROW_ALL:    // All
+            if ( [appDelegate.mapView.editorLayer.mapData changesetAsXml] ) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Warning",nil)
+                                                                                message:NSLocalizedString(@"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.",nil)
+                                                                         preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }]];
+                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Purge",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }]];
+                [self presentViewController:alert animated:YES completion:nil];
+                return;
+            }
+            [appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
+            [appDelegate.mapView removePin];
+            [appDelegate.mapView.mapnikLayer purgeTileCache];
+            [appDelegate.mapView.gpxLayer purgeTileCache];
+            [appDelegate.mapView.aerialLayer purgeTileCache];
+            [appDelegate.mapView.locatorLayer purgeTileCache];
+            [appDelegate.mapView.gpsTraceLayer purgeTileCache];
+            break;
 	}
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
