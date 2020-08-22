@@ -57,9 +57,9 @@ static const CGFloat Z_GPX				= -15;
 static const CGFloat Z_ROTATEGRAPHIC	= -3;
 //static const CGFloat Z_BING_LOGO		= 2;
 static const CGFloat Z_BLINK			= 4;
-static const CGFloat Z_BALL				= 5;
+static const CGFloat Z_CROSSHAIRS		= 5;
+static const CGFloat Z_BALL				= 6;
 static const CGFloat Z_TOOLBAR			= 90;
-static const CGFloat Z_CROSSHAIRS		= 100;
 static const CGFloat Z_PUSHPIN			= 105;
 static const CGFloat Z_FLASH			= 110;
 
@@ -183,7 +183,7 @@ const CGFloat kEditControlCornerRadius = 4;
 			// implement crosshairs
 			_crossHairs = [CAShapeLayer new];
 			UIBezierPath * path = [UIBezierPath bezierPath];
-			CGFloat radius = 10;
+			CGFloat radius = 12;
 			[path moveToPoint:CGPointMake(-radius, 0)];
 			[path addLineToPoint:CGPointMake(radius, 0)];
 			[path moveToPoint:CGPointMake(0, -radius)];
