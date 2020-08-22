@@ -403,7 +403,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
 		self.screenFromMapTransform = OSMTransformMakeTranslation( rc.origin.x+rc.size.width/2 - 128, rc.origin.y+rc.size.height/2 - 128);
 		// turn on GPS which will move us to current location
-		self.gpsState = GPS_STATE_LOCATION;
+		[self.mainViewController setGpsState:GPS_STATE_LOCATION];
 	}
 
 	// get notes

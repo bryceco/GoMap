@@ -119,6 +119,10 @@
 			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 			[button setImage:image forState:UIControlStateNormal];
 			button.tintColor = UIColor.systemBlueColor;
+			if ( button == _mapView.addNodeButton )
+				button.imageEdgeInsets = UIEdgeInsetsMake(15, 15, 15, 15);	// resize images on button to be smaller
+			else
+				button.imageEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);	// resize images on button to be smaller
 		}
 		// background selection color
 		if ( button != _undoRedoView ) {
@@ -260,7 +264,7 @@
 		self.mapView.gpsState = state;
 
 		// update GPS icon
-		NSString * imageName = (self.mapView.gpsState == GPS_STATE_NONE) ? @"location" : @"location.fill";
+		NSString * imageName = (self.mapView.gpsState == GPS_STATE_NONE) ? @"location2" : @"location.fill";
 		UIImage * image = [UIImage imageNamed:imageName];
 		image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 		[self.locationButton setImage:image forState:UIControlStateNormal];
@@ -274,19 +278,10 @@
 			[self setGpsState:GPS_STATE_LOCATION];
 			[self.mapView rotateToNorth];
 			break;
-#if 1
 		case GPS_STATE_LOCATION:
 		case GPS_STATE_HEADING:
 			[self setGpsState:GPS_STATE_NONE];
 			break;
-#else
-		case GPS_STATE_LOCATION:
-			[self setGpsState:GPS_STATE_HEADING];
-			break;
-		case GPS_STATE_HEADING:
-			[self setGpsState:GPS_STATE_NONE];
-			break;
-#endif
 	}
 }
 
