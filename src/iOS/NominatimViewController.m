@@ -144,7 +144,7 @@
 		[_activityIndicator startAnimating];
 
 		NSString * text = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-		NSString * url = [NSString stringWithFormat:@"https://nominatim.openstreetmap.org/search?q=%@&format=json",text];
+		NSString * url = [NSString stringWithFormat:@"https://nominatim.openstreetmap.org/search?q=%@&format=json&limit=50",text];
 		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				
