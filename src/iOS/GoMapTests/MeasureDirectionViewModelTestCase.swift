@@ -191,6 +191,9 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
         viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         viewModel.delegate = delegateMock
         
+        let heading = CLHeadingMock(trueHeading: 123.456)
+        headingProviderMock.delegate?.headingProviderDidUpdateHeading(heading)
+        
         viewModel.didTapPrimaryActionButton()
         
         XCTAssertEqual(delegateMock.key, key)
