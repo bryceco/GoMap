@@ -1,5 +1,5 @@
 //
-//  CommonTagKeyTestCase.swift
+//  PresetKeyTagCase.swift
 //  GoMapTests
 //
 //  Created by Wolfgang Timme on 4/13/19.
@@ -10,7 +10,7 @@ import XCTest
 
 @testable import Go_Map__
 
-class CommonTagKeyTestCase: XCTestCase {
+class PresetKeyTagCase: XCTestCase {
     
     func testInitWithPresetsShouldPreferThePlaceholderParameterIfProvided() {
         let placeholder = "Lorem ipsum"
