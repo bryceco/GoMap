@@ -11,12 +11,12 @@ import XCTest
 
 class LocationURLParserTestCase: XCTestCase {
     
-    var parser: GeoURLParser!
+    var parser: LocationURLParser!
 
     override func setUp() {
         super.setUp()
         
-        parser = GeoURLParser()
+        parser = LocationURLParser()
     }
 
     override func tearDown() {
