@@ -19,7 +19,7 @@ class PresetKeyTagCase: XCTestCase {
         let secondPreset = PresetValue(name: "Nein", details: "", tagValue: "no").require()
         
         let tagKey = PresetKey(name: "Rückenlehne",
-                                  tagKey: "backreset",
+                                  featureKey: "backreset",
                                   defaultValue: nil,
                                   placeholder: placeholder,
                                   keyboard: .default,
@@ -37,7 +37,7 @@ class PresetKeyTagCase: XCTestCase {
         let secondPreset = PresetValue(name: secondPresentName, details: "", tagValue: "no").require()
         
         let tagKey = PresetKey(name: "Rückenlehne",
-                                  tagKey: "backreset",
+                                  featureKey: "backreset",
                                   defaultValue: nil,
                                   placeholder: nil,
                                   keyboard: .default,
