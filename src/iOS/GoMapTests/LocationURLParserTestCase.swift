@@ -1,5 +1,5 @@
 //
-//  GeoURLParserTestCase.swift
+//  LocationURLParserTestCase.swift
 //  GoMapTests
 //
 //  Created by Wolfgang Timme on 2/2/20.
@@ -9,13 +9,13 @@
 @testable import Go_Map__
 import XCTest
 
-class GeoURLParserTestCase: XCTestCase {
-    var parser: GeoURLParser!
+class LocationURLParserTestCase: XCTestCase {
+    var parser: LocationURLParser!
 
     override func setUp() {
         super.setUp()
 
-        parser = GeoURLParser()
+        parser = LocationURLParser()
     }
 
     override func tearDown() {
