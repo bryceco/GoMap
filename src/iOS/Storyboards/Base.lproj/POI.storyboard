@@ -169,7 +169,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHA-2B-6DC">
-                                            <rect key="frame" x="142.5" y="10" width="129" height="24"/>
+                                            <rect key="frame" x="0.0" y="10" width="414" height="24"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <state key="normal" title="Customize Presets">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -181,8 +181,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="pHA-2B-6DC" firstAttribute="top" secondItem="IcA-4t-XoH" secondAttribute="top" constant="10" id="5R8-cz-CeX"/>
+                                        <constraint firstItem="pHA-2B-6DC" firstAttribute="leading" secondItem="IcA-4t-XoH" secondAttribute="leading" id="7JZ-xg-Zrv"/>
                                         <constraint firstAttribute="bottom" secondItem="pHA-2B-6DC" secondAttribute="bottom" constant="10" id="JHN-9J-IAc"/>
-                                        <constraint firstAttribute="centerX" secondItem="pHA-2B-6DC" secondAttribute="centerX" id="ZBx-xE-UMq"/>
+                                        <constraint firstAttribute="trailing" secondItem="pHA-2B-6DC" secondAttribute="trailing" id="W8e-EA-9To"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
