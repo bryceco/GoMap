@@ -112,6 +112,12 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
 		NSLocale * locale = [NSLocale currentLocale];
 		NSString * countryName = [locale displayNameForKey:NSLocaleCountryCode value:countryCode];
+        
+        if (countryCode.length == 0 || countryName.length == 0) {
+            // There's nothing to display.
+            return nil;
+        }
+        
 		return [NSString stringWithFormat:NSLocalizedString(@"Results for %@ (%@)",nil),countryName,countryCode.uppercaseString];
 	}
 	return nil;
