@@ -46,6 +46,14 @@ platform :ios do
     pull_request_checks
 
     create_private_keychain
+
+    # Bump the build number and the version.
+    increment_build_number
+    increment_version_number(bump_type: 'patch')
+    commit_version_bump(
+      xcodeproj: './Go Map!!.xcodeproj',
+      message: 'Bump build number and version'
+    )
   end
 
 end
