@@ -38,4 +38,14 @@ platform :ios do
     )
   end
 
+  desc "Builds and uploads a new TestFlight Beta release."
+  lane :beta do
+    UI.message("Preparing new TestFlight release...")
+
+    # Make sure that all tests run successfully.
+    pull_request_checks
+
+    create_private_keychain
+  end
+
 end
