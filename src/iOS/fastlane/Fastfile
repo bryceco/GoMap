@@ -75,6 +75,17 @@ platform :ios do
       xcodeproj: './Go Map!!.xcodeproj',
       message: 'Bump build number and version'
     )
+
+    build_app(
+      project: "Go Map!!.xcodeproj",
+      scheme: "Go Map!!"
+    )
+
+    add_git_tag(tag: get_version_number())
+
+    push_to_git_remote
+
+    upload_to_testflight
   end
 
 end
