@@ -1,9 +1,26 @@
 # Disable metrics
 opt_out_usage
 
+# Configuration
+private_keychain_name = "fastlane_keychain"
+private_keychain_password = "does-not-matter"
+
 default_platform(:ios)
 
 platform :ios do
+
+  desc "Creates a private Keychain. This is needed so that the Beta can be created by a GitHub Action."
+  private_lane :create_private_keychain do
+    # See: https://medium.com/well-red/github-actions-fastlane-ios-1f6d43cce726
+    create_keychain(
+      name: private_keychain_name,
+      password: private_keychain_password,
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: false
+    )
+  end
 
   desc "Performs basic integration checks to be run before merging"
   lane :pull_request_checks do
