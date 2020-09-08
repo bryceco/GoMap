@@ -27,12 +27,12 @@
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
-        <target/>
+        <target>Подключиться к внешнему Bluetooth GPS устройству</target>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects</source>
-        <target/>
+        <target>Камера используется для измерения высоты зданий или объектов.</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -42,17 +42,17 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target/>
+        <target>Постоянное отслеживание местоположения позволяет приложению записывать файлы GPX, когда они неактивны.</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target/>
+        <target>Ваше местоположение будет отображаться и отслеживаться на карте.</target>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target/>
+        <target>Ваше местоположение будет отображаться и отслеживаться на карте.</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
     </body>
@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
-        <target/>
+        <target>%1$ld метров, %2$ld точек</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
@@ -141,7 +141,7 @@
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target/>
+        <target>Необходимо %lu тайлов</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -181,12 +181,12 @@
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target/>
+        <target>Трек GPX записывает ваш путь, пока вы путешествуете по дороге или тропе.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
-        <target/>
+        <target>Отношение, к которому принадлежит узел, не загружено полностью</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -206,7 +206,7 @@
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target/>
+        <target>Добавить путь в мультиполигон?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
@@ -226,12 +226,12 @@
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
-        <target/>
+        <target>Все варианты</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
         <source>An unknown error occurred fetching metadata</source>
-        <target/>
+        <target>Неизвестная ошибка при получении метаданных</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
@@ -246,7 +246,7 @@
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
-        <target/>
+        <target>Неподходящий логин</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -261,12 +261,12 @@
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target/>
+        <target>В мультиполигон возможно добавлять только пути</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
-        <target/>
+        <target>Нельзя удалять узел, являющийся частью отношения</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
