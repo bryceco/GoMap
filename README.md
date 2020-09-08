@@ -19,6 +19,12 @@ Do you want to help testing pre-releases of Go Map!!?
 * png/poi/Maki/iD SVG POI - Icons used for map elements (POIs, etc)
 * presets - The presets database copied from the iD editor
 
+## Formatting
+
+In order to have a consistent code style, please make sure to install
+[SwiftFormat][6] and run it on a regular basis. Consider setting up a `pre-commit`
+Git hook, as described [here][7].
+
 ## Assets
 
 The Go Map!! app icon was created by [@Binnette][5].
@@ -28,7 +34,10 @@ The Go Map!! app icon was created by [@Binnette][5].
 [3]: https://itunes.apple.com/app/id592990211
 [4]: https://testflight.apple.com/join/T96F9wYq
 [5]: https://github.com/Binnette
+[6]: https://github.com/nicklockwood/SwiftFormat
+[7]: https://github.com/nicklockwood/SwiftFormat#git-pre-commit-hook
 
 ## Presets and translation
 
 Go Map!! is using iD presets, so you can improve translations [by improving translations of iD presets](https://github.com/openstreetmap/iD/blob/develop/CONTRIBUTING.md#translating).
+

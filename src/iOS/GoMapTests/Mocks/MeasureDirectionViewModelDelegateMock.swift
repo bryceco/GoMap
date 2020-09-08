@@ -18,7 +18,7 @@ class MeasureDirectionViewModelDelegateMock: NSObject {
 extension MeasureDirectionViewModelDelegateMock: MeasureDirectionViewModelDelegate {
     func didFinishUpdatingTag(key: String, value: String?) {
         didFinishUpdatingTagCalled = true
-        
+
         self.key = key
         self.value = value
     }

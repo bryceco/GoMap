@@ -10,17 +10,17 @@ import CoreLocation
 
 class CLHeadingMock: CLHeading {
     var mockedTrueHeading: CLLocationDirection
-    
+
     init(trueHeading: CLLocationDirection = 0.0) {
         mockedTrueHeading = trueHeading
-        
+
         super.init()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var trueHeading: CLLocationDirection {
         return mockedTrueHeading
     }
