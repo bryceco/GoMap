@@ -77,7 +77,7 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 
 // extra stuff
 @property (readonly,nonatomic)    OSMRect				boundingBox;
-@property (strong,nonatomic)    NSArray            *   	shapeLayers;
+@property (strong,nonatomic)    NSArray<CALayer<LayerPropertiesProviding> *>            *   	shapeLayers;
 @property (readonly,nonatomic)    ONEWAY               	isOneWay;
 @property (assign,nonatomic)    TRISTATE            	isShown;
 
