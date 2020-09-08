@@ -25,16 +25,19 @@ NS_ASSUME_NONNULL_BEGIN
 }
 @end
 
-@interface CALayerWithProperties : CALayer
+@protocol LayerPropertiesProviding
+
 @property (readonly) LayerProperties * properties;
+
 @end
 
-@interface CAShapeLayerWithProperties : CAShapeLayer
-@property (readonly) LayerProperties * properties;
+@interface CALayerWithProperties : CALayer <LayerPropertiesProviding>
 @end
 
-@interface CATextLayerWithProperties : CATextLayer
-@property (readonly) LayerProperties * properties;
+@interface CAShapeLayerWithProperties : CAShapeLayer <LayerPropertiesProviding>
+@end
+
+@interface CATextLayerWithProperties : CATextLayer <LayerPropertiesProviding>
 @end
 
 NS_ASSUME_NONNULL_END
