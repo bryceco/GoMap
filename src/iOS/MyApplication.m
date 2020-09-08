@@ -15,9 +15,6 @@
 	if ( self ) {
 		_touches 	= [NSMutableDictionary new];
 		_touchImage	= [UIImage imageNamed:@"Finger"];
-#if 0
-		self.showTouchCircles = YES;
-#endif
 	}
 	return self;
 }
@@ -46,28 +43,13 @@ static const CGFloat TOUCH_RADIUS = 22;
 
 	for ( UITouch * touch in event.allTouches ) {
 
-		CGPoint pos2 = [touch locationInView:nil];
-		// if we double-tap then then second tap will be captured by our own window
-		pos2 = [touch.window convertPoint:pos2 toWindow:nil];
+		CGPoint pos = [touch locationInView:nil];
+		// if we double-tap then the second tap will be captured by our own window
+		pos = [touch.window convertPoint:pos toWindow:nil];
 
-		CGPoint pos = pos2;
-		CGRect bounds = [[UIScreen mainScreen] bounds];
-
-		switch ( [[UIDevice currentDevice] orientation] ) {
-			case UIDeviceOrientationPortraitUpsideDown:
-				pos.x = bounds.size.width  - pos2.x - 1;
-				pos.y = bounds.size.height - pos2.y - 1;
-				break;
-			case UIDeviceOrientationLandscapeLeft:
-				pos.x = bounds.size.height - pos2.y - 1;
-				pos.y = pos2.x;
-				break;
-			case UIDeviceOrientationLandscapeRight:
-				pos.x = pos2.y;
-				pos.y = bounds.size.width - pos2.x - 1;
-				break;
-			default:
-				break;
+		if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+			// Translate coordinates in case screen is rotated. On iPad the tranform is done for us.
+			pos = [UIScreen.mainScreen.coordinateSpace convertPoint:pos toCoordinateSpace:UIScreen.mainScreen.fixedCoordinateSpace];
 		}
 
 		if ( touch.phase == UITouchPhaseBegan ) {

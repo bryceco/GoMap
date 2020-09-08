@@ -20,7 +20,7 @@
 {
     [super viewDidLoad];
 	
-	EditorMapLayer * editor = AppDelegate.getAppDelegate.mapView.editorLayer;
+	EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 	
 	self.levelsText.text		= editor.showLevelRange;
 	self.switchLevel.on			= editor.showLevel;
@@ -42,7 +42,7 @@
 {
 	[super viewWillDisappear:animated];
 
-	EditorMapLayer * editor = AppDelegate.getAppDelegate.mapView.editorLayer;
+	EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 	
 	editor.showLevelRange		= self.levelsText.text;
 	editor.showLevel			= self.switchLevel.on;

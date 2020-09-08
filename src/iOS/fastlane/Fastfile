@@ -1,0 +1,24 @@
+# Disable metrics
+opt_out_usage
+
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Performs basic integration checks to be run before merging"
+  lane :pull_request_checks do
+    run_tests(
+      project: "Go Map!!.xcodeproj",
+      scheme: "GoMapTests"
+    )
+  end
+
+  desc "Re-generates the app icon from the base app_icon.png in the fastlane metadata directory"
+  lane :regenerate_app_icon do
+    appicon(
+      appicon_devices: [:ipad, :iphone, :ios_marketing],
+      appicon_path: "../Images.xcassets"
+    )
+  end
+
+end

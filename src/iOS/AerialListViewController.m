@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	_aerials = appDelegate.mapView.customAerials;
 
 	OSMRect viewport = [appDelegate.mapView screenLongitudeLatitude];
@@ -43,7 +43,7 @@
 	[super viewWillDisappear:animated];
 
 	if ( [self isMovingFromParentViewController] ) {
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 		MapView * mapView = appDelegate.mapView;
 		[mapView setAerialTileService:_aerials.currentAerial];
 	}
@@ -70,9 +70,22 @@
 		return NSLocalizedString(@"Standard imagery",nil);
 	if ( section == SECTION_USER )
 		return NSLocalizedString(@"User-defined imagery",nil);
-	if ( section == SECTION_EXTERNAL )
-		return NSLocalizedString(@"Additional imagery sources",nil);
+	if ( section == SECTION_EXTERNAL ) {
+		return NSLocalizedString(@"Additional imagery",nil);
+	}
 	return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	if ( section == SECTION_EXTERNAL ) {
+		NSDateFormatter * dateFormatter = [NSDateFormatter new];
+		dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+		dateFormatter.timeStyle = NSDateFormatterNoStyle;
+		NSString * date = [dateFormatter stringFromDate:_aerials.lastDownloadDate];
+		return [NSString stringWithFormat:NSLocalizedString(@"Last updated %@",nil),date];
+	}
+	return nil;;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -102,13 +115,25 @@
 	if ( aerial == _aerials.currentAerial ) {
 		title = [@"\u2714 " stringByAppendingString:title];	// add checkmark
 	}
-	NSString * detail = aerial.url;
-	if ( [detail hasPrefix:@"https://"] )
-		detail = [detail substringFromIndex:8];
-	else if ( [detail hasPrefix:@"http://"] )
-		detail = [detail substringFromIndex:7];
+
+	// get details
+	NSString * urlDetail = aerial.isMaxar ? nil : aerial.url;
+	if ( [urlDetail hasPrefix:@"https://"] )
+		urlDetail = [urlDetail substringFromIndex:8];
+	else if ( [urlDetail hasPrefix:@"http://"] )
+		urlDetail = [urlDetail substringFromIndex:7];
+
+	NSString * dateDetail = nil;
+	if ( aerial.startDate && aerial.endDate && ![aerial.startDate isEqualToString:aerial.endDate] )
+		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@ - %@",nil), aerial.startDate, aerial.endDate];
+	else if ( aerial.startDate || aerial.endDate ) {
+		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@",nil), aerial.startDate ?: aerial.endDate];
+	}
+	NSString * details = dateDetail ?: urlDetail;
+
 	cell.textLabel.text = title;
-	cell.detailTextLabel.text = detail;
+	cell.detailTextLabel.text = details;
+
 	return cell;
 }
 
@@ -158,7 +183,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	MapView * mapView = appDelegate.mapView;
 
 	NSArray * list = [self aerialListForSection:indexPath.section];
@@ -171,7 +196,7 @@
 
 	// if popping all the way up we need to tell Settings to save changes
 	[self.displayViewController applyChanges];
-	[self.navigationController popToRootViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -200,8 +225,9 @@
 				editRow = indexPath;
 			}
 			c.name = service.name;
-			c.url = service.url;
+			c.url = service.isMaxar ? nil : service.url;
 			c.zoom = @(service.maxZoom);
+			c.projection = service.wmsProjection;
 		}
 
 		c.completion = ^(AerialService * service) {
@@ -209,11 +235,13 @@
 				return;
 			if ( editRow.row == _aerials.userDefinedServices.count ) {
 				[_aerials addUserDefinedService:service atIndex:_aerials.userDefinedServices.count];
-			} else if ( editRow >= 0 ) {
+			} else {
 				[_aerials removeUserDefinedServiceAtIndex:editRow.row];
 				[_aerials addUserDefinedService:service atIndex:editRow.row];
 			}
 			[self.tableView reloadData];
+
+			[self tableView:self.tableView didSelectRowAtIndexPath:editRow];
 		};
 	}
 }

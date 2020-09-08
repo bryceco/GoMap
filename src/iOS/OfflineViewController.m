@@ -25,8 +25,8 @@
 	self.tableView.estimatedRowHeight = 100;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
-	_aerialCell.tileLayer = AppDelegate.getAppDelegate.mapView.aerialLayer;
-	_mapnikCell.tileLayer = AppDelegate.getAppDelegate.mapView.mapnikLayer;
+	_aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer;
+	_mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer;
 	for ( OfflineTableViewCell * cell in @[ _aerialCell, _mapnikCell ] ) {
 		cell.tileList			= [cell.tileLayer allTilesIntersectingVisibleRect];
 		cell.detailLabel.text 	= [NSString stringWithFormat:NSLocalizedString(@"%lu tiles needed",nil), (unsigned long)cell.tileList.count];

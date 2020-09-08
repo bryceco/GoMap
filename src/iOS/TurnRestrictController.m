@@ -14,7 +14,7 @@
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
-#import "OsmObjects.h"
+#import "OsmMember.h"
 
 
 @interface TurnRestrictController ()
@@ -40,14 +40,14 @@
     _highwayViewArray = [NSMutableArray new];
 	[self createMapWindow];
 
-	[[AppDelegate getAppDelegate].mapView.editorLayer.mapData beginUndoGrouping];
+	[AppDelegate.shared.mapView.editorLayer.mapData beginUndoGrouping];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
 
-	[[AppDelegate getAppDelegate].mapView.editorLayer.mapData endUndoGrouping];
+	[AppDelegate.shared.mapView.editorLayer.mapData endUndoGrouping];
 }
 
 // To dray Popup window
@@ -64,8 +64,8 @@
 	_viewWithTitle.layer.cornerRadius 	= 3;
 
 	// get highways that contain selection
-	OsmMapData * mapData = [AppDelegate getAppDelegate].mapView.editorLayer.mapData;
-	NSArray * parentWays = [mapData waysContainingNode:_centralNode];
+	OsmMapData * mapData = AppDelegate.shared.mapView.editorLayer.mapData;
+	NSArray<OsmWay *> * parentWays = [mapData waysContainingNode:_centralNode];
 	parentWays = [parentWays filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(OsmWay * way, NSDictionary *bindings) {
 		return way.tags[@"highway"] != nil;
 	}]];
@@ -83,7 +83,7 @@
 		fromWay = [relation memberByRole:@"from"].ref;
 	} else {
 		// no relations or multiple relations, so select highway already selected by user
-		EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;
+		EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 		fromWay = editor.selectedWay;
 	}
 	if ( fromWay ) {
@@ -199,7 +199,7 @@
 		highwayLayer.lineWidth   	= DEFAULT_POPUPLINEWIDTH;
 		highwayLayer.lineCap 		= kCALineCapRound;
 		highwayLayer.path 	  		= bezierPath.CGPath;
-		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.tagInfo.lineColor.CGColor ?: UIColor.blackColor.CGColor;
+		highwayLayer.strokeColor 	= node.turnRestrictionParentWay.renderInfo.lineColor.CGColor ?: UIColor.blackColor.CGColor;
 		highwayLayer.bounds 		= _detailView.bounds;
 		highwayLayer.position	 	= detailViewCenter;
 		highwayLayer.masksToBounds 	= NO;
@@ -258,7 +258,7 @@
 {
 	NSString * message = NSLocalizedString(@"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\n"
 						"Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.",nil);
-	UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Turn Restrictions" message:message preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Turn Restrictions",nil) message:message preferredStyle:UIAlertControllerStyleAlert];
 	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 	[self presentViewController:alert animated:YES completion:nil];
 }
@@ -269,11 +269,11 @@
 	NSString * toName = toHwy.wayObj.friendlyDescription;
 	switch ( toHwy.restriction ) {
 		case TURN_RESTRICT_NONE:
-			return [NSString stringWithFormat:@"Travel ALLOWED from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:NSLocalizedString(@"Travel ALLOWED from %@ to %@",nil), fromName, toName];
 		case TURN_RESTRICT_NO:
-			return [NSString stringWithFormat:@"Travel PROHIBITED from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:NSLocalizedString(@"Travel PROHIBITED from %@ to %@",nil), fromName, toName];
 		case TURN_RESTRICT_ONLY:
-			return [NSString stringWithFormat:@"Travel ONLY from %@ to %@", fromName, toName];
+			return [NSString stringWithFormat:NSLocalizedString(@"Travel ONLY from %@ to %@",nil), fromName, toName];
 	}
 	return nil;
 }
@@ -284,7 +284,7 @@
 {
 	_selectedFromHwy = selectedHwy;
 
-	EditorMapLayer * editor = [AppDelegate getAppDelegate].mapView.editorLayer;
+	EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 	editor.selectedWay = selectedHwy.wayObj;
 	
 	selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay;
@@ -299,7 +299,7 @@
 											 to:_selectedFromHwy.wayObj];
 	_uTurnButton.selected = (_currentUTurnRelation != nil);
 
-	self.detailText.text = [NSString stringWithFormat:@"Travel from %@",selectedHwy.wayObj.friendlyDescription];
+	self.detailText.text = [NSString stringWithFormat:NSLocalizedString(@"Travel from %@",nil),selectedHwy.wayObj.friendlyDescription];
 
 	// highway exits center one-way
 	BOOL selectedHwyIsOneWayExit = [selectedHwy isOneWayExitingCenter];
@@ -382,9 +382,9 @@
 	if (canDelete ) {
 		canDelete();
 	} else {
-		NSString * message = [NSString stringWithFormat:@"The restriction cannot be deleted: %@", error];
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Error deleting" message:message preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+		NSString * message = [NSString stringWithFormat:NSLocalizedString(@"The restriction cannot be deleted: %@",nil), error];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error deleting",nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[self presentViewController:alert animated:YES completion:nil];
 	}
 }
@@ -437,7 +437,7 @@
 // Enable/disable a left/right/straight turn restriction
 -(void)toggleTurnRestrictionUnsafe:(TurnRestrictHwyView *)targetHwy
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	switch (targetHwy.restriction) {
@@ -496,7 +496,7 @@
 // Use clicked the U-Turn button
 -(void)uTurnButtonClicked:(UIButton *)sender
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmMapData * mapData = appDelegate.mapView.editorLayer.mapData;
 
 	sender.selected = !sender.selected;
@@ -515,8 +515,8 @@
 		}
 	}
 
-	self.detailText.text = isRestricting ? [NSString stringWithFormat:@"U-Turn from %@ prohibited", _selectedFromHwy.wayObj.friendlyDescription]
-										 : [NSString stringWithFormat:@"U-Turn from %@ allowed", _selectedFromHwy.wayObj.friendlyDescription];
+	self.detailText.text = isRestricting ? [NSString stringWithFormat:NSLocalizedString(@"U-Turn from %@ prohibited",nil), _selectedFromHwy.wayObj.friendlyDescription]
+										 : [NSString stringWithFormat:NSLocalizedString(@"U-Turn from %@ allowed",nil), _selectedFromHwy.wayObj.friendlyDescription];
 
 	[appDelegate.mapView.editorLayer setNeedsLayout];
 }

@@ -10,8 +10,7 @@
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmMapData.h"
-#import "OsmObjects.h"
-#import "POICommonTagsViewController.h"
+#import "POIFeaturePresetsViewController.h"
 #import "POITabBarController.h"
 #import "POIAttributesViewController.h"
 
@@ -27,7 +26,7 @@
 {
 	[super viewWillAppear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmBaseObject * selection = appDelegate.mapView.editorLayer.selectedPrimary;
 	self.selection = selection;
 	self.keyValueDict = [NSMutableDictionary new];
@@ -42,7 +41,8 @@
 
 	NSInteger tabIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"POITabIndex"];
 	self.selectedIndex = tabIndex;
-    
+
+	// hide attributes tab on new objects
     [self updatePOIAttributesTabBarItemVisibilityWithSelectedObject:selection];
 }
 
@@ -51,8 +51,9 @@
 
  @param selectedObject The object that the user selected on the map.
  */
-- (void)updatePOIAttributesTabBarItemVisibilityWithSelectedObject:(nullable OsmBaseObject *)selectedObject {
-    BOOL isAddingNewItem = selectedObject.ident.integerValue <= 0;
+- (void)updatePOIAttributesTabBarItemVisibilityWithSelectedObject:(nullable OsmBaseObject *)selectedObject
+{
+    BOOL isAddingNewItem = selectedObject == nil;
     if (isAddingNewItem) {
         // Remove the `POIAttributesViewController`.
         NSMutableArray<UIViewController *> *viewControllersToKeep = [NSMutableArray array];
@@ -82,13 +83,13 @@
 
 - (void)commitChanges
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	[appDelegate.mapView setTagsForCurrentObject:self.keyValueDict];
 }
 
 - (BOOL)isTagDictChanged:(NSDictionary *)newDictionary
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	NSDictionary * tags = appDelegate.mapView.editorLayer.selectedPrimary.tags;
 	if ( tags.count == 0 )

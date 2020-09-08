@@ -13,12 +13,9 @@ typedef void (^	PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat
 @interface PushPinView : UIButton<CAAnimationDelegate>
 {
 	CGPoint					_panCoord;
-	UIGestureRecognizer	*	_panRecognizer;
 
-	CGMutablePathRef		_path;
 	CAShapeLayer		*	_shapeLayer;	// shape for balloon
 	CATextLayer			*	_textLayer;		// text in balloon
-	CALayer				*	_placeholderLayer;
 	CGRect					_hittestRect;
 
 	CALayer				*	_moveButton;
@@ -28,7 +25,7 @@ typedef void (^	PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat
 	NSMutableArray		*	_lineLayers;
 }
 
-@property (strong,nonatomic)	UIImage					*	placeholderImage;
+@property (readonly,nonatomic)	CALayer					*	placeholderLayer;
 @property (copy,nonatomic)		NSString				*	text;
 @property (assign,nonatomic)	CGPoint						arrowPoint;
 @property (strong,nonatomic)	PushPinViewDragCallback		dragCallback;

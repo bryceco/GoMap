@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "temaki-needle_and_spool.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

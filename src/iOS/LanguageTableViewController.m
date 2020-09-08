@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 #import "MapView.h"
-#import "CommonTagList.h"
 #import "LanguageTableViewController.h"
+#import "PresetsDatabase.h"
 
 
 
@@ -35,7 +35,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( section == 0 ) {
-		return @"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.";
+		return NSLocalizedString(@"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.",nil);
 	}
 	return nil;
 }
@@ -70,8 +70,8 @@
 
 	[self.tableView reloadData];
 
-	[CommonTagList initialize];	// reset tags
-	[[AppDelegate getAppDelegate].mapView refreshPushpinText];
+	[PresetsDatabase initialize];	// reset tags
+	[AppDelegate.shared.mapView refreshPushpinText];
 }
 
 @end

@@ -173,16 +173,26 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
     
     // MARK: didTapPrimaryActionButton
     
-    func testDidTapPrimaryActionButtonShouldInformDelegate() {
+    func testDidTapPrimaryActionButtonWhenOldValueIsNilShouldNotInformDelegate() {
+        /// Given
+        let viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock,
+                                                  key: "",
+                                                  value: nil)
+        
+        /// When
         viewModel.didTapPrimaryActionButton()
         
-        XCTAssertTrue(delegateMock.didFinishUpdatingTagCalled)
+        /// Then
+        XCTAssertFalse(delegateMock.didFinishUpdatingTagCalled)
     }
     
     func testDidTapPrimaryActionButtonShouldInformDelegateWithTheKeyFromTheInitialization() {
         let key = "foo"
         viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
         viewModel.delegate = delegateMock
+        
+        let heading = CLHeadingMock(trueHeading: 123.456)
+        headingProviderMock.delegate?.headingProviderDidUpdateHeading(heading)
         
         viewModel.didTapPrimaryActionButton()
         

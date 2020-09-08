@@ -24,7 +24,7 @@
 
 	[self.activityIndicator startAnimating];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OSMRect viewRect = [appDelegate.mapView screenLongitudeLatitude];
 	NSInteger zoomLevel = [appDelegate.mapView.aerialLayer zoomLevel];
 	AerialService * aerialService = appDelegate.mapView.aerialLayer.aerialService;

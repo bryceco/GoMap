@@ -1,0 +1,14 @@
+{
+	"applinks": {
+		"apps": [],
+		"details": [
+		    {
+			    "appID": "MKTTC6734C.com.bryceco.GoMap",
+		    	"paths": [
+		    		"/edit/*",
+		    		"NOT *"
+			    ]
+		    }
+		]
+	}
+}

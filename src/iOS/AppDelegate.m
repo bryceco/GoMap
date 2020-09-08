@@ -9,18 +9,17 @@
 
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
-#import "DownloadThreadPool.h"
 #import "EditorMapLayer.h"
+#import "LocationURLParser.h"
 #import "GpxLayer.h"
 #import "KeyChain.h"
 #import "OsmMapData.h"
 #import "MapView.h"
-#import "MapViewController.h"
-
+#import "MainViewController.h"
 
 @implementation AppDelegate
 
-+ (AppDelegate *)getAppDelegate
++ (AppDelegate *)shared
 {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
@@ -55,8 +54,6 @@
 
 	[self removePlaintextCredentialsFromUserDefaults];
 
-	[DownloadThreadPool setUserAgent:[NSString stringWithFormat:@"%@/%@", self.appName, self.appVersion]];
-
 	// self.externalGPS = [[ExternalGPS alloc] init];
 
 	NSURL * url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
@@ -68,6 +65,15 @@
 	return YES;
 }
 
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+{
+	if ( [userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb] ) {
+		NSURL * url = userActivity.webpageURL;
+		return [self application:application openURL:url options:@{}];
+	}
+	return NO;
+}
+
 /**
  Makes sure that the user defaults do not contain plaintext credentials from previous app versions.
  */
@@ -76,108 +82,19 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
 }
 
--(void)setMapLatitude:(double)lat longitude:(double)lon zoom:(double)zoom view:(MapViewState)view
+-(void)setMapLocation:(MapLocation *)location
 {
 	double delayInSeconds = 0.1;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		double metersPerDegree = MetersPerDegree( lat );
-		double minMeters = 50;
-		double widthDegrees = widthDegrees = minMeters / metersPerDegree;
-		if ( zoom != 0 ) {
-			widthDegrees = 360.0 / pow(2,zoom);
-		}
-		[self.mapView setTransformForLatitude:lat longitude:lon width:widthDegrees];
-		if ( view != MAPVIEW_NONE ) {
-			self.mapView.viewState = view;
-		}
+		[self.mapView setMapLocation:location];
 	});
 }
 
-
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
-	if ( [url.absoluteString hasPrefix:@"geo:"] ) {
-		// geo:47.75538,-122.15979?z=18
-		double lat = 0, lon = 0, zoom = 0;
-		NSScanner * scanner = [NSScanner scannerWithString:url.absoluteString];
-		[scanner scanString:@"geo:" intoString:NULL];
-		[scanner scanDouble:&lat];
-		[scanner scanString:@"," intoString:NULL];
-		[scanner scanDouble:&lon];
-		while ( [scanner scanString:@";" intoString:NULL] ) {
-			NSMutableCharacterSet * nonSemicolon = [[NSCharacterSet characterSetWithCharactersInString:@";"] mutableCopy];
-			[nonSemicolon invert];
-			[scanner scanCharactersFromSet:nonSemicolon intoString:NULL];
-		}
-		if ( [scanner scanString:@"?" intoString:NULL] && [scanner scanString:@"z=" intoString:NULL] ) {
-			[scanner scanDouble:&zoom];
-		}
-		[self setMapLatitude:lat longitude:lon zoom:zoom view:MAPVIEW_NONE];
-	}
-
-	// open to longitude/latitude
-	if ( [url.absoluteString hasPrefix:@"gomaposm://?"] ) {
-
-		NSArray * params = [url.query componentsSeparatedByString:@"&"];
-		BOOL hasCenter = NO, hasZoom = NO;
-		double lat = 0, lon = 0, zoom = 0;
-		MapViewState view = MAPVIEW_NONE;
-
-		for ( NSString * param in params ) {
-			NSScanner * scanner = [NSScanner scannerWithString:param];
-
-			if ( [scanner scanString:@"center=" intoString:NULL] ) {
-
-				// scan center
-				BOOL ok = YES;
-				if ( ![scanner scanDouble:&lat] )
-					ok = NO;
-				if ( ![scanner scanString:@"," intoString:NULL] )
-					ok = NO;
-				if ( ![scanner scanDouble:&lon] )
-					ok = NO;
-				hasCenter = ok;
-
-			} else if ( [scanner scanString:@"zoom=" intoString:NULL] ) {
-
-				// scan zoom
-				BOOL ok = YES;
-				if ( ![scanner scanDouble:&zoom] )
-					ok = NO;
-				hasZoom = ok;
-
-			} else if ( [scanner scanString:@"view=" intoString:NULL] ) {
-
-				// scan view
-				if ( [scanner scanString:@"aerial+editor" intoString:NULL] ) {
-					view = MAPVIEW_EDITORAERIAL;
-				} else if ( [scanner scanString:@"aerial" intoString:NULL] ) {
-					view = MAPVIEW_AERIAL;
-				} else if ( [scanner scanString:@"mapnik" intoString:NULL] ) {
-					view = MAPVIEW_MAPNIK;
-				} else if ( [scanner scanString:@"editor" intoString:NULL] ) {
-					view = MAPVIEW_EDITOR;
-				}
-
-			} else {
-				// unrecognized parameter
-			}
-		}
-		if ( hasCenter ) {
-			[self setMapLatitude:lat longitude:lon zoom:(hasZoom?zoom:0) view:view];
-		} else {
-			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
-			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
-		}
-	}
-
-	// GPX support
 	if ( url.isFileURL && [url.pathExtension isEqualToString:@"gpx"] ) {
-
-		// Process the URL
-
+		// Load GPX 
 		double delayInSeconds = 1.0;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -188,12 +105,27 @@
 																				message:NSLocalizedString(@"Sorry, an error occurred while loading the GPX file",nil)
 																		 preferredStyle:UIAlertControllerStyleAlert];
 				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self.mapView.viewController presentViewController:alert animated:YES completion:nil];
+				[self.mapView.mainViewController presentViewController:alert animated:YES completion:nil];
 			}
 		});
-
-		// Indicate that we have successfully opened the URL
 		return YES;
+	} else if ( url.absoluteString.length > 0 ) {
+		// geo: and gomaposm: support
+		LocationURLParser * urlParser = [LocationURLParser new];
+		MapLocation * parserResult = [urlParser parseURL:url];
+		if ( parserResult ) {
+			double delayInSeconds = 1.0;
+			dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+			dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+				[self setMapLocation:parserResult];
+			});
+			return YES;
+		} else {
+			UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL",nil) message:url.absoluteString preferredStyle:UIAlertControllerStyleAlert];
+			[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self.mapView.mainViewController presentViewController:alertView animated:YES completion:nil];
+			return NO;
+		}
 	}
 	return NO;
 }
@@ -254,6 +186,42 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
++ (void)askUserToAllowLocationAccess:(UIViewController *)parentVC
+{
+	NSString * appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+	NSString * title = [NSString stringWithFormat:NSLocalizedString(@"Turn On Location Services to Allow %@ to Determine Your Location",nil),appName];
+
+	[AppDelegate askUserToOpenSettingsWithAlertTitle:title message:nil parentVC:parentVC];
+}
+
++ (void)askUserToOpenSettingsWithAlertTitle:(NSString *)title message:(NSString *)message parentVC:(UIViewController *)parentVC
+{
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+																			 message:message
+																	  preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
+														 style:UIAlertActionStyleCancel
+													   handler:nil];
+	UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+														   style:UIAlertActionStyleDefault
+														 handler:^(UIAlertAction * _Nonnull action) {
+															 [AppDelegate openAppSettings];
+														 }];
+
+	[alertController addAction:openSettings];
+	[alertController addAction:okayAction];
+
+	[parentVC presentViewController:alertController animated:YES completion:nil];
+}
+
++ (void)openAppSettings
+{
+	NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+	if (openSettingsURL) {
+		[[UIApplication sharedApplication] openURL:openSettingsURL];
+	}
 }
 
 @end

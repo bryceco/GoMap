@@ -13,7 +13,6 @@
 #import "AerialListViewController.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
-#import "MapViewController.h"
 #import "MercatorTileLayer.h"
 #import "DisplayViewController.h"
 
@@ -34,13 +33,13 @@ static const NSInteger FILTER_SECTION = 3;
 -(IBAction)gpsSwitchChanged:(id)sender
 {
 	// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
-	MapView * mapView = AppDelegate.getAppDelegate.mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 	mapView.enableGpxLogging = _gpxLoggingSwitch.on;
 }
 
 -(IBAction)toggleObjectFilters:(UISwitch *)sender
 {
-	EditorMapLayer * editor = AppDelegate.getAppDelegate.mapView.editorLayer;
+	EditorMapLayer * editor = AppDelegate.shared.mapView.editorLayer;
 	editor.enableObjectFilters = sender.on;
 }
 
@@ -50,44 +49,54 @@ static const NSInteger FILTER_SECTION = 3;
 
 	MapView * mapView = [(AppDelegate *)[[UIApplication sharedApplication] delegate] mapView];
 
-	if ( [self isMovingToParentViewController] ) {
-		// becoming visible the first time
-		self.navigationController.navigationBarHidden = NO;
+	// becoming visible the first time
+	self.navigationController.navigationBarHidden = NO;
 
-		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:mapView.viewState inSection:BACKGROUND_SECTION];
-		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
-		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	_notesSwitch.on				= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
+	_gpsTraceSwitch.on			= !mapView.gpsTraceLayer.hidden;
 
-		[self setCustomAerialCellTitle];
+	_birdsEyeSwitch.on			= mapView.enableBirdsEye;
+	_rotationSwitch.on			= mapView.enableRotation;
+	_unnamedRoadSwitch.on		= mapView.enableUnnamedRoadHalo;
+	_gpxLoggingSwitch.on		= mapView.enableGpxLogging;
+	_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
+	_objectFiltersSwitch.on		= mapView.editorLayer.enableObjectFilters;
+}
 
-		_notesSwitch.on				= (mapView.viewOverlayMask & VIEW_OVERLAY_NOTES) != 0;
-		_gpsTraceSwitch.on			= !mapView.gpsTraceLayer.hidden;
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	// place a checkmark next to currently selected display
+	if ( indexPath.section == BACKGROUND_SECTION ) {
+		MapView * mapView = AppDelegate.shared.mapView;
+		if ( cell.tag == mapView.viewState ) {
+			cell.accessoryType = UITableViewCellAccessoryCheckmark;
+		} else {
+			cell.accessoryType = UITableViewCellAccessoryNone;
+		}
+	}
 
-		_birdsEyeSwitch.on			= mapView.enableBirdsEye;
-		_rotationSwitch.on			= mapView.enableRotation;
-		_unnamedRoadSwitch.on		= mapView.enableUnnamedRoadHalo;
-		_gpxLoggingSwitch.on		= mapView.enableGpxLogging;
-		_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
-		_objectFiltersSwitch.on		= mapView.editorLayer.enableObjectFilters;
-
-	} else {
-
-		// returning from child view
-		[self setCustomAerialCellTitle];
+	// set the name of the aerial provider
+	if ( indexPath.section == BACKGROUND_SECTION && indexPath.row == 2 ) {
+		if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
+			AppDelegate * appDelegate = AppDelegate.shared;
+			AerialList * aerials = appDelegate.mapView.customAerials;
+			CustomBackgroundCell * custom = (id)cell;
+			[custom.button setTitle:aerials.currentAerial.name forState:UIControlStateNormal];
+			[custom.button sizeToFit];
+		}
 	}
 }
 
-
 - (void)applyChanges
 {
-	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 
 	NSInteger maxRow = [self.tableView numberOfRowsInSection:BACKGROUND_SECTION];
 	for ( NSInteger row = 0; row < maxRow; ++row ) {
 		NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:BACKGROUND_SECTION];
 		UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
 		if ( cell.accessoryType == UITableViewCellAccessoryCheckmark ) {
-			mapView.viewState = (MapViewState)row;
+			mapView.viewState = (MapViewState) cell.tag;
 			[mapView setAerialTileService:mapView.customAerials.currentAerial];
 			break;
 		}
@@ -103,27 +112,19 @@ static const NSInteger FILTER_SECTION = 3;
 	mapView.enableUnnamedRoadHalo	= _unnamedRoadSwitch.on;
 	mapView.enableGpxLogging		= _gpxLoggingSwitch.on;
 	mapView.enableTurnRestriction	= _turnRestrictionSwitch.on;
+
+	[mapView.editorLayer setNeedsLayout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-
-	if ( [self isMovingFromParentViewController] ) {
-		[self applyChanges];
-	}
+	[self applyChanges];
 }
 
--(void)setCustomAerialCellTitle
+- (IBAction)onDone:(id)sender
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	AerialList * aerials = appDelegate.mapView.customAerials;
-	NSIndexPath * path = [NSIndexPath indexPathForRow:2 inSection:BACKGROUND_SECTION];
-	CustomBackgroundCell * cell = [self.tableView cellForRowAtIndexPath:path];
-	if ( [cell isKindOfClass:[CustomBackgroundCell class]] ) {
-		[cell.button setTitle:aerials.currentAerial.name forState:UIControlStateNormal];
-		[cell.button sizeToFit];
-	}
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,7 +149,7 @@ static const NSInteger FILTER_SECTION = 3;
 
 	// automatically dismiss settings when a new background is selected
 	if ( indexPath.section == BACKGROUND_SECTION ) {
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self onDone:nil];
 	}
 }
 

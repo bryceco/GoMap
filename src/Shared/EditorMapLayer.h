@@ -7,15 +7,15 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "VectorMath.h"
 #import "iosapi.h"
 #import "OsmMapData.h"
+#import "VectorMath.h"
 
+@class OsmBaseObject;
 @class Buildings3DView;
 @class OsmMapData;
-@class OsmRenderInfo;
 @class MapView;
-@class OsmBaseObject;
+@class OsmRenderInfo;
 @class OsmNode;
 @class OsmWay;
 @class OsmRelation;
@@ -31,19 +31,13 @@ extern const double MinIconSizeInPixels;
 
 @interface EditorMapLayer : CALayer<NSCoding>
 {
-	CGSize					_iconSize;
-	double					_highwayScale;
-
-	NSMutableSet		*	_nameDrawSet;
-
-	NSMutableArray		*	_shownObjects;
-	NSMutableSet		*	_fadingOutSet;
-
-	NSMutableArray		*	_highlightLayers;
-
-	BOOL					_isPerformingLayout;
-
-	CATransformLayer	*	_baseLayer;
+	CGSize									_iconSize;
+	double									_highwayScale;
+	NSMutableArray<OsmBaseObject *>		*	_shownObjects;
+	NSMutableSet<OsmBaseObject *>		*	_fadingOutSet;
+	NSMutableArray<CALayer *>			*	_highlightLayers;
+	BOOL									_isPerformingLayout;
+	CATransformLayer					*	_baseLayer;
 }
 
 @property (assign,nonatomic)	BOOL			enableObjectFilters;	// turn all filters on/on
@@ -71,12 +65,13 @@ extern const double MinIconSizeInPixels;
 @property (readonly,nonatomic)	OsmBaseObject		*	selectedPrimary;	// way or node, but not a node in a selected way
 @property (readonly,nonatomic)	OsmMapData			*	mapData;
 @property (assign,nonatomic)	BOOL					addNodeInProgress;
+@property (readonly)			BOOL					atVisibleObjectLimit;
 
 - (id)initWithMapView:(MapView *)mapView;
 - (void)didReceiveMemoryWarning;
 
-- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius testNodes:(BOOL)testNodes ignoreList:(NSArray *)ignoreList segment:(NSInteger *)segment;
-- (NSArray *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius ;
+- (OsmBaseObject *)osmHitTest:(CGPoint)point radius:(CGFloat)radius isDragConnect:(BOOL)isDragConnect ignoreList:(NSArray<OsmBaseObject *> *)ignoreList segment:(NSInteger *)segment;
+- (NSArray<OsmBaseObject *> *)osmHitTestMultiple:(CGPoint)point radius:(CGFloat)radius ;
 - (OsmNode *)osmHitTestNodeInSelectedWay:(CGPoint)point radius:(CGFloat)radius ;
 
 - (void)updateMapLocation;
@@ -88,7 +83,7 @@ extern const double MinIconSizeInPixels;
 -(OsmWay *)createWayWithNode:(OsmNode *)node;
 
 -(void)adjustNode:(OsmNode *)node byDistance:(CGPoint)delta;
--(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object;
+-(OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset;
 
 // these are similar to OsmMapData methods but also update selections and refresh the layout
 -(EditActionWithNode)canAddNodeToWay:(OsmWay *)way atIndex:(NSInteger)index error:(NSString **)error;
@@ -96,9 +91,9 @@ extern const double MinIconSizeInPixels;
 
 
 - (BOOL)copyTags:(OsmBaseObject *)object;
-- (void)mergeTags:(OsmBaseObject *)object;
+- (void)pasteTagsMerge:(OsmBaseObject *)object;
 - (BOOL)canPasteTags;
-- (void)replaceTags:(OsmBaseObject *)object;
+- (void)pasteTagsReplace:(OsmBaseObject *)object;
 
 
 - (void)save;

@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "fas-truck-monster.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

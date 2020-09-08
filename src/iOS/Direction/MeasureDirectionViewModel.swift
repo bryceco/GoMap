@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 @objc protocol MeasureDirectionViewModelDelegate: class {
-    func didFinishUpdatingTag(key: String, value: String?)
+    func didFinishUpdatingTag(key: String, value: String)
 }
 
 class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
@@ -77,11 +77,13 @@ class MeasureDirectionViewModel: NSObject, HeadingProviderDelegate {
     }
     
     func didTapPrimaryActionButton() {
-        let value: String?
+		let value: String
         if let heading = mostRecentHeading {
             value = "\(Int(heading.trueHeading))"
-        } else {
-            value = oldValue
+        } else if oldValue == nil {
+			return
+		} else {
+			value = oldValue!
         }
         
         delegate?.didFinishUpdatingTag(key: key, value: value)
