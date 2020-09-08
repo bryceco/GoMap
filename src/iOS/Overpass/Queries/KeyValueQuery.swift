@@ -21,7 +21,7 @@ struct KeyValueQuery {
 extension KeyValueQuery: BaseObjectMatching {
     
     func matches(_ object: OsmBaseObject) -> Bool {
-        guard let valueOfObject = object.tags?[key] as? String else {
+        guard let valueOfObject = object.tags?[key] else {
             return false
         }
         
