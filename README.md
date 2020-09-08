@@ -28,3 +28,7 @@ The Go Map!! app icon was created by [@Binnette][5].
 [3]: https://itunes.apple.com/app/id592990211
 [4]: https://testflight.apple.com/join/T96F9wYq
 [5]: https://github.com/Binnette
+
+## Presets and translation
+
+Go Map!! is using iD presets, so you can improve translations [by improving translations of iD presets](https://github.com/openstreetmap/iD/blob/develop/CONTRIBUTING.md#translating).
