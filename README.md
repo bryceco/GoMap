@@ -36,3 +36,8 @@ The Go Map!! app icon was created by [@Binnette][5].
 [5]: https://github.com/Binnette
 [6]: https://github.com/nicklockwood/SwiftFormat
 [7]: https://github.com/nicklockwood/SwiftFormat#git-pre-commit-hook
+
+## Presets and translation
+
+Go Map!! is using iD presets, so you can improve translations [by improving translations of iD presets](https://github.com/openstreetmap/iD/blob/develop/CONTRIBUTING.md#translating).
+
