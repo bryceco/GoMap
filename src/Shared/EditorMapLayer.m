@@ -1207,7 +1207,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	return wall;
 }
 
--(NSArray *)getShapeLayersForObject:(OsmBaseObject *)object
+-(NSArray<CALayer<LayerPropertiesProviding> *> *)getShapeLayersForObject:(OsmBaseObject *)object
 {
 	if ( object.shapeLayers )
 		return object.shapeLayers;
@@ -1524,9 +1524,9 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
  */
 - (NSArray<CALayer *> *)shapeLayersForNode:(OsmNode *)node
 {
-    NSMutableArray<CALayer *> *layers = [NSMutableArray array];
+    NSMutableArray<CALayer<LayerPropertiesProviding> *> *layers = [NSMutableArray array];
     
-    NSArray<CALayer *> *directionLayers = [self directionShapeLayersWithNode:node];
+    NSArray<CALayer<LayerPropertiesProviding> *> *directionLayers = [self directionShapeLayersWithNode:node];
     if (directionLayers) {
 		[layers addObjectsFromArray:directionLayers];
     }
@@ -1644,7 +1644,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 }
 
 
-- (CALayer *)directionShapeLayerForNode:(OsmNode *)node withDirection:(NSRange)direction
+- (CALayer<LayerPropertiesProviding> *)directionShapeLayerForNode:(OsmNode *)node withDirection:(NSRange)direction
 {
 	CGFloat heading = direction.location - 90.0;
 	if ( direction.length )
@@ -1707,7 +1707,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
  @param node The node to get the layer for.
  @return A `CALayer` instance for rendering the given node's direction.
  */
-- (NSArray<CALayer *> *)directionShapeLayersWithNode:(OsmNode *)node
+- (NSArray<CALayer<LayerPropertiesProviding> *> *)directionShapeLayersWithNode:(OsmNode *)node
 {
     NSRange direction = node.direction;
 	if (direction.location != NSNotFound) {
@@ -2391,9 +2391,9 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 
 	for ( OsmBaseObject * object in _shownObjects ) {
 
-		NSArray * layers = [self getShapeLayersForObject:object];
+		NSArray<CALayer<LayerPropertiesProviding> *> * layers = [self getShapeLayersForObject:object];
 
-		for ( CALayerWithProperties * layer in layers ) {
+		for ( CALayer<LayerPropertiesProviding> * layer in layers ) {
 
 			// configure the layer for presentation
 			BOOL isShapeLayer = [layer isKindOfClass:[CAShapeLayer class]];
