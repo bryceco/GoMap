@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
+        <target>Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -17,12 +17,12 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
+        <target>Go Map!!</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
-        <target/>
+        <target>GPS Exchange Format (GPX)</target>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
@@ -64,64 +64,66 @@
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
-        <target/>
+        <target>	Отношение </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
-        <target/>
+        <target>	Линия </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target/>
+        <target> (%d участники)
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target/>
+        <target> (%d точки)
+</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
-        <target/>
+        <target> (точка)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
-        <target/>
+        <target> (линия)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %d files" xml:space="preserve">
         <source>%1$.2f MB, %2$d files</source>
-        <target/>
+        <target>%1$.2f МБ, %2$d файлы</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
-        <target/>
+        <target>%@ (отношение)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ Attributes" xml:space="preserve">
         <source>%@ Attributes</source>
-        <target/>
+        <target>%@ Атрибуты</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
         <source>%@ changeset</source>
-        <target/>
+        <target>%@ пакет правок</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target/>
+        <target>%@ метры</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
-        <target/>
+        <target>%ld Дней</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
@@ -136,7 +138,7 @@
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
-        <target/>
+        <target>%ld объекты</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
@@ -146,7 +148,7 @@
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
-        <target/>
+        <target>(новый объект)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
@@ -156,27 +158,27 @@
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
-        <target/>
+        <target>(точка)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
-        <target/>
+        <target>(отношения %@)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
-        <target/>
+        <target>(линия)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
         <source>1 Day</source>
-        <target/>
+        <target>1 день</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
         <source>&lt;unknown&gt;</source>
-        <target/>
+        <target>&lt;неизвестно&gt;</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
@@ -191,7 +193,7 @@
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
-        <target/>
+        <target>Добавить заметку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
@@ -221,7 +223,7 @@
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
-        <target/>
+        <target>Все теги</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
@@ -236,12 +238,12 @@
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
-        <target/>
+        <target>Внимание</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
-        <target/>
+        <target>Фоновые изображения %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
@@ -251,7 +253,7 @@
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
-        <target/>
+        <target>Предупреждение о размере кэша</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
