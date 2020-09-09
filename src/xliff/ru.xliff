@@ -2443,7 +2443,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
         <source>role</source>
-        <target/>
+        <target>роль</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ";</note>
       </trans-unit>
       <trans-unit id="tPF-m9-RtO.text" xml:space="preserve">
