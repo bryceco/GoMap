@@ -2623,12 +2623,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Gxc-44-SzR.title" xml:space="preserve">
         <source>Advanced Settings</source>
-        <target/>
+        <target>Расширенные настройки</target>
         <note>Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR";</note>
       </trans-unit>
       <trans-unit id="HNj-kK-OCP.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
+        <target>Заголовок</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP";</note>
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
@@ -2638,7 +2638,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target/>
+        <target>Подзаголовок</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO";</note>
       </trans-unit>
       <trans-unit id="LaB-Et-hHT.text" xml:space="preserve">
