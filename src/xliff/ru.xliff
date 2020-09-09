@@ -258,7 +258,7 @@
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
-        <target/>
+        <target>Кэш очищен</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
@@ -318,7 +318,7 @@
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
-        <target/>
+        <target>Не удалось создать сообщение</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
@@ -1077,12 +1077,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted: %@" xml:space="preserve">
         <source>The restriction cannot be deleted: %@</source>
-        <target/>
+        <target>Ограничение не может быть удалено: %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
-        <target/>
+        <target>Выбранная линия должна быть видна целиком</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
@@ -1092,22 +1092,22 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
-        <target/>
+        <target>Поворот содержит неопознанный стиль ограничения манёвра. Данное действие уничтожит его.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
-        <target/>
+        <target>Линия принадлежит отношению, которое не загружено целиком</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation this not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation this not fully downloaded</source>
-        <target/>
+        <target>Линия принадлежит отношению, которе не загружено целиком</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
-        <target/>
+        <target>Линия недостаточно прямая</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
@@ -1117,7 +1117,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
-        <target/>
+        <target>Линии содержат несовместимые теги</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
@@ -1127,27 +1127,27 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target/>
+        <target>Это приложение пока не поддерживает ограничение манёвров без точки с ролью 'via'</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
-        <target/>
+        <target>Чтобы добавить ещё участника в отношение, выберите и удерживайте линию, которую требуется добавить</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %1$@ to %2$@</source>
-        <target/>
+        <target>Движение РАЗРЕШЕНО из %1$@ в %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %1$@ to %2$@</source>
-        <target/>
+        <target>Движение ТОЛЬКО из %1$@ в %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %1$@ to %2$@</source>
-        <target/>
+        <target>Движение ЗАПРЕЩЕНО из %1$@ в %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
@@ -1157,7 +1157,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
-        <target/>
+        <target>Включите сервисы геолокации, чтобы позволить %@ определить ваше местоположение</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
@@ -1169,7 +1169,9 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
-        <target/>
+        <target>Ограничения маневров позволяют определить, на какие дороги можно повернуть, подъезжая к перекрёстку с определенной стороны.
+
+Выберите сегмент, по которому вы подъезжаете к перекрёстку, затем нажмите на стрелку, чтобы разрешить/запретить движение в точку назначения.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
@@ -1209,22 +1211,22 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
-        <target/>
+        <target>Неподдерживаемый тип ограничения манёвра</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>
-        <target/>
+        <target>Обновить</target>
         <note>update an osm note</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
-        <target/>
+        <target>Обновление заметки...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
-        <target/>
+        <target>Загрузка завершена!</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
@@ -1234,12 +1236,12 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
-        <target/>
+        <target>Загрузите ваши правки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
-        <target/>
+        <target>Загрузка GPX...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
@@ -1249,7 +1251,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
         <source>User-defined imagery</source>
-        <target/>
+        <target>Пользовательские снимки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
@@ -1269,30 +1271,33 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Way tags" xml:space="preserve">
         <source>Way tags</source>
-        <target/>
+        <target>Теги линии</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
 
 To continue press Commit once again, otherwise press Cancel.</source>
-        <target/>
+        <target>Вы собираетесь внести изменения в действующую базу данных OpenStreetMap. Ваши правки будут доступны для просмотра абсолютно любому человеку из любой точки планеты.
+
+Чтобы продолжить нажмите Загрузить на сервер ещё раз, в противном случае нажмите Отмена.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can define your own custom presets here" xml:space="preserve">
         <source>You can define your own custom presets here</source>
-        <target/>
+        <target>Здесь вы можете создать свои личные пресеты</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
         <source>You can navigate to a relation member only if it is already downloaded.
 These members are marked with '&gt;'.</source>
-        <target/>
+        <target>Вы можете выполнять навигацию только по тем участникам отношения, которые были загружены.
+Эти участники обозначены '&gt;'.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
-        <target/>
+        <target>Вы сделали правки, которые ещё не были загружены на сервер. Очистка кэша приведёт к их потере.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must provide your OSM user name, not an email address." xml:space="preserve">
@@ -1302,26 +1307,30 @@ These members are marked with '&gt;'.</source>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
-        <target/>
+        <target>Вы должны сохранить или отменить правки текущего объекта перед тем, как редактировать связанное отношение</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target/>
+        <target>Вы загрузили %ld пакетов правок с этой версией Go Map!!
+
+Хотите оценить приложение?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
 
 You may want to clear the cache (under Display settings) to improve performance.</source>
-        <target/>
+        <target>Ваш кэш данных OSM становится слишком большим, что может привести к медленному запуску и закрытию приложения.
+
+Вы можете очистить кэш (в настройках отображения), чтобы улучшить быстродействие.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target/>
+        <target>Приблизьте, чтобы приступить к редактированию</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
@@ -1336,12 +1345,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
-        <target/>
+        <target>добавлено к отношению типа мультиполигон</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
-        <target/>
+        <target>вычисление размера...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
@@ -1381,7 +1390,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
         <source>delete object from relation</source>
-        <target/>
+        <target>удалить объект из отношения</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete relation" xml:space="preserve">
@@ -1411,12 +1420,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
-        <target/>
+        <target>метров</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
-        <target/>
+        <target>переместить</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
@@ -1441,12 +1450,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
-        <target/>
+        <target>присвоить теги</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
         <source>update relation members</source>
-        <target/>
+        <target>обновить участников отношения</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
@@ -1478,12 +1487,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target/>
+        <target>Треки GPX</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
@@ -1503,7 +1512,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
         <source>-1..3,7</source>
-        <target/>
+        <target>-1..3,7</target>
         <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
@@ -1513,22 +1522,22 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
       </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
         <source>Overlays</source>
-        <target/>
+        <target>Накладываемые слои</target>
         <note>Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
         <source>Mapnik only</source>
-        <target/>
+        <target>Только Mapnik</target>
         <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
-        <target/>
+        <target>Отображение</target>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
@@ -1538,32 +1547,32 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
         <source>12:00:00</source>
-        <target/>
+        <target>12:00:00</target>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
       <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
       </trans-unit>
       <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
       </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
         <source>QA Poole No Name Tiles</source>
-        <target/>
+        <target>Тайлы QA Poole No Name</target>
         <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target/>
+        <target>Настройки энергопотребления</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
@@ -1573,47 +1582,47 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Enable Filters</source>
-        <target/>
+        <target>Включить фильтры</target>
         <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target/>
+        <target>Редактор с аэрофотосъемкой</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
         <source>Aerial Provider</source>
-        <target/>
+        <target>Поставщик аэрофотоснимков</target>
         <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target/>
+        <target>GPX-треки, которые вы записываете или загружаете будут удалены автоматически после:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target/>
+        <target>Заметки и ключи fixme</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Отмена</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3";</note>
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
-        <target/>
+        <target>Категория землепользования</target>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
-        <target/>
+        <target>Взаимодействия</target>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
-        <target/>
+        <target>Служебные дороги</target>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -1622,57 +1631,61 @@ You may want to clear the cache (under Display settings) to improve performance.
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target/>
+        <target>Очистите кэш данных OSM, если состояние данных в приложении не синхронизировано с сервером OSM. Это может происходить, если кто-то еще вносит правки в те же объекты, которые редактируете вы, или если загрузка одного из ваших пакетов была неудачной, что мешает дальнейшей загрузке данных. 
+
+Внимание: Очистка кэша OSM приведёт к потере данных, которые ещё не были загружены на сервер.
+
+Очистите кэш тайлов Mapnik или кэш накладываемых слоёв, чтобы загрузить обновленные тайлы, на которых будут отображены внесённые вами изменения. Обработка ваших правок может занимать до 24 часов.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target/>
+        <target>Удалить &amp; Обновить</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
-        <target/>
+        <target>Другие</target>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Enable Rotation</source>
-        <target/>
+        <target>Включить возможность вращения</target>
         <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target/>
+        <target>Удалить треки после:</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target/>
+        <target>GPX-треки</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
-        <target/>
+        <target>Дороги без названия</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
+        <target>Тайлы аэрофотосъемки</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
-        <target/>
+        <target>Go Map!! автоматически удалит устаревшие данные, чтобы оптимизировать производительность.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
         <source>Cache Management</source>
-        <target/>
+        <target>Управление кэшем</target>
         <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
         <source>Show Objects</source>
-        <target/>
+        <target>Показать объекты</target>
         <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
       </trans-unit>
       <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
@@ -1687,58 +1700,59 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
         <source>Automatic</source>
-        <target/>
+        <target>Автоматический</target>
         <note>Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44";</note>
       </trans-unit>
       <trans-unit id="dci-gg-ddc.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Отмена</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc";</note>
       </trans-unit>
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target/>
+        <target>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
+ </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
+        <target>Тайлы аэрофотосъемки</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
-        <target/>
+        <target>Только редактор</target>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
+        <target>Тайлы аэрофотосъемки</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
         <source>Bing</source>
-        <target/>
+        <target>Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
+        <target>Тайлы аэрофотосъемки</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
       <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
+        <target>Тайлы аэрофотосъемки</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
       </trans-unit>
       <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <target/>
+        <target>Тайлы аэрофотосъемки</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
@@ -1758,7 +1772,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target/>
+        <target>GPS-треки OpenStreetMap</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
@@ -1769,82 +1783,83 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
-        <target/>
+        <target>Simon Poole Map Data © Участники OpenStreetMap
+</target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
         <source>Past/Future</source>
-        <target/>
+        <target>Прошлое/Будущее</target>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
       <trans-unit id="luT-Tw-T3x.text" xml:space="preserve">
         <source>Enable 3-D Effects</source>
-        <target/>
+        <target>Включить 3D-эффекты</target>
         <note>Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x";</note>
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
-        <target/>
+        <target>Подложка</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target/>
+        <target>Настроить GPX-треки</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
         <source>Buildings</source>
-        <target/>
+        <target>Здания</target>
         <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
       </trans-unit>
       <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH";</note>
       </trans-unit>
       <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
         <source>Boundaries</source>
-        <target/>
+        <target>Границы</target>
         <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target/>
+        <target>Ограничения манёвров</target>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
         <source>Filter Objects</source>
-        <target/>
+        <target>Фильтровать объекты</target>
         <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
         <source>URL</source>
-        <target/>
+        <target>URL</target>
         <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
         <source>Clear Cache</source>
-        <target/>
+        <target>Очистить кэш</target>
         <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
         <source>Water Features</source>
-        <target/>
+        <target>Водные объекты</target>
         <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
       </trans-unit>
       <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
         <source>Aerial only</source>
-        <target/>
+        <target>Только аэрофотоснимки</target>
         <note>Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq";</note>
       </trans-unit>
       <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
         <source>21</source>
-        <target/>
+        <target>21</target>
         <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
@@ -1859,42 +1874,42 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
         <source>Max Zoom</source>
-        <target/>
+        <target>Максимальное увеличение</target>
         <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Bing aerial</source>
-        <target/>
+        <target>Аэрофотоснимки Bing</target>
         <note>Class = "UITextField"; placeholder = "Bing aerial"; ObjectID = "w75-Lj-3jF";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
         <source>Reset</source>
-        <target/>
+        <target>Сброс</target>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
       </trans-unit>
       <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
+        <target>Наименование</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders.</source>
-        <target/>
+        <target>Адрес URL TMS с {x}, {y} и {z} заполнителями.</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders."; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
-        <target/>
+        <target>Шаблон URL тайл-сервера</target>
         <note>Class = "UITableViewSection"; headerTitle = "Template URL of the tile server"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zI2-YM-qbl.normalTitle" xml:space="preserve">
         <source>Add New</source>
-        <target/>
+        <target>Добавить новый</target>
         <note>Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl";</note>
       </trans-unit>
     </body>
@@ -1911,7 +1926,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
         <source>First</source>
-        <target/>
+        <target>Первый</target>
         <note>Class = "UIViewController"; title = "First"; ObjectID = "2";</note>
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
@@ -1921,32 +1936,32 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
         <source>Comment</source>
-        <target/>
+        <target>Комментарий</target>
         <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc";</note>
       </trans-unit>
       <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
         <source>Upload</source>
-        <target/>
+        <target>Загрузить</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
         <source>username - action</source>
-        <target/>
+        <target>имя пользователя - действие</target>
         <note>Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP";</note>
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
         <source>New comment:</source>
-        <target/>
+        <target>Новый комментарий:</target>
         <note>Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn";</note>
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
-        <target/>
+        <target>66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="Af5-y9-yOe.accessibilityLabel" xml:space="preserve">
         <source>Locate me</source>
-        <target/>
+        <target>Найти меня</target>
         <note>Class = "UIButton"; accessibilityLabel = "Locate me"; ObjectID = "Af5-y9-yOe";</note>
       </trans-unit>
       <trans-unit id="Ceq-eN-yV5.title" xml:space="preserve">
@@ -1956,22 +1971,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
-        <target/>
+        <target>Переориентировать карту на север</target>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
         <source>Compass</source>
-        <target/>
+        <target>Компас</target>
         <note>Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
-        <target/>
+        <target>Искать место</target>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
         <source>Center</source>
-        <target/>
+        <target>Центр</target>
         <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
@@ -1981,62 +1996,62 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
         <source>Note</source>
-        <target/>
+        <target>Заметка</target>
         <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
       </trans-unit>
       <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target/>
+        <target>Увеличьте, чтобы редактировать</target>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Resolve</source>
-        <target/>
+        <target>Устранить</target>
         <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
         <source>Various comments...</source>
-        <target/>
+        <target>Различные комментарии...</target>
         <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx";</note>
       </trans-unit>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
-        <target/>
+        <target>Задать высоту</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
         <source>Bing Maps</source>
-        <target/>
+        <target>Карты Bing</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
         <source>Distance</source>
-        <target/>
+        <target>Расстояние</target>
         <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
-        <target/>
+        <target>Комментарий для пакета правок</target>
         <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
       </trans-unit>
       <trans-unit id="e3U-Im-GKP.title" xml:space="preserve">
         <source>Item</source>
-        <target/>
+        <target>Элемент</target>
         <note>Class = "UIBarButtonItem"; title = "Item"; ObjectID = "e3U-Im-GKP";</note>
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
         <source>Commit</source>
-        <target/>
+        <target>Загрузить на сервер</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE";</note>
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
         <source>Height</source>
-        <target/>
+        <target>Высота</target>
         <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Отмена</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
       </trans-unit>
       <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
@@ -2051,7 +2066,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
         <source>Search for Location</source>
-        <target/>
+        <target>Искать место</target>
         <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
       </trans-unit>
       <trans-unit id="stf-JU-iga.text" xml:space="preserve">
@@ -2071,22 +2086,22 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
-        <target/>
+        <target>Ниагарский водопад</target>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
         <source>Tags</source>
-        <target/>
+        <target>Теги</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
         <source>Delete</source>
-        <target/>
+        <target>Удалить</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
         <source>More...</source>
-        <target/>
+        <target>Ещё...</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
     </body>
@@ -2098,17 +2113,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
         <source>no</source>
-        <target/>
+        <target>нет</target>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm";</note>
       </trans-unit>
       <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
         <source>type</source>
-        <target/>
+        <target>тип</target>
         <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ";</note>
       </trans-unit>
       <trans-unit id="1Yx-Ce-yfq.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
       </trans-unit>
       <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
@@ -2118,7 +2133,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
+        <target>Атрибуты</target>
         <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
       </trans-unit>
       <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
@@ -2148,17 +2163,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
-        <target/>
+        <target>собака</target>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
         <source>Add New</source>
-        <target/>
+        <target>Добавить новый</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
-        <target/>
+        <target>Значение 8</target>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
@@ -2178,7 +2193,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
         <source>Value 3</source>
-        <target/>
+        <target>Значение 3</target>
         <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
@@ -2208,12 +2223,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Jsm-mO-hgo.title" xml:space="preserve">
         <source>POI Type</source>
-        <target/>
+        <target>Тип POI</target>
         <note>Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo";</note>
       </trans-unit>
       <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
       </trans-unit>
       <trans-unit id="LUc-68-Anl.text" xml:space="preserve">
@@ -2273,7 +2288,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
-        <target/>
+        <target>ключ</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ";</note>
       </trans-unit>
       <trans-unit id="X7U-Pa-WCn.text" xml:space="preserve">
@@ -2343,17 +2358,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
         <source>value</source>
-        <target/>
+        <target>значение</target>
         <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
       </trans-unit>
       <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
         <source>Changeset</source>
-        <target/>
+        <target>Пакет правок</target>
         <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
         <source>The possible values for the preset</source>
-        <target/>
+        <target>Возможные значения для пресета</target>
         <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
@@ -2378,27 +2393,27 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target/>
+        <target>Распространённые теги</target>
         <note>Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
+        <target>Наименование</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u";</note>
       </trans-unit>
       <trans-unit id="nKt-LG-cSw.text" xml:space="preserve">
         <source>Value 2</source>
-        <target/>
+        <target>Значение 2</target>
         <note>Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw";</note>
       </trans-unit>
       <trans-unit id="ng7-T9-SJ6.text" xml:space="preserve">
         <source>Value 4</source>
-        <target/>
+        <target>Значение 4</target>
         <note>Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
         <source>Value 11</source>
-        <target/>
+        <target>Значение 11</target>
         <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
@@ -2413,7 +2428,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
+        <target>Наименование</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq";</note>
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
@@ -2423,7 +2438,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
         <source>Restaurant</source>
-        <target/>
+        <target>Ресторан</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7";</note>
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
@@ -2458,7 +2473,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
         <source>Value</source>
-        <target/>
+        <target>Значение</target>
         <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
       </trans-unit>
     </body>
@@ -2470,12 +2485,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
         <source>Mapnik Tiles</source>
-        <target/>
+        <target>Тайлы Mapnik</target>
         <note>Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg";</note>
       </trans-unit>
       <trans-unit id="1Mo-xe-IbY.headerTitle" xml:space="preserve">
         <source>I don't have an account</source>
-        <target/>
+        <target>У меня нет аккаунта</target>
         <note>Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY";</note>
       </trans-unit>
       <trans-unit id="1SU-BF-K3n.title" xml:space="preserve">
@@ -2495,7 +2510,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
         <source>Show Touches</source>
-        <target/>
+        <target>Визуализировать прикосновения</target>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -2535,7 +2550,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
         <source>Language</source>
-        <target/>
+        <target>Язык</target>
         <note>Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
@@ -2619,7 +2634,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
         <source>Login</source>
-        <target/>
+        <target>Логин</target>
         <note>Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
@@ -2629,42 +2644,42 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
         <source>In order to upload changes to the map you need a user name and password registered at openstreetmap.org. </source>
-        <target/>
+        <target>Чтобы загружать правки на карту, вам понадобятся имя пользователя и пароль, зарегистрированные на openstreetmap.org. </target>
         <note>Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
-        <target/>
+        <target>Аккаунт OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="TrT-Nn-WKe.text" xml:space="preserve">
         <source>Join the TestFlight Beta</source>
-        <target/>
+        <target>Вступить в TestFlight Beta</target>
         <note>Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe";</note>
       </trans-unit>
       <trans-unit id="UeH-ME-EV8.text" xml:space="preserve">
         <source>Show FPS</source>
-        <target/>
+        <target>Показывать частоту кадров</target>
         <note>Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8";</note>
       </trans-unit>
       <trans-unit id="UvN-Qa-roL.text" xml:space="preserve">
         <source>Frames/Second</source>
-        <target/>
+        <target>кадров в секунду</target>
         <note>Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL";</note>
       </trans-unit>
       <trans-unit id="VDO-HW-SLB.title" xml:space="preserve">
         <source>Nearby Mappers</source>
-        <target/>
+        <target>Картографы рядом</target>
         <note>Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB";</note>
       </trans-unit>
       <trans-unit id="YQ4-05-lQz.placeholder" xml:space="preserve">
         <source>username</source>
-        <target/>
+        <target>имя пользователя</target>
         <note>Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz";</note>
       </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
         <source>Contact Us</source>
-        <target/>
+        <target>Связаться с нами</target>
         <note>Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q";</note>
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
@@ -2674,27 +2689,27 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ctb-pg-pM9.title" xml:space="preserve">
         <source>Save</source>
-        <target/>
+        <target>Сохранить</target>
         <note>Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9";</note>
       </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
         <source>Bug Reports &amp; Suggestions</source>
-        <target/>
+        <target>Отчёты об ошибках &amp; Предложения</target>
         <note>Class = "UITableViewSection"; headerTitle = "Bug Reports &amp; Suggestions"; ObjectID = "dbi-X6-Day";</note>
       </trans-unit>
       <trans-unit id="e7I-rE-dAW.placeholder" xml:space="preserve">
         <source>password</source>
-        <target/>
+        <target>пароль</target>
         <note>Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW";</note>
       </trans-unit>
       <trans-unit id="fbD-Hr-HNI.headerTitle" xml:space="preserve">
         <source>Credentials</source>
-        <target/>
+        <target>Реквизиты</target>
         <note>Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI";</note>
       </trans-unit>
       <trans-unit id="gec-8l-k4H.text" xml:space="preserve">
         <source>Advanced Settings</source>
-        <target/>
+        <target>Продвинутые настройки</target>
         <note>Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H";</note>
       </trans-unit>
       <trans-unit id="gh3-sb-yuZ.headerTitle" xml:space="preserve">
@@ -2709,77 +2724,77 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
         <source>Language</source>
-        <target/>
+        <target>Язык</target>
         <note>Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD";</note>
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
         <source>Nearby Mappers</source>
-        <target/>
+        <target>Картографы рядом</target>
         <note>Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3";</note>
       </trans-unit>
       <trans-unit id="k0y-gf-6DY.text" xml:space="preserve">
         <source>Password</source>
-        <target/>
+        <target>Пароль</target>
         <note>Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY";</note>
       </trans-unit>
       <trans-unit id="kDx-6x-qqY.text" xml:space="preserve">
         <source>Hostname</source>
-        <target/>
+        <target>Имя узла</target>
         <note>Class = "UILabel"; text = "Hostname"; ObjectID = "kDx-6x-qqY";</note>
       </trans-unit>
       <trans-unit id="kt1-K7-kcu.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "kt1-K7-kcu";</note>
       </trans-unit>
       <trans-unit id="ktz-ef-tti.title" xml:space="preserve">
         <source>Contact Us</source>
-        <target/>
+        <target>Свяжитесь с нами</target>
         <note>Class = "UINavigationItem"; title = "Contact Us"; ObjectID = "ktz-ef-tti";</note>
       </trans-unit>
       <trans-unit id="m7D-wn-3MP.title" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target/>
+        <target>Подготовить для работы offline</target>
         <note>Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP";</note>
       </trans-unit>
       <trans-unit id="m7u-CH-jgg.headerTitle" xml:space="preserve">
         <source>Become a Tester</source>
-        <target/>
+        <target>Стать тестировщиком</target>
         <note>Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg";</note>
       </trans-unit>
       <trans-unit id="nIn-2k-PYG.headerTitle" xml:space="preserve">
         <source>Miscellaneous</source>
-        <target/>
+        <target>Разное</target>
         <note>Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG";</note>
       </trans-unit>
       <trans-unit id="oIj-UV-kLH.headerTitle" xml:space="preserve">
         <source>About Us</source>
-        <target/>
+        <target>О нас</target>
         <note>Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH";</note>
       </trans-unit>
       <trans-unit id="osk-Kq-gDX.text" xml:space="preserve">
         <source>Language</source>
-        <target/>
+        <target>Язык</target>
         <note>Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX";</note>
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target/>
+        <target>Подготовить для работы offline</target>
         <note>Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l";</note>
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
         <source>Start</source>
-        <target/>
+        <target>Начать</target>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib";</note>
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>E-mail Feedback</source>
-        <target/>
+        <target>Обратная связь по email</target>
         <note>Class = "UILabel"; text = "E-mail Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
         <source>GitHub - Issues &amp; Source Code</source>
-        <target/>
+        <target>GitHub - проблемы &amp; исходный код</target>
         <note>Class = "UILabel"; text = "GitHub - Issues &amp; Source Code"; ObjectID = "x4m-oT-EG8";</note>
       </trans-unit>
       <trans-unit id="yAO-9B-CTd.headerTitle" xml:space="preserve">
