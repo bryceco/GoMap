@@ -1435,7 +1435,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="node %@ (in way)" xml:space="preserve">
         <source>node %@ (in way)</source>
-        <target/>
+        <target>точка %@ (на линии)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
