@@ -32,7 +32,7 @@
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects</source>
-        <target>Камера используется для измерения высоты зданий или объектов.</target>
+        <target>Камера используется для измерения высоты зданий или объектов</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -153,7 +153,7 @@
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
-        <target>(точка в линии)</target>
+        <target>(точка на линии)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
@@ -183,12 +183,12 @@
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target>Трек GPX записывает ваш путь, пока вы путешествуете по дороге или тропе.</target>
+        <target>Трек GPX записывает ваш путь, пока вы путешествуете по дороге или тропе</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
-        <target>Отношение, к которому принадлежит узел, не загружено полностью</target>
+        <target>Отношение, к которому принадлежит точка, не загружено полностью</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -208,7 +208,7 @@
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
-        <target>Добавить путь в мультиполигон?</target>
+        <target>Добавить линию в мультиполигон?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
@@ -263,12 +263,12 @@
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target>В мультиполигон возможно добавлять только пути</target>
+        <target>В мультиполигон возможно добавлять только линии</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
-        <target>Нельзя удалять узел, являющийся частью отношения</target>
+        <target>Нельзя удалить точку, являющуюся частью отношения</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
@@ -1112,7 +1112,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
-        <target/>
+        <target>Линия должна иметь не менее 2 точек</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
@@ -1266,7 +1266,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Way" xml:space="preserve">
         <source>Way</source>
-        <target>Путь</target>
+        <target>Линия</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way tags" xml:space="preserve">
@@ -1335,7 +1335,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
         <source>add node to way</source>
-        <target/>
+        <target>добавить точку к линии</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
@@ -1355,7 +1355,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
         <source>create node</source>
-        <target>создать узел</target>
+        <target>создать точку</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
@@ -1966,7 +1966,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Ceq-eN-yV5.title" xml:space="preserve">
         <source>Add node</source>
-        <target/>
+        <target>Добавить точку</target>
         <note>Class = "UIBarButtonItem"; title = "Add node"; ObjectID = "Ceq-eN-yV5";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
