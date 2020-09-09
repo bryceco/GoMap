@@ -2453,17 +2453,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>
-        <target/>
+        <target>Ключ</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
         <source>Presets</source>
-        <target/>
+        <target>Пресеты</target>
         <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
       </trans-unit>
       <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
         <source>yes</source>
-        <target/>
+        <target>да</target>
         <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl";</note>
       </trans-unit>
       <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
@@ -2525,7 +2525,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>
-        <target/>
+        <target>Сервер OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6Lj-wh-z9f.text" xml:space="preserve">
@@ -2535,7 +2535,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="7cc-E7-pzw.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
+        <target>Имя</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
@@ -2545,7 +2545,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
         <source>api.openstreetmap.org</source>
-        <target/>
+        <target>api.openstreetmap.org</target>
         <note>Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh";</note>
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
@@ -2555,7 +2555,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
         <source>Settings</source>
-        <target/>
+        <target>Настройки</target>
         <note>Class = "UINavigationItem"; title = "Settings"; ObjectID = "AHZ-L8-yUA";</note>
       </trans-unit>
       <trans-unit id="AVI-04-hFN.text" xml:space="preserve">
