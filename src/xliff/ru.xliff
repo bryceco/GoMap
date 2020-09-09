@@ -2433,7 +2433,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
         <source>Customize Presets</source>
-        <target/>
+        <target>Настроить пресеты</target>
         <note>Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
