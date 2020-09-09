@@ -229,11 +229,6 @@ import QuartzCore
         var currentCharacter: CFIndex = 0
         var currentPixelOffset = offset
         while currentCharacter < charCount {
-            if currentCharacter > 0, isRTL, false {
-                // doesn't fit on one segment so give up
-                return nil
-            }
-
             // get the number of characters that fit in the current path segment and create a text layer for it
             guard var loc = PositionAndAngleForOffset(points: pathPoints,
                                                       offset: currentPixelOffset,
