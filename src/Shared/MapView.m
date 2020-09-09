@@ -397,22 +397,26 @@ const CGFloat kEditControlCornerRadius = 4;
 
 -(void)viewDidAppear
 {
-	// get current location
-	double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
-	double latitude		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.latitude"];
-	double longitude	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.longitude"];
+	if ( !_viewPresented ) {
+		_viewPresented = YES;
+		
+		// get current location
+		double scale		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.scale"];
+		double latitude		= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.latitude"];
+		double longitude	= [[NSUserDefaults standardUserDefaults] doubleForKey:@"view.longitude"];
 
-	if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
-		[self setTransformForLatitude:latitude longitude:longitude scale:scale];
-	} else {
-		OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
-		self.screenFromMapTransform = OSMTransformMakeTranslation( rc.origin.x+rc.size.width/2 - 128, rc.origin.y+rc.size.height/2 - 128);
-		// turn on GPS which will move us to current location
-		self.gpsState = GPS_STATE_LOCATION;
+		if ( !isnan(latitude) && !isnan(longitude) && !isnan(scale) ) {
+			[self setTransformForLatitude:latitude longitude:longitude scale:scale];
+		} else {
+			OSMRect rc = OSMRectFromCGRect( self.layer.bounds );
+			self.screenFromMapTransform = OSMTransformMakeTranslation( rc.origin.x+rc.size.width/2 - 128, rc.origin.y+rc.size.height/2 - 128);
+			// turn on GPS which will move us to current location
+			self.gpsState = GPS_STATE_LOCATION;
+		}
+
+		// get notes
+		[self updateNotesFromServerWithDelay:0];
 	}
-
-	// get notes
-	[self updateNotesFromServerWithDelay:0];
 }
 
 -(CALayer *)compassLayerWithRadius:(CGFloat)radius
