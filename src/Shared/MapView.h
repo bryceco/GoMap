@@ -126,6 +126,8 @@ typedef enum {
 	UILongPressGestureRecognizer	*	_addNodeButtonLongPressGestureRecognizer;
 	NSTimeInterval						_addNodeButtonTimestamp;
 #endif
+
+	BOOL								_windowPresented;
 }
 
 #if TARGET_OS_IPHONE
