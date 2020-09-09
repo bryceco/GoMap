@@ -2423,7 +2423,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
-        <target/>
+        <target>парк</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
@@ -2468,7 +2468,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
         <source>Value 12</source>
-        <target/>
+        <target>Значение 12</target>
         <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
@@ -2540,7 +2540,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
         <source>OpenStreetMap Login</source>
-        <target/>
+        <target>Логин OpenStreetMap</target>
         <note>Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf";</note>
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
@@ -2624,7 +2624,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="LaB-Et-hHT.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Подробнее</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT";</note>
       </trans-unit>
       <trans-unit id="Mus-SG-1Sz.text" xml:space="preserve">
@@ -2684,7 +2684,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
         <source>Start</source>
-        <target/>
+        <target>Начать</target>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH";</note>
       </trans-unit>
       <trans-unit id="ctb-pg-pM9.title" xml:space="preserve">
@@ -2719,7 +2719,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>E-mail Feedback</source>
-        <target/>
+        <target>Обратная связь по email</target>
         <note>Class = "UILabel"; text = "E-mail Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
