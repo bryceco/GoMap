@@ -2448,7 +2448,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="tPF-m9-RtO.text" xml:space="preserve">
         <source>Payment</source>
-        <target/>
+        <target>Оплата</target>
         <note>Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
