@@ -8,6 +8,35 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Table View Controller-->
+        <scene sceneID="xG0-JV-Zit">
+            <objects>
+                <tableViewController id="Y3T-AJ-l1d" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="B9R-nU-Epx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="SuC-8Z-QmP">
+                                <rect key="frame" x="0.0" y="28" width="320" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SuC-8Z-QmP" id="FJ8-7F-ieo">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Y3T-AJ-l1d" id="71M-6M-1CO"/>
+                            <outlet property="delegate" destination="Y3T-AJ-l1d" id="Eqa-GM-1AQ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Ari-lp-NeO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TKg-K7-Llh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4519" y="1685"/>
+        </scene>
         <!--QA Poole Attribution View Controller-->
         <scene sceneID="D7A-KY-U59">
             <objects>
@@ -1203,7 +1232,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             <objects>
                 <navigationController storyboardIdentifier="DisplayViewController" id="3il-wo-nAN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="DisplayViewController" insetsLayoutMarginsFromSafeArea="NO" id="6od-EN-7Ax">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbm-5N-YoL">
@@ -1508,6 +1537,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Y3T-AJ-l1d" kind="push" id="k7s-5x-aKB"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
