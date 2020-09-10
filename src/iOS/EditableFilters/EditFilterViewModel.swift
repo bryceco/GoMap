@@ -48,8 +48,5 @@ final class EditFilterViewModel {
         case operationPicker(operation: Operation)
     }
     
-    private(set) var sections = [Section(rows: [.textField(placeholder: "Tag", value: "amenity"),
-                                                .operationPickerToggle(operation: .equals),
-                                                .operationPicker(operation: .equals),
-                                                .textField(placeholder: "Value", value: "bench")])]
+    private(set) var sections = [Section]()
 }
