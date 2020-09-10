@@ -92,4 +92,42 @@ final class EditFilterViewModel {
         
         delegate?.showKeyboardForTextFieldCell(at: IndexPath(row: 0, section: indexOfNewSection))
     }
+    
+    func selectRow(at indexPath: IndexPath) {
+        guard let defaultOperation = Operation.allCases.first else {
+            assertionFailure("Failed to determine the default operation for new condition.")
+            return
+        }
+        
+        guard sections.count > indexPath.section else { return }
+        let section = sections[indexPath.section]
+        
+        guard section.rows.count > indexPath.row else { return }
+        let row = section.rows[indexPath.row]
+        
+        guard case .operationPickerToggle(_) = row else {
+            /// The row is not a toggle for the operation picker; ignore.
+            return
+        }
+        
+        let isPickerVisible = section.rows.contains(where: { row in
+            if case .operationPicker(_) = row {
+                return true
+            } else {
+                return false
+            }
+        })
+        
+        if isPickerVisible {
+            sections[indexPath.section].rows.remove(at: 2)
+            
+            let indexPathOfOperationPicker = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+            delegate?.removeRows(at: [indexPathOfOperationPicker])
+        } else {
+            sections[indexPath.section].rows.insert(.operationPicker(operation: defaultOperation), at: 2)
+            
+            let indexPathOfOperationPicker = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+            delegate?.addRows(at: [indexPathOfOperationPicker])
+        }
+    }
 }

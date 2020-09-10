@@ -120,5 +120,99 @@ class EditFilterViewModelTestCase: XCTestCase {
         XCTAssertTrue(delegateMock.didCallShowKeyboardForTextFieldCell)
         XCTAssertEqual(delegateMock.textFieldCellIndexPath, IndexPath(row: 0, section: 3))
     }
+    
+    // MARK: selectRow(at:)
+    
+    func testSelectRow_whenRowIsFirstOrThirdOne_shouldNotAskDelegateToAddRows() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 0, section: 0))
+        viewModel.selectRow(at: IndexPath(row: 2, section: 0))
+        
+        /// Then
+        XCTAssertFalse(delegateMock.didCallAddRows)
+    }
+    
+    func testSelectRow_whenSectionDoesNotExist_shouldNotAskDelegateToAddRows() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 9999))
+        
+        /// Then
+        XCTAssertFalse(delegateMock.didCallAddRows)
+    }
+    
+    func testSelectRow_whenRowDoesNotExist_shouldNotAskDelegateToAddRows() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 9999, section: 0))
+        
+        /// Then
+        XCTAssertFalse(delegateMock.didCallAddRows)
+    }
+    
+    func testSelectRow_whenRowIsSecondOne_shouldInsertOperationPickerCellAtThirdPositionInSection() {
+        /// Given
+        guard let defaultOperation = EditFilterViewModel.Operation.allCases.first else {
+            XCTFail()
+            return
+        }
+        
+        viewModel.addCondition()
+        viewModel.addCondition()
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 2))
+        
+        /// Then
+        XCTAssertEqual(viewModel.sections[2].rows.count, 4)
+        XCTAssertEqual(viewModel.sections[2].rows[2], EditFilterViewModel.Row.operationPicker(operation: defaultOperation))
+    }
+    
+    func testSelectRow_whenRowIsSecondOne_shouldAskDelegateToAddRowAtThirdPosition() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Then
+        XCTAssertTrue(delegateMock.didCallAddRows)
+        XCTAssertEqual(delegateMock.addRowsIndexPaths, [IndexPath(row: 2, section: 0)])
+    }
+    
+    func testSelectRow_whenRowIsSecondOneAndTappedForTheSecondTime_shouldRemoveOperationPickerCellFromThirdPositionInSection() {
+        /// Given
+        viewModel.addCondition()
+        viewModel.addCondition()
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 2))
+        viewModel.selectRow(at: IndexPath(row: 1, section: 2))
+        
+        /// Then
+        XCTAssertEqual(viewModel.sections[2].rows.count, 3)
+    }
+    
+    func testSelectRow_whenRowIsSecondOneAndTappedForTheSecondTime_shouldAskDelegateToRemoveRowAtThirdPosition() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Then
+        XCTAssertTrue(delegateMock.didCallRemoveRows)
+        XCTAssertEqual(delegateMock.removeRowsIndexPaths, [IndexPath(row: 2, section: 0)])
+    }
 
 }
