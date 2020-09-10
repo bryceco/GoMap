@@ -12,13 +12,18 @@ import XCTest
 class EditFilterViewModelTestCase: XCTestCase {
     
     var viewModel: EditFilterViewModel!
+    var delegateMock: EditFilterViewModelDelegateMock!
 
     override func setUpWithError() throws {
         viewModel = EditFilterViewModel()
+        
+        delegateMock = EditFilterViewModelDelegateMock()
+        viewModel.delegate = delegateMock
     }
 
     override func tearDownWithError() throws {
         viewModel = nil
+        delegateMock = nil
     }
 
 }
