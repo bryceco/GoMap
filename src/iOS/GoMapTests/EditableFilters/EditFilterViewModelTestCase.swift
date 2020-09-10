@@ -176,6 +176,21 @@ class EditFilterViewModelTestCase: XCTestCase {
         XCTAssertEqual(viewModel.sections[2].rows[2], EditFilterViewModel.Row.operationPicker(operation: defaultOperation))
     }
     
+    func testSelectRow_whenRowIsSecondOne_shouldInsertOperationPickerCellWithOperationOfTheSecondRowAtThirdPositionInSection() {
+        /// Given
+        let operation: EditFilterViewModel.Operation = .doesNotEqual
+        viewModel.addCondition()
+        
+        /// Open picker and change operation.
+        viewModel.changeOperationForSection(0, toOperation: operation)
+        
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Then
+        XCTAssertEqual(viewModel.sections[0].rows[2], EditFilterViewModel.Row.operationPicker(operation: operation))
+    }
+    
     func testSelectRow_whenRowIsSecondOne_shouldAskDelegateToAddRowAtThirdPosition() {
         /// Given
         viewModel.addCondition()

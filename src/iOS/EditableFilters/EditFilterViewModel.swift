@@ -101,11 +101,6 @@ final class EditFilterViewModel {
     }
     
     func selectRow(at indexPath: IndexPath) {
-        guard let defaultOperation = Operation.allCases.first else {
-            assertionFailure("Failed to determine the default operation for new condition.")
-            return
-        }
-        
         guard sections.count > indexPath.section else { return }
         let section = sections[indexPath.section]
         
@@ -131,7 +126,8 @@ final class EditFilterViewModel {
             let indexPathOfOperationPicker = IndexPath(row: indexPath.row + 1, section: indexPath.section)
             delegate?.removeRows(at: [indexPathOfOperationPicker])
         } else {
-            sections[indexPath.section].rows.insert(.operationPicker(operation: defaultOperation), at: 2)
+            guard case let .operationPickerToggle(operation) = sections[indexPath.section].rows[1] else { return }
+            sections[indexPath.section].rows.insert(.operationPicker(operation: operation), at: 2)
             
             let indexPathOfOperationPicker = IndexPath(row: indexPath.row + 1, section: indexPath.section)
             delegate?.addRows(at: [indexPathOfOperationPicker])
