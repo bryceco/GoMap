@@ -15,6 +15,10 @@ protocol EditFilterViewModelDelegate: AnyObject {
     /// - Parameter indexPaths: The index paths at which to add row.
     func addRows(at indexPaths: [IndexPath])
     
+    /// Asks the delegate to remove rows at the given `IndexPath`s.
+    /// - Parameter indexPaths: The index paths at which to remove rows.
+    func removeRows(at indexPaths: [IndexPath])
+    
     /// Asks the delegate to show the keyboard and make the `UITextField` in the cell at the given `IndexPath` the first responder.
     /// - Parameter indexPath: The index path for the text field cell that the keyboard should be shown for.
     func showKeyboardForTextFieldCell(at indexPath: IndexPath)
