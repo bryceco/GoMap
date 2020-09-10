@@ -12,6 +12,12 @@ class TextFieldTableViewCell: UITableViewCell {
     
     @IBOutlet private var textField: UITextField!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        selectionStyle = .none
+    }
+    
     func update(placeholder: String, text: String?) {
         textField.placeholder = placeholder
         textField.text = text
