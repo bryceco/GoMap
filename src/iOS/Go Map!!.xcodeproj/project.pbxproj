@@ -800,6 +800,7 @@
 		640C76C6250A0FC200BB4665 /* EditableFilters */ = {
 			isa = PBXGroup;
 			children = (
+				640C76D1250A91C900BB4665 /* Queries */,
 				640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */,
 			);
 			path = EditableFilters;
@@ -809,6 +810,13 @@
 			isa = PBXGroup;
 			children = (
 				640C76CD250A914900BB4665 /* BaseObjectMatching.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		640C76D1250A91C900BB4665 /* Queries */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Queries;
 			sourceTree = "<group>";
