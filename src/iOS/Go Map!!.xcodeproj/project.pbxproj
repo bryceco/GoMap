@@ -123,6 +123,7 @@
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3E49F4B224DFA64800A347BB /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E49F4B124DFA64800A347BB /* RulerView.m */; };
 		3EED6DC224DF2920009D676D /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBB516713F2A00BB4414 /* RulerView.m */; };
+		640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -384,6 +385,7 @@
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
 		3E49F4B124DFA64800A347BB /* RulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RulerView.m; path = ../Shared/RulerView.m; sourceTree = "<group>"; };
+		640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelTestCase.swift; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -791,6 +793,14 @@
 			path = Height;
 			sourceTree = "<group>";
 		};
+		640C76C6250A0FC200BB4665 /* EditableFilters */ = {
+			isa = PBXGroup;
+			children = (
+				640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */,
+			);
+			path = EditableFilters;
+			sourceTree = "<group>";
+		};
 		64305F6C23E71F5700232BB9 /* URLParsing */ = {
 			isa = PBXGroup;
 			children = (
@@ -803,6 +813,7 @@
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				640C76C6250A0FC200BB4665 /* EditableFilters */,
 				02ACBBB516713F2A00BB4414 /* RulerView.m */,
 				64E21EB622651F0D004605D7 /* Helpers */,
 				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
@@ -1202,6 +1213,7 @@
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */,
+				640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
