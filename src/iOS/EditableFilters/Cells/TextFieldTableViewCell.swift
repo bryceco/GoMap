@@ -9,22 +9,20 @@
 import UIKit
 
 class TextFieldTableViewCell: UITableViewCell {
-    
     @IBOutlet private var textField: UITextField!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         selectionStyle = .none
     }
-    
+
     override func becomeFirstResponder() -> Bool {
         return textField.becomeFirstResponder()
     }
-    
+
     func update(placeholder: String, text: String?) {
         textField.placeholder = placeholder
         textField.text = text
     }
-
 }

@@ -11,16 +11,16 @@
 final class EditFilterViewModelDelegateMock: NSObject {
     private(set) var didCallAddSection = false
     private(set) var addSection: Int?
-    
+
     private(set) var didCallAddRows = false
     private(set) var addRowsIndexPaths = [IndexPath]()
-    
+
     private(set) var didCallRemoveRows = false
     private(set) var removeRowsIndexPaths = [IndexPath]()
-    
+
     private(set) var didCallShowKeyboardForTextFieldCell = false
     private(set) var textFieldCellIndexPath: IndexPath?
-    
+
     private(set) var didCallSetTextForTextLabelCell = false
     private(set) var setTextForTextLabelCellArguments: (indexPath: IndexPath, text: String)?
 }
@@ -28,31 +28,31 @@ final class EditFilterViewModelDelegateMock: NSObject {
 extension EditFilterViewModelDelegateMock: EditFilterViewModelDelegate {
     func addSection(_ section: Int) {
         didCallAddSection = true
-        
+
         addSection = section
     }
-    
+
     func addRows(at indexPaths: [IndexPath]) {
         didCallAddRows = true
-        
+
         addRowsIndexPaths = indexPaths
     }
-    
+
     func removeRows(at indexPaths: [IndexPath]) {
         didCallRemoveRows = true
-        
+
         removeRowsIndexPaths = indexPaths
     }
-    
+
     func showKeyboardForTextFieldCell(at indexPath: IndexPath) {
         didCallShowKeyboardForTextFieldCell = true
-        
+
         textFieldCellIndexPath = indexPath
     }
-    
+
     func setTextForTextLabelCell(at indexPath: IndexPath, to text: String) {
         didCallSetTextForTextLabelCell = true
-        
+
         setTextForTextLabelCellArguments = (indexPath, text)
     }
 }
