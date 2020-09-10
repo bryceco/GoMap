@@ -124,6 +124,7 @@
 		3E49F4B224DFA64800A347BB /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E49F4B124DFA64800A347BB /* RulerView.m */; };
 		640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */; };
 		640C76CA250A111100BB4665 /* EditFilterViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */; };
+		640C76CE250A914900BB4665 /* BaseObjectMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CD250A914900BB4665 /* BaseObjectMatching.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -387,6 +388,7 @@
 		3E49F4B124DFA64800A347BB /* RulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RulerView.m; path = ../Shared/RulerView.m; sourceTree = "<group>"; };
 		640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelTestCase.swift; sourceTree = "<group>"; };
 		640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelDelegateMock.swift; sourceTree = "<group>"; };
+		640C76CD250A914900BB4665 /* BaseObjectMatching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatching.swift; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -806,6 +808,7 @@
 		640C76CC250A912400BB4665 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
+				640C76CD250A914900BB4665 /* BaseObjectMatching.swift */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -1158,6 +1161,7 @@
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
 				02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */,
 				022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */,
+				640C76CE250A914900BB4665 /* BaseObjectMatching.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				02354F782462526A00878A04 /* PersistentWebCache.m in Sources */,
