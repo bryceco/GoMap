@@ -214,5 +214,46 @@ class EditFilterViewModelTestCase: XCTestCase {
         XCTAssertTrue(delegateMock.didCallRemoveRows)
         XCTAssertEqual(delegateMock.removeRowsIndexPaths, [IndexPath(row: 2, section: 0)])
     }
+    
+    // MARK: changeOperationForSection(_:toOperation:)
+    
+    func testChangeOperationForSection_whenGivenAnInvalidSection_shouldNotAskDelegateToSetText() {
+        /// When
+        viewModel.changeOperationForSection(9999, toOperation: .doesNotEqual)
+        
+        /// Then
+        XCTAssertFalse(delegateMock.didCallSetTextForTextLabelCell)
+    }
+    
+    func testChangeOperationForSection_whenGivenAValidSection_shouldAskDelegateToSetTextForTheOperationPickerToggleCell() {
+        /// Given
+        let updatedOperation: EditFilterViewModel.Operation = .doesNotExist
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.changeOperationForSection(0, toOperation: updatedOperation)
+        
+        /// Then
+        XCTAssertTrue(delegateMock.didCallSetTextForTextLabelCell)
+        XCTAssertEqual(delegateMock.setTextForTextLabelCellArguments?.indexPath, IndexPath(row: 1, section: 0))
+        XCTAssertEqual(delegateMock.setTextForTextLabelCellArguments?.text, updatedOperation.humanReadableString)
+    }
+    
+    func testChangeOperationForSection_whenGivenAValidSection_shouldUpdateRowInDataModel() {
+        /// Given
+        let updatedOperation: EditFilterViewModel.Operation = .matches
+        
+        viewModel.addCondition()
+        viewModel.addCondition()
+        viewModel.addCondition()
+        
+        /// When
+        viewModel.changeOperationForSection(2, toOperation: updatedOperation)
+        
+        /// Then
+        let expectedSecondRow = EditFilterViewModel.Row.operationPickerToggle(operation: updatedOperation)
+        let secondRow = viewModel.sections[2].rows[1]
+        XCTAssertEqual(secondRow, expectedSecondRow)
+    }
 
 }

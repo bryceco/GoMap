@@ -78,6 +78,9 @@ class EditFilterViewController: UITableViewController {
 
 extension EditFilterViewController: PickerViewTableViewCellDelegate {
     func pickerViewCell(_ pickerViewCell: PickerViewTableViewCell, didSelectOperation operation: EditFilterViewModel.Operation) {
+        guard let section = tableView.indexPath(for: pickerViewCell)?.section else { return }
+        
+        viewModel.changeOperationForSection(section, toOperation: operation)
     }
 }
 

@@ -137,4 +137,13 @@ final class EditFilterViewModel {
             delegate?.addRows(at: [indexPathOfOperationPicker])
         }
     }
+    
+    func changeOperationForSection(_ section: Int, toOperation operation: Operation) {
+        guard sections.count > section else { return }
+        
+        /// Update the data model.
+        sections[section].rows[1] = .operationPickerToggle(operation: operation)
+        
+        delegate?.setTextForTextLabelCell(at: IndexPath(row: 1, section: section), to: operation.humanReadableString)
+    }
 }
