@@ -6,6 +6,12 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
+protocol EditFilterViewModelDelegate: AnyObject {
+    /// Asks the delegate to add rows at the given `IndexPath`s.
+    /// - Parameter indexPaths: The index paths at which to add row.
+    func addRows(at indexPaths: [IndexPath])
+}
+
 final class EditFilterViewModel {
     // MARK: Types
     
