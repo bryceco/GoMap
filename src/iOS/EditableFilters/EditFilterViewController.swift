@@ -102,4 +102,10 @@ extension EditFilterViewController: EditFilterViewModelDelegate {
 //        /// TODO: Move to dedicated delegate method?
 //        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
+    
+    func setTextForTextLabelCell(at indexPath: IndexPath, to text: String) {
+        guard let textFieldCell = tableView.cellForRow(at: indexPath) else { return }
+        
+        textFieldCell.textLabel?.text = text
+    }
 }

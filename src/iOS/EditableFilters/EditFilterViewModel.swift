@@ -22,6 +22,13 @@ protocol EditFilterViewModelDelegate: AnyObject {
     /// Asks the delegate to show the keyboard and make the `UITextField` in the cell at the given `IndexPath` the first responder.
     /// - Parameter indexPath: The index path for the text field cell that the keyboard should be shown for.
     func showKeyboardForTextFieldCell(at indexPath: IndexPath)
+    
+    /// Asks the delegate to change the text for the text label cell at the given `IndexPath` to the given `text`.
+    /// - Parameters:
+    ///   - indexPath: The index path of the cell to change the text for.
+    ///   - text: The text to change to.
+    func setTextForTextLabelCell(at indexPath: IndexPath,
+                                 to text: String)
 }
 
 final class EditFilterViewModel {
