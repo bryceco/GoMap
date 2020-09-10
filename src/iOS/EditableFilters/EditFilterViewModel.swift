@@ -59,4 +59,6 @@ final class EditFilterViewModel {
     // MARK: Public properties
     
     private(set) var sections = [Section]()
+    
+    weak var delegate: EditFilterViewModelDelegate?
 }
