@@ -803,6 +803,13 @@
 			path = EditableFilters;
 			sourceTree = "<group>";
 		};
+		640C76CC250A912400BB4665 /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
 		64305F6C23E71F5700232BB9 /* URLParsing */ = {
 			isa = PBXGroup;
 			children = (
@@ -931,6 +938,7 @@
 		64DBF15625091A6300D67C31 /* EditableFilters */ = {
 			isa = PBXGroup;
 			children = (
+				640C76CC250A912400BB4665 /* Queries */,
 				6487A63B25094E4300F40053 /* Cells */,
 				64DBF15725091A8A00D67C31 /* EditFilterViewController.swift */,
 				6487A63E25094F6800F40053 /* EditFilterViewModel.swift */,
