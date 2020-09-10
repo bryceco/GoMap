@@ -9,8 +9,8 @@
 @testable import Go_Map__
 
 final class EditFilterViewModelDelegateMock: NSObject {
-    private(set) var didCallAddSection = false
-    private(set) var addSection: Int?
+    private(set) var didCallInsertSection = false
+    private(set) var insertSection: Int?
 
     private(set) var didCallAddRows = false
     private(set) var addRowsIndexPaths = [IndexPath]()
@@ -26,10 +26,10 @@ final class EditFilterViewModelDelegateMock: NSObject {
 }
 
 extension EditFilterViewModelDelegateMock: EditFilterViewModelDelegate {
-    func addSection(_ section: Int) {
-        didCallAddSection = true
+    func insertSection(_ section: Int) {
+        didCallInsertSection = true
 
-        addSection = section
+        insertSection = section
     }
 
     func addRows(at indexPaths: [IndexPath]) {

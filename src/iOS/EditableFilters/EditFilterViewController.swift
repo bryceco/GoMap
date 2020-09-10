@@ -83,7 +83,7 @@ extension EditFilterViewController: PickerViewTableViewCellDelegate {
 }
 
 extension EditFilterViewController: EditFilterViewModelDelegate {
-    func addSection(_ section: Int) {
+    func insertSection(_ section: Int) {
         tableView.insertSections(IndexSet(integer: section), with: .fade)
     }
 

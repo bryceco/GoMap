@@ -7,9 +7,9 @@
 //
 
 protocol EditFilterViewModelDelegate: AnyObject {
-    /// Asks the delegate to add a section at the given index.
-    /// - Parameter section: The index at which to add the section.
-    func addSection(_ section: Int)
+    /// Asks the delegate to insert a section at the given index.
+    /// - Parameter section: The index at which to insert the section.
+    func insertSection(_ section: Int)
 
     /// Asks the delegate to add rows at the given `IndexPath`s.
     /// - Parameter indexPaths: The index paths at which to add row.
@@ -95,7 +95,7 @@ final class EditFilterViewModel {
         sections.append(newSection)
 
         let indexOfNewSection = sections.count - 1
-        delegate?.addSection(indexOfNewSection)
+        delegate?.insertSection(indexOfNewSection)
 
         delegate?.showKeyboardForTextFieldCell(at: IndexPath(row: 0, section: indexOfNewSection))
     }

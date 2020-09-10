@@ -32,7 +32,7 @@ class EditFilterViewModelTestCase: XCTestCase {
         viewModel.addCondition()
 
         /// Then
-        XCTAssertTrue(delegateMock.didCallAddSection)
+        XCTAssertTrue(delegateMock.didCallInsertSection)
     }
 
     func testAddCondition_whenThereAreNoConditionsYet_shouldAskDelegateToInsertRowsInFirstSection() {
@@ -40,7 +40,7 @@ class EditFilterViewModelTestCase: XCTestCase {
         viewModel.addCondition()
 
         /// Then
-        XCTAssertEqual(delegateMock.addSection, 0)
+        XCTAssertEqual(delegateMock.insertSection, 0)
     }
 
     func testAddCondition_whenThereIsAlreadyACondition_shouldAskDelegateToInsertRowsInSecondSection() {
@@ -55,7 +55,7 @@ class EditFilterViewModelTestCase: XCTestCase {
         viewModel.addCondition()
 
         /// Then
-        XCTAssertEqual(delegateMock.addSection, 1)
+        XCTAssertEqual(delegateMock.insertSection, 1)
     }
 
     func testAddCondition_shouldAddSection() {
