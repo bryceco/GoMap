@@ -50,7 +50,7 @@ final class EditFilterViewModel {
     }
     
     struct Section {
-        let rows: [Row]
+        var rows: [Row]
     }
     
     enum Row: Equatable {
