@@ -18,6 +18,10 @@ class TextFieldTableViewCell: UITableViewCell {
         selectionStyle = .none
     }
     
+    override func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
+    }
+    
     func update(placeholder: String, text: String?) {
         textField.placeholder = placeholder
         textField.text = text
