@@ -128,6 +128,7 @@
 		640C76D0250A91C400BB4665 /* RecursiveQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CF250A91C400BB4665 /* RecursiveQuery.swift */; };
 		640C76D3250A922A00BB4665 /* RecursiveQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */; };
 		640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */; };
+		640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -395,6 +396,7 @@
 		640C76CF250A91C400BB4665 /* RecursiveQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQuery.swift; sourceTree = "<group>"; };
 		640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQueryTestCase.swift; sourceTree = "<group>"; };
 		640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatcherMock.swift; sourceTree = "<group>"; };
+		640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmBaseObject+Make.swift"; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -862,6 +864,7 @@
 				640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */,
 				64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */,
 				64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */,
+				640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */,
 				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
 				640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */,
 			);
@@ -1256,6 +1259,7 @@
 				640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
+				640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
