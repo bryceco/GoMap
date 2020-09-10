@@ -125,6 +125,7 @@
 		640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */; };
 		640C76CA250A111100BB4665 /* EditFilterViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */; };
 		640C76CE250A914900BB4665 /* BaseObjectMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CD250A914900BB4665 /* BaseObjectMatching.swift */; };
+		640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -389,6 +390,7 @@
 		640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelTestCase.swift; sourceTree = "<group>"; };
 		640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelDelegateMock.swift; sourceTree = "<group>"; };
 		640C76CD250A914900BB4665 /* BaseObjectMatching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatching.swift; sourceTree = "<group>"; };
+		640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatcherMock.swift; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -851,6 +853,7 @@
 		64348CF6225E867800ADE7FB /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */,
 				64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */,
 				64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */,
 				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
@@ -1242,6 +1245,7 @@
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
+				640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
