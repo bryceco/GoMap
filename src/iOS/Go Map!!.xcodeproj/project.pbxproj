@@ -122,7 +122,6 @@
 		02F8F4341696004B002A0820 /* NominatimViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatimViewController.m */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3E49F4B224DFA64800A347BB /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E49F4B124DFA64800A347BB /* RulerView.m */; };
-		3EED6DC224DF2920009D676D /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBBB516713F2A00BB4414 /* RulerView.m */; };
 		640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */; };
 		640C76CA250A111100BB4665 /* EditFilterViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
@@ -323,7 +322,6 @@
 		02ACBBB216713F2A00BB4414 /* QuadMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuadMap.h; path = ../Shared/QuadMap.h; sourceTree = "<group>"; };
 		02ACBBB316713F2A00BB4414 /* QuadMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuadMap.m; path = ../Shared/QuadMap.m; sourceTree = "<group>"; };
 		02ACBBB416713F2A00BB4414 /* RulerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RulerView.h; path = ../Shared/RulerView.h; sourceTree = "<group>"; };
-		02ACBBB516713F2A00BB4414 /* RulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RulerView.m; sourceTree = "<group>"; };
 		02ACBBB616713F2A00BB4414 /* SpeechBalloonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonLayer.h; path = ../Shared/SpeechBalloonLayer.h; sourceTree = "<group>"; };
 		02ACBBB716713F2A00BB4414 /* SpeechBalloonLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonLayer.m; path = ../Shared/SpeechBalloonLayer.m; sourceTree = "<group>"; };
 		02ACBBBB16713F2A00BB4414 /* RenderInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = RenderInfo.json; path = ../Shared/RenderInfo.json; sourceTree = "<group>"; };
@@ -818,7 +816,6 @@
 			isa = PBXGroup;
 			children = (
 				640C76C6250A0FC200BB4665 /* EditableFilters */,
-				02ACBBB516713F2A00BB4414 /* RulerView.m */,
 				64E21EB622651F0D004605D7 /* Helpers */,
 				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
@@ -1228,7 +1225,6 @@
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
-				3EED6DC224DF2920009D676D /* RulerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
