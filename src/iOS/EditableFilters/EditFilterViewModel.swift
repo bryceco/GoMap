@@ -145,5 +145,19 @@ final class EditFilterViewModel {
         sections[section].rows[1] = .operationPickerToggle(operation: operation)
         
         delegate?.setTextForTextLabelCell(at: IndexPath(row: 1, section: section), to: operation.humanReadableString)
+        
+        /// Remove the last cell if the operation does not require a value.
+        guard sections[section].rows.count == 4 else {
+            /// The section only consists of three rows; nothing to remove.
+            return
+        }
+        
+        let operationsThatDoNotRequireTagValue: [Operation] = [.exists, .doesNotExist]
+        if operationsThatDoNotRequireTagValue.contains(operation) {
+            let indexOfTagValueCell = 3
+            
+            sections[section].rows.remove(at: indexOfTagValueCell)
+            delegate?.removeRows(at: [IndexPath(row: indexOfTagValueCell, section: section)])
+        }
     }
 }

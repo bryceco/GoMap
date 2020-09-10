@@ -255,5 +255,61 @@ class EditFilterViewModelTestCase: XCTestCase {
         let secondRow = viewModel.sections[2].rows[1]
         XCTAssertEqual(secondRow, expectedSecondRow)
     }
+    
+    func testChangeOperationForSection_whenSetToExists_shouldAskDelegateRemoveLastCell() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        
+        /// Expand the picker.
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Change the operation mode.
+        viewModel.changeOperationForSection(0, toOperation: .exists)
+        
+        /// Then
+        XCTAssertTrue(delegateMock.didCallRemoveRows)
+        XCTAssertEqual(delegateMock.removeRowsIndexPaths, [IndexPath(row: 3, section: 0)])
+    }
+    
+    func testChangeOperationForSection_whenGivenAValidSection_shouldRemoveRowFromDataModel() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        
+        /// Expand the picker.
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Change the operation mode.
+        viewModel.changeOperationForSection(0, toOperation: .exists)
+        
+        /// Then
+        XCTAssertEqual(viewModel.sections[0].rows.count, 3)
+    }
+    
+    func testChangeOperationForSection_whenSetToExistsButWasDoesNotExistBefore_shouldNotAskDelegateRemoveLastCell() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        
+        /// Expand the picker.
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Change the operation mode once.
+        viewModel.changeOperationForSection(0, toOperation: .doesNotExist)
+        
+        /// Reset the delegate, so that we are able to tell whether `removeRows(at:)` was called.
+        delegateMock = EditFilterViewModelDelegateMock()
+        viewModel.delegate = delegateMock
+        
+        /// Change the operation mode once more.
+        viewModel.changeOperationForSection(0, toOperation: .exists)
+        
+        /// Then
+        XCTAssertFalse(delegateMock.didCallRemoveRows)
+    }
 
 }
