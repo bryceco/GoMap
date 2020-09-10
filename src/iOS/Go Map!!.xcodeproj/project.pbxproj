@@ -147,6 +147,7 @@
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		6487A63D25094E5400F40053 /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */; };
 		6487A63F25094F6800F40053 /* EditFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A63E25094F6800F40053 /* EditFilterViewModel.swift */; };
+		6487A6412509515600F40053 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A6402509515600F40053 /* TextFieldTableViewCell.swift */; };
 		64981F1F22667D7700178476 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* ContactUsViewController.swift */; };
 		64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* PresetKeyTagCase.swift */; };
 		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
@@ -419,6 +420,7 @@
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
 		6487A63E25094F6800F40053 /* EditFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModel.swift; sourceTree = "<group>"; };
+		6487A6402509515600F40053 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* PresetKeyTagCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyTagCase.swift; sourceTree = "<group>"; };
 		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
@@ -878,6 +880,7 @@
 			isa = PBXGroup;
 			children = (
 				6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */,
+				6487A6402509515600F40053 /* TextFieldTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1118,6 +1121,7 @@
 				6453777323D391CC00656A1C /* OsmMember.m in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				0223DB5716765C9000D6F825 /* POIFeaturePresetsViewController.m in Sources */,
+				6487A6412509515600F40053 /* TextFieldTableViewCell.swift in Sources */,
 				0205460616766808004A2A23 /* POIPresetValuePickerController.m in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
