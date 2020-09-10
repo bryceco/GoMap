@@ -7,6 +7,8 @@
 //
 
 final class EditFilterViewModel {
+    // MARK: Types
+    
     enum Operation: Int, CaseIterable {
         case equals
         case doesNotEqual
@@ -47,6 +49,8 @@ final class EditFilterViewModel {
         /// Cell that contains the picker view that allows the user to select an `Operation`.
         case operationPicker(operation: Operation)
     }
+    
+    // MARK: Public properties
     
     private(set) var sections = [Section]()
 }
