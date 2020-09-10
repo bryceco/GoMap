@@ -81,6 +81,16 @@ final class EditFilterViewModel {
 
     weak var delegate: EditFilterViewModelDelegate?
 
+    // MARK: Private properties
+
+    private var queries: [BaseObjectMatching]
+
+    // MARK: Initializer
+
+    init(queries: [BaseObjectMatching] = []) {
+        self.queries = queries
+    }
+
     // MARK: Public methods
 
     func addCondition() {
