@@ -49,7 +49,7 @@ final class EditFilterViewModel {
         let rows: [Row]
     }
     
-    enum Row {
+    enum Row: Equatable {
         /// Cell with a text field that can be edited.
         case textField(placeholder: String, value: String?)
         
