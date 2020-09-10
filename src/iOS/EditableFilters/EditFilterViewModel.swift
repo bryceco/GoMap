@@ -7,6 +7,10 @@
 //
 
 protocol EditFilterViewModelDelegate: AnyObject {
+    /// Asks the delegate to add a section at the given index.
+    /// - Parameter section: The index at which to add the section.
+    func addSection(_ section: Int)
+    
     /// Asks the delegate to add rows at the given `IndexPath`s.
     /// - Parameter indexPaths: The index paths at which to add row.
     func addRows(at indexPaths: [IndexPath])
