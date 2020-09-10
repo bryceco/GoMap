@@ -146,18 +146,32 @@ final class EditFilterViewModel {
         
         delegate?.setTextForTextLabelCell(at: IndexPath(row: 1, section: section), to: operation.humanReadableString)
         
-        /// Remove the last cell if the operation does not require a value.
-        guard sections[section].rows.count == 4 else {
-            /// The section only consists of three rows; nothing to remove.
-            return
-        }
-        
         let operationsThatDoNotRequireTagValue: [Operation] = [.exists, .doesNotExist]
         if operationsThatDoNotRequireTagValue.contains(operation) {
+            /// Remove the last cell if the operation does not require a value.
+            guard sections[section].rows.count == 4 else {
+                /// The section only consists of three rows; nothing to remove.
+                return
+            }
+            
             let indexOfTagValueCell = 3
             
             sections[section].rows.remove(at: indexOfTagValueCell)
             delegate?.removeRows(at: [IndexPath(row: indexOfTagValueCell, section: section)])
+        }
+        
+        let operationsThatDoRequireTagValue = Operation.allCases.filter { !operationsThatDoNotRequireTagValue.contains($0) }
+        if operationsThatDoRequireTagValue.contains(operation) {
+            /// Add the last cell if the operation does require a value.
+            guard sections[section].rows.count < 4 else {
+                /// The section already consists of four rows; nothing to add.
+                return
+            }
+            
+            let indexOfTagValueCell = 3
+            
+            sections[section].rows.insert(.textField(placeholder: "Value", value: nil), at: indexOfTagValueCell)
+            delegate?.addRows(at: [IndexPath(row: indexOfTagValueCell, section: section)])
         }
     }
 }

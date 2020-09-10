@@ -311,5 +311,79 @@ class EditFilterViewModelTestCase: XCTestCase {
         /// Then
         XCTAssertFalse(delegateMock.didCallRemoveRows)
     }
+    
+    func testChangeOperationForSection_whenSetToMatchesAndWasExistsBefore_shouldAskDelegateToAddLastCell() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        
+        /// Expand the picker.
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Change the operation mode once.
+        viewModel.changeOperationForSection(0, toOperation: .exists)
+        
+        /// Reset the delegate, so that we are able to tell whether `addRows(at:)` was called.
+        delegateMock = EditFilterViewModelDelegateMock()
+        viewModel.delegate = delegateMock
+        
+        /// Change the operation mode once more.
+        viewModel.changeOperationForSection(0, toOperation: .matches)
+        
+        /// Then
+        XCTAssertTrue(delegateMock.didCallAddRows)
+        XCTAssertEqual(delegateMock.addRowsIndexPaths, [IndexPath(row: 3, section: 0)])
+    }
+    
+    func testChangeOperationForSection_whenSetToEqualsAndWasDoesNotExistBefore_shouldAddRowToDataModel() {
+        /// Given
+        viewModel.addCondition()
+        viewModel.addCondition()
+        viewModel.addCondition()
+        
+        /// When
+        
+        /// Expand the picker.
+        viewModel.selectRow(at: IndexPath(row: 1, section: 2))
+        
+        /// Change the operation mode once.
+        viewModel.changeOperationForSection(2, toOperation: .doesNotExist)
+        
+        /// Reset the delegate, so that we are able to tell whether `addRows(at:)` was called.
+        delegateMock = EditFilterViewModelDelegateMock()
+        viewModel.delegate = delegateMock
+        
+        /// Change the operation mode once more.
+        viewModel.changeOperationForSection(2, toOperation: .equals)
+        
+        /// Then
+        let expectedFourthRow = EditFilterViewModel.Row.textField(placeholder: "Value", value: nil)
+        let fourthRow = viewModel.sections[2].rows[3]
+        XCTAssertEqual(fourthRow, expectedFourthRow)
+    }
+    
+    func testChangeOperationForSection_whenSetToMatchesAndWasDoesNotMatchBefore_shouldNotAskDelegateToAddLastCell() {
+        /// Given
+        viewModel.addCondition()
+        
+        /// When
+        
+        /// Expand the picker.
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+        
+        /// Change the operation mode once.
+        viewModel.changeOperationForSection(0, toOperation: .doesNotMatch)
+        
+        /// Reset the delegate, so that we are able to tell whether `addRows(at:)` was called.
+        delegateMock = EditFilterViewModelDelegateMock()
+        viewModel.delegate = delegateMock
+        
+        /// Change the operation mode once more.
+        viewModel.changeOperationForSection(0, toOperation: .matches)
+        
+        /// Then
+        XCTAssertFalse(delegateMock.didCallAddRows)
+    }
 
 }
