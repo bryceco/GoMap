@@ -65,4 +65,21 @@ final class EditFilterViewModel {
     private(set) var sections = [Section]()
     
     weak var delegate: EditFilterViewModelDelegate?
+    
+    // MARK: Public methods
+    
+    func addCondition() {
+        guard let defaultOperation = Operation.allCases.first else {
+            assertionFailure("Failed to determine the default operation for new condition.")
+            return
+        }
+        
+        let newSection = Section(rows: [.textField(placeholder: "Key", value: nil),
+                                        .operationPickerToggle(operation: defaultOperation),
+                                        .textField(placeholder: "Value", value: nil),])
+        sections.append(newSection)
+        
+        let indexOfNewSection = sections.count - 1
+        delegate?.addSection(indexOfNewSection)
+    }
 }
