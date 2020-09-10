@@ -14,15 +14,21 @@ class EditFilterViewModelTestCase: XCTestCase {
     var delegateMock: EditFilterViewModelDelegateMock!
 
     override func setUpWithError() throws {
-        viewModel = EditFilterViewModel()
-
-        delegateMock = EditFilterViewModelDelegateMock()
-        viewModel.delegate = delegateMock
+        setupViewModel()
     }
 
     override func tearDownWithError() throws {
         viewModel = nil
         delegateMock = nil
+    }
+
+    // MARK: Helper methods
+
+    private func setupViewModel(queries: [BaseObjectMatching] = []) {
+        viewModel = EditFilterViewModel(queries: queries)
+
+        delegateMock = EditFilterViewModelDelegateMock()
+        viewModel.delegate = delegateMock
     }
 
     // MARK: addCondition()
