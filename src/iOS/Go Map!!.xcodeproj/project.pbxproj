@@ -125,6 +125,8 @@
 		640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */; };
 		640C76CA250A111100BB4665 /* EditFilterViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */; };
 		640C76CE250A914900BB4665 /* BaseObjectMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CD250A914900BB4665 /* BaseObjectMatching.swift */; };
+		640C76D0250A91C400BB4665 /* RecursiveQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CF250A91C400BB4665 /* RecursiveQuery.swift */; };
+		640C76D3250A922A00BB4665 /* RecursiveQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */; };
 		640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
@@ -390,6 +392,8 @@
 		640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelTestCase.swift; sourceTree = "<group>"; };
 		640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelDelegateMock.swift; sourceTree = "<group>"; };
 		640C76CD250A914900BB4665 /* BaseObjectMatching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatching.swift; sourceTree = "<group>"; };
+		640C76CF250A91C400BB4665 /* RecursiveQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQuery.swift; sourceTree = "<group>"; };
+		640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQueryTestCase.swift; sourceTree = "<group>"; };
 		640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatcherMock.swift; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
@@ -812,6 +816,7 @@
 			isa = PBXGroup;
 			children = (
 				640C76CD250A914900BB4665 /* BaseObjectMatching.swift */,
+				640C76CF250A91C400BB4665 /* RecursiveQuery.swift */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -819,6 +824,7 @@
 		640C76D1250A91C900BB4665 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
+				640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -1199,6 +1205,7 @@
 				02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */,
 				02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */,
 				64981F1F22667D7700178476 /* ContactUsViewController.swift in Sources */,
+				640C76D0250A91C400BB4665 /* RecursiveQuery.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				025B99A3240DEF1D007E0342 /* aes.m in Sources */,
@@ -1244,6 +1251,7 @@
 				640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
+				640C76D3250A922A00BB4665 /* RecursiveQueryTestCase.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
 				640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
