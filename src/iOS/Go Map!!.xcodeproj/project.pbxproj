@@ -131,6 +131,8 @@
 		640C76D7250A930E00BB4665 /* KeyValueQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D6250A930E00BB4665 /* KeyValueQuery.swift */; };
 		640C76D9250A932A00BB4665 /* KeyValueQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */; };
 		640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */; };
+		640C76DD250A941A00BB4665 /* KeyExistsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DC250A941A00BB4665 /* KeyExistsQuery.swift */; };
+		640C76DF250A943900BB4665 /* KeyExistsQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -401,6 +403,8 @@
 		640C76D6250A930E00BB4665 /* KeyValueQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueQuery.swift; sourceTree = "<group>"; };
 		640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueQueryTestCase.swift; sourceTree = "<group>"; };
 		640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmBaseObject+Make.swift"; sourceTree = "<group>"; };
+		640C76DC250A941A00BB4665 /* KeyExistsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQuery.swift; sourceTree = "<group>"; };
+		640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQueryTestCase.swift; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -822,6 +826,7 @@
 			isa = PBXGroup;
 			children = (
 				640C76CD250A914900BB4665 /* BaseObjectMatching.swift */,
+				640C76DC250A941A00BB4665 /* KeyExistsQuery.swift */,
 				640C76D6250A930E00BB4665 /* KeyValueQuery.swift */,
 				640C76CF250A91C400BB4665 /* RecursiveQuery.swift */,
 			);
@@ -831,6 +836,7 @@
 		640C76D1250A91C900BB4665 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
+				640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */,
 				640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */,
 				640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */,
 			);
@@ -1162,6 +1168,7 @@
 				6453776A23D38FA200656A1C /* OsmNode.m in Sources */,
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
 				025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */,
+				640C76DD250A941A00BB4665 /* KeyExistsQuery.swift in Sources */,
 				024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */,
 				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
@@ -1266,6 +1273,7 @@
 				640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
+				640C76DF250A943900BB4665 /* KeyExistsQueryTestCase.swift in Sources */,
 				640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */,
 				640C76D9250A932A00BB4665 /* KeyValueQueryTestCase.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
