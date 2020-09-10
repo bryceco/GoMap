@@ -89,6 +89,29 @@ final class EditFilterViewModel {
 
     init(queries: [BaseObjectMatching] = []) {
         self.queries = queries
+
+        sections = queries.compactMap { query in
+            if let keyExistsQuery = query as? KeyExistsQuery {
+                let operation: Operation = keyExistsQuery.isNegated ? .doesNotExist : .exists
+
+                return Section(rows: [.textField(placeholder: "Key", value: keyExistsQuery.key),
+                                      .operationPickerToggle(operation: operation)])
+            } else if let keyValueQuery = query as? KeyValueQuery {
+                let operation: Operation = keyValueQuery.isNegated ? .doesNotEqual : .equals
+
+                return Section(rows: [.textField(placeholder: "Key", value: keyValueQuery.key),
+                                      .operationPickerToggle(operation: operation),
+                                      .textField(placeholder: "Value", value: keyValueQuery.value)])
+            } else if let regularExpressionQuery = query as? RegularExpressionQuery {
+                let operation: Operation = regularExpressionQuery.isNegated ? .doesNotMatch : .matches
+
+                return Section(rows: [.textField(placeholder: "Key", value: regularExpressionQuery.key),
+                                      .operationPickerToggle(operation: operation),
+                                      .textField(placeholder: "Value", value: regularExpressionQuery.value)])
+            }
+
+            return nil
+        }
     }
 
     // MARK: Public methods

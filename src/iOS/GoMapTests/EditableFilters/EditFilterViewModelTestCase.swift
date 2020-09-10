@@ -31,6 +31,112 @@ class EditFilterViewModelTestCase: XCTestCase {
         viewModel.delegate = delegateMock
     }
 
+    // MARK: init(queries:)
+
+    func testInit_whenFirstQueryIsKeyExistsQuery_shouldResultInOneSectionWithTextFieldCellAndExistsOperationToggleCell() {
+        /// Given
+        let key = "some-key"
+        let query = KeyExistsQuery(key: key)
+
+        /// When
+        setupViewModel(queries: [query])
+
+        /// Then
+        XCTAssertEqual(viewModel.sections.count, 1)
+
+        let expectedRows = [EditFilterViewModel.Row.textField(placeholder: "Key", value: key),
+                            EditFilterViewModel.Row.operationPickerToggle(operation: .exists)]
+        XCTAssertEqual(viewModel.sections[0].rows, expectedRows)
+    }
+
+    func testInit_whenFirstQueryIsNegatedKeyExistsQuery_shouldResultInOneSectionWithTextFieldCellAndDoesNotExistOperationToggleCell() {
+        /// Given
+        let key = "some-key"
+        let query = KeyExistsQuery(key: key, isNegated: true)
+
+        /// When
+        setupViewModel(queries: [query])
+
+        /// Then
+        XCTAssertEqual(viewModel.sections.count, 1)
+
+        let expectedRows = [EditFilterViewModel.Row.textField(placeholder: "Key", value: key),
+                            EditFilterViewModel.Row.operationPickerToggle(operation: .doesNotExist)]
+        XCTAssertEqual(viewModel.sections[0].rows, expectedRows)
+    }
+
+    func testInit_whenFirstQueryIsKeyValueQuery_shouldResultInOneSectionWithTextFieldCellAndEqualsOperationToggleCellAndAnotherTextFieldCell() {
+        /// Given
+        let key = "some-key"
+        let value = "example-value"
+        let query = KeyValueQuery(key: key, value: value)
+
+        /// When
+        setupViewModel(queries: [query])
+
+        /// Then
+        XCTAssertEqual(viewModel.sections.count, 1)
+
+        let expectedRows = [EditFilterViewModel.Row.textField(placeholder: "Key", value: key),
+                            EditFilterViewModel.Row.operationPickerToggle(operation: .equals),
+                            EditFilterViewModel.Row.textField(placeholder: "Value", value: value)]
+        XCTAssertEqual(viewModel.sections[0].rows, expectedRows)
+    }
+
+    func testInit_whenFirstQueryIsNegatedKeyValueQuery_shouldResultInOneSectionWithTextFieldCellAndDoesNotEqualOperationToggleCellAndAnotherTextFieldCell() {
+        /// Given
+        let key = "some-key"
+        let value = "example-value"
+        let query = KeyValueQuery(key: key, value: value, isNegated: true)
+
+        /// When
+        setupViewModel(queries: [query])
+
+        /// Then
+        XCTAssertEqual(viewModel.sections.count, 1)
+
+        let expectedRows = [EditFilterViewModel.Row.textField(placeholder: "Key", value: key),
+                            EditFilterViewModel.Row.operationPickerToggle(operation: .doesNotEqual),
+                            EditFilterViewModel.Row.textField(placeholder: "Value", value: value)]
+        XCTAssertEqual(viewModel.sections[0].rows, expectedRows)
+    }
+
+    func testInit_whenFirstQueryIsRegularExpressionQuery_shouldResultInOneSectionWithTextFieldCellAndMatchesOperationToggleCellAndAnotherTextFieldCell() {
+        /// Given
+        let key = "man_*"
+        let value = "surveill*"
+        let query = RegularExpressionQuery(key: key, value: value)
+
+        /// When
+        setupViewModel(queries: [query])
+
+        /// Then
+        XCTAssertEqual(viewModel.sections.count, 1)
+
+        let expectedRows = [EditFilterViewModel.Row.textField(placeholder: "Key", value: key),
+                            EditFilterViewModel.Row.operationPickerToggle(operation: .matches),
+                            EditFilterViewModel.Row.textField(placeholder: "Value", value: value)]
+        XCTAssertEqual(viewModel.sections[0].rows, expectedRows)
+    }
+
+    func testInit_whenFirstQueryNegatedIsRegularExpressionQuery_shouldResultInOneSectionWithTextFieldCellAndDoesNotMatchOperationToggleCellAndAnotherTextFieldCell() {
+        /// Given
+        let key = "man_*"
+        let value = "surveill*"
+        let query = RegularExpressionQuery(key: key, value: value, isNegated: true)
+
+        /// When
+        setupViewModel(queries: [query])
+
+        /// Then
+        XCTAssertEqual(viewModel.sections.count, 1)
+
+        let expectedRows = [EditFilterViewModel.Row.textField(placeholder: "Key", value: key),
+                            EditFilterViewModel.Row.operationPickerToggle(operation: .doesNotMatch),
+                            EditFilterViewModel.Row.textField(placeholder: "Value", value: value)]
+        XCTAssertEqual(viewModel.sections[0].rows, expectedRows)
+    }
+
     // MARK: addCondition()
 
     func testAddCondition_shouldAskDelegateToInsertSection() {
