@@ -145,6 +145,7 @@
 		6463E3CB23F948FE00E4F6ED /* GeekbenchScoreProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
+		6487A63D25094E5400F40053 /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */; };
 		6487A63F25094F6800F40053 /* EditFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A63E25094F6800F40053 /* EditFilterViewModel.swift */; };
 		64981F1F22667D7700178476 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* ContactUsViewController.swift */; };
 		64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* PresetKeyTagCase.swift */; };
@@ -416,6 +417,7 @@
 		6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeekbenchScoreProvider.m; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
+		6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
 		6487A63E25094F6800F40053 /* EditFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModel.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* PresetKeyTagCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyTagCase.swift; sourceTree = "<group>"; };
@@ -872,6 +874,14 @@
 			path = Upload;
 			sourceTree = "<group>";
 		};
+		6487A63B25094E4300F40053 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		64981F1D22667D7700178476 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +915,7 @@
 		64DBF15625091A6300D67C31 /* EditableFilters */ = {
 			isa = PBXGroup;
 			children = (
+				6487A63B25094E4300F40053 /* Cells */,
 				6487A63E25094F6800F40053 /* EditFilterViewModel.swift */,
 			);
 			path = EditableFilters;
@@ -1137,6 +1148,7 @@
 				02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */,
 				6453777623D3959500656A1C /* IsOsmBooleanFalse.m in Sources */,
 				6453777023D3913100656A1C /* OsmRelation.m in Sources */,
+				6487A63D25094E5400F40053 /* PickerViewTableViewCell.swift in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
