@@ -128,6 +128,8 @@
 		640C76D0250A91C400BB4665 /* RecursiveQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CF250A91C400BB4665 /* RecursiveQuery.swift */; };
 		640C76D3250A922A00BB4665 /* RecursiveQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */; };
 		640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */; };
+		640C76D7250A930E00BB4665 /* KeyValueQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D6250A930E00BB4665 /* KeyValueQuery.swift */; };
+		640C76D9250A932A00BB4665 /* KeyValueQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */; };
 		640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
@@ -396,6 +398,8 @@
 		640C76CF250A91C400BB4665 /* RecursiveQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQuery.swift; sourceTree = "<group>"; };
 		640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQueryTestCase.swift; sourceTree = "<group>"; };
 		640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatcherMock.swift; sourceTree = "<group>"; };
+		640C76D6250A930E00BB4665 /* KeyValueQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueQuery.swift; sourceTree = "<group>"; };
+		640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueQueryTestCase.swift; sourceTree = "<group>"; };
 		640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmBaseObject+Make.swift"; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
@@ -818,6 +822,7 @@
 			isa = PBXGroup;
 			children = (
 				640C76CD250A914900BB4665 /* BaseObjectMatching.swift */,
+				640C76D6250A930E00BB4665 /* KeyValueQuery.swift */,
 				640C76CF250A91C400BB4665 /* RecursiveQuery.swift */,
 			);
 			path = Queries;
@@ -826,6 +831,7 @@
 		640C76D1250A91C900BB4665 /* Queries */ = {
 			isa = PBXGroup;
 			children = (
+				640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */,
 				640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */,
 			);
 			path = Queries;
@@ -1165,6 +1171,7 @@
 				0223DB531675D53200D6F825 /* POIFeaturePickerViewController.m in Sources */,
 				6453777323D391CC00656A1C /* OsmMember.m in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
+				640C76D7250A930E00BB4665 /* KeyValueQuery.swift in Sources */,
 				64DBF15825091A8A00D67C31 /* EditFilterViewController.swift in Sources */,
 				0223DB5716765C9000D6F825 /* POIFeaturePresetsViewController.m in Sources */,
 				6487A6412509515600F40053 /* TextFieldTableViewCell.swift in Sources */,
@@ -1260,6 +1267,7 @@
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
 				640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */,
+				640C76D9250A932A00BB4665 /* KeyValueQueryTestCase.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
