@@ -14,6 +14,10 @@ protocol EditFilterViewModelDelegate: AnyObject {
     /// Asks the delegate to add rows at the given `IndexPath`s.
     /// - Parameter indexPaths: The index paths at which to add row.
     func addRows(at indexPaths: [IndexPath])
+    
+    /// Asks the delegate to show the keyboard and make the `UITextField` in the cell at the given `IndexPath` the first responder.
+    /// - Parameter indexPath: The index path for the text field cell that the keyboard should be shown for.
+    func showKeyboardForTextFieldCell(at indexPath: IndexPath)
 }
 
 final class EditFilterViewModel {
@@ -81,5 +85,7 @@ final class EditFilterViewModel {
         
         let indexOfNewSection = sections.count - 1
         delegate?.addSection(indexOfNewSection)
+        
+        delegate?.showKeyboardForTextFieldCell(at: IndexPath(row: 0, section: indexOfNewSection))
     }
 }

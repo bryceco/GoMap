@@ -14,6 +14,9 @@ final class EditFilterViewModelDelegateMock: NSObject {
     
     private(set) var didCallAddRows = false
     private(set) var addRowsIndexPaths = [IndexPath]()
+    
+    private(set) var didCallShowKeyboardForTextFieldCell = false
+    private(set) var textFieldCellIndexPath: IndexPath?
 }
 
 extension EditFilterViewModelDelegateMock: EditFilterViewModelDelegate {
@@ -27,5 +30,11 @@ extension EditFilterViewModelDelegateMock: EditFilterViewModelDelegate {
         didCallAddRows = true
         
         addRowsIndexPaths = indexPaths
+    }
+    
+    func showKeyboardForTextFieldCell(at indexPath: IndexPath) {
+        didCallShowKeyboardForTextFieldCell = true
+        
+        textFieldCellIndexPath = indexPath
     }
 }

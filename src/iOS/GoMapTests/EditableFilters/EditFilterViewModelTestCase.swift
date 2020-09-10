@@ -102,5 +102,23 @@ class EditFilterViewModelTestCase: XCTestCase {
         let expectedRow: EditFilterViewModel.Row = .textField(placeholder: "Value", value: nil)
         XCTAssertEqual(viewModel.sections.last?.rows[2], expectedRow)
     }
+    
+    func testAddCondition_shouldAskDelegateToShowKeyboardForFirstCellInNewSection() {
+        /// Given
+        viewModel.addCondition()
+        viewModel.addCondition()
+        viewModel.addCondition()
+        
+        /// Reset the delegate, since the `showKeyboardForTextFieldCell(at:)` will be called again.
+        delegateMock = EditFilterViewModelDelegateMock()
+        viewModel.delegate = delegateMock
+        
+        /// When
+        viewModel.addCondition()
+        
+        /// Then
+        XCTAssertTrue(delegateMock.didCallShowKeyboardForTextFieldCell)
+        XCTAssertEqual(delegateMock.textFieldCellIndexPath, IndexPath(row: 0, section: 3))
+    }
 
 }
