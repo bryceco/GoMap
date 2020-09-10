@@ -32,4 +32,24 @@ final class EditFilterViewModel {
             }
         }
     }
+    
+    struct Section {
+        let rows: [Row]
+    }
+    
+    enum Row {
+        /// Cell with a text field that can be edited.
+        case textField(placeholder: String, value: String?)
+        
+        /// Cell that toggles the picker view.
+        case operationPickerToggle(operation: Operation)
+        
+        /// Cell that contains the picker view that allows the user to select an `Operation`.
+        case operationPicker(operation: Operation)
+    }
+    
+    private(set) var sections = [Section(rows: [.textField(placeholder: "Tag", value: "amenity"),
+                                                .operationPickerToggle(operation: .equals),
+                                                .operationPicker(operation: .equals),
+                                                .textField(placeholder: "Value", value: "bench")])]
 }
