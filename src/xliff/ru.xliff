@@ -98,7 +98,7 @@
       </trans-unit>
       <trans-unit id="%.2f MB, %d files" xml:space="preserve">
         <source>%1$.2f MB, %2$d files</source>
-        <target>%1$.2f МБ, %2$d файлы</target>
+        <target>%1$.2f МБ, %2$d файлов</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -243,7 +243,7 @@
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
-        <target>Фоновые изображения %@</target>
+        <target>Подложка %@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
