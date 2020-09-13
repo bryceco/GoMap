@@ -15,6 +15,12 @@ class ErrorTableViewCell: UITableViewCell {
 
     // MARK: Lifecycle
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        selectionStyle = .none
+    }
+
     // MARK: Public methods
 
     func update(errors: [String]) {
