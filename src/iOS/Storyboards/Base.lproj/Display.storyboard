@@ -103,10 +103,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ErrorCell" id="AIl-s3-EYz" customClass="ErrorTableViewCell" customModule="Go_Map__" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="403.5" width="320" height="112.5"/>
+                                <rect key="frame" x="0.0" y="403.5" width="320" height="116.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIl-s3-EYz" id="YCZ-tV-8xF">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="112.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="116.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Errors:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zb2-f3-Ajq">
@@ -115,17 +115,24 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fll-Nh-7ak" userLabel="ErrorIndicator">
+                                            <rect key="frame" x="17" y="35.5" width="3" height="70"/>
+                                            <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="3" id="buB-gH-DPS"/>
+                                            </constraints>
+                                        </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Dfg-wW-oKe">
-                                            <rect key="frame" x="16" y="31.5" width="288" height="69.5"/>
+                                            <rect key="frame" x="28" y="35.5" width="276" height="69.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key must not be empty" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eco-Vs-bRy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="288" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="276" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value must be a valid regular expression" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yD3-0N-CJ9">
-                                                    <rect key="frame" x="0.0" y="28.5" width="288" height="41"/>
+                                                    <rect key="frame" x="0.0" y="28.5" width="276" height="41"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -134,12 +141,15 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="leading" secondItem="Fll-Nh-7ak" secondAttribute="trailing" constant="8" id="18M-Ha-H0s"/>
                                         <constraint firstItem="Zb2-f3-Ajq" firstAttribute="top" secondItem="YCZ-tV-8xF" secondAttribute="topMargin" id="6S9-Za-2AC"/>
                                         <constraint firstItem="Zb2-f3-Ajq" firstAttribute="leading" secondItem="YCZ-tV-8xF" secondAttribute="leadingMargin" id="CyQ-KX-STr"/>
-                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="leading" secondItem="YCZ-tV-8xF" secondAttribute="leadingMargin" id="EGb-KK-FLk"/>
+                                        <constraint firstItem="Fll-Nh-7ak" firstAttribute="top" secondItem="Zb2-f3-Ajq" secondAttribute="bottom" constant="4" id="Fhl-BW-Tsn"/>
                                         <constraint firstItem="Dfg-wW-oKe" firstAttribute="trailing" secondItem="YCZ-tV-8xF" secondAttribute="trailingMargin" id="JGk-hJ-ZeS"/>
-                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="top" secondItem="Zb2-f3-Ajq" secondAttribute="bottom" id="Roi-sX-omI"/>
+                                        <constraint firstItem="Fll-Nh-7ak" firstAttribute="leading" secondItem="YCZ-tV-8xF" secondAttribute="leadingMargin" constant="1" id="KXT-Q4-5qT"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="top" secondItem="Zb2-f3-Ajq" secondAttribute="bottom" constant="4" id="Roi-sX-omI"/>
                                         <constraint firstItem="Zb2-f3-Ajq" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="YCZ-tV-8xF" secondAttribute="trailingMargin" id="Taj-ch-TI1"/>
+                                        <constraint firstItem="Fll-Nh-7ak" firstAttribute="bottom" secondItem="YCZ-tV-8xF" secondAttribute="bottomMargin" id="f6c-oa-lRB"/>
                                         <constraint firstItem="Dfg-wW-oKe" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="YCZ-tV-8xF" secondAttribute="bottomMargin" id="mfg-ty-gah"/>
                                     </constraints>
                                 </tableViewCellContentView>
