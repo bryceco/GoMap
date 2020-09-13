@@ -364,6 +364,22 @@
 		02C31960250EB3DC00C5D200 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02C31961250EB3DC00C5D200 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		02C31962250EB3DC00C5D200 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02C31979250EB9C600C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Display.strings; sourceTree = "<group>"; };
+		02C3197B250EB9DD00C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Height.strings; sourceTree = "<group>"; };
+		02C3197D250EB9E700C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		02C3197F250EB9EB00C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		02C31981250EB9F100C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/POI.strings; sourceTree = "<group>"; };
+		02C31982250EBA1000C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02C31983250EBA1700C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02C31985250EBA2E00C5D200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Changeset.strings; sourceTree = "<group>"; };
+		02C3198E250EBAAD00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Height.strings; sourceTree = "<group>"; };
+		02C3198F250EBAAD00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Display.strings; sourceTree = "<group>"; };
+		02C31990250EBADA00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		02C31991250EBADA00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Settings.strings; sourceTree = "<group>"; };
+		02C31992250EBADB00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/POI.strings; sourceTree = "<group>"; };
+		02C31993250EBADB00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Changeset.strings; sourceTree = "<group>"; };
+		02C31994250EBADB00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02C31995250EBADB00C5D200 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02C3C73219A5A40C003B6783 /* AerialListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AerialListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C3C73319A5A40C003B6783 /* AerialListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AerialListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02C3C73519A5D679003B6783 /* AerialEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AerialEditViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1016,6 +1032,7 @@
 				Base,
 				ja,
 				ru,
+				fi,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
@@ -1230,6 +1247,8 @@
 				027AB509250E9D0600C404CD /* Base */,
 				02C31952250EB08700C5D200 /* ja */,
 				02C3195E250EB3DC00C5D200 /* ru */,
+				02C3197F250EB9EB00C5D200 /* en */,
+				02C31991250EBADA00C5D200 /* fi */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -1240,6 +1259,8 @@
 				027AB50A250E9D0700C404CD /* Base */,
 				02C31953250EB08700C5D200 /* ja */,
 				02C3195F250EB3DC00C5D200 /* ru */,
+				02C31981250EB9F100C5D200 /* en */,
+				02C31992250EBADB00C5D200 /* fi */,
 			);
 			name = POI.storyboard;
 			sourceTree = "<group>";
@@ -1250,6 +1271,8 @@
 				027AB508250E9D0600C404CD /* Base */,
 				02C3194F250EB05900C5D200 /* ja */,
 				02C3195B250EB3AF00C5D200 /* ru */,
+				02C3197B250EB9DD00C5D200 /* en */,
+				02C3198E250EBAAD00C5D200 /* fi */,
 			);
 			name = Height.storyboard;
 			sourceTree = "<group>";
@@ -1260,6 +1283,8 @@
 				027AB50B250E9D0700C404CD /* Base */,
 				02C31954250EB08700C5D200 /* ja */,
 				02C31960250EB3DC00C5D200 /* ru */,
+				02C31985250EBA2E00C5D200 /* en */,
+				02C31993250EBADB00C5D200 /* fi */,
 			);
 			name = Changeset.storyboard;
 			sourceTree = "<group>";
@@ -1270,6 +1295,8 @@
 				027AB506250E9D0600C404CD /* Base */,
 				02C31950250EB05900C5D200 /* ja */,
 				02C3195C250EB3AF00C5D200 /* ru */,
+				02C31979250EB9C600C5D200 /* en */,
+				02C3198F250EBAAD00C5D200 /* fi */,
 			);
 			name = Display.storyboard;
 			sourceTree = "<group>";
@@ -1279,6 +1306,8 @@
 			children = (
 				02C31955250EB08700C5D200 /* ja */,
 				02C31961250EB3DC00C5D200 /* ru */,
+				02C31982250EBA1000C5D200 /* en */,
+				02C31994250EBADB00C5D200 /* fi */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1289,6 +1318,8 @@
 				027AB507250E9D0600C404CD /* Base */,
 				02C31951250EB08600C5D200 /* ja */,
 				02C3195D250EB3DC00C5D200 /* ru */,
+				02C3197D250EB9E700C5D200 /* en */,
+				02C31990250EBADA00C5D200 /* fi */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -1298,6 +1329,8 @@
 			children = (
 				02C31956250EB08700C5D200 /* ja */,
 				02C31962250EB3DC00C5D200 /* ru */,
+				02C31983250EBA1700C5D200 /* en */,
+				02C31995250EBADB00C5D200 /* fi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
