@@ -12,8 +12,8 @@ enum Filter {
         case or
     }
 
-    case keyExists(key: String, isNegated: Bool)
-    case keyValue(key: String, value: String, isNegated: Bool)
-    case regularExpression(key: String, value: String, isNegated: Bool)
+    case keyExists(key: String, isNegated: Bool = false)
+    case keyValue(key: String, value: String, isNegated: Bool = false)
+    case regularExpression(key: String, value: String, isNegated: Bool = false)
     case recursive(logical: RecursiveLogical, filters: [Filter])
 }
