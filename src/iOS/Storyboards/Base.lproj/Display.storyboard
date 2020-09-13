@@ -101,6 +101,48 @@
                                     <outlet property="textField" destination="JGE-ny-9WT" id="NCB-pu-5SQ"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="AIl-s3-EYz">
+                                <rect key="frame" x="0.0" y="403.5" width="320" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIl-s3-EYz" id="YCZ-tV-8xF">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Errors:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zb2-f3-Ajq">
+                                            <rect key="frame" x="16" y="11" width="51" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Dfg-wW-oKe">
+                                            <rect key="frame" x="16" y="31.5" width="288" height="61.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key must not be empty" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eco-Vs-bRy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="288" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value must be a valid regular expression" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yD3-0N-CJ9">
+                                                    <rect key="frame" x="0.0" y="20.5" width="288" height="41"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Zb2-f3-Ajq" firstAttribute="top" secondItem="YCZ-tV-8xF" secondAttribute="topMargin" id="6S9-Za-2AC"/>
+                                        <constraint firstItem="Zb2-f3-Ajq" firstAttribute="leading" secondItem="YCZ-tV-8xF" secondAttribute="leadingMargin" id="CyQ-KX-STr"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="leading" secondItem="YCZ-tV-8xF" secondAttribute="leadingMargin" id="EGb-KK-FLk"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="trailing" secondItem="YCZ-tV-8xF" secondAttribute="trailingMargin" id="JGk-hJ-ZeS"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="top" secondItem="Zb2-f3-Ajq" secondAttribute="bottom" id="Roi-sX-omI"/>
+                                        <constraint firstItem="Zb2-f3-Ajq" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="YCZ-tV-8xF" secondAttribute="trailingMargin" id="Taj-ch-TI1"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="YCZ-tV-8xF" secondAttribute="bottomMargin" id="mfg-ty-gah"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="Y3T-AJ-l1d" id="71M-6M-1CO"/>
@@ -1321,7 +1363,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             <objects>
                 <navigationController storyboardIdentifier="DisplayViewController" id="3il-wo-nAN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="DisplayViewController" insetsLayoutMarginsFromSafeArea="NO" id="6od-EN-7Ax">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbm-5N-YoL">
