@@ -135,6 +135,7 @@
 		640C76DF250A943900BB4665 /* KeyExistsQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */; };
 		640C76E1250A949200BB4665 /* RegularExpressionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */; };
 		640C76E3250A94B000BB4665 /* RegularExpressionQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E2250A94B000BB4665 /* RegularExpressionQueryTestCase.swift */; };
+		640C76EA250E762100BB4665 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E9250E762100BB4665 /* Filter.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -409,6 +410,7 @@
 		640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQueryTestCase.swift; sourceTree = "<group>"; };
 		640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpressionQuery.swift; sourceTree = "<group>"; };
 		640C76E2250A94B000BB4665 /* RegularExpressionQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpressionQueryTestCase.swift; sourceTree = "<group>"; };
+		640C76E9250E762100BB4665 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -834,6 +836,7 @@
 				640C76D6250A930E00BB4665 /* KeyValueQuery.swift */,
 				640C76CF250A91C400BB4665 /* RecursiveQuery.swift */,
 				640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */,
+				640C76E9250E762100BB4665 /* Filter.swift */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -1205,6 +1208,7 @@
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				02354F782462526A00878A04 /* PersistentWebCache.m in Sources */,
+				640C76EA250E762100BB4665 /* Filter.swift in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
 				3E49F4B224DFA64800A347BB /* RulerView.m in Sources */,
