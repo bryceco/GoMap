@@ -6,7 +6,7 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-enum Filter {
+enum Filter: Equatable {
     enum RecursiveLogical: Int, Codable {
         case and
         case or
