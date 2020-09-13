@@ -107,7 +107,13 @@
                             <outlet property="delegate" destination="Y3T-AJ-l1d" id="Eqa-GM-1AQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit Conditions" id="Ari-lp-NeO"/>
+                    <navigationItem key="navigationItem" title="Edit Conditions" id="Ari-lp-NeO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="s50-86-oyt">
+                            <connections>
+                                <action selector="didTapAddConditionButton" destination="Y3T-AJ-l1d" id="x6u-9I-eV7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TKg-K7-Llh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -19,15 +19,11 @@ class EditFilterViewController: UITableViewController {
         super.viewDidLoad()
 
         viewModel.delegate = self
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                                            target: self,
-                                                            action: #selector(didTapAddConditionButton))
     }
 
     // MARK: - Private methods
 
-    @objc private func didTapAddConditionButton() {
+    @IBAction private func didTapAddConditionButton() {
         viewModel.addCondition()
     }
 
