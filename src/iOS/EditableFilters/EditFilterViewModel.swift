@@ -73,6 +73,9 @@ final class EditFilterViewModel {
 
         /// Cell that contains the picker view that allows the user to select an `Operation`.
         case operationPicker(operation: Operation)
+
+        /// Cell that indicates that there have been errors during validation.
+        case error(errors: [String])
     }
 
     // MARK: Public properties

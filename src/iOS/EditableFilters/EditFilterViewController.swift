@@ -12,6 +12,7 @@ class EditFilterViewController: UITableViewController {
     private let textFieldCellReuseIdentifier = "TextFieldCell"
     private let textLabelCellReuseIdentifier = "TextLabelCell"
     private let pickerViewCellReuseIdentifier = "PickerViewCell"
+    private let errorCellReuseIdentifier = "ErrorCell"
 
     private let viewModel = EditFilterViewModel()
 
@@ -62,6 +63,11 @@ class EditFilterViewController: UITableViewController {
             pickerViewCell.delegate = self
 
             cell = pickerViewCell
+        case let .error(errors):
+            let errorCell = tableView.dequeueReusableCell(withIdentifier: errorCellReuseIdentifier, for: indexPath) as! ErrorTableViewCell
+            errorCell.update(errors: errors)
+
+            cell = errorCell
         }
 
         return cell
