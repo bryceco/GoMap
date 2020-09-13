@@ -47,6 +47,12 @@ static const NSInteger CACHE_SECTION			= 3;
 	editor.enableObjectFilters = sender.on;
 }
 
+-(void)setButtonLayoutTitle
+{
+	NSString * title = AppDelegate.shared.mapView.mainViewController.buttonLayout == BUTTON_LAYOUT_ADD_ON_LEFT ? @"Left" : @"Right";
+	[_addButtonPosition setTitle:title forState:UIControlStateNormal];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -65,6 +71,24 @@ static const NSInteger CACHE_SECTION			= 3;
 	_gpxLoggingSwitch.on		= mapView.enableGpxLogging;
 	_turnRestrictionSwitch.on	= mapView.enableTurnRestriction;
 	_objectFiltersSwitch.on		= mapView.editorLayer.enableObjectFilters;
+
+	[self setButtonLayoutTitle];
+}
+
+-(IBAction)chooseAddButtonPosition:(id)sender
+{
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"+ Button Position",nil)
+																	message:NSLocalizedString(@"The + button can be positioned on either the left or right side of the screen",nil)
+															 preferredStyle:UIAlertControllerStyleAlert];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Left side",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT_ADD_ON_LEFT;
+		[self setButtonLayoutTitle];
+	}]];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Right side",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT_ADD_ON_RIGHT;
+		[self setButtonLayoutTitle];
+	}]];
+	[self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
