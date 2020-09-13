@@ -1,0 +1,81 @@
+/* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
+"1xx-L0-hKm.text" = "";
+
+/* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
+"2.title" = "Ensimmäinen";
+
+/* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
+"2g1-vb-Cjc.normalTitle" = "Kommentti";
+
+/* Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC"; */
+"2Ka-IT-DQC.normalTitle" = "";
+
+/* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
+"7Ua-cx-BHI.title" = "Lähetä";
+
+/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; */
+"9G2-Gl-CeP.text" = "";
+
+/* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
+"9hH-Ja-fKn.text" = "Uusi kommentti:";
+
+/* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
+"ach-1A-88x.text" = "";
+
+/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityHint" = "";
+
+/* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityLabel" = "Kompassi";
+
+/* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
+"FaM-WV-S6I.title" = "";
+
+/* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
+"Fo4-Nq-pAz.normalTitle" = "";
+
+/* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
+"gdu-Sf-XrE.title" = "";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
+"l7S-YL-RKK.text" = "Alaotsikko";
+
+/* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
+"MBY-TK-Wuy.title" = "";
+
+/* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
+"N5Q-nV-TPG.text" = "";
+
+/* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
+"OJ0-aO-ri1.normalTitle" = "";
+
+/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; */
+"PHk-s9-onx.text" = "";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
+"qP9-Sc-sc4.text" = "Nimike";
+
+/* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
+"Qz0-Ce-YCX.title" = "Bing-kartat";
+
+/* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
+"siu-I6-IEp.title" = "";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
+"stf-JU-iga.text" = "Otsikko";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
+"vRO-Aj-Sdr.text" = "Otsikko";
+
+/* Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai"; */
+"xw9-Ro-Fai.placeholder" = "Niagaran putoukset";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[0]" = "Tagit";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[1]" = "Poista";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[2]" = "Lisää…";
+
