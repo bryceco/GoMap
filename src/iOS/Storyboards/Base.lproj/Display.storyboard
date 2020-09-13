@@ -1204,7 +1204,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             <objects>
                 <navigationController storyboardIdentifier="DisplayViewController" id="3il-wo-nAN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="DisplayViewController" insetsLayoutMarginsFromSafeArea="NO" id="6od-EN-7Ax">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbm-5N-YoL">
@@ -1501,7 +1501,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         <rect key="frame" x="0.0" y="639.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQI-EZ-rd6" id="pIi-Ie-btg">
-                                            <rect key="frame" x="0.0" y="0.0" width="293" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="301" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Filters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxX-tl-ZLH">

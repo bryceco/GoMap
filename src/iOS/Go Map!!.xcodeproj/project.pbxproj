@@ -50,6 +50,10 @@
 		025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 025F1CF31BCD9B070097D7FE /* TapAndDragGesture.m */; };
 		0260484219E66C8700415CB1 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0260484119E66C8700415CB1 /* DisplayLink.m */; };
 		02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02695B8C1A08C1DB0028D95E /* NotesTableViewController.m */; };
+		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
+		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
+		027AB500250E9C9B00C404CD /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB502250E9C9B00C404CD /* Height.storyboard */; };
+		027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB505250E9CA500C404CD /* Changeset.storyboard */; };
 		027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AD5D119F5A18700120654 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		027EDC70206F3EED00D349D6 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC60206F3EED00D349D6 /* DDXMLElement.m */; };
 		027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC64206F3EED00D349D6 /* DDXMLElementAdditions.m */; };
@@ -64,13 +68,10 @@
 		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
-		0291D8392442815100F793BE /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D8382442815100F793BE /* Settings.storyboard */; };
-		0291D83C24428CBB00F793BE /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83B24428CBB00F793BE /* POI.storyboard */; };
 		0296873F167E30C700B8FF2C /* PushPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0296873E167E30C700B8FF2C /* PushPinView.m */; };
 		02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A077D1167A77A400686261 /* POIAllTagsViewController.m */; };
 		02A194B019C69701002338DA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A194AF19C69701002338DA /* Database.m */; };
 		02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A194B119C6A432002338DA /* libsqlite3.0.dylib */; };
-		02A229E824454838000DA9F4 /* Changeset.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02A229E724454838000DA9F4 /* Changeset.storyboard */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
@@ -96,7 +97,6 @@
 		02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B69D0F1BF5A66B002605A3 /* LanguageTableViewController.m */; };
-		02BC04E824C6766100BFA5EF /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02BC04E724C6766100BFA5EF /* Height.storyboard */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED98D168BF87200357B94 /* NearbyMappersViewController.m */; };
 		02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02BED99B168CBC5400357B94 /* LocationBallLayer.m */; };
@@ -249,6 +249,12 @@
 		02695B8B1A08C1DB0028D95E /* NotesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NotesTableViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02695B8C1A08C1DB0028D95E /* NotesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NotesTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
+		027AB507250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		027AB508250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Height.storyboard; sourceTree = "<group>"; };
+		027AB509250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		027AB50A250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/POI.storyboard; sourceTree = "<group>"; };
+		027AB50B250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Changeset.storyboard; sourceTree = "<group>"; };
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
 		027EDC5E206F3EED00D349D6 /* DDXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLDocument.h; sourceTree = "<group>"; };
@@ -276,9 +282,6 @@
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		029043A11682797A00BE3480 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		029043A21682797A00BE3480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		0291D83624427AFA00F793BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
-		0291D8382442815100F793BE /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Settings.storyboard; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
-		0291D83B24428CBB00F793BE /* POI.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = POI.storyboard; path = Base.lproj/POI.storyboard; sourceTree = "<group>"; };
 		0296873D167E30C700B8FF2C /* PushPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPinView.h; sourceTree = "<group>"; };
 		0296873E167E30C700B8FF2C /* PushPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushPinView.m; sourceTree = "<group>"; };
 		02A077D0167A77A400686261 /* POIAllTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAllTagsViewController.h; sourceTree = "<group>"; };
@@ -286,7 +289,6 @@
 		02A194AE19C69701002338DA /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Database.h; path = ../Shared/Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02A194AF19C69701002338DA /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = Database.m; path = ../Shared/Database.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
-		02A229E724454838000DA9F4 /* Changeset.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Changeset.storyboard; sourceTree = "<group>"; };
 		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		02ACBA3516713CCB00BB4414 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -333,7 +335,6 @@
 		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = ../Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "Go Map!!/Go Map!!.entitlements"; sourceTree = "<group>"; };
-		02BC04E724C6766100BFA5EF /* Height.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Height.storyboard; sourceTree = "<group>"; };
 		02BE6194245FEC4C00E92662 /* PersistentWebCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PersistentWebCache.h; path = ../Shared/PersistentWebCache.h; sourceTree = "<group>"; };
 		02BED98C168BF87100357B94 /* NearbyMappersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyMappersViewController.h; sourceTree = "<group>"; };
 		02BED98D168BF87200357B94 /* NearbyMappersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyMappersViewController.m; sourceTree = "<group>"; };
@@ -367,7 +368,6 @@
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
 		02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OsmNotesDatabase.h; path = ../Shared/OsmNotesDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = OsmNotesDatabase.m; path = ../Shared/OsmNotesDatabase.m; sourceTree = "<group>"; };
-		02E8437919B4DD730044AC1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GpxConfigureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -525,8 +525,8 @@
 				0291D83524427AFA00F793BE /* Display.storyboard */,
 				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
-				0291D8382442815100F793BE /* Settings.storyboard */,
-				0291D83B24428CBB00F793BE /* POI.storyboard */,
+				027AB4FC250E9C8000C404CD /* Settings.storyboard */,
+				027AB4FF250E9C8A00C404CD /* POI.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -775,7 +775,7 @@
 		02BC04E924C6767100BFA5EF /* Height */ = {
 			isa = PBXGroup;
 			children = (
-				02BC04E724C6766100BFA5EF /* Height.storyboard */,
+				027AB502250E9C9B00C404CD /* Height.storyboard */,
 				02DBB4431A1C884F00732D53 /* HeightViewController.h */,
 				02DBB4441A1C884F00732D53 /* HeightViewController.m */,
 			);
@@ -859,7 +859,7 @@
 		647C150D24268DB7008A9366 /* Upload */ = {
 			isa = PBXGroup;
 			children = (
-				02A229E724454838000DA9F4 /* Changeset.storyboard */,
+				027AB505250E9CA500C404CD /* Changeset.storyboard */,
 				02F373F716822C2C004614D4 /* UploadViewController.h */,
 				02F373F816822C2C004614D4 /* UploadViewController.m */,
 			);
@@ -1023,13 +1023,13 @@
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
 				02ACBBC116713F2B00BB4414 /* changeset.xsl in Resources */,
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
-				0291D8392442815100F793BE /* Settings.storyboard in Resources */,
+				027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */,
 				64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
-				02A229E824454838000DA9F4 /* Changeset.storyboard in Resources */,
-				0291D83C24428CBB00F793BE /* POI.storyboard in Resources */,
+				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
+				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
 				024AB08D240C86FF004A3B5B /* Font Awesome Icons.xcassets in Resources */,
-				02BC04E824C6766100BFA5EF /* Height.storyboard in Resources */,
+				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
 				027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */,
 				024AB090240C9202004A3B5B /* TNP Icons.xcassets in Resources */,
 				024AB08B240C80FD004A3B5B /* Temaki Icons.xcassets in Resources */,
@@ -1204,10 +1204,42 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		027AB4FC250E9C8000C404CD /* Settings.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				027AB509250E9D0600C404CD /* Base */,
+			);
+			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
+		027AB4FF250E9C8A00C404CD /* POI.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				027AB50A250E9D0700C404CD /* Base */,
+			);
+			name = POI.storyboard;
+			sourceTree = "<group>";
+		};
+		027AB502250E9C9B00C404CD /* Height.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				027AB508250E9D0600C404CD /* Base */,
+			);
+			name = Height.storyboard;
+			sourceTree = "<group>";
+		};
+		027AB505250E9CA500C404CD /* Changeset.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				027AB50B250E9D0700C404CD /* Base */,
+			);
+			name = Changeset.storyboard;
+			sourceTree = "<group>";
+		};
 		0291D83524427AFA00F793BE /* Display.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				0291D83624427AFA00F793BE /* Base */,
+				027AB506250E9D0600C404CD /* Base */,
 			);
 			name = Display.storyboard;
 			sourceTree = "<group>";
@@ -1223,7 +1255,7 @@
 		02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				02E8437919B4DD730044AC1D /* Base */,
+				027AB507250E9D0600C404CD /* Base */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
