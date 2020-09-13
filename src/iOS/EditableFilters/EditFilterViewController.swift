@@ -27,6 +27,10 @@ class EditFilterViewController: UITableViewController {
         viewModel.addCondition()
     }
 
+    @IBAction private func didTapSaveButton() {
+        // TODO: Implement me.
+    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in _: UITableView) -> Int {

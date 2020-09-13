@@ -108,11 +108,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit Conditions" id="Ari-lp-NeO">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="s50-86-oyt">
-                            <connections>
-                                <action selector="didTapAddConditionButton" destination="Y3T-AJ-l1d" id="x6u-9I-eV7"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="save" id="zby-MU-4Eb">
+                                <connections>
+                                    <action selector="didTapSaveButton" destination="Y3T-AJ-l1d" id="AlQ-7t-9ta"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="s50-86-oyt">
+                                <connections>
+                                    <action selector="didTapAddConditionButton" destination="Y3T-AJ-l1d" id="x6u-9I-eV7"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TKg-K7-Llh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
