@@ -136,6 +136,7 @@
 		640C76E1250A949200BB4665 /* RegularExpressionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */; };
 		640C76E3250A94B000BB4665 /* RegularExpressionQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E2250A94B000BB4665 /* RegularExpressionQueryTestCase.swift */; };
 		640C76EA250E762100BB4665 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E9250E762100BB4665 /* Filter.swift */; };
+		640C76EC250E7C8A00BB4665 /* Filter+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76EB250E7C8A00BB4665 /* Filter+Codable.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -411,6 +412,7 @@
 		640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpressionQuery.swift; sourceTree = "<group>"; };
 		640C76E2250A94B000BB4665 /* RegularExpressionQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpressionQueryTestCase.swift; sourceTree = "<group>"; };
 		640C76E9250E762100BB4665 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		640C76EB250E7C8A00BB4665 /* Filter+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Filter+Codable.swift"; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 				640C76CF250A91C400BB4665 /* RecursiveQuery.swift */,
 				640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */,
 				640C76E9250E762100BB4665 /* Filter.swift */,
+				640C76EB250E7C8A00BB4665 /* Filter+Codable.swift */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -1160,6 +1163,7 @@
 				02ACBA5316713CCB00BB4414 /* MainViewController.m in Sources */,
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
 				6453776623D38D4600656A1C /* OsmBaseObject.m in Sources */,
+				640C76EC250E7C8A00BB4665 /* Filter+Codable.swift in Sources */,
 				02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */,
 				02A194B019C69701002338DA /* Database.m in Sources */,
 				02ACBBC416713F2B00BB4414 /* EditorMapLayer.m in Sources */,
