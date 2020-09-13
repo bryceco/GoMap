@@ -24,8 +24,8 @@ class EditFilterViewModelTestCase: XCTestCase {
 
     // MARK: Helper methods
 
-    private func setupViewModel(queries: [BaseObjectMatching] = []) {
-        viewModel = EditFilterViewModel(queries: queries)
+    private func setupViewModel(filters: [Filter] = []) {
+        viewModel = EditFilterViewModel(filters: filters)
 
         delegateMock = EditFilterViewModelDelegateMock()
         viewModel.delegate = delegateMock
@@ -36,10 +36,10 @@ class EditFilterViewModelTestCase: XCTestCase {
     func testInit_whenFirstQueryIsKeyExistsQuery_shouldResultInOneSectionWithTextFieldCellAndExistsOperationToggleCell() {
         /// Given
         let key = "some-key"
-        let query = KeyExistsQuery(key: key)
+        let filter = Filter.keyExists(key: key)
 
         /// When
-        setupViewModel(queries: [query])
+        setupViewModel(filters: [filter])
 
         /// Then
         XCTAssertEqual(viewModel.sections.count, 1)
@@ -52,10 +52,10 @@ class EditFilterViewModelTestCase: XCTestCase {
     func testInit_whenFirstQueryIsNegatedKeyExistsQuery_shouldResultInOneSectionWithTextFieldCellAndDoesNotExistOperationToggleCell() {
         /// Given
         let key = "some-key"
-        let query = KeyExistsQuery(key: key, isNegated: true)
+        let filter = Filter.keyExists(key: key, isNegated: true)
 
         /// When
-        setupViewModel(queries: [query])
+        setupViewModel(filters: [filter])
 
         /// Then
         XCTAssertEqual(viewModel.sections.count, 1)
@@ -69,10 +69,10 @@ class EditFilterViewModelTestCase: XCTestCase {
         /// Given
         let key = "some-key"
         let value = "example-value"
-        let query = KeyValueQuery(key: key, value: value)
+        let filter = Filter.keyValue(key: key, value: value)
 
         /// When
-        setupViewModel(queries: [query])
+        setupViewModel(filters: [filter])
 
         /// Then
         XCTAssertEqual(viewModel.sections.count, 1)
@@ -87,10 +87,10 @@ class EditFilterViewModelTestCase: XCTestCase {
         /// Given
         let key = "some-key"
         let value = "example-value"
-        let query = KeyValueQuery(key: key, value: value, isNegated: true)
+        let filter = Filter.keyValue(key: key, value: value, isNegated: true)
 
         /// When
-        setupViewModel(queries: [query])
+        setupViewModel(filters: [filter])
 
         /// Then
         XCTAssertEqual(viewModel.sections.count, 1)
@@ -105,10 +105,10 @@ class EditFilterViewModelTestCase: XCTestCase {
         /// Given
         let key = "man_*"
         let value = "surveill*"
-        let query = RegularExpressionQuery(key: key, value: value)
+        let filter = Filter.regularExpression(key: key, value: value)
 
         /// When
-        setupViewModel(queries: [query])
+        setupViewModel(filters: [filter])
 
         /// Then
         XCTAssertEqual(viewModel.sections.count, 1)
@@ -123,10 +123,10 @@ class EditFilterViewModelTestCase: XCTestCase {
         /// Given
         let key = "man_*"
         let value = "surveill*"
-        let query = RegularExpressionQuery(key: key, value: value, isNegated: true)
+        let filter = Filter.regularExpression(key: key, value: value, isNegated: true)
 
         /// When
-        setupViewModel(queries: [query])
+        setupViewModel(filters: [filter])
 
         /// Then
         XCTAssertEqual(viewModel.sections.count, 1)

@@ -83,34 +83,36 @@ final class EditFilterViewModel {
 
     // MARK: Private properties
 
-    private var queries: [BaseObjectMatching]
+    private var filters: [Filter]
 
     // MARK: Initializer
 
-    init(queries: [BaseObjectMatching] = []) {
-        self.queries = queries
+    init(filters: [Filter] = []) {
+        self.filters = filters
 
-        sections = queries.compactMap { query in
-            if let keyExistsQuery = query as? KeyExistsQuery {
-                let operation: Operation = keyExistsQuery.isNegated ? .doesNotExist : .exists
+        sections = filters.compactMap { filter in
+            switch filter {
+            case let .keyExists(key, isNegated):
+                let operation: Operation = isNegated ? .doesNotExist : .exists
 
-                return Section(rows: [.textField(placeholder: "Key", value: keyExistsQuery.key),
+                return Section(rows: [.textField(placeholder: "Key", value: key),
                                       .operationPickerToggle(operation: operation)])
-            } else if let keyValueQuery = query as? KeyValueQuery {
-                let operation: Operation = keyValueQuery.isNegated ? .doesNotEqual : .equals
+            case let .keyValue(key, value, isNegated):
+                let operation: Operation = isNegated ? .doesNotEqual : .equals
 
-                return Section(rows: [.textField(placeholder: "Key", value: keyValueQuery.key),
+                return Section(rows: [.textField(placeholder: "Key", value: key),
                                       .operationPickerToggle(operation: operation),
-                                      .textField(placeholder: "Value", value: keyValueQuery.value)])
-            } else if let regularExpressionQuery = query as? RegularExpressionQuery {
-                let operation: Operation = regularExpressionQuery.isNegated ? .doesNotMatch : .matches
+                                      .textField(placeholder: "Value", value: value)])
+            case let .regularExpression(key, value, isNegated):
+                let operation: Operation = isNegated ? .doesNotMatch : .matches
 
-                return Section(rows: [.textField(placeholder: "Key", value: regularExpressionQuery.key),
+                return Section(rows: [.textField(placeholder: "Key", value: key),
                                       .operationPickerToggle(operation: operation),
-                                      .textField(placeholder: "Value", value: regularExpressionQuery.value)])
+                                      .textField(placeholder: "Value", value: value)])
+            case .recursive:
+                assertionFailure("The editor does not support recursive filters yet.")
+                return nil
             }
-
-            return nil
         }
     }
 
