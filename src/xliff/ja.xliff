@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="ja" datatype="plaintext">
     <header>
@@ -55,6 +55,11 @@
         <target>マップ上にあなたの位置が表示、追跡されます。</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
+      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
+        <source>A Error Message Flashing Z</source>
+        <target>エラーメッセージがZをフラッシュ</target>
+        <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn";</note>
+      </trans-unit>
     </body>
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="ja" datatype="plaintext">
@@ -98,14 +103,17 @@
       </trans-unit>
       <trans-unit id="%.0f meters" xml:space="preserve">
         <source>%.0f meters</source>
+        <target>%.0f メートル</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.1f meters" xml:space="preserve">
         <source>%.1f meters</source>
+        <target>%.1f メートル</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
+        <target>%1$.2f MB, %2$ld ファイル</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -175,6 +183,7 @@
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
+        <target>+ ボタン位置</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -249,6 +258,7 @@
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
+        <target>属性</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -606,10 +616,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
+        <target>左側</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
+        <target>長さ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location services timed out." xml:space="preserve">
@@ -735,6 +747,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
+        <target>次へ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
@@ -789,6 +802,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Node attributes" xml:space="preserve">
         <source>Node attributes</source>
+        <target>ノードの属性</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
@@ -893,6 +907,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
+        <target>前へ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
@@ -917,6 +932,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Relation attributes" xml:space="preserve">
         <source>Relation attributes</source>
+        <target>リレーションの属性</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation tags" xml:space="preserve">
@@ -971,6 +987,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
+        <target>右側</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
@@ -1055,6 +1072,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
+        <target>+ ボタンは画面の左側または右側に配置できます</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
@@ -1193,6 +1211,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
+        <target>UID</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
@@ -1267,6 +1286,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Way attributes" xml:space="preserve">
         <source>Way attributes</source>
+        <target>ウェイの属性</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way tags" xml:space="preserve">
@@ -1482,7 +1502,7 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
-        <target>Set Height</target>
+        <target>高さをセット</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
@@ -1492,12 +1512,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
         <source>Height</source>
-        <target>Height</target>
+        <target>高さ</target>
         <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target>Cancel</target>
+        <target>中止</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
       </trans-unit>
     </body>
@@ -1534,6 +1554,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
+        <target>投影法</target>
         <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
@@ -1701,10 +1722,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
+        <target>WMSのURLを指定する際には投影法も入力してください</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
         <source>WMS Projection</source>
+        <target>WMS投影法</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
@@ -1751,7 +1774,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
         <target>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
-</target>
+ </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
@@ -1761,6 +1784,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
+        <target>位置 + ボタンオン </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
@@ -1775,10 +1799,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
         <source>Bing</source>
+        <target>Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
       </trans-unit>
       <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target>ボタン</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
@@ -1829,10 +1855,13 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
+        <target>Simon Poole Map データ © OpenStreetMap 投稿者
+</target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
+        <target>(TMS)</target>
         <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
@@ -1927,6 +1956,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
+        <target>Portlandia GIS</target>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
@@ -1946,6 +1976,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
+        <target>{x}, {y} 及び {z} プレースホルダー付きのTMSのURLまたはWMSのURL</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
@@ -2002,6 +2033,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
+        <target>66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
@@ -2333,6 +2365,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
+        <target>ラベル</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
@@ -2352,10 +2385,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
+        <target>クリーン</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
+        <target>ラベル</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
@@ -2745,6 +2780,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>
+        <target>メールでのフィードバック</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
@@ -2809,6 +2845,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
+        <target>メールでのフィードバック</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
@@ -2830,7 +2867,7 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
-        <target>Changes:</target>
+        <target>変更:</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
@@ -2860,17 +2897,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
-        <target>Edit</target>
+        <target>編集</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
-        <target>Changeset comment:</target>
+        <target>変更セットコメント:</target>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
-        <target>survey, Bing, etc.</target>
+        <target>survey, Bing, など</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
