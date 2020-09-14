@@ -24,8 +24,11 @@ class EditFilterViewModelTestCase: XCTestCase {
 
     // MARK: Helper methods
 
-    private func setupViewModel(filters: [Filter] = []) {
-        viewModel = EditFilterViewModel(filters: filters)
+    private func setupViewModel(availableFilterTypes: [Filter.FilterType: String] = [:],
+                                filters: [Filter] = [])
+    {
+        viewModel = EditFilterViewModel(availableFilterTypes: availableFilterTypes,
+                                        filters: filters)
 
         delegateMock = EditFilterViewModelDelegateMock()
         viewModel.delegate = delegateMock

@@ -80,6 +80,10 @@ final class EditFilterViewModel {
 
     // MARK: Public properties
 
+    /// The filter types that are supported and can be selected by the user.
+    /// The key is the filter type, and the value is the human-readable title of the type.
+    private let availableFilterTypes: [Filter.FilterType: String]
+
     private(set) var sections: [Section]
 
     weak var delegate: EditFilterViewModelDelegate?
@@ -90,7 +94,12 @@ final class EditFilterViewModel {
 
     // MARK: Initializer
 
-    init(filters: [Filter] = []) {
+    init(availableFilterTypes: [Filter.FilterType: String] = [.keyExists: "Key exists",
+                                                              .keyValue: "Key/Value pair",
+                                                              .regularExpression: "Regular expression"],
+         filters: [Filter] = [])
+    {
+        self.availableFilterTypes = availableFilterTypes
         self.filters = filters
 
         sections = filters.compactMap { filter in
