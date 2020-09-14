@@ -7,6 +7,13 @@
 //
 
 enum Filter: Equatable {
+    enum FilterType: String, Codable {
+        case keyExists
+        case keyValue
+        case regularExpression
+        case recursive
+    }
+
     enum RecursiveLogical: Int, Codable {
         case and
         case or

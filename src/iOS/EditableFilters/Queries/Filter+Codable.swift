@@ -7,13 +7,6 @@
 //
 
 extension Filter: Codable {
-    private enum FilterType: String, Codable {
-        case keyExists
-        case keyValue
-        case regularExpression
-        case recursive
-    }
-
     private enum CodingKeys: String, CodingKey {
         case type
         case key
