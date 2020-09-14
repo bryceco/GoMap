@@ -25,7 +25,6 @@
 		0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0228442B16D8870C00A1C051 /* GpxLayer.m */; };
 		022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A53167B8F1C00D7A5AC /* POITabBarController.m */; };
 		022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */; };
-		022ABCA120C1AACF002D4977 /* MultilineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */; };
 		022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022ABCA320C3750A002D4977 /* Buildings3DView.m */; };
 		022ABCA520C37618002D4977 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025B841619DCF55C0053C637 /* SceneKit.framework */; };
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
@@ -207,8 +206,6 @@
 		022A2A53167B8F1C00D7A5AC /* POITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POITabBarController.m; sourceTree = "<group>"; };
 		022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ClearCacheViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ClearCacheViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultilineTableViewCell.h; sourceTree = "<group>"; };
-		022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MultilineTableViewCell.m; sourceTree = "<group>"; };
 		022ABCA220C3750A002D4977 /* Buildings3DView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Buildings3DView.h; path = ../Shared/Buildings3DView.h; sourceTree = "<group>"; };
 		022ABCA320C3750A002D4977 /* Buildings3DView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Buildings3DView.m; path = ../Shared/Buildings3DView.m; sourceTree = "<group>"; };
 		022B09A619BD3F7B0041687B /* QuadMapC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadMapC.mm; path = ../Shared/QuadMapC.mm; sourceTree = "<group>"; };
@@ -663,8 +660,6 @@
 				029043A21682797A00BE3480 /* LoginViewController.m */,
 				02ACBA5116713CCB00BB4414 /* MainViewController.h */,
 				02ACBA5216713CCB00BB4414 /* MainViewController.m */,
-				022ABC9F20C1AACF002D4977 /* MultilineTableViewCell.h */,
-				022ABCA020C1AACF002D4977 /* MultilineTableViewCell.m */,
 				02BED98C168BF87100357B94 /* NearbyMappersViewController.h */,
 				02BED98D168BF87200357B94 /* NearbyMappersViewController.m */,
 				02F8F4321696004B002A0820 /* NominatimViewController.h */,
@@ -1186,7 +1181,6 @@
 				02C19B351699E8C000F75E3C /* BingMetadataViewController.m in Sources */,
 				028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */,
 				0259E4081BCAEC88006C354C /* MyApplication.m in Sources */,
-				022ABCA120C1AACF002D4977 /* MultilineTableViewCell.m in Sources */,
 				028DADE4247DFB8F000A130A /* WikiPage.m in Sources */,
 				02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */,
 				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,
