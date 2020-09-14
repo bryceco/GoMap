@@ -55,6 +55,191 @@
         <target>Tvoje će se mjesto prikazati i pratiti na karti.</target>
         <note>Privacy - Location When In Use Usage Description</note>
       </trans-unit>
+      <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
+        <source>The + button can be positioned on either the left or right side of the screen</source>
+        <target>Gumb + moguće je postaviti na lijevu ili desnu stranu ekrana</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
+        <source>Position + Button on </source>
+        <target>Položaj gumba + na </target>
+        <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG";</note>
+      </trans-unit>
+      <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
+        <source>Changeset comment:</source>
+        <target>Komentar za skup promjena:</target>
+        <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
+      </trans-unit>
+      <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
+        <source>Changes:</source>
+        <target>Promjene:</target>
+        <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
+      </trans-unit>
+      <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
+        <source>Source:</source>
+        <target>Izvor:</target>
+        <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
+      </trans-unit>
+      <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
+        <source>Mail</source>
+        <target>E-pošta</target>
+        <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
+      </trans-unit>
+      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
+        <source>Label</source>
+        <target>Etiketa</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh";</note>
+      </trans-unit>
+      <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
+        <source>(TMS)</source>
+        <target>(TMS)</target>
+        <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
+      </trans-unit>
+      <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
+        <source>If specifying a WMS URL you must also provide the projection used</source>
+        <target>Ako odrešuješ WMS URL, moraš navesti i korištenu projekciju</target>
+        <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
+      </trans-unit>
+      <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Odustani</target>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
+      </trans-unit>
+      <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
+        <source>Distance</source>
+        <target>Udaljenost</target>
+        <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
+      </trans-unit>
+      <trans-unit id="Way attributes" xml:space="preserve">
+        <source>Way attributes</source>
+        <target>Svojstva puta</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Right side" xml:space="preserve">
+        <source>Right side</source>
+        <target>Desna strana</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Previous" xml:space="preserve">
+        <source>Previous</source>
+        <target>Prethodno</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Next" xml:space="preserve">
+        <source>Next</source>
+        <target>Sljedeće</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Left side" xml:space="preserve">
+        <source>Left side</source>
+        <target>Lijeva strana</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
+        <source>survey, Bing, etc.</source>
+        <target>ankete, Bing itd.</target>
+        <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
+      </trans-unit>
+      <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
+        <source>Edit</source>
+        <target>Uredi</target>
+        <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
+      </trans-unit>
+      <trans-unit id="feW-AK-msn.title" xml:space="preserve">
+        <source>Commit</source>
+        <target>Spremi</target>
+        <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
+      </trans-unit>
+      <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
+        <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target>Lorem ipsum dolor sit er elit lamet,</target>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY";</note>
+      </trans-unit>
+      <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
+        <source>Upload</source>
+        <target>Prenesi</target>
+        <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
+      </trans-unit>
+      <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
+        <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target>Lorem ipsum dolor sit er elit lamet,</target>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv";</note>
+      </trans-unit>
+      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
+        <source>Label</source>
+        <target>Etiketa</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw";</note>
+      </trans-unit>
+      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
+        <source>A Error Message Flashing Z</source>
+        <target>Poruka o grešci treperi Z</target>
+        <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn";</note>
+      </trans-unit>
+      <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target>Gumb</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
+      </trans-unit>
+      <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
+        <source>WMS Projection</source>
+        <target>WMS projekcija</target>
+        <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
+      </trans-unit>
+      <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
+        <source>Projection</source>
+        <target>Projekcija</target>
+        <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
+      </trans-unit>
+      <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
+        <source>Height</source>
+        <target>Visina</target>
+        <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
+      </trans-unit>
+      <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
+        <source>Set Height</source>
+        <target>Postavi visinu</target>
+        <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
+      </trans-unit>
+      <trans-unit id="Relation attributes" xml:space="preserve">
+        <source>Relation attributes</source>
+        <target>Svojstva veze</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Node attributes" xml:space="preserve">
+        <source>Node attributes</source>
+        <target>Svojstva čvora</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Length" xml:space="preserve">
+        <source>Length</source>
+        <target>Duljina</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Attributes" xml:space="preserve">
+        <source>Attributes</source>
+        <target>Svojstva</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="+ Button Position" xml:space="preserve">
+        <source>+ Button Position</source>
+        <target>Položaj gumba +</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
+        <source>%1$.2f MB, %2$ld files</source>
+        <target>%1$.2f MB, broj datoteka: %2$ld</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters" xml:space="preserve">
+        <source>%.1f meters</source>
+        <target>%.1f m</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%.0f meters" xml:space="preserve">
+        <source>%.0f meters</source>
+        <target>%.0f m</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
     </body>
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
@@ -1878,8 +2063,8 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
-        <source>Bing aerial</source>
-        <target>Bing aerofotografija</target>
+        <source>Portlandia GIS</source>
+        <target>Portlandia GIS</target>
         <note>Class = "UITextField"; placeholder = "Bing aerial"; ObjectID = "w75-Lj-3jF";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
@@ -1898,8 +2083,8 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
-        <source>A TMS URL with {x}, {y} and {z} placeholders.</source>
-        <target>TMS URL s rezerviranim mjestima {x}, {y} i {z}.</target>
+        <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
+        <target>TMS URL s rezerviranim mjestima {x}, {y} i {z} ili WMS URL</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders."; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
