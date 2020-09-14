@@ -126,12 +126,20 @@
 		if ( button != _undoRedoView && button != _mapView.compassButton ) {
 			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 			[button setImage:image forState:UIControlStateNormal];
-			button.tintColor = UIColor.systemBlueColor;
+			if (@available(iOS 13.0, *)) {
+				button.tintColor = UIColor.linkColor;
+			} else {
+				button.tintColor = UIColor.systemBlueColor;
+			}
 			if ( button == _mapView.addNodeButton )
 				button.imageEdgeInsets = UIEdgeInsetsMake(15, 15, 15, 15);	// resize images on button to be smaller
 			else
 				button.imageEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);	// resize images on button to be smaller
 		}
+
+		// normal background color
+		[self buttonNormal:button];
+
 		// background selection color
 		if ( button != _undoRedoView ) {
 			[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
@@ -143,11 +151,19 @@
 }
 -(void)buttonHighlight:(UIButton *)button
 {
-	button.backgroundColor = UIColor.lightGrayColor;
+	if (@available(iOS 13.0, *)) {
+		button.backgroundColor = UIColor.secondarySystemBackgroundColor;
+	} else {
+		button.backgroundColor = UIColor.lightGrayColor;
+	}
 }
 -(void)buttonNormal:(UIButton *)button
 {
-	button.backgroundColor = UIColor.whiteColor;
+	if (@available(iOS 13.0, *)) {
+		button.backgroundColor = UIColor.systemBackgroundColor;
+	} else {
+		button.backgroundColor = UIColor.whiteColor;
+	}
 }
 
 #if USER_MOVABLE_BUTTONS
