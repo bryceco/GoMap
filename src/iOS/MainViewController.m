@@ -134,7 +134,7 @@
 			if ( button == _mapView.addNodeButton )
 				button.imageEdgeInsets = UIEdgeInsetsMake(15, 15, 15, 15);	// resize images on button to be smaller
 			else
-				button.imageEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);	// resize images on button to be smaller
+				button.imageEdgeInsets = UIEdgeInsetsMake(9, 9, 9, 9);	// resize images on button to be smaller
 		}
 
 		// normal background color
