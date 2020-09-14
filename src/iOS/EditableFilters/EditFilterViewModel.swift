@@ -23,6 +23,13 @@ protocol EditFilterViewModelDelegate: AnyObject {
     /// - Parameter indexPath: The index path for the text field cell that the keyboard should be shown for.
     func showKeyboardForTextFieldCell(at indexPath: IndexPath)
 
+    /// Asks the delegate to allow the user to select a filter type from a list of filter type titles.
+    /// - Parameters:
+    ///   - titles: The titles of the filter types that the user can select from.
+    ///   - select: A closure that should be executed when the user selected a filter type. Pass the index of the selected filter type as the argument.
+    func presentFilterTypeSelection(titles: [String],
+                                    select: @escaping (Int) -> Void)
+
     /// Asks the delegate to change the text for the text label cell at the given `IndexPath` to the given `text`.
     /// - Parameters:
     ///   - indexPath: The index path of the cell to change the text for.
@@ -159,6 +166,8 @@ final class EditFilterViewModel {
             return
         }
 
+        presentFilterTypeSelectionForFilter(in: indexPath.section)
+
         let isPickerVisible = section.rows.contains(where: { row in
             if case .operationPicker = row {
                 return true
@@ -216,5 +225,15 @@ final class EditFilterViewModel {
             sections[section].rows.insert(.textField(placeholder: "Value", value: nil), at: indexOfTagValueCell)
             delegate?.addRows(at: [IndexPath(row: indexOfTagValueCell, section: section)])
         }
+    }
+
+    // MARK: Private methods
+
+    private func presentFilterTypeSelectionForFilter(in _: Int) {
+        let titles = Array(availableFilterTypes.values).sorted()
+
+        delegate?.presentFilterTypeSelection(titles: titles, select: { _ in
+            // TODO: Implement me.
+        })
     }
 }

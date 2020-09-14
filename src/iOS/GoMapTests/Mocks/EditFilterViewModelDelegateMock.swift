@@ -21,6 +21,9 @@ final class EditFilterViewModelDelegateMock: NSObject {
     private(set) var didCallShowKeyboardForTextFieldCell = false
     private(set) var textFieldCellIndexPath: IndexPath?
 
+    private(set) var didCallPresentFilterTypeSelection = false
+    private(set) var presentFilterTypeSelectionArguments: (titles: [String], select: (Int) -> Void)?
+
     private(set) var didCallSetTextForTextLabelCell = false
     private(set) var setTextForTextLabelCellArguments: (indexPath: IndexPath, text: String)?
 }
@@ -48,6 +51,12 @@ extension EditFilterViewModelDelegateMock: EditFilterViewModelDelegate {
         didCallShowKeyboardForTextFieldCell = true
 
         textFieldCellIndexPath = indexPath
+    }
+
+    func presentFilterTypeSelection(titles: [String], select: @escaping (Int) -> Void) {
+        didCallPresentFilterTypeSelection = true
+
+        presentFilterTypeSelectionArguments = (titles, select)
     }
 
     func setTextForTextLabelCell(at indexPath: IndexPath, to text: String) {

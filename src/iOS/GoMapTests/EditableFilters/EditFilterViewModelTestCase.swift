@@ -271,6 +271,75 @@ class EditFilterViewModelTestCase: XCTestCase {
         XCTAssertFalse(delegateMock.didCallAddRows)
     }
 
+    func testSelectRow_whenRowIsSecondOne_shouldAskDelegateToPresentFilterTypeSelection() {
+        /// Given
+        viewModel.addCondition()
+        viewModel.addCondition()
+        viewModel.addCondition()
+
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 2))
+
+        /// Then
+        XCTAssertTrue(delegateMock.didCallPresentFilterTypeSelection)
+    }
+
+    func testSelectRow_whenRowIsAnyOtherThanSecondOne_shouldNotAskDelegateToPresentFilterTypeSelection() {
+        /// Given
+        viewModel.addCondition()
+        viewModel.addCondition()
+        viewModel.addCondition()
+
+        for row in 0 ... 10 {
+            guard row != 1 else { continue }
+
+            /// When
+            viewModel.selectRow(at: IndexPath(row: row, section: 2))
+
+            /// Then
+            XCTAssertFalse(delegateMock.didCallPresentFilterTypeSelection,
+                           "When tapping row \(row), filter type selection should not be presented.")
+        }
+    }
+
+    func testSelectRow_whenRowIsSecondOne_shouldAskDelegateToPresentFilterTypeSelectionUsingTheAvailableFilterTypes() {
+        /// Given
+        let filterTypeTitle = "Lorem ipsum"
+        let availableFilterTypes: [Filter.FilterType: String] = [.keyExists: filterTypeTitle]
+
+        /// Setup the view model, since the `availableFilterTypes` are passed during initialization.
+        setupViewModel(availableFilterTypes: availableFilterTypes)
+
+        viewModel.addCondition()
+
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+
+        /// Then
+        XCTAssertEqual(delegateMock.presentFilterTypeSelectionArguments?.titles, [filterTypeTitle])
+    }
+
+    func testSelectRow_whenRowIsSecondOne_shouldAskDelegateToPresentFilterTypeSelectionUsingTheAvailableFilterTypesSortedAlphabetically() {
+        /// Given
+        let fooBarTitle = "Foo bar"
+        let loremIpsumTitle = "Lorem ipsum"
+        let availableFilterTypes: [Filter.FilterType: String] = [.regularExpression: loremIpsumTitle,
+                                                                 .keyExists: fooBarTitle]
+
+        /// Setup the view model, since the `availableFilterTypes` are passed during initialization.
+        setupViewModel(availableFilterTypes: availableFilterTypes)
+
+        viewModel.addCondition()
+
+        /// When
+        viewModel.selectRow(at: IndexPath(row: 1, section: 0))
+
+        /// Then
+        XCTAssertEqual(delegateMock.presentFilterTypeSelectionArguments?.titles,
+                       [fooBarTitle, loremIpsumTitle],
+                       "The titles should've been sorted alphabetically.")
+    }
+
     func testSelectRow_whenRowIsSecondOne_shouldInsertOperationPickerCellAtThirdPositionInSection() {
         /// Given
         guard let defaultOperation = EditFilterViewModel.Operation.allCases.first else {
