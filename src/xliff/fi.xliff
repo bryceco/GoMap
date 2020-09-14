@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="fi" datatype="plaintext">
     <header>
@@ -92,22 +92,27 @@
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
+        <target> (viiva)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.0f meters" xml:space="preserve">
         <source>%.0f meters</source>
+        <target>%.0f metriä</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.1f meters" xml:space="preserve">
         <source>%.1f meters</source>
+        <target>%.1f metriä</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
+        <target>%1$.2f MT, %2$ld tiedostoa</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
+        <target>%@ (relaatio)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
@@ -167,6 +172,7 @@
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
+        <target>(viiva)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
@@ -240,6 +246,7 @@
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
+        <target>Huomio</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
@@ -592,6 +599,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
+        <target>Leveys-/pituusaste</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
@@ -638,6 +646,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
+        <target>Ehkä myöhemmin…</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -715,6 +724,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
+        <target>Ei koskaan</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
@@ -767,6 +777,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
+        <target>Piste</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node attributes" xml:space="preserve">
@@ -870,6 +881,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
+        <target>Odota</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -893,6 +905,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
+        <target>Tee uudelleen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation attributes" xml:space="preserve">
@@ -946,6 +959,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
+        <target>Käännä</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
@@ -1028,6 +1042,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
+        <target>Tagit</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
@@ -1168,6 +1183,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
+        <target>UID</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
@@ -1237,6 +1253,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
+        <target>Varoitus</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way attributes" xml:space="preserve">
@@ -1449,7 +1466,7 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
-        <target>Set Height</target>
+        <target>Aseta korkeus</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
@@ -1459,12 +1476,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
         <source>Height</source>
-        <target>Height</target>
+        <target>Korkeus</target>
         <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
         <source>Cancel</source>
-        <target>Cancel</target>
+        <target>Peruuta</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
       </trans-unit>
     </body>
@@ -1501,6 +1518,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
+        <target>Projektio</target>
         <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
@@ -1738,6 +1756,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
         <source>Bing</source>
+        <target>Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
       </trans-unit>
       <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
@@ -1792,10 +1811,13 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
+        <target>Simon Poole Map Data © OpenStreetMap contributors
+</target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
+        <target>(TMS)</target>
         <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
@@ -1890,6 +1912,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
+        <target>Portlandia GIS</target>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
@@ -1965,6 +1988,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
+        <target>66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
@@ -1994,7 +2018,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
         <source>Note</source>
-        <target/>
+        <target>Huomautus</target>
         <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
       </trans-unit>
       <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
@@ -2694,6 +2718,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>
+        <target>Palaute sähköpostitse</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
@@ -2758,6 +2783,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
+        <target>Palaute sähköpostitse</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
@@ -2779,7 +2805,7 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
-        <target>Changes:</target>
+        <target>Muutokset:</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
@@ -2809,17 +2835,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
-        <target>Edit</target>
+        <target>Muokkaa</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
-        <target>Changeset comment:</target>
+        <target></target>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
-        <target>survey, Bing, etc.</target>
+        <target>tutkimus, Bing jne.</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
