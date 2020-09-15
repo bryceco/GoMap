@@ -817,7 +817,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
         <source>Node tags</source>
-        <target>ノードタグ</target>
+        <target>ノードのタグ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
@@ -937,7 +937,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Relation tags" xml:space="preserve">
         <source>Relation tags</source>
-        <target>リレーションタグ</target>
+        <target>リレーションのタグ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
