@@ -22,7 +22,7 @@
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
-        <target>GPS 交換形式 (GPX)</target>
+        <target>GPS交換形式 (GPX)</target>
         <note/>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
@@ -198,7 +198,7 @@
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target>GPSトラックはあなたの道路や山道の経路を記録します</target>
+        <target>GPXトラックはあなたの道路や山道の経路を記録します</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
@@ -363,7 +363,7 @@
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
-        <target>GPSトラックをクリア</target>
+        <target>GPXトラックをクリア</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
@@ -551,12 +551,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
-        <target>GPSアップロード完了</target>
+        <target>GPXアップロード完了</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
-        <target>GPSアップロード失敗</target>
+        <target>GPXアップロード失敗</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Height: %@ ± %@ meters" xml:space="preserve">
@@ -717,7 +717,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
-        <target>最新使用タグ</target>
+        <target>最近使ったタグ</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
@@ -832,7 +832,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
-        <target>表示する最近の項目数</target>
+        <target>最新利用項目の表示数</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
@@ -1534,7 +1534,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target>GPX トラック</target>
+        <target>GPXトラック</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
@@ -1757,7 +1757,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
-        <target>フレンドリーな名前</target>
+        <target>わかりやすい名前</target>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
@@ -1784,7 +1784,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
-        <target>位置 + ボタンオン </target>
+        <target>+ ボタンの位置 </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
@@ -2155,7 +2155,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
         <source>no</source>
-        <target>いいえ</target>
+        <target>no</target>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm";</note>
       </trans-unit>
       <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
@@ -2205,7 +2205,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
-        <target>犬</target>
+        <target>dog</target>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
@@ -2375,7 +2375,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
         <source>Dogs Allowed</source>
-        <target>犬の可否</target>
+        <target>犬の同行許可</target>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -2505,7 +2505,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
         <source>yes</source>
-        <target>はい</target>
+        <target>yes</target>
         <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl";</note>
       </trans-unit>
       <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
@@ -2542,7 +2542,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
         <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</source>
-        <target>ネット接続が制限されているところでマッピングする際には、衛星画像やMapnikタイルを次の2つの現在見えているエリア内のより高いズームレベルでダウンロードできます。</target>
+        <target>ネット接続が制限されているところでマッピングする際には、衛星画像やMapnikタイルを現在見えているエリア内の2段階高いズームレベルでダウンロードできます。</target>
         <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
@@ -2730,7 +2730,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="VDO-HW-SLB.title" xml:space="preserve">
         <source>Nearby Mappers</source>
-        <target>近所のマッパー</target>
+        <target>付近のマッパー</target>
         <note>Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB";</note>
       </trans-unit>
       <trans-unit id="YQ4-05-lQz.placeholder" xml:space="preserve">
@@ -2790,7 +2790,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
         <source>Nearby Mappers</source>
-        <target>近所のマッパー</target>
+        <target>付近のマッパー</target>
         <note>Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3";</note>
       </trans-unit>
       <trans-unit id="k0y-gf-6DY.text" xml:space="preserve">
