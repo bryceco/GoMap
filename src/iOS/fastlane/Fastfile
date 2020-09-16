@@ -34,6 +34,11 @@ platform :ios do
     )
   end
 
+  desc "Deletes the privat Keychain that is used with GitHub Actions."
+  private_lane :delete_private_keychain do
+    delete_keychain(name: private_keychain_name)
+  end
+
   desc "Performs basic integration checks to be run before merging"
   lane :pull_request_checks do
     run_tests(
