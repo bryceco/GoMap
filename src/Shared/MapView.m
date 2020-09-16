@@ -740,14 +740,6 @@ const CGFloat kEditControlCornerRadius = 4;
 			ignoreButton = NSLocalizedString(@"Ignore",nil);
 		}
 
-		// don't let message be too long
-		if ( text.length > 1000 ) {
-			NSMutableString * newText = [NSMutableString stringWithString:text];
-			[newText deleteCharactersInRange:NSMakeRange(1000, text.length-1000)];
-			[newText appendString:@"..."];
-			text = newText;
-		}
-
 		if ( flash ) {
 			[self flashMessage:text duration:0.9];
 		} else {
