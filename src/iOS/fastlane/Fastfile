@@ -86,6 +86,8 @@ platform :ios do
       scheme: "Go Map!!"
     )
 
+    delete_private_keychain
+
     add_git_tag(tag: get_version_number())
 
     push_to_git_remote
