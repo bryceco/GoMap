@@ -695,7 +695,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		[UIView animateWithDuration:0.35 animations:^{
 			_flashLabel.alpha = 0.0;
 		} completion:^(BOOL finished){
-			if ( finished && ((CALayer *)_flashLabel.layer.presentationLayer).opacity == 0.0 ) {
+			if ( finished && _flashLabel.layer.presentationLayer.opacity == 0.0 ) {
 				_flashLabel.hidden = YES;
 			}
 		}];
