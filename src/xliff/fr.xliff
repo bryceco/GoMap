@@ -7,7 +7,7 @@
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
+        <target>Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -17,7 +17,7 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target/>
+        <target>Go Map!!</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
@@ -641,7 +641,7 @@ Erreur : %@</target>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
-        <target/>
+        <target>La livraison de message n'est pas disponible pour cet appareil</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
@@ -1310,7 +1310,7 @@ These members are marked with '&gt;'.</source>
       </trans-unit>
       <trans-unit id="You must provide your OSM user name, not an email address." xml:space="preserve">
         <source>You must provide your OSM user name, not an email address.</source>
-        <target/>
+        <target>Vous devez fournir votre nom d’utilisateur OSM, pas une adresse courriel.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
@@ -2744,7 +2744,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target/>
+        <target>Remarques par courriel</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
@@ -2789,12 +2789,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="oIj-UV-kLH.headerTitle" xml:space="preserve">
         <source>About Us</source>
-        <target/>
+        <target>À propos de nous</target>
         <note>Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH";</note>
       </trans-unit>
       <trans-unit id="osk-Kq-gDX.text" xml:space="preserve">
         <source>Language</source>
-        <target/>
+        <target>Langue</target>
         <note>Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX";</note>
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
@@ -2809,7 +2809,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target/>
+        <target>Remarques par courriel</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
@@ -2841,7 +2841,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
         <source>Upload</source>
-        <target/>
+        <target>Téléverser</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
       </trans-unit>
       <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
@@ -2851,7 +2851,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Mail</source>
-        <target/>
+        <target>Messages</target>
         <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
@@ -2861,7 +2861,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
-        <target/>
+        <target>Modifier</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
