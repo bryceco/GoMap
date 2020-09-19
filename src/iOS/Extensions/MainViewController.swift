@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  MainViewController.swift
 //  Go Map!!
 //
 //  Created by Wolfgang Timme on 2/28/20.
