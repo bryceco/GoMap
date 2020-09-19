@@ -49,6 +49,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1d-Y3-CcW" userLabel="Search Button">
                                 <rect key="frame" x="69" y="428" width="42" height="42"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="find_location"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="IVi-i0-4Ko"/>
                                     <constraint firstAttribute="width" constant="42" id="ytZ-tx-Wh5"/>
