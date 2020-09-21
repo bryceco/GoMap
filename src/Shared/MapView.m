@@ -2205,8 +2205,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	NSInteger segment = segmentedControl.selectedSegmentIndex;
 
 	if ( segment < _editControlActions.count ) {
-		NSNumber * actionNum = _editControlActions[ segment ];
-		EDIT_ACTION action = (EDIT_ACTION)actionNum.integerValue;
+		EDIT_ACTION action = (EDIT_ACTION)_editControlActions[ segment ].integerValue;
 
 		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
 		switch ( action ) {
