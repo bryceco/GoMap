@@ -2064,6 +2064,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			// ignore
 		}
 	}
+
+	[self consistencyCheck];
 }
 
 
@@ -2292,7 +2294,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[relation deresolveRefs];
 		[relation resolveToMapData:self];
 	}];
-	
+
+	[self consistencyCheck];
+
 	t = CACurrentMediaTime() - t;
 	NSLog(@"Discard sweep time = %f\n",t);
 
@@ -2445,9 +2449,19 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[Database deleteDatabaseWithName:nil];
 			_region = [QuadMap new];
 		}
+		[self consistencyCheck];
 	}
 
 	return self;
+}
+
+-(void)consistencyCheck
+{
+#if DEBUG
+	// This is extremely expensive: DEBUG only!
+	NSLog(@"Checking spatial database consistency");
+	[_spatial consistencyCheckNodes:_nodes.allValues ways:_ways.allValues relations:_relations.allValues];
+#endif
 }
 
 @end

@@ -56,8 +56,14 @@
 }
 -(void)computeBoundingBox
 {
-    OSMRect rc = { _lon, _lat, 0, 0 };
-    _boundingBox = rc;
+	if ( _lon || _lat ) {
+		OSMRect rc = { _lon, _lat, 0, 0 };
+		_boundingBox = rc;
+	} else {
+		// object at null island
+		OSMRect rc = { FLT_MIN, _lat, 0, 0 };
+		_boundingBox = rc;
+	}
 }
 
 -(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2

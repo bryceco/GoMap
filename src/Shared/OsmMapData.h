@@ -152,4 +152,6 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 
 -(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect;
 
+-(void)consistencyCheck;
+
 @end
