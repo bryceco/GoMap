@@ -1,5 +1,5 @@
 //
-//  CommonPresetList.h
+//  PresetsDatabase.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/4/14.
