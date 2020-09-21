@@ -1,0 +1,213 @@
+/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; */
+"0mW-YK-ajm.placeholder" = "нет";
+
+/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; */
+"0zS-QM-zwQ.placeholder" = "тип";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
+"1Yx-Ce-yfq.title" = "Назад";
+
+/* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
+"2cB-FV-ozw.title" = "Атрибуты";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; */
+"2Q5-Vd-FED.text" = "Заголовок";
+
+/* Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S"; */
+"6VA-gm-L0S.title" = "Точка интереса";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q"; */
+"8Nt-xf-x5Q.text" = "Заголовок";
+
+/* Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5"; */
+"9Nw-ha-JK5.placeholder" = "Да";
+
+/* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
+"19J-sp-UTX.title" = "Все теги";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
+"436-kv-L7j.placeholder" = "Ресторан";
+
+/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; */
+"aCs-vS-YXj.placeholder" = "номер/индекс";
+
+/* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; */
+"Ak4-ru-E4V.placeholder" = "собака";
+
+/* Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k"; */
+"aLi-Vs-z0k.title" = "Настроить";
+
+/* Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; */
+"Bnh-U0-D7i.text" = "Добавить новый";
+
+/* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
+"cN9-3h-H3l.title" = "Все теги";
+
+/* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; */
+"cP3-lR-lzM.placeholder" = "значение";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
+"cTf-Rc-vqr.headerTitle" = "Ключ пресета";
+
+/* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
+"CXe-gQ-Zda.text" = "Значение 8";
+
+/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
+"Dfv-TT-J6i.footerTitle" = "Данный пресет будет доступен при редактировании объектов с данной комбинацией ключ/значение. Оставьте незаполненным любое из полей для возможности подстановки.";
+
+/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
+"Dfv-TT-J6i.headerTitle" = "Применимо к";
+
+/* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
+"dsA-B6-s7R.text" = "Значение 9";
+
+/* Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp"; */
+"eG3-Xz-Nnp.placeholder" = "Собакам разрешено";
+
+/* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
+"Eou-a6-V4g.text" = "Ключ";
+
+/* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
+"f5t-25-IXF.title" = "Атрибуты";
+
+/* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
+"Fcv-4Q-gpE.text" = "Значение 3";
+
+/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; */
+"Fe2-dc-zgA.placeholder" = "предназначенный";
+
+/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; */
+"foC-aN-GtH.placeholder" = "чистый";
+
+/* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
+"G5R-oP-lp3.title" = "Настраиваемые теги";
+
+/* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
+"GIO-W7-q5U.title" = "Настраиваемые пресеты";
+
+/* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
+"hfr-Mf-ZHv.text" = "значение";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG"; */
+"Hgu-iP-FnG.title" = "Назад";
+
+/* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
+"hKU-EH-qxp.title" = "Атрибуты";
+
+/* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
+"ijx-N9-1eO.text" = "Пакет правок";
+
+/* Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS"; */
+"JAT-qD-dTS.text" = "Значение 1";
+
+/* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
+"Jsm-mO-hgo.title" = "Тип POI";
+
+/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.footerTitle" = "Возможные значения для пресета";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.headerTitle" = "Значения пресета";
+
+/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; */
+"kPA-ky-U48.placeholder" = "отдых ";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
+"KX3-hG-OyE.title" = "Назад";
+
+/* Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT"; */
+"li7-oV-pgT.text" = "Значение 5";
+
+/* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
+"lPv-s6-uEz.title" = "Распространённые теги";
+
+/* Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb"; */
+"mAb-DX-pqb.title" = "Распространённые теги";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
+"mcN-gM-s7u.text" = "Наименование";
+
+/* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
+"ng7-T9-SJ6.text" = "Значение 4";
+
+/* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
+"nKt-LG-cSw.text" = "Значение 2";
+
+/* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
+"o63-qY-4vl.text" = "Значение 11";
+
+/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; */
+"oC6-w7-cwN.placeholder" = "связаны";
+
+/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; */
+"okh-JP-aKZ.placeholder" = "парк";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
+"omf-S9-Yjq.text" = "Наименование";
+
+/* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
+"OND-s7-I6f.title" = "Настраиваемый пресет";
+
+/* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
+"P3A-5n-1Iq.text" = "Тип";
+
+/* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
+"pHA-2B-6DC.normalTitle" = "Настроить пресеты";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
+"pxY-di-zg7.placeholder" = "Ресторан";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
+"QDv-7w-nbx.headerTitle" = "Имя пресета";
+
+/* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
+"R0q-aM-ULf.text" = "Значение 6";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
+"Rfe-SO-p0w.title" = "Отмена";
+
+/* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; */
+"sVp-1S-TjJ.placeholder" = "роль";
+
+/* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
+"teB-9L-Nrf.text" = "Ключ";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; */
+"TK4-E8-1q7.text" = "Заголовок";
+
+/* Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO"; */
+"tPF-m9-RtO.text" = "Оплата";
+
+/* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; */
+"Urd-9O-Mte.placeholder" = "связь";
+
+/* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
+"v1b-PG-XxE.title" = "Пресеты";
+
+/* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
+"Vli-Ct-Lpz.text" = "Доступ для инвалидных колясок";
+
+/* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; */
+"vpk-jC-yxl.placeholder" = "да";
+
+/* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
+"wFE-f1-sQa.text" = "Значение 12";
+
+/* Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ"; */
+"Wim-Qa-dYQ.text" = "Значение 10";
+
+/* Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL"; */
+"WoH-od-iKL.text" = "Значение 7";
+
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; */
+"X1y-nK-nVJ.placeholder" = "ключ";
+
+/* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; */
+"XBV-Ie-LDT.text" = "Еда и напитки";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
+"z19-cc-gHZ.text" = "Значение";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; */
+"ZYn-TK-k7d.text" = "Подзаголовок";
+

@@ -17,13 +17,16 @@
 #import "PushPinView.h"
 #import "SpeechBalloonView.h"
 
+
+#define USER_MOVABLE_BUTTONS	0
+
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *settingsButton;
 @property (weak, nonatomic) IBOutlet UIButton *displayButton;
 @end
 
 @implementation MainViewController
-
+@synthesize buttonLayout = _buttonLayout;
 
 - (void)updateUndoRedoButtonState
 {
@@ -88,6 +91,11 @@
 	[super viewWillAppear:animated];
 	self.navigationController.navigationBarHidden = YES;
 
+	// update button layout constraints
+	[NSUserDefaults.standardUserDefaults registerDefaults:@{ @"buttonLayout" : @(BUTTON_LAYOUT_ADD_ON_RIGHT) }];
+	self.buttonLayout = (BUTTON_LAYOUT) [NSUserDefaults.standardUserDefaults integerForKey:@"buttonLayout"];
+
+	// update button styling
 	NSArray * buttons = @[
 		_undoRedoView,
 		_locationButton,
@@ -118,12 +126,20 @@
 		if ( button != _undoRedoView && button != _mapView.compassButton ) {
 			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 			[button setImage:image forState:UIControlStateNormal];
-			button.tintColor = UIColor.systemBlueColor;
+			if (@available(iOS 13.0, *)) {
+				button.tintColor = UIColor.linkColor;
+			} else {
+				button.tintColor = UIColor.systemBlueColor;
+			}
 			if ( button == _mapView.addNodeButton )
 				button.imageEdgeInsets = UIEdgeInsetsMake(15, 15, 15, 15);	// resize images on button to be smaller
 			else
-				button.imageEdgeInsets = UIEdgeInsetsMake(6, 6, 6, 6);	// resize images on button to be smaller
+				button.imageEdgeInsets = UIEdgeInsetsMake(9, 9, 9, 9);	// resize images on button to be smaller
 		}
+
+		// normal background color
+		[self buttonNormal:button];
+
 		// background selection color
 		if ( button != _undoRedoView ) {
 			[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
@@ -135,11 +151,40 @@
 }
 -(void)buttonHighlight:(UIButton *)button
 {
-	button.backgroundColor = UIColor.lightGrayColor;
+	if (@available(iOS 13.0, *)) {
+		button.backgroundColor = UIColor.secondarySystemBackgroundColor;
+	} else {
+		button.backgroundColor = UIColor.lightGrayColor;
+	}
 }
 -(void)buttonNormal:(UIButton *)button
 {
-	button.backgroundColor = UIColor.whiteColor;
+	if (@available(iOS 13.0, *)) {
+		button.backgroundColor = UIColor.systemBackgroundColor;
+	} else {
+		button.backgroundColor = UIColor.whiteColor;
+	}
+}
+
+#if USER_MOVABLE_BUTTONS
+-(void)removeConstrainsOnView:(UIView *)view
+{
+	UIView * superview = view.superview;
+	while ( superview != nil ) {
+		for ( NSLayoutConstraint * c in superview.constraints ) {
+			if ( c.firstItem == view || c.secondItem == view ) {
+				[superview removeConstraint:c];
+			}
+		}
+		superview = superview.superview;
+	}
+	for ( NSLayoutConstraint * c in [view.constraints copy] ) {
+		if ( ((UIView *)c.firstItem).superview == view || ((UIView *)c.secondItem).superview == view ) {
+			// skip
+		} else {
+			[view removeConstraint:c];
+		}
+	}
 }
 
 -(void)makeMovableButtons
@@ -160,22 +205,7 @@
 	];
 	// remove layout constraints
 	for ( UIButton * button in buttons ) {
-		UIView * superview = button.superview;
-		while ( superview != nil ) {
-			for ( NSLayoutConstraint * c in superview.constraints ) {
-				if ( c.firstItem == button || c.secondItem == button ) {
-					[superview removeConstraint:c];
-				}
-			}
-			superview = superview.superview;
-		}
-		for ( NSLayoutConstraint * c in [button.constraints copy] ) {
-			if ( ((UIView *)c.firstItem).superview == button || ((UIView *)c.secondItem).superview == button ) {
-				// skip
-			} else {
-				[button removeConstraint:c];
-			}
-		}
+		[self removeConstrainsOnView:button];
 		button.translatesAutoresizingMaskIntoConstraints = YES;
 	}
 	for ( UIButton * button in buttons ) {
@@ -183,7 +213,6 @@
 		// panGesture.delegate = self;
 		[button addGestureRecognizer:panGesture];
 	}
-
 	NSString * message = @"This build has a temporary feature: Drag the buttons in the UI to new locations that looks and feel best for you.\n\n"
 						@"* Submit your preferred layouts either via email or on GitHub.\n\n"
 						@"* Positions reset when the app terminates\n\n"
@@ -204,12 +233,49 @@
 	} else {
 	}
 }
+#endif
+
+-(BUTTON_LAYOUT)buttonLayout
+{
+	return _buttonLayout;
+}
+
+-(void)setButtonLayout:(BUTTON_LAYOUT)buttonLayout
+{
+	_buttonLayout = buttonLayout;
+
+	[NSUserDefaults.standardUserDefaults setInteger:_buttonLayout forKey:@"buttonLayout"];
+
+	BOOL left = buttonLayout == BUTTON_LAYOUT_ADD_ON_LEFT;
+	NSLayoutAttribute attribute = left ? NSLayoutAttributeLeading : NSLayoutAttributeTrailing;
+	UIButton * addButton = _mapView.addNodeButton;
+	UIView * superview = addButton.superview;
+	for ( NSLayoutConstraint * c in superview.constraints ) {
+		if ( c.firstItem == addButton &&
+			[c.secondItem isKindOfClass:[UILayoutGuide class]] &&
+			(c.firstAttribute == NSLayoutAttributeLeading || c.firstAttribute == NSLayoutAttributeTrailing) &&
+			(c.secondAttribute == NSLayoutAttributeLeading || c.secondAttribute == NSLayoutAttributeTrailing) )
+		{
+			[superview removeConstraint:c];
+			NSLayoutConstraint * c2 = [NSLayoutConstraint constraintWithItem:c.firstItem
+																   attribute:attribute
+																   relatedBy:NSLayoutRelationEqual
+																	  toItem:c.secondItem
+																   attribute:attribute
+																  multiplier:1.0
+																	constant:left ? fabs(c.constant) : -fabs(c.constant)];
+			[superview addConstraint:c2];
+			return;
+		}
+	}
+	assert(NO);	// didn't find the constraint
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
 
-#if 1 // FIXME
+#if USER_MOVABLE_BUTTONS
 	[self makeMovableButtons];
 #endif
 

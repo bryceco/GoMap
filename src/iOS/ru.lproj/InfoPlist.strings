@@ -1,0 +1,30 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Get Info string */
+"CFBundleGetInfoString" = "";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Подключиться к внешнему Bluetooth GPS устройству";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Камера используется для измерения высоты зданий или объектов";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Постоянное отслеживание местоположения позволяет приложению записывать файлы GPX, когда они неактивны.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Ваше местоположение будет отображаться и отслеживаться на карте.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Ваше местоположение будет отображаться и отслеживаться на карте.";
+

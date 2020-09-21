@@ -695,7 +695,7 @@ const CGFloat kEditControlCornerRadius = 4;
 		[UIView animateWithDuration:0.35 animations:^{
 			_flashLabel.alpha = 0.0;
 		} completion:^(BOOL finished){
-			if ( finished && ((CALayer *)_flashLabel.layer.presentationLayer).opacity == 0.0 ) {
+			if ( finished && _flashLabel.layer.presentationLayer.opacity == 0.0 ) {
 				_flashLabel.hidden = YES;
 			}
 		}];
@@ -738,14 +738,6 @@ const CGFloat kEditControlCornerRadius = 4;
 				return;
 			title = NSLocalizedString(@"Network error",nil);
 			ignoreButton = NSLocalizedString(@"Ignore",nil);
-		}
-
-		// don't let message be too long
-		if ( text.length > 1000 ) {
-			NSMutableString * newText = [NSMutableString stringWithString:text];
-			[newText deleteCharactersInRange:NSMakeRange(1000, text.length-1000)];
-			[newText appendString:@"..."];
-			text = newText;
 		}
 
 		if ( flash ) {

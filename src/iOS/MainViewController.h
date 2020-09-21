@@ -10,6 +10,11 @@
 #import <UIKit/UIKit.h>
 #import "MapView.h"
 
+typedef enum {
+	BUTTON_LAYOUT_ADD_ON_LEFT,
+	BUTTON_LAYOUT_ADD_ON_RIGHT,
+} BUTTON_LAYOUT;
+
 
 @class MapView;
 
@@ -24,6 +29,7 @@
 
 @property (assign,nonatomic) IBOutlet MapView	*	_Nonnull mapView;
 @property (assign,nonatomic) IBOutlet UIButton 	* 	_Nonnull locationButton;
+@property (assign,nonatomic) BUTTON_LAYOUT	buttonLayout;
 
 -(IBAction)toggleLocation:(_Nullable id)sender;
 -(void)setGpsState:(GPS_STATE)state;

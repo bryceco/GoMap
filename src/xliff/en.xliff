@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -59,7 +59,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -96,19 +96,24 @@
         <target> (way)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.2f MB, %d files" xml:space="preserve">
-        <source>%1$.2f MB, %2$d files</source>
-        <target>%1$.2f MB, %2$d files</target>
+      <trans-unit id="%.0f meters" xml:space="preserve">
+        <source>%.0f meters</source>
+        <target>%.0f meters</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%.1f meters" xml:space="preserve">
+        <source>%.1f meters</source>
+        <target>%.1f meters</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
+        <source>%1$.2f MB, %2$ld files</source>
+        <target>%1$.2f MB, %2$ld files</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
         <target>%@ (relation)</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="%@ Attributes" xml:space="preserve">
-        <source>%@ Attributes</source>
-        <target>%@ Attributes</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ changeset" xml:space="preserve">
@@ -169,6 +174,11 @@
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
         <target>(way)</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="+ Button Position" xml:space="preserve">
+        <source>+ Button Position</source>
+        <target>+ Button Position</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -239,6 +249,11 @@
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
         <target>Attention</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Attributes" xml:space="preserve">
+        <source>Attributes</source>
+        <target>Attributes</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -475,11 +490,6 @@
         <target>Edit XML</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Edit download region is too large" xml:space="preserve">
-        <source>Edit download region is too large</source>
-        <target>Edit download region is too large</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
         <target>Edit restrictions</target>
@@ -544,11 +554,6 @@ Error: %@</target>
         <target>GPX Upload Failed</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Height = %@ meters" xml:space="preserve">
-        <source>Height = %@ meters</source>
-        <target>Height = %@ meters</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Height: %@ ± %@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
         <target>Height: %1$@ ± %2$@ meters</target>
@@ -604,6 +609,16 @@ Error: %@</target>
         <target>Lat/Lon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Left side" xml:space="preserve">
+        <source>Left side</source>
+        <target>Left side</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Length" xml:space="preserve">
+        <source>Length</source>
+        <target>Length</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Location services timed out." xml:space="preserve">
         <source>Location services timed out.</source>
         <target>Location services timed out.</target>
@@ -624,11 +639,6 @@ Error: %@</target>
         <target>Low memory: clearing cache</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Mail" xml:space="preserve">
-        <source>Mail</source>
-        <target>Mail</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
         <target>Mail delivery is not available on this device</target>
@@ -647,11 +657,6 @@ Error: %@</target>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
         <target>Maybe later...</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Measure Height" xml:space="preserve">
-        <source>Measure Height</source>
-        <target>Measure Height</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -735,6 +740,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>Never</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Next" xml:space="preserve">
+        <source>Next</source>
+        <target>Next</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target>No Data</target>
@@ -743,11 +753,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
         <target>No Left Turn restriction</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="No Object Selected" xml:space="preserve">
-        <source>No Object Selected</source>
-        <target>No Object Selected</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
@@ -790,14 +795,19 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>Node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Node attributes" xml:space="preserve">
+        <source>Node attributes</source>
+        <target>Node attributes</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
         <target>Node is not an element of way</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must first or last node of the way" xml:space="preserve">
-        <source>Node must first or last node of the way</source>
-        <target>Node must first or last node of the way</target>
+        <source>Node must be first or last node of the way</source>
+        <target>Node must be first or last node of the way</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -890,6 +900,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>Please wait</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Previous" xml:space="preserve">
+        <source>Previous</source>
+        <target>Previous</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
         <target>Previous Tracks</target>
@@ -910,9 +925,9 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>Redo</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation" xml:space="preserve">
-        <source>Relation</source>
-        <target>Relation</target>
+      <trans-unit id="Relation attributes" xml:space="preserve">
+        <source>Relation attributes</source>
+        <target>Relation attributes</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation tags" xml:space="preserve">
@@ -965,6 +980,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>Reverse</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Right side" xml:space="preserve">
+        <source>Right side</source>
+        <target>Right side</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
         <target>Rotate</target>
@@ -993,11 +1013,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
         <target>Set Height Tag</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Set height tag?" xml:space="preserve">
-        <source>Set height tag?</source>
-        <target>Set height tag?</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
@@ -1048,6 +1063,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
         <target>Tags</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
+        <source>The + button can be positioned on either the left or right side of the screen</source>
+        <target>The + button can be positioned on either the left or right side of the screen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
@@ -1189,11 +1209,6 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target>UID</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Unable to access the camera" xml:space="preserve">
-        <source>Unable to access the camera</source>
-        <target>Unable to access the camera</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
         <source>Unable to upload changes</source>
         <target>Unable to upload changes</target>
@@ -1264,9 +1279,9 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target>Warning</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way" xml:space="preserve">
-        <source>Way</source>
-        <target>Way</target>
+      <trans-unit id="Way attributes" xml:space="preserve">
+        <source>Way attributes</source>
+        <target>Way attributes</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way tags" xml:space="preserve">
@@ -1475,9 +1490,36 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
+  <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+    </header>
+    <body>
+      <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
+        <source>Set Height</source>
+        <target>Set Height</target>
+        <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
+      </trans-unit>
+      <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
+        <source>Distance</source>
+        <target>Distance</target>
+        <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
+      </trans-unit>
+      <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
+        <source>Height</source>
+        <target>Height</target>
+        <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
+      </trans-unit>
+      <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
+      </trans-unit>
+    </body>
+  </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1504,6 +1546,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>99 Days</source>
         <target>99 Days</target>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
+      </trans-unit>
+      <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
+        <source>Projection</source>
+        <target>Projection</target>
+        <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
@@ -1668,6 +1715,16 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Unnamed Roads</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
+      <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
+        <source>If specifying a WMS URL you must also provide the projection used</source>
+        <target>If specifying a WMS URL you must also provide the projection used</target>
+        <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
+      </trans-unit>
+      <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
+        <source>WMS Projection</source>
+        <target>WMS Projection</target>
+        <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
+      </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
         <target>Aerial Tiles</target>
@@ -1720,6 +1777,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Aerial Tiles</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
+      <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
+        <source>Position + Button on </source>
+        <target>Position + Button on </target>
+        <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG";</note>
+      </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
         <target>Editor only</target>
@@ -1734,6 +1796,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>Bing</source>
         <target>Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
+      </trans-unit>
+      <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target>Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
@@ -1786,6 +1853,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Simon Poole Map Data © OpenStreetMap contributors
 </target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
+      </trans-unit>
+      <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
+        <source>(TMS)</source>
+        <target>(TMS)</target>
+        <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
         <source>Past/Future</source>
@@ -1878,9 +1950,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
-        <source>Bing aerial</source>
-        <target>Bing aerial</target>
-        <note>Class = "UITextField"; placeholder = "Bing aerial"; ObjectID = "w75-Lj-3jF";</note>
+        <source>Portlandia GIS</source>
+        <target>Portlandia GIS</target>
+        <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
         <source>Reset</source>
@@ -1898,9 +1970,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
-        <source>A TMS URL with {x}, {y} and {z} placeholders.</source>
-        <target>A TMS URL with {x}, {y} and {z} placeholders.</target>
-        <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders."; ObjectID = "zD6-m4-1PD";</note>
+        <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
+        <target>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</target>
+        <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
         <source>Template URL of the tile server</source>
@@ -1916,7 +1988,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -1958,16 +2030,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>66.6 FPS</source>
         <target>66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
-      </trans-unit>
-      <trans-unit id="Af5-y9-yOe.accessibilityLabel" xml:space="preserve">
-        <source>Locate me</source>
-        <target>Locate me</target>
-        <note>Class = "UIButton"; accessibilityLabel = "Locate me"; ObjectID = "Af5-y9-yOe";</note>
-      </trans-unit>
-      <trans-unit id="Ceq-eN-yV5.title" xml:space="preserve">
-        <source>Add node</source>
-        <target>Add node</target>
-        <note>Class = "UIBarButtonItem"; title = "Add node"; ObjectID = "Ceq-eN-yV5";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
@@ -2014,50 +2076,30 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Various comments...</target>
         <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx";</note>
       </trans-unit>
-      <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
-        <source>Set Height</source>
-        <target>Set Height</target>
-        <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
-      </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
         <source>Bing Maps</source>
         <target>Bing Maps</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
-      </trans-unit>
-      <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
-        <source>Distance</source>
-        <target>Distance</target>
-        <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
         <target>Changeset comment goes here</target>
         <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
       </trans-unit>
-      <trans-unit id="e3U-Im-GKP.title" xml:space="preserve">
-        <source>Item</source>
-        <target>Item</target>
-        <note>Class = "UIBarButtonItem"; title = "Item"; ObjectID = "e3U-Im-GKP";</note>
-      </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
         <source>Commit</source>
         <target>Commit</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE";</note>
       </trans-unit>
-      <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
-        <source>Height</source>
-        <target>Height</target>
-        <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
-      </trans-unit>
-      <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
-        <source>Cancel</source>
-        <target>Cancel</target>
-        <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
-      </trans-unit>
       <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
         <source>Subtitle</source>
         <target>Subtitle</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
+      </trans-unit>
+      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
+        <source>A Error Message Flashing Z</source>
+        <target>A Error Message Flashing Z</target>
+        <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn";</note>
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
@@ -2108,7 +2150,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2231,11 +2273,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Back</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
       </trans-unit>
-      <trans-unit id="LUc-68-Anl.text" xml:space="preserve">
-        <source>Food &amp; Drink</source>
-        <target>Food &amp; Drink</target>
-        <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "LUc-68-Anl";</note>
-      </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Preset</source>
         <target>Custom Preset</target>
@@ -2291,11 +2328,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>key</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ";</note>
       </trans-unit>
-      <trans-unit id="X7U-Pa-WCn.text" xml:space="preserve">
-        <source>Subtitle</source>
-        <target>Subtitle</target>
-        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "X7U-Pa-WCn";</note>
-      </trans-unit>
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
         <source>Food &amp; Drink</source>
         <target>Food &amp; Drink</target>
@@ -2331,6 +2363,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <target>Preset Key</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
       </trans-unit>
+      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh";</note>
+      </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
         <source>Value 9</source>
         <target>Value 9</target>
@@ -2350,6 +2387,11 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>clean</source>
         <target>clean</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH";</note>
+      </trans-unit>
+      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
         <source>Attributes</source>
@@ -2480,7 +2522,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2737,9 +2779,9 @@ http://glyphish.com
         <note>Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
-        <source>E-mail Feedback</source>
-        <target>E-mail Feedback</target>
-        <note>Class = "UILabel"; text = "E-mail Feedback"; ObjectID = "iR4-av-Q7M";</note>
+        <source>Email Feedback</source>
+        <target>Email Feedback</target>
+        <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
         <source>Language</source>
@@ -2755,11 +2797,6 @@ http://glyphish.com
         <source>Password</source>
         <target>Password</target>
         <note>Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY";</note>
-      </trans-unit>
-      <trans-unit id="kDx-6x-qqY.text" xml:space="preserve">
-        <source>Hostname</source>
-        <target>Hostname</target>
-        <note>Class = "UILabel"; text = "Hostname"; ObjectID = "kDx-6x-qqY";</note>
       </trans-unit>
       <trans-unit id="kt1-K7-kcu.title" xml:space="preserve">
         <source>Back</source>
@@ -2807,9 +2844,9 @@ http://glyphish.com
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib";</note>
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
-        <source>E-mail Feedback</source>
-        <target>E-mail Feedback</target>
-        <note>Class = "UILabel"; text = "E-mail Feedback"; ObjectID = "whL-SZ-HD5";</note>
+        <source>Email Feedback</source>
+        <target>Email Feedback</target>
+        <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
         <source>GitHub - Issues &amp; Source Code</source>
@@ -2820,6 +2857,63 @@ http://glyphish.com
         <source>Developer settings</source>
         <target>Developer settings</target>
         <note>Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+    </header>
+    <body>
+      <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
+        <source>Changes:</source>
+        <target>Changes:</target>
+        <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
+      </trans-unit>
+      <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
+        <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target>Lorem ipsum dolor sit er elit lamet,</target>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv";</note>
+      </trans-unit>
+      <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
+        <source>Upload</source>
+        <target>Upload</target>
+        <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
+      </trans-unit>
+      <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
+        <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target>Lorem ipsum dolor sit er elit lamet,</target>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY";</note>
+      </trans-unit>
+      <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
+        <source>Mail</source>
+        <target>Mail</target>
+        <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
+      </trans-unit>
+      <trans-unit id="feW-AK-msn.title" xml:space="preserve">
+        <source>Commit</source>
+        <target>Commit</target>
+        <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
+      </trans-unit>
+      <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
+        <source>Edit</source>
+        <target>Edit</target>
+        <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
+      </trans-unit>
+      <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
+        <source>Changeset comment:</source>
+        <target>Changeset comment:</target>
+        <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
+      </trans-unit>
+      <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
+        <source>survey, Bing, etc.</source>
+        <target>survey, Bing, etc.</target>
+        <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
+      </trans-unit>
+      <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
+        <source>Source:</source>
+        <target>Source:</target>
+        <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
       </trans-unit>
     </body>
   </file>

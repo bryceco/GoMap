@@ -1377,7 +1377,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             <objects>
                 <navigationController storyboardIdentifier="DisplayViewController" id="3il-wo-nAN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="DisplayViewController" insetsLayoutMarginsFromSafeArea="NO" id="6od-EN-7Ax">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbm-5N-YoL">
@@ -1726,8 +1726,40 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             </tableViewSection>
                             <tableViewSection headerTitle="Interactions" id="RJU-Z2-QFh">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IqK-Jw-3YY">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WpQ-Uc-2gz">
                                         <rect key="frame" x="0.0" y="775.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WpQ-Uc-2gz" id="LSM-B0-YI9">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position + Button on " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLW-GB-ugG">
+                                                    <rect key="frame" x="15" y="11.5" width="166" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="el8-h8-H1F">
+                                                    <rect key="frame" x="249" y="5.5" width="51" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <connections>
+                                                        <action selector="chooseAddButtonPosition:" destination="UfZ-fJ-hyB" eventType="touchUpInside" id="CYQ-4y-eor"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="el8-h8-H1F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eLW-GB-ugG" secondAttribute="trailing" constant="10" id="1QG-q2-3Ot"/>
+                                                <constraint firstAttribute="trailing" secondItem="el8-h8-H1F" secondAttribute="trailing" constant="20" id="6vb-sM-lR9"/>
+                                                <constraint firstItem="eLW-GB-ugG" firstAttribute="centerY" secondItem="LSM-B0-YI9" secondAttribute="centerY" id="Kpt-ep-ACN"/>
+                                                <constraint firstItem="eLW-GB-ugG" firstAttribute="centerY" secondItem="el8-h8-H1F" secondAttribute="centerY" id="L7j-zM-g90"/>
+                                                <constraint firstItem="eLW-GB-ugG" firstAttribute="leading" secondItem="LSM-B0-YI9" secondAttribute="leading" constant="15" id="V4G-CL-cvx"/>
+                                                <constraint firstItem="el8-h8-H1F" firstAttribute="centerY" secondItem="LSM-B0-YI9" secondAttribute="centerY" id="i4k-6B-zgb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IqK-Jw-3YY">
+                                        <rect key="frame" x="0.0" y="819.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IqK-Jw-3YY" id="5R9-J2-ycr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1753,7 +1785,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gt5-e4-ICw">
-                                        <rect key="frame" x="0.0" y="819.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="863.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gt5-e4-ICw" id="sug-RD-ipO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1795,6 +1827,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="_addButtonPosition" destination="el8-h8-H1F" id="gtU-mk-rXW"/>
                         <outlet property="_birdsEyeSwitch" destination="IuS-7H-TV3" id="qn2-l1-Fvx"/>
                         <outlet property="_gpsTraceSwitch" destination="hvT-hi-s8k" id="aav-pU-882"/>
                         <outlet property="_gpxLoggingSwitch" destination="1jq-Mx-hmn" id="Xjp-YQ-1CM"/>

@@ -1,9 +1,43 @@
 # Disable metrics
 opt_out_usage
 
+# Configuration
+private_keychain_name = "fastlane_keychain"
+private_keychain_password = "does-not-matter"
+
 default_platform(:ios)
 
+# Determines the bundle identifier based on the given target name.
+# Source: https://stackoverflow.com/a/42610380
+def product_bundle_id(scheme)
+  # The working directory of fastlane actions is the `./fastlane` folder,
+  # so in order to access the project file, we need to use "../".
+  project = Xcodeproj::Project.open("../Go Map!!.xcodeproj")
+
+  scheme = project.native_targets.find { |target| target.name == scheme }
+  build_configuration = scheme.build_configurations.first
+  build_configuration.build_settings['PRODUCT_BUNDLE_IDENTIFIER']
+end
+
 platform :ios do
+
+  desc "Creates a private Keychain. This is needed so that the Beta can be created by a GitHub Action."
+  private_lane :create_private_keychain do
+    # See: https://medium.com/well-red/github-actions-fastlane-ios-1f6d43cce726
+    create_keychain(
+      name: private_keychain_name,
+      password: private_keychain_password,
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: false
+    )
+  end
+
+  desc "Deletes the privat Keychain that is used with GitHub Actions."
+  private_lane :delete_private_keychain do
+    delete_keychain(name: private_keychain_name)
+  end
 
   desc "Performs basic integration checks to be run before merging"
   lane :pull_request_checks do
@@ -19,6 +53,46 @@ platform :ios do
       appicon_devices: [:ipad, :iphone, :ios_marketing],
       appicon_path: "../Images.xcassets"
     )
+  end
+
+  desc "Builds and uploads a new TestFlight Beta release."
+  lane :beta do
+    UI.message("Preparing new TestFlight release...")
+
+    # Make sure that all tests run successfully.
+    pull_request_checks
+
+    create_private_keychain
+
+    # Get the provisioning profiles and certificates.
+    match(
+      type: "appstore",
+      readonly: is_ci,
+      keychain_name: private_keychain_name,
+      keychain_password: private_keychain_password,
+      app_identifier: product_bundle_id("Go Map!!")
+    )
+
+    # Bump the build number and the version.
+    increment_build_number
+    increment_version_number(bump_type: 'patch')
+    commit_version_bump(
+      xcodeproj: './Go Map!!.xcodeproj',
+      message: 'Bump build number and version'
+    )
+
+    build_app(
+      project: "Go Map!!.xcodeproj",
+      scheme: "Go Map!!"
+    )
+
+    delete_private_keychain
+
+    add_git_tag(tag: get_version_number())
+
+    push_to_git_remote
+
+    upload_to_testflight
   end
 
 end
