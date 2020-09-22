@@ -126,6 +126,11 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	} else {
 		hostname = [@"https://" stringByAppendingString:hostname];
 	}
+
+	while ( [hostname hasSuffix:@"//"] ) {
+		// fix for previous releases that may have accidently set an extra slash
+		hostname = [hostname substringToIndex:hostname.length-1];
+	}
 	if ( [hostname hasSuffix:@"/"] ) {
 		// great
 	} else {
@@ -143,12 +148,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 -(NSString *)getServer
 {
-	NSString * s = OSM_API_URL;
-	if ( [s hasPrefix:@"http://"] )
-		s = [s substringFromIndex:7];
-	if ( [s hasSuffix:@"/"] )
-		s = [s substringToIndex:s.length-1];
-	return s;
+	return OSM_API_URL;
 }
 
 -(void)setupPeriodicSaveTimer
