@@ -1222,14 +1222,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			if ( data && error == nil ) {
+			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
+			if ( data && error == nil && httpResponse && httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299  ) {
 				completion(data,nil);
 			} else {
 				NSString * errorMessage;
 				if ( data.length > 0 ) {
 					errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
 				} else {
-					errorMessage = error.localizedDescription;
+					errorMessage = error ? error.localizedDescription : httpResponse ? [NSString stringWithFormat:@"HTTP Error %ld", (long)httpResponse.statusCode] : @"Unknown error";
 				}
 				completion(nil,errorMessage);
 			}
