@@ -32,6 +32,8 @@
 {
 	_undoButton.enabled = self.mapView.editorLayer.mapData.canUndo && !self.mapView.editorLayer.hidden;
 	_redoButton.enabled = self.mapView.editorLayer.mapData.canRedo && !self.mapView.editorLayer.hidden;
+	_uploadButton.hidden = !_undoButton.enabled;
+	_undoRedoView.hidden = !_undoButton.enabled && !_redoButton.enabled;
 }
 
 
