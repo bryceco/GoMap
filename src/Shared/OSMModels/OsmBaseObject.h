@@ -99,8 +99,8 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 -(void)setTimestamp:(NSDate *)date undo:(UndoManager *)undo;
 -(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo;
 
--(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
--(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
+-(void)addParentRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
+-(void)removeParentRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
 
 -(void)clearCachedProperties;
 

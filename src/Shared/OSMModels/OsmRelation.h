@@ -15,7 +15,7 @@
 
 -(void)constructMember:(OsmMember *)member;
 
--(void)resolveToMapData:(OsmMapData *)mapData;
+-(BOOL)resolveToMapData:(OsmMapData *)mapData;
 -(NSSet *)allMemberObjects;
 
 -(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo;

@@ -642,25 +642,25 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
--(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo
+-(void)addParentRelation:(OsmRelation *)parentRelation undo:(UndoManager *)undo
 {
     if ( _constructed && undo ) {
-        [undo registerUndoWithTarget:self selector:@selector(removeRelation:undo:) objects:@[relation,undo]];
+        [undo registerUndoWithTarget:self selector:@selector(removeParentRelation:undo:) objects:@[parentRelation,undo]];
     }
 
     if ( _parentRelations ) {
-        if ( ![_parentRelations containsObject:relation] )
-            _parentRelations = [_parentRelations arrayByAddingObject:relation];
+        if ( ![_parentRelations containsObject:parentRelation] )
+            _parentRelations = [_parentRelations arrayByAddingObject:parentRelation];
     } else {
-        _parentRelations = @[ relation ];
+        _parentRelations = @[ parentRelation ];
     }
 }
--(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo
+-(void)removeParentRelation:(OsmRelation *)parentRelation undo:(UndoManager *)undo
 {
     if ( _constructed && undo ) {
-        [undo registerUndoWithTarget:self selector:@selector(addRelation:undo:) objects:@[relation,undo]];
+        [undo registerUndoWithTarget:self selector:@selector(addParentRelation:undo:) objects:@[parentRelation,undo]];
     }
-    NSInteger index = [_parentRelations indexOfObject:relation];
+    NSInteger index = [_parentRelations indexOfObject:parentRelation];
     if ( index == NSNotFound ) {
         DLog(@"missing relation");
         return;
