@@ -1079,13 +1079,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}];
 
 		// all relations, including old ones, need to be resolved against new objects
-		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
-
-			OSMRect bbox = relation.boundingBox;
-			[relation resolveToMapData:self];
-			[_spatial updateMember:relation fromBox:bbox undo:nil];
-		}];
-
+		__block BOOL didChange = YES;
+		while ( didChange ) {
+			didChange = NO;
+			[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
+				OSMRect bbox = relation.boundingBox;
+				didChange |= [relation resolveToMapData:self];
+				[_spatial updateMember:relation fromBox:bbox undo:nil];
+			}];
+		}
 
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			[node setConstructed];
