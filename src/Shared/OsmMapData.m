@@ -2458,11 +2458,25 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	return self;
 }
 
+
+-(void)consistencyCheckRelationMembers
+{
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL * _Nonnull stop) {
+		for ( OsmMember * member in relation.members ) {
+			OsmBaseObject * object = member.ref;
+			if ( [object isKindOfClass:[NSNumber class]] )
+				continue;;
+			assert( [object.parentRelations containsObject:relation] );
+		}
+	}];
+}
+
 -(void)consistencyCheck
 {
 #if DEBUG
 	// This is extremely expensive: DEBUG only!
 	NSLog(@"Checking spatial database consistency");
+	[self consistencyCheckRelationMembers];
 	[_spatial consistencyCheckNodes:_nodes.allValues ways:_ways.allValues relations:_relations.allValues];
 #endif
 }
