@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)removeAllObjects;
 -(void)removeObjectsAsyncOlderThan:(NSDate *_Nonnull)expiration;
--(void)diskCacheSize:(NSInteger *_Nonnull)pSize count:(NSInteger *_Nonnull)pCount;
+-(void)getDiskCacheSize:(NSInteger *_Nonnull)pSize count:(NSInteger *_Nonnull)pCount;
 -(NSArray<NSString *> *)allKeys;
 @end
 

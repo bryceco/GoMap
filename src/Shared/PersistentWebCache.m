@@ -76,7 +76,7 @@
 	});
 }
 
--(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
+-(void)getDiskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
 	NSInteger count = 0;
 	NSInteger size = 0;
