@@ -147,7 +147,7 @@
 
 -(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
-	[_webCache diskCacheSize:pSize count:pCount];
+    [_webCache getDiskCacheSize:pSize count:pCount];
 }
 
 -(BOOL)layerOverlapsScreen:(CALayer *)layer
