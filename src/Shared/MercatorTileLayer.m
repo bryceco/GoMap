@@ -145,7 +145,7 @@
 	[_webCache removeObjectsAsyncOlderThan:expiration];
 }
 
--(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
+-(void)getDiskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
     [_webCache getDiskCacheSize:pSize count:pCount];
 }
