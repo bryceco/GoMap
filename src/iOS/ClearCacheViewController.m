@@ -88,7 +88,7 @@ enum {
 		cell.detailLabel.text = NSLocalizedString(@"computing size...",nil);
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
 			NSInteger size, count;
-			[(id)object diskCacheSize:&size count:&count];
+			[(id)object getDiskCacheSize:&size count:&count];
 			dispatch_async(dispatch_get_main_queue(), ^{
 				cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %ld files",nil), (double)size/(1024*1024), (long)count];
 			});
