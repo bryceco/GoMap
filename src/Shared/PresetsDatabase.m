@@ -756,40 +756,43 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	} else if ( [type isEqualToString:@"address"] ) {
 
+		NSString * addressPrefix = dict[@"key"];
 		NSArray * numericFields = @[
-									@"addr:block_number",
-									@"addr:conscriptionnumber",
-									@"addr:floor",
-									@"addr:housenumber",
-									@"addr:postcode",
-									@"addr:unit"
+									@"block_number",
+									@"conscriptionnumber",
+									@"floor",
+									@"housenumber",
+									@"postcode",
+									@"unit"
 									];
 
 		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
-		NSArray * keys = nil;
+		NSArray * keysForCountry = nil;
 		for ( NSDictionary * localeDict in g_jsonAddressFormatsDict ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
 			if ( countryCodeList == nil ) {
 				// default
-				keys = localeDict[ @"format" ];
+				keysForCountry = localeDict[ @"format" ];
 			} else if ( [countryCodeList containsObject:countryCode] ) {
 				// country specific format
-				keys = localeDict[ @"format" ];
+				keysForCountry = localeDict[ @"format" ];
 				break;
 			}
 		}
 
 		NSDictionary * placeholders = dict[ @"strings" ][ @"placeholders" ];
 		NSMutableArray * addrs = [NSMutableArray new];
-		for ( NSArray * row in keys ) {
-			for ( NSString * k in row ) {
-				NSString * name = k;
-				placeholder = placeholders[name];
-				name = PrettyTag( name );
-				if ( ![placeholder isEqualToString:@"123"] )
+		for ( NSArray * addressGroup in keysForCountry ) {
+			for ( NSString * addressKey in addressGroup ) {
+				NSString * name;
+				placeholder = placeholders[addressKey];
+				if ( placeholder && ![placeholder isEqualToString:@"123"] ) {
 					name = placeholder;
-				keyboard = [numericFields containsObject:k] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
-				NSString * tagKey = [@"addr:" stringByAppendingString:k];
+				} else {
+					name = PrettyTag( addressKey );
+				}
+				keyboard = [numericFields containsObject:addressKey] ? UIKeyboardTypeNumbersAndPunctuation : UIKeyboardTypeDefault;
+				NSString * tagKey = [NSString stringWithFormat:@"%@:%@", addressPrefix, addressKey];
 				PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:tagKey defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeWords presets:nil];
 				[addrs addObject:tag];
 			}
