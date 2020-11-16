@@ -333,12 +333,16 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		NSString * y = [NSString stringWithFormat:@"%d",tileY];
 		NSString * negY = [NSString stringWithFormat:@"%d",(1<<zoom)-tileY-1];
 		NSString * z = [NSString stringWithFormat:@"%d",zoom];
-		[url replaceOccurrencesOfString:@"{u}" withString:u options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{x}" withString:x options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{y}" withString:y options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{-y}" withString:negY options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{z}" withString:z options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{u}"	withString:u options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{x}"	withString:x options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{y}" 	withString:y options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{-y}"	withString:negY options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{z}" 	withString:z options:0 range:NSMakeRange(0,url.length)];
 	}
+	// retina screen
+	NSString * retina = UIScreen.mainScreen.scale > 1 ? @"@2x" : @"";
+	[url replaceOccurrencesOfString:@"{@2x}" withString:retina options:0 range:NSMakeRange(0,url.length)];
+
 	NSString * urlString = [url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
 	return [NSURL URLWithString:urlString];
 }
