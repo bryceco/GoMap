@@ -291,13 +291,6 @@
 #endif
 }
 
--(void)search:(UILongPressGestureRecognizer *)recognizer
-{
-	if ( recognizer.state == UIGestureRecognizerStateBegan ) {
-		[self performSegueWithIdentifier:@"searchSegue" sender:recognizer];
-	}
-}
-
 -(void)addNodeQuick:(UILongPressGestureRecognizer *)recognizer
 {
 	if ( recognizer.state == UIGestureRecognizerStateBegan ) {
