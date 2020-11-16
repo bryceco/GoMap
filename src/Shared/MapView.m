@@ -104,7 +104,11 @@ const CGFloat kEditControlCornerRadius = 4;
 		self.wantsLayer = YES;
 #endif
 		self.layer.masksToBounds = YES;
-		self.backgroundColor = [UIColor colorWithWhite:0.85 alpha:1];
+		if (@available(iOS 13.0, *)) {
+			self.backgroundColor = [UIColor systemGray6Color];
+		} else {
+			self.backgroundColor = [UIColor colorWithWhite:0.85 alpha:1.0];
+		}
 
 		_screenFromMapTransform = OSMTransformIdentity();
 		_birdsEyeDistance = 1000.0;
