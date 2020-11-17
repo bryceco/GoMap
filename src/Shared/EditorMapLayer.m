@@ -1441,7 +1441,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 
 		// get object name, or address if no name
-		NSString * name = object.tags[@"name"];
+		NSString * name = object.tags[@"name"] ?: object.tags[@"ref"];
 		if ( name == nil )
 			name = DrawNodeAsHouseNumber( object.tags );
 
