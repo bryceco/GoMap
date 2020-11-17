@@ -273,7 +273,7 @@
 	}
 }
 
--(void)setAssociatedColorForCell:(TextPairTableCell *)cell
+-(UIView *)getAssociatedColorForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"colour"] ||
 		 [cell.text1.text isEqualToString:@"color"] ||
@@ -291,11 +291,10 @@
 			UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size+6, size)];
 			view.backgroundColor = UIColor.clearColor;
 			[view addSubview:square];
-			cell.text2.rightView = view;
-			cell.text2.rightViewMode = UITextFieldViewModeAlways;
-			return;
+			return view;
 		}
 	}
+	return nil;
 }
 
 -(IBAction)openWebsite:(id)sender
@@ -337,7 +336,7 @@
 	}
 }
 
--(void)setWebsiteButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getWebsiteButtonForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"wikipedia"] ||
 		 [cell.text1.text isEqualToString:@"wikidata"] ||
@@ -346,11 +345,16 @@
 		 [cell.text2.text hasPrefix:@"http://"] ||
 	     [cell.text2.text hasPrefix:@"https://"] )
 	{
-		UIButton * button = [UIButton buttonWithType:UIButtonTypeInfoLight];
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeSystem];
+		button.layer.borderWidth = 2.0;
+		button.layer.borderColor = UIColor.systemBlueColor.CGColor;
+		button.layer.cornerRadius = 15.0;
+		[button setTitle:@"🔗" forState:UIControlStateNormal];
+
 		[button addTarget:self action:@selector(openWebsite:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 -(IBAction)setSurveyDate:(id)sender
@@ -369,7 +373,7 @@
 	[self textFieldEditingDidEnd:pair.text2];
 }
 
--(void)setSurveyDateButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getSurveyDateButtonForCell:(TextPairTableCell *)cell
 {
 	NSArray * synonyms = @[
 		@"check_date",
@@ -383,9 +387,9 @@
 	if ( [synonyms containsObject:cell.text1.text] ) {
 		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		[button addTarget:self action:@selector(setSurveyDate:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 -(IBAction)setDirection:(id)sender
@@ -405,7 +409,7 @@
 	[self presentViewController:directionViewController animated:YES completion:nil];
 }
 
--(void)setDirectionButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getDirectionButtonForCell:(TextPairTableCell *)cell
 {
 	NSArray * synonyms = @[
 		@"direction",
@@ -414,9 +418,9 @@
 	if ( [synonyms containsObject:cell.text1.text] ) {
 		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		[button addTarget:self action:@selector(setDirection:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 
@@ -440,26 +444,26 @@
 	_childViewPresented = YES;
 }
 
--(void)setHeightButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getHeightButtonForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"height"] ) {
 		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		[button addTarget:self action:@selector(setHeight:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 - (void)updateAssociatedContentForCell:(TextPairTableCell *)cell
 {
-	cell.text2.rightView 	 = nil;
-	cell.text2.rightViewMode = UITextFieldViewModeNever;
+	UIView * associatedView =  [self getAssociatedColorForCell:cell]
+							?: [self getWebsiteButtonForCell:cell]
+							?: [self getSurveyDateButtonForCell:cell]
+							?: [self getDirectionButtonForCell:cell]
+							?: [self getHeightButtonForCell:cell];
 
-	[self setAssociatedColorForCell:cell];
-	[self setWebsiteButtonForCell:cell];
-	[self setSurveyDateButtonForCell:cell];
-	[self setDirectionButtonForCell:cell];
-	[self setHeightButtonForCell:cell];
+	cell.text2.rightView 	 = associatedView;
+	cell.text2.rightViewMode = associatedView ? UITextFieldViewModeAlways : UITextFieldViewModeNever;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -870,7 +874,7 @@
 	[tabController commitChanges];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
 		// show OSM wiki page
