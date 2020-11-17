@@ -376,6 +376,16 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[set addObject:key];
 		}];
 	}];
+	// these are additionl tags that people might want (e.g. for autocomplete)
+	[set addObjectsFromArray:@[
+		@"official_name",
+		@"alt_name",
+		@"short_name",
+		@"old_name",
+		@"reg_name",
+		@"nat_name",
+		@"loc_name"
+	]];
 	return set;
 }
 
