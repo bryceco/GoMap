@@ -440,6 +440,21 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
 -(NSString *)givenName
 {
+	enum { USES_NAME = 1, USES_REF = 2 };
+	static NSDictionary * highwayTypes = nil;
+	if ( highwayTypes == nil ) {
+		highwayTypes = @{ @"motorway":@(USES_REF),
+						  @"trunk":@(USES_REF),
+						  @"primary":@(USES_REF),
+						  @"secondary":@(USES_REF),
+						  @"tertiary":@(USES_REF),
+						  @"unclassified":@(USES_NAME),
+						  @"residential":@(USES_NAME),
+						  @"road":@(USES_NAME),
+						  @"living_street":@(USES_NAME) };
+	}
+
+
 	NSString * name = _tags[@"name"];
 	if ( name.length )
 		return name;
@@ -447,18 +462,6 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	if ( self.isWay ) {
 		NSString * highway = _tags[@"highway"];
 		if ( highway ) {
-			enum { USES_NAME = 1, USES_REF = 2 };
-			static NSDictionary * highwayTypes = nil;
-			if ( highwayTypes == nil )
-				highwayTypes = @{ @"motorway":@(USES_REF),
-								  @"trunk":@(USES_REF),
-								  @"primary":@(USES_REF),
-								  @"secondary":@(USES_REF),
-								  @"tertiary":@(USES_NAME),
-								  @"unclassified":@(USES_NAME),
-								  @"residential":@(USES_NAME),
-								  @"road":@(USES_NAME),
-								  @"living_street":@(USES_NAME) };
 			NSInteger uses = [highwayTypes[highway] integerValue];
 			if ( uses & USES_REF) {
 				name = _tags[@"ref"];
