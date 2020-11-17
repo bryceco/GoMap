@@ -996,6 +996,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	// enable/disable editing buttons based on visibility
 	[_mainViewController updateUndoRedoButtonState];
 	[self updateAerialAttributionButton];
+	self.addNodeButton.hidden = _editorLayer.hidden;
 }
 -(MapViewState)viewState
 {
