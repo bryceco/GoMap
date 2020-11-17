@@ -137,9 +137,10 @@ enum {
 	} else if ( object.isWay ) {
 		if ( indexPath.section == SECTION_WAY_EXTRA ) {
 			double len = object.isWay.lengthInMeters;
+			long nodes = object.isWay.nodes.count;
 			cell.title.text = NSLocalizedString(@"Length",nil);
-			cell.value.text = len >= 10 ? [NSString stringWithFormat:NSLocalizedString(@"%.0f meters",nil), len]
-										: [NSString stringWithFormat:NSLocalizedString(@"%.1f meters",nil), len];
+			cell.value.text = len >= 10 ? [NSString stringWithFormat:NSLocalizedString(@"%.0f meters, %ld nodes",nil), len, nodes]
+										: [NSString stringWithFormat:NSLocalizedString(@"%.1f meters, %ld nodes",nil), len, nodes];
 			cell.accessoryType = UITableViewCellAccessoryNone;
 		} else if ( indexPath.section == SECTION_WAY_NODES ) {
 			OsmWay * way = object.isWay;
