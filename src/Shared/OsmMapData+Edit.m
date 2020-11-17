@@ -1111,6 +1111,11 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	}
 
 	OsmWay * otherWay = otherWays.firstObject;
+	if ( otherWay.nodes.count + selectedWay.nodes.count > 2000 ) {
+		*error = NSLocalizedString(@"Max nodes after joining is 2000",nil);
+		return nil;
+	}
+
 	NSMutableSet * relations = [NSMutableSet setWithArray:selectedWay.parentRelations];
 	[relations intersectSet:[NSSet setWithArray:otherWay.parentRelations]];
 	for ( OsmRelation * relation in relations ) {
