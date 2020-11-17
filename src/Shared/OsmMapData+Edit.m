@@ -125,6 +125,10 @@
 			}
 		}
 	}
+	if ( way.nodes.count == 2000 ) {
+		*error = NSLocalizedString(@"Maximum way length is 2000 nodes", nil);
+		return nil;
+	}
 
 	return ^(OsmNode * node) {
 		[self addNodeUnsafe:node toWay:way atIndex:index];
