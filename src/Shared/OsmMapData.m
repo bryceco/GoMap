@@ -1201,10 +1201,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion
 {
-	if ( [url hasPrefix:@"http:"] ) {
-		url = [@"https" stringByAppendingString:[url substringFromIndex:4]];
-	}
-
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
 	[request setHTTPMethod:method];
 	if ( xml ) {
