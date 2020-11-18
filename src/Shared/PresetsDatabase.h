@@ -151,6 +151,7 @@ typedef int UITextAutocapitalizationType;
 +(NSSet<NSString *> *)allTagValuesForKey:(NSString *)key;
 +(NSSet<NSString *> *)allFeatureKeys;
 +(BOOL)isArea:(OsmWay *)way;
++(BOOL)eligibleForAutocomplete:(NSString *)key;
 @end
 
 // A preset the user defined as a custom preset

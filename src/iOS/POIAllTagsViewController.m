@@ -273,6 +273,8 @@
 	}
 }
 
+#pragma mark Accessory buttons
+
 -(UIView *)getAssociatedColorForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"colour"] ||
@@ -581,17 +583,19 @@
 		if ( isValue ) {
 			// get list of values for current key
 			NSString * key = kv[0];
-			NSSet * set = [PresetsDatabase allTagValuesForKey:key];
-			AppDelegate * appDelegate = AppDelegate.shared;
-			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
-			[values addObjectsFromArray:[set allObjects]];
-			NSArray * list = [values allObjects];
-			textField.strings = list;
+			if ( [PresetsDatabase eligibleForAutocomplete:key] ) {
+				NSSet * set = [PresetsDatabase allTagValuesForKey:key];
+				AppDelegate * appDelegate = AppDelegate.shared;
+				NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+				[values addObjectsFromArray:[set allObjects]];
+				NSArray * list = [values allObjects];
+				textField.autocompleteStrings = list;
+			}
 		} else {
 			// get list of keys
 			NSSet * set = [PresetsDatabase allTagKeys];
 			NSArray * list = [set allObjects];
-			textField.strings = list;
+			textField.autocompleteStrings = list;
 		}
 	}
 }

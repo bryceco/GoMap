@@ -22,7 +22,7 @@
 	CAGradientLayer					*	_gradientLayer;
 }
 
-@property (copy,nonatomic)	NSArray<NSString *> * strings;
+@property (copy,nonatomic)	NSArray<NSString *> * autocompleteStrings;
 @property (copy,nonatomic)	void (^didSelectAutocomplete)(void);
 
 -(void)clearFilteredCompletionsInternal;

@@ -19,7 +19,7 @@ static CGRect	s_keyboardFrame;
 
 
 @implementation AutocompleteTextField
-@synthesize strings = _allStrings;
+@synthesize autocompleteStrings = _allStrings;
 
 static const CGFloat GradientHeight = 20.0;
 
@@ -65,12 +65,12 @@ static const CGFloat GradientHeight = 20.0;
 	[self updateCompletionTableView];
 }
 
--(void)setStrings:(NSArray *)strings
+-(void)setAutocompleteStrings:(NSArray *)strings
 {
 	_allStrings = strings;
 	assert( super.delegate == self );
 }
--(NSArray *)strings
+-(NSArray *)autocompleteStrings
 {
 	return _allStrings;
 }

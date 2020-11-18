@@ -363,12 +363,14 @@
 		NSString * key = cell.presetKey.tagKey;
 		if ( key == nil )
 			return;	// should never happen
-		NSSet * set = [PresetsDatabase allTagValuesForKey:key];
-		AppDelegate * appDelegate = AppDelegate.shared;
-		NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
-		[values addObjectsFromArray:[set allObjects]];
-		NSArray * list = [values allObjects];
-		textField.strings = list;
+		if ( [PresetsDatabase eligibleForAutocomplete:key] ) {
+			NSSet * set = [PresetsDatabase allTagValuesForKey:key];
+			AppDelegate * appDelegate = AppDelegate.shared;
+			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+			[values addObjectsFromArray:[set allObjects]];
+			NSArray * list = [values allObjects];
+			textField.autocompleteStrings = list;
+		}
 	}
 	_isEditing = YES;
 }

@@ -1061,6 +1061,40 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return area;
 }
 
++(BOOL)eligibleForAutocomplete:(NSString *)key
+{
+	static NSDictionary * list = nil;
+	if ( list == nil ) {
+		list = @{
+			@"capacity" : @(YES),
+			@"depth" : @(YES),
+			@"ele" : @(YES),
+			@"height" : @(YES),
+			@"housenumber" : @(YES),
+			@"lanes" : @(YES),
+			// @"layer" : @(YES),
+			@"maxspeed" : @(YES),
+			@"maxweight" : @(YES),
+			@"scale" : @(YES),
+			@"step_count" : @(YES),
+			@"unit" : @(YES),
+			@"width" : @(YES),
+		};
+	}
+	if ( list[key] != nil )
+		return NO;
+	__block BOOL isBad = NO;
+	[list enumerateKeysAndObjectsUsingBlock:^(NSString * suffix, NSNumber * isSuffix, BOOL * stop) {
+		if ( isSuffix.boolValue && [key hasSuffix:suffix] ) {
+			if ( [key characterAtIndex:key.length-suffix.length-1] == ':' ) {
+				isBad = YES;
+				*stop = YES;
+			}
+		}
+	}];
+	return !isBad;
+}
+
 @end
 
 
