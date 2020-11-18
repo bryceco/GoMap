@@ -13,6 +13,7 @@
 
 static NSString * CUSTOMAERIALLIST_KEY = @"AerialList";
 static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
+static NSString * RECENTLY_USED_KEY = @"AerialListRecentlyUsed";
 
 #define BING_IDENTIFIER	 			@"BingIdentifier"
 #define MAPNIK_IDENTIFIER			@"MapnikIdentifier"
@@ -214,8 +215,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		NSString * url = @"eZ5AGZGcRQyKahl/+UTyIm+vENuJECB4Hvu4ytCzjBoCBDeRMbsOkaQ7zD5rUAYfRDaQwnQRiqE4lj0KYTenPe1d1spljlcYgvYRsqjEtYp6AhCoBPO4Rz6d0Z9enlPqPj7KCvxyOcB8A/+3HkYjpMGMEcvA6oeSX9I0RH/PS9mdAZEC5TmU3odUJQ0hNzczrKtUDmNujrTNfFVHhZZWPLEVZUC9cE94VF/AJkoIigdmXooJ+5UcPtH/uzc6NbOb";
-		service = [AerialService aerialWithName:MAXAR_STANDARD_IDENTIFIER
-								  identifier:@"Maxar-Standard"
+		service = [AerialService aerialWithName:@"Maxar Standard Aerial"
+								  identifier:MAXAR_STANDARD_IDENTIFIER
 										 url:[aes decryptString:url]
 									 maxZoom:21
 									 roundUp:YES
@@ -439,6 +440,8 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 
 
 @implementation AerialList
+
+@synthesize currentAerial = _currentAerial;
 
 -(instancetype)init
 {
@@ -748,6 +751,28 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 			_userDefinedList[i] = [[AerialService alloc] initWithDictionary:_userDefinedList[i]];
 		}
 	}
+
+	// fetch and decode recently used list
+	NSMutableDictionary * dict = [NSMutableDictionary new];
+	for ( AerialService * service in _downloadedList ) {
+		dict[service.identifier] = service;
+	}
+	for ( AerialService * service in _userDefinedList ) {
+		dict[service.identifier] = service;
+	}
+	for ( AerialService * service in @[[AerialService maxarPremiumAerial], [AerialService maxarStandardAerial] ] ) {
+		dict[service.identifier] = service;
+	}
+
+	NSArray * recentIdentiers = [defaults objectForKey:RECENTLY_USED_KEY] ?: @[];
+	_recentlyUsed = [NSMutableArray arrayWithCapacity:recentIdentiers.count];
+	for ( NSString * identifier in recentIdentiers ) {
+		AerialService * service = dict[identifier];
+		if ( service ) {
+			[_recentlyUsed addObject:service];
+		}
+	}
+
 	NSString * currentIdentifier = [defaults objectForKey:CUSTOMAERIALSELECTION_KEY];
 	if ( currentIdentifier == nil || [currentIdentifier isKindOfClass:[NSNumber class]] ) {
 		currentIdentifier = BING_IDENTIFIER;
@@ -755,12 +780,12 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	NSArray * a = [[self.builtinServices arrayByAddingObjectsFromArray:self.userDefinedServices] arrayByAddingObjectsFromArray:_downloadedList];
 	for ( AerialService * service in a ) {
 		if ( [currentIdentifier isEqualToString:service.identifier] ) {
-			_currentAerial = service;
+			self.currentAerial = service;
 			break;
 		}
 	}
 	if ( _currentAerial == nil ) {
-		_currentAerial = self.builtinServices[0];
+		self.currentAerial = self.builtinServices[0];
 	}
 }
 
@@ -773,6 +798,12 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	}
 	[defaults setObject:a forKey:CUSTOMAERIALLIST_KEY];
 	[defaults setObject:_currentAerial.identifier forKey:CUSTOMAERIALSELECTION_KEY];
+
+	NSMutableArray * recents = [NSMutableArray new];
+	for ( AerialService * service in _recentlyUsed ) {
+		[recents addObject:service.identifier];
+	}
+	[defaults setObject:recents forKey:RECENTLY_USED_KEY];
 }
 
 -(NSArray *)servicesForRegion:(OSMRect)rect
@@ -792,6 +823,28 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 		return [obj1.name compare:obj2.name];
 	}];
 	return result;
+}
+
+-(AerialService *)currentAerial
+{
+	return _currentAerial;
+}
+-(void)setCurrentAerial:(AerialService *)currentAerial
+{
+	_currentAerial = currentAerial;
+
+	// update recently used
+	const NSInteger MAX_ITEMS = 6;
+	[_recentlyUsed removeObject:currentAerial];
+	[_recentlyUsed insertObject:currentAerial atIndex:0];
+	while ( _recentlyUsed.count > MAX_ITEMS ) {
+		[_recentlyUsed removeLastObject];
+	}
+}
+
+-(NSArray<AerialService *> *)recentlyUsed
+{
+	return _recentlyUsed;
 }
 
 -(NSInteger)count
@@ -816,8 +869,9 @@ static NSString * CUSTOMAERIALSELECTION_KEY = @"AerialListSelection";
 	AerialService * s = _userDefinedList[index];
 	[_userDefinedList removeObjectAtIndex:index];
 	if ( s == _currentAerial ) {
-		_currentAerial = self.builtinServices[0];
+		self.currentAerial = self.builtinServices[0];
 	}
+	[_recentlyUsed removeObject:s];
 }
 
 @end

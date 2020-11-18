@@ -312,7 +312,7 @@ const CGFloat kEditControlCornerRadius = 4;
 	_editControl.layer.zPosition = Z_TOOLBAR;
     _editControl.layer.cornerRadius = kEditControlCornerRadius;
 
-	// long press for selecting from multiple objects
+	// long press for selecting from multiple objects (for multipolygon members)
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
 	longPress.delegate = self;
 	[self addGestureRecognizer:longPress];

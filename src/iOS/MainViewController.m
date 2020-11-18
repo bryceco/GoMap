@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AerialList.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
 #import "MainViewController.h"
@@ -75,6 +76,10 @@
     
     [self setupAccessibility];
 
+	// long press for quick access to aerial imagery
+	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(displayButtonLongPressGesture:)];
+	[self.displayButton addGestureRecognizer:longPress];
+
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:NULL];
 }
 
@@ -88,6 +93,7 @@
     _uploadButton.accessibilityLabel = NSLocalizedString(@"Upload your changes",nil);
     _displayButton.accessibilityLabel = NSLocalizedString(@"Display options",nil);
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -140,18 +146,20 @@
 		}
 
 		// normal background color
-		[self buttonNormal:button];
+		[self makeButtonNormal:button];
 
 		// background selection color
 		if ( button != _undoRedoView ) {
-			[button addTarget:self action:@selector(buttonHighlight:) forControlEvents:UIControlEventTouchDown];
-			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpInside];
-			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchUpOutside];
-			[button addTarget:self action:@selector(buttonNormal:) forControlEvents:UIControlEventTouchCancel];
+			[button addTarget:self action:@selector(makeButtonHighlight:) forControlEvents:UIControlEventTouchDown];
+			[button addTarget:self action:@selector(makeButtonNormal:) forControlEvents:UIControlEventTouchUpInside];
+			[button addTarget:self action:@selector(makeButtonNormal:) forControlEvents:UIControlEventTouchUpOutside];
+			[button addTarget:self action:@selector(makeButtonNormal:) forControlEvents:UIControlEventTouchCancel];
+
+			button.showsTouchWhenHighlighted = YES;
 		}
 	}
 }
--(void)buttonHighlight:(UIButton *)button
+-(void)makeButtonHighlight:(UIButton *)button
 {
 	if (@available(iOS 13.0, *)) {
 		button.backgroundColor = UIColor.secondarySystemBackgroundColor;
@@ -159,7 +167,7 @@
 		button.backgroundColor = UIColor.lightGrayColor;
 	}
 }
--(void)buttonNormal:(UIButton *)button
+-(void)makeButtonNormal:(UIButton *)button
 {
 	if (@available(iOS 13.0, *)) {
 		button.backgroundColor = UIColor.systemBackgroundColor;
@@ -305,6 +313,25 @@
 		if ( view.gestureRecognizers.count == 0 ) {
 			[view addGestureRecognizer:gesture];
 		}
+	}
+}
+
+-(void)displayButtonLongPressGesture:(UILongPressGestureRecognizer *)recognizer
+{
+	if ( recognizer.state == UIGestureRecognizerStateBegan ) {
+		// show the most recently used aerial imagery
+		AerialList * aerialList = self.mapView.customAerials;
+		UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Recent Aerial Imagery", nil)
+																			  message:nil
+																	   preferredStyle:UIAlertControllerStyleActionSheet];
+		for ( AerialService * service in aerialList.recentlyUsed ) {
+			[actionSheet addAction:[UIAlertAction actionWithTitle:service.name style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				aerialList.currentAerial = service;
+				[self.mapView setAerialTileService:service];
+			}]];
+		}
+		[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+		[self presentViewController:actionSheet animated:YES completion:nil];
 	}
 }
 
