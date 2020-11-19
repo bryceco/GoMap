@@ -8,7 +8,7 @@
 "CFBundleName" = "Go Map!!";
 
 /* (No Comment) */
-"GPS Exchange Format (GPX)" = "GPS 交換形式 (GPX)";
+"GPS Exchange Format (GPX)" = "GPS交換形式 (GPX)";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
 "NSBluetoothPeripheralUsageDescription" = "外部Bluetooth GPS装置に接続";
@@ -27,5 +27,4 @@
 
 /* Privacy - Location When In Use Usage Description */
 "NSLocationWhenInUseUsageDescription" = "マップ上にあなたの位置が表示、追跡されます。";
-
 

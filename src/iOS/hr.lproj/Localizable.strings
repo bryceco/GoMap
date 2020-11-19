@@ -1,0 +1,789 @@
+/* No comment provided by engineer. */
+"\tRelation " = "\tVeza ";
+
+/* No comment provided by engineer. */
+"\tWay " = "\tPut ";
+
+/* No comment provided by engineer. */
+" (%d members)\n" = " (broj članova: %d)\n";
+
+/* No comment provided by engineer. */
+" (%d nodes)\n" = " (broj čvorova: %d)\n";
+
+/* No comment provided by engineer. */
+" (node)" = " (čvor)";
+
+/* No comment provided by engineer. */
+" (way)" = " (put)";
+
+/* No comment provided by engineer. */
+"(new object)" = "(novi objekt)";
+
+/* No comment provided by engineer. */
+"(node in way)" = "(čvor na putu)";
+
+/* No comment provided by engineer. */
+"(node)" = "(čvor)";
+
+/* No comment provided by engineer. */
+"(relation %@)" = "(veza %@)";
+
+/* No comment provided by engineer. */
+"(way)" = "(put)";
+
+/* No comment provided by engineer. */
+"%@ (relation)" = "%@ (veza)";
+
+/* No comment provided by engineer. */
+"%@ changeset" = "%@ komplet promjena";
+
+/* No comment provided by engineer. */
+"%@ meters" = "%@ m";
+
+/* No comment provided by engineer. */
+"%ld Days" = "%ld dana";
+
+/* No comment provided by engineer. */
+"%ld edits, last active %@" = "%1$ld uređivanja, zadnje aktivno %2$@";
+
+/* length of a gpx track */
+"%ld meters, %ld points" = "%1$ld m, broj točaka: %2$ld";
+
+/* No comment provided by engineer. */
+"%ld objects" = "Broj objekata: %ld";
+
+/* No comment provided by engineer. */
+"%lu tiles needed" = "Broj potrebnih pločica: %lu";
+
+/* No comment provided by engineer. */
+"<unknown>" = "<nepoznato>";
+
+/* No comment provided by engineer. */
+"1 Day" = "1 dan";
+
+/* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "GPX staza snima tvoj put dok putuješ cestom ili stazom";
+
+/* No comment provided by engineer. */
+"A relation the node belongs to is not fully downloaded" = "Vezu kojoj čvor pripada nije moguće potpuno preuzeti";
+
+/* No comment provided by engineer. */
+"Add inner member" = "Dodaj unutarnji član";
+
+/* No comment provided by engineer. */
+"add node to way" = "putu dodaj čvor";
+
+/* No comment provided by engineer. */
+"Add Note" = "Dodaj bilješku";
+
+/* No comment provided by engineer. */
+"add object to relation" = "vezi dodaj objekt";
+
+/* No comment provided by engineer. */
+"Add outer member" = "Dodaj vanjski član";
+
+/* No comment provided by engineer. */
+"Add way to multipolygon?" = "Dodati put mnogokutu?";
+
+/* No comment provided by engineer. */
+"added to multipolygon relation" = "dodano mnogokutnoj vezi";
+
+/* No comment provided by engineer. */
+"Adding members:" = "Dodavanje članova:";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "Dodatne slike";
+
+/* No comment provided by engineer. */
+"All choices" = "Svi izbori";
+
+/* No comment provided by engineer. */
+"All Tags" = "Sve oznake";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "Dogodila se nepoznata greška pri dohvaćanju metapodataka";
+
+/* No comment provided by engineer. */
+"Attention" = "Oprez";
+
+/* No comment provided by engineer. */
+"Background imagery %@" = "Slike pozadine %@";
+
+/* No comment provided by engineer. */
+"Bad login" = "Neispravna prijava";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "Upozorenje o veličini predmemorije";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "Predmemorija odrezana";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "Putovi se mogu dodati samo mnogokutima";
+
+/* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "Nije moguće izbrisati čvor koji je dio veze";
+
+/* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "Nije moguće izbrisati vezu koja nije mnogokut";
+
+/* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "Nije moguće izbrisati put koji je dio rute ili slične veze";
+
+/* No comment provided by engineer. */
+"Can't extend way" = "Put se ne može produžiti";
+
+/* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "Nije moguće ukloniti komponentu rute ili slične veze";
+
+/* No comment provided by engineer. */
+"Can't remove node in Turn Restriction 'via' way" = "Nije moguće ukloniti čvor u zabrani skretanja s puta „preko”";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "Nije moguće ukloniti čvor zabrane skretanja „preko”";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "Nije moguće ukloniti čvor zabrane skretanja, koji povezuje „u smjeru”/„iz smjera” u „preko”";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "Nije moguće ukloniti zabranu skretanja s puta „u smjeru”/„iz smjera”";
+
+/* No comment provided by engineer. */
+"Cancel" = "Odustani";
+
+/* No comment provided by engineer. */
+"Cannot compose message" = "Nije moguće sastaviti poruku";
+
+/* No comment provided by engineer. */
+"Cannot connect an inner way to an outer way" = "Nije moguće povezati unutarnji put s vanjskim putom";
+
+/* No comment provided by engineer. */
+"Changeset" = "Skup promjena";
+
+/* No comment provided by engineer. */
+"Clear Aerial Tiles" = "Izbriši pločice aerofotografije";
+
+/* No comment provided by engineer. */
+"Clear GPS Overlay Tiles" = "Izbriši GPS pločice slojeva";
+
+/* No comment provided by engineer. */
+"Clear GPX Tracks" = "Izbriši GPX staze";
+
+/* No comment provided by engineer. */
+"Clear Locator Overlay Tiles" = "Izbriši lokatorske pločice slojeva";
+
+/* No comment provided by engineer. */
+"Clear Mapnik Tiles" = "Izbriši Mapnik pločice";
+
+/* No comment provided by engineer. */
+"Clear OSM Data" = "Izbriši OSM podatke";
+
+/* No comment provided by engineer. */
+"Commit" = "Spremi";
+
+/* No comment provided by engineer. */
+"computing size..." = "izračunavanje veličine …";
+
+/* No comment provided by engineer. */
+"Configure" = "Konfiguriraj";
+
+/* No comment provided by engineer. */
+"Confirm move" = "Potvrdi premještanje";
+
+/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "Spajanje čvorova bi pokvarilo vezu";
+
+/* No comment provided by engineer. */
+"Copy Tags" = "Kopiraj oznake";
+
+/* No comment provided by engineer. */
+"Could not duplicate object" = "Nije bilo moguće duplicirati objekt";
+
+/* No comment provided by engineer. */
+"Create\n" = "Stvori\n";
+
+/* No comment provided by engineer. */
+"create node" = "stvori čvor";
+
+/* No comment provided by engineer. */
+"create relation" = "stvori vezu";
+
+/* No comment provided by engineer. */
+"Create Relation" = "Stvori vezu";
+
+/* No comment provided by engineer. */
+"Create Relation Type" = "Stvori vrstu veze";
+
+/* No comment provided by engineer. */
+"create turn restriction" = "stvori zabranu skretanja";
+
+/* No comment provided by engineer. */
+"create way" = "stvori put";
+
+/* No comment provided by engineer. */
+"Current Track" = "Trenutačna staza";
+
+/* No comment provided by engineer. */
+"Data not available" = "Nema podataka";
+
+/* No comment provided by engineer. */
+"Delete" = "Izbriši";
+
+/* No comment provided by engineer. */
+"Delete\n" = "Izbriši\n";
+
+/* No comment provided by engineer. */
+"Delete completely" = "Potpuno izbriši";
+
+/* No comment provided by engineer. */
+"Delete failed" = "Brisanje neuspjelo";
+
+/* No comment provided by engineer. */
+"delete multipolygon" = "izbriši mnogokut";
+
+/* No comment provided by engineer. */
+"delete node" = "izbriši čvor";
+
+/* No comment provided by engineer. */
+"delete node from way" = "izbriši čvor iz puta";
+
+/* No comment provided by engineer. */
+"delete object from relation" = "izbriši objekt iz veze";
+
+/* No comment provided by engineer. */
+"delete relation" = "izbriši vezu";
+
+/* No comment provided by engineer. */
+"delete restriction" = "izbriši zabranu";
+
+/* No comment provided by engineer. */
+"delete route" = "izbriši rutu";
+
+/* No comment provided by engineer. */
+"delete way" = "izbriši put";
+
+/* No comment provided by engineer. */
+"Detach from relation" = "Odspoji iz veze";
+
+/* No comment provided by engineer. */
+"Disconnect" = "Odspoji";
+
+/* No comment provided by engineer. */
+"Display options" = "Opcije prikaza";
+
+/* No comment provided by engineer. */
+"Done" = "Gotovo";
+
+/* No comment provided by engineer. */
+"duplicate" = "duplikat";
+
+/* No comment provided by engineer. */
+"Duplicate" = "Duplikat";
+
+/* No comment provided by engineer. */
+"Edit" = "Uredi";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "Uredi zabrane";
+
+/* No comment provided by engineer. */
+"Edit XML" = "Uredi XML";
+
+/* No comment provided by engineer. */
+"Editing layer not visible" = "Sloj koji se uređuje nije vidljiv";
+
+/* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Osiguraj, da je usluga određivanja mjesta aktivirana i da program ima prava pristupa.\n\nGreška: %@";
+
+/* No comment provided by engineer. */
+"Ensure the editor view is visible and displays objects in the local area" = "Osiguraj, da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području";
+
+/* No comment provided by engineer. */
+"Error" = "Greška";
+
+/* No comment provided by engineer. */
+"Error connecting to way" = "Greška pri povezivanju s putom";
+
+/* No comment provided by engineer. */
+"Error deleting" = "Greška pri brisanju";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "Greška pri dohvaćanju metapodataka: %@";
+
+/* No comment provided by engineer. */
+"Extending a 'via' in a Turn Restriction will break the relation" = "Produženje veze „preko” u zabrani skretanja, prekinut će vezu";
+
+/* No comment provided by engineer. */
+"Extending a way which belongs to a Route or similar relation may damage the relation" = "Produženje puta koji pripada ruti ili sličnoj vezi može oštetiti vezu";
+
+/* No comment provided by engineer. */
+"GPX Upload Complete" = "Prijenos na GPX gotov";
+
+/* No comment provided by engineer. */
+"GPX Upload Failed" = "Prijenos na GPX neuspio";
+
+/* No comment provided by engineer. */
+"Height: %@ ± %@ meters" = "Visina: %1$@ ± %2$@ m";
+
+/* No comment provided by engineer. */
+"I'll do it!" = "Ja ću to obaviti!";
+
+/* No comment provided by engineer. */
+"Identifier" = "Identifikator";
+
+/* No comment provided by engineer. */
+"Ignore" = "Zanemari";
+
+/* No comment provided by engineer. */
+"In order to measure height, please enable camera access in the app's settings." = "Za mjerenje visine aktiviraj pristup kameri u postavkama programa.";
+
+/* No comment provided by engineer. */
+"Invalid URL" = "Nevažeći URL";
+
+/* No comment provided by engineer. */
+"Join" = "Spoji";
+
+/* No comment provided by engineer. */
+"Joining would invalidate a Turn Restriction the way belongs to" = "Spajanje bi poništilo zabranu skretanja s puta kojemu pripada";
+
+/* No comment provided by engineer. */
+"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Odabir jezika utječe samo na predodređene postavke i na one, koje su prevedene za iD. Jezik glavnog sučelja je i nadalje engleski.";
+
+/* No comment provided by engineer. */
+"Last updated %@" = "Zadnje aktualiziranje: %@";
+
+/* No comment provided by engineer. */
+"Lat/Lon" = "Zemljopisna širina/dužina";
+
+/* No comment provided by engineer. */
+"Location services timed out." = "Vrijeme usluge određivanja mjesta je isteklo.";
+
+/* No comment provided by engineer. */
+"Location unavailable" = "Mjesto nedostupno";
+
+/* No comment provided by engineer. */
+"Login successful" = "Prijava uspjela";
+
+/* No comment provided by engineer. */
+"Low memory: clearing cache" = "Mala količina memorije: predmemorija se briše";
+
+/* No comment provided by engineer. */
+"Mail delivery is not available on this device" = "Dostava e-poštom nije dostupna na ovom uređaju";
+
+/* No comment provided by engineer. */
+"Make Circular" = "Postavi kružno";
+
+/* No comment provided by engineer. */
+"Make Rectangular" = "Postavi pravokutno";
+
+/* No comment provided by engineer. */
+"Maybe later..." = "Možda kasnije …";
+
+/* No comment provided by engineer. */
+"Member of multipolygon relation" = "Član mnogokutne veze";
+
+/* No comment provided by engineer. */
+"Members" = "Članovi";
+
+/* No comment provided by engineer. */
+"Merge Tags" = "Sjedini oznake";
+
+/* No comment provided by engineer. */
+"meters" = "metara";
+
+/* No comment provided by engineer. */
+"Missing way to connect to" = "Nedostaje put na koji bi se povezalo";
+
+/* No comment provided by engineer. */
+"Modified" = "Promijenjeno";
+
+/* No comment provided by engineer. */
+"Modify" = "Promijeni";
+
+/* No comment provided by engineer. */
+"Modify\n" = "Promijeni\n";
+
+/* No comment provided by engineer. */
+"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Mijenjanje neobrađenih XML podataka omogućuje ispravljanje grešaka koje sprečavaju prijenos.\n\nTo je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dobro znanje o formatu skupa promjena OSM-a.";
+
+/* No comment provided by engineer. */
+"More..." = "Više …";
+
+/* No comment provided by engineer. */
+"Most recent" = "Najnovije";
+
+/* No comment provided by engineer. */
+"move" = "premjesti";
+
+/* No comment provided by engineer. */
+"Move" = "Premjesti";
+
+/* No comment provided by engineer. */
+"Move selected object?" = "Premjestiti odabrani objekt?";
+
+/* No comment provided by engineer. */
+"Multipolygon" = "Mnogokut";
+
+/* No comment provided by engineer. */
+"Network error" = "Greška mreže";
+
+/* No comment provided by engineer. */
+"Never" = "Nikada";
+
+/* No comment provided by engineer. */
+"No active track" = "Nema aktivne staze";
+
+/* No comment provided by engineer. */
+"No Data" = "Nema podataka";
+
+/* No comment provided by engineer. */
+"No image data available" = "Nema slikovnih podataka";
+
+/* No comment provided by engineer. */
+"No Left Turn restriction" = "Nema zabrane skretanja nalijevo";
+
+/* No comment provided by engineer. */
+"No results found" = "Nema rezultata";
+
+/* No comment provided by engineer. */
+"No Right Turn restriction" = "Nema zabrane skretanja nadesno";
+
+/* No comment provided by engineer. */
+"No Straight On restriction" = "Nema zabrane kretanja ravno";
+
+/* No comment provided by engineer. */
+"No tags to paste" = "Nema oznaka za umetanje";
+
+/* No comment provided by engineer. */
+"No U-Turn restriction" = "Nema zabrane polukružnog okretanja";
+
+/* No comment provided by engineer. */
+"Node" = "Čvor";
+
+/* No comment provided by engineer. */
+"node %@" = "čvor %@";
+
+/* No comment provided by engineer. */
+"node %@ (in way)" = "čvor %@ (na putu)";
+
+/* No comment provided by engineer. */
+"Node is not an element of way" = "Čvor nije element puta";
+
+/* No comment provided by engineer. */
+"Node tags" = "Oznake čvora";
+
+/* No comment provided by engineer. */
+"Note History" = "Kronologija bilješke";
+
+/* No comment provided by engineer. */
+"Nothing to upload, no changes have been made." = "Nema se što prenijeti. Ništa nije promijenjeno.";
+
+/* No comment provided by engineer. */
+"Number of recent items to display" = "Broj prikazanih nedavnih elemenata";
+
+/* No comment provided by engineer. */
+"Object modified" = "Objekt promijenjen";
+
+/* No comment provided by engineer. */
+"OK" = "U redu";
+
+/* No comment provided by engineer. */
+"Only Left Turn restriction" = "Samo zabrana skretanja ulijevo";
+
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "Podržane su samo mnogokutne veze";
+
+/* No comment provided by engineer. */
+"Only Right Turn restriction" = "Samo zabrana skretanja udesno";
+
+/* No comment provided by engineer. */
+"Only Straight On restriction" = "Samo zabrana kretanja ravno";
+
+/* No comment provided by engineer. */
+"Only ways/multipolygons can be rotated" = "Okretati se mogu samo putovi/mnogokuti";
+
+/* No comment provided by engineer. */
+"Open Settings" = "Otvori postavke";
+
+/* No comment provided by engineer. */
+"Open URL" = "Otvori URL";
+
+/* No comment provided by engineer. */
+"OSM data must be version 0.6 (fetched '%@')" = "OSM podaci moraju biti u verziji 0.6 (dohvaćeno „%@”)";
+
+/* No comment provided by engineer. */
+"other object" = "drugi objekt";
+
+/* No comment provided by engineer. */
+"Paste" = "Umetni";
+
+/* No comment provided by engineer. */
+"Pasting %ld tag(s)" = "Umetanje %ld oznake(a)";
+
+/* No comment provided by engineer. */
+"Perform Action" = "Izvedi radnju";
+
+/* No comment provided by engineer. */
+"Please wait" = "Pričekaj";
+
+/* No comment provided by engineer. */
+"Previous Tracks" = "Prethodna staza";
+
+/* No comment provided by engineer. */
+"Purge" = "Isprazni";
+
+/* No comment provided by engineer. */
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Ocjenjivanjem ovog programa olakvaša se drugim kartografima otkriti ga, te povećava vidljivost OpenStreetMapa.";
+
+/* No comment provided by engineer. */
+"Redo" = "Ponovi";
+
+/* No comment provided by engineer. */
+"relation" = "veza";
+
+/* No comment provided by engineer. */
+"Relation tags" = "Oznake veza";
+
+/* No comment provided by engineer. */
+"Relation: %@" = "Veza: %@";
+
+/* No comment provided by engineer. */
+"Relations" = "Veze";
+
+/* No comment provided by engineer. */
+"Replace Tags" = "Zamijeni oznake";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 3 nodes" = "Zahtijeva zatvoren put s barem tri čvora";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 4 nodes" = "Zahtijeva zatvoren put s barem četiri čvora";
+
+/* No comment provided by engineer. */
+"Restrict" = "Zabrani";
+
+/* No comment provided by engineer. */
+"Restriction: %@" = "Zabrana: %@";
+
+/* No comment provided by engineer. */
+"Results for %@ (%@)" = "Rezultati za %1$@ (%2$@)";
+
+/* No comment provided by engineer. */
+"Reverse" = "Preokreni";
+
+/* No comment provided by engineer. */
+"Rotate" = "Okreni";
+
+/* No comment provided by engineer. */
+"Select a highway approaching the intersection" = "Odaberi autocestu koja se približava raskrižju";
+
+/* No comment provided by engineer. */
+"Select Object" = "Odaberi objekt";
+
+/* No comment provided by engineer. */
+"Selected object is off screen" = "Odabrani objekt se nalazi izvan ekrana";
+
+/* set tag value */
+"Set" = "Postavi";
+
+/* No comment provided by engineer. */
+"Set Height Tag" = "Postavi oznaku visine";
+
+/* No comment provided by engineer. */
+"set tags" = "postavi oznake";
+
+/* No comment provided by engineer. */
+"Settings" = "Postavke";
+
+/* No comment provided by engineer. */
+"Share" = "Dijeli";
+
+/* No comment provided by engineer. */
+"Show Recent Items" = "Prikaži nedavne stavke";
+
+/* No comment provided by engineer. */
+"Sorry, an error occurred while loading the GPX file" = "Oprosti, došlo je do greške tijekom učitavanja GPX datoteke";
+
+/* No comment provided by engineer. */
+"Split" = "Razdvoji";
+
+/* No comment provided by engineer. */
+"Standard imagery" = "Standardne slike";
+
+/* No comment provided by engineer. */
+"Start" = "Pokreni";
+
+/* No comment provided by engineer. */
+"Stop" = "Prekini";
+
+/* No comment provided by engineer. */
+"Straighten" = "Izravnaj";
+
+/* No comment provided by engineer. */
+"Tags" = "Oznake";
+
+/* No comment provided by engineer. */
+"The current location cannot be determined: " = "Nije moguće odrediti trenutačno mjesto: ";
+
+/* No comment provided by engineer. */
+"The merged nodes contain conflicting tags" = "Sjedinjeni čvorovi sadrže sukobljavajuće oznake";
+
+/* No comment provided by engineer. */
+"The nodes have conflicting roles in parent relations" = "Čvorovi sadrže sukobljavajuće uloge u nadređenoj vezi";
+
+/* No comment provided by engineer. */
+"The object does contain any tags" = "Objekt ne sadrži oznake";
+
+/* No comment provided by engineer. */
+"The restriction cannot be deleted: %@" = "Zabrana se ne može izbrisati: %@";
+
+/* No comment provided by engineer. */
+"The selected way must be completely visible" = "Odabrani put mora biti potupno vidljiv";
+
+/* No comment provided by engineer. */
+"The target way is ambiguous" = "Put odredišta nije jednoznačan";
+
+/* No comment provided by engineer. */
+"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "Skretanje sadrži neprepoznatu vrstu zabrane skretanja. Nastavljanjem će se uništiti.";
+
+/* No comment provided by engineer. */
+"The way belongs to a relation that is not fully downloaded" = "Put pripada vezi koja nije u potpunosti preuzeta";
+
+/* No comment provided by engineer. */
+"The way belongs to a relation this not fully downloaded" = "Put pripada vezi koja nije u potpunosti preuzeta";
+
+/* No comment provided by engineer. */
+"The way is not sufficiently straight" = "Put nije dovoljno ravan";
+
+/* No comment provided by engineer. */
+"The way must have at least 2 nodes" = "Put mora imati barem dva čvora";
+
+/* No comment provided by engineer. */
+"The ways contain incompatible tags" = "Putovi sadrže nekompatibilne oznake";
+
+/* No comment provided by engineer. */
+"The XML is improperly formed" = "Neispravan oblik XML-a";
+
+/* No comment provided by engineer. */
+"This action requires GPS to be turned on" = "Za ovu je radnju potrebno uključiti GPS";
+
+/* No comment provided by engineer. */
+"This app does not yet support editing turn restrictions without a node as the 'via' member" = "Ovaj program još ne podržava uređivanje zabrane skretanja bez čvora kao člana „preko”";
+
+/* No comment provided by engineer. */
+"To add another member to the relation 'long press' on the way to be added" = "Za dodavanje daljnjeg člana vezi, „pritisni dugo” na put kojemu se dodaje";
+
+/* No comment provided by engineer. */
+"Travel ALLOWED from %@ to %@" = "Putovanje DOZVOLJENO iz smjera %1$@ u smjeru %2$@";
+
+/* No comment provided by engineer. */
+"Travel from %@" = "Putovanje iz smjera %@";
+
+/* No comment provided by engineer. */
+"Travel ONLY from %@ to %@" = "Putovanje SAMO iz smjera %1$@ u smjeru %2$@";
+
+/* No comment provided by engineer. */
+"Travel PROHIBITED from %@ to %@" = "Putovanje ZABRANJENO iz smjera %1$@ u smjeru %2$@";
+
+/* No comment provided by engineer. */
+"Turn On Location Services to Allow %@ to Determine Your Location" = "Uključi usluge određivanja mjesta, kako bi %@ utvrdio tvoje mjesto";
+
+/* No comment provided by engineer. */
+"Turn Restrictions" = "Zabrane skretanja";
+
+/* No comment provided by engineer. */
+"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "Zabrane skretanja navode ceste, na koje možeš skrenuti prilikom ulaska u raskrižje iz zadanog smjera.\n\nOdaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu uključivanje/isključivanje ceste do odredišta kao dozvoljene rute.";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ allowed" = "Polukružno okretanje iz smjera %@ dozvoljeno";
+
+/* No comment provided by engineer. */
+"U-Turn from %@ prohibited" = "Polukružno okretanje iz smjera %@ zabranjeno";
+
+/* No comment provided by engineer. */
+"UID" = "UID";
+
+/* No comment provided by engineer. */
+"Unable to upload changes" = "Nemoguć prijenos promjena";
+
+/* No comment provided by engineer. */
+"Undo" = "Poništi";
+
+/* No comment provided by engineer. */
+"Unknown role" = "Nepoznata uloga";
+
+/* No comment provided by engineer. */
+"Unsupported turn restriction type" = "Nepodržana vrsta zabrane skretanja";
+
+/* update an osm note */
+"Update" = "Aktualiziraj";
+
+/* No comment provided by engineer. */
+"update relation members" = "aktualiziraj vezu između članova";
+
+/* No comment provided by engineer. */
+"Updating Note..." = "Aktualiziranje čvora …";
+
+/* No comment provided by engineer. */
+"Upload complete!" = "Prijenos gotov!";
+
+/* No comment provided by engineer. */
+"Upload to OSM" = "Prenesi na OSM";
+
+/* No comment provided by engineer. */
+"Upload your changes" = "Prijenos tvojih promjena";
+
+/* No comment provided by engineer. */
+"Uploading GPX..." = "Prenošenje GPX podataka …";
+
+/* No comment provided by engineer. */
+"User" = "Korisnik";
+
+/* No comment provided by engineer. */
+"User-defined imagery" = "Korisnički određene slike";
+
+/* No comment provided by engineer. */
+"Version" = "Verzija";
+
+/* No comment provided by engineer. */
+"vintage %@" = "vrijeme snimanja %@";
+
+/* No comment provided by engineer. */
+"vintage %@ - %@" = "vrijeme snimanja %1$@ – %2$@";
+
+/* No comment provided by engineer. */
+"Warning" = "Upozorenje";
+
+/* No comment provided by engineer. */
+"way %@" = "put %@";
+
+/* No comment provided by engineer. */
+"Way tags" = "Oznake puta";
+
+/* No comment provided by engineer. */
+"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nZa nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.";
+
+/* No comment provided by engineer. */
+"You can define your own custom presets here" = "Ovdje možeš definirati vlastite predodređene postavke";
+
+/* No comment provided by engineer. */
+"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "Možeš navigirati do člana veze samo, ako je već preuzet.\nTi su članovi označeni s „>”.";
+
+/* No comment provided by engineer. */
+"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Imaš promjene koje još nisu prenesene na poslužitelj. Ako izbrišeš predmemoriju, izgubit ćeš promjene.";
+
+/* No comment provided by engineer. */
+"You must provide your OSM user name, not an email address." = "Moraš zadati tvoje korisničko ime za OSM, a ne e-adresu.";
+
+/* No comment provided by engineer. */
+"You must save or discard changes to the current object before editing its associated relation" = "Moraš spremiti ili odbaciti promjene na trenutačnom objektu prije uređivanja njegove povezane veze";
+
+/* No comment provided by engineer. */
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "S ovom Go Map verzijom prenio/prenijela si %ld skupa promjena!!\n\nOcijeniti ovu aplikaciju?";
+
+/* No comment provided by engineer. */
+"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "Tvoja predmemorija podataka OSM-a raste, što može usporiti pokretanje i isključivanje.\n\nZa poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).";
+
+/* No comment provided by engineer. */
+"Zoom to Edit" = "Za uređivanje uvećaj prikaz";
+

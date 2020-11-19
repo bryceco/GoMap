@@ -7,6 +7,21 @@
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Yhdistä ulkoiseen Bluetooth GPS -laitteeseen";
+
 /* Copyright (human-readable) */
 "NSHumanReadableCopyright" = "";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "";
 

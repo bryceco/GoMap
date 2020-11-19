@@ -57,7 +57,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="en.lproj/Localizable.strings" source-language="en" target-language="de" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
@@ -1481,7 +1481,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
@@ -1508,7 +1508,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
@@ -1972,7 +1972,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
@@ -2134,7 +2134,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
@@ -2506,7 +2506,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>
@@ -2827,7 +2827,7 @@ http://glyphish.com
       </trans-unit>
     </body>
   </file>
-  <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
     </header>

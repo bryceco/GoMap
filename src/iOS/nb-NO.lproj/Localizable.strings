@@ -449,6 +449,9 @@
 "No U-Turn restriction" = "";
 
 /* No comment provided by engineer. */
+"node %@" = "node %@";
+
+/* No comment provided by engineer. */
 "node %@ (in way)" = "node %@ (i vei)";
 
 /* No comment provided by engineer. */
@@ -471,6 +474,9 @@
 
 /* No comment provided by engineer. */
 "Object modified" = "Objekt endret";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
 
 /* No comment provided by engineer. */
 "Only Left Turn restriction" = "";
@@ -525,6 +531,9 @@
 
 /* No comment provided by engineer. */
 "relation" = "relasjon";
+
+/* No comment provided by engineer. */
+"Relation attributes" = "Relasjon";
 
 /* No comment provided by engineer. */
 "Relation tags" = "Relasjonsetiketter";
@@ -765,5 +774,4 @@
 
 /* No comment provided by engineer. */
 "Zoom to Edit" = "Forstørr for å redigere";
-
 

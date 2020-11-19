@@ -1,12 +1,12 @@
+/* Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs"; */
+"juy-LX-vDs.normalTitle" = "高さ";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr"; */
+"l5O-tO-QFr.normalTitle" = "中止";
 
 /* Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa"; */
-"QZK-2k-kEa.normalTitle" = "Set Height";
+"QZK-2k-kEa.normalTitle" = "高さをセット";
 
 /* Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK"; */
 "SdH-uy-BuK.normalTitle" = "Distance";
 
-/* Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs"; */
-"juy-LX-vDs.normalTitle" = "Height";
-
-/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr"; */
-"l5O-tO-QFr.normalTitle" = "Cancel";

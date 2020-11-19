@@ -1,6 +1,9 @@
 /* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; */
 "0mW-YK-ajm.placeholder" = "nei";
 
+/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; */
+"0zS-QM-zwQ.placeholder" = "type";
+
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
 "1Yx-Ce-yfq.title" = "Tilbake";
 
@@ -21,6 +24,9 @@
 
 /* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
 "19J-sp-UTX.title" = "Alle etiketter";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
+"436-kv-L7j.placeholder" = "Restaurant";
 
 /* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; */
 "aCs-vS-YXj.placeholder" = "ref.";
@@ -142,8 +148,14 @@
 /* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
 "OND-s7-I6f.title" = "Egendefinert forvalg";
 
+/* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
+"P3A-5n-1Iq.text" = "Type";
+
 /* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
 "pHA-2B-6DC.normalTitle" = "Tilpass forvalg";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
+"pxY-di-zg7.placeholder" = "Restaurant";
 
 /* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
 "QDv-7w-nbx.headerTitle" = "Forvalgsnavn";

@@ -32,6 +32,9 @@
 "(way)" = "(ウェイ)";
 
 /* No comment provided by engineer. */
+"%.2f MB, %ld files" = "%1$.2f MB, %2$ld ファイル";
+
+/* No comment provided by engineer. */
 "%@ (relation)" = "%@ (リレーション)";
 
 /* No comment provided by engineer. */
@@ -56,13 +59,16 @@
 "%lu tiles needed" = "%lu タイルが必要";
 
 /* No comment provided by engineer. */
+"+ Button Position" = "+ ボタン位置";
+
+/* No comment provided by engineer. */
 "<unknown>" = "<不明>";
 
 /* No comment provided by engineer. */
 "1 Day" = "1 日";
 
 /* No comment provided by engineer. */
-"A GPX Track records your path as you travel along a road or trail" = "GPSトラックはあなたの道路や山道の経路を記録します";
+"A GPX Track records your path as you travel along a road or trail" = "GPXトラックはあなたの道路や山道の経路を記録します";
 
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "このノードが所属するリレーションはまだダンロードしきれていません";
@@ -105,6 +111,9 @@
 
 /* No comment provided by engineer. */
 "Attention" = "注意";
+
+/* No comment provided by engineer. */
+"Attributes" = "属性";
 
 /* No comment provided by engineer. */
 "Background imagery %@" = "背景画像 %@";
@@ -167,7 +176,7 @@
 "Clear GPS Overlay Tiles" = "GPSオーバーレイタイルをクリア";
 
 /* No comment provided by engineer. */
-"Clear GPX Tracks" = "GPSトラックをクリア";
+"Clear GPX Tracks" = "GPXトラックをクリア";
 
 /* No comment provided by engineer. */
 "Clear Locator Overlay Tiles" = "位置オーバーレイタイルをクリア";
@@ -317,10 +326,10 @@
 "Extending a way which belongs to a Route or similar relation may damage the relation" = "ルートやそれに類するリレーションに属するウェイの延長はリレーションを壊す可能性があります";
 
 /* No comment provided by engineer. */
-"GPX Upload Complete" = "GPSアップロード完了";
+"GPX Upload Complete" = "GPXアップロード完了";
 
 /* No comment provided by engineer. */
-"GPX Upload Failed" = "GPSアップロード失敗";
+"GPX Upload Failed" = "GPXアップロード失敗";
 
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "高さ: %1$@ ± %2$@ メートル";
@@ -354,6 +363,12 @@
 
 /* No comment provided by engineer. */
 "Lat/Lon" = "緯度/経度";
+
+/* No comment provided by engineer. */
+"Left side" = "左側";
+
+/* No comment provided by engineer. */
+"Length" = "長さ";
 
 /* No comment provided by engineer. */
 "Location services timed out." = "位置サービスがタイムアウトしました。";
@@ -410,7 +425,7 @@
 "More..." = "その他...";
 
 /* No comment provided by engineer. */
-"Most recent" = "最新使用タグ";
+"Most recent" = "最近使ったタグ";
 
 /* No comment provided by engineer. */
 "move" = "移動";
@@ -429,6 +444,9 @@
 
 /* No comment provided by engineer. */
 "Never" = "いいえ";
+
+/* No comment provided by engineer. */
+"Next" = "次へ";
 
 /* No comment provided by engineer. */
 "No active track" = "アクティブなトラックなし";
@@ -467,13 +485,16 @@
 "node %@ (in way)" = "ノード %@ (ウェイ内)";
 
 /* No comment provided by engineer. */
+"Node attributes" = "ノードの属性";
+
+/* No comment provided by engineer. */
 "Node is not an element of way" = "ノードがウェイの要素ではありません";
 
 /* No comment provided by engineer. */
 "Node must first or last node of the way" = "ノードはウェイの最初または最後のノードでなければなりません";
 
 /* No comment provided by engineer. */
-"Node tags" = "ノードタグ";
+"Node tags" = "ノードのタグ";
 
 /* No comment provided by engineer. */
 "Note History" = "メモの履歴";
@@ -482,10 +503,13 @@
 "Nothing to upload, no changes have been made." = "アップロードするものはありません、変更はありません。";
 
 /* No comment provided by engineer. */
-"Number of recent items to display" = "表示する最近の項目数";
+"Number of recent items to display" = "最新利用項目の表示数";
 
 /* No comment provided by engineer. */
 "Object modified" = "オブジェクトは変更されました";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
 
 /* No comment provided by engineer. */
 "Only Left Turn restriction" = "左折のみ";
@@ -527,6 +551,9 @@
 "Please wait" = "お待ち下さい";
 
 /* No comment provided by engineer. */
+"Previous" = "前へ";
+
+/* No comment provided by engineer. */
 "Previous Tracks" = "以前のトラック";
 
 /* No comment provided by engineer. */
@@ -542,7 +569,10 @@
 "relation" = "リレーション";
 
 /* No comment provided by engineer. */
-"Relation tags" = "リレーションタグ";
+"Relation attributes" = "リレーションの属性";
+
+/* No comment provided by engineer. */
+"Relation tags" = "リレーションのタグ";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "リレーション: %@";
@@ -570,6 +600,9 @@
 
 /* No comment provided by engineer. */
 "Reverse" = "反転";
+
+/* No comment provided by engineer. */
+"Right side" = "右側";
 
 /* No comment provided by engineer. */
 "Rotate" = "回転";
@@ -621,6 +654,9 @@
 
 /* No comment provided by engineer. */
 "Tags" = "タグ";
+
+/* No comment provided by engineer. */
+"The + button can be positioned on either the left or right side of the screen" = "+ ボタンは画面の左側または右側に配置できます";
 
 /* No comment provided by engineer. */
 "The current location cannot be determined: " = "現在地を取得できません: ";
@@ -701,6 +737,9 @@
 "U-Turn from %@ prohibited" = "%@ からのUターンが禁止されています";
 
 /* No comment provided by engineer. */
+"UID" = "UID";
+
+/* No comment provided by engineer. */
 "Unable to upload changes" = "変更をアップロードできません";
 
 /* No comment provided by engineer. */
@@ -755,6 +794,9 @@
 "way %@" = "ウェイ %@";
 
 /* No comment provided by engineer. */
+"Way attributes" = "ウェイの属性";
+
+/* No comment provided by engineer. */
 "Way tags" = "ウェイのタグ";
 
 /* No comment provided by engineer. */
@@ -783,5 +825,4 @@
 
 /* No comment provided by engineer. */
 "Zoom to Edit" = "ズームして編集";
-
 

@@ -8,7 +8,7 @@
 "1SU-BF-K3n.title" = "クレジット";
 
 /* Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2"; */
-"2TW-mO-uX2.footerTitle" = "ネット接続が制限されているところでマッピングする際には、衛星画像やMapnikタイルを次の2つの現在見えているエリア内のより高いズームレベルでダウンロードできます。";
+"2TW-mO-uX2.footerTitle" = "ネット接続が制限されているところでマッピングする際には、衛星画像やMapnikタイルを現在見えているエリア内の2段階高いズームレベルでダウンロードできます。";
 
 /* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
 "2TW-mO-uX2.headerTitle" = "ズームしたタイルをダウンロード";
@@ -33,6 +33,9 @@
 
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
 "34N-Ep-rpf.text" = "OpenStreetMapログイン";
+
+/* Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh"; */
+"66J-ih-Lfh.placeholder" = "api.openstreetmap.org";
 
 /* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8"; */
 "355-dx-Oi8.headerTitle" = "言語";
@@ -88,11 +91,14 @@
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
 "ib9-wt-IzD.title" = "言語";
 
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "メールでのフィードバック";
+
 /* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
 "JbA-pC-plJ.text" = "タイトル";
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
-"jcn-Lx-tj3.text" = "近所のマッパー";
+"jcn-Lx-tj3.text" = "付近のマッパー";
 
 /* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
 "k0y-gf-6DY.text" = "パスワード";
@@ -116,7 +122,7 @@
 "m7u-CH-jgg.headerTitle" = "テスターになる";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz"; */
-"Mus-SG-1Sz.text" = "詳細";
+"Mus-SG-1Sz.text" = "详情";
 
 /* Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG"; */
 "nIn-2k-PYG.headerTitle" = "その他";
@@ -155,7 +161,10 @@
 "UvN-Qa-roL.text" = "フレーム/秒";
 
 /* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
-"VDO-HW-SLB.title" = "近所のマッパー";
+"VDO-HW-SLB.title" = "付近のマッパー";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "メールでのフィードバック";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
 "x4m-oT-EG8.text" = "GitHub - 課題 & ソースコード";
@@ -165,5 +174,4 @@
 
 /* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
 "YQ4-05-lQz.placeholder" = "ユーザー名";
-
 

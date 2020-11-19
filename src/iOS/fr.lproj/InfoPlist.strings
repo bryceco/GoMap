@@ -1,0 +1,30 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Get Info string */
+"CFBundleGetInfoString" = "";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Se connecter aux appareils GPS externes en Bluetooth";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "L'appareil photo est utilisé pour mesurer la hauteur des bâtiments ou des objets";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Votre position sera affichée et suivie sur la carte.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Votre position sera affichée et suivie sur la carte.";
+

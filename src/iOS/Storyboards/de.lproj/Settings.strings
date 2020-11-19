@@ -1,0 +1,177 @@
+/* Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg"; */
+"0Hk-5U-2Kg.text" = "Mapnik Kacheln";
+
+/* Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY"; */
+"1Mo-xe-IbY.headerTitle" = "Ich habe keinen Account";
+
+/* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
+"1SU-BF-K3n.title" = "";
+
+/* Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2"; */
+"2TW-mO-uX2.footerTitle" = "";
+
+/* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
+"2TW-mO-uX2.headerTitle" = "";
+
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; */
+"2Zi-cz-7Va.text" = "Berührungen anzeigen";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
+"3qk-15-BUc.text" = "Details";
+
+/* Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO"; */
+"6GT-p2-rPO.footerTitle" = "";
+
+/* Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO"; */
+"6GT-p2-rPO.headerTitle" = "OpenStreetMap Server";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
+"6Lj-wh-z9f.text" = "Detail";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw"; */
+"7cc-E7-pzw.text" = "Name";
+
+/* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
+"34N-Ep-rpf.text" = "OpenStreetMap Login";
+
+/* Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh"; */
+"66J-ih-Lfh.placeholder" = "api.openstreetmap.org";
+
+/* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8"; */
+"355-dx-Oi8.headerTitle" = "Sprache";
+
+/* Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q"; */
+"ags-Mx-c1q.text" = "Kontaktiere uns";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "AHZ-L8-yUA"; */
+"AHZ-L8-yUA.title" = "Einstellungen";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN"; */
+"AVI-04-hFN.text" = "";
+
+/* Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F"; */
+"BHr-ta-k6F.text" = "";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
+"bt0-CH-HbH.normalTitle" = "Start";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
+"ctb-pg-pM9.title" = "Speichern";
+
+/* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
+"dbi-X6-Day.headerTitle" = "";
+
+/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; */
+"DiU-tt-U7H.text" = "";
+
+/* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
+"DY5-Ls-XZ1.normalTitle" = "Neuen Account registrieren";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW"; */
+"e7I-rE-dAW.placeholder" = "Passwort";
+
+/* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
+"fbD-Hr-HNI.headerTitle" = "";
+
+/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; */
+"Gcr-zK-nDq.text" = "";
+
+/* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
+"gec-8l-k4H.text" = "";
+
+/* Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ"; */
+"gh3-sb-yuZ.headerTitle" = "";
+
+/* Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR"; */
+"Gxc-44-SzR.title" = "";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP"; */
+"HNj-kK-OCP.text" = "Titel";
+
+/* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
+"ib9-wt-IzD.title" = "Sprache";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "E-Mail Feedback";
+
+/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
+"JbA-pC-plJ.text" = "";
+
+/* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
+"jcn-Lx-tj3.text" = "";
+
+/* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
+"k0y-gf-6DY.text" = "Passwort";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO"; */
+"KIO-8j-QsO.text" = "Untertitel";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "kt1-K7-kcu"; */
+"kt1-K7-kcu.title" = "Zurück";
+
+/* Class = "UINavigationItem"; title = "Contact Us"; ObjectID = "ktz-ef-tti"; */
+"ktz-ef-tti.title" = "Kontaktiere uns";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT"; */
+"LaB-Et-hHT.text" = "Details";
+
+/* Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP"; */
+"m7D-wn-3MP.title" = "";
+
+/* Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg"; */
+"m7u-CH-jgg.headerTitle" = "Werde Tester";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz"; */
+"Mus-SG-1Sz.text" = "Detail";
+
+/* Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG"; */
+"nIn-2k-PYG.headerTitle" = "";
+
+/* Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k"; */
+"O6E-f1-A1k.title" = "Login";
+
+/* Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH"; */
+"oIj-UV-kLH.headerTitle" = "Über uns";
+
+/* Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX"; */
+"osk-Kq-gDX.text" = "Sprache";
+
+/* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
+"rfX-TP-V0l.text" = "";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
+"snH-kp-6ib.normalTitle" = "Start";
+
+/* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
+"TGa-tJ-nrC.text" = "";
+
+/* Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS"; */
+"Tkc-bW-kNS.footerTitle" = "";
+
+/* Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS"; */
+"Tkc-bW-kNS.headerTitle" = "OpenStreetMap Account";
+
+/* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
+"TrT-Nn-WKe.text" = "Tritt der TestFlight-Beta bei";
+
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; */
+"UeH-ME-EV8.text" = "";
+
+/* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */
+"UvN-Qa-roL.text" = "Bilder/Sekunde";
+
+/* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
+"VDO-HW-SLB.title" = "";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "E-Mail Feedback";
+
+/* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
+"x4m-oT-EG8.text" = "";
+
+/* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
+"yAO-9B-CTd.headerTitle" = "";
+
+/* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
+"YQ4-05-lQz.placeholder" = "Benutzername";
+

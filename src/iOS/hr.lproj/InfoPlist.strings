@@ -1,0 +1,30 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Get Info string */
+"CFBundleGetInfoString" = "";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS format za razmjenu podataka (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Poveži se s vanjskim Bluetooth GPS uređajima";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Kamera se korsiti za mjerenje visine zgrada ili objekata";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Uvijek uključeno praćenje mjesta omogućuje programu snimanje GPX datoteka kad je neaktivna.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Tvoje će se mjesto prikazati i pratiti na karti.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Tvoje će se mjesto prikazati i pratiti na karti.";
+

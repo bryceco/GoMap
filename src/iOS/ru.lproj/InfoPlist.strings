@@ -20,7 +20,7 @@
 "NSHumanReadableCopyright" = "";
 
 /* Privacy - Location Always and When In Use Usage Description */
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "Постоянное отслеживание местоположения позволяет приложению записывать файлы GPX, когда они неактивны.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Постоянное отслеживание местоположения позволяет приложению записывать файлы GPX, даже когда оно неактивно.";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Ваше местоположение будет отображаться и отслеживаться на карте.";

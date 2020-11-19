@@ -32,7 +32,10 @@
 "7cc-E7-pzw.text" = "Имя";
 
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
-"34N-Ep-rpf.text" = "Логин OpenStreetMap";
+"34N-Ep-rpf.text" = "Войти в OpenStreetMap";
+
+/* Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh"; */
+"66J-ih-Lfh.placeholder" = "api.openstreetmap.org";
 
 /* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8"; */
 "355-dx-Oi8.headerTitle" = "Язык";
@@ -68,7 +71,7 @@
 "e7I-rE-dAW.placeholder" = "пароль";
 
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
-"fbD-Hr-HNI.headerTitle" = "Реквизиты";
+"fbD-Hr-HNI.headerTitle" = "Аккаунт";
 
 /* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; */
 "Gcr-zK-nDq.text" = "Прикосновения для записи скринкаста";
@@ -87,6 +90,9 @@
 
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
 "ib9-wt-IzD.title" = "Язык";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "Обратная связь по email";
 
 /* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
 "JbA-pC-plJ.text" = "Заголовок заголовок заголовок заголовок";
@@ -110,7 +116,7 @@
 "LaB-Et-hHT.text" = "Подробнее";
 
 /* Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP"; */
-"m7D-wn-3MP.title" = "Подготовить для работы offline";
+"m7D-wn-3MP.title" = "Подготовить для работы автономно";
 
 /* Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg"; */
 "m7u-CH-jgg.headerTitle" = "Стать тестировщиком";
@@ -131,7 +137,7 @@
 "osk-Kq-gDX.text" = "Язык";
 
 /* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
-"rfX-TP-V0l.text" = "Подготовить для работы offline";
+"rfX-TP-V0l.text" = "Подготовить для работы автономно";
 
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
 "snH-kp-6ib.normalTitle" = "Начать";
@@ -156,6 +162,9 @@
 
 /* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
 "VDO-HW-SLB.title" = "Картографы рядом";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "Обратная связь по email";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
 "x4m-oT-EG8.text" = "GitHub - проблемы и исходный код";

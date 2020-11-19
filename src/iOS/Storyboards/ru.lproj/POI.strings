@@ -52,6 +52,9 @@
 /* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
 "CXe-gQ-Zda.text" = "Значение 8";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; */
+"daQ-tl-pKh.text" = "Метка";
+
 /* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
 "Dfv-TT-J6i.footerTitle" = "Данный пресет будет доступен при редактировании объектов с данной комбинацией ключ/значение. Оставьте незаполненным любое из полей для возможности подстановки.";
 
@@ -83,7 +86,10 @@
 "G5R-oP-lp3.title" = "Настраиваемые теги";
 
 /* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
-"GIO-W7-q5U.title" = "Настраиваемые пресеты";
+"GIO-W7-q5U.title" = "Пользовательские предустановки";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; */
+"gv7-b8-wUw.text" = "Метка";
 
 /* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
 "hfr-Mf-ZHv.text" = "значение";
@@ -104,10 +110,10 @@
 "Jsm-mO-hgo.title" = "Тип POI";
 
 /* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.footerTitle" = "Возможные значения для пресета";
+"jv1-BF-p2a.footerTitle" = "Возможные значения для предустановки";
 
 /* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.headerTitle" = "Значения пресета";
+"jv1-BF-p2a.headerTitle" = "Предустановленные значения";
 
 /* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; */
 "kPA-ky-U48.placeholder" = "отдых ";
@@ -137,7 +143,7 @@
 "o63-qY-4vl.text" = "Значение 11";
 
 /* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; */
-"oC6-w7-cwN.placeholder" = "связаны";
+"oC6-w7-cwN.placeholder" = "на поводке";
 
 /* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; */
 "okh-JP-aKZ.placeholder" = "парк";
@@ -146,19 +152,19 @@
 "omf-S9-Yjq.text" = "Наименование";
 
 /* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
-"OND-s7-I6f.title" = "Настраиваемый пресет";
+"OND-s7-I6f.title" = "Пользовательская предустановка";
 
 /* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
 "P3A-5n-1Iq.text" = "Тип";
 
 /* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
-"pHA-2B-6DC.normalTitle" = "Настроить пресеты";
+"pHA-2B-6DC.normalTitle" = "Настроить предустановки";
 
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
 "pxY-di-zg7.placeholder" = "Ресторан";
 
 /* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
-"QDv-7w-nbx.headerTitle" = "Имя пресета";
+"QDv-7w-nbx.headerTitle" = "Название предустановки";
 
 /* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
 "R0q-aM-ULf.text" = "Значение 6";
@@ -179,10 +185,10 @@
 "tPF-m9-RtO.text" = "Оплата";
 
 /* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; */
-"Urd-9O-Mte.placeholder" = "связь";
+"Urd-9O-Mte.placeholder" = "отношение";
 
 /* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
-"v1b-PG-XxE.title" = "Пресеты";
+"v1b-PG-XxE.title" = "Предустановки";
 
 /* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
 "Vli-Ct-Lpz.text" = "Доступ для инвалидных колясок";

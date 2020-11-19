@@ -242,7 +242,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="en.lproj/Localizable.strings" source-language="en" target-language="hr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
     </header>
@@ -1660,7 +1660,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
     </header>
@@ -2099,7 +2099,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
     </header>
@@ -2291,7 +2291,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
     </header>
@@ -2663,7 +2663,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
     </header>

@@ -13,8 +13,14 @@
 /* Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX"; */
 "4s8-Bj-JOX.normalTitle" = "99 päivää";
 
+/* Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl"; */
+"5hB-2Y-Wgl.text" = "Projektio";
+
 /* Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa"; */
 "7df-49-qTa.text" = "";
+
+/* Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV"; */
+"7ga-PZ-MfV.placeholder" = "-1..3,7";
 
 /* Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3"; */
 "8es-4f-sj3.headerTitle" = "";
@@ -55,8 +61,20 @@
 /* Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh"; */
 "DmO-dW-3Fh.text" = "";
 
+/* Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3"; */
+"dzT-B4-za3.placeholder" = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n ";
+
+/* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
+"eac-Db-EaW.normalTitle" = "Bing";
+
 /* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl"; */
 "eFa-yZ-YZl.text" = "";
+
+/* Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz"; */
+"EHa-L5-Hcz.text" = "12:00:00";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Painike";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
 "EmS-9F-1qc.text" = "Yksityiskohdat";
@@ -101,10 +119,16 @@
 "hkr-kO-jbt.text" = "";
 
 /* Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe"; */
-"hMJ-yP-XJe.text" = "";
+"hMJ-yP-XJe.text" = "OpenStreetMap GPS -jäljet";
+
+/* Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6"; */
+"hsp-Xj-TU6.text" = "Simon Poole Map Data © OpenStreetMap contributors\n";
 
 /* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
 "Idx-2G-6F7.text" = "";
+
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
 
 /* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
 "Jz1-GP-Wbe.text" = "";
@@ -169,6 +193,9 @@
 /* Class = "UITableViewSection"; headerTitle = "Discard & Refresh"; ObjectID = "SNa-W1-wga"; */
 "SNa-W1-wga.headerTitle" = "";
 
+/* Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w"; */
+"swu-t3-p5w.text" = "URL";
+
 /* Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu"; */
 "tS9-CP-pqu.title" = "Tyhjennä välimuisti";
 
@@ -181,6 +208,9 @@
 /* Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq"; */
 "uOd-BB-zEq.text" = "";
 
+/* Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H"; */
+"uQ3-vb-l3H.placeholder" = "21";
+
 /* Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF"; */
 "Uum-Wn-9CF.text" = "Muut";
 
@@ -191,13 +221,16 @@
 "v6h-g5-fka.text" = "22.12.2018 klo 19.55";
 
 /* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
-"voF-Yf-33h.text" = "";
+"voF-Yf-33h.text" = "Suurin zoomaus";
 
 /* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
 "VUR-wT-knn.text" = "";
 
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; */
+"w75-Lj-3jF.placeholder" = "Portlandia GIS";
+
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
-"wev-ax-u4C.headerTitle" = "";
+"wev-ax-u4C.headerTitle" = "Nollaa";
 
 /* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
 "WnI-tY-WWa.text" = "";
