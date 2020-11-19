@@ -1,9 +1,6 @@
 /* Bundle display name */
 "CFBundleDisplayName" = "Go Map!!";
 
-/* Get Info string */
-"CFBundleGetInfoString" = "";
-
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
@@ -15,9 +12,6 @@
 
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "カメラは建物やオブジェクトの高さを測るために使われます";
-
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "非アクティブ時にGPXファイルの記録による現在地のトラッキングをアプリに常時許可する。";

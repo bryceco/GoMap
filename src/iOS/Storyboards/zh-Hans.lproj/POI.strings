@@ -1,9 +1,3 @@
-/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; */
-"0mW-YK-ajm.placeholder" = "";
-
-/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; */
-"0zS-QM-zwQ.placeholder" = "";
-
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
 "1Yx-Ce-yfq.title" = "返回";
 
@@ -27,9 +21,6 @@
 
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "餐厅";
-
-/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; */
-"aCs-vS-YXj.placeholder" = "";
 
 /* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; */
 "Ak4-ru-E4V.placeholder" = "狗";
@@ -55,29 +46,14 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; */
 "daQ-tl-pKh.text" = "标签";
 
-/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.footerTitle" = "";
-
-/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.headerTitle" = "";
-
 /* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
 "dsA-B6-s7R.text" = "值9";
 
 /* Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp"; */
 "eG3-Xz-Nnp.placeholder" = "允许带狗";
 
-/* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
-"Eou-a6-V4g.text" = "";
-
 /* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
 "f5t-25-IXF.title" = "属性";
-
-/* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
-"Fcv-4Q-gpE.text" = "";
-
-/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; */
-"Fe2-dc-zgA.placeholder" = "";
 
 /* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; */
 "foC-aN-GtH.placeholder" = "清除";
@@ -109,14 +85,8 @@
 /* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
 "Jsm-mO-hgo.title" = "POI类型";
 
-/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.footerTitle" = "";
-
 /* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
 "jv1-BF-p2a.headerTitle" = "预设值";
-
-/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; */
-"kPA-ky-U48.placeholder" = "";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
 "KX3-hG-OyE.title" = "返回";
@@ -141,9 +111,6 @@
 
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
 "o63-qY-4vl.text" = "值11";
-
-/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; */
-"oC6-w7-cwN.placeholder" = "";
 
 /* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; */
 "okh-JP-aKZ.placeholder" = "公园";
@@ -175,9 +142,6 @@
 /* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; */
 "sVp-1S-TjJ.placeholder" = "角色";
 
-/* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
-"teB-9L-Nrf.text" = "";
-
 /* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; */
 "TK4-E8-1q7.text" = "标题";
 
@@ -195,9 +159,6 @@
 
 /* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; */
 "vpk-jC-yxl.placeholder" = "是的";
-
-/* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
-"wFE-f1-sQa.text" = "";
 
 /* Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ"; */
 "Wim-Qa-dYQ.text" = "值 10";

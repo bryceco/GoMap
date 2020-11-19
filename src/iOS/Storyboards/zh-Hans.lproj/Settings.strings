@@ -4,24 +4,6 @@
 /* Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY"; */
 "1Mo-xe-IbY.headerTitle" = "我没有帐号";
 
-/* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
-"1SU-BF-K3n.title" = "";
-
-/* Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2"; */
-"2TW-mO-uX2.footerTitle" = "";
-
-/* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
-"2TW-mO-uX2.headerTitle" = "";
-
-/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; */
-"2Zi-cz-7Va.text" = "";
-
-/* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
-"3qk-15-BUc.text" = "";
-
-/* Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO"; */
-"6GT-p2-rPO.footerTitle" = "";
-
 /* Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO"; */
 "6GT-p2-rPO.headerTitle" = "OpenStreetMap服务器";
 
@@ -46,12 +28,6 @@
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "AHZ-L8-yUA"; */
 "AHZ-L8-yUA.title" = "设置";
 
-/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN"; */
-"AVI-04-hFN.text" = "";
-
-/* Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F"; */
-"BHr-ta-k6F.text" = "";
-
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "开始";
 
@@ -61,9 +37,6 @@
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "问题反馈 & 建议";
 
-/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; */
-"DiU-tt-U7H.text" = "";
-
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
 "DY5-Ls-XZ1.normalTitle" = "注册新帐号";
 
@@ -72,9 +45,6 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "证书";
-
-/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; */
-"Gcr-zK-nDq.text" = "";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
 "gec-8l-k4H.text" = "高级设置";
@@ -93,9 +63,6 @@
 
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
 "iR4-av-Q7M.text" = "邮件反馈";
-
-/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
-"JbA-pC-plJ.text" = "";
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
 "jcn-Lx-tj3.text" = "附近的编辑者";
@@ -141,9 +108,6 @@
 
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
 "snH-kp-6ib.normalTitle" = "开始";
-
-/* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
-"TGa-tJ-nrC.text" = "";
 
 /* Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS"; */
 "Tkc-bW-kNS.footerTitle" = "为了将更改上传到地图，你需要在openstreetmap.org上注册的用户名和密码。 ";

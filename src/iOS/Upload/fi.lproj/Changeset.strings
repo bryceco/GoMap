@@ -10,9 +10,6 @@
 /* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH"; */
 "hcE-yO-3eH.normalTitle" = "Muokkaa";
 
-/* Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn"; */
-"ikj-u9-9Bn.text" = "";
-
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ"; */
 "Mdj-M0-0mZ.title" = "Upload";
 

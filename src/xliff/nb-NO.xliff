@@ -12,7 +12,6 @@
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
-        <target/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -37,7 +36,6 @@
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source/>
-        <target/>
         <note>Copyright (human-readable)</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
@@ -291,32 +289,26 @@
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
@@ -356,7 +348,6 @@
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
@@ -485,7 +476,6 @@
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
@@ -504,7 +494,6 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
@@ -514,7 +503,6 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error deleting" xml:space="preserve">
@@ -529,12 +517,10 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
@@ -584,7 +570,6 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
@@ -612,22 +597,18 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Location services timed out." xml:space="preserve">
         <source>Location services timed out.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
@@ -749,27 +730,22 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No image data available" xml:space="preserve">
@@ -797,12 +773,10 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must first or last node of the way" xml:space="preserve">
         <source>Node must first or last node of the way</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -842,27 +816,22 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -911,7 +880,6 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
@@ -950,12 +918,10 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
@@ -975,7 +941,6 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
@@ -994,7 +959,6 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -1107,17 +1071,14 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation this not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation this not fully downloaded</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
@@ -1142,12 +1103,10 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
@@ -1177,24 +1136,20 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
         <source>U-Turn from %@ prohibited</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
@@ -1218,7 +1173,6 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
@@ -1371,7 +1325,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="create turn restriction" xml:space="preserve">
         <source>create turn restriction</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
@@ -1466,12 +1419,10 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="vintage %@ - %@" xml:space="preserve">
         <source>vintage %1$@ - %2$@</source>
-        <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
@@ -1544,7 +1495,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
-        <target/>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
@@ -1574,7 +1524,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
@@ -1584,7 +1533,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
         <source>12:00:00</source>
-        <target/>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
       <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
@@ -1604,7 +1552,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
         <source>QA Poole No Name Tiles</source>
-        <target/>
         <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
@@ -1624,7 +1571,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target/>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
@@ -1634,12 +1580,10 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target/>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target/>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
@@ -1649,7 +1593,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
-        <target/>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
@@ -1659,7 +1602,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
-        <target/>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -1668,7 +1610,6 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
@@ -1752,7 +1693,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
@@ -1766,7 +1706,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
-        <target/>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
@@ -1875,7 +1814,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <target/>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
@@ -1920,7 +1858,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
         <source>12/22/20, 7:55 PM</source>
-        <target/>
         <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
@@ -1980,7 +1917,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
-        <target/>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
@@ -2010,7 +1946,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
-        <target/>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
@@ -2030,7 +1965,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <target/>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
@@ -2094,7 +2028,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
         <source>2014-06-17 17:54 UTC</source>
-        <target/>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
@@ -2151,7 +2084,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
         <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
       </trans-unit>
       <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
@@ -2196,12 +2128,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
         <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
         <source>Applies To</source>
-        <target/>
         <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
@@ -2216,7 +2146,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA";</note>
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
@@ -2355,7 +2284,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
         <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
@@ -2394,7 +2322,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
         <source>leisure </source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
@@ -2434,12 +2361,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN";</note>
       </trans-unit>
       <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
-        <target/>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ";</note>
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
@@ -2516,7 +2441,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
         <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</source>
-        <target/>
         <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
@@ -2526,7 +2450,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
         <source>Show Touches</source>
-        <target/>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -2633,7 +2556,6 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="Gcr-zK-nDq.text" xml:space="preserve">
         <source>Touches for screen recording</source>
-        <target/>
         <note>Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq";</note>
       </trans-unit>
       <trans-unit id="Gxc-44-SzR.title" xml:space="preserve">

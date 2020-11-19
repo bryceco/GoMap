@@ -7,14 +7,8 @@
 /* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
 "1SU-BF-K3n.title" = "Bidragsytere";
 
-/* Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2"; */
-"2TW-mO-uX2.footerTitle" = "";
-
 /* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
 "2TW-mO-uX2.headerTitle" = "Last ned forstørrede flis";
-
-/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; */
-"2Zi-cz-7Va.text" = "";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
 "3qk-15-BUc.text" = "Detaljer";
@@ -72,9 +66,6 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "Identitetsdetaljer";
-
-/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; */
-"Gcr-zK-nDq.text" = "";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
 "gec-8l-k4H.text" = "Avanserte innstillinger";

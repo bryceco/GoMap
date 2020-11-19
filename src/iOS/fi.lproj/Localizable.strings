@@ -46,17 +46,11 @@
 /* No comment provided by engineer. */
 "%ld Days" = "%ld päivää";
 
-/* No comment provided by engineer. */
-"%ld edits, last active %@" = "";
-
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld metriä, %2$ld pistettä";
 
 /* No comment provided by engineer. */
 "%ld objects" = "%ld objektia";
-
-/* No comment provided by engineer. */
-"%lu tiles needed" = "";
 
 /* No comment provided by engineer. */
 "<unknown>" = "<tuntematon>";
@@ -65,37 +59,10 @@
 "1 Day" = "1 päivä";
 
 /* No comment provided by engineer. */
-"A GPX Track records your path as you travel along a road or trail" = "";
-
-/* No comment provided by engineer. */
-"A relation the node belongs to is not fully downloaded" = "";
-
-/* No comment provided by engineer. */
-"Add inner member" = "";
-
-/* No comment provided by engineer. */
-"add node to way" = "";
-
-/* No comment provided by engineer. */
 "Add Note" = "Lisää karttailmoitus";
 
 /* No comment provided by engineer. */
-"add object to relation" = "";
-
-/* No comment provided by engineer. */
-"Add outer member" = "";
-
-/* No comment provided by engineer. */
-"Add way to multipolygon?" = "";
-
-/* No comment provided by engineer. */
-"added to multipolygon relation" = "";
-
-/* No comment provided by engineer. */
 "Adding members:" = "Jäsenten lisääminen:";
-
-/* No comment provided by engineer. */
-"Additional imagery" = "";
 
 /* No comment provided by engineer. */
 "All choices" = "Kaikki vaihtoehdot";
@@ -104,91 +71,28 @@
 "All Tags" = "Kaikki tagit";
 
 /* No comment provided by engineer. */
-"An unknown error occurred fetching metadata" = "";
-
-/* No comment provided by engineer. */
 "Attention" = "Huomio";
 
 /* No comment provided by engineer. */
 "Attributes" = "Attribuutit";
 
 /* No comment provided by engineer. */
-"Background imagery %@" = "";
-
-/* No comment provided by engineer. */
 "Bad login" = "Epäonnistunut kirjautuminen";
-
-/* No comment provided by engineer. */
-"Cache size warning" = "";
 
 /* No comment provided by engineer. */
 "Cache trimmed" = "Välimuisti on tyhjennetty";
 
 /* No comment provided by engineer. */
-"Can only add ways to multipolygons" = "";
-
-/* No comment provided by engineer. */
-"Can't delete node that is part of a relation" = "";
-
-/* No comment provided by engineer. */
-"Can't delete relation that is not a multipolygon" = "";
-
-/* No comment provided by engineer. */
-"Can't delete way that is part of a Route or similar relation" = "";
-
-/* No comment provided by engineer. */
-"Can't extend way" = "";
-
-/* No comment provided by engineer. */
-"Can't remove component of a Route or similar relation" = "";
-
-/* No comment provided by engineer. */
-"Can't remove node in Turn Restriction 'via' way" = "";
-
-/* No comment provided by engineer. */
-"Can't remove Turn Restriction 'via' node" = "";
-
-/* No comment provided by engineer. */
-"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "";
-
-/* No comment provided by engineer. */
-"Can't remove Turn Restriction to/from way" = "";
-
-/* No comment provided by engineer. */
 "Cancel" = "Peruuta";
-
-/* No comment provided by engineer. */
-"Cannot compose message" = "";
-
-/* No comment provided by engineer. */
-"Cannot connect an inner way to an outer way" = "";
 
 /* No comment provided by engineer. */
 "Changeset" = "Muutoskokoelma";
 
 /* No comment provided by engineer. */
-"Clear Aerial Tiles" = "";
-
-/* No comment provided by engineer. */
-"Clear GPS Overlay Tiles" = "";
-
-/* No comment provided by engineer. */
 "Clear GPX Tracks" = "Tyhjennä GPX-jäljet";
 
 /* No comment provided by engineer. */
-"Clear Locator Overlay Tiles" = "";
-
-/* No comment provided by engineer. */
-"Clear Mapnik Tiles" = "";
-
-/* No comment provided by engineer. */
 "Clear OSM Data" = "Tyhjennä OSM-data";
-
-/* No comment provided by engineer. */
-"Commit" = "";
-
-/* No comment provided by engineer. */
-"computing size..." = "";
 
 /* No comment provided by engineer. */
 "Configure" = "Määritä";
@@ -197,13 +101,7 @@
 "Confirm move" = "Vahvista siirto";
 
 /* No comment provided by engineer. */
-"Connecting the nodes would damage a relation" = "";
-
-/* No comment provided by engineer. */
 "Copy Tags" = "Kopioi tagit";
-
-/* No comment provided by engineer. */
-"Could not duplicate object" = "";
 
 /* No comment provided by engineer. */
 "Create\n" = "Luo\n";
@@ -216,12 +114,6 @@
 
 /* No comment provided by engineer. */
 "Create Relation" = "Luo relaatio";
-
-/* No comment provided by engineer. */
-"Create Relation Type" = "";
-
-/* No comment provided by engineer. */
-"create turn restriction" = "";
 
 /* No comment provided by engineer. */
 "create way" = "luo viiva";
@@ -296,34 +188,10 @@
 "Edit XML" = "Muokkaa XML:ää";
 
 /* No comment provided by engineer. */
-"Editing layer not visible" = "";
-
-/* No comment provided by engineer. */
-"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "";
-
-/* No comment provided by engineer. */
-"Ensure the editor view is visible and displays objects in the local area" = "";
-
-/* No comment provided by engineer. */
 "Error" = "Virhe";
 
 /* No comment provided by engineer. */
-"Error connecting to way" = "";
-
-/* No comment provided by engineer. */
 "Error deleting" = "Virhe poistettaessa";
-
-/* No comment provided by engineer. */
-"Error fetching metadata: %@" = "";
-
-/* No comment provided by engineer. */
-"Extending a 'via' in a Turn Restriction will break the relation" = "";
-
-/* No comment provided by engineer. */
-"Extending a way which belongs to a Route or similar relation may damage the relation" = "";
-
-/* No comment provided by engineer. */
-"GPX Upload Complete" = "";
 
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Korkeus: %1$@ ± %2$@ metriä";
@@ -338,19 +206,10 @@
 "Ignore" = "Ohita";
 
 /* No comment provided by engineer. */
-"In order to measure height, please enable camera access in the app's settings." = "";
-
-/* No comment provided by engineer. */
 "Invalid URL" = "Virheellinen URL";
 
 /* No comment provided by engineer. */
 "Join" = "Yhdistä";
-
-/* No comment provided by engineer. */
-"Joining would invalidate a Turn Restriction the way belongs to" = "";
-
-/* No comment provided by engineer. */
-"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "";
 
 /* No comment provided by engineer. */
 "Last updated %@" = "Viimeksi päivitetty %@";
@@ -365,28 +224,13 @@
 "Length" = "Pituus";
 
 /* No comment provided by engineer. */
-"Location services timed out." = "";
-
-/* No comment provided by engineer. */
 "Location unavailable" = "Sijainti ei ole käytettävissä";
 
 /* No comment provided by engineer. */
 "Login successful" = "Kirjautuminen onnistui";
 
 /* No comment provided by engineer. */
-"Mail delivery is not available on this device" = "";
-
-/* No comment provided by engineer. */
-"Make Circular" = "";
-
-/* No comment provided by engineer. */
-"Make Rectangular" = "";
-
-/* No comment provided by engineer. */
 "Maybe later..." = "Ehkä myöhemmin…";
-
-/* No comment provided by engineer. */
-"Member of multipolygon relation" = "";
 
 /* No comment provided by engineer. */
 "Members" = "Jäsenet";
@@ -398,19 +242,10 @@
 "meters" = "metriä";
 
 /* No comment provided by engineer. */
-"Missing way to connect to" = "";
-
-/* No comment provided by engineer. */
-"Modified" = "";
-
-/* No comment provided by engineer. */
 "Modify" = "Muuta";
 
 /* No comment provided by engineer. */
 "Modify\n" = "Muuta\n";
-
-/* No comment provided by engineer. */
-"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "";
 
 /* No comment provided by engineer. */
 "More..." = "Lisää…";
@@ -425,9 +260,6 @@
 "Move" = "Siirrä";
 
 /* No comment provided by engineer. */
-"Move selected object?" = "";
-
-/* No comment provided by engineer. */
 "Multipolygon" = "Multipolygoni";
 
 /* No comment provided by engineer. */
@@ -440,28 +272,7 @@
 "Next" = "Seuraava";
 
 /* No comment provided by engineer. */
-"No active track" = "";
-
-/* No comment provided by engineer. */
 "No Data" = "Ei dataa";
-
-/* No comment provided by engineer. */
-"No image data available" = "";
-
-/* No comment provided by engineer. */
-"No results found" = "";
-
-/* No comment provided by engineer. */
-"No Right Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"No Straight On restriction" = "";
-
-/* No comment provided by engineer. */
-"No tags to paste" = "";
-
-/* No comment provided by engineer. */
-"No U-Turn restriction" = "";
 
 /* No comment provided by engineer. */
 "Node" = "Piste";
@@ -473,43 +284,7 @@
 "node %@ (in way)" = "piste %@ (viivalla)";
 
 /* No comment provided by engineer. */
-"Node is not an element of way" = "";
-
-/* No comment provided by engineer. */
-"Node must first or last node of the way" = "";
-
-/* No comment provided by engineer. */
-"Node tags" = "";
-
-/* No comment provided by engineer. */
-"Note History" = "";
-
-/* No comment provided by engineer. */
-"Nothing to upload, no changes have been made." = "";
-
-/* No comment provided by engineer. */
-"Number of recent items to display" = "";
-
-/* No comment provided by engineer. */
-"Object modified" = "";
-
-/* No comment provided by engineer. */
 "OK" = "OK";
-
-/* No comment provided by engineer. */
-"Only Left Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"Only multipolygon relations are supported" = "";
-
-/* No comment provided by engineer. */
-"Only Right Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"Only Straight On restriction" = "";
-
-/* No comment provided by engineer. */
-"Only ways/multipolygons can be rotated" = "";
 
 /* No comment provided by engineer. */
 "Open Settings" = "Avaa asetukset";
@@ -518,19 +293,7 @@
 "Open URL" = "Avaa URL";
 
 /* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "";
-
-/* No comment provided by engineer. */
-"other object" = "";
-
-/* No comment provided by engineer. */
 "Paste" = "Liitä";
-
-/* No comment provided by engineer. */
-"Pasting %ld tag(s)" = "";
-
-/* No comment provided by engineer. */
-"Perform Action" = "";
 
 /* No comment provided by engineer. */
 "Please wait" = "Odota";
@@ -539,13 +302,7 @@
 "Previous" = "Edellinen";
 
 /* No comment provided by engineer. */
-"Previous Tracks" = "";
-
-/* No comment provided by engineer. */
 "Purge" = "Tyhjennä";
-
-/* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "";
 
 /* No comment provided by engineer. */
 "Redo" = "Tee uudelleen";
@@ -554,31 +311,13 @@
 "relation" = "relaatio";
 
 /* No comment provided by engineer. */
-"Relation tags" = "";
-
-/* No comment provided by engineer. */
 "Relation: %@" = "Relaatio: %@";
 
 /* No comment provided by engineer. */
 "Relations" = "Relaatiot";
 
 /* No comment provided by engineer. */
-"Replace Tags" = "";
-
-/* No comment provided by engineer. */
-"Requires a closed way with at least 3 nodes" = "";
-
-/* No comment provided by engineer. */
-"Requires a closed way with at least 4 nodes" = "";
-
-/* No comment provided by engineer. */
-"Restrict" = "";
-
-/* No comment provided by engineer. */
 "Restriction: %@" = "Rajoitus: %@";
-
-/* No comment provided by engineer. */
-"Results for %@ (%@)" = "";
 
 /* No comment provided by engineer. */
 "Reverse" = "Käännä";
@@ -590,13 +329,7 @@
 "Rotate" = "Kierrä";
 
 /* No comment provided by engineer. */
-"Select a highway approaching the intersection" = "";
-
-/* No comment provided by engineer. */
 "Select Object" = "Valitse objekti";
-
-/* No comment provided by engineer. */
-"Selected object is off screen" = "";
 
 /* set tag value */
 "Set" = "Aseta";
@@ -611,18 +344,6 @@
 "Share" = "Jaa";
 
 /* No comment provided by engineer. */
-"Show Recent Items" = "";
-
-/* No comment provided by engineer. */
-"Sorry, an error occurred while loading the GPX file" = "";
-
-/* No comment provided by engineer. */
-"Split" = "";
-
-/* No comment provided by engineer. */
-"Standard imagery" = "";
-
-/* No comment provided by engineer. */
 "Start" = "Aloita";
 
 /* No comment provided by engineer. */
@@ -635,88 +356,10 @@
 "Tags" = "Tagit";
 
 /* No comment provided by engineer. */
-"The current location cannot be determined: " = "";
-
-/* No comment provided by engineer. */
-"The merged nodes contain conflicting tags" = "";
-
-/* No comment provided by engineer. */
-"The nodes have conflicting roles in parent relations" = "";
-
-/* No comment provided by engineer. */
-"The object does contain any tags" = "";
-
-/* No comment provided by engineer. */
-"The restriction cannot be deleted: %@" = "";
-
-/* No comment provided by engineer. */
-"The selected way must be completely visible" = "";
-
-/* No comment provided by engineer. */
-"The target way is ambiguous" = "";
-
-/* No comment provided by engineer. */
-"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "";
-
-/* No comment provided by engineer. */
-"The way belongs to a relation that is not fully downloaded" = "";
-
-/* No comment provided by engineer. */
-"The way belongs to a relation this not fully downloaded" = "";
-
-/* No comment provided by engineer. */
-"The way is not sufficiently straight" = "";
-
-/* No comment provided by engineer. */
-"The way must have at least 2 nodes" = "";
-
-/* No comment provided by engineer. */
-"The ways contain incompatible tags" = "";
-
-/* No comment provided by engineer. */
-"The XML is improperly formed" = "";
-
-/* No comment provided by engineer. */
-"This action requires GPS to be turned on" = "";
-
-/* No comment provided by engineer. */
-"This app does not yet support editing turn restrictions without a node as the 'via' member" = "";
-
-/* No comment provided by engineer. */
-"To add another member to the relation 'long press' on the way to be added" = "";
-
-/* No comment provided by engineer. */
-"Travel ALLOWED from %@ to %@" = "";
-
-/* No comment provided by engineer. */
-"Travel from %@" = "";
-
-/* No comment provided by engineer. */
-"Travel ONLY from %@ to %@" = "";
-
-/* No comment provided by engineer. */
-"Travel PROHIBITED from %@ to %@" = "";
-
-/* No comment provided by engineer. */
-"Turn On Location Services to Allow %@ to Determine Your Location" = "";
-
-/* No comment provided by engineer. */
 "Turn Restrictions" = "Kääntymisrajoitukset";
 
 /* No comment provided by engineer. */
-"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "";
-
-/* No comment provided by engineer. */
-"U-Turn from %@ allowed" = "";
-
-/* No comment provided by engineer. */
-"U-Turn from %@ prohibited" = "";
-
-/* No comment provided by engineer. */
 "UID" = "UID";
-
-/* No comment provided by engineer. */
-"Unable to upload changes" = "";
 
 /* No comment provided by engineer. */
 "Undo" = "Kumoa";
@@ -724,78 +367,18 @@
 /* No comment provided by engineer. */
 "Unknown role" = "Tuntematon rooli";
 
-/* No comment provided by engineer. */
-"Unsupported turn restriction type" = "";
-
 /* update an osm note */
 "Update" = "Päivitä";
-
-/* No comment provided by engineer. */
-"update relation members" = "";
-
-/* No comment provided by engineer. */
-"Updating Note..." = "";
-
-/* No comment provided by engineer. */
-"Upload complete!" = "";
-
-/* No comment provided by engineer. */
-"Upload to OSM" = "";
-
-/* No comment provided by engineer. */
-"Upload your changes" = "";
-
-/* No comment provided by engineer. */
-"Uploading GPX..." = "";
 
 /* No comment provided by engineer. */
 "User" = "Käyttäjä";
 
 /* No comment provided by engineer. */
-"User-defined imagery" = "";
-
-/* No comment provided by engineer. */
 "Version" = "Versio";
-
-/* No comment provided by engineer. */
-"vintage %@" = "";
-
-/* No comment provided by engineer. */
-"vintage %@ - %@" = "";
 
 /* No comment provided by engineer. */
 "Warning" = "Varoitus";
 
 /* No comment provided by engineer. */
 "way %@" = "viiva %@";
-
-/* No comment provided by engineer. */
-"Way tags" = "";
-
-/* No comment provided by engineer. */
-"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "";
-
-/* No comment provided by engineer. */
-"You can define your own custom presets here" = "";
-
-/* No comment provided by engineer. */
-"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "";
-
-/* No comment provided by engineer. */
-"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "";
-
-/* No comment provided by engineer. */
-"You must save or discard changes to the current object before editing its associated relation" = "";
-
-/* No comment provided by engineer. */
-"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "";
-
-/* No comment provided by engineer. */
-"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "";
-
-/* No comment provided by engineer. */
-"Zoom to Edit" = "";
 

@@ -7,9 +7,6 @@
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
 "1Yx-Ce-yfq.title" = "Tilbake";
 
-/* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
-"2cB-FV-ozw.title" = "";
-
 /* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; */
 "2Q5-Vd-FED.text" = "Tittel";
 
@@ -52,12 +49,6 @@
 /* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
 "CXe-gQ-Zda.text" = "Verdi 8";
 
-/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.footerTitle" = "";
-
-/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.headerTitle" = "";
-
 /* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
 "dsA-B6-s7R.text" = "Verdi 9";
 
@@ -67,14 +58,8 @@
 /* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
 "Eou-a6-V4g.text" = "Nøkkel";
 
-/* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
-"f5t-25-IXF.title" = "";
-
 /* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
 "Fcv-4Q-gpE.text" = "Verdi 3";
-
-/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; */
-"Fe2-dc-zgA.placeholder" = "";
 
 /* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; */
 "foC-aN-GtH.placeholder" = "rens";
@@ -109,9 +94,6 @@
 /* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
 "jv1-BF-p2a.headerTitle" = "Forvalgsverdier";
 
-/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; */
-"kPA-ky-U48.placeholder" = "";
-
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
 "KX3-hG-OyE.title" = "Tilbake";
 
@@ -135,12 +117,6 @@
 
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
 "o63-qY-4vl.text" = "Verdi 11";
-
-/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; */
-"oC6-w7-cwN.placeholder" = "";
-
-/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; */
-"okh-JP-aKZ.placeholder" = "";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
 "omf-S9-Yjq.text" = "Navn";

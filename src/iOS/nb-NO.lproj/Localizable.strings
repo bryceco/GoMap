@@ -125,24 +125,6 @@
 "Can't delete way that is part of a Route or similar relation" = "Kan ikke slette vei som er en del av en rute eller lignende relasjon";
 
 /* No comment provided by engineer. */
-"Can't extend way" = "";
-
-/* No comment provided by engineer. */
-"Can't remove component of a Route or similar relation" = "";
-
-/* No comment provided by engineer. */
-"Can't remove node in Turn Restriction 'via' way" = "";
-
-/* No comment provided by engineer. */
-"Can't remove Turn Restriction 'via' node" = "";
-
-/* No comment provided by engineer. */
-"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "";
-
-/* No comment provided by engineer. */
-"Can't remove Turn Restriction to/from way" = "";
-
-/* No comment provided by engineer. */
 "Cancel" = "Avbryt";
 
 /* No comment provided by engineer. */
@@ -162,9 +144,6 @@
 
 /* No comment provided by engineer. */
 "Clear GPX Tracks" = "Tøm GPX-spor";
-
-/* No comment provided by engineer. */
-"Clear Locator Overlay Tiles" = "";
 
 /* No comment provided by engineer. */
 "Clear Mapnik Tiles" = "Tøm Mapnik-flis";
@@ -207,9 +186,6 @@
 
 /* No comment provided by engineer. */
 "Create Relation Type" = "Opprett relasjonstype";
-
-/* No comment provided by engineer. */
-"create turn restriction" = "";
 
 /* No comment provided by engineer. */
 "create way" = "opprett vei";
@@ -278,9 +254,6 @@
 "Edit" = "Rediger";
 
 /* No comment provided by engineer. */
-"Edit restrictions" = "";
-
-/* No comment provided by engineer. */
 "Edit XML" = "Rediger XML";
 
 /* No comment provided by engineer. */
@@ -290,25 +263,13 @@
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Sørg for at plasseringstjenester er påslått og at du har innvilget denne programtilgangen.\n\nFeil: %@";
 
 /* No comment provided by engineer. */
-"Ensure the editor view is visible and displays objects in the local area" = "";
-
-/* No comment provided by engineer. */
 "Error" = "Feil";
-
-/* No comment provided by engineer. */
-"Error connecting to way" = "";
 
 /* No comment provided by engineer. */
 "Error deleting" = "Feil under sletting";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Klarte ikke å hente metadata: %@";
-
-/* No comment provided by engineer. */
-"Extending a 'via' in a Turn Restriction will break the relation" = "";
-
-/* No comment provided by engineer. */
-"Extending a way which belongs to a Route or similar relation may damage the relation" = "";
 
 /* No comment provided by engineer. */
 "GPX Upload Complete" = "GPX-fil opplastet";
@@ -338,9 +299,6 @@
 "Join" = "Knytt sammen";
 
 /* No comment provided by engineer. */
-"Joining would invalidate a Turn Restriction the way belongs to" = "";
-
-/* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Språkvalg har kun innvirkning på forvalg, som også er oversatt for iD. Hovedgrensesnittet er fremdeles Engelsk.";
 
 /* No comment provided by engineer. */
@@ -348,18 +306,6 @@
 
 /* No comment provided by engineer. */
 "Lat/Lon" = "Bredde-/lengdegrad";
-
-/* No comment provided by engineer. */
-"Location services timed out." = "";
-
-/* No comment provided by engineer. */
-"Location unavailable" = "";
-
-/* No comment provided by engineer. */
-"Login successful" = "";
-
-/* No comment provided by engineer. */
-"Low memory: clearing cache" = "";
 
 /* No comment provided by engineer. */
 "Mail delivery is not available on this device" = "Forsendelse per e-post er ikke tilgjengelig på denne enheten";
@@ -422,43 +368,22 @@
 "Never" = "Aldri";
 
 /* No comment provided by engineer. */
-"No active track" = "";
-
-/* No comment provided by engineer. */
 "No Data" = "Ingen data";
 
 /* No comment provided by engineer. */
 "No image data available" = "Bildedata ikke tilgjengelig";
 
 /* No comment provided by engineer. */
-"No Left Turn restriction" = "";
-
-/* No comment provided by engineer. */
 "No results found" = "Resultatløst";
 
 /* No comment provided by engineer. */
-"No Right Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"No Straight On restriction" = "";
-
-/* No comment provided by engineer. */
 "No tags to paste" = "Ingen etiketter å lime inn";
-
-/* No comment provided by engineer. */
-"No U-Turn restriction" = "";
 
 /* No comment provided by engineer. */
 "node %@" = "node %@";
 
 /* No comment provided by engineer. */
 "node %@ (in way)" = "node %@ (i vei)";
-
-/* No comment provided by engineer. */
-"Node is not an element of way" = "";
-
-/* No comment provided by engineer. */
-"Node must first or last node of the way" = "";
 
 /* No comment provided by engineer. */
 "Node tags" = "Node-etiketter";
@@ -477,21 +402,6 @@
 
 /* No comment provided by engineer. */
 "OK" = "OK";
-
-/* No comment provided by engineer. */
-"Only Left Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"Only multipolygon relations are supported" = "";
-
-/* No comment provided by engineer. */
-"Only Right Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"Only Straight On restriction" = "";
-
-/* No comment provided by engineer. */
-"Only ways/multipolygons can be rotated" = "";
 
 /* No comment provided by engineer. */
 "Open Settings" = "Åpne innstillingene";
@@ -524,9 +434,6 @@
 "Purge" = "Tøm";
 
 /* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "";
-
-/* No comment provided by engineer. */
 "Redo" = "Gjenta";
 
 /* No comment provided by engineer. */
@@ -548,12 +455,6 @@
 "Replace Tags" = "Erstatt etiketter";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 3 nodes" = "";
-
-/* No comment provided by engineer. */
-"Requires a closed way with at least 4 nodes" = "";
-
-/* No comment provided by engineer. */
 "Restrict" = "Begrens";
 
 /* No comment provided by engineer. */
@@ -563,13 +464,7 @@
 "Results for %@ (%@)" = "Resultater for %1$@ (%2$@)";
 
 /* No comment provided by engineer. */
-"Reverse" = "";
-
-/* No comment provided by engineer. */
 "Rotate" = "Roter";
-
-/* No comment provided by engineer. */
-"Select a highway approaching the intersection" = "";
 
 /* No comment provided by engineer. */
 "Select Object" = "Velg objekt";
@@ -635,15 +530,6 @@
 "The target way is ambiguous" = "Målveien er tvetydig";
 
 /* No comment provided by engineer. */
-"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "";
-
-/* No comment provided by engineer. */
-"The way belongs to a relation that is not fully downloaded" = "";
-
-/* No comment provided by engineer. */
-"The way belongs to a relation this not fully downloaded" = "";
-
-/* No comment provided by engineer. */
 "The way is not sufficiently straight" = "Veien er ikke rett nok";
 
 /* No comment provided by engineer. */
@@ -657,12 +543,6 @@
 
 /* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Handlingen krever at GPS er påslått";
-
-/* No comment provided by engineer. */
-"This app does not yet support editing turn restrictions without a node as the 'via' member" = "";
-
-/* No comment provided by engineer. */
-"To add another member to the relation 'long press' on the way to be added" = "";
 
 /* No comment provided by engineer. */
 "Travel ALLOWED from %@ to %@" = "Gjennomferdsel TILLATT fra %1$s til %2$s";
@@ -680,18 +560,6 @@
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Skru på posisjonstjenester for å tillate %@ å fastsette din posisjon";
 
 /* No comment provided by engineer. */
-"Turn Restrictions" = "";
-
-/* No comment provided by engineer. */
-"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "";
-
-/* No comment provided by engineer. */
-"U-Turn from %@ allowed" = "";
-
-/* No comment provided by engineer. */
-"U-Turn from %@ prohibited" = "";
-
-/* No comment provided by engineer. */
 "Unable to upload changes" = "Kunne ikke laste opp endringer";
 
 /* No comment provided by engineer. */
@@ -699,9 +567,6 @@
 
 /* No comment provided by engineer. */
 "Unknown role" = "Ukjent rolle";
-
-/* No comment provided by engineer. */
-"Unsupported turn restriction type" = "";
 
 /* update an osm note */
 "Update" = "Oppdater";
@@ -732,12 +597,6 @@
 
 /* No comment provided by engineer. */
 "Version" = "Versjon";
-
-/* No comment provided by engineer. */
-"vintage %@" = "";
-
-/* No comment provided by engineer. */
-"vintage %@ - %@" = "";
 
 /* No comment provided by engineer. */
 "Warning" = "Advarsel";

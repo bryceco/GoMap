@@ -77,22 +77,13 @@
 "Add inner member" = "Inneres Mitglied hinzufügen";
 
 /* No comment provided by engineer. */
-"add node to way" = "";
-
-/* No comment provided by engineer. */
 "Add Note" = "Hinweis hinzufügen";
-
-/* No comment provided by engineer. */
-"add object to relation" = "";
 
 /* No comment provided by engineer. */
 "Add outer member" = "Äußeres Mitglied hinzufügen";
 
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "Weg zu Multipolygon hinzufügen?";
-
-/* No comment provided by engineer. */
-"added to multipolygon relation" = "";
 
 /* No comment provided by engineer. */
 "Adding members:" = "Mitglieder hinzufügen:";
@@ -143,9 +134,6 @@
 "Can't extend way" = "Kann Weg nicht verlängern";
 
 /* No comment provided by engineer. */
-"Can't remove component of a Route or similar relation" = "";
-
-/* No comment provided by engineer. */
 "Can't remove node in Turn Restriction 'via' way" = "Kann Knoten in 'Via'-Weg der Abbiegebeschränkung nicht löschen";
 
 /* No comment provided by engineer. */
@@ -159,9 +147,6 @@
 
 /* No comment provided by engineer. */
 "Cancel" = "Abbrechen";
-
-/* No comment provided by engineer. */
-"Cannot compose message" = "";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Kann inneren Weg nicht mit äußerem Weg verbinden";
@@ -191,9 +176,6 @@
 "Commit" = "Hochladen";
 
 /* No comment provided by engineer. */
-"computing size..." = "";
-
-/* No comment provided by engineer. */
 "Configure" = "Konfigurieren";
 
 /* No comment provided by engineer. */
@@ -212,22 +194,10 @@
 "Create\n" = "Erstellen\n";
 
 /* No comment provided by engineer. */
-"create node" = "";
-
-/* No comment provided by engineer. */
-"create relation" = "";
-
-/* No comment provided by engineer. */
 "Create Relation" = "Relation erstellen";
 
 /* No comment provided by engineer. */
 "Create Relation Type" = "Relations-Typ erstellen";
-
-/* No comment provided by engineer. */
-"create turn restriction" = "";
-
-/* No comment provided by engineer. */
-"create way" = "";
 
 /* No comment provided by engineer. */
 "Current Track" = "Aktueller Track";
@@ -248,30 +218,6 @@
 "Delete failed" = "Löschen fehlgeschlagen";
 
 /* No comment provided by engineer. */
-"delete multipolygon" = "";
-
-/* No comment provided by engineer. */
-"delete node" = "";
-
-/* No comment provided by engineer. */
-"delete node from way" = "";
-
-/* No comment provided by engineer. */
-"delete object from relation" = "";
-
-/* No comment provided by engineer. */
-"delete relation" = "";
-
-/* No comment provided by engineer. */
-"delete restriction" = "";
-
-/* No comment provided by engineer. */
-"delete route" = "";
-
-/* No comment provided by engineer. */
-"delete way" = "";
-
-/* No comment provided by engineer. */
 "Detach from relation" = "Von Relation trennen";
 
 /* No comment provided by engineer. */
@@ -284,16 +230,10 @@
 "Done" = "Fertig";
 
 /* No comment provided by engineer. */
-"duplicate" = "";
-
-/* No comment provided by engineer. */
 "Duplicate" = "Duplizieren";
 
 /* No comment provided by engineer. */
 "Edit" = "Bearbeiten";
-
-/* No comment provided by engineer. */
-"Edit restrictions" = "";
 
 /* No comment provided by engineer. */
 "Edit XML" = "XML bearbeiten";
@@ -350,28 +290,16 @@
 "Invalid URL" = "Ungültige URL";
 
 /* No comment provided by engineer. */
-"Join" = "";
-
-/* No comment provided by engineer. */
-"Joining would invalidate a Turn Restriction the way belongs to" = "";
-
-/* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Die Sprachauswahl betrifft nur Vorlagen und nur jene Vorlagen die für iD übersetzt wurden. Die Hauptoberfläche ist immer noch englisch.";
 
 /* No comment provided by engineer. */
 "Last updated %@" = "Zuletzt aktualisiert %@";
 
 /* No comment provided by engineer. */
-"Lat/Lon" = "";
-
-/* No comment provided by engineer. */
 "Left side" = "Linke Seite";
 
 /* No comment provided by engineer. */
 "Length" = "Länge";
-
-/* No comment provided by engineer. */
-"Location services timed out." = "";
 
 /* No comment provided by engineer. */
 "Location unavailable" = "Standort nicht verfügbar";
@@ -381,9 +309,6 @@
 
 /* No comment provided by engineer. */
 "Low memory: clearing cache" = "Geringer Speicherplatz: leere Cache";
-
-/* No comment provided by engineer. */
-"Mail delivery is not available on this device" = "";
 
 /* No comment provided by engineer. */
 "Make Circular" = "Kreisförmig machen";
@@ -425,12 +350,6 @@
 "More..." = "Mehr...";
 
 /* No comment provided by engineer. */
-"Most recent" = "";
-
-/* No comment provided by engineer. */
-"move" = "";
-
-/* No comment provided by engineer. */
 "Move" = "Bewegen";
 
 /* No comment provided by engineer. */
@@ -458,31 +377,13 @@
 "No image data available" = "Keine Bilddaten verfügbar";
 
 /* No comment provided by engineer. */
-"No Left Turn restriction" = "";
-
-/* No comment provided by engineer. */
 "No results found" = "Keine Ergebnisse gefunden";
-
-/* No comment provided by engineer. */
-"No Right Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"No Straight On restriction" = "";
 
 /* No comment provided by engineer. */
 "No tags to paste" = "Keine Attribute zum Einfügen";
 
 /* No comment provided by engineer. */
-"No U-Turn restriction" = "";
-
-/* No comment provided by engineer. */
 "Node" = "Knoten";
-
-/* No comment provided by engineer. */
-"node %@" = "";
-
-/* No comment provided by engineer. */
-"node %@ (in way)" = "";
 
 /* No comment provided by engineer. */
 "Node attributes" = "Knoten-Attribute";
@@ -500,25 +401,13 @@
 "Nothing to upload, no changes have been made." = "Nichts zum Hochladen, keine Änderungen wurden durchgeführt.";
 
 /* No comment provided by engineer. */
-"Number of recent items to display" = "";
-
-/* No comment provided by engineer. */
 "Object modified" = "Objekt verändert";
 
 /* No comment provided by engineer. */
 "OK" = "OK";
 
 /* No comment provided by engineer. */
-"Only Left Turn restriction" = "";
-
-/* No comment provided by engineer. */
 "Only multipolygon relations are supported" = "Nur Multipolygon-Relationen werden unterstützt";
-
-/* No comment provided by engineer. */
-"Only Right Turn restriction" = "";
-
-/* No comment provided by engineer. */
-"Only Straight On restriction" = "";
 
 /* No comment provided by engineer. */
 "Only ways/multipolygons can be rotated" = "Nur Wege/Multipolygone können gedreht werden";
@@ -528,12 +417,6 @@
 
 /* No comment provided by engineer. */
 "Open URL" = "URL öffnen";
-
-/* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "";
-
-/* No comment provided by engineer. */
-"other object" = "";
 
 /* No comment provided by engineer. */
 "Paste" = "Einfügen";
@@ -548,16 +431,7 @@
 "Please wait" = "Bitte warten";
 
 /* No comment provided by engineer. */
-"Previous" = "";
-
-/* No comment provided by engineer. */
 "Previous Tracks" = "Vorherige Tracks";
-
-/* No comment provided by engineer. */
-"Purge" = "";
-
-/* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "";
 
 /* No comment provided by engineer. */
 "Redo" = "Wiederherstellen";
@@ -587,12 +461,6 @@
 "Requires a closed way with at least 4 nodes" = "Benötigt einen geschlossenen Weg mit mindestens 4 Knoten";
 
 /* No comment provided by engineer. */
-"Restrict" = "";
-
-/* No comment provided by engineer. */
-"Restriction: %@" = "";
-
-/* No comment provided by engineer. */
 "Results for %@ (%@)" = "Ergebnisse für %1$@ (%2$@)";
 
 /* No comment provided by engineer. */
@@ -605,22 +473,13 @@
 "Rotate" = "Drehen";
 
 /* No comment provided by engineer. */
-"Select a highway approaching the intersection" = "";
-
-/* No comment provided by engineer. */
 "Select Object" = "Objekt auswählen";
 
 /* No comment provided by engineer. */
 "Selected object is off screen" = "Ausgewähltes Objekt ist außerhalb des Bildschirms";
 
-/* set tag value */
-"Set" = "";
-
 /* No comment provided by engineer. */
 "Set Height Tag" = "Höhen-Attribut setzen";
-
-/* No comment provided by engineer. */
-"set tags" = "";
 
 /* No comment provided by engineer. */
 "Settings" = "Einstellungen";
@@ -629,16 +488,7 @@
 "Share" = "Teilen";
 
 /* No comment provided by engineer. */
-"Show Recent Items" = "";
-
-/* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Entschuldigung, ein Fehler beim Laden der GPX-Datei ist aufgetreten";
-
-/* No comment provided by engineer. */
-"Split" = "";
-
-/* No comment provided by engineer. */
-"Standard imagery" = "";
 
 /* No comment provided by engineer. */
 "Start" = "Start";
@@ -653,37 +503,13 @@
 "Tags" = "Attribute";
 
 /* No comment provided by engineer. */
-"The + button can be positioned on either the left or right side of the screen" = "";
-
-/* No comment provided by engineer. */
 "The current location cannot be determined: " = "Die aktuelle Position kann nicht bestimmt werden: ";
-
-/* No comment provided by engineer. */
-"The merged nodes contain conflicting tags" = "";
-
-/* No comment provided by engineer. */
-"The nodes have conflicting roles in parent relations" = "";
-
-/* No comment provided by engineer. */
-"The object does contain any tags" = "";
-
-/* No comment provided by engineer. */
-"The restriction cannot be deleted: %@" = "";
 
 /* No comment provided by engineer. */
 "The selected way must be completely visible" = "Der ausgewählte Weg muss vollständig sichtbar sein";
 
 /* No comment provided by engineer. */
-"The target way is ambiguous" = "";
-
-/* No comment provided by engineer. */
-"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "";
-
-/* No comment provided by engineer. */
 "The way belongs to a relation that is not fully downloaded" = "Der Weg gehört zu einer Relation, die nicht vollständig heruntergeladen ist";
-
-/* No comment provided by engineer. */
-"The way belongs to a relation this not fully downloaded" = "";
 
 /* No comment provided by engineer. */
 "The way is not sufficiently straight" = "Der Weg ist nicht gerade genug";
@@ -695,43 +521,13 @@
 "The ways contain incompatible tags" = "Die Wege enthalten inkompatible Attribute";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "";
-
-/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Diese Aktion erfordert, dass GPS eingeschalten ist";
-
-/* No comment provided by engineer. */
-"This app does not yet support editing turn restrictions without a node as the 'via' member" = "";
-
-/* No comment provided by engineer. */
-"To add another member to the relation 'long press' on the way to be added" = "";
-
-/* No comment provided by engineer. */
-"Travel ALLOWED from %@ to %@" = "";
-
-/* No comment provided by engineer. */
-"Travel from %@" = "";
-
-/* No comment provided by engineer. */
-"Travel ONLY from %@ to %@" = "";
-
-/* No comment provided by engineer. */
-"Travel PROHIBITED from %@ to %@" = "";
 
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Schalte Ortungsdienste ein, um %@ zu erlauben, deine Position zu bestimmen";
 
 /* No comment provided by engineer. */
 "Turn Restrictions" = "Abbiegebeschränkungen";
-
-/* No comment provided by engineer. */
-"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "";
-
-/* No comment provided by engineer. */
-"U-Turn from %@ allowed" = "";
-
-/* No comment provided by engineer. */
-"U-Turn from %@ prohibited" = "";
 
 /* No comment provided by engineer. */
 "UID" = "UID";
@@ -752,74 +548,17 @@
 "Update" = "Aktualisieren";
 
 /* No comment provided by engineer. */
-"update relation members" = "";
-
-/* No comment provided by engineer. */
 "Updating Note..." = "Hinweis aktualisieren...";
 
 /* No comment provided by engineer. */
 "Upload complete!" = "Hochladen abgeschlossen!";
 
 /* No comment provided by engineer. */
-"Upload to OSM" = "";
-
-/* No comment provided by engineer. */
-"Upload your changes" = "";
-
-/* No comment provided by engineer. */
-"Uploading GPX..." = "";
-
-/* No comment provided by engineer. */
 "User" = "Nutzer";
-
-/* No comment provided by engineer. */
-"User-defined imagery" = "";
 
 /* No comment provided by engineer. */
 "Version" = "Version";
 
 /* No comment provided by engineer. */
-"vintage %@" = "";
-
-/* No comment provided by engineer. */
-"vintage %@ - %@" = "";
-
-/* No comment provided by engineer. */
 "Warning" = "Warnung";
-
-/* No comment provided by engineer. */
-"way %@" = "";
-
-/* No comment provided by engineer. */
-"Way attributes" = "";
-
-/* No comment provided by engineer. */
-"Way tags" = "";
-
-/* No comment provided by engineer. */
-"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "";
-
-/* No comment provided by engineer. */
-"You can define your own custom presets here" = "";
-
-/* No comment provided by engineer. */
-"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "";
-
-/* No comment provided by engineer. */
-"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "";
-
-/* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "";
-
-/* No comment provided by engineer. */
-"You must save or discard changes to the current object before editing its associated relation" = "";
-
-/* No comment provided by engineer. */
-"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "";
-
-/* No comment provided by engineer. */
-"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "";
-
-/* No comment provided by engineer. */
-"Zoom to Edit" = "";
 

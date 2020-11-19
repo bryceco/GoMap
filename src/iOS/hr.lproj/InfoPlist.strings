@@ -1,9 +1,6 @@
 /* Bundle display name */
 "CFBundleDisplayName" = "Go Map!!";
 
-/* Get Info string */
-"CFBundleGetInfoString" = "";
-
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
@@ -15,9 +12,6 @@
 
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Kamera se korsiti za mjerenje visine zgrada ili objekata";
-
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Uvijek uključeno praćenje mjesta omogućuje programu snimanje GPX datoteka kad je neaktivna.";

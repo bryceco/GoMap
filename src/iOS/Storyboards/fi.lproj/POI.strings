@@ -28,9 +28,6 @@
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "Ravintola";
 
-/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; */
-"aCs-vS-YXj.placeholder" = "";
-
 /* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; */
 "Ak4-ru-E4V.placeholder" = "koira";
 
@@ -46,20 +43,11 @@
 /* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; */
 "cP3-lR-lzM.placeholder" = "arvo";
 
-/* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
-"cTf-Rc-vqr.headerTitle" = "";
-
 /* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
 "CXe-gQ-Zda.text" = "Arvo 8";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; */
 "daQ-tl-pKh.text" = "Nimike";
-
-/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.footerTitle" = "";
-
-/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.headerTitle" = "";
 
 /* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
 "dsA-B6-s7R.text" = "Arvo 9";
@@ -75,18 +63,6 @@
 
 /* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
 "Fcv-4Q-gpE.text" = "Arvo 3";
-
-/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; */
-"Fe2-dc-zgA.placeholder" = "";
-
-/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; */
-"foC-aN-GtH.placeholder" = "";
-
-/* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
-"G5R-oP-lp3.title" = "";
-
-/* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
-"GIO-W7-q5U.title" = "";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; */
 "gv7-b8-wUw.text" = "Nimike";
@@ -108,12 +84,6 @@
 
 /* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
 "Jsm-mO-hgo.title" = "POI-tyyppi";
-
-/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.footerTitle" = "";
-
-/* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.headerTitle" = "";
 
 /* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; */
 "kPA-ky-U48.placeholder" = "vapaa-aika ";
@@ -151,20 +121,11 @@
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
 "omf-S9-Yjq.text" = "Nimi";
 
-/* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
-"OND-s7-I6f.title" = "";
-
 /* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
 "P3A-5n-1Iq.text" = "Tyyppi";
 
-/* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
-"pHA-2B-6DC.normalTitle" = "";
-
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
 "pxY-di-zg7.placeholder" = "Ravintola";
-
-/* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
-"QDv-7w-nbx.headerTitle" = "";
 
 /* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
 "R0q-aM-ULf.text" = "Arvo 6";
@@ -189,9 +150,6 @@
 
 /* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
 "v1b-PG-XxE.title" = "Esivalinnat";
-
-/* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
-"Vli-Ct-Lpz.text" = "";
 
 /* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; */
 "vpk-jC-yxl.placeholder" = "kyllä";

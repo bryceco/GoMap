@@ -1,9 +1,6 @@
 /* Bundle display name */
 "CFBundleDisplayName" = "Go Map!!";
 
-/* Get Info string */
-"CFBundleGetInfoString" = "";
-
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
@@ -15,12 +12,6 @@
 
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Die Kamera wird verwendet, um Höhen von Gebäuden oder Objekten zu messen";
-
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "";
-
-/* Privacy - Location Always and When In Use Usage Description */
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Dein Standort wird angezeigt und auf der Karte verfolgt.";
