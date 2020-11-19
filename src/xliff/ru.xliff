@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="ru" datatype="plaintext">
     <header>
@@ -926,6 +926,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
+        <target>Недавние аэрофотоснимки</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
