@@ -425,7 +425,7 @@
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
-        <target>當前的軌跡</target>
+        <target>當前的航跡</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Data not available" xml:space="preserve">
