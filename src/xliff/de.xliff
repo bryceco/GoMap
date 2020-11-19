@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -59,7 +59,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -96,14 +96,12 @@
         <target> (Weg)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.0f meters" xml:space="preserve">
-        <source>%.0f meters</source>
-        <target>%.0f Meter</target>
+      <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.0f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.1f meters" xml:space="preserve">
-        <source>%.1f meters</source>
-        <target>%.1f Meter</target>
+      <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.1f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -654,6 +652,14 @@ Error: %@</target>
         <target>Rechteckig machen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
+        <source>Max nodes after joining is 2000</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
+        <source>Maximum way length is 2000 nodes</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
         <target>Vielleicht später...</target>
@@ -806,8 +812,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must first or last node of the way" xml:space="preserve">
-        <source>Node must be first or last node of the way</source>
-        <target>Knoten muss erster oder letzter Knoten des Weges sein</target>
+        <source>Node must first or last node of the way</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -918,6 +923,10 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
         <target/>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
+        <source>Recent Aerial Imagery</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
@@ -1483,7 +1492,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1510,7 +1519,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1974,7 +1983,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2136,7 +2145,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2508,7 +2517,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2829,7 +2838,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

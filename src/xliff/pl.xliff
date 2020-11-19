@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -47,7 +47,7 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
         <source>Your location will be displayed and followed on the map.</source>
-        <target state="translated">Twoja lokalizacja zostanie wyświetlona i obserwowana na mapie.</target>
+        <target>Twoja lokalizacja zostanie wyświetlona i obserwowana na mapie.</target>
         <note>Privacy - Location Always Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationWhenInUseUsageDescription" xml:space="preserve">
@@ -59,7 +59,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -96,19 +96,17 @@
         <target> (linia)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.0f meters" xml:space="preserve">
-        <source>%.0f meters</source>
-        <target state="translated">%.0f metrów</target>
+      <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.0f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.1f meters" xml:space="preserve">
-        <source>%.1f meters</source>
-        <target/>
+      <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.1f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
-        <target state="translated">%1$.2f MB, %2$ld plików</target>
+        <target>%1$.2f MB, %2$ld plików</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -123,7 +121,7 @@
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
-        <target state="translated">%@ metrów</target>
+        <target>%@ metrów</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
@@ -133,7 +131,7 @@
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
         <source>%1$ld edits, last active %2$@</source>
-        <target state="translated">%1$ld zmian, ostatnio aktywny %2$@</target>
+        <target>%1$ld zmian, ostatnio aktywny %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -650,6 +648,14 @@ Error: %@</source>
         <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
+        <source>Max nodes after joining is 2000</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
+        <source>Maximum way length is 2000 nodes</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
         <target/>
@@ -799,8 +805,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must first or last node of the way" xml:space="preserve">
-        <source>Node must be first or last node of the way</source>
-        <target/>
+        <source>Node must first or last node of the way</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -911,6 +916,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
         <target/>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
+        <source>Recent Aerial Imagery</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
@@ -1401,12 +1410,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
-        <target state="translated">usuń ograniczenie</target>
+        <target>usuń ograniczenie</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
         <source>delete route</source>
-        <target state="translated">usuń trasę</target>
+        <target>usuń trasę</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
@@ -1451,7 +1460,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
-        <target state="translated">ustaw tagi</target>
+        <target>ustaw tagi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -1478,7 +1487,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1505,7 +1514,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1520,7 +1529,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
         <source>Details</source>
-        <target state="translated">Szczegóły</target>
+        <target>Szczegóły</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
@@ -1635,7 +1644,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
-        <target state="translated">Uwagi i poprawki</target>
+        <target>Uwagi i poprawki</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
@@ -1650,12 +1659,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
-        <target state="translated">Interakcje</target>
+        <target>Interakcje</target>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
-        <target state="translated">Drogi serwisowe</target>
+        <target>Drogi serwisowe</target>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -1669,12 +1678,12 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target state="translated">Odrzuć &amp; Odśwież</target>
+        <target>Odrzuć &amp; Odśwież</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
-        <target state="translated">Pozostałe</target>
+        <target>Pozostałe</target>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
@@ -1968,7 +1977,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2130,7 +2139,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2502,7 +2511,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2823,7 +2832,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="pl" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">

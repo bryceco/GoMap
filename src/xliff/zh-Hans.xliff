@@ -1,13 +1,13 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target state="translated">Go Map!!</target>
+        <target>Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
@@ -17,7 +17,7 @@
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Go Map!!</source>
-        <target state="translated">Go Map!!</target>
+        <target>Go Map!!</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
@@ -42,7 +42,7 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target state="translated">始终处于位置跟踪状态，允许应用程序在不活动时记录GPX文件。</target>
+        <target>始终处于位置跟踪状态，允许应用程序在不活动时记录GPX文件。</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
@@ -59,7 +59,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -96,14 +96,12 @@
         <target> (线)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.0f meters" xml:space="preserve">
-        <source>%.0f meters</source>
-        <target>%.0f 米</target>
+      <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.0f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.1f meters" xml:space="preserve">
-        <source>%.1f meters</source>
-        <target>%.1f 米</target>
+      <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.1f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -373,22 +371,22 @@
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
-        <target state="translated">清除OSM数据</target>
+        <target>清除OSM数据</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
-        <target state="translated">提交</target>
+        <target>提交</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
-        <target state="translated">配置</target>
+        <target>配置</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
-        <target state="translated">确认移动</target>
+        <target>确认移动</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
@@ -420,7 +418,7 @@
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
-        <target state="translated">创建关系类型</target>
+        <target>创建关系类型</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -514,7 +512,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
-        <target state="translated">错误</target>
+        <target>错误</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
@@ -619,12 +617,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Location services timed out." xml:space="preserve">
         <source>Location services timed out.</source>
-        <target state="translated">定位服务超时</target>
+        <target>定位服务超时</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
-        <target state="translated">位置不可用</target>
+        <target>位置不可用</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
@@ -649,7 +647,15 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
-        <target state="translated">制作矩形</target>
+        <target>制作矩形</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
+        <source>Max nodes after joining is 2000</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
+        <source>Maximum way length is 2000 nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
@@ -747,7 +753,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
-        <target state="translated">无左转限制</target>
+        <target>无左转限制</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
@@ -801,8 +807,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node must first or last node of the way" xml:space="preserve">
-        <source>Node must be first or last node of the way</source>
-        <target/>
+        <source>Node must first or last node of the way</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -822,7 +827,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
-        <target state="translated">最近显示的项目数</target>
+        <target>最近显示的项目数</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
@@ -915,6 +920,10 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
+        <source>Recent Aerial Imagery</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
         <target>重做</target>
@@ -927,7 +936,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Relation tags" xml:space="preserve">
         <source>Relation tags</source>
-        <target state="translated">关系标签</target>
+        <target>关系标签</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
@@ -1239,7 +1248,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>
-        <target state="translated">上传到OSM</target>
+        <target>上传到OSM</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
@@ -1249,7 +1258,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
-        <target state="translated">上传GPX...</target>
+        <target>上传GPX...</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
@@ -1478,7 +1487,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1505,7 +1514,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1820,7 +1829,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target state="translated">OpenStreetMap GPS轨迹</target>
+        <target>OpenStreetMap GPS轨迹</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
@@ -1851,17 +1860,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
-        <target state="translated">背景</target>
+        <target>背景</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target state="translated">配置GPX轨迹</target>
+        <target>配置GPX轨迹</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
         <source>Buildings</source>
-        <target state="translated">建筑物</target>
+        <target>建筑物</target>
         <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
       </trans-unit>
       <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
@@ -1881,7 +1890,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
         <source>Filter Objects</source>
-        <target state="translated">筛选对象</target>
+        <target>筛选对象</target>
         <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
@@ -1896,7 +1905,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
         <source>Back</source>
-        <target state="translated">返回</target>
+        <target>返回</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
@@ -1968,7 +1977,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -2130,7 +2139,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2380,7 +2389,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
         <source>value</source>
-        <target state="translated">值</target>
+        <target>值</target>
         <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
       </trans-unit>
       <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
@@ -2502,7 +2511,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2567,7 +2576,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
         <source>api.openstreetmap.org</source>
-        <target state="translated">api.openstreetmap.org</target>
+        <target>api.openstreetmap.org</target>
         <note>Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh";</note>
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
@@ -2796,17 +2805,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target state="translated">离线准备</target>
+        <target>离线准备</target>
         <note>Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l";</note>
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
         <source>Start</source>
-        <target state="translated">开始</target>
+        <target>开始</target>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib";</note>
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
-        <target state="translated">邮件反馈</target>
+        <target>邮件反馈</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
@@ -2823,12 +2832,12 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
-        <target state="translated">变化：</target>
+        <target>变化：</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
@@ -2858,7 +2867,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
-        <target state="translated">编辑</target>
+        <target>编辑</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">

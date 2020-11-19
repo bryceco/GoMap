@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -59,7 +59,7 @@
   </file>
   <file original="en.lproj/Localizable.strings" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -95,12 +95,12 @@
         <target> (vei)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.0f meters" xml:space="preserve">
-        <source>%.0f meters</source>
+      <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.0f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="%.1f meters" xml:space="preserve">
-        <source>%.1f meters</source>
+      <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
+        <source>%1$.1f meters, %2$ld nodes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -579,7 +579,7 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
-        <target state="translated">Knytt sammen</target>
+        <target>Knytt sammen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
@@ -589,7 +589,7 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
         <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
-        <target state="translated">Språkvalg har kun innvirkning på forvalg, som også er oversatt for iD. Hovedgrensesnittet er fremdeles Engelsk.</target>
+        <target>Språkvalg har kun innvirkning på forvalg, som også er oversatt for iD. Hovedgrensesnittet er fremdeles Engelsk.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
@@ -645,6 +645,14 @@ Feil: %@</target>
         <target>Gjør firkantet</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
+        <source>Max nodes after joining is 2000</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
+        <source>Maximum way length is 2000 nodes</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
         <target>Kanskje senere …</target>
@@ -698,12 +706,12 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
-        <target state="translated">Mer…</target>
+        <target>Mer…</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
-        <target state="translated">Nyligste</target>
+        <target>Nyligste</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
@@ -859,7 +867,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
-        <target state="translated">Åpne innstillingene</target>
+        <target>Åpne innstillingene</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
@@ -874,7 +882,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
-        <target state="translated">Limer inn %ld etikett(er)</target>
+        <target>Limer inn %ld etikett(er)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -906,6 +914,10 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
         <target/>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
+        <source>Recent Aerial Imagery</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
         <target>Gjenta</target>
@@ -913,7 +925,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Relation attributes" xml:space="preserve">
         <source>Relation attributes</source>
-		<target>Relasjon</target>
+        <target>Relasjon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation tags" xml:space="preserve">
@@ -1085,12 +1097,12 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
-        <target state="translated">Valgt vei må være synlig i sin helhet</target>
+        <target>Valgt vei må være synlig i sin helhet</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
-        <target state="translated">Målveien er tvetydig</target>
+        <target>Målveien er tvetydig</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
@@ -1115,7 +1127,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
-        <target state="translated">Veien må ha minst to noder</target>
+        <target>Veien må ha minst to noder</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
@@ -1160,7 +1172,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
-        <target state="translated">Skru på posisjonstjenester for å tillate %@ å fastsette din posisjon</target>
+        <target>Skru på posisjonstjenester for å tillate %@ å fastsette din posisjon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
@@ -1216,7 +1228,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
-        <target state="translated">Oppdaterer notat …</target>
+        <target>Oppdaterer notat …</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
@@ -1236,7 +1248,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
-        <target state="translated">Laster opp GPX-fil…</target>
+        <target>Laster opp GPX-fil…</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
@@ -1272,7 +1284,7 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
 
 To continue press Commit once again, otherwise press Cancel.</source>
-        <target state="translated">Du er i ferd med å gjøre endringer i OpenStreetMap-sanntidsdatabasen. Dine endringer vil bli synlige for alle og enhver.
+        <target>Du er i ferd med å gjøre endringer i OpenStreetMap-sanntidsdatabasen. Dine endringer vil bli synlige for alle og enhver.
 
 For å fortsette, trykk «Send inn» igjen, ellers trykk «Avbryt».</target>
         <note>No comment provided by engineer.</note>
@@ -1296,12 +1308,12 @@ Disse medlemmene er markert med «&gt;».</target>
       </trans-unit>
       <trans-unit id="You must provide your OSM user name, not an email address." xml:space="preserve">
         <source>You must provide your OSM user name, not an email address.</source>
-        <target state="translated">Du må angi ditt OSM-brukernavn, ikke en e-postadresse.</target>
+        <target>Du må angi ditt OSM-brukernavn, ikke en e-postadresse.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
-        <target state="translated">Du må lagre eller forkaste endringer i nåværende objekt før redigering av dets tilknyttede relasjon</target>
+        <target>Du må lagre eller forkaste endringer i nåværende objekt før redigering av dets tilknyttede relasjon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
@@ -1317,14 +1329,14 @@ Vurder programmet?</target>
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
 
 You may want to clear the cache (under Display settings) to improve performance.</source>
-        <target state="translated">Ditt OSM-datahurtiglager er i ferd med å bli stort, som kan føre til treghet i oppstart og avslutning.
+        <target>Ditt OSM-datahurtiglager er i ferd med å bli stort, som kan føre til treghet i oppstart og avslutning.
 
 Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target state="translated">Forstørr for å redigere</target>
+        <target>Forstørr for å redigere</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
@@ -1334,7 +1346,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
         <source>add object to relation</source>
-        <target state="translated">legg objekt til relasjon</target>
+        <target>legg objekt til relasjon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
@@ -1344,7 +1356,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
-        <target state="translated">regner ut størrelse …</target>
+        <target>regner ut størrelse …</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
@@ -1409,7 +1421,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
-        <target state="translated">dupliser</target>
+        <target>dupliser</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -1471,7 +1483,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -1498,7 +1510,7 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
   </file>
   <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -1597,17 +1609,17 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target state="translated">Avanserte funksjoner</target>
+        <target>Avanserte funksjoner</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
         <source>Paths</source>
-        <target state="translated">Stier</target>
+        <target>Stier</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Enable Filters</source>
-        <target state="translated">Skru på filter</target>
+        <target>Skru på filter</target>
         <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
@@ -1661,17 +1673,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
-        <target state="translated">Forkast og gjenoppfrisk</target>
+        <target>Forkast og gjenoppfrisk</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
-        <target state="translated">Andre</target>
+        <target>Andre</target>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Enable Rotation</source>
-        <target state="translated">Skru på rotasjon</target>
+        <target>Skru på rotasjon</target>
         <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
@@ -1704,7 +1716,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
-        <target state="translated">Go Map!! vil automatisk forkaste gammel data for å forbedre ytelsen.</target>
+        <target>Go Map!! vil automatisk forkaste gammel data for å forbedre ytelsen.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
@@ -1724,7 +1736,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
-        <target state="translated">Egendefinert navn</target>
+        <target>Egendefinert navn</target>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
@@ -1807,7 +1819,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target state="translated">GPS-spor for OpenStreetMap</target>
+        <target>GPS-spor for OpenStreetMap</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
@@ -1833,7 +1845,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="luT-Tw-T3x.text" xml:space="preserve">
         <source>Enable 3-D Effects</source>
-        <target state="translated">Skru på 3D-effekter</target>
+        <target>Skru på 3D-effekter</target>
         <note>Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x";</note>
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
@@ -1858,7 +1870,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
         <source>Boundaries</source>
-        <target state="translated">Yttergrenser</target>
+        <target>Yttergrenser</target>
         <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
@@ -1953,17 +1965,17 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
-        <target state="translated">Innhent veivisning</target>
+        <target>Innhent veivisning</target>
         <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
       </trans-unit>
       <trans-unit id="2.title" xml:space="preserve">
         <source>First</source>
-        <target state="translated">Første</target>
+        <target>Første</target>
         <note>Class = "UIViewController"; title = "First"; ObjectID = "2";</note>
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
@@ -1973,7 +1985,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
         <source>Comment</source>
-        <target state="translated">Kommentar</target>
+        <target>Kommentar</target>
         <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc";</note>
       </trans-unit>
       <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
@@ -2013,7 +2025,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
         <source>Center</source>
-        <target state="translated">Sentrer</target>
+        <target>Sentrer</target>
         <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
@@ -2033,7 +2045,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Resolve</source>
-        <target state="translated">Løs</target>
+        <target>Løs</target>
         <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
@@ -2107,14 +2119,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
         <source>More...</source>
-        <target state="translated">Mer…</target>
+        <target>Mer…</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
     </body>
   </file>
   <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -2174,7 +2186,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
         <source>Add New</source>
-        <target state="translated">Legg til ny</target>
+        <target>Legg til ny</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
@@ -2304,7 +2316,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
-        <target state="translated">ref.</target>
+        <target>ref.</target>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj";</note>
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
@@ -2484,7 +2496,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
   </file>
   <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -2509,7 +2521,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
         <source>Download zoomed tiles</source>
-        <target state="translated">Last ned forstørrede flis</target>
+        <target>Last ned forstørrede flis</target>
         <note>Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
@@ -2524,7 +2536,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.</source>
-        <target state="translated">Angi en vert hvis du ønsker å redigere data som finnes på en alternativ OSM-tjener. Forvalgt vert er api.openstreetmap.org.</target>
+        <target>Angi en vert hvis du ønsker å redigere data som finnes på en alternativ OSM-tjener. Forvalgt vert er api.openstreetmap.org.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -2616,7 +2628,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
         <source>Detail detail detail detail detail</source>
-        <target state="translated">Detalj detalj detalj detalj detalj</target>
+        <target>Detalj detalj detalj detalj detalj</target>
         <note>Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H";</note>
       </trans-unit>
       <trans-unit id="Gcr-zK-nDq.text" xml:space="preserve">
@@ -2636,7 +2648,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
         <source>Title title title title</source>
-        <target state="translated">Tittel tittel tittel tittel</target>
+        <target>Tittel tittel tittel tittel</target>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ";</note>
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
@@ -2656,7 +2668,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
         <source>Login</source>
-        <target state="translated">Innlogging</target>
+        <target>Innlogging</target>
         <note>Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
@@ -2666,7 +2678,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
         <source>In order to upload changes to the map you need a user name and password registered at openstreetmap.org. </source>
-        <target state="translated">For å laste opp kartendringer må du ha et brukernavn og passord på openstreetmap.org. </target>
+        <target>For å laste opp kartendringer må du ha et brukernavn og passord på openstreetmap.org. </target>
         <note>Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
@@ -2770,7 +2782,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="m7D-wn-3MP.title" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target state="translated">Klargjør for frakoblet bruk</target>
+        <target>Klargjør for frakoblet bruk</target>
         <note>Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP";</note>
       </trans-unit>
       <trans-unit id="m7u-CH-jgg.headerTitle" xml:space="preserve">
@@ -2795,7 +2807,7 @@ https://glyphish.com
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
-        <target state="translated">Klargjør for frakoblet bruk</target>
+        <target>Klargjør for frakoblet bruk</target>
         <note>Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l";</note>
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
@@ -2820,7 +2832,7 @@ https://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.0" build-num="12A8189h"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
