@@ -2085,23 +2085,23 @@ typedef enum {
 NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 {
 	switch (action) {
-		case ACTION_SPLIT:			return NSLocalizedString(@"Split",nil);
-		case ACTION_RECTANGULARIZE:	return NSLocalizedString(@"Make Rectangular",nil);
-		case ACTION_STRAIGHTEN:		return NSLocalizedString(@"Straighten",nil);
-		case ACTION_REVERSE:		return NSLocalizedString(@"Reverse",nil);
-		case ACTION_DUPLICATE:		return NSLocalizedString(@"Duplicate",nil);
-		case ACTION_ROTATE:			return NSLocalizedString(@"Rotate",nil);
-		case ACTION_CIRCULARIZE:	return NSLocalizedString(@"Make Circular",nil);
-		case ACTION_JOIN:			return NSLocalizedString(@"Join",nil);
-		case ACTION_DISCONNECT:		return NSLocalizedString(@"Disconnect",nil);
-		case ACTION_COPYTAGS:		return NSLocalizedString(@"Copy Tags",nil);
-		case ACTION_PASTETAGS:		return NSLocalizedString(@"Paste",nil);
-		case ACTION_EDITTAGS:		return NSLocalizedString(@"Tags", nil);
-		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", nil);
-		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
-		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
-		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", nil) : NSLocalizedString(@"Turn Restrictions", nil);
-		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", nil);
+		case ACTION_SPLIT:			return NSLocalizedString(@"Split",@"Edit action");
+		case ACTION_RECTANGULARIZE:	return NSLocalizedString(@"Make Rectangular",@"Edit action");
+		case ACTION_STRAIGHTEN:		return NSLocalizedString(@"Straighten",@"Edit action");
+		case ACTION_REVERSE:		return NSLocalizedString(@"Reverse",@"Edit action");
+		case ACTION_DUPLICATE:		return NSLocalizedString(@"Duplicate",@"Edit action");
+		case ACTION_ROTATE:			return NSLocalizedString(@"Rotate",@"Edit action");
+		case ACTION_CIRCULARIZE:	return NSLocalizedString(@"Make Circular",@"Edit action");
+		case ACTION_JOIN:			return NSLocalizedString(@"Join",@"Edit action");
+		case ACTION_DISCONNECT:		return NSLocalizedString(@"Disconnect",@"Edit action");
+		case ACTION_COPYTAGS:		return NSLocalizedString(@"Copy Tags",@"Edit action");
+		case ACTION_PASTETAGS:		return NSLocalizedString(@"Paste",@"Edit action");
+		case ACTION_EDITTAGS:		return NSLocalizedString(@"Tags", @"Edit action");
+		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", @"Edit action");
+		case ACTION_DELETE:			return NSLocalizedString(@"Delete",@"Edit action");
+		case ACTION_MORE:			return NSLocalizedString(@"More...",@"Edit action");
+		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", @"Edit action") : NSLocalizedString(@"Turn Restrictions", @"Edit action");
+		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", @"Edit action");
 	};
 	return nil;
 }
@@ -2133,6 +2133,9 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			NSString * title = ActionTitle( (EDIT_ACTION)action.integerValue, YES );
 			[_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
 		}
+
+		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+		[_editControl setTitleTextAttributes:@{NSFontAttributeName:font} forState:UIControlStateNormal];
 	}
 }
 
