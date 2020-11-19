@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="nb-NO" datatype="plaintext">
     <header>
@@ -95,14 +95,17 @@
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
+        <target>%1$.0f meter, %2$ld noder</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
+        <target>%1$.1f meter, %2$ld node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
+        <target>%1$.2f MB, %2$ld filer</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -157,6 +160,7 @@
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
+        <target>(node)</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
@@ -171,6 +175,7 @@
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
+        <target>+ Knappeposisjon</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -245,6 +250,7 @@
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
+        <target state="translated">Attributter</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -476,6 +482,7 @@
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
+        <target>Rediger begrensninger</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
@@ -589,10 +596,12 @@ Feil: %@</target>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
+        <target>Venstre side</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
+        <target>Lengde</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location services timed out." xml:space="preserve">
@@ -721,6 +730,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
+        <target>Neste</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
@@ -765,6 +775,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
+        <target>Node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node attributes" xml:space="preserve">
@@ -866,6 +877,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
+        <target>Forrige</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
@@ -945,6 +957,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
+        <target>Høyre side</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
@@ -1008,6 +1021,7 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
+        <target>Start</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
