@@ -115,6 +115,7 @@ typedef int UITextAutocapitalizationType;
 // languages supported by presets database
 @interface PresetLanguages : NSObject
 @property (strong,nonatomic) NSString * preferredLanguageCode;	// default or user's preferred languange
+@property (readonly,nonatomic) BOOL preferredLanguageIsDefault;
 
 -(NSArray *)languageCodes;
 -(NSString *)languageNameForCode:(NSString *)code;

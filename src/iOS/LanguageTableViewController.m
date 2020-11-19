@@ -43,30 +43,49 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return _languages.languageCodes.count;
+	return _languages.languageCodes.count+1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 
-	NSString * code = _languages.languageCodes[ indexPath.row ];
+	NSString * code = nil;
 
-	// name in native language
-	cell.textLabel.text = [_languages languageNameForCode:code];
+	if ( indexPath.row == 0 ) {
 
-	// name in current language
-	cell.detailTextLabel.text = [_languages localLanguageNameForCode:code];
+		// Default
+		code = nil;
+
+		// name in native language
+		cell.textLabel.text = NSLocalizedString(@"Automatic", @"Automatic selection of presets languages");
+		cell.detailTextLabel.text = nil;
+
+	} else {
+
+		code = _languages.languageCodes[ indexPath.row - 1 ];
+
+		// name in native language
+		cell.textLabel.text = [_languages languageNameForCode:code];
+
+		// name in current language
+		cell.detailTextLabel.text = [_languages localLanguageNameForCode:code];
+
+	}
 
 	// accessory checkmark
-	cell.accessoryType = [code isEqualToString:_languages.preferredLanguageCode] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.accessoryType = (_languages.preferredLanguageIsDefault ? indexPath.row == 0 : [code isEqualToString:_languages.preferredLanguageCode]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString * code = _languages.languageCodes[ indexPath.row ];
-	_languages.preferredLanguageCode = code;
+	if ( indexPath.row == 0 ) {
+		_languages.preferredLanguageCode = nil;
+	} else {
+		NSString * code = _languages.languageCodes[ indexPath.row - 1 ];
+		_languages.preferredLanguageCode = code;
+	}
 
 	[self.tableView reloadData];
 

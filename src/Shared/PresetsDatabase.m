@@ -1574,6 +1574,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 	return self;
 }
+-(BOOL)preferredLanguageIsDefault
+{
+	NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
+	return code == nil;
+}
 -(NSString *)preferredLanguageCode
 {
 	NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
