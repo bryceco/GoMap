@@ -1084,7 +1084,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 -(EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode error:(NSString **)error
 {
 	if ( selectedWay.nodes[0] != selectedNode && selectedWay.nodes.lastObject != selectedNode ) {
-		*error = NSLocalizedString(@"Node must first or last node of the way",nil);
+		*error = NSLocalizedString(@"Node must be the first or last node of the way",nil);
 		return nil;	// must be endpoint node
 	}
 

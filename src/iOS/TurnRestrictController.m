@@ -382,8 +382,7 @@
 	if (canDelete ) {
 		canDelete();
 	} else {
-		NSString * message = [NSString stringWithFormat:NSLocalizedString(@"The restriction cannot be deleted: %@",nil), error];
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error deleting",nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"The restriction cannot be deleted",nil) message:error preferredStyle:UIAlertControllerStyleAlert];
 		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
 		[self presentViewController:alert animated:YES completion:nil];
 	}

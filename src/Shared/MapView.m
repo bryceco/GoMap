@@ -2259,7 +2259,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	switch (action) {
 		case ACTION_COPYTAGS:
 			if ( ! [_editorLayer copyTags:_editorLayer.selectedPrimary] )
-				error = NSLocalizedString(@"The object does contain any tags",nil);
+				error = NSLocalizedString(@"The object does not contain any tags",nil);
 			break;
 		case ACTION_PASTETAGS:
 			if ( _editorLayer.selectedPrimary == nil ) {
