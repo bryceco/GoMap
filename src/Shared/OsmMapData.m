@@ -1230,6 +1230,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 				} else {
 					errorMessage = error ? error.localizedDescription : httpResponse ? [NSString stringWithFormat:@"HTTP Error %ld", (long)httpResponse.statusCode] : @"Unknown error";
 				}
+				errorMessage = [errorMessage stringByAppendingFormat:@"\n\n%@ %@",method,url];
 				completion(nil,errorMessage);
 			}
 		});
