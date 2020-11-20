@@ -201,6 +201,12 @@
 		UIViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
 		[self presentViewController:viewController animated:YES completion:nil];
 
+	} else if ( cell == _weblateCell ) {
+
+		NSURL * url = [NSURL URLWithString:@"https://hosted.weblate.org/projects/go-map/app/"];
+		UIViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+		[self presentViewController:viewController animated:YES completion:nil];
+
     } else if (cell == _testFlightCell) {
 
         [self openTestFlightURL];
