@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="hr" datatype="plaintext">
     <header>
@@ -96,14 +96,17 @@
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
+        <target>%1$.0f m, broj čvorova: %2$ld</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
+        <target>%1$.1f m, broj čvorova: %2$ld</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
+        <target>%1$.2f MB, broj datoteka: %2$ld</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -173,6 +176,7 @@
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
+        <target>Pozicija gumba +</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -247,10 +251,12 @@
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
+        <target>Svojstva</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
+        <target>Automaski</target>
         <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
@@ -603,10 +609,12 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
+        <target>Lijeva strana</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
+        <target>Duljina</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Location services timed out." xml:space="preserve">
@@ -646,10 +654,12 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
+        <target>Maksimalni broj čvorova nakon spajanja je 2000</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
+        <target>Maksimalna duljina puta je 2000 čvorova</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
@@ -740,6 +750,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
+        <target>Sljedeće</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
@@ -794,6 +805,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Node attributes" xml:space="preserve">
         <source>Node attributes</source>
+        <target>Svojstva čvora</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
@@ -803,6 +815,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
+        <target>Čvor mora biti prvi ili zadnji čvor puta</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -897,11 +910,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
+        <target>Prethodne</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
-        <target>Prethodna staza</target>
+        <target>Prethodne staze</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -911,11 +925,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <target>Ocjenjivanjem ovog programa olakvaša se drugim kartografima otkriti ga, te povećava vidljivost OpenStreetMapa.</target>
+        <target>Ocjenjivanje ovog programa olakšava drugim kartografima ga otkriti, te povećava vidljivost karte OpenStreetMap.</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
+        <target>Nedavne aerofotografije</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
@@ -925,6 +940,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Relation attributes" xml:space="preserve">
         <source>Relation attributes</source>
+        <target>Svojstva veze</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation tags" xml:space="preserve">
@@ -979,6 +995,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
+        <target>Desna strana</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
@@ -1063,6 +1080,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
+        <target>Gumb + se može postaviti na lijevu ili desnu stranu ekrana</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
@@ -1087,10 +1105,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
+        <target>Objekt ne sadržava oznake</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
+        <target>Ograničenje se ne može izbrisati</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
@@ -1274,6 +1294,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       </trans-unit>
       <trans-unit id="Way attributes" xml:space="preserve">
         <source>Way attributes</source>
+        <target>Svojstva puta</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Way tags" xml:space="preserve">
@@ -1489,18 +1510,22 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
         <source>Set Height</source>
+        <target>Postavi visinu</target>
         <note>Class = "UIButton"; normalTitle = "Set Height"; ObjectID = "QZK-2k-kEa";</note>
       </trans-unit>
       <trans-unit id="SdH-uy-BuK.normalTitle" xml:space="preserve">
         <source>Distance</source>
+        <target>Udaljenost</target>
         <note>Class = "UIButton"; normalTitle = "Distance"; ObjectID = "SdH-uy-BuK";</note>
       </trans-unit>
       <trans-unit id="juy-LX-vDs.normalTitle" xml:space="preserve">
         <source>Height</source>
+        <target>Visina</target>
         <note>Class = "UIButton"; normalTitle = "Height"; ObjectID = "juy-LX-vDs";</note>
       </trans-unit>
       <trans-unit id="l5O-tO-QFr.normalTitle" xml:space="preserve">
         <source>Cancel</source>
+        <target>Odustani</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "l5O-tO-QFr";</note>
       </trans-unit>
     </body>
@@ -1537,6 +1562,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
+        <target>Projekcija</target>
         <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
@@ -1704,10 +1730,12 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
+        <target>Ako odrešuješ WMS URL, moraš navesti i korištenu projekciju</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
         <source>WMS Projection</source>
+        <target>WMS projekcija</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
@@ -1764,6 +1792,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
+        <target>Smjesti gumb + na </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
@@ -1783,6 +1812,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target>Gumb</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
@@ -1839,6 +1869,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
+        <target>(TMS)</target>
         <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
@@ -2346,6 +2377,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
+        <target>Etiketa</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
@@ -2370,6 +2402,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
+        <target>Etiketa</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
@@ -2521,7 +2554,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
         <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</source>
-        <target>Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti Mapnik aerofotografije i/ili pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza.</target>
+        <target>Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti aerofotografije i/ili Mapnik pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza.</target>
         <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
@@ -2629,6 +2662,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
+        <target>Weblate – prijevodi</target>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
@@ -2763,6 +2797,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
         <source>Email Feedback</source>
+        <target>Povratna informacija putem e-pošte</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M";</note>
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
@@ -2827,6 +2862,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
         <source>Email Feedback</source>
+        <target>Povratna informacija putem e-pošte</target>
         <note>Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5";</note>
       </trans-unit>
       <trans-unit id="x4m-oT-EG8.text" xml:space="preserve">
@@ -2848,42 +2884,52 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
+        <target>Promjene:</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target>Lorem ipsum dolor sit er elit lamet,</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv";</note>
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
         <source>Upload</source>
+        <target>Prenesi</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
       </trans-unit>
       <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target>Lorem ipsum dolor sit er elit lamet,</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY";</note>
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
         <source>Mail</source>
+        <target>E-mail</target>
         <note>Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F";</note>
       </trans-unit>
       <trans-unit id="feW-AK-msn.title" xml:space="preserve">
         <source>Commit</source>
+        <target>Spremi</target>
         <note>Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn";</note>
       </trans-unit>
       <trans-unit id="hcE-yO-3eH.normalTitle" xml:space="preserve">
         <source>Edit</source>
+        <target>Uredi</target>
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
+        <target>Komentar za skup promjena:</target>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
+        <target>anketa, Bing itd.</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
         <source>Source:</source>
+        <target>Izvor:</target>
         <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
       </trans-unit>
     </body>
