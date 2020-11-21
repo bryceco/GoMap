@@ -1,0 +1,549 @@
+/* No comment provided by engineer. */
+"\tRelation " = "\t關係 ";
+
+/* No comment provided by engineer. */
+"\tWay " = "\t線段 ";
+
+/* No comment provided by engineer. */
+" (%d members)\n" = " (%d 成員)\n";
+
+/* No comment provided by engineer. */
+" (%d nodes)\n" = " (%d 節點)\n";
+
+/* No comment provided by engineer. */
+" (node)" = " (節點)";
+
+/* No comment provided by engineer. */
+" (way)" = " (線段)";
+
+/* No comment provided by engineer. */
+"(new object)" = "(新物件)";
+
+/* No comment provided by engineer. */
+"(node in way)" = "(線段中的節點)";
+
+/* No comment provided by engineer. */
+"(node)" = "(節點)";
+
+/* No comment provided by engineer. */
+"(relation %@)" = "(關係 %@)";
+
+/* No comment provided by engineer. */
+"(way)" = "(線段)";
+
+/* No comment provided by engineer. */
+"%.0f meters, %ld nodes" = "%1$.0f 公尺, %2$ld 節點";
+
+/* No comment provided by engineer. */
+"%.1f meters, %ld nodes" = "%1$.1f 公尺, %2$ld 節點";
+
+/* No comment provided by engineer. */
+"%.2f MB, %ld files" = "%1$.2f MB, %2$ld 檔案";
+
+/* No comment provided by engineer. */
+"%@ (relation)" = "%@ (關係)";
+
+/* No comment provided by engineer. */
+"%@ changeset" = "%@ 變更集";
+
+/* No comment provided by engineer. */
+"%@ meters" = "%@ 公尺";
+
+/* No comment provided by engineer. */
+"%ld Days" = "%ld 天";
+
+/* No comment provided by engineer. */
+"%ld edits, last active %@" = "%1$ld 編輯次數, 最近編輯 %2$@";
+
+/* length of a gpx track */
+"%ld meters, %ld points" = "%1$ld 公尺, %2$ld 點";
+
+/* No comment provided by engineer. */
+"%ld objects" = "%ld 物件";
+
+/* No comment provided by engineer. */
+"%lu tiles needed" = "%lu 圖磚需求";
+
+/* No comment provided by engineer. */
+"+ Button Position" = "+ 按鈕位置";
+
+/* No comment provided by engineer. */
+"<unknown>" = "<未知>";
+
+/* No comment provided by engineer. */
+"1 Day" = "1 天";
+
+/* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "當您沿著道路或小徑移動時， GPX 軌跡記錄了您的移動路徑";
+
+/* No comment provided by engineer. */
+"A relation the node belongs to is not fully downloaded" = "節點所屬的關係並沒有全部下載完";
+
+/* No comment provided by engineer. */
+"Add inner member" = "新增內部成員";
+
+/* Edit action */
+"Add Note" = "新增節點";
+
+/* No comment provided by engineer. */
+"Add outer member" = "新增外部成員";
+
+/* No comment provided by engineer. */
+"Add way to multipolygon?" = "新增線段到複多邊形？";
+
+/* No comment provided by engineer. */
+"Adding members:" = "正在新增成員：";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "其他影像";
+
+/* No comment provided by engineer. */
+"All choices" = "全部選擇";
+
+/* No comment provided by engineer. */
+"All Tags" = "全部標籤";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "更新詮釋資料時發生未知錯誤";
+
+/* No comment provided by engineer. */
+"Attention" = "注意";
+
+/* No comment provided by engineer. */
+"Attributes" = "屬性";
+
+/* No comment provided by engineer. */
+"Background imagery %@" = "背景影像 %@";
+
+/* No comment provided by engineer. */
+"Bad login" = "無效登入";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "快取總量的警告";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "快取已調整";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "只有線段可以新增到複多邊形";
+
+/* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "無法刪除關係中的節點";
+
+/* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "無法刪除不是複多邊形的關係";
+
+/* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "無法刪除路線或類似關係中的線段";
+
+/* No comment provided by engineer. */
+"Can't extend way" = "無法延伸線段";
+
+/* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "無法移除屬於路線或類似關係中的成員";
+
+/* No comment provided by engineer. */
+"Can't remove node in Turn Restriction 'via' way" = "無法移除轉向限制關係中屬於「轉向」線段的節點";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction 'via' node" = "無法移除轉向限制關係中的「轉向」節點";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "無法移除在轉向限制的關係中已連結到「轉向節點」的「來向/去向」節點";
+
+/* No comment provided by engineer. */
+"Can't remove Turn Restriction to/from way" = "無法移除轉向限制關係中的「來向/去向」線段";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* No comment provided by engineer. */
+"Cannot compose message" = "無法組成訊息";
+
+/* No comment provided by engineer. */
+"Cannot connect an inner way to an outer way" = "無法將內部線段連結到外部線段";
+
+/* No comment provided by engineer. */
+"Changeset" = "變更集";
+
+/* No comment provided by engineer. */
+"Clear Aerial Tiles" = "清除空拍圖磚";
+
+/* No comment provided by engineer. */
+"Clear GPS Overlay Tiles" = "清除 GPS 圖磚";
+
+/* No comment provided by engineer. */
+"Clear GPX Tracks" = "清除 GPX 路徑";
+
+/* No comment provided by engineer. */
+"Clear Locator Overlay Tiles" = "清除定位器圖磚";
+
+/* No comment provided by engineer. */
+"Clear Mapnik Tiles" = "清除 Mapnik 圖磚";
+
+/* No comment provided by engineer. */
+"Clear OSM Data" = "清除 OSM 資料";
+
+/* No comment provided by engineer. */
+"Commit" = "提交";
+
+/* No comment provided by engineer. */
+"Configure" = "配置";
+
+/* No comment provided by engineer. */
+"Confirm move" = "確認移動";
+
+/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "連接該節點將會破壞某個關係";
+
+/* Edit action */
+"Copy Tags" = "複製標籤";
+
+/* No comment provided by engineer. */
+"Could not duplicate object" = "無法複製物件";
+
+/* No comment provided by engineer. */
+"Create\n" = "新增\n";
+
+/* Edit action */
+"Create Relation" = "新增關係";
+
+/* No comment provided by engineer. */
+"Create Relation Type" = "新增關係類型";
+
+/* No comment provided by engineer. */
+"Current Track" = "當前的航跡";
+
+/* No comment provided by engineer. */
+"Data not available" = "資料無法取用";
+
+/* Edit action */
+"Delete" = "刪除";
+
+/* No comment provided by engineer. */
+"Delete\n" = "刪除\n";
+
+/* No comment provided by engineer. */
+"Delete completely" = "完全刪除";
+
+/* No comment provided by engineer. */
+"Delete failed" = "刪除失敗";
+
+/* No comment provided by engineer. */
+"Detach from relation" = "從關係中分離";
+
+/* Edit action */
+"Disconnect" = "斷開連接";
+
+/* No comment provided by engineer. */
+"Display options" = "顯示選項";
+
+/* No comment provided by engineer. */
+"Done" = "完成";
+
+/* Edit action */
+"Duplicate" = "複製";
+
+/* No comment provided by engineer. */
+"Edit" = "編輯";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "編輯限制";
+
+/* No comment provided by engineer. */
+"Edit XML" = "編輯 XML";
+
+/* No comment provided by engineer. */
+"Editing layer not visible" = "無法顯示編輯圖層";
+
+/* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "請確保已啟用定位服務且本軟體有使用定位服務的權限。\n\n錯誤： %@";
+
+/* No comment provided by engineer. */
+"Ensure the editor view is visible and displays objects in the local area" = "請確保可顯示編輯圖層與局部區域內的物件";
+
+/* No comment provided by engineer. */
+"Error" = "錯誤";
+
+/* No comment provided by engineer. */
+"Error connecting to way" = "連接到線段時發生錯誤";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "更新詮釋資料時發生錯誤：%@";
+
+/* No comment provided by engineer. */
+"Extending a 'via' in a Turn Restriction will break the relation" = "延伸轉向限制關係中的「轉向」線段將會破壞該關係";
+
+/* No comment provided by engineer. */
+"Extending a way which belongs to a Route or similar relation may damage the relation" = "延伸屬於某個路線或類似關係中的線段可能會破壞該關係";
+
+/* No comment provided by engineer. */
+"GPX Upload Complete" = "GPX 上傳完畢";
+
+/* No comment provided by engineer. */
+"GPX Upload Failed" = "GPX 上傳失敗";
+
+/* No comment provided by engineer. */
+"Height: %@ ± %@ meters" = "高度： %1$@ ± %2$@ 公尺";
+
+/* No comment provided by engineer. */
+"I'll do it!" = "來吧！";
+
+/* No comment provided by engineer. */
+"Identifier" = "識別符號";
+
+/* No comment provided by engineer. */
+"Ignore" = "忽略";
+
+/* No comment provided by engineer. */
+"In order to measure height, please enable camera access in the app's settings." = "為了要測量高度，請在 iOS 的設定中開啟 Go Map 的相機使用權限。";
+
+/* No comment provided by engineer. */
+"Invalid URL" = "無效網址";
+
+/* Edit action */
+"Join" = "加入";
+
+/* No comment provided by engineer. */
+"Joining would invalidate a Turn Restriction the way belongs to" = "若要加入，將會使線段所屬的轉向限制關係失效";
+
+/* No comment provided by engineer. */
+"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "語言選擇只會套用到預設組合以及那些在 iD 編輯器中已經翻譯完的預設組合。介面仍然是英文。";
+
+/* No comment provided by engineer. */
+"Last updated %@" = "最後更新 %@";
+
+/* No comment provided by engineer. */
+"Lat/Lon" = "緯/經";
+
+/* No comment provided by engineer. */
+"Left side" = "左邊";
+
+/* No comment provided by engineer. */
+"Length" = "長度";
+
+/* No comment provided by engineer. */
+"Location services timed out." = "定位服務逾時。";
+
+/* No comment provided by engineer. */
+"Location unavailable" = "無法定位";
+
+/* No comment provided by engineer. */
+"Login successful" = "成功登入";
+
+/* No comment provided by engineer. */
+"Low memory: clearing cache" = "記憶體不足：清理快取中";
+
+/* No comment provided by engineer. */
+"Mail delivery is not available on this device" = "無法在這台裝置上寄送電子郵件";
+
+/* Edit action */
+"Make Circular" = "圓形化";
+
+/* Edit action */
+"Make Rectangular" = "矩形化";
+
+/* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "結合後的最大節點數為 2000";
+
+/* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "線段最多允許 2000 個節點";
+
+/* No comment provided by engineer. */
+"Maybe later..." = "可能等一下再來...";
+
+/* No comment provided by engineer. */
+"Member of multipolygon relation" = "複多邊形關係的成員";
+
+/* No comment provided by engineer. */
+"Members" = "成員";
+
+/* No comment provided by engineer. */
+"Merge Tags" = "合併標籤";
+
+/* No comment provided by engineer. */
+"Missing way to connect to" = "缺少要連結的線段";
+
+/* No comment provided by engineer. */
+"Modified" = "已修改";
+
+/* No comment provided by engineer. */
+"Modify" = "修改";
+
+/* No comment provided by engineer. */
+"Modify\n" = "修改\n";
+
+/* No comment provided by engineer. */
+"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "直接修改 XML 資料可以讓您修正那些影響上傳作業的錯誤。\n\n這是一個進階操作，只有在您確實瞭解 OSM 變更集格式的情況下才繼續。";
+
+/* Edit action */
+"More..." = "更多...";
+
+/* No comment provided by engineer. */
+"Most recent" = "最近的";
+
+/* No comment provided by engineer. */
+"Move" = "移動";
+
+/* No comment provided by engineer. */
+"Move selected object?" = "移動所選物件？";
+
+/* No comment provided by engineer. */
+"Multipolygon" = "複多邊形";
+
+/* No comment provided by engineer. */
+"Network error" = "網路問題";
+
+/* No comment provided by engineer. */
+"Never" = "永不";
+
+/* No comment provided by engineer. */
+"Next" = "下一個";
+
+/* No comment provided by engineer. */
+"No active track" = "沒有啟用的航跡";
+
+/* No comment provided by engineer. */
+"No Data" = "沒有資料";
+
+/* No comment provided by engineer. */
+"No image data available" = "沒有可用的影像資料";
+
+/* No comment provided by engineer. */
+"No Left Turn restriction" = "禁止左轉";
+
+/* No comment provided by engineer. */
+"No results found" = "找不到結果";
+
+/* No comment provided by engineer. */
+"No Right Turn restriction" = "禁止右轉";
+
+/* No comment provided by engineer. */
+"No Straight On restriction" = "禁止直行";
+
+/* No comment provided by engineer. */
+"No tags to paste" = "沒有標籤可以貼上";
+
+/* No comment provided by engineer. */
+"No U-Turn restriction" = "禁止迴轉";
+
+/* No comment provided by engineer. */
+"Node" = "節點";
+
+/* No comment provided by engineer. */
+"Node attributes" = "節點屬性";
+
+/* No comment provided by engineer. */
+"Node is not an element of way" = "節點不屬於線段";
+
+/* No comment provided by engineer. */
+"Node tags" = "節點的標籤";
+
+/* No comment provided by engineer. */
+"Note History" = "節點的歷史紀錄";
+
+/* No comment provided by engineer. */
+"Nothing to upload, no changes have been made." = "無法上傳，因為沒有改變。";
+
+/* No comment provided by engineer. */
+"Number of recent items to display" = "要顯示的最新項目數量";
+
+/* No comment provided by engineer. */
+"Object modified" = "已修改物件";
+
+/* No comment provided by engineer. */
+"OK" = "好的";
+
+/* No comment provided by engineer. */
+"Only Left Turn restriction" = "只能左轉";
+
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "只支援複多邊形關係";
+
+/* No comment provided by engineer. */
+"Only Right Turn restriction" = "只能右轉";
+
+/* No comment provided by engineer. */
+"Only Straight On restriction" = "只能直行";
+
+/* No comment provided by engineer. */
+"Only ways/multipolygons can be rotated" = "只能旋轉線段或複多邊形";
+
+/* No comment provided by engineer. */
+"Open Settings" = "打開設定";
+
+/* No comment provided by engineer. */
+"Open URL" = "打開連結";
+
+/* No comment provided by engineer. */
+"OSM data must be version 0.6 (fetched '%@')" = "OSM 資料必須是版本 0.6 (已更新 '%@')";
+
+/* Edit action */
+"Paste" = "貼上";
+
+/* No comment provided by engineer. */
+"Pasting %ld tag(s)" = "貼上 %ld 標籤";
+
+/* No comment provided by engineer. */
+"Please wait" = "請稍候";
+
+/* No comment provided by engineer. */
+"Previous" = "上一個";
+
+/* No comment provided by engineer. */
+"Previous Tracks" = "上一個航跡";
+
+/* No comment provided by engineer. */
+"Purge" = "清除";
+
+/* No comment provided by engineer. */
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "給這個 app 評分，可以讓圖客們更容易找到之外，同時提升了開放街圖的能見度。";
+
+/* No comment provided by engineer. */
+"Recent Aerial Imagery" = "最近的空拍影像";
+
+/* No comment provided by engineer. */
+"Redo" = "重做";
+
+/* No comment provided by engineer. */
+"Relation attributes" = "關係的屬性";
+
+/* No comment provided by engineer. */
+"Relation tags" = "關係的標籤";
+
+/* No comment provided by engineer. */
+"Relation: %@" = "關係： %@";
+
+/* No comment provided by engineer. */
+"Relations" = "關係";
+
+/* No comment provided by engineer. */
+"Replace Tags" = "取代標籤";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 3 nodes" = "需要一個至少包含三個節點的閉鎖線段";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 4 nodes" = "需要一個至少包含四個節點的閉環線段";
+
+/* Edit action */
+"Restrict" = "限制";
+
+/* No comment provided by engineer. */
+"Restriction: %@" = "限制：%@";
+
+/* No comment provided by engineer. */
+"Results for %@ (%@)" = "結果： %1$@ (%2$@)";
+
+/* Edit action */
+"Reverse" = "反轉方向";
+
+/* No comment provided by engineer. */
+"Right side" = "右邊";
+
+/* Edit action */
+"Rotate" = "旋轉";
+
+/* No comment provided by engineer. */
+"Select Object" = "選擇物件";
+

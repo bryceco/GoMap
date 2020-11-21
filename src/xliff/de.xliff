@@ -199,7 +199,7 @@
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
         <target>Hinweis hinzufügen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
@@ -250,6 +250,10 @@
         <source>Attributes</source>
         <target>Attribute</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Automatic" xml:space="preserve">
+        <source>Automatic</source>
+        <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
@@ -392,7 +396,7 @@
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
         <target>Attribute kopieren</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
@@ -409,7 +413,7 @@
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
         <target>Relation erstellen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
@@ -429,7 +433,7 @@
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
         <target>Löschen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Delete&#10;" xml:space="preserve">
         <source>Delete
@@ -456,7 +460,7 @@
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
         <target>Trennen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
@@ -471,7 +475,7 @@
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
         <target>Duplizieren</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
@@ -514,11 +518,6 @@ Error: %@</target>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
         <target>Fehler beim Verbinden mit Weg</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Error deleting" xml:space="preserve">
-        <source>Error deleting</source>
-        <target>Fehler beim Löschen</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
@@ -578,7 +577,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
@@ -634,12 +633,12 @@ Error: %@</target>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
         <target>Kreisförmig machen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
         <target>Rechteckig machen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
@@ -703,7 +702,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
         <target>Mehr...</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
@@ -795,8 +794,8 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
         <target>Knoten ist kein Element von Weg</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Node must first or last node of the way" xml:space="preserve">
-        <source>Node must first or last node of the way</source>
+      <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
+        <source>Node must be the first or last node of the way</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -867,7 +866,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
         <target>Einfügen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
@@ -947,7 +946,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
@@ -961,7 +960,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
         <target>Umkehren</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -971,7 +970,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
         <target>Drehen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -1017,7 +1016,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
@@ -1036,12 +1035,12 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
         <target>Begradigen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
         <target>Attribute</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
@@ -1064,12 +1063,12 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
         <source>The nodes have conflicting roles in parent relations</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The object does contain any tags" xml:space="preserve">
-        <source>The object does contain any tags</source>
+      <trans-unit id="The object does not contain any tags" xml:space="preserve">
+        <source>The object does not contain any tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The restriction cannot be deleted: %@" xml:space="preserve">
-        <source>The restriction cannot be deleted: %@</source>
+      <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
+        <source>The restriction cannot be deleted</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
@@ -1146,7 +1145,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
         <target>Abbiegebeschränkungen</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
@@ -2413,6 +2412,10 @@ Other icons by Glyphish:
 http://glyphish.com
 </source>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
+      </trans-unit>
+      <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
+        <source>Weblate - Translations</source>
+        <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
         <source>Register new account</source>

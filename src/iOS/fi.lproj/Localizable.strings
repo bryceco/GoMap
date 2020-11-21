@@ -58,7 +58,7 @@
 /* No comment provided by engineer. */
 "1 Day" = "1 päivä";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Add Note" = "Lisää karttailmoitus";
 
 /* No comment provided by engineer. */
@@ -100,7 +100,7 @@
 /* No comment provided by engineer. */
 "Confirm move" = "Vahvista siirto";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Copy Tags" = "Kopioi tagit";
 
 /* No comment provided by engineer. */
@@ -112,7 +112,7 @@
 /* No comment provided by engineer. */
 "create relation" = "luo relaatio";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Create Relation" = "Luo relaatio";
 
 /* No comment provided by engineer. */
@@ -124,7 +124,7 @@
 /* No comment provided by engineer. */
 "Data not available" = "Dataa ei ole saatavilla";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Delete" = "Poista";
 
 /* No comment provided by engineer. */
@@ -163,7 +163,7 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Irrota relaatiosta";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Disconnect" = "Irrota";
 
 /* No comment provided by engineer. */
@@ -175,7 +175,7 @@
 /* No comment provided by engineer. */
 "duplicate" = "monista";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Duplicate" = "Monista";
 
 /* No comment provided by engineer. */
@@ -189,9 +189,6 @@
 
 /* No comment provided by engineer. */
 "Error" = "Virhe";
-
-/* No comment provided by engineer. */
-"Error deleting" = "Virhe poistettaessa";
 
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Korkeus: %1$@ ± %2$@ metriä";
@@ -208,7 +205,7 @@
 /* No comment provided by engineer. */
 "Invalid URL" = "Virheellinen URL";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Join" = "Yhdistä";
 
 /* No comment provided by engineer. */
@@ -247,7 +244,7 @@
 /* No comment provided by engineer. */
 "Modify\n" = "Muuta\n";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "More..." = "Lisää…";
 
 /* No comment provided by engineer. */
@@ -292,7 +289,7 @@
 /* No comment provided by engineer. */
 "Open URL" = "Avaa URL";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Paste" = "Liitä";
 
 /* No comment provided by engineer. */
@@ -319,13 +316,13 @@
 /* No comment provided by engineer. */
 "Restriction: %@" = "Rajoitus: %@";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Reverse" = "Käännä";
 
 /* No comment provided by engineer. */
 "Right side" = "Oikea puoli";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Rotate" = "Kierrä";
 
 /* No comment provided by engineer. */
@@ -349,13 +346,13 @@
 /* No comment provided by engineer. */
 "Stop" = "Pysäytä";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Straighten" = "Suorista";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Tags" = "Tagit";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Turn Restrictions" = "Kääntymisrajoitukset";
 
 /* No comment provided by engineer. */

@@ -20,10 +20,22 @@
 "(node in way)" = "(node i vei)";
 
 /* No comment provided by engineer. */
+"(node)" = "(node)";
+
+/* No comment provided by engineer. */
 "(relation %@)" = "(relasjon %@)";
 
 /* No comment provided by engineer. */
 "(way)" = "(vei)";
+
+/* No comment provided by engineer. */
+"%.0f meters, %ld nodes" = "%1$.0f meter, %2$ld noder";
+
+/* No comment provided by engineer. */
+"%.1f meters, %ld nodes" = "%1$.1f meter, %2$ld node";
+
+/* No comment provided by engineer. */
+"%.2f MB, %ld files" = "%1$.2f MB, %2$ld filer";
 
 /* No comment provided by engineer. */
 "%@ (relation)" = "%@ (relasjon)";
@@ -50,6 +62,9 @@
 "%lu tiles needed" = "%lu flis behøves";
 
 /* No comment provided by engineer. */
+"+ Button Position" = "+ Knappeposisjon";
+
+/* No comment provided by engineer. */
 "<unknown>" = "<ukjent>";
 
 /* No comment provided by engineer. */
@@ -67,7 +82,7 @@
 /* No comment provided by engineer. */
 "add node to way" = "legg til node i vei";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Add Note" = "Legg til notat";
 
 /* No comment provided by engineer. */
@@ -99,6 +114,9 @@
 
 /* No comment provided by engineer. */
 "Attention" = "Merk";
+
+/* No comment provided by engineer. */
+"Attributes" = "Attributter";
 
 /* No comment provided by engineer. */
 "Background imagery %@" = "Bakgrunnsbildemateriale %@";
@@ -166,7 +184,7 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Sammenkobling av nodene ville ha skadet en relasjon";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Copy Tags" = "Kopier etiketter";
 
 /* No comment provided by engineer. */
@@ -181,7 +199,7 @@
 /* No comment provided by engineer. */
 "create relation" = "opprett relasjon";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Create Relation" = "Opprett relasjon";
 
 /* No comment provided by engineer. */
@@ -196,7 +214,7 @@
 /* No comment provided by engineer. */
 "Data not available" = "Data ikke tilgjengelig";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Delete" = "Slett";
 
 /* No comment provided by engineer. */
@@ -235,7 +253,7 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Avhekt fra relasjon";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Disconnect" = "Koble fra";
 
 /* No comment provided by engineer. */
@@ -247,11 +265,14 @@
 /* No comment provided by engineer. */
 "duplicate" = "dupliser";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Duplicate" = "Dupliser";
 
 /* No comment provided by engineer. */
 "Edit" = "Rediger";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "Rediger begrensninger";
 
 /* No comment provided by engineer. */
 "Edit XML" = "Rediger XML";
@@ -264,9 +285,6 @@
 
 /* No comment provided by engineer. */
 "Error" = "Feil";
-
-/* No comment provided by engineer. */
-"Error deleting" = "Feil under sletting";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Klarte ikke å hente metadata: %@";
@@ -295,7 +313,7 @@
 /* No comment provided by engineer. */
 "Invalid URL" = "Ugyldig nettadresse";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Join" = "Knytt sammen";
 
 /* No comment provided by engineer. */
@@ -308,12 +326,18 @@
 "Lat/Lon" = "Bredde-/lengdegrad";
 
 /* No comment provided by engineer. */
+"Left side" = "Venstre side";
+
+/* No comment provided by engineer. */
+"Length" = "Lengde";
+
+/* No comment provided by engineer. */
 "Mail delivery is not available on this device" = "Forsendelse per e-post er ikke tilgjengelig på denne enheten";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Circular" = "Gjør rund";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Rectangular" = "Gjør firkantet";
 
 /* No comment provided by engineer. */
@@ -346,7 +370,7 @@
 /* No comment provided by engineer. */
 "Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Endring av XML-rådata lar deg fikse problemer som forhindrer opplastning.\n\nDet er en avansert handling som kun skal utføres om du har en dekkende forståelse av formatet for OSM-endringssett.";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "More..." = "Mer…";
 
 /* No comment provided by engineer. */
@@ -368,6 +392,9 @@
 "Never" = "Aldri";
 
 /* No comment provided by engineer. */
+"Next" = "Neste";
+
+/* No comment provided by engineer. */
 "No Data" = "Ingen data";
 
 /* No comment provided by engineer. */
@@ -378,6 +405,9 @@
 
 /* No comment provided by engineer. */
 "No tags to paste" = "Ingen etiketter å lime inn";
+
+/* No comment provided by engineer. */
+"Node" = "Node";
 
 /* No comment provided by engineer. */
 "node %@" = "node %@";
@@ -415,7 +445,7 @@
 /* No comment provided by engineer. */
 "other object" = "annet objekt";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Paste" = "Lim inn";
 
 /* No comment provided by engineer. */
@@ -426,6 +456,9 @@
 
 /* No comment provided by engineer. */
 "Please wait" = "Vent …";
+
+/* No comment provided by engineer. */
+"Previous" = "Forrige";
 
 /* No comment provided by engineer. */
 "Previous Tracks" = "Tidligere spor";
@@ -454,7 +487,7 @@
 /* No comment provided by engineer. */
 "Replace Tags" = "Erstatt etiketter";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Restrict" = "Begrens";
 
 /* No comment provided by engineer. */
@@ -464,6 +497,9 @@
 "Results for %@ (%@)" = "Resultater for %1$@ (%2$@)";
 
 /* No comment provided by engineer. */
+"Right side" = "Høyre side";
+
+/* Edit action */
 "Rotate" = "Roter";
 
 /* No comment provided by engineer. */
@@ -493,19 +529,22 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Kunne ikke laste inn GPX-filen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Split" = "Del opp";
 
 /* No comment provided by engineer. */
 "Standard imagery" = "Forvalgt bildemateriale";
 
 /* No comment provided by engineer. */
+"Start" = "Start";
+
+/* No comment provided by engineer. */
 "Stop" = "Stopp";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Straighten" = "Rett ut";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Tags" = "Etiketter";
 
 /* No comment provided by engineer. */
@@ -516,12 +555,6 @@
 
 /* No comment provided by engineer. */
 "The nodes have conflicting roles in parent relations" = "Nodene har uoverensstemmende roller i deres ovennevnte relasjoner";
-
-/* No comment provided by engineer. */
-"The object does contain any tags" = "Objektet inneholder ingen etiketter";
-
-/* No comment provided by engineer. */
-"The restriction cannot be deleted: %@" = "Begrensningen kan ikke slettes: %@";
 
 /* No comment provided by engineer. */
 "The selected way must be completely visible" = "Valgt vei må være synlig i sin helhet";

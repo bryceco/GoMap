@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <header>
@@ -202,7 +202,7 @@
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
         <target>新增節點</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
@@ -253,6 +253,10 @@
         <source>Attributes</source>
         <target>屬性</target>
         <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Automatic" xml:space="preserve">
+        <source>Automatic</source>
+        <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
@@ -331,7 +335,7 @@
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
-        <target state="translated">無法組成訊息</target>
+        <target>無法組成訊息</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
@@ -397,7 +401,7 @@
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
         <target>複製標籤</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
@@ -414,7 +418,7 @@
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
         <target>新增關係</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
@@ -434,7 +438,7 @@
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
         <target>刪除</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Delete&#10;" xml:space="preserve">
         <source>Delete
@@ -461,7 +465,7 @@
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
         <target>斷開連接</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
@@ -476,7 +480,7 @@
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
         <target>複製</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
@@ -520,11 +524,6 @@ Error: %@</source>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
         <target>連接到線段時發生錯誤</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Error deleting" xml:space="preserve">
-        <source>Error deleting</source>
-        <target>刪除時發生錯誤</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
@@ -585,7 +584,7 @@ Error: %@</source>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
         <target>加入</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
@@ -645,12 +644,12 @@ Error: %@</source>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
         <target>圓形化</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
         <target>矩形化</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
@@ -716,7 +715,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
         <target>更多...</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
@@ -813,9 +812,8 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>節點不屬於線段</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Node must first or last node of the way" xml:space="preserve">
-        <source>Node must first or last node of the way</source>
-        <target>節點必須是線段的首或尾</target>
+      <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
+        <source>Node must be the first or last node of the way</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node tags" xml:space="preserve">
@@ -891,7 +889,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
         <target>貼上</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)" xml:space="preserve">
         <source>Pasting %ld tag(s)</source>
@@ -975,7 +973,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
         <target>限制</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
@@ -990,7 +988,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
         <target>反轉方向</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -1000,7 +998,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
         <target>旋轉</target>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -1041,7 +1039,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
@@ -1057,11 +1055,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
@@ -1083,12 +1081,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <source>The nodes have conflicting roles in parent relations</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The object does contain any tags" xml:space="preserve">
-        <source>The object does contain any tags</source>
+      <trans-unit id="The object does not contain any tags" xml:space="preserve">
+        <source>The object does not contain any tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="The restriction cannot be deleted: %@" xml:space="preserve">
-        <source>The restriction cannot be deleted: %@</source>
+      <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
+        <source>The restriction cannot be deleted</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
@@ -1157,7 +1155,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
-        <note>No comment provided by engineer.</note>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
@@ -1398,7 +1396,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="Height/Base.lproj/Height.storyboard" datatype="plaintext" source-language="en" target-language="zh-Hant">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
@@ -1421,7 +1419,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Display.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Display.storyboard" datatype="plaintext" source-language="en" target-language="zh-Hant">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
@@ -1794,7 +1792,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/MainStoryboard.storyboard" datatype="plaintext" source-language="en" target-language="zh-Hant">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
@@ -1925,7 +1923,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/POI.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/POI.storyboard" datatype="plaintext" source-language="en" target-language="zh-Hant">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
@@ -2224,7 +2222,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
     </body>
   </file>
-  <file original="Storyboards/Base.lproj/Settings.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="Storyboards/Base.lproj/Settings.storyboard" datatype="plaintext" source-language="en" target-language="zh-Hant">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
@@ -2315,6 +2313,10 @@ Other icons by Glyphish:
 http://glyphish.com
 </source>
         <note>Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
+      </trans-unit>
+      <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
+        <source>Weblate - Translations</source>
+        <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
         <source>Register new account</source>
@@ -2486,7 +2488,7 @@ http://glyphish.com
       </trans-unit>
     </body>
   </file>
-  <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="zh-Hant" datatype="plaintext">
+  <file original="Upload/Base.lproj/Changeset.storyboard" datatype="plaintext" source-language="en" target-language="zh-Hant">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>

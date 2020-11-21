@@ -67,7 +67,7 @@
 /* No comment provided by engineer. */
 "Add inner member" = "Ajouter un membre interne";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Add Note" = "Ajouter une note";
 
 /* No comment provided by engineer. */
@@ -133,7 +133,7 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Connecter les nœuds endommagera une relation";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Copy Tags" = "Copier les étiquettes";
 
 /* No comment provided by engineer. */
@@ -142,7 +142,7 @@
 /* No comment provided by engineer. */
 "Create\n" = "Créer\n";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Create Relation" = "Créer une relation";
 
 /* No comment provided by engineer. */
@@ -154,7 +154,7 @@
 /* No comment provided by engineer. */
 "Data not available" = "Données non disponibles";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Delete" = "Supprimer";
 
 /* No comment provided by engineer. */
@@ -169,7 +169,7 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Détacher de la relation";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Disconnect" = "Déconnecter";
 
 /* No comment provided by engineer. */
@@ -178,7 +178,7 @@
 /* No comment provided by engineer. */
 "Done" = "Terminé";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Duplicate" = "Dupliquer";
 
 /* No comment provided by engineer. */
@@ -204,9 +204,6 @@
 
 /* No comment provided by engineer. */
 "Error connecting to way" = "Erreur de la connexion du chemin";
-
-/* No comment provided by engineer. */
-"Error deleting" = "Erreur lors de la suppression";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Erreur lors de la récupération des métadonnées : %@";
@@ -235,7 +232,7 @@
 /* No comment provided by engineer. */
 "Invalid URL" = "URL invalide";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Join" = "Joindre";
 
 /* No comment provided by engineer. */
@@ -265,10 +262,10 @@
 /* No comment provided by engineer. */
 "Mail delivery is not available on this device" = "La livraison de message n'est pas disponible pour cet appareil";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Circular" = "Rendre circulaire";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Rectangular" = "Rendre rectangulaire";
 
 /* No comment provided by engineer. */
@@ -292,7 +289,7 @@
 /* No comment provided by engineer. */
 "Modify\n" = "Modifier\n";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "More..." = "Plus…";
 
 /* No comment provided by engineer. */
@@ -373,7 +370,7 @@
 /* No comment provided by engineer. */
 "OSM data must be version 0.6 (fetched '%@')" = "Les données d'OSM doivent être de version 0.6 (« %@ » récupéré)";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Paste" = "Coller";
 
 /* No comment provided by engineer. */
@@ -415,7 +412,7 @@
 /* No comment provided by engineer. */
 "Replace Tags" = "Remplacer les étiquettes";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Restrict" = "Restreindre";
 
 /* No comment provided by engineer. */
@@ -424,13 +421,13 @@
 /* No comment provided by engineer. */
 "Results for %@ (%@)" = "Résultats pour %1$@ (%2$@)";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Reverse" = "Inverser";
 
 /* No comment provided by engineer. */
 "Right side" = "Côté droit";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Rotate" = "Retourner";
 
 /* No comment provided by engineer. */
@@ -454,7 +451,7 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Désolé, une erreur s'est produite lors du chargement du fichier GPX";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Split" = "Séparer";
 
 /* No comment provided by engineer. */
@@ -463,7 +460,7 @@
 /* No comment provided by engineer. */
 "Stop" = "Arrêter";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Tags" = "Étiquettes";
 
 /* No comment provided by engineer. */
@@ -477,12 +474,6 @@
 
 /* No comment provided by engineer. */
 "The nodes have conflicting roles in parent relations" = "Les nœuds ont des rôles en conflit avec les relations parentes";
-
-/* No comment provided by engineer. */
-"The object does contain any tags" = "L'objet ne contient aucune balise";
-
-/* No comment provided by engineer. */
-"The restriction cannot be deleted: %@" = "La restriction ne peut pas être supprimée : %@";
 
 /* No comment provided by engineer. */
 "The selected way must be completely visible" = "Le chemin sélectionné doit être complètement visible";

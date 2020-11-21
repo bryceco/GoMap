@@ -76,7 +76,7 @@
 /* No comment provided by engineer. */
 "Add inner member" = "添加内部成员";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Add Note" = "添加节点";
 
 /* No comment provided by engineer. */
@@ -169,7 +169,7 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "连接节点会破坏关系";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Copy Tags" = "复制标签";
 
 /* No comment provided by engineer. */
@@ -184,7 +184,7 @@
 /* No comment provided by engineer. */
 "create relation" = "创建关系";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Create Relation" = "创建关系";
 
 /* No comment provided by engineer. */
@@ -202,7 +202,7 @@
 /* No comment provided by engineer. */
 "Data not available" = "数据不可用";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Delete" = "删除";
 
 /* No comment provided by engineer. */
@@ -220,7 +220,7 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "从关系中分离";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Disconnect" = "断开";
 
 /* No comment provided by engineer. */
@@ -229,7 +229,7 @@
 /* No comment provided by engineer. */
 "Done" = "完成";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Duplicate" = "复制";
 
 /* No comment provided by engineer. */
@@ -249,9 +249,6 @@
 
 /* No comment provided by engineer. */
 "Error connecting to way" = "连接到路径时出错";
-
-/* No comment provided by engineer. */
-"Error deleting" = "删除时出错";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "获取元数据时出错：%@";
@@ -280,7 +277,7 @@
 /* No comment provided by engineer. */
 "Invalid URL" = "无效URL";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Join" = "加入";
 
 /* No comment provided by engineer. */
@@ -310,10 +307,10 @@
 /* No comment provided by engineer. */
 "Mail delivery is not available on this device" = "此设备无法发送邮件";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Circular" = "制作圆形";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Rectangular" = "制作矩形";
 
 /* No comment provided by engineer. */
@@ -328,7 +325,7 @@
 /* No comment provided by engineer. */
 "Merge Tags" = "合并标签";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "More..." = "更多…";
 
 /* No comment provided by engineer. */
@@ -403,7 +400,7 @@
 /* No comment provided by engineer. */
 "OSM data must be version 0.6 (fetched '%@')" = "OSM数据必须为0.6版(已提取'％@')";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Paste" = "粘贴";
 
 /* No comment provided by engineer. */
@@ -433,13 +430,13 @@
 /* No comment provided by engineer. */
 "Replace Tags" = "替换标签";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Reverse" = "逆转";
 
 /* No comment provided by engineer. */
 "Right side" = "右侧";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Rotate" = "旋转";
 
 /* No comment provided by engineer. */
@@ -466,7 +463,7 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "抱歉，加载GPX文件时发生错误";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Split" = "拆分";
 
 /* No comment provided by engineer. */
@@ -478,10 +475,10 @@
 /* No comment provided by engineer. */
 "Stop" = "停止";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Straighten" = "拉直";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Tags" = "标签";
 
 /* No comment provided by engineer. */

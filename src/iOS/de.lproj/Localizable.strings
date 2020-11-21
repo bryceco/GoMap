@@ -76,7 +76,7 @@
 /* No comment provided by engineer. */
 "Add inner member" = "Inneres Mitglied hinzufügen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Add Note" = "Hinweis hinzufügen";
 
 /* No comment provided by engineer. */
@@ -184,7 +184,7 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Diese Knoten zu verbinden würde eine Relation beschädigen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Copy Tags" = "Attribute kopieren";
 
 /* No comment provided by engineer. */
@@ -193,7 +193,7 @@
 /* No comment provided by engineer. */
 "Create\n" = "Erstellen\n";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Create Relation" = "Relation erstellen";
 
 /* No comment provided by engineer. */
@@ -205,7 +205,7 @@
 /* No comment provided by engineer. */
 "Data not available" = "Daten nicht verfügbar";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Delete" = "Löschen";
 
 /* No comment provided by engineer. */
@@ -220,7 +220,7 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Von Relation trennen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Disconnect" = "Trennen";
 
 /* No comment provided by engineer. */
@@ -229,7 +229,7 @@
 /* No comment provided by engineer. */
 "Done" = "Fertig";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Duplicate" = "Duplizieren";
 
 /* No comment provided by engineer. */
@@ -252,9 +252,6 @@
 
 /* No comment provided by engineer. */
 "Error connecting to way" = "Fehler beim Verbinden mit Weg";
-
-/* No comment provided by engineer. */
-"Error deleting" = "Fehler beim Löschen";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Fehler beim Abrufen von Metadaten: %@";
@@ -310,10 +307,10 @@
 /* No comment provided by engineer. */
 "Low memory: clearing cache" = "Geringer Speicherplatz: leere Cache";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Circular" = "Kreisförmig machen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Rectangular" = "Rechteckig machen";
 
 /* No comment provided by engineer. */
@@ -346,7 +343,7 @@
 /* No comment provided by engineer. */
 "Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Die rohen XML-Daten zu bearbeiten, ermöglicht dir Fehler zu beheben, die das Hochladen verhindern.\n\nEs ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wenn du ein tiefgreifendes Verständnis des OSM-Änderungssatz Formats besitzt.";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "More..." = "Mehr...";
 
 /* No comment provided by engineer. */
@@ -418,7 +415,7 @@
 /* No comment provided by engineer. */
 "Open URL" = "URL öffnen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Paste" = "Einfügen";
 
 /* No comment provided by engineer. */
@@ -463,13 +460,13 @@
 /* No comment provided by engineer. */
 "Results for %@ (%@)" = "Ergebnisse für %1$@ (%2$@)";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Reverse" = "Umkehren";
 
 /* No comment provided by engineer. */
 "Right side" = "Rechte Seite";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Rotate" = "Drehen";
 
 /* No comment provided by engineer. */
@@ -496,10 +493,10 @@
 /* No comment provided by engineer. */
 "Stop" = "Stop";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Straighten" = "Begradigen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Tags" = "Attribute";
 
 /* No comment provided by engineer. */
@@ -526,7 +523,7 @@
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Schalte Ortungsdienste ein, um %@ zu erlauben, deine Position zu bestimmen";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Turn Restrictions" = "Abbiegebeschränkungen";
 
 /* No comment provided by engineer. */

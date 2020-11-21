@@ -45,7 +45,7 @@ xcodebuild -exportLocalizations -localizationPath $TMPDIR -project "$PROJECT" $L
 cp $TMPDIR/*/Localized\ Contents/*.xliff .
 
 # Make sure newly added strings are tracked by git
-find .. -name '*.strings' | xargs git add
+find .. -name '*.strings' -print0 | xargs -0 git add
 git add *.xliff
 git add -u
 
