@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (chemin)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(nouvel objet)";
 
 /* No comment provided by engineer. */
@@ -31,46 +31,47 @@
 /* No comment provided by engineer. */
 "(way)" = "(chemin)";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f Mo, %2$ld fichiers";
 
 /* No comment provided by engineer. */
 "%@ (relation)" = "%@ (relation)";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ mètres";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld jours";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld modifications, dernière activité le %2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld mètres, %2$ld points";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld objets";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "%lu tuiles requises";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
 "+ Button Position" = "+ Position du bouton";
 
-/* No comment provided by engineer. */
+/* unknown user name */
 "<unknown>" = "<inconnu>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 jour";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add inner member" = "Ajouter un membre interne";
 
 /* Edit action */
 "Add Note" = "Ajouter une note";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add outer member" = "Ajouter un membre externe";
 
 /* No comment provided by engineer. */
@@ -91,7 +92,7 @@
 /* No comment provided by engineer. */
 "Attention" = "Avertissement";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
 "Attributes" = "Attributs";
 
 /* No comment provided by engineer. */
@@ -112,13 +113,13 @@
 /* No comment provided by engineer. */
 "Cancel" = "Annuler";
 
-/* No comment provided by engineer. */
+/* e-mail message */
 "Cannot compose message" = "Impossible de rédiger le message";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Impossible de connecter un chemin interne à un chemin externe";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "Effacer les suivis GPX";
 
 /* No comment provided by engineer. */
@@ -148,7 +149,7 @@
 /* No comment provided by engineer. */
 "Create Relation Type" = "Créer un type de relation";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "Suivi actuel";
 
 /* No comment provided by engineer. */
@@ -199,7 +200,7 @@
 /* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "Assurez-vous que la vue de l'éditeur est visible et qu'elle affiche les objets dans la zone locale";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "Erreur";
 
 /* No comment provided by engineer. */
@@ -217,10 +218,10 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Hauteur : %1$@ ± %2$@ mètres";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "Je le ferai !";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "Identifiant";
 
 /* No comment provided by engineer. */
@@ -238,10 +239,10 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "Dernière mise à jour le %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "Lat/Lon";
 
-/* No comment provided by engineer. */
+/* Left-hand side of screen */
 "Left side" = "Côté gauche";
 
 /* No comment provided by engineer. */
@@ -268,7 +269,7 @@
 /* Edit action */
 "Make Rectangular" = "Rendre rectangulaire";
 
-/* No comment provided by engineer. */
+/* rate the app later */
 "Maybe later..." = "Peut-être plus tard…";
 
 /* No comment provided by engineer. */
@@ -280,7 +281,7 @@
 /* No comment provided by engineer. */
 "Merge Tags" = "Fusionner les étiquettes";
 
-/* No comment provided by engineer. */
+/* last modified date */
 "Modified" = "Modifié";
 
 /* No comment provided by engineer. */
@@ -307,16 +308,17 @@
 /* No comment provided by engineer. */
 "Network error" = "Erreur réseau";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "Jamais";
 
 /* No comment provided by engineer. */
 "Next" = "Suivant";
 
-/* No comment provided by engineer. */
+/* GPX track */
 "No active track" = "Pas de suivi actif";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "Pas de données";
 
 /* No comment provided by engineer. */
@@ -340,7 +342,7 @@
 /* No comment provided by engineer. */
 "Node tags" = "Étiquettes du nœud";
 
-/* No comment provided by engineer. */
+/* OSM note */
 "Note History" = "Historique des notes";
 
 /* No comment provided by engineer. */
@@ -361,7 +363,7 @@
 /* No comment provided by engineer. */
 "Only ways/multipolygons can be rotated" = "Seuls les chemins/polygones multiples peuvent être retournés";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "Ouvrir les paramètres";
 
 /* No comment provided by engineer. */
@@ -385,10 +387,10 @@
 /* No comment provided by engineer. */
 "Previous" = "Précédent";
 
-/* No comment provided by engineer. */
+/* previous GPX track */
 "Previous Tracks" = "Suivis précédents";
 
-/* No comment provided by engineer. */
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "Purger";
 
 /* No comment provided by engineer. */
@@ -418,13 +420,13 @@
 /* No comment provided by engineer. */
 "Restriction: %@" = "Restriction : %@";
 
-/* No comment provided by engineer. */
+/* country name,2-character country code */
 "Results for %@ (%@)" = "Résultats pour %1$@ (%2$@)";
 
 /* Edit action */
 "Reverse" = "Inverser";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
 "Right side" = "Côté droit";
 
 /* Edit action */
@@ -436,13 +438,14 @@
 /* set tag value */
 "Set" = "Définir";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "Définir l'étiquette de hauteur";
 
 /* No comment provided by engineer. */
 "Settings" = "Paramètres";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "Partager";
 
 /* No comment provided by engineer. */
@@ -454,7 +457,7 @@
 /* Edit action */
 "Split" = "Séparer";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "Démarrer";
 
 /* No comment provided by engineer. */
@@ -514,7 +517,7 @@
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Activez les service de localisation pour autoriser %@ à détecter votre emplacement";
 
-/* No comment provided by engineer. */
+/* OSM numeric user ID */
 "UID" = "Identifiant unique";
 
 /* No comment provided by engineer. */
@@ -523,7 +526,7 @@
 /* No comment provided by engineer. */
 "Undo" = "Rétablir";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "Rôle inconnu";
 
 /* No comment provided by engineer. */

@@ -8,7 +8,7 @@
 "1SU-BF-K3n.title" = "Zasluge";
 
 /* Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2"; */
-"2TW-mO-uX2.footerTitle" = "Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti Mapnik aerofotografije i/ili pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza.";
+"2TW-mO-uX2.footerTitle" = "Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti aerofotografije i/ili Mapnik pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza.";
 
 /* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
 "2TW-mO-uX2.headerTitle" = "Preuzmi uvećani prikaz pločica";
@@ -55,6 +55,9 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "Pokreni";
 
+/* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
+"CHj-a3-gC9.text" = "Weblate – prijevodi";
+
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "Spremi";
 
@@ -90,6 +93,9 @@
 
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
 "ib9-wt-IzD.title" = "Jezik";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "Povratna informacija putem e-pošte";
 
 /* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
 "JbA-pC-plJ.text" = "Naslov naslov naslov naslov";
@@ -159,6 +165,9 @@
 
 /* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
 "VDO-HW-SLB.title" = "Obližnji kartografi";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "Povratna informacija putem e-pošte";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
 "x4m-oT-EG8.text" = "GitHub – Problemi i izvorni kod";

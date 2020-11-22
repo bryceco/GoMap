@@ -13,6 +13,9 @@
 /* Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX"; */
 "4s8-Bj-JOX.normalTitle" = "99 dana";
 
+/* Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl"; */
+"5hB-2Y-Wgl.text" = "Projekcija";
+
 /* Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa"; */
 "7df-49-qTa.text" = "Željezničke funkcije";
 
@@ -70,6 +73,12 @@
 /* Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz"; */
 "EHa-L5-Hcz.text" = "12:00:00";
 
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Gumb";
+
+/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; */
+"eLW-GB-ugG.text" = "Smjesti gumb + na ";
+
 /* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
 "EmS-9F-1qc.text" = "Detalji";
 
@@ -120,6 +129,9 @@
 
 /* Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7"; */
 "Idx-2G-6F7.text" = "Energetske funkcije";
+
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
 
 /* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
 "Jz1-GP-Wbe.text" = "Staze";
@@ -243,6 +255,12 @@
 
 /* Class = "UIButton"; normalTitle = "Add New"; ObjectID = "zI2-YM-qbl"; */
 "zI2-YM-qbl.normalTitle" = "Dodaj novi";
+
+/* Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.footerTitle" = "Ako odrešuješ WMS URL, moraš navesti i korištenu projekciju";
+
+/* Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS"; */
+"Zn9-Sg-9fS.headerTitle" = "WMS projekcija";
 
 /* Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe"; */
 "ZP1-qY-kXe.text" = "Neimenovane ceste";

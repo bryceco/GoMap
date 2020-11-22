@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (viiva)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(uusi objekti)";
 
 /* No comment provided by engineer. */
@@ -31,7 +31,7 @@
 /* No comment provided by engineer. */
 "(way)" = "(viiva)";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MT, %2$ld tiedostoa";
 
 /* No comment provided by engineer. */
@@ -40,22 +40,23 @@
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ muutoskokoelma";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ metriä";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld päivää";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld metriä, %2$ld pistettä";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld objektia";
 
-/* No comment provided by engineer. */
+/* unknown user name */
 "<unknown>" = "<tuntematon>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 päivä";
 
 /* Edit action */
@@ -73,7 +74,7 @@
 /* No comment provided by engineer. */
 "Attention" = "Huomio";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
 "Attributes" = "Attribuutit";
 
 /* No comment provided by engineer. */
@@ -85,13 +86,13 @@
 /* No comment provided by engineer. */
 "Cancel" = "Peruuta";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "Muutoskokoelma";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "Tyhjennä GPX-jäljet";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "Tyhjennä OSM-data";
 
 /* No comment provided by engineer. */
@@ -118,7 +119,7 @@
 /* No comment provided by engineer. */
 "create way" = "luo viiva";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "Nykyinen jälki";
 
 /* No comment provided by engineer. */
@@ -172,7 +173,7 @@
 /* No comment provided by engineer. */
 "Done" = "Valmis";
 
-/* No comment provided by engineer. */
+/* create a duplicate */
 "duplicate" = "monista";
 
 /* Edit action */
@@ -187,16 +188,16 @@
 /* No comment provided by engineer. */
 "Edit XML" = "Muokkaa XML:ää";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "Virhe";
 
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Korkeus: %1$@ ± %2$@ metriä";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "Teen sen!";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "Tunniste";
 
 /* No comment provided by engineer. */
@@ -211,10 +212,10 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "Viimeksi päivitetty %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "Leveys-/pituusaste";
 
-/* No comment provided by engineer. */
+/* Left-hand side of screen */
 "Left side" = "Vasen puoli";
 
 /* No comment provided by engineer. */
@@ -226,7 +227,7 @@
 /* No comment provided by engineer. */
 "Login successful" = "Kirjautuminen onnistui";
 
-/* No comment provided by engineer. */
+/* rate the app later */
 "Maybe later..." = "Ehkä myöhemmin…";
 
 /* No comment provided by engineer. */
@@ -262,13 +263,14 @@
 /* No comment provided by engineer. */
 "Network error" = "Verkkovirhe";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "Ei koskaan";
 
 /* No comment provided by engineer. */
 "Next" = "Seuraava";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "Ei dataa";
 
 /* No comment provided by engineer. */
@@ -283,7 +285,7 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "Avaa asetukset";
 
 /* No comment provided by engineer. */
@@ -298,7 +300,7 @@
 /* No comment provided by engineer. */
 "Previous" = "Edellinen";
 
-/* No comment provided by engineer. */
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "Tyhjennä";
 
 /* No comment provided by engineer. */
@@ -319,7 +321,7 @@
 /* Edit action */
 "Reverse" = "Käännä";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
 "Right side" = "Oikea puoli";
 
 /* Edit action */
@@ -337,10 +339,11 @@
 /* No comment provided by engineer. */
 "Settings" = "Asetukset";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "Jaa";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "Aloita";
 
 /* No comment provided by engineer. */
@@ -355,22 +358,22 @@
 /* Edit action */
 "Turn Restrictions" = "Kääntymisrajoitukset";
 
-/* No comment provided by engineer. */
+/* OSM numeric user ID */
 "UID" = "UID";
 
 /* No comment provided by engineer. */
 "Undo" = "Kumoa";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "Tuntematon rooli";
 
 /* update an osm note */
 "Update" = "Päivitä";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "Käyttäjä";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "Versio";
 
 /* No comment provided by engineer. */

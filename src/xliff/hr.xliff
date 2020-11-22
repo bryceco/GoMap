@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="hr" datatype="plaintext">
     <header>
@@ -97,17 +97,17 @@
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
         <target>%1$.0f m, broj čvorova: %2$ld</target>
-        <note>No comment provided by engineer.</note>
+        <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
         <target>%1$.1f m, broj čvorova: %2$ld</target>
-        <note>No comment provided by engineer.</note>
+        <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$.2f MB, %2$ld files</source>
         <target>%1$.2f MB, broj datoteka: %2$ld</target>
-        <note>No comment provided by engineer.</note>
+        <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
@@ -122,17 +122,18 @@
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
         <target>%@ m</target>
-        <note>No comment provided by engineer.</note>
+        <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%ld Days" xml:space="preserve">
         <source>%ld Days</source>
         <target>%ld dana</target>
-        <note>No comment provided by engineer.</note>
+        <note>One or more days
+   Plural number of days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@" xml:space="preserve">
         <source>%1$ld edits, last active %2$@</source>
         <target>%1$ld uređivanja, zadnje aktivno %2$@</target>
-        <note>No comment provided by engineer.</note>
+        <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$ld meters, %2$ld points</source>
@@ -142,17 +143,17 @@
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
         <target>Broj objekata: %ld</target>
-        <note>No comment provided by engineer.</note>
+        <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
         <source>%lu tiles needed</source>
         <target>Broj potrebnih pločica: %lu</target>
-        <note>No comment provided by engineer.</note>
+        <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target>(novi objekt)</target>
-        <note>No comment provided by engineer.</note>
+        <note>a newly created node/object</note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
@@ -177,17 +178,17 @@
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
         <target>Pozicija gumba +</target>
-        <note>No comment provided by engineer.</note>
+        <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
         <source>1 Day</source>
         <target>1 dan</target>
-        <note>No comment provided by engineer.</note>
+        <note>1 day singular</note>
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
         <source>&lt;unknown&gt;</source>
         <target>&lt;nepoznato&gt;</target>
-        <note>No comment provided by engineer.</note>
+        <note>unknown user name</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
@@ -207,12 +208,12 @@
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
         <target>Dodaj unutarnji član</target>
-        <note>No comment provided by engineer.</note>
+        <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
         <target>Dodaj vanjski član</target>
-        <note>No comment provided by engineer.</note>
+        <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
@@ -252,7 +253,7 @@
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
         <target>Svojstva</target>
-        <note>No comment provided by engineer.</note>
+        <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
@@ -262,7 +263,7 @@
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
         <target>Slike pozadine %@</target>
-        <note>No comment provided by engineer.</note>
+        <note>identifies current aerial imagery</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
@@ -337,7 +338,7 @@
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
         <target>Nije moguće sastaviti poruku</target>
-        <note>No comment provided by engineer.</note>
+        <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
@@ -347,37 +348,37 @@
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
         <target>Skup promjena</target>
-        <note>No comment provided by engineer.</note>
+        <note>OSM changeset identifier</note>
       </trans-unit>
       <trans-unit id="Clear Aerial Tiles" xml:space="preserve">
         <source>Clear Aerial Tiles</source>
         <target>Izbriši pločice aerofotografije</target>
-        <note>No comment provided by engineer.</note>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
         <source>Clear GPS Overlay Tiles</source>
         <target>Izbriši GPS pločice slojeva</target>
-        <note>No comment provided by engineer.</note>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear GPX Tracks" xml:space="preserve">
         <source>Clear GPX Tracks</source>
         <target>Izbriši GPX staze</target>
-        <note>No comment provided by engineer.</note>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
         <source>Clear Locator Overlay Tiles</source>
         <target>Izbriši lokatorske pločice slojeva</target>
-        <note>No comment provided by engineer.</note>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
         <source>Clear Mapnik Tiles</source>
         <target>Izbriši Mapnik pločice</target>
-        <note>No comment provided by engineer.</note>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
         <target>Izbriši OSM podatke</target>
-        <note>No comment provided by engineer.</note>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
@@ -429,7 +430,7 @@
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
         <target>Trenutačna staza</target>
-        <note>No comment provided by engineer.</note>
+        <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Data not available" xml:space="preserve">
         <source>Data not available</source>
@@ -520,7 +521,7 @@ Greška: %@</target>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
         <target>Greška</target>
-        <note>No comment provided by engineer.</note>
+        <note>Error dialog title</note>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
@@ -560,12 +561,12 @@ Greška: %@</target>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
         <target>Ja ću to obaviti!</target>
-        <note>No comment provided by engineer.</note>
+        <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
         <target>Identifikator</target>
-        <note>No comment provided by engineer.</note>
+        <note>OSM node/way/relation identifier</note>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
@@ -605,12 +606,12 @@ Greška: %@</target>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
         <target>Zemljopisna širina/dužina</target>
-        <note>No comment provided by engineer.</note>
+        <note>coordinates</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
         <target>Lijeva strana</target>
-        <note>No comment provided by engineer.</note>
+        <note>Left-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
@@ -665,7 +666,7 @@ Greška: %@</target>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
         <target>Možda kasnije …</target>
-        <note>No comment provided by engineer.</note>
+        <note>rate the app later</note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
@@ -690,7 +691,7 @@ Greška: %@</target>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
         <target>Promijenjeno</target>
-        <note>No comment provided by engineer.</note>
+        <note>last modified date</note>
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
@@ -746,7 +747,8 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
         <target>Nikada</target>
-        <note>No comment provided by engineer.</note>
+        <note>Never delete old GPX tracks
+   Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
@@ -756,7 +758,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target>Nema podataka</target>
-        <note>No comment provided by engineer.</note>
+        <note>Alert title</note>
       </trans-unit>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
@@ -781,7 +783,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
         <target>Nema aktivne staze</target>
-        <note>No comment provided by engineer.</note>
+        <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No image data available" xml:space="preserve">
         <source>No image data available</source>
@@ -826,7 +828,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
         <target>Kronologija bilješke</target>
-        <note>No comment provided by engineer.</note>
+        <note>OSM note</note>
       </trans-unit>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
@@ -881,7 +883,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
         <target>Otvori postavke</target>
-        <note>No comment provided by engineer.</note>
+        <note>Open the iOS Settings app</note>
       </trans-unit>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
@@ -916,12 +918,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
         <target>Prethodne staze</target>
-        <note>No comment provided by engineer.</note>
+        <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
         <target>Isprazni</target>
-        <note>No comment provided by engineer.</note>
+        <note>Discard editing changes when resetting OSM data cache</note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
@@ -931,7 +933,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
         <target>Nedavne aerofotografije</target>
-        <note>No comment provided by engineer.</note>
+        <note>Alert title message</note>
       </trans-unit>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
@@ -986,7 +988,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %1$@ (%2$@)</source>
         <target>Rezultati za %1$@ (%2$@)</target>
-        <note>No comment provided by engineer.</note>
+        <note>country name,2-character country code</note>
       </trans-unit>
       <trans-unit id="Reverse" xml:space="preserve">
         <source>Reverse</source>
@@ -996,7 +998,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
         <target>Desna strana</target>
-        <note>No comment provided by engineer.</note>
+        <note>Right-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Rotate" xml:space="preserve">
         <source>Rotate</source>
@@ -1026,7 +1028,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
         <target>Postavi oznaku visine</target>
-        <note>No comment provided by engineer.</note>
+        <note>The height=* tag</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
@@ -1036,7 +1038,8 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
         <target>Dijeli</target>
-        <note>No comment provided by engineer.</note>
+        <note>Open iOS sharing sheet
+   Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
@@ -1061,7 +1064,7 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
         <target>Pokreni</target>
-        <note>No comment provided by engineer.</note>
+        <note>Begin downloading tiles</note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
@@ -1220,7 +1223,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
         <target>UID</target>
-        <note>No comment provided by engineer.</note>
+        <note>OSM numeric user ID</note>
       </trans-unit>
       <trans-unit id="Unable to upload changes" xml:space="preserve">
         <source>Unable to upload changes</source>
@@ -1235,7 +1238,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       <trans-unit id="Unknown role" xml:space="preserve">
         <source>Unknown role</source>
         <target>Nepoznata uloga</target>
-        <note>No comment provided by engineer.</note>
+        <note>relation role=* tag</note>
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
@@ -1250,7 +1253,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
         <target>Aktualiziranje čvora …</target>
-        <note>No comment provided by engineer.</note>
+        <note>OSM Note</note>
       </trans-unit>
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
@@ -1275,7 +1278,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
         <target>Korisnik</target>
-        <note>No comment provided by engineer.</note>
+        <note>OSM user name</note>
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
         <source>User-defined imagery</source>
@@ -1285,7 +1288,7 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
         <target>Verzija</target>
-        <note>No comment provided by engineer.</note>
+        <note>OSM object versioh</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
@@ -1314,7 +1317,7 @@ Za nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.</
       <trans-unit id="You can define your own custom presets here" xml:space="preserve">
         <source>You can define your own custom presets here</source>
         <target>Ovdje možeš definirati vlastite predodređene postavke</target>
-        <note>No comment provided by engineer.</note>
+        <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
         <source>You can navigate to a relation member only if it is already downloaded.
@@ -1444,7 +1447,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
         <target>duplikat</target>
-        <note>No comment provided by engineer.</note>
+        <note>create a duplicate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
@@ -1489,12 +1492,12 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
         <target>vrijeme snimanja %@</target>
-        <note>No comment provided by engineer.</note>
+        <note>Year aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="vintage %@ - %@" xml:space="preserve">
         <source>vintage %1$@ - %2$@</source>
         <target>vrijeme snimanja %1$@ – %2$@</target>
-        <note>No comment provided by engineer.</note>
+        <note>Years aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
@@ -1503,7 +1506,7 @@ Za poboljšavanje performance, izbriši predmemoriju (u postavci „Prikaz”).<
       </trans-unit>
     </body>
   </file>
-  <file original="Height/Base.lproj/Height.storyboard" datatype="plaintext" source-language="en" target-language="hr">
+  <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>
@@ -2111,7 +2114,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
         <source>A Error Message Flashing Z</source>
-        <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn";</note>
+        <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate";</note>
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
@@ -2877,7 +2880,7 @@ http://glyphish.com
       </trans-unit>
     </body>
   </file>
-  <file original="Upload/Base.lproj/Changeset.storyboard" datatype="plaintext" source-language="en" target-language="hr">
+  <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="hr" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.2" build-num="12B45b"/>
     </header>

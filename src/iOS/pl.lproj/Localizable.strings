@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (linia)";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld plików";
 
 /* No comment provided by engineer. */
@@ -25,13 +25,14 @@
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ zestaw zmian";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ metrów";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld Dni";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld zmian, ostatnio aktywny %2$@";
 
 /* No comment provided by engineer. */
@@ -79,7 +80,7 @@
 /* No comment provided by engineer. */
 "delete way" = "usuń linię";
 
-/* No comment provided by engineer. */
+/* create a duplicate */
 "duplicate" = "duplikuj";
 
 /* No comment provided by engineer. */

@@ -13,7 +13,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (vei)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(nytt objekt)";
 
 /* No comment provided by engineer. */
@@ -28,13 +28,13 @@
 /* No comment provided by engineer. */
 "(way)" = "(vei)";
 
-/* No comment provided by engineer. */
+/* way length if > 10m */
 "%.0f meters, %ld nodes" = "%1$.0f meter, %2$ld noder";
 
-/* No comment provided by engineer. */
+/* way length if < 10m */
 "%.1f meters, %ld nodes" = "%1$.1f meter, %2$ld node";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld filer";
 
 /* No comment provided by engineer. */
@@ -43,31 +43,32 @@
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ endringssett";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ meter";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld dager";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld redideringer, sist aktiv %2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld meter, %2$ld punkter";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld objekter";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "%lu flis behøves";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
 "+ Button Position" = "+ Knappeposisjon";
 
-/* No comment provided by engineer. */
+/* unknown user name */
 "<unknown>" = "<ukjent>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "Én dag";
 
 /* No comment provided by engineer. */
@@ -76,7 +77,7 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "En relasjon noden tilhører er ikke helt nedlastet enda";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add inner member" = "Leg til indre medlem";
 
 /* No comment provided by engineer. */
@@ -88,7 +89,7 @@
 /* No comment provided by engineer. */
 "add object to relation" = "legg objekt til relasjon";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add outer member" = "Leg til ytre medlem";
 
 /* No comment provided by engineer. */
@@ -115,10 +116,10 @@
 /* No comment provided by engineer. */
 "Attention" = "Merk";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
 "Attributes" = "Attributter";
 
-/* No comment provided by engineer. */
+/* identifies current aerial imagery */
 "Background imagery %@" = "Bakgrunnsbildemateriale %@";
 
 /* No comment provided by engineer. */
@@ -145,28 +146,28 @@
 /* No comment provided by engineer. */
 "Cancel" = "Avbryt";
 
-/* No comment provided by engineer. */
+/* e-mail message */
 "Cannot compose message" = "Kan ikke forfatte melding";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Kan ikke koble til en indre vei til en ytre vei";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "Endringsflis";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Aerial Tiles" = "Tøm flyfoto-flis";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPS Overlay Tiles" = "Tøm GPS-overlagsflis";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "Tøm GPX-spor";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Mapnik Tiles" = "Tøm Mapnik-flis";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "Tøm OSM-data";
 
 /* No comment provided by engineer. */
@@ -208,7 +209,7 @@
 /* No comment provided by engineer. */
 "create way" = "opprett vei";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "Nåværende spor";
 
 /* No comment provided by engineer. */
@@ -262,7 +263,7 @@
 /* No comment provided by engineer. */
 "Done" = "Ferdig";
 
-/* No comment provided by engineer. */
+/* create a duplicate */
 "duplicate" = "dupliser";
 
 /* Edit action */
@@ -283,7 +284,7 @@
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Sørg for at plasseringstjenester er påslått og at du har innvilget denne programtilgangen.\n\nFeil: %@";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "Feil";
 
 /* No comment provided by engineer. */
@@ -298,10 +299,10 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Høyde: %1$@ ± %2$@ meter";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "På saken!";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "Identifikator";
 
 /* No comment provided by engineer. */
@@ -322,10 +323,10 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "Sist oppdatert %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "Bredde-/lengdegrad";
 
-/* No comment provided by engineer. */
+/* Left-hand side of screen */
 "Left side" = "Venstre side";
 
 /* No comment provided by engineer. */
@@ -340,7 +341,7 @@
 /* Edit action */
 "Make Rectangular" = "Gjør firkantet";
 
-/* No comment provided by engineer. */
+/* rate the app later */
 "Maybe later..." = "Kanskje senere …";
 
 /* No comment provided by engineer. */
@@ -358,7 +359,7 @@
 /* No comment provided by engineer. */
 "Missing way to connect to" = "Manglende vei å koble til";
 
-/* No comment provided by engineer. */
+/* last modified date */
 "Modified" = "Endret";
 
 /* No comment provided by engineer. */
@@ -388,13 +389,14 @@
 /* No comment provided by engineer. */
 "Network error" = "Nettverksfeil";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "Aldri";
 
 /* No comment provided by engineer. */
 "Next" = "Neste";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "Ingen data";
 
 /* No comment provided by engineer. */
@@ -418,7 +420,7 @@
 /* No comment provided by engineer. */
 "Node tags" = "Node-etiketter";
 
-/* No comment provided by engineer. */
+/* OSM note */
 "Note History" = "Node-historikk";
 
 /* No comment provided by engineer. */
@@ -433,7 +435,7 @@
 /* No comment provided by engineer. */
 "OK" = "OK";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "Åpne innstillingene";
 
 /* No comment provided by engineer. */
@@ -460,10 +462,10 @@
 /* No comment provided by engineer. */
 "Previous" = "Forrige";
 
-/* No comment provided by engineer. */
+/* previous GPX track */
 "Previous Tracks" = "Tidligere spor";
 
-/* No comment provided by engineer. */
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "Tøm";
 
 /* No comment provided by engineer. */
@@ -493,10 +495,10 @@
 /* No comment provided by engineer. */
 "Restriction: %@" = "Begrensning: %@";
 
-/* No comment provided by engineer. */
+/* country name,2-character country code */
 "Results for %@ (%@)" = "Resultater for %1$@ (%2$@)";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
 "Right side" = "Høyre side";
 
 /* Edit action */
@@ -511,7 +513,7 @@
 /* set tag value */
 "Set" = "Sett";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "Sett «høyde»-etikett";
 
 /* No comment provided by engineer. */
@@ -520,7 +522,8 @@
 /* No comment provided by engineer. */
 "Settings" = "Innstillinger";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "Del";
 
 /* No comment provided by engineer. */
@@ -535,7 +538,7 @@
 /* No comment provided by engineer. */
 "Standard imagery" = "Forvalgt bildemateriale";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "Start";
 
 /* No comment provided by engineer. */
@@ -598,7 +601,7 @@
 /* No comment provided by engineer. */
 "Undo" = "Angre";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "Ukjent rolle";
 
 /* update an osm note */
@@ -607,7 +610,7 @@
 /* No comment provided by engineer. */
 "update relation members" = "oppdater relasjonsmedlemmer";
 
-/* No comment provided by engineer. */
+/* OSM Note */
 "Updating Note..." = "Oppdaterer notat …";
 
 /* No comment provided by engineer. */
@@ -622,13 +625,13 @@
 /* No comment provided by engineer. */
 "Uploading GPX..." = "Laster opp GPX-fil…";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "Bruker";
 
 /* No comment provided by engineer. */
 "User-defined imagery" = "Brukerdefinert bildemateriale";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "Versjon";
 
 /* No comment provided by engineer. */
@@ -643,7 +646,7 @@
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Du er i ferd med å gjøre endringer i OpenStreetMap-sanntidsdatabasen. Dine endringer vil bli synlige for alle og enhver.\n\nFor å fortsette, trykk «Send inn» igjen, ellers trykk «Avbryt».";
 
-/* No comment provided by engineer. */
+/* POI editor presets */
 "You can define your own custom presets here" = "Du kan definere dine egne tilpassede forvalg her";
 
 /* No comment provided by engineer. */

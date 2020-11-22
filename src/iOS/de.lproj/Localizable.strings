@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (Weg)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(neues Objekt)";
 
 /* No comment provided by engineer. */
@@ -31,7 +31,7 @@
 /* No comment provided by engineer. */
 "(way)" = "(Weg)";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld Dateien";
 
 /* No comment provided by engineer. */
@@ -40,31 +40,32 @@
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ Änderungssatz";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ Meter";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld Tage";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld Bearbeitungen, zuletzt aktiv %2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld Meter, %2$ld Punkte";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld Objekte";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "%lu Kacheln benötigt";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
 "+ Button Position" = "+ Knopfposition";
 
-/* No comment provided by engineer. */
+/* unknown user name */
 "<unknown>" = "<unbekannt>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 Tag";
 
 /* No comment provided by engineer. */
@@ -73,13 +74,13 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Eine Relation, zu der dieser Knoten gehört, ist nicht vollständig heruntergeladen";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add inner member" = "Inneres Mitglied hinzufügen";
 
 /* Edit action */
 "Add Note" = "Hinweis hinzufügen";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add outer member" = "Äußeres Mitglied hinzufügen";
 
 /* No comment provided by engineer. */
@@ -103,10 +104,10 @@
 /* No comment provided by engineer. */
 "Attention" = "Achtung";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
 "Attributes" = "Attribute";
 
-/* No comment provided by engineer. */
+/* identifies current aerial imagery */
 "Background imagery %@" = "Hintergrundbilder %@";
 
 /* No comment provided by engineer. */
@@ -151,25 +152,25 @@
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Kann inneren Weg nicht mit äußerem Weg verbinden";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "Änderungssatz";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Aerial Tiles" = "Luftbildkacheln leeren";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPS Overlay Tiles" = "GPS-Overlay Kacheln leeren";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "GPX-Tracks leeren";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Locator Overlay Tiles" = "Locator-Overlay Kacheln leeren";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Mapnik Tiles" = "Mapnik Kacheln leeren";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "OSM-Daten leeren";
 
 /* No comment provided by engineer. */
@@ -199,7 +200,7 @@
 /* No comment provided by engineer. */
 "Create Relation Type" = "Relations-Typ erstellen";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "Aktueller Track";
 
 /* No comment provided by engineer. */
@@ -247,7 +248,7 @@
 /* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "Stelle sicher, dass die Bearbeitungsansicht sichtbar ist und Objekte im lokalen Gebiet anzeigt";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "Fehler";
 
 /* No comment provided by engineer. */
@@ -271,10 +272,10 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Höhe: %1$@ ± %2$@ Meter";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "Ich erledige das!";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "Identifikator";
 
 /* No comment provided by engineer. */
@@ -292,7 +293,7 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "Zuletzt aktualisiert %@";
 
-/* No comment provided by engineer. */
+/* Left-hand side of screen */
 "Left side" = "Linke Seite";
 
 /* No comment provided by engineer. */
@@ -313,7 +314,7 @@
 /* Edit action */
 "Make Rectangular" = "Rechteckig machen";
 
-/* No comment provided by engineer. */
+/* rate the app later */
 "Maybe later..." = "Vielleicht später...";
 
 /* No comment provided by engineer. */
@@ -331,7 +332,7 @@
 /* No comment provided by engineer. */
 "Missing way to connect to" = "Weg zum Verbinden fehlt";
 
-/* No comment provided by engineer. */
+/* last modified date */
 "Modified" = "Geändert";
 
 /* No comment provided by engineer. */
@@ -358,16 +359,17 @@
 /* No comment provided by engineer. */
 "Network error" = "Netzwerkfehler";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "Niemals";
 
 /* No comment provided by engineer. */
 "Next" = "Nächstes";
 
-/* No comment provided by engineer. */
+/* GPX track */
 "No active track" = "Kein aktiver Track";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "Keine Daten";
 
 /* No comment provided by engineer. */
@@ -391,7 +393,7 @@
 /* No comment provided by engineer. */
 "Node tags" = "Knoten-Attribute";
 
-/* No comment provided by engineer. */
+/* OSM note */
 "Note History" = "Hinweis-Verlauf";
 
 /* No comment provided by engineer. */
@@ -409,7 +411,7 @@
 /* No comment provided by engineer. */
 "Only ways/multipolygons can be rotated" = "Nur Wege/Multipolygone können gedreht werden";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "Einstellungen öffnen";
 
 /* No comment provided by engineer. */
@@ -427,7 +429,7 @@
 /* No comment provided by engineer. */
 "Please wait" = "Bitte warten";
 
-/* No comment provided by engineer. */
+/* previous GPX track */
 "Previous Tracks" = "Vorherige Tracks";
 
 /* No comment provided by engineer. */
@@ -457,13 +459,13 @@
 /* No comment provided by engineer. */
 "Requires a closed way with at least 4 nodes" = "Benötigt einen geschlossenen Weg mit mindestens 4 Knoten";
 
-/* No comment provided by engineer. */
+/* country name,2-character country code */
 "Results for %@ (%@)" = "Ergebnisse für %1$@ (%2$@)";
 
 /* Edit action */
 "Reverse" = "Umkehren";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
 "Right side" = "Rechte Seite";
 
 /* Edit action */
@@ -475,19 +477,20 @@
 /* No comment provided by engineer. */
 "Selected object is off screen" = "Ausgewähltes Objekt ist außerhalb des Bildschirms";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "Höhen-Attribut setzen";
 
 /* No comment provided by engineer. */
 "Settings" = "Einstellungen";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "Teilen";
 
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Entschuldigung, ein Fehler beim Laden der GPX-Datei ist aufgetreten";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "Start";
 
 /* No comment provided by engineer. */
@@ -526,7 +529,7 @@
 /* Edit action */
 "Turn Restrictions" = "Abbiegebeschränkungen";
 
-/* No comment provided by engineer. */
+/* OSM numeric user ID */
 "UID" = "UID";
 
 /* No comment provided by engineer. */
@@ -535,7 +538,7 @@
 /* No comment provided by engineer. */
 "Undo" = "Rückgängig";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "Unbekannte Rolle";
 
 /* No comment provided by engineer. */
@@ -544,16 +547,16 @@
 /* update an osm note */
 "Update" = "Aktualisieren";
 
-/* No comment provided by engineer. */
+/* OSM Note */
 "Updating Note..." = "Hinweis aktualisieren...";
 
 /* No comment provided by engineer. */
 "Upload complete!" = "Hochladen abgeschlossen!";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "Nutzer";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "Version";
 
 /* No comment provided by engineer. */

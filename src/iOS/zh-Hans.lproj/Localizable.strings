@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (线)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(新建对象)";
 
 /* No comment provided by engineer. */
@@ -31,7 +31,7 @@
 /* No comment provided by engineer. */
 "(way)" = "(路径)";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld 个文件";
 
 /* No comment provided by engineer. */
@@ -40,31 +40,32 @@
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ 变更集";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ 米";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld 天";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld次编辑，上次编辑%2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld 米, %2$ld 个点";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld 个对象";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "需要 %lu 个瓦片";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
 "+ Button Position" = "+ 按钮位置";
 
-/* No comment provided by engineer. */
+/* unknown user name */
 "<unknown>" = "<未知>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 天";
 
 /* No comment provided by engineer. */
@@ -73,13 +74,13 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "节点所属的关系没有完全下载";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add inner member" = "添加内部成员";
 
 /* Edit action */
 "Add Note" = "添加节点";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add outer member" = "添加外部成员";
 
 /* No comment provided by engineer. */
@@ -103,10 +104,10 @@
 /* No comment provided by engineer. */
 "Attention" = "注意";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
 "Attributes" = "属性";
 
-/* No comment provided by engineer. */
+/* identifies current aerial imagery */
 "Background imagery %@" = "背景图像 %@";
 
 /* No comment provided by engineer. */
@@ -136,25 +137,25 @@
 /* No comment provided by engineer. */
 "Cancel" = "取消";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "变更集";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Aerial Tiles" = "清除卫星瓦片";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPS Overlay Tiles" = "清除GPS叠加层瓦片";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "清除GPX轨迹";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Locator Overlay Tiles" = "清除定位叠加层瓦片";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Mapnik Tiles" = "清除Mapnik瓦片";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "清除OSM数据";
 
 /* No comment provided by engineer. */
@@ -196,7 +197,7 @@
 /* No comment provided by engineer. */
 "create way" = "创建路径";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "当前轨迹";
 
 /* No comment provided by engineer. */
@@ -244,7 +245,7 @@
 /* No comment provided by engineer. */
 "Editing layer not visible" = "编辑图层不可见";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "错误";
 
 /* No comment provided by engineer. */
@@ -262,10 +263,10 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "高度: %1$@ ± %2$@ 米";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "我会做的！";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "ID";
 
 /* No comment provided by engineer. */
@@ -283,10 +284,10 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "上次更新 %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "纬度/经度";
 
-/* No comment provided by engineer. */
+/* Left-hand side of screen */
 "Left side" = "左侧";
 
 /* No comment provided by engineer. */
@@ -313,7 +314,7 @@
 /* Edit action */
 "Make Rectangular" = "制作矩形";
 
-/* No comment provided by engineer. */
+/* rate the app later */
 "Maybe later..." = "以后再说...";
 
 /* No comment provided by engineer. */
@@ -337,16 +338,17 @@
 /* No comment provided by engineer. */
 "Network error" = "网络错误";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "从不";
 
 /* No comment provided by engineer. */
 "Next" = "下一个";
 
-/* No comment provided by engineer. */
+/* GPX track */
 "No active track" = "无活动轨迹";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "无数据";
 
 /* No comment provided by engineer. */
@@ -379,7 +381,7 @@
 /* No comment provided by engineer. */
 "Node tags" = "节点标签";
 
-/* No comment provided by engineer. */
+/* OSM note */
 "Note History" = "日志历史";
 
 /* No comment provided by engineer. */
@@ -391,7 +393,7 @@
 /* No comment provided by engineer. */
 "OK" = "确定";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "打开设置";
 
 /* No comment provided by engineer. */
@@ -409,7 +411,7 @@
 /* No comment provided by engineer. */
 "Previous" = "上一个";
 
-/* No comment provided by engineer. */
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "清理";
 
 /* No comment provided by engineer. */
@@ -433,7 +435,7 @@
 /* Edit action */
 "Reverse" = "逆转";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
 "Right side" = "右侧";
 
 /* Edit action */
@@ -448,13 +450,14 @@
 /* set tag value */
 "Set" = "设置";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "设置高度标签";
 
 /* No comment provided by engineer. */
 "Settings" = "设置";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "分享";
 
 /* No comment provided by engineer. */
@@ -469,7 +472,7 @@
 /* No comment provided by engineer. */
 "Standard imagery" = "标准影像";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "开始";
 
 /* No comment provided by engineer. */
@@ -490,7 +493,7 @@
 /* No comment provided by engineer. */
 "The XML is improperly formed" = "XML格式不正确";
 
-/* No comment provided by engineer. */
+/* OSM numeric user ID */
 "UID" = "用户ID";
 
 /* No comment provided by engineer. */
@@ -499,13 +502,13 @@
 /* No comment provided by engineer. */
 "Undo" = "撤消";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "未知角色";
 
 /* update an osm note */
 "Update" = "更新";
 
-/* No comment provided by engineer. */
+/* OSM Note */
 "Updating Note..." = "更新说明...";
 
 /* No comment provided by engineer. */
@@ -520,13 +523,13 @@
 /* No comment provided by engineer. */
 "Uploading GPX..." = "上传GPX...";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "用户";
 
 /* No comment provided by engineer. */
 "User-defined imagery" = "用户定义的影像";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "版本";
 
 /* No comment provided by engineer. */

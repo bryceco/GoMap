@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (put)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(novi objekt)";
 
 /* No comment provided by engineer. */
@@ -31,34 +31,47 @@
 /* No comment provided by engineer. */
 "(way)" = "(put)";
 
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f m, broj čvorova: %2$ld";
+
+/* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f m, broj čvorova: %2$ld";
+
+/* These values will always be large (plural) */
+"%.2f MB, %ld files" = "%1$.2f MB, broj datoteka: %2$ld";
+
 /* No comment provided by engineer. */
 "%@ (relation)" = "%@ (veza)";
 
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ komplet promjena";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ m";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld dana";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld uređivanja, zadnje aktivno %2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld m, broj točaka: %2$ld";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "Broj objekata: %ld";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "Broj potrebnih pločica: %lu";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
+"+ Button Position" = "Pozicija gumba +";
+
+/* unknown user name */
 "<unknown>" = "<nepoznato>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 dan";
 
 /* No comment provided by engineer. */
@@ -67,7 +80,7 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Vezu kojoj čvor pripada nije moguće potpuno preuzeti";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add inner member" = "Dodaj unutarnji član";
 
 /* No comment provided by engineer. */
@@ -79,7 +92,7 @@
 /* No comment provided by engineer. */
 "add object to relation" = "vezi dodaj objekt";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add outer member" = "Dodaj vanjski član";
 
 /* No comment provided by engineer. */
@@ -106,7 +119,13 @@
 /* No comment provided by engineer. */
 "Attention" = "Oprez";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
+"Attributes" = "Svojstva";
+
+/* Automatic selection of presets languages */
+"Automatic" = "Automaski";
+
+/* identifies current aerial imagery */
 "Background imagery %@" = "Slike pozadine %@";
 
 /* No comment provided by engineer. */
@@ -151,31 +170,31 @@
 /* No comment provided by engineer. */
 "Cancel" = "Odustani";
 
-/* No comment provided by engineer. */
+/* e-mail message */
 "Cannot compose message" = "Nije moguće sastaviti poruku";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Nije moguće povezati unutarnji put s vanjskim putom";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "Skup promjena";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Aerial Tiles" = "Izbriši pločice aerofotografije";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPS Overlay Tiles" = "Izbriši GPS pločice slojeva";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "Izbriši GPX staze";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Locator Overlay Tiles" = "Izbriši lokatorske pločice slojeva";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Mapnik Tiles" = "Izbriši Mapnik pločice";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "Izbriši OSM podatke";
 
 /* No comment provided by engineer. */
@@ -220,7 +239,7 @@
 /* No comment provided by engineer. */
 "create way" = "stvori put";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "Trenutačna staza";
 
 /* No comment provided by engineer. */
@@ -274,7 +293,7 @@
 /* No comment provided by engineer. */
 "Done" = "Gotovo";
 
-/* No comment provided by engineer. */
+/* create a duplicate */
 "duplicate" = "duplikat";
 
 /* Edit action */
@@ -298,7 +317,7 @@
 /* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "Osiguraj, da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "Greška";
 
 /* No comment provided by engineer. */
@@ -322,10 +341,10 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Visina: %1$@ ± %2$@ m";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "Ja ću to obaviti!";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "Identifikator";
 
 /* No comment provided by engineer. */
@@ -349,8 +368,14 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "Zadnje aktualiziranje: %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "Zemljopisna širina/dužina";
+
+/* Left-hand side of screen */
+"Left side" = "Lijeva strana";
+
+/* No comment provided by engineer. */
+"Length" = "Duljina";
 
 /* No comment provided by engineer. */
 "Location services timed out." = "Vrijeme usluge određivanja mjesta je isteklo.";
@@ -374,6 +399,12 @@
 "Make Rectangular" = "Postavi pravokutno";
 
 /* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "Maksimalni broj čvorova nakon spajanja je 2000";
+
+/* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "Maksimalna duljina puta je 2000 čvorova";
+
+/* rate the app later */
 "Maybe later..." = "Možda kasnije …";
 
 /* No comment provided by engineer. */
@@ -391,7 +422,7 @@
 /* No comment provided by engineer. */
 "Missing way to connect to" = "Nedostaje put na koji bi se povezalo";
 
-/* No comment provided by engineer. */
+/* last modified date */
 "Modified" = "Promijenjeno";
 
 /* No comment provided by engineer. */
@@ -424,13 +455,17 @@
 /* No comment provided by engineer. */
 "Network error" = "Greška mreže";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "Nikada";
 
 /* No comment provided by engineer. */
+"Next" = "Sljedeće";
+
+/* GPX track */
 "No active track" = "Nema aktivne staze";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "Nema podataka";
 
 /* No comment provided by engineer. */
@@ -464,12 +499,18 @@
 "node %@ (in way)" = "čvor %@ (na putu)";
 
 /* No comment provided by engineer. */
+"Node attributes" = "Svojstva čvora";
+
+/* No comment provided by engineer. */
 "Node is not an element of way" = "Čvor nije element puta";
+
+/* No comment provided by engineer. */
+"Node must be the first or last node of the way" = "Čvor mora biti prvi ili zadnji čvor puta";
 
 /* No comment provided by engineer. */
 "Node tags" = "Oznake čvora";
 
-/* No comment provided by engineer. */
+/* OSM note */
 "Note History" = "Kronologija bilješke";
 
 /* No comment provided by engineer. */
@@ -499,7 +540,7 @@
 /* No comment provided by engineer. */
 "Only ways/multipolygons can be rotated" = "Okretati se mogu samo putovi/mnogokuti";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "Otvori postavke";
 
 /* No comment provided by engineer. */
@@ -524,19 +565,28 @@
 "Please wait" = "Pričekaj";
 
 /* No comment provided by engineer. */
-"Previous Tracks" = "Prethodna staza";
+"Previous" = "Prethodne";
 
-/* No comment provided by engineer. */
+/* previous GPX track */
+"Previous Tracks" = "Prethodne staze";
+
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "Isprazni";
 
 /* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Ocjenjivanjem ovog programa olakvaša se drugim kartografima otkriti ga, te povećava vidljivost OpenStreetMapa.";
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Ocjenjivanje ovog programa olakšava drugim kartografima ga otkriti, te povećava vidljivost karte OpenStreetMap.";
+
+/* Alert title message */
+"Recent Aerial Imagery" = "Nedavne aerofotografije";
 
 /* No comment provided by engineer. */
 "Redo" = "Ponovi";
 
 /* No comment provided by engineer. */
 "relation" = "veza";
+
+/* No comment provided by engineer. */
+"Relation attributes" = "Svojstva veze";
 
 /* No comment provided by engineer. */
 "Relation tags" = "Oznake veza";
@@ -562,11 +612,14 @@
 /* No comment provided by engineer. */
 "Restriction: %@" = "Zabrana: %@";
 
-/* No comment provided by engineer. */
+/* country name,2-character country code */
 "Results for %@ (%@)" = "Rezultati za %1$@ (%2$@)";
 
 /* Edit action */
 "Reverse" = "Preokreni";
+
+/* Right-hand side of screen */
+"Right side" = "Desna strana";
 
 /* Edit action */
 "Rotate" = "Okreni";
@@ -583,7 +636,7 @@
 /* set tag value */
 "Set" = "Postavi";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "Postavi oznaku visine";
 
 /* No comment provided by engineer. */
@@ -592,7 +645,8 @@
 /* No comment provided by engineer. */
 "Settings" = "Postavke";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "Dijeli";
 
 /* No comment provided by engineer. */
@@ -607,7 +661,7 @@
 /* No comment provided by engineer. */
 "Standard imagery" = "Standardne slike";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "Pokreni";
 
 /* No comment provided by engineer. */
@@ -620,6 +674,9 @@
 "Tags" = "Oznake";
 
 /* No comment provided by engineer. */
+"The + button can be positioned on either the left or right side of the screen" = "Gumb + se može postaviti na lijevu ili desnu stranu ekrana";
+
+/* No comment provided by engineer. */
 "The current location cannot be determined: " = "Nije moguće odrediti trenutačno mjesto: ";
 
 /* No comment provided by engineer. */
@@ -627,6 +684,12 @@
 
 /* No comment provided by engineer. */
 "The nodes have conflicting roles in parent relations" = "Čvorovi sadrže sukobljavajuće uloge u nadređenoj vezi";
+
+/* No comment provided by engineer. */
+"The object does not contain any tags" = "Objekt ne sadržava oznake";
+
+/* No comment provided by engineer. */
+"The restriction cannot be deleted" = "Ograničenje se ne može izbrisati";
 
 /* No comment provided by engineer. */
 "The selected way must be completely visible" = "Odabrani put mora biti potupno vidljiv";
@@ -691,7 +754,7 @@
 /* No comment provided by engineer. */
 "U-Turn from %@ prohibited" = "Polukružno okretanje iz smjera %@ zabranjeno";
 
-/* No comment provided by engineer. */
+/* OSM numeric user ID */
 "UID" = "UID";
 
 /* No comment provided by engineer. */
@@ -700,7 +763,7 @@
 /* No comment provided by engineer. */
 "Undo" = "Poništi";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "Nepoznata uloga";
 
 /* No comment provided by engineer. */
@@ -712,7 +775,7 @@
 /* No comment provided by engineer. */
 "update relation members" = "aktualiziraj vezu između članova";
 
-/* No comment provided by engineer. */
+/* OSM Note */
 "Updating Note..." = "Aktualiziranje čvora …";
 
 /* No comment provided by engineer. */
@@ -727,19 +790,19 @@
 /* No comment provided by engineer. */
 "Uploading GPX..." = "Prenošenje GPX podataka …";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "Korisnik";
 
 /* No comment provided by engineer. */
 "User-defined imagery" = "Korisnički određene slike";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "Verzija";
 
-/* No comment provided by engineer. */
+/* Year aerial imagery was created */
 "vintage %@" = "vrijeme snimanja %@";
 
-/* No comment provided by engineer. */
+/* Years aerial imagery was created */
 "vintage %@ - %@" = "vrijeme snimanja %1$@ – %2$@";
 
 /* No comment provided by engineer. */
@@ -749,12 +812,15 @@
 "way %@" = "put %@";
 
 /* No comment provided by engineer. */
+"Way attributes" = "Svojstva puta";
+
+/* No comment provided by engineer. */
 "Way tags" = "Oznake puta";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Promijenit ćeš podatke u aktivnoj OpenStreetMap bazi podataka. Tvoje promjene će vidjeti svi na svijetu.\n\nZa nastavak pritisni još jednom „Spremi”, inače pritisni „Odustani”.";
 
-/* No comment provided by engineer. */
+/* POI editor presets */
 "You can define your own custom presets here" = "Ovdje možeš definirati vlastite predodređene postavke";
 
 /* No comment provided by engineer. */

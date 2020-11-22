@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (линия)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(новый объект)";
 
 /* No comment provided by engineer. */
@@ -31,7 +31,7 @@
 /* No comment provided by engineer. */
 "(way)" = "(линия)";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f МБ, %2$d файлов";
 
 /* No comment provided by engineer. */
@@ -40,31 +40,32 @@
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ пакет правок";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ метры";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld дней";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld правок, последняя правка %2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld метров, %2$ld точек";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld объекты";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "Необходимо %lu тайлов";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
 "+ Button Position" = "Положение кнопки +";
 
-/* No comment provided by engineer. */
+/* unknown user name */
 "<unknown>" = "<неизвестно>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 день";
 
 /* No comment provided by engineer. */
@@ -73,7 +74,7 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Отношение, к которому принадлежит точка, не загружено полностью";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add inner member" = "Добавить элемент с ролью inner";
 
 /* No comment provided by engineer. */
@@ -85,7 +86,7 @@
 /* No comment provided by engineer. */
 "add object to relation" = "добавить объект к отношению";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add outer member" = "Добавить элемент с ролью outer";
 
 /* No comment provided by engineer. */
@@ -112,10 +113,10 @@
 /* No comment provided by engineer. */
 "Attention" = "Внимание";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
 "Attributes" = "Атрибуты";
 
-/* No comment provided by engineer. */
+/* identifies current aerial imagery */
 "Background imagery %@" = "Подложка %@";
 
 /* No comment provided by engineer. */
@@ -160,31 +161,31 @@
 /* No comment provided by engineer. */
 "Cancel" = "Отмена";
 
-/* No comment provided by engineer. */
+/* e-mail message */
 "Cannot compose message" = "Не удалось создать сообщение";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Невозможно соединить внутренний контур с внешним";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "Пакет правок";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Aerial Tiles" = "Очистить тайлы аэрофотосъемки";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPS Overlay Tiles" = "Очистить тайлы слоя GPS";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "Очистить GPX-треки";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Locator Overlay Tiles" = "Очистить тайлы слоя Locator";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Mapnik Tiles" = "Очистить тайлы Mapnik";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "Очистить данные OSM";
 
 /* No comment provided by engineer. */
@@ -229,7 +230,7 @@
 /* No comment provided by engineer. */
 "create way" = "создать линию";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "Текущий трек";
 
 /* No comment provided by engineer. */
@@ -283,7 +284,7 @@
 /* No comment provided by engineer. */
 "Done" = "Готово";
 
-/* No comment provided by engineer. */
+/* create a duplicate */
 "duplicate" = "создать копию";
 
 /* Edit action */
@@ -307,7 +308,7 @@
 /* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "Убедитесь, что редактируемый слой включён и отображает объекты в данном районе";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "Ошибка";
 
 /* No comment provided by engineer. */
@@ -331,10 +332,10 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Высота: %1$@ ± %2$@ метров";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "Будет сделано!";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "Идентификатор";
 
 /* No comment provided by engineer. */
@@ -358,10 +359,10 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "Последнее обновление %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "Широта/Долгота";
 
-/* No comment provided by engineer. */
+/* Left-hand side of screen */
 "Left side" = "Левая сторона";
 
 /* No comment provided by engineer. */
@@ -388,7 +389,7 @@
 /* Edit action */
 "Make Rectangular" = "Выпрямить углы";
 
-/* No comment provided by engineer. */
+/* rate the app later */
 "Maybe later..." = "Может быть, позже...";
 
 /* No comment provided by engineer. */
@@ -406,7 +407,7 @@
 /* No comment provided by engineer. */
 "Missing way to connect to" = "Отсутствует линия для присоединения";
 
-/* No comment provided by engineer. */
+/* last modified date */
 "Modified" = "Изменено";
 
 /* No comment provided by engineer. */
@@ -439,16 +440,17 @@
 /* No comment provided by engineer. */
 "Network error" = "Ошибка сети";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "Никогда";
 
 /* No comment provided by engineer. */
 "Next" = "Следующий";
 
-/* No comment provided by engineer. */
+/* GPX track */
 "No active track" = "Нет активного трека";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "Нет данных";
 
 /* No comment provided by engineer. */
@@ -490,7 +492,7 @@
 /* No comment provided by engineer. */
 "Node tags" = "Теги точки";
 
-/* No comment provided by engineer. */
+/* OSM note */
 "Note History" = "История заметки";
 
 /* No comment provided by engineer. */
@@ -520,7 +522,7 @@
 /* No comment provided by engineer. */
 "Only ways/multipolygons can be rotated" = "Вращать можно только линии/мультиполигоны";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "Открыть настройки";
 
 /* No comment provided by engineer. */
@@ -547,16 +549,16 @@
 /* No comment provided by engineer. */
 "Previous" = "Предыдущий";
 
-/* No comment provided by engineer. */
+/* previous GPX track */
 "Previous Tracks" = "Предыдущие треки";
 
-/* No comment provided by engineer. */
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "Очистить";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Оценивая это приложение, вы помогаете другим картографам легче его обнаружить и повышаете популярность OpenStreetMap.";
 
-/* No comment provided by engineer. */
+/* Alert title message */
 "Recent Aerial Imagery" = "Недавние аэрофотоснимки";
 
 /* No comment provided by engineer. */
@@ -592,13 +594,13 @@
 /* No comment provided by engineer. */
 "Restriction: %@" = "Ограничение: %@";
 
-/* No comment provided by engineer. */
+/* country name,2-character country code */
 "Results for %@ (%@)" = "Результаты для %1$@ (%2$@)";
 
 /* Edit action */
 "Reverse" = "Изменить направление";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
 "Right side" = "Правая сторона";
 
 /* Edit action */
@@ -616,7 +618,7 @@
 /* set tag value */
 "Set" = "Установить";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "Задать тег высоты";
 
 /* No comment provided by engineer. */
@@ -625,7 +627,8 @@
 /* No comment provided by engineer. */
 "Settings" = "Настройки";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "Поделиться";
 
 /* No comment provided by engineer. */
@@ -640,7 +643,7 @@
 /* No comment provided by engineer. */
 "Standard imagery" = "Стандартные снимки";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "Начать";
 
 /* No comment provided by engineer. */
@@ -727,7 +730,7 @@
 /* No comment provided by engineer. */
 "U-Turn from %@ prohibited" = "Разворот с %@ запрещён";
 
-/* No comment provided by engineer. */
+/* OSM numeric user ID */
 "UID" = "UID";
 
 /* No comment provided by engineer. */
@@ -736,7 +739,7 @@
 /* No comment provided by engineer. */
 "Undo" = "Отменить";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "Неизвестная роль";
 
 /* No comment provided by engineer. */
@@ -748,7 +751,7 @@
 /* No comment provided by engineer. */
 "update relation members" = "обновить участников отношения";
 
-/* No comment provided by engineer. */
+/* OSM Note */
 "Updating Note..." = "Обновление заметки...";
 
 /* No comment provided by engineer. */
@@ -763,19 +766,19 @@
 /* No comment provided by engineer. */
 "Uploading GPX..." = "Загрузка GPX...";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "Пользователь";
 
 /* No comment provided by engineer. */
 "User-defined imagery" = "Пользовательские снимки";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "Версия";
 
-/* No comment provided by engineer. */
+/* Year aerial imagery was created */
 "vintage %@" = "дата съёмки %@";
 
-/* No comment provided by engineer. */
+/* Years aerial imagery was created */
 "vintage %@ - %@" = "дата съёмки %1$@ - %2$@";
 
 /* No comment provided by engineer. */
@@ -793,7 +796,7 @@
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Вы собираетесь внести изменения в действующую базу данных OpenStreetMap. Ваши правки будут доступны для просмотра абсолютно любому человеку из любой точки планеты.\n\nЧтобы продолжить нажмите Загрузить на сервер ещё раз, в противном случае нажмите Отмена.";
 
-/* No comment provided by engineer. */
+/* POI editor presets */
 "You can define your own custom presets here" = "Здесь вы можете создать свои личные предустановки";
 
 /* No comment provided by engineer. */

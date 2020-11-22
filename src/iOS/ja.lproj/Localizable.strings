@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (ウェイ)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(新規オブジェクト)";
 
 /* No comment provided by engineer. */
@@ -31,7 +31,7 @@
 /* No comment provided by engineer. */
 "(way)" = "(ウェイ)";
 
-/* No comment provided by engineer. */
+/* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld ファイル";
 
 /* No comment provided by engineer. */
@@ -40,31 +40,32 @@
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ 変更セット";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ メートル";
 
-/* No comment provided by engineer. */
+/* One or more days
+   Plural number of days */
 "%ld Days" = "%ld 日";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld 件の編集, 最新アクティブ化 %2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld メートル, %2$ld ポイント";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld オブジェクト";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "%lu タイルが必要";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
 "+ Button Position" = "+ ボタン位置";
 
-/* No comment provided by engineer. */
+/* unknown user name */
 "<unknown>" = "<不明>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 日";
 
 /* No comment provided by engineer. */
@@ -73,7 +74,7 @@
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "このノードが所属するリレーションはまだダンロードしきれていません";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add inner member" = "innerメンバーを追加";
 
 /* No comment provided by engineer. */
@@ -85,7 +86,7 @@
 /* No comment provided by engineer. */
 "add object to relation" = "オブジェクトをリレーションに追加";
 
-/* No comment provided by engineer. */
+/* Add to relation */
 "Add outer member" = "outerメンバーを追加";
 
 /* No comment provided by engineer. */
@@ -112,10 +113,10 @@
 /* No comment provided by engineer. */
 "Attention" = "注意";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
 "Attributes" = "属性";
 
-/* No comment provided by engineer. */
+/* identifies current aerial imagery */
 "Background imagery %@" = "背景画像 %@";
 
 /* No comment provided by engineer. */
@@ -160,31 +161,31 @@
 /* No comment provided by engineer. */
 "Cancel" = "中止";
 
-/* No comment provided by engineer. */
+/* e-mail message */
 "Cannot compose message" = "メッセージを作成できません";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "innerウェイはouterウェイに接続できません";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "変更セット";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Aerial Tiles" = "画像タイルをクリア";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPS Overlay Tiles" = "GPSオーバーレイタイルをクリア";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "GPXトラックをクリア";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Locator Overlay Tiles" = "位置オーバーレイタイルをクリア";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Mapnik Tiles" = "Mapnikタイルをクリア";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "OSMデータをクリア";
 
 /* No comment provided by engineer. */
@@ -229,7 +230,7 @@
 /* No comment provided by engineer. */
 "create way" = "ウェイを新規作成";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "現在のトラック";
 
 /* No comment provided by engineer. */
@@ -283,7 +284,7 @@
 /* No comment provided by engineer. */
 "Done" = "完了";
 
-/* No comment provided by engineer. */
+/* create a duplicate */
 "duplicate" = "複製";
 
 /* Edit action */
@@ -307,7 +308,7 @@
 /* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "エディタのビューが表示されていて、ローカルエリア内のオブジェクトが表示されていることを確認してください";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "エラー";
 
 /* No comment provided by engineer. */
@@ -331,10 +332,10 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "高さ: %1$@ ± %2$@ メートル";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "実行します！";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "識別子";
 
 /* No comment provided by engineer. */
@@ -358,10 +359,10 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "最終更新 %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "緯度/経度";
 
-/* No comment provided by engineer. */
+/* Left-hand side of screen */
 "Left side" = "左側";
 
 /* No comment provided by engineer. */
@@ -388,7 +389,7 @@
 /* Edit action */
 "Make Rectangular" = "直角化";
 
-/* No comment provided by engineer. */
+/* rate the app later */
 "Maybe later..." = "後で...";
 
 /* No comment provided by engineer. */
@@ -406,7 +407,7 @@
 /* No comment provided by engineer. */
 "Missing way to connect to" = "接続先のウェイが見つかりません";
 
-/* No comment provided by engineer. */
+/* last modified date */
 "Modified" = "更新日";
 
 /* No comment provided by engineer. */
@@ -439,16 +440,17 @@
 /* No comment provided by engineer. */
 "Network error" = "ネットワークのエラー";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "いいえ";
 
 /* No comment provided by engineer. */
 "Next" = "次へ";
 
-/* No comment provided by engineer. */
+/* GPX track */
 "No active track" = "アクティブなトラックなし";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "データなし";
 
 /* No comment provided by engineer. */
@@ -490,7 +492,7 @@
 /* No comment provided by engineer. */
 "Node tags" = "ノードのタグ";
 
-/* No comment provided by engineer. */
+/* OSM note */
 "Note History" = "メモの履歴";
 
 /* No comment provided by engineer. */
@@ -520,7 +522,7 @@
 /* No comment provided by engineer. */
 "Only ways/multipolygons can be rotated" = "ウェイ/マルチポリゴンだけが回転できます";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "設定を開く";
 
 /* No comment provided by engineer. */
@@ -547,10 +549,10 @@
 /* No comment provided by engineer. */
 "Previous" = "前へ";
 
-/* No comment provided by engineer. */
+/* previous GPX track */
 "Previous Tracks" = "以前のトラック";
 
-/* No comment provided by engineer. */
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "消去";
 
 /* No comment provided by engineer. */
@@ -589,13 +591,13 @@
 /* No comment provided by engineer. */
 "Restriction: %@" = "制限: %@";
 
-/* No comment provided by engineer. */
+/* country name,2-character country code */
 "Results for %@ (%@)" = "%1$@ (%2$@) の検索結果";
 
 /* Edit action */
 "Reverse" = "反転";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
 "Right side" = "右側";
 
 /* Edit action */
@@ -613,7 +615,7 @@
 /* set tag value */
 "Set" = "セット";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "heightタグをセット";
 
 /* No comment provided by engineer. */
@@ -622,7 +624,8 @@
 /* No comment provided by engineer. */
 "Settings" = "設定";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "共有";
 
 /* No comment provided by engineer. */
@@ -637,7 +640,7 @@
 /* No comment provided by engineer. */
 "Standard imagery" = "標準画像";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "開始";
 
 /* No comment provided by engineer. */
@@ -724,7 +727,7 @@
 /* No comment provided by engineer. */
 "U-Turn from %@ prohibited" = "%@ からのUターンが禁止されています";
 
-/* No comment provided by engineer. */
+/* OSM numeric user ID */
 "UID" = "UID";
 
 /* No comment provided by engineer. */
@@ -733,7 +736,7 @@
 /* No comment provided by engineer. */
 "Undo" = "元に戻す";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "不明なロール";
 
 /* No comment provided by engineer. */
@@ -745,7 +748,7 @@
 /* No comment provided by engineer. */
 "update relation members" = "リレーションメンバーを更新";
 
-/* No comment provided by engineer. */
+/* OSM Note */
 "Updating Note..." = "メモを更新中...";
 
 /* No comment provided by engineer. */
@@ -760,19 +763,19 @@
 /* No comment provided by engineer. */
 "Uploading GPX..." = "GPXをアップロード中...";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "ユーザー";
 
 /* No comment provided by engineer. */
 "User-defined imagery" = "ユーザー定義の画像";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "バージョン";
 
-/* No comment provided by engineer. */
+/* Year aerial imagery was created */
 "vintage %@" = "年代 %@";
 
-/* No comment provided by engineer. */
+/* Years aerial imagery was created */
 "vintage %@ - %@" = "年代 %1$@ - %2$@";
 
 /* No comment provided by engineer. */
@@ -790,7 +793,7 @@
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "あなたはOpenStreetMapデータベースの本番環境に変更を加えようとしています。この変更は世界中で閲覧されます。\n\n続ける場合はコミットを再度押してください。やめる場合は中止を押してください。";
 
-/* No comment provided by engineer. */
+/* POI editor presets */
 "You can define your own custom presets here" = "ここではあなた自身のカスタムプリセットを定義できます";
 
 /* No comment provided by engineer. */

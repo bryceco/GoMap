@@ -52,6 +52,9 @@
 /* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
 "CXe-gQ-Zda.text" = "Vrijednost 8";
 
+/* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; */
+"daQ-tl-pKh.text" = "Etiketa";
+
 /* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
 "Dfv-TT-J6i.footerTitle" = "Predodređena postavka bit će dostupna prilikom uređivanja objekata koji odgovaraju ovoj kombinaciji ključa/vrijednosti. Ostavi bilo koje polje praznim za upotrebu zamjenskog znaka.";
 
@@ -84,6 +87,9 @@
 
 /* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
 "GIO-W7-q5U.title" = "Prilagođene predodređene postavke";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; */
+"gv7-b8-wUw.text" = "Etiketa";
 
 /* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
 "hfr-Mf-ZHv.text" = "vrijednost";
