@@ -111,6 +111,7 @@
 		_redoButton,
 		_mapView.addNodeButton,
 		_mapView.compassButton,
+		_mapView.centerOnGPSButton,
 		_settingsButton,
 		_uploadButton,
 		_displayButton,

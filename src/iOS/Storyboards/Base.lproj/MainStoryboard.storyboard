@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -255,8 +255,11 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo4-Nq-pAz" userLabel="Center Button">
-                                <rect key="frame" x="253" y="124" width="57" height="28"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <rect key="frame" x="248" y="124" width="62" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="2rn-RQ-QPx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" title="Center"/>
                                 <connections>
@@ -295,7 +298,7 @@
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="P70-Oz-du4" secondAttribute="leading" constant="16" id="OSS-Fj-87U"/>
                             <constraint firstItem="9O3-HG-HvC" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="12" id="Q13-4n-waC"/>
                             <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="9" id="QvO-s0-CSk"/>
-                            <constraint firstItem="53z-ij-akY" firstAttribute="centerY" secondItem="P70-Oz-du4" secondAttribute="centerY" constant="71" id="VwN-nB-ehp"/>
+                            <constraint firstItem="53z-ij-akY" firstAttribute="centerY" secondItem="P70-Oz-du4" secondAttribute="centerY" priority="700" constant="71" id="VwN-nB-ehp"/>
                             <constraint firstAttribute="trailing" secondItem="NOu-1p-3jQ" secondAttribute="trailing" id="ZRJ-bF-j5o"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="ZUW-Zx-W4g"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="trailing" secondItem="YRw-Aj-GwS" secondAttribute="trailing" constant="12" id="bGw-oa-eIq"/>
@@ -653,7 +656,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="stf-JU-iga">
-                                            <rect key="frame" x="16" y="3" width="35.5" height="20.5"/>
+                                            <rect key="frame" x="16" y="3" width="35" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>

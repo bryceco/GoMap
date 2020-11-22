@@ -353,10 +353,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	_editorLayer.whiteText = !_aerialLayer.hidden;
 
 	// center button
-	_centerOnGPSButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
-	_centerOnGPSButton.layer.cornerRadius = 5;
-	_centerOnGPSButton.layer.borderWidth = 1.0;
-	_centerOnGPSButton.layer.borderColor = UIColor.blueColor.CGColor;
 	_centerOnGPSButton.hidden = YES;
 
 	// compass button
