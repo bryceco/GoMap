@@ -322,7 +322,7 @@
 	if ( recognizer.state == UIGestureRecognizerStateBegan ) {
 		// show the most recently used aerial imagery
 		AerialList * aerialList = self.mapView.customAerials;
-		UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Recent Aerial Imagery", nil)
+		UIAlertController * actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Recent Aerial Imagery", @"Alert title message")
 																			  message:nil
 																	   preferredStyle:UIAlertControllerStyleActionSheet];
 		for ( AerialService * service in aerialList.recentlyUsed ) {

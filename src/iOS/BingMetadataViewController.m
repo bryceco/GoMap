@@ -83,7 +83,7 @@
 			}];
 
 			NSString * text = [attrList componentsJoinedByString:@"\n\n• "];
-			self.textView.text = [NSString stringWithFormat:NSLocalizedString(@"Background imagery %@",nil), text];
+			self.textView.text = [NSString stringWithFormat:NSLocalizedString(@"Background imagery %@",@"identifies current aerial imagery"), text];
 
 		} else if ( error ) {
 			self.textView.text = [NSString stringWithFormat:NSLocalizedString(@"Error fetching metadata: %@",nil), error.localizedDescription];

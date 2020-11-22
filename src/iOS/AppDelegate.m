@@ -204,7 +204,7 @@
 	UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
 														 style:UIAlertActionStyleCancel
 													   handler:nil];
-	UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+	UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",@"Open the iOS Settings app")
 														   style:UIAlertActionStyleDefault
 														 handler:^(UIAlertAction * _Nonnull action) {
 															 [AppDelegate openAppSettings];

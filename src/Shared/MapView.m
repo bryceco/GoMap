@@ -779,8 +779,8 @@ const CGFloat kEditControlCornerRadius = 4;
 	if ( uploadCount > 1 && countLog10 == floor(countLog10) ) {
 		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?",nil), (long)uploadCount];
         UIAlertController * alertViewRateApp = [UIAlertController alertControllerWithTitle:title message:NSLocalizedString(@"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.",nil) preferredStyle:UIAlertControllerStyleAlert];
-        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Maybe later...",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"I'll do it!",nil)    style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Maybe later...",@"rate the app later") 	style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"I'll do it!",@"rate the app now")    	style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 			[self showInAppStore];
         }]];
         [self.mainViewController presentViewController:alertViewRateApp animated:YES completion:nil];
@@ -2589,7 +2589,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	_confirmDrag = NO;
 
 	_pushpinView = [PushPinView new];
-	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
+	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",@"a newly created node/object");
 	_pushpinView.layer.zPosition = Z_PUSHPIN;
 
 	_pushpinView.arrowPoint = point;
@@ -3492,10 +3492,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 						[self showAlert:NSLocalizedString(@"Error",nil) message:error];
 					}
 				};
-				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add outer member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add outer member",@"Add to relation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 					addMmember(@"outer");
 				}]];
-				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add inner member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add inner member",@"Add to relation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 					addMmember(@"inner");
 				}]];
 				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];

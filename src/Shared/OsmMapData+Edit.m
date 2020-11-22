@@ -241,7 +241,7 @@
 		}
 	}
 	if ( role == nil ) {
-		*error = NSLocalizedString(@"Unknown role", nil);
+		*error = NSLocalizedString(@"Unknown role", @"relation role=* tag");
 		return nil;
 	}
 
@@ -1315,14 +1315,15 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 
 - (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset
 {
+	NSString * comment = NSLocalizedString(@"duplicate",@"create a duplicate");
 	if ( object.isNode ) {
-		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:comment];
 		return [self duplicateNode:object.isNode withOffset:offset];
 	} else if ( object.isWay ) {
-		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:comment];
 		return [self duplicateWay:object.isWay withOffset:offset];
 	} else if ( object.isRelation.isMultipolygon ) {
-		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:comment];
 		OsmRelation * newRelation = [self createRelation];
 		for ( OsmMember * member in object.isRelation.members ) {
 			OsmWay * way = member.ref;

@@ -118,7 +118,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
             return nil;
         }
         
-		return [NSString stringWithFormat:NSLocalizedString(@"Results for %@ (%@)",nil),countryName,countryCode.uppercaseString];
+		return [NSString stringWithFormat:NSLocalizedString(@"Results for %@ (%@)",@"country name,2-character country code"),countryName,countryCode.uppercaseString];
 	}
 	return nil;
 }

@@ -37,7 +37,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return NSLocalizedString(@"You can define your own custom presets here",nil);
+	return NSLocalizedString(@"You can define your own custom presets here",@"POI editor presets");
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

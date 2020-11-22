@@ -32,13 +32,12 @@
 @implementation GpxTrackTableCell
 -(IBAction)doAction:(id)sender
 {
-	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share",@"Title for sharing options") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Upload to OSM",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		[self.tableView shareTrack:_gpxTrack];
 	}]];
-
-	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Share",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Share",@"Open iOS sharing sheet") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		NSString * fileName = [NSString stringWithFormat:@"%@ %@.gpx", AppDelegate.shared.appName, self.gpxTrack.creationDate];
 		NSURL * url = [NSFileManager.defaultManager.temporaryDirectory URLByAppendingPathComponent:fileName];
 		NSString * gpx = self.gpxTrack.gpxXmlString;
@@ -179,9 +178,9 @@
 {
 	switch (section) {
 		case SECTION_ACTIVE_TRACK:
-			return NSLocalizedString(@"Current Track",nil);
+			return NSLocalizedString(@"Current Track",@"current GPX track");
 		case SECTION_PREVIOUS_TRACKS:
-			return NSLocalizedString(@"Previous Tracks",nil);
+			return NSLocalizedString(@"Previous Tracks","previous GPX track");
 		case SECTION_CONFIGURE:
 			return NSLocalizedString(@"Configure",nil);
 		default:
@@ -206,7 +205,7 @@
 	if ( indexPath.section == SECTION_ACTIVE_TRACK && gpxLayer.activeTrack == nil ) {
 		// no active track
 		UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.textLabel.text = NSLocalizedString(@"No active track",nil);
+		cell.textLabel.text = NSLocalizedString(@"No active track",@"GPX track");
 		return cell;
 	}
 	if ( indexPath.section == SECTION_CONFIGURE ) {
@@ -216,7 +215,7 @@
 			GpxTrackExpirationCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackExpirationCell" forIndexPath:indexPath];
 			NSNumber * expirationDays = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
 			NSInteger expiration = [expirationDays integerValue];
-			NSString * title = expiration <= 0 ? NSLocalizedString(@"Never",nil) : [NSString stringWithFormat:NSLocalizedString(@"%ld Days",nil),(long)expiration];
+			NSString * title = expiration <= 0 ? NSLocalizedString(@"Never",@"Never delete old tracks") : [NSString stringWithFormat:NSLocalizedString(@"%ld Days",@"One or more days"),(long)expiration];
 			[cell.expirationButton setTitle:title forState:UIControlStateNormal];
 			[cell.expirationButton sizeToFit];
 			return cell;
