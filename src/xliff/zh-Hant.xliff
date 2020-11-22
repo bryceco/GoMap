@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <header>
@@ -1009,63 +1009,78 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
+        <target>選擇一條靠近路口的道路</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
+        <target>您選取的物件在畫面外</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
+        <target>設定</target>
         <note>set tag value</note>
       </trans-unit>
       <trans-unit id="Set Height Tag" xml:space="preserve">
         <source>Set Height Tag</source>
+        <target>設定高度標籤</target>
         <note>The height=* tag</note>
       </trans-unit>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
+        <target>設定</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
+        <target>分享</target>
         <note>Open iOS sharing sheet
    Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
+        <target>顯示近期的項目</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the GPX file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the GPX file</source>
+        <target>抱歉，讀取 GPX 檔的時候遇到錯誤</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
         <source>Split</source>
+        <target>拆分</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
+        <target>預設影像</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
+        <target>開始</target>
         <note>Begin downloading tiles</note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
+        <target>停止</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
+        <target>截彎取直</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
+        <target>標籤</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
+        <target>加號按鈕可以移到畫面的左邊或右邊</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The XML is improperly formed" xml:space="preserve">
@@ -1074,90 +1089,112 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
+        <target>無法確定目前的定位： </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
+        <target>所合併的節點有標籤衝突</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
         <source>The nodes have conflicting roles in parent relations</source>
+        <target>節點和所屬關係的角色有衝突</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
+        <target>物件沒有任何標籤</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
+        <target>無法刪除轉向限制關係</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
+        <target>所選線段必須完整顯示在畫面中</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
+        <target>無法確定目標線段</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
+        <target>轉向限制關係包含了無法辨識的限制，如果繼續將會破壞該關係。</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
+        <target>線段屬於一個尚未完整下載的關係</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation this not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation this not fully downloaded</source>
+        <target>線段屬於一個尚未完整下載的關係</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
+        <target>線段不夠直</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
+        <target>線段必須包含至少兩個節點</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
+        <target>線段包含不相容的標籤</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
+        <target>這個行為需要啟用 GPS 功能</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
+        <target>本軟體尚未支援編輯無轉向節點的轉向限制關係</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
+        <target>把另一個成員加入到關係中的做法是在線段上長按就可以新增</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %1$@ to %2$@</source>
+        <target>已允許從 %1$@ 移動到 %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %1$@ to %2$@</source>
+        <target>只能從 %1$@ 移動到 %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %1$@ to %2$@</source>
+        <target>禁止從 %1$@ 移動到 %2$@</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
+        <target>從 %@ 移動</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
+        <target>開啟定位服務讓 %@ 確定您的定位</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
+        <target>轉向限制關係</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
