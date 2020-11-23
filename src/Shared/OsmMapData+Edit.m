@@ -670,7 +670,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 			if ( relation.isRestriction ) {
 				for ( OsmMember * member in relation.members ) {
 					if ( ! [member.ref isKindOfClass:[OsmBaseObject class]] ) {
-						*error = NSLocalizedString(@"The way belongs to a relation this not fully downloaded", nil);
+						*error = NSLocalizedString(@"The way belongs to a relation that is not fully downloaded", nil);
 						return NO;
 					}
 				}
