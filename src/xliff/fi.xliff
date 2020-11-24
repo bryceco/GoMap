@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="fi" datatype="plaintext">
     <header>
@@ -92,10 +92,12 @@
       </trans-unit>
       <trans-unit id="%.0f meters, %ld nodes" xml:space="preserve">
         <source>%1$.0f meters, %2$ld nodes</source>
+        <target>%1$.0f metriä, %2$ld pistettä</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$.1f meters, %2$ld nodes</source>
+        <target>%1$.1f metriä, %2$ld pistettä</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -241,6 +243,7 @@
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
+        <target>Automaattinen</target>
         <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
