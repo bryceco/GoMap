@@ -266,6 +266,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="daQ-tl-pKh" firstAttribute="top" secondItem="gv7-b8-wUw" secondAttribute="bottom" id="FHY-zg-4GF"/>
+                                                <constraint firstAttribute="bottom" secondItem="daQ-tl-pKh" secondAttribute="bottom" id="hvC-Jq-NBo"/>
+                                                <constraint firstItem="gv7-b8-wUw" firstAttribute="top" secondItem="DcA-k0-mZa" secondAttribute="top" id="nQJ-MT-AOI"/>
                                             </constraints>
                                         </stackView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mTF-fy-t5D">
