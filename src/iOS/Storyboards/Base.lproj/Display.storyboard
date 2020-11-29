@@ -31,7 +31,11 @@
                         <viewLayoutGuide key="safeArea" id="1Pp-Dq-lMU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="QA Poole No Name Tiles" id="H3p-Ta-kIy" userLabel="QA Poole"/>
+                    <navigationItem key="navigationItem" title="QA Poole No Name Tiles" id="H3p-Ta-kIy" userLabel="QA Poole">
+                        <attributedString key="userComments">
+                            <fragment content="Title for Simon Poole's &quot;No name&quot; (missing name) tile overlay"/>
+                        </attributedString>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5i0-Uq-W3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -635,6 +639,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <rect key="frame" x="80" y="5" width="220" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="A hypothetical aerial imagery provider"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="gWP-Gt-h0B" eventType="editingChanged" id="QvZ-c7-OHq"/>
                                                     </connections>
@@ -1500,7 +1507,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         <rect key="frame" x="0.0" y="639.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQI-EZ-rd6" id="pIi-Ie-btg">
-                                            <rect key="frame" x="0.0" y="0.0" width="301" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="293" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Filters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxX-tl-ZLH">
@@ -1544,6 +1551,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="The location on the screen where the user prefers the + (add node) button to appear"/>
+                                                    </attributedString>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="el8-h8-H1F">
                                                     <rect key="frame" x="249" y="5.5" width="51" height="33"/>

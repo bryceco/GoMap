@@ -250,12 +250,18 @@
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
                                                     <rect key="frame" x="0.0" y="20.5" width="43.5" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -298,6 +304,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -319,7 +328,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hbg-7W-7Nu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3797" y="-1103"/>
+            <point key="canvasLocation" x="3795.652173913044" y="-1103.5714285714284"/>
         </scene>
         <!--POI Preset Values-->
         <scene sceneID="Jm0-pc-0xm">
@@ -343,6 +352,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -360,6 +372,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZYn-TK-k7d">
                                             <rect key="frame" x="20" y="24.5" width="47" height="16"/>
@@ -367,6 +382,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -409,6 +427,9 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="BEW-to-vAi"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="HWR-Ud-Kgc"/>
@@ -421,6 +442,9 @@
                                             <rect key="frame" x="154" y="5" width="208" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="Bi5-qH-vtX"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="flk-oA-v6f"/>
@@ -459,6 +483,9 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="ZB2-P2-lYD"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="RR5-Po-rum"/>
@@ -470,6 +497,9 @@
                                             <rect key="frame" x="154" y="8" width="209" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="enw-Un-WMB"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="xd6-gT-IO9"/>
@@ -508,6 +538,9 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="WiJ-Ye-TUp"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="JMd-oe-raC"/>
@@ -520,6 +553,9 @@
                                             <rect key="frame" x="154" y="5" width="240" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="WVW-x6-1Gd"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="wpd-nh-Mqn"/>
@@ -787,6 +823,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="8fV-oZ-Cyd"/>
                                                     </connections>
@@ -824,6 +863,9 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="CTz-DC-LcR"/>
                                                     </connections>
@@ -865,6 +907,9 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="mGS-Zh-CNb"/>
                                                     </connections>
@@ -902,6 +947,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="uWh-vf-snf"/>
                                                     </connections>
@@ -935,6 +983,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="dtU-Ze-rc1"/>
                                                     </connections>
@@ -969,6 +1020,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="lrl-DI-aSV"/>
                                                     </connections>
@@ -1003,6 +1057,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="fnJ-N0-Rby"/>
                                                     </connections>
@@ -1037,6 +1094,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="SdA-vq-uOP"/>
                                                     </connections>
@@ -1405,7 +1465,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="CI0-Ka-NB5"/>
+        <segue reference="ZKT-be-rhK"/>
         <segue reference="g2g-Jn-Tdv"/>
     </inferredMetricsTieBreakers>
     <resources>
