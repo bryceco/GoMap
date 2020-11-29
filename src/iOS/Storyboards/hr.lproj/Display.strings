@@ -76,7 +76,7 @@
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
 "el8-h8-H1F.normalTitle" = "Gumb";
 
-/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; */
+/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear"; */
 "eLW-GB-ugG.text" = "Smjesti gumb + na ";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
@@ -115,7 +115,7 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF"; */
 "h1O-06-ApF.text" = "Etiketa";
 
-/* Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; */
+/* Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay"; */
 "H3p-Ta-kIy.title" = "QA Poole No Name pločice";
 
 /* Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt"; */
@@ -229,7 +229,7 @@
 /* Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn"; */
 "VUR-wT-knn.text" = "Aktiviraj okretanje";
 
-/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; */
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
 "w75-Lj-3jF.placeholder" = "Portlandia GIS";
 
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */

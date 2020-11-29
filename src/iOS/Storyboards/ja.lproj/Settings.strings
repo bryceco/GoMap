@@ -13,7 +13,7 @@
 /* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
 "2TW-mO-uX2.headerTitle" = "ズームしたタイルをダウンロード";
 
-/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; */
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
 "2Zi-cz-7Va.text" = "タッチ位置を表示";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
@@ -55,13 +55,16 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "開始";
 
+/* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
+"CHj-a3-gC9.text" = "Weblate - 翻訳";
+
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "保存";
 
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "バグ報告 & 提案";
 
-/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; */
+/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
 "DiU-tt-U7H.text" = "詳細";
 
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
@@ -73,7 +76,7 @@
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "認証情報";
 
-/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; */
+/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen"; */
 "Gcr-zK-nDq.text" = "画面録画用のタッチ位置表示";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
@@ -94,7 +97,7 @@
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
 "iR4-av-Q7M.text" = "メールでのフィードバック";
 
-/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
+/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate"; */
 "JbA-pC-plJ.text" = "タイトル";
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
@@ -154,7 +157,7 @@
 /* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
 "TrT-Nn-WKe.text" = "TestFlight Betaに参加";
 
-/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; */
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
 "UeH-ME-EV8.text" = "FPSを表示";
 
 /* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */

@@ -31,7 +31,7 @@
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "Tallenna";
 
-/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; */
+/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
 "DiU-tt-U7H.text" = "Lisätietoja lisätietoja lisätietoja lisätietoja lisätietoja";
 
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
@@ -55,7 +55,7 @@
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
 "iR4-av-Q7M.text" = "Palaute sähköpostitse";
 
-/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
+/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate"; */
 "JbA-pC-plJ.text" = "Otsikko otsikko otsikko otsikko";
 
 /* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
@@ -97,7 +97,7 @@
 /* Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS"; */
 "Tkc-bW-kNS.headerTitle" = "OpenStreetMap-tili";
 
-/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; */
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
 "UeH-ME-EV8.text" = "Näytä FPS";
 
 /* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */

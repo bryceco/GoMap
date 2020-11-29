@@ -13,7 +13,7 @@
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
 "7Ua-cx-BHI.title" = "Загрузить";
 
-/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; */
+/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
 "9G2-Gl-CeP.text" = "имя пользователя - действие";
 
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
@@ -58,7 +58,7 @@
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "Устранить";
 
-/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; */
+/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
 "PHk-s9-onx.text" = "Различные комментарии...";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */

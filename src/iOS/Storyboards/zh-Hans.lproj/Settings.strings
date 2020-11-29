@@ -4,6 +4,12 @@
 /* Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY"; */
 "1Mo-xe-IbY.headerTitle" = "我没有帐号";
 
+/* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
+"1SU-BF-K3n.title" = "鸣谢";
+
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
+"2Zi-cz-7Va.text" = "显示触摸";
+
 /* Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO"; */
 "6GT-p2-rPO.headerTitle" = "OpenStreetMap服务器";
 
@@ -109,6 +115,9 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
 "snH-kp-6ib.normalTitle" = "开始";
 
+/* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
+"TGa-tJ-nrC.text" = "鸣谢";
+
 /* Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS"; */
 "Tkc-bW-kNS.footerTitle" = "为了将更改上传到地图，你需要在openstreetmap.org上注册的用户名和密码。 ";
 
@@ -118,7 +127,7 @@
 /* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
 "TrT-Nn-WKe.text" = "加入TestFlight测试";
 
-/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; */
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
 "UeH-ME-EV8.text" = "显示FPS";
 
 /* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */

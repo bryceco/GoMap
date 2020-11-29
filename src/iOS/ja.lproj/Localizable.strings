@@ -31,6 +31,12 @@
 /* No comment provided by engineer. */
 "(way)" = "(ウェイ)";
 
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f メートル, %2$ld ノード";
+
+/* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f メートル, %2$ld ノード";
+
 /* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld ファイル";
 
@@ -115,6 +121,9 @@
 
 /* node/way/relation attributes */
 "Attributes" = "属性";
+
+/* Automatic selection of presets languages */
+"Automatic" = "自動";
 
 /* identifies current aerial imagery */
 "Background imagery %@" = "背景画像 %@";
@@ -389,6 +398,12 @@
 /* Edit action */
 "Make Rectangular" = "直角化";
 
+/* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "ジョイン後の最大ノード数は2000です";
+
+/* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "最大ウェイ長は2000ノードです";
+
 /* rate the app later */
 "Maybe later..." = "後で...";
 
@@ -490,6 +505,9 @@
 "Node is not an element of way" = "ノードがウェイの要素ではありません";
 
 /* No comment provided by engineer. */
+"Node must be the first or last node of the way" = "ノードはウェイの最初か最後のノードでなければなりません";
+
+/* No comment provided by engineer. */
 "Node tags" = "ノードのタグ";
 
 /* OSM note */
@@ -557,6 +575,9 @@
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "このアプリを評価すると他のマッパーが見つけやすくなり、OpenStreetMap自体も閲覧されやすくなります。";
+
+/* Alert title message */
+"Recent Aerial Imagery" = "最近使った航空画像";
 
 /* No comment provided by engineer. */
 "Redo" = "再実行";
@@ -665,6 +686,12 @@
 "The nodes have conflicting roles in parent relations" = "このノードには親リレーション内で競合するロールがあります";
 
 /* No comment provided by engineer. */
+"The object does not contain any tags" = "オブジェクトにタグがありません";
+
+/* No comment provided by engineer. */
+"The restriction cannot be deleted" = "制限は削除できません";
+
+/* No comment provided by engineer. */
 "The selected way must be completely visible" = "選択されたウェイは完全に見えていなければなりません";
 
 /* No comment provided by engineer. */
@@ -675,9 +702,6 @@
 
 /* No comment provided by engineer. */
 "The way belongs to a relation that is not fully downloaded" = "このウェイはまだダウンロードしきれていないリレーションに属しています";
-
-/* No comment provided by engineer. */
-"The way belongs to a relation this not fully downloaded" = "このウェイはまだダウンロードしきれていないリレーションに属しています";
 
 /* No comment provided by engineer. */
 "The way is not sufficiently straight" = "このウェイは充分に直線化されていません";

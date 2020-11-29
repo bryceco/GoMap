@@ -55,7 +55,7 @@
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "Feilrapporter og forslag";
 
-/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; */
+/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
 "DiU-tt-U7H.text" = "Detalj detalj detalj detalj detalj";
 
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
@@ -82,7 +82,7 @@
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
 "ib9-wt-IzD.title" = "Språk";
 
-/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
+/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate"; */
 "JbA-pC-plJ.text" = "Tittel tittel tittel tittel";
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
@@ -139,7 +139,7 @@
 /* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
 "TrT-Nn-WKe.text" = "Ta del i TestFlight-betaen";
 
-/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; */
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
 "UeH-ME-EV8.text" = "Vis rammetakt";
 
 /* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */

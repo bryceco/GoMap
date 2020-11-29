@@ -31,6 +31,12 @@
 /* No comment provided by engineer. */
 "(way)" = "(viiva)";
 
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f metriä, %2$ld pistettä";
+
+/* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f metriä, %2$ld pistettä";
+
 /* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MT, %2$ld tiedostoa";
 
@@ -76,6 +82,9 @@
 
 /* node/way/relation attributes */
 "Attributes" = "Attribuutit";
+
+/* Automatic selection of presets languages */
+"Automatic" = "Automaattinen";
 
 /* No comment provided by engineer. */
 "Bad login" = "Epäonnistunut kirjautuminen";

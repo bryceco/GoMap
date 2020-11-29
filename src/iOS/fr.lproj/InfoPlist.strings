@@ -13,6 +13,9 @@
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "L'appareil photo est utilisé pour mesurer la hauteur des bâtiments ou des objets";
 
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "L'activation permanente de la localisation permet à l'application d'enregistrer des fichiers GPX pendant que celle-ci est inactive.";
+
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Votre position sera affichée et suivie sur la carte.";
 

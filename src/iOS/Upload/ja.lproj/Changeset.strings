@@ -20,7 +20,7 @@
 "Plh-7W-ceY.text" = "Lorem ipsum dolor sit er elit lamet,";
 
 /* Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow"; */
-"ps9-Hb-Vow.placeholder" = "survey, Bing, など";
+"ps9-Hb-Vow.placeholder" = "survey, Bing, など。";
 
 /* Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F"; */
 "Rqu-ny-n3F.normalTitle" = "Mail";

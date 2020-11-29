@@ -4,7 +4,7 @@
 /* Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY"; */
 "1Mo-xe-IbY.headerTitle" = "Ich habe keinen Account";
 
-/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; */
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
 "2Zi-cz-7Va.text" = "Berührungen anzeigen";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */

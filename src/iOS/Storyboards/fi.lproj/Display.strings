@@ -133,7 +133,7 @@
 /* Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h"; */
 "voF-Yf-33h.text" = "Suurin zoomaus";
 
-/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; */
+/* Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider"; */
 "w75-Lj-3jF.placeholder" = "Portlandia GIS";
 
 /* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */

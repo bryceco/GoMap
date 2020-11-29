@@ -107,6 +107,9 @@
 /* node/way/relation attributes */
 "Attributes" = "属性";
 
+/* Automatic selection of presets languages */
+"Automatic" = "自动";
+
 /* identifies current aerial imagery */
 "Background imagery %@" = "背景图像 %@";
 
@@ -393,6 +396,18 @@
 /* No comment provided by engineer. */
 "OK" = "确定";
 
+/* No comment provided by engineer. */
+"Only Left Turn restriction" = "只有左转限制";
+
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "仅支持复杂多边形关系";
+
+/* No comment provided by engineer. */
+"Only Right Turn restriction" = "只有右转限制";
+
+/* No comment provided by engineer. */
+"Only Straight On restriction" = "只有直行限制";
+
 /* Open the iOS Settings app */
 "Open Settings" = "打开设置";
 
@@ -540,4 +555,7 @@
 
 /* No comment provided by engineer. */
 "Way tags" = "路径标签";
+
+/* POI editor presets */
+"You can define your own custom presets here" = "您可以在这里定义自己的自定义预设";
 
