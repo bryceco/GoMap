@@ -329,8 +329,51 @@
 			[actionSheet addAction:[UIAlertAction actionWithTitle:service.name style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 				aerialList.currentAerial = service;
 				[self.mapView setAerialTileService:service];
+				if ( _mapView.viewState == MAPVIEW_EDITOR )
+					_mapView.viewState = MAPVIEW_EDITORAERIAL;
+				else if ( _mapView.viewState == MAPVIEW_MAPNIK )
+					_mapView.viewState = MAPVIEW_EDITORAERIAL;
 			}]];
 		}
+
+		// add options for changing display
+		NSString * prefix = @"🌐 ";
+		UIAlertAction * editorOnly = [UIAlertAction actionWithTitle:[prefix stringByAppendingString:NSLocalizedString(@"Editor only",nil)]
+															  style:UIAlertActionStyleDefault
+															handler:^(UIAlertAction * _Nonnull action) {
+			_mapView.viewState = MAPVIEW_EDITOR;
+		}];
+		UIAlertAction * aerialOnly = [UIAlertAction actionWithTitle:[prefix stringByAppendingString:NSLocalizedString(@"Aerial only",nil)]
+															  style:UIAlertActionStyleDefault
+															handler:^(UIAlertAction * _Nonnull action) {
+			_mapView.viewState = MAPVIEW_AERIAL;
+		}];
+		UIAlertAction * editorAerial = [UIAlertAction actionWithTitle:[prefix stringByAppendingString:NSLocalizedString(@"Editor with Aerial",nil)]
+																style:UIAlertActionStyleDefault
+															  handler:^(UIAlertAction * _Nonnull action) {
+			_mapView.viewState = MAPVIEW_EDITORAERIAL;
+		}];
+
+		switch ( _mapView.viewState ) {
+			case MAPVIEW_EDITOR:
+				[actionSheet addAction:editorAerial];
+				[actionSheet addAction:aerialOnly];
+				break;
+			case MAPVIEW_EDITORAERIAL:
+				[actionSheet addAction:editorOnly];
+				[actionSheet addAction:aerialOnly];
+				break;
+			case MAPVIEW_AERIAL:
+				[actionSheet addAction:editorAerial];
+				[actionSheet addAction:editorOnly];
+				break;
+			default:
+				[actionSheet addAction:editorAerial];
+				[actionSheet addAction:editorOnly];
+				[actionSheet addAction:aerialOnly];
+				break;
+		}
+
 		[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
 		[self presentViewController:actionSheet animated:YES completion:nil];
 	}
