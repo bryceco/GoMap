@@ -1675,7 +1675,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
-        <target/>
+        <target>Occupation des sols</target>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
