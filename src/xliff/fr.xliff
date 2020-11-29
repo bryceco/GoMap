@@ -1881,32 +1881,32 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="luT-Tw-T3x.text" xml:space="preserve">
         <source>Enable 3-D Effects</source>
-        <target/>
+        <target>Activer les effets 3D</target>
         <note>Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x";</note>
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
-        <target/>
+        <target>Arrière-plan</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target/>
+        <target>Configurer les traces GPX</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
         <source>Buildings</source>
-        <target/>
+        <target>Bâtiments</target>
         <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
       </trans-unit>
       <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Retour</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH";</note>
       </trans-unit>
       <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
         <source>Boundaries</source>
-        <target/>
+        <target>Limites</target>
         <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
@@ -1921,17 +1921,17 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
         <source>URL</source>
-        <target/>
+        <target>URL</target>
         <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
         <source>Clear Cache</source>
-        <target/>
+        <target>Vider le cache</target>
         <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Retour</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
@@ -1946,7 +1946,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
         <source>21</source>
-        <target/>
+        <target>21</target>
         <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
@@ -1961,7 +1961,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
         <source>Max Zoom</source>
-        <target/>
+        <target>Zoom maximum</target>
         <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
@@ -1971,17 +1971,17 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
         <source>Reset</source>
-        <target/>
+        <target>Réinitialiser</target>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
       </trans-unit>
       <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
         <source>Details</source>
-        <target/>
+        <target>Détails</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
+        <target>Nom</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
@@ -2028,7 +2028,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
         <source>Upload</source>
-        <target/>
+        <target>Téléverser</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
       </trans-unit>
       <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
@@ -2038,12 +2038,12 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
         <source>New comment:</source>
-        <target/>
+        <target>Nouveau commentaire :</target>
         <note>Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn";</note>
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
-        <target/>
+        <target state="translated">66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
@@ -2068,22 +2068,22 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
-        <target/>
+        <target state="translated">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1";</note>
       </trans-unit>
       <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
         <source>Note</source>
-        <target/>
+        <target>Note</target>
         <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
       </trans-unit>
       <trans-unit id="N5Q-nV-TPG.text" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <target/>
+        <target>Zoomer pour modifier</target>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Resolve</source>
-        <target/>
+        <target>Résoudre</target>
         <note>Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
@@ -2093,7 +2093,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
         <source>Bing Maps</source>
-        <target/>
+        <target state="translated">Bing Maps</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
@@ -2108,7 +2108,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="l7S-YL-RKK.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target/>
+        <target>Sous-titre</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
       </trans-unit>
       <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
@@ -2118,7 +2118,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
+        <target>Libellé</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
       <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
@@ -2128,7 +2128,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="stf-JU-iga.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
+        <target>Titre</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga";</note>
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
@@ -2138,27 +2138,27 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
+        <target>Titre</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
-        <target/>
+        <target>Chutes du Niagara</target>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
         <source>Tags</source>
-        <target/>
+        <target>Tags</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
         <source>Delete</source>
-        <target/>
+        <target>Supprimer</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
       <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
         <source>More...</source>
-        <target/>
+        <target>Plus...</target>
         <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
       </trans-unit>
     </body>
@@ -2170,57 +2170,57 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
         <source>no</source>
-        <target/>
+        <target>non</target>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm";</note>
       </trans-unit>
       <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
         <source>type</source>
-        <target/>
+        <target>type</target>
         <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ";</note>
       </trans-unit>
       <trans-unit id="1Yx-Ce-yfq.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Retour</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
       </trans-unit>
       <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
+        <target>Titre</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED";</note>
       </trans-unit>
       <trans-unit id="2cB-FV-ozw.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
+        <target>Attributs</target>
         <note>Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw";</note>
       </trans-unit>
       <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
         <source>Point of Interest</source>
-        <target/>
+        <target>Point d'intérêt</target>
         <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
+        <target>Titre</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q";</note>
       </trans-unit>
       <trans-unit id="9Nw-ha-JK5.placeholder" xml:space="preserve">
         <source>Yes</source>
-        <target/>
+        <target>Oui</target>
         <note>Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5";</note>
       </trans-unit>
       <trans-unit id="19J-sp-UTX.title" xml:space="preserve">
         <source>All Tags</source>
-        <target/>
+        <target>Tous les tags</target>
         <note>Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX";</note>
       </trans-unit>
       <trans-unit id="436-kv-L7j.placeholder" xml:space="preserve">
         <source>Restaurant</source>
-        <target/>
+        <target>Restaurant</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
-        <target/>
+        <target>chien</target>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V";</note>
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
@@ -2230,7 +2230,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
-        <target/>
+        <target>Valeur 8</target>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
@@ -2240,17 +2240,17 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
         <source>Applies To</source>
-        <target/>
+        <target>S'applique à</target>
         <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
-        <target/>
+        <target>Clé</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g";</note>
       </trans-unit>
       <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
         <source>Value 3</source>
-        <target/>
+        <target>Valeur 3</target>
         <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
@@ -2260,7 +2260,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="G5R-oP-lp3.title" xml:space="preserve">
         <source>Custom Tags</source>
-        <target/>
+        <target>Tags personnalisés</target>
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
@@ -2270,22 +2270,22 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Retour</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
-        <target/>
+        <target>Valeur 1</target>
         <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
       </trans-unit>
       <trans-unit id="Jsm-mO-hgo.title" xml:space="preserve">
         <source>POI Type</source>
-        <target/>
+        <target>Type de POI</target>
         <note>Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo";</note>
       </trans-unit>
       <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
         <source>Back</source>
-        <target/>
+        <target>Retour</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
@@ -2295,7 +2295,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
         <source>Type</source>
-        <target/>
+        <target>Type</target>
         <note>Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq";</note>
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
@@ -2305,42 +2305,42 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
         <source>Value 6</source>
-        <target/>
+        <target>Valeur 6</target>
         <note>Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf";</note>
       </trans-unit>
       <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
         <source>Cancel</source>
-        <target/>
+        <target>Annuler</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
         <source>Title</source>
-        <target/>
+        <target>Titre</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
         <source>relation</source>
-        <target/>
+        <target>relation</target>
         <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte";</note>
       </trans-unit>
       <trans-unit id="Vli-Ct-Lpz.text" xml:space="preserve">
         <source>Wheelchair Access</source>
-        <target/>
+        <target>Accès fauteuil roulant</target>
         <note>Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
         <source>Value 10</source>
-        <target/>
+        <target>Valeur 10</target>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
-        <target/>
+        <target>Valeur 7</target>
         <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
       </trans-unit>
       <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
-        <target/>
+        <target>clé</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ";</note>
       </trans-unit>
       <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
@@ -2350,7 +2350,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
-        <target/>
+        <target>Sous-titre</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d";</note>
       </trans-unit>
       <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
@@ -2360,17 +2360,17 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="aLi-Vs-z0k.title" xml:space="preserve">
         <source>Configure</source>
-        <target/>
+        <target>Configurer</target>
         <note>Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
-        <target/>
+        <target state="translated">Tous les tags</target>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
         <source>value</source>
-        <target/>
+        <target>valeur</target>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM";</note>
       </trans-unit>
       <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
@@ -2380,22 +2380,22 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
+        <target>Libellé</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh";</note>
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
         <source>Value 9</source>
-        <target/>
+        <target>Valeur 9</target>
         <note>Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R";</note>
       </trans-unit>
       <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
         <source>Dogs Allowed</source>
-        <target/>
+        <target>Chiens autorisés</target>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
+        <target>Attributs</target>
         <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
@@ -2405,72 +2405,72 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
-        <target/>
+        <target>Libellé</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw";</note>
       </trans-unit>
       <trans-unit id="hKU-EH-qxp.title" xml:space="preserve">
         <source>Attributes</source>
-        <target/>
+        <target>Attributs</target>
         <note>Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp";</note>
       </trans-unit>
       <trans-unit id="hfr-Mf-ZHv.text" xml:space="preserve">
         <source>value</source>
-        <target/>
+        <target>valeur</target>
         <note>Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv";</note>
       </trans-unit>
       <trans-unit id="ijx-N9-1eO.text" xml:space="preserve">
         <source>Changeset</source>
-        <target/>
+        <target>Jeu de modifications</target>
         <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
         <source>The possible values for the preset</source>
-        <target/>
+        <target state="translated">Valeurs possibles pour les preset</target>
         <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
         <source>Preset values</source>
-        <target/>
+        <target state="translated">Valeurs des presets</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
         <source>leisure </source>
-        <target/>
+        <target>loisirs </target>
         <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target/>
+        <target>Tags courants</target>
         <note>Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz";</note>
       </trans-unit>
       <trans-unit id="li7-oV-pgT.text" xml:space="preserve">
         <source>Value 5</source>
-        <target/>
+        <target>Valeur 5</target>
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
         <source>Common Tags</source>
-        <target/>
+        <target>Tags courants</target>
         <note>Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
+        <target>Nom</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u";</note>
       </trans-unit>
       <trans-unit id="nKt-LG-cSw.text" xml:space="preserve">
         <source>Value 2</source>
-        <target/>
+        <target>Valeur 2</target>
         <note>Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw";</note>
       </trans-unit>
       <trans-unit id="ng7-T9-SJ6.text" xml:space="preserve">
         <source>Value 4</source>
-        <target/>
+        <target>Valeur 4</target>
         <note>Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
         <source>Value 11</source>
-        <target/>
+        <target>Valeur 11</target>
         <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
       </trans-unit>
       <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
@@ -2485,7 +2485,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="omf-S9-Yjq.text" xml:space="preserve">
         <source>Name</source>
-        <target/>
+        <target>Nom</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq";</note>
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
@@ -2495,22 +2495,22 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
         <source>Restaurant</source>
-        <target/>
+        <target>Restaurant</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7";</note>
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
         <source>role</source>
-        <target/>
+        <target>rôle</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ";</note>
       </trans-unit>
       <trans-unit id="tPF-m9-RtO.text" xml:space="preserve">
         <source>Payment</source>
-        <target/>
+        <target>Paiement</target>
         <note>Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>
-        <target/>
+        <target>Clé</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -2520,17 +2520,17 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
         <source>yes</source>
-        <target/>
+        <target>oui</target>
         <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl";</note>
       </trans-unit>
       <trans-unit id="wFE-f1-sQa.text" xml:space="preserve">
         <source>Value 12</source>
-        <target/>
+        <target>Valeur 12</target>
         <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
         <source>Value</source>
-        <target/>
+        <target>Valeur</target>
         <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
       </trans-unit>
     </body>
@@ -2542,22 +2542,27 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
         <source>Mapnik Tiles</source>
+        <target>Tuiles Mapnik</target>
         <note>Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg";</note>
       </trans-unit>
       <trans-unit id="1Mo-xe-IbY.headerTitle" xml:space="preserve">
         <source>I don't have an account</source>
+        <target>Je n'ai pas de compte</target>
         <note>Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY";</note>
       </trans-unit>
       <trans-unit id="1SU-BF-K3n.title" xml:space="preserve">
         <source>Credits</source>
+        <target state="translated">Crédits</target>
         <note>Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
         <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</source>
+        <target state="translated">Si vous cartographiez depuis une zone avec une mauvaise connexion vous pouvez télécharger les tuiles aériennes ou Mapnik pour les deux niveaux de zoom supérieurs dans la zone actuellement visible.</target>
         <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
         <source>Download zoomed tiles</source>
+        <target state="translated">Télécharger les tuiles zoomées</target>
         <note>Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
@@ -2566,38 +2571,47 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
         <source>Details</source>
+        <target>Détails</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org.</source>
+        <target>Spécifiez un hôte si vous souhaitez éditer les données sur un serveur OSM alternatif. L'hôte par défaut est api.openstreetmap.org.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
         <source>OpenStreetMap Server</source>
+        <target>Serveur OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6Lj-wh-z9f.text" xml:space="preserve">
         <source>Detail</source>
+        <target>Détail</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f";</note>
       </trans-unit>
       <trans-unit id="7cc-E7-pzw.text" xml:space="preserve">
         <source>Name</source>
+        <target>Nom</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
         <source>OpenStreetMap Login</source>
+        <target>Identifiant OpenStreetMap</target>
         <note>Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf";</note>
       </trans-unit>
       <trans-unit id="66J-ih-Lfh.placeholder" xml:space="preserve">
         <source>api.openstreetmap.org</source>
+        <target state="translated">api.openstreetmap.org</target>
         <note>Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh";</note>
       </trans-unit>
       <trans-unit id="355-dx-Oi8.headerTitle" xml:space="preserve">
         <source>Language</source>
+        <target>Langue</target>
         <note>Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
         <source>Settings</source>
+        <target>Paramètres</target>
         <note>Class = "UINavigationItem"; title = "Settings"; ObjectID = "AHZ-L8-yUA";</note>
       </trans-unit>
       <trans-unit id="AVI-04-hFN.text" xml:space="preserve">
@@ -2629,10 +2643,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
         <source>Weblate - Translations</source>
+        <target state="translated">Traductions - Weblate</target>
         <note>Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
         <source>Register new account</source>
+        <target state="translated">Créer un compte</target>
         <note>Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1";</note>
       </trans-unit>
       <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
@@ -2645,10 +2661,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Gxc-44-SzR.title" xml:space="preserve">
         <source>Advanced Settings</source>
+        <target>Paramètres avancés</target>
         <note>Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR";</note>
       </trans-unit>
       <trans-unit id="HNj-kK-OCP.text" xml:space="preserve">
         <source>Title</source>
+        <target>Titre</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP";</note>
       </trans-unit>
       <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
@@ -2657,18 +2675,22 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="KIO-8j-QsO.text" xml:space="preserve">
         <source>Subtitle</source>
+        <target>Sous-titre</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO";</note>
       </trans-unit>
       <trans-unit id="LaB-Et-hHT.text" xml:space="preserve">
         <source>Details</source>
+        <target>Détails</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT";</note>
       </trans-unit>
       <trans-unit id="Mus-SG-1Sz.text" xml:space="preserve">
         <source>Detail</source>
+        <target>Détail</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz";</note>
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
         <source>Login</source>
+        <target>Identifiant</target>
         <note>Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
@@ -2677,14 +2699,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.footerTitle" xml:space="preserve">
         <source>In order to upload changes to the map you need a user name and password registered at openstreetmap.org. </source>
+        <target state="translated">Pour téléverser vos changements vers la carte, vous devez disposer d'identifiants de connexion sur openstreetmap.org </target>
         <note>Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="Tkc-bW-kNS.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
+        <target>Compte OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS";</note>
       </trans-unit>
       <trans-unit id="TrT-Nn-WKe.text" xml:space="preserve">
         <source>Join the TestFlight Beta</source>
+        <target>Rejoignez la Beta sur TestFlight</target>
         <note>Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe";</note>
       </trans-unit>
       <trans-unit id="UeH-ME-EV8.text" xml:space="preserve">
@@ -2693,6 +2718,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="UvN-Qa-roL.text" xml:space="preserve">
         <source>Frames/Second</source>
+        <target>Images/Seconde</target>
         <note>Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL";</note>
       </trans-unit>
       <trans-unit id="VDO-HW-SLB.title" xml:space="preserve">
@@ -2701,14 +2727,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="YQ4-05-lQz.placeholder" xml:space="preserve">
         <source>username</source>
+        <target>identifiant</target>
         <note>Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz";</note>
       </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
         <source>Contact Us</source>
+        <target>Contactez-nous</target>
         <note>Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q";</note>
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
         <source>Start</source>
+        <target>Démarrer</target>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH";</note>
       </trans-unit>
       <trans-unit id="ctb-pg-pM9.title" xml:space="preserve">
@@ -2722,18 +2751,22 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="e7I-rE-dAW.placeholder" xml:space="preserve">
         <source>password</source>
+        <target>mot de passe</target>
         <note>Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW";</note>
       </trans-unit>
       <trans-unit id="fbD-Hr-HNI.headerTitle" xml:space="preserve">
         <source>Credentials</source>
+        <target>Identifiants</target>
         <note>Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI";</note>
       </trans-unit>
       <trans-unit id="gec-8l-k4H.text" xml:space="preserve">
         <source>Advanced Settings</source>
+        <target>Paramètres avancés</target>
         <note>Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H";</note>
       </trans-unit>
       <trans-unit id="gh3-sb-yuZ.headerTitle" xml:space="preserve">
         <source>Advanced</source>
+        <target>Avancé</target>
         <note>Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
@@ -2743,6 +2776,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ib9-wt-IzD.title" xml:space="preserve">
         <source>Language</source>
+        <target>Langue</target>
         <note>Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD";</note>
       </trans-unit>
       <trans-unit id="jcn-Lx-tj3.text" xml:space="preserve">
@@ -2751,14 +2785,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="k0y-gf-6DY.text" xml:space="preserve">
         <source>Password</source>
+        <target>Mot de passe</target>
         <note>Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY";</note>
       </trans-unit>
       <trans-unit id="kt1-K7-kcu.title" xml:space="preserve">
         <source>Back</source>
+        <target>Retour</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "kt1-K7-kcu";</note>
       </trans-unit>
       <trans-unit id="ktz-ef-tti.title" xml:space="preserve">
         <source>Contact Us</source>
+        <target>Contactez-nous</target>
         <note>Class = "UINavigationItem"; title = "Contact Us"; ObjectID = "ktz-ef-tti";</note>
       </trans-unit>
       <trans-unit id="m7D-wn-3MP.title" xml:space="preserve">
@@ -2771,6 +2808,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="nIn-2k-PYG.headerTitle" xml:space="preserve">
         <source>Miscellaneous</source>
+        <target>Divers</target>
         <note>Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG";</note>
       </trans-unit>
       <trans-unit id="oIj-UV-kLH.headerTitle" xml:space="preserve">
@@ -2789,6 +2827,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
         <source>Start</source>
+        <target>Démarrer</target>
         <note>Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib";</note>
       </trans-unit>
       <trans-unit id="whL-SZ-HD5.text" xml:space="preserve">
@@ -2802,6 +2841,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="yAO-9B-CTd.headerTitle" xml:space="preserve">
         <source>Developer settings</source>
+        <target>Paramètres développeur</target>
         <note>Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd";</note>
       </trans-unit>
     </body>
@@ -2813,10 +2853,12 @@ http://glyphish.com
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
         <source>Changes:</source>
+        <target>Changements :</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
       <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target state="translated">Lorem ipsum dolor sit er elit lamet,</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv";</note>
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
@@ -2826,6 +2868,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
+        <target state="translated">Lorem ipsum dolor sit er elit lamet,</target>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY";</note>
       </trans-unit>
       <trans-unit id="Rqu-ny-n3F.normalTitle" xml:space="preserve">
@@ -2845,14 +2888,17 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
         <source>Changeset comment:</source>
+        <target state="translated">Commentaire du jeu de modifications :</target>
         <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
+        <target state="translated">survey, Bing, etc.</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
         <source>Source:</source>
+        <target>Source :</target>
         <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
       </trans-unit>
     </body>
