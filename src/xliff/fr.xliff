@@ -1680,7 +1680,7 @@ Vous pouvez vider le cache (dans Paramètres d'affichage) pour améliorer les pe
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
-        <target/>
+        <target state="translated">Interactions</target>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
