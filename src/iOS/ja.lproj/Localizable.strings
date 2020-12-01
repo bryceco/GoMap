@@ -108,6 +108,9 @@
 "Additional imagery" = "追加の画像";
 
 /* No comment provided by engineer. */
+"Aerial only" = "衛星画像のみ";
+
+/* No comment provided by engineer. */
 "All choices" = "全体から選ぶ";
 
 /* No comment provided by engineer. */
@@ -310,6 +313,12 @@
 
 /* No comment provided by engineer. */
 "Editing layer not visible" = "編集レイヤが非表示です";
+
+/* No comment provided by engineer. */
+"Editor only" = "エディタのみ";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "衛星画像ありのエディタ";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "位置サービスが有効になっていて、このアプリによるアクセスを許可しているか確認してください。\n\nエラー: %@";

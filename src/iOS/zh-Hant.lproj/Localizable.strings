@@ -83,14 +83,23 @@
 /* Add to relation */
 "Add inner member" = "新增內部成員";
 
+/* No comment provided by engineer. */
+"add node to way" = "新增節點到線段中";
+
 /* Edit action */
 "Add Note" = "新增節點";
+
+/* No comment provided by engineer. */
+"add object to relation" = "新增物件到關係中";
 
 /* Add to relation */
 "Add outer member" = "新增外部成員";
 
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "新增線段到複多邊形？";
+
+/* No comment provided by engineer. */
+"added to multipolygon relation" = "已新增到複多邊形關係中";
 
 /* No comment provided by engineer. */
 "Adding members:" = "正在新增成員：";
@@ -189,6 +198,9 @@
 "Commit" = "提交";
 
 /* No comment provided by engineer. */
+"computing size..." = "計算大小中...";
+
+/* No comment provided by engineer. */
 "Configure" = "配置";
 
 /* No comment provided by engineer. */
@@ -206,11 +218,23 @@
 /* No comment provided by engineer. */
 "Create\n" = "新增\n";
 
+/* No comment provided by engineer. */
+"create node" = "新增節點";
+
+/* No comment provided by engineer. */
+"create relation" = "新增關係";
+
 /* Edit action */
 "Create Relation" = "新增關係";
 
 /* No comment provided by engineer. */
 "Create Relation Type" = "新增關係類型";
+
+/* No comment provided by engineer. */
+"create turn restriction" = "新增轉向限制關係";
+
+/* No comment provided by engineer. */
+"create way" = "新增線段";
 
 /* current GPX track */
 "Current Track" = "當前的航跡";
@@ -231,6 +255,30 @@
 "Delete failed" = "刪除失敗";
 
 /* No comment provided by engineer. */
+"delete multipolygon" = "刪除複多邊形";
+
+/* No comment provided by engineer. */
+"delete node" = "刪除節點";
+
+/* No comment provided by engineer. */
+"delete node from way" = "刪除線段中的節點";
+
+/* No comment provided by engineer. */
+"delete object from relation" = "刪除關係中的物件";
+
+/* No comment provided by engineer. */
+"delete relation" = "刪除關係";
+
+/* No comment provided by engineer. */
+"delete restriction" = "刪除轉向限制關係";
+
+/* No comment provided by engineer. */
+"delete route" = "刪除路線";
+
+/* No comment provided by engineer. */
+"delete way" = "刪除線段";
+
+/* No comment provided by engineer. */
 "Detach from relation" = "從關係中分離";
 
 /* Edit action */
@@ -241,6 +289,9 @@
 
 /* No comment provided by engineer. */
 "Done" = "完成";
+
+/* create a duplicate */
+"duplicate" = "複製";
 
 /* Edit action */
 "Duplicate" = "複製";
@@ -363,6 +414,9 @@
 "Merge Tags" = "合併標籤";
 
 /* No comment provided by engineer. */
+"meters" = "公尺";
+
+/* No comment provided by engineer. */
 "Missing way to connect to" = "缺少要連結的線段";
 
 /* last modified date */
@@ -382,6 +436,9 @@
 
 /* No comment provided by engineer. */
 "Most recent" = "最近的";
+
+/* No comment provided by engineer. */
+"move" = "移動";
 
 /* No comment provided by engineer. */
 "Move" = "移動";
@@ -433,6 +490,12 @@
 "Node" = "節點";
 
 /* No comment provided by engineer. */
+"node %@" = "節點 %@";
+
+/* No comment provided by engineer. */
+"node %@ (in way)" = "節點 %@ (在線段中)";
+
+/* No comment provided by engineer. */
 "Node attributes" = "節點屬性";
 
 /* No comment provided by engineer. */
@@ -480,6 +543,9 @@
 /* No comment provided by engineer. */
 "OSM data must be version 0.6 (fetched '%@')" = "OSM 資料必須是版本 0.6 (已更新 '%@')";
 
+/* No comment provided by engineer. */
+"other object" = "其他物件";
+
 /* Edit action */
 "Paste" = "貼上";
 
@@ -506,6 +572,9 @@
 
 /* No comment provided by engineer. */
 "Redo" = "重做";
+
+/* No comment provided by engineer. */
+"relation" = "關係";
 
 /* No comment provided by engineer. */
 "Relation attributes" = "關係的屬性";
@@ -560,6 +629,9 @@
 
 /* The height=* tag */
 "Set Height Tag" = "設定高度標籤";
+
+/* No comment provided by engineer. */
+"set tags" = "設置標籤";
 
 /* No comment provided by engineer. */
 "Settings" = "設定";
@@ -685,6 +757,9 @@
 /* update an osm note */
 "Update" = "更新";
 
+/* No comment provided by engineer. */
+"update relation members" = "更新關係的成員";
+
 /* OSM Note */
 "Updating Note..." = "上傳註記中...";
 
@@ -709,8 +784,17 @@
 /* OSM object versioh */
 "Version" = "版本";
 
+/* Year aerial imagery was created */
+"vintage %@" = "年份 %@";
+
+/* Years aerial imagery was created */
+"vintage %@ - %@" = "年份 %1$@ - %2$@";
+
 /* No comment provided by engineer. */
 "Warning" = "警告";
+
+/* No comment provided by engineer. */
+"way %@" = "線段 %@";
 
 /* No comment provided by engineer. */
 "Way attributes" = "線段的屬性";
@@ -723,4 +807,25 @@
 
 /* POI editor presets */
 "You can define your own custom presets here" = "您可以在這裡自定義預設組合";
+
+/* No comment provided by engineer. */
+"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "您只能導航到已經下載的關係成員。\n這些成員會標示為 '>'。";
+
+/* No comment provided by engineer. */
+"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "您所編輯的內容尚未上傳到伺服器。清除快取將一併刪除這些內容。";
+
+/* No comment provided by engineer. */
+"You must provide your OSM user name, not an email address." = "您必須提供您的 OSM 使用者名稱，而非電子郵件信箱。";
+
+/* No comment provided by engineer. */
+"You must save or discard changes to the current object before editing its associated relation" = "您必須先儲存或捨棄對於所選物件的變更，然後才能編輯該物件的關係";
+
+/* No comment provided by engineer. */
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "您已透過這個版本的 Go Map!! 上傳了 %ld 個變更集\n\n要評分這個 app 嗎？";
+
+/* No comment provided by engineer. */
+"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "您的 OSM 資料快取越來越大，這可能導致啟動緩慢或提高閃退的次數。\n\n您可能會想要清除快取（在顯示設定中）以提升效能。";
+
+/* No comment provided by engineer. */
+"Zoom to Edit" = "放大後才能編輯";
 

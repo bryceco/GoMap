@@ -179,6 +179,8 @@
 		020C2A8E168A7688003F2C2A /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CreditsViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		020C2A8F168A7688003F2C2A /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CreditsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PresetsDatabase.swift; path = ../Shared/PresetsDatabase.swift; sourceTree = "<group>"; };
+		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
+		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
 		0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurvedTextLayer.swift; path = ../Shared/CurvedTextLayer.swift; sourceTree = "<group>"; };
 		0216636E24738C9600B0B0F6 /* LayerProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LayerProperties.h; path = ../Shared/LayerProperties.h; sourceTree = "<group>"; };
 		0216636F24738C9600B0B0F6 /* LayerProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LayerProperties.m; path = ../Shared/LayerProperties.m; sourceTree = "<group>"; };
@@ -1342,6 +1344,7 @@
 				02F0D9CB2565FD9800C7A3AD /* pl */,
 				02F0D9D32565FDBE00C7A3AD /* zh-Hans */,
 				02A41837256A2026005BF1AB /* hr */,
+				02128F7B2575D925003D2551 /* zh-Hant */,
 			);
 			name = Height.storyboard;
 			sourceTree = "<group>";
@@ -1378,6 +1381,7 @@
 				02F0D9C72565FD7500C7A3AD /* hr */,
 				02F0D9D02565FD9800C7A3AD /* pl */,
 				02F0D9D82565FDBE00C7A3AD /* zh-Hans */,
+				02128F7C2575D925003D2551 /* zh-Hant */,
 			);
 			name = Display.storyboard;
 			sourceTree = "<group>";

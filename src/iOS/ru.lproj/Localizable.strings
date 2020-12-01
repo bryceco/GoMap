@@ -108,6 +108,9 @@
 "Additional imagery" = "Дополнительные снимки";
 
 /* No comment provided by engineer. */
+"Aerial only" = "Только аэрофотосъемки";
+
+/* No comment provided by engineer. */
 "All choices" = "Все варианты";
 
 /* No comment provided by engineer. */
@@ -310,6 +313,12 @@
 
 /* No comment provided by engineer. */
 "Editing layer not visible" = "Редактируемый слой отключён";
+
+/* No comment provided by engineer. */
+"Editor only" = "Только редактор";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Редактор с аэрофотосъемкой";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Убедитесь, что службы геолокации включены и приложению предоставлен доступ.\n\nОшибка: %@";
