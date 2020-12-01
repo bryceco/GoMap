@@ -534,9 +534,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	if ( dict.count == 0 )
 		return nil;
 
-	NSString * geo = dict[@"geometry"];
-	if ( geo && [geo rangeOfString:geometry].location == NSNotFound ) {
-		return nil;
+	NSArray * geoList = dict[@"geometry"];
+	if ( geoList ) {
+		if ( ![geoList containsObject:geometry] )
+			return nil;
 	}
 
 	NSString	*	key					= dict[ @"key" ] ?: fieldName;
@@ -1511,8 +1512,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSString * key = fieldDict[ @"key" ];
 		if ( key == nil )
 			continue;
-		NSString * geom = fieldDict[@"geometry"];
-		if ( geom && [geom rangeOfString:geometry].location == NSNotFound )
+		NSArray * geom = fieldDict[@"geometry"];
+		if ( geom && ![geom containsObject:geometry] )
 			continue;
 		if ( result == nil )
 			result = [NSMutableDictionary dictionaryWithObject:value forKey:key];
