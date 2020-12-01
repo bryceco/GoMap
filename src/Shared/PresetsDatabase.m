@@ -91,9 +91,9 @@ static id Translate( id orig, id translation )
 static void InitializeDictionaries()
 {
 	if ( g_jsonPresetsDict == nil ) {
-		g_jsonAddressFormatsDict = DictionaryForFile(@"address-formats.json");
-		g_jsonDefaultsDict		 = DictionaryForFile(@"defaults.json");
-		g_jsonCategoriesDict	 = DictionaryForFile(@"categories.json");
+		g_jsonAddressFormatsDict = DictionaryForFile(@"address_formats.json");
+		g_jsonDefaultsDict		 = DictionaryForFile(@"preset_defaults.json");
+		g_jsonCategoriesDict	 = DictionaryForFile(@"preset_categories.json");
 		g_jsonPresetsDict		 = DictionaryForFile(@"presets.json");
 		g_jsonFieldsDict		 = DictionaryForFile(@"fields.json");
 
@@ -817,12 +817,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			    [type isEqualToString:@"textarea"] ||
 			    [type isEqualToString:@"tel"] ||
 			    [type isEqualToString:@"url"] ||
+			    [type isEqualToString:@"roadspeed"] ||
 			    [type isEqualToString:@"wikipedia"] ||
 				[type isEqualToString:@"wikidata"] )
 	{
 
 		// no presets
-		if ( [type isEqualToString:@"number"] )
+		if ( [type isEqualToString:@"number"] || [type isEqualToString:@"roadspeed"])
 			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypeDecimalPad doesn't have Done button
 		else if ( [type isEqualToString:@"tel"] )
 			keyboard = UIKeyboardTypeNumbersAndPunctuation; // UIKeyboardTypePhonePad doesn't have Done Button
@@ -832,13 +833,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			keyboard = UIKeyboardTypeEmailAddress;
 		else if ( [type isEqualToString:@"textarea"] )
 			capitalize = UITextAutocapitalizationTypeSentences;
-		PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
-		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[tag]];
-		return group;
-
-	} else if ( [type isEqualToString:@"maxspeed"] ) {
-
-		// special case
 		PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:capitalize presets:nil];
 		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[tag]];
 		return group;
