@@ -1596,14 +1596,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
         <source>Mapnik only</source>
+        <target>只有 Mapnik</target>
         <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
+        <target>顯示</target>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
         <source>Collect in background:</source>
+        <target>在背景收集：</target>
         <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
@@ -1612,54 +1615,67 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
         <source>Details</source>
+        <target>詳細內容</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
       </trans-unit>
       <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
         <source>Details</source>
+        <target>詳細內容</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
       </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
+        <target>詳細內容</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
       </trans-unit>
       <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
         <source>QA Poole No Name Tiles</source>
+        <target>QA Poole No Name 圖磚</target>
         <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
+        <target>能源類圖徵</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
         <source>Paths</source>
+        <target>路徑</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Enable Filters</source>
+        <target>啟用過濾功能</target>
         <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
+        <target>編輯器疊空拍圖</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
         <source>Aerial Provider</source>
+        <target>空拍影像釋出來源</target>
         <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
+        <target>您所記錄或下載的 GPX 航跡將於後述情況下自動刪除：</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
+        <target>註記與需要修正</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
         <source>Cancel</source>
+        <target>取消</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3";</note>
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
+        <target>土地利用</target>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
@@ -1668,6 +1684,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
+        <target>銜接道路</target>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
