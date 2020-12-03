@@ -468,6 +468,38 @@
 	cell.text2.rightViewMode = associatedView ? UITextFieldViewModeAlways : UITextFieldViewModeNever;
 }
 
+- (IBAction)infoButtonPressed:(UIButton *)button
+{
+	TextPairTableCell * cell = (id)button.superview;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
+		cell = (id)cell.superview;
+
+	// show OSM wiki page
+	NSString * key = cell.text1.text;
+	NSString * value = cell.text2.text;
+	if ( key.length == 0 )
+		return;
+	PresetLanguages * presetLanguages = [PresetLanguages new];
+	NSString * languageCode = presetLanguages.preferredLanguageCode;
+
+	UIActivityIndicatorView * progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	progress.frame = cell.infoButton.bounds;
+	[cell.infoButton addSubview:progress];
+	cell.infoButton.enabled = NO;
+	cell.infoButton.titleLabel.layer.opacity = 0.0;
+	[progress startAnimating];
+	[WikiPage.shared bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
+		[progress removeFromSuperview];
+		cell.infoButton.enabled = YES;
+		cell.infoButton.titleLabel.layer.opacity = 1.0;
+		if ( url && self.view.window ) {
+			SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+			_childViewPresented = YES;
+			[self presentViewController:viewController animated:YES completion:nil];
+		}
+	}];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == 0 ) {
@@ -876,33 +908,6 @@
 
 	POITabBarController * tabController = (id)self.tabBarController;
 	[tabController commitChanges];
-}
-
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.section == 0 ) {
-		// show OSM wiki page
-		TextPairTableCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-		NSString * key = cell.text1.text;
-		NSString * value = cell.text2.text;
-		if ( key.length == 0 )
-			return;
-		PresetLanguages * presetLanguages = [PresetLanguages new];
-		NSString * languageCode = presetLanguages.preferredLanguageCode;
-
-		UIActivityIndicatorView * progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		progress.bounds = CGRectMake(0, 0, 24, 24);
-		cell.accessoryView = progress;
-		[progress startAnimating];
-		[WikiPage.shared bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
-			cell.accessoryView = nil;
-			if ( url && self.view.window ) {
-				SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
-				_childViewPresented = YES;
-				[self presentViewController:viewController animated:YES completion:nil];
-			}
-		}];
-	}
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
