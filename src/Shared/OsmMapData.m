@@ -1677,7 +1677,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			completion(nil);
 		} else {
 			if ( errorMessage == nil )
-				errorMessage = @"Not found";
+				errorMessage = NSLocalizedString(@"Not found",@"User credentials not found");
 			completion(errorMessage);
 		}
 	}];
