@@ -36,9 +36,6 @@
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
 		02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02401F381DE1369E00F32AF5 /* ExternalGPS.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
-		024AB08B240C80FD004A3B5B /* Temaki Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 024AB08A240C80FD004A3B5B /* Temaki Icons.xcassets */; };
-		024AB08D240C86FF004A3B5B /* Font Awesome Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 024AB08C240C86FF004A3B5B /* Font Awesome Icons.xcassets */; };
-		024AB090240C9202004A3B5B /* TNP Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 024AB08F240C9202004A3B5B /* TNP Icons.xcassets */; };
 		024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 024ADF3B16B1B38B00875658 /* PathUtil.m */; };
 		024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024B4CA119BBE67400BBA60B /* CustomPresetListViewController.m */; };
 		024C323D1DEEA97100AD62AB /* AdvancedSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 024C323C1DEEA97100AD62AB /* AdvancedSettingsViewController.m */; };
@@ -59,8 +56,6 @@
 		027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC65206F3EED00D349D6 /* DDXMLNode.m */; };
 		027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC66206F3EED00D349D6 /* DDXMLDocument.m */; };
 		027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */; };
-		027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3520B13B8000901E9F /* Maki Icons.xcassets */; };
-		027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */; };
 		028DADE4247DFB8F000A130A /* WikiPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 028DADE3247DFB8F000A130A /* WikiPage.m */; };
 		028E0C0C20B2182100CEC71F /* FilterObjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 028E0C0B20B2182100CEC71F /* FilterObjectsViewController.m */; };
 		028F504519B949780093C423 /* PresetsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 028F504419B949780093C423 /* PresetsDatabase.m */; };
@@ -68,6 +63,7 @@
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
 		0296873F167E30C700B8FF2C /* PushPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0296873E167E30C700B8FF2C /* PushPinView.m */; };
+		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A077D1167A77A400686261 /* POIAllTagsViewController.m */; };
 		02A194B019C69701002338DA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A194AF19C69701002338DA /* Database.m */; };
 		02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A194B119C6A432002338DA /* libsqlite3.0.dylib */; };
@@ -225,9 +221,6 @@
 		02401F381DE1369E00F32AF5 /* ExternalGPS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = ExternalGPS.m; path = ../Shared/ExternalGPS.m; sourceTree = "<group>"; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0242330F1674FDB4008A3B6A /* VectorMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VectorMath.m; path = ../Shared/VectorMath.m; sourceTree = "<group>"; };
-		024AB08A240C80FD004A3B5B /* Temaki Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Temaki Icons.xcassets"; path = "../POI-Icons/Temaki Icons.xcassets"; sourceTree = "<group>"; };
-		024AB08C240C86FF004A3B5B /* Font Awesome Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Font Awesome Icons.xcassets"; path = "../POI-Icons/Font Awesome Icons.xcassets"; sourceTree = "<group>"; };
-		024AB08F240C9202004A3B5B /* TNP Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "TNP Icons.xcassets"; path = "../POI-Icons/TNP Icons.xcassets"; sourceTree = "<group>"; };
 		024ADF3A16B1B38A00875658 /* PathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PathUtil.h; path = ../Shared/PathUtil.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		024ADF3B16B1B38B00875658 /* PathUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PathUtil.m; path = ../Shared/PathUtil.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		024B4CA019BBE65F00BBA60B /* CustomPresetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -239,6 +232,7 @@
 		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; name = "apple-app-site-association"; path = "../apple-app-site-association"; sourceTree = "<group>"; };
 		025224E616D7292E00B6FD53 /* RotatingNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RotatingNavigationController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		025224E716D7292E00B6FD53 /* RotatingNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RotatingNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
 		0259E4061BCAEC88006C354C /* MyApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MyApplication.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0259E4071BCAEC88006C354C /* MyApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MyApplication.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
@@ -272,8 +266,6 @@
 		027EDC6B206F3EED00D349D6 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
 		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
-		027FEA3520B13B8000901E9F /* Maki Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Maki Icons.xcassets"; path = "../POI-Icons/Maki Icons.xcassets"; sourceTree = "<group>"; };
-		027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "iD SVG POI.xcassets"; path = "../POI-Icons/iD SVG POI.xcassets"; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		028DADE2247DFB8F000A130A /* WikiPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WikiPage.h; path = ../Shared/WikiPage.h; sourceTree = "<group>"; };
 		028DADE3247DFB8F000A130A /* WikiPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = WikiPage.m; path = ../Shared/WikiPage.m; sourceTree = "<group>"; };
@@ -286,6 +278,7 @@
 		029043A21682797A00BE3480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		0296873D167E30C700B8FF2C /* PushPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPinView.h; sourceTree = "<group>"; };
 		0296873E167E30C700B8FF2C /* PushPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushPinView.m; sourceTree = "<group>"; };
+		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A077D0167A77A400686261 /* POIAllTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAllTagsViewController.h; sourceTree = "<group>"; };
 		02A077D1167A77A400686261 /* POIAllTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAllTagsViewController.m; sourceTree = "<group>"; };
 		02A194AE19C69701002338DA /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Database.h; path = ../Shared/Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -544,18 +537,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		024AB08E240C8721004A3B5B /* POI Icons */ = {
-			isa = PBXGroup;
-			children = (
-				027FEA3720B1ECDA00901E9F /* iD SVG POI.xcassets */,
-				027FEA3520B13B8000901E9F /* Maki Icons.xcassets */,
-				024AB08A240C80FD004A3B5B /* Temaki Icons.xcassets */,
-				024AB08C240C86FF004A3B5B /* Font Awesome Icons.xcassets */,
-				024AB08F240C9202004A3B5B /* TNP Icons.xcassets */,
-			);
-			name = "POI Icons";
-			sourceTree = "<group>";
-		};
 		027EDC5D206F3EED00D349D6 /* KissXML */ = {
 			isa = PBXGroup;
 			children = (
@@ -615,6 +596,7 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
+				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
 				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
 				024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
@@ -743,6 +725,7 @@
 		02ACBA3A16713CCB00BB4414 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0254C6CD2579CD88000705B4 /* POI-Icons */,
 				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
 				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
 				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
@@ -752,7 +735,6 @@
 				02C3194C250EAED500C5D200 /* Localizable.strings */,
 				02ACBA3F16713CCB00BB4414 /* main.m */,
 				02AFBF1F245774DC00BE43F4 /* OSM-Logo256.png */,
-				024AB08E240C8721004A3B5B /* POI Icons */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1105,6 +1087,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */,
 				02ACBA3E16713CCB00BB4414 /* InfoPlist.strings in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
 				02AFBF20245774DC00BE43F4 /* OSM-Logo256.png in Resources */,
@@ -1119,12 +1102,7 @@
 				027AB503250E9CA500C404CD /* Changeset.storyboard in Resources */,
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
 				02C3194E250EAED500C5D200 /* Localizable.strings in Resources */,
-				024AB08D240C86FF004A3B5B /* Font Awesome Icons.xcassets in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
-				027FEA3620B13B8000901E9F /* Maki Icons.xcassets in Resources */,
-				024AB090240C9202004A3B5B /* TNP Icons.xcassets in Resources */,
-				024AB08B240C80FD004A3B5B /* Temaki Icons.xcassets in Resources */,
-				027FEA3820B1ECDA00901E9F /* iD SVG POI.xcassets in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
 				02ACBCFD16713F2B00BB4414 /* RenderInfo.json in Resources */,
 			);

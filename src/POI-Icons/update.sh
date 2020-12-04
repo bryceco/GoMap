@@ -1,0 +1,81 @@
+#!/bin/sh
+
+NAME=(temaki 									maki)
+GIT=(https://github.com/ideditor/temaki.git		https://github.com/mapbox/maki.git)
+FILES=('icons/*.svg'							'icons/*-15.svg')
+
+# fetch icons from repositories
+for index in "${!NAME[@]}"; do
+	name=${NAME[index]}
+	git=${GIT[index]}
+	files=${FILES[index]}
+
+	rm -rf /tmp/$name
+	(cd /tmp/ && git clone $git)
+	for f in /tmp/$name/$files; do
+		f2=${f##*/}
+		mv -f $f ./$name"-"$(echo $f2 | sed 's/-15//')
+	done
+done
+
+# fetch FontAwesome icons (might require website login)
+curl --output /tmp/fas.zip https://use.fontawesome.com/releases/v5.15.1/fontawesome-free-5.15.1-desktop.zip
+(cd /tmp/ && unzip -q -o ./fas.zip)
+for style in "brands" "regular" "solid"; do
+	for f in /tmp/fontawesome-*/svgs/$style/*; do
+		f2=${f##*/}
+		prefix="fa"${style:0:1}
+		mv -f $f ./$prefix"-"$f2
+	done
+done
+
+# filter out any files not required by presets
+keepFiles=$(./presetIcons.py | sort | uniq | sed 's/$/.svg/')
+keepFilesString=" ${keepFiles[@]} "
+
+for f in *.svg; do
+	if [[ ! $keepFilesString =~ $f ]]; then
+		rm $f
+	fi
+done
+
+# convert from svg to pdf
+rm -f *.pdf
+/Applications/Inkscape.app/Contents/MacOS/inkscape --export-type=pdf *.svg
+rm *.svg
+
+# build asset catalog
+echo "Building asset catalog"
+rm -rf ./POI-Icons.xcassets
+mkdir POI-Icons.xcassets
+for f in *.pdf; do
+	f2=${f%.*}
+	mkdir ./POI-Icons.xcassets/$f2.imageset
+	mv $f ./POI-Icons.xcassets/$f2.imageset/$f
+	cat > ./POI-Icons.xcassets/$f2.imageset/Contents.json <<EOF
+{
+  "images" : [
+    {
+      "filename" : "$f",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}
+EOF
+done
+
+git add ./POI-Icons.xcassets
+
+echo "done"
