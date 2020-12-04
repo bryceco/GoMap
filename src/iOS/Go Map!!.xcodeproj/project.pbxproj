@@ -596,7 +596,6 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
-				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
 				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
 				024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */,
 				02ACBA3916713CCB00BB4414 /* Go Map! */,
@@ -725,6 +724,7 @@
 		02ACBA3A16713CCB00BB4414 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
 				0254C6CD2579CD88000705B4 /* POI-Icons */,
 				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
 				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
