@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Download icons from various sources
+# Filter those used by the presets
+# Convert them from SVG to PDF
+# Build an asset catalog containing the images
+
 NAME=(temaki 									maki)
 GIT=(https://github.com/ideditor/temaki.git		https://github.com/mapbox/maki.git)
 FILES=('icons/*.svg'							'icons/*-15.svg')
@@ -19,7 +24,7 @@ for index in "${!NAME[@]}"; do
 done
 
 # fetch FontAwesome icons (might require website login)
-curl --output /tmp/fas.zip https://use.fontawesome.com/releases/v5.15.1/fontawesome-free-5.15.1-desktop.zip
+curl -fLsS --output /tmp/fas.zip https://use.fontawesome.com/releases/v5.15.1/fontawesome-free-5.15.1-desktop.zip
 (cd /tmp/ && unzip -q -o ./fas.zip)
 for style in "brands" "regular" "solid"; do
 	for f in /tmp/fontawesome-*/svgs/$style/*; do
@@ -30,17 +35,31 @@ for style in "brands" "regular" "solid"; do
 done
 
 # filter out any files not required by presets
-keepFiles=$(./presetIcons.py | sort | uniq | sed 's/$/.svg/')
-keepFilesString=" ${keepFiles[@]} "
-
+presetIcons=($(./presetIcons.py | sort | uniq | sed 's/$/.svg/'))
+presetStrings=" ${presetIcons[@]} "
 for f in *.svg; do
-	if [[ ! $keepFilesString =~ $f ]]; then
+	if [[ ! $presetStrings =~ $f ]]; then
 		rm $f
+	fi
+done
+
+# Special case fetching icons created in iD
+for f in "${presetIcons[@]}"; do
+	if [[ $f = "iD-"* ]]; then
+		f2=${f:3}
+		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/iD-sprite/presets/$f2"
+	fi
+done
+
+for f in "${presetIcons[@]}"; do
+	if [ ! -f "$f" ]; then
+		echo "Missing preset icon" $f
 	fi
 done
 
 # convert from svg to pdf
 rm -f *.pdf
+export SOURCE_DATE_EPOCH=1521324801 # set CreationDate within PDF so files don't change unnecessarily
 /Applications/Inkscape.app/Contents/MacOS/inkscape --export-type=pdf *.svg
 rm *.svg
 

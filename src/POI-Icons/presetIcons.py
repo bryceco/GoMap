@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+# Look though the preset files and pull out the names of all referenced icons
+# Print them to stdout one per line
+
 import sys, glob, json
 
 for file in glob.glob('../presets/*.json'):
