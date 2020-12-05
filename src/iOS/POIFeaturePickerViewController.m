@@ -167,7 +167,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			} objectForData:^id _Nonnull(NSData * data) {
 				extern UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize );
 				UIImage * image = [UIImage imageWithData:data];
-				return ImageScaledToSize( image, 40.0 );
+				return ImageScaledToSize( image, 60.0 );
 			} completion:^(id image) {
 				if ( image ) {
 					dispatch_async(dispatch_get_main_queue(), ^{
