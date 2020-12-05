@@ -262,10 +262,12 @@
 	UIButton * addButton = _mapView.addNodeButton;
 	UIView * superview = addButton.superview;
 	for ( NSLayoutConstraint * c in superview.constraints ) {
-		if ( c.firstItem == addButton &&
-			[c.secondItem isKindOfClass:[UILayoutGuide class]] &&
-			(c.firstAttribute == NSLayoutAttributeLeading || c.firstAttribute == NSLayoutAttributeTrailing) &&
-			(c.secondAttribute == NSLayoutAttributeLeading || c.secondAttribute == NSLayoutAttributeTrailing) )
+		if ( c.firstItem != addButton )
+			continue;
+		if ( !([c.secondItem isKindOfClass:[UILayoutGuide class]] || [c.secondItem isKindOfClass:[UIView class]]) )
+			continue;;
+		if ( (c.firstAttribute == NSLayoutAttributeLeading || c.firstAttribute == NSLayoutAttributeTrailing) &&
+			 (c.secondAttribute == NSLayoutAttributeLeading || c.secondAttribute == NSLayoutAttributeTrailing) )
 		{
 			[superview removeConstraint:c];
 			NSLayoutConstraint * c2 = [NSLayoutConstraint constraintWithItem:c.firstItem
