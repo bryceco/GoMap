@@ -636,7 +636,7 @@ static NSString * RECENTLY_USED_KEY = @"AerialListRecentlyUsed";
 					if ( [attribIconString hasPrefix:@"http"] ) {
 						httpIcon = YES;
 					} else {
-						NSLog(@"unsupported icon format: %@\n",attribIconString);
+						NSLog(@"Aerial: unsupported icon format in %@: %@\n",name,attribIconString);
 					}
 				}
 			}

@@ -97,6 +97,39 @@ static void InitializeDictionaries()
 		g_jsonPresetsDict		 = DictionaryForFile(@"presets.json");
 		g_jsonFieldsDict		 = DictionaryForFile(@"fields.json");
 
+		// merge name suggestion index into presets
+		{
+			NSMutableDictionary * nsi = [DictionaryForFile(@"nsi_presets.json") mutableCopy];
+			for ( NSString * ident in [nsi allKeys] ) {
+				NSMutableDictionary * dict = [nsi[ident] mutableCopy];
+
+				// mark entry as a suggestion
+				dict[@"suggestion"] = @"yes";
+
+				// convert locations to country codes
+				NSMutableArray * locations = [dict[@"locationSet"][@"include"] mutableCopy];
+				[dict removeObjectForKey:@"locationSet"];
+				if ( locations ) {
+					for ( NSInteger i = 0; i < locations.count; ++i ) {
+						NSString * s = locations[i];
+						if ( [s isEqualToString:@"conus"] ) {
+							locations[i] = @"us";
+						} else if ( [s isEqualToString:@"001"] ) {
+							locations = nil;
+							break;
+						}
+					}
+					dict[@"countryCodes"] = locations;
+				}
+
+				// install updated dictionary for identifier
+				nsi[ident] = dict;
+			}
+
+			[nsi addEntriesFromDictionary:g_jsonPresetsDict];
+			g_jsonPresetsDict = nsi;
+		}
+
 		PresetLanguages * presetLanguages = [PresetLanguages new];	// don't need to save this, it doesn't get used again unless user changes the language
 		NSString * code = presetLanguages.preferredLanguageCode;
 		NSString * code2 = [code stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
@@ -648,8 +681,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			return nil;
 		}
 
-	} else if ( [type isEqualToString:@"combo"] || [type isEqualToString:@"semiCombo"] || [type isEqualToString:@"multiCombo"] ) {	// semiCombo is for setting semicolor delimited lists of values, which we don't support
-
+	} else if ( [type isEqualToString:@"combo"] ||
+			    [type isEqualToString:@"semiCombo"] || 	// semiCombo is for setting semicolor delimited lists of values, which we don't support
+			    [type isEqualToString:@"multiCombo"] ||
+			    [type isEqualToString:@"manyCombo"] )
+	{
 		BOOL isMulti = [type isEqualToString:@"multiCombo"];
 		if ( isMulti && ![key hasSuffix:@":"] )
 			key = [key stringByAppendingString:@":"];

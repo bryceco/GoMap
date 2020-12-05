@@ -10,11 +10,14 @@ presets=(preset_categories
 
 for preset in ${presets[*]}; do
 	echo $preset
-	curl --silent -L $DIST/$preset.min.json > $preset.json
+	curl -fLsS $DIST/$preset.min.json > $preset.json
 done
 
+# Download NSI presets
+curl -fLsS --output nsi_presets.json https://raw.githubusercontent.com/osmlab/name-suggestion-index/main/dist/presets/nsi-id-presets.min.json
+
 # Download address formats
-curl --silent -L https://raw.githubusercontent.com/openstreetmap/iD/develop/data/address_formats.json > address_formats.json
+curl -fLsS https://raw.githubusercontent.com/openstreetmap/iD/develop/data/address_formats.json > address_formats.json
 
 git add *.json
 
@@ -32,12 +35,12 @@ for index,(k,v) in enumerate(dict.items()):
 EOF
 )
 
-languages=$(curl --silent -L $DIST/translations/index.json |
+languages=$(curl -fLsS $DIST/translations/index.json |
 python3 -c "$GET_LANGS")
 
 for lang in ${languages[*]}; do
 	echo $lang
-    curl --silent -L $DIST/translations/$lang.min.json > translations/$lang.json
+    curl -fLsS $DIST/translations/$lang.min.json > translations/$lang.json
 done
 
 git add translations/*.json
