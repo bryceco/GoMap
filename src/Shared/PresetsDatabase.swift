@@ -83,87 +83,110 @@ extension PresetsDatabase {
         return featureDict
     }
 
-    private static var presetsDict: [String: Feature]?
+	// map country -> featureName -> feature attributes
+	private static var presetsCountryDict = [String: [String:Feature]]()
 
-    @objc static func featureNameForObjectDictSwift(_ dict: NSDictionary,
+    @objc static func featureNameForObjectDictSwift(_ jsonPresetsDict: NSDictionary,
                                                     countryCode: String?,
                                                     objectTags: [String: String]?,
                                                     geometry: NSString) -> String?
     {
-        guard let objectTags = objectTags == nil ? [:] : convertStringDict(objectTags as NSDictionary?) else { return nil }
+		// build an optimized version of the presets dictionary
+		if presetsCountryDict.count == 0 {
+			let presetsDict = convertToSwift(jsonPresetsDict)
+			presetsCountryDict[""] = [String:Feature]()
 
-        var bestMatchScore = 0.0
-        var bestMatchName: String?
+			for (featureName, dict) in presetsDict {
 
-        if presetsDict == nil {
-            presetsDict = convertToSwift(dict)
+				if let countryCodes = dict.countryCodes {
+					for country : String in countryCodes {
+						if presetsCountryDict[country] == nil {
+							presetsCountryDict[country] = [featureName:dict]
+						} else {
+							presetsCountryDict[country]![featureName] = dict
+						}
+					}
+				} else {
+					presetsCountryDict[""]![featureName] = dict
+				}
+			}
         }
 
-        nextFeature:
-            for (featureName, dict) in presetsDict! {
-            if let countryCode = countryCode,
-                let countryCodes = dict.countryCodes,
-                !countryCodes.contains(countryCode)
-            {
-                continue
-            }
+		guard let objectTags = objectTags == nil ? [:] : convertStringDict(objectTags as NSDictionary?) else { return nil }
 
-            var totalScore = 0.0
-            if let geom = dict.geometry,
-                geom.contains(geometry as String)
-            {
-                totalScore = 1
-            } else {
-                continue
-            }
+		var bestMatchScore = 0.0
+		var bestMatchName: String?
 
-            let matchScore = dict.matchScore == nil ? 1.0 : dict.matchScore!
 
-            guard let keyvals = dict.tags else { continue }
+		for (country,presetsDict) in presetsCountryDict {
 
-            var seen = Set<String>()
-            for (key, value) in keyvals {
-                seen.insert(key)
+			if let countryCode = countryCode,
+			   country != "",
+			   country != countryCode
+			{
+				continue
+			}
 
-                var v: String?
-                if key.hasSuffix("*") {
-                    let c = String(key.dropLast())
-                    v = objectTags.first(where: { (key: String, _: String) -> Bool in
-                        key.hasPrefix(c)
-                    })?.value
-                } else {
-                    v = objectTags[key]
-                }
-                if let v = v {
-                    if value == v {
-                        totalScore += matchScore
-                        continue
-                    }
-                    if value == "*" {
-                        totalScore += matchScore / 2
-                        continue
-                    }
-                } else if key == "area", value == "yes", geometry == "area" {
-                    totalScore += 0.1
-                    continue
-                }
-                continue nextFeature // invalid match
-            }
+			nextFeature:
+			for (featureName, dict) in presetsDict {
 
-            // boost score for additional matches in addTags
-            if let addTags = dict.addTags {
-                for (key, val) in addTags {
-                    if !seen.contains(key), objectTags[key] == val {
-                        totalScore += matchScore
-                    }
-                }
-            }
+				var totalScore = 0.0
+				if let geom = dict.geometry,
+					geom.contains(geometry as String)
+				{
+					totalScore = 1
+				} else {
+					continue
+				}
 
-            if totalScore > bestMatchScore {
-                bestMatchName = featureName
-                bestMatchScore = totalScore
-            }
-        }
+				let matchScore = dict.matchScore == nil ? 1.0 : dict.matchScore!
+
+				guard let keyvals = dict.tags else { continue }
+
+				var seen = Set<String>()
+				for (key, value) in keyvals {
+					seen.insert(key)
+
+					var v: String?
+					if key.hasSuffix("*") {
+						let c = String(key.dropLast())
+						v = objectTags.first(where: { (key: String, _: String) -> Bool in
+							key.hasPrefix(c)
+						})?.value
+					} else {
+						v = objectTags[key]
+					}
+					if let v = v {
+						if value == v {
+							totalScore += matchScore
+							continue
+						}
+						if value == "*" {
+							totalScore += matchScore / 2
+							continue
+						}
+					} else if key == "area", value == "yes", geometry == "area" {
+						totalScore += 0.1
+						continue
+					}
+					continue nextFeature // invalid match
+				}
+
+				// boost score for additional matches in addTags
+				if let addTags = dict.addTags {
+					for (key, val) in addTags {
+						if !seen.contains(key), objectTags[key] == val {
+							totalScore += matchScore
+						}
+					}
+				}
+
+				if totalScore > bestMatchScore {
+					bestMatchName = featureName
+					bestMatchScore = totalScore
+				}
+			}
+		}
         return bestMatchName
     }
 }
