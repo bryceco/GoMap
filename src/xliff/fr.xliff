@@ -837,6 +837,10 @@ Il s'agit d'une opération avancée qui ne devrait être effectuée uniquement s
         <target>Étiquettes du nœud</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Not found" xml:space="preserve">
+        <source>Not found</source>
+        <note>User credentials not found</note>
+      </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
         <target>Historique des notes</target>
@@ -2522,6 +2526,10 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
         <source>Value</source>
         <target>Valeur</target>
         <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
+      </trans-unit>
+      <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
+        <source>ⓘ</source>
+        <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
     </body>
   </file>

@@ -808,6 +808,10 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
         <target>Node-etiketter</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
+      <trans-unit id="Not found" xml:space="preserve">
+        <source>Not found</source>
+        <note>User credentials not found</note>
+      </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
         <target>Node-historikk</target>
@@ -2438,6 +2442,10 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>Value</source>
         <target>Verdi</target>
         <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
+      </trans-unit>
+      <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
+        <source>ⓘ</source>
+        <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
     </body>
   </file>

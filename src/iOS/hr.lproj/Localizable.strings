@@ -108,6 +108,9 @@
 "Additional imagery" = "Dodatne slike";
 
 /* No comment provided by engineer. */
+"Aerial only" = "Samo aerofotografije";
+
+/* No comment provided by engineer. */
 "All choices" = "Svi izbori";
 
 /* No comment provided by engineer. */
@@ -310,6 +313,12 @@
 
 /* No comment provided by engineer. */
 "Editing layer not visible" = "Sloj koji se uređuje nije vidljiv";
+
+/* No comment provided by engineer. */
+"Editor only" = "Samo uređivač";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Uređivač s aerofotografijama";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Osiguraj, da je usluga određivanja mjesta aktivirana i da program ima prava pristupa.\n\nGreška: %@";
