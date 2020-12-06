@@ -11,7 +11,7 @@ import Foundation
 extension PresetsDatabase {
     struct Feature {
         let addTags: [String: String]?
-        let countryCodes: [String]?
+        let locationSet: [String: [String]]?
         let geometry: [String]?
         let icon: String?
         let imageURL: String?
@@ -47,7 +47,7 @@ extension PresetsDatabase {
 
     private static func convertFeatureToSwift(_ jsonDict: NSDictionary) -> Feature? {
         let addTags = convertStringDict(jsonDict["addTags"] as? NSDictionary)
-        let countryCodes = jsonDict["countryCodes"] as? [String]
+		let locationSet = jsonDict["locationSet"] as? [String: [String]]
         let geometry = jsonDict["geometry"] as? [String]
         let icon = jsonDict["icon"] as? String
         let imageURL = jsonDict["imageURL"] as? String
@@ -58,7 +58,7 @@ extension PresetsDatabase {
         let tags = convertStringDict(jsonDict["tags"] as? NSDictionary)
         let terms = jsonDict["terms"] as? [String]
         let feature = Feature(addTags: addTags,
-                              countryCodes: countryCodes,
+                              locationSet: locationSet,
                               geometry: geometry,
                               icon: icon,
                               imageURL: imageURL,
@@ -98,8 +98,10 @@ extension PresetsDatabase {
 
 			for (featureName, dict) in presetsDict {
 
-				if let countryCodes = dict.countryCodes {
-					for country : String in countryCodes {
+				if let locationSet = dict.locationSet,
+				   let includeList = locationSet["include"]
+				{
+					for country : String in includeList {
 						if presetsCountryDict[country] == nil {
 							presetsCountryDict[country] = [featureName:dict]
 						} else {

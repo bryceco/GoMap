@@ -108,7 +108,6 @@ static void InitializeDictionaries()
 
 				// convert locations to country codes
 				NSMutableArray * locations = [dict[@"locationSet"][@"include"] mutableCopy];
-				[dict removeObjectForKey:@"locationSet"];
 				if ( locations ) {
 					for ( NSInteger i = 0; i < locations.count; ++i ) {
 						NSString * s = locations[i];
@@ -119,7 +118,10 @@ static void InitializeDictionaries()
 							break;
 						}
 					}
-					dict[@"countryCodes"] = locations;
+					if ( locations )
+						dict[@"locationSet"] = @{ @"include" : locations };
+					else
+						dict[@"locationSet"] = nil;
 				}
 
 				// install updated dictionary for identifier
@@ -480,7 +482,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
 		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
 #if USE_SUGGESTIONS
-			NSArray<NSString *> * a = dict[@"countryCodes"];
+			NSArray<NSString *> * a = dict[@"locationSet"][@"include"];
 			if ( a.count > 0 ) {
 				BOOL found = NO;
 				for ( NSString * s in a ) {
@@ -937,7 +939,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}
 		__block double totalScore = 0;
 #if USE_SUGGESTIONS
-		NSArray<NSString *> * countryList = dict[@"countryCodes"];
+		NSArray<NSString *> * countryList = dict[@"@locationSet"][@"include"];
 		if ( countryList.count > 0 ) {
 			BOOL found = NO;
 			for ( NSString * country in countryList ) {
