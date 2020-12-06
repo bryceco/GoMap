@@ -35,7 +35,7 @@ for style in "brands" "regular" "solid"; do
 done
 
 # filter out any files not required by presets
-presetIcons=($(./presetIcons.py | sort | uniq | sed 's/$/.svg/'))
+presetIcons=($(cd ../presets && ./presetIcons.py | sort | uniq | sed 's/$/.svg/'))
 presetStrings=" ${presetIcons[@]} "
 for f in *.svg; do
 	if [[ ! $presetStrings =~ $f ]]; then

@@ -5,7 +5,7 @@
 
 import sys, glob, json
 
-for file in glob.glob('../presets/*.json'):
+for file in glob.glob('./*.json'):
 #	print(file)
 	f = open(file,)
 	d=json.load(f)
