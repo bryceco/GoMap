@@ -559,7 +559,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return text;
 }
 
-+(PresetGroup *)groupForField:(NSString *)fieldName geometry:(NSString *)geometry update:(void (^)(void))update
++(PresetGroup *)groupForField:(NSString *)fieldName geometry:(NSString *)geometry ignore:(NSArray *)ignore update:(void (^)(void))update
 {
 	if ( g_taginfoCache == nil ) {
 		g_taginfoCache = [NSMutableDictionary new];
@@ -686,8 +686,12 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	} else if ( [type isEqualToString:@"combo"] ||
 			    [type isEqualToString:@"semiCombo"] || 	// semiCombo is for setting semicolor delimited lists of values, which we don't support
 			    [type isEqualToString:@"multiCombo"] ||
+			    [type isEqualToString:@"typeCombo"] ||
 			    [type isEqualToString:@"manyCombo"] )
 	{
+		if ( [type isEqualToString:@"typeCombo"] && [ignore containsObject:key] ) {
+			return nil;
+		}
 		BOOL isMulti = [type isEqualToString:@"multiCombo"];
 		if ( isMulti && ![key hasSuffix:@":"] )
 			key = [key stringByAppendingString:@":"];
@@ -893,11 +897,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}
 		PresetGroup * group = [PresetGroup presetGroupWithName:label tags:tags];
 		return group;
-
-	} else if ( [type isEqualToString:@"typeCombo"] ) {
-
-		// skip since this is for selecting generic objects
-		return nil;
 
 	} else if ( [type isEqualToString:@"localized"] ) {
 
@@ -1312,7 +1311,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return [self presetAtSection:indexPath.section row:indexPath.row];
 }
 
--(void)addPresetsForFieldsInFeature:(NSString *)featureName geometry:(NSString *)geometry field:(NSString *)fieldType dupSet:(NSMutableSet *)dupSet update:(void (^)(void))update
+-(void)addPresetsForFieldsInFeature:(NSString *)featureName geometry:(NSString *)geometry field:(NSString *)fieldType ignore:(NSArray *)ignore dupSet:(NSMutableSet *)dupSet update:(void (^)(void))update
 {
 	NSArray * fields = nil;
 	while ( (fields = g_jsonPresetsDict[ featureName ][ fieldType ]) == nil ) {
@@ -1328,7 +1327,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		if ( [field hasPrefix:@"{"] && [field hasSuffix:@"}"]) {
 			// copy fields from referenced item
 			NSString * ref = [field substringWithRange:NSMakeRange(1, field.length-2)];
-			[self addPresetsForFieldsInFeature:ref geometry:geometry field:fieldType dupSet:dupSet update:update];
+			[self addPresetsForFieldsInFeature:ref geometry:geometry field:fieldType ignore:ignore dupSet:dupSet update:update];
 			continue;
 		}
 
@@ -1336,7 +1335,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			continue;
 		[dupSet addObject:field];
 
-		PresetGroup * group = [PresetsDatabase groupForField:field geometry:geometry update:update];
+		PresetGroup * group = [PresetsDatabase groupForField:field geometry:geometry ignore:ignore update:update];
 		if ( group == nil )
 			continue;
 		// if both this group and the previous don't have a name then merge them
@@ -1385,9 +1384,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	// Add presets specific to the type
 	NSMutableSet * dupSet = [NSMutableSet new];
-	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"fields"     dupSet:dupSet update:update];
+	NSArray * ignoreTags = [featureDict[@"tags"] allKeys];
+	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"fields"     ignore:ignoreTags dupSet:dupSet update:update];
 	[_sectionList addObject:[PresetGroup presetGroupWithName:nil tags:nil]];	// Create a break between the common items and the rare items
-	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"moreFields" dupSet:dupSet update:update];
+	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"moreFields" ignore:ignoreTags dupSet:dupSet update:update];
 }
 @end
 
