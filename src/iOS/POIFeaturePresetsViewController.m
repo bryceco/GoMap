@@ -76,11 +76,11 @@
 
 		__weak POIFeaturePresetsViewController * weakSelf = self;
 
-		_presets = [PresetsForFeature presetsForFeature:feature.featureName objectTags:dict geometry:geometry update:^{
+		_allPresets = [PresetsForFeature presetsForFeature:feature objectTags:dict geometry:geometry update:^{
 				// this may complete much later, even after we've been dismissed
 				POIFeaturePresetsViewController * mySelf = weakSelf;
 				if ( mySelf && !mySelf->_isEditing ) {
-					mySelf->_presets = [PresetsForFeature presetsForFeature:feature.featureName objectTags:dict geometry:geometry update:nil];
+					mySelf->_allPresets = [PresetsForFeature presetsForFeature:feature objectTags:dict geometry:geometry update:nil];
 					[mySelf.tableView reloadData];
 				}
 			}];
@@ -173,18 +173,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return _drillDownGroup ? 1 : _presets.sectionCount + 1;
+	return _drillDownGroup ? 1 : _allPresets.sectionCount + 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( _drillDownGroup )
 		return _drillDownGroup.name;
-	if ( section == _presets.sectionCount )
+	if ( section == _allPresets.sectionCount )
 		return nil;
-	if ( section > _presets.sectionCount )
+	if ( section > _allPresets.sectionCount )
 		return nil;
-	PresetGroup * group = [_presets groupAtIndex:section];
+	PresetGroup * group = [_allPresets groupAtIndex:section];
 	return group.name;
 }
 
@@ -192,23 +192,23 @@
 {
 	if ( _drillDownGroup )
 		return _drillDownGroup.presetKeys.count;
-	if ( section == _presets.sectionCount )
+	if ( section == _allPresets.sectionCount )
 		return 1;
-	if ( section > _presets.sectionCount )
+	if ( section > _allPresets.sectionCount )
 		return 0;
-	return [_presets tagsInSection:section];
+	return [_allPresets tagsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( _drillDownGroup == nil ) {
-		if ( indexPath.section == _presets.sectionCount ) {
+		if ( indexPath.section == _allPresets.sectionCount ) {
 			UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CustomizePresets" forIndexPath:indexPath];
 			return cell;
 		}
 	}
 
-	id rowObject = _drillDownGroup ? _drillDownGroup.presetKeys[ indexPath.row ] : [_presets presetAtIndexPath:indexPath];
+	id rowObject = _drillDownGroup ? _drillDownGroup.presetKeys[ indexPath.row ] : [_allPresets presetAtIndexPath:indexPath];
 	if ( [rowObject isKindOfClass:[PresetKey class]] ) {
 
 		PresetKey 	* presetKey	= rowObject;
@@ -245,7 +245,7 @@
 
 		if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 			// Type cell
-			NSString * text = [_presets featureName];
+			NSString * text = [_allPresets featureName];
 			cell.valueField.text = text;
 			cell.valueField.enabled = NO;
 		} else {

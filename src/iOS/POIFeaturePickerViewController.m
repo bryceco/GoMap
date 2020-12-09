@@ -18,7 +18,7 @@ static const NSInteger MOST_RECENT_SAVED_MAXIMUM = 100;
 
 
 @interface FeaturePickerCell : UITableViewCell
-@property (strong,atomic)		NSString	* featureName;
+@property (strong,atomic)		NSString	* featureID;
 @property (assign)	IBOutlet	UILabel 	* title;
 @property (assign)	IBOutlet	UILabel 	* details;
 @property (assign)	IBOutlet	UIImageView	* image;
@@ -43,8 +43,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSString * defaults = [NSString stringWithFormat:@"mostRecentTypes.%@", geometry];
 	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
 	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
-	for ( NSString * featureName in a ) {
-		PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureName:featureName];
+	for ( NSString * featureID in a ) {
+		PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureID:featureID];
 		if ( feature ) {
 			[mostRecentArray addObject:feature];
 		}
@@ -158,10 +158,10 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		}
 	}
 
-	if ( feature.suggestion && feature.logoImage == nil && feature.logoURL ) {
+	if ( feature.nsiSuggestion && feature.nsiLogo == nil && feature.logoURL ) {
 		// download brand logo for name suggestion
-		feature.logoImage = feature.imageUnscaled;
-		UIImage * logo = [logoCache objectWithKey:feature.featureName
+		feature.nsiLogo = feature.iconUnscaled;
+		UIImage * logo = [logoCache objectWithKey:feature.featureID
 			fallbackURL:^{
 				return [NSURL URLWithString:feature.logoURL];
 			} objectForData:^id _Nonnull(NSData * data) {
@@ -171,10 +171,10 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			} completion:^(id image) {
 				if ( image ) {
 					dispatch_async(dispatch_get_main_queue(), ^{
-						feature.logoImage = image;
+						feature.nsiLogo = image;
 						for ( FeaturePickerCell * cell in self.tableView.visibleCells ) {
 							if ( [cell isKindOfClass:[FeaturePickerCell class]] ) {
-								if ( cell.featureName == feature.featureName ) {
+								if ( cell.featureID == feature.featureID ) {
 									cell.image.image = image;
 								}
 							}
@@ -183,7 +183,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 				}
 			}];
 		if ( logo ) {
-			feature.logoImage = logo;
+			feature.nsiLogo = logo;
 		}
 	}
 
@@ -194,10 +194,10 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 																 geometry:geometry
 																includeNSI:YES];
 	FeaturePickerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
-	cell.title.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
-	cell.image.image		= feature.logoImage && feature.logoImage != feature.imageUnscaled
-									? feature.logoImage
-									: [feature.imageUnscaled imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+	cell.title.text			= feature.nsiSuggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
+	cell.image.image		= feature.nsiLogo && feature.nsiLogo != feature.iconUnscaled
+									? feature.nsiLogo
+									: [feature.iconUnscaled imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	if (@available(iOS 13.0, *)) {
 		cell.image.tintColor = UIColor.labelColor;
 	} else {
@@ -207,14 +207,14 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	[cell setNeedsUpdateConstraints];
 	cell.details.text	= feature.summary;
 	cell.accessoryType = currentFeature == feature ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-	cell.featureName = feature.featureName;
+	cell.featureID = feature.featureID;
 	return cell;
 }
 
 +(void)updateMostRecentArrayWithSelection:(PresetFeature *)feature geometry:(NSString *)geometry
 {
 	[mostRecentArray filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PresetFeature * f, id bindings) {
-		return ! [f.featureName isEqualToString:feature.featureName];
+		return ! [f.featureID isEqualToString:feature.featureID];
 	}]];
 	[mostRecentArray insertObject:feature atIndex:0];
 	if ( mostRecentArray.count > MOST_RECENT_SAVED_MAXIMUM ) {
@@ -223,7 +223,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	NSMutableArray * a = [[NSMutableArray alloc] initWithCapacity:mostRecentArray.count];
 	for ( PresetFeature * f in mostRecentArray ) {
-		[a addObject:f.featureName];
+		[a addObject:f.featureID];
 	}
 
 	NSString * defaults = [NSString stringWithFormat:@"mostRecentTypes.%@", geometry];

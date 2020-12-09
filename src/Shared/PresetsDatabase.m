@@ -342,7 +342,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			}
 		}
 	}];
-	[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * name, PresetFeature * feature) {
+	[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
 		NSDictionary * dict2 = feature.tags;
 		NSString * value = dict2[ key ];
 		if ( value ) {
@@ -366,7 +366,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[set addObject:key];
 		}
 	}];
-	[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * name, PresetFeature * feature) {
+	[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
 		NSDictionary * dict2 = feature.tags;
 		[dict2 enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop2) {
 			[set addObject:key];
@@ -391,9 +391,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		set = [NSMutableSet new];
-		[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * key, PresetFeature * feature) {
-			NSRange slash = [key rangeOfString:@"/"];
-			NSString * featureKey = slash.location != NSNotFound ? [key substringToIndex:slash.location] : key;
+		[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+			NSString * featureID = feature.featureID;
+			NSRange slash = [feature.featureID rangeOfString:@"/"];
+			NSString * featureKey = slash.location != NSNotFound ? [feature.featureID substringToIndex:slash.location] : featureID;
 			[set addObject:featureKey];
 		}];
 	});
@@ -404,16 +405,16 @@ BOOL IsOsmBooleanTrue( NSString * value )
 +(NSArray<PresetFeature *> *)featuresAndCategoriesForMemberList:(NSArray *)memberList
 {
 	NSMutableArray * list = [NSMutableArray new];
-	for ( NSString * featureName in memberList ) {
+	for ( NSString * featureID in memberList ) {
 
-		if ( [featureName hasPrefix:@"category-"] ) {
+		if ( [featureID hasPrefix:@"category-"] ) {
 
-			PresetCategory * category = [[PresetCategory alloc] initWithCategoryName:featureName];
+			PresetCategory * category = [[PresetCategory alloc] initWithCategoryName:featureID];
 			[list addObject:category];
 
 		} else {
 
-			PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureName:featureName];
+			PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureID:featureID];
 			if ( feature == nil )
 				continue;
 			[list addObject:feature];
@@ -448,7 +449,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	[list sortUsingComparator:^NSComparisonResult(PresetFeature * obj1, PresetFeature * obj2) {
 		NSString * name1 = obj1.friendlyName;
 		NSString * name2 = obj2.friendlyName;
-		int diff = obj1.suggestion - obj2.suggestion;
+		int diff = obj1.nsiSuggestion - obj2.nsiSuggestion;
 		if ( diff )
 			return diff;
 		// prefer exact matches of primary name over alternate terms
@@ -846,13 +847,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSArray * ignore = @[ @"barrier", @"highway", @"footway", @"railway", @"type" ];
 
 		// whitelist
-		[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * field, PresetFeature * dict) {
-			if ( dict.suggestion )
+		[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+			if ( feature.nsiSuggestion )
 				return;
-			NSArray * geom = dict.geometry;
+			NSArray * geom = feature.geometry;
 			if ( ![geom containsObject:@"area"] )
 				return;
-			NSDictionary * tags = dict.tags;
+			NSDictionary * tags = feature.tags;
 			if ( tags.count > 1 )
 				return;	// very specific tags aren't suitable for whitelist, since we don't know which key is primary (in iD the JSON order is preserved and it would be the first key)
 			for ( NSString * key in tags ) {
@@ -863,13 +864,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}];
 
 		// blacklist
-		[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * field, PresetFeature * dict) {
-			if ( dict.suggestion )
+		[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+			if ( feature.nsiSuggestion )
 				return;
-			NSArray * geom = dict.geometry;
+			NSArray * geom = feature.geometry;
 			if ( [geom containsObject:@"area"] )
 				return;
-			NSDictionary * tags = dict.tags;
+			NSDictionary * tags = feature.tags;
 			for ( NSString * key in tags ) {
 				if ( [ignore containsObject:key] )
 					return;
@@ -1062,7 +1063,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	NSArray<PresetFeature *> * m = dict[ @"members" ];
 	NSMutableArray<PresetFeature *> * m2 = [NSMutableArray new];
 	for ( NSString * p in m ) {
-		PresetFeature * t = [PresetsDatabase presetFeatureForFeatureName:p];
+		PresetFeature * t = [PresetsDatabase presetFeatureForFeatureID:p];
 		if ( p ) {
 			[m2 addObject:t];
 		}
@@ -1075,10 +1076,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 @implementation PresetsForFeature
 
-+(instancetype)presetsForFeature:(NSString *)featureName objectTags:(NSDictionary *)objectTags geometry:(NSString *)geometry  update:(void (^)(void))update
++(instancetype)presetsForFeature:(PresetFeature *)feature objectTags:(NSDictionary *)objectTags geometry:(NSString *)geometry  update:(void (^)(void))update
 {
 	PresetsForFeature * presentation = [PresetsForFeature new];
-	[presentation setFeature:featureName
+	[presentation setFeature:feature
 				  objectTags:objectTags
 					geometry:geometry
 					  update:update];
@@ -1122,21 +1123,26 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return [self presetAtSection:indexPath.section row:indexPath.row];
 }
 
--(void)addPresetsForFieldsInFeature:(NSString *)featureName
-						   geometry:(NSString *)geometry
-							  field:(NSArray * (^)(PresetFeature * feature))valueGetter
-							 ignore:(NSArray *)ignore
-							 dupSet:(NSMutableSet *)dupSet
-							 update:(void (^)(void))update
+-(void)addPresetsForFieldsInFeatureID:(NSString *)featureID
+							 geometry:(NSString *)geometry
+								field:(NSArray * (^)(PresetFeature * feature))valueGetter
+							   ignore:(NSArray *)ignore
+							   dupSet:(NSMutableSet *)dupSet
+							   update:(void (^)(void))update
 {
-	NSArray * fields = (id)[PresetsDatabase inheritedValueOfFeature:featureName value:valueGetter];
+	NSArray * fields = (id)[PresetsDatabase inheritedValueOfFeature:featureID valueGetter:valueGetter];
 
 	for ( NSString * field in fields ) {
 
 		if ( [field hasPrefix:@"{"] && [field hasSuffix:@"}"]) {
 			// copy fields from referenced item
-			NSString * ref = [field substringWithRange:NSMakeRange(1, field.length-2)];
-			[self addPresetsForFieldsInFeature:ref geometry:geometry field:valueGetter ignore:ignore dupSet:dupSet update:update];
+			NSString * refFeature = [field substringWithRange:NSMakeRange(1, field.length-2)];
+			[self addPresetsForFieldsInFeatureID:refFeature
+										geometry:geometry
+										   field:valueGetter
+										  ignore:ignore
+										  dupSet:dupSet
+										  update:update];
 			continue;
 		}
 
@@ -1161,10 +1167,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 }
 
--(void)setFeature:(NSString *)featureName objectTags:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
+-(void)setFeature:(PresetFeature *)feature objectTags:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
 {
-	PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureName:featureName];
-
 	_featureName = feature.name;
 
 	// Always start with Type and Name
@@ -1194,14 +1198,14 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	// Add presets specific to the type
 	NSMutableSet * dupSet = [NSMutableSet new];
 	NSArray * ignoreTags = [feature.tags allKeys];
-	[self addPresetsForFieldsInFeature:featureName
+	[self addPresetsForFieldsInFeatureID:feature.featureID
 							  geometry:geometry
 								 field:^(PresetFeature * f){return f.fields;}
 								ignore:ignoreTags
 								dupSet:dupSet
 								update:update];
 	[_sectionList addObject:[PresetGroup presetGroupWithName:nil tags:nil]];	// Create a break between the common items and the rare items
-	[self addPresetsForFieldsInFeature:featureName
+	[self addPresetsForFieldsInFeatureID:feature.featureID
 							  geometry:geometry
 								 field:^(PresetFeature * f){return f.moreFields;}
 								ignore:ignoreTags

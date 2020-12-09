@@ -15,7 +15,7 @@
 
 @interface POIFeaturePresetsViewController : UITableViewController<UITextFieldDelegate,POITypeViewControllerDelegate>
 {
-	PresetsForFeature			*	_presets;
+	PresetsForFeature			*	_allPresets;
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	PresetFeature				*	_selectedFeature;	// the feature selected by the user, not derived from tags (e.g. Address)
 	BOOL							_childPushed;

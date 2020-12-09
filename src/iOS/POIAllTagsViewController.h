@@ -21,7 +21,7 @@
 	NSMutableArray				*	_members;
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	BOOL							_childViewPresented;
-	NSString					*	_featureName;
+	NSString					*	_featureID;
 	UITextField					*	_currentTextField;
 }
 

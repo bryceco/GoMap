@@ -9,31 +9,31 @@
 import Foundation
 
 // A feature-defining tag such as amenity=shop
-@objc @objcMembers class PresetFeature: NSObject {
+@objc class PresetFeature: NSObject {
 
-	static let missingImage = UIImage()
+	static let uninitializedImage = UIImage()
 
-	let featureName: String
+	@objc let featureID: String
 
 	// from json dictionary:
 	let _addTags: [String : String]?
-	let fields: [String]?
-	let geometry: [String]?
-	let icon: String?
-	public let logoURL: String?
+	@objc let fields: [String]?
+	@objc let geometry: [String]?
+	let icon: String?							// icon on the map
+	@objc let logoURL: String?					// NSI brand image
 	let locationSet: [String: [String]]?
 	let matchScore: Double
-	let moreFields: [String]?
-	let name: String?
+	@objc let moreFields: [String]?
+	@objc let name: String?
 	let reference: [String : String]?
 	let _removeTags: [String : String]?
 	let searchable: Bool
-	let tags: [String : String]
+	@objc let tags: [String : String]
 	let terms: [String]?
 
-	init(withName featureName:String, jsonDict:[String:Any], isNSI:Bool)
+	init(withID featureID:String, jsonDict:[String:Any], isNSI:Bool)
 	{
-		self.featureName = featureName
+		self.featureID = featureID
 
 		self._addTags = jsonDict["addTags"] as? [String: String]
 		self.fields = jsonDict["fields"] as? [String]
@@ -50,7 +50,7 @@ import Foundation
 		self.tags = jsonDict["tags"] as! [String: String]
 		self.terms = jsonDict["terms"] as? [String]
 
-		self.suggestion = isNSI
+		self.nsiSuggestion = isNSI
 	}
 
 	class func convertLocationSet( _ locationSet:[String:[String]]? ) -> [String:[String]]?
@@ -70,78 +70,62 @@ import Foundation
 		return ["include":includes]
 	}
 
-	public var logoImage: UIImage?
-	public var renderInfo: RenderInfo?
-	public let suggestion: Bool
+	@objc let nsiSuggestion: Bool		// is from NSI
+	@objc var nsiLogo: UIImage? = nil	// from NSI imageURL
 
-	var _imageUnscaled: UIImage?
-	var _imageScaled24: UIImage?
+	var _iconUnscaled: UIImage? = PresetFeature.uninitializedImage
+	var _iconScaled24: UIImage? = PresetFeature.uninitializedImage
 
-	func friendlyName() -> String
+	@objc func friendlyName() -> String
 	{
-		return self.name ?? self.featureName
+		return self.name ?? self.featureID
 	}
 
-	func summary() -> String? {
-		let feature = PresetFeature.parentNameOfName( self.featureName )
-		let result = PresetsDatabase.inheritedValueOfFeature(feature, value: { (feature:PresetFeature?) -> AnyHashable? in
-			return feature!.name
-		})
+	@objc func summary() -> String? {
+		let parentID = PresetFeature.parentIDofID( self.featureID )
+		let result = PresetsDatabase.inheritedValueOfFeature(parentID,
+			valueGetter: { (feature:PresetFeature?) -> AnyHashable? in return feature!.name })
 		return result as? String
 	}
 
-	func imageUnscaled() -> UIImage? {
-		if _imageUnscaled == nil {
-			_imageUnscaled = self.icon != nil ? UIImage(named: self.icon!) : nil
-			if _imageUnscaled == nil {
-				_imageUnscaled = PresetFeature.missingImage
-			}
+	@objc func iconUnscaled() -> UIImage? {
+		if _iconUnscaled == PresetFeature.uninitializedImage {
+			_iconUnscaled = self.icon != nil ? UIImage(named: self.icon!) : nil
 		}
-		return _imageUnscaled == PresetFeature.missingImage ? nil : _imageUnscaled
+		return _iconUnscaled
 	}
-
-	func imageScaled24() -> UIImage?
+	@objc func iconScaled24() -> UIImage?
 	{
-		if _imageScaled24 == nil {
-			_imageScaled24 = self.imageUnscaled()
-			if _imageScaled24 != nil {
-				_imageScaled24 = IconScaledForDisplay( _imageScaled24 );
-			} else {
-				_imageScaled24 = PresetFeature.missingImage
-			}
+		if _iconScaled24 == PresetFeature.uninitializedImage {
+			_iconScaled24 = IconScaledForDisplay( self.iconUnscaled() )
 		}
-		return _imageScaled24 == PresetFeature.missingImage ? nil : _imageScaled24
+		return _iconScaled24
 	}
 
-	func addTags() -> [String : String]? {
-		return self._addTags != nil ? self._addTags : self.tags
+	@objc func addTags() -> [String : String]? {
+		return self._addTags ?? self.tags
 	}
 
-	func removeTags() -> [String : String]? {
-		return self._removeTags != nil ? self._removeTags : self.addTags()
+	@objc func removeTags() -> [String : String]? {
+		return self._removeTags ?? self.addTags()
 	}
 
-	class func parentNameOfName(_ name:String) -> String?
+	class func parentIDofID(_ featureID:String) -> String?
 	{
-		guard let range = name.range(of: "/", options: .backwards, range: nil, locale: nil) else {
-			return nil
+		if let range = featureID.range(of: "/", options: .backwards, range: nil, locale: nil) {
+			return String( featureID.prefix(upTo: range.lowerBound) )
 		}
-		let s = name.prefix(upTo: range.lowerBound)
-		return String(s)
-	}
-	func parentName() -> String?
-	{
-		return PresetFeature.parentNameOfName(self.featureName)
+		return nil
 	}
 
-	func matchesSearchText(_ searchText: String?) -> Bool {
+	@objc func matchesSearchText(_ searchText: String?) -> Bool {
 		guard let searchText = searchText else {
 			return false
 		}
-		if self.featureName.range(of: searchText, options: .caseInsensitive) != nil {
+		if self.featureID.range(of: searchText, options: .caseInsensitive) != nil {
 			return true
 		}
-		if self.friendlyName().range(of: searchText, options: .caseInsensitive) != nil {
+		if self.name?.range(of: searchText, options: .caseInsensitive) != nil {
 			return true
 		}
 		if let terms = self.terms {
@@ -158,7 +142,7 @@ import Foundation
 
 @objc class PresetsDatabase : NSObject {
 
-	static var presets : [String :PresetFeature]?
+	static var stdPresets : [String :PresetFeature]?
 	static var nsiPresets : [String :PresetFeature]?
 
 	// initialize database
@@ -167,60 +151,60 @@ import Foundation
 		var presets = [String :PresetFeature]()
 		let dict2 = dict as! [String:[String:Any]]
 		for (name,values) in dict2 {
-			presets[name] = PresetFeature(withName: name, jsonDict: values, isNSI:isNSI)
+			presets[name] = PresetFeature(withID: name, jsonDict: values, isNSI:isNSI)
 		}
 		return presets
 	}
 	@objc class func initializeWith(presetsDict:NSDictionary, nsiPresetsDict:NSDictionary)
 	{
-		presets 	= featureDictForJsonDict(presetsDict, isNSI:false)
+		stdPresets 	= featureDictForJsonDict(presetsDict, isNSI:false)
 		nsiPresets 	= featureDictForJsonDict(nsiPresetsDict, isNSI:true)
 	}
 
 	// enumerate contents of database
-	@objc class func enumeratePresetsUsingBlock(_ block:(_ name: String, _ feature: PresetFeature) -> Void) {
-		for (k,v) in presets! {
-			block(k,v)
+	@objc class func enumeratePresetsUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
+		for (_,v) in stdPresets! {
+			block(v)
 		}
 	}
-	@objc class func enumeratePresetsAndNsiUsingBlock(_ block:(_ name: String, _ feature: PresetFeature) -> Void) {
-		for (k,v) in presets! {
-			block(k,v)
+	@objc class func enumeratePresetsAndNsiUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
+		for (_,v) in stdPresets! {
+			block(v)
 		}
-		for (k,v) in nsiPresets! {
-			block(k,v)
+		for (_,v) in nsiPresets! {
+			block(v)
 		}
 	}
 
 	// go up the feature tree and return the first instance of the requested field value
 	private class func inheritedFieldForPresetsDict( _ presetDict: [String:PresetFeature],
-													 featureName: String?,
+													 featureID: String?,
 													 field fieldGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
 													-> AnyHashable?
 	{
-		var featureName = featureName
-		while featureName != nil {
-			if let feature = presetDict[featureName!],
+		var featureID = featureID
+		while featureID != nil {
+			if let feature = presetDict[featureID!],
 			   let field = fieldGetter(feature)
 			{
 				return field
 			}
-			featureName = PresetFeature.parentNameOfName(featureName!)
+			featureID = PresetFeature.parentIDofID(featureID!)
 		}
 		return nil
 	}
-	@objc class func inheritedValueOfFeature( _ featureName: String?,
-											  value valueGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
+	@objc class func inheritedValueOfFeature( _ featureID: String?,
+											  valueGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
 											-> AnyHashable?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
-		return PresetsDatabase.inheritedFieldForPresetsDict(presets!, featureName: featureName, field: valueGetter)
+		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets!, featureID: featureID, field: valueGetter)
 	}
 
 
-	@objc class func presetFeatureForFeatureName(_ name:String) -> PresetFeature?
+	@objc class func presetFeatureForFeatureID(_ featureID:String) -> PresetFeature?
 	{
-		return presets![name] ?? nsiPresets![name]
+		return stdPresets![featureID] ?? nsiPresets![featureID]
 	}
 
 	private static func matchObjectTagsToFeature(_ presetsDict: [String:PresetFeature],
@@ -294,7 +278,7 @@ import Foundation
 												 geometry: NSString,
 												 includeNSI: Bool) -> PresetFeature?
 	{
-		let (feature,score) = matchObjectTagsToFeature(presets!, objectTags: objectTags, geometry: geometry)
+		let (feature,score) = matchObjectTagsToFeature(stdPresets!, objectTags: objectTags, geometry: geometry)
 		if includeNSI {
 			let (feature2,score2) = matchObjectTagsToFeature(nsiPresets!, objectTags: objectTags, geometry: geometry)
 			if score2 > score {
@@ -307,12 +291,11 @@ import Foundation
 	@objc static func featuresMatchingSearchText(_ searchText:String?, country:String? ) -> [PresetFeature]
 	{
 		var list = [PresetFeature]()
-		PresetsDatabase.enumeratePresetsAndNsiUsingBlock { (_, feature:PresetFeature) in
+		PresetsDatabase.enumeratePresetsAndNsiUsingBlock { (feature:PresetFeature) in
 			if feature.searchable {
 				if let country = country,
 				   let loc = feature.locationSet,
-				   let includes = loc["include"],
-				   includes.count > 0
+				   let includes = loc["include"]
 				{
 					if !includes.contains(country) {
 						return

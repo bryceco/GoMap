@@ -485,9 +485,9 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 															  geometry:self.geometryName
 															 includeNSI:YES];
     if ( feature ) {
-		BOOL isGeneric = [feature.featureName isEqualToString:@"point"] ||
-						 [feature.featureName isEqualToString:@"line"] ||
-						 [feature.featureName isEqualToString:@"area"];
+		BOOL isGeneric = [feature.featureID isEqualToString:@"point"] ||
+						 [feature.featureID isEqualToString:@"line"] ||
+						 [feature.featureID isEqualToString:@"area"];
 		if ( !isGeneric ) {
 			name = feature.friendlyName;
 			if ( name.length > 0 )

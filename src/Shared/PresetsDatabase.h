@@ -109,7 +109,7 @@ typedef int UITextAutocapitalizationType;
 	NSMutableArray<PresetGroup *>	*	_sectionList;
 }
 
-+(instancetype)presetsForFeature:(NSString *)featureName objectTags:(NSDictionary *)dict geometry:(NSString *)geometry  update:(void (^)(void))update;
++(instancetype)presetsForFeature:(PresetFeature *)feature objectTags:(NSDictionary *)dict geometry:(NSString *)geometry  update:(void (^)(void))update;
 
 -(NSString *)featureName;
 -(NSArray<PresetGroup *> *)sectionList;

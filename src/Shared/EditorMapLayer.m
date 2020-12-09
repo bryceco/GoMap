@@ -1538,7 +1538,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
     PresetFeature * feature = [PresetsDatabase matchObjectTagsToFeature:node.tags
 															  geometry:node.geometryName
 															includeNSI:NO];
-	UIImage * icon = feature.imageScaled24;
+	UIImage * icon = feature.iconScaled24;
 	if ( icon == nil ) {
 		if ( node.tags[@"amenity"] || node.tags[@"name"] )
 			icon = [self genericIcon];

@@ -87,9 +87,9 @@
 															 geometry:geometry
 															includeNSI:YES];
 
-	if ( !forceReload && [newFeature.featureName isEqualToString:_featureName] )
+	if ( !forceReload && [newFeature.featureID isEqualToString:_featureID] )
 		return -1;
-	_featureName = newFeature.featureName;
+	_featureID = newFeature.featureID;
 
 	// remove all entries without key & value
 	[_tags filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray<NSString *> * kv, id bindings) {
@@ -103,7 +103,7 @@
 
 	// add placeholder keys
 	if ( newFeature ) {
-		PresetsForFeature * presets = [PresetsForFeature presetsForFeature:newFeature.featureName objectTags:dict geometry:geometry update:nil];
+		PresetsForFeature * presets = [PresetsForFeature presetsForFeature:newFeature objectTags:dict geometry:geometry update:nil];
 		NSMutableArray * newKeys = [NSMutableArray new];
 		for ( NSInteger section = 0; section < presets.sectionCount; ++section ) {
 			for ( NSInteger row = 0; row < [presets tagsInSection:section]; ++row ) {
