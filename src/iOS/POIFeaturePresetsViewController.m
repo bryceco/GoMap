@@ -66,20 +66,22 @@
 		NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
 
 		// update most recent feature
-		NSString * featureName = _selectedFeature ? _selectedFeature.featureName : [PresetsDatabase featureNameForObjectDict:dict geometry:geometry];
-		if ( featureName ) {
-			PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
+		PresetFeature * feature = _selectedFeature ? _selectedFeature
+												: [PresetsDatabase matchObjectTagsToFeature:dict
+																				   geometry:geometry
+																				  includeNSI:YES];
+		if ( feature ) {
 			[POIFeaturePickerViewController loadMostRecentForGeometry:geometry];
 			[POIFeaturePickerViewController updateMostRecentArrayWithSelection:feature geometry:geometry];
 		}
 
 		__weak POIFeaturePresetsViewController * weakSelf = self;
 
-		_presets = [PresetsForFeature presetsForFeature:featureName objectTags:dict geometry:geometry update:^{
+		_presets = [PresetsForFeature presetsForFeature:feature.featureName objectTags:dict geometry:geometry update:^{
 				// this may complete much later, even after we've been dismissed
 				POIFeaturePresetsViewController * mySelf = weakSelf;
 				if ( mySelf && !mySelf->_isEditing ) {
-					mySelf->_presets = [PresetsForFeature presetsForFeature:featureName objectTags:dict geometry:geometry update:nil];
+					mySelf->_presets = [PresetsForFeature presetsForFeature:feature.featureName objectTags:dict geometry:geometry update:nil];
 					[mySelf.tableView reloadData];
 				}
 			}];
@@ -142,8 +144,9 @@
 	_selectedFeature = feature;
 	POITabBarController * tabController = (id) self.tabBarController;
 	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
-	NSString * oldFeatureName = [PresetsDatabase featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-	PresetFeature * oldFeature = [PresetFeature presetFeatureForFeatureName:oldFeatureName];
+	PresetFeature * oldFeature = [PresetsDatabase matchObjectTagsToFeature:tabController.keyValueDict
+																 geometry:geometry
+																includeNSI:YES];
 
 	// remove previous feature tags
 	NSDictionary * removeTags = oldFeature.removeTags;

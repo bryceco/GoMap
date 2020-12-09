@@ -8,187 +8,321 @@
 
 import Foundation
 
-extension PresetsDatabase {
-    struct Feature {
-        let addTags: [String: String]?
-        let locationSet: [String: [String]]?
-        let geometry: [String]?
-        let icon: String?
-        let imageURL: String?
-        let matchScore: Double?
-        let name: String?
-        let reference: [String: String]?
-        let suggestion: Int?
-        let tags: [String: String]?
-        let terms: [String]?
-    }
+// A feature-defining tag such as amenity=shop
+@objc @objcMembers class PresetFeature: NSObject {
 
-    private static func convertStringDict(_ jsonDict: NSDictionary?) -> [String: String]? {
-        if let jsonDict = jsonDict {
-            var newDict = [String: String]()
-            for (key, value) in jsonDict {
-                let newKey: String = key as! String
-                let newValue: String = value as! String
-                newDict[newKey] = newValue
-            }
-            return newDict
-        }
-        return nil
-    }
+	static let missingImage = UIImage()
 
-    private static func convertStringArray(_ jsonArray: NSArray?) -> [String]? {
-        if let jsonArray = jsonArray {
-            return (jsonArray as! [String]).map { (s) -> String in
-                s as String
-            }
-        }
-        return nil
-    }
+	let featureName: String
 
-    private static func convertFeatureToSwift(_ jsonDict: NSDictionary) -> Feature? {
-        let addTags = convertStringDict(jsonDict["addTags"] as? NSDictionary)
-		let locationSet = jsonDict["locationSet"] as? [String: [String]]
-        let geometry = jsonDict["geometry"] as? [String]
-        let icon = jsonDict["icon"] as? String
-        let imageURL = jsonDict["imageURL"] as? String
-        let matchScore = jsonDict["matchScore"] as? Double
-        let name = jsonDict["name"] as? String
-        let reference = convertStringDict(jsonDict["reference"] as? NSDictionary)
-        let suggestion = jsonDict["suggestion"] as? Int
-        let tags = convertStringDict(jsonDict["tags"] as? NSDictionary)
-        let terms = jsonDict["terms"] as? [String]
-        let feature = Feature(addTags: addTags,
-                              locationSet: locationSet,
-                              geometry: geometry,
-                              icon: icon,
-                              imageURL: imageURL,
-                              matchScore: matchScore,
-                              name: name,
-                              reference: reference,
-                              suggestion: suggestion,
-                              tags: tags,
-                              terms: terms)
-        return feature
-    }
+	// from json dictionary:
+	let _addTags: [String : String]?
+	let fields: [String]?
+	let geometry: [String]?
+	let icon: String?
+	public let logoURL: String?
+	let locationSet: [String: [String]]?
+	let matchScore: Double
+	let moreFields: [String]?
+	let name: String?
+	let reference: [String : String]?
+	let _removeTags: [String : String]?
+	let searchable: Bool
+	let tags: [String : String]
+	let terms: [String]?
 
-    private static func convertToSwift(_ jsonDict: NSDictionary) -> [String: Feature] {
-        var featureDict = [String: Feature]()
+	init(withName featureName:String, jsonDict:[String:Any], isNSI:Bool)
+	{
+		self.featureName = featureName
 
-        for (name, dict) in jsonDict {
-            let name2: String = name as! String
-            let dict2: NSDictionary = dict as! NSDictionary
-            let feature = convertFeatureToSwift(dict2)
-            featureDict[name2] = feature
-        }
-        return featureDict
-    }
+		self._addTags = jsonDict["addTags"] as? [String: String]
+		self.fields = jsonDict["fields"] as? [String]
+		self.geometry = jsonDict["geometry"] as? [String]
+		self.icon = jsonDict["icon"] as? String
+		self.logoURL = jsonDict["imageURL"] as? String
+		self.locationSet = PresetFeature.convertLocationSet( jsonDict["locationSet"] as? [String: [String]] )
+		self.matchScore = jsonDict["matchScore"] as? Double ?? 1.0
+		self.moreFields = jsonDict["moreFields"] as? [String]
+		self.name = jsonDict["name"] as? String
+		self.reference = jsonDict["reference"] as? [String : String]
+		self._removeTags = jsonDict["removeTags"] as? [String: String]
+		self.searchable = jsonDict["searchable"] as? Bool ?? true
+		self.tags = jsonDict["tags"] as! [String: String]
+		self.terms = jsonDict["terms"] as? [String]
 
-	// map country -> featureName -> feature attributes
-	private static var presetsCountryDict = [String: [String:Feature]]()
+		self.suggestion = isNSI
+	}
 
-    @objc static func featureNameForObjectDictSwift(_ jsonPresetsDict: NSDictionary,
-                                                    countryCode: String?,
-                                                    objectTags: [String: String]?,
-                                                    geometry: NSString) -> String?
-    {
-		// build an optimized version of the presets dictionary
-		if presetsCountryDict.count == 0 {
-			let presetsDict = convertToSwift(jsonPresetsDict)
-			presetsCountryDict[""] = [String:Feature]()
-
-			for (featureName, dict) in presetsDict {
-
-				if let locationSet = dict.locationSet,
-				   let includeList = locationSet["include"]
-				{
-					for country : String in includeList {
-						if presetsCountryDict[country] == nil {
-							presetsCountryDict[country] = [featureName:dict]
-						} else {
-							presetsCountryDict[country]![featureName] = dict
-						}
-					}
-				} else {
-					presetsCountryDict[""]![featureName] = dict
-				}
-			}
-        }
-
-		guard let objectTags = objectTags == nil ? [:] : convertStringDict(objectTags as NSDictionary?) else { return nil }
-
-		var bestMatchScore = 0.0
-		var bestMatchName: String?
-
-
-		for (country,presetsDict) in presetsCountryDict {
-
-			if let countryCode = countryCode,
-			   country != "",
-			   country != countryCode
-			{
+	class func convertLocationSet( _ locationSet:[String:[String]]? ) -> [String:[String]]?
+	{
+		// convert locations to country codes
+		guard var includes = locationSet?["include"] else { return nil }
+		for i in 0 ..< includes.count {
+			switch includes[i] {
+			case "conus":
+				includes[i] = "us"
+			case "001":
+				return nil
+			default:
 				continue
 			}
+		}
+		return ["include":includes]
+	}
 
-			nextFeature:
-			for (featureName, dict) in presetsDict {
+	public var logoImage: UIImage?
+	public var renderInfo: RenderInfo?
+	public let suggestion: Bool
 
-				var totalScore = 0.0
-				if let geom = dict.geometry,
-					geom.contains(geometry as String)
-				{
-					totalScore = 1
-				} else {
-					continue
-				}
+	var _imageUnscaled: UIImage?
+	var _imageScaled24: UIImage?
 
-				let matchScore = dict.matchScore == nil ? 1.0 : dict.matchScore!
+	func friendlyName() -> String
+	{
+		return self.name ?? self.featureName
+	}
 
-				guard let keyvals = dict.tags else { continue }
+	func summary() -> String? {
+		let feature = PresetFeature.parentNameOfName( self.featureName )
+		let result = PresetsDatabase.inheritedValueOfFeature(feature, value: { (feature:PresetFeature?) -> AnyHashable? in
+			return feature!.name
+		})
+		return result as? String
+	}
 
-				var seen = Set<String>()
-				for (key, value) in keyvals {
-					seen.insert(key)
+	func imageUnscaled() -> UIImage? {
+		if _imageUnscaled == nil {
+			_imageUnscaled = self.icon != nil ? UIImage(named: self.icon!) : nil
+			if _imageUnscaled == nil {
+				_imageUnscaled = PresetFeature.missingImage
+			}
+		}
+		return _imageUnscaled == PresetFeature.missingImage ? nil : _imageUnscaled
+	}
 
-					var v: String?
-					if key.hasSuffix("*") {
-						let c = String(key.dropLast())
-						v = objectTags.first(where: { (key: String, _: String) -> Bool in
-							key.hasPrefix(c)
-						})?.value
-					} else {
-						v = objectTags[key]
-					}
-					if let v = v {
-						if value == v {
-							totalScore += matchScore
-							continue
-						}
-						if value == "*" {
-							totalScore += matchScore / 2
-							continue
-						}
-					} else if key == "area", value == "yes", geometry == "area" {
-						totalScore += 0.1
-						continue
-					}
-					continue nextFeature // invalid match
-				}
+	func imageScaled24() -> UIImage?
+	{
+		if _imageScaled24 == nil {
+			_imageScaled24 = self.imageUnscaled()
+			if _imageScaled24 != nil {
+				_imageScaled24 = IconScaledForDisplay( _imageScaled24 );
+			} else {
+				_imageScaled24 = PresetFeature.missingImage
+			}
+		}
+		return _imageScaled24 == PresetFeature.missingImage ? nil : _imageScaled24
+	}
 
-				// boost score for additional matches in addTags
-				if let addTags = dict.addTags {
-					for (key, val) in addTags {
-						if !seen.contains(key), objectTags[key] == val {
-							totalScore += matchScore
-						}
-					}
-				}
+	func addTags() -> [String : String]? {
+		return self._addTags != nil ? self._addTags : self.tags
+	}
 
-				if totalScore > bestMatchScore {
-					bestMatchName = featureName
-					bestMatchScore = totalScore
+	func removeTags() -> [String : String]? {
+		return self._removeTags != nil ? self._removeTags : self.addTags()
+	}
+
+	class func parentNameOfName(_ name:String) -> String?
+	{
+		guard let range = name.range(of: "/", options: .backwards, range: nil, locale: nil) else {
+			return nil
+		}
+		let s = name.prefix(upTo: range.lowerBound)
+		return String(s)
+	}
+	func parentName() -> String?
+	{
+		return PresetFeature.parentNameOfName(self.featureName)
+	}
+
+	func matchesSearchText(_ searchText: String?) -> Bool {
+		guard let searchText = searchText else {
+			return false
+		}
+		if self.featureName.range(of: searchText, options: .caseInsensitive) != nil {
+			return true
+		}
+		if self.friendlyName().range(of: searchText, options: .caseInsensitive) != nil {
+			return true
+		}
+		if let terms = self.terms {
+			for term in terms {
+				if term.range(of: searchText, options: .caseInsensitive) != nil {
+					return true
 				}
 			}
 		}
-        return bestMatchName
-    }
+		return false
+	}
+}
+
+
+@objc class PresetsDatabase : NSObject {
+
+	static var presets : [String :PresetFeature]?
+	static var nsiPresets : [String :PresetFeature]?
+
+	// initialize database
+	private class func featureDictForJsonDict(_ dict:NSDictionary, isNSI:Bool) -> [String:PresetFeature]
+	{
+		var presets = [String :PresetFeature]()
+		let dict2 = dict as! [String:[String:Any]]
+		for (name,values) in dict2 {
+			presets[name] = PresetFeature(withName: name, jsonDict: values, isNSI:isNSI)
+		}
+		return presets
+	}
+	@objc class func initializeWith(presetsDict:NSDictionary, nsiPresetsDict:NSDictionary)
+	{
+		presets 	= featureDictForJsonDict(presetsDict, isNSI:false)
+		nsiPresets 	= featureDictForJsonDict(nsiPresetsDict, isNSI:true)
+	}
+
+	// enumerate contents of database
+	@objc class func enumeratePresetsUsingBlock(_ block:(_ name: String, _ feature: PresetFeature) -> Void) {
+		for (k,v) in presets! {
+			block(k,v)
+		}
+	}
+	@objc class func enumeratePresetsAndNsiUsingBlock(_ block:(_ name: String, _ feature: PresetFeature) -> Void) {
+		for (k,v) in presets! {
+			block(k,v)
+		}
+		for (k,v) in nsiPresets! {
+			block(k,v)
+		}
+	}
+
+	// go up the feature tree and return the first instance of the requested field value
+	private class func inheritedFieldForPresetsDict( _ presetDict: [String:PresetFeature],
+													 featureName: String?,
+													 field fieldGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
+													-> AnyHashable?
+	{
+		var featureName = featureName
+		while featureName != nil {
+			if let feature = presetDict[featureName!],
+			   let field = fieldGetter(feature)
+			{
+				return field
+			}
+			featureName = PresetFeature.parentNameOfName(featureName!)
+		}
+		return nil
+	}
+	@objc class func inheritedValueOfFeature( _ featureName: String?,
+											  value valueGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
+											-> AnyHashable?
+	{
+		// This is currently never used for NSI entries, so we can ignore nsiPresets
+		return PresetsDatabase.inheritedFieldForPresetsDict(presets!, featureName: featureName, field: valueGetter)
+	}
+
+
+	@objc class func presetFeatureForFeatureName(_ name:String) -> PresetFeature?
+	{
+		return presets![name]
+	}
+
+	private static func matchObjectTagsToFeature(_ presetsDict: [String:PresetFeature],
+												 objectTags: [String: String]?,
+												 geometry: NSString)
+												-> (feature:PresetFeature?,score:Double)
+    {
+		guard let objectTags = objectTags else { return (nil,0.0) }
+
+		var bestMatchScore = 0.0
+		var bestMatchFeature: PresetFeature? = nil
+
+		nextFeature:
+		for (_, preset) in presetsDict {
+
+			var totalScore = 0.0
+			if let geom = preset.geometry,
+				geom.contains(geometry as String)
+			{
+				totalScore = 1
+			} else {
+				continue
+			}
+
+			var seen = Set<String>()
+			for (key, value) in preset.tags {
+				seen.insert(key)
+
+				var v: String?
+				if key.hasSuffix("*") {
+					let c = String(key.dropLast())
+					v = objectTags.first(where: { (key: String, _: String) -> Bool in
+						key.hasPrefix(c)
+					})?.value
+				} else {
+					v = objectTags[key]
+				}
+				if let v = v {
+					if value == v {
+						totalScore += preset.matchScore
+						continue
+					}
+					if value == "*" {
+						totalScore += preset.matchScore / 2
+						continue
+					}
+				} else if key == "area", value == "yes", geometry == "area" {
+					totalScore += 0.1
+					continue
+				}
+				continue nextFeature // invalid match
+			}
+
+			// boost score for additional matches in addTags
+			if let addTags = preset._addTags {
+				for (key, val) in addTags {
+					if !seen.contains(key), objectTags[key] == val {
+						totalScore += preset.matchScore
+					}
+				}
+			}
+
+			if totalScore > bestMatchScore {
+				bestMatchFeature = preset
+				bestMatchScore = totalScore
+			}
+		}
+		return (bestMatchFeature,bestMatchScore)
+	}
+	@objc static func matchObjectTagsToFeature(_ objectTags: [String: String]?,
+												 geometry: NSString,
+												 includeNSI: Bool) -> PresetFeature?
+	{
+		let (feature,score) = matchObjectTagsToFeature(presets!, objectTags: objectTags, geometry: geometry)
+		if includeNSI {
+			let (feature2,score2) = matchObjectTagsToFeature(nsiPresets!, objectTags: objectTags, geometry: geometry)
+			if score2 > score {
+				return feature2
+			}
+		}
+		return feature
+	}
+
+	@objc static func featuresMatchingSearchText(_ searchText:String?, country:String? ) -> [PresetFeature]
+	{
+		var list = [PresetFeature]()
+		PresetsDatabase.enumeratePresetsAndNsiUsingBlock { (_, feature:PresetFeature) in
+			if feature.searchable {
+				if let country = country,
+				   let loc = feature.locationSet,
+				   let includes = loc["include"],
+				   includes.count > 0
+				{
+					if !includes.contains(country) {
+						return
+					}
+				}
+				if feature.matchesSearchText(searchText) {
+					list.append(feature)
+				}
+			}
+		}
+		return list
+	}
 }

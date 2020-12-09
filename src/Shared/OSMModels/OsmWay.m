@@ -9,6 +9,7 @@
 #import "OsmWay.h"
 
 #import "OsmMember.h"
+#import "PresetsDatabase.h"
 
 @implementation OsmWay
 

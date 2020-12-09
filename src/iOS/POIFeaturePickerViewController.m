@@ -44,7 +44,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
 	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
 	for ( NSString * featureName in a ) {
-		PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
+		PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureName:featureName];
 		if ( feature ) {
 			[mostRecentArray addObject:feature];
 		}
@@ -190,7 +190,9 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSString * brand = @"☆ ";
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = [self currentSelectionGeometry];
-	NSString * currentFeature = [PresetsDatabase featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
+	PresetFeature * currentFeature = [PresetsDatabase matchObjectTagsToFeature:tabController.keyValueDict
+																 geometry:geometry
+																includeNSI:YES];
 	FeaturePickerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 	cell.title.text			= feature.suggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
 	cell.image.image		= feature.logoImage && feature.logoImage != feature.imageUnscaled
@@ -204,7 +206,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	cell.image.contentMode = UIViewContentModeScaleAspectFit;
 	[cell setNeedsUpdateConstraints];
 	cell.details.text	= feature.summary;
-	cell.accessoryType = [currentFeature isEqualToString:feature.featureName] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	cell.accessoryType = currentFeature == feature ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	cell.featureName = feature.featureName;
 	return cell;
 }

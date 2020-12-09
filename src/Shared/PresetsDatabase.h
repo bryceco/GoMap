@@ -74,29 +74,8 @@ typedef int UITextAutocapitalizationType;
 +(instancetype)presetGroupWithName:(NSString *)name tags:(NSArray *)tags;
 @end
 
-
 // A feature-defining tag such as amenity=shop
-@interface PresetFeature : NSObject
-{
-	NSDictionary	*	_dict;
-	RenderInfo		*	_renderInfo;
-}
-@property (readonly,nonatomic)	NSString		*	featureName;
-@property (readonly,nonatomic)	NSString		*	friendlyName;
-@property (readonly,nonatomic)	NSDictionary	*	tags;
-@property (readonly,nonatomic)	NSString		*	summary;
-@property (readonly,nonatomic)	UIImage			*	imageScaled24;
-@property (readonly,nonatomic)	UIImage			*	imageUnscaled;
-@property (readonly,nonatomic)	NSString		*	logoURL;
-@property (strong,nonatomic)	UIImage			*	logoImage;
-@property (readonly,nonatomic)	NSArray			*	terms;
-@property (readonly,nonatomic)	NSArray			*	geometry;
-@property (readonly,nonatomic)	NSArray			*	members;
-@property (readonly,nonatomic)	NSDictionary	*	addTags;
-@property (readonly,nonatomic)	NSDictionary	*	removeTags;
-@property (readonly,nonatomic)	BOOL				suggestion;
-+(instancetype)presetFeatureForFeatureName:(NSString *)name;
--(BOOL)matchesSearchText:(NSString *)text;
+@interface PresetFeature(Extension)
 -(NSDictionary *)defaultValuesForGeometry:(NSString *)geometry;
 @end
 
@@ -144,8 +123,7 @@ typedef int UITextAutocapitalizationType;
 
 
 // The entire presets database from iD
-@interface PresetsDatabase : NSObject
-+(NSString *)featureNameForObjectDict:(NSDictionary *)tagDict geometry:(NSString *)geometry;
+@interface PresetsDatabase(Extension)
 +(NSArray<PresetFeature *> *)featuresAndCategoriesForGeometry:(NSString *)geometry;
 +(NSArray<PresetFeature *> *)featuresInCategory:(PresetCategory *)category matching:(NSString *)searchText;
 +(NSSet<NSString *> *)allTagKeys;

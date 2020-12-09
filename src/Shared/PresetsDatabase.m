@@ -14,8 +14,6 @@
 #import "PresetsDatabase.h"
 #import "RenderInfo.h"
 
-#define USE_SUGGESTIONS	1
-
 #if !TARGET_OS_IPHONE
 const int UIKeyboardTypeDefault					= 0;
 const int UIKeyboardTypeNumbersAndPunctuation 	= 1;
@@ -29,7 +27,6 @@ const int UITextAutocapitalizationTypeWords		= 2;
 static NSDictionary<NSString *,NSDictionary *> 				* g_jsonAddressFormatsDict;	// address formats for different countries
 static NSDictionary<NSString *,NSArray *> 					* g_jsonDefaultsDict;		// map a geometry to a set of features/categories
 static NSDictionary<NSString *,NSDictionary *> 				* g_jsonCategoriesDict;		// map a top-level category ("building") to a set of specific features ("building/retail")
-static NSDictionary<NSString *,NSDictionary *> 				* g_jsonPresetsDict;		// tags for a specific feature
 static NSDictionary<NSString *,NSDictionary *> 				* g_jsonFieldsDict;			// possible values for a preset key ("oneway=")
 static NSDictionary<NSString *,NSDictionary *> 				* g_jsonTranslationDict;	// translations of all preset text
 
@@ -90,47 +87,18 @@ static id Translate( id orig, id translation )
 
 static void InitializeDictionaries()
 {
-	if ( g_jsonPresetsDict == nil ) {
+	NSDictionary * jsonPresetsDict = nil;
+	NSDictionary * jsonNsiPresetsDict = nil;
+
+	if ( g_jsonAddressFormatsDict == nil ) {
 		g_jsonAddressFormatsDict = DictionaryForFile(@"address_formats.json");
 		g_jsonDefaultsDict		 = DictionaryForFile(@"preset_defaults.json");
 		g_jsonCategoriesDict	 = DictionaryForFile(@"preset_categories.json");
-		g_jsonPresetsDict		 = DictionaryForFile(@"presets.json");
 		g_jsonFieldsDict		 = DictionaryForFile(@"fields.json");
 
-		// merge name suggestion index into presets
-		{
-			NSMutableDictionary * nsi = [DictionaryForFile(@"nsi_presets.json") mutableCopy];
-			for ( NSString * ident in [nsi allKeys] ) {
-				NSMutableDictionary * dict = [nsi[ident] mutableCopy];
+		jsonPresetsDict			 = DictionaryForFile(@"presets.json");
+		jsonNsiPresetsDict		 = DictionaryForFile(@"nsi_presets.json");
 
-				// mark entry as a suggestion
-				dict[@"suggestion"] = @"yes";
-
-				// convert locations to country codes
-				NSMutableArray * locations = [dict[@"locationSet"][@"include"] mutableCopy];
-				if ( locations ) {
-					for ( NSInteger i = 0; i < locations.count; ++i ) {
-						NSString * s = locations[i];
-						if ( [s isEqualToString:@"conus"] ) {
-							locations[i] = @"us";
-						} else if ( [s isEqualToString:@"001"] ) {
-							locations = nil;
-							break;
-						}
-					}
-					if ( locations )
-						dict[@"locationSet"] = @{ @"include" : locations };
-					else
-						dict[@"locationSet"] = nil;
-				}
-
-				// install updated dictionary for identifier
-				nsi[ident] = dict;
-			}
-
-			[nsi addEntriesFromDictionary:g_jsonPresetsDict];
-			g_jsonPresetsDict = nsi;
-		}
 
 		PresetLanguages * presetLanguages = [PresetLanguages new];	// don't need to save this, it doesn't get used again unless user changes the language
 		NSString * code = presetLanguages.preferredLanguageCode;
@@ -142,9 +110,13 @@ static void InitializeDictionaries()
 #ifndef __clang_analyzer__	// this confuses the analyzer because it doesn't know that top-level return values are always NSDictionary
 		g_jsonDefaultsDict		= Translate( g_jsonDefaultsDict,	g_jsonTranslationDict[@"defaults"] );
 		g_jsonCategoriesDict	= Translate( g_jsonCategoriesDict,	g_jsonTranslationDict[@"categories"] );
-		g_jsonPresetsDict		= Translate( g_jsonPresetsDict,		g_jsonTranslationDict[@"presets"] );
 		g_jsonFieldsDict		= Translate( g_jsonFieldsDict,		g_jsonTranslationDict[@"fields"] );
+
+		jsonPresetsDict			= Translate( jsonPresetsDict,		g_jsonTranslationDict[@"presets"] );
+		jsonNsiPresetsDict		= Translate( jsonNsiPresetsDict,	g_jsonTranslationDict[@"presets"] );
 #endif
+
+		[PresetsDatabase initializeWithPresetsDict:jsonPresetsDict nsiPresetsDict:jsonNsiPresetsDict];
 	}
 }
 
@@ -347,24 +319,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 
 
-@implementation PresetsDatabase
+@implementation PresetsDatabase(Extension)
 
 +(void)initialize
 {
-	g_jsonPresetsDict		= nil;
-	g_taginfoCache		= nil;
+	g_jsonAddressFormatsDict	= nil;
+	g_taginfoCache				= nil;
 	InitializeDictionaries();
-}
-
-+(instancetype)sharedList
-{
-	static dispatch_once_t onceToken;
-	static PresetsDatabase * list = nil;
-	dispatch_once(&onceToken, ^{
-		InitializeDictionaries();
-		list = [PresetsDatabase new];
-	});
-	return list;
 }
 
 +(NSSet *)allTagValuesForKey:(NSString *)key
@@ -381,8 +342,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			}
 		}
 	}];
-	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
-		NSDictionary * dict2 = dict[ @"tags" ];
+	[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * name, PresetFeature * feature) {
+		NSDictionary * dict2 = feature.tags;
 		NSString * value = dict2[ key ];
 		if ( value ) {
 			[set addObject:value];
@@ -405,8 +366,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[set addObject:key];
 		}
 	}];
-	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
-		NSDictionary * dict2 = dict[ @"tags" ];
+	[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * name, PresetFeature * feature) {
+		NSDictionary * dict2 = feature.tags;
 		[dict2 enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop2) {
 			[set addObject:key];
 		}];
@@ -430,10 +391,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		set = [NSMutableSet new];
-		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSDictionary * dict, BOOL * _Nonnull stop) {
+		[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * key, PresetFeature * feature) {
 			NSRange slash = [key rangeOfString:@"/"];
-			NSString * feature = slash.location != NSNotFound ? [key substringToIndex:slash.location] : key;
-			[set addObject:feature];
+			NSString * featureKey = slash.location != NSNotFound ? [key substringToIndex:slash.location] : key;
+			[set addObject:featureKey];
 		}];
 	});
 	return set;
@@ -452,10 +413,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 		} else {
 
-			PresetFeature * tag = [PresetFeature presetFeatureForFeatureName:featureName];
-			if ( tag == nil )
+			PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureName:featureName];
+			if ( feature == nil )
 				continue;
-			[list addObject:tag];
+			[list addObject:feature];
 
 		}
 	}
@@ -473,65 +434,23 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	NSMutableArray<PresetFeature *> * list = [NSMutableArray new];
 	if ( category ) {
-		for ( PresetFeature * tag in category.members ) {
-			if ( [tag matchesSearchText:searchText] ) {
-				[list addObject:tag];
+		for ( PresetFeature * feature in category.members ) {
+			if ( [feature matchesSearchText:searchText] ) {
+				[list addObject:feature];
 			}
 		}
 	} else {
 		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
-		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL *stop) {
-#if USE_SUGGESTIONS
-			NSArray<NSString *> * a = dict[@"locationSet"][@"include"];
-			if ( a.count > 0 ) {
-				BOOL found = NO;
-				for ( NSString * s in a ) {
-					if ( [countryCode isEqualToString:s] ) {
-						found = YES;
-						break;
-					}
-				}
-				if ( !found )
-					return;
-			}
-#else
-			if ( dict[@"suggestion"] )
-				return;
-#endif
-			id searchable = dict[@"searchable"];
-			if ( searchable && [searchable boolValue] == NO )
-				return;
-
-			BOOL add = NO;
-			if ( [featureName rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0 ) {
-				add = YES;
-			} else if ( [dict[@"name"] rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0 ) {
-				add = YES;
-			} else {
-				for ( NSString * term in dict[ @"terms" ] ) {
-					if ( [term rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0 ) {
-						add = YES;
-						break;
-					}
-				}
-			}
-			if ( add ) {
-				PresetFeature * tag = [PresetFeature presetFeatureForFeatureName:featureName];
-				if ( tag ) {
-					[list addObject:tag];
-				}
-			}
-		}];
+		NSArray * a = [PresetsDatabase featuresMatchingSearchText:searchText country:countryCode];
+		list = [a mutableCopy];
 	}
 	// sort so that regular items come before suggestions
 	[list sortUsingComparator:^NSComparisonResult(PresetFeature * obj1, PresetFeature * obj2) {
 		NSString * name1 = obj1.friendlyName;
 		NSString * name2 = obj2.friendlyName;
-#if USE_SUGGESTIONS
 		int diff = obj1.suggestion - obj2.suggestion;
 		if ( diff )
 			return diff;
-#endif
 		// prefer exact matches of primary name over alternate terms
 		BOOL p1 = [name1 hasPrefix:searchText];
 		BOOL p2 = [name2 hasPrefix:searchText];
@@ -915,114 +834,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 }
 
-+(NSString *)featureNameForObjectDict:(NSDictionary *)objectTags geometry:(NSString *)geometry
-{
-	NSString * featureName = [PresetsDatabase featureNameForObjectDictSwift:g_jsonPresetsDict
-																countryCode:AppDelegate.shared.mapView.countryCodeForLocation
-																 objectTags:objectTags
-																   geometry:geometry];
-	return featureName;
-}
-
-+(NSString *)featureNameForObjectDictObjc:(NSDictionary *)objectTags geometry:(NSString *)geometry
- {
-	__block double bestMatchScore = 0.0;
-	__block NSString * bestMatchName = nil;
-
-	NSString * currentCountryCode = AppDelegate.shared.mapView.countryCodeForLocation;
-
-	[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * featureName, NSDictionary * dict, BOOL * stop) {
-
-		if ( [featureName containsString:@"Rosa"] ) {
-			NSLog(@"");
-		}
-		__block double totalScore = 0;
-#if USE_SUGGESTIONS
-		NSArray<NSString *> * countryList = dict[@"@locationSet"][@"include"];
-		if ( countryList.count > 0 ) {
-			BOOL found = NO;
-			for ( NSString * country in countryList ) {
-				if ( [currentCountryCode isEqualToString:country] ) {
-					found = YES;
-					break;
-				}
-			}
-			if ( !found )
-				return;
-		}
-#else
-		id suggestion = dict[@"suggestion"];
-		if ( suggestion )
-			return;
-#endif
-
-		NSArray * geom = dict[@"geometry"];
-		for ( NSString * g in geom ) {
-			if ( [g isEqualToString:geometry] ) {
-				totalScore = 1;
-				break;
-			}
-		}
-		if ( totalScore == 0 )
-			return;
-
-		NSString * matchScoreText = dict[ @"matchScore" ];
-		double matchScore = matchScoreText ? matchScoreText.doubleValue : 1.0;
-
-		NSDictionary * keyvals = dict[ @"tags" ];
-		if ( keyvals.count == 0 )
-			return;
-
-		NSMutableSet * seen = [NSMutableSet new];
-		[keyvals enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop2) {
-			[seen addObject:key];
-
-			__block NSString * v = nil;
-			if ( [key hasSuffix:@"*"] ) {
-				NSString * c = [key stringByReplacingCharactersInRange:NSMakeRange(key.length-1,1) withString:@""];
-				[objectTags enumerateKeysAndObjectsUsingBlock:^(NSString * k2, NSString * v2, BOOL * stop3) {
-					if ( [k2 hasPrefix:c] ) {
-						v = v2;
-						*stop3 = YES;
-					}
-				}];
-			} else {
-				v = objectTags[ key ];
-			}
-			if ( v ) {
-				if ( [value isEqualToString:v] ) {
-					totalScore += matchScore;
-					return;
-				}
-				if ( [value isEqualToString:@"*"] ) {
-					totalScore += matchScore/2;
-					return;
-				}
-			} else if ( [key isEqualToString:@"area"] && [value isEqualToString:@"yes"] && [geometry isEqualToString:@"area"] ) {
-				totalScore += 0.1;
-				return;
-			}
-			totalScore = -1;
-			*stop2 = YES;
-		}];
-		if ( totalScore < 0 )
-			return;
-
-		// boost score for additional matches in addTags
-		[dict[@"addTags"] enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * _Nonnull val, BOOL *stop3) {
-			if ( ![seen containsObject:key] && [objectTags[key] isEqualToString:val] ) {
-				totalScore += matchScore;
-			}
-		}];
-
-		if ( totalScore > bestMatchScore ) {
-			bestMatchName = featureName;
-			bestMatchScore = totalScore;
-		}
-	}];
-	return bestMatchName;
-}
-
 
 
 +(BOOL)isArea:(OsmWay *)way
@@ -1035,13 +846,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSArray * ignore = @[ @"barrier", @"highway", @"footway", @"railway", @"type" ];
 
 		// whitelist
-		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
-			if ( dict[@"suggestion"] )
+		[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * field, PresetFeature * dict) {
+			if ( dict.suggestion )
 				return;
-			NSArray * geom = dict[@"geometry"];
+			NSArray * geom = dict.geometry;
 			if ( ![geom containsObject:@"area"] )
 				return;
-			NSDictionary * tags = dict[@"tags"];
+			NSDictionary * tags = dict.tags;
 			if ( tags.count > 1 )
 				return;	// very specific tags aren't suitable for whitelist, since we don't know which key is primary (in iD the JSON order is preserved and it would be the first key)
 			for ( NSString * key in tags ) {
@@ -1052,13 +863,13 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}];
 
 		// blacklist
-		[g_jsonPresetsDict enumerateKeysAndObjectsUsingBlock:^(NSString * field, NSDictionary * dict, BOOL * stop) {
-			if ( dict[@"suggestion"] )
+		[PresetsDatabase enumeratePresetsUsingBlock:^(NSString * field, PresetFeature * dict) {
+			if ( dict.suggestion )
 				return;
-			NSArray * geom = dict[ @"geometry"];
+			NSArray * geom = dict.geometry;
 			if ( [geom containsObject:@"area"] )
 				return;
-			NSDictionary * tags = dict[@"tags"];
+			NSDictionary * tags = dict.tags;
 			for ( NSString * key in tags ) {
 				if ( [ignore containsObject:key] )
 					return;
@@ -1251,7 +1062,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	NSArray<PresetFeature *> * m = dict[ @"members" ];
 	NSMutableArray<PresetFeature *> * m2 = [NSMutableArray new];
 	for ( NSString * p in m ) {
-		PresetFeature * t = [PresetFeature presetFeatureForFeatureName:p];
+		PresetFeature * t = [PresetsDatabase presetFeatureForFeatureName:p];
 		if ( p ) {
 			[m2 addObject:t];
 		}
@@ -1311,23 +1122,21 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return [self presetAtSection:indexPath.section row:indexPath.row];
 }
 
--(void)addPresetsForFieldsInFeature:(NSString *)featureName geometry:(NSString *)geometry field:(NSString *)fieldType ignore:(NSArray *)ignore dupSet:(NSMutableSet *)dupSet update:(void (^)(void))update
+-(void)addPresetsForFieldsInFeature:(NSString *)featureName
+						   geometry:(NSString *)geometry
+							  field:(NSArray * (^)(PresetFeature * feature))valueGetter
+							 ignore:(NSArray *)ignore
+							 dupSet:(NSMutableSet *)dupSet
+							 update:(void (^)(void))update
 {
-	NSArray * fields = nil;
-	while ( (fields = g_jsonPresetsDict[ featureName ][ fieldType ]) == nil ) {
-		// check parent
-		NSRange slash = [featureName rangeOfString:@"/" options:NSBackwardsSearch];
-		if ( slash.length == 0  ||  slash.location == 0 )
-			break;
-		featureName = [featureName substringToIndex:slash.location];
-	}
+	NSArray * fields = (id)[PresetsDatabase inheritedValueOfFeature:featureName value:valueGetter];
 
 	for ( NSString * field in fields ) {
 
 		if ( [field hasPrefix:@"{"] && [field hasSuffix:@"}"]) {
 			// copy fields from referenced item
 			NSString * ref = [field substringWithRange:NSMakeRange(1, field.length-2)];
-			[self addPresetsForFieldsInFeature:ref geometry:geometry field:fieldType ignore:ignore dupSet:dupSet update:update];
+			[self addPresetsForFieldsInFeature:ref geometry:geometry field:valueGetter ignore:ignore dupSet:dupSet update:update];
 			continue;
 		}
 
@@ -1354,9 +1163,9 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 -(void)setFeature:(NSString *)featureName objectTags:(NSDictionary *)objectTags geometry:(NSString *)geometry update:(void (^)(void))update
 {
-	NSDictionary * featureDict = g_jsonPresetsDict[ featureName ];
+	PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureName:featureName];
 
-	_featureName = featureDict[ @"name" ];
+	_featureName = feature.name;
 
 	// Always start with Type and Name
 	PresetKey * typeTag = [PresetKey presetKeyWithName:@"Type" featureKey:nil defaultValue:nil placeholder:@"" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeNone presets:@[@"",@""]];
@@ -1384,160 +1193,26 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	// Add presets specific to the type
 	NSMutableSet * dupSet = [NSMutableSet new];
-	NSArray * ignoreTags = [featureDict[@"tags"] allKeys];
-	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"fields"     ignore:ignoreTags dupSet:dupSet update:update];
+	NSArray * ignoreTags = [feature.tags allKeys];
+	[self addPresetsForFieldsInFeature:featureName
+							  geometry:geometry
+								 field:^(PresetFeature * f){return f.fields;}
+								ignore:ignoreTags
+								dupSet:dupSet
+								update:update];
 	[_sectionList addObject:[PresetGroup presetGroupWithName:nil tags:nil]];	// Create a break between the common items and the rare items
-	[self addPresetsForFieldsInFeature:featureName geometry:geometry field:@"moreFields" ignore:ignoreTags dupSet:dupSet update:update];
+	[self addPresetsForFieldsInFeature:featureName
+							  geometry:geometry
+								 field:^(PresetFeature * f){return f.moreFields;}
+								ignore:ignoreTags
+								dupSet:dupSet
+								update:update];
 }
 @end
 
 
 
-@implementation PresetFeature
-@synthesize imageScaled24 = _imageScaled24;
-@synthesize imageUnscaled = _imageUnscaled;
-
--(instancetype)initWithName:(NSString *)featureName presets:(NSDictionary *)dict
-{
-	self = [super init];
-	if ( self ) {
-		_featureName	= featureName;
-		_dict			= dict;
-	}
-	return self;
-}
-
-+(instancetype)presetFeatureForFeatureName:(NSString *)name
-{
-	NSDictionary * dict = name.length ? g_jsonPresetsDict[ name ] : nil;
-	if ( dict.count == 0 )
-		return nil;
-	return [[PresetFeature alloc] initWithName:name presets:dict];
-}
-
--(NSString *)description
-{
-	return self.friendlyName;
-}
-
--(NSString	*)friendlyName
-{
-	return _dict[ @"name" ];
-}
-
--(NSString *)summary
-{
-	NSString * feature = _featureName;
-	for (;;) {
-		NSRange slash = [feature rangeOfString:@"/" options:NSBackwardsSearch];
-		if ( slash.length == 0 )
-			break;
-		feature = [feature substringToIndex:slash.location];
-		NSDictionary * p = g_jsonPresetsDict[feature];
-		NSString * s = p[@"name"];
-		if ( s )
-			return s;
-	}
-
-	return nil;
-}
-
-
-// Icons and names are synced to the iD presets.json file.
-// SVG icons can be found in Maki/Temaki and the iD source tree
-// To convert from SVG to PDF use: /Volumes/Inkscape/Inkscape.app/Contents/MacOS/inkscape  --export-type=pdf *.svg
-// To rename files with the proper prefix use: for f in `ls *.pdf`; do echo mv $f `echo $f | sed 's/^/maki-/;s/-15//'`; done | bash
--(UIImage *)imageUnscaled
-{
-	if ( _imageUnscaled ) {
-		return [_imageUnscaled isKindOfClass:[NSNull class]] ? nil : _imageUnscaled;
-	}
-	NSString * iconName = _dict[ @"icon" ];
-	if ( iconName ) {
-		_imageUnscaled = [UIImage imageNamed:iconName];
-		if ( _imageUnscaled ) {
-			return _imageUnscaled;
-		}
-	}
-	_imageUnscaled = (id)[NSNull null];
-	return nil;
-}
-
--(UIImage *)imageScaled24
-{
-	extern UIImage * IconScaledForDisplay(UIImage *icon);
-
-	if ( _imageScaled24 == nil ) {
-		_imageScaled24 = self.imageUnscaled;
-		if ( _imageScaled24 ) {
-			_imageScaled24 = IconScaledForDisplay( _imageScaled24 );
-		} else {
-			_imageScaled24 = (id)[NSNull null];
-		}
-	}
-	return [_imageScaled24 isKindOfClass:[NSNull class]] ? nil : _imageScaled24;
-}
-
--(NSString *)logoURL
-{
-	return _dict[@"imageURL"];
-}
-
--(NSArray *)terms
-{
-	return _dict[ @"terms" ];
-}
--(NSArray *)geometry
-{
-	return _dict[ @"geometry" ];
-}
--(NSDictionary *)tags
-{
-	return _dict[ @"tags" ];
-}
--(NSDictionary *)addTags
-{
-	NSDictionary * tags = _dict[ @"addTags" ];
-	if ( tags == nil )
-		tags = self.tags;
-	return tags;
-}
--(NSDictionary *)removeTags
-{
-	NSDictionary * tags =  _dict[ @"removeTags" ];
-	if ( tags == nil )
-		tags = self.addTags;
-	return tags;
-}
--(BOOL)suggestion
-{
-	return _dict[ @"suggestion" ] != nil;
-}
-
--(NSArray *)inheritableField:(NSString *)field
-{
-	id result = _dict[ field ];
-	if ( result == nil ) {
-		// inherit from parent
-		NSRange slash = [self.featureName rangeOfString:@"/" options:NSBackwardsSearch];
-		if ( slash.length ) {
-			NSString * parentName = [self.featureName substringToIndex:slash.location];
-			PresetFeature * parent = [PresetFeature presetFeatureForFeatureName:parentName];
-			return [parent inheritableField:field];
-		}
-	}
-	return result;
-}
-
--(NSArray *)fields
-{
-	return [self inheritableField:@"fields"];
-}
-
--(NSArray *)moreFields
-{
-	return [self inheritableField:@"moreFields"];
-}
+@implementation PresetFeature(Extension)
 
 -(NSDictionary *)defaultValuesForGeometry:(NSString *)geometry
 {
@@ -1559,22 +1234,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[result setObject:value forKey:key];
 	}
 	return result;
-}
-
--(BOOL)matchesSearchText:(NSString *)searchText
-{
-	if ( [self.featureName rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0 ) {
-		return YES;
-	}
-	if ( [self.friendlyName rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0 ) {
-		return YES;
-	}
-	for ( NSString * term in self.terms ) {
-		if ( [term rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0 ) {
-			return YES;
-		}
-	}
-	return NO;
 }
 
 @end

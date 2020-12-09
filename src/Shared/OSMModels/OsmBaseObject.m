@@ -6,9 +6,10 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-#import "OsmBaseObject.h"
-
 #import "DLog.h"
+#import "OsmBaseObject.h"
+#import "PresetsDatabase.h"
+
 
 @implementation OsmBaseObject
 @synthesize deleted = _deleted;
@@ -480,13 +481,14 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     if ( name.length )
         return name;
 
-    NSString * featureName = [PresetsDatabase featureNameForObjectDict:self.tags geometry:self.geometryName];
-    if ( featureName ) {
-		BOOL isGeneric = [featureName isEqualToString:@"point"] ||
-						 [featureName isEqualToString:@"line"] ||
-						 [featureName isEqualToString:@"area"];
+    PresetFeature * feature = [PresetsDatabase matchObjectTagsToFeature:self.tags
+															  geometry:self.geometryName
+															 includeNSI:YES];
+    if ( feature ) {
+		BOOL isGeneric = [feature.featureName isEqualToString:@"point"] ||
+						 [feature.featureName isEqualToString:@"line"] ||
+						 [feature.featureName isEqualToString:@"area"];
 		if ( !isGeneric ) {
-			PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
 			name = feature.friendlyName;
 			if ( name.length > 0 )
 				return name;
