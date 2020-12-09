@@ -66,8 +66,7 @@
 		NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
 
 		// update most recent feature
-		PresetFeature * feature = _selectedFeature ? _selectedFeature
-												: [PresetsDatabase matchObjectTagsToFeature:dict
+		PresetFeature * feature = _selectedFeature ?: [PresetsDatabase matchObjectTagsToFeature:dict
 																				   geometry:geometry
 																				  includeNSI:YES];
 		if ( feature ) {

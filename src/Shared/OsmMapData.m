@@ -2470,7 +2470,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)consistencyCheck
 {
-#if DEBUG
+#if DEBUG && 0
 	// This is extremely expensive: DEBUG only!
 	NSLog(@"Checking spatial database consistency");
 	[self consistencyCheckRelationMembers];

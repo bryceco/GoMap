@@ -220,7 +220,7 @@ import Foundation
 
 	@objc class func presetFeatureForFeatureName(_ name:String) -> PresetFeature?
 	{
-		return presets![name]
+		return presets![name] ?? nsiPresets![name]
 	}
 
 	private static func matchObjectTagsToFeature(_ presetsDict: [String:PresetFeature],
