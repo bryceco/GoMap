@@ -159,6 +159,35 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	}
 
 	if ( feature.nsiSuggestion && feature.nsiLogo == nil && feature.logoURL ) {
+#if 1
+		// use built-in logo files
+		if ( feature.nsiLogo == nil ) {
+			feature.nsiLogo = feature.iconUnscaled;
+			dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+				NSString * name = [feature.featureID stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+				NSLog(@"%@",name);
+				name = [@"presets/brandIcons/" stringByAppendingString:name];
+				NSString * path = [[NSBundle mainBundle] pathForResource:name ofType:@"jpg"]
+								?: [[NSBundle mainBundle] pathForResource:name ofType:@"png"]
+								?: [[NSBundle mainBundle] pathForResource:name ofType:@"gif"]
+								?: [[NSBundle mainBundle] pathForResource:name ofType:@"bmp"]
+								?: nil;
+				UIImage * image = [UIImage imageWithContentsOfFile:path];
+				if ( image ) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						feature.nsiLogo = image;
+						for ( FeaturePickerCell * cell in self.tableView.visibleCells ) {
+							if ( [cell isKindOfClass:[FeaturePickerCell class]] ) {
+								if ( cell.featureID == feature.featureID ) {
+									cell.image.image = image;
+								}
+							}
+						}
+					});
+				}
+			});
+		}
+#else
 		// download brand logo for name suggestion
 		feature.nsiLogo = feature.iconUnscaled;
 		UIImage * logo = [logoCache objectWithKey:feature.featureID
@@ -185,6 +214,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		if ( logo ) {
 			feature.nsiLogo = logo;
 		}
+#endif
 	}
 
 	NSString * brand = @"☆ ";

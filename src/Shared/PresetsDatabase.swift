@@ -142,9 +142,8 @@ import Foundation
 		return false
 	}
 
-	func matchObjectTagsScore(_ objectTags: [String: String]?, geometry: String) -> Double
+	func matchObjectTagsScore(_ objectTags: [String: String], geometry: String) -> Double
 	{
-		guard let objectTags = objectTags else { return 0.0 }
 		guard let geom = self.geometry,
 			  geom.contains(geometry) else { return 0.0 }
 
@@ -298,14 +297,17 @@ import Foundation
 	}
 
 	@objc static func matchObjectTagsToFeature(_ objectTags: [String: String]?,
-												 geometry: String,
+												 geometry: String?,
 												 includeNSI: Bool) -> PresetFeature?
 	{
+		guard let geometry = geometry,
+			  let objectTags = objectTags else { return nil }
+
 		var bestFeature: PresetFeature? = nil
 		var bestScore: Double = 0.0
 
 		let index = includeNSI ? nsiIndex! : stdIndex!
-		let keys = objectTags!.keys + [""]
+		let keys = objectTags.keys + [""]
 		for key in keys {
 			if let list = index[key] {
 				for feature in list {
