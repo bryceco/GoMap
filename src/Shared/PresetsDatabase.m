@@ -91,6 +91,10 @@ static void InitializeDictionaries()
 	NSDictionary * jsonNsiPresetsDict = nil;
 
 	if ( g_jsonAddressFormatsDict == nil ) {
+#if DEBUG
+		CFTimeInterval t = CACurrentMediaTime();
+#endif
+
 		g_jsonAddressFormatsDict = DictionaryForFile(@"address_formats.json");
 		g_jsonDefaultsDict		 = DictionaryForFile(@"preset_defaults.json");
 		g_jsonCategoriesDict	 = DictionaryForFile(@"preset_categories.json");
@@ -117,6 +121,11 @@ static void InitializeDictionaries()
 #endif
 
 		[PresetsDatabase initializeWithPresetsDict:jsonPresetsDict nsiPresetsDict:jsonNsiPresetsDict];
+
+#if DEBUG
+		t = CACurrentMediaTime() - t;
+		NSLog(@"Preset load time = %f seconds",t);
+#endif
 	}
 }
 

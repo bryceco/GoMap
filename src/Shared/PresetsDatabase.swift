@@ -76,6 +76,10 @@ import Foundation
 	var _iconUnscaled: UIImage? = PresetFeature.uninitializedImage
 	var _iconScaled24: UIImage? = PresetFeature.uninitializedImage
 
+	@objc override var description : String {
+		return self.featureID
+	}
+
 	@objc func friendlyName() -> String
 	{
 		return self.name ?? self.featureID
@@ -137,13 +141,65 @@ import Foundation
 		}
 		return false
 	}
+
+	func matchObjectTagsScore(_ objectTags: [String: String]?, geometry: String) -> Double
+	{
+		guard let objectTags = objectTags else { return 0.0 }
+		guard let geom = self.geometry,
+			  geom.contains(geometry) else { return 0.0 }
+
+		var totalScore = 1.0
+
+		var seen = Set<String>()
+		for (key, value) in self.tags {
+			seen.insert(key)
+
+			var v: String?
+			if key.hasSuffix("*") {
+				let c = String(key.dropLast())
+				v = objectTags.first(where: { (key: String, _: String) -> Bool in
+					key.hasPrefix(c)
+				})?.value
+			} else {
+				v = objectTags[key]
+			}
+			if let v = v {
+				if value == v {
+					totalScore += self.matchScore
+					continue
+				}
+				if value == "*" {
+					totalScore += self.matchScore / 2
+					continue
+				}
+			} else if key == "area", value == "yes", geometry == "area" {
+				totalScore += 0.1
+				continue
+			}
+			return 0.0 // invalid match
+		}
+
+		// boost score for additional matches in addTags
+		if let addTags = self._addTags {
+			for (key, val) in addTags {
+				if !seen.contains(key), objectTags[key] == val {
+					totalScore += self.matchScore
+				}
+			}
+		}
+		return totalScore
+	}
 }
 
 
 @objc class PresetsDatabase : NSObject {
 
-	static var stdPresets : [String :PresetFeature]?
-	static var nsiPresets : [String :PresetFeature]?
+	// these map a FeatureID to a feature
+	static var stdPresets : [String :PresetFeature]?	// only generic presets
+	static var nsiPresets : [String :PresetFeature]?	// only NSI presets
+	// these map a tag key to a list of features that require that key
+	static var stdIndex : [String: [PresetFeature]]?	// generic preset index
+	static var nsiIndex : [String: [PresetFeature]]?	// generic+NSI index
 
 	// initialize database
 	private class func featureDictForJsonDict(_ dict:NSDictionary, isNSI:Bool) -> [String:PresetFeature]
@@ -159,6 +215,40 @@ import Foundation
 	{
 		stdPresets 	= featureDictForJsonDict(presetsDict, isNSI:false)
 		nsiPresets 	= featureDictForJsonDict(nsiPresetsDict, isNSI:true)
+
+		stdIndex = PresetsDatabase.buildTagIndex([stdPresets!])
+		nsiIndex = PresetsDatabase.buildTagIndex([stdPresets!,nsiPresets!])
+	}
+	class func buildTagIndex(_ inputList:[[String:PresetFeature]]) -> [String:[PresetFeature]]
+	{
+		var keys = [String:Int]()
+		for (featureID,_) in stdPresets! {
+			var key = featureID
+			if let range = key.range(of:"/") {
+				key = String(key.prefix(upTo: range.lowerBound))
+			}
+			keys[key] = (keys[key] ?? 0) + 1
+		}
+		var tagIndex = [String:[PresetFeature]]()
+		for list in inputList {
+			for (_,feature) in list {
+				var added = false
+				for key in feature.tags.keys {
+					if keys[key] != nil {
+						if tagIndex[key]?.append(feature) == nil {
+							tagIndex[key] = [feature]
+						}
+						added = true
+					}
+				}
+				if !added {
+					if tagIndex[""]?.append(feature) == nil {
+						tagIndex[""] = [feature]
+					}
+				}
+			}
+		}
+		return tagIndex
 	}
 
 	// enumerate contents of database
@@ -207,91 +297,33 @@ import Foundation
 		return stdPresets![featureID] ?? nsiPresets![featureID]
 	}
 
-	private static func matchObjectTagsToFeature(_ presetsDict: [String:PresetFeature],
-												 objectTags: [String: String]?,
-												 geometry: NSString)
-												-> (feature:PresetFeature?,score:Double)
-    {
-		guard let objectTags = objectTags else { return (nil,0.0) }
-
-		var bestMatchScore = 0.0
-		var bestMatchFeature: PresetFeature? = nil
-
-		nextFeature:
-		for (_, preset) in presetsDict {
-
-			var totalScore = 0.0
-			if let geom = preset.geometry,
-				geom.contains(geometry as String)
-			{
-				totalScore = 1
-			} else {
-				continue
-			}
-
-			var seen = Set<String>()
-			for (key, value) in preset.tags {
-				seen.insert(key)
-
-				var v: String?
-				if key.hasSuffix("*") {
-					let c = String(key.dropLast())
-					v = objectTags.first(where: { (key: String, _: String) -> Bool in
-						key.hasPrefix(c)
-					})?.value
-				} else {
-					v = objectTags[key]
-				}
-				if let v = v {
-					if value == v {
-						totalScore += preset.matchScore
-						continue
-					}
-					if value == "*" {
-						totalScore += preset.matchScore / 2
-						continue
-					}
-				} else if key == "area", value == "yes", geometry == "area" {
-					totalScore += 0.1
-					continue
-				}
-				continue nextFeature // invalid match
-			}
-
-			// boost score for additional matches in addTags
-			if let addTags = preset._addTags {
-				for (key, val) in addTags {
-					if !seen.contains(key), objectTags[key] == val {
-						totalScore += preset.matchScore
-					}
-				}
-			}
-
-			if totalScore > bestMatchScore {
-				bestMatchFeature = preset
-				bestMatchScore = totalScore
-			}
-		}
-		return (bestMatchFeature,bestMatchScore)
-	}
 	@objc static func matchObjectTagsToFeature(_ objectTags: [String: String]?,
-												 geometry: NSString,
+												 geometry: String,
 												 includeNSI: Bool) -> PresetFeature?
 	{
-		let (feature,score) = matchObjectTagsToFeature(stdPresets!, objectTags: objectTags, geometry: geometry)
-		if includeNSI {
-			let (feature2,score2) = matchObjectTagsToFeature(nsiPresets!, objectTags: objectTags, geometry: geometry)
-			if score2 > score {
-				return feature2
+		var bestFeature: PresetFeature? = nil
+		var bestScore: Double = 0.0
+
+		let index = includeNSI ? nsiIndex! : stdIndex!
+		let keys = objectTags!.keys + [""]
+		for key in keys {
+			if let list = index[key] {
+				for feature in list {
+					let score = feature.matchObjectTagsScore(objectTags, geometry: geometry)
+					if score > bestScore {
+						bestScore = score
+						bestFeature = feature
+					}
+				}
 			}
 		}
-		return feature
+		return bestFeature
 	}
 
 	@objc static func featuresMatchingSearchText(_ searchText:String?, country:String? ) -> [PresetFeature]
 	{
 		var list = [PresetFeature]()
-		PresetsDatabase.enumeratePresetsAndNsiUsingBlock { (feature:PresetFeature) in
+		PresetsDatabase.enumeratePresetsAndNsiUsingBlock { (feature) in
 			if feature.searchable {
 				if let country = country,
 				   let loc = feature.locationSet,
