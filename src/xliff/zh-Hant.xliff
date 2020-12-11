@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hant" datatype="plaintext">
     <header>
@@ -232,6 +232,7 @@
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
+        <target>只有空照</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
@@ -1697,70 +1698,91 @@ You may want to clear the cache (under Display settings) to improve performance.
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
+        <target>如果現有資料的狀態已經和 OSM 伺服器不同步，請刪除 OSM 資料快取。成因可能是其他人更動了您當下所編輯的資料，或是在您上傳時因無法增加資料而失敗了。
+
+警告：刪除 OSM 資料快取，會使您失去所有尚未上傳的更動。
+
+清除 Mapnik 或是其他套疊的圖磚快取，以下載最新且包含您之前所更動資料的圖磚。然而您的更動可能要 24 個小時才會生效。</target>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Mapnik or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
         <source>Discard &amp; Refresh</source>
+        <target>捨棄並更新</target>
         <note>Class = "UITableViewSection"; headerTitle = "Discard &amp; Refresh"; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
+        <target>其他</target>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Enable Rotation</source>
+        <target>啟用旋轉功能</target>
         <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
+        <target>在這之後刪除航跡：</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
+        <target>GPX 航跡</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
+        <target>未命名道路</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
+        <target>如果指定了 WMS 網址，您也必須提供所採用的投影</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
         <source>WMS Projection</source>
+        <target>WMS 投影</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>空照圖磚</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
+        <target>Go Map!! 會自動捨棄舊資料讓效能最佳化。</target>
         <note>Class = "UITableViewSection"; footerTitle = "Go Map!! will automatically discard old data to optimize performance."; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.headerTitle" xml:space="preserve">
         <source>Cache Management</source>
+        <target>快取管理</target>
         <note>Class = "UITableViewSection"; headerTitle = "Cache Management"; ObjectID = "bmY-Hw-jv6";</note>
       </trans-unit>
       <trans-unit id="cXC-ij-AMQ.title" xml:space="preserve">
         <source>Show Objects</source>
+        <target>顯示物件</target>
         <note>Class = "UINavigationItem"; title = "Show Objects"; ObjectID = "cXC-ij-AMQ";</note>
       </trans-unit>
       <trans-unit id="cpC-iE-1Dm.text" xml:space="preserve">
         <source>Title</source>
+        <target>標題</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm";</note>
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
+        <target>友善名稱</target>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
         <source>Automatic</source>
+        <target>自動化</target>
         <note>Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44";</note>
       </trans-unit>
       <trans-unit id="dci-gg-ddc.title" xml:space="preserve">
         <source>Cancel</source>
+        <target>取消</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc";</note>
       </trans-unit>
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
@@ -1770,58 +1792,72 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>空照圖磚</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
+        <target>「+」按鈕的位置 </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
         <source>Editor only</source>
+        <target>只有編輯器</target>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
       </trans-unit>
       <trans-unit id="eTY-48-gab.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>空照圖磚</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
         <source>Bing</source>
+        <target>Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW";</note>
       </trans-unit>
       <trans-unit id="el8-h8-H1F.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target>按鈕</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F";</note>
       </trans-unit>
       <trans-unit id="fFT-hv-mKl.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>空照圖磚</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
       <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>空照圖磚</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details</source>
+        <target>詳細內容</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
       </trans-unit>
       <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target>空照圖磚</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
+        <target>點</target>
         <note>Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R";</note>
       </trans-unit>
       <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
         <source>Detail</source>
+        <target>詳細內容</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA";</note>
       </trans-unit>
       <trans-unit id="h1O-06-ApF.text" xml:space="preserve">
         <source>Label</source>
+        <target>標記</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF";</note>
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
+        <target>開放街圖 GPS 航跡</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
@@ -1831,74 +1867,93 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
         <source>Simon Poole Map Data © OpenStreetMap contributors
 </source>
+        <target>Simon Poole 地圖資料 © 開放街圖貢獻者
+</target>
         <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
+        <target>(TMS)</target>
         <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
       </trans-unit>
       <trans-unit id="lu0-kr-5Cc.text" xml:space="preserve">
         <source>Past/Future</source>
+        <target>過去/未來</target>
         <note>Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc";</note>
       </trans-unit>
       <trans-unit id="luT-Tw-T3x.text" xml:space="preserve">
         <source>Enable 3-D Effects</source>
+        <target>啟用 3-D 效果</target>
         <note>Class = "UILabel"; text = "Enable 3-D Effects"; ObjectID = "luT-Tw-T3x";</note>
       </trans-unit>
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
+        <target>背景</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
+        <target>配置 GPX 航跡</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
         <source>Buildings</source>
+        <target>建築物</target>
         <note>Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z";</note>
       </trans-unit>
       <trans-unit id="pR1-M8-pXH.title" xml:space="preserve">
         <source>Back</source>
+        <target>上一步</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH";</note>
       </trans-unit>
       <trans-unit id="qdV-Je-jXT.text" xml:space="preserve">
         <source>Boundaries</source>
+        <target>邊界</target>
         <note>Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT";</note>
       </trans-unit>
       <trans-unit id="r6a-cT-Ufa.text" xml:space="preserve">
         <source>Turn Restrictions</source>
+        <target>轉向限制</target>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
         <source>Filter Objects</source>
+        <target>過濾物件</target>
         <note>Class = "UITableViewSection"; headerTitle = "Filter Objects"; ObjectID = "scg-Po-M3L";</note>
       </trans-unit>
       <trans-unit id="swu-t3-p5w.text" xml:space="preserve">
         <source>URL</source>
+        <target>網址</target>
         <note>Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w";</note>
       </trans-unit>
       <trans-unit id="tS9-CP-pqu.title" xml:space="preserve">
         <source>Clear Cache</source>
+        <target>清除快取</target>
         <note>Class = "UINavigationItem"; title = "Clear Cache"; ObjectID = "tS9-CP-pqu";</note>
       </trans-unit>
       <trans-unit id="tU9-Ml-4ko.title" xml:space="preserve">
         <source>Back</source>
+        <target>上一步</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko";</note>
       </trans-unit>
       <trans-unit id="twn-Ve-8vl.text" xml:space="preserve">
         <source>Water Features</source>
+        <target>水資源圖徵</target>
         <note>Class = "UILabel"; text = "Water Features"; ObjectID = "twn-Ve-8vl";</note>
       </trans-unit>
       <trans-unit id="uOd-BB-zEq.text" xml:space="preserve">
         <source>Aerial only</source>
+        <target>只有空照</target>
         <note>Class = "UILabel"; text = "Aerial only"; ObjectID = "uOd-BB-zEq";</note>
       </trans-unit>
       <trans-unit id="uQ3-vb-l3H.placeholder" xml:space="preserve">
         <source>21</source>
+        <target>21</target>
         <note>Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H";</note>
       </trans-unit>
       <trans-unit id="uZo-P0-sR7.text" xml:space="preserve">
         <source>Building Level</source>
+        <target>建築物樓層</target>
         <note>Class = "UILabel"; text = "Building Level"; ObjectID = "uZo-P0-sR7";</note>
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
@@ -1907,26 +1962,32 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
         <source>Max Zoom</source>
+        <target>放大極限</target>
         <note>Class = "UILabel"; text = "Max Zoom"; ObjectID = "voF-Yf-33h";</note>
       </trans-unit>
       <trans-unit id="w75-Lj-3jF.placeholder" xml:space="preserve">
         <source>Portlandia GIS</source>
+        <target>Portlandia GIS</target>
         <note>Class = "UITextField"; placeholder = "Portlandia GIS"; ObjectID = "w75-Lj-3jF"; Note = "A hypothetical aerial imagery provider";</note>
       </trans-unit>
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
         <source>Reset</source>
+        <target>重置</target>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
       </trans-unit>
       <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
         <source>Details</source>
+        <target>詳細內容</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
+        <target>名稱</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
+        <target>包含 {x}、{y}與{z} 替換符的 TMS 網址或是 WMS 網址</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
