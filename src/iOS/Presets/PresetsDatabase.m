@@ -24,110 +24,8 @@ const int UITextAutocapitalizationTypeSentences = 1;
 const int UITextAutocapitalizationTypeWords		= 2;
 #endif
 
-static NSDictionary<NSString *,NSDictionary *> 				* g_jsonAddressFormatsDict;	// address formats for different countries
-static NSDictionary<NSString *,NSArray *> 					* g_jsonDefaultsDict;		// map a geometry to a set of features/categories
-static NSDictionary<NSString *,NSDictionary *> 				* g_jsonCategoriesDict;		// map a top-level category ("building") to a set of specific features ("building/retail")
-static NSDictionary<NSString *,NSDictionary *> 				* g_jsonFieldsDict;			// possible values for a preset key ("oneway=")
-static NSDictionary<NSString *,NSDictionary *> 				* g_jsonTranslationDict;	// translations of all preset text
-
 static NSMutableDictionary<NSString *,NSMutableArray *> 	* g_taginfoCache;			// OSM TagInfo database in the cloud: contains either a group or an array of values
 
-
-static NSDictionary * DictionaryForFile( NSString * file )
-{
-	NSString * rootDir = [[NSBundle mainBundle] resourcePath];
-	NSString * rootPresetPath = [NSString stringWithFormat:@"%@/presets/%@",rootDir,file];
-	NSData * rootPresetData = [NSData dataWithContentsOfFile:rootPresetPath];
-	if ( rootPresetData == nil )
-		return nil;
-	NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:rootPresetData options:0 error:NULL];
-	DbgAssert(dict);
-	return dict;
-}
-
-static id Translate( id orig, id translation )
-{
-	if ( translation == nil )
-		return orig;
-	if ( [orig isKindOfClass:[NSString class]] && [translation isKindOfClass:[NSString class]] ) {
-		if ( [translation hasPrefix:@"<"] )
-			return orig; // meta content
-		return translation;
-	}
-	if ( [orig isKindOfClass:[NSArray class]] ) {
-		if ( [translation isKindOfClass:[NSDictionary class]] ) {
-			NSArray			* origArray = orig;
-			NSMutableArray	* newArray = [NSMutableArray arrayWithCapacity:origArray.count];
-			for ( NSInteger i = 0; i < origArray.count; ++i ) {
-				id o = [translation objectForKey:@(i)] ?: origArray[ i ];
-				[newArray addObject:o];
-			}
-			return newArray;
-		} else if ( [translation isKindOfClass:[NSString class]] ) {
-			NSArray * a = [translation componentsSeparatedByString:@","];
-			return a;
-		} else {
-			return orig;
-		}
-	}
-	if ( [orig isKindOfClass:[NSDictionary class]] && [translation isKindOfClass:[NSDictionary class]] ) {
-		NSMutableDictionary * newDict = [ NSMutableDictionary new];
-		[orig enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			if ( [key isEqualToString:@"strings"] ) {
-				// for "strings" the translation skips a level
-				newDict[key] = Translate( obj, translation );
-			} else {
-				newDict[key] = Translate( obj, translation[key] );
-			}
-		}];
-		return newDict;
-	}
-	return orig;
-}
-
-static void InitializeDictionaries()
-{
-	NSDictionary * jsonPresetsDict = nil;
-	NSDictionary * jsonNsiPresetsDict = nil;
-
-	if ( g_jsonAddressFormatsDict == nil ) {
-#if DEBUG
-		CFTimeInterval t = CACurrentMediaTime();
-#endif
-
-		g_jsonAddressFormatsDict = DictionaryForFile(@"address_formats.json");
-		g_jsonDefaultsDict		 = DictionaryForFile(@"preset_defaults.json");
-		g_jsonCategoriesDict	 = DictionaryForFile(@"preset_categories.json");
-		g_jsonFieldsDict		 = DictionaryForFile(@"fields.json");
-
-		jsonPresetsDict			 = DictionaryForFile(@"presets.json");
-		jsonNsiPresetsDict		 = DictionaryForFile(@"nsi_presets.json");
-
-
-		PresetLanguages * presetLanguages = [PresetLanguages new];	// don't need to save this, it doesn't get used again unless user changes the language
-		NSString * code = presetLanguages.preferredLanguageCode;
-		NSString * code2 = [code stringByReplacingOccurrencesOfString:@"-" withString:@"_"];
-		NSString * file = [NSString stringWithFormat:@"translations/%@.json",code];
-		g_jsonTranslationDict	= DictionaryForFile(file);
-		g_jsonTranslationDict	= g_jsonTranslationDict[ code2 ][ @"presets" ];
-
-#ifndef __clang_analyzer__	// this confuses the analyzer because it doesn't know that top-level return values are always NSDictionary
-		g_jsonDefaultsDict		= Translate( g_jsonDefaultsDict,	g_jsonTranslationDict[@"defaults"] );
-		g_jsonCategoriesDict	= Translate( g_jsonCategoriesDict,	g_jsonTranslationDict[@"categories"] );
-		g_jsonFieldsDict		= Translate( g_jsonFieldsDict,		g_jsonTranslationDict[@"fields"] );
-
-		jsonPresetsDict			= Translate( jsonPresetsDict,		g_jsonTranslationDict[@"presets"] );
-		jsonNsiPresetsDict		= Translate( jsonNsiPresetsDict,	g_jsonTranslationDict[@"presets"] );
-#endif
-
-		[PresetsDatabase initializeWithPresetsDict:jsonPresetsDict nsiPresetsDict:jsonNsiPresetsDict];
-
-#if DEBUG
-		t = CACurrentMediaTime() - t;
-		NSLog(@"Preset load time = %f seconds",t);
-#endif
-	}
-}
 
 static NSString * PrettyTag( NSString * tag )
 {
@@ -330,17 +228,10 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 @implementation PresetsDatabase(Extension)
 
-+(void)initialize
-{
-	g_jsonAddressFormatsDict	= nil;
-	g_taginfoCache				= nil;
-	InitializeDictionaries();
-}
-
 +(NSSet *)allTagValuesForKey:(NSString *)key
 {
 	NSMutableSet * set = [NSMutableSet new];
-	[g_jsonFieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+	[PresetsDatabase.shared.jsonFields enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSString * k = dict[ @"key" ];
 		if ( [k isEqualToString:key] ) {
 			NSDictionary * dict2 = dict[ @"strings" ];
@@ -351,7 +242,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			}
 		}
 	}];
-	[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+	[PresetsDatabase.shared enumeratePresetsUsingBlock:^(PresetFeature * feature) {
 		NSDictionary * dict2 = feature.tags;
 		NSString * value = dict2[ key ];
 		if ( value ) {
@@ -365,7 +256,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 +(NSSet *)allTagKeys
 {
 	NSMutableSet * set = [NSMutableSet new];
-	[g_jsonFieldsDict enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
+	[PresetsDatabase.shared.jsonFields enumerateKeysAndObjectsUsingBlock:^(NSString * name, NSDictionary * dict, BOOL *stop) {
 		NSString * key = dict[ @"key" ];
 		if ( key ) {
 			[set addObject:key];
@@ -375,7 +266,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			[set addObject:key];
 		}
 	}];
-	[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+	[PresetsDatabase.shared enumeratePresetsUsingBlock:^(PresetFeature * feature) {
 		NSDictionary * dict2 = feature.tags;
 		[dict2 enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop2) {
 			[set addObject:key];
@@ -400,7 +291,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		set = [NSMutableSet new];
-		[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+		[PresetsDatabase.shared enumeratePresetsUsingBlock:^(PresetFeature * feature) {
 			NSString * featureID = feature.featureID;
 			NSRange slash = [feature.featureID rangeOfString:@"/"];
 			NSString * featureKey = slash.location != NSNotFound ? [feature.featureID substringToIndex:slash.location] : featureID;
@@ -423,7 +314,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 		} else {
 
-			PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureID:featureID];
+			PresetFeature * feature = [PresetsDatabase.shared presetFeatureForFeatureID:featureID];
 			if ( feature == nil )
 				continue;
 			[list addObject:feature];
@@ -435,7 +326,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 +(NSArray<PresetFeature *> *)featuresAndCategoriesForGeometry:(NSString *)geometry
 {
-	NSArray * list = g_jsonDefaultsDict[geometry];
+	NSArray * list = PresetsDatabase.shared.jsonDefaults[geometry];
 	NSArray * featureList = [self featuresAndCategoriesForMemberList:list];
 	return featureList;
 }
@@ -451,7 +342,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}
 	} else {
 		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
-		NSArray * a = [PresetsDatabase featuresMatchingSearchText:searchText country:countryCode];
+		NSArray * a = [PresetsDatabase.shared featuresMatchingSearchText:searchText country:countryCode];
 		list = [a mutableCopy];
 	}
 	// sort so that regular items come before suggestions
@@ -473,7 +364,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 +(NSString *)yesForLocale
 {
-	NSDictionary * dict = g_jsonTranslationDict[@"fields"][@"internet_access"][@"options"];
+	NSDictionary * dict = PresetsDatabase.shared.jsonTranslation[@"fields"][@"internet_access"][@"options"];
 	NSString * text = dict[ @"yes" ];
 	if ( text == nil )
 		text = @"Yes";
@@ -481,7 +372,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 +(NSString *)noForLocale
 {
-	NSDictionary * dict = g_jsonTranslationDict[@"fields"][@"internet_access"][@"options"];
+	NSDictionary * dict = PresetsDatabase.shared.jsonTranslation[@"fields"][@"internet_access"][@"options"];
 	NSString * text = dict[ @"no" ];
 	if ( text == nil )
 		text = @"No";
@@ -494,7 +385,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		g_taginfoCache = [NSMutableDictionary new];
 	}
 
-	NSDictionary * dict = g_jsonFieldsDict[ fieldName ];
+	NSDictionary * dict = PresetsDatabase.shared.jsonFields[ fieldName ];
 	if ( dict.count == 0 )
 		return nil;
 
@@ -750,7 +641,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 		NSString * countryCode = AppDelegate.shared.mapView.countryCodeForLocation;
 		NSArray * keysForCountry = nil;
-		for ( NSDictionary * localeDict in g_jsonAddressFormatsDict ) {
+		for ( NSDictionary * localeDict in PresetsDatabase.shared.jsonAddressFormats ) {
 			NSArray * countryCodeList = localeDict[@"countryCodes"];
 			if ( countryCodeList == nil ) {
 				// default
@@ -856,7 +747,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		NSArray * ignore = @[ @"barrier", @"highway", @"footway", @"railway", @"type" ];
 
 		// whitelist
-		[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+		[PresetsDatabase.shared enumeratePresetsUsingBlock:^(PresetFeature * feature) {
 			if ( feature.nsiSuggestion )
 				return;
 			NSArray * geom = feature.geometry;
@@ -873,7 +764,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 		}];
 
 		// blacklist
-		[PresetsDatabase enumeratePresetsUsingBlock:^(PresetFeature * feature) {
+		[PresetsDatabase.shared enumeratePresetsUsingBlock:^(PresetFeature * feature) {
 			if ( feature.nsiSuggestion )
 				return;
 			NSArray * geom = feature.geometry;
@@ -1059,7 +950,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 -(NSString	*)friendlyName
 {
-	NSDictionary * dict = g_jsonCategoriesDict[ _categoryName ];
+	NSDictionary * dict = PresetsDatabase.shared.jsonCategories[ _categoryName ];
 	return dict[ @"name" ];
 }
 -(UIImage *)icon
@@ -1068,11 +959,11 @@ BOOL IsOsmBooleanTrue( NSString * value )
 }
 -(NSArray<PresetFeature *> *)members
 {
-	NSDictionary * dict = g_jsonCategoriesDict[ _categoryName ];
+	NSDictionary * dict = PresetsDatabase.shared.jsonCategories[ _categoryName ];
 	NSArray<PresetFeature *> * m = dict[ @"members" ];
 	NSMutableArray<PresetFeature *> * m2 = [NSMutableArray new];
 	for ( NSString * p in m ) {
-		PresetFeature * t = [PresetsDatabase presetFeatureForFeatureID:p];
+		PresetFeature * t = [PresetsDatabase.shared presetFeatureForFeatureID:p];
 		if ( p ) {
 			[m2 addObject:t];
 		}
@@ -1139,7 +1030,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 							   dupSet:(NSMutableSet *)dupSet
 							   update:(void (^)(void))update
 {
-	NSArray * fields = (id)[PresetsDatabase inheritedValueOfFeature:featureID valueGetter:valueGetter];
+	NSArray * fields = (id)[PresetsDatabase.shared inheritedValueOfFeature:featureID valueGetter:valueGetter];
 
 	for ( NSString * field in fields ) {
 
@@ -1181,8 +1072,20 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	_featureName = feature.name;
 
 	// Always start with Type and Name
-	PresetKey * typeTag = [PresetKey presetKeyWithName:@"Type" featureKey:nil defaultValue:nil placeholder:@"" keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeNone presets:@[@"",@""]];
-	PresetKey * nameTag = [PresetKey presetKeyWithName:g_jsonFieldsDict[@"name"][@"label"] featureKey:@"name" defaultValue:nil placeholder:g_jsonFieldsDict[@"name"][@"placeholder"] keyboard:UIKeyboardTypeDefault capitalize:UITextAutocapitalizationTypeWords presets:nil];
+	PresetKey * typeTag = [PresetKey presetKeyWithName:@"Type"
+											featureKey:nil
+										  defaultValue:nil
+										   placeholder:@""
+											  keyboard:UIKeyboardTypeDefault
+											capitalize:UITextAutocapitalizationTypeNone
+											   presets:@[@"",@""]];
+	PresetKey * nameTag = [PresetKey presetKeyWithName:PresetsDatabase.shared.jsonFields[@"name"][@"label"]
+											featureKey:@"name"
+										  defaultValue:nil
+										   placeholder:PresetsDatabase.shared.jsonFields[@"name"][@"placeholder"]
+											  keyboard:UIKeyboardTypeDefault
+											capitalize:UITextAutocapitalizationTypeWords
+											   presets:nil];
 	PresetGroup * typeGroup = [PresetGroup presetGroupWithName:@"Type" tags:@[ typeTag, nameTag ] ];
 	_sectionList = [NSMutableArray arrayWithArray:@[ typeGroup ]];
 
@@ -1231,7 +1134,7 @@ BOOL IsOsmBooleanTrue( NSString * value )
 {
 	NSMutableDictionary * result = nil;
 	for ( NSString * field in self.fields ) {
-		NSDictionary * fieldDict = g_jsonFieldsDict[ field ];
+		NSDictionary * fieldDict = PresetsDatabase.shared.jsonFields[ field ];
 		NSString * value = fieldDict[ @"default" ];
 		if ( value == nil )
 			continue;
@@ -1248,329 +1151,5 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	}
 	return result;
 }
-
-@end
-
-
-
-@implementation PresetLanguages
-{
-	NSMutableArray 		* _codeList;
-}
--(instancetype)init
-{
-	self = [super init];
-	if ( self ) {
-		NSString * path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"presets/translations"];
-		NSArray * languageFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
-		languageFiles = [languageFiles arrayByAddingObject:@"en.json"];
-		
-		_codeList = [NSMutableArray new];
-		for ( NSString * file in languageFiles ) {
-			NSString * code = [file stringByReplacingOccurrencesOfString:@".json" withString:@""];
-			[_codeList addObject:code];
-		}
-		
-		[_codeList sortUsingComparator:^NSComparisonResult(NSString * code1, NSString * code2) {
-			NSString * s1 = [self languageNameForCode:code1];
-			NSString * s2 = [self languageNameForCode:code2];
-			return [s1 compare:s2 options:NSCaseInsensitiveSearch];
-		}];
-	}
-	return self;
-}
--(BOOL)preferredLanguageIsDefault
-{
-	NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
-	return code == nil;
-}
--(NSString *)preferredLanguageCode
-{
-	NSString * code = [[NSUserDefaults standardUserDefaults] objectForKey:@"preferredLanguage"];
-	if ( code == nil ) {
-		NSArray * userPrefs = [NSLocale preferredLanguages];
-		NSArray * matches = [NSBundle preferredLocalizationsFromArray:_codeList forPreferences:userPrefs];
-		code = matches.count > 0 ? matches[0] : @"en";
-	}
-	return code;
-}
--(void)setPreferredLanguageCode:(NSString *)code
-{
-	[[NSUserDefaults standardUserDefaults] setObject:code forKey:@"preferredLanguage"];
-}
-
--(NSArray *)languageCodes
-{
-	return _codeList;
-}
--(NSString *)languageNameForCode:(NSString *)code
-{
-	NSLocale * locale =  [NSLocale localeWithLocaleIdentifier:code];
-	NSString * name = [locale displayNameForKey:NSLocaleIdentifier value:code];
-	return name;
-}
--(NSString *)localLanguageNameForCode:(NSString *)code
-{
-	NSString * name = [[NSLocale currentLocale] displayNameForKey:NSLocaleIdentifier value:code];
-	return name;
-}
-
-// https://wiki.openstreetmap.org/wiki/Nominatim/Country_Codes
-+(NSString *)languageCodesForCountryCode:(NSString *)countryCode
-{
-	static NSDictionary * map = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		map = @{
-			@"ad" : @"ca",
-			@"ae" : @"ar",
-			@"af" : @"fa,ps",
-			@"ag" : @"en",
-			@"ai" : @"en",
-			@"al" : @"sq",
-			@"am" : @"hy",
-			@"an" : @"nl,en",
-			@"ao" : @"pt",
-			// 'aq" : @"",
-			@"ar" : @"es",
-			@"as" : @"en,sm",
-			@"at" : @"de",
-			@"au" : @"en",
-			@"aw" : @"nl,pap",
-			@"ax" : @"sv",
-			@"ba" : @"bs,hr,sr",
-			@"bb" : @"en",
-			@"bd" : @"bn",
-			@"be" : @"nl,fr,de",
-			@"bf" : @"fr",
-			@"bh" : @"ar",
-			@"bi" : @"fr",
-			@"bj" : @"fr",
-			@"bl" : @"fr",
-			@"bm" : @"en",
-			@"bn" : @"ms",
-			@"bo" : @"es,qu,ay",
-			@"br" : @"pt",
-			@"bs" : @"en",
-			@"bt" : @"dz",
-			@"bv" : @"no",
-			@"bw" : @"en,tn",
-			@"by" : @"be,ru",
-			@"bz" : @"en",
-			@"ca" : @"en,fr",
-			@"cc" : @"en",
-			@"cd" : @"fr",
-			@"cf" : @"fr",
-			@"cg" : @"fr",
-			@"ch" : @"de,fr,it,rm",
-			@"ci" : @"fr",
-			@"ck" : @"en,rar",
-			@"cl" : @"es",
-			@"cm" : @"fr,en",
-			@"cn" : @"zh",
-			@"co" : @"es",
-			@"cr" : @"es",
-			@"cu" : @"es",
-			@"cv" : @"pt",
-			@"cx" : @"en",
-			@"cy" : @"el,tr",
-			@"cz" : @"cs",
-			@"de" : @"de",
-			@"dj" : @"fr,ar,so",
-			@"dk" : @"da",
-			@"dm" : @"en",
-			@"do" : @"es",
-			@"dz" : @"ar",
-			@"ec" : @"es",
-			@"ee" : @"et",
-			@"eg" : @"ar",
-			@"eh" : @"ar,es,fr",
-			@"er" : @"ti,ar,en",
-			@"es" : @"ast,ca,es,eu,gl",
-			@"et" : @"am,om",
-			@"fi" : @"fi,sv,se",
-			@"fj" : @"en",
-			@"fk" : @"en",
-			@"fm" : @"en",
-			@"fo" : @"fo",
-			@"fr" : @"fr",
-			@"ga" : @"fr",
-			@"gb" : @"en,ga,cy,gd,kw",
-			@"gd" : @"en",
-			@"ge" : @"ka",
-			@"gf" : @"fr",
-			@"gg" : @"en",
-			@"gh" : @"en",
-			@"gi" : @"en",
-			@"gl" : @"kl,da",
-			@"gm" : @"en",
-			@"gn" : @"fr",
-			@"gp" : @"fr",
-			@"gq" : @"es,fr,pt",
-			@"gr" : @"el",
-			@"gs" : @"en",
-			@"gt" : @"es",
-			@"gu" : @"en,ch",
-			@"gw" : @"pt",
-			@"gy" : @"en",
-			@"hk" : @"zh,en",
-			@"hm" : @"en",
-			@"hn" : @"es",
-			@"hr" : @"hr",
-			@"ht" : @"fr,ht",
-			@"hu" : @"hu",
-			@"id" : @"id",
-			@"ie" : @"en,ga",
-			@"il" : @"he",
-			@"im" : @"en",
-			@"in" : @"hi,en",
-			@"io" : @"en",
-			@"iq" : @"ar,ku",
-			@"ir" : @"fa",
-			@"is" : @"is",
-			@"it" : @"it,de,fr",
-			@"je" : @"en",
-			@"jm" : @"en",
-			@"jo" : @"ar",
-			@"jp" : @"ja",
-			@"ke" : @"sw,en",
-			@"kg" : @"ky,ru",
-			@"kh" : @"km",
-			@"ki" : @"en",
-			@"km" : @"ar,fr",
-			@"kn" : @"en",
-			@"kp" : @"ko",
-			@"kr" : @"ko,en",
-			@"kw" : @"ar",
-			@"ky" : @"en",
-			@"kz" : @"kk,ru",
-			@"la" : @"lo",
-			@"lb" : @"ar,fr",
-			@"lc" : @"en",
-			@"li" : @"de",
-			@"lk" : @"si,ta",
-			@"lr" : @"en",
-			@"ls" : @"en,st",
-			@"lt" : @"lt",
-			@"lu" : @"lb,fr,de",
-			@"lv" : @"lv",
-			@"ly" : @"ar",
-			@"ma" : @"ar",
-			@"mc" : @"fr",
-			@"md" : @"ru,uk,ro",
-			@"me" : @"srp,sq,bs,hr,sr",
-			@"mf" : @"fr",
-			@"mg" : @"mg,fr",
-			@"mh" : @"en,mh",
-			@"mk" : @"mk",
-			@"ml" : @"fr",
-			@"mm" : @"my",
-			@"mn" : @"mn",
-			@"mo" : @"zh,pt",
-			@"mp" : @"ch",
-			@"mq" : @"fr",
-			@"mr" : @"ar,fr",
-			@"ms" : @"en",
-			@"mt" : @"mt,en",
-			@"mu" : @"mfe,fr,en",
-			@"mv" : @"dv",
-			@"mw" : @"en,ny",
-			@"mx" : @"es",
-			@"my" : @"ms",
-			@"mz" : @"pt",
-			@"na" : @"en,sf,de",
-			@"nc" : @"fr",
-			@"ne" : @"fr",
-			@"nf" : @"en,pih",
-			@"ng" : @"en",
-			@"ni" : @"es",
-			@"nl" : @"nl",
-			@"no" : @"nb,nn,no,se",
-			@"np" : @"ne",
-			@"nr" : @"na,en",
-			@"nu" : @"niu,en",
-			@"nz" : @"mi,en",
-			@"om" : @"ar",
-			@"pa" : @"es",
-			@"pe" : @"es",
-			@"pf" : @"fr",
-			@"pg" : @"en,tpi,ho",
-			@"ph" : @"en,tl",
-			@"pk" : @"en,ur",
-			@"pl" : @"pl",
-			@"pm" : @"fr",
-			@"pn" : @"en,pih",
-			@"pr" : @"es,en",
-			@"ps" : @"ar,he",
-			@"pt" : @"pt",
-			@"pw" : @"en,pau,ja,sov,tox",
-			@"py" : @"es,gn",
-			@"qa" : @"ar",
-			@"re" : @"fr",
-			@"ro" : @"ro",
-			@"rs" : @"sr",
-			@"ru" : @"ru",
-			@"rw" : @"rw,fr,en",
-			@"sa" : @"ar",
-			@"sb" : @"en",
-			@"sc" : @"fr,en,crs",
-			@"sd" : @"ar,en",
-			@"se" : @"sv",
-			@"sg" : @"en,ms,zh,ta",
-			@"sh" : @"en",
-			@"si" : @"sl",
-			@"sj" : @"no",
-			@"sk" : @"sk",
-			@"sl" : @"en",
-			@"sm" : @"it",
-			@"sn" : @"fr",
-			@"so" : @"so,ar",
-			@"sr" : @"nl",
-			@"st" : @"pt",
-			@"ss" : @"en",
-			@"sv" : @"es",
-			@"sy" : @"ar",
-			@"sz" : @"en,ss",
-			@"tc" : @"en",
-			@"td" : @"fr,ar",
-			@"tf" : @"fr",
-			@"tg" : @"fr",
-			@"th" : @"th",
-			@"tj" : @"tg,ru",
-			@"tk" : @"tkl,en,sm",
-			@"tl" : @"pt,tet",
-			@"tm" : @"tk",
-			@"tn" : @"ar",
-			@"to" : @"en",
-			@"tr" : @"tr",
-			@"tt" : @"en",
-			@"tv" : @"en",
-			@"tw" : @"zh",
-			@"tz" : @"sw,en",
-			@"ua" : @"uk",
-			@"ug" : @"en,sw",
-			@"um" : @"en",
-			@"us" : @"en",
-			@"uy" : @"es",
-			@"uz" : @"uz,kaa",
-			@"va" : @"it",
-			@"vc" : @"en",
-			@"ve" : @"es",
-			@"vg" : @"en",
-			@"vi" : @"en",
-			@"vn" : @"vi",
-			@"vu" : @"bi,en,fr",
-			@"wf" : @"fr",
-			@"ws" : @"sm,en",
-			@"ye" : @"ar",
-			@"yt" : @"fr",
-			@"za" : @"zu,xh,af,st,tn,en",
-			@"zm" : @"en",
-			@"zw" : @"en,sn,nd ",
-		};
-	});
-	return map[ countryCode ];
-}
-
 
 @end

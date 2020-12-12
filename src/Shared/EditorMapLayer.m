@@ -1535,9 +1535,9 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	BOOL drawRef = YES;
 
     // fetch icon
-    PresetFeature * feature = [PresetsDatabase matchObjectTagsToFeature:node.tags
-															  geometry:node.geometryName
-															includeNSI:NO];
+    PresetFeature * feature = [PresetsDatabase.shared matchObjectTagsToFeature:node.tags
+																	  geometry:node.geometryName
+																	includeNSI:NO];
 	UIImage * icon = feature.iconScaled24;
 	if ( icon == nil ) {
 		if ( node.tags[@"amenity"] || node.tags[@"name"] )

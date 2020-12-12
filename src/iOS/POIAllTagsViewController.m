@@ -83,9 +83,9 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
 	NSDictionary * dict = [self keyValueDictionary];
-	PresetFeature * newFeature = [PresetsDatabase matchObjectTagsToFeature:dict
-															 geometry:geometry
-															includeNSI:YES];
+	PresetFeature * newFeature = [PresetsDatabase.shared matchObjectTagsToFeature:dict
+																		 geometry:geometry
+																	   includeNSI:YES];
 
 	if ( !forceReload && [newFeature.featureID isEqualToString:_featureID] )
 		return -1;

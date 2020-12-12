@@ -35,7 +35,7 @@
 
 	PresetLanguages * presetLanguages = [PresetLanguages new];
 	NSString * preferredLanguageCode = presetLanguages.preferredLanguageCode;
-	NSString * preferredLanguage = [presetLanguages localLanguageNameForCode:preferredLanguageCode];
+	NSString * preferredLanguage = [PresetLanguages localLanguageNameForCode:preferredLanguageCode];
 	_language.text = preferredLanguage;
 
 	// set username, but then validate it

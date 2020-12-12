@@ -481,9 +481,9 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     if ( name.length )
         return name;
 
-    PresetFeature * feature = [PresetsDatabase matchObjectTagsToFeature:self.tags
-															  geometry:self.geometryName
-															 includeNSI:YES];
+    PresetFeature * feature = [PresetsDatabase.shared matchObjectTagsToFeature:self.tags
+																	  geometry:self.geometryName
+																	includeNSI:YES];
     if ( feature ) {
 		BOOL isGeneric = [feature.featureID isEqualToString:@"point"] ||
 						 [feature.featureID isEqualToString:@"line"] ||

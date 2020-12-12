@@ -1,8 +1,8 @@
 //
-//  PresetsDatabase.swift
+//  PresetFeature.swift
 //  Go Map!!
 //
-//  Created by Bryce Cogswell on 6/29/20.
+//  Created by Bryce Cogswell on 12/11/20.
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
@@ -87,7 +87,7 @@ import Foundation
 
 	@objc func summary() -> String? {
 		let parentID = PresetFeature.parentIDofID( self.featureID )
-		let result = PresetsDatabase.inheritedValueOfFeature(parentID,
+		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID,
 			valueGetter: { (feature:PresetFeature?) -> AnyHashable? in return feature!.name })
 		return result as? String
 	}
@@ -187,159 +187,5 @@ import Foundation
 			}
 		}
 		return totalScore
-	}
-}
-
-
-@objc class PresetsDatabase : NSObject {
-
-	// these map a FeatureID to a feature
-	static var stdPresets : [String :PresetFeature]?	// only generic presets
-	static var nsiPresets : [String :PresetFeature]?	// only NSI presets
-	// these map a tag key to a list of features that require that key
-	static var stdIndex : [String: [PresetFeature]]?	// generic preset index
-	static var nsiIndex : [String: [PresetFeature]]?	// generic+NSI index
-
-	// initialize database
-	private class func featureDictForJsonDict(_ dict:NSDictionary, isNSI:Bool) -> [String:PresetFeature]
-	{
-		var presets = [String :PresetFeature]()
-		let dict2 = dict as! [String:[String:Any]]
-		for (name,values) in dict2 {
-			presets[name] = PresetFeature(withID: name, jsonDict: values, isNSI:isNSI)
-		}
-		return presets
-	}
-	@objc class func initializeWith(presetsDict:NSDictionary, nsiPresetsDict:NSDictionary)
-	{
-		stdPresets 	= featureDictForJsonDict(presetsDict, isNSI:false)
-		nsiPresets 	= featureDictForJsonDict(nsiPresetsDict, isNSI:true)
-
-		stdIndex = PresetsDatabase.buildTagIndex([stdPresets!])
-		nsiIndex = PresetsDatabase.buildTagIndex([stdPresets!,nsiPresets!])
-	}
-	class func buildTagIndex(_ inputList:[[String:PresetFeature]]) -> [String:[PresetFeature]]
-	{
-		var keys = [String:Int]()
-		for (featureID,_) in stdPresets! {
-			var key = featureID
-			if let range = key.range(of:"/") {
-				key = String(key.prefix(upTo: range.lowerBound))
-			}
-			keys[key] = (keys[key] ?? 0) + 1
-		}
-		var tagIndex = [String:[PresetFeature]]()
-		for list in inputList {
-			for (_,feature) in list {
-				var added = false
-				for key in feature.tags.keys {
-					if keys[key] != nil {
-						if tagIndex[key]?.append(feature) == nil {
-							tagIndex[key] = [feature]
-						}
-						added = true
-					}
-				}
-				if !added {
-					if tagIndex[""]?.append(feature) == nil {
-						tagIndex[""] = [feature]
-					}
-				}
-			}
-		}
-		return tagIndex
-	}
-
-	// enumerate contents of database
-	@objc class func enumeratePresetsUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
-		for (_,v) in stdPresets! {
-			block(v)
-		}
-	}
-	@objc class func enumeratePresetsAndNsiUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
-		for (_,v) in stdPresets! {
-			block(v)
-		}
-		for (_,v) in nsiPresets! {
-			block(v)
-		}
-	}
-
-	// go up the feature tree and return the first instance of the requested field value
-	private class func inheritedFieldForPresetsDict( _ presetDict: [String:PresetFeature],
-													 featureID: String?,
-													 field fieldGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
-													-> AnyHashable?
-	{
-		var featureID = featureID
-		while featureID != nil {
-			if let feature = presetDict[featureID!],
-			   let field = fieldGetter(feature)
-			{
-				return field
-			}
-			featureID = PresetFeature.parentIDofID(featureID!)
-		}
-		return nil
-	}
-	@objc class func inheritedValueOfFeature( _ featureID: String?,
-											  valueGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
-											-> AnyHashable?
-	{
-		// This is currently never used for NSI entries, so we can ignore nsiPresets
-		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets!, featureID: featureID, field: valueGetter)
-	}
-
-
-	@objc class func presetFeatureForFeatureID(_ featureID:String) -> PresetFeature?
-	{
-		return stdPresets![featureID] ?? nsiPresets![featureID]
-	}
-
-	@objc static func matchObjectTagsToFeature(_ objectTags: [String: String]?,
-												 geometry: String?,
-												 includeNSI: Bool) -> PresetFeature?
-	{
-		guard let geometry = geometry,
-			  let objectTags = objectTags else { return nil }
-
-		var bestFeature: PresetFeature? = nil
-		var bestScore: Double = 0.0
-
-		let index = includeNSI ? nsiIndex! : stdIndex!
-		let keys = objectTags.keys + [""]
-		for key in keys {
-			if let list = index[key] {
-				for feature in list {
-					let score = feature.matchObjectTagsScore(objectTags, geometry: geometry)
-					if score > bestScore {
-						bestScore = score
-						bestFeature = feature
-					}
-				}
-			}
-		}
-		return bestFeature
-	}
-
-	@objc static func featuresMatchingSearchText(_ searchText:String?, country:String? ) -> [PresetFeature]
-	{
-		var list = [PresetFeature]()
-		PresetsDatabase.enumeratePresetsAndNsiUsingBlock { (feature) in
-			if feature.searchable {
-				if let country = country,
-				   let loc = feature.locationSet,
-				   let includes = loc["include"]
-				{
-					if !includes.contains(country) {
-						return
-					}
-				}
-				if feature.matchesSearchText(searchText) {
-					list.append(feature)
-				}
-			}
-		}
-		return list
 	}
 }

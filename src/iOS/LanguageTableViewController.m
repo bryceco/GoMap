@@ -66,10 +66,10 @@
 		code = _languages.languageCodes[ indexPath.row - 1 ];
 
 		// name in native language
-		cell.textLabel.text = [_languages languageNameForCode:code];
+		cell.textLabel.text = [PresetLanguages languageNameForCode:code];
 
 		// name in current language
-		cell.detailTextLabel.text = [_languages localLanguageNameForCode:code];
+		cell.detailTextLabel.text = [PresetLanguages localLanguageNameForCode:code];
 
 	}
 
@@ -89,7 +89,7 @@
 
 	[self.tableView reloadData];
 
-	[PresetsDatabase initialize];	// reset tags
+	[PresetsDatabase reload];	// reset tags
 	[AppDelegate.shared.mapView refreshPushpinText];
 }
 

@@ -91,16 +91,6 @@ typedef int UITextAutocapitalizationType;
 -(instancetype)initWithCategoryName:(NSString *)name;
 @end
 
-// languages supported by presets database
-@interface PresetLanguages : NSObject
-@property (strong,nonatomic) NSString * preferredLanguageCode;	// default or user's preferred languange
-@property (readonly,nonatomic) BOOL preferredLanguageIsDefault;
-
--(NSArray *)languageCodes;
--(NSString *)languageNameForCode:(NSString *)code;
--(NSString *)localLanguageNameForCode:(NSString *)code;
-@end
-
 
 // All presets for a feature, for presentation in Common Tags table view
 @interface PresetsForFeature : NSObject

@@ -44,7 +44,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSArray * a = [[NSUserDefaults standardUserDefaults] objectForKey:defaults];
 	mostRecentArray = [NSMutableArray arrayWithCapacity:a.count+1];
 	for ( NSString * featureID in a ) {
-		PresetFeature * feature = [PresetsDatabase presetFeatureForFeatureID:featureID];
+		PresetFeature * feature = [PresetsDatabase.shared presetFeatureForFeatureID:featureID];
 		if ( feature ) {
 			[mostRecentArray addObject:feature];
 		}
@@ -159,7 +159,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	}
 
 	if ( feature.nsiSuggestion && feature.nsiLogo == nil && feature.logoURL ) {
-#if 1
+#if 0
 		// use built-in logo files
 		if ( feature.nsiLogo == nil ) {
 			feature.nsiLogo = feature.iconUnscaled;
@@ -188,11 +188,17 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			});
 		}
 #else
-		// download brand logo for name suggestion
+		// download brand logo
 		feature.nsiLogo = feature.iconUnscaled;
 		UIImage * logo = [logoCache objectWithKey:feature.featureID
 			fallbackURL:^{
+#if 1
+				NSString * name = [feature.featureID stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+				NSString * url = [@"http://gomaposm.com/brandIcons/" stringByAppendingString:name];
+				return [NSURL URLWithString:url];
+#else
 				return [NSURL URLWithString:feature.logoURL];
+#endif
 			} objectForData:^id _Nonnull(NSData * data) {
 				extern UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize );
 				UIImage * image = [UIImage imageWithData:data];
@@ -220,7 +226,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	NSString * brand = @"☆ ";
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = [self currentSelectionGeometry];
-	PresetFeature * currentFeature = [PresetsDatabase matchObjectTagsToFeature:tabController.keyValueDict
+	PresetFeature * currentFeature = [PresetsDatabase.shared matchObjectTagsToFeature:tabController.keyValueDict
 																 geometry:geometry
 																includeNSI:YES];
 	FeaturePickerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];

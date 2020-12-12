@@ -66,7 +66,7 @@
 		NSString * geometry = object ? [object geometryName] : GEOMETRY_NODE;
 
 		// update most recent feature
-		PresetFeature * feature = _selectedFeature ?: [PresetsDatabase matchObjectTagsToFeature:dict
+		PresetFeature * feature = _selectedFeature ?: [PresetsDatabase.shared matchObjectTagsToFeature:dict
 																				   geometry:geometry
 																				  includeNSI:YES];
 		if ( feature ) {
@@ -143,9 +143,9 @@
 	_selectedFeature = feature;
 	POITabBarController * tabController = (id) self.tabBarController;
 	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
-	PresetFeature * oldFeature = [PresetsDatabase matchObjectTagsToFeature:tabController.keyValueDict
-																 geometry:geometry
-																includeNSI:YES];
+	PresetFeature * oldFeature = [PresetsDatabase.shared matchObjectTagsToFeature:tabController.keyValueDict
+																		 geometry:geometry
+																	   includeNSI:YES];
 
 	// remove previous feature tags
 	NSDictionary * removeTags = oldFeature.removeTags;
