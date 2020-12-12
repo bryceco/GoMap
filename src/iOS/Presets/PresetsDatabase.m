@@ -362,23 +362,6 @@ BOOL IsOsmBooleanTrue( NSString * value )
 	return list;
 }
 
-+(NSString *)yesForLocale
-{
-	NSDictionary * dict = PresetsDatabase.shared.jsonTranslation[@"fields"][@"internet_access"][@"options"];
-	NSString * text = dict[ @"yes" ];
-	if ( text == nil )
-		text = @"Yes";
-	return text;
-}
-+(NSString *)noForLocale
-{
-	NSDictionary * dict = PresetsDatabase.shared.jsonTranslation[@"fields"][@"internet_access"][@"options"];
-	NSString * text = dict[ @"no" ];
-	if ( text == nil )
-		text = @"No";
-	return text;
-}
-
 +(PresetGroup *)groupForField:(NSString *)fieldName geometry:(NSString *)geometry ignore:(NSArray *)ignore update:(void (^)(void))update
 {
 	if ( g_taginfoCache == nil ) {
@@ -418,8 +401,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 	if ( [type isEqualToString:@"defaultcheck"] || [type isEqualToString:@"check"] || [type isEqualToString:@"onewayCheck"] ) {
 
-		NSArray * presets = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
-							   [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
+		NSArray * presets = @[ [PresetValue presetValueWithName:PresetsDatabase.shared.yesForLocale details:nil tagValue:@"yes"],
+							   [PresetValue presetValueWithName:PresetsDatabase.shared.noForLocale  details:nil tagValue:@"no"] ];
 		PresetKey * tag = [PresetKey presetKeyWithName:label featureKey:key defaultValue:defaultValue placeholder:placeholder keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
 		PresetGroup * group = [PresetGroup presetGroupWithName:nil tags:@[ tag ]];
 		return group;
@@ -430,8 +413,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 
 			// a list of booleans
 			NSMutableArray * tags = [NSMutableArray new];
-			NSArray * presets = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
-								   [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
+			NSArray * presets = @[ [PresetValue presetValueWithName:PresetsDatabase.shared.yesForLocale details:nil tagValue:@"yes"],
+								   [PresetValue presetValueWithName:PresetsDatabase.shared.noForLocale details:nil tagValue:@"no"] ];
 			for ( NSString * k in keysArray ) {
 				NSString * name = stringsOptionsDict[ k ];
 				PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
@@ -475,8 +458,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 			
 			// a list of booleans
 			NSMutableArray * tags = [NSMutableArray new];
-			NSArray * presets = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
-								   [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
+			NSArray * presets = @[ [PresetValue presetValueWithName:PresetsDatabase.shared.yesForLocale details:nil tagValue:@"yes"],
+								   [PresetValue presetValueWithName:PresetsDatabase.shared.noForLocale  details:nil tagValue:@"no"] ];
 			for ( NSString * k in keysArray ) {
 				NSString * name = stringsOptionsDict[ k ];
 				PresetKey * tag = [PresetKey presetKeyWithName:name featureKey:k defaultValue:defaultValue placeholder:nil keyboard:keyboard capitalize:UITextAutocapitalizationTypeNone presets:presets];
@@ -557,8 +540,8 @@ BOOL IsOsmBooleanTrue( NSString * value )
 						if ( isMulti ) {
 							// a list of booleans
 							NSMutableArray * tags = [NSMutableArray new];
-							NSArray * yesNo = @[ [PresetValue presetValueWithName:[PresetsDatabase yesForLocale] details:nil tagValue:@"yes"],
-											     [PresetValue presetValueWithName:[PresetsDatabase noForLocale]  details:nil tagValue:@"no"] ];
+							NSArray * yesNo = @[ [PresetValue presetValueWithName:PresetsDatabase.shared.yesForLocale details:nil tagValue:@"yes"],
+											     [PresetValue presetValueWithName:PresetsDatabase.shared.noForLocale  details:nil tagValue:@"no"] ];
 							for ( NSDictionary * v in values ) {
 								if ( [v[@"count_all"] integerValue] < 1000 )
 									continue; // it's a very uncommon value, so ignore it

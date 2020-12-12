@@ -19,11 +19,11 @@ import Foundation
 	}
 
 	// these map a FeatureID to a feature
-	let stdPresets : [String :PresetFeature]?	// only generic presets
-	let nsiPresets : [String :PresetFeature]?	// only NSI presets
+	let stdPresets : [String :PresetFeature]	// only generic presets
+	var nsiPresets : [String :PresetFeature]	// only NSI presets
 	// these map a tag key to a list of features that require that key
-	let stdIndex : [String: [PresetFeature]]?	// generic preset index
-	let nsiIndex : [String: [PresetFeature]]?	// generic+NSI index
+	let stdIndex : [String: [PresetFeature]]	// generic preset index
+	var nsiIndex : [String: [PresetFeature]]	// generic+NSI index
 
 	private class func DictionaryForFile(_ file: String?) -> Any? {
 		guard let file = file else { return nil }
@@ -86,44 +86,51 @@ import Foundation
 	@objc let jsonDefaults: [String : Any] 				// map a geometry to a set of features/categories
 	@objc let jsonCategories: [String : Any]	 		// map a top-level category ("building") to a set of specific features ("building/retail")
 	@objc let jsonFields: [String : Any]				// possible values for a preset key ("oneway=")
-	@objc let jsonTranslation: [String : [String:Any]]	// translations of all preset text
+
+	@objc let yesForLocale: String
+	@objc let noForLocale: String
 
 	override init() {
-		#if DEBUG
-		var t = CACurrentMediaTime()
-		#endif
-
-		jsonAddressFormats		 	= PresetsDatabase.DictionaryForFile("address_formats.json") as! [Any]
-		let jsonDefaultsPre 		= PresetsDatabase.DictionaryForFile("preset_defaults.json")!
-		let jsonCategoriesPre 		= PresetsDatabase.DictionaryForFile("preset_categories.json")!
-		let jsonFieldsPre 			= PresetsDatabase.DictionaryForFile("fields.json")!
-
+		// get translations for current language
 		let presetLanguages = PresetLanguages() // don't need to save this, it doesn't get used again unless user changes the language
 		let code = presetLanguages.preferredLanguageCode()
 		let file = "translations/"+code+".json"
-
 		let trans = PresetsDatabase.DictionaryForFile(file) as! [String : [String : Any]]
-		jsonTranslation	= (trans[ code ]?[ "presets" ] as? [String : [String : Any]]) ?? [String:[String:Any]]()
+		let jsonTranslation	= (trans[ code ]?[ "presets" ] as? [String : [String : Any]]) ?? [String:[String:Any]]()
+		let yesNoDict = ((jsonTranslation["fields"])?["internet_access"] as? [String:Any])?["options"] as? [String:String]
+		yesForLocale = yesNoDict?[ "yes" ] ?? "Yes"
+		noForLocale  = yesNoDict?[ "no" ] ?? "No"
 
+		// get presets files
+		let jsonDefaultsPre 	= PresetsDatabase.DictionaryForFile("preset_defaults.json")!
+		let jsonCategoriesPre 	= PresetsDatabase.DictionaryForFile("preset_categories.json")!
+		let jsonFieldsPre 		= PresetsDatabase.DictionaryForFile("fields.json")!
 		jsonDefaults	= (PresetsDatabase.Translate( jsonDefaultsPre,		jsonTranslation["defaults"] ) as? [String : Any])!
 		jsonCategories	= (PresetsDatabase.Translate( jsonCategoriesPre,	jsonTranslation["categories"] ) as? [String : Any])!
 		jsonFields		= (PresetsDatabase.Translate( jsonFieldsPre,		jsonTranslation["fields"] ) as? [String : Any])!
 
+		// address formats
+		jsonAddressFormats	 	= PresetsDatabase.DictionaryForFile("address_formats.json") as! [Any]
+
 		// initialize presets and index them
-		var jsonPresetsDict		= PresetsDatabase.DictionaryForFile("presets.json") as! [String : [String:Any]]
-		var jsonNsiPresetsDict 	= PresetsDatabase.DictionaryForFile("nsi_presets.json") as! [String : [String:Any]]
-		jsonPresetsDict			= PresetsDatabase.Translate( jsonPresetsDict,		jsonTranslation["presets"] ) as! [String : [String:Any]]
-		jsonNsiPresetsDict		= PresetsDatabase.Translate( jsonNsiPresetsDict,	jsonTranslation["presets"] ) as! [String : [String:Any]]
+		var jsonPresetsDict		= PresetsDatabase.DictionaryForFile("presets.json")
+		jsonPresetsDict			= PresetsDatabase.Translate( jsonPresetsDict, jsonTranslation["presets"] )
+		stdPresets 	= PresetsDatabase.featureDictForJsonDict(jsonPresetsDict as! [String : [String:Any]], isNSI:false)
+		stdIndex 	= PresetsDatabase.buildTagIndex([stdPresets], basePresets: stdPresets)
 
-		stdPresets 	= PresetsDatabase.featureDictForJsonDict(jsonPresetsDict, isNSI:false)
-		nsiPresets 	= PresetsDatabase.featureDictForJsonDict(jsonNsiPresetsDict, isNSI:true)
-		stdIndex = PresetsDatabase.buildTagIndex([stdPresets!], basePresets: stdPresets!)
-		nsiIndex = PresetsDatabase.buildTagIndex([stdPresets!,nsiPresets!], basePresets: stdPresets!)
-
-#if DEBUG
-		t = CACurrentMediaTime() - t;
-		print("Preset load time = \(t) seconds")
-#endif
+		// name suggestion index
+		nsiPresets = [String: PresetFeature]()
+		nsiIndex   = stdIndex
+		super.init()
+		DispatchQueue.global(qos: .userInitiated).async {
+			let jsonNsiPresetsDict 	= PresetsDatabase.DictionaryForFile("nsi_presets.json")
+			let nsiPresets2 = PresetsDatabase.featureDictForJsonDict(jsonNsiPresetsDict as! [String : [String:Any]], isNSI:true)
+			let nsiIndex2 	= PresetsDatabase.buildTagIndex([self.stdPresets,nsiPresets2], basePresets: self.stdPresets)
+			DispatchQueue.main.async {
+				self.nsiPresets = nsiPresets2
+				self.nsiIndex 	= nsiIndex2
+			}
+		}
 	}
 
 	// initialize presets database
@@ -169,15 +176,15 @@ import Foundation
 
 	// enumerate contents of database
 	@objc func enumeratePresetsUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
-		for (_,v) in stdPresets! {
+		for (_,v) in stdPresets {
 			block(v)
 		}
 	}
 	@objc func enumeratePresetsAndNsiUsingBlock(_ block:(_ feature: PresetFeature) -> Void) {
-		for (_,v) in stdPresets! {
+		for (_,v) in stdPresets {
 			block(v)
 		}
-		for (_,v) in nsiPresets! {
+		for (_,v) in nsiPresets {
 			block(v)
 		}
 	}
@@ -204,13 +211,13 @@ import Foundation
 										-> AnyHashable?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
-		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets!, featureID: featureID, field: valueGetter)
+		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: valueGetter)
 	}
 
 
 	@objc func presetFeatureForFeatureID(_ featureID:String) -> PresetFeature?
 	{
-		return stdPresets![featureID] ?? nsiPresets![featureID]
+		return stdPresets[featureID] ?? nsiPresets[featureID]
 	}
 
 	@objc func matchObjectTagsToFeature(_ objectTags: [String: String]?,
@@ -223,7 +230,7 @@ import Foundation
 		var bestFeature: PresetFeature? = nil
 		var bestScore: Double = 0.0
 
-		let index = includeNSI ? nsiIndex! : stdIndex!
+		let index = includeNSI ? nsiIndex : stdIndex
 		let keys = objectTags.keys + [""]
 		for key in keys {
 			if let list = index[key] {
