@@ -50,6 +50,8 @@ import Foundation
 		self.tags = jsonDict["tags"] as! [String: String]
 		self.terms = jsonDict["terms"] as? [String]
 
+		print("fields = \(self.fields?.count ?? 0)")
+
 		self.nsiSuggestion = isNSI
 	}
 
@@ -188,4 +190,26 @@ import Foundation
 		}
 		return totalScore
 	}
+
+	@objc func defaultValuesForGeometry(_ geometry: String) -> [String : String] {
+		var result : [String : String] = [:]
+		if let fields = self.fields {
+			for field in fields {
+				let fieldDict = PresetsDatabase.shared.jsonFields[field] as? [String : Any]
+				guard let value = fieldDict?["default"] as? String,
+					  let key = fieldDict?["key"] as? String else
+				{
+					continue
+				}
+				if let geom = fieldDict?["geometry"] as? [String] {
+					if !geom.contains(geometry) {
+						continue
+					}
+				}
+				result[key] = value
+			}
+		}
+		return result
+	}
+
 }

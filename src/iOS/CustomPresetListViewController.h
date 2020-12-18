@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class CustomPresetList;
+@class PresetKeyUserDefinedList;
 
 @interface CustomPresetListViewController : UITableViewController <UITableViewDelegate,UITableViewDataSource>
 {
-	CustomPresetList * _customPresets;
+	PresetKeyUserDefinedList * _customPresets;
 }
 
 @end

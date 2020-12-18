@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class CustomPreset;
+@class PresetKeyUserDefined;
 
 @interface CustomPresetController : UITableViewController
 {
@@ -32,9 +32,9 @@
 	NSArray * _valueFieldList;
 }
 
-@property CustomPreset * customPreset;
+@property PresetKeyUserDefined * customPreset;
 
-@property (copy) void (^completion)(CustomPreset * customPreset);
+@property (copy) void (^completion)(PresetKeyUserDefined * customPreset);
 
 -(IBAction)contentChanged:(id)sender;
 -(IBAction)done:(id)sender;

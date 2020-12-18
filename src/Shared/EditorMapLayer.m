@@ -23,7 +23,6 @@
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 #import "PathUtil.h"
-#import "PresetsDatabase.h"
 #import "QuadMap.h"
 #import "SpeechBalloonLayer.h"
 #import "RenderInfo.h"
@@ -1241,11 +1240,11 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 					props->position = refPoint;
 					props->lineWidth = layer.lineWidth;
 					NSString * bridge = object.tags[@"bridge"];
-					if ( bridge && !IsOsmBooleanFalse(bridge) ) {
+					if ( bridge && ![OsmTags IsOsmBooleanFalse:bridge] ) {
 						props->lineWidth += 4;
 					}
 					NSString * tunnel = object.tags[@"tunnel"];
-					if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
+					if ( tunnel && ![OsmTags IsOsmBooleanFalse:tunnel] ) {
 						props->lineWidth += 2;
 						layer.strokeColor = UIColor.brownColor.CGColor;
 					}

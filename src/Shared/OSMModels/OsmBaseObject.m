@@ -8,7 +8,6 @@
 
 #import "DLog.h"
 #import "OsmBaseObject.h"
-#import "PresetsDatabase.h"
 
 
 @implementation OsmBaseObject
@@ -530,7 +529,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 #endif
 
     __block NSString * tagDescription = nil;
-    NSSet * featureKeys = [PresetsDatabase allFeatureKeys];
+    NSSet * featureKeys = [PresetsDatabase.shared allFeatureKeys];
     // look for a feature key
     [_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
         if ( [featureKeys containsObject:key] ) {
