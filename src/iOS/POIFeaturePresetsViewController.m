@@ -17,7 +17,6 @@
 #import "POIPresetValuePickerController.h"
 #import "POITabBarController.h"
 #import "POIFeaturePickerViewController.h"
-#import "PresetsDatabase.h"
 #import "RenderInfo.h"
 
 
@@ -76,11 +75,11 @@
 
 		__weak POIFeaturePresetsViewController * weakSelf = self;
 
-		_allPresets = [PresetsForFeature presetsForFeature:feature objectTags:dict geometry:geometry update:^{
+		_allPresets = [[PresetsForFeature alloc] initWithFeature:feature objectTags:dict geometry:geometry update:^{
 				// this may complete much later, even after we've been dismissed
 				POIFeaturePresetsViewController * mySelf = weakSelf;
 				if ( mySelf && !mySelf->_isEditing ) {
-					mySelf->_allPresets = [PresetsForFeature presetsForFeature:feature objectTags:dict geometry:geometry update:nil];
+					mySelf->_allPresets = [[PresetsForFeature alloc] initWithFeature:feature objectTags:dict geometry:geometry update:nil];
 					[mySelf.tableView reloadData];
 				}
 			}];
@@ -213,7 +212,9 @@
 
 		PresetKey 	* presetKey	= rowObject;
 		NSString * key = presetKey.tagKey;
-		NSString * cellName = key == nil ? @"CommonTagType" : [key isEqualToString:@"name"] ? @"CommonTagName" : @"CommonTagSingle";
+		NSString * cellName = key.length == 0 ? @"CommonTagType"
+							: [key isEqualToString:@"name"] ? @"CommonTagName"
+							: @"CommonTagSingle";
 
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:cellName forIndexPath:indexPath];
 		cell.nameLabel.text = presetKey.name;
@@ -229,7 +230,7 @@
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
 		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
         
-		if ( presetKey.presetList.count > 0 ) {
+		if ( presetKey.presetList.count > 0 || key.length == 0 ) {
 			// The user can select from a list of presets.
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		} else if ( [self canMeasureDirectionForKey:presetKey] ) {
@@ -365,8 +366,8 @@
 		NSString * key = cell.presetKey.tagKey;
 		if ( key == nil )
 			return;	// should never happen
-		if ( [PresetsDatabase eligibleForAutocomplete:key] ) {
-			NSSet * set = [PresetsDatabase allTagValuesForKey:key];
+		if ( [PresetsDatabase.shared eligibleForAutocomplete:key] ) {
+			NSSet * set = [PresetsDatabase.shared allTagValuesForKey:key];
 			AppDelegate * appDelegate = AppDelegate.shared;
 			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 			[values addObjectsFromArray:[set allObjects]];

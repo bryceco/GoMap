@@ -121,7 +121,10 @@ import Foundation
 		// name suggestion index
 		nsiPresets = [String: PresetFeature]()
 		nsiIndex   = stdIndex
+		g_taginfoCache = [String : AnyHashable]()
+
 		super.init()
+
 		DispatchQueue.global(qos: .userInitiated).async {
 			let jsonNsiPresetsDict 	= PresetsDatabase.DictionaryForFile("nsi_presets.json")
 			let nsiPresets2 = PresetsDatabase.featureDictForJsonDict(jsonNsiPresetsDict as! [String : [String:Any]], isNSI:true)
@@ -133,6 +136,10 @@ import Foundation
 		}
 	}
 
+	// OSM TagInfo database in the cloud: contains either a group or an array of values
+	var g_taginfoCache: [String : AnyHashable]
+
+
 	// initialize presets database
 	private class func featureDictForJsonDict(_ dict:[String:[String:Any]], isNSI:Bool) -> [String:PresetFeature]
 	{
@@ -142,7 +149,7 @@ import Foundation
 		}
 		return presets
 	}
-	class func buildTagIndex(_ inputList:[[String:PresetFeature]], basePresets:[String:PresetFeature]) -> [String:[PresetFeature]]
+	private class func buildTagIndex(_ inputList:[[String:PresetFeature]], basePresets:[String:PresetFeature]) -> [String:[PresetFeature]]
 	{
 		var keys = [String:Int]()
 		for (featureID,_) in basePresets {
@@ -192,8 +199,8 @@ import Foundation
 	// go up the feature tree and return the first instance of the requested field value
 	private class func inheritedFieldForPresetsDict( _ presetDict: [String:PresetFeature],
 													 featureID: String?,
-													 field fieldGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
-													-> AnyHashable?
+													 field fieldGetter: @escaping (_ feature: PresetFeature) -> Any? )
+													-> Any?
 	{
 		var featureID = featureID
 		while featureID != nil {
@@ -207,8 +214,8 @@ import Foundation
 		return nil
 	}
 	@objc func inheritedValueOfFeature( _ featureID: String?,
-										valueGetter: @escaping (_ feature: PresetFeature?) -> AnyHashable? )
-										-> AnyHashable?
+										valueGetter: @escaping (_ feature: PresetFeature) -> Any? )
+										-> Any?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
 		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: valueGetter)

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "POIFeaturePickerViewController.h"
-#import "PresetsDatabase.h"
 
 @class OsmBaseObject;
 @class PresetsDatabase;

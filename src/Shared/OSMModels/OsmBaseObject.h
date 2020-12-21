@@ -19,6 +19,11 @@
 
 extern const double PATH_SCALING;
 
+#define GEOMETRY_AREA @"area"
+#define GEOMETRY_WAY @"line"
+#define GEOMETRY_NODE @"point"
+#define GEOMETRY_VERTEX @"vertex"
+
 typedef enum {
     OSM_TYPE_NODE        = 1,
     OSM_TYPE_WAY        = 2,
@@ -37,9 +42,9 @@ typedef enum {
     TRISTATE_NO
 } TRISTATE;
 
-BOOL IsInterestingKey(NSString * key);
+BOOL IsInterestingKey(NSString * _Nonnull key);
 
-NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOnConflict);
+NSDictionary * _Nullable MergeTags(NSDictionary * _Nullable myself, NSDictionary * _Nullable tags, BOOL failOnConflict);
 
 @interface OsmBaseObject : NSObject <NSCoding,NSCopying>
 {
@@ -56,76 +61,76 @@ NSDictionary * MergeTags(NSDictionary * myself, NSDictionary * tags, BOOL failOn
 	NSInteger						           	renderPriorityCached;
 }
 @property (readonly,nonatomic)  BOOL               	deleted;
-@property (strong,nonatomic)    RenderInfo		*	renderInfo;
+@property (strong,nonatomic)    RenderInfo		* _Nullable	renderInfo;
 @property (readonly,nonatomic)  int32_t         	modifyCount;
-@property (readonly,nonatomic)	NSArray     	*	parentRelations;
+@property (readonly,nonatomic)	NSArray     	* _Nullable	parentRelations;
 @property (readonly,nonatomic)  OsmIdentifier    	extendedIdentifier;
 @property (readonly,nonatomic)	OSM_TYPE     		extendedType;
 
 +(OsmIdentifier)extendedIdentifierForType:(OSM_TYPE)type identifier:(OsmIdentifier)identifier;
-+(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *)pType ident:(OsmIdentifier *)pIdent;
++(void)decomposeExtendedIdentifier:(OsmIdentifier)extendedIdentifier type:(OSM_TYPE *_Nonnull)pType ident:(OsmIdentifier *_Nonnull)pIdent;
 
 // attributes
-@property (readonly,nonatomic)    NSDictionary<NSString *, NSString *>    *    tags;
-@property (readonly,nonatomic)    NSNumber        *    	ident;
-@property (readonly,nonatomic)    NSString        *    	user;
-@property (readonly,nonatomic)    NSString        *    	timestamp;
-@property (readonly,nonatomic)    int32_t              	version;
-@property (readonly,nonatomic)    OsmIdentifier        	changeset;
-@property (readonly,nonatomic)    int32_t              	uid;
-@property (readonly,nonatomic)    BOOL                 	visible;
+@property (readonly,nonatomic)	NSDictionary<NSString *, NSString *>    * _Nullable   tags;
+@property (readonly,nonatomic)  NSNumber        * _Nonnull  ident;
+@property (readonly,nonatomic)  NSString        * _Nullable user;
+@property (readonly,nonatomic)  NSString        * _Nullable timestamp;
+@property (readonly,nonatomic)  int32_t     	  			version;
+@property (readonly,nonatomic)  OsmIdentifier        		changeset;
+@property (readonly,nonatomic)  int32_t              		uid;
+@property (readonly,nonatomic)  BOOL                 		visible;
 
 // extra stuff
-@property (readonly,nonatomic)    OSMRect				boundingBox;
-@property (strong,nonatomic)    NSArray<CALayer<LayerPropertiesProviding> *>            *   	shapeLayers;
-@property (readonly,nonatomic)    ONEWAY               	isOneWay;
-@property (assign,nonatomic)    TRISTATE            	isShown;
+@property (readonly,nonatomic)  OSMRect						boundingBox;
+@property (strong,nonatomic)    NSArray<CALayer<LayerPropertiesProviding> *> * _Nullable 	shapeLayers;
+@property (readonly,nonatomic)  ONEWAY               		isOneWay;
+@property (assign,nonatomic)    TRISTATE            		isShown;
 
-+(NSDateFormatter *)rfc3339DateFormatter;
++(NSDateFormatter * _Nonnull)rfc3339DateFormatter;
 
--(void)constructTag:(NSString *)tag value:(NSString *)value;
--(void)constructBaseAttributesWithVersion:(int32_t)version changeset:(int64_t)changeset user:(NSString *)user uid:(int32_t)uid ident:(int64_t)ident timestamp:(NSString *)timestmap;
--(void)constructBaseAttributesFromXmlDict:(NSDictionary *)attributeDict;
--(void)constructAsUserCreated:(NSString *)userName;
+-(void)constructTag:(NSString *_Nonnull)tag value:(NSString *_Nonnull)value;
+-(void)constructBaseAttributesWithVersion:(int32_t)version changeset:(int64_t)changeset user:(NSString *_Nullable)user uid:(int32_t)uid ident:(int64_t)ident timestamp:(NSString *_Nullable)timestmap;
+-(void)constructBaseAttributesFromXmlDict:(NSDictionary *_Nonnull)attributeDict;
+-(void)constructAsUserCreated:(NSString *_Nullable)userName;
 -(void)setConstructed;
 -(void)serverUpdateVersion:(NSInteger)version;
 -(void)serverUpdateChangeset:(OsmIdentifier)changeset;
 -(void)serverUpdateIdent:(OsmIdentifier)ident;
--(void)serverUpdateInPlace:(OsmBaseObject *)newerVersion;
+-(void)serverUpdateInPlace:(OsmBaseObject *_Nonnull)newerVersion;
 
--(void)incrementModifyCount:(UndoManager *)undo;
--(void)resetModifyCount:(UndoManager *)undo;
--(void)setTags:(NSDictionary<NSString *, NSString *> *)tags undo:(UndoManager *)undo;
--(void)setTimestamp:(NSDate *)date undo:(UndoManager *)undo;
--(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo;
+-(void)incrementModifyCount:(UndoManager *_Nullable)undo;
+-(void)resetModifyCount:(UndoManager *_Nullable)undo;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *_Nullable)tags undo:(UndoManager *_Nullable)undo;
+-(void)setTimestamp:(NSDate *_Nonnull)date undo:(UndoManager *_Nullable)undo;
+-(void)setDeleted:(BOOL)deleted undo:(UndoManager *_Nullable)undo;
 
--(void)addParentRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
--(void)removeParentRelation:(OsmRelation *)relation undo:(UndoManager *)undo;
+-(void)addParentRelation:(OsmRelation *_Nonnull)relation undo:(UndoManager *_Nullable)undo;
+-(void)removeParentRelation:(OsmRelation *_Nullable)relation undo:(UndoManager *_Nullable)undo;
 
 -(void)clearCachedProperties;
 
--(OsmNode *)isNode;
--(OsmWay *)isWay;
--(OsmRelation *)isRelation;
+-(OsmNode *_Nullable)isNode;
+-(OsmWay *_Nullable)isWay;
+-(OsmRelation *_Nullable)isRelation;
 
 -(OSMPoint)selectionPoint;
 -(OSMPoint)pointOnObjectForPoint:(OSMPoint)target;
--(CGPathRef)linePathForObjectWithRefPoint:(OSMPoint *)refPoint CF_RETURNS_RETAINED;
--(CGPathRef)shapePathForObjectWithRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
+-(CGPathRef _Nonnull)linePathForObjectWithRefPoint:(OSMPoint *_Nullable)refPoint CF_RETURNS_RETAINED;
+-(CGPathRef _Nonnull)shapePathForObjectWithRefPoint:(OSMPoint *_Nullable)pRefPoint CF_RETURNS_RETAINED;
 
--(NSDate *)dateForTimestamp;
+-(NSDate *_Nullable)dateForTimestamp;
 
--(NSSet *)nodeSet;
--(NSArray *)extendedKeysForKey:(NSString *)key;
+-(NSSet *_Nonnull)nodeSet;
+-(NSArray *_Nullable)extendedKeysForKey:(NSString *_Nullable)key;
 -(void)computeBoundingBox;
 -(BOOL)overlapsBox:(OSMRect)box;
 -(OSMRect)boundingBox;
 -(double)distanceToLineSegment:(OSMPoint)point1 point:(OSMPoint)point2;
--(NSString *)givenName;
--(NSString *)friendlyDescription;
--(NSString *)friendlyDescriptionWithDetails;
+-(NSString *_Nonnull)givenName;
+-(NSString *_Nonnull)friendlyDescription;
+-(NSString *_Nonnull)friendlyDescriptionWithDetails;
 
--(NSString *)geometryName;
+-(NSString *_Nonnull)geometryName;
 
 -(BOOL)hasInterestingTags;
 

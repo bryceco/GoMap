@@ -18,7 +18,6 @@
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
 #import "PushPinView.h"
-#import "PresetsDatabase.h"
 #import "RenderInfo.h"
 #import "WikiPage.h"
 
@@ -103,7 +102,7 @@
 
 	// add placeholder keys
 	if ( newFeature ) {
-		PresetsForFeature * presets = [PresetsForFeature presetsForFeature:newFeature objectTags:dict geometry:geometry update:nil];
+		PresetsForFeature * presets = [[PresetsForFeature alloc] initWithFeature:newFeature objectTags:dict geometry:geometry update:nil];
 		NSMutableArray * newKeys = [NSMutableArray new];
 		for ( NSInteger section = 0; section < presets.sectionCount; ++section ) {
 			for ( NSInteger row = 0; row < [presets tagsInSection:section]; ++row ) {
@@ -617,8 +616,8 @@
 		if ( isValue ) {
 			// get list of values for current key
 			NSString * key = kv[0];
-			if ( [PresetsDatabase eligibleForAutocomplete:key] ) {
-				NSSet * set = [PresetsDatabase allTagValuesForKey:key];
+			if ( [PresetsDatabase.shared eligibleForAutocomplete:key] ) {
+				NSSet * set = [PresetsDatabase.shared allTagValuesForKey:key];
 				AppDelegate * appDelegate = AppDelegate.shared;
 				NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
 				[values addObjectsFromArray:[set allObjects]];
@@ -627,7 +626,7 @@
 			}
 		} else {
 			// get list of keys
-			NSSet * set = [PresetsDatabase allTagKeys];
+			NSSet * set = [PresetsDatabase.shared allTagKeys];
 			NSArray * list = [set allObjects];
 			textField.autocompleteStrings = list;
 		}

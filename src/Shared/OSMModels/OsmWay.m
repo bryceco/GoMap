@@ -9,7 +9,6 @@
 #import "OsmWay.h"
 
 #import "OsmMember.h"
-#import "PresetsDatabase.h"
 
 @implementation OsmWay
 
@@ -87,7 +86,7 @@
 
 -(BOOL)isArea
 {
-    return [PresetsDatabase isArea:self];
+    return [PresetsDatabase.shared isArea:self];
 }
 
 -(BOOL)isClosed

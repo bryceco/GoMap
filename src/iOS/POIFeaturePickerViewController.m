@@ -10,7 +10,6 @@
 #import "PersistentWebCache.h"
 #import "POITabBarController.h"
 #import "POIFeaturePickerViewController.h"
-#import "PresetsDatabase.h"
 
 
 static const NSInteger MOST_RECENT_DEFAULT_COUNT = 5;
@@ -81,7 +80,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	if ( _parentCategory == nil ) {
 		_isTopLevel = YES;
-		_featureList = [PresetsDatabase featuresAndCategoriesForGeometry:geometry];
+		_featureList = [PresetsDatabase.shared featuresAndCategoriesForGeometry:geometry];
 	} else {
 		_featureList = _parentCategory.members;
 	}
@@ -126,7 +125,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	if ( _searchArrayAll ) {
-		return section == 0 ? _searchArrayRecent.count : _searchArrayAll.count;
+		return section == 0 && _isTopLevel ? _searchArrayRecent.count : _searchArrayAll.count;
 	} else {
 		if ( _isTopLevel && section == 0 ) {
 			NSInteger count = mostRecentArray.count;
@@ -141,7 +140,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 {
 	PresetFeature * feature = nil;
 	if ( _searchArrayAll ) {
-		feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+		feature = indexPath.section == 0 && _isTopLevel ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
 	} else if ( _isTopLevel && indexPath.section == 0 ) {
 		// most recents
 		feature = mostRecentArray[ indexPath.row ];
@@ -277,7 +276,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( _searchArrayAll ) {
-		PresetFeature * feature = indexPath.section == 0 ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
+		PresetFeature * feature = indexPath.section == 0 && _isTopLevel ? _searchArrayRecent[ indexPath.row ] : _searchArrayAll[ indexPath.row ];
 		[self updateTagsWithFeature:feature];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 		return;
@@ -315,7 +314,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		_searchArrayRecent = nil;
 	} else {
 		// searching
-		_searchArrayAll = [[PresetsDatabase featuresInCategory:_parentCategory matching:searchText] mutableCopy];
+		_searchArrayAll = [[PresetsDatabase.shared featuresInCategory:_parentCategory matching:searchText] mutableCopy];
 		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PresetFeature * feature, NSDictionary *bindings) {
 			return [feature matchesSearchText:searchText];
 		}]];
