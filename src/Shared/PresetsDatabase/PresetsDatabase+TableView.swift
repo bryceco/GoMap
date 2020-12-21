@@ -30,6 +30,7 @@ extension PresetsDatabase {
 			let countryCode = AppDelegate.shared.mapView?.countryCodeForLocation
 			list = PresetsDatabase.shared.featuresMatchingSearchText(searchText, country: countryCode)
 		}
+		let searchText = searchText.lowercased()
 		list.sort(by: { (obj1, obj2) -> Bool in
 			// sort so that regular items come before suggestions
 			let diff = (obj1.nsiSuggestion ? 1:0) - (obj2.nsiSuggestion ? 1:0)
@@ -37,14 +38,14 @@ extension PresetsDatabase {
 				return diff < 0
 			}
 			// prefer exact matches of primary name over alternate terms
-			let name1 = obj1.friendlyName
-			let name2 = obj2.friendlyName
-			let p1 = name1().hasPrefix(searchText)
-			let p2 = name2().hasPrefix(searchText)
+			let name1 = obj1.friendlyName()
+			let name2 = obj2.friendlyName()
+			let p1 = name1.lowercased().hasPrefix(searchText)
+			let p2 = name2.lowercased().hasPrefix(searchText)
 			if p1 != p2 {
-				return (p1 ? 1:0) < (p2 ? 1:0)
+				return (p1 ? 1:0) > (p2 ? 1:0)
 			}
-			return name1().caseInsensitiveCompare(name2()) == .orderedAscending
+			return name1.caseInsensitiveCompare(name2) == .orderedAscending
 		})
 		return list
 	}
