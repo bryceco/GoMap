@@ -35,7 +35,7 @@ class PresetKey: NSCoder {
 	@objc let name: String					// name of the preset, e.g. Hours
 	@objc let tagKey: String				// the key being set, e.g. opening_hours
 	@objc let defaultValue: String?
-	@objc let placeholder: String?			// placeholder text in the UITextField
+	@objc let placeholder: String			// placeholder text in the UITextField
 	@objc let presetList: [PresetValue]?	// array of potential values, or nil if it's free-form text
 	@objc let keyboardType: UIKeyboardType
 	@objc let autocapitalizationType: UITextAutocapitalizationType
@@ -49,33 +49,9 @@ class PresetKey: NSCoder {
 		capitalize: UITextAutocapitalizationType,
 		presets: [PresetValue]?
 	) {
-		var placeholder = placeholder
-		if placeholder == nil {
-			// use the first 3 values as the placeholder text
-			if let presets = presets,
-			   presets.count > 1
-			{
-				var s = ""
-				for i in 0..<min(3,presets.count) {
-					let p = presets[i]
-					if p.name.count >= 20 {
-						continue
-					}
-					if s.count != 0 {
-						s += ", "
-					}
-					s += p.name
-				}
-				s += "..."
-				placeholder = s
-			} else {
-				placeholder = ""
-			}
-		}
-
 		self.name = name
 		self.tagKey = tag
-		self.placeholder = placeholder
+		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? ""
 		self.keyboardType = keyboard
 		self.autocapitalizationType = capitalize
 		self.presetList = presets
@@ -132,6 +108,29 @@ class PresetKey: NSCoder {
 			}
 		}
 		return value
+	}
+
+	class private func placeholderForPresets(_ presets:[PresetValue]?) -> String?
+	{
+		// use the first 3 values as the placeholder text
+		if let presets = presets,
+		   presets.count > 1
+		{
+			var s = ""
+			for i in 0..<min(3,presets.count) {
+				let p = presets[i]
+				if p.name.count >= 20 {
+					continue
+				}
+				if s.count != 0 {
+					s += ", "
+				}
+				s += p.name
+			}
+			s += "..."
+			return s
+		}
+		return nil
 	}
 
 	override var description: String {

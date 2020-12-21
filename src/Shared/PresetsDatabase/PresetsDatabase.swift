@@ -149,7 +149,7 @@ import Foundation
 		}
 		return presets
 	}
-	class func buildTagIndex(_ inputList:[[String:PresetFeature]], basePresets:[String:PresetFeature]) -> [String:[PresetFeature]]
+	private class func buildTagIndex(_ inputList:[[String:PresetFeature]], basePresets:[String:PresetFeature]) -> [String:[PresetFeature]]
 	{
 		var keys = [String:Int]()
 		for (featureID,_) in basePresets {

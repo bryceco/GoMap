@@ -11,6 +11,7 @@ import Foundation
 
 // The entire presets database from iD
 extension PresetsDatabase {
+
 	@objc func featuresAndCategoriesForGeometry(_ geometry: String) -> [AnyHashable]? {
 		let list = jsonDefaults[geometry] as! [String]
 		let featureList = self.featuresAndCategoriesForMemberList( memberList: list )
@@ -116,7 +117,7 @@ extension PresetsDatabase {
 		return PresetsDatabase.allFeatureKeysSet
 	}
 
-	static let isAreaAreaTags: [String : [String:Bool]] = {
+	static let areaTagsDictionary: [String : [String:Bool]] = {
 
 		// make a list of items that can/cannot be areas
 		var areaKeys = [String : [String:Bool]]()
@@ -185,7 +186,7 @@ extension PresetsDatabase {
 			return true // newly created closed way
 		}
 		for (key,val) in way.tags! {
-			if let exclusions = PresetsDatabase.isAreaAreaTags[key] {
+			if let exclusions = PresetsDatabase.areaTagsDictionary[key] {
 				if exclusions[val] == nil {
 					return true
 				}
@@ -270,8 +271,9 @@ extension PresetsDatabase {
 
 		//r	DLog(@"%@",dict);
 
-		if (type == "defaultcheck") || (type == "check") || (type == "onewayCheck") {
+		switch type {
 
+		case "defaultcheck", "check", "onewayCheck":
 			let presets = [
 				PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
 				PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
@@ -279,7 +281,8 @@ extension PresetsDatabase {
 			let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
 			let group = PresetGroup(name:nil, tags:[tag])
 			return group
-		} else if (type == "radio") || (type == "structureRadio") {
+
+		case "radio", "structureRadio":
 
 			if let keysArray = keysArray {
 
@@ -326,43 +329,9 @@ extension PresetsDatabase {
 			#endif
 				return nil
 			}
-		} else if (type == "radio") || (type == "structureRadio") {
 
-			if let keysArray = keysArray {
+		case "combo", "semiCombo", "multiCombo", "typeCombo", "manyCombo":
 
-				// a list of booleans
-				var tags: [PresetKey] = []
-				let presets = [
-					PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-					PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
-				]
-				for k in keysArray {
-					let name = stringsOptionsDict?[k] as? String
-					let tag = PresetKey(name: name!, tagKey: k, defaultValue: defaultValue, placeholder: nil, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
-					tags.append(tag)
-				}
-				let group = PresetGroup(name: label, tags: tags)
-				return group
-			} else if let optionsArray = optionsArray {
-
-				// a multiple selection
-				var presets: [PresetValue] = []
-				for v in optionsArray {
-					guard let v = v as? String else {
-						continue
-					}
-					presets.append(PresetValue(name: nil, details: nil, tagValue: v))
-				}
-				let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
-				let group = PresetGroup(name: nil, tags: [tag])
-				return group
-			} else {
-			#if DEBUG
-				assert(false)
-			#endif
-				return nil
-			}
-		} else if (type == "combo") || (type == "semiCombo") || (type == "multiCombo") || (type == "typeCombo") || (type == "manyCombo") {
 			if (type == "typeCombo") && (ignore?.contains(key) ?? false) {
 				return nil
 			}
@@ -482,7 +451,7 @@ extension PresetsDatabase {
 				return group
 			}
 
-		} else if type == "cycleway" {
+		case "cycleway":
 
 			var tagList: [PresetKey] = []
 
@@ -500,7 +469,7 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: label, tags: tagList)
 			return group
 
-		} else if type == "address" {
+		case "address":
 
 			let addressPrefix = dict["key"] as! String
 			let numericFields = [
@@ -547,25 +516,30 @@ extension PresetsDatabase {
 			}
 			let group = PresetGroup(name: label, tags: addrs)
 			return group
-		} else if (type == "text") || (type == "number") || (type == "email") || (type == "identifier") || (type == "textarea") || (type == "tel") || (type == "url") || (type == "roadspeed") || (type == "wikipedia") || (type == "wikidata") {
+
+		case "text", "number", "email", "identifier", "textarea", "tel", "url",
+			 "roadspeed", "wikipedia", "wikidata":
 
 			// no presets
-			if (type == "number") || (type == "roadspeed") {
+			switch type {
+			case "number", "roadspeed":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
-			} else if type == "tel" {
+			case "tel":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypePhonePad doesn't have Done Button
-			} else if type == "url" {
+			case "url":
 				keyboard = .URL
-			} else if type == "email" {
-				keyboard = UIKeyboardType.emailAddress
-			} else if type == "textarea" {
+			case "email":
+				keyboard = .emailAddress
+			case "textarea":
 				capitalize = .sentences
+			default:
+				break
 			}
 			let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: nil)
 			let group = PresetGroup(name: nil, tags: [tag])
 			return group
 
-		} else if type == "access" {
+		case "access":
 
 			// special case
 			var presets: [PresetValue] = []
@@ -582,11 +556,12 @@ extension PresetsDatabase {
 			}
 			let group = PresetGroup(name: label, tags: tags)
 			return group
-		} else if type == "localized" {
+		case "localized":
 
 			// not implemented
 			return nil
-		} else {
+
+		default:
 
 		#if DEBUG
 			assert(false)

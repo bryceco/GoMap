@@ -50,8 +50,6 @@ import Foundation
 		self.tags = jsonDict["tags"] as! [String: String]
 		self.terms = jsonDict["terms"] as? [String]
 
-		print("fields = \(self.fields?.count ?? 0)")
-
 		self.nsiSuggestion = isNSI
 	}
 

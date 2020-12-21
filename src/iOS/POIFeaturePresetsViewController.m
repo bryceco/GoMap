@@ -230,7 +230,7 @@
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
 		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
         
-		if ( presetKey.presetList.count > 0 ) {
+		if ( presetKey.presetList.count > 0 || key.length == 0 ) {
 			// The user can select from a list of presets.
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		} else if ( [self canMeasureDirectionForKey:presetKey] ) {

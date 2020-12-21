@@ -21,7 +21,7 @@
 		021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetKey.swift */; };
 		021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBF258594EE00F6E1C0 /* PresetValue.swift */; };
 		021FADC52585951E00F6E1C0 /* PresetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADC42585951E00F6E1C0 /* PresetGroup.swift */; };
-		021FADCD25873C8200F6E1C0 /* PresetsDatabase+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADCC25873C8200F6E1C0 /* PresetsDatabase+Ext.swift */; };
+		021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADCC25873C8200F6E1C0 /* PresetsDatabase+TableView.swift */; };
 		021FADD225873CC000F6E1C0 /* PresetKeyUserDefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD125873CC000F6E1C0 /* PresetKeyUserDefined.swift */; };
 		021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */; };
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
@@ -202,7 +202,7 @@
 		021FADBA258591D000F6E1C0 /* PresetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKey.swift; sourceTree = "<group>"; };
 		021FADBF258594EE00F6E1C0 /* PresetValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValue.swift; sourceTree = "<group>"; };
 		021FADC42585951E00F6E1C0 /* PresetGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetGroup.swift; sourceTree = "<group>"; };
-		021FADCC25873C8200F6E1C0 /* PresetsDatabase+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresetsDatabase+Ext.swift"; sourceTree = "<group>"; };
+		021FADCC25873C8200F6E1C0 /* PresetsDatabase+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresetsDatabase+TableView.swift"; sourceTree = "<group>"; };
 		021FADD125873CC000F6E1C0 /* PresetKeyUserDefined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyUserDefined.swift; sourceTree = "<group>"; };
 		021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsForFeature.swift; sourceTree = "<group>"; };
 		021FADE12588474300F6E1C0 /* PresetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCategory.swift; sourceTree = "<group>"; };
@@ -864,7 +864,7 @@
 				021FADD125873CC000F6E1C0 /* PresetKeyUserDefined.swift */,
 				02CC01DB25843F2F004444EF /* PresetLanguages.swift */,
 				020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */,
-				021FADCC25873C8200F6E1C0 /* PresetsDatabase+Ext.swift */,
+				021FADCC25873C8200F6E1C0 /* PresetsDatabase+TableView.swift */,
 				021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */,
 				021FADBF258594EE00F6E1C0 /* PresetValue.swift */,
 			);
@@ -1251,7 +1251,7 @@
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
-				021FADCD25873C8200F6E1C0 /* PresetsDatabase+Ext.swift in Sources */,
+				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */,
 				0260484219E66C8700415CB1 /* DisplayLink.m in Sources */,
 				027EDC70206F3EED00D349D6 /* DDXMLElement.m in Sources */,
