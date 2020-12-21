@@ -1418,6 +1418,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( gpsState != _gpsState ) {
 		// update collection of GPX points
 		if ( _gpsState == GPS_STATE_NONE && gpsState != GPS_STATE_NONE ) {
+			// because recording GPX tracks is cheap we record them every time GPS is enabled
 			[_gpxLayer startNewTrack];
 		} else if ( gpsState == GPS_STATE_NONE ) {
 			[_gpxLayer endActiveTrack];
@@ -1493,16 +1494,21 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( locating ) {
 		
 		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-			[AppDelegate askUserToAllowLocationAccess:self.mainViewController];
-            
-			self.gpsState = GPS_STATE_NONE;
-			return;
-		}
-
-		// ios 8 and later:
-		if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] ) {
-			[_locationManager requestWhenInUseAuthorization];
+		switch ( status ) {
+			case kCLAuthorizationStatusNotDetermined:
+				// we haven't asked user before, so have iOS pop up the question
+				[_locationManager requestWhenInUseAuthorization];
+				self.gpsState = GPS_STATE_NONE;
+				return;
+			case kCLAuthorizationStatusRestricted:
+			case kCLAuthorizationStatusDenied:
+				// user denied permission previously, so ask if they want to open Settings
+				[AppDelegate askUserToAllowLocationAccess:self.mainViewController];
+				self.gpsState = GPS_STATE_NONE;
+				return;
+			case kCLAuthorizationStatusAuthorizedAlways:
+			case kCLAuthorizationStatusAuthorizedWhenInUse:
+				break;
 		}
 
 		self.userOverrodeLocationPosition	= NO;
@@ -1519,6 +1525,24 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationBallLayer removeFromSuperlayer];
 		_locationBallLayer = nil;
 	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+	BOOL ok = NO;
+	switch ( status ) {
+		case kCLAuthorizationStatusAuthorizedAlways:
+		case kCLAuthorizationStatusAuthorizedWhenInUse:
+			ok = YES;
+			break;
+		case kCLAuthorizationStatusNotDetermined:
+		case kCLAuthorizationStatusRestricted:
+		case kCLAuthorizationStatusDenied:
+		default:
+			ok = NO;
+			break;
+	}
+	self.mainViewController.gpsState = ok ? GPS_STATE_LOCATION : GPS_STATE_NONE;
 }
 
 -(IBAction)centerOnGPS:(id)sender
