@@ -378,6 +378,9 @@
 
 		[actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
 		[self presentViewController:actionSheet animated:YES completion:nil];
+		// set location of popup
+		actionSheet.popoverPresentationController.sourceView = self.displayButton;
+		actionSheet.popoverPresentationController.sourceRect = self.displayButton.bounds;
 	}
 }
 
