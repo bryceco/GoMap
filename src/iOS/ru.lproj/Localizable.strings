@@ -513,6 +513,9 @@
 /* No comment provided by engineer. */
 "Node tags" = "Теги точки";
 
+/* User credentials not found */
+"Not found" = "Не найдено";
+
 /* OSM note */
 "Note History" = "История заметки";
 

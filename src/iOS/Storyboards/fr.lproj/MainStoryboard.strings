@@ -50,7 +50,7 @@
 "qP9-Sc-sc4.text" = "Libellé";
 
 /* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
-"Qz0-Ce-YCX.title" = "Bing Maps";
+"Qz0-Ce-YCX.title" = "Cartes Bing";
 
 /* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
 "siu-I6-IEp.title" = "Rechercher un lieu";

@@ -13,6 +13,9 @@
 /* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
 "2TW-mO-uX2.headerTitle" = "Télécharger les tuiles zoomées";
 
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
+"2Zi-cz-7Va.text" = "Afficher les touches";
+
 /* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
 "3qk-15-BUc.text" = "Détails";
 
@@ -69,6 +72,9 @@
 
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
 "fbD-Hr-HNI.headerTitle" = "Identifiants";
+
+/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen"; */
+"Gcr-zK-nDq.text" = "Touches pour l'enregistrement d'écran";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
 "gec-8l-k4H.text" = "Paramètres avancés";
@@ -144,6 +150,9 @@
 
 /* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
 "TrT-Nn-WKe.text" = "Rejoignez la Beta sur TestFlight";
+
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
+"UeH-ME-EV8.text" = "Afficher les IPS";
 
 /* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */
 "UvN-Qa-roL.text" = "Images/Seconde";

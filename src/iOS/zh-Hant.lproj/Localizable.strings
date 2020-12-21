@@ -108,6 +108,9 @@
 "Additional imagery" = "其他影像";
 
 /* No comment provided by engineer. */
+"Aerial only" = "只有空照";
+
+/* No comment provided by engineer. */
 "All choices" = "全部選擇";
 
 /* No comment provided by engineer. */
@@ -827,5 +830,5 @@
 "Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "您的 OSM 資料快取越來越大，這可能導致啟動緩慢或提高閃退的次數。\n\n您可能會想要清除快取（在顯示設定中）以提升效能。";
 
 /* No comment provided by engineer. */
-"Zoom to Edit" = "放大後才能編輯";
+"Zoom to Edit" = "放大後編輯";
 

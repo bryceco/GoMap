@@ -70,6 +70,9 @@
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
 "el8-h8-H1F.normalTitle" = "Bouton";
 
+/* Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear"; */
+"eLW-GB-ugG.text" = "Position du bouton + ";
+
 /* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
 "EmS-9F-1qc.text" = "Détails";
 
@@ -218,7 +221,7 @@
 "wev-ax-u4C.headerTitle" = "Réinitialiser";
 
 /* Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa"; */
-"WnI-tY-WWa.text" = "Supprimer les traces après";
+"WnI-tY-WWa.text" = "Supprimer les traces après :";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7"; */
 "xve-fW-qM7.text" = "Détails";

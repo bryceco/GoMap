@@ -519,8 +519,11 @@
 /* No comment provided by engineer. */
 "Node tags" = "Oznake čvora";
 
+/* User credentials not found */
+"Not found" = "Nije pronađeno";
+
 /* OSM note */
-"Note History" = "Kronologija bilješke";
+"Note History" = "Kronologija bilježaka";
 
 /* No comment provided by engineer. */
 "Nothing to upload, no changes have been made." = "Nema se što prenijeti. Ništa nije promijenjeno.";

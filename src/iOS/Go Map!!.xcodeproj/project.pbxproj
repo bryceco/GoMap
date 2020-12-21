@@ -420,6 +420,8 @@
 		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
 		02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OsmNotesDatabase.h; path = ../Shared/OsmNotesDatabase.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = OsmNotesDatabase.m; path = ../Shared/OsmNotesDatabase.m; sourceTree = "<group>"; };
+		02EC2EA225902E8D00B7B4B9 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MainStoryboard.strings"; sourceTree = "<group>"; };
+		02EC2EA325902E8D00B7B4B9 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/POI.strings"; sourceTree = "<group>"; };
 		02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		02EDCC071683EC2D007F9934 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		02F04AD01BC4D3B50044FD95 /* GpxConfigureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = GpxConfigureViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1341,6 +1343,7 @@
 				02F0D9C82565FD7500C7A3AD /* hr */,
 				02F0D9CE2565FD9800C7A3AD /* pl */,
 				02F0D9D62565FDBE00C7A3AD /* zh-Hans */,
+				02EC2EA325902E8D00B7B4B9 /* zh-Hant */,
 			);
 			name = POI.storyboard;
 			sourceTree = "<group>";
@@ -1433,6 +1436,7 @@
 				02F0D9C62565FD7500C7A3AD /* hr */,
 				02F0D9CD2565FD9800C7A3AD /* pl */,
 				02F0D9D52565FDBE00C7A3AD /* zh-Hans */,
+				02EC2EA225902E8D00B7B4B9 /* zh-Hant */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";

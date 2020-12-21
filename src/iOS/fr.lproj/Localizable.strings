@@ -108,6 +108,9 @@
 "Additional imagery" = "Imagerie additionnelle";
 
 /* No comment provided by engineer. */
+"Aerial only" = "Aérien uniquement";
+
+/* No comment provided by engineer. */
 "All choices" = "Tous les choix";
 
 /* No comment provided by engineer. */
@@ -312,6 +315,12 @@
 "Editing layer not visible" = "Modification de la couche invisible";
 
 /* No comment provided by engineer. */
+"Editor only" = "Éditeur uniquement";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Éditeur avec aérien";
+
+/* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Assurez-vous que les services de localisation sont activés et que vous y avez autorisé l'accès.\n\nErreur : %@";
 
 /* No comment provided by engineer. */
@@ -509,6 +518,9 @@
 
 /* No comment provided by engineer. */
 "Node tags" = "Étiquettes du nœud";
+
+/* User credentials not found */
+"Not found" = "Introuvable";
 
 /* OSM note */
 "Note History" = "Historique des notes";

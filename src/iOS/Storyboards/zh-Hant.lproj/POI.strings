@@ -1,0 +1,39 @@
+/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate"; */
+"0mW-YK-ajm.placeholder" = "不要";
+
+/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate"; */
+"0zS-QM-zwQ.placeholder" = "類型";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
+"1Yx-Ce-yfq.title" = "上一步";
+
+/* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
+"2cB-FV-ozw.title" = "屬性";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate"; */
+"2Q5-Vd-FED.text" = "標題";
+
+/* Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S"; */
+"6VA-gm-L0S.title" = "興趣點";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q"; */
+"8Nt-xf-x5Q.text" = "標題";
+
+/* Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5"; */
+"9Nw-ha-JK5.placeholder" = "是的";
+
+/* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
+"19J-sp-UTX.title" = "全部標籤";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
+"436-kv-L7j.placeholder" = "餐廳";
+
+/* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate"; */
+"Ak4-ru-E4V.placeholder" = "狗";
+
+/* Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; */
+"Bnh-U0-D7i.text" = "新增";
+
+/* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
+"CXe-gQ-Zda.text" = "值 8";
+
