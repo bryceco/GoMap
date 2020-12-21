@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="fr" datatype="plaintext">
     <header>
@@ -232,6 +232,7 @@
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
+        <target>Aérien uniquement</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
@@ -510,10 +511,12 @@
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
+        <target>Éditeur uniquement</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
+        <target>Éditeur avec aérien</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
@@ -839,6 +842,7 @@ Il s'agit d'une opération avancée qui ne devrait être effectuée uniquement s
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
+        <target>Introuvable</target>
         <note>User credentials not found</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
@@ -1727,7 +1731,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target>Supprimer les traces après</target>
+        <target>Supprimer les traces après :</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
@@ -1802,6 +1806,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
+        <target>Position du bouton + </target>
         <note>Class = "UILabel"; text = "Position + Button on "; ObjectID = "eLW-GB-ugG"; Note = "The location on the screen where the user prefers the + (add node) button to appear";</note>
       </trans-unit>
       <trans-unit id="eN6-SZ-99I.text" xml:space="preserve">
@@ -2095,7 +2100,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="Qz0-Ce-YCX.title" xml:space="preserve">
         <source>Bing Maps</source>
-        <target>Bing Maps</target>
+        <target>Cartes Bing</target>
         <note>Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX";</note>
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
@@ -2529,6 +2534,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="zpj-gL-2Nt.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
+        <target>ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
     </body>
@@ -2565,6 +2571,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
         <source>Show Touches</source>
+        <target>Afficher les touches</target>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -2676,6 +2683,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Gcr-zK-nDq.text" xml:space="preserve">
         <source>Touches for screen recording</source>
+        <target>Touches pour l'enregistrement d'écran</target>
         <note>Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="Gxc-44-SzR.title" xml:space="preserve">
@@ -2734,6 +2742,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="UeH-ME-EV8.text" xml:space="preserve">
         <source>Show FPS</source>
+        <target>Afficher les IPS</target>
         <note>Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running";</note>
       </trans-unit>
       <trans-unit id="UvN-Qa-roL.text" xml:space="preserve">
@@ -2920,7 +2929,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
-        <target>survey, Bing, etc.</target>
+        <target>sondage, Bing, etc.</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
