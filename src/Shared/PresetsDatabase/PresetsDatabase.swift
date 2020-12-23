@@ -121,7 +121,7 @@ import Foundation
 		// name suggestion index
 		nsiPresets = [String: PresetFeature]()
 		nsiIndex   = stdIndex
-		g_taginfoCache = [String : AnyHashable]()
+		taginfoCache = [String : AnyHashable]()
 
 		super.init()
 
@@ -137,7 +137,7 @@ import Foundation
 	}
 
 	// OSM TagInfo database in the cloud: contains either a group or an array of values
-	var g_taginfoCache: [String : AnyHashable]
+	var taginfoCache: [String : AnyHashable]
 
 
 	// initialize presets database

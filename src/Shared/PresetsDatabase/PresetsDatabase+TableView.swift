@@ -360,12 +360,13 @@ extension PresetsDatabase {
 			} else {
 
 				// check tagInfo
-				if let cached = g_taginfoCache[fieldName] {
+				if let cached = taginfoCache[fieldName] {
 					// already got them once
 					if cached is PresetGroup {
 						return cached as? PresetGroup // hack for multi-combo: we already created the group and stashed it in presets
 					} else {
 						// its an array, and we'll convert it to a group below
+						presets = cached as! [PresetValue]
 					}
 				} else if let update = update {
 					DispatchQueue.global(qos: .default).async(execute: {
@@ -430,7 +431,7 @@ extension PresetsDatabase {
 								presets2 = presetList
 							}
 							DispatchQueue.main.async(execute: {
-								self.g_taginfoCache[fieldName] = presets2
+								self.taginfoCache[fieldName] = presets2
 								update()
 							})
 						}
