@@ -164,7 +164,6 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			feature.nsiLogo = feature.iconUnscaled;
 			dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
 				NSString * name = [feature.featureID stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-				NSLog(@"%@",name);
 				name = [@"presets/brandIcons/" stringByAppendingString:name];
 				NSString * path = [[NSBundle mainBundle] pathForResource:name ofType:@"jpg"]
 								?: [[NSBundle mainBundle] pathForResource:name ofType:@"png"]
@@ -231,8 +230,8 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 	FeaturePickerCell * cell = [tableView dequeueReusableCellWithIdentifier:@"FinalCell" forIndexPath:indexPath];
 	cell.title.text			= feature.nsiSuggestion ? [brand stringByAppendingString:feature.friendlyName] : feature.friendlyName;
 	cell.image.image		= feature.nsiLogo && feature.nsiLogo != feature.iconUnscaled
-									? feature.nsiLogo
-									: [feature.iconUnscaled imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+							? feature.nsiLogo
+							: [feature.iconUnscaled imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 	if (@available(iOS 13.0, *)) {
 		cell.image.tintColor = UIColor.labelColor;
 	} else {
@@ -314,9 +313,11 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 		_searchArrayRecent = nil;
 	} else {
 		// searching
-		_searchArrayAll = [[PresetsDatabase.shared featuresInCategory:_parentCategory matching:searchText] mutableCopy];
+		NSString * geometry = [self currentSelectionGeometry];
+		NSArray * results = [PresetsDatabase.shared featuresInCategory:_parentCategory matching:searchText geometry:geometry];
+		_searchArrayAll = [results mutableCopy];
 		_searchArrayRecent = [mostRecentArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PresetFeature * feature, NSDictionary *bindings) {
-			return [feature matchesSearchText:searchText];
+			return [feature matchesSearchText:searchText geometry:geometry];
 		}]];
 	}
 	[self.tableView reloadData];

@@ -698,7 +698,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
         else
             return GEOMETRY_WAY;
     }
-    return @"unknown";
+    return @"";
 }
 
 -(OSM_TYPE)extendedType

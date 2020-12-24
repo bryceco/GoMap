@@ -14,11 +14,11 @@ class PresetsForFeature: NSObject {
 	var _featureName: String
 	var _sectionList: [PresetGroup]
 
-	@objc func featureName() -> String? {
+	@objc func featureName() -> String {
 		return _featureName
 	}
 
-	@objc func sectionList() -> [AnyHashable]? {
+	@objc func sectionList() -> [AnyHashable] {
 		return _sectionList
 	}
 
@@ -94,12 +94,12 @@ class PresetsForFeature: NSObject {
 		}
 	}
 
-	@objc init(withFeature feature:PresetFeature,
+	@objc init(withFeature feature:PresetFeature?,
 			   objectTags: [String : String],
 			   geometry: String,
 			   update: (() -> Void)?)
 	{
-		_featureName = feature.name!
+		_featureName = feature?.name ?? ""
 
 		// Always start with Type and Name
 		let typeTag = PresetKey(
@@ -146,6 +146,10 @@ class PresetsForFeature: NSObject {
 		super.init()
 
 		// Add presets specific to the type
+		guard let feature = feature else {
+			// all done
+			return
+		}
 		var dupSet = Set<String>()
 		let ignoreTags = Array(feature.tags.keys)
 		addPresetsForFields(

@@ -18,7 +18,7 @@ import Foundation
 	// from json dictionary:
 	let _addTags: [String : String]?
 	@objc let fields: [String]?
-	@objc let geometry: [String]?
+	@objc let geometry: [String]
 	let icon: String?							// icon on the map
 	@objc let logoURL: String?					// NSI brand image
 	let locationSet: [String: [String]]?
@@ -37,7 +37,7 @@ import Foundation
 
 		self._addTags = jsonDict["addTags"] as? [String: String]
 		self.fields = jsonDict["fields"] as? [String]
-		self.geometry = jsonDict["geometry"] as? [String]
+		self.geometry = jsonDict["geometry"] as? [String] ?? []
 		self.icon = jsonDict["icon"] as? String
 		self.logoURL = jsonDict["imageURL"] as? String
 		self.locationSet = PresetFeature.convertLocationSet( jsonDict["locationSet"] as? [String: [String]] )
@@ -122,8 +122,11 @@ import Foundation
 		return nil
 	}
 
-	@objc func matchesSearchText(_ searchText: String?) -> Bool {
+	@objc func matchesSearchText(_ searchText: String?, geometry:String) -> Bool {
 		guard let searchText = searchText else {
+			return false
+		}
+		if !self.geometry.contains(geometry) {
 			return false
 		}
 		if self.featureID.range(of: searchText, options: .caseInsensitive) != nil {
@@ -144,8 +147,11 @@ import Foundation
 
 	func matchObjectTagsScore(_ objectTags: [String: String], geometry: String) -> Double
 	{
-		guard let geom = self.geometry,
-			  geom.contains(geometry) else { return 0.0 }
+		guard self.geometry.contains(geometry) else { return 0.0 }
+
+		if self.featureID == "landuse/orchard" {
+			print("self")
+		}
 
 		var totalScore = 1.0
 

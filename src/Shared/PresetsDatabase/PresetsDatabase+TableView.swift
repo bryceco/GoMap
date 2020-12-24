@@ -18,17 +18,17 @@ extension PresetsDatabase {
 		return featureList
 	}
 
-	@objc func featuresInCategory( _ category: PresetCategory?, matching searchText: String) -> [PresetFeature] {
+	@objc func featuresInCategory( _ category: PresetCategory?, matching searchText: String, geometry:String) -> [PresetFeature] {
 		var list = [PresetFeature]()
 		if let category = category {
 			for feature in category.members {
-				if feature.matchesSearchText(searchText) {
+				if feature.matchesSearchText(searchText, geometry: geometry) {
 					list.append(feature)
 				}
 			}
 		} else {
 			let countryCode = AppDelegate.shared.mapView?.countryCodeForLocation
-			list = PresetsDatabase.shared.featuresMatchingSearchText(searchText, country: countryCode)
+			list = PresetsDatabase.shared.featuresMatchingSearchText(searchText, geometry:geometry, country: countryCode)
 		}
 		let searchText = searchText.lowercased()
 		list.sort(by: { (obj1, obj2) -> Bool in
@@ -126,16 +126,11 @@ extension PresetsDatabase {
 
 		// whitelist
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			if feature.nsiSuggestion  {
-				return
-			}
-			if let geom = feature.geometry,
-				geom.contains("area")
+			if feature.nsiSuggestion  ||
+				!feature.geometry.contains("area")  ||
+				feature.tags.count > 1 // very specific tags aren't suitable for whitelist, since we don't know which key is primary (in iD the JSON order is preserved and it would be the first key)
 			{
 				return
-			}
-			if feature.tags.count > 1 {
-				return // very specific tags aren't suitable for whitelist, since we don't know which key is primary (in iD the JSON order is preserved and it would be the first key)
 			}
 			for (key,_) in feature.tags {
 				if ignore.contains(key) {
@@ -147,11 +142,8 @@ extension PresetsDatabase {
 
 		// blacklist
 		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
-			if feature.nsiSuggestion {
-				return
-			}
-			if let geom = feature.geometry,
-				geom.contains("area")
+			if feature.nsiSuggestion  ||
+				feature.geometry.contains("area")
 			{
 				return
 			}

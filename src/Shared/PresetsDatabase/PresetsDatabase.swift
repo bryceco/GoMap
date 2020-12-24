@@ -228,11 +228,10 @@ import Foundation
 	}
 
 	@objc func matchObjectTagsToFeature(_ objectTags: [String: String]?,
-												 geometry: String?,
+												 geometry: String,
 												 includeNSI: Bool) -> PresetFeature?
 	{
-		guard let geometry = geometry,
-			  let objectTags = objectTags else { return nil }
+		guard let objectTags = objectTags else { return nil }
 
 		var bestFeature: PresetFeature? = nil
 		var bestScore: Double = 0.0
@@ -253,7 +252,7 @@ import Foundation
 		return bestFeature
 	}
 
-	@objc func featuresMatchingSearchText(_ searchText:String?, country:String? ) -> [PresetFeature]
+	@objc func featuresMatchingSearchText(_ searchText:String?, geometry:String, country:String? ) -> [PresetFeature]
 	{
 		var list = [PresetFeature]()
 		enumeratePresetsAndNsiUsingBlock { (feature) in
@@ -266,7 +265,7 @@ import Foundation
 						return
 					}
 				}
-				if feature.matchesSearchText(searchText) {
+				if feature.matchesSearchText(searchText, geometry: geometry) {
 					list.append(feature)
 				}
 			}
