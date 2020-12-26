@@ -1,0 +1,21 @@
+/* Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg"; */
+"0Hk-5U-2Kg.text" = "Mapnik 圖磚";
+
+/* Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY"; */
+"1Mo-xe-IbY.headerTitle" = "我沒有帳號";
+
+/* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
+"1SU-BF-K3n.title" = "致謝";
+
+/* Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2"; */
+"2TW-mO-uX2.footerTitle" = "在您編輯的當下，如果網路通訊受到限制，您可以先下載空照影像或 Mapnik 圖磚，這將包含了放大兩階後，目前畫面範圍內的區域。";
+
+/* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
+"2TW-mO-uX2.headerTitle" = "下載放大後的圖磚";
+
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
+"2Zi-cz-7Va.text" = "顯示觸控的位置";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
+"3qk-15-BUc.text" = "詳細內容";
+

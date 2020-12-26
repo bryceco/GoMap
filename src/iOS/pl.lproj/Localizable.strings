@@ -102,6 +102,21 @@
 "set tags" = "ustaw tagi";
 
 /* No comment provided by engineer. */
+"The object does not contain any tags" = "Obiekt nie ma żadnych tagów";
+
+/* No comment provided by engineer. */
+"The way belongs to a relation that is not fully downloaded" = "Linia należy do relacji, która nie jest w pełni pobrana";
+
+/* No comment provided by engineer. */
+"The way is not sufficiently straight" = "Linia nie jest wystarczająco prosta";
+
+/* No comment provided by engineer. */
+"The ways contain incompatible tags" = "Linie zawierają niekompatybilne tagi";
+
+/* No comment provided by engineer. */
+"This action requires GPS to be turned on" = "To działanie wymaga włączenia GPS";
+
+/* No comment provided by engineer. */
 "update relation members" = "aktualizuj członków relacji";
 
 /* No comment provided by engineer. */

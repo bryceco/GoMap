@@ -51,13 +51,11 @@ git add -u
 
 git status
 
-exit
-
 # Commit locally
-#git commit -m "Update XLIFF files"
+git commit -m "Update XLIFF files"
 
 # Push to master
-#git push origin master
+git push origin master
 
 # Tell weblate to pull latest XLIFFs
-#curl -d operation=pull -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
+curl -d operation=pull -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
