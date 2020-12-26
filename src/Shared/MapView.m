@@ -341,9 +341,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	_notesDatabase.mapData	= _editorLayer.mapData;
 	_notesViewDict			= [NSMutableDictionary new];
 
-	// make help button have rounded corners
-	_helpButton.layer.cornerRadius = _helpButton.bounds.size.width / 2;
-
 	// observe changes to aerial visibility so we can show/hide bing logo
 	[_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
 	[_editorLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];

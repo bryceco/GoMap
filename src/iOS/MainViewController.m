@@ -112,6 +112,7 @@
 		_mapView.addNodeButton,
 		_mapView.compassButton,
 		_mapView.centerOnGPSButton,
+		_mapView.helpButton,
 		_settingsButton,
 		_uploadButton,
 		_displayButton,
@@ -132,7 +133,7 @@
 			button.layer.masksToBounds	= NO;
 		}
 		// image blue tint
-		if ( button != _undoRedoView && button != _mapView.compassButton ) {
+		if ( button != _undoRedoView && button != _mapView.compassButton && button != _mapView.helpButton ) {
 			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 			[button setImage:image forState:UIControlStateNormal];
 			if (@available(iOS 13.0, *)) {
