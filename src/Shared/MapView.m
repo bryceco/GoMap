@@ -289,6 +289,7 @@ const CGFloat kEditControlCornerRadius = 4;
 	_progressIndicator.color = NSColor.greenColor;
 #endif
 
+	_locationManagerExtraneousNotification = YES;	// flag that we're going to receive a bogus notification from CL
 	_locationManager = [[CLLocationManager alloc] init];
 	_locationManager.delegate = self;
 #if TARGET_OS_IPHONE
@@ -1529,6 +1530,13 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
+	if ( _locationManagerExtraneousNotification ) {
+		// filter out extraneous notification we get when initializing CL
+		//
+		_locationManagerExtraneousNotification = NO;
+		return;
+	}
+
 	BOOL ok = NO;
 	switch ( status ) {
 		case kCLAuthorizationStatusAuthorizedAlways:

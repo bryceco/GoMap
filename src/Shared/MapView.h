@@ -128,6 +128,7 @@ typedef enum {
 #endif
 
 	BOOL								_windowPresented;
+	BOOL								_locationManagerExtraneousNotification;
 }
 
 #if TARGET_OS_IPHONE
