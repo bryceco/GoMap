@@ -16,19 +16,17 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LayerProperties : NSObject
 {
 @public
-	OSMPoint		position;
-	double			lineWidth;
 	CATransform3D	transform;
+	OSMPoint		position;
 	CGPoint			offset;
+	double			lineWidth;
 	BOOL			is3D;
 	BOOL			isDirectional;
 }
 @end
 
 @protocol LayerPropertiesProviding
-
 @property (readonly) LayerProperties * properties;
-
 @end
 
 @interface CALayerWithProperties : CALayer <LayerPropertiesProviding>
