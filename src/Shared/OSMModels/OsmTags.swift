@@ -14,7 +14,7 @@ class OsmTags : NSObject {
 	static private let PrettyTagExpr: NSRegularExpression = {
 		do {
 			let e = try NSRegularExpression(
-					pattern: "^[abcdefghijklmnopqrstuvwxyz_:]+$",
+					pattern: "^[abcdefghijklmnopqrstuvwxyz_:;]+$",
 					options: [])
 			 return e
 		} catch {
