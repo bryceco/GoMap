@@ -3478,9 +3478,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			break;
 		case UIGestureRecognizerStateEnded:
 			if ( CACurrentMediaTime() - _addNodeButtonTimestamp < 0.5 ) {
-				// treat as tap
-				CGPoint point = _crossHairs.position;
-				[self dropPinAtPoint:point];
+				// treat as tap, but make sure it occured inside the button
+				CGPoint touch = [recognizer locationInView:recognizer.view];
+				if ( CGRectContainsPoint( recognizer.view.bounds, touch ) ) {
+					CGPoint point = _crossHairs.position;
+					[self dropPinAtPoint:point];
+				}
 			}
 			_addNodeButtonTimestamp = 0.0;
 			break;
