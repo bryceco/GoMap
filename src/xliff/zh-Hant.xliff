@@ -26,12 +26,12 @@
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
-        <target>連線到外接的藍牙 GPS 裝置</target>
+        <target>連線到其他藍牙 GPS 裝置</target>
         <note>Privacy - Bluetooth Peripheral Usage Description</note>
       </trans-unit>
       <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
         <source>The camera is used to measure heights of buildings or objects</source>
-        <target>相機將會被用於測量建築物或物件的高度</target>
+        <target>您的相機將會被用來測量建築物或實體物件的高度</target>
         <note>Privacy - Camera Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -40,7 +40,7 @@
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target>在背景執行時永遠允許 app 紀錄定位資訊到 GPX 檔案。</target>
+        <target>持續定位並允許 app 紀錄資訊到 GPX 檔案，當 app 在背景執行時。</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
@@ -73,14 +73,14 @@
       <trans-unit id=" (%d members)&#10;" xml:space="preserve">
         <source> (%d members)
 </source>
-        <target> (%d 成員)
+        <target> (%d 個成員)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;" xml:space="preserve">
         <source> (%d nodes)
 </source>
-        <target> (%d 節點)
+        <target> (%d 個節點)
 </target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
@@ -142,12 +142,12 @@
       </trans-unit>
       <trans-unit id="%ld objects" xml:space="preserve">
         <source>%ld objects</source>
-        <target>%ld 物件</target>
+        <target>%ld 個物件</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target>%lu 圖磚需求</target>
+        <target>尚需 %lu 塊圖磚</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -177,7 +177,7 @@
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
-        <target>+ 按鈕位置</target>
+        <target>+ 按鈕的位置</target>
         <note>Location of Add Node button on the screen</note>
       </trans-unit>
       <trans-unit id="1 Day" xml:space="preserve">
@@ -197,7 +197,7 @@
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
-        <target>節點所屬的關係並沒有全部下載完</target>
+        <target>節點所屬的關係沒有全部下載完畢</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -232,7 +232,7 @@
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
-        <target>只有空照</target>
+        <target>只用空照影像</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
