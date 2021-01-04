@@ -326,6 +326,7 @@
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
+        <target>Komponente einer Route oder ähnlichen Relation kann nicht entfernt werden</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
@@ -594,6 +595,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
+        <target>Verbinden</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
