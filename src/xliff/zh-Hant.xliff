@@ -287,7 +287,7 @@
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
-        <target>只有線段可以新增到複多邊形</target>
+        <target>只有線段可以被新增到複多邊形中</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
