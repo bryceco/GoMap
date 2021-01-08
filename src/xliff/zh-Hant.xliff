@@ -342,7 +342,7 @@
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
-        <target>無法組成訊息</target>
+        <target>無法產生訊息內容</target>
         <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
