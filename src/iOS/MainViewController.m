@@ -121,7 +121,10 @@
 	for ( UIButton * button in buttons ) {
 
 		// corners
-		if ( button != _mapView.compassButton ) {
+        if ( button == _mapView.helpButton ) {
+            // The button is a circle.
+            button.layer.cornerRadius = button.bounds.size.width / 2;
+        } else if ( button != _mapView.compassButton ) {
 			button.layer.cornerRadius	= button == _mapView.addNodeButton ? 30.0 : 10.0;
 		}
 		// shadow
