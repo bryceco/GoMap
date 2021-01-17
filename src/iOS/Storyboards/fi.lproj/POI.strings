@@ -1,20 +1,20 @@
-/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; */
+/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate"; */
 "0mW-YK-ajm.placeholder" = "ei";
 
-/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; */
+/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate"; */
 "0zS-QM-zwQ.placeholder" = "tyyppi";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
 "1Yx-Ce-yfq.title" = "Takaisin";
 
 /* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
-"2cB-FV-ozw.title" = "";
+"2cB-FV-ozw.title" = "Attribuutit";
 
-/* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; */
+/* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate"; */
 "2Q5-Vd-FED.text" = "Otsikko";
 
 /* Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S"; */
-"6VA-gm-L0S.title" = "";
+"6VA-gm-L0S.title" = "Kohdepiste";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q"; */
 "8Nt-xf-x5Q.text" = "Otsikko";
@@ -28,10 +28,7 @@
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
 "436-kv-L7j.placeholder" = "Ravintola";
 
-/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; */
-"aCs-vS-YXj.placeholder" = "";
-
-/* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; */
+/* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate"; */
 "Ak4-ru-E4V.placeholder" = "koira";
 
 /* Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k"; */
@@ -43,20 +40,14 @@
 /* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
 "cN9-3h-H3l.title" = "Kaikki tagit";
 
-/* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; */
+/* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
 "cP3-lR-lzM.placeholder" = "arvo";
-
-/* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
-"cTf-Rc-vqr.headerTitle" = "";
 
 /* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
 "CXe-gQ-Zda.text" = "Arvo 8";
 
-/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.footerTitle" = "";
-
-/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
-"Dfv-TT-J6i.headerTitle" = "";
+/* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate"; */
+"daQ-tl-pKh.text" = "Nimike";
 
 /* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
 "dsA-B6-s7R.text" = "Arvo 9";
@@ -68,22 +59,13 @@
 "Eou-a6-V4g.text" = "Avain";
 
 /* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
-"f5t-25-IXF.title" = "";
+"f5t-25-IXF.title" = "Attribuutit";
 
 /* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
 "Fcv-4Q-gpE.text" = "Arvo 3";
 
-/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; */
-"Fe2-dc-zgA.placeholder" = "";
-
-/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; */
-"foC-aN-GtH.placeholder" = "";
-
-/* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
-"G5R-oP-lp3.title" = "";
-
-/* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
-"GIO-W7-q5U.title" = "";
+/* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
+"gv7-b8-wUw.text" = "Nimike";
 
 /* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
 "hfr-Mf-ZHv.text" = "arvo";
@@ -92,7 +74,7 @@
 "Hgu-iP-FnG.title" = "Takaisin";
 
 /* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
-"hKU-EH-qxp.title" = "";
+"hKU-EH-qxp.title" = "Attribuutit";
 
 /* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
 "ijx-N9-1eO.text" = "Muutoskokoelma";
@@ -103,13 +85,7 @@
 /* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
 "Jsm-mO-hgo.title" = "POI-tyyppi";
 
-/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.footerTitle" = "";
-
-/* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
-"jv1-BF-p2a.headerTitle" = "";
-
-/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; */
+/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate"; */
 "kPA-ky-U48.placeholder" = "vapaa-aika ";
 
 /* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
@@ -136,29 +112,20 @@
 /* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
 "o63-qY-4vl.text" = "Arvo 11";
 
-/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; */
+/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate"; */
 "oC6-w7-cwN.placeholder" = "hihnassa oleva";
 
-/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; */
+/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
 "okh-JP-aKZ.placeholder" = "puisto";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
 "omf-S9-Yjq.text" = "Nimi";
 
-/* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
-"OND-s7-I6f.title" = "";
-
 /* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
 "P3A-5n-1Iq.text" = "Tyyppi";
 
-/* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
-"pHA-2B-6DC.normalTitle" = "";
-
 /* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
 "pxY-di-zg7.placeholder" = "Ravintola";
-
-/* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
-"QDv-7w-nbx.headerTitle" = "";
 
 /* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
 "R0q-aM-ULf.text" = "Arvo 6";
@@ -166,28 +133,25 @@
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
 "Rfe-SO-p0w.title" = "Peruuta";
 
-/* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; */
+/* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
 "sVp-1S-TjJ.placeholder" = "rooli";
 
 /* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
 "teB-9L-Nrf.text" = "Avain";
 
-/* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; */
+/* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
 "TK4-E8-1q7.text" = "Otsikko";
 
 /* Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO"; */
 "tPF-m9-RtO.text" = "Maksu";
 
-/* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; */
+/* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
 "Urd-9O-Mte.placeholder" = "relaatio";
 
 /* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
 "v1b-PG-XxE.title" = "Esivalinnat";
 
-/* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
-"Vli-Ct-Lpz.text" = "";
-
-/* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; */
+/* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
 "vpk-jC-yxl.placeholder" = "kyllä";
 
 /* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
@@ -199,15 +163,15 @@
 /* Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL"; */
 "WoH-od-iKL.text" = "Arvo 7";
 
-/* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; */
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate"; */
 "X1y-nK-nVJ.placeholder" = "avain";
 
-/* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; */
+/* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
 "XBV-Ie-LDT.text" = "Ruoka ja juoma";
 
 /* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
 "z19-cc-gHZ.text" = "Arvo";
 
-/* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; */
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
 "ZYn-TK-k7d.text" = "Alaotsikko";
 

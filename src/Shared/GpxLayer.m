@@ -623,7 +623,7 @@ static double metersApart( double lat1, double lon1, double lat2, double lon2 )
 	}
 }
 
--(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
+-(void)getDiskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
 	NSInteger size = 0;
 	NSString * dir = [self saveDirectory];

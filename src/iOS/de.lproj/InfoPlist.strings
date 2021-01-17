@@ -1,0 +1,21 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Verbinde mit externen Bluetooth GPS-Geräten";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Die Kamera wird verwendet, um Höhen von Gebäuden oder Objekten zu messen";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Dein Standort wird angezeigt und auf der Karte verfolgt.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Dein Standort wird angezeigt und auf der Karte verfolgt.";
+

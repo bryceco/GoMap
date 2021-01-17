@@ -128,6 +128,7 @@ typedef enum {
 #endif
 
 	BOOL								_windowPresented;
+	BOOL								_locationManagerExtraneousNotification;
 }
 
 #if TARGET_OS_IPHONE
@@ -146,7 +147,7 @@ typedef enum {
 @property (assign,nonatomic)	IBOutlet UIActivityIndicatorView	*	progressIndicator;
 
 @property (assign,nonatomic)	IBOutlet UISegmentedControl *	editControl;
-@property (strong,nonatomic)	NSArray						*	editControlActions;
+@property (strong,nonatomic)	NSArray<NSNumber *>			*	editControlActions;
 #endif
 
 @property (readonly,nonatomic)	CLLocationManager			*	locationManager;

@@ -27,8 +27,6 @@
 @class QuadMapC;
 @class OsmUserStatistics;
 
-BOOL IsOsmBooleanFalse( NSString * value );
-
 extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
 
@@ -151,5 +149,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 +(NSString *)encodeBase64:(NSString *)plainText;
 
 -(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect;
+
+-(void)consistencyCheck;
 
 @end

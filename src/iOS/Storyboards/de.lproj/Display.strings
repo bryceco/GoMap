@@ -1,0 +1,105 @@
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "1SY-O5-qJR"; */
+"1SY-O5-qJR.title" = "Abbrechen";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf"; */
+"2Ku-Lb-uCf.text" = "Details";
+
+/* Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl"; */
+"5hB-2Y-Wgl.text" = "Projektion";
+
+/* Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV"; */
+"7ga-PZ-MfV.placeholder" = "-1..3,7";
+
+/* Class = "UITableViewSection"; headerTitle = "Overlays"; ObjectID = "8es-4f-sj3"; */
+"8es-4f-sj3.headerTitle" = "Überlagerungen";
+
+/* Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF"; */
+"8S7-Kw-QHF.normalTitle" = "Details";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "cpC-iE-1Dm"; */
+"cpC-iE-1Dm.text" = "Titel";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "dci-gg-ddc"; */
+"dci-gg-ddc.title" = "Abbrechen";
+
+/* Class = "UILabel"; text = "Automatic"; ObjectID = "dIe-MC-t44"; */
+"dIe-MC-t44.text" = "Automatisch";
+
+/* Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3"; */
+"dzT-B4-za3.placeholder" = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n ";
+
+/* Class = "UIButton"; normalTitle = "Bing"; ObjectID = "eac-Db-EaW"; */
+"eac-Db-EaW.normalTitle" = "Bing";
+
+/* Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz"; */
+"EHa-L5-Hcz.text" = "12:00:00";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "el8-h8-H1F"; */
+"el8-h8-H1F.normalTitle" = "Knopf";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc"; */
+"EmS-9F-1qc.text" = "Details";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf"; */
+"F9l-B0-puf.text" = "Details";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q"; */
+"g2G-5j-Y4q.text" = "Details";
+
+/* Class = "UILabel"; text = "Points"; ObjectID = "gdL-Os-R6R"; */
+"gdL-Os-R6R.text" = "Punkte";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X"; */
+"GNK-bZ-i9X.text" = "Details";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA"; */
+"gre-3S-iPA.text" = "Detail";
+
+/* Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw"; */
+"iuk-Fk-3Fw.placeholder" = "(TMS)";
+
+/* Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe"; */
+"Jz1-GP-Wbe.text" = "Wege";
+
+/* Class = "UILabel"; text = "Past/Future"; ObjectID = "lu0-kr-5Cc"; */
+"lu0-kr-5Cc.text" = "Vergangenes/Zukünftiges";
+
+/* Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ"; */
+"lwG-AE-nIZ.headerTitle" = "Hintergrund";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "OiJ-GU-gZ3"; */
+"OiJ-GU-gZ3.title" = "Abbrechen";
+
+/* Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U"; */
+"Okg-2D-O6U.text" = "Flächennutzung";
+
+/* Class = "UILabel"; text = "Buildings"; ObjectID = "pQK-9y-t4z"; */
+"pQK-9y-t4z.text" = "Gebäude";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "pR1-M8-pXH"; */
+"pR1-M8-pXH.title" = "Zurück";
+
+/* Class = "UILabel"; text = "Boundaries"; ObjectID = "qdV-Je-jXT"; */
+"qdV-Je-jXT.text" = "Grenzen";
+
+/* Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh"; */
+"RJU-Z2-QFh.headerTitle" = "Interaktionen";
+
+/* Class = "UILabel"; text = "URL"; ObjectID = "swu-t3-p5w"; */
+"swu-t3-p5w.text" = "URL";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "tU9-Ml-4ko"; */
+"tU9-Ml-4ko.title" = "Zurück";
+
+/* Class = "UITextField"; placeholder = "21"; ObjectID = "uQ3-vb-l3H"; */
+"uQ3-vb-l3H.placeholder" = "21";
+
+/* Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C"; */
+"wev-ax-u4C.headerTitle" = "Zurücksetzen";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7"; */
+"xve-fW-qM7.text" = "Details";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "yue-km-52a"; */
+"yue-km-52a.text" = "Name";
+

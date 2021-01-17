@@ -13,11 +13,14 @@
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
 "7Ua-cx-BHI.title" = "アップロード";
 
-/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; */
+/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
 "9G2-Gl-CeP.text" = "ユーザー名 - 操作";
 
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
 "9hH-Ja-fKn.text" = "新規コメント:";
+
+/* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
+"9t5-wq-j1u.text" = "66.6 FPS";
 
 /* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
 "ach-1A-88x.text" = "変更セットのコメントはこちら";
@@ -37,6 +40,9 @@
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
 "gdu-Sf-XrE.title" = "コミット";
 
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; */
+"HeZ-95-3K1.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
 "l7S-YL-RKK.text" = "サブタイトル";
 
@@ -49,7 +55,7 @@
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "解決";
 
-/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; */
+/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
 "PHk-s9-onx.text" = "様々なコメント...";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
@@ -63,6 +69,9 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
 "stf-JU-iga.text" = "タイトル";
+
+/* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
+"tOO-VD-MeJ.text" = "2014-06-17 17:54 UTC";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
 "vRO-Aj-Sdr.text" = "タイトル";
@@ -78,5 +87,4 @@
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
 "zrW-uc-hfQ.segmentTitles[2]" = "続き...";
-
 

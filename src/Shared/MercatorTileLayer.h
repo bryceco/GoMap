@@ -27,7 +27,7 @@
 
 -(id)initWithMapView:(MapView *)mapView;
 -(IBAction)purgeTileCache;
--(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount;
+-(void)getDiskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount;
 -(int32_t)zoomLevel;
 
 -(NSMutableArray *)allTilesIntersectingVisibleRect;

@@ -1,12 +1,12 @@
 /* Bundle display name */
 "CFBundleDisplayName" = "Go Map!!";
 
-/* Get Info string */
-"CFBundleGetInfoString" = "";
-
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "";
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS Exchange Format (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Yhdistä ulkoiseen Bluetooth GPS -laitteeseen";
 

@@ -1,0 +1,222 @@
+/* Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Do not translate"; */
+"0mW-YK-ajm.placeholder" = "ne";
+
+/* Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Do not translate"; */
+"0zS-QM-zwQ.placeholder" = "vrsta";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq"; */
+"1Yx-Ce-yfq.title" = "Natrag";
+
+/* Class = "UITabBarItem"; title = "Attributes"; ObjectID = "2cB-FV-ozw"; */
+"2cB-FV-ozw.title" = "Svojstva";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Do not translate"; */
+"2Q5-Vd-FED.text" = "Naslov";
+
+/* Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S"; */
+"6VA-gm-L0S.title" = "Točka interesa";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q"; */
+"8Nt-xf-x5Q.text" = "Naslov";
+
+/* Class = "UITextField"; placeholder = "Yes"; ObjectID = "9Nw-ha-JK5"; */
+"9Nw-ha-JK5.placeholder" = "Da";
+
+/* Class = "UITabBarItem"; title = "All Tags"; ObjectID = "19J-sp-UTX"; */
+"19J-sp-UTX.title" = "Sve oznake";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j"; */
+"436-kv-L7j.placeholder" = "Restoran";
+
+/* Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Do not translate"; */
+"aCs-vS-YXj.placeholder" = "ref";
+
+/* Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Do not translate"; */
+"Ak4-ru-E4V.placeholder" = "pas";
+
+/* Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k"; */
+"aLi-Vs-z0k.title" = "Konfiguriraj";
+
+/* Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; */
+"Bnh-U0-D7i.text" = "Dodaj novi";
+
+/* Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l"; */
+"cN9-3h-H3l.title" = "Sve oznake";
+
+/* Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Do not translate"; */
+"cP3-lR-lzM.placeholder" = "vrijednost";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr"; */
+"cTf-Rc-vqr.headerTitle" = "Predodređeni ključ";
+
+/* Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda"; */
+"CXe-gQ-Zda.text" = "Vrijednost 8";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Do not translate"; */
+"daQ-tl-pKh.text" = "Etiketa";
+
+/* Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i"; */
+"Dfv-TT-J6i.footerTitle" = "Predodređena postavka bit će dostupna prilikom uređivanja objekata koji odgovaraju ovoj kombinaciji ključa/vrijednosti. Ostavi bilo koje polje praznim za upotrebu zamjenskog znaka.";
+
+/* Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i"; */
+"Dfv-TT-J6i.headerTitle" = "Vrijedi za";
+
+/* Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R"; */
+"dsA-B6-s7R.text" = "Vrijednost 9";
+
+/* Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp"; */
+"eG3-Xz-Nnp.placeholder" = "Dozvoljen pristup psima";
+
+/* Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g"; */
+"Eou-a6-V4g.text" = "Ključ";
+
+/* Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF"; */
+"f5t-25-IXF.title" = "Svojstva";
+
+/* Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE"; */
+"Fcv-4Q-gpE.text" = "Vrijednost 3";
+
+/* Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Do not translate"; */
+"Fe2-dc-zgA.placeholder" = "određeno";
+
+/* Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Do not translate"; */
+"foC-aN-GtH.placeholder" = "čisto";
+
+/* Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3"; */
+"G5R-oP-lp3.title" = "Prilagođene oznake";
+
+/* Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U"; */
+"GIO-W7-q5U.title" = "Prilagođene predodređene postavke";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Do not translate"; */
+"gv7-b8-wUw.text" = "Etiketa";
+
+/* Class = "UITextField"; text = "value"; ObjectID = "hfr-Mf-ZHv"; */
+"hfr-Mf-ZHv.text" = "vrijednost";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Hgu-iP-FnG"; */
+"Hgu-iP-FnG.title" = "Natrag";
+
+/* Class = "UINavigationItem"; title = "Attributes"; ObjectID = "hKU-EH-qxp"; */
+"hKU-EH-qxp.title" = "Svojstva";
+
+/* Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO"; */
+"ijx-N9-1eO.text" = "Skup promjena";
+
+/* Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS"; */
+"JAT-qD-dTS.text" = "Vrijednost 1";
+
+/* Class = "UINavigationItem"; title = "POI Type"; ObjectID = "Jsm-mO-hgo"; */
+"Jsm-mO-hgo.title" = "Vrsta točke interesa";
+
+/* Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.footerTitle" = "Moguće predodređene vrijednosti";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a"; */
+"jv1-BF-p2a.headerTitle" = "Predodređene vrijednosti";
+
+/* Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Do not translate"; */
+"kPA-ky-U48.placeholder" = "slobodno vrijeme ";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE"; */
+"KX3-hG-OyE.title" = "Natrag";
+
+/* Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT"; */
+"li7-oV-pgT.text" = "Vrijednost 5";
+
+/* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
+"lPv-s6-uEz.title" = "Uobičajene oznake";
+
+/* Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb"; */
+"mAb-DX-pqb.title" = "Uobičajene oznake";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
+"mcN-gM-s7u.text" = "Ime";
+
+/* Class = "UILabel"; text = "Value 4"; ObjectID = "ng7-T9-SJ6"; */
+"ng7-T9-SJ6.text" = "Vrijednost 4";
+
+/* Class = "UILabel"; text = "Value 2"; ObjectID = "nKt-LG-cSw"; */
+"nKt-LG-cSw.text" = "Vrijednost 2";
+
+/* Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl"; */
+"o63-qY-4vl.text" = "Vrijednost 11";
+
+/* Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Do not translate"; */
+"oC6-w7-cwN.placeholder" = "na uzici";
+
+/* Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Do not translate"; */
+"okh-JP-aKZ.placeholder" = "park";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq"; */
+"omf-S9-Yjq.text" = "Ime";
+
+/* Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f"; */
+"OND-s7-I6f.title" = "Prilagođena predodređena postavka";
+
+/* Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq"; */
+"P3A-5n-1Iq.text" = "Vrsta";
+
+/* Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC"; */
+"pHA-2B-6DC.normalTitle" = "Prilagodi predodređene postavke";
+
+/* Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7"; */
+"pxY-di-zg7.placeholder" = "Restoran";
+
+/* Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx"; */
+"QDv-7w-nbx.headerTitle" = "Predodređeno ime";
+
+/* Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf"; */
+"R0q-aM-ULf.text" = "Vrijednost 6";
+
+/* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w"; */
+"Rfe-SO-p0w.title" = "Odustani";
+
+/* Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate"; */
+"sVp-1S-TjJ.placeholder" = "uloga";
+
+/* Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf"; */
+"teB-9L-Nrf.text" = "Ključ";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
+"TK4-E8-1q7.text" = "Naslov";
+
+/* Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO"; */
+"tPF-m9-RtO.text" = "Plaćanje";
+
+/* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
+"Urd-9O-Mte.placeholder" = "veza";
+
+/* Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE"; */
+"v1b-PG-XxE.title" = "Predodređene postavke";
+
+/* Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz"; */
+"Vli-Ct-Lpz.text" = "Pristupačno s invalidskim kolicima";
+
+/* Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Do not translate"; */
+"vpk-jC-yxl.placeholder" = "da";
+
+/* Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa"; */
+"wFE-f1-sQa.text" = "Vrijednost 12";
+
+/* Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ"; */
+"Wim-Qa-dYQ.text" = "Vrijednost 10";
+
+/* Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL"; */
+"WoH-od-iKL.text" = "Vrijednost 7";
+
+/* Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Do not translate"; */
+"X1y-nK-nVJ.placeholder" = "ključ";
+
+/* Class = "UILabel"; text = "Food & Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Do not translate"; */
+"XBV-Ie-LDT.text" = "Hrana i piće";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ"; */
+"z19-cc-gHZ.text" = "Vrijednost";
+
+/* Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt"; */
+"zpj-gL-2Nt.normalTitle" = "ⓘ";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Do not translate"; */
+"ZYn-TK-k7d.text" = "Podnaslov";
+

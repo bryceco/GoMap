@@ -28,7 +28,7 @@ static const CGFloat InsetPercent = 0.15;
 + (BOOL)unableToInstantiateWithUserWarning:(UIViewController *)vc
 {
 	if ( AppDelegate.shared.mapView.gpsState == GPS_STATE_NONE ) {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error",nil)
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error",@"Error dialog title")
 																		message:NSLocalizedString(@"This action requires GPS to be turned on",nil)
 																 preferredStyle:UIAlertControllerStyleAlert];
 		[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -459,7 +459,7 @@ static const CGFloat InsetPercent = 0.15;
 					[label removeFromSuperview];
 				} else {
 					label.layer.anchorPoint = CGPointMake(0, 0.5);
-					label.text				= [NSString stringWithFormat:NSLocalizedString(@"%@ meters",nil), [self distanceStringForFloat:height-scrollHeight]];
+					label.text				= [NSString stringWithFormat:NSLocalizedString(@"%@ meters",@"Always plural"), [self distanceStringForFloat:height-scrollHeight]];
 					label.font				= [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 					label.backgroundColor	= [UIColor colorWithWhite:1.0 alpha:0.5];
 					label.textColor			= UIColor.blackColor;
@@ -522,7 +522,7 @@ static const CGFloat InsetPercent = 0.15;
 	if ( _canZoom ) {
 		[self setHeight:_currentHeight];
 	} else {
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Set Height Tag",nil)
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Set Height Tag",@"The height=* tag")
 																		message:NSLocalizedString(@"meters",nil) preferredStyle:UIAlertControllerStyleAlert];
 		[alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
 			textField.keyboardType	= UIKeyboardTypeNumbersAndPunctuation;

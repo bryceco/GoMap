@@ -23,7 +23,6 @@
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 #import "PathUtil.h"
-#import "PresetsDatabase.h"
 #import "QuadMap.h"
 #import "SpeechBalloonLayer.h"
 #import "RenderInfo.h"
@@ -1241,11 +1240,11 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 					props->position = refPoint;
 					props->lineWidth = layer.lineWidth;
 					NSString * bridge = object.tags[@"bridge"];
-					if ( bridge && !IsOsmBooleanFalse(bridge) ) {
+					if ( bridge && ![OsmTags IsOsmBooleanFalse:bridge] ) {
 						props->lineWidth += 4;
 					}
 					NSString * tunnel = object.tags[@"tunnel"];
-					if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
+					if ( tunnel && ![OsmTags IsOsmBooleanFalse:tunnel] ) {
 						props->lineWidth += 2;
 						layer.strokeColor = UIColor.brownColor.CGColor;
 					}
@@ -1441,7 +1440,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 
 		// get object name, or address if no name
-		NSString * name = object.tags[@"name"];
+		NSString * name = object.tags[@"name"] ?: object.tags[@"ref"];
 		if ( name == nil )
 			name = DrawNodeAsHouseNumber( object.tags );
 
@@ -1535,9 +1534,10 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	BOOL drawRef = YES;
 
     // fetch icon
-    NSString * featureName = [PresetsDatabase featureNameForObjectDict:node.tags geometry:node.geometryName];
-    PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
-	UIImage * icon = feature.imageScaled24;
+    PresetFeature * feature = [PresetsDatabase.shared matchObjectTagsToFeature:node.tags
+																	  geometry:node.geometryName
+																	includeNSI:NO];
+	UIImage * icon = feature.iconScaled24;
 	if ( icon == nil ) {
 		if ( node.tags[@"amenity"] || node.tags[@"name"] )
 			icon = [self genericIcon];

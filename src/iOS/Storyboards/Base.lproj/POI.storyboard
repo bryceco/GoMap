@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2320" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,7 +15,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="VZH-ZU-gFu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CommonTagType" id="l7g-Wi-ks5" customClass="FeaturePresetCell">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
@@ -34,7 +35,7 @@
                                         </label>
                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="240" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Restaurant" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-di-zg7" customClass="AutocompleteTextField">
                                             <rect key="frame" x="120" y="9.5" width="260" height="25.5"/>
-                                            <color key="textColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" systemColor="systemBlueColor"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="done"/>
                                         </textField>
@@ -168,7 +169,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHA-2B-6DC">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHA-2B-6DC">
                                             <rect key="frame" x="0.0" y="10" width="414" height="24"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <state key="normal" title="Customize Presets">
@@ -221,10 +222,10 @@
         <scene sceneID="FoV-QD-xDb">
             <objects>
                 <tableViewController storyboardIdentifier="PoiTypeViewController" id="Mkl-sm-LxO" userLabel="POI Feature Picker" customClass="POIFeaturePickerViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="cz9-rj-bsD">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="66" sectionHeaderHeight="10" sectionFooterHeight="10" id="cz9-rj-bsD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="zcL-3c-Tx3">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -234,11 +235,11 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FinalCell" rowHeight="66" id="rRF-a2-sIn" customClass="FeaturePickerCell">
-                                <rect key="frame" x="0.0" y="99.5" width="414" height="66"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FinalCell" id="rRF-a2-sIn" customClass="FeaturePickerCell">
+                                <rect key="frame" x="0.0" y="99.5" width="414" height="66.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rRF-a2-sIn" id="OBB-T0-Ocb">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DcA-k0-mZa">
@@ -249,20 +250,31 @@
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
                                                     <rect key="frame" x="0.0" y="20.5" width="43.5" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="daQ-tl-pKh" firstAttribute="top" secondItem="gv7-b8-wUw" secondAttribute="bottom" id="FHY-zg-4GF"/>
+                                                <constraint firstAttribute="bottom" secondItem="daQ-tl-pKh" secondAttribute="bottom" id="hvC-Jq-NBo"/>
+                                                <constraint firstItem="gv7-b8-wUw" firstAttribute="top" secondItem="DcA-k0-mZa" secondAttribute="top" id="nQJ-MT-AOI"/>
+                                            </constraints>
                                         </stackView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mTF-fy-t5D">
-                                            <rect key="frame" x="20" y="3" width="60" height="60"/>
+                                            <rect key="frame" x="20" y="3" width="60" height="60.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="1hW-pn-AJg"/>
-                                                <constraint firstAttribute="height" constant="60" id="MsE-ob-gDC"/>
+                                                <constraint firstAttribute="height" priority="900" constant="60" id="MsE-ob-gDC"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
@@ -282,18 +294,21 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SubCell" textLabel="XBV-Ie-LDT" style="IBUITableViewCellStyleDefault" id="fNF-ys-Vuv">
-                                <rect key="frame" x="0.0" y="165.5" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="166" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fNF-ys-Vuv" id="848-UC-G2n">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Food &amp; Drink" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="XBV-Ie-LDT">
-                                            <rect key="frame" x="20" y="0.0" width="355" height="44"/>
+                                            <rect key="frame" x="20" y="0.0" width="355" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -315,7 +330,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hbg-7W-7Nu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3797" y="-1103"/>
+            <point key="canvasLocation" x="3795.652173913044" y="-1103.5714285714284"/>
         </scene>
         <!--POI Preset Values-->
         <scene sceneID="Jm0-pc-0xm">
@@ -324,7 +339,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="OSZ-4N-bs6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BasicCell" textLabel="TK4-E8-1q7" style="IBUITableViewCellStyleDefault" id="4Yd-1m-RTi">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
@@ -339,6 +354,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -351,11 +369,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="2Q5-Vd-FED">
-                                            <rect key="frame" x="20" y="4" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="20" y="4" width="33" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZYn-TK-k7d">
                                             <rect key="frame" x="20" y="24.5" width="47" height="16"/>
@@ -363,6 +384,9 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -389,13 +413,13 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="q1U-8N-MXL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TagCell" id="V3V-d0-DLx" customClass="TextPairTableCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TagCell" id="V3V-d0-DLx" customClass="TextPairTableCell">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V3V-d0-DLx" id="sNa-Uq-eZb">
-                                    <rect key="frame" x="0.0" y="0.0" width="383" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="key" translatesAutoresizingMaskIntoConstraints="NO" id="X1y-nK-nVJ" userLabel="Text1" customClass="AutocompleteTextField">
@@ -405,6 +429,9 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="BEW-to-vAi"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="HWR-Ud-Kgc"/>
@@ -414,9 +441,12 @@
                                             </connections>
                                         </textField>
                                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="value" translatesAutoresizingMaskIntoConstraints="NO" id="cP3-lR-lzM" customClass="AutocompleteTextField">
-                                            <rect key="frame" x="154" y="5" width="221" height="34"/>
+                                            <rect key="frame" x="154" y="5" width="220" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="Bi5-qH-vtX"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="flk-oA-v6f"/>
@@ -425,18 +455,36 @@
                                                 <outlet property="delegate" destination="G5R-oP-lp3" id="BZ4-dA-evd"/>
                                             </connections>
                                         </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpj-gL-2Nt">
+                                            <rect key="frame" x="378" y="6" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="UUZ-UM-E30"/>
+                                                <constraint firstAttribute="height" constant="32" id="fob-de-HBQ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                            <state key="normal" title="ⓘ">
+                                                <color key="titleColor" systemColor="systemBlueColor"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="infoButtonPressed:" destination="G5R-oP-lp3" eventType="touchUpInside" id="Pmv-HE-cAf"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="zpj-gL-2Nt" secondAttribute="trailing" constant="4" id="Syd-9i-c0E"/>
+                                        <constraint firstItem="zpj-gL-2Nt" firstAttribute="leading" secondItem="cP3-lR-lzM" secondAttribute="trailing" constant="4" id="Zbs-Gm-K7N"/>
+                                        <constraint firstItem="zpj-gL-2Nt" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="awn-BH-fl0"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <constraints>
                                     <constraint firstItem="X1y-nK-nVJ" firstAttribute="leading" secondItem="sNa-Uq-eZb" secondAttribute="leading" constant="20" id="8i3-2v-jVU"/>
                                     <constraint firstItem="X1y-nK-nVJ" firstAttribute="bottom" secondItem="cP3-lR-lzM" secondAttribute="bottom" id="Qug-EU-hvo"/>
                                     <constraint firstItem="X1y-nK-nVJ" firstAttribute="top" secondItem="cP3-lR-lzM" secondAttribute="top" id="Rf0-f7-oEx"/>
-                                    <constraint firstItem="cP3-lR-lzM" firstAttribute="baseline" secondItem="X1y-nK-nVJ" secondAttribute="baseline" id="gul-JJ-Ma8"/>
-                                    <constraint firstItem="sNa-Uq-eZb" firstAttribute="trailing" secondItem="cP3-lR-lzM" secondAttribute="trailing" constant="8" id="lFh-gx-wDI"/>
                                     <constraint firstItem="cP3-lR-lzM" firstAttribute="centerY" secondItem="sNa-Uq-eZb" secondAttribute="centerY" id="vfj-SJ-cEY"/>
                                     <constraint firstItem="cP3-lR-lzM" firstAttribute="leading" secondItem="X1y-nK-nVJ" secondAttribute="trailing" constant="13" id="vqt-5E-Wez"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="infoButton" destination="zpj-gL-2Nt" id="rhL-jy-n4V"/>
                                     <outlet property="text1" destination="X1y-nK-nVJ" id="ayI-fI-Sgz"/>
                                     <outlet property="text2" destination="cP3-lR-lzM" id="oAt-ph-jQD"/>
                                 </connections>
@@ -455,6 +503,9 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="ZB2-P2-lYD"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="RR5-Po-rum"/>
@@ -466,6 +517,9 @@
                                             <rect key="frame" x="154" y="8" width="209" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="enw-Un-WMB"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="xd6-gT-IO9"/>
@@ -504,6 +558,9 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="WiJ-Ye-TUp"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="JMd-oe-raC"/>
@@ -516,6 +573,9 @@
                                             <rect key="frame" x="154" y="5" width="240" height="34"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Do not translate"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="textFieldChanged:" destination="G5R-oP-lp3" eventType="editingChanged" id="WVW-x6-1Gd"/>
                                                 <action selector="textFieldEditingDidBegin:" destination="G5R-oP-lp3" eventType="editingDidBegin" id="wpd-nh-Mqn"/>
@@ -597,7 +657,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="TCM-TQ-yKX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="h9U-Vj-X5o" customClass="AttributeCustomCell">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
@@ -722,7 +782,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NTs-dG-Mrg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Preset Name" id="QDv-7w-nbx">
                                 <cells>
@@ -783,6 +843,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="8fV-oZ-Cyd"/>
                                                     </connections>
@@ -820,6 +883,9 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="CTz-DC-LcR"/>
                                                     </connections>
@@ -861,6 +927,9 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="mGS-Zh-CNb"/>
                                                     </connections>
@@ -898,6 +967,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="uWh-vf-snf"/>
                                                     </connections>
@@ -931,6 +1003,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="dtU-Ze-rc1"/>
                                                     </connections>
@@ -965,6 +1040,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="lrl-DI-aSV"/>
                                                     </connections>
@@ -999,6 +1077,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="fnJ-N0-Rby"/>
                                                     </connections>
@@ -1033,6 +1114,9 @@
                                                     <rect key="frame" x="132" y="5" width="262" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Do not translate"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="i45-Ke-tiE" eventType="editingChanged" id="SdA-vq-uOP"/>
                                                     </connections>
@@ -1337,7 +1421,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dGd-nr-PM0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="backgroundCell" textLabel="8Nt-xf-x5Q" style="IBUITableViewCellStyleDefault" id="UFD-D4-ikj">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="44"/>
@@ -1401,12 +1485,24 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="CI0-Ka-NB5"/>
+        <segue reference="ZKT-be-rhK"/>
         <segue reference="g2g-Jn-Tdv"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="710-folder.png" width="28" height="24"/>
         <image name="751-eye-toolbar.png" width="22" height="12"/>
         <image name="982-food-toolbar.png" width="22" height="18"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

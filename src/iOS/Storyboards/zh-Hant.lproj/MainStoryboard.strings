@@ -1,0 +1,69 @@
+/* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
+"1xx-L0-hKm.text" = "定向";
+
+/* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
+"2g1-vb-Cjc.normalTitle" = "留言";
+
+/* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
+"7Ua-cx-BHI.title" = "上傳";
+
+/* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
+"9hH-Ja-fKn.text" = "新的留言：";
+
+/* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
+"9t5-wq-j1u.text" = "66.6 FPS";
+
+/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityHint" = "地圖定北";
+
+/* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
+"E22-sL-sNt.accessibilityLabel" = "羅盤";
+
+/* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
+"FaM-WV-S6I.title" = "搜尋位置";
+
+/* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
+"Fo4-Nq-pAz.normalTitle" = "置中";
+
+/* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
+"gdu-Sf-XrE.title" = "提交";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
+"l7S-YL-RKK.text" = "副標題";
+
+/* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
+"MBY-TK-Wuy.title" = "註記";
+
+/* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
+"N5Q-nV-TPG.text" = "放大後編輯";
+
+/* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
+"OJ0-aO-ri1.normalTitle" = "解決";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
+"qP9-Sc-sc4.text" = "標記";
+
+/* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
+"Qz0-Ce-YCX.title" = "Bing 地圖";
+
+/* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
+"siu-I6-IEp.title" = "搜尋位置";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
+"stf-JU-iga.text" = "標題";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
+"vRO-Aj-Sdr.text" = "標題";
+
+/* Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai"; */
+"xw9-Ro-Fai.placeholder" = "尼加拉瀑布";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[0]" = "標籤";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[1]" = "刪除";
+
+/* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
+"zrW-uc-hfQ.segmentTitles[2]" = "更多...";
+

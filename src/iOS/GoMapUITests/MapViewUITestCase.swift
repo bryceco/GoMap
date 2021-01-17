@@ -25,9 +25,9 @@ class MapViewUITestCase: XCTestCase {
         app = nil
     }
 
-    func testLongTapOnTheLocationButtonShouldPresentTheLocationSearch() {
-        let button = app.buttons["location_button"]
-        button.press(forDuration: 1.0)
+    func testTapOnTheFindLocationButtonShouldPresentTheLocationSearch() {
+        let button = app.buttons["find_location"]
+        button.tap()
 
         waitForViewController("Search for Location")
     }

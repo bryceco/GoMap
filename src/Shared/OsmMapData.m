@@ -126,6 +126,11 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	} else {
 		hostname = [@"https://" stringByAppendingString:hostname];
 	}
+
+	while ( [hostname hasSuffix:@"//"] ) {
+		// fix for previous releases that may have accidently set an extra slash
+		hostname = [hostname substringToIndex:hostname.length-1];
+	}
 	if ( [hostname hasSuffix:@"/"] ) {
 		// great
 	} else {
@@ -143,12 +148,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 -(NSString *)getServer
 {
-	NSString * s = OSM_API_URL;
-	if ( [s hasPrefix:@"http://"] )
-		s = [s substringFromIndex:7];
-	if ( [s hasSuffix:@"/"] )
-		s = [s substringToIndex:s.length-1];
-	return s;
+	return OSM_API_URL;
 }
 
 -(void)setupPeriodicSaveTimer
@@ -1079,13 +1079,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}];
 
 		// all relations, including old ones, need to be resolved against new objects
-		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
-
-			OSMRect bbox = relation.boundingBox;
-			[relation resolveToMapData:self];
-			[_spatial updateMember:relation fromBox:bbox undo:nil];
-		}];
-
+		__block BOOL didChange = YES;
+		while ( didChange ) {
+			didChange = NO;
+			[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
+				OSMRect bbox = relation.boundingBox;
+				didChange |= [relation resolveToMapData:self];
+				[_spatial updateMember:relation fromBox:bbox undo:nil];
+			}];
+		}
 
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			[node setConstructed];
@@ -1199,10 +1201,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion
 {
-	if ( [url hasPrefix:@"http:"] ) {
-		url = [@"https" stringByAppendingString:[url substringFromIndex:4]];
-	}
-
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
 	[request setHTTPMethod:method];
 	if ( xml ) {
@@ -1222,15 +1220,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			if ( data && error == nil ) {
+			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
+			if ( data && error == nil && httpResponse && httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299  ) {
 				completion(data,nil);
 			} else {
 				NSString * errorMessage;
 				if ( data.length > 0 ) {
 					errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
 				} else {
-					errorMessage = error.localizedDescription;
+					errorMessage = error ? error.localizedDescription : httpResponse ? [NSString stringWithFormat:@"HTTP Error %ld", (long)httpResponse.statusCode] : @"Unknown error";
 				}
+				errorMessage = [errorMessage stringByAppendingFormat:@"\n\n%@ %@",method,url];
 				completion(nil,errorMessage);
 			}
 		});
@@ -1677,7 +1677,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			completion(nil);
 		} else {
 			if ( errorMessage == nil )
-				errorMessage = @"Not found";
+				errorMessage = NSLocalizedString(@"Not found",@"User credentials not found");
 			completion(errorMessage);
 		}
 	}];
@@ -2064,6 +2064,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			// ignore
 		}
 	}
+
+	[self consistencyCheck];
 }
 
 
@@ -2292,7 +2294,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[relation deresolveRefs];
 		[relation resolveToMapData:self];
 	}];
-	
+
+	[self consistencyCheck];
+
 	t = CACurrentMediaTime() - t;
 	NSLog(@"Discard sweep time = %f\n",t);
 
@@ -2445,9 +2449,33 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			[Database deleteDatabaseWithName:nil];
 			_region = [QuadMap new];
 		}
+		[self consistencyCheck];
 	}
 
 	return self;
+}
+
+
+-(void)consistencyCheckRelationMembers
+{
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL * _Nonnull stop) {
+		for ( OsmMember * member in relation.members ) {
+			OsmBaseObject * object = member.ref;
+			if ( [object isKindOfClass:[NSNumber class]] )
+				continue;;
+			assert( [object.parentRelations containsObject:relation] );
+		}
+	}];
+}
+
+-(void)consistencyCheck
+{
+#if DEBUG && 0
+	// This is extremely expensive: DEBUG only!
+	NSLog(@"Checking spatial database consistency");
+	[self consistencyCheckRelationMembers];
+	[_spatial consistencyCheckNodes:_nodes.allValues ways:_ways.allValues relations:_relations.allValues];
+#endif
 }
 
 @end

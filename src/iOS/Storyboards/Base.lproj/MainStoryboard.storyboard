@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17700" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -49,6 +49,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1d-Y3-CcW" userLabel="Search Button">
                                 <rect key="frame" x="69" y="428" width="42" height="42"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration" identifier="find_location"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="IVi-i0-4Ko"/>
                                     <constraint firstAttribute="width" constant="42" id="ytZ-tx-Wh5"/>
@@ -66,7 +67,7 @@
                                     <constraint firstAttribute="height" constant="42" id="rLd-DR-Gbp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" image="compass.png"/>
+                                <state key="normal" image="temaki-compass"/>
                                 <connections>
                                     <action selector="compassPressed:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="j6f-G1-Ixj"/>
                                 </connections>
@@ -214,6 +215,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
+                                <attributedString key="userComments">
+                                    <fragment content="Placeholder - Don't translate"/>
+                                </attributedString>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoom to Edit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N5Q-nV-TPG">
                                 <rect key="frame" x="83.5" y="25" width="153" height="33.5"/>
@@ -238,8 +242,8 @@
                                     <action selector="requestAerialServiceAttribution:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="tf2-Qn-bbX"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-uc-hfQ" userLabel="Edit Toolbar">
-                                <rect key="frame" x="66" y="367" width="188" height="44"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-uc-hfQ" userLabel="Edit Toolbar">
+                                <rect key="frame" x="74.5" y="367" width="171" height="44"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="to3-dt-REX"/>
@@ -254,8 +258,11 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fo4-Nq-pAz" userLabel="Center Button">
-                                <rect key="frame" x="253" y="124" width="57" height="28"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <rect key="frame" x="248" y="124" width="62" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="2rn-RQ-QPx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" title="Center"/>
                                 <connections>
@@ -294,7 +301,7 @@
                             <constraint firstItem="Fo4-Nq-pAz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="P70-Oz-du4" secondAttribute="leading" constant="16" id="OSS-Fj-87U"/>
                             <constraint firstItem="9O3-HG-HvC" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="12" id="Q13-4n-waC"/>
                             <constraint firstItem="2Ka-IT-DQC" firstAttribute="top" secondItem="P70-Oz-du4" secondAttribute="top" constant="9" id="QvO-s0-CSk"/>
-                            <constraint firstItem="53z-ij-akY" firstAttribute="centerY" secondItem="P70-Oz-du4" secondAttribute="centerY" constant="71" id="VwN-nB-ehp"/>
+                            <constraint firstItem="53z-ij-akY" firstAttribute="centerY" secondItem="P70-Oz-du4" secondAttribute="centerY" priority="700" constant="71" id="VwN-nB-ehp"/>
                             <constraint firstAttribute="trailing" secondItem="NOu-1p-3jQ" secondAttribute="trailing" id="ZRJ-bF-j5o"/>
                             <constraint firstItem="fss-Ag-fKJ" firstAttribute="leading" secondItem="j5Z-hB-i8A" secondAttribute="leading" id="ZUW-Zx-W4g"/>
                             <constraint firstItem="P70-Oz-du4" firstAttribute="trailing" secondItem="YRw-Aj-GwS" secondAttribute="trailing" constant="12" id="bGw-oa-eIq"/>
@@ -436,6 +443,9 @@
                                                             <color key="textColor" systemColor="labelColor"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - ignore"/>
+                                                            </attributedString>
                                                         </textView>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
@@ -457,6 +467,9 @@
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="Placeholder - ignore"/>
+                                                    </attributedString>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -964,12 +977,12 @@
         <image name="arrow.uturn.right" width="256" height="256"/>
         <image name="bing-logo-gray" width="78.5" height="17"/>
         <image name="bing-logo-white" width="78.5" height="17"/>
-        <image name="compass.png" width="100" height="100"/>
         <image name="gear" width="256" height="256"/>
         <image name="location2" width="256" height="256"/>
         <image name="magnifyingglass" width="256" height="256"/>
         <image name="map" width="256" height="256"/>
         <image name="plus" width="256" height="256"/>
+        <image name="temaki-compass" width="38" height="38"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

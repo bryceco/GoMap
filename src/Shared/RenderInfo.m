@@ -34,12 +34,29 @@ static RenderInfo * g_DefaultRender = nil;
 	if ( text == nil )
 		return nil;
 	assert( text.length == 6 );
-	int r = 0, g = 0, b = 0;
-	assert( sscanf( text.UTF8String, "%2x%2x%2x", &r, &g, &b) == 3 );
+	int r2 = 0, g2 = 0, b2 = 0;
+	assert( sscanf( text.UTF8String, "%2x%2x%2x", &r2, &g2, &b2) == 3 );
+	CGFloat r = r2 / 255.0;
+	CGFloat g = g2 / 255.0;
+	CGFloat b = b2 / 255.0;
 #if TARGET_OS_IPHONE
-	return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+	if (@available(iOS 13.0, *)) {
+		return [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+			if ( traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ) {
+				// lighten colors for dark mode
+				CGFloat delta = 0.3;
+				CGFloat r3 = r * (1-delta) + delta;
+				CGFloat g3 = g * (1-delta) + delta;
+				CGFloat b3 = b * (1-delta) + delta;
+				return [UIColor colorWithRed:r3 green:g3 blue:b3 alpha:1.0];
+			}
+			return [UIColor colorWithRed:r green:g blue:b alpha:1.0];
+		}];
+	} else {
+		return [UIColor colorWithRed:r green:g blue:b alpha:1.0];
+	}
 #else
-	return [NSColor colorWithCalibratedRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0];
 #endif
 }
 

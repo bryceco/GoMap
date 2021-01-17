@@ -6,9 +6,9 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
+#import "DLog.h"
 #import "OsmBaseObject.h"
 
-#import "DLog.h"
 
 @implementation OsmBaseObject
 @synthesize deleted = _deleted;
@@ -440,6 +440,21 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 
 -(NSString *)givenName
 {
+	enum { USES_NAME = 1, USES_REF = 2 };
+	static NSDictionary * highwayTypes = nil;
+	if ( highwayTypes == nil ) {
+		highwayTypes = @{ @"motorway":@(USES_REF),
+						  @"trunk":@(USES_REF),
+						  @"primary":@(USES_REF),
+						  @"secondary":@(USES_REF),
+						  @"tertiary":@(USES_REF),
+						  @"unclassified":@(USES_NAME),
+						  @"residential":@(USES_NAME),
+						  @"road":@(USES_NAME),
+						  @"living_street":@(USES_NAME) };
+	}
+
+
 	NSString * name = _tags[@"name"];
 	if ( name.length )
 		return name;
@@ -447,18 +462,6 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 	if ( self.isWay ) {
 		NSString * highway = _tags[@"highway"];
 		if ( highway ) {
-			enum { USES_NAME = 1, USES_REF = 2 };
-			static NSDictionary * highwayTypes = nil;
-			if ( highwayTypes == nil )
-				highwayTypes = @{ @"motorway":@(USES_REF),
-								  @"trunk":@(USES_REF),
-								  @"primary":@(USES_REF),
-								  @"secondary":@(USES_REF),
-								  @"tertiary":@(USES_NAME),
-								  @"unclassified":@(USES_NAME),
-								  @"residential":@(USES_NAME),
-								  @"road":@(USES_NAME),
-								  @"living_street":@(USES_NAME) };
 			NSInteger uses = [highwayTypes[highway] integerValue];
 			if ( uses & USES_REF) {
 				name = _tags[@"ref"];
@@ -477,13 +480,14 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     if ( name.length )
         return name;
 
-    NSString * featureName = [PresetsDatabase featureNameForObjectDict:self.tags geometry:self.geometryName];
-    if ( featureName ) {
-		BOOL isGeneric = [featureName isEqualToString:@"point"] ||
-						 [featureName isEqualToString:@"line"] ||
-						 [featureName isEqualToString:@"area"];
+    PresetFeature * feature = [PresetsDatabase.shared matchObjectTagsToFeature:self.tags
+																	  geometry:self.geometryName
+																	includeNSI:YES];
+    if ( feature ) {
+		BOOL isGeneric = [feature.featureID isEqualToString:@"point"] ||
+						 [feature.featureID isEqualToString:@"line"] ||
+						 [feature.featureID isEqualToString:@"area"];
 		if ( !isGeneric ) {
-			PresetFeature * feature = [PresetFeature presetFeatureForFeatureName:featureName];
 			name = feature.friendlyName;
 			if ( name.length > 0 )
 				return name;
@@ -525,7 +529,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 #endif
 
     __block NSString * tagDescription = nil;
-    NSSet * featureKeys = [PresetsDatabase allFeatureKeys];
+    NSSet * featureKeys = [PresetsDatabase.shared allFeatureKeys];
     // look for a feature key
     [_tags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL * stop) {
         if ( [featureKeys containsObject:key] ) {
@@ -642,25 +646,25 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
--(void)addRelation:(OsmRelation *)relation undo:(UndoManager *)undo
+-(void)addParentRelation:(OsmRelation *)parentRelation undo:(UndoManager *)undo
 {
     if ( _constructed && undo ) {
-        [undo registerUndoWithTarget:self selector:@selector(removeRelation:undo:) objects:@[relation,undo]];
+        [undo registerUndoWithTarget:self selector:@selector(removeParentRelation:undo:) objects:@[parentRelation,undo]];
     }
 
     if ( _parentRelations ) {
-        if ( ![_parentRelations containsObject:relation] )
-            _parentRelations = [_parentRelations arrayByAddingObject:relation];
+        if ( ![_parentRelations containsObject:parentRelation] )
+            _parentRelations = [_parentRelations arrayByAddingObject:parentRelation];
     } else {
-        _parentRelations = @[ relation ];
+        _parentRelations = @[ parentRelation ];
     }
 }
--(void)removeRelation:(OsmRelation *)relation undo:(UndoManager *)undo
+-(void)removeParentRelation:(OsmRelation *)parentRelation undo:(UndoManager *)undo
 {
     if ( _constructed && undo ) {
-        [undo registerUndoWithTarget:self selector:@selector(addRelation:undo:) objects:@[relation,undo]];
+        [undo registerUndoWithTarget:self selector:@selector(addParentRelation:undo:) objects:@[parentRelation,undo]];
     }
-    NSInteger index = [_parentRelations indexOfObject:relation];
+    NSInteger index = [_parentRelations indexOfObject:parentRelation];
     if ( index == NSNotFound ) {
         DLog(@"missing relation");
         return;
@@ -694,7 +698,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
         else
             return GEOMETRY_WAY;
     }
-    return @"unknown";
+    return @"";
 }
 
 -(OSM_TYPE)extendedType

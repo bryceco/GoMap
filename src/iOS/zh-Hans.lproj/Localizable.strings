@@ -1,0 +1,561 @@
+/* No comment provided by engineer. */
+"\tRelation " = "\t关系 ";
+
+/* No comment provided by engineer. */
+"\tWay " = "\t线 ";
+
+/* No comment provided by engineer. */
+" (%d members)\n" = " (%d 个成员)\n";
+
+/* No comment provided by engineer. */
+" (%d nodes)\n" = " (%d 个节点)\n";
+
+/* No comment provided by engineer. */
+" (node)" = " (节点)";
+
+/* No comment provided by engineer. */
+" (way)" = " (线)";
+
+/* a newly created node/object */
+"(new object)" = "(新建对象)";
+
+/* No comment provided by engineer. */
+"(node in way)" = "(路径中的节点)";
+
+/* No comment provided by engineer. */
+"(node)" = "(节点)";
+
+/* No comment provided by engineer. */
+"(relation %@)" = "(关系 %@)";
+
+/* No comment provided by engineer. */
+"(way)" = "(路径)";
+
+/* These values will always be large (plural) */
+"%.2f MB, %ld files" = "%1$.2f MB, %2$ld 个文件";
+
+/* No comment provided by engineer. */
+"%@ (relation)" = "%@ (关系)";
+
+/* No comment provided by engineer. */
+"%@ changeset" = "%@ 变更集";
+
+/* Always plural */
+"%@ meters" = "%@ 米";
+
+/* One or more days
+   Plural number of days */
+"%ld Days" = "%ld 天";
+
+/* Brief synopsis of a mapper's activity (count,last active date) */
+"%ld edits, last active %@" = "%1$ld次编辑，上次编辑%2$@";
+
+/* length of a gpx track */
+"%ld meters, %ld points" = "%1$ld 米, %2$ld 个点";
+
+/* Number of tiles/objects in cache */
+"%ld objects" = "%ld 个对象";
+
+/* Always plural */
+"%lu tiles needed" = "需要 %lu 个瓦片";
+
+/* Location of Add Node button on the screen */
+"+ Button Position" = "+ 按钮位置";
+
+/* unknown user name */
+"<unknown>" = "<未知>";
+
+/* 1 day singular */
+"1 Day" = "1 天";
+
+/* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "当您沿着道路或小径行驶时，GPX轨迹会记录您的路径。";
+
+/* No comment provided by engineer. */
+"A relation the node belongs to is not fully downloaded" = "节点所属的关系没有完全下载";
+
+/* Add to relation */
+"Add inner member" = "添加内部成员";
+
+/* Edit action */
+"Add Note" = "添加节点";
+
+/* Add to relation */
+"Add outer member" = "添加外部成员";
+
+/* No comment provided by engineer. */
+"Add way to multipolygon?" = "添加路径到复杂多边形吗？";
+
+/* No comment provided by engineer. */
+"Adding members:" = "添加成员:";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "其他图像";
+
+/* No comment provided by engineer. */
+"All choices" = "所有选择";
+
+/* No comment provided by engineer. */
+"All Tags" = "所有标签";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "读取元数据时发生未知错误";
+
+/* No comment provided by engineer. */
+"Attention" = "注意";
+
+/* node/way/relation attributes */
+"Attributes" = "属性";
+
+/* Automatic selection of presets languages */
+"Automatic" = "自动";
+
+/* identifies current aerial imagery */
+"Background imagery %@" = "背景图像 %@";
+
+/* No comment provided by engineer. */
+"Bad login" = "登录错误";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "缓存大小警告";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "缓存裁剪";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "只能给复杂多边形添加路径";
+
+/* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "不能删除关系中的节点";
+
+/* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "无法删除不是复杂多边形的关系";
+
+/* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "无法删除属于道路或其他关系中的路径";
+
+/* No comment provided by engineer. */
+"Can't extend way" = "无法延伸路径";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* OSM changeset identifier */
+"Changeset" = "变更集";
+
+/* Delete cached data */
+"Clear Aerial Tiles" = "清除卫星瓦片";
+
+/* Delete cached data */
+"Clear GPS Overlay Tiles" = "清除GPS叠加层瓦片";
+
+/* Delete cached data */
+"Clear GPX Tracks" = "清除GPX轨迹";
+
+/* Delete cached data */
+"Clear Locator Overlay Tiles" = "清除定位叠加层瓦片";
+
+/* Delete cached data */
+"Clear Mapnik Tiles" = "清除Mapnik瓦片";
+
+/* Delete cached data */
+"Clear OSM Data" = "清除OSM数据";
+
+/* No comment provided by engineer. */
+"Commit" = "提交";
+
+/* No comment provided by engineer. */
+"Configure" = "配置";
+
+/* No comment provided by engineer. */
+"Confirm move" = "确认移动";
+
+/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "连接节点会破坏关系";
+
+/* Edit action */
+"Copy Tags" = "复制标签";
+
+/* No comment provided by engineer. */
+"Could not duplicate object" = "无法复制对象";
+
+/* No comment provided by engineer. */
+"Create\n" = "创建\n";
+
+/* No comment provided by engineer. */
+"create node" = "创建节点";
+
+/* No comment provided by engineer. */
+"create relation" = "创建关系";
+
+/* Edit action */
+"Create Relation" = "创建关系";
+
+/* No comment provided by engineer. */
+"Create Relation Type" = "创建关系类型";
+
+/* No comment provided by engineer. */
+"create turn restriction" = "创建转向限制";
+
+/* No comment provided by engineer. */
+"create way" = "创建路径";
+
+/* current GPX track */
+"Current Track" = "当前轨迹";
+
+/* No comment provided by engineer. */
+"Data not available" = "数据不可用";
+
+/* Edit action */
+"Delete" = "删除";
+
+/* No comment provided by engineer. */
+"Delete\n" = "删除\n";
+
+/* No comment provided by engineer. */
+"Delete completely" = "完全删除";
+
+/* No comment provided by engineer. */
+"Delete failed" = "删除失败";
+
+/* No comment provided by engineer. */
+"delete node" = "删除节点";
+
+/* No comment provided by engineer. */
+"Detach from relation" = "从关系中分离";
+
+/* Edit action */
+"Disconnect" = "断开";
+
+/* No comment provided by engineer. */
+"Display options" = "显示选项";
+
+/* No comment provided by engineer. */
+"Done" = "完成";
+
+/* Edit action */
+"Duplicate" = "复制";
+
+/* No comment provided by engineer. */
+"Edit" = "编辑";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "编辑禁行限制";
+
+/* No comment provided by engineer. */
+"Edit XML" = "编辑XML";
+
+/* No comment provided by engineer. */
+"Editing layer not visible" = "编辑图层不可见";
+
+/* Error dialog title */
+"Error" = "错误";
+
+/* No comment provided by engineer. */
+"Error connecting to way" = "连接到路径时出错";
+
+/* No comment provided by engineer. */
+"Error fetching metadata: %@" = "获取元数据时出错：%@";
+
+/* No comment provided by engineer. */
+"GPX Upload Complete" = "GPX上传完成";
+
+/* No comment provided by engineer. */
+"GPX Upload Failed" = "GPX上传失败";
+
+/* No comment provided by engineer. */
+"Height: %@ ± %@ meters" = "高度: %1$@ ± %2$@ 米";
+
+/* rate the app now */
+"I'll do it!" = "我会做的！";
+
+/* OSM node/way/relation identifier */
+"Identifier" = "ID";
+
+/* No comment provided by engineer. */
+"Ignore" = "忽略";
+
+/* No comment provided by engineer. */
+"In order to measure height, please enable camera access in the app's settings." = "为了测量高度，请在应用程序设置中启用相机访问权限。";
+
+/* No comment provided by engineer. */
+"Invalid URL" = "无效URL";
+
+/* Edit action */
+"Join" = "加入";
+
+/* No comment provided by engineer. */
+"Last updated %@" = "上次更新 %@";
+
+/* coordinates */
+"Lat/Lon" = "纬度/经度";
+
+/* Left-hand side of screen */
+"Left side" = "左侧";
+
+/* No comment provided by engineer. */
+"Length" = "长度";
+
+/* No comment provided by engineer. */
+"Location services timed out." = "定位服务超时";
+
+/* No comment provided by engineer. */
+"Location unavailable" = "位置不可用";
+
+/* No comment provided by engineer. */
+"Login successful" = "登录成功";
+
+/* No comment provided by engineer. */
+"Low memory: clearing cache" = "内存不足:清理缓存";
+
+/* No comment provided by engineer. */
+"Mail delivery is not available on this device" = "此设备无法发送邮件";
+
+/* Edit action */
+"Make Circular" = "制作圆形";
+
+/* Edit action */
+"Make Rectangular" = "制作矩形";
+
+/* rate the app later */
+"Maybe later..." = "以后再说...";
+
+/* No comment provided by engineer. */
+"Member of multipolygon relation" = "复杂多边关系成员";
+
+/* No comment provided by engineer. */
+"Members" = "成员";
+
+/* No comment provided by engineer. */
+"Merge Tags" = "合并标签";
+
+/* Edit action */
+"More..." = "更多…";
+
+/* No comment provided by engineer. */
+"Move" = "移动";
+
+/* No comment provided by engineer. */
+"Move selected object?" = "移动所选对象？";
+
+/* No comment provided by engineer. */
+"Network error" = "网络错误";
+
+/* Never delete old GPX tracks
+   Never delete old tracks */
+"Never" = "从不";
+
+/* No comment provided by engineer. */
+"Next" = "下一个";
+
+/* GPX track */
+"No active track" = "无活动轨迹";
+
+/* Alert title */
+"No Data" = "无数据";
+
+/* No comment provided by engineer. */
+"No image data available" = "没有可用的图像数据";
+
+/* No comment provided by engineer. */
+"No Left Turn restriction" = "无左转限制";
+
+/* No comment provided by engineer. */
+"No results found" = "未找到结果";
+
+/* No comment provided by engineer. */
+"No Right Turn restriction" = "无右转限制";
+
+/* No comment provided by engineer. */
+"No Straight On restriction" = "无直行限制";
+
+/* No comment provided by engineer. */
+"No tags to paste" = "没有标签粘贴";
+
+/* No comment provided by engineer. */
+"No U-Turn restriction" = "无掉头限制";
+
+/* No comment provided by engineer. */
+"Node" = "节点";
+
+/* No comment provided by engineer. */
+"Node attributes" = "节点属性";
+
+/* No comment provided by engineer. */
+"Node tags" = "节点标签";
+
+/* OSM note */
+"Note History" = "日志历史";
+
+/* No comment provided by engineer. */
+"Nothing to upload, no changes have been made." = "没有可上传的，没任何变化。";
+
+/* No comment provided by engineer. */
+"Number of recent items to display" = "最近显示的项目数";
+
+/* No comment provided by engineer. */
+"OK" = "确定";
+
+/* No comment provided by engineer. */
+"Only Left Turn restriction" = "只有左转限制";
+
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "仅支持复杂多边形关系";
+
+/* No comment provided by engineer. */
+"Only Right Turn restriction" = "只有右转限制";
+
+/* No comment provided by engineer. */
+"Only Straight On restriction" = "只有直行限制";
+
+/* Open the iOS Settings app */
+"Open Settings" = "打开设置";
+
+/* No comment provided by engineer. */
+"Open URL" = "打开URL";
+
+/* No comment provided by engineer. */
+"OSM data must be version 0.6 (fetched '%@')" = "OSM数据必须为0.6版(已提取'％@')";
+
+/* Edit action */
+"Paste" = "粘贴";
+
+/* No comment provided by engineer. */
+"Please wait" = "请稍候";
+
+/* No comment provided by engineer. */
+"Previous" = "上一个";
+
+/* Discard editing changes when resetting OSM data cache */
+"Purge" = "清理";
+
+/* No comment provided by engineer. */
+"Redo" = "重做";
+
+/* No comment provided by engineer. */
+"Relation attributes" = "关系属性";
+
+/* No comment provided by engineer. */
+"Relation tags" = "关系标签";
+
+/* No comment provided by engineer. */
+"Relation: %@" = "关系: %@";
+
+/* No comment provided by engineer. */
+"Relations" = "关系";
+
+/* No comment provided by engineer. */
+"Replace Tags" = "替换标签";
+
+/* Edit action */
+"Reverse" = "逆转";
+
+/* Right-hand side of screen */
+"Right side" = "右侧";
+
+/* Edit action */
+"Rotate" = "旋转";
+
+/* No comment provided by engineer. */
+"Select Object" = "选择对象";
+
+/* No comment provided by engineer. */
+"Selected object is off screen" = "所选对象不在屏幕上";
+
+/* set tag value */
+"Set" = "设置";
+
+/* The height=* tag */
+"Set Height Tag" = "设置高度标签";
+
+/* No comment provided by engineer. */
+"Settings" = "设置";
+
+/* Open iOS sharing sheet
+   Title for sharing options */
+"Share" = "分享";
+
+/* No comment provided by engineer. */
+"Show Recent Items" = "显示最近的项目";
+
+/* No comment provided by engineer. */
+"Sorry, an error occurred while loading the GPX file" = "抱歉，加载GPX文件时发生错误";
+
+/* Edit action */
+"Split" = "拆分";
+
+/* No comment provided by engineer. */
+"Standard imagery" = "标准影像";
+
+/* Begin downloading tiles */
+"Start" = "开始";
+
+/* No comment provided by engineer. */
+"Stop" = "停止";
+
+/* Edit action */
+"Straighten" = "拉直";
+
+/* Edit action */
+"Tags" = "标签";
+
+/* No comment provided by engineer. */
+"The + button can be positioned on either the left or right side of the screen" = "+按钮可以位于屏幕的左侧或右侧";
+
+/* No comment provided by engineer. */
+"The current location cannot be determined: " = "无法确定当前位置： ";
+
+/* No comment provided by engineer. */
+"The XML is improperly formed" = "XML格式不正确";
+
+/* OSM numeric user ID */
+"UID" = "用户ID";
+
+/* No comment provided by engineer. */
+"Unable to upload changes" = "无法上传变更";
+
+/* No comment provided by engineer. */
+"Undo" = "撤消";
+
+/* relation role=* tag */
+"Unknown role" = "未知角色";
+
+/* update an osm note */
+"Update" = "更新";
+
+/* OSM Note */
+"Updating Note..." = "更新说明...";
+
+/* No comment provided by engineer. */
+"Upload complete!" = "上传完成！";
+
+/* No comment provided by engineer. */
+"Upload to OSM" = "上传到OSM";
+
+/* No comment provided by engineer. */
+"Upload your changes" = "上载你的变更";
+
+/* No comment provided by engineer. */
+"Uploading GPX..." = "上传GPX...";
+
+/* OSM user name */
+"User" = "用户";
+
+/* No comment provided by engineer. */
+"User-defined imagery" = "用户定义的影像";
+
+/* OSM object versioh */
+"Version" = "版本";
+
+/* No comment provided by engineer. */
+"Warning" = "警告";
+
+/* No comment provided by engineer. */
+"Way attributes" = "路径属性";
+
+/* No comment provided by engineer. */
+"Way tags" = "路径标签";
+
+/* POI editor presets */
+"You can define your own custom presets here" = "您可以在这里定义自己的自定义预设";
+

@@ -1,9 +1,6 @@
 /* Bundle display name */
 "CFBundleDisplayName" = "Go Map!!";
 
-/* Get Info string */
-"CFBundleGetInfoString" = "";
-
 /* Bundle name */
 "CFBundleName" = "Go Map!!";
 
@@ -15,9 +12,6 @@
 
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Kamera brukes for å måle høyden på bygninger eller objekter";
-
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "";
 
 /* Privacy - Location Always and When In Use Usage Description */
 "NSLocationAlwaysAndWhenInUseUsageDescription" = "Sporingstilgang som alltid er på tillater programmet å lage GPX-filer når det er inaktivt.";

@@ -168,5 +168,19 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 	[_rootQuad deleteObjectsWithPredicate:predicate];
 }
 
+-(void)consistencyCheckNodes:(NSArray *)nodes ways:(NSArray *)ways relations:(NSArray *)relations
+{
+	// check that every object appears exactly one in the object tree
+	for ( OsmBaseObject * object in nodes ) {
+		[_rootQuad consistencyCheckObject:object];
+	}
+	for ( OsmBaseObject * object in ways ) {
+		[_rootQuad consistencyCheckObject:object];
+	}
+	for ( OsmBaseObject * object in relations ) {
+		[_rootQuad consistencyCheckObject:object];
+	}
+	assert( _rootQuad.count == nodes.count + ways.count + relations.count );
+}
 
 @end

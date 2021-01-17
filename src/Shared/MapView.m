@@ -104,7 +104,11 @@ const CGFloat kEditControlCornerRadius = 4;
 		self.wantsLayer = YES;
 #endif
 		self.layer.masksToBounds = YES;
-		self.backgroundColor = [UIColor colorWithWhite:0.85 alpha:1];
+		if (@available(iOS 13.0, *)) {
+			self.backgroundColor = [UIColor systemGray6Color];
+		} else {
+			self.backgroundColor = [UIColor colorWithWhite:0.85 alpha:1.0];
+		}
 
 		_screenFromMapTransform = OSMTransformIdentity();
 		_birdsEyeDistance = 1000.0;
@@ -285,6 +289,7 @@ const CGFloat kEditControlCornerRadius = 4;
 	_progressIndicator.color = NSColor.greenColor;
 #endif
 
+	_locationManagerExtraneousNotification = YES;	// flag that we're going to receive a bogus notification from CL
 	_locationManager = [[CLLocationManager alloc] init];
 	_locationManager.delegate = self;
 #if TARGET_OS_IPHONE
@@ -308,7 +313,7 @@ const CGFloat kEditControlCornerRadius = 4;
 	_editControl.layer.zPosition = Z_TOOLBAR;
     _editControl.layer.cornerRadius = kEditControlCornerRadius;
 
-	// long press for selecting from multiple objects
+	// long press for selecting from multiple objects (for multipolygon members)
 	UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
 	longPress.delegate = self;
 	[self addGestureRecognizer:longPress];
@@ -336,9 +341,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	_notesDatabase.mapData	= _editorLayer.mapData;
 	_notesViewDict			= [NSMutableDictionary new];
 
-	// make help button have rounded corners
-	_helpButton.layer.cornerRadius = _helpButton.bounds.size.width / 2;
-
 	// observe changes to aerial visibility so we can show/hide bing logo
 	[_aerialLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
 	[_editorLayer addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:NULL];
@@ -349,10 +351,6 @@ const CGFloat kEditControlCornerRadius = 4;
 	_editorLayer.whiteText = !_aerialLayer.hidden;
 
 	// center button
-	_centerOnGPSButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
-	_centerOnGPSButton.layer.cornerRadius = 5;
-	_centerOnGPSButton.layer.borderWidth = 1.0;
-	_centerOnGPSButton.layer.borderColor = UIColor.blueColor.CGColor;
 	_centerOnGPSButton.hidden = YES;
 
 	// compass button
@@ -779,8 +777,8 @@ const CGFloat kEditControlCornerRadius = 4;
 	if ( uploadCount > 1 && countLog10 == floor(countLog10) ) {
 		NSString * title = [NSString stringWithFormat:NSLocalizedString(@"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?",nil), (long)uploadCount];
         UIAlertController * alertViewRateApp = [UIAlertController alertControllerWithTitle:title message:NSLocalizedString(@"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.",nil) preferredStyle:UIAlertControllerStyleAlert];
-        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Maybe later...",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
-        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"I'll do it!",nil)    style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Maybe later...",@"rate the app later") 	style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {}]];
+        [alertViewRateApp addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"I'll do it!",@"rate the app now")    	style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
 			[self showInAppStore];
         }]];
         [self.mainViewController presentViewController:alertViewRateApp animated:YES completion:nil];
@@ -992,6 +990,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	// enable/disable editing buttons based on visibility
 	[_mainViewController updateUndoRedoButtonState];
 	[self updateAerialAttributionButton];
+	self.addNodeButton.hidden = _editorLayer.hidden;
 }
 -(MapViewState)viewState
 {
@@ -1417,6 +1416,7 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( gpsState != _gpsState ) {
 		// update collection of GPX points
 		if ( _gpsState == GPS_STATE_NONE && gpsState != GPS_STATE_NONE ) {
+			// because recording GPX tracks is cheap we record them every time GPS is enabled
 			[_gpxLayer startNewTrack];
 		} else if ( gpsState == GPS_STATE_NONE ) {
 			[_gpxLayer endActiveTrack];
@@ -1492,16 +1492,21 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 	if ( locating ) {
 		
 		CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-		if ( status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied ) {
-			[AppDelegate askUserToAllowLocationAccess:self.mainViewController];
-            
-			self.gpsState = GPS_STATE_NONE;
-			return;
-		}
-
-		// ios 8 and later:
-		if ( [_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] ) {
-			[_locationManager requestWhenInUseAuthorization];
+		switch ( status ) {
+			case kCLAuthorizationStatusNotDetermined:
+				// we haven't asked user before, so have iOS pop up the question
+				[_locationManager requestWhenInUseAuthorization];
+				self.gpsState = GPS_STATE_NONE;
+				return;
+			case kCLAuthorizationStatusRestricted:
+			case kCLAuthorizationStatusDenied:
+				// user denied permission previously, so ask if they want to open Settings
+				[AppDelegate askUserToAllowLocationAccess:self.mainViewController];
+				self.gpsState = GPS_STATE_NONE;
+				return;
+			case kCLAuthorizationStatusAuthorizedAlways:
+			case kCLAuthorizationStatusAuthorizedWhenInUse:
+				break;
 		}
 
 		self.userOverrodeLocationPosition	= NO;
@@ -1518,6 +1523,31 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 		[_locationBallLayer removeFromSuperlayer];
 		_locationBallLayer = nil;
 	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+	if ( _locationManagerExtraneousNotification ) {
+		// filter out extraneous notification we get when initializing CL
+		//
+		_locationManagerExtraneousNotification = NO;
+		return;
+	}
+
+	BOOL ok = NO;
+	switch ( status ) {
+		case kCLAuthorizationStatusAuthorizedAlways:
+		case kCLAuthorizationStatusAuthorizedWhenInUse:
+			ok = YES;
+			break;
+		case kCLAuthorizationStatusNotDetermined:
+		case kCLAuthorizationStatusRestricted:
+		case kCLAuthorizationStatusDenied:
+		default:
+			ok = NO;
+			break;
+	}
+	self.mainViewController.gpsState = ok ? GPS_STATE_LOCATION : GPS_STATE_NONE;
 }
 
 -(IBAction)centerOnGPS:(id)sender
@@ -2080,23 +2110,23 @@ typedef enum {
 NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 {
 	switch (action) {
-		case ACTION_SPLIT:			return NSLocalizedString(@"Split",nil);
-		case ACTION_RECTANGULARIZE:	return NSLocalizedString(@"Make Rectangular",nil);
-		case ACTION_STRAIGHTEN:		return NSLocalizedString(@"Straighten",nil);
-		case ACTION_REVERSE:		return NSLocalizedString(@"Reverse",nil);
-		case ACTION_DUPLICATE:		return NSLocalizedString(@"Duplicate",nil);
-		case ACTION_ROTATE:			return NSLocalizedString(@"Rotate",nil);
-		case ACTION_CIRCULARIZE:	return NSLocalizedString(@"Make Circular",nil);
-		case ACTION_JOIN:			return NSLocalizedString(@"Join",nil);
-		case ACTION_DISCONNECT:		return NSLocalizedString(@"Disconnect",nil);
-		case ACTION_COPYTAGS:		return NSLocalizedString(@"Copy Tags",nil);
-		case ACTION_PASTETAGS:		return NSLocalizedString(@"Paste",nil);
-		case ACTION_EDITTAGS:		return NSLocalizedString(@"Tags", nil);
-		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", nil);
-		case ACTION_DELETE:			return NSLocalizedString(@"Delete",nil);
-		case ACTION_MORE:			return NSLocalizedString(@"More...",nil);
-		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", nil) : NSLocalizedString(@"Turn Restrictions", nil);
-		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", nil);
+		case ACTION_SPLIT:			return NSLocalizedString(@"Split",@"Edit action");
+		case ACTION_RECTANGULARIZE:	return NSLocalizedString(@"Make Rectangular",@"Edit action");
+		case ACTION_STRAIGHTEN:		return NSLocalizedString(@"Straighten",@"Edit action");
+		case ACTION_REVERSE:		return NSLocalizedString(@"Reverse",@"Edit action");
+		case ACTION_DUPLICATE:		return NSLocalizedString(@"Duplicate",@"Edit action");
+		case ACTION_ROTATE:			return NSLocalizedString(@"Rotate",@"Edit action");
+		case ACTION_CIRCULARIZE:	return NSLocalizedString(@"Make Circular",@"Edit action");
+		case ACTION_JOIN:			return NSLocalizedString(@"Join",@"Edit action");
+		case ACTION_DISCONNECT:		return NSLocalizedString(@"Disconnect",@"Edit action");
+		case ACTION_COPYTAGS:		return NSLocalizedString(@"Copy Tags",@"Edit action");
+		case ACTION_PASTETAGS:		return NSLocalizedString(@"Paste",@"Edit action");
+		case ACTION_EDITTAGS:		return NSLocalizedString(@"Tags", @"Edit action");
+		case ACTION_ADDNOTE:		return NSLocalizedString(@"Add Note", @"Edit action");
+		case ACTION_DELETE:			return NSLocalizedString(@"Delete",@"Edit action");
+		case ACTION_MORE:			return NSLocalizedString(@"More...",@"Edit action");
+		case ACTION_RESTRICT:		return abbrev ? NSLocalizedString(@"Restrict", @"Edit action") : NSLocalizedString(@"Turn Restrictions", @"Edit action");
+		case ACTION_CREATE_RELATION:return NSLocalizedString(@"Create Relation", @"Edit action");
 	};
 	return nil;
 }
@@ -2128,6 +2158,9 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			NSString * title = ActionTitle( (EDIT_ACTION)action.integerValue, YES );
 			[_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
 		}
+
+		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+		[_editControl setTitleTextAttributes:@{NSFontAttributeName:font} forState:UIControlStateNormal];
 	}
 }
 
@@ -2205,8 +2238,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	NSInteger segment = segmentedControl.selectedSegmentIndex;
 
 	if ( segment < _editControlActions.count ) {
-		NSNumber * actionNum = _editControlActions[ segment ];
-		EDIT_ACTION action = (EDIT_ACTION)actionNum.integerValue;
+		EDIT_ACTION action = (EDIT_ACTION)_editControlActions[ segment ].integerValue;
 
 		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
 		switch ( action ) {
@@ -2252,7 +2284,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	switch (action) {
 		case ACTION_COPYTAGS:
 			if ( ! [_editorLayer copyTags:_editorLayer.selectedPrimary] )
-				error = NSLocalizedString(@"The object does contain any tags",nil);
+				error = NSLocalizedString(@"The object does not contain any tags",nil);
 			break;
 		case ACTION_PASTETAGS:
 			if ( _editorLayer.selectedPrimary == nil ) {
@@ -2586,7 +2618,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 	_confirmDrag = NO;
 
 	_pushpinView = [PushPinView new];
-	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",nil);
+	_pushpinView.text = object ? object.friendlyDescription : NSLocalizedString(@"(new object)",@"a newly created node/object");
 	_pushpinView.layer.zPosition = Z_PUSHPIN;
 
 	_pushpinView.arrowPoint = point;
@@ -3446,9 +3478,12 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 			break;
 		case UIGestureRecognizerStateEnded:
 			if ( CACurrentMediaTime() - _addNodeButtonTimestamp < 0.5 ) {
-				// treat as tap
-				CGPoint point = _crossHairs.position;
-				[self dropPinAtPoint:point];
+				// treat as tap, but make sure it occured inside the button
+				CGPoint touch = [recognizer locationInView:recognizer.view];
+				if ( CGRectContainsPoint( recognizer.view.bounds, touch ) ) {
+					CGPoint point = _crossHairs.position;
+					[self dropPinAtPoint:point];
+				}
 			}
 			_addNodeButtonTimestamp = 0.0;
 			break;
@@ -3489,10 +3524,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 						[self showAlert:NSLocalizedString(@"Error",nil) message:error];
 					}
 				};
-				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add outer member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add outer member",@"Add to relation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 					addMmember(@"outer");
 				}]];
-				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add inner member",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Add inner member",@"Add to relation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 					addMmember(@"inner");
 				}]];
 				[confirm addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];

@@ -7,13 +7,10 @@
 /* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
 "2g1-vb-Cjc.normalTitle" = "Kommentar";
 
-/* Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC"; */
-"2Ka-IT-DQC.normalTitle" = "";
-
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
 "7Ua-cx-BHI.title" = "Last opp";
 
-/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; */
+/* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
 "9G2-Gl-CeP.text" = "brukernavn - handling";
 
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
@@ -24,9 +21,6 @@
 
 /* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
 "ach-1A-88x.text" = "Endringssettkommentar skrives her";
-
-/* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
-"E22-sL-sNt.accessibilityHint" = "";
 
 /* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
 "E22-sL-sNt.accessibilityLabel" = "Kompass";
@@ -40,9 +34,6 @@
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
 "gdu-Sf-XrE.title" = "Send inn";
 
-/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; */
-"HeZ-95-3K1.text" = "";
-
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
 "l7S-YL-RKK.text" = "Undertekst";
 
@@ -55,7 +46,7 @@
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
 "OJ0-aO-ri1.normalTitle" = "Løs";
 
-/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; */
+/* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
 "PHk-s9-onx.text" = "Ymse kommentarer…";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
@@ -69,9 +60,6 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
 "stf-JU-iga.text" = "Tittel";
-
-/* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
-"tOO-VD-MeJ.text" = "";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
 "vRO-Aj-Sdr.text" = "Tittel";

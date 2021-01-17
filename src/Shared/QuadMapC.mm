@@ -209,7 +209,7 @@ public:
 		return (int)north << 1 | west;
 	}
 
-	void enumerateWithBlock( void (^block)(QuadBoxCC *) )
+	void enumerateWithBlock( void (^block)(const QuadBoxCC *) ) const
 	{
 		block(this);
 		for ( int child = 0; child <= QUAD_LAST; ++child ) {
@@ -315,6 +315,14 @@ public:
 		}
 	}
 
+	NSInteger count() const
+	{
+		__block NSInteger c = 0;
+		enumerateWithBlock(^(const QuadBoxCC * quad) {
+			c += quad->_members.size();
+		});
+		return c;
+	}
 
 	NSInteger countBusy() const
 	{
@@ -360,14 +368,14 @@ public:
 	{
 		if ( fraction ) {
 			// get a list of all quads that have downloads
-			__block std::vector<QuadBoxCC *> list;
-			this->enumerateWithBlock(^(QuadBoxCC * quad) {
+			__block std::vector<const QuadBoxCC *> list;
+			this->enumerateWithBlock(^(const QuadBoxCC * quad) {
 				if ( quad->_downloadDate ) {
 					list.push_back(quad);
 				}
 			});
 			// sort ascending by date
-			std::sort( list.begin(), list.end(), ^(QuadBoxCC *a, QuadBoxCC * b){return a->_downloadDate < b->_downloadDate;} );
+			std::sort( list.begin(), list.end(), ^(const QuadBoxCC *a, const QuadBoxCC * b){return a->_downloadDate < b->_downloadDate;} );
 
 			int index = (int)(list.size() * fraction);
 			double date2 = list[ index ]->downloadDate();
@@ -549,6 +557,35 @@ public:
 			}
 		}
 	}
+
+	static void consistencyCheck( const QuadBoxCC * top, OsmBaseObject * object )
+	{
+		std::vector<const QuadBoxCC *>	stack;
+		stack.reserve(32);
+		stack.push_back(top);
+		int foundCount = 0;
+
+		while ( !stack.empty() ) {
+
+			const QuadBoxCC * q = stack.back();
+			stack.pop_back();
+
+			for ( const auto & member : q->_members ) {
+				if ( member == object ) {
+					++foundCount;
+					assert( foundCount == 1 );
+					assert( OSMRectContainsRect( q->_rect, object.boundingBox ) );
+				}
+			}
+			for ( int c = 0; c <= QUAD_LAST; ++c ) {
+				QuadBoxCC * child = q->_children[ c ];
+				if ( child ) {
+					stack.push_back(child);
+				}
+			}
+		}
+		assert( foundCount == 1 );
+	}
 };
 
 
@@ -634,11 +671,7 @@ public:
 
 -(NSInteger)count
 {
-	__block NSInteger c = 0;
-	_cpp->enumerateWithBlock(^(QuadBoxCC * quad) {
-		++c;
-	});
-	return c;
+	return _cpp->count();
 }
 
 #pragma mark Region
@@ -706,6 +739,11 @@ public:
 -(void)findObjectsInArea:(OSMRect)bbox block:(void (^)(OsmBaseObject *))block
 {
 	_cpp->findObjectsInAreaNonRecurse(_cpp,bbox,block);
+}
+
+-(void)consistencyCheckObject:(OsmBaseObject *)object
+{
+	_cpp->consistencyCheck( _cpp, object );
 }
 
 #pragma mark Discard objects

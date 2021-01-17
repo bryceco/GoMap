@@ -16,5 +16,7 @@
 #import "OsmRelation.h"
 #import "OsmWay.h"
 #import "PathUtil.h"
-#import "PresetsDatabase.h"
+#import "RenderInfo.h"
 #import "VectorMath.h"
+
+UIImage * IconScaledForDisplay(UIImage *icon);

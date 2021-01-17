@@ -5,7 +5,7 @@
 "\tWay " = "\tЛиния ";
 
 /* No comment provided by engineer. */
-" (%d members)\n" = " (%d участники)\n";
+" (%d members)\n" = " (%d элементов)\n";
 
 /* No comment provided by engineer. */
 " (%d nodes)\n" = " (%d точки)\n";
@@ -16,7 +16,7 @@
 /* No comment provided by engineer. */
 " (way)" = " (линия)";
 
-/* No comment provided by engineer. */
+/* a newly created node/object */
 "(new object)" = "(новый объект)";
 
 /* No comment provided by engineer. */
@@ -31,56 +31,69 @@
 /* No comment provided by engineer. */
 "(way)" = "(линия)";
 
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f метров, %2$ld точек";
+
+/* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f метров, %2$ld точек";
+
+/* These values will always be large (plural) */
+"%.2f MB, %ld files" = "%1$.2f МБ, %2$d файлов";
+
 /* No comment provided by engineer. */
 "%@ (relation)" = "%@ (отношение)";
 
 /* No comment provided by engineer. */
 "%@ changeset" = "%@ пакет правок";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%@ meters" = "%@ метры";
 
-/* No comment provided by engineer. */
-"%ld Days" = "%ld Дней";
+/* One or more days
+   Plural number of days */
+"%ld Days" = "%ld дней";
 
-/* No comment provided by engineer. */
+/* Brief synopsis of a mapper's activity (count,last active date) */
 "%ld edits, last active %@" = "%1$ld правок, последняя правка %2$@";
 
 /* length of a gpx track */
 "%ld meters, %ld points" = "%1$ld метров, %2$ld точек";
 
-/* No comment provided by engineer. */
+/* Number of tiles/objects in cache */
 "%ld objects" = "%ld объекты";
 
-/* No comment provided by engineer. */
+/* Always plural */
 "%lu tiles needed" = "Необходимо %lu тайлов";
 
-/* No comment provided by engineer. */
+/* Location of Add Node button on the screen */
+"+ Button Position" = "Положение кнопки +";
+
+/* unknown user name */
 "<unknown>" = "<неизвестно>";
 
-/* No comment provided by engineer. */
+/* 1 day singular */
 "1 Day" = "1 день";
 
 /* No comment provided by engineer. */
-"A GPX Track records your path as you travel along a road or trail" = "Трек GPX записывает ваш путь, пока вы путешествуете по дороге или тропе";
+"A GPX Track records your path as you travel along a road or trail" = "GPX-трек записывает ваш путь, пока вы путешествуете по дороге или тропе";
 
 /* No comment provided by engineer. */
 "A relation the node belongs to is not fully downloaded" = "Отношение, к которому принадлежит точка, не загружено полностью";
 
-/* No comment provided by engineer. */
-"Add inner member" = "Добавить участника с ролью inner";
+/* Add to relation */
+"Add inner member" = "Добавить элемент с ролью inner";
 
 /* No comment provided by engineer. */
 "add node to way" = "добавить точку к линии";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Add Note" = "Добавить заметку";
 
 /* No comment provided by engineer. */
 "add object to relation" = "добавить объект к отношению";
 
-/* No comment provided by engineer. */
-"Add outer member" = "Добавить участника с ролью outer";
+/* Add to relation */
+"Add outer member" = "Добавить элемент с ролью outer";
 
 /* No comment provided by engineer. */
 "Add way to multipolygon?" = "Добавить линию в мультиполигон?";
@@ -89,10 +102,13 @@
 "added to multipolygon relation" = "добавлено к отношению типа мультиполигон";
 
 /* No comment provided by engineer. */
-"Adding members:" = "Добавление участников:";
+"Adding members:" = "Добавление элементов:";
 
 /* No comment provided by engineer. */
 "Additional imagery" = "Дополнительные снимки";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Только аэрофотосъемки";
 
 /* No comment provided by engineer. */
 "All choices" = "Все варианты";
@@ -106,7 +122,13 @@
 /* No comment provided by engineer. */
 "Attention" = "Внимание";
 
-/* No comment provided by engineer. */
+/* node/way/relation attributes */
+"Attributes" = "Атрибуты";
+
+/* Automatic selection of presets languages */
+"Automatic" = "Автоматически";
+
+/* identifies current aerial imagery */
 "Background imagery %@" = "Подложка %@";
 
 /* No comment provided by engineer. */
@@ -128,7 +150,7 @@
 "Can't delete relation that is not a multipolygon" = "Невозможно удалить отношение, которое не является мультиполигоном";
 
 /* No comment provided by engineer. */
-"Can't delete way that is part of a Route or similar relation" = "Невозможно удалить линию, которая является участником маршрута или похожего отношения";
+"Can't delete way that is part of a Route or similar relation" = "Невозможно удалить линию, которая является частью маршрута или похожего отношения";
 
 /* No comment provided by engineer. */
 "Can't extend way" = "Невозможно продлить линию";
@@ -137,7 +159,7 @@
 "Can't remove component of a Route or similar relation" = "Невозможно удалить компонент маршрута или подобного отношения";
 
 /* No comment provided by engineer. */
-"Can't remove node in Turn Restriction 'via' way" = "Невозможно удалить точку в линии с ролью 'via', участвующую в ограничении манёвров";
+"Can't remove node in Turn Restriction 'via' way" = "Невозможно удалить точку на линии с ролью 'via', участвующую в ограничении манёвров";
 
 /* No comment provided by engineer. */
 "Can't remove Turn Restriction 'via' node" = "Невозможно удалить точку с ролью ‘via’, участвующую в ограничении манёвров";
@@ -151,31 +173,31 @@
 /* No comment provided by engineer. */
 "Cancel" = "Отмена";
 
-/* No comment provided by engineer. */
+/* e-mail message */
 "Cannot compose message" = "Не удалось создать сообщение";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "Невозможно соединить внутренний контур с внешним";
 
-/* No comment provided by engineer. */
+/* OSM changeset identifier */
 "Changeset" = "Пакет правок";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Aerial Tiles" = "Очистить тайлы аэрофотосъемки";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPS Overlay Tiles" = "Очистить тайлы слоя GPS";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear GPX Tracks" = "Очистить GPX-треки";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Locator Overlay Tiles" = "Очистить тайлы слоя Locator";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear Mapnik Tiles" = "Очистить тайлы Mapnik";
 
-/* No comment provided by engineer. */
+/* Delete cached data */
 "Clear OSM Data" = "Очистить данные OSM";
 
 /* No comment provided by engineer. */
@@ -193,7 +215,7 @@
 /* No comment provided by engineer. */
 "Connecting the nodes would damage a relation" = "Объединение этих точек повредит отношение";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Copy Tags" = "Копировать теги";
 
 /* No comment provided by engineer. */
@@ -208,7 +230,7 @@
 /* No comment provided by engineer. */
 "create relation" = "создать отношение";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Create Relation" = "Создать отношение";
 
 /* No comment provided by engineer. */
@@ -220,13 +242,13 @@
 /* No comment provided by engineer. */
 "create way" = "создать линию";
 
-/* No comment provided by engineer. */
+/* current GPX track */
 "Current Track" = "Текущий трек";
 
 /* No comment provided by engineer. */
 "Data not available" = "Данные недоступны";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Delete" = "Удалить";
 
 /* No comment provided by engineer. */
@@ -265,7 +287,7 @@
 /* No comment provided by engineer. */
 "Detach from relation" = "Изъять из отношения";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Disconnect" = "Отсоединить";
 
 /* No comment provided by engineer. */
@@ -274,23 +296,29 @@
 /* No comment provided by engineer. */
 "Done" = "Готово";
 
-/* No comment provided by engineer. */
-"duplicate" = "дублировать";
+/* create a duplicate */
+"duplicate" = "создать копию";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Duplicate" = "Создать копию";
 
 /* No comment provided by engineer. */
-"Edit" = "Редактировать";
+"Edit" = "Править";
 
 /* No comment provided by engineer. */
-"Edit restrictions" = "Редактировать ограничения";
+"Edit restrictions" = "Править ограничения";
 
 /* No comment provided by engineer. */
-"Edit XML" = "Редактировать XML";
+"Edit XML" = "Править XML";
 
 /* No comment provided by engineer. */
 "Editing layer not visible" = "Редактируемый слой отключён";
+
+/* No comment provided by engineer. */
+"Editor only" = "Только редактор";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Редактор с аэрофотосъемкой";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Убедитесь, что службы геолокации включены и приложению предоставлен доступ.\n\nОшибка: %@";
@@ -298,14 +326,11 @@
 /* No comment provided by engineer. */
 "Ensure the editor view is visible and displays objects in the local area" = "Убедитесь, что редактируемый слой включён и отображает объекты в данном районе";
 
-/* No comment provided by engineer. */
+/* Error dialog title */
 "Error" = "Ошибка";
 
 /* No comment provided by engineer. */
 "Error connecting to way" = "Ошибка присоединения к линии";
-
-/* No comment provided by engineer. */
-"Error deleting" = "Ошибка удаления";
 
 /* No comment provided by engineer. */
 "Error fetching metadata: %@" = "Ошибка загрузки мета-данных: %@";
@@ -325,22 +350,22 @@
 /* No comment provided by engineer. */
 "Height: %@ ± %@ meters" = "Высота: %1$@ ± %2$@ метров";
 
-/* No comment provided by engineer. */
+/* rate the app now */
 "I'll do it!" = "Будет сделано!";
 
-/* No comment provided by engineer. */
+/* OSM node/way/relation identifier */
 "Identifier" = "Идентификатор";
 
 /* No comment provided by engineer. */
 "Ignore" = "Игнорировать";
 
 /* No comment provided by engineer. */
-"In order to measure height, please enable camera access in the app's settings." = "Чтобы измерить высоту, пожалуйста, предоставьте доступ к камере в настройках приложения.";
+"In order to measure height, please enable camera access in the app's settings." = "Чтобы измерить высоту, предоставьте доступ к камере в настройках приложения.";
 
 /* No comment provided by engineer. */
 "Invalid URL" = "Некорректный URL";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Join" = "Соединить";
 
 /* No comment provided by engineer. */
@@ -352,8 +377,14 @@
 /* No comment provided by engineer. */
 "Last updated %@" = "Последнее обновление %@";
 
-/* No comment provided by engineer. */
+/* coordinates */
 "Lat/Lon" = "Широта/Долгота";
+
+/* Left-hand side of screen */
+"Left side" = "Левая сторона";
+
+/* No comment provided by engineer. */
+"Length" = "Длина";
 
 /* No comment provided by engineer. */
 "Location services timed out." = "Превышен порог ожидания служб геолокации.";
@@ -370,20 +401,23 @@
 /* No comment provided by engineer. */
 "Mail delivery is not available on this device" = "Доставка почты недоступна на данном устройстве";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Circular" = "Сделать круглым";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Make Rectangular" = "Выпрямить углы";
 
 /* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "Максимальная длина линии - 2000 точек";
+
+/* rate the app later */
 "Maybe later..." = "Может быть, позже...";
 
 /* No comment provided by engineer. */
-"Member of multipolygon relation" = "Участник мультиполигона";
+"Member of multipolygon relation" = "Элемент мультиполигона";
 
 /* No comment provided by engineer. */
-"Members" = "Участники";
+"Members" = "Элементы";
 
 /* No comment provided by engineer. */
 "Merge Tags" = "Объединить теги";
@@ -394,7 +428,7 @@
 /* No comment provided by engineer. */
 "Missing way to connect to" = "Отсутствует линия для присоединения";
 
-/* No comment provided by engineer. */
+/* last modified date */
 "Modified" = "Изменено";
 
 /* No comment provided by engineer. */
@@ -406,7 +440,7 @@
 /* No comment provided by engineer. */
 "Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "Непосредственная правка данных XML позволит устранить ошибки, которые мешают загрузке.\n\nЭта возможность предназначена для продвинутых пользователей и к ней следует прибегать только в том случае, если вы имеете полное понимание формата, используемого в пакетах правок OSM.";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "More..." = "Ещё...";
 
 /* No comment provided by engineer. */
@@ -427,13 +461,17 @@
 /* No comment provided by engineer. */
 "Network error" = "Ошибка сети";
 
-/* No comment provided by engineer. */
+/* Never delete old GPX tracks
+   Never delete old tracks */
 "Never" = "Никогда";
 
 /* No comment provided by engineer. */
+"Next" = "Следующий";
+
+/* GPX track */
 "No active track" = "Нет активного трека";
 
-/* No comment provided by engineer. */
+/* Alert title */
 "No Data" = "Нет данных";
 
 /* No comment provided by engineer. */
@@ -467,16 +505,19 @@
 "node %@ (in way)" = "точка %@ (на линии)";
 
 /* No comment provided by engineer. */
-"Node is not an element of way" = "Точка не является элементом линии";
+"Node attributes" = "Атрибуты точки";
 
 /* No comment provided by engineer. */
-"Node must first or last node of the way" = "Точка должна быть первой или последней точкой линии";
+"Node is not an element of way" = "Точка не является элементом линии";
 
 /* No comment provided by engineer. */
 "Node tags" = "Теги точки";
 
-/* No comment provided by engineer. */
-"Note History" = "История заметок";
+/* User credentials not found */
+"Not found" = "Не найдено";
+
+/* OSM note */
+"Note History" = "История заметки";
 
 /* No comment provided by engineer. */
 "Nothing to upload, no changes have been made." = "Нечего загружать, не сделано ни одной правки.";
@@ -505,7 +546,7 @@
 /* No comment provided by engineer. */
 "Only ways/multipolygons can be rotated" = "Вращать можно только линии/мультиполигоны";
 
-/* No comment provided by engineer. */
+/* Open the iOS Settings app */
 "Open Settings" = "Открыть настройки";
 
 /* No comment provided by engineer. */
@@ -517,7 +558,7 @@
 /* No comment provided by engineer. */
 "other object" = "другой объект";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Paste" = "Вставить";
 
 /* No comment provided by engineer. */
@@ -527,22 +568,31 @@
 "Perform Action" = "Выполнить действие";
 
 /* No comment provided by engineer. */
-"Please wait" = "Пожалуйста, подождите";
+"Please wait" = "Подождите";
 
 /* No comment provided by engineer. */
+"Previous" = "Предыдущий";
+
+/* previous GPX track */
 "Previous Tracks" = "Предыдущие треки";
 
-/* No comment provided by engineer. */
+/* Discard editing changes when resetting OSM data cache */
 "Purge" = "Очистить";
 
 /* No comment provided by engineer. */
 "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Оценивая это приложение, вы помогаете другим картографам легче его обнаружить и повышаете популярность OpenStreetMap.";
+
+/* Alert title message */
+"Recent Aerial Imagery" = "Недавние аэрофотоснимки";
 
 /* No comment provided by engineer. */
 "Redo" = "Повторить";
 
 /* No comment provided by engineer. */
 "relation" = "отношение";
+
+/* No comment provided by engineer. */
+"Relation attributes" = "Атрибуты отношения";
 
 /* No comment provided by engineer. */
 "Relation tags" = "Теги отношения";
@@ -554,27 +604,30 @@
 "Relations" = "Отношения";
 
 /* No comment provided by engineer. */
-"Replace Tags" = "Заместить теги";
+"Replace Tags" = "Заменить теги";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 3 nodes" = "Необходима замкнутая линия с 3мя и более точками";
+"Requires a closed way with at least 3 nodes" = "Необходима замкнутая линия с 3-мя и более точками";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 4 nodes" = "Необходима замкнутая линия с 4мя и более точками";
+"Requires a closed way with at least 4 nodes" = "Необходима замкнутая линия с 4-мя и более точками";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Restrict" = "Запретить";
 
 /* No comment provided by engineer. */
 "Restriction: %@" = "Ограничение: %@";
 
-/* No comment provided by engineer. */
+/* country name,2-character country code */
 "Results for %@ (%@)" = "Результаты для %1$@ (%2$@)";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Reverse" = "Изменить направление";
 
-/* No comment provided by engineer. */
+/* Right-hand side of screen */
+"Right side" = "Правая сторона";
+
+/* Edit action */
 "Rotate" = "Повернуть";
 
 /* No comment provided by engineer. */
@@ -589,16 +642,17 @@
 /* set tag value */
 "Set" = "Установить";
 
-/* No comment provided by engineer. */
+/* The height=* tag */
 "Set Height Tag" = "Задать тег высоты";
 
 /* No comment provided by engineer. */
 "set tags" = "присвоить теги";
 
 /* No comment provided by engineer. */
-"Settings" = "Установки";
+"Settings" = "Настройки";
 
-/* No comment provided by engineer. */
+/* Open iOS sharing sheet
+   Title for sharing options */
 "Share" = "Поделиться";
 
 /* No comment provided by engineer. */
@@ -607,26 +661,29 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Простите, произошла ошибка при загрузке GPX-файла";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Split" = "Разделить";
 
 /* No comment provided by engineer. */
 "Standard imagery" = "Стандартные снимки";
 
-/* No comment provided by engineer. */
+/* Begin downloading tiles */
 "Start" = "Начать";
 
 /* No comment provided by engineer. */
 "Stop" = "Закончить";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Straighten" = "Выпрямить";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Tags" = "Теги";
 
 /* No comment provided by engineer. */
-"The current location cannot be determined: " = "Текущая геопозиция не может быть определена: ";
+"The + button can be positioned on either the left or right side of the screen" = "Кнопка + может быть расположена как на левой, так и на правой стороне экрана";
+
+/* No comment provided by engineer. */
+"The current location cannot be determined: " = "Текущее местоположение не может быть определено: ";
 
 /* No comment provided by engineer. */
 "The merged nodes contain conflicting tags" = "Объединённые точки содержат конфликтующие теги";
@@ -635,10 +692,10 @@
 "The nodes have conflicting roles in parent relations" = "Точки имеют конфликтующие роли в родительских отношениях";
 
 /* No comment provided by engineer. */
-"The object does contain any tags" = "У объекта есть теги";
+"The object does not contain any tags" = "У объекта нет тегов";
 
 /* No comment provided by engineer. */
-"The restriction cannot be deleted: %@" = "Ограничение не может быть удалено: %@";
+"The restriction cannot be deleted" = "Ограничение не может быть удалено";
 
 /* No comment provided by engineer. */
 "The selected way must be completely visible" = "Выбранная линия должна быть видна целиком";
@@ -653,13 +710,10 @@
 "The way belongs to a relation that is not fully downloaded" = "Линия принадлежит отношению, которое не загружено целиком";
 
 /* No comment provided by engineer. */
-"The way belongs to a relation this not fully downloaded" = "Линия принадлежит отношению, которе не загружено целиком";
-
-/* No comment provided by engineer. */
 "The way is not sufficiently straight" = "Линия недостаточно прямая";
 
 /* No comment provided by engineer. */
-"The way must have at least 2 nodes" = "Линия должна иметь не менее 2 точек";
+"The way must have at least 2 nodes" = "Линия должна иметь не менее 2-х точек";
 
 /* No comment provided by engineer. */
 "The ways contain incompatible tags" = "Линии содержат несовместимые теги";
@@ -674,7 +728,7 @@
 "This app does not yet support editing turn restrictions without a node as the 'via' member" = "Это приложение пока не поддерживает ограничение манёвров без точки с ролью 'via'";
 
 /* No comment provided by engineer. */
-"To add another member to the relation 'long press' on the way to be added" = "Чтобы добавить ещё участника в отношение, выберите и удерживайте линию, которую требуется добавить";
+"To add another member to the relation 'long press' on the way to be added" = "Чтобы добавить элемент в отношение, выберите и удерживайте линию, которую требуется добавить";
 
 /* No comment provided by engineer. */
 "Travel ALLOWED from %@ to %@" = "Движение РАЗРЕШЕНО из %1$@ в %2$@";
@@ -691,7 +745,7 @@
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Включите сервисы геолокации, чтобы позволить %@ определить ваше местоположение";
 
-/* No comment provided by engineer. */
+/* Edit action */
 "Turn Restrictions" = "Ограничения поворота";
 
 /* No comment provided by engineer. */
@@ -703,13 +757,16 @@
 /* No comment provided by engineer. */
 "U-Turn from %@ prohibited" = "Разворот с %@ запрещён";
 
+/* OSM numeric user ID */
+"UID" = "UID";
+
 /* No comment provided by engineer. */
 "Unable to upload changes" = "Невозможно загрузить изменения";
 
 /* No comment provided by engineer. */
 "Undo" = "Отменить";
 
-/* No comment provided by engineer. */
+/* relation role=* tag */
 "Unknown role" = "Неизвестная роль";
 
 /* No comment provided by engineer. */
@@ -721,7 +778,7 @@
 /* No comment provided by engineer. */
 "update relation members" = "обновить участников отношения";
 
-/* No comment provided by engineer. */
+/* OSM Note */
 "Updating Note..." = "Обновление заметки...";
 
 /* No comment provided by engineer. */
@@ -736,20 +793,20 @@
 /* No comment provided by engineer. */
 "Uploading GPX..." = "Загрузка GPX...";
 
-/* No comment provided by engineer. */
+/* OSM user name */
 "User" = "Пользователь";
 
 /* No comment provided by engineer. */
 "User-defined imagery" = "Пользовательские снимки";
 
-/* No comment provided by engineer. */
+/* OSM object versioh */
 "Version" = "Версия";
 
-/* No comment provided by engineer. */
-"vintage %@" = "дата съемки %@";
+/* Year aerial imagery was created */
+"vintage %@" = "дата съёмки %@";
 
-/* No comment provided by engineer. */
-"vintage %@ - %@" = "дата съемки %1$@ - %2$@";
+/* Years aerial imagery was created */
+"vintage %@ - %@" = "дата съёмки %1$@ - %2$@";
 
 /* No comment provided by engineer. */
 "Warning" = "Предупреждение";
@@ -758,16 +815,19 @@
 "way %@" = "линия %@";
 
 /* No comment provided by engineer. */
+"Way attributes" = "Атрибуты линии";
+
+/* No comment provided by engineer. */
 "Way tags" = "Теги линии";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Вы собираетесь внести изменения в действующую базу данных OpenStreetMap. Ваши правки будут доступны для просмотра абсолютно любому человеку из любой точки планеты.\n\nЧтобы продолжить нажмите Загрузить на сервер ещё раз, в противном случае нажмите Отмена.";
 
-/* No comment provided by engineer. */
-"You can define your own custom presets here" = "Здесь вы можете создать свои личные пресеты";
+/* POI editor presets */
+"You can define your own custom presets here" = "Здесь вы можете создать свои личные предустановки";
 
 /* No comment provided by engineer. */
-"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "Вы можете выполнять навигацию только по тем участникам отношения, которые были загружены.\nЭти участники обозначены '>'.";
+"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "Вы можете выполнять навигацию только по тем элементам отношения, которые были загружены.\nЭти элементы обозначены '>'.";
 
 /* No comment provided by engineer. */
 "You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Вы сделали правки, которые ещё не были загружены на сервер. Очистка кэша приведёт к их потере.";
@@ -779,7 +839,7 @@
 "You must save or discard changes to the current object before editing its associated relation" = "Вы должны сохранить или отменить правки текущего объекта перед тем, как редактировать связанное отношение";
 
 /* No comment provided by engineer. */
-"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "Вы загрузили %ld пакетов правок с этой версией Go Map!!\n\nХотите оценить приложение?";
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "Вы загрузили %ld пакетов правок используя эту версию Go Map!!\n\nХотите оценить приложение?";
 
 /* No comment provided by engineer. */
 "Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "Ваш кэш данных OSM становится слишком большим, что может привести к медленному запуску и закрытию приложения.\n\nВы можете очистить кэш (в настройках отображения), чтобы улучшить быстродействие.";

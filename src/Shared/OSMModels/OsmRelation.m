@@ -68,7 +68,7 @@
 
 
 
--(void)resolveToMapData:(OsmMapData *)mapData
+-(BOOL)resolveToMapData:(OsmMapData *)mapData
 {
     BOOL needsRedraw = NO;
     for ( OsmMember * member in _members ) {
@@ -81,7 +81,7 @@
             OsmWay * way = [mapData wayForRef:ref];
             if ( way ) {
                 [member resolveRefToObject:way];
-                [way addRelation:self undo:nil];
+                [way addParentRelation:self undo:nil];
                 needsRedraw = YES;
             } else {
                 // way is not in current view
@@ -90,7 +90,7 @@
             OsmNode * node = [mapData nodeForRef:ref];
             if ( node ) {
                 [member resolveRefToObject:node];
-                [node addRelation:self undo:nil];
+                [node addParentRelation:self undo:nil];
                 needsRedraw = YES;
             } else {
                 // node is not in current view
@@ -99,7 +99,7 @@
             OsmRelation * rel = [mapData relationForRef:ref];
             if ( rel ) {
                 [member resolveRefToObject:rel];
-                [rel addRelation:self undo:nil];
+                [rel addParentRelation:self undo:nil];
                 needsRedraw = YES;
             } else {
                 // relation is not in current view
@@ -111,6 +111,7 @@
     if ( needsRedraw ) {
         [self clearCachedProperties];
     }
+	return needsRedraw;
 }
 
 // convert references to objects back to NSNumber
@@ -119,7 +120,7 @@
     for ( OsmMember * member in _members ) {
         OsmBaseObject * ref = member.ref;
         if ( [ref isKindOfClass:[OsmBaseObject class]] ) {
-            [ref removeRelation:self undo:nil];
+            [ref removeParentRelation:self undo:nil];
             [member resolveRefToObject:(OsmBaseObject *)ref.ident];
         }
     }
@@ -154,10 +155,10 @@
     [new minusSet:common];    // added items
     [old minusSet:common];    // removed items
     for ( OsmBaseObject * obj in old ) {
-        [obj removeRelation:self undo:nil];
+        [obj removeParentRelation:self undo:nil];
     }
     for ( OsmBaseObject * obj in new ) {
-        [obj addRelation:self undo:nil];
+        [obj addParentRelation:self undo:nil];
     }
 #else
     NSArray * old = [_members sortedArrayUsingComparator:^NSComparisonResult(OsmMember * obj1, OsmMember * obj2) {
@@ -184,7 +185,7 @@
     [_members removeObjectAtIndex:index];
     OsmBaseObject * obj = member.ref;
     if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
-        [obj removeRelation:self undo:nil];
+        [obj removeParentRelation:self undo:nil];
     }
 }
 -(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo
@@ -200,7 +201,7 @@
     [_members insertObject:member atIndex:index];
     OsmBaseObject * obj = member.ref;
     if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
-        [obj addRelation:self undo:nil];
+        [obj addParentRelation:self undo:nil];
     }
 }
 
@@ -218,6 +219,8 @@
     OSMRect box = { 0, 0, 0, 0 };
     NSSet * objects = [self allMemberObjects];
     for ( OsmBaseObject * obj in objects ) {
+		if ( obj.isRelation )
+			continue;	// child members have already been added to the set
         OSMRect rc = obj.boundingBox;
         if ( rc.origin.x == 0 && rc.origin.y == 0 && rc.size.height == 0 && rc.size.width == 0 ) {
             // skip

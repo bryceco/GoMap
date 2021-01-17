@@ -13,7 +13,6 @@
 #import "OsmMapData.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
-#import "PresetsDatabase.h"
 #import "SettingsViewController.h"
 
 
@@ -35,7 +34,7 @@
 
 	PresetLanguages * presetLanguages = [PresetLanguages new];
 	NSString * preferredLanguageCode = presetLanguages.preferredLanguageCode;
-	NSString * preferredLanguage = [presetLanguages localLanguageNameForCode:preferredLanguageCode];
+	NSString * preferredLanguage = [PresetLanguages localLanguageNameForCode:preferredLanguageCode];
 	_language.text = preferredLanguage;
 
 	// set username, but then validate it
@@ -45,7 +44,7 @@
 	if ( appDelegate.userName.length > 0 ) {
 		[appDelegate.mapView.editorLayer.mapData verifyUserCredentialsWithCompletion:^(NSString * errorMessage) {
 			if ( errorMessage ) {
-				_username.text = NSLocalizedString(@"<unknown>",nil);
+				_username.text = NSLocalizedString(@"<unknown>",@"unknown user name");
 			} else {
 				_username.text = appDelegate.userName;
 			}

@@ -94,11 +94,14 @@
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
 	if ( url.isFileURL && [url.pathExtension isEqualToString:@"gpx"] ) {
-		// Load GPX 
+		// Load GPX
+		NSError * error = nil;
+		[url startAccessingSecurityScopedResource];
+		NSData * data = [NSData dataWithContentsOfURL:url options:0 error:&error];
+		[url stopAccessingSecurityScopedResource];
 		double delayInSeconds = 1.0;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-			NSData * data = [NSData dataWithContentsOfURL:url];
 			BOOL ok = [self.mapView.gpxLayer loadGPXData:data center:YES];
 			if ( !ok ) {
 				UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Open URL",nil)
@@ -204,7 +207,7 @@
 	UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil)
 														 style:UIAlertActionStyleCancel
 													   handler:nil];
-	UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",nil)
+	UIAlertAction *openSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings",@"Open the iOS Settings app")
 														   style:UIAlertActionStyleDefault
 														 handler:^(UIAlertAction * _Nonnull action) {
 															 [AppDelegate openAppSettings];

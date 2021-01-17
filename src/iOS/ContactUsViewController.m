@@ -188,7 +188,7 @@
 			[mail setMessageBody:body isHTML:NO];
 			[self.navigationController presentViewController:mail animated:YES completion:nil];
 		} else {
-			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cannot compose message",nil)
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cannot compose message",@"e-mail message")
 																			message:NSLocalizedString(@"Mail delivery is not available on this device",nil)
 																	 preferredStyle:UIAlertControllerStyleAlert];
 			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
@@ -198,6 +198,12 @@
 	} else if ( cell == _githubCell ) {
 
 		NSURL * url = [NSURL URLWithString:@"https://github.com/bryceco/GoMap/issues"];
+		UIViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+		[self presentViewController:viewController animated:YES completion:nil];
+
+	} else if ( cell == _weblateCell ) {
+
+		NSURL * url = [NSURL URLWithString:@"https://hosted.weblate.org/projects/go-map/app/"];
 		UIViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
 		[self presentViewController:viewController animated:YES completion:nil];
 

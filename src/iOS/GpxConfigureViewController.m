@@ -27,10 +27,10 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
 	if ( row == 0 )
-		return NSLocalizedString(@"Never",nil);
+		return NSLocalizedString(@"Never",@"Never delete old GPX tracks");
 	if ( row == 1 )
-		return NSLocalizedString(@"1 Day",nil);
-	return [NSString stringWithFormat:NSLocalizedString(@"%ld Days",nil),(long)row];
+		return NSLocalizedString(@"1 Day",@"1 day singular");
+	return [NSString stringWithFormat:NSLocalizedString(@"%ld Days",@"Plural number of days"),(long)row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component

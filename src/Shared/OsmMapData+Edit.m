@@ -125,6 +125,10 @@
 			}
 		}
 	}
+	if ( way.nodes.count == 2000 ) {
+		*error = NSLocalizedString(@"Maximum way length is 2000 nodes", nil);
+		return nil;
+	}
 
 	return ^(OsmNode * node) {
 		[self addNodeUnsafe:node toWay:way atIndex:index];
@@ -237,7 +241,7 @@
 		}
 	}
 	if ( role == nil ) {
-		*error = NSLocalizedString(@"Unknown role", nil);
+		*error = NSLocalizedString(@"Unknown role", @"relation role=* tag");
 		return nil;
 	}
 
@@ -666,7 +670,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 			if ( relation.isRestriction ) {
 				for ( OsmMember * member in relation.members ) {
 					if ( ! [member.ref isKindOfClass:[OsmBaseObject class]] ) {
-						*error = NSLocalizedString(@"The way belongs to a relation this not fully downloaded", nil);
+						*error = NSLocalizedString(@"The way belongs to a relation that is not fully downloaded", nil);
 						return NO;
 					}
 				}
@@ -1080,7 +1084,7 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 -(EditAction)canJoinWay:(OsmWay *)selectedWay atNode:(OsmNode *)selectedNode error:(NSString **)error
 {
 	if ( selectedWay.nodes[0] != selectedNode && selectedWay.nodes.lastObject != selectedNode ) {
-		*error = NSLocalizedString(@"Node must first or last node of the way",nil);
+		*error = NSLocalizedString(@"Node must be the first or last node of the way",nil);
 		return nil;	// must be endpoint node
 	}
 
@@ -1111,6 +1115,11 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 	}
 
 	OsmWay * otherWay = otherWays.firstObject;
+	if ( otherWay.nodes.count + selectedWay.nodes.count > 2000 ) {
+		*error = NSLocalizedString(@"Max nodes after joining is 2000",nil);
+		return nil;
+	}
+
 	NSMutableSet * relations = [NSMutableSet setWithArray:selectedWay.parentRelations];
 	[relations intersectSet:[NSSet setWithArray:otherWay.parentRelations]];
 	for ( OsmRelation * relation in relations ) {
@@ -1306,14 +1315,15 @@ static void InsertNode( OsmMapData * mapData, OsmWay * way, OSMPoint center, dou
 
 - (OsmBaseObject *)duplicateObject:(OsmBaseObject *)object withOffset:(OSMPoint)offset
 {
+	NSString * comment = NSLocalizedString(@"duplicate",@"create a duplicate");
 	if ( object.isNode ) {
-		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:comment];
 		return [self duplicateNode:object.isNode withOffset:offset];
 	} else if ( object.isWay ) {
-		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:comment];
 		return [self duplicateWay:object.isWay withOffset:offset];
 	} else if ( object.isRelation.isMultipolygon ) {
-		[self registerUndoCommentString:NSLocalizedString(@"duplicate",nil)];
+		[self registerUndoCommentString:comment];
 		OsmRelation * newRelation = [self createRelation];
 		for ( OsmMember * member in object.isRelation.members ) {
 			OsmWay * way = member.ref;

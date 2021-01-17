@@ -194,11 +194,6 @@
 
 -(IBAction)editXml:(id)sender
 {
-	AppDelegate * appDelegate = AppDelegate.shared;
-
-	MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
-	mail.mailComposeDelegate = self;
-	[mail setSubject:[NSString stringWithFormat:NSLocalizedString(@"%@ changeset",nil), appDelegate.appName]];
 	NSString * xml = [_mapData changesetAsXml];
 	xml = [xml stringByAppendingString:@"\n\n\n\n\n\n\n\n\n\n\n\n"];
 	_xmlTextView.attributedText = nil;

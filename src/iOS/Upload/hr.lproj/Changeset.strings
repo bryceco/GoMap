@@ -1,0 +1,30 @@
+/* Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D"; */
+"ArV-4u-j7D.text" = "Promjene:";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv"; */
+"BAY-7z-hwv.text" = "Lorem ipsum dolor sit er elit lamet,";
+
+/* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "feW-AK-msn"; */
+"feW-AK-msn.title" = "Spremi";
+
+/* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH"; */
+"hcE-yO-3eH.normalTitle" = "Uredi";
+
+/* Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn"; */
+"ikj-u9-9Bn.text" = "Komentar za skup promjena:";
+
+/* Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ"; */
+"Mdj-M0-0mZ.title" = "Prenesi";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; */
+"Plh-7W-ceY.text" = "Lorem ipsum dolor sit er elit lamet,";
+
+/* Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow"; */
+"ps9-Hb-Vow.placeholder" = "anketa, Bing itd.";
+
+/* Class = "UIButton"; normalTitle = "Mail"; ObjectID = "Rqu-ny-n3F"; */
+"Rqu-ny-n3F.normalTitle" = "E-mail";
+
+/* Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S"; */
+"yZR-tZ-66S.text" = "Izvor:";
+

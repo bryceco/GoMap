@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -204,7 +204,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="1Pp-Dq-lMU"/>
                     </view>
-                    <navigationItem key="navigationItem" title="QA Poole No Name Tiles" id="H3p-Ta-kIy" userLabel="QA Poole"/>
+                    <navigationItem key="navigationItem" title="QA Poole No Name Tiles" id="H3p-Ta-kIy" userLabel="QA Poole">
+                        <attributedString key="userComments">
+                            <fragment content="Title for Simon Poole's &quot;No name&quot; (missing name) tile overlay"/>
+                        </attributedString>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5i0-Uq-W3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -467,7 +471,7 @@
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Discard &amp; Refresh" id="SNa-W1-wga">
-                                <string key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
+                                <string key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data.
 
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
@@ -808,6 +812,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <rect key="frame" x="80" y="5" width="220" height="34"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="A hypothetical aerial imagery provider"/>
+                                                    </attributedString>
                                                     <connections>
                                                         <action selector="contentChanged:" destination="gWP-Gt-h0B" eventType="editingChanged" id="QvZ-c7-OHq"/>
                                                     </connections>
@@ -993,7 +1000,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="500" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="-1..3,7" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="7ga-PZ-MfV">
                                                     <rect key="frame" x="163" y="5" width="80" height="34"/>
-                                                    <color key="backgroundColor" white="0.93348524305555558" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="ROY-4z-UDA"/>
                                                     </constraints>
@@ -1377,7 +1383,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
             <objects>
                 <navigationController storyboardIdentifier="DisplayViewController" id="3il-wo-nAN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" restorationIdentifier="DisplayViewController" insetsLayoutMarginsFromSafeArea="NO" id="6od-EN-7Ax">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xbm-5N-YoL">
@@ -1694,7 +1700,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         <rect key="frame" x="0.0" y="683.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQI-EZ-rd6" id="pIi-Ie-btg">
-                                            <rect key="frame" x="0.0" y="0.0" width="301" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="293" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Filters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxX-tl-ZLH">
@@ -1738,6 +1744,9 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <attributedString key="userComments">
+                                                        <fragment content="The location on the screen where the user prefers the + (add node) button to appear"/>
+                                                    </attributedString>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="el8-h8-H1F">
                                                     <rect key="frame" x="249" y="5.5" width="51" height="33"/>

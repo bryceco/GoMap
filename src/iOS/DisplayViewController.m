@@ -77,14 +77,14 @@ static const NSInteger CACHE_SECTION			= 3;
 
 -(IBAction)chooseAddButtonPosition:(id)sender
 {
-	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"+ Button Position",nil)
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"+ Button Position",@"Location of Add Node button on the screen")
 																	message:NSLocalizedString(@"The + button can be positioned on either the left or right side of the screen",nil)
 															 preferredStyle:UIAlertControllerStyleAlert];
-	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Left side",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Left side",@"Left-hand side of screen") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT_ADD_ON_LEFT;
 		[self setButtonLayoutTitle];
 	}]];
-	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Right side",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Right side",@"Right-hand side of screen") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		AppDelegate.shared.mapView.mainViewController.buttonLayout = BUTTON_LAYOUT_ADD_ON_RIGHT;
 		[self setButtonLayoutTitle];
 	}]];

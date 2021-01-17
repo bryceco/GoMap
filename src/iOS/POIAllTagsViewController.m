@@ -18,7 +18,6 @@
 #import "POIAllTagsViewController.h"
 #import "POITabBarController.h"
 #import "PushPinView.h"
-#import "PresetsDatabase.h"
 #import "RenderInfo.h"
 #import "WikiPage.h"
 
@@ -83,11 +82,13 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
 	NSDictionary * dict = [self keyValueDictionary];
-	NSString * newFeature = [PresetsDatabase featureNameForObjectDict:dict geometry:geometry];
+	PresetFeature * newFeature = [PresetsDatabase.shared matchObjectTagsToFeature:dict
+																		 geometry:geometry
+																	   includeNSI:YES];
 
-	if ( !forceReload && [newFeature isEqualToString:_featureName] )
+	if ( !forceReload && [newFeature.featureID isEqualToString:_featureID] )
 		return -1;
-	_featureName = newFeature;
+	_featureID = newFeature.featureID;
 
 	// remove all entries without key & value
 	[_tags filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray<NSString *> * kv, id bindings) {
@@ -101,7 +102,7 @@
 
 	// add placeholder keys
 	if ( newFeature ) {
-		PresetsForFeature * presets = [PresetsForFeature presetsForFeature:newFeature objectTags:dict geometry:geometry update:nil];
+		PresetsForFeature * presets = [[PresetsForFeature alloc] initWithFeature:newFeature objectTags:dict geometry:geometry update:nil];
 		NSMutableArray * newKeys = [NSMutableArray new];
 		for ( NSInteger section = 0; section < presets.sectionCount; ++section ) {
 			for ( NSInteger row = 0; row < [presets tagsInSection:section]; ++row ) {
@@ -273,7 +274,9 @@
 	}
 }
 
--(void)setAssociatedColorForCell:(TextPairTableCell *)cell
+#pragma mark Accessory buttons
+
+-(UIView *)getAssociatedColorForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"colour"] ||
 		 [cell.text1.text isEqualToString:@"color"] ||
@@ -291,11 +294,10 @@
 			UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size+6, size)];
 			view.backgroundColor = UIColor.clearColor;
 			[view addSubview:square];
-			cell.text2.rightView = view;
-			cell.text2.rightViewMode = UITextFieldViewModeAlways;
-			return;
+			return view;
 		}
 	}
+	return nil;
 }
 
 -(IBAction)openWebsite:(id)sender
@@ -337,7 +339,7 @@
 	}
 }
 
--(void)setWebsiteButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getWebsiteButtonForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"wikipedia"] ||
 		 [cell.text1.text isEqualToString:@"wikidata"] ||
@@ -346,11 +348,16 @@
 		 [cell.text2.text hasPrefix:@"http://"] ||
 	     [cell.text2.text hasPrefix:@"https://"] )
 	{
-		UIButton * button = [UIButton buttonWithType:UIButtonTypeInfoLight];
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeSystem];
+		button.layer.borderWidth = 2.0;
+		button.layer.borderColor = UIColor.systemBlueColor.CGColor;
+		button.layer.cornerRadius = 15.0;
+		[button setTitle:@"🔗" forState:UIControlStateNormal];
+
 		[button addTarget:self action:@selector(openWebsite:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 -(IBAction)setSurveyDate:(id)sender
@@ -369,7 +376,7 @@
 	[self textFieldEditingDidEnd:pair.text2];
 }
 
--(void)setSurveyDateButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getSurveyDateButtonForCell:(TextPairTableCell *)cell
 {
 	NSArray * synonyms = @[
 		@"check_date",
@@ -383,9 +390,9 @@
 	if ( [synonyms containsObject:cell.text1.text] ) {
 		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		[button addTarget:self action:@selector(setSurveyDate:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 -(IBAction)setDirection:(id)sender
@@ -405,7 +412,7 @@
 	[self presentViewController:directionViewController animated:YES completion:nil];
 }
 
--(void)setDirectionButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getDirectionButtonForCell:(TextPairTableCell *)cell
 {
 	NSArray * synonyms = @[
 		@"direction",
@@ -414,9 +421,9 @@
 	if ( [synonyms containsObject:cell.text1.text] ) {
 		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		[button addTarget:self action:@selector(setDirection:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 
@@ -440,26 +447,58 @@
 	_childViewPresented = YES;
 }
 
--(void)setHeightButtonForCell:(TextPairTableCell *)cell
+-(UIView *)getHeightButtonForCell:(TextPairTableCell *)cell
 {
 	if ( [cell.text1.text isEqualToString:@"height"] ) {
 		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
 		[button addTarget:self action:@selector(setHeight:) forControlEvents:UIControlEventTouchUpInside];
-		cell.text2.rightView	 = button;
-		cell.text2.rightViewMode = UITextFieldViewModeAlways;
+		return button;
 	}
+	return nil;
 }
 
 - (void)updateAssociatedContentForCell:(TextPairTableCell *)cell
 {
-	cell.text2.rightView 	 = nil;
-	cell.text2.rightViewMode = UITextFieldViewModeNever;
+	UIView * associatedView =  [self getAssociatedColorForCell:cell]
+							?: [self getWebsiteButtonForCell:cell]
+							?: [self getSurveyDateButtonForCell:cell]
+							?: [self getDirectionButtonForCell:cell]
+							?: [self getHeightButtonForCell:cell];
 
-	[self setAssociatedColorForCell:cell];
-	[self setWebsiteButtonForCell:cell];
-	[self setSurveyDateButtonForCell:cell];
-	[self setDirectionButtonForCell:cell];
-	[self setHeightButtonForCell:cell];
+	cell.text2.rightView 	 = associatedView;
+	cell.text2.rightViewMode = associatedView ? UITextFieldViewModeAlways : UITextFieldViewModeNever;
+}
+
+- (IBAction)infoButtonPressed:(UIButton *)button
+{
+	TextPairTableCell * cell = (id)button.superview;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
+		cell = (id)cell.superview;
+
+	// show OSM wiki page
+	NSString * key = cell.text1.text;
+	NSString * value = cell.text2.text;
+	if ( key.length == 0 )
+		return;
+	PresetLanguages * presetLanguages = [PresetLanguages new];
+	NSString * languageCode = presetLanguages.preferredLanguageCode;
+
+	UIActivityIndicatorView * progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	progress.frame = cell.infoButton.bounds;
+	[cell.infoButton addSubview:progress];
+	cell.infoButton.enabled = NO;
+	cell.infoButton.titleLabel.layer.opacity = 0.0;
+	[progress startAnimating];
+	[WikiPage.shared bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
+		[progress removeFromSuperview];
+		cell.infoButton.enabled = YES;
+		cell.infoButton.titleLabel.layer.opacity = 1.0;
+		if ( url && self.view.window ) {
+			SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+			_childViewPresented = YES;
+			[self presentViewController:viewController animated:YES completion:nil];
+		}
+	}];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -577,17 +616,19 @@
 		if ( isValue ) {
 			// get list of values for current key
 			NSString * key = kv[0];
-			NSSet * set = [PresetsDatabase allTagValuesForKey:key];
-			AppDelegate * appDelegate = AppDelegate.shared;
-			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
-			[values addObjectsFromArray:[set allObjects]];
-			NSArray * list = [values allObjects];
-			textField.strings = list;
+			if ( [PresetsDatabase.shared eligibleForAutocomplete:key] ) {
+				NSSet * set = [PresetsDatabase.shared allTagValuesForKey:key];
+				AppDelegate * appDelegate = AppDelegate.shared;
+				NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+				[values addObjectsFromArray:[set allObjects]];
+				NSArray * list = [values allObjects];
+				textField.autocompleteStrings = list;
+			}
 		} else {
 			// get list of keys
-			NSSet * set = [PresetsDatabase allTagKeys];
+			NSSet * set = [PresetsDatabase.shared allTagKeys];
 			NSArray * list = [set allObjects];
-			textField.strings = list;
+			textField.autocompleteStrings = list;
 		}
 	}
 }
@@ -868,33 +909,6 @@
 
 	POITabBarController * tabController = (id)self.tabBarController;
 	[tabController commitChanges];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.section == 0 ) {
-		// show OSM wiki page
-		TextPairTableCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-		NSString * key = cell.text1.text;
-		NSString * value = cell.text2.text;
-		if ( key.length == 0 )
-			return;
-		PresetLanguages * presetLanguages = [PresetLanguages new];
-		NSString * languageCode = presetLanguages.preferredLanguageCode;
-
-		UIActivityIndicatorView * progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		progress.bounds = CGRectMake(0, 0, 24, 24);
-		cell.accessoryView = progress;
-		[progress startAnimating];
-		[WikiPage.shared bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
-			cell.accessoryView = nil;
-			if ( url && self.view.window ) {
-				SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
-				_childViewPresented = YES;
-				[self presentViewController:viewController animated:YES completion:nil];
-			}
-		}];
-	}
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender

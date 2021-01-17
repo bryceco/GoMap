@@ -125,9 +125,9 @@
 
 	NSString * dateDetail = nil;
 	if ( aerial.startDate && aerial.endDate && ![aerial.startDate isEqualToString:aerial.endDate] )
-		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@ - %@",nil), aerial.startDate, aerial.endDate];
+		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@ - %@",@"Years aerial imagery was created"), aerial.startDate, aerial.endDate];
 	else if ( aerial.startDate || aerial.endDate ) {
-		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@",nil), aerial.startDate ?: aerial.endDate];
+		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@",@"Year aerial imagery was created"), aerial.startDate ?: aerial.endDate];
 	}
 	NSString * details = dateDetail ?: urlDetail;
 

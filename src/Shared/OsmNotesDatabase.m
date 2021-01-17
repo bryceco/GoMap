@@ -404,20 +404,33 @@ static NSInteger g_nextTagID = 1;
 
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion
 {
-	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:[[NSCharacterSet characterSetWithCharactersInString:@"+;"] invertedSet]];
 
-	NSString * url;
+	NSURLComponents * components = [NSURLComponents componentsWithString:[OSM_API_URL stringByAppendingString:@"api/0.6/notes"]];
 	if ( note.comments == nil ) {
 		// brand new note
-		url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?lat=%f&lon=%f&text=%@", note.lat, note.lon, comment];
+		components.queryItems = @[
+			[NSURLQueryItem queryItemWithName:@"lat" value:@(note.lat).stringValue],
+			[NSURLQueryItem queryItemWithName:@"lon" value:@(note.lon).stringValue],
+			[NSURLQueryItem queryItemWithName:@"text" value:comment]
+		];
 	} else {
 		// existing note
 		if ( close ) {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/close?text=%@", note.noteId, comment];
+			components.path = [components.path stringByAppendingPathComponent:note.noteId.stringValue];
+			components.path = [components.path stringByAppendingPathComponent:@"close"];
+			components.queryItems = @[
+				[NSURLQueryItem queryItemWithName:@"text" value:comment]
+			];
 		} else {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/comment?text=%@", note.noteId, comment];
+			components.path = [components.path stringByAppendingPathComponent:note.noteId.stringValue];
+			components.path = [components.path stringByAppendingPathComponent:@"comment"];
+			components.queryItems = @[
+				[NSURLQueryItem queryItemWithName:@"text" value:comment]
+			];
 		}
 	}
+	NSString * url = components.string;
 
 	[_mapData putRequest:url method:@"POST" xml:nil completion:^(NSData *postData,NSString * postErrorMessage) {
 		OsmNote * newNote = nil;

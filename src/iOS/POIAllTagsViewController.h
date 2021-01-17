@@ -11,6 +11,7 @@
 @interface TextPairTableCell : UITableViewCell
 @property (assign,nonatomic) IBOutlet	AutocompleteTextField *	text1;
 @property (assign,nonatomic) IBOutlet	AutocompleteTextField *	text2;
+@property (assign,nonatomic) IBOutlet	UIButton			  * infoButton;
 @end
 
 @interface POIAllTagsViewController : UITableViewController
@@ -20,7 +21,7 @@
 	NSMutableArray				*	_members;
 	IBOutlet UIBarButtonItem	*	_saveButton;
 	BOOL							_childViewPresented;
-	NSString					*	_featureName;
+	NSString					*	_featureID;
 	UITextField					*	_currentTextField;
 }
 

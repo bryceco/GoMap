@@ -1,0 +1,180 @@
+/* Class = "UILabel"; text = "Mapnik Tiles"; ObjectID = "0Hk-5U-2Kg"; */
+"0Hk-5U-2Kg.text" = "Mapnik pločice";
+
+/* Class = "UITableViewSection"; headerTitle = "I don't have an account"; ObjectID = "1Mo-xe-IbY"; */
+"1Mo-xe-IbY.headerTitle" = "Nemam račun";
+
+/* Class = "UINavigationItem"; title = "Credits"; ObjectID = "1SU-BF-K3n"; */
+"1SU-BF-K3n.title" = "Zasluge";
+
+/* Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2"; */
+"2TW-mO-uX2.footerTitle" = "Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti aerofotografije i/ili Mapnik pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza.";
+
+/* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
+"2TW-mO-uX2.headerTitle" = "Preuzmi uvećani prikaz pločica";
+
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
+"2Zi-cz-7Va.text" = "Prikaži dodire";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
+"3qk-15-BUc.text" = "Detalji";
+
+/* Class = "UITableViewSection"; footerTitle = "Specify a host if you would like to edit data located on an alternate OSM server. The default host is api.openstreetmap.org."; ObjectID = "6GT-p2-rPO"; */
+"6GT-p2-rPO.footerTitle" = "Odredi računalo, ako želiš uređivati podatke koji se nalaze na alternativnom poslužitelju OSM-a. Standardno računalo je api.openstreetmap.org.";
+
+/* Class = "UITableViewSection"; headerTitle = "OpenStreetMap Server"; ObjectID = "6GT-p2-rPO"; */
+"6GT-p2-rPO.headerTitle" = "OpenStreetMap poslužitelj";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f"; */
+"6Lj-wh-z9f.text" = "Detalj";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "7cc-E7-pzw"; */
+"7cc-E7-pzw.text" = "Ime";
+
+/* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
+"34N-Ep-rpf.text" = "OpenStreetMap prijava";
+
+/* Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh"; */
+"66J-ih-Lfh.placeholder" = "api.openstreetmap.org";
+
+/* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8"; */
+"355-dx-Oi8.headerTitle" = "Jezik";
+
+/* Class = "UILabel"; text = "Contact Us"; ObjectID = "ags-Mx-c1q"; */
+"ags-Mx-c1q.text" = "Kontaktiraj nas";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "AHZ-L8-yUA"; */
+"AHZ-L8-yUA.title" = "Postavke";
+
+/* Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "AVI-04-hFN"; */
+"AVI-04-hFN.text" = "Pločice aerofotografije";
+
+/* Class = "UITextView"; text = "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F"; */
+"BHr-ta-k6F.text" = "Copyright © 2012. – 2020. Bryce Cogswell.\nSva prava pridržana.\n\nOpenStreetMap podaci licencirani su pod Open Data Commons licencom za otvorenu bazu podataka (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nAutorska prava za Bing aerofotografije drži Microsoft i njegovi dobavljači:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nAutorska prava za Mapbox aerofotografije drži Mapbox i njegovi dobavljači: https://www.mapbox.com/tos\n\nXML obrada od Robbieja Hansona KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nIkone kartata od SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOstale ikone od Glyphish:\nhttp://glyphish.com\n";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
+"bt0-CH-HbH.normalTitle" = "Pokreni";
+
+/* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
+"CHj-a3-gC9.text" = "Weblate – prijevodi";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
+"ctb-pg-pM9.title" = "Spremi";
+
+/* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
+"dbi-X6-Day.headerTitle" = "Prijave grešaka i prijedlozi";
+
+/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
+"DiU-tt-U7H.text" = "Detalj detalj detalj detalj detalj";
+
+/* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
+"DY5-Ls-XZ1.normalTitle" = "Registriraj novi račun";
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "e7I-rE-dAW"; */
+"e7I-rE-dAW.placeholder" = "lozinka";
+
+/* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
+"fbD-Hr-HNI.headerTitle" = "Podaci za prijavu";
+
+/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen"; */
+"Gcr-zK-nDq.text" = "Dodiri za snimanje ekrana";
+
+/* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
+"gec-8l-k4H.text" = "Napredne postavke";
+
+/* Class = "UITableViewSection"; headerTitle = "Advanced"; ObjectID = "gh3-sb-yuZ"; */
+"gh3-sb-yuZ.headerTitle" = "Napredno";
+
+/* Class = "UINavigationItem"; title = "Advanced Settings"; ObjectID = "Gxc-44-SzR"; */
+"Gxc-44-SzR.title" = "Napredne postavke";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP"; */
+"HNj-kK-OCP.text" = "Naslov";
+
+/* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
+"ib9-wt-IzD.title" = "Jezik";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "Povratna informacija putem e-pošte";
+
+/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate"; */
+"JbA-pC-plJ.text" = "Naslov naslov naslov naslov";
+
+/* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
+"jcn-Lx-tj3.text" = "Obližnji kartografi";
+
+/* Class = "UILabel"; text = "Password"; ObjectID = "k0y-gf-6DY"; */
+"k0y-gf-6DY.text" = "Lozinka";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "KIO-8j-QsO"; */
+"KIO-8j-QsO.text" = "Podnaslov";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "kt1-K7-kcu"; */
+"kt1-K7-kcu.title" = "Natrag";
+
+/* Class = "UINavigationItem"; title = "Contact Us"; ObjectID = "ktz-ef-tti"; */
+"ktz-ef-tti.title" = "Kontaktiraj nas";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "LaB-Et-hHT"; */
+"LaB-Et-hHT.text" = "Detalji";
+
+/* Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP"; */
+"m7D-wn-3MP.title" = "Pripremi za bezmrežni rad";
+
+/* Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg"; */
+"m7u-CH-jgg.headerTitle" = "Postani ispitivač";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz"; */
+"Mus-SG-1Sz.text" = "Detalj";
+
+/* Class = "UITableViewSection"; headerTitle = "Miscellaneous"; ObjectID = "nIn-2k-PYG"; */
+"nIn-2k-PYG.headerTitle" = "Razno";
+
+/* Class = "UINavigationItem"; title = "Login"; ObjectID = "O6E-f1-A1k"; */
+"O6E-f1-A1k.title" = "Prijava";
+
+/* Class = "UITableViewSection"; headerTitle = "About Us"; ObjectID = "oIj-UV-kLH"; */
+"oIj-UV-kLH.headerTitle" = "O nama";
+
+/* Class = "UILabel"; text = "Language"; ObjectID = "osk-Kq-gDX"; */
+"osk-Kq-gDX.text" = "Jezik";
+
+/* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
+"rfX-TP-V0l.text" = "Pripremi za bezmrežni rad";
+
+/* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
+"snH-kp-6ib.normalTitle" = "Pokreni";
+
+/* Class = "UILabel"; text = "Credits"; ObjectID = "TGa-tJ-nrC"; */
+"TGa-tJ-nrC.text" = "Zasluge";
+
+/* Class = "UITableViewSection"; footerTitle = "In order to upload changes to the map you need a user name and password registered at openstreetmap.org. "; ObjectID = "Tkc-bW-kNS"; */
+"Tkc-bW-kNS.footerTitle" = "Za prenošenje promjena na karti moraš imati registrirano korisničko ime i lozinku na openstreetmap.org. ";
+
+/* Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "Tkc-bW-kNS"; */
+"Tkc-bW-kNS.headerTitle" = "OpenStreetMap račun";
+
+/* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
+"TrT-Nn-WKe.text" = "Pridruži se TestFlight Beta programu";
+
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
+"UeH-ME-EV8.text" = "Prikaži FPS";
+
+/* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */
+"UvN-Qa-roL.text" = "Kadrova u sekundi";
+
+/* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
+"VDO-HW-SLB.title" = "Obližnji kartografi";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "Povratna informacija putem e-pošte";
+
+/* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
+"x4m-oT-EG8.text" = "GitHub – Problemi i izvorni kod";
+
+/* Class = "UITableViewSection"; headerTitle = "Developer settings"; ObjectID = "yAO-9B-CTd"; */
+"yAO-9B-CTd.headerTitle" = "Programerske postavke";
+
+/* Class = "UITextField"; placeholder = "username"; ObjectID = "YQ4-05-lQz"; */
+"YQ4-05-lQz.placeholder" = "korisničko ime";
+

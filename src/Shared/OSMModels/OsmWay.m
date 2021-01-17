@@ -86,7 +86,7 @@
 
 -(BOOL)isArea
 {
-    return [PresetsDatabase isArea:self];
+    return [PresetsDatabase.shared isArea:self];
 }
 
 -(BOOL)isClosed

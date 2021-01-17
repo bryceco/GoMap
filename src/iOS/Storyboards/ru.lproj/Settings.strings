@@ -13,7 +13,7 @@
 /* Class = "UITableViewSection"; headerTitle = "Download zoomed tiles"; ObjectID = "2TW-mO-uX2"; */
 "2TW-mO-uX2.headerTitle" = "Загрузить увеличенные тайлы";
 
-/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; */
+/* Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen"; */
 "2Zi-cz-7Va.text" = "Визуализировать прикосновения";
 
 /* Class = "UILabel"; text = "Details"; ObjectID = "3qk-15-BUc"; */
@@ -32,7 +32,10 @@
 "7cc-E7-pzw.text" = "Имя";
 
 /* Class = "UILabel"; text = "OpenStreetMap Login"; ObjectID = "34N-Ep-rpf"; */
-"34N-Ep-rpf.text" = "Логин OpenStreetMap";
+"34N-Ep-rpf.text" = "Войти в OpenStreetMap";
+
+/* Class = "UITextField"; placeholder = "api.openstreetmap.org"; ObjectID = "66J-ih-Lfh"; */
+"66J-ih-Lfh.placeholder" = "api.openstreetmap.org";
 
 /* Class = "UITableViewSection"; headerTitle = "Language"; ObjectID = "355-dx-Oi8"; */
 "355-dx-Oi8.headerTitle" = "Язык";
@@ -52,13 +55,16 @@
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "bt0-CH-HbH"; */
 "bt0-CH-HbH.normalTitle" = "Начать";
 
+/* Class = "UILabel"; text = "Weblate - Translations"; ObjectID = "CHj-a3-gC9"; */
+"CHj-a3-gC9.text" = "Weblate - переводы";
+
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "ctb-pg-pM9"; */
 "ctb-pg-pM9.title" = "Сохранить";
 
 /* Class = "UITableViewSection"; headerTitle = "Bug Reports & Suggestions"; ObjectID = "dbi-X6-Day"; */
 "dbi-X6-Day.headerTitle" = "Отчёты об ошибках и предложения";
 
-/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; */
+/* Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Do not translate"; */
 "DiU-tt-U7H.text" = "Подробности подробности подробности подробности подробности";
 
 /* Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1"; */
@@ -68,9 +74,9 @@
 "e7I-rE-dAW.placeholder" = "пароль";
 
 /* Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI"; */
-"fbD-Hr-HNI.headerTitle" = "Реквизиты";
+"fbD-Hr-HNI.headerTitle" = "Аккаунт";
 
-/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; */
+/* Class = "UILabel"; text = "Touches for screen recording"; ObjectID = "Gcr-zK-nDq"; Note = "Display the user's touches when they tap the screen"; */
 "Gcr-zK-nDq.text" = "Прикосновения для записи скринкаста";
 
 /* Class = "UILabel"; text = "Advanced Settings"; ObjectID = "gec-8l-k4H"; */
@@ -88,7 +94,10 @@
 /* Class = "UINavigationItem"; title = "Language"; ObjectID = "ib9-wt-IzD"; */
 "ib9-wt-IzD.title" = "Язык";
 
-/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; */
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "iR4-av-Q7M"; */
+"iR4-av-Q7M.text" = "Обратная связь по email";
+
+/* Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Do not translate"; */
 "JbA-pC-plJ.text" = "Заголовок заголовок заголовок заголовок";
 
 /* Class = "UILabel"; text = "Nearby Mappers"; ObjectID = "jcn-Lx-tj3"; */
@@ -110,7 +119,7 @@
 "LaB-Et-hHT.text" = "Подробнее";
 
 /* Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP"; */
-"m7D-wn-3MP.title" = "Подготовить для работы offline";
+"m7D-wn-3MP.title" = "Подготовить для работы автономно";
 
 /* Class = "UITableViewSection"; headerTitle = "Become a Tester"; ObjectID = "m7u-CH-jgg"; */
 "m7u-CH-jgg.headerTitle" = "Стать тестировщиком";
@@ -131,7 +140,7 @@
 "osk-Kq-gDX.text" = "Язык";
 
 /* Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l"; */
-"rfX-TP-V0l.text" = "Подготовить для работы offline";
+"rfX-TP-V0l.text" = "Подготовить для работы автономно";
 
 /* Class = "UIButton"; normalTitle = "Start"; ObjectID = "snH-kp-6ib"; */
 "snH-kp-6ib.normalTitle" = "Начать";
@@ -148,7 +157,7 @@
 /* Class = "UILabel"; text = "Join the TestFlight Beta"; ObjectID = "TrT-Nn-WKe"; */
 "TrT-Nn-WKe.text" = "Вступить в TestFlight Beta";
 
-/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; */
+/* Class = "UILabel"; text = "Show FPS"; ObjectID = "UeH-ME-EV8"; Note = "Display the app's frames/second while running"; */
 "UeH-ME-EV8.text" = "Показывать частоту кадров";
 
 /* Class = "UILabel"; text = "Frames/Second"; ObjectID = "UvN-Qa-roL"; */
@@ -156,6 +165,9 @@
 
 /* Class = "UINavigationItem"; title = "Nearby Mappers"; ObjectID = "VDO-HW-SLB"; */
 "VDO-HW-SLB.title" = "Картографы рядом";
+
+/* Class = "UILabel"; text = "Email Feedback"; ObjectID = "whL-SZ-HD5"; */
+"whL-SZ-HD5.text" = "Обратная связь по email";
 
 /* Class = "UILabel"; text = "GitHub - Issues & Source Code"; ObjectID = "x4m-oT-EG8"; */
 "x4m-oT-EG8.text" = "GitHub - проблемы и исходный код";
