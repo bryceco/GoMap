@@ -127,6 +127,22 @@
 		02F8F4341696004B002A0820 /* NominatimViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F8F4331696004B002A0820 /* NominatimViewController.m */; };
 		02FFCE0B16A7360B001A5B8A /* NSMutableArray+PartialSort.mm in Sources */ = {isa = PBXBuildFile; fileRef = 02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3E49F4B224DFA64800A347BB /* RulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E49F4B124DFA64800A347BB /* RulerView.m */; };
+		640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */; };
+		640C76CA250A111100BB4665 /* EditFilterViewModelDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */; };
+		640C76CE250A914900BB4665 /* BaseObjectMatching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CD250A914900BB4665 /* BaseObjectMatching.swift */; };
+		640C76D0250A91C400BB4665 /* RecursiveQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76CF250A91C400BB4665 /* RecursiveQuery.swift */; };
+		640C76D3250A922A00BB4665 /* RecursiveQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */; };
+		640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */; };
+		640C76D7250A930E00BB4665 /* KeyValueQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D6250A930E00BB4665 /* KeyValueQuery.swift */; };
+		640C76D9250A932A00BB4665 /* KeyValueQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */; };
+		640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */; };
+		640C76DD250A941A00BB4665 /* KeyExistsQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DC250A941A00BB4665 /* KeyExistsQuery.swift */; };
+		640C76DF250A943900BB4665 /* KeyExistsQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */; };
+		640C76E1250A949200BB4665 /* RegularExpressionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */; };
+		640C76E3250A94B000BB4665 /* RegularExpressionQueryTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E2250A94B000BB4665 /* RegularExpressionQueryTestCase.swift */; };
+		640C76EA250E762100BB4665 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76E9250E762100BB4665 /* Filter.swift */; };
+		640C76EC250E7C8A00BB4665 /* Filter+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76EB250E7C8A00BB4665 /* Filter+Codable.swift */; };
+		640C76EF250E7CEE00BB4665 /* Filter+CodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C76EE250E7CEE00BB4665 /* Filter+CodableTestCase.swift */; };
 		64305F7223E7224E00232BB9 /* LocationURLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7123E7224E00232BB9 /* LocationURLParser.m */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
 		64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CEC225E7CD900ADE7FB /* GoMapTests.swift */; };
@@ -148,14 +164,19 @@
 		6463E3CB23F948FE00E4F6ED /* GeekbenchScoreProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
+		6487A63D25094E5400F40053 /* PickerViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */; };
+		6487A63F25094F6800F40053 /* EditFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A63E25094F6800F40053 /* EditFilterViewModel.swift */; };
+		6487A6412509515600F40053 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6487A6402509515600F40053 /* TextFieldTableViewCell.swift */; };
 		64981F1F22667D7700178476 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64981F1E22667D7700178476 /* ContactUsViewController.swift */; };
 		64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* PresetKeyTagCase.swift */; };
 		64C072FE22622B9C00598078 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072FD22622B9C00598078 /* Require.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64D74BF42253DF49004FFD20 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64D74BF22253DF49004FFD20 /* DirectionViewController.xib */; };
+		64DBF15825091A8A00D67C31 /* EditFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DBF15725091A8A00D67C31 /* EditFilterViewController.swift */; };
 		64E21EB322651620004605D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB222651620004605D7 /* LoginViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
+		64E75A09250E8B2D00D4E41E /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E75A08250E8B2D00D4E41E /* ErrorTableViewCell.swift */; };
 		64F59A50240915840093DCDB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F59A4F240915840093DCDB /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -472,6 +493,22 @@
 		02FFCE0916A7360B001A5B8A /* NSMutableArray+PartialSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+PartialSort.h"; path = "../Shared/NSMutableArray+PartialSort.h"; sourceTree = "<group>"; };
 		02FFCE0A16A7360B001A5B8A /* NSMutableArray+PartialSort.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSMutableArray+PartialSort.mm"; path = "../Shared/NSMutableArray+PartialSort.mm"; sourceTree = "<group>"; };
 		3E49F4B124DFA64800A347BB /* RulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RulerView.m; path = ../Shared/RulerView.m; sourceTree = "<group>"; };
+		640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelTestCase.swift; sourceTree = "<group>"; };
+		640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModelDelegateMock.swift; sourceTree = "<group>"; };
+		640C76CD250A914900BB4665 /* BaseObjectMatching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatching.swift; sourceTree = "<group>"; };
+		640C76CF250A91C400BB4665 /* RecursiveQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQuery.swift; sourceTree = "<group>"; };
+		640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveQueryTestCase.swift; sourceTree = "<group>"; };
+		640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseObjectMatcherMock.swift; sourceTree = "<group>"; };
+		640C76D6250A930E00BB4665 /* KeyValueQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueQuery.swift; sourceTree = "<group>"; };
+		640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueQueryTestCase.swift; sourceTree = "<group>"; };
+		640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmBaseObject+Make.swift"; sourceTree = "<group>"; };
+		640C76DC250A941A00BB4665 /* KeyExistsQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQuery.swift; sourceTree = "<group>"; };
+		640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyExistsQueryTestCase.swift; sourceTree = "<group>"; };
+		640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpressionQuery.swift; sourceTree = "<group>"; };
+		640C76E2250A94B000BB4665 /* RegularExpressionQueryTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularExpressionQueryTestCase.swift; sourceTree = "<group>"; };
+		640C76E9250E762100BB4665 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		640C76EB250E7C8A00BB4665 /* Filter+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Filter+Codable.swift"; sourceTree = "<group>"; };
+		640C76EE250E7CEE00BB4665 /* Filter+CodableTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Filter+CodableTestCase.swift"; sourceTree = "<group>"; };
 		64305F7023E7224E00232BB9 /* LocationURLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationURLParser.h; sourceTree = "<group>"; };
 		64305F7123E7224E00232BB9 /* LocationURLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationURLParser.m; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
@@ -504,14 +541,19 @@
 		6463E3CA23F948FE00E4F6ED /* GeekbenchScoreProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeekbenchScoreProvider.m; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
+		6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewTableViewCell.swift; sourceTree = "<group>"; };
+		6487A63E25094F6800F40053 /* EditFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewModel.swift; sourceTree = "<group>"; };
+		6487A6402509515600F40053 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		64981F1E22667D7700178476 /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* PresetKeyTagCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyTagCase.swift; sourceTree = "<group>"; };
 		64C072FD22622B9C00598078 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64D74BF22253DF49004FFD20 /* DirectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectionViewController.xib; sourceTree = "<group>"; };
+		64DBF15725091A8A00D67C31 /* EditFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFilterViewController.swift; sourceTree = "<group>"; };
 		64E21EB222651620004605D7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
+		64E75A08250E8B2D00D4E41E /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		64F59A4F240915840093DCDB /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -662,6 +704,7 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
+				64DBF15625091A6300D67C31 /* EditableFilters */,
 				024C323B1DEEA97100AD62AB /* AdvancedSettingsViewController.h */,
 				024C323C1DEEA97100AD62AB /* AdvancedSettingsViewController.m */,
 				02C3C73519A5D679003B6783 /* AerialEditViewController.h */,
@@ -857,6 +900,41 @@
 			path = Height;
 			sourceTree = "<group>";
 		};
+		640C76C6250A0FC200BB4665 /* EditableFilters */ = {
+			isa = PBXGroup;
+			children = (
+				640C76D1250A91C900BB4665 /* Queries */,
+				640C76C7250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift */,
+			);
+			path = EditableFilters;
+			sourceTree = "<group>";
+		};
+		640C76CC250A912400BB4665 /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				640C76CD250A914900BB4665 /* BaseObjectMatching.swift */,
+				640C76DC250A941A00BB4665 /* KeyExistsQuery.swift */,
+				640C76D6250A930E00BB4665 /* KeyValueQuery.swift */,
+				640C76CF250A91C400BB4665 /* RecursiveQuery.swift */,
+				640C76E0250A949200BB4665 /* RegularExpressionQuery.swift */,
+				640C76E9250E762100BB4665 /* Filter.swift */,
+				640C76EB250E7C8A00BB4665 /* Filter+Codable.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
+		640C76D1250A91C900BB4665 /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				640C76DE250A943900BB4665 /* KeyExistsQueryTestCase.swift */,
+				640C76D8250A932A00BB4665 /* KeyValueQueryTestCase.swift */,
+				640C76D2250A922A00BB4665 /* RecursiveQueryTestCase.swift */,
+				640C76E2250A94B000BB4665 /* RegularExpressionQueryTestCase.swift */,
+				640C76EE250E7CEE00BB4665 /* Filter+CodableTestCase.swift */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
 		02CC01CF2584190A004444EF /* PresetsDatabase */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,6 +965,7 @@
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				640C76C6250A0FC200BB4665 /* EditableFilters */,
 				64E21EB622651F0D004605D7 /* Helpers */,
 				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
@@ -904,9 +983,12 @@
 		64348CF6225E867800ADE7FB /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				640C76D4250A925C00BB4665 /* BaseObjectMatcherMock.swift */,
 				64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */,
 				64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */,
+				640C76DA250A936B00BB4665 /* OsmBaseObject+Make.swift */,
 				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
+				640C76C9250A111100BB4665 /* EditFilterViewModelDelegateMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -960,6 +1042,16 @@
 			path = Upload;
 			sourceTree = "<group>";
 		};
+		6487A63B25094E4300F40053 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6487A63C25094E5400F40053 /* PickerViewTableViewCell.swift */,
+				6487A6402509515600F40053 /* TextFieldTableViewCell.swift */,
+				64E75A08250E8B2D00D4E41E /* ErrorTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		64981F1D22667D7700178476 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -988,6 +1080,17 @@
 				64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */,
 			);
 			path = Direction;
+			sourceTree = "<group>";
+		};
+		64DBF15625091A6300D67C31 /* EditableFilters */ = {
+			isa = PBXGroup;
+			children = (
+				640C76CC250A912400BB4665 /* Queries */,
+				6487A63B25094E4300F40053 /* Cells */,
+				64DBF15725091A8A00D67C31 /* EditFilterViewController.swift */,
+				6487A63E25094F6800F40053 /* EditFilterViewModel.swift */,
+			);
+			path = EditableFilters;
 			sourceTree = "<group>";
 		};
 		64E21EB622651F0D004605D7 /* Helpers */ = {
@@ -1168,6 +1271,7 @@
 				02ACBA5316713CCB00BB4414 /* MainViewController.m in Sources */,
 				02ACBA5A16713CCB00BB4414 /* SettingsViewController.m in Sources */,
 				6453776623D38D4600656A1C /* OsmBaseObject.m in Sources */,
+				640C76EC250E7C8A00BB4665 /* Filter+Codable.swift in Sources */,
 				02ACBBC316713F2B00BB4414 /* DownloadThreadPool.m in Sources */,
 				02A194B019C69701002338DA /* Database.m in Sources */,
 				02ACBBC416713F2B00BB4414 /* EditorMapLayer.m in Sources */,
@@ -1178,6 +1282,7 @@
 				02BF745120793EE20028ED6A /* TurnRestrictHwyView.m in Sources */,
 				64E21EB322651620004605D7 /* LoginViewController.swift in Sources */,
 				02ACBBCB16713F2B00BB4414 /* MercatorTileLayer.m in Sources */,
+				64E75A09250E8B2D00D4E41E /* ErrorTableViewCell.swift in Sources */,
 				02ACBBCC16713F2B00BB4414 /* OsmMapData.m in Sources */,
 				027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */,
 				02BF745420793F0A0028ED6A /* TurnRestrictController.m in Sources */,
@@ -1186,6 +1291,7 @@
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
 				025F1CF41BCD9B070097D7FE /* TapAndDragGesture.m in Sources */,
+				640C76DD250A941A00BB4665 /* KeyExistsQuery.swift in Sources */,
 				024B4CA219BBE67400BBA60B /* CustomPresetListViewController.m in Sources */,
 				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
@@ -1196,7 +1302,10 @@
 				0223DB531675D53200D6F825 /* POIFeaturePickerViewController.m in Sources */,
 				6453777323D391CC00656A1C /* OsmMember.m in Sources */,
 				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
+				640C76D7250A930E00BB4665 /* KeyValueQuery.swift in Sources */,
+				64DBF15825091A8A00D67C31 /* EditFilterViewController.swift in Sources */,
 				0223DB5716765C9000D6F825 /* POIFeaturePresetsViewController.m in Sources */,
+				6487A6412509515600F40053 /* TextFieldTableViewCell.swift in Sources */,
 				0205460616766808004A2A23 /* POIPresetValuePickerController.m in Sources */,
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
@@ -1210,10 +1319,12 @@
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
 				02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */,
 				022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */,
+				640C76CE250A914900BB4665 /* BaseObjectMatching.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,
 				02354F782462526A00878A04 /* PersistentWebCache.m in Sources */,
+				640C76EA250E762100BB4665 /* Filter.swift in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
@@ -1228,14 +1339,17 @@
 				02DBB4451A1C884F00732D53 /* HeightViewController.m in Sources */,
 				02B69D101BF5A66B002605A3 /* LanguageTableViewController.m in Sources */,
 				6453777023D3913100656A1C /* OsmRelation.m in Sources */,
+				6487A63D25094E5400F40053 /* PickerViewTableViewCell.swift in Sources */,
 				02BED98E168BF87200357B94 /* NearbyMappersViewController.m in Sources */,
 				02C3C73719A5D679003B6783 /* AerialEditViewController.m in Sources */,
 				64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */,
+				6487A63F25094F6800F40053 /* EditFilterViewModel.swift in Sources */,
 				027EDC74206F3EED00D349D6 /* NSString+DDXML.m in Sources */,
 				02C3C73A19A6DCEA003B6783 /* AerialList.m in Sources */,
 				02BED99C168CBC5400357B94 /* LocationBallLayer.m in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
 				64981F1F22667D7700178476 /* ContactUsViewController.swift in Sources */,
+				640C76D0250A91C400BB4665 /* RecursiveQuery.swift in Sources */,
 				02BED99F168D102700357B94 /* OfflineViewController.m in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				025B99A3240DEF1D007E0342 /* aes.m in Sources */,
@@ -1253,6 +1367,7 @@
 				027EDC73206F3EED00D349D6 /* DDXMLDocument.m in Sources */,
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
+				640C76E1250A949200BB4665 /* RegularExpressionQuery.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */,
@@ -1275,15 +1390,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
+				640C76E3250A94B000BB4665 /* RegularExpressionQueryTestCase.swift in Sources */,
+				640C76CA250A111100BB4665 /* EditFilterViewModelDelegateMock.swift in Sources */,
 				64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */,
+				640C76C8250A0FCF00BB4665 /* EditFilterViewModelTestCase.swift in Sources */,
 				64348CFB225E867800ADE7FB /* HeadingProviderMock.swift in Sources */,
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
+				640C76D3250A922A00BB4665 /* RecursiveQueryTestCase.swift in Sources */,
 				64C072FE22622B9C00598078 /* Require.swift in Sources */,
+				640C76D5250A925C00BB4665 /* BaseObjectMatcherMock.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
+				640C76DF250A943900BB4665 /* KeyExistsQueryTestCase.swift in Sources */,
+				640C76DB250A936C00BB4665 /* OsmBaseObject+Make.swift in Sources */,
+				640C76D9250A932A00BB4665 /* KeyValueQueryTestCase.swift in Sources */,
+				640C76EF250E7CEE00BB4665 /* Filter+CodableTestCase.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

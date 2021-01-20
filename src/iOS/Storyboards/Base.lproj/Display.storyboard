@@ -5,10 +5,183 @@
         <deployment version="2304" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Edit Conditions-->
+        <scene sceneID="xG0-JV-Zit">
+            <objects>
+                <tableViewController id="Y3T-AJ-l1d" customClass="EditFilterViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" canCancelContentTouches="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="B9R-nU-Epx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="6k8-Sn-zLG" style="IBUITableViewCellStyleDefault" id="SuC-8Z-QmP">
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SuC-8Z-QmP" id="FJ8-7F-ieo">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="amenity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6k8-Sn-zLG">
+                                            <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextLabelCell" textLabel="hnP-ZK-MVQ" style="IBUITableViewCellStyleDefault" id="Tie-Jn-uEy">
+                                <rect key="frame" x="0.0" y="99" width="320" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tie-Jn-uEy" id="mc7-Vk-PqC">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="is" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hnP-ZK-MVQ">
+                                            <rect key="frame" x="16" y="0.0" width="288" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PickerViewCell" id="4iL-bH-qS9" customClass="PickerViewTableViewCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="142.5" width="320" height="216.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4iL-bH-qS9" id="3Ro-Ks-CaI">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="216.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="00b-58-kjA">
+                                            <rect key="frame" x="16" y="0.0" width="288" height="216.5"/>
+                                            <connections>
+                                                <outlet property="dataSource" destination="4iL-bH-qS9" id="M7u-TE-q16"/>
+                                                <outlet property="delegate" destination="4iL-bH-qS9" id="eJR-nt-WkY"/>
+                                            </connections>
+                                        </pickerView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="00b-58-kjA" secondAttribute="trailing" id="Hiw-AU-FAV"/>
+                                        <constraint firstItem="00b-58-kjA" firstAttribute="top" secondItem="3Ro-Ks-CaI" secondAttribute="top" id="q1a-NZ-pcT"/>
+                                        <constraint firstAttribute="bottom" secondItem="00b-58-kjA" secondAttribute="bottom" id="sgq-OA-GgY"/>
+                                        <constraint firstItem="00b-58-kjA" firstAttribute="leading" secondItem="3Ro-Ks-CaI" secondAttribute="leadingMargin" id="zjE-ie-11R"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="pickerView" destination="00b-58-kjA" id="CCp-Rr-JlX"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextFieldCell" id="Qb4-cq-4BK" customClass="TextFieldTableViewCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="359" width="320" height="44.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qb4-cq-4BK" id="x8d-A4-dHA">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="bench" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JGE-ny-9WT">
+                                            <rect key="frame" x="16" y="11" width="288" height="22.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="JGE-ny-9WT" secondAttribute="trailing" id="85X-uZ-KVN"/>
+                                        <constraint firstItem="JGE-ny-9WT" firstAttribute="leading" secondItem="x8d-A4-dHA" secondAttribute="leadingMargin" id="BaR-TH-K4f"/>
+                                        <constraint firstItem="JGE-ny-9WT" firstAttribute="top" secondItem="x8d-A4-dHA" secondAttribute="topMargin" id="ZnT-8q-vPR"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="JGE-ny-9WT" secondAttribute="bottom" id="nog-HM-nAB"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="JGE-ny-9WT" id="NCB-pu-5SQ"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ErrorCell" id="AIl-s3-EYz" customClass="ErrorTableViewCell" customModule="Go_Map__" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="403.5" width="320" height="116.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIl-s3-EYz" id="YCZ-tV-8xF">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="116.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Errors:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zb2-f3-Ajq">
+                                            <rect key="frame" x="16" y="11" width="56" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fll-Nh-7ak" userLabel="ErrorIndicator">
+                                            <rect key="frame" x="17" y="35.5" width="3" height="70"/>
+                                            <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="3" id="buB-gH-DPS"/>
+                                            </constraints>
+                                        </view>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Dfg-wW-oKe">
+                                            <rect key="frame" x="28" y="35.5" width="276" height="69.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Key must not be empty" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eco-Vs-bRy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="276" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value must be a valid regular expression" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yD3-0N-CJ9">
+                                                    <rect key="frame" x="0.0" y="28.5" width="276" height="41"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="leading" secondItem="Fll-Nh-7ak" secondAttribute="trailing" constant="8" id="18M-Ha-H0s"/>
+                                        <constraint firstItem="Zb2-f3-Ajq" firstAttribute="top" secondItem="YCZ-tV-8xF" secondAttribute="topMargin" id="6S9-Za-2AC"/>
+                                        <constraint firstItem="Zb2-f3-Ajq" firstAttribute="leading" secondItem="YCZ-tV-8xF" secondAttribute="leadingMargin" id="CyQ-KX-STr"/>
+                                        <constraint firstItem="Fll-Nh-7ak" firstAttribute="top" secondItem="Zb2-f3-Ajq" secondAttribute="bottom" constant="4" id="Fhl-BW-Tsn"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="trailing" secondItem="YCZ-tV-8xF" secondAttribute="trailingMargin" id="JGk-hJ-ZeS"/>
+                                        <constraint firstItem="Fll-Nh-7ak" firstAttribute="leading" secondItem="YCZ-tV-8xF" secondAttribute="leadingMargin" constant="1" id="KXT-Q4-5qT"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="top" secondItem="Zb2-f3-Ajq" secondAttribute="bottom" constant="4" id="Roi-sX-omI"/>
+                                        <constraint firstItem="Zb2-f3-Ajq" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="YCZ-tV-8xF" secondAttribute="trailingMargin" id="Taj-ch-TI1"/>
+                                        <constraint firstItem="Fll-Nh-7ak" firstAttribute="bottom" secondItem="YCZ-tV-8xF" secondAttribute="bottomMargin" id="f6c-oa-lRB"/>
+                                        <constraint firstItem="Dfg-wW-oKe" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="YCZ-tV-8xF" secondAttribute="bottomMargin" id="mfg-ty-gah"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="stackView" destination="Dfg-wW-oKe" id="ukM-EO-LD4"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Y3T-AJ-l1d" id="71M-6M-1CO"/>
+                            <outlet property="delegate" destination="Y3T-AJ-l1d" id="Eqa-GM-1AQ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Edit Conditions" id="Ari-lp-NeO">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="save" id="zby-MU-4Eb">
+                                <connections>
+                                    <action selector="didTapSaveButton" destination="Y3T-AJ-l1d" id="AlQ-7t-9ta"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="s50-86-oyt">
+                                <connections>
+                                    <action selector="didTapAddConditionButton" destination="Y3T-AJ-l1d" id="x6u-9I-eV7"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TKg-K7-Llh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4519" y="1685"/>
+        </scene>
         <!--QA Poole Attribution View Controller-->
         <scene sceneID="D7A-KY-U59">
             <objects>
@@ -20,16 +193,16 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hsp-Xj-TU6">
                                 <rect key="frame" x="16" y="64" width="288" height="396"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <string key="text">Simon Poole Map Data © OpenStreetMap contributors
 </string>
-                                <color key="textColor" systemColor="labelColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="1Pp-Dq-lMU"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="QA Poole No Name Tiles" id="H3p-Ta-kIy" userLabel="QA Poole">
                         <attributedString key="userComments">
@@ -48,7 +221,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="1PI-ej-JPh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GpxTrackTableCell" rowHeight="55" id="u32-zl-4Xr" customClass="GpxTrackTableCell">
                                 <rect key="frame" x="0.0" y="55.5" width="320" height="55"/>
@@ -70,12 +243,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="12/22/20, 7:55 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6h-g5-fka">
-                                            <rect key="frame" x="20" y="6" width="144.5" height="20"/>
+                                            <rect key="frame" x="20" y="6" width="147" height="20"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEr-ao-8x1">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EEr-ao-8x1">
                                             <rect key="frame" x="274" y="11.5" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="32" id="OCa-Ve-Avy"/>
@@ -115,7 +288,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4s8-Bj-JOX">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4s8-Bj-JOX">
                                             <rect key="frame" x="240" y="6" width="60" height="32"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <state key="normal" title="99 Days"/>
@@ -124,7 +297,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete tracks after:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnI-tY-WWa">
-                                            <rect key="frame" x="20" y="11" width="152.5" height="21.5"/>
+                                            <rect key="frame" x="20" y="11" width="153.5" height="21.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -228,8 +401,7 @@
                                 <rect key="frame" x="20" y="126.5" width="280" height="216"/>
                             </pickerView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="8pi-lE-GdV"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="8pi-lE-GdV" firstAttribute="trailing" secondItem="dWF-I1-mgM" secondAttribute="trailing" id="7Rd-eV-6in"/>
                             <constraint firstItem="PK9-1m-unf" firstAttribute="leading" secondItem="8pi-lE-GdV" secondAttribute="leading" constant="20" id="Egi-t4-gQv"/>
@@ -241,6 +413,7 @@
                             <constraint firstItem="MeQ-4N-FqC" firstAttribute="top" secondItem="dWF-I1-mgM" secondAttribute="bottom" constant="20" id="qf3-vW-INh"/>
                             <constraint firstItem="8pi-lE-GdV" firstAttribute="trailing" secondItem="MeQ-4N-FqC" secondAttribute="trailing" constant="20" id="r2C-Ap-5CU"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="8pi-lE-GdV"/>
                     </view>
                     <connections>
                         <outlet property="pickerView" destination="PK9-1m-unf" id="UuT-ev-pHW"/>
@@ -257,7 +430,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="a9I-fl-DFN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Cache Management" footerTitle="Go Map!! will automatically discard old data to optimize performance." id="bmY-Hw-jv6">
                                 <cells>
@@ -298,7 +471,7 @@
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Discard &amp; Refresh" id="SNa-W1-wga">
-                                <string key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. 
+                                <string key="footerTitle">Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data.
 
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
@@ -540,7 +713,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="avw-Qm-8AW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="backgroundCell" textLabel="cpC-iE-1Dm" detailTextLabel="gre-3S-iPA" style="IBUITableViewCellStyleSubtitle" id="w9i-dC-HMH">
                                 <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
@@ -576,8 +749,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zI2-YM-qbl">
-                                            <rect key="frame" x="129" y="8" width="62" height="28"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zI2-YM-qbl">
+                                            <rect key="frame" x="128.5" y="8" width="63" height="28"/>
                                             <state key="normal" title="Add New">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
@@ -615,7 +788,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="hZT-D9-DPj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Friendly Name" id="cpv-m2-oDm">
                                 <cells>
@@ -1132,7 +1305,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <rect key="frame" x="251" y="6.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Past/Future" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lu0-kr-5Cc">
-                                                    <rect key="frame" x="20" y="11" width="92" height="22"/>
+                                                    <rect key="frame" x="20" y="11" width="93.5" height="22"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1231,7 +1404,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="BGf-jB-aPS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Background" id="lwG-AE-nIZ">
                                 <cells>
@@ -1282,8 +1455,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eac-Db-EaW">
-                                                    <rect key="frame" x="270" y="5.5" width="34" height="33"/>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="700" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eac-Db-EaW">
+                                                    <rect key="frame" x="269" y="5.5" width="35" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <state key="normal" title="Bing"/>
                                                     <connections>
@@ -1367,8 +1540,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                         <action selector="gpsSwitchChanged:" destination="UfZ-fJ-hyB" eventType="valueChanged" id="akt-la-BJd"/>
                                                     </connections>
                                                 </switch>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
-                                                    <rect key="frame" x="185" y="5.5" width="52" height="33"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8S7-Kw-QHF">
+                                                    <rect key="frame" x="184" y="5.5" width="53" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <state key="normal" title="Details"/>
                                                     <connections>
@@ -1499,12 +1672,32 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qeG-9i-gBD" style="IBUITableViewCellStyleDefault" id="MQw-d6-lvU">
+                                        <rect key="frame" x="0.0" y="591.5" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MQw-d6-lvU" id="dKv-eU-Yth">
+                                            <rect key="frame" x="0.0" y="0.0" width="301" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Conditional Highlighting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qeG-9i-gBD">
+                                                    <rect key="frame" x="15" y="0.0" width="278" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Y3T-AJ-l1d" kind="push" id="k7s-5x-aKB"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Filter Objects" id="scg-Po-M3L">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="aQI-EZ-rd6">
-                                        <rect key="frame" x="0.0" y="639.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="683.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQI-EZ-rd6" id="pIi-Ie-btg">
                                             <rect key="frame" x="0.0" y="0.0" width="293" height="44"/>
@@ -1540,14 +1733,14 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                             <tableViewSection headerTitle="Interactions" id="RJU-Z2-QFh">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WpQ-Uc-2gz">
-                                        <rect key="frame" x="0.0" y="731.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="775.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WpQ-Uc-2gz" id="LSM-B0-YI9">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Position + Button on " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLW-GB-ugG">
-                                                    <rect key="frame" x="15" y="11.5" width="164.5" height="21"/>
+                                                    <rect key="frame" x="15" y="11.5" width="166" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1555,7 +1748,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                                         <fragment content="The location on the screen where the user prefers the + (add node) button to appear"/>
                                                     </attributedString>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="el8-h8-H1F">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="el8-h8-H1F">
                                                     <rect key="frame" x="249" y="5.5" width="51" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <state key="normal" title="Button"/>
@@ -1575,7 +1768,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="IqK-Jw-3YY">
-                                        <rect key="frame" x="0.0" y="775.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="819.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IqK-Jw-3YY" id="5R9-J2-ycr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1601,7 +1794,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gt5-e4-ICw">
-                                        <rect key="frame" x="0.0" y="819.5" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="863.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gt5-e4-ICw" id="sug-RD-ipO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1664,26 +1857,5 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
     </inferredMetricsTieBreakers>
     <resources>
         <image name="702-share.png" width="21" height="28"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>
