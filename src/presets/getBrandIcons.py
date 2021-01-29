@@ -2,12 +2,27 @@
 
 # Look though the nsi-presets file and download all referenced brand images
 
-import sys, os, json, requests, cv2
+import sys, os, json, requests, cv2, getopt
+
+skip = 0
+
+try:
+	opts, _ = getopt.getopt(sys.argv[1:],'',['skip='])
+except getopt.GetoptError as e:
+	print(e)
+	sys.exit(2)
+for opt, arg in opts:
+	if opt in ("--skip"):
+		skip = int(arg)
+	else:
+		print('getBrandIcons.py [--skip <count>]')
+		sys.exit()
 
 FILE='./nsi_presets.json'
 SIZE=60
 
 dict=json.load(open(FILE,))
+dict=dict["presets"]
 
 types = {
 	"image/jpeg" 	: ".jpg",
@@ -26,12 +41,19 @@ cnt=0
 for ident,fields in dict.items():
 	if 'imageURL' in fields:
 		cnt=cnt+1
+		if cnt < skip:
+			continue
 		if cnt > 2000000:
 			break
 		url=fields['imageURL']
 		ident=ident.replace("/","_")
 
-		response = requests.get(url, stream=True)
+		try:
+			response = requests.get(url, stream=True)
+		except:
+			print(cnt,url,"--> *** Error ***")
+			continue
+
 		if response.status_code == 200:
 			contentType=response.headers["Content-Type"]
 			ext=types.get(contentType,"")
