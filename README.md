@@ -31,12 +31,12 @@ A number of assets used in the app come from other repositories, and should be p
 
 ### How to update external assets
 
-Starting from the src directory:
-- (cd presets && update.sh)			# fetches latest presets.json, etc. files and NSI
-- (cd POI-Icons && update.sh)			# fetches maki/temaki icons 
-- (cd presets && getBrandIcons.py)		# downloads images from various websites and converts them to png as necessary
-- (cd presets && uploadBrandIcons.sh)	# uploads imagery to gomaposm.com where they can be downloaded on demand at runtime (password required)
-- (cd xliff && update.sh)				# downloads latest translations from weblate (password required)
+Starting from the `src` directory:
+- `(cd presets && update.sh)`				# fetches latest presets.json, etc. files and NSI
+- `(cd POI-Icons && update.sh)`			# fetches maki/temaki icons 
+- `(cd presets && getBrandIcons.py)`		# downloads images from various websites and converts them to png as necessary
+- `(cd presets && uploadBrandIcons.sh)`	# uploads imagery to gomaposm.com where they can be downloaded on demand at runtime (password required)
+- `(cd xliff && update.sh)`					# downloads latest translations from weblate (password required)
 
 ## Continuous integration
 
