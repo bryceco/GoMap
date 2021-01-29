@@ -27,7 +27,7 @@ A number of assets used in the app come from other repositories, and should be p
 - iD presets icons (https://github.com/ideditor/temaki.git, https://github.com/mapbox/maki.git)
 - Name suggestion index (https://github.com/osmlab/name-suggestion-index)
 - NSI brand imagery (pulled from facebook/twitter/wikipedia)
-- WebLate translations (https://hosted.weblate.org/projects/go-map)
+- WebLate translations (https://hosted.weblate.org/projects/go-map/app)
 
 ### How to update external assets
 
@@ -85,5 +85,5 @@ The Go Map!! app icon was created by [@Binnette][5].
 
 ## Presets and translation
 
-Go Map!! is using iD presets, so you can improve translations [by improving translations of iD presets](https://github.com/openstreetmap/iD/blob/develop/CONTRIBUTING.md#translating).
+Go Map!! is using iD presets, so you can improve translations [by improving translations of iD presets](https://github.com/openstreetmap/id-tagging-schema).
 
