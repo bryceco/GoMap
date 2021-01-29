@@ -8,13 +8,13 @@
 "GPS Exchange Format (GPX)" = "GPS 交換格式 (GPX)";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "連線到外接的藍牙 GPS 裝置";
+"NSBluetoothPeripheralUsageDescription" = "連線到其他藍牙 GPS 裝置";
 
 /* Privacy - Camera Usage Description */
-"NSCameraUsageDescription" = "相機將會被用於測量建築物或物件的高度";
+"NSCameraUsageDescription" = "您的相機將會被用來測量建築物或實體物件的高度";
 
 /* Privacy - Location Always and When In Use Usage Description */
-"NSLocationAlwaysAndWhenInUseUsageDescription" = "在背景執行時永遠允許 app 紀錄定位資訊到 GPX 檔案。";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "持續定位並允許 app 紀錄資訊到 GPX 檔案，當 app 在背景執行時。";
 
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "您的定位動態將會顯示在地圖上。";

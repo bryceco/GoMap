@@ -31,6 +31,12 @@
 /* No comment provided by engineer. */
 "(way)" = "(Weg)";
 
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f Meter, %2$ld Knoten";
+
+/* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f Meter, %2$ld Knoten";
+
 /* These values will always be large (plural) */
 "%.2f MB, %ld files" = "%1$.2f MB, %2$ld Dateien";
 
@@ -77,6 +83,9 @@
 /* Add to relation */
 "Add inner member" = "Inneres Mitglied hinzufügen";
 
+/* No comment provided by engineer. */
+"add node to way" = "Knoten zum Weg hinzufügen";
+
 /* Edit action */
 "Add Note" = "Hinweis hinzufügen";
 
@@ -107,6 +116,9 @@
 /* node/way/relation attributes */
 "Attributes" = "Attribute";
 
+/* Automatic selection of presets languages */
+"Automatic" = "Automatisch";
+
 /* identifies current aerial imagery */
 "Background imagery %@" = "Hintergrundbilder %@";
 
@@ -133,6 +145,9 @@
 
 /* No comment provided by engineer. */
 "Can't extend way" = "Kann Weg nicht verlängern";
+
+/* No comment provided by engineer. */
+"Can't remove component of a Route or similar relation" = "Komponente einer Route oder ähnlichen Relation kann nicht entfernt werden";
 
 /* No comment provided by engineer. */
 "Can't remove node in Turn Restriction 'via' way" = "Kann Knoten in 'Via'-Weg der Abbiegebeschränkung nicht löschen";
@@ -194,11 +209,20 @@
 /* No comment provided by engineer. */
 "Create\n" = "Erstellen\n";
 
-/* Edit action */
-"Create Relation" = "Relation erstellen";
+/* No comment provided by engineer. */
+"create node" = "Erstelle Knoten";
 
 /* No comment provided by engineer. */
-"Create Relation Type" = "Relations-Typ erstellen";
+"create relation" = "Erstelle Relation";
+
+/* Edit action */
+"Create Relation" = "Erstelle Relation";
+
+/* No comment provided by engineer. */
+"Create Relation Type" = "Erstelle Relations-Typ";
+
+/* No comment provided by engineer. */
+"create way" = "Erstelle Weg";
 
 /* current GPX track */
 "Current Track" = "Aktueller Track";
@@ -219,6 +243,21 @@
 "Delete failed" = "Löschen fehlgeschlagen";
 
 /* No comment provided by engineer. */
+"delete multipolygon" = "Lösche Multiploygon";
+
+/* No comment provided by engineer. */
+"delete node" = "Lösche Knoten";
+
+/* No comment provided by engineer. */
+"delete node from way" = "Lösche Knoten von Weg";
+
+/* No comment provided by engineer. */
+"delete relation" = "Lösche Relation";
+
+/* No comment provided by engineer. */
+"delete way" = "Lösche Weg";
+
+/* No comment provided by engineer. */
 "Detach from relation" = "Von Relation trennen";
 
 /* Edit action */
@@ -229,6 +268,9 @@
 
 /* No comment provided by engineer. */
 "Done" = "Fertig";
+
+/* create a duplicate */
+"duplicate" = "dupliziere";
 
 /* Edit action */
 "Duplicate" = "Duplizieren";
@@ -287,11 +329,17 @@
 /* No comment provided by engineer. */
 "Invalid URL" = "Ungültige URL";
 
+/* Edit action */
+"Join" = "Verbinden";
+
 /* No comment provided by engineer. */
 "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "Die Sprachauswahl betrifft nur Vorlagen und nur jene Vorlagen die für iD übersetzt wurden. Die Hauptoberfläche ist immer noch englisch.";
 
 /* No comment provided by engineer. */
 "Last updated %@" = "Zuletzt aktualisiert %@";
+
+/* coordinates */
+"Lat/Lon" = "Breitengrad/Längengrad";
 
 /* Left-hand side of screen */
 "Left side" = "Linke Seite";
@@ -313,6 +361,9 @@
 
 /* Edit action */
 "Make Rectangular" = "Rechteckig machen";
+
+/* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "Maximale Weglänge sind 2000 Knoten";
 
 /* rate the app later */
 "Maybe later..." = "Vielleicht später...";
@@ -346,6 +397,9 @@
 
 /* Edit action */
 "More..." = "Mehr...";
+
+/* No comment provided by engineer. */
+"move" = "bewegen";
 
 /* No comment provided by engineer. */
 "Move" = "Bewegen";
@@ -385,10 +439,19 @@
 "Node" = "Knoten";
 
 /* No comment provided by engineer. */
+"node %@" = "Knoten %@";
+
+/* No comment provided by engineer. */
+"node %@ (in way)" = "Knoten %@ (in Weg)";
+
+/* No comment provided by engineer. */
 "Node attributes" = "Knoten-Attribute";
 
 /* No comment provided by engineer. */
 "Node is not an element of way" = "Knoten ist kein Element von Weg";
+
+/* No comment provided by engineer. */
+"Node must be the first or last node of the way" = "Der Knoten muss der erste oder letzte Knoten des Wegs sein";
 
 /* No comment provided by engineer. */
 "Node tags" = "Knoten-Attribute";
@@ -416,6 +479,9 @@
 
 /* No comment provided by engineer. */
 "Open URL" = "URL öffnen";
+
+/* No comment provided by engineer. */
+"OSM data must be version 0.6 (fetched '%@')" = "OSM Daten müssen Version 0.6 (abgerufen '%@') sein";
 
 /* Edit action */
 "Paste" = "Einfügen";
@@ -490,6 +556,9 @@
 /* No comment provided by engineer. */
 "Sorry, an error occurred while loading the GPX file" = "Entschuldigung, ein Fehler beim Laden der GPX-Datei ist aufgetreten";
 
+/* Edit action */
+"Split" = "Teilen";
+
 /* Begin downloading tiles */
 "Start" = "Start";
 
@@ -503,7 +572,13 @@
 "Tags" = "Attribute";
 
 /* No comment provided by engineer. */
+"The + button can be positioned on either the left or right side of the screen" = "Der + Knopf kann sowohl auf der linken, als auch auf der rechten Seite des Bildschirms positioniert sein";
+
+/* No comment provided by engineer. */
 "The current location cannot be determined: " = "Die aktuelle Position kann nicht bestimmt werden: ";
+
+/* No comment provided by engineer. */
+"The merged nodes contain conflicting tags" = "Die zusammengeführten Knoten enthalten widersprüchliche Tags";
 
 /* No comment provided by engineer. */
 "The selected way must be completely visible" = "Der ausgewählte Weg muss vollständig sichtbar sein";
@@ -521,7 +596,13 @@
 "The ways contain incompatible tags" = "Die Wege enthalten inkompatible Attribute";
 
 /* No comment provided by engineer. */
+"The XML is improperly formed" = "Das XML ist falsch geformt";
+
+/* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "Diese Aktion erfordert, dass GPS eingeschalten ist";
+
+/* No comment provided by engineer. */
+"To add another member to the relation 'long press' on the way to be added" = "Um ein anderes Mitglied zur Relation hinzuzufügen, halte den Weg der hinzugefügt werden soll lange gedrückt";
 
 /* No comment provided by engineer. */
 "Turn On Location Services to Allow %@ to Determine Your Location" = "Schalte Ortungsdienste ein, um %@ zu erlauben, deine Position zu bestimmen";
@@ -553,6 +634,9 @@
 /* No comment provided by engineer. */
 "Upload complete!" = "Hochladen abgeschlossen!";
 
+/* No comment provided by engineer. */
+"Uploading GPX..." = "GPX hochladen...";
+
 /* OSM user name */
 "User" = "Nutzer";
 
@@ -561,4 +645,22 @@
 
 /* No comment provided by engineer. */
 "Warning" = "Warnung";
+
+/* No comment provided by engineer. */
+"way %@" = "Weg %@";
+
+/* No comment provided by engineer. */
+"Way attributes" = "Weg Attribute";
+
+/* No comment provided by engineer. */
+"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Du bist gerade dabei, Änderungen an der live-geschalteten OpenStreetMap Datenbank zu machen. Die Änderungen werden für jeden auf der Welt sichtbar.\n\nZum Fortfahren drücke noch einmal Hochladen, sonst drücke Abbrechen.";
+
+/* No comment provided by engineer. */
+"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "Es wurden Änderungen gemacht, welche noch nicht zum Server hochgeladen wurden. Den Cache zu leeren, würde den Verlust dieser Veränderungen bedeuten.";
+
+/* No comment provided by engineer. */
+"You must provide your OSM user name, not an email address." = "Der OSM-Nutzername muss eingetragen sein, keine E-Mail Addresse.";
+
+/* No comment provided by engineer. */
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "Du hast %ld Änderungssätze mit dieser Version von GoMap!! hochgeladen.\n\nDiese App bewerten?";
 

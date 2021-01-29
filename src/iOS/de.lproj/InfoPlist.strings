@@ -13,6 +13,9 @@
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = "Die Kamera wird verwendet, um Höhen von Gebäuden oder Objekten zu messen";
 
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Die Standortdienste immer zu erlauben, ermöglicht der App, GPX-Dateien auch dann aufzuzeichnen, wenn sie inaktiv ist.";
+
 /* Privacy - Location Always Usage Description */
 "NSLocationAlwaysUsageDescription" = "Dein Standort wird angezeigt und auf der Karte verfolgt.";
 

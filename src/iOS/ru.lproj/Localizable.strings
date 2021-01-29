@@ -408,6 +408,9 @@
 "Make Rectangular" = "Выпрямить углы";
 
 /* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "Максимальное количество точек после соединения - 2000";
+
+/* No comment provided by engineer. */
 "Maximum way length is 2000 nodes" = "Максимальная длина линии - 2000 точек";
 
 /* rate the app later */
@@ -509,6 +512,9 @@
 
 /* No comment provided by engineer. */
 "Node is not an element of way" = "Точка не является элементом линии";
+
+/* No comment provided by engineer. */
+"Node must be the first or last node of the way" = "Точка должна быть первой или последней точкой линии";
 
 /* No comment provided by engineer. */
 "Node tags" = "Теги точки";

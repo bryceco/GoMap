@@ -5,10 +5,10 @@
 "\tWay " = "\t線段 ";
 
 /* No comment provided by engineer. */
-" (%d members)\n" = " (%d 成員)\n";
+" (%d members)\n" = " (%d 個成員)\n";
 
 /* No comment provided by engineer. */
-" (%d nodes)\n" = " (%d 節點)\n";
+" (%d nodes)\n" = " (%d 個節點)\n";
 
 /* No comment provided by engineer. */
 " (node)" = " (節點)";
@@ -60,13 +60,13 @@
 "%ld meters, %ld points" = "%1$ld 公尺, %2$ld 點";
 
 /* Number of tiles/objects in cache */
-"%ld objects" = "%ld 物件";
+"%ld objects" = "%ld 個物件";
 
 /* Always plural */
-"%lu tiles needed" = "%lu 圖磚需求";
+"%lu tiles needed" = "尚需 %lu 塊圖磚";
 
 /* Location of Add Node button on the screen */
-"+ Button Position" = "+ 按鈕位置";
+"+ Button Position" = "+ 按鈕的位置";
 
 /* unknown user name */
 "<unknown>" = "<未知>";
@@ -78,7 +78,7 @@
 "A GPX Track records your path as you travel along a road or trail" = "當您沿著道路或小徑移動時， GPX 軌跡記錄了您的移動路徑";
 
 /* No comment provided by engineer. */
-"A relation the node belongs to is not fully downloaded" = "節點所屬的關係並沒有全部下載完";
+"A relation the node belongs to is not fully downloaded" = "節點所屬的關係沒有全部下載完畢";
 
 /* Add to relation */
 "Add inner member" = "新增內部成員";
@@ -108,7 +108,7 @@
 "Additional imagery" = "其他影像";
 
 /* No comment provided by engineer. */
-"Aerial only" = "只有空照";
+"Aerial only" = "只用空照影像";
 
 /* No comment provided by engineer. */
 "All choices" = "全部選擇";
@@ -125,6 +125,9 @@
 /* node/way/relation attributes */
 "Attributes" = "屬性";
 
+/* Automatic selection of presets languages */
+"Automatic" = "自動";
+
 /* identifies current aerial imagery */
 "Background imagery %@" = "背景影像 %@";
 
@@ -138,7 +141,7 @@
 "Cache trimmed" = "快取已調整";
 
 /* No comment provided by engineer. */
-"Can only add ways to multipolygons" = "只有線段可以新增到複多邊形";
+"Can only add ways to multipolygons" = "只有線段可以被新增到複多邊形中";
 
 /* No comment provided by engineer. */
 "Can't delete node that is part of a relation" = "無法刪除關係中的節點";
@@ -171,7 +174,7 @@
 "Cancel" = "取消";
 
 /* e-mail message */
-"Cannot compose message" = "無法組成訊息";
+"Cannot compose message" = "無法產生訊息內容";
 
 /* No comment provided by engineer. */
 "Cannot connect an inner way to an outer way" = "無法將內部線段連結到外部線段";
@@ -180,7 +183,7 @@
 "Changeset" = "變更集";
 
 /* Delete cached data */
-"Clear Aerial Tiles" = "清除空拍圖磚";
+"Clear Aerial Tiles" = "清除空照圖磚";
 
 /* Delete cached data */
 "Clear GPS Overlay Tiles" = "清除 GPS 圖磚";
@@ -310,6 +313,12 @@
 
 /* No comment provided by engineer. */
 "Editing layer not visible" = "無法顯示編輯圖層";
+
+/* No comment provided by engineer. */
+"Editor only" = "只有編輯器";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "編輯器疊空照圖";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "請確保已啟用定位服務且本軟體有使用定位服務的權限。\n\n錯誤： %@";
@@ -505,7 +514,13 @@
 "Node is not an element of way" = "節點不屬於線段";
 
 /* No comment provided by engineer. */
+"Node must be the first or last node of the way" = "節點必須在線段的首或尾";
+
+/* No comment provided by engineer. */
 "Node tags" = "節點的標籤";
+
+/* User credentials not found */
+"Not found" = "找不到";
 
 /* OSM note */
 "Note History" = "節點的歷史紀錄";
@@ -554,6 +569,9 @@
 
 /* No comment provided by engineer. */
 "Pasting %ld tag(s)" = "貼上 %ld 標籤";
+
+/* No comment provided by engineer. */
+"Perform Action" = "繼續執行";
 
 /* No comment provided by engineer. */
 "Please wait" = "請稍候";
@@ -705,6 +723,9 @@
 
 /* No comment provided by engineer. */
 "The ways contain incompatible tags" = "線段包含不相容的標籤";
+
+/* No comment provided by engineer. */
+"The XML is improperly formed" = "XML 格式錯誤";
 
 /* No comment provided by engineer. */
 "This action requires GPS to be turned on" = "這個行為需要啟用 GPS 功能";
