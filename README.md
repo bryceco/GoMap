@@ -10,6 +10,34 @@ Go Map!! is an iPhone/iPad editor for adding cartographic information to [OpenSt
 Do you want to help testing pre-releases of Go Map!!?
 [Become a TestFlight tester][4] today! 🚀
 
+## Source code structure
+
+* iOS - Code specific to the iOS app
+* Mac - Code specific to the Mac app (old, doesn't build anymore)
+* Shared - Shared code (drawing code, OSM data structures, etc)
+* Images - Images used for application elements (buttons, etc)
+* POI-Icons - Icons used for map elements (POIs, etc)
+* presets - The presets database copied from the iD editor
+* xliff - Translation files
+
+## External assets
+
+A number of assets used in the app come from other repositories, and should be periodically updated. Because updating these items can be a lengthy process it is performed manually rather than at build time:
+- iD presets database (https://github.com/openstreetmap/id-tagging-schema) 
+- iD presets icons (https://github.com/ideditor/temaki.git, https://github.com/mapbox/maki.git)
+- Name suggestion index (https://github.com/osmlab/name-suggestion-index)
+- NSI brand imagery (pulled from facebook/twitter/wikipedia)
+- WebLate translations (https://hosted.weblate.org/projects/go-map)
+
+### How to update external assets
+
+Starting from the src directory:
+- (cd presets && update.sh)			# fetches latest presets.json, etc. files and NSI
+- (cd POI-Icons && update.sh)			# fetches maki/temaki icons 
+- (cd presets && getBrandIcons.py)		# downloads images from various websites and converts them to png as necessary
+- (cd presets && uploadBrandIcons.sh)	# uploads imagery to gomaposm.com where they can be downloaded on demand at runtime (password required)
+- (cd xliff && update.sh)				# downloads latest translations from weblate (password required)
+
 ## Continuous integration
 
 ### Prerequisite
@@ -36,15 +64,6 @@ In order to release a new Beta to the TestFlight testers, run
       FASTLANE_USER=<APP_STORE_CONNECT_EMAIL> \
       FASTLANE_ITC_TEAM_ID=<APP_STORE_CONNECT_TEAM_ID> \
       bundle exec fastlane beta
-
-## Source code structure
-
-* iOS - Code specific to the iOS app
-* Mac - Code specific to the Mac app (old, doesn't build anymore)
-* Shared - Shared code (drawing code, OSM data structures, etc)
-* Images - Images used for application elements (buttons, etc)
-* png/poi/Maki/iD SVG POI - Icons used for map elements (POIs, etc)
-* presets - The presets database copied from the iD editor
 
 ## Formatting
 
