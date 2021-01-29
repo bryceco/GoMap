@@ -54,7 +54,7 @@ import Foundation
 				newArray.reserveCapacity(origArray.count)
 				for i in 0..<origArray.count {
 					let o = translation[NSNumber(value: i)] ?? origArray[i]
-					newArray[i] = o as! AnyHashable
+					newArray.append( o as! AnyHashable )
 				}
 				return newArray
 			} else if let translation = translation as? String {
@@ -75,6 +75,12 @@ import Foundation
 					newDict[key] = Translate( obj, translation )
 				} else {
 					newDict[key] = Translate( obj, translation[key] )
+				}
+			}
+			for (key,obj) in translation {
+				// need to add things that don't exist in orig
+				if newDict[key] == nil {
+					newDict[key] = obj
 				}
 			}
 			return newDict
@@ -143,8 +149,9 @@ import Foundation
 	// initialize presets database
 	private class func featureDictForJsonDict(_ dict:[String:[String:Any]], isNSI:Bool) -> [String:PresetFeature]
 	{
+		let presetDict = isNSI ? dict["presets"] as! [String:[String:Any]] : dict
 		var presets = [String :PresetFeature]()
-		for (name,values) in dict {
+		for (name,values) in presetDict {
 			presets[name] = PresetFeature(withID: name, jsonDict: values, isNSI:isNSI)
 		}
 		return presets

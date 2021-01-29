@@ -491,7 +491,7 @@ extension PresetsDatabase {
 				}
 			}
 
-			let placeholders = (dict["strings"] as? [String:Any])?["placeholders"] as? [String : Any]
+			let placeholders = dict["placeholders"] as? [String : Any]
 			var addrs: [AnyHashable] = []
 			for addressGroup in keysForCountry ?? [] {
 				for addressKey in addressGroup {
