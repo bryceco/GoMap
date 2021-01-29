@@ -1922,7 +1922,10 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 				arrow.path = arrowPath;
 				arrow.lineWidth = 1;
 				arrow.fillColor = UIColor.blackColor.CGColor;
+				arrow.strokeColor = UIColor.whiteColor.CGColor;
+				arrow.lineWidth = 0.5;
 				arrow.zPosition	= isHighlight ? Z_HIGHLIGHT_ARROW : Z_ARROW;
+
 				[layers addObject:arrow];
 				CGPathRelease(arrowPath);
 			}];
