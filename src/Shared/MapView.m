@@ -1204,20 +1204,14 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(double)metersPerPixel
 {
-	OSMRect screenRect = OSMRectFromCGRect( self.layer.bounds );
-	OSMRect rc = [self mapRectFromScreenRect:screenRect];
-	OSMPoint southwest = { rc.origin.x, rc.origin.y + rc.size.height };
-	OSMPoint northeast = { rc.origin.x + rc.size.width, rc.origin.y };
-	southwest = LongitudeLatitudeFromMapPoint(southwest);
-	northeast = LongitudeLatitudeFromMapPoint(northeast);
-	// if the map is zoomed to the top/bottom boundary then the y-axis will be crazy
-	if ( southwest.y > northeast.y ) {
-		northeast.y = southwest.y;
-		screenRect.size.height = 0;
-	}
-	double meters = GreatCircleDistance( southwest, northeast );
-	double pixels = hypot(screenRect.size.width,screenRect.size.height);
-	return meters/pixels;
+	CGPoint p1 = _crossHairs.position;
+	CGPoint p2 = { p1.x+1.0, p1.y };
+	CLLocationCoordinate2D c1 = [self longitudeLatitudeForScreenPoint:p1 birdsEye:NO];
+	CLLocationCoordinate2D c2 = [self longitudeLatitudeForScreenPoint:p2 birdsEye:NO];
+	OSMPoint o1 = { c1.longitude, c1.latitude };
+	OSMPoint o2 = { c2.longitude, c2.latitude };
+	double meters = GreatCircleDistance( o1, o2 );
+	return meters;
 }
 
 -(OSMRect)boundingScreenRectForMapRect:(OSMRect)mapRect
