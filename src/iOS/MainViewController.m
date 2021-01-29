@@ -121,11 +121,13 @@
 	for ( UIButton * button in buttons ) {
 
 		// corners
-        if ( button == _mapView.helpButton ) {
-            // The button is a circle.
-            button.layer.cornerRadius = button.bounds.size.width / 2;
+        if ( button == _mapView.helpButton ||
+			 button == _mapView.addNodeButton )
+		{
+			// The button is a circle.
+			button.layer.cornerRadius = button.bounds.size.width / 2;
         } else if ( button != _mapView.compassButton ) {
-			button.layer.cornerRadius	= button == _mapView.addNodeButton ? 30.0 : 10.0;
+			button.layer.cornerRadius	= 10.0;
 		}
 		// shadow
 		if ( button.superview != _undoRedoView ) {
