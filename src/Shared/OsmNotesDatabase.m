@@ -404,33 +404,24 @@ static NSInteger g_nextTagID = 1;
 
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion
 {
-	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:[[NSCharacterSet characterSetWithCharactersInString:@"+;"] invertedSet]];
+	NSMutableCharacterSet * allowedChars = [NSCharacterSet.URLQueryAllowedCharacterSet mutableCopy];
+	[allowedChars removeCharactersInString:@"+;&"];
+	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:allowedChars];
 
-	NSURLComponents * components = [NSURLComponents componentsWithString:[OSM_API_URL stringByAppendingString:@"api/0.6/notes"]];
+	NSMutableString * url = [[OSM_API_URL stringByAppendingString:@"api/0.6/notes"] mutableCopy];
+
 	if ( note.comments == nil ) {
 		// brand new note
-		components.queryItems = @[
-			[NSURLQueryItem queryItemWithName:@"lat" value:@(note.lat).stringValue],
-			[NSURLQueryItem queryItemWithName:@"lon" value:@(note.lon).stringValue],
-			[NSURLQueryItem queryItemWithName:@"text" value:comment]
-		];
+		[url appendFormat:@"?lat=%@&lon=%@&text=%@",
+				 @(note.lat).stringValue, @(note.lon).stringValue, comment];
 	} else {
 		// existing note
 		if ( close ) {
-			components.path = [components.path stringByAppendingPathComponent:note.noteId.stringValue];
-			components.path = [components.path stringByAppendingPathComponent:@"close"];
-			components.queryItems = @[
-				[NSURLQueryItem queryItemWithName:@"text" value:comment]
-			];
+			[url appendFormat:@"/%@/close?text=%@",note.noteId.stringValue,comment];
 		} else {
-			components.path = [components.path stringByAppendingPathComponent:note.noteId.stringValue];
-			components.path = [components.path stringByAppendingPathComponent:@"comment"];
-			components.queryItems = @[
-				[NSURLQueryItem queryItemWithName:@"text" value:comment]
-			];
+			[url appendFormat:@"/%@/comment?text=%@",note.noteId.stringValue,comment];
 		}
 	}
-	NSString * url = components.string;
 
 	[_mapData putRequest:url method:@"POST" xml:nil completion:^(NSData *postData,NSString * postErrorMessage) {
 		OsmNote * newNote = nil;
