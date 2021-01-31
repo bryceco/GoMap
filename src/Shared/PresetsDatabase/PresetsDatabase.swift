@@ -38,54 +38,30 @@ import Foundation
 		return nil
 	}
 
-	private class func Translate(_ orig: Any?, _ translation: Any?) -> Any? {
+	private class func Translate( _ orig: Any, _ translation: Any?) -> Any {
 		guard let translation = translation else {
 			return orig
 		}
-		if (orig is String) && (translation is String) {
-			if (translation as! String).hasPrefix("<") {
-				return orig // meta content
-			}
-			return translation
-		}
-		if let origArray = orig as? [AnyHashable] {
-			if let translation = translation as? [AnyHashable : Any] {
-				var newArray = [AnyHashable]()
-				newArray.reserveCapacity(origArray.count)
-				for i in 0..<origArray.count {
-					let o = translation[NSNumber(value: i)] ?? origArray[i]
-					newArray.append( o as! AnyHashable )
-				}
-				return newArray
-			} else if let translation = translation as? String {
-				let a = translation.components(separatedBy: ",")
-				return a
-			 } else {
-				 return origArray
-			 }
-		}
+		let orig = orig as! [String:Any]
+		let translation2: [String:Any] = translation as! [String:Any]
 
-		if let orig = orig as? [String:Any],
-		   let translation = translation as? [String:Any]
-		{
-			var newDict = [String:Any]()
-			for (key,obj) in orig {
-				if key == "strings" {
-					// for "strings" the translation skips a level
-					newDict[key] = Translate( obj, translation )
-				} else {
-					newDict[key] = Translate( obj, translation[key] )
-				}
+		// both are dictionaries, so recurse on each key/value pair
+		var newDict = [String:Any]()
+		for (key,obj) in orig {
+			if key == "options" {
+				newDict[key] = obj
+				newDict["strings"] = translation2[key]
+			} else {
+				newDict[key] = Translate( obj, translation2[key] )
 			}
-			for (key,obj) in translation {
-				// need to add things that don't exist in orig
-				if newDict[key] == nil {
-					newDict[key] = obj
-				}
-			}
-			return newDict
 		}
-		return orig
+		for (key,obj) in translation2 {
+			// need to add things that don't exist in orig
+			if newDict[key] == nil {
+				newDict[key] = obj
+			}
+		}
+		return newDict
 	}
 
 	@objc let jsonAddressFormats: [Any]				 	// address formats for different countries
@@ -95,6 +71,7 @@ import Foundation
 
 	@objc let yesForLocale: String
 	@objc let noForLocale: String
+	@objc let unknownForLocale: String
 
 	override init() {
 		// get translations for current language
@@ -106,6 +83,7 @@ import Foundation
 		let yesNoDict = ((jsonTranslation["fields"])?["internet_access"] as? [String:Any])?["options"] as? [String:String]
 		yesForLocale = yesNoDict?[ "yes" ] ?? "Yes"
 		noForLocale  = yesNoDict?[ "no" ] ?? "No"
+		unknownForLocale = ((jsonTranslation["fields"])?["opening_hours"] as? [String:Any])?["placeholder"] as? String ?? "???"
 
 		// get presets files
 		let jsonDefaultsPre 	= PresetsDatabase.DictionaryForFile("preset_defaults.json")!
@@ -119,7 +97,7 @@ import Foundation
 		jsonAddressFormats	 	= PresetsDatabase.DictionaryForFile("address_formats.json") as! [Any]
 
 		// initialize presets and index them
-		var jsonPresetsDict		= PresetsDatabase.DictionaryForFile("presets.json")
+		var jsonPresetsDict		= PresetsDatabase.DictionaryForFile("presets.json")!
 		jsonPresetsDict			= PresetsDatabase.Translate( jsonPresetsDict, jsonTranslation["presets"] )
 		stdPresets 	= PresetsDatabase.featureDictForJsonDict(jsonPresetsDict as! [String : [String:Any]], isNSI:false)
 		stdIndex 	= PresetsDatabase.buildTagIndex([stdPresets], basePresets: stdPresets)
@@ -127,7 +105,6 @@ import Foundation
 		// name suggestion index
 		nsiPresets = [String: PresetFeature]()
 		nsiIndex   = stdIndex
-		taginfoCache = [String : AnyHashable]()
 
 		super.init()
 
@@ -138,13 +115,25 @@ import Foundation
 			DispatchQueue.main.async {
 				self.nsiPresets = nsiPresets2
 				self.nsiIndex 	= nsiIndex2
+
+				#if DEBUG
+				// verify all fields can be read
+				for (field,info) in self.jsonFields {
+					var geometry = "way"
+					if let info = info as? [String:Any],
+					   let geom = info["geometry"] as? [String]
+					{
+						geometry = geom[0]
+					}
+					let _ = self.groupForField( fieldName:field, geometry:geometry, ignore:nil, update:nil)
+				}
+				#endif
 			}
 		}
 	}
 
 	// OSM TagInfo database in the cloud: contains either a group or an array of values
-	var taginfoCache: [String : AnyHashable]
-
+	var taginfoCache = [String : [String]]()
 
 	// initialize presets database
 	private class func featureDictForJsonDict(_ dict:[String:[String:Any]], isNSI:Bool) -> [String:PresetFeature]

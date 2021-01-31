@@ -51,7 +51,7 @@ class PresetKey: NSCoder {
 	) {
 		self.name = name
 		self.tagKey = tag
-		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? ""
+		self.placeholder = placeholder ?? PresetKey.placeholderForPresets(presets) ?? PresetsDatabase.shared.unknownForLocale
 		self.keyboardType = keyboard
 		self.autocapitalizationType = capitalize
 		self.presetList = presets

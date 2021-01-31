@@ -229,9 +229,130 @@ extension PresetsDatabase {
 		return list // list of PresetFeature or PresetCategory
 	}
 
+	// search the taginfo database, return the data immediately if its cached,
+	// and call the update function later if it isn't
+	func taginfoFor( key:String, searchKeys:Bool, update:(() -> Void)?) -> [String]
+	{
+		let cacheKey = key + (searchKeys ? ":K" : ":V")
+		if let cached = taginfoCache[cacheKey] {
+			return cached
+		}
+		guard let update = update else {
+			// some callers don't want to wait for results
+			return []
+		}
+		taginfoCache[cacheKey] = []	// mark as in-transit
+
+		DispatchQueue.global(qos: .default).async(execute: {
+			let cleanKey = searchKeys ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
+			let urlText = searchKeys
+				? "https://taginfo.openstreetmap.org/api/4/keys/all?query=\(cleanKey)&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc"
+				: "https://taginfo.openstreetmap.org/api/4/key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
+			var rawData: Data? = nil
+			if let url = URL(string: urlText) {
+				do {
+					try rawData = Data(contentsOf: url)
+				} catch {}
+			}
+			if let rawData = rawData {
+				var json: [AnyHashable : Any]? = nil
+				do {
+					json = try JSONSerialization.jsonObject(with: rawData, options: []) as? [AnyHashable : Any]
+				} catch {
+				}
+				let results = json?["data"] as? [AnyHashable] ?? []
+				var resultList: [String] = []
+				if searchKeys {
+					for v in results {
+						guard let v = v as? [AnyHashable : Any] else {
+							continue
+						}
+						if (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
+							continue // it's a very uncommon value, so ignore it
+						}
+						if let k = v["key"] as? String {
+							resultList.append(k)
+						}
+					}
+				} else {
+					for v in results {
+						guard let v = v as? [AnyHashable : Any] else {
+							continue
+						}
+						if ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
+							continue // it's a very uncommon value, so ignore it
+						}
+						if let val = v["value"] as? String {
+							resultList.append(val)
+						}
+					}
+				}
+				if resultList.count > 0 {
+					DispatchQueue.main.async(execute: {
+						self.taginfoCache[cacheKey] = resultList
+						update()
+					})
+				}
+			}
+		})
+		return []
+	}
+
+	// a list of keys with yes/no values
+	func multiComboWith(label:String, keys:[String], options:[String], strings:[String:String]?,
+						defaultValue:String?, placeholder:String?, keyboard:UIKeyboardType, capitalize:UITextAutocapitalizationType) -> PresetGroup
+	{
+		var tags: [PresetKey] = []
+		for i in keys.indices {
+			let name = strings?[options[i]] ?? OsmTags.PrettyTag(options[i])
+			let tag = yesNoWith(label:name, key:keys[i], defaultValue:defaultValue, placeholder:nil, keyboard:keyboard, capitalize:capitalize)
+			tags.append(tag)
+		}
+		let group = PresetGroup(name: label, tags: tags)
+		let group2 = PresetGroup(name: nil, tags: [group])
+		group.isDrillDown = true
+		group2.isDrillDown = true
+		return group2
+	}
+
+	// a preset value with a supplied list of potential values
+	func comboWith(label:String, key:String, options:[String], strings:[String:Any]?,
+					defaultValue:String?, placeholder:String?, keyboard:UIKeyboardType, capitalize:UITextAutocapitalizationType) -> PresetKey
+	{
+		var presets: [PresetValue] = []
+		for value in options {
+			if let strings = strings as? [String:String] {
+				let name = strings[value] ?? OsmTags.PrettyTag(value)
+				presets.append(PresetValue(name: name, details: nil, tagValue: value))
+			} else if let strings = strings as? [String:[String:String]] {
+				let info = strings[value]
+				let name = info?["title"] ?? OsmTags.PrettyTag(value)
+				let desc = info?["description"] ?? ""
+				presets.append(PresetValue(name: name, details: desc, tagValue: value))
+			} else {
+				print("missing strings definition: \(key)")
+				let name = OsmTags.PrettyTag(value)
+				presets.append(PresetValue(name: name, details: nil, tagValue: value))
+			}
+		}
+		let tag = PresetKey(name: label, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
+		return tag
+	}
+
+	// a yes/no preset
+	func yesNoWith(label:String, key:String, defaultValue:String?, placeholder:String?, keyboard:UIKeyboardType, capitalize:UITextAutocapitalizationType) -> PresetKey
+	{
+		let presets = [
+			PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
+			PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
+		]
+		let tag = PresetKey(name:label, tagKey:key, defaultValue:defaultValue, placeholder:placeholder, keyboard:keyboard, capitalize:capitalize, presets:presets)
+		return tag
+	}
+
 	func groupForField( fieldName: String, geometry: String, ignore: [String]?, update: (() -> Void)?) -> PresetGroup?
 	{
-		guard let dict = jsonFields[fieldName ] as? [AnyHashable : Any] else { return nil }
+		guard let dict = jsonFields[fieldName] as? [AnyHashable : Any] else { return nil }
 		if dict.count == 0 {
 			return nil
 		}
@@ -242,222 +363,84 @@ extension PresetsDatabase {
 			}
 		}
 
-		var key = dict["key"] as? String ?? fieldName
-		let type = dict["type"] as? String
-		let keysArray = dict["keys"] as? [String]
-		let label = dict["label"] as? String
-		var placeholder = dict["placeholder"] as? String
-		let dictStrings = dict["strings"] as? [String:Any]
-		let stringsOptionsDict = dictStrings?["options"] as? [String : Any]
-		let stringsTypesDict = dictStrings?["types"] as? [AnyHashable : Any]
-		let optionsArray = dict["options"] as? [AnyHashable]
-		let defaultValue = dict["default"] as? String
-		#if os(iOS)
-		var keyboard = UIKeyboardType.default
-		var capitalize = key.hasPrefix("name:") || (key == "operator") ? UITextAutocapitalizationType.words : UITextAutocapitalizationType.none
-		#else
-		var keyboard = 0
-		let UITextAutocapitalizationTypeNone = 0
-		let UITextAutocapitalizationTypeWords = 1
-		var capitalize = key?.hasPrefix("name:") ?? false || (key == "operator") ? .words : .none
-		#endif
+		if let _ = dict["prerequisiteTag"] as? [String:String] {
+			// supporting this would require us to dynamically add/remove fields as tags are set
+			print("preset \(fieldName) doesn't honor prerequisiteTag")
+		}
 
-		//r	DLog(@"%@",dict);
+		let type 			= dict["type"] as! String
+		let keyType 		= dict["key"] as? String ?? fieldName
+		let label 			= dict["label"] as? String ?? OsmTags.PrettyTag(keyType)
+		let placeholder 	= dict["placeholder"] as? String
+		let defaultValue 	= dict["default"] as? String
+		var keyboard 		= UIKeyboardType.default
+		var capitalize 		= keyType.hasPrefix("name:") || (keyType == "operator") ? UITextAutocapitalizationType.words : UITextAutocapitalizationType.none
 
 		switch type {
 
 		case "defaultcheck", "check", "onewayCheck":
-			let presets = [
-				PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-				PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
-			]
-			let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
+			let key = dict["key"] as! String
+			let tag = yesNoWith(label: label, key: key, defaultValue:defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
 			let group = PresetGroup(name:nil, tags:[tag])
 			return group
 
-		case "radio", "structureRadio":
+		case "radio", "structureRadio", "manyCombo", "multiCombo":
+			// all of these can have multiple keys
+			let isMultiCombo = type == "multiCombo"	// uses a prefix key with multiple suffixes
 
-			if let keysArray = keysArray {
+			var options = dict["options"] as? [String]
+			if options == nil {
+				// need to get options from taginfo
+				let key = dict["key"] as! String
+				options = taginfoFor( key:key, searchKeys:isMultiCombo, update:update)
+			} else if isMultiCombo {
+				// prepend key: to options
+				options = options!.map{ (k) -> String in return (dict["key"] as! String)+k }
+			}
+			let strings = dict["strings"] as? [String:String]
 
+			if isMultiCombo || dict["keys"] != nil {
 				// a list of booleans
-				let presets = [
-					PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-					PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
-				]
-				var tags: [PresetKey] = []
-				for k in keysArray {
-					let name = stringsOptionsDict![k] as? String
-					let tag = PresetKey(name: name!, tagKey: k, defaultValue: defaultValue, placeholder: nil, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
-					tags.append(tag)
-				}
-				let group = PresetGroup(name: label, tags: tags)
-				return group
-			} else if let optionsArray = optionsArray {
-
-				// a multiple selection
-				var presets: [PresetValue] = []
-				for v in optionsArray {
-					guard let v = v as? String else {
-						continue
-					}
-					presets.append(PresetValue(name: nil, details: nil, tagValue: v))
-				}
-				let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
-				let group = PresetGroup(name: nil, tags: [tag])
-				return group
-			} else if let stringsOptionsDict = stringsOptionsDict {
-
-				// a multiple selection
-				var presets: [PresetValue] = []
-				for (val2,prettyName) in stringsOptionsDict as! [String:String] {
-					let p = PresetValue(name: prettyName, details: nil, tagValue: val2)
-					presets.append(p)
-				}
-				let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
-				let group = PresetGroup(name: nil, tags: [tag].compactMap { $0 })
+				let keys = (isMultiCombo ? options : dict["keys"] as? [String]) ?? []
+				let group = multiComboWith(label:label, keys:keys, options:options!, strings:strings,
+										   defaultValue:defaultValue, placeholder:placeholder, keyboard:keyboard, capitalize:capitalize)
 				return group
 			} else {
-			#if DEBUG
-				assert(false)
-			#endif
-				return nil
+				// a multiple selection
+				let key = dict["key"] as! String
+				let tag = comboWith(label:label, key: key, options: options!, strings: strings, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
+				let group = PresetGroup(name: nil, tags: [tag])
+				return group
 			}
 
-		case "combo", "semiCombo", "multiCombo", "typeCombo", "manyCombo":
+		case "combo", "semiCombo", "networkCombo", "typeCombo":
 
+			let key = dict["key"] as! String
 			if (type == "typeCombo") && (ignore?.contains(key) ?? false) {
 				return nil
 			}
-			let isMulti = type == "multiCombo"
-			if isMulti && !key.hasSuffix(":") {
-				key = key + ":"
-			}
+			let options = dict["options"] as? [String] ?? taginfoFor(key:key, searchKeys:false, update:update)
 			var presets: [PresetValue] = []
-			if let stringsOptionsDict = stringsOptionsDict {
-
-				for (k,v) in stringsOptionsDict as! [String:String] {
-					presets.append(PresetValue(name: v, details: nil, tagValue: k))
-				}
-				presets.sort(by: { (obj1, obj2) -> Bool in
-					return obj1.name < obj2.name
-				})
-			} else if let optionsArray = optionsArray {
-
-				for v in optionsArray {
-					if let v = v as? String {
-						presets.append(PresetValue(name: nil, details: nil, tagValue: v))
-					}
-				}
-
-			} else {
-
-				// check tagInfo
-				if let cached = taginfoCache[fieldName] {
-					// already got them once
-					if cached is PresetGroup {
-						return cached as? PresetGroup // hack for multi-combo: we already created the group and stashed it in presets
-					} else {
-						// its an array, and we'll convert it to a group below
-						presets = cached as! [PresetValue]
-					}
-				} else if let update = update {
-					DispatchQueue.global(qos: .default).async(execute: {
-						let cleanKey = isMulti ? key.trimmingCharacters(in: CharacterSet(charactersIn: ":")) : key
-						let urlText = isMulti
-							? "https://taginfo.openstreetmap.org/api/4/keys/all?query=\(cleanKey)&filter=characters_colon&page=1&rp=10&sortname=count_all&sortorder=desc"
-							: "https://taginfo.openstreetmap.org/api/4/key/values?key=\(key)&page=1&rp=25&sortname=count_all&sortorder=desc"
-						let url = URL(string: urlText)
-						var data: Data? = nil
-						if let url = url {
-							do {
-								try data = Data(contentsOf: url)
-							} catch {}
-						}
-						if let data = data {
-							var presets2: AnyHashable? = nil
-							var dict2: [AnyHashable : Any]? = nil
-							do {
-								dict2 = try JSONSerialization.jsonObject(with: data, options: []) as? [AnyHashable : Any]
-							} catch {
-							}
-							let values = dict2?["data"] as? [AnyHashable]
-							if isMulti {
-								// a list of booleans
-								var tags: [PresetKey] = []
-								let yesNo = [
-									PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-									PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
-								]
-								for v in values ?? [] {
-									guard let v = v as? [AnyHashable : Any] else {
-										continue
-									}
-									if (v["count_all"] as? NSNumber)?.intValue ?? 0 < 1000 {
-										continue // it's a very uncommon value, so ignore it
-									}
-									if let k = v["key"] as? String {
-										let tag = PresetKey(name: k, tagKey: k, defaultValue: defaultValue, placeholder: nil, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: yesNo)
-										tags.append(tag)
-									}
-								}
-								let group = PresetGroup(name: label, tags: tags)
-								let group2 = PresetGroup(name: nil, tags: [group])
-								group.isDrillDown = true
-								group2.isDrillDown = true
-								presets2 = group2
-
-							} else {
-
-								var presetList : [PresetValue] = []
-								for v in values ?? [] {
-									guard let v = v as? [AnyHashable : Any] else {
-										continue
-									}
-									if ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
-										continue // it's a very uncommon value, so ignore it
-									}
-									if let val = v["value"] as? String {
-										presetList.append(PresetValue(name: nil, details: nil, tagValue: val))
-									}
-								}
-								presets2 = presetList
-							}
-							DispatchQueue.main.async(execute: {
-								self.taginfoCache[fieldName] = presets2
-								update()
-							})
-						}
-					})
-				} else {
-					// already submitted to network, so don't do it again
-				}
+			let strings = dict["strings"] as? [String:String]
+			for v in options {
+				let name = strings?[v] ?? OsmTags.PrettyTag(v)
+				presets.append(PresetValue(name: name, details: nil, tagValue: v))
 			}
+			let tag = PresetKey(name: label, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
+			let group = PresetGroup(name: nil, tags: [tag])
+			return group
 
-			if isMulti {
-				let group = PresetGroup(name: label, tags: [])
-				let group2 = PresetGroup(name: nil, tags: [group])
-				group.isDrillDown = true
-				group2.isDrillDown = true
-				return group2
-			} else {
-				let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
-				let group = PresetGroup(name: nil, tags: [tag])
-				return group
-			}
-
-		case "cycleway":
+		case "access", "cycleway":
 
 			var tagList: [PresetKey] = []
 
-			for key in keysArray ?? [] {
-				var presets: [PresetValue] = []
-				for (k,v) in stringsOptionsDict as? [String:[String:String]] ?? [:] {
-					let n = v["title"]
-					let d = v["description"]
-					presets.append(PresetValue(name: n, details: d, tagValue: k))
-				}
-				let name = (stringsTypesDict?[key] as? String) ?? OsmTags.PrettyTag(type!)
-				let tag = PresetKey(name: name, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
+			let keys = dict["keys"] as! [String]
+			let types = dict["types"] as! [String:String]
+			let strings = dict["strings"] as! [String:[String:String]]
+			let options = dict["options"] as! [String]
+			for key in keys {
+				let name = types[key] ?? OsmTags.PrettyTag(key)
+				let tag = comboWith(label: name, key: key, options: options, strings: strings, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
 				tagList.append(tag)
 			}
 			let group = PresetGroup(name: label, tags: tagList)
@@ -496,7 +479,7 @@ extension PresetsDatabase {
 			for addressGroup in keysForCountry ?? [] {
 				for addressKey in addressGroup {
 					var name: String?
-					placeholder = placeholders?[addressKey] as? String
+					let placeholder = placeholders?[addressKey] as? String
 					if placeholder != nil && (placeholder != "123") {
 						name = placeholder
 					} else {
@@ -511,12 +494,12 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: label, tags: addrs)
 			return group
 
-		case "text", "number", "email", "identifier", "textarea", "tel", "url",
-			 "roadspeed", "wikipedia", "wikidata":
+		case "text", "number", "email", "identifier", "maxweight_bridge", "textarea", "tel", "url",
+			 "roadheight", "roadspeed", "wikipedia", "wikidata":
 
 			// no presets
 			switch type {
-			case "number", "roadspeed":
+			case "number", "roadheight", "roadspeed":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
 			case "tel":
 				keyboard = .numbersAndPunctuation // UIKeyboardTypePhonePad doesn't have Done Button
@@ -529,40 +512,21 @@ extension PresetsDatabase {
 			default:
 				break
 			}
-			let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: nil)
+			let key = dict["key"] as! String
+			let tag = PresetKey(name: label, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: nil)
 			let group = PresetGroup(name: nil, tags: [tag])
 			return group
 
-		case "access":
-
-			// special case
-			var presets: [PresetValue] = []
-			for (k,info) in stringsOptionsDict as! [String:[String:Any]] {
-				let v = PresetValue(name: info["title"] as? String, details: info["description"] as? String, tagValue: k)
-				presets.append(v)
-			}
-
-			var tags: [AnyHashable] = []
-			for k in keysArray ?? [] {
-				let name = stringsTypesDict?[k] as? String
-				let tag = PresetKey(name: name!, tagKey: k, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
-				tags.append(tag)
-			}
-			let group = PresetGroup(name: label, tags: tags)
-			return group
-		case "localized":
+		case "localized", "restrictions":
 
 			// not implemented
 			return nil
 
 		default:
-
-		#if DEBUG
-			assert(false)
-		#endif
-			let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: nil)
-			let group = PresetGroup(name: nil, tags: [tag])
-			return group
+			#if DEBUG
+				assert(false)
+			#endif
+			return nil
 		}
 	}
 }
