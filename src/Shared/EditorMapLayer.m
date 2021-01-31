@@ -1380,10 +1380,6 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 						height *= 3;
 					}
 
-#if USE_SCENEKIT
-					UIBezierPath * wallPath = [UIBezierPath bezierPathWithCGPath:path];
-					[_mapView.buildings3D addShapeWithPath:wallPath height:height position:refPoint];
-#else
 					// get walls
 					double hue = object.ident.longLongValue % 20 - 10;
 					__block BOOL hasPrev = NO;
@@ -1427,7 +1423,6 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 						roof.transform = t;
 						[layers addObject:roof];
 					}
-#endif // USE_SCENEKIT
 				}
 #endif	// SHOW_3D
 
@@ -2482,14 +2477,6 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 			}
 		}
 	}
-
-#if USE_SCENEKIT
-	{
-		CGPoint center = CGRectCenter(_mapView.bounds);
-		OSMPoint mapCenter = [_mapView mapPointFromScreenPoint:OSMPointFromCGPoint(center) birdsEye:NO];
-		[_mapView.buildings3D setCameraDirection:tRotation birdsEye:_mapView.birdsEyeRotation distance:_mapView.birdsEyeDistance fromPoint:mapCenter];
-	}
-#endif
 
 #if FADE_INOUT
 	[CATransaction commit];
