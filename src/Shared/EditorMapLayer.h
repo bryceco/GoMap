@@ -12,7 +12,6 @@
 #import "VectorMath.h"
 
 @class OsmBaseObject;
-@class Buildings3DView;
 @class OsmMapData;
 @class MapView;
 @class OsmRenderInfo;

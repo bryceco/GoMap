@@ -11,7 +11,6 @@
 #import "iosapi.h"
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
-#import "Buildings3DView.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
 #if TARGET_OS_IPHONE
