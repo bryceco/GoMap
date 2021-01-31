@@ -49,14 +49,10 @@
 	UITableViewCell *cell;
 	PresetValue * preset = _valueDefinitions[ indexPath.row ];
 
-	if ( preset.details )
-		cell = [tableView dequeueReusableCellWithIdentifier:@"SubtitleCell" forIndexPath:indexPath];
-	else
-		cell = [tableView dequeueReusableCellWithIdentifier:@"BasicCell" forIndexPath:indexPath];
+    cell = [tableView dequeueReusableCellWithIdentifier:@"BasicCell" forIndexPath:indexPath];
 
 	if ( preset.name ) {
 		cell.textLabel.text = preset.name;
-		cell.detailTextLabel.text = preset.details;
 	} else {
 		NSString * text = [preset.tagValue stringByReplacingOccurrencesOfString:@"_" withString:@" "];
 		text = [text capitalizedString];
