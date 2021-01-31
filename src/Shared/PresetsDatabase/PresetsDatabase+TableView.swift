@@ -268,8 +268,8 @@ extension PresetsDatabase {
 
 		case "defaultcheck", "check", "onewayCheck":
 			let presets = [
-				PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-				PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
+				PresetValue(name: PresetsDatabase.shared.yesForLocale, tagValue: "yes"),
+				PresetValue(name: PresetsDatabase.shared.noForLocale, tagValue: "no")
 			]
 			let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
 			let group = PresetGroup(name:nil, tags:[tag])
@@ -281,8 +281,8 @@ extension PresetsDatabase {
 
 				// a list of booleans
 				let presets = [
-					PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-					PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
+					PresetValue(name: PresetsDatabase.shared.yesForLocale, tagValue: "yes"),
+					PresetValue(name: PresetsDatabase.shared.noForLocale, tagValue: "no")
 				]
 				var tags: [PresetKey] = []
 				for k in keysArray {
@@ -300,7 +300,7 @@ extension PresetsDatabase {
 					guard let v = v as? String else {
 						continue
 					}
-					presets.append(PresetValue(name: nil, details: nil, tagValue: v))
+					presets.append(PresetValue(name: nil, tagValue: v))
 				}
 				let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
 				let group = PresetGroup(name: nil, tags: [tag])
@@ -310,7 +310,7 @@ extension PresetsDatabase {
 				// a multiple selection
 				var presets: [PresetValue] = []
 				for (val2,prettyName) in stringsOptionsDict as! [String:String] {
-					let p = PresetValue(name: prettyName, details: nil, tagValue: val2)
+					let p = PresetValue(name: prettyName, tagValue: val2)
 					presets.append(p)
 				}
 				let tag = PresetKey(name: label!, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
@@ -336,7 +336,7 @@ extension PresetsDatabase {
 			if let stringsOptionsDict = stringsOptionsDict {
 
 				for (k,v) in stringsOptionsDict as! [String:String] {
-					presets.append(PresetValue(name: v, details: nil, tagValue: k))
+					presets.append(PresetValue(name: v, tagValue: k))
 				}
 				presets.sort(by: { (obj1, obj2) -> Bool in
 					return obj1.name < obj2.name
@@ -345,7 +345,7 @@ extension PresetsDatabase {
 
 				for v in optionsArray {
 					if let v = v as? String {
-						presets.append(PresetValue(name: nil, details: nil, tagValue: v))
+						presets.append(PresetValue(name: nil, tagValue: v))
 					}
 				}
 
@@ -385,8 +385,8 @@ extension PresetsDatabase {
 								// a list of booleans
 								var tags: [PresetKey] = []
 								let yesNo = [
-									PresetValue(name: PresetsDatabase.shared.yesForLocale, details: nil, tagValue: "yes"),
-									PresetValue(name: PresetsDatabase.shared.noForLocale, details: nil, tagValue: "no")
+									PresetValue(name: PresetsDatabase.shared.yesForLocale, tagValue: "yes"),
+									PresetValue(name: PresetsDatabase.shared.noForLocale, tagValue: "no")
 								]
 								for v in values ?? [] {
 									guard let v = v as? [AnyHashable : Any] else {
@@ -417,7 +417,7 @@ extension PresetsDatabase {
 										continue // it's a very uncommon value, so ignore it
 									}
 									if let val = v["value"] as? String {
-										presetList.append(PresetValue(name: nil, details: nil, tagValue: val))
+										presetList.append(PresetValue(name: nil, tagValue: val))
 									}
 								}
 								presets2 = presetList
@@ -453,7 +453,7 @@ extension PresetsDatabase {
 				var presets: [PresetValue] = []
 				for (k,v) in stringsOptionsDict as? [String:[String:String]] ?? [:] {
 					let n = v["title"]
-                    presets.append(PresetValue(name: n, details: nil, tagValue: k))
+                    presets.append(PresetValue(name: n, tagValue: k))
 				}
 				let name = (stringsTypesDict?[key] as? String) ?? OsmTags.PrettyTag(type!)
 				let tag = PresetKey(name: name, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
@@ -537,7 +537,7 @@ extension PresetsDatabase {
 			// special case
 			var presets: [PresetValue] = []
 			for (k,info) in stringsOptionsDict as! [String:[String:Any]] {
-				let v = PresetValue(name: info["title"] as? String, details: nil, tagValue: k)
+				let v = PresetValue(name: info["title"] as? String, tagValue: k)
 				presets.append(v)
 			}
 

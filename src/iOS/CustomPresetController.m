@@ -50,7 +50,7 @@
 	for ( UITextField * field in _valueFieldList ) {
 		NSString * value = [field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if ( value.length ) {
-			PresetValue * preset = [[PresetValue alloc] initWithName:nil details:nil tagValue:value];
+			PresetValue * preset = [[PresetValue alloc] initWithName:nil tagValue:value];
 			[presets addObject:preset];
 		}
 	}

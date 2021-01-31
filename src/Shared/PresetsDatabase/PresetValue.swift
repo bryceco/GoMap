@@ -15,9 +15,9 @@ import Foundation
 	@objc let details: String?
 	@objc let tagValue: String
 
-	@objc init(name: String?, details: String?, tagValue value: String) {
+	@objc init(name: String?, tagValue value: String) {
 		self.name = name ?? OsmTags.PrettyTag(value)
-		self.details = details
+		self.details = nil
 		self.tagValue = value
 	}
 
