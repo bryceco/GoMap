@@ -420,13 +420,8 @@ extension PresetsDatabase {
 				return nil
 			}
 			let options = dict["options"] as? [String] ?? taginfoFor(key:key, searchKeys:false, update:update)
-			var presets: [PresetValue] = []
 			let strings = dict["strings"] as? [String:String]
-			for v in options {
-				let name = strings?[v] ?? OsmTags.PrettyTag(v)
-				presets.append(PresetValue(name: name, details: nil, tagValue: v))
-			}
-			let tag = PresetKey(name: label, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
+			let tag = comboWith(label: label, key:key, options:options, strings:strings, defaultValue:defaultValue, placeholder:placeholder, keyboard:keyboard, capitalize:capitalize)
 			let group = PresetGroup(name: nil, tags: [tag])
 			return group
 
@@ -494,8 +489,8 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: label, tags: addrs)
 			return group
 
-		case "text", "number", "email", "identifier", "maxweight_bridge", "textarea", "tel", "url",
-			 "roadheight", "roadspeed", "wikipedia", "wikidata":
+		case "text", "number", "email", "identifier", "maxweight_bridge", "textarea",
+			"tel", "url", "roadheight", "roadspeed", "wikipedia", "wikidata":
 
 			// no presets
 			switch type {
@@ -518,7 +513,6 @@ extension PresetsDatabase {
 			return group
 
 		case "localized", "restrictions":
-
 			// not implemented
 			return nil
 
