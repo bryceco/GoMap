@@ -453,8 +453,7 @@ extension PresetsDatabase {
 				var presets: [PresetValue] = []
 				for (k,v) in stringsOptionsDict as? [String:[String:String]] ?? [:] {
 					let n = v["title"]
-					let d = v["description"]
-					presets.append(PresetValue(name: n, details: d, tagValue: k))
+                    presets.append(PresetValue(name: n, details: nil, tagValue: k))
 				}
 				let name = (stringsTypesDict?[key] as? String) ?? OsmTags.PrettyTag(type!)
 				let tag = PresetKey(name: name, tagKey: key, defaultValue: defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: UITextAutocapitalizationType.none, presets: presets)
@@ -538,7 +537,7 @@ extension PresetsDatabase {
 			// special case
 			var presets: [PresetValue] = []
 			for (k,info) in stringsOptionsDict as! [String:[String:Any]] {
-				let v = PresetValue(name: info["title"] as? String, details: info["description"] as? String, tagValue: k)
+				let v = PresetValue(name: info["title"] as? String, details: nil, tagValue: k)
 				presets.append(v)
 			}
 
