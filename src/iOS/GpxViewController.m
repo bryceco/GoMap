@@ -276,11 +276,13 @@
 
 - (nullable NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == SECTION_ACTIVE_TRACK ) {
-		if ( AppDelegate.shared.mapView.gpxLayer.activeTrack == nil ) {
-			// don't allow selecting the active track if there is none
-			return nil;
-		}
+	if ( indexPath.section == SECTION_CONFIGURE )
+		return nil;
+	if ( indexPath.section == SECTION_ACTIVE_TRACK &&
+		AppDelegate.shared.mapView.gpxLayer.activeTrack == nil )
+	{
+		// don't allow selecting the active track if there is none
+		return nil;
 	}
 	return indexPath;
 }
