@@ -274,6 +274,17 @@
 
 #pragma mark - Table view delegate
 
+- (nullable NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.section == SECTION_ACTIVE_TRACK ) {
+		if ( AppDelegate.shared.mapView.gpxLayer.activeTrack == nil ) {
+			// don't allow selecting the active track if there is none
+			return nil;
+		}
+	}
+	return indexPath;
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == SECTION_ACTIVE_TRACK ) {
