@@ -33,7 +33,6 @@
 		0228442C16D8870C00A1C051 /* GpxLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0228442B16D8870C00A1C051 /* GpxLayer.m */; };
 		022A2A54167B8F1C00D7A5AC /* POITabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A53167B8F1C00D7A5AC /* POITabBarController.m */; };
 		022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */; };
-		022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022ABCA320C3750A002D4977 /* Buildings3DView.m */; };
 		022ABCA520C37618002D4977 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025B841619DCF55C0053C637 /* SceneKit.framework */; };
 		022B09A719BD3F7B0041687B /* QuadMapC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 022B09A619BD3F7B0041687B /* QuadMapC.mm */; };
 		0230558B19B931B20041B151 /* CustomPresetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0230558A19B931B20041B151 /* CustomPresetController.m */; };
@@ -223,8 +222,6 @@
 		022A2A53167B8F1C00D7A5AC /* POITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POITabBarController.m; sourceTree = "<group>"; };
 		022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ClearCacheViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		022A2A6D167D969600D7A5AC /* ClearCacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ClearCacheViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		022ABCA220C3750A002D4977 /* Buildings3DView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Buildings3DView.h; path = ../Shared/Buildings3DView.h; sourceTree = "<group>"; };
-		022ABCA320C3750A002D4977 /* Buildings3DView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Buildings3DView.m; path = ../Shared/Buildings3DView.m; sourceTree = "<group>"; };
 		022B09A619BD3F7B0041687B /* QuadMapC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QuadMapC.mm; path = ../Shared/QuadMapC.mm; sourceTree = "<group>"; };
 		0230558919B931A50041B151 /* CustomPresetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CustomPresetController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0230558A19B931B20041B151 /* CustomPresetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CustomPresetController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -765,8 +762,6 @@
 				025B99A1240DEF1D007E0342 /* aes.h */,
 				025B99A2240DEF1D007E0342 /* aes.m */,
 				02ACBA6D16713F2A00BB4414 /* BingMapsGeometry.h */,
-				022ABCA220C3750A002D4977 /* Buildings3DView.h */,
-				022ABCA320C3750A002D4977 /* Buildings3DView.m */,
 				02ACBA7016713F2A00BB4414 /* changeset.xsl */,
 				02D5B5F2248F154D00FEE448 /* Colors.swift */,
 				02354F79246349E100878A04 /* CurvedGlyphLayer.swift */,
@@ -1210,7 +1205,6 @@
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
 				02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */,
-				022ABCA420C3750A002D4977 /* Buildings3DView.m in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,

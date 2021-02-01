@@ -21,7 +21,6 @@
 @class CAShapeLayer;
 @class AerialList;
 @class AerialService;
-@class Buildings3DView;
 @class DisplayLink;
 @class EditorMapLayer;
 @class FpsLabel;
@@ -167,7 +166,6 @@ typedef enum {
 @property (readonly,nonatomic)	EditorMapLayer				*	editorLayer;
 @property (readonly,nonatomic)	GpxLayer					*	gpxLayer;
 @property (readonly,nonatomic)  MercatorTileLayer           *   noNameLayer;
-@property (readonly,nonatomic)	Buildings3DView				*	buildings3D;
 
 // overlays
 @property (readonly,nonatomic)	MercatorTileLayer			*	locatorLayer;
