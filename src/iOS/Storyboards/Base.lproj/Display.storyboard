@@ -216,7 +216,7 @@
                                                 <action selector="cancel:" destination="Nkd-2e-8Au" id="Dip-qC-lNb"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="yxT-d6-2pL">
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="yxT-d6-2pL">
                                             <connections>
                                                 <action selector="done:" destination="Nkd-2e-8Au" id="fHA-vp-BLI"/>
                                             </connections>
