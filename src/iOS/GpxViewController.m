@@ -294,7 +294,7 @@
 		GpxLayer * gpxLayer = AppDelegate.shared.mapView.gpxLayer;
 		gpxLayer.selectedTrack = gpxLayer.activeTrack;
 		[gpxLayer centerOnTrack:gpxLayer.selectedTrack];
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	} else if ( indexPath.section == SECTION_CONFIGURE ) {
 		// configuration
 	} else if ( indexPath.section == SECTION_PREVIOUS_TRACKS ) {
@@ -302,7 +302,7 @@
 		GpxTrack *	track = gpxLayer.previousTracks[ indexPath.row ];
 		gpxLayer.selectedTrack = track;
 		[gpxLayer centerOnTrack:track];
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	}
 }
 
