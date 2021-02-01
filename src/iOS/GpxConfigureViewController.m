@@ -17,9 +17,9 @@
 	_pickerView.delegate = self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-	[super viewDidAppear:animated];
+	[super viewWillAppear:animated];
 
 	[_pickerView selectRow:_expirationValue.integerValue inComponent:0 animated:NO];
 }
