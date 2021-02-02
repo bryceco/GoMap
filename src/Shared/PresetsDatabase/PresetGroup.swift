@@ -39,7 +39,7 @@ class PresetGroup: NSObject {
 		return text
 	}
 
-	@objc func multiComboSummary(_ dict:[String:String]?) -> String
+	@objc func multiComboSummary(ofDict dict:[String:String]?, isPlaceholder:Bool) -> String
 	{
 		var summary = ""
 		for preset in presetKeys {
@@ -49,7 +49,7 @@ class PresetGroup: NSObject {
 			   values[0].tagValue == "yes",
 			   values[1].tagValue == "no"
 			{
-				if let v = dict?[ preset.tagKey ],
+				if let v = isPlaceholder ? "yes" : dict?[ preset.tagKey ],
 				   OsmTags.IsOsmBooleanTrue( v )
 				{
 					if summary.isEmpty {

@@ -266,8 +266,8 @@
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagSingle" forIndexPath:indexPath];
 		POITabBarController	* tabController = (id)self.tabBarController;
 		cell.nameLabel.text = drillDownGroup.name;
-		cell.valueField.text = [drillDownGroup multiComboSummary:tabController.keyValueDict];
-		cell.valueField.placeholder = @"";
+		cell.valueField.text = [drillDownGroup multiComboSummaryOfDict:tabController.keyValueDict isPlaceholder:NO];
+		cell.valueField.placeholder = [drillDownGroup multiComboSummaryOfDict:nil isPlaceholder:YES];
 		cell.valueField.enabled = NO;
 		cell.presetKey = (id)drillDownGroup;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

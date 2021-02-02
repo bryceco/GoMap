@@ -298,28 +298,26 @@ extension PresetsDatabase {
 		return []
 	}
 
+	func commonPrefixOfMultiKeys(_ options:[String]) -> String
+	{
+		if options.count == 0 { return "" }
+		let prefix = options[0].prefix { (ch) -> Bool in ch != ":" } + ":"
+		for s in options[1...] {
+			if !s.hasPrefix(prefix) {
+				return ""
+			}
+		}
+		return String(prefix)
+	}
+
 	// a list of keys with yes/no values
 	func multiComboWith(label:String, keys:[String], options:[String], strings:[String:String]?,
 						defaultValue:String?, placeholder:String?, keyboard:UIKeyboardType, capitalize:UITextAutocapitalizationType) -> PresetGroup
 	{
+		let prefix = commonPrefixOfMultiKeys( options )
 		var tags: [PresetKey] = []
-
-		var prefix:String? = nil
-		for s in options {
-			if prefix == nil {
-				prefix = s
-			} else {
-				prefix = prefix!.commonPrefix(with: s, options: NSString.CompareOptions.literal)
-				if prefix!.count == 0 {
-					break
-				}
-			}
-		}
-		if prefix == nil || prefix?.last != ":"  {
-			prefix = ""
-		}
 		for i in keys.indices {
-			let name = strings?[options[i]] ?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix!.count)))
+			let name = strings?[options[i]] ?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix.count)))
 			let tag = yesNoWith(label:name, key:keys[i], defaultValue:defaultValue, placeholder:nil, keyboard:keyboard, capitalize:capitalize)
 			tags.append(tag)
 		}
