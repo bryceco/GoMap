@@ -38,5 +38,32 @@ class PresetGroup: NSObject {
 		}
 		return text
 	}
+
+	@objc func multiComboSummary(_ dict:[String:String]?) -> String
+	{
+		var summary = ""
+		for preset in presetKeys {
+			if let preset = preset as? PresetKey,
+			   let values = preset.presetList,
+			   values.count == 2,
+			   values[0].tagValue == "yes",
+			   values[1].tagValue == "no"
+			{
+				if let v = dict?[ preset.tagKey ],
+				   OsmTags.IsOsmBooleanTrue( v )
+				{
+					if summary.isEmpty {
+						summary = preset.name
+					} else {
+						summary = summary + ", " + preset.name
+					}
+				}
+			} else {
+				// it's not a multiCombo
+				return ""
+			}
+		}
+		return summary
+	}
 }
 

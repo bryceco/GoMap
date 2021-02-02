@@ -263,8 +263,12 @@
 
 		// drill down cell
 		PresetGroup * drillDownGroup = rowObject;
-		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagDrillDown" forIndexPath:indexPath];
+		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagSingle" forIndexPath:indexPath];
+		POITabBarController	* tabController = (id)self.tabBarController;
 		cell.nameLabel.text = drillDownGroup.name;
+		cell.valueField.text = [drillDownGroup multiComboSummary:tabController.keyValueDict];
+		cell.valueField.placeholder = @"";
+		cell.valueField.enabled = NO;
 		cell.presetKey = (id)drillDownGroup;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 

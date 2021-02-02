@@ -303,8 +303,23 @@ extension PresetsDatabase {
 						defaultValue:String?, placeholder:String?, keyboard:UIKeyboardType, capitalize:UITextAutocapitalizationType) -> PresetGroup
 	{
 		var tags: [PresetKey] = []
+
+		var prefix:String? = nil
+		for s in options {
+			if prefix == nil {
+				prefix = s
+			} else {
+				prefix = prefix!.commonPrefix(with: s, options: NSString.CompareOptions.literal)
+				if prefix!.count == 0 {
+					break
+				}
+			}
+		}
+		if prefix == nil || prefix?.last != ":"  {
+			prefix = ""
+		}
 		for i in keys.indices {
-			let name = strings?[options[i]] ?? OsmTags.PrettyTag(options[i])
+			let name = strings?[options[i]] ?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix!.count)))
 			let tag = yesNoWith(label:name, key:keys[i], defaultValue:defaultValue, placeholder:nil, keyboard:keyboard, capitalize:capitalize)
 			tags.append(tag)
 		}
