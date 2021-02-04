@@ -207,6 +207,9 @@
 		}
 	}
 
+	POITabBarController	* tabController = (id)self.tabBarController;
+	NSDictionary * keyValueDict = tabController.keyValueDict;
+
 	id rowObject = _drillDownGroup ? _drillDownGroup.presetKeys[ indexPath.row ] : [_allPresets presetAtIndexPath:indexPath];
 	if ( [rowObject isKindOfClass:[PresetKey class]] ) {
 
@@ -224,13 +227,18 @@
 
 		cell.valueField.keyboardType = presetKey.keyboardType;
 		cell.valueField.autocapitalizationType = presetKey.autocapitalizationType;
+
 		[cell.valueField removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
 		[cell.valueField addTarget:self action:@selector(textFieldReturn:)			forControlEvents:UIControlEventEditingDidEndOnExit];
 		[cell.valueField addTarget:self action:@selector(textFieldChanged:)			forControlEvents:UIControlEventEditingChanged];
 		[cell.valueField addTarget:self action:@selector(textFieldEditingDidBegin:)	forControlEvents:UIControlEventEditingDidBegin];
 		[cell.valueField addTarget:self action:@selector(textFieldDidEndEditing:)	forControlEvents:UIControlEventEditingDidEnd];
-        
-		if ( presetKey.presetList.count > 0 || key.length == 0 ) {
+
+		cell.valueField.rightView 	 = nil;
+
+		if ( presetKey.isYesNo ) {
+			cell.accessoryType = UITableViewCellAccessoryNone;
+		} else if ( presetKey.presetList.count > 0 || key.length == 0 ) {
 			// The user can select from a list of presets.
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		} else if ( [self canMeasureDirectionForKey:presetKey] ) {
@@ -241,17 +249,34 @@
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
 
-		POITabBarController	* tabController = (id)self.tabBarController;
-		NSDictionary * objectDict = tabController.keyValueDict;
-
 		if ( _drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 ) {
 			// Type cell
 			NSString * text = [_allPresets featureName];
 			cell.valueField.text = text;
 			cell.valueField.enabled = NO;
+		} else if ( presetKey.isYesNo ) {
+			// special case for yes/no tristate
+			TristateButton * button = [TristateButton new];
+			NSString * value = keyValueDict[ presetKey.tagKey ];
+			[button setSelectionForString:value];
+			if ( [button stringForSelection] == nil ) {
+				// display the string iff we don't recognize it (or it's nil)
+				cell.valueField.text = [presetKey prettyNameForTagValue:value];
+			} else {
+				cell.valueField.text = nil;
+			}
+			cell.valueField.enabled = YES;
+			cell.valueField.rightView = button;
+			cell.valueField.rightViewMode = UITextFieldViewModeAlways;
+			cell.valueField.placeholder = nil;
+			button.onSelect = ^(NSString * newValue) {
+				[self updateTagWithValue:newValue forKey:cell.presetKey.tagKey];
+				cell.valueField.text = nil;
+				[cell.valueField resignFirstResponder];
+			};
 		} else {
 			// Regular cell
-			NSString * value = objectDict[ presetKey.tagKey ];
+			NSString * value = keyValueDict[ presetKey.tagKey ];
 			value = [presetKey prettyNameForTagValue:value];
 			cell.valueField.text = value;
 			cell.valueField.enabled = YES;
@@ -264,11 +289,11 @@
 		// drill down cell
 		PresetGroup * drillDownGroup = rowObject;
 		FeaturePresetCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CommonTagSingle" forIndexPath:indexPath];
-		POITabBarController	* tabController = (id)self.tabBarController;
 		cell.nameLabel.text = drillDownGroup.name;
-		cell.valueField.text = [drillDownGroup multiComboSummaryOfDict:tabController.keyValueDict isPlaceholder:NO];
+		cell.valueField.text = [drillDownGroup multiComboSummaryOfDict:keyValueDict isPlaceholder:NO];
 		cell.valueField.placeholder = [drillDownGroup multiComboSummaryOfDict:nil isPlaceholder:YES];
 		cell.valueField.enabled = NO;
+		cell.valueField.rightView = nil;
 		cell.presetKey = (id)drillDownGroup;
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
@@ -299,7 +324,7 @@
 		[self.navigationController pushViewController:sub animated:YES];
 	} else if ([self canMeasureDirectionForKey:presetKey]) {
 		[self measureDirectionForKey:cell.presetKey.tagKey
-													value:cell.valueField.text];
+							   value:cell.valueField.text];
 	} else if ([self canMeasureHeightForKey:presetKey]) {
 		[self measureHeightForKey:cell.presetKey.tagKey];
 	} else {
@@ -405,6 +430,13 @@
 	NSString * tagValue = [cell.presetKey tagValueForPrettyName:prettyValue];
 	_isEditing = NO;
     [self updateTagWithValue:tagValue forKey:key];
+
+	if ( cell.presetKey.isYesNo ) {
+		TristateButton * tri = (id)cell.valueField.rightView;
+		if ( [tri isKindOfClass:[TristateButton class]] ) {
+			[tri setSelectionForString:textField.text];
+		}
+	}
 }
 
 - (void)updateTagWithValue:(NSString *)value forKey:(NSString *)key {

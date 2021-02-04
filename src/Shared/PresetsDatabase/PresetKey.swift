@@ -110,6 +110,18 @@ class PresetKey: NSCoder {
 		return value
 	}
 
+	@objc func isYesNo() -> Bool
+	{
+		if let presetList = presetList,
+			presetList.count == 2,
+			presetList[0].tagValue == "yes",
+			presetList[1].tagValue == "no"
+		{
+			return true
+		}
+		return false
+	}
+
 	class private func placeholderForPresets(_ presets:[PresetValue]?) -> String?
 	{
 		// use the first 3 values as the placeholder text
