@@ -210,11 +210,11 @@ import Foundation
 		return nil
 	}
 	@objc func inheritedValueOfFeature( _ featureID: String?,
-										valueGetter: @escaping (_ feature: PresetFeature) -> Any? )
+										fieldGetter: @escaping (_ feature: PresetFeature) -> Any? )
 										-> Any?
 	{
 		// This is currently never used for NSI entries, so we can ignore nsiPresets
-		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: valueGetter)
+		return PresetsDatabase.inheritedFieldForPresetsDict(stdPresets, featureID: featureID, field: fieldGetter)
 	}
 
 

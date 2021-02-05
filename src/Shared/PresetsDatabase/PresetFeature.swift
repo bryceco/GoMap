@@ -88,7 +88,7 @@ import Foundation
 	@objc func summary() -> String? {
 		let parentID = PresetFeature.parentIDofID( self.featureID )
 		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID,
-			valueGetter: { (feature:PresetFeature?) -> AnyHashable? in return feature!.name })
+			fieldGetter: { (feature:PresetFeature?) -> AnyHashable? in return feature!.name })
 		return result as? String
 	}
 
@@ -195,25 +195,20 @@ import Foundation
 		return totalScore
 	}
 
-	@objc func defaultValuesForGeometry(_ geometry: String) -> [String : String] {
+	@objc func defaultValuesForGeometry(_ geometry: String) -> [String : String]
+	{
 		var result : [String : String] = [:]
-		if let fields = self.fields {
-			for field in fields {
-				let fieldDict = PresetsDatabase.shared.jsonFields[field] as? [String : Any]
-				guard let value = fieldDict?["default"] as? String,
-					  let key = fieldDict?["key"] as? String else
-				{
-					continue
-				}
-				if let geom = fieldDict?["geometry"] as? [String] {
-					if !geom.contains(geometry) {
-						continue
-					}
-				}
-				result[key] = value
+		let fields = PresetsForFeature.fieldsFor(featureID:self.featureID, field:{ f in return f.fields })
+		for fieldName in fields {
+			if let field = PresetsDatabase.shared.jsonFields[fieldName] as? [String:Any],
+			   let key = field["key"] as? String,
+			   let def = field["default"] as? String,
+			   let geom = field["geometry"] as? [String],
+			   geom.contains(geometry)
+			{
+				result[key] = def
 			}
 		}
 		return result
 	}
-
 }

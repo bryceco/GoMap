@@ -137,9 +137,9 @@
 	}
 }
 
--(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(PresetFeature *)feature
+-(void)typeViewController:(POIFeaturePickerViewController *)typeViewController didChangeFeatureTo:(PresetFeature *)newFeature
 {
-	_selectedFeature = feature;
+	_selectedFeature = newFeature;
 	POITabBarController * tabController = (id) self.tabBarController;
 	NSString * geometry = tabController.selection ? [tabController.selection geometryName] : GEOMETRY_NODE;
 	PresetFeature * oldFeature = [PresetsDatabase.shared matchObjectTagsToFeature:tabController.keyValueDict
@@ -147,23 +147,31 @@
 																	   includeNSI:YES];
 
 	// remove previous feature tags
-	NSDictionary * removeTags = oldFeature.removeTags;
+	NSMutableDictionary * removeTags = [oldFeature.removeTags mutableCopy];
+	[removeTags removeObjectsForKeys:newFeature.addTags.allKeys];
 	[removeTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
 		[tabController setFeatureKey:key value:nil];
 	}];
 
 	// add new feature tags
-	NSDictionary * defaults = [feature defaultValuesForGeometry:geometry];
-	[defaults enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-		if ( tabController.keyValueDict[key] == nil ) {
+	[newFeature.addTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+		if ( [value isEqualToString:@"*"] ) {
+			if ( tabController.keyValueDict[key] == nil ) {
+				[tabController setFeatureKey:key value:@"yes"];
+			} else {
+				// already has a value
+			}
+		} else {
 			[tabController setFeatureKey:key value:value];
 		}
 	}];
 
-	[feature.addTags enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
-		if ( [value isEqualToString:@"*"] )
-			value = @"yes";
-		[tabController setFeatureKey:key value:value];
+	// add default values of new feature fields
+	NSDictionary * defaults = [newFeature defaultValuesForGeometry:geometry];
+	[defaults enumerateKeysAndObjectsUsingBlock:^(NSString * key, NSString * value, BOOL *stop) {
+		if ( tabController.keyValueDict[key] == nil ) {
+			[tabController setFeatureKey:key value:value];
+		}
 	}];
 }
 

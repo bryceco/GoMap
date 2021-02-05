@@ -45,31 +45,36 @@ class PresetsForFeature: NSObject {
 		return presetAtSection( indexPath.section, row: indexPath.row)
 	}
 
+	@objc class func fieldsFor(featureID:String?, field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?) -> [String]
+	{
+		guard let featureID = featureID,
+			  let fields = PresetsDatabase.shared.inheritedValueOfFeature(featureID, fieldGetter:fieldGetter) as? [String]
+		else { return [] }
+
+		var list = [String]()
+		for field in fields {
+			if field.hasPrefix("{") && field.hasSuffix("}") {
+				// copy fields from referenced item
+				let refFeature = String(field.dropLast().dropFirst())
+				list += fieldsFor(featureID: refFeature, field: fieldGetter)
+			} else {
+				list.append( field )
+			}
+		}
+		return list
+	}
+
 	func addPresetsForFields(
 		inFeatureID featureID: String?,
 		geometry: String,
-		field valueGetter: @escaping (_ feature: PresetFeature) -> [String]?,
+		field fieldGetter: @escaping (_ feature: PresetFeature) -> [String]?,
 		ignore: [String]?,
 		dupSet: inout Set<String>,
 		update: (() -> Void)?
 	) {
-		guard let fields = PresetsDatabase.shared.inheritedValueOfFeature(featureID, valueGetter: valueGetter) as? [String]
-		else { return }
+		let fields = PresetsForFeature.fieldsFor(featureID:featureID, field:fieldGetter)
 
 		for field in fields {
-
-			if field.hasPrefix("{") && field.hasSuffix("}") {
-				// copy fields from referenced item
-				let refFeature = String(field.dropLast().dropFirst())
-				addPresetsForFields(
-					inFeatureID: refFeature,
-					geometry: geometry,
-					field: valueGetter,
-					ignore: ignore,
-					dupSet: &dupSet,
-					update: update)
-				continue
-			}
 
 			if dupSet.contains(field) {
 				continue
