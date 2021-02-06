@@ -18,6 +18,7 @@ import Foundation
 
 	init() {
 		super.init(items: [PresetsDatabase.shared.noForLocale, "-", PresetsDatabase.shared.yesForLocale])
+		self.apportionsSegmentWidthsByContent = true
 		setEnabled(true, forSegmentAt: 1)
 		self.addTarget(self, action: #selector(self.valueChanged(_:)), for:.valueChanged)
 	}
