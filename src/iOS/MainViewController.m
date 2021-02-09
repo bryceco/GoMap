@@ -105,7 +105,10 @@
 
 	// update button styling
 	NSArray * buttons = @[
+		// these aren't actually buttons, but they get similar tinting and shadows
+		_mapView.editControl,
 		_undoRedoView,
+		// these are buttons
 		_locationButton,
 		_undoButton,
 		_redoButton,
@@ -118,45 +121,54 @@
 		_displayButton,
 		_searchButton
 	];
-	for ( UIButton * button in buttons ) {
+	for ( UIView * view in buttons ) {
 
 		// corners
-        if ( button == _mapView.helpButton ||
-			 button == _mapView.addNodeButton )
+		if ( view == _mapView.compassButton ||
+			 view == _mapView.editControl )
+		{
+			// these buttons take care of themselves
+		} else if ( view == _mapView.helpButton ||
+				    view == _mapView.addNodeButton )
 		{
 			// The button is a circle.
-			button.layer.cornerRadius = button.bounds.size.width / 2;
-        } else if ( button != _mapView.compassButton ) {
-			button.layer.cornerRadius	= 10.0;
+			view.layer.cornerRadius = view.bounds.size.width / 2;
+		} else {
+			// rounded corners
+			view.layer.cornerRadius	= 10.0;
 		}
 		// shadow
-		if ( button.superview != _undoRedoView ) {
-			button.layer.shadowColor 	= UIColor.blackColor.CGColor;
-			button.layer.shadowOffset	= CGSizeMake(0,0);
-			button.layer.shadowRadius	= 3;
-			button.layer.shadowOpacity	= 0.5;
-			button.layer.masksToBounds	= NO;
+		if ( view.superview != _undoRedoView ) {
+			view.layer.shadowColor 	= UIColor.blackColor.CGColor;
+			view.layer.shadowOffset	= CGSizeMake(0,0);
+			view.layer.shadowRadius	= 3;
+			view.layer.shadowOpacity	= 0.5;
+			view.layer.masksToBounds	= NO;
 		}
 		// image blue tint
-		if ( button != _undoRedoView && button != _mapView.compassButton && button != _mapView.helpButton ) {
-			UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-			[button setImage:image forState:UIControlStateNormal];
-			if (@available(iOS 13.0, *)) {
-				button.tintColor = UIColor.linkColor;
-			} else {
-				button.tintColor = UIColor.systemBlueColor;
+		if ( [view isKindOfClass:[UIButton class]] ) {
+			UIButton * button = (UIButton *)view;
+			if ( button != _mapView.compassButton && button != _mapView.helpButton ) {
+				UIImage * image = [button.currentImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+				[button setImage:image forState:UIControlStateNormal];
+				if (@available(iOS 13.0, *)) {
+					button.tintColor = UIColor.linkColor;
+				} else {
+					button.tintColor = UIColor.systemBlueColor;
+				}
+				if ( button == _mapView.addNodeButton )
+					button.imageEdgeInsets = UIEdgeInsetsMake(15, 15, 15, 15);	// resize images on button to be smaller
+				else
+					button.imageEdgeInsets = UIEdgeInsetsMake(9, 9, 9, 9);	// resize images on button to be smaller
 			}
-			if ( button == _mapView.addNodeButton )
-				button.imageEdgeInsets = UIEdgeInsetsMake(15, 15, 15, 15);	// resize images on button to be smaller
-			else
-				button.imageEdgeInsets = UIEdgeInsetsMake(9, 9, 9, 9);	// resize images on button to be smaller
 		}
 
 		// normal background color
-		[self makeButtonNormal:button];
+		[self makeButtonNormal:view];
 
 		// background selection color
-		if ( button != _undoRedoView ) {
+		if ( [view isKindOfClass:[UIButton class]] ) {
+			UIButton * button = (UIButton *)view;
 			[button addTarget:self action:@selector(makeButtonHighlight:) forControlEvents:UIControlEventTouchDown];
 			[button addTarget:self action:@selector(makeButtonNormal:) forControlEvents:UIControlEventTouchUpInside];
 			[button addTarget:self action:@selector(makeButtonNormal:) forControlEvents:UIControlEventTouchUpOutside];
@@ -166,7 +178,8 @@
 		}
 	}
 }
--(void)makeButtonHighlight:(UIButton *)button
+
+-(void)makeButtonHighlight:(UIView *)button
 {
 	if (@available(iOS 13.0, *)) {
 		button.backgroundColor = UIColor.secondarySystemBackgroundColor;
@@ -174,7 +187,7 @@
 		button.backgroundColor = UIColor.lightGrayColor;
 	}
 }
--(void)makeButtonNormal:(UIButton *)button
+-(void)makeButtonNormal:(UIView *)button
 {
 	if (@available(iOS 13.0, *)) {
 		button.backgroundColor = UIColor.systemBackgroundColor;
