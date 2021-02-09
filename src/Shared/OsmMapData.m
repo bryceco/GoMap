@@ -2425,28 +2425,32 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}];
 
 		// merge info from SQL database
-		BOOL databaseFailure = NO;
 		@try {
 			Database * db = [Database new];
-			NSMutableDictionary<NSNumber *, OsmNode *> * newNodes		= [db querySqliteNodes];
+			NSMutableDictionary<NSNumber *, OsmNode *> * newNodes			= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
-			NSMutableDictionary<NSNumber *, OsmWay *> * newWays		= [db querySqliteWays];
+			NSMutableDictionary<NSNumber *, OsmWay *> * newWays				= [db querySqliteWays];
 			NSAssert(newWays,nil);
 			NSMutableDictionary<NSNumber *, OsmRelation *> * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
-
-			OsmMapData * newData = [[OsmMapData alloc] init];
-			newData->_nodes = newNodes;
-			newData->_ways = newWays;
-			newData->_relations = newRelations;
-			[self merge:newData fromDownload:NO quadList:nil success:YES];
+			@try {
+				OsmMapData * newData = [[OsmMapData alloc] init];
+				newData->_nodes = newNodes;
+				newData->_ways = newWays;
+				newData->_relations = newRelations;
+				[self merge:newData fromDownload:NO quadList:nil success:YES];
+			} @catch (id exception) {
+				// we couldn't resolve references correctly, which leaves us in an inconsistent state
+				NSLog(@"Unable to read database: recreating from scratch\n");
+				[Database deleteDatabaseWithName:nil];
+				// try again
+				return [[OsmMapData alloc] initWithCachedData];
+			}
 		} @catch (id exception) {
-			// database couldn't be read, or we couldn't resolve references correctly, so have to download everything
-			databaseFailure = YES;
-		}
-		if ( databaseFailure ) {
+			// database couldn't be read
 			NSLog(@"Unable to read database: recreating from scratch\n");
 			[Database deleteDatabaseWithName:nil];
+			// download all regions
 			_region = [QuadMap new];
 		}
 		[self consistencyCheck];

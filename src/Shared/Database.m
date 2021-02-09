@@ -51,6 +51,9 @@ if (!(condition)) {		\
 	return nil;
 }
 
+// return self if database can be opened
+// return nil if database doesn't exist
+// assert if it is corrupted somehow
 -(instancetype)initWithName:(NSString *)name
 {
 	self = [super init];
