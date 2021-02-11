@@ -2425,8 +2425,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}];
 
 		// merge info from SQL database
+		Database * db = [Database new];
 		@try {
-			Database * db = [Database new];
 			NSMutableDictionary<NSNumber *, OsmNode *> * newNodes			= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
 			NSMutableDictionary<NSNumber *, OsmWay *> * newWays				= [db querySqliteWays];
@@ -2442,6 +2442,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			} @catch (id exception) {
 				// we couldn't resolve references correctly, which leaves us in an inconsistent state
 				NSLog(@"Unable to read database: recreating from scratch\n");
+				[db close];
 				[Database deleteDatabaseWithName:nil];
 				// try again
 				return [[OsmMapData alloc] initWithCachedData];
@@ -2449,6 +2450,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		} @catch (id exception) {
 			// database couldn't be read
 			NSLog(@"Unable to read database: recreating from scratch\n");
+			[db close];
 			[Database deleteDatabaseWithName:nil];
 			// download all regions
 			_region = [QuadMap new];

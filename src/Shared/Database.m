@@ -99,7 +99,7 @@ if (!(condition)) {		\
 	return _path;
 }
 
--(void)dealloc
+-(void)close
 {
 #if USE_RTREE
 	if ( _spatialInsert ) {
@@ -114,7 +114,13 @@ if (!(condition)) {		\
 		if ( rc != SQLITE_OK ) {
 			NSLog(@"Database could not close: %s\n", sqlite3_errmsg(_db) );
 		}
+		_db = NULL;
 	}
+}
+
+-(void)dealloc
+{
+	[self close];
 }
 
 -(void)dropTables
