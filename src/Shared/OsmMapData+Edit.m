@@ -755,6 +755,7 @@ NSString * reverseValue( NSString * key, NSString * value)
 #pragma mark disconnectWayAtNode
 
 // disconnect all other ways from the selected way joined to it at node
+// if the node doesn't belong to any other ways then it's a self-intersection
 - (EditActionReturnNode)canDisconnectWay:(OsmWay *)way atNode:(OsmNode *)node error:(NSString **)error
 {
 	if ( ![way.nodes containsObject:node] ) {
@@ -776,8 +777,16 @@ NSString * reverseValue( NSString * key, NSString * value)
 		OsmNode * newNode = [self createNodeAtLocation:loc];
 		[self setTags:node.tags forObject:newNode];
 
-		NSInteger index;
-		while ( (index = [way.nodes indexOfObject:node]) != NSNotFound ) {
+		if ( [self waysContainingNode:node].count > 1 ) {
+			// detach node from other ways containing it
+			NSInteger index;
+			while ( (index = [way.nodes indexOfObject:node]) != NSNotFound ) {
+				[self addNodeUnsafe:newNode toWay:way atIndex:index+1];
+				[self deleteNodeInWayUnsafe:way index:index preserveNode:NO];
+			}
+		} else {
+			// detach node from self-intersection
+			NSInteger index = [way.nodes indexOfObject:node];
 			[self addNodeUnsafe:newNode toWay:way atIndex:index+1];
 			[self deleteNodeInWayUnsafe:way index:index preserveNode:NO];
 		}

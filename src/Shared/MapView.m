@@ -2153,7 +2153,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		if ( _editorLayer.selectedNode ) {
 			// node in way
 			NSArray<OsmWay *> * parentWays = [_editorLayer.mapData waysContainingNode:_editorLayer.selectedNode];
-            BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags;
+			BOOL disconnect		= parentWays.count > 1 || _editorLayer.selectedNode.hasInterestingTags || [_editorLayer.selectedWay isSelfIntersection:_editorLayer.selectedNode];
 			BOOL split 			= _editorLayer.selectedWay.isClosed || (_editorLayer.selectedNode != _editorLayer.selectedWay.nodes[0] && _editorLayer.selectedNode != _editorLayer.selectedWay.nodes.lastObject);
 			BOOL join 			= parentWays.count > 1;
 			BOOL restriction	= _enableTurnRestriction && _editorLayer.selectedWay.tags[@"highway"] && parentWays.count > 1;

@@ -32,6 +32,7 @@
 -(BOOL)isMultipolygonMember;
 -(BOOL)isSimpleMultipolygonOuterMember;
 +(BOOL)isClockwiseArrayOfNodes:(NSArray *)nodes;
+-(BOOL)isSelfIntersection:(OsmNode *)node;
 +(CGPathRef)shapePathForNodes:(NSArray *)nodes forward:(BOOL)forward withRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
 -(BOOL)hasDuplicatedNode;
 -(OsmNode *)connectsToWay:(OsmWay *)way;
