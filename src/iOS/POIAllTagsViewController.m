@@ -55,17 +55,17 @@
 	POITabBarController * tabController = (id)self.tabBarController;
 
 	if ( tabController.selection.isNode ) {
-		self.title = NSLocalizedString(@"Node tags",nil);
+		self.title = NSLocalizedString(@"Node Tags",nil);
 	} else if ( tabController.selection.isWay ) {
-		self.title = NSLocalizedString(@"Way tags",nil);
+		self.title = NSLocalizedString(@"Way Tags",nil);
 	} else if ( tabController.selection.isRelation ) {
 		NSString * type = tabController.keyValueDict[ @"type" ];
 		if ( type.length ) {
 			type = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
 			type = [type capitalizedString];
-			self.title = [NSString stringWithFormat:@"%@ tags",type];
+			self.title = [NSString stringWithFormat:@"%@ Tags",type];
 		} else {
-			self.title = NSLocalizedString(@"Relation tags",nil);
+			self.title = NSLocalizedString(@"Relation Tags",nil);
 		}
 	} else {
 		self.title = NSLocalizedString(@"All Tags",nil);
