@@ -35,6 +35,7 @@
 -(BOOL)isSelfIntersection:(OsmNode *)node;
 +(CGPathRef)shapePathForNodes:(NSArray *)nodes forward:(BOOL)forward withRefPoint:(OSMPoint *)pRefPoint CF_RETURNS_RETAINED;
 -(BOOL)hasDuplicatedNode;
+-(BOOL)needsNoNameHighlight;
 -(OsmNode *)connectsToWay:(OsmWay *)way;
 -(NSInteger)segmentClosestToPoint:(OSMPoint)point;
 @end

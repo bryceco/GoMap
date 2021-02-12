@@ -1252,26 +1252,23 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 				}
 
 				// provide a halo for streets that don't have a name
-				if ( _mapView.enableUnnamedRoadHalo  &&  object.tags[@"highway"] ) {
-					NSString * name = [object givenName];
-					if ( name == nil && ![object.tags[@"noname"] isEqualToString:@"yes"] ) {
-						// it lacks a name
-						CAShapeLayerWithProperties * haloLayer = [CAShapeLayerWithProperties new];
-						haloLayer.anchorPoint	= CGPointMake(0, 0);
-						haloLayer.position		= CGPointFromOSMPoint( refPoint );
-						haloLayer.path			= path;
-						haloLayer.strokeColor	= UIColor.redColor.CGColor;
-						haloLayer.fillColor		= nil;
-						haloLayer.lineWidth		= (2+renderInfo.lineWidth)*_highwayScale;
-						haloLayer.lineCap		= DEFAULT_LINECAP;
-						haloLayer.lineJoin		= DEFAULT_LINEJOIN;
-						haloLayer.zPosition		= Z_HALO;
-						LayerProperties * haloProps = haloLayer.properties;
-						haloProps->position = refPoint;
-						haloProps->lineWidth = haloLayer.lineWidth;
+				if ( _mapView.enableUnnamedRoadHalo && object.isWay.needsNoNameHighlight ) {
+					// it lacks a name
+					CAShapeLayerWithProperties * haloLayer = [CAShapeLayerWithProperties new];
+					haloLayer.anchorPoint	= CGPointMake(0, 0);
+					haloLayer.position		= CGPointFromOSMPoint( refPoint );
+					haloLayer.path			= path;
+					haloLayer.strokeColor	= UIColor.redColor.CGColor;
+					haloLayer.fillColor		= nil;
+					haloLayer.lineWidth		= (2+renderInfo.lineWidth)*_highwayScale;
+					haloLayer.lineCap		= DEFAULT_LINECAP;
+					haloLayer.lineJoin		= DEFAULT_LINEJOIN;
+					haloLayer.zPosition		= Z_HALO;
+					LayerProperties * haloProps = haloLayer.properties;
+					haloProps->position = refPoint;
+					haloProps->lineWidth = haloLayer.lineWidth;
 
-						[layers addObject:haloLayer];
-					}
+					[layers addObject:haloLayer];
 				}
 
 				CGPathRelease(path);

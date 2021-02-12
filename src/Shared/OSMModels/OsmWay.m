@@ -229,6 +229,20 @@
 	return YES;
 }
 
+-(BOOL)needsNoNameHighlight
+{
+	NSString * highway = _tags[@"highway"];
+	if ( highway == nil )
+		return NO;
+	if ( [highway isEqualToString:@"service"] )
+		return NO;
+	if ( self.givenName )
+		return NO;
+	if ( [_tags[@"noname"] isEqualToString:@"yes"] )
+		return NO;
+	return YES;
+}
+
 -(double)wayArea
 {
     assert(NO);
