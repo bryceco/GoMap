@@ -87,6 +87,23 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)jumpToLat:(double)lat lon:(double)lon
+{
+	AppDelegate * appDelegate = AppDelegate.shared;
+	double metersPerDegree = MetersPerDegree( lat );
+	double minMeters = 50;
+	double widthDegrees = minMeters / metersPerDegree;
+
+	// disable GPS
+	while ( appDelegate.mapView.gpsState != GPS_STATE_NONE ) {
+		[appDelegate.mapView.mainViewController toggleLocation:self];
+	}
+
+	[appDelegate.mapView setTransformForLatitude:lat longitude:lon width:widthDegrees];
+
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,19 +125,44 @@
 	lat1 = (lat1+lat2)/2;
 	lon1 = (lon1+lon2)/2;
 
-	AppDelegate * appDelegate = AppDelegate.shared;
-	double metersPerDegree = MetersPerDegree( lat1 );
-	double minMeters = 50;
-	double widthDegrees = minMeters / metersPerDegree;
+	[self jumpToLat:lat1 lon:lon1];
+}
 
-	// disable GPS
-	while ( appDelegate.mapView.gpsState != GPS_STATE_NONE ) {
-		[appDelegate.mapView.mainViewController toggleLocation:self];
+// look for a pair of non-integer numbers in the string, and jump to it if found
+-(BOOL)containsLatLon:(NSString *)text
+{
+	NSScanner * scanner = [NSScanner scannerWithString:text];
+	NSCharacterSet * digits = [NSCharacterSet characterSetWithCharactersInString:@"-0123456789"];
+	NSCharacterSet * comma = [NSCharacterSet characterSetWithCharactersInString:@",/"];
+	[scanner setCharactersToBeSkipped:[NSCharacterSet whitespaceCharacterSet]];
+	double lat,lon;
+
+	while ( !scanner.atEnd ) {
+		[scanner scanUpToCharactersFromSet:digits intoString:NULL];
+		if ( [scanner scanDouble:&lat] &&
+			lat != (int)lat &&	// don't want to accidently grab the Z number
+			lat > -90 && lat < 90 &&
+			[scanner scanCharactersFromSet:comma intoString:NULL] &&
+			[scanner scanDouble:&lon] &&
+			lon != (int)lon &&
+			lon >= -180 && lon <= 180 )
+		{
+			[self updateHistoryWithString:[NSString stringWithFormat:@"%g,%g",lat,lon]];
+			[self jumpToLat:lat lon:lon];
+			return YES;
+		}
 	}
+	return NO;
+}
 
-	[appDelegate.mapView setTransformForLatitude:lat1 longitude:lon1 width:widthDegrees];
-
-	[self dismissViewControllerAnimated:YES completion:nil];
+-(void)updateHistoryWithString:(NSString *)string
+{
+	NSMutableArray * a = _historyArray ? [_historyArray mutableCopy] : [NSMutableArray new];
+	[a removeObject:string];
+	[a insertObject:string atIndex:0];
+	while ( a.count > 20 )
+		[a removeLastObject];
+	_historyArray = a;
 }
 
 #pragma mark Search bar delegate
@@ -139,6 +181,8 @@
 	if ( string.length == 0 ) {
 		// no search
 		[_searchBar performSelector:@selector(resignFirstResponder) withObject:nil afterDelay:0.1];
+	} else if ( [self containsLatLon:string] ) {
+		return;
 	} else {
 		// searching
 		[_activityIndicator startAnimating];
@@ -172,12 +216,7 @@
 					[_tableView reloadData];
 					
 					if ( _resultsArray.count > 0 ) {
-						NSMutableArray * a = _historyArray ? [_historyArray mutableCopy] : [NSMutableArray new];
-						[a removeObject:string];
-						[a insertObject:string atIndex:0];
-						while ( a.count > 20 )
-							[a removeLastObject];
-						_historyArray = a;
+						[self updateHistoryWithString:string];
 					}
 					
 				} else {
