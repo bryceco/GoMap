@@ -298,10 +298,14 @@ extension PresetsDatabase {
 		return []
 	}
 
-	func commonPrefixOfMultiKeys(_ options:[String]) -> String
+	private func commonPrefixOfMultiKeys(_ options:[String]) -> String
 	{
-		if options.count == 0 { return "" }
-		let prefix = options[0].prefix { (ch) -> Bool in ch != ":" } + ":"
+		guard options.count > 0,
+			  let index = options[0].lastIndex(of: ":") else
+		{
+			return ""
+		}
+		let prefix = options[0].prefix(through: index)
 		for s in options[1...] {
 			if !s.hasPrefix(prefix) {
 				return ""
