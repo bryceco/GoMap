@@ -471,7 +471,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 		}
 	}
 
-	return _tags[@"brand"] ?: _tags[ @"operator" ] ?: nil;
+	return _tags[@"brand"];
 }
 
 -(NSString *)friendlyDescriptionWithDetails:(BOOL)details
