@@ -139,6 +139,7 @@
 
 	while ( !scanner.atEnd ) {
 		[scanner scanUpToCharactersFromSet:digits intoString:NULL];
+		NSInteger pos = scanner.scanLocation;
 		if ( [scanner scanDouble:&lat] &&
 			lat != (int)lat &&	// don't want to accidently grab the Z number
 			lat > -90 && lat < 90 &&
@@ -150,6 +151,9 @@
 			[self updateHistoryWithString:[NSString stringWithFormat:@"%g,%g",lat,lon]];
 			[self jumpToLat:lat lon:lon];
 			return YES;
+		}
+		if ( scanner.scanLocation == pos && !scanner.atEnd ) {
+			scanner.scanLocation = pos+1;
 		}
 	}
 	return NO;
