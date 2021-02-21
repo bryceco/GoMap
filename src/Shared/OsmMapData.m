@@ -2026,7 +2026,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_ways enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
 		if ( object.isModified ) {
 			[dirty addObject:object];
-			[dirty addObjectsFromArray:((OsmWay *)object).nodes];
 		}
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
@@ -2038,6 +2037,20 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	// get objects referenced by undo manager
 	NSSet * undoRefs = [_undoManager objectRefs];
 	[dirty unionSet:undoRefs];
+
+	// add nodes in ways to dirty set, because we must preserve them to maintain consistency
+	for ( OsmWay * way in dirty.allObjects ) {
+		if ( [way isKindOfClass:[OsmWay class]] ) {
+			[dirty addObjectsFromArray:way.nodes];
+		}
+	}
+
+	// deresolve relations
+	for ( OsmRelation * rel in dirty ) {
+		if ( [rel isKindOfClass:[OsmRelation class]] ) {
+			[rel deresolveRefs];
+		}
+	}
 
 	// purge everything
 	[self purgeExceptUndo];
@@ -2056,12 +2069,25 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			} else {
 				assert(NO);
 			}
-			if ( !object.deleted ) {
-				[_spatial addMember:object undo:nil];
-			}
 
 		} else {
-			// ignore
+			// it's an undo comment
+		}
+	}
+
+	// restore relation references
+	for ( OsmRelation * rel in dirty ) {
+		if ( [rel isKindOfClass:[OsmRelation class]] ) {
+			[rel resolveToMapData:self];
+		}
+	}
+
+	// rebuild spatial
+	for ( OsmBaseObject * obj in dirty ) {
+		if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
+			if ( !obj.deleted ) {
+				[_spatial addMember:obj undo:nil];
+			}
 		}
 	}
 
