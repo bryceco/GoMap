@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+#import <UserNotifications/UserNotifications.h>
 
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
@@ -158,8 +159,8 @@
 	// set app badge if edits are pending
 	NSInteger pendingEdits = [self.mapView.editorLayer.mapData modificationCount];
 	if ( pendingEdits ) {
-		UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
-		[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+		[UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:UNAuthorizationOptionBadge completionHandler:^(BOOL granted, NSError * _Nullable error) {
+		}];
 	}
 	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:pendingEdits];
 	
