@@ -37,6 +37,6 @@ extension ContactUsViewController {
     @objc func openTestFlightURL() {
         guard let url = URL(string: "https://testflight.apple.com/join/T96F9wYq") else { return }
 
-        UIApplication.shared.openURL(url)
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
