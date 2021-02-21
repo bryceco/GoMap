@@ -32,7 +32,9 @@
 
 - (IBAction)registerAccount:(id)sender
 {
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.openstreetmap.org/user/new"]];
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.openstreetmap.org/user/new"]
+									   options:@{}
+							 completionHandler:nil];
 }
 
 

@@ -777,7 +777,7 @@ const CGFloat kEditControlCornerRadius = 4;
 #if 1
 	NSString * urlText = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @592990211];
 	NSURL * url = [NSURL URLWithString:urlText];
-	[[UIApplication sharedApplication] openURL:url];
+	[[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 #else
 	SKStoreProductViewController * spvc = [SKStoreProductViewController new];
 	spvc.delegate = self; //self is the view controller to present spvc

@@ -224,7 +224,7 @@
 {
 	NSURL *openSettingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
 	if (openSettingsURL) {
-		[[UIApplication sharedApplication] openURL:openSettingsURL];
+		[[UIApplication sharedApplication] openURL:openSettingsURL options:@{} completionHandler:nil];
 	}
 }
 
