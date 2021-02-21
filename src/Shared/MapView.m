@@ -1739,8 +1739,10 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 -(void)placePushpinForSelection
 {
 	OsmBaseObject * selection = _editorLayer.selectedPrimary;
-	if ( selection == nil )
+	if ( selection == nil ) {
+		[self removePin];
 		return;
+	}
 	OSMPoint loc = selection.selectionPoint;
 	CGPoint point = [self screenPointForLatitude:loc.y longitude:loc.x birdsEye:YES];
 	[self placePushpinAtPoint:point object:selection];

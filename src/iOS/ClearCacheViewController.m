@@ -115,6 +115,7 @@ enum {
 				}]];
 				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Purge",@"Discard editing changes when resetting OSM data cache") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 					[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
+					[appDelegate.mapView placePushpinForSelection];
 					[self.navigationController popViewControllerAnimated:YES];
 				}]];
 				[self presentViewController:alert animated:YES completion:nil];

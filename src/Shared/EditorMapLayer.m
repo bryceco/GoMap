@@ -274,6 +274,7 @@ const double MinIconSizeInMeters = 2.0;
 {
 	self.selectedNode	= nil;
 	self.selectedWay	= nil;
+	self.selectedRelation = nil;
 	if ( hard ) {
 		[_mapData purgeHard];
 	} else {
