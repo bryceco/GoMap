@@ -539,8 +539,12 @@ static NSString * RECENTLY_USED_KEY = @"AerialListRecentlyUsed";
 			NSString * 	identifier			= properties[@"id"];
 			NSString *  category			= properties[@"category"];
 			if ( categories[category] == nil ) {
-				// NSLog(@"category %@ - %@",category,identifier);
-				continue;
+				if ( [identifier isEqualToString:@"OpenTopoMap"] ) {
+					// okay
+				} else {
+					// NSLog(@"category %@ - %@",category,identifier);
+					continue;
+				}
 			}
 			NSString *	startDateString		= properties[@"start_date"];
 			NSString *	endDateString		= properties[@"end_date"];
