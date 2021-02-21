@@ -42,10 +42,10 @@
 	[request addValue:@"8bit" forHTTPHeaderField:@"Content-Transfer-Encoding"];
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 
-	OSAtomicIncrement32(&_downloadCount);
+	atomic_fetch_add(&_downloadCount,1);
 
 	NSURLSessionDataTask * task = [_urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-		OSAtomicDecrement32(&_downloadCount);
+		atomic_fetch_sub(&_downloadCount,1);
 
 		NSHTTPURLResponse * httpResponse = (id)response;
 		if ( error ) {

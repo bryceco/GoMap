@@ -378,9 +378,9 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 #endif
 	[_layerDict setObject:layer forKey:tileKey];
 
-	OSAtomicIncrement32( &_isPerformingLayout );
+	atomic_fetch_add( &_isPerformingLayout, 1 );
 	[self addSublayer:layer];
-	OSAtomicDecrement32( &_isPerformingLayout );
+	atomic_fetch_sub( &_isPerformingLayout, 1 );
 
 	// check memory cache
 	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
@@ -544,9 +544,9 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 {
 	if ( self.hidden )
 		return;
-	OSAtomicIncrement32( &_isPerformingLayout );
+	atomic_fetch_add( &_isPerformingLayout, 1 );
 	[self layoutSublayersSafe];
-	OSAtomicDecrement32( &_isPerformingLayout );
+	atomic_fetch_sub( &_isPerformingLayout, 1 );
 }
 
 -(void)downloadTileForKey:(NSString *)cacheKey completion:(void(^)(void))completion

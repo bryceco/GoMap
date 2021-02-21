@@ -8,6 +8,7 @@
 
 #import "iosapi.h"
 #import <QuartzCore/QuartzCore.h> 
+#include <stdatomic.h>
 
 @class AerialService;
 @class MapView;
@@ -19,7 +20,7 @@
 	NSString				*	_logoUrl;
 
 	NSMutableDictionary		*	_layerDict;				// map of tiles currently displayed
-	int32_t						_isPerformingLayout;
+	atomic_int					_isPerformingLayout;
 }
 
 @property (strong,nonatomic) AerialService	*	aerialService;

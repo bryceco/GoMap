@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <stdatomic.h>
 
 @class ConnectionState;
 
 @interface DownloadThreadPool : NSObject <NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 {
-	int32_t				_downloadCount;
+	atomic_int			_downloadCount;
 	NSURLSession	*	_urlSession;
 }
 
