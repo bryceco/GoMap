@@ -254,7 +254,7 @@
 }
 
 // this is for navigating from the changeset back to the location of the modified object
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
 {
 	AppDelegate	*	appDelegate = AppDelegate.shared;
 	NSString 	*	name = url.absoluteString;
