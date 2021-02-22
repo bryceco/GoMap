@@ -12,8 +12,8 @@ class Colors: UIColor {
     @objc static func cssColorForColorName(_ string: String) -> UIColor? {
         guard string.count > 0 else { return nil }
 
-        var hex: UInt32 = 0
-        let bits: UInt32
+        var hex: UInt64 = 0
+        let bits: UInt64
 
         if string.hasPrefix("#") {
             switch string.count - 1 {
@@ -22,8 +22,9 @@ class Colors: UIColor {
             default: return nil
             }
             let scanner = Scanner(string: string)
-            guard scanner.scanString("#", into: nil),
-                scanner.scanHexInt32(&hex),
+
+            guard scanner.scanString("#") != nil,
+                scanner.scanHexInt64(&hex),
                 scanner.isAtEnd else { return nil }
         } else {
             switch string {
@@ -179,7 +180,7 @@ class Colors: UIColor {
             }
             bits = 8
         }
-        let mask: UInt32 = (1 << bits) - 1
+        let mask: UInt64 = (1 << bits) - 1
         return UIColor(red: CGFloat((hex >> (2 * bits)) & mask) / CGFloat(mask),
                        green: CGFloat((hex >> (1 * bits)) & mask) / CGFloat(mask),
                        blue: CGFloat((hex >> (0 * bits)) & mask) / CGFloat(mask),
