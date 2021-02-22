@@ -31,7 +31,9 @@ let GEOMETRY_NODE = "point"
 let GEOMETRY_VERTEX = "vertex"
 
 // A key along with information about possible values
-class PresetKey: NSCoder {
+@objc class PresetKey: NSObject, NSSecureCoding {
+	static let supportsSecureCoding: Bool = true
+
 	@objc let name: String					// name of the preset, e.g. Hours
 	@objc let tagKey: String				// the key being set, e.g. opening_hours
 	@objc let defaultValue: String?
@@ -58,7 +60,7 @@ class PresetKey: NSCoder {
 		self.defaultValue = defaultValue
 	}
 
-	@objc required init?(withCoder coder: NSCoder) {
+	@objc required init?(coder: NSCoder) {
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagKey = coder.decodeObject(forKey: "tagKey") as? String,
 		   let placeholder = coder.decodeObject(forKey: "placeholder") as? String,
@@ -78,7 +80,7 @@ class PresetKey: NSCoder {
 		}
 	}
 
-	@objc func encode(withCoder coder: NSCoder) {
+	@objc func encode(with coder: NSCoder) {
 		coder.encode(name, forKey: "name")
 		coder.encode(tagKey, forKey: "tagKey")
 		coder.encode(placeholder, forKey: "placeholder")

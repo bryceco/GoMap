@@ -14,16 +14,21 @@ import Foundation
 	@objc let appliesToKey: String		// "" if not used
 	@objc let appliesToValue: String	// "" if not used
 
-	@objc required init?(withCoder coder: NSCoder) {
+	@objc required init?(coder: NSCoder) {
 		if let appliesToKey = coder.decodeObject(forKey: "appliesToKey") as? String,
 		   let appliesToValue = coder.decodeObject(forKey: "appliesToValue") as? String
 		{
 			self.appliesToKey = appliesToKey
 			self.appliesToValue = appliesToValue
-			super.init(withCoder: coder)
+			super.init(coder: coder)
 		} else {
 			return nil
 		}
+	}
+
+	@objc class func supportsSecureCoding() -> Bool
+	{
+		return true
 	}
 
 	@objc init(appliesToKey: String,	// empty string is possible
@@ -40,8 +45,8 @@ import Foundation
 		super.init(name: name, tagKey: key, defaultValue: nil, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize, presets: presets)
 	}
 
-	@objc override func encode(withCoder coder: NSCoder) {
-		super.encode(withCoder: coder)
+	@objc override func encode(with coder: NSCoder) {
+		super.encode(with: coder)
 		coder.encode(appliesToKey, forKey: "appliesToKey")
 		coder.encode(appliesToValue, forKey: "appliesToValue")
 	}
@@ -66,8 +71,13 @@ import Foundation
 			NSKeyedUnarchiver.setClass(PresetKeyUserDefined.classForKeyedArchiver(), forClassName: "CustomPreset")
 			NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), 		 forClassName: "PresetValue")
 			// decode
-			let oldList = NSKeyedUnarchiver.unarchiveObject(withFile: path)
-			list = oldList as? [PresetKeyUserDefined] ?? []
+			if #available(iOS 11.0, *) {
+				let data = try Data(contentsOf: URL(fileURLWithPath: path))
+				list = try! NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PresetKeyUserDefined.self,PresetValue.self], from: data) as? [PresetKeyUserDefined] ?? []
+			} else {
+				let oldList = NSKeyedUnarchiver.unarchiveObject(withFile: path)
+				list = oldList as? [PresetKeyUserDefined] ?? []
+			}
 		} catch {
 			print("error loading custom presets")
 			list = []
@@ -76,7 +86,14 @@ import Foundation
 
 	@objc func save() {
 		let path = PresetKeyUserDefinedList.archivePath()
-		NSKeyedArchiver.archiveRootObject(list as NSArray, toFile: path)
+		if #available(iOS 11.0, *) {
+			do {
+				let data = try? NSKeyedArchiver.archivedData(withRootObject: list as NSArray, requiringSecureCoding:true)
+				try data?.write(to: URL(fileURLWithPath: path))
+			} catch {}
+		} else {
+			NSKeyedArchiver.archiveRootObject(list as NSArray, toFile: path)
+		}
 	}
 
 	@objc func addPreset(_ preset: PresetKeyUserDefined, atIndex index: Int) {

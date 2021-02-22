@@ -10,7 +10,9 @@ import Foundation
 
 
 // A possible value for a preset key
-@objc class PresetValue: NSCoder {
+@objc class PresetValue: NSObject, NSSecureCoding {
+	static let supportsSecureCoding: Bool = true
+	
 	@objc let name: String
 	@objc let details: String?
 	@objc let tagValue: String
@@ -21,13 +23,13 @@ import Foundation
 		self.tagValue = value
 	}
 
-	@objc func encode(withCoder coder: NSCoder) {
+	@objc func encode(with coder: NSCoder) {
 		coder.encode(name, forKey: "name")
 		coder.encode(details, forKey: "details")
 		coder.encode(tagValue, forKey: "tagValue")
 	}
 
-	@objc required init?(withCoder coder: NSCoder) {
+	@objc required init?(coder: NSCoder) {
 		self.details = coder.decodeObject(forKey: "details") as? String
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagValue = coder.decodeObject(forKey: "tagValue") as? String
