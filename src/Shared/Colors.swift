@@ -23,7 +23,7 @@ class Colors: UIColor {
             }
             let scanner = Scanner(string: string)
 
-            guard scanner.scanString("#") != nil,
+			guard scanner.scanString("#",into:nil),
                 scanner.scanHexInt64(&hex),
                 scanner.isAtEnd else { return nil }
         } else {
