@@ -58,7 +58,7 @@ static NSString * TMS_PROJECTION_NAME = @"(TMS)";
 	NSString * identifier = url;
 
 	NSString * projection = projectionField.text;
-	if ( [projection isEqualToString:TMS_PROJECTION_NAME] ) {
+	if ( projection.length == 0 || [projection isEqualToString:TMS_PROJECTION_NAME] ) {
 		projection = nil;
 	}
 
