@@ -17,19 +17,19 @@ import Foundation
 
 	// from json dictionary:
 	let _addTags: [String : String]?
-	@objc let fields: [String]?
-	@objc let geometry: [String]
+	let fields: [String]?
+	let geometry: [String]
 	let icon: String?							// icon on the map
 	@objc let logoURL: String?					// NSI brand image
 	let locationSet: [String: [String]]?
 	let matchScore: Double
-	@objc let moreFields: [String]?
-	@objc let name: String?
+	let moreFields: [String]?
+	let name: String?
 	let reference: [String : String]?
 	let _removeTags: [String : String]?
 	let searchable: Bool
-	@objc let tags: [String : String]
-	let terms: [String]?
+	let tags: [String : String]
+	let terms: [String]
 
 	init(withID featureID:String, jsonDict:[String:Any], isNSI:Bool)
 	{
@@ -48,7 +48,7 @@ import Foundation
 		self._removeTags = jsonDict["removeTags"] as? [String: String]
 		self.searchable = jsonDict["searchable"] as? Bool ?? true
 		self.tags = jsonDict["tags"] as! [String: String]
-		self.terms = jsonDict["terms"] as? [String]
+		self.terms = jsonDict["terms"] as? [String] ?? jsonDict["matchNames"] as? [String] ?? []
 
 		self.nsiSuggestion = isNSI
 	}
@@ -135,11 +135,9 @@ import Foundation
 		if self.name?.range(of: searchText, options: .caseInsensitive) != nil {
 			return true
 		}
-		if let terms = self.terms {
-			for term in terms {
-				if term.range(of: searchText, options: .caseInsensitive) != nil {
-					return true
-				}
+		for term in self.terms {
+			if term.range(of: searchText, options: .caseInsensitive) != nil {
+				return true
 			}
 		}
 		return false
