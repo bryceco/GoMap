@@ -1025,11 +1025,11 @@ UIImage * IconScaledForDisplay( UIImage *icon )
 	return nil;
 }
 
-static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
+static NSString * HouseNumberForObjectTags( NSDictionary * tags )
 {
-	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
+	NSString * houseNumber = tags[@"addr:housenumber"];
 	if ( houseNumber ) {
-		NSString * unitNumber = [tags objectForKey:@"addr:unit"];
+		NSString * unitNumber = tags[@"addr:unit"];
 		if ( unitNumber )
 			return [NSString stringWithFormat:@"%@/%@",houseNumber,unitNumber];
 	}
@@ -1432,9 +1432,9 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 
 		// get object name, or address if no name
-		NSString * name = object.tags[@"name"] ?: object.tags[@"ref"];
+		NSString * name = object.givenName;
 		if ( name == nil )
-			name = DrawNodeAsHouseNumber( object.tags );
+			name = HouseNumberForObjectTags( object.tags );
 
 		if ( name ) {
 
@@ -1577,7 +1577,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 
 		// draw generic box
 		UIColor * color = [self defaultColorForObject:node];
-		NSString * houseNumber = color ? nil : DrawNodeAsHouseNumber( node.tags );
+		NSString * houseNumber = color ? nil : HouseNumberForObjectTags( node.tags );
 		if ( houseNumber ) {
 
 			CATextLayerWithProperties * layer = [CurvedGlyphLayer layerWithString:houseNumber];
