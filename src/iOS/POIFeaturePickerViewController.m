@@ -71,7 +71,7 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 
 	self.tableView.estimatedRowHeight = 44.0; // or could use UITableViewAutomaticDimension;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
-	
+
 	NSString * geometry = [self currentSelectionGeometry];
 	if ( geometry == nil )
 		geometry = GEOMETRY_NODE;	// a brand new node
@@ -134,6 +134,11 @@ static PersistentWebCache * logoCache;	// static so memory cache persists each t
 			return _featureList.count;
 		}
 	}
+}
+
+- (BOOL)tableView:(UITableView *)tableView canFocusRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return NO;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
