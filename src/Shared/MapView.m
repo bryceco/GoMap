@@ -2142,6 +2142,7 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 			NSString * title = ActionTitle( (EDIT_ACTION)action.integerValue, YES );
 			[_editControl insertSegmentWithTitle:title atIndex:_editControl.numberOfSegments animated:NO];
 		}
+		// mark segment labels as adjustsFontSizeToFitWidth
 		for ( UIView * segment in _editControl.subviews ) {
 			for ( UILabel * label in segment.subviews ) {
 				if ( [label isKindOfClass:[UILabel class]] ) {
@@ -2149,10 +2150,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 				}
 			}
 		}
-#if 0
-		UIFont * font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-		[_editControl setTitleTextAttributes:@{NSFontAttributeName:font} forState:UIControlStateNormal];
-#endif
 	}
 }
 
