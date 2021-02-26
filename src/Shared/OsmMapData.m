@@ -81,11 +81,10 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		[self.userDefaults registerDefaults:@{ OSM_SERVER_KEY : @"https://api.openstreetmap.org/" }];
-		NSString * server = [self.userDefaults objectForKey:OSM_SERVER_KEY];
-		[self setServer:server];
-		
-		[self setupPeriodicSaveTimer];
 	});
+	NSString * server = [self.userDefaults objectForKey:OSM_SERVER_KEY];
+	[self setServer:server];
+	[self setupPeriodicSaveTimer];
 }
 
 - (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults {
@@ -111,6 +110,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 -(void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UndoManagerDidChangeNotification object:_undoManager];
 	[_periodicSaveTimer invalidate];
 }
 
@@ -135,6 +135,11 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 		// great
 	} else {
 		hostname = [hostname stringByAppendingString:@"/"];
+	}
+
+	if ( [OSM_API_URL isEqualToString:hostname] ) {
+		// no change
+		return;
 	}
 
 	if ( OSM_API_URL.length ) {
@@ -2423,8 +2428,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	t = CACurrentMediaTime() - t;
 	(void)t;
-//	DLog(@"archive save %ld,%ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.count, (long)_region.count, t);
-//	DLog(@"Save objects = %ld", (long)self.nodeCount+self.wayCount+self.relationCount);
+	DLog(@"archive save %ld,%ld,%ld,%ld,%ld = %f", (long)modified.nodeCount, (long)modified.wayCount, (long)modified.relationCount, (long)_undoManager.countUndoGroups, (long)_region.count, t);
+	DLog(@"Save objects = %ld", (long)self.nodeCount+self.wayCount+self.relationCount);
 	
 	[_periodicSaveTimer invalidate];
 	_periodicSaveTimer = nil;
