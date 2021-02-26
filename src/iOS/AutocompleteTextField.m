@@ -125,12 +125,17 @@ static const CGFloat GradientHeight = 20.0;
 	}
 
 	CGRect cellRC = [cell convertRect:cell.bounds toView:tableView];
-	CGRect keyboardPos = [tableView convertRect:s_keyboardFrame fromView:nil];	// keyboard is in screen coordinates
 	CGRect rect;
 	rect.origin.x = 0;
 	rect.origin.y = cellRC.origin.y + cellRC.size.height;
 	rect.size.width = tableView.frame.size.width;
-	rect.size.height = keyboardPos.origin.y - rect.origin.y;
+	if ( s_keyboardFrame.size.height > 0 ) {
+		CGRect keyboardPos = [tableView convertRect:s_keyboardFrame fromView:nil];	// keyboard is in screen coordinates
+		rect.size.height = keyboardPos.origin.y - rect.origin.y;
+	} else {
+		// no on-screen keyboard (external keyboard or Mac Catalyst)
+		rect.size.height = tableView.frame.size.height - cellRC.size.height;
+	}
 	return rect;
 }
 
