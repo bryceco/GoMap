@@ -46,6 +46,19 @@
     [self updatePOIAttributesTabBarItemVisibilityWithSelectedObject:selection];
 }
 
+- (NSArray *) keyCommands
+{
+	UIKeyCommand *esc = [UIKeyCommand keyCommandWithInput:UIKeyInputEscape modifierFlags:0 action:@selector(escapeKeyPress:)];
+	return @[esc];
+}
+
+- (void) escapeKeyPress:(UIKeyCommand *)keyCommand
+{
+	UIViewController * vc = self.selectedViewController;
+	[vc.view endEditing:YES];
+	[vc dismissViewControllerAnimated:YES completion:nil];
+}
+
 /**
  Hides the POI attributes tab bar item when the user is adding a new item, since it doesn't have any attributes yet.
 
