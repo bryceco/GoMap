@@ -334,6 +334,8 @@
 		return self.mapView.editorLayer.selectedPrimary != nil;
 	if ( action == @selector(paste:) )
 		return self.mapView.editorLayer.selectedPrimary != nil && self.mapView.editorLayer.canPasteTags;
+	if ( action == @selector(delete:) )
+		return self.mapView.editorLayer.selectedPrimary && !self.mapView.editorLayer.selectedRelation;
 	return NO;
 }
 
@@ -352,6 +354,10 @@
 -(void)paste:(id)sender
 {
 	[self.mapView performEditAction:ACTION_PASTETAGS];
+}
+-(void)delete:(id)sender
+{
+	[self.mapView performEditAction:ACTION_DELETE];
 }
 
 #pragma mark Gesture recognizers

@@ -2112,8 +2112,8 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_MORE) ];
 				else
 					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS) ];
-				else
-					self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
+			else
+				self.editControlActions = @[ @(ACTION_EDITTAGS), @(ACTION_PASTETAGS), @(ACTION_DELETE), @(ACTION_MORE) ];
 		}
 		[_editControl removeAllSegments];
 		for ( NSNumber * action in _editControlActions ) {
