@@ -59,6 +59,27 @@ typedef enum {
 	GPS_STATE_HEADING,
 } GPS_STATE;
 
+typedef enum {
+	// used by edit control:
+	ACTION_EDITTAGS,
+	ACTION_ADDNOTE,
+	ACTION_DELETE,
+	ACTION_MORE,
+	// used for action sheet edits:
+	ACTION_SPLIT,
+	ACTION_RECTANGULARIZE,
+	ACTION_STRAIGHTEN,
+	ACTION_REVERSE,
+	ACTION_DUPLICATE,
+	ACTION_ROTATE,
+	ACTION_JOIN,
+	ACTION_DISCONNECT,
+	ACTION_CIRCULARIZE,
+	ACTION_COPYTAGS,
+	ACTION_PASTETAGS,
+	ACTION_RESTRICT,
+	ACTION_CREATE_RELATION
+} EDIT_ACTION;
 
 @interface MapLocation : NSObject
 @property (nonatomic) double longitude;
@@ -248,8 +269,9 @@ typedef enum {
 -(void)placePushpinForSelection;
 -(void)placePushpinAtPoint:(CGPoint)point object:(OsmBaseObject *)object;
 
-- (IBAction)undo:(id)sender;
-- (IBAction)redo:(id)sender;
+-(IBAction)undo:(id)sender;
+-(IBAction)redo:(id)sender;
+-(void)performEditAction:(EDIT_ACTION)action;
 
 #if TARGET_OS_IPHONE
 - (IBAction)handlePanGesture:(UIPanGestureRecognizer *)pan;

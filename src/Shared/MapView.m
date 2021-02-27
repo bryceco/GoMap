@@ -2069,28 +2069,6 @@ static NSString * const DisplayLinkHeading	= @"Heading";
 
 #pragma mark Edit Actions
 
-typedef enum {
-	// used by edit control:
-	ACTION_EDITTAGS,
-	ACTION_ADDNOTE,
-	ACTION_DELETE,
-	ACTION_MORE,
-	// used for action sheet edits:
-	ACTION_SPLIT,
-	ACTION_RECTANGULARIZE,
-	ACTION_STRAIGHTEN,
-	ACTION_REVERSE,
-	ACTION_DUPLICATE,
-	ACTION_ROTATE,
-	ACTION_JOIN,
-	ACTION_DISCONNECT,
-	ACTION_CIRCULARIZE,
-	ACTION_COPYTAGS,
-	ACTION_PASTETAGS,
-	ACTION_RESTRICT,
-	ACTION_CREATE_RELATION
-} EDIT_ACTION;
-
 NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 {
 	switch (action) {
@@ -2228,40 +2206,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 	if ( segment < _editControlActions.count ) {
 		EDIT_ACTION action = (EDIT_ACTION)_editControlActions[ segment ].integerValue;
-
-		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
-		switch ( action ) {
-			case ACTION_RECTANGULARIZE:
-			case ACTION_STRAIGHTEN:
-			case ACTION_REVERSE:
-			case ACTION_DUPLICATE:
-			case ACTION_ROTATE:
-			case ACTION_CIRCULARIZE:
-			case ACTION_COPYTAGS:
-			case ACTION_PASTETAGS:
-			case ACTION_EDITTAGS:
-			case ACTION_CREATE_RELATION:
-				if ( self.editorLayer.selectedWay &&
-					self.editorLayer.selectedNode &&
-					self.editorLayer.selectedNode.tags.count == 0 &&
-					self.editorLayer.selectedWay.tags.count == 0 &&
-					!self.editorLayer.selectedWay.isMultipolygonMember )
-				{
-					// promote the selection to the way
-					self.editorLayer.selectedNode = nil;
-					[self refreshPushpinText];
-				}
-				break;
-			case ACTION_SPLIT:
-			case ACTION_JOIN:
-			case ACTION_DISCONNECT:
-			case ACTION_RESTRICT:
-			case ACTION_ADDNOTE:
-			case ACTION_DELETE:
-			case ACTION_MORE:
-				break;
-		}
-
 		[self performEditAction:action];
 	}
 	segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
@@ -2269,6 +2213,39 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 -(void)performEditAction:(EDIT_ACTION)action
 {
+	// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+	switch ( action ) {
+		case ACTION_RECTANGULARIZE:
+		case ACTION_STRAIGHTEN:
+		case ACTION_REVERSE:
+		case ACTION_DUPLICATE:
+		case ACTION_ROTATE:
+		case ACTION_CIRCULARIZE:
+		case ACTION_COPYTAGS:
+		case ACTION_PASTETAGS:
+		case ACTION_EDITTAGS:
+		case ACTION_CREATE_RELATION:
+			if ( self.editorLayer.selectedWay &&
+				self.editorLayer.selectedNode &&
+				self.editorLayer.selectedNode.tags.count == 0 &&
+				self.editorLayer.selectedWay.tags.count == 0 &&
+				!self.editorLayer.selectedWay.isMultipolygonMember )
+			{
+				// promote the selection to the way
+				self.editorLayer.selectedNode = nil;
+				[self refreshPushpinText];
+			}
+			break;
+		case ACTION_SPLIT:
+		case ACTION_JOIN:
+		case ACTION_DISCONNECT:
+		case ACTION_RESTRICT:
+		case ACTION_ADDNOTE:
+		case ACTION_DELETE:
+		case ACTION_MORE:
+			break;
+	}
+
 	NSString * error = nil;
 	switch (action) {
 		case ACTION_COPYTAGS:

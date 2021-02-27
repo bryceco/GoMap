@@ -321,6 +321,41 @@
 #endif
 }
 
+
+#pragma mark Keyboard shortcuts
+
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+	if ( action == @selector(undo:) )
+		return self.mapView.editorLayer.mapData.canUndo;
+	if ( action == @selector(redo:) )
+		return self.mapView.editorLayer.mapData.canRedo;
+	if ( action == @selector(copy:) )
+		return self.mapView.editorLayer.selectedPrimary != nil;
+	if ( action == @selector(paste:) )
+		return self.mapView.editorLayer.selectedPrimary != nil && self.mapView.editorLayer.canPasteTags;
+	return NO;
+}
+
+-(void)undo:(id)sender
+{
+	[self.mapView undo:sender];
+}
+-(void)redo:(id)sender
+{
+	[self.mapView redo:sender];
+}
+-(void)copy:(id)sender
+{
+	[self.mapView performEditAction:ACTION_COPYTAGS];
+}
+-(void)paste:(id)sender
+{
+	[self.mapView performEditAction:ACTION_PASTETAGS];
+}
+
+#pragma mark Gesture recognizers
+
 -(void)addNodeQuick:(UILongPressGestureRecognizer *)recognizer
 {
 	if ( recognizer.state == UIGestureRecognizerStateBegan ) {
