@@ -32,7 +32,7 @@ let GEOMETRY_VERTEX = "vertex"
 
 // A key along with information about possible values
 @objc class PresetKey: NSObject, NSSecureCoding {
-	static let supportsSecureCoding: Bool = true
+	static var supportsSecureCoding: Bool = true
 
 	@objc let name: String					// name of the preset, e.g. Hours
 	@objc let tagKey: String				// the key being set, e.g. opening_hours

@@ -26,11 +26,6 @@ import Foundation
 		}
 	}
 
-	@objc class func supportsSecureCoding() -> Bool
-	{
-		return true
-	}
-
 	@objc init(appliesToKey: String,	// empty string is possible
 			   appliesToValue: String,	// empty string is possible
 			   name: String,
