@@ -353,6 +353,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer cancelsTouchesInView="NO" minimumNumberOfTouches="1" id="0bZ-QH-3ce">
+                    <scrollTypes key="allowedScrollTypesMask" continuous="YES"/>
                     <connections>
                         <action selector="handlePanGesture:" destination="fss-Ag-fKJ" id="tOw-4b-9rt"/>
                         <outlet property="delegate" destination="fss-Ag-fKJ" id="J71-B4-4YV"/>
