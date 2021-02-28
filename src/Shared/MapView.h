@@ -257,6 +257,9 @@ typedef enum {
 -(void)flashMessage:(NSString *)message duration:(NSTimeInterval)duration;
 -(void)presentError:(NSError *)error flash:(BOOL)flash;
 
+-(void)blinkObject:(OsmBaseObject *)object segment:(NSInteger)segment;
+-(void)unblinkObject;
+
 -(void)setAerialTileService:(AerialService *)service;
 
 -(BOOL)isLocationSpecified;

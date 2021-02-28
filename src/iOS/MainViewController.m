@@ -103,6 +103,27 @@
 	[NSUserDefaults.standardUserDefaults registerDefaults:@{ @"buttonLayout" : @(BUTTON_LAYOUT_ADD_ON_RIGHT) }];
 	self.buttonLayout = (BUTTON_LAYOUT) [NSUserDefaults.standardUserDefaults integerForKey:@"buttonLayout"];
 
+	[self setButtonAppearances];
+
+	// this is only used in Mac Catalyst:
+	UIHoverGestureRecognizer * hover = [[UIHoverGestureRecognizer alloc] initWithTarget:self action:@selector(hover:)];
+	[_mapView addGestureRecognizer:hover];
+}
+
+-(void)hover:(UIGestureRecognizer *)recognizer
+{
+	if ( recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateChanged ) {
+		CGPoint loc = [recognizer locationInView:_mapView];
+		NSInteger segment;
+		OsmBaseObject * hit = [_mapView.editorLayer osmHitTest:loc radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:&segment];
+		if ( hit == _mapView.editorLayer.selectedNode || hit == _mapView.editorLayer.selectedWay )
+			hit = nil;
+		[_mapView blinkObject:hit segment:segment];
+	}
+}
+
+-(void)setButtonAppearances
+{
 	// update button styling
 	NSArray * buttons = @[
 		// these aren't actually buttons, but they get similar tinting and shadows
@@ -129,7 +150,7 @@
 		{
 			// these buttons take care of themselves
 		} else if ( view == _mapView.helpButton ||
-				    view == _mapView.addNodeButton )
+					view == _mapView.addNodeButton )
 		{
 			// The button is a circle.
 			view.layer.cornerRadius = view.bounds.size.width / 2;

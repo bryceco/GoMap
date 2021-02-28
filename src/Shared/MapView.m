@@ -3086,6 +3086,10 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 
 -(void)blinkObject:(OsmBaseObject *)object segment:(NSInteger)segment
 {
+	if ( object == nil ) {
+		[self unblinkObject];
+		return;
+	}
 	if ( object == _blinkObject && segment == _blinkSegment )
 		return;
 	[_blinkLayer removeFromSuperlayer];
@@ -3635,6 +3639,7 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 		[self endObjectRotation];
 	}
 
+	[self unblinkObject];	// used by Mac Catalyst, harmless otherwise
 
 	if ( _editorLayer.selectedWay ) {
 		// check for selecting node inside way

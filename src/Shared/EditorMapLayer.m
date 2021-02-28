@@ -1758,8 +1758,9 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	NSInteger			nameLimit	= 5 + (geekScore - 500) / 200;	// 500 -> 5, 2500 -> 10
 	NSMutableSet	*	nameSet		= [NSMutableSet new];
 	NSMutableArray	*	layers		= [NSMutableArray new];
+	UIColor			*	regularColor  = UIColor.cyanColor;
 	UIColor			*	relationColor = [UIColor colorWithRed:66/255.0 green:188/255.0 blue:244/255.0 alpha:1.0];
-	
+
 	// highlighting
 	NSMutableSet * highlights = [NSMutableSet new];
 	if ( _selectedNode ) {
@@ -1780,7 +1781,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 		if ( object.isWay ) {
 			CGPathRef	path		= [self pathForWay:object.isWay];
 			CGFloat		lineWidth	= selected ? 1.0 : 2.0;
-			UIColor	*	wayColor	= selected ? UIColor.cyanColor : relationColor;
+			UIColor	*	wayColor	= selected ? regularColor : relationColor;
 
 			if ( lineWidth == 0 )
 				lineWidth = 1;
