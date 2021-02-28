@@ -31,6 +31,7 @@ typedef void (^	PushPinViewDragCallback)(UIGestureRecognizerState state, CGFloat
 @property (strong,nonatomic)	PushPinViewDragCallback		dragCallback;
 @property (assign,nonatomic)	BOOL						labelOnBottom;
 
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gesture;
 
 - (void)addButton:(UIButton *)button callback:(void(^)(void))callback;
 - (void)animateMoveFrom:(CGPoint)startPos;

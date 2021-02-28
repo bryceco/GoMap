@@ -53,7 +53,7 @@
 		_placeholderLayer = [CALayer layer];
 		[_shapeLayer addSublayer:_placeholderLayer];
 
-		[self addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(draggingGesture:)]];
+		[self addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)]];
 	}
 	return self;
 }
@@ -295,9 +295,9 @@
 	CGPathRelease( path );
 }
 
--(void)draggingGesture:(UIPanGestureRecognizer *)gesture
+-(void)handlePanGesture:(UIPanGestureRecognizer *)gesture
 {
-	CGPoint newCoord = [gesture locationInView:gesture.view];
+	CGPoint newCoord = [gesture locationInView:self];
 	CGFloat dX = 0;
 	CGFloat dY = 0;
 
@@ -309,7 +309,7 @@
 		_arrowPoint = CGPointMake( _arrowPoint.x + dX, _arrowPoint.y + dY );
 
 		CGPoint newCenter = { self.center.x + dX, self.center.y + dY };
-		gesture.view.center = newCenter;
+		self.center = newCenter;
 	}
 
 	if ( _dragCallback ) {
