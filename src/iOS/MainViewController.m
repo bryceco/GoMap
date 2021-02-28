@@ -105,21 +105,29 @@
 
 	[self setButtonAppearances];
 
-	// this is only used in Mac Catalyst:
+	// mouseover support for Mac Catalyst:
 	UIHoverGestureRecognizer * hover = [[UIHoverGestureRecognizer alloc] initWithTarget:self action:@selector(hover:)];
 	[_mapView addGestureRecognizer:hover];
+
+	// right-click support for Mac Catalyst:
+	UIContextMenuInteraction * rightClick = [[UIContextMenuInteraction alloc] initWithDelegate:self];
+	[_mapView addInteraction:rightClick];
 }
 
 -(void)hover:(UIGestureRecognizer *)recognizer
 {
-	if ( recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateChanged ) {
-		CGPoint loc = [recognizer locationInView:_mapView];
-		NSInteger segment;
-		OsmBaseObject * hit = [_mapView.editorLayer osmHitTest:loc radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:&segment];
-		if ( hit == _mapView.editorLayer.selectedNode || hit == _mapView.editorLayer.selectedWay )
-			hit = nil;
-		[_mapView blinkObject:hit segment:segment];
-	}
+	CGPoint loc = [recognizer locationInView:_mapView];
+	NSInteger segment;
+	OsmBaseObject * hit = [_mapView.editorLayer osmHitTest:loc radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:&segment];
+	if ( hit == _mapView.editorLayer.selectedNode || hit == _mapView.editorLayer.selectedWay || hit.isRelation )
+		hit = nil;
+	[_mapView blinkObject:hit segment:segment];
+}
+
+-(UIContextMenuConfiguration *)contextMenuInteraction:(UIContextMenuInteraction *)interaction configurationForMenuAtLocation:(CGPoint)location
+{
+	[_mapView rightClickAtLocation:location];
+	return nil;
 }
 
 -(void)setButtonAppearances

@@ -3715,4 +3715,10 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 	}
 }
 
+-(void)rightClickAtLocation:(CGPoint)location
+{
+	// right-click is equivalent to holding + and clicking
+	[self dropPinAtPoint:location];
+}
+
 @end

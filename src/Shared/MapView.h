@@ -280,6 +280,7 @@ typedef enum {
 - (IBAction)handlePanGesture:(UIPanGestureRecognizer *)pan;
 - (IBAction)handlePinchGesture:(UIPinchGestureRecognizer *)pinch;
 - (IBAction)handleTapGesture:(UITapGestureRecognizer *)tap;
+- (void)rightClickAtLocation:(CGPoint)location;
 
 - (void)setTagsForCurrentObject:(NSDictionary *)tags;
 #endif

@@ -18,7 +18,7 @@ typedef enum {
 
 @class MapView;
 
-@interface MainViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate>
+@interface MainViewController : UIViewController <UIActionSheetDelegate,UIGestureRecognizerDelegate,UIContextMenuInteractionDelegate>
 {
 	IBOutlet UIButton		*	_uploadButton;
 	IBOutlet UIButton		*	_undoButton;
