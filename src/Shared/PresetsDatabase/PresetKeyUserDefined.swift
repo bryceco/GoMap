@@ -11,6 +11,8 @@ import Foundation
 
 // A preset the user defined as a custom preset
 @objc class PresetKeyUserDefined: PresetKey {
+	override public class var supportsSecureCoding: Bool { return true }
+
 	@objc let appliesToKey: String		// "" if not used
 	@objc let appliesToValue: String	// "" if not used
 
