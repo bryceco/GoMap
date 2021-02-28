@@ -105,6 +105,7 @@
 
 	[self setButtonAppearances];
 
+#if TARGET_OS_MACCATALYST
 	// mouseover support for Mac Catalyst:
 	UIHoverGestureRecognizer * hover = [[UIHoverGestureRecognizer alloc] initWithTarget:self action:@selector(hover:)];
 	[_mapView addGestureRecognizer:hover];
@@ -112,6 +113,7 @@
 	// right-click support for Mac Catalyst:
 	UIContextMenuInteraction * rightClick = [[UIContextMenuInteraction alloc] initWithDelegate:self];
 	[_mapView addInteraction:rightClick];
+#endif
 }
 
 -(void)hover:(UIGestureRecognizer *)recognizer

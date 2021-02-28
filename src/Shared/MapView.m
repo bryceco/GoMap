@@ -318,13 +318,15 @@ const CGFloat kEditControlCornerRadius = 4;
 	_addNodeButtonLongPressGestureRecognizer.delegate = self;
 	[self.addNodeButton addGestureRecognizer:_addNodeButtonLongPressGestureRecognizer];
 
-	// pan gesture to recognize mouse-wheel scrolling (zoom)
-	if (@available(iOS 13.4, *)) {
+#if TARGET_OS_MACCATALYST
+	{
+		// pan gesture to recognize mouse-wheel scrolling (zoom) on Mac Catalyst
 		UIPanGestureRecognizer * scrollWheelGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollWheelGesture:)];
 		scrollWheelGesture.allowedScrollTypesMask = UIScrollTypeMaskDiscrete;
 		scrollWheelGesture.maximumNumberOfTouches = 0;
 		[self addGestureRecognizer:scrollWheelGesture];
 	}
+#endif
 
 	_notesDatabase			= [OsmNotesDatabase new];
 	_notesDatabase.mapData	= _editorLayer.mapData;
@@ -3336,6 +3338,11 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan
 {
+	// if we're
+	if (@available(iOS 13.4, *)) {
+
+	}
+
 	self.userOverrodeLocationPosition = YES;
 
 	if ( pan.state == UIGestureRecognizerStateBegan ) {
