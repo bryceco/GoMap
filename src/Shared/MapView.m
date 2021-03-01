@@ -3338,18 +3338,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan
 {
-#if TARGET_OS_MACCATALYST
-	if ( _editorLayer.selectedNode || _editorLayer.selectedWay ) {
-		CGPoint point = [pan locationInView:self];
-		OsmBaseObject * hit = [_editorLayer osmHitTest:point radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:NULL];
-		if ( hit == _editorLayer.selectedPrimary ) {
-			// drag the object instead of the display
-			[_pushpinView handlePanGesture:pan];
-			return;
-		}
-	}
-#endif
-
 	self.userOverrodeLocationPosition = YES;
 
 	if ( pan.state == UIGestureRecognizerStateBegan ) {
@@ -3483,10 +3471,6 @@ static NSString * const DisplayLinkPanning	= @"Panning";
 // long press on map allows selection of various objects near the location
 - (IBAction)handleLongPressGesture:(UILongPressGestureRecognizer *)longPress
 {
-#if TARGET_OS_MACCATALYST
-	if ( _editorLayer.selectedPrimary )
-		return;
-#endif
 	if ( longPress.state == UIGestureRecognizerStateBegan && !_editorLayer.hidden ) {
 		CGPoint point = [longPress locationInView:self];
 
