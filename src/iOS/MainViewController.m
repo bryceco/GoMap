@@ -132,6 +132,34 @@
 	return nil;
 }
 
+#if TARGET_OS_MACCATALYST
+-(void)pressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event
+{
+	if (@available(macCatalyst 13.4, *)) {
+		for ( UIPress * press in presses ) {
+			UIKey * key = [press key];
+			const CGFloat ARROW_KEY_DELTA = 256;;
+			switch ( key.keyCode ) {
+				case UIKeyboardHIDUsageKeyboardRightArrow:
+					[_mapView adjustOriginBy:CGPointMake(-ARROW_KEY_DELTA, 0)];
+					break;
+				case UIKeyboardHIDUsageKeyboardLeftArrow:
+					[_mapView adjustOriginBy:CGPointMake(ARROW_KEY_DELTA, 0)];
+					break;
+				case UIKeyboardHIDUsageKeyboardDownArrow:
+					[_mapView adjustOriginBy:CGPointMake(0, -ARROW_KEY_DELTA)];
+					break;
+				case UIKeyboardHIDUsageKeyboardUpArrow:
+					[_mapView adjustOriginBy:CGPointMake(0, ARROW_KEY_DELTA)];
+					break;
+				default:
+					break;
+			}
+		}
+	}
+}
+#endif
+
 -(void)setButtonAppearances
 {
 	// update button styling
