@@ -105,11 +105,17 @@
 	}
 }
 
-
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
+	// test the label box
 	if ( CGRectContainsPoint( _hittestRect, point ) )
 		return self;
+#if TARGET_OS_MACCATALYST
+	// also hit the arrow point
+	if ( fabs(point.y) < 12 && fabs(point.x-_hittestRect.origin.x - _hittestRect.size.width/2) < 12 )
+		return self;
+#endif
+	// and any buttons connected to us
 	for ( UIButton * button in _buttonList ) {
 		CGPoint point2 = [button convertPoint:point fromView:self];
 		UIView * hit = [button hitTest:point2 withEvent:event];
