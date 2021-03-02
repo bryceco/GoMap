@@ -121,14 +121,16 @@
 	CGPoint loc = [recognizer locationInView:_mapView];
 	NSInteger segment = 0;
 	OsmBaseObject * hit = nil;
-	if ( _mapView.editorLayer.selectedWay ) {
-		hit = [_mapView.editorLayer osmHitTestNodeInSelectedWay:loc radius:DefaultHitTestRadius];
+	if ( recognizer.state == UIGestureRecognizerStateChanged ) {
+		if ( _mapView.editorLayer.selectedWay ) {
+			hit = [_mapView.editorLayer osmHitTestNodeInSelectedWay:loc radius:DefaultHitTestRadius];
+		}
+		if ( hit == nil ) {
+			hit = [_mapView.editorLayer osmHitTest:loc radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:&segment];
+		}
+		if ( hit == _mapView.editorLayer.selectedNode || hit == _mapView.editorLayer.selectedWay || hit.isRelation )
+			hit = nil;
 	}
-	if ( hit == nil ) {
-		hit = [_mapView.editorLayer osmHitTest:loc radius:DefaultHitTestRadius isDragConnect:NO ignoreList:nil segment:&segment];
-	}
-	if ( hit == _mapView.editorLayer.selectedNode || hit == _mapView.editorLayer.selectedWay || hit.isRelation )
-		hit = nil;
 	[_mapView blinkObject:hit segment:segment];
 }
 
