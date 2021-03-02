@@ -131,7 +131,7 @@
 		if ( hit == _mapView.editorLayer.selectedNode || hit == _mapView.editorLayer.selectedWay || hit.isRelation )
 			hit = nil;
 	}
-	[_mapView blinkObject:hit segment:segment];
+	[_mapView blinkObject:hit segment:-1];
 }
 
 -(UIContextMenuConfiguration *)contextMenuInteraction:(UIContextMenuInteraction *)interaction configurationForMenuAtLocation:(CGPoint)location

@@ -3108,13 +3108,25 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
 		CGPathAddEllipseInRect(path, NULL, rect);
 	} else if ( object.isWay ) {
 		OsmWay * way = (id)object;
-		assert( way.nodes.count >= segment+2 );
-		OsmNode * n1 = way.nodes[segment];
-		OsmNode * n2 = way.nodes[segment+1];
-		CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon birdsEye:YES];
-		CGPoint p2 = [self screenPointForLatitude:n2.lat longitude:n2.lon birdsEye:YES];
-		CGPathMoveToPoint(path, NULL, p1.x, p1.y);
-		CGPathAddLineToPoint(path, NULL, p2.x, p2.y);
+		if ( segment >= 0 ) {
+			assert( way.nodes.count >= segment+2 );
+			OsmNode * n1 = way.nodes[segment];
+			OsmNode * n2 = way.nodes[segment+1];
+			CGPoint p1 = [self screenPointForLatitude:n1.lat longitude:n1.lon birdsEye:YES];
+			CGPoint p2 = [self screenPointForLatitude:n2.lat longitude:n2.lon birdsEye:YES];
+			CGPathMoveToPoint(path, NULL, p1.x, p1.y);
+			CGPathAddLineToPoint(path, NULL, p2.x, p2.y);
+		} else {
+			BOOL isFirst = YES;
+			for ( OsmNode * node in way.nodes ) {
+				CGPoint pt = [self screenPointForLatitude:node.lat longitude:node.lon birdsEye:YES];
+				if ( isFirst )
+					CGPathMoveToPoint(path, NULL, pt.x, pt.y);
+				else
+					CGPathAddLineToPoint(path, NULL, pt.x, pt.y);
+				isFirst = NO;
+			}
+		}
 	} else {
 		assert(NO);
 	}
