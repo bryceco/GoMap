@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'OpenStreetMap' target in the 'OpenStreetMap' project
-//
-
-#ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
-#endif
