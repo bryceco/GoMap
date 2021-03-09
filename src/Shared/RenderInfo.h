@@ -19,7 +19,6 @@ static const NSInteger RenderInfoMaxPriority = (33+1)*3;
 }
 @property (strong,nonatomic)	NSString	*	key;
 @property (strong,nonatomic)	NSString	*	value;
-@property (strong,nonatomic)	NSString	*	geometry;
 @property (strong,nonatomic)	NSColor		*	lineColor;
 @property (assign,nonatomic)	CGFloat			lineWidth;
 @property (strong,nonatomic)	NSColor		*	areaColor;
@@ -34,7 +33,7 @@ static const NSInteger RenderInfoMaxPriority = (33+1)*3;
 
 @interface RenderInfoDatabase : NSObject
 {
-	NSArray				*	_allTags;
+	NSArray				*	_allFeatures;
 	NSMutableDictionary *	_keyDict;
 }
 +(RenderInfoDatabase *)sharedRenderInfoDatabase;

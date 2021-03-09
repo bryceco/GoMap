@@ -23,6 +23,7 @@
 
 -(instancetype)initWithName:(NSString *)name;
 -(NSString *)path;
+-(void)close;
 
 -(void)createTables;
 -(void)dropTables;

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-#import "CommonPresetList.h"
 #import "CustomPresetController.h"
 #import "POIFeaturePresetsViewController.h"
 
@@ -31,7 +30,7 @@
 	for ( UITextField * textField in _valueFieldList ) {
 		if ( idx >= _customPreset.presetList.count )
 			break;
-		CommonPresetValue * preset = _customPreset.presetList[ idx ];
+		PresetValue * preset = _customPreset.presetList[ idx ];
 		textField.text = preset.tagValue;
 		++idx;
 	}
@@ -51,16 +50,15 @@
 	for ( UITextField * field in _valueFieldList ) {
 		NSString * value = [field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if ( value.length ) {
-			CommonPresetValue * preset = [CommonPresetValue presetWithName:nil details:nil tagValue:value];
+			PresetValue * preset = [[PresetValue alloc] initWithName:nil details:nil tagValue:value];
 			[presets addObject:preset];
 		}
 	}
 	UIKeyboardType keyboard = UIKeyboardTypeDefault;
 	UITextAutocapitalizationType capitalize = UITextAutocapitalizationTypeNone;
 	
-	_customPreset = [[CustomPreset alloc] initWithName:name featureKey:key defaultValue:nil placeholder:nil keyboard:keyboard capitalize:capitalize presets:presets];
-	_customPreset.appliesToKey = appliesToKey;
-	_customPreset.appliesToValue = appliesToVal;
+	_customPreset = [[PresetKeyUserDefined alloc] initWithAppliesToKey:appliesToKey appliesToValue:appliesToVal
+														  name:name tagKey:key placeholder:nil keyboard:keyboard capitalize:capitalize presets:presets];
 	if ( _completion ) {
 		_completion(_customPreset);
 	}

@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS 交換格式 (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "連線到其他藍牙 GPS 裝置";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "您的相機將會被用來測量建築物或實體物件的高度";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "持續定位並允許 app 紀錄資訊到 GPX 檔案，當 app 在背景執行時。";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "您的定位動態將會顯示在地圖上。";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "您的定位動態將會顯示在地圖上。";
+

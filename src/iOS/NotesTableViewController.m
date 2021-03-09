@@ -61,9 +61,9 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
 	if ( self.note.comments && section == 0 )
-		return @"Note History";
+		return NSLocalizedString(@"Note History",@"OSM note");
 	else
-		return @"Update";
+		return NSLocalizedString(@"Update",@"update an osm note");
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
@@ -142,7 +142,7 @@
 		cell = (id) [cell superview];
 	if ( cell ) {
 		NSString * s = [cell.text.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Updating Note...",nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Updating Note...",@"OSM Note") message:nil preferredStyle:UIAlertControllerStyleAlert];
 		[self presentViewController:alert animated:YES completion:nil];
 
 		[self.mapView.notesDatabase updateNote:self.note close:resolve comment:s completion:^(OsmNote * newNote, NSString *errorMessage) {

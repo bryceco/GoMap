@@ -122,7 +122,12 @@
 			zoomLevel = 21;
 		NSString * url = [NSString stringWithFormat:self.aerialService.metadataUrl, rc.origin.y+rc.size.height/2, rc.origin.x+rc.size.width/2, zoomLevel];
 
-		[[DownloadThreadPool generalPool] dataForUrl:url completeOnMain:YES completion:callback];
+		NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				callback( data, error );
+			});
+		}];
+		[task resume];
 	}
 }
 
@@ -140,9 +145,9 @@
 	[_webCache removeObjectsAsyncOlderThan:expiration];
 }
 
--(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
+-(void)getDiskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
-	[_webCache diskCacheSize:pSize count:pCount];
+    [_webCache getDiskCacheSize:pSize count:pCount];
 }
 
 -(BOOL)layerOverlapsScreen:(CALayer *)layer
@@ -278,7 +283,7 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 	return loc;
 }
 
--(NSString *)urlForZoom:(int32_t)zoom tileX:(int32_t)tileX tileY:(int32_t)tileY
+-(NSURL *)urlForZoom:(int32_t)zoom tileX:(int32_t)tileX tileY:(int32_t)tileY
 {
 	NSMutableString * url = [self.aerialService.url mutableCopy];
 
@@ -328,13 +333,18 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 		NSString * y = [NSString stringWithFormat:@"%d",tileY];
 		NSString * negY = [NSString stringWithFormat:@"%d",(1<<zoom)-tileY-1];
 		NSString * z = [NSString stringWithFormat:@"%d",zoom];
-		[url replaceOccurrencesOfString:@"{u}" withString:u options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{x}" withString:x options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{y}" withString:y options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{-y}" withString:negY options:0 range:NSMakeRange(0,url.length)];
-		[url replaceOccurrencesOfString:@"{z}" withString:z options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{u}"	withString:u options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{x}"	withString:x options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{y}" 	withString:y options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{-y}"	withString:negY options:0 range:NSMakeRange(0,url.length)];
+		[url replaceOccurrencesOfString:@"{z}" 	withString:z options:0 range:NSMakeRange(0,url.length)];
 	}
-	return [url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+	// retina screen
+	NSString * retina = UIScreen.mainScreen.scale > 1 ? @"@2x" : @"";
+	[url replaceOccurrencesOfString:@"{@2x}" withString:retina options:0 range:NSMakeRange(0,url.length)];
+
+	NSString * urlString = [url stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLQueryAllowedCharacterSet];
+	return [NSURL URLWithString:urlString];
 }
 
 -(BOOL)fetchTileForTileX:(int32_t)tileX tileY:(int32_t)tileY
@@ -368,9 +378,9 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 #endif
 	[_layerDict setObject:layer forKey:tileKey];
 
-	OSAtomicIncrement32( &_isPerformingLayout );
+	atomic_fetch_add( &_isPerformingLayout, 1 );
 	[self addSublayer:layer];
-	OSAtomicDecrement32( &_isPerformingLayout );
+	atomic_fetch_sub( &_isPerformingLayout, 1 );
 
 	// check memory cache
 	NSString * cacheKey = [self quadKeyForZoom:zoomLevel tileX:tileModX tileY:tileModY];
@@ -505,7 +515,7 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 	for ( int32_t tileX = tileWest; tileX < tileEast; ++tileX ) {
 		for ( int32_t tileY = tileNorth; tileY < tileSouth; ++tileY ) {
 
-			[_mapView progressIncrement:NO];
+			[_mapView progressIncrement];
 			[self fetchTileForTileX:tileX tileY:tileY
 						minZoom:MAX(zoomLevel-8,1)
 						  zoomLevel:zoomLevel
@@ -534,16 +544,16 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 {
 	if ( self.hidden )
 		return;
-	OSAtomicIncrement32( &_isPerformingLayout );
+	atomic_fetch_add( &_isPerformingLayout, 1 );
 	[self layoutSublayersSafe];
-	OSAtomicDecrement32( &_isPerformingLayout );
+	atomic_fetch_sub( &_isPerformingLayout, 1 );
 }
 
 -(void)downloadTileForKey:(NSString *)cacheKey completion:(void(^)(void))completion
 {
 	int tileX, tileY, zoomLevel;
 	QuadKeyToTileXY( cacheKey, &tileX, &tileY, &zoomLevel );
-	NSString * (^url)(void) = ^{ return [self urlForZoom:zoomLevel tileX:tileX tileY:tileY]; };
+	NSURL * (^url)(void) = ^{ return [self urlForZoom:zoomLevel tileX:tileX tileY:tileY]; };
 	NSData * data2 = [_webCache objectWithKey:cacheKey fallbackURL:url objectForData:^NSObject *(NSData * data) {
 		if ( data.length == 0 || [self isPlaceholderImage:data] )
 			return nil;

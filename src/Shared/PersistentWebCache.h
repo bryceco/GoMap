@@ -20,13 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 -(instancetype)initWithName:(NSString *)name memorySize:(NSInteger)memorySize;
 
 -(id _Nullable)objectWithKey:(NSString * _Nonnull)cacheKey
-				 fallbackURL:(NSString *(^_Nonnull)(void))url
+				 fallbackURL:(NSURL *(^_Nonnull)(void))url
 			   objectForData:(id(^)(NSData *_Nullable))objectForData
 				  completion:(void(^_Nonnull)(id))completion;
 
 -(void)removeAllObjects;
 -(void)removeObjectsAsyncOlderThan:(NSDate *_Nonnull)expiration;
--(void)diskCacheSize:(NSInteger *_Nonnull)pSize count:(NSInteger *_Nonnull)pCount;
+-(void)getDiskCacheSize:(NSInteger *_Nonnull)pSize count:(NSInteger *_Nonnull)pCount;
 -(NSArray<NSString *> *)allKeys;
 @end
 

@@ -19,6 +19,7 @@
 @end
 
 @implementation CALayerWithProperties
+@synthesize properties = _properties;
 -(instancetype)init
 {
 	if ( self = [super init] ) {
@@ -26,9 +27,11 @@
 	}
 	return self;
 }
+
 @end
 
 @implementation CAShapeLayerWithProperties
+@synthesize properties = _properties;
 -(instancetype)init
 {
 	if ( self = [super init] ) {
@@ -39,6 +42,7 @@
 @end
 
 @implementation CATextLayerWithProperties
+@synthesize properties = _properties;
 -(instancetype)init
 {
 	if ( self = [super init] ) {

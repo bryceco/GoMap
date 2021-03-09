@@ -14,3 +14,7 @@ DerivedData/
 # Misc
 .svn
 .DS_Store
+
+# Build results
+*.dSYM.zip
+*.ipa

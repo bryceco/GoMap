@@ -27,24 +27,28 @@ enum {
 	ROW_UID,
 	ROW_MODIFIED,
 	ROW_VERSION,
-	ROW_CHANGESET
+	ROW_CHANGESET,
 };
 
 @implementation POIAttributesViewController
 
-const NSInteger kCoordinateSection = 1;
+enum {
+	SECTION_METADATA = 0,
+	SECTION_NODE_LATLON = 1,
+	SECTION_WAY_EXTRA = 1,
+	SECTION_WAY_NODES = 2,
+};
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
-	if ( object ) {
-		self.title				= [NSString stringWithFormat:NSLocalizedString(@"%@ Attributes",nil), object.isNode ? NSLocalizedString(@"Node",nil) : object.isWay ? NSLocalizedString(@"Way",nil) : object.isRelation ? NSLocalizedString(@"Relation",nil) : @""];
-	} else {
-		self.title				= NSLocalizedString(@"No Object Selected",nil);
-	}
+	self.title	= object.isNode ? NSLocalizedString(@"Node Attributes",nil)
+				: object.isWay ? NSLocalizedString(@"Way Attributes",nil)
+				: object.isRelation ? NSLocalizedString(@"Relation Attributes",nil)
+				: NSLocalizedString(@"Attributes",@"node/way/relation attributes");
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,63 +61,66 @@ const NSInteger kCoordinateSection = 1;
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
-	return object.isNode || object.isWay ? 2 : 1;
+	OsmBaseObject * object = AppDelegate.shared.mapView.editorLayer.selectedPrimary;
+	return object.isNode ? 2 : object.isWay ? 3 : 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	if ( section == 0 )
-		return 6;
+	OsmBaseObject * object = AppDelegate.shared.mapView.editorLayer.selectedPrimary;
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
-	if ( object.isNode )
-		return 1;	// longitude/latitude
-	if ( object.isWay )
-		return object.isWay.nodes.count;	// all nodes
-	if ( object.isRelation )
-		return 0;
+	if ( section == SECTION_METADATA ) {
+		return 6;
+	}
+	if ( object.isNode ) {
+		if ( section == SECTION_NODE_LATLON )
+			return 1;	// longitude/latitude
+	} else if ( object.isWay ) {
+		if ( section == SECTION_WAY_EXTRA ) {
+			return 1;
+		} else if ( section == SECTION_WAY_NODES ) {
+			return object.isWay.nodes.count;	// all nodes
+		}
+	}
 	return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
 
 	AttributeCustomCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 	cell.accessoryType	= UITableViewCellAccessoryNone;
 
-	if ( indexPath.section == 0 ) {
+	if ( indexPath.section == SECTION_METADATA ) {
 
 		switch ( indexPath.row ) {
 			case ROW_IDENTIFIER:
-				cell.title.text = NSLocalizedString(@"Identifier",nil);
+				cell.title.text = NSLocalizedString(@"Identifier",@"OSM node/way/relation identifier");
 				cell.value.text = object.ident.stringValue;
 				cell.accessoryType	= object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
 			case ROW_USER:
-				cell.title.text = NSLocalizedString(@"User",nil);
+				cell.title.text = NSLocalizedString(@"User",@"OSM user name");
 				cell.value.text = object.user;
 				cell.accessoryType	= object.user.length > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
 			case ROW_UID:
-				cell.title.text = NSLocalizedString(@"UID",nil);
+				cell.title.text = NSLocalizedString(@"UID",@"OSM numeric user ID");
 				cell.value.text = @(object.uid).stringValue;
 				break;
 			case ROW_MODIFIED:
-				cell.title.text = NSLocalizedString(@"Modified",nil);
+				cell.title.text = NSLocalizedString(@"Modified",@"last modified date");
 				cell.value.text = [NSDateFormatter localizedStringFromDate:object.dateForTimestamp dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle];
 				break;
 			case ROW_VERSION:
-				cell.title.text = NSLocalizedString(@"Version",nil);
+				cell.title.text = NSLocalizedString(@"Version",@"OSM object versioh");
 				cell.value.text = @(object.version).stringValue;
 				cell.accessoryType	= object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
 			case ROW_CHANGESET:
-				cell.title.text = NSLocalizedString(@"Changeset",nil);
+				cell.title.text = NSLocalizedString(@"Changeset",@"OSM changeset identifier");
 				cell.value.text = @(object.changeset).stringValue;
 				cell.accessoryType = object.ident.longLongValue > 0 ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
 				break;
@@ -121,18 +128,21 @@ const NSInteger kCoordinateSection = 1;
 				assert(NO);
 		}
 
-	} else if (indexPath.section == kCoordinateSection) {
-
-		if ( object.isNode ) {
+	} else if ( object.isNode ) {
+		if ( indexPath.section == SECTION_NODE_LATLON ) {
 			OsmNode * node = object.isNode;
-			switch ( indexPath.row ) {
-				case 0:
-					cell.title.text = NSLocalizedString(@"Lat/Lon",nil);
-					cell.value.text = [NSString stringWithFormat:@"%f,%f", node.lat, node.lon];
-				default:
-					break;
-			}
-		} else if ( object.isWay ) {
+			cell.title.text = NSLocalizedString(@"Lat/Lon",@"coordinates");
+			cell.value.text = [NSString stringWithFormat:@"%f,%f", node.lat, node.lon];
+		}
+	} else if ( object.isWay ) {
+		if ( indexPath.section == SECTION_WAY_EXTRA ) {
+			double len = object.isWay.lengthInMeters;
+			long nodes = object.isWay.nodes.count;
+			cell.title.text = NSLocalizedString(@"Length",nil);
+			cell.value.text = len >= 10 ? [NSString stringWithFormat:NSLocalizedString(@"%.0f meters, %ld nodes",@"way length if > 10m"), len, nodes]
+										: [NSString stringWithFormat:NSLocalizedString(@"%.1f meters, %ld nodes",@"way length if < 10m"), len, nodes];
+			cell.accessoryType = UITableViewCellAccessoryNone;
+		} else if ( indexPath.section == SECTION_WAY_NODES ) {
 			OsmWay * way = object.isWay;
 			OsmNode * node = way.nodes[ indexPath.row ];
 			cell.title.text = NSLocalizedString(@"Node",nil);
@@ -142,10 +152,10 @@ const NSInteger kCoordinateSection = 1;
 			else
 				name = node.ident.stringValue;
 			cell.value.text = name;
-		} else {
-			// shouldn't be here
-			assert(NO);
 		}
+	} else {
+		// shouldn't be here
+		assert(NO);
 	}
 	// do extra work so keyboard won't display if they select a value
 	UITextField * value = cell.value;
@@ -165,8 +175,7 @@ const NSInteger kCoordinateSection = 1;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-    OsmBaseObject * object = appDelegate.mapView.editorLayer.selectedPrimary;
+	OsmBaseObject * object = AppDelegate.shared.mapView.editorLayer.selectedPrimary;
     if ( object == nil ) {
         return;
     }
@@ -194,13 +203,15 @@ const NSInteger kCoordinateSection = 1;
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Allow the user to copy the latitude/longitude.
-    return indexPath.section == kCoordinateSection;
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Allow the user to copy the latitude/longitude
+    return indexPath.section != SECTION_METADATA;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    if (indexPath.section != SECTION_METADATA && action == @selector(copy:)) {
         // Allow users to copy latitude/longitude.
         return YES;
     }
@@ -208,7 +219,8 @@ const NSInteger kCoordinateSection = 1;
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if (![cell isKindOfClass:[AttributeCustomCell class]]) {
         // For cells other than `AttributeCustomCell`, we don't know how to get the value.
@@ -217,7 +229,7 @@ const NSInteger kCoordinateSection = 1;
     
     AttributeCustomCell *customCell = (AttributeCustomCell *)cell;
     
-    if (indexPath.section == kCoordinateSection && action == @selector(copy:)) {
+    if (indexPath.section != SECTION_METADATA && action == @selector(copy:)) {
         [UIPasteboard.generalPasteboard setString:customCell.value.text];
     }
 }

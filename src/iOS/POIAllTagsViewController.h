@@ -11,6 +11,7 @@
 @interface TextPairTableCell : UITableViewCell
 @property (assign,nonatomic) IBOutlet	AutocompleteTextField *	text1;
 @property (assign,nonatomic) IBOutlet	AutocompleteTextField *	text2;
+@property (assign,nonatomic) IBOutlet	UIButton			  * infoButton;
 @end
 
 @interface POIAllTagsViewController : UITableViewController
@@ -19,8 +20,11 @@
 	NSMutableArray				*	_relations;
 	NSMutableArray				*	_members;
 	IBOutlet UIBarButtonItem	*	_saveButton;
+	BOOL							_childViewPresented;
+	NSString					*	_featureID;
+	UITextField					*	_currentTextField;
 }
 
-- (IBAction)toggleEditing:(id)sender;
+- (IBAction)toggleTableRowEditing:(id)sender;
 
 @end

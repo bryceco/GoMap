@@ -27,8 +27,6 @@
 @class QuadMapC;
 @class OsmUserStatistics;
 
-BOOL IsOsmBooleanFalse( NSString * value );
-
 extern NSString * OSM_API_URL;	//	@"http://api.openstreetmap.org/"
 
 
@@ -127,7 +125,8 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(NSMutableSet<NSString *> *)tagValuesForKey:(NSString *)key;
 
 // editing
-+(NSSet<NSString *> *)tagsToAutomaticallyStrip;
+@property (class,readonly) NSSet<NSString *> * tagsToAutomaticallyStrip;
+
 -(OsmNode *)createNodeAtLocation:(CLLocationCoordinate2D)loc;
 -(OsmWay *)createWay;
 -(OsmRelation *)createRelation;
@@ -136,7 +135,9 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(void)setLongitude:(double)longitude latitude:(double)latitude forNode:(OsmNode *)node;
 -(void)setTags:(NSDictionary<NSString *, NSString *> *)dict forObject:(OsmBaseObject *)object;
 
-- (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
+// download data
+- (void)updateWithBox:(OSMRect)box progressDelegate:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion;
+- (void)cancelCurrentDownloads;
 
 // upload changeset
 - (NSAttributedString *)changesetAsAttributedString;
@@ -148,5 +149,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 +(NSString *)encodeBase64:(NSString *)plainText;
 
 -(NSArray<OsmUserStatistics *> *)userStatisticsForRegion:(OSMRect)rect;
+
+-(void)consistencyCheck;
 
 @end

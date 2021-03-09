@@ -25,8 +25,8 @@
 	self.tableView.estimatedRowHeight = 100;
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 
-	_aerialCell.tileLayer = AppDelegate.getAppDelegate.mapView.aerialLayer;
-	_mapnikCell.tileLayer = AppDelegate.getAppDelegate.mapView.mapnikLayer;
+	_aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer;
+	_mapnikCell.tileLayer = AppDelegate.shared.mapView.mapnikLayer;
 	for ( OfflineTableViewCell * cell in @[ _aerialCell, _mapnikCell ] ) {
 		cell.tileList			= [cell.tileLayer allTilesIntersectingVisibleRect];
 		cell.detailLabel.text 	= [NSString stringWithFormat:NSLocalizedString(@"%lu tiles needed",nil), (unsigned long)cell.tileList.count];
@@ -47,7 +47,7 @@
 -(void)downloadFileForCell:(OfflineTableViewCell *)cell
 {
 	if ( cell.tileList.count == 0 ) {
-		[cell.button setTitle:NSLocalizedString(@"Start",nil) forState:UIControlStateNormal];
+		[cell.button setTitle:NSLocalizedString(@"Start",@"Begin downloading tiles") forState:UIControlStateNormal];
 		[cell.activityView stopAnimating];
 		if ( --_activityCount == 0 ) {
 			[self.navigationItem setHidesBackButton:NO animated:YES];
@@ -57,7 +57,7 @@
 	NSString * cacheKey = cell.tileList.lastObject;
 	[cell.tileList removeLastObject];
 	[cell.tileLayer downloadTileForKey:cacheKey completion:^{
-		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%lu tiles needed",nil), (unsigned long)cell.tileList.count];
+		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%lu tiles needed",@"Always plural"), (unsigned long)cell.tileList.count];
 		if ( cell.activityView.isAnimating ) {
 			[self downloadFileForCell:cell];
 		}

@@ -51,6 +51,9 @@ if (!(condition)) {		\
 	return nil;
 }
 
+// return self if database can be opened
+// return nil if database doesn't exist
+// assert if it is corrupted somehow
 -(instancetype)initWithName:(NSString *)name
 {
 	self = [super init];
@@ -96,7 +99,7 @@ if (!(condition)) {		\
 	return _path;
 }
 
--(void)dealloc
+-(void)close
 {
 #if USE_RTREE
 	if ( _spatialInsert ) {
@@ -111,7 +114,13 @@ if (!(condition)) {		\
 		if ( rc != SQLITE_OK ) {
 			NSLog(@"Database could not close: %s\n", sqlite3_errmsg(_db) );
 		}
+		_db = NULL;
 	}
+}
+
+-(void)dealloc
+{
+	[self close];
 }
 
 -(void)dropTables

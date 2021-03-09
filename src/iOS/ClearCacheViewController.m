@@ -46,7 +46,7 @@ enum {
 	self.tableView.rowHeight = UITableViewAutomaticDimension;
 	self.tableView.estimatedRowHeight = 44;
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	_automaticCacheManagement.on = appDelegate.mapView.enableAutomaticCacheManagement;
 }
 
@@ -54,7 +54,7 @@ enum {
 {
 	[super viewWillDisappear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	appDelegate.mapView.enableAutomaticCacheManagement = _automaticCacheManagement.on;
 }
 
@@ -65,32 +65,32 @@ enum {
 	if ( indexPath.section != 1 )
 		return;
 
-	MapView * mapView = AppDelegate.getAppDelegate.mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 	OsmMapData * mapData = mapView.editorLayer.mapData;
 
 	NSString	*title = nil;
 	id			 object = nil;
 	switch ( indexPath.row ) {
-		case ROW_OSM_DATA: 		title = NSLocalizedString(@"Clear OSM Data",nil);				object = nil;					break;
-		case ROW_MAPNIK:		title = NSLocalizedString(@"Clear Mapnik Tiles",nil);			object = mapView.mapnikLayer;	break;
-		case ROW_BREADCRUMB:	title = NSLocalizedString(@"Clear GPX Tracks",nil);				object = mapView.gpxLayer;		break;
-		case ROW_AERIAL:		title = NSLocalizedString(@"Clear Aerial Tiles",nil);			object = mapView.aerialLayer;	break;
-		case ROW_LOCATOR:		title = NSLocalizedString(@"Clear Locator Overlay Tiles",nil);	object = mapView.locatorLayer;	break;
-		case ROW_GPS: 			title = NSLocalizedString(@"Clear GPS Overlay Tiles",nil);		object = mapView.gpsTraceLayer;	break;
+		case ROW_OSM_DATA: 		title = NSLocalizedString(@"Clear OSM Data",@"Delete cached data");					object = nil;					break;
+		case ROW_MAPNIK:		title = NSLocalizedString(@"Clear Mapnik Tiles",@"Delete cached data");				object = mapView.mapnikLayer;	break;
+		case ROW_BREADCRUMB:	title = NSLocalizedString(@"Clear GPX Tracks",@"Delete cached data");				object = mapView.gpxLayer;		break;
+		case ROW_AERIAL:		title = NSLocalizedString(@"Clear Aerial Tiles",@"Delete cached data");				object = mapView.aerialLayer;	break;
+		case ROW_LOCATOR:		title = NSLocalizedString(@"Clear Locator Overlay Tiles",@"Delete cached data");	object = mapView.locatorLayer;	break;
+		case ROW_GPS: 			title = NSLocalizedString(@"Clear GPS Overlay Tiles",@"Delete cached data");		object = mapView.gpsTraceLayer;	break;
 	}
 	cell.titleLabel.text = title;
 	cell.detailLabel.text = @"";
 
 	if ( indexPath.row == ROW_OSM_DATA ) {
 		NSInteger objectCount = mapData.nodeCount + mapData.wayCount + mapData.relationCount;
-		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",nil), (long)objectCount];
+		cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%ld objects",@"Number of tiles/objects in cache"), (long)objectCount];
 	} else {
 		cell.detailLabel.text = NSLocalizedString(@"computing size...",nil);
 		dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
 			NSInteger size, count;
-			[(id)object diskCacheSize:&size count:&count];
+			[(id)object getDiskCacheSize:&size count:&count];
 			dispatch_async(dispatch_get_main_queue(), ^{
-				cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %d files",nil), (double)size/(1024*1024), count];
+				cell.detailLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%.2f MB, %ld files",@"These values will always be large (plural)"), (double)size/(1024*1024), (long)count];
 			});
 		});
 	}
@@ -98,7 +98,7 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	if ( indexPath.section == 0 ) {
 		return;
@@ -113,8 +113,9 @@ enum {
 				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
 					[self.navigationController popViewControllerAnimated:YES];
 				}]];
-				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Purge",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+				[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Purge",@"Discard editing changes when resetting OSM data cache") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 					[appDelegate.mapView.editorLayer purgeCachedDataHard:YES];
+					[appDelegate.mapView placePushpinForSelection];
 					[self.navigationController popViewControllerAnimated:YES];
 				}]];
 				[self presentViewController:alert animated:YES completion:nil];

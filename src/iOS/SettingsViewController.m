@@ -9,11 +9,9 @@
 #import "AppDelegate.h"
 #import "AerialList.h"
 #import "AerialListViewController.h"
-#import "CommonPresetList.h"
 #import "EditorMapLayer.h"
 #import "OsmMapData.h"
 #import "MapView.h"
-#import "MapViewController.h"
 #import "MercatorTileLayer.h"
 #import "SettingsViewController.h"
 
@@ -36,17 +34,17 @@
 
 	PresetLanguages * presetLanguages = [PresetLanguages new];
 	NSString * preferredLanguageCode = presetLanguages.preferredLanguageCode;
-	NSString * preferredLanguage = [presetLanguages localLanguageNameForCode:preferredLanguageCode];
+	NSString * preferredLanguage = [PresetLanguages localLanguageNameForCode:preferredLanguageCode];
 	_language.text = preferredLanguage;
 
 	// set username, but then validate it
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	_username.text = @"";
 	if ( appDelegate.userName.length > 0 ) {
 		[appDelegate.mapView.editorLayer.mapData verifyUserCredentialsWithCompletion:^(NSString * errorMessage) {
 			if ( errorMessage ) {
-				_username.text = NSLocalizedString(@"<unknown>",nil);
+				_username.text = NSLocalizedString(@"<unknown>",@"unknown user name");
 			} else {
 				_username.text = appDelegate.userName;
 			}

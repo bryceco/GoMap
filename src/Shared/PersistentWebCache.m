@@ -76,7 +76,7 @@
 	});
 }
 
--(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
+-(void)getDiskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount
 {
 	NSInteger count = 0;
 	NSInteger size = 0;
@@ -91,7 +91,7 @@
 }
 
 -(id)objectWithKey:(NSString *)cacheKey
-	   fallbackURL:(NSString *(^)(void))urlFunction
+	   fallbackURL:(NSURL *(^)(void))urlFunction
 	 objectForData:(id(^)(NSData * data))objectForData
 		completion:(void(^)(id object))completion
 {
@@ -134,11 +134,11 @@
 			gotData( fileData );
 		} else {
 			// fetch from server
-			NSURL * url = [NSURL URLWithString:urlFunction()];
+			NSURL * url = urlFunction();
 			NSURLRequest * request = [NSURLRequest requestWithURL:url];
 			NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 				if ( gotData(data) ) {
-					dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+					dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
 						[data writeToURL:filePath atomically:YES];
 					});
 				}

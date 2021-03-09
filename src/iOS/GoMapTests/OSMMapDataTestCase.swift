@@ -6,11 +6,10 @@
 //  Copyright © 2019 Bryce. All rights reserved.
 //
 
-import XCTest
 @testable import Go_Map__
+import XCTest
 
 class OSMMapDataTestCase: XCTestCase {
-    
     var mapData: OsmMapData!
     var userDefaults: UserDefaults!
 
@@ -23,20 +22,19 @@ class OSMMapDataTestCase: XCTestCase {
         mapData = nil
         userDefaults = nil
     }
-    
+
     func testSetServerShouldAddThePathSeparatorSuffixIfItDoesNotExist() {
         let hostname = "https://example.com"
         mapData.setServer(hostname)
-        
+
         let hostnameWithPathSeparatorSuffix = "\(hostname)/"
         XCTAssertEqual(OSM_API_URL, hostnameWithPathSeparatorSuffix)
     }
-    
+
     func testSetServerShouldNotAddThePathSeparatorSuffixIfItAlreadyExists() {
         let hostname = "https://example.com/"
         mapData.setServer(hostname)
-        
+
         XCTAssertEqual(OSM_API_URL, hostname)
     }
-
 }

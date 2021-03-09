@@ -1,0 +1,24 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Go Map!!";
+
+/* Bundle name */
+"CFBundleName" = "Go Map!!";
+
+/* (No Comment) */
+"GPS Exchange Format (GPX)" = "GPS-utvekslingsformat (GPX)";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Koble til eksterne Blåtanns-GPS-enheter";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Kamera brukes for å måle høyden på bygninger eller objekter";
+
+/* Privacy - Location Always and When In Use Usage Description */
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Sporingstilgang som alltid er på tillater programmet å lage GPX-filer når det er inaktivt.";
+
+/* Privacy - Location Always Usage Description */
+"NSLocationAlwaysUsageDescription" = "Din plassering vil bli vist og fulgt på kartet.";
+
+/* Privacy - Location When In Use Usage Description */
+"NSLocationWhenInUseUsageDescription" = "Din plassering vil bli vist og fulgt på kartet.";
+

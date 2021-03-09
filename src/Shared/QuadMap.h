@@ -51,6 +51,8 @@ struct QuadBoxCC;
 -(BOOL)nodesAreCovered:(NSArray *)nodeList;
 -(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate;
 
+-(void)consistencyCheckObject:(OsmBaseObject *)object;
+
 @end
 
 
@@ -78,5 +80,7 @@ struct QuadBoxCC;
 -(BOOL)pointIsCovered:(OSMPoint)point;
 -(BOOL)nodesAreCovered:(NSArray *)nodeList;
 -(void)deleteObjectsWithPredicate:(BOOL(^)(OsmBaseObject * obj))predicate;
+
+-(void)consistencyCheckNodes:(NSArray *)nodes ways:(NSArray *)ways relations:(NSArray *)relations;
 
 @end

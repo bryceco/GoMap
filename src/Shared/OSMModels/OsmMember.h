@@ -6,7 +6,7 @@
 //  Copyright © 2020 Bryce. All rights reserved.
 //
 
-@import Foundation;
+#include <Foundation/Foundation.h>
 
 @interface OsmMember : NSObject <NSCoding>
 {

@@ -126,6 +126,11 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	} else {
 		hostname = [@"https://" stringByAppendingString:hostname];
 	}
+
+	while ( [hostname hasSuffix:@"//"] ) {
+		// fix for previous releases that may have accidently set an extra slash
+		hostname = [hostname substringToIndex:hostname.length-1];
+	}
 	if ( [hostname hasSuffix:@"/"] ) {
 		// great
 	} else {
@@ -143,12 +148,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 -(NSString *)getServer
 {
-	NSString * s = OSM_API_URL;
-	if ( [s hasPrefix:@"http://"] )
-		s = [s substringFromIndex:7];
-	if ( [s hasSuffix:@"/"] )
-		s = [s substringToIndex:s.length-1];
-	return s;
+	return OSM_API_URL;
 }
 
 -(void)setupPeriodicSaveTimer
@@ -166,7 +166,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 }
 -(void)periodicSave:(NSTimer *)timer
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	[appDelegate.mapView save];	// this will also invalidate the timer
 }
 
@@ -268,7 +268,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	__block NSMutableArray * a = [NSMutableArray new];
 	if ( object.isNode ) {
 		[_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmWay * way, BOOL *stop) {
-			if ( [way.nodes containsObject:object] )
+			if ( [way.nodes containsObject:(id)object] )
 				[a addObject:way];
 		}];
 	}
@@ -521,7 +521,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self removeFromParentRelationsUnsafe:way];
 
 	while ( way.nodes.count ) {
-		[self deleteNodeInWayUnsafe:way index:way.nodes.count-1];
+		OsmNode * node = way.nodes.lastObject;
+		[self deleteNodeInWayUnsafe:way index:way.nodes.count-1 preserveNode:node.hasInterestingTags];
 	}
 	[way setDeleted:YES undo:_undoManager];
 }
@@ -552,7 +553,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_spatial updateMember:way fromBox:origBox undo:_undoManager];
 }
 
--(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index
+-(void)deleteNodeInWayUnsafe:(OsmWay *)way index:(NSInteger)index preserveNode:(BOOL)preserveNode
 {
 	[self registerUndoCommentString:NSLocalizedString(@"delete node from way",nil)];
 	OsmNode * node = way.nodes[ index ];
@@ -565,12 +566,8 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[way removeNodeAtIndex:index undo:_undoManager];
 	[_spatial updateMember:way fromBox:bbox undo:_undoManager];
 
-	if ( node.wayCount == 0 ) {
-		if ( !node.hasInterestingTags ) {
-			[self deleteNodeUnsafe:node];
-		} else {
-			[_spatial addMember:node undo:_undoManager];
-		}
+	if ( node.wayCount == 0 && !preserveNode ) {
+		[self deleteNodeUnsafe:node];
 	}
 }
 
@@ -837,12 +834,12 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[self osmDataForUrl:url quads:query completion:completion];
 }
 
-- (void)updateWithBox:(OSMRect)box mapView:(MapView *)mapView completion:(void(^)(BOOL partial,NSError * error))completion
+- (void)updateWithBox:(OSMRect)box progressDelegate:(NSObject<MapViewProgress> *)progress completion:(void(^)(BOOL partial,NSError * error))completion
 {
 	__block int activeRequests = 0;
 
 	void(^mergePartialResults)(ServerQuery * query,OsmMapData * mapData,NSError * error) = ^(ServerQuery * query,OsmMapData * mapData,NSError * error){
-		[mapView progressDecrement];
+		[progress progressDecrement];
 		--activeRequests;
 		if ( activeRequests == 0 ) {
 		}
@@ -852,35 +849,30 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		completion( activeRequests > 0, error );
 	};
 
-	// check how much area we're trying to download, and if too large complain
-	NSError * error = nil;
-	NSArray * newQuads = nil;
-	double area = SurfaceArea( box );
-	BOOL tooLarge = area > 10.0*1000*1000;	// square kilometer
-	if ( !tooLarge ) {
-		// get list of new quads to fetch
-		newQuads = [_region newQuadsForRect:box];
-	} else {
-		if ( [[DownloadThreadPool osmPool] downloadsInProgress] > 0 ) {
-			error = [NSError errorWithDomain:@"Network" code:1 userInfo:@{ NSLocalizedDescriptionKey : NSLocalizedString(@"Edit download region is too large",nil) }];
-			[[DownloadThreadPool osmPool] cancelAllDownloads];
-		}
-	}
+	// get list of new quads to fetch
+	NSArray * newQuads = [_region newQuadsForRect:box];
 
 	if ( newQuads.count == 0 ) {
 		++activeRequests;
-		[mapView progressIncrement:NO];
-		mergePartialResults( nil, nil, error );
+		[progress progressIncrement];
+		mergePartialResults( nil, nil, nil );
 	} else {
 		NSArray * queryList = [OsmMapData coalesceQuadQueries:newQuads];
 		for ( ServerQuery * query in queryList ) {
 			++activeRequests;
-			[mapView progressIncrement:NO];
+			[progress progressIncrement];
 			[OsmMapData osmDataForBox:query completion:mergePartialResults];
 		}
 	}
 
-	[mapView progressAnimate];
+	[progress progressAnimate];
+}
+
+-(void)cancelCurrentDownloads
+{
+	if ( [DownloadThreadPool.osmPool downloadsInProgress] > 0 ) {
+		[DownloadThreadPool.osmPool cancelAllDownloads];
+	}
 }
 
 #pragma mark Download parsing
@@ -1087,13 +1079,15 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}];
 
 		// all relations, including old ones, need to be resolved against new objects
-		[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
-
-			OSMRect bbox = relation.boundingBox;
-			[relation resolveToMapData:self];
-			[_spatial updateMember:relation fromBox:bbox undo:nil];
-		}];
-
+		__block BOOL didChange = YES;
+		while ( didChange ) {
+			didChange = NO;
+			[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmRelation * relation,BOOL * stop){
+				OSMRect bbox = relation.boundingBox;
+				didChange |= [relation resolveToMapData:self];
+				[_spatial updateMember:relation fromBox:bbox undo:nil];
+			}];
+		}
 
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			[node setConstructed];
@@ -1117,7 +1111,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 			// purge old data
 			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				[[AppDelegate getAppDelegate].mapView discardStaleData];
+				[AppDelegate.shared.mapView discardStaleData];
 			});
 		}
 	}
@@ -1207,10 +1201,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 -(void)putRequest:(NSString *)url method:(NSString *)method xml:(NSXMLDocument *)xml completion:(void(^)(NSData * data,NSString * error))completion
 {
-	if ( [url hasPrefix:@"http:"] ) {
-		url = [@"https" stringByAppendingString:[url substringFromIndex:4]];
-	}
-
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
 	[request setHTTPMethod:method];
 	if ( xml ) {
@@ -1230,15 +1220,17 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 	NSURLSessionDataTask * task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			if ( data && error == nil ) {
+			NSHTTPURLResponse * httpResponse = [response isKindOfClass:[NSHTTPURLResponse class]] ? (id)response : nil;
+			if ( data && error == nil && httpResponse && httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299  ) {
 				completion(data,nil);
 			} else {
 				NSString * errorMessage;
 				if ( data.length > 0 ) {
 					errorMessage = [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:NSUTF8StringEncoding];
 				} else {
-					errorMessage = error.localizedDescription;
+					errorMessage = error ? error.localizedDescription : httpResponse ? [NSString stringWithFormat:@"HTTP Error %ld", (long)httpResponse.statusCode] : @"Unknown error";
 				}
+				errorMessage = [errorMessage stringByAppendingFormat:@"\n\n%@ %@",method,url];
 				completion(nil,errorMessage);
 			}
 		});
@@ -1387,7 +1379,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 
 #if TARGET_OS_IPHONE
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	NSString * text = [NSString stringWithFormat:@"<?xml version=\"1.0\"?>"
 												@"<osmChange generator=\"%@ %@\" version=\"0.6\"></osmChange>",
 												appDelegate.appName, appDelegate.appVersion];
@@ -1598,7 +1590,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 // create a new changeset to upload to
 -(void)createChangesetWithComment:(NSString *)comment source:(NSString *)source imagery:(NSString *)imagery completion:(void(^)(NSString * changesetID, NSString * errorMessage))completion
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	NSString * creator = [NSString stringWithFormat:@"%@ %@", appDelegate.appName, appDelegate.appVersion];
 	NSMutableDictionary * tags = [NSMutableDictionary dictionaryWithDictionary:@{ @"created_by" : creator }];
 	if ( comment.length )
@@ -1657,7 +1649,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 
 - (void)verifyUserCredentialsWithCompletion:(void(^)(NSString * errorMessage))completion
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 
 	self.credentialsUserName = appDelegate.userName;
 	self.credentialsPassword = appDelegate.userPassword;
@@ -1685,7 +1677,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			completion(nil);
 		} else {
 			if ( errorMessage == nil )
-				errorMessage = @"Not found";
+				errorMessage = NSLocalizedString(@"Not found",@"User credentials not found");
 			completion(errorMessage);
 		}
 	}];
@@ -1782,11 +1774,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
     }
 
 	NSString * wayName = [way attributeForName:@"id"].stringValue;
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tWay " attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\tWay ",nil) attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:wayName
 																   attributes:@{ NSFontAttributeName : font,
 																				 NSLinkAttributeName : [@"w" stringByAppendingString:wayName] }]];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%d nodes)\n",nodeCount]
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@" (%d nodes)\n",nil),nodeCount]
                                                                    attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
 
 	for ( NSXMLElement * tag in way.children ) {
@@ -1820,11 +1812,11 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
     }
 
 	NSString * relationName = [relation attributeForName:@"id"].stringValue;
-    [string appendAttributedString:[[NSAttributedString alloc] initWithString:@"\tRelation " attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
+    [string appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\tRelation ",nil) attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
 	[string appendAttributedString:[[NSAttributedString alloc] initWithString:relationName
 																   attributes:@{ NSFontAttributeName : font,
 																				 NSLinkAttributeName : [@"r" stringByAppendingString:relationName] }]];
-	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" (%d members)\n",memberCount]
+	[string appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@" (%d members)\n",nil),memberCount]
                                                                    attributes:@{ NSFontAttributeName : font, NSForegroundColorAttributeName: foregroundColor }]];
 
 	for ( NSXMLElement * tag in relation.children ) {
@@ -2034,7 +2026,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	[_ways enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
 		if ( object.isModified ) {
 			[dirty addObject:object];
-			[dirty addObjectsFromArray:((OsmWay *)object).nodes];
 		}
 	}];
 	[_relations enumerateKeysAndObjectsUsingBlock:^(id key, OsmBaseObject * object, BOOL *stop) {
@@ -2046,6 +2037,20 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 	// get objects referenced by undo manager
 	NSSet * undoRefs = [_undoManager objectRefs];
 	[dirty unionSet:undoRefs];
+
+	// add nodes in ways to dirty set, because we must preserve them to maintain consistency
+	for ( OsmWay * way in dirty.allObjects ) {
+		if ( [way isKindOfClass:[OsmWay class]] ) {
+			[dirty addObjectsFromArray:way.nodes];
+		}
+	}
+
+	// deresolve relations
+	for ( OsmRelation * rel in dirty ) {
+		if ( [rel isKindOfClass:[OsmRelation class]] ) {
+			[rel deresolveRefs];
+		}
+	}
 
 	// purge everything
 	[self purgeExceptUndo];
@@ -2064,14 +2069,29 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 			} else {
 				assert(NO);
 			}
-			if ( !object.deleted ) {
-				[_spatial addMember:object undo:nil];
-			}
 
 		} else {
-			// ignore
+			// it's an undo comment
 		}
 	}
+
+	// restore relation references
+	for ( OsmRelation * rel in dirty ) {
+		if ( [rel isKindOfClass:[OsmRelation class]] ) {
+			[rel resolveToMapData:self];
+		}
+	}
+
+	// rebuild spatial
+	for ( OsmBaseObject * obj in dirty ) {
+		if ( [obj isKindOfClass:[OsmBaseObject class]] ) {
+			if ( !obj.deleted ) {
+				[_spatial addMember:obj undo:nil];
+			}
+		}
+	}
+
+	[self consistencyCheck];
 }
 
 
@@ -2300,7 +2320,9 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		[relation deresolveRefs];
 		[relation resolveToMapData:self];
 	}];
-	
+
+	[self consistencyCheck];
+
 	t = CACurrentMediaTime() - t;
 	NSLog(@"Discard sweep time = %f\n",t);
 
@@ -2429,33 +2451,63 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		}];
 
 		// merge info from SQL database
-		BOOL databaseFailure = NO;
+		Database * db = [Database new];
 		@try {
-			Database * db = [Database new];
-			NSMutableDictionary<NSNumber *, OsmNode *> * newNodes		= [db querySqliteNodes];
+			NSMutableDictionary<NSNumber *, OsmNode *> * newNodes			= [db querySqliteNodes];
 			NSAssert(newNodes,nil);
-			NSMutableDictionary<NSNumber *, OsmWay *> * newWays		= [db querySqliteWays];
+			NSMutableDictionary<NSNumber *, OsmWay *> * newWays				= [db querySqliteWays];
 			NSAssert(newWays,nil);
 			NSMutableDictionary<NSNumber *, OsmRelation *> * newRelations	= [db querySqliteRelations];
 			NSAssert(newRelations,nil);
-
-			OsmMapData * newData = [[OsmMapData alloc] init];
-			newData->_nodes = newNodes;
-			newData->_ways = newWays;
-			newData->_relations = newRelations;
-			[self merge:newData fromDownload:NO quadList:nil success:YES];
+			@try {
+				OsmMapData * newData = [[OsmMapData alloc] init];
+				newData->_nodes = newNodes;
+				newData->_ways = newWays;
+				newData->_relations = newRelations;
+				[self merge:newData fromDownload:NO quadList:nil success:YES];
+			} @catch (id exception) {
+				// we couldn't resolve references correctly, which leaves us in an inconsistent state
+				NSLog(@"Unable to read database: recreating from scratch\n");
+				[db close];
+				[Database deleteDatabaseWithName:nil];
+				// try again
+				return [[OsmMapData alloc] initWithCachedData];
+			}
 		} @catch (id exception) {
-			// database couldn't be read, or we couldn't resolve references correctly, so have to download everything
-			databaseFailure = YES;
-		}
-		if ( databaseFailure ) {
+			// database couldn't be read
 			NSLog(@"Unable to read database: recreating from scratch\n");
+			[db close];
 			[Database deleteDatabaseWithName:nil];
+			// download all regions
 			_region = [QuadMap new];
 		}
+		[self consistencyCheck];
 	}
 
 	return self;
+}
+
+
+-(void)consistencyCheckRelationMembers
+{
+	[_relations enumerateKeysAndObjectsUsingBlock:^(NSNumber * ident, OsmRelation * relation, BOOL * _Nonnull stop) {
+		for ( OsmMember * member in relation.members ) {
+			OsmBaseObject * object = member.ref;
+			if ( [object isKindOfClass:[NSNumber class]] )
+				continue;;
+			assert( [object.parentRelations containsObject:relation] );
+		}
+	}];
+}
+
+-(void)consistencyCheck
+{
+#if DEBUG && 0
+	// This is extremely expensive: DEBUG only!
+	NSLog(@"Checking spatial database consistency");
+	[self consistencyCheckRelationMembers];
+	[_spatial consistencyCheckNodes:_nodes.allValues ways:_ways.allValues relations:_relations.allValues];
+#endif
 }
 
 @end

@@ -404,18 +404,22 @@ static NSInteger g_nextTagID = 1;
 
 -(void)updateNote:(OsmNote *)note close:(BOOL)close comment:(NSString *)comment completion:(void(^)(OsmNote * newNote, NSString * errorMessage))completion
 {
-	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+	NSMutableCharacterSet * allowedChars = [NSCharacterSet.URLQueryAllowedCharacterSet mutableCopy];
+	[allowedChars removeCharactersInString:@"+;&"];
+	comment = [comment stringByAddingPercentEncodingWithAllowedCharacters:allowedChars];
 
-	NSString * url;
+	NSMutableString * url = [[OSM_API_URL stringByAppendingString:@"api/0.6/notes"] mutableCopy];
+
 	if ( note.comments == nil ) {
 		// brand new note
-		url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes?lat=%f&lon=%f&text=%@", note.lat, note.lon, comment];
+		[url appendFormat:@"?lat=%@&lon=%@&text=%@",
+				 @(note.lat).stringValue, @(note.lon).stringValue, comment];
 	} else {
 		// existing note
 		if ( close ) {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/close?text=%@", note.noteId, comment];
+			[url appendFormat:@"/%@/close?text=%@",note.noteId.stringValue,comment];
 		} else {
-			url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/notes/%@/comment?text=%@", note.noteId, comment];
+			[url appendFormat:@"/%@/comment?text=%@",note.noteId.stringValue,comment];
 		}
 	}
 

@@ -1,5 +1,5 @@
 //
-//  NewTileServerViewController.m
+//  AerialEditViewController.m
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 8/21/14.
@@ -8,6 +8,8 @@
 
 #import "AerialList.h"
 #import "AerialEditViewController.h"
+
+static NSString * TMS_PROJECTION_NAME = @"(TMS)";
 
 @interface AerialEditViewController ()
 @end
@@ -21,6 +23,16 @@
 	nameField.text = self.name;
 	urlField.text = self.url;
 	zoomField.text = [self.zoom stringValue];
+	projectionField.text = self.projection;
+
+	_picker = [UIPickerView new];
+	_picker.delegate = self;
+
+	[_picker reloadAllComponents];
+	NSInteger row = self.projection.length == 0 ? 0 : [AerialService.supportedProjections indexOfObject:self.projection]+1;
+	[_picker selectRow:row inComponent:0 animated:NO];
+
+	projectionField.inputView = _picker;
 }
 
 -(BOOL)isBannedURL:(NSString *)url
@@ -45,6 +57,11 @@
 
 	NSString * identifier = url;
 
+	NSString * projection = projectionField.text;
+	if ( projection.length == 0 || [projection isEqualToString:TMS_PROJECTION_NAME] ) {
+		projection = nil;
+	}
+
 	AerialService * service = [AerialService aerialWithName:[nameField.text	stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
 												 			identifier:identifier
 																	url:url
@@ -52,7 +69,7 @@
 																roundUp:YES
 															  startDate:nil
 																endDate:nil
-																wmsProjection:nil
+																wmsProjection:projection
 																polygon:NULL
 											   				attribString:nil
 												 			attribIcon:nil
@@ -76,6 +93,27 @@
 		}
 	}
 	self.navigationItem.rightBarButtonItem.enabled = allowed;
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView
+{
+	return 1;
+}
+
+- (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+	return AerialService.supportedProjections.count + 1;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+	return row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row-1];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+	projectionField.text = row == 0 ? TMS_PROJECTION_NAME : AerialService.supportedProjections[row-1];
+	[self contentChanged:projectionField];
 }
 
 @end

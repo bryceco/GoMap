@@ -74,7 +74,7 @@
 
 -(void)centerOnTrack:(GpxTrack *)track;
 
--(void)diskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount;
+-(void)getDiskCacheSize:(NSInteger *)pSize count:(NSInteger *)pCount;
 -(void)purgeTileCache;
 
 -(BOOL)loadGPXData:(NSData *)data center:(BOOL)center;

@@ -18,21 +18,9 @@
 static RenderInfo * g_AddressRender = nil;
 static RenderInfo * g_DefaultRender = nil;
 
--(RenderInfo *)copy
-{
-	RenderInfo * copy = [RenderInfo new];
-	copy.key			= self.key;
-	copy.value			= self.value;
-	copy.geometry		= self.geometry;
-	copy.lineColor		= self.lineColor;
-	copy.lineWidth		= self.lineWidth;
-	copy.areaColor		= self.areaColor;
-	return copy;
-}
-
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@=%@ %@", [super description], _key, _value, _geometry];
+	return [NSString stringWithFormat:@"%@ %@=%@", [super description], _key, _value];
 }
 
 -(BOOL)isAddressPoint
@@ -41,16 +29,34 @@ static RenderInfo * g_DefaultRender = nil;
 }
 
 
-+(NSColor *)colorForString:(NSString *)text
++(NSColor *)colorForHexString:(NSString *)text
 {
 	if ( text == nil )
 		return nil;
-	int r = 0, g = 0, b = 0;
-	sscanf( text.UTF8String, "%2x%2x%2x", &r, &g, &b);
+	assert( text.length == 6 );
+	int r2 = 0, g2 = 0, b2 = 0;
+	assert( sscanf( text.UTF8String, "%2x%2x%2x", &r2, &g2, &b2) == 3 );
+	CGFloat r = r2 / 255.0;
+	CGFloat g = g2 / 255.0;
+	CGFloat b = b2 / 255.0;
 #if TARGET_OS_IPHONE
-	return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+	if (@available(iOS 13.0, *)) {
+		return [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull traitCollection) {
+			if ( traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ) {
+				// lighten colors for dark mode
+				CGFloat delta = 0.3;
+				CGFloat r3 = r * (1-delta) + delta;
+				CGFloat g3 = g * (1-delta) + delta;
+				CGFloat b3 = b * (1-delta) + delta;
+				return [UIColor colorWithRed:r3 green:g3 blue:b3 alpha:1.0];
+			}
+			return [UIColor colorWithRed:r green:g blue:b alpha:1.0];
+		}];
+	} else {
+		return [UIColor colorWithRed:r green:g blue:b alpha:1.0];
+	}
 #else
-	return [NSColor colorWithCalibratedRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0];
 #endif
 }
 
@@ -103,6 +109,8 @@ static RenderInfo * g_DefaultRender = nil;
 				_renderPriority = 31;
 			} else if ( [_key isEqualToString:@"waterway"] && [_value isEqualToString:@"riverbank"] ) {
 				_renderPriority = 30;
+			} else if ( [_key isEqualToString:@"landuse"] ) {
+				_renderPriority = 29;
 			} else if ( [_key isEqualToString:@"highway"] && _value  && (_renderPriority = [highwayDict[_value] integerValue]) > 0 ) {
 				(void)0;
 			} else if ( [_key isEqualToString:@"railway"] ) {
@@ -145,54 +153,38 @@ static RenderInfo * g_DefaultRender = nil;
 	return _database;
 }
 
-+(NSMutableArray *)readXml
++(NSMutableArray *)readConfiguration
 {
-	NSError * error = nil;
-	NSMutableArray * tagList = [NSMutableArray new];
-	NSString * text = [NSString stringWithContentsOfFile:@"RenderInfo.xml" encoding:NSUTF8StringEncoding error:&error];
+	NSData * text = [NSData dataWithContentsOfFile:@"RenderInfo.json"];
 	if ( text == nil ) {
-		NSString * path = [[NSBundle mainBundle] pathForResource:@"RenderInfo" ofType:@"xml"];
-		text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+		NSString * path = [[NSBundle mainBundle] pathForResource:@"RenderInfo" ofType:@"json"];
+		text = [NSData dataWithContentsOfFile:path];
 	}
-	NSXMLDocument * doc = [[NSXMLDocument alloc] initWithXMLString:text options:0 error:&error];
-	NSXMLElement * root = [doc rootElement];
-	for ( NSXMLElement * tag in root.children ) {
+	NSDictionary * features = [NSJSONSerialization JSONObjectWithData:text options:0 error:NULL];
 
-		RenderInfo * tagType = [RenderInfo new];
-		tagType.key				= [tag attributeForName:@"key"].stringValue;
-		tagType.value			= [tag attributeForName:@"value"].stringValue;
-		tagType.geometry		= [tag attributeForName:@"type"].stringValue;
-		tagType.lineColor		= [RenderInfo colorForString:[tag attributeForName:@"lineColor"].stringValue];
-		tagType.areaColor		= [RenderInfo colorForString:[tag attributeForName:@"areaColor"].stringValue];
-		tagType.lineWidth		= [tag attributeForName:@"lineWidth"].stringValue.doubleValue;
+	NSMutableArray * renderList = [NSMutableArray new];
 
-		if ( [tag.name isEqualToString:@"tag"] ) {
-			[tagList addObject:tagType];
-		} else if ( [tag.name isEqualToString:@"default"] ) {
-			assert( tagType.value == nil );	// not implemented
-			tagType.value = @"";
-			[tagList addObject:tagType];
-		} else {
-			assert(NO);
-		}
-	}
-	return tagList;
+	[features enumerateKeysAndObjectsUsingBlock:^(NSString * feature, NSDictionary * dict, BOOL * _Nonnull stop) {
+		NSArray * keyValue = [feature componentsSeparatedByString:@"/"];
+		RenderInfo * render = [RenderInfo new];
+		render.key				= keyValue[0];
+		render.value			= keyValue.count > 1 ? keyValue[1] : @"";
+		render.lineColor		= [RenderInfo colorForHexString:dict[@"lineColor"]];
+		render.areaColor		= [RenderInfo colorForHexString:dict[@"areaColor"]];
+		render.lineWidth		= ((NSNumber *)dict[@"lineWidth"]).doubleValue;
+		[renderList addObject:render];
+	}];
+	return renderList;
 }
 
 
 -(id)init
 {
-	self = [self initWithXmlFile];
-	return self;
-}
-
--(id)initWithXmlFile
-{
 	self = [super init];
 	if ( self ) {
-		_allTags = [RenderInfoDatabase readXml];
+		_allFeatures = [RenderInfoDatabase readConfiguration];
 		_keyDict = [NSMutableDictionary new];
-		for ( RenderInfo * tag in _allTags ) {
+		for ( RenderInfo * tag in _allFeatures ) {
 			NSMutableDictionary * valDict = [_keyDict objectForKey:tag.key];
 			if ( valDict == nil ) {
 				valDict = [NSMutableDictionary dictionaryWithObject:tag forKey:tag.value];
@@ -207,36 +199,53 @@ static RenderInfo * g_DefaultRender = nil;
 
 -(RenderInfo *)renderInfoForObject:(OsmBaseObject *)object
 {
+	NSDictionary * tags = object.tags;
+	// if the object is part of a rendered relation than inherit that relation's tags
+	if ( object.parentRelations.count && object.isWay && !object.hasInterestingTags ) {
+		for ( OsmRelation * parent in object.parentRelations ) {
+			if ( parent.isBoundary ) {
+				tags = parent.tags;
+				break;
+			}
+		}
+	}
+
 	// try exact match
-	__block RenderInfo * best = nil;
-	__block BOOL isDefault = NO;
-	[object.tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
-		NSDictionary * valDict = [_keyDict objectForKey:key];
+	__block RenderInfo * bestRender = nil;
+	__block BOOL bestIsDefault = NO;
+	__block int bestCount = 0;
+	[tags enumerateKeysAndObjectsUsingBlock:^(NSString * key,NSString * value,BOOL * stop){
+		NSDictionary * valDict = _keyDict[key];
+		if ( valDict == nil )
+			return;
 		RenderInfo * render = valDict[value];
+		BOOL isDefault = NO;
 		if ( render == nil ) {
 			render = valDict[@""];
-			if ( render )
+			if ( render ) {
 				isDefault = YES;
+			}
 		}
-
 		if ( render == nil )
 			return;
-		if ( best == nil || isDefault || (best.lineColor == nil && render.lineColor) )
-			best = render;
-		if ( render.lineColor == nil )
+
+		int count = (render.lineColor != nil) + (render.areaColor != nil);
+		if ( bestRender == nil || (bestIsDefault && !isDefault) || (count > bestCount) ) {
+			bestRender = render;
+			bestCount = count;
+			bestIsDefault = isDefault;
 			return;
-		// DLog(@"render %@=%@",key,value);
-		*stop = YES;
+		}
 	}];
-	if ( best ) {
-		return best;
+	if ( bestRender ) {
+		return bestRender;
 	}
 
 	// check if it is an address point
 	BOOL isAddress = object.isNode && object.tags.count > 0;
 	if ( isAddress ) {
 		for ( NSString * key in object.tags ) {
-			if ( ![key hasPrefix:@"addr:"] ) {
+			if ( IsInterestingKey(key) && ![key hasPrefix:@"addr:"] ) {
 				isAddress = NO;
 				break;
 			}
@@ -255,7 +264,7 @@ static RenderInfo * g_DefaultRender = nil;
 		g_DefaultRender = [RenderInfo new];
 		g_DefaultRender.key = @"DEFAULT";
 #if TARGET_OS_IPHONE
-		g_DefaultRender.lineColor = [NSColor colorWithRed:0 green:0 blue:0 alpha:1];
+		g_DefaultRender.lineColor = UIColor.blackColor;
 #else
 		g_DefaultRender.lineColor = [NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:1];
 #endif

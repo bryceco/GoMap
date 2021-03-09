@@ -7,23 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <stdatomic.h>
 
 @class ConnectionState;
 
 @interface DownloadThreadPool : NSObject <NSURLSessionDataDelegate,NSURLSessionTaskDelegate>
 {
-	int32_t				_downloadCount;
+	atomic_int			_downloadCount;
 	NSURLSession	*	_urlSession;
 }
 
-
 +(DownloadThreadPool *)osmPool;
-+(DownloadThreadPool *)generalPool;
 
-+(void)setUserAgent:(NSString *)userAgent;
-
--(void)dataForUrl:(NSString *)url completion:(void(^)(NSData * data,NSError * error))completion;
--(void)dataForUrl:(NSString *)url completeOnMain:(BOOL)completeOnMain completion:(void(^)(NSData * data,NSError * error))completion;
 -(void)streamForUrl:(NSString *)url callback:(void(^)(NSInputStream * stream,NSError * error))callback;
 
 -(void)cancelAllDownloads;

@@ -1,5 +1,5 @@
 //
-//  OsmServerViewController.h
+//  AdvancedSettingsViewController.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 11/29/16.

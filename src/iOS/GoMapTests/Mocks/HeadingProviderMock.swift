@@ -13,17 +13,17 @@ import Foundation
 class HeadingProviderMock: NSObject, HeadingProviding {
     var startUpdatingHeadingCalled = false
     var stopUpdatingHeadingCalled = false
-    
+
     // MARK: HeadingProviding
-    
+
     var delegate: HeadingProviderDelegate?
-    
+
     var isHeadingAvailable: Bool = true
-    
+
     func startUpdatingHeading() {
         startUpdatingHeadingCalled = true
     }
-    
+
     func stopUpdatingHeading() {
         stopUpdatingHeadingCalled = true
     }

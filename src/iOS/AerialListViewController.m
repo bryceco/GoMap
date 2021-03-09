@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	_aerials = appDelegate.mapView.customAerials;
 
 	OSMRect viewport = [appDelegate.mapView screenLongitudeLatitude];
@@ -43,7 +43,7 @@
 	[super viewWillDisappear:animated];
 
 	if ( [self isMovingFromParentViewController] ) {
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 		MapView * mapView = appDelegate.mapView;
 		[mapView setAerialTileService:_aerials.currentAerial];
 	}
@@ -125,9 +125,9 @@
 
 	NSString * dateDetail = nil;
 	if ( aerial.startDate && aerial.endDate && ![aerial.startDate isEqualToString:aerial.endDate] )
-		dateDetail = [NSString stringWithFormat:@"vintage %@ - %@", aerial.startDate, aerial.endDate];
+		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@ - %@",@"Years aerial imagery was created"), aerial.startDate, aerial.endDate];
 	else if ( aerial.startDate || aerial.endDate ) {
-		dateDetail = [NSString stringWithFormat:@"vintage %@", aerial.startDate ?: aerial.endDate];
+		dateDetail = [NSString stringWithFormat:NSLocalizedString(@"vintage %@",@"Year aerial imagery was created"), aerial.startDate ?: aerial.endDate];
 	}
 	NSString * details = dateDetail ?: urlDetail;
 
@@ -183,7 +183,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	MapView * mapView = appDelegate.mapView;
 
 	NSArray * list = [self aerialListForSection:indexPath.section];
@@ -227,6 +227,7 @@
 			c.name = service.name;
 			c.url = service.isMaxar ? nil : service.url;
 			c.zoom = @(service.maxZoom);
+			c.projection = service.wmsProjection;
 		}
 
 		c.completion = ^(AerialService * service) {
@@ -234,11 +235,13 @@
 				return;
 			if ( editRow.row == _aerials.userDefinedServices.count ) {
 				[_aerials addUserDefinedService:service atIndex:_aerials.userDefinedServices.count];
-			} else if ( editRow >= 0 ) {
+			} else {
 				[_aerials removeUserDefinedServiceAtIndex:editRow.row];
 				[_aerials addUserDefinedService:service atIndex:editRow.row];
 			}
 			[self.tableView reloadData];
+
+			[self tableView:self.tableView didSelectRowAtIndexPath:editRow];
 		};
 	}
 }

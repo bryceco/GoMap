@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-#import "CommonPresetList.h"
 #import "CustomPresetController.h"
 #import "CustomPresetListViewController.h"
 
@@ -15,7 +14,7 @@
 
 - (void)viewDidLoad
 {
-	_customPresets = [CustomPresetList shared];
+	_customPresets = PresetKeyUserDefinedList.shared;
 
 	[super viewDidLoad];
 
@@ -37,7 +36,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return NSLocalizedString(@"You can define your own custom presets here",nil);
+	return NSLocalizedString(@"You can define your own custom presets here",@"POI editor presets");
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -49,15 +48,15 @@
 {
 	if ( section != 0 )
 		return 0;
-	return _customPresets.count + 1;
+	return _customPresets.list.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	assert( indexPath.section == 0 );
-	if ( indexPath.row < _customPresets.count ) {
+	if ( indexPath.row < _customPresets.list.count ) {
 		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"backgroundCell" forIndexPath:indexPath];
-		CustomPreset * preset = [_customPresets presetAtIndex:indexPath.row];
+		PresetKeyUserDefined * preset = _customPresets.list[indexPath.row];
 		cell.textLabel.text = preset.name;
 		return cell;
 	} else {
@@ -68,7 +67,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == 0 && indexPath.row < _customPresets.count )
+	if ( indexPath.section == 0 && indexPath.row < _customPresets.list.count )
 		return YES;
 	return NO;
 }
@@ -86,14 +85,14 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-	CustomPreset * preset = [_customPresets presetAtIndex:fromIndexPath.row];
+	PresetKeyUserDefined * preset = _customPresets.list[fromIndexPath.row];
 	[_customPresets removePresetAtIndex:fromIndexPath.row];
 	[_customPresets addPreset:preset atIndex:toIndexPath.row];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	if ( indexPath.section == 0 && indexPath.row < _customPresets.count )
+	if ( indexPath.section == 0 && indexPath.row < _customPresets.list.count )
 		return YES;
 	return NO;
 }
@@ -114,14 +113,14 @@
 	UITableViewCell * cell = sender;
 	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
 	NSInteger row = indexPath.row;
-	if ( row < _customPresets.count ) {
+	if ( row < _customPresets.list.count ) {
 		// existing item is being edited
-		c.customPreset = [_customPresets presetAtIndex:row];
+		c.customPreset = _customPresets.list[row];
 	}
 
-	c.completion = ^(CustomPreset * preset) {
-		if ( row >= _customPresets.count ) {
-			[_customPresets addPreset:preset atIndex:_customPresets.count];
+	c.completion = ^(PresetKeyUserDefined * preset) {
+		if ( row >= _customPresets.list.count ) {
+			[_customPresets addPreset:preset atIndex:_customPresets.list.count];
 		} else {
 			[_customPresets removePresetAtIndex:row];
 			[_customPresets addPreset:preset atIndex:row];

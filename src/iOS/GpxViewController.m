@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
-#import <MessageUI/MessageUI.h>
-
 #import "AppDelegate.h"
 #import "DLog.h"
 #import "MapView.h"
@@ -34,36 +32,34 @@
 @implementation GpxTrackTableCell
 -(IBAction)doAction:(id)sender
 {
-	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share",nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+	UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share",@"Title for sharing options") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
 	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Upload to OSM",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		[self.tableView shareTrack:_gpxTrack];
 	}]];
-	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Mail",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-		if ( [MFMailComposeViewController canSendMail] ) {
-			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-			MFMailComposeViewController * mail = [[MFMailComposeViewController alloc] init];
-			mail.mailComposeDelegate = self;
-			[mail setSubject:[NSString stringWithFormat:@"%@ GPX file: %@", appDelegate.appName, self.gpxTrack.creationDate]];
-			[mail addAttachmentData:self.gpxTrack.gpxXmlData mimeType:@"application/gpx+xml" fileName:[NSString stringWithFormat:@"%@.gpx", self.gpxTrack.creationDate]];
-			[self.tableView presentViewController:mail animated:YES completion:nil];
-		} else {
-			UIAlertController * error = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cannot compose message",nil)
-																			message:NSLocalizedString(@"Mail delivery is not available on this device",nil)
-																	 preferredStyle:UIAlertControllerStyleAlert];
-			[error addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleCancel handler:nil]];
-			[self.tableView presentViewController:error animated:YES completion:nil];
+	[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Share",@"Open iOS sharing sheet") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		NSString * fileName = [NSString stringWithFormat:@"%@ %@.gpx", AppDelegate.shared.appName, self.gpxTrack.creationDate];
+		NSURL * url = [NSFileManager.defaultManager.temporaryDirectory URLByAppendingPathComponent:fileName];
+		NSString * gpx = self.gpxTrack.gpxXmlString;
+		[NSFileManager.defaultManager removeItemAtURL:url error:NULL];
+		if ( [gpx writeToURL:url atomically:YES encoding:NSUTF8StringEncoding error:NULL] ) {
+			UIActivityViewController * controller = [[UIActivityViewController alloc] initWithActivityItems:@[fileName,url] applicationActivities:nil];
+			controller.completionWithItemsHandler = ^(UIActivityType activityType, BOOL completed, NSArray *returnedItems, NSError *activityError){
+				if ( completed ) {
+					GpxLayer * gpxLayer = AppDelegate.shared.mapView.gpxLayer;
+					[gpxLayer markTrackUploaded:self.gpxTrack];
+					[self.tableView.tableView reloadData];
+				}
+			};
+			[self.tableView presentViewController:controller animated:YES completion:nil];
 		}
 	}]];
+
 	[self.tableView presentViewController:alert animated:YES completion:nil];
 	// set location of popup
 	UIButton * button = sender;
 	alert.popoverPresentationController.sourceView = button;
 	alert.popoverPresentationController.sourceRect = button.bounds;
-}
--(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
-{
-	[controller dismissViewControllerAnimated:YES completion:nil];
 }
 @end
 
@@ -74,7 +70,7 @@
 -(IBAction)enableBackground:(id)sender
 {
 	UISwitch * toggle = sender;
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	appDelegate.mapView.gpsInBackground = [toggle isOn];
 }
 @end
@@ -99,7 +95,7 @@
 	_navigationBar.topItem.rightBarButtonItem = self.editButtonItem;
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	[appDelegate.mapView.gpxLayer loadTracksInBackgroundWithProgress:^{
 		[self.tableView reloadData];
 	}];
@@ -110,7 +106,7 @@
 {
 	[super viewDidAppear:animated];
 
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	if ( appDelegate.mapView.gpxLayer.activeTrack ) {
 		[self startTimerForStartDate:appDelegate.mapView.gpxLayer.activeTrack.creationDate];
 	}
@@ -138,7 +134,7 @@
 
 -(void)timerFired:(NSTimer *)timer
 {
-	AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+	AppDelegate * appDelegate = AppDelegate.shared;
 	GpxTrack * track = appDelegate.mapView.gpxLayer.activeTrack;
 	if ( track ) {
 		NSIndexPath * index = [NSIndexPath indexPathForRow:0 inSection:SECTION_ACTIVE_TRACK];
@@ -168,7 +164,7 @@
 		return 1;
 	} else if ( section == SECTION_PREVIOUS_TRACKS ) {
 		// previous tracks
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 		return appDelegate.mapView.gpxLayer.previousTracks.count;
 	} else if ( section == SECTION_CONFIGURE ) {
 		// configuration
@@ -182,11 +178,11 @@
 {
 	switch (section) {
 		case SECTION_ACTIVE_TRACK:
-			return @"Current Track";
+			return NSLocalizedString(@"Current Track",@"current GPX track");
 		case SECTION_PREVIOUS_TRACKS:
-			return @"Previous Tracks";
+			return NSLocalizedString(@"Previous Tracks","previous GPX track");
 		case SECTION_CONFIGURE:
-			return @"Configure";
+			return NSLocalizedString(@"Configure",nil);
 		default:
 			return nil;
 	}
@@ -195,7 +191,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
 	if ( section == SECTION_ACTIVE_TRACK ) {
-		return @"A GPX Track records your path as you travel along a road or trail";
+		return NSLocalizedString(@"A GPX Track records your path as you travel along a road or trail",nil);
 	}
 	return nil;
 }
@@ -203,13 +199,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 	GpxLayer * gpxLayer = mapView.gpxLayer;
 
 	if ( indexPath.section == SECTION_ACTIVE_TRACK && gpxLayer.activeTrack == nil ) {
 		// no active track
 		UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		cell.textLabel.text = NSLocalizedString(@"No active track",nil);
+		cell.textLabel.text = NSLocalizedString(@"No active track",@"GPX track");
 		return cell;
 	}
 	if ( indexPath.section == SECTION_CONFIGURE ) {
@@ -219,7 +215,7 @@
 			GpxTrackExpirationCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackExpirationCell" forIndexPath:indexPath];
 			NSNumber * expirationDays = [[NSUserDefaults standardUserDefaults] objectForKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
 			NSInteger expiration = [expirationDays integerValue];
-			NSString * title = expiration <= 0 ? NSLocalizedString(@"Never",nil) : [NSString stringWithFormat:NSLocalizedString(@"%ld Days",nil),(long)expiration];
+			NSString * title = expiration <= 0 ? NSLocalizedString(@"Never",@"Never delete old tracks") : [NSString stringWithFormat:NSLocalizedString(@"%ld Days",@"One or more days"),(long)expiration];
 			[cell.expirationButton setTitle:title forState:UIControlStateNormal];
 			[cell.expirationButton sizeToFit];
 			return cell;
@@ -236,7 +232,7 @@
 	NSInteger	dur = (NSInteger)round(track.duration);
 	NSString * startDate = [NSDateFormatter localizedStringFromDate:track.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
 	NSString * duration = [NSString stringWithFormat:@"%d:%02d:%02d", (int)(dur/3600), (int)(dur/60%60), (int)(dur%60)];
-	NSString * meters = [NSString stringWithFormat:@"%ld meters, %ld points", (long)track.distance, (long)track.points.count];
+	NSString * meters = [NSString stringWithFormat:NSLocalizedString(@"%ld meters, %ld points",@"length of a gpx track"), (long)track.distance, (long)track.points.count];
 	GpxTrackTableCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GpxTrackTableCell" forIndexPath:indexPath];
 	cell.startDate.text = startDate;
 	cell.duration.text = duration;
@@ -265,7 +261,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-		GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+		GpxLayer * gpxLayer = AppDelegate.shared.mapView.gpxLayer;
 		GpxTrack * track = gpxLayer.previousTracks[ indexPath.row ];
 		[gpxLayer deleteTrack:track];
 
@@ -278,22 +274,35 @@
 
 #pragma mark - Table view delegate
 
+- (nullable NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if ( indexPath.section == SECTION_CONFIGURE )
+		return nil;
+	if ( indexPath.section == SECTION_ACTIVE_TRACK &&
+		AppDelegate.shared.mapView.gpxLayer.activeTrack == nil )
+	{
+		// don't allow selecting the active track if there is none
+		return nil;
+	}
+	return indexPath;
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if ( indexPath.section == SECTION_ACTIVE_TRACK ) {
 		// active track
-		GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+		GpxLayer * gpxLayer = AppDelegate.shared.mapView.gpxLayer;
 		gpxLayer.selectedTrack = gpxLayer.activeTrack;
 		[gpxLayer centerOnTrack:gpxLayer.selectedTrack];
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	} else if ( indexPath.section == SECTION_CONFIGURE ) {
 		// configuration
 	} else if ( indexPath.section == SECTION_PREVIOUS_TRACKS ) {
-		GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+		GpxLayer * gpxLayer = AppDelegate.shared.mapView.gpxLayer;
 		GpxTrack *	track = gpxLayer.previousTracks[ indexPath.row ];
 		gpxLayer.selectedTrack = track;
 		[gpxLayer centerOnTrack:track];
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self.navigationController dismissViewControllerAnimated:YES completion:nil];
 	}
 }
 
@@ -306,7 +315,7 @@
 
 	// let progress window display before we submit work
 	dispatch_async(dispatch_get_main_queue(), ^{
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 
 		NSString * url = [OSM_API_URL stringByAppendingFormat:@"api/0.6/gpx/create"];
 
@@ -366,7 +375,7 @@
 					[self presentViewController:success animated:YES completion:nil];
 
 					// mark track as uploaded in UI
-					GpxLayer * gpxLayer = [AppDelegate getAppDelegate].mapView.gpxLayer;
+					GpxLayer * gpxLayer = AppDelegate.shared.mapView.gpxLayer;
 					[gpxLayer markTrackUploaded:track];
 					[self.tableView reloadData];
 
@@ -403,7 +412,7 @@
 			[[NSUserDefaults standardUserDefaults] setObject:pick forKey:USER_DEFAULTS_GPX_EXPIRATIION_KEY];
 
 			if ( pick.doubleValue > 0 ) {
-				AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+				AppDelegate * appDelegate = AppDelegate.shared;
 				NSDate * cutoff = [NSDate dateWithTimeIntervalSinceNow:-pick.doubleValue*24*60*60];
 				[appDelegate.mapView.gpxLayer trimTracksOlderThan:cutoff];
 			}

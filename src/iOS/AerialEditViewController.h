@@ -1,5 +1,5 @@
 //
-//  NewTileServerViewController.h
+//  AerialEditViewController.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 8/21/14.
@@ -10,16 +10,21 @@
 
 @class AerialService;
 
-@interface AerialEditViewController : UITableViewController
+@interface AerialEditViewController : UITableViewController<UIPickerViewDelegate, UIPickerViewDataSource>
 {
 	IBOutlet UITextField *	nameField;
 	IBOutlet UITextField *	urlField;
 	IBOutlet UITextField *	zoomField;
+	IBOutlet UITextField *	projectionField;
+
+	UIPickerView		*	_picker;
+	NSArray<NSString *>	*	_projectionList;
 }
 
 @property NSString * name;
 @property NSString * url;
 @property NSNumber * zoom;
+@property NSString * projection;
 
 @property (copy) void (^completion)(AerialService * service);
 

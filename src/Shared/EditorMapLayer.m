@@ -11,14 +11,12 @@
 #import "iosapi.h"
 #import "AppDelegate.h"
 #import "BingMapsGeometry.h"
-#import "Buildings3DView.h"
-#import "CommonPresetList.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
 #if TARGET_OS_IPHONE
 #import "FilterObjectsViewController.h"
-#import "MapViewController.h"
 #endif
+#import "GeekbenchScoreProvider.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
@@ -29,7 +27,6 @@
 #import "RenderInfo.h"
 #import "VectorMath.h"
 #import "Go_Map__-Swift.h"
-#import "GeekbenchScoreProvider.h"
 
 #define FADE_INOUT			0
 #define SINGLE_SIDED_WALLS	1
@@ -69,7 +66,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 		_mapView = mapView;
         _geekbenchScoreProvider = [[GeekbenchScoreProvider alloc] init];
 
-		AppDelegate * appDelegate = [AppDelegate getAppDelegate];
+		AppDelegate * appDelegate = AppDelegate.shared;
 
 		self.whiteText = YES;
 
@@ -128,7 +125,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 				NSString * text = NSLocalizedString(@"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance.",nil);
 				UIAlertController * alertView = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Cache size warning",nil) message:text preferredStyle:UIAlertControllerStyleAlert];
 				[alertView addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleCancel handler:nil]];
-				[self.mapView.viewController presentViewController:alertView animated:YES completion:nil];
+				[self.mapView.mainViewController presentViewController:alertView animated:YES completion:nil];
 			});
 		}
 #endif
@@ -195,6 +192,7 @@ static const CGFloat NodeHighlightRadius = 6.0;
 {
 	[super setBounds:bounds];
 	_baseLayer.frame = bounds;
+	_baseLayer.bounds = bounds;	// need to set both of these so bounds stays in sync with superlayer bounds
 	[self updateMapLocation];
 }
 
@@ -222,9 +220,12 @@ static const CGFloat NodeHighlightRadius = 6.0;
 
 #define SET_FILTER(name)\
 -(void)setShow##name:(BOOL)on {\
-if ( on != _show##name ) { _show##name = on;\
-[[NSUserDefaults standardUserDefaults] setBool:_show##name forKey:@"editor.show"#name];[_mapData clearCachedProperties];\
-}}
+	if ( on != _show##name ) {\
+		_show##name = on;\
+		[[NSUserDefaults standardUserDefaults] setBool:_show##name forKey:@"editor.show"#name];\
+		[_mapData clearCachedProperties];\
+	}\
+}
 SET_FILTER(Level)
 SET_FILTER(Points)
 SET_FILTER(TrafficRoads)
@@ -273,6 +274,7 @@ const double MinIconSizeInMeters = 2.0;
 {
 	self.selectedNode	= nil;
 	self.selectedWay	= nil;
+	self.selectedRelation = nil;
 	if ( hard ) {
 		[_mapData purgeHard];
 	} else {
@@ -286,16 +288,21 @@ const double MinIconSizeInMeters = 2.0;
 
 - (void)updateMapLocation
 {
-	if ( self.hidden )
+	if ( self.hidden ) {
+		[_mapData cancelCurrentDownloads];
 		return;
+	}
 
-	OSMRect box = [_mapView screenLongitudeLatitude];
+	if ( self.mapView.screenFromMapTransform.a == 1.0 )
+		return;	// identity, we haven't been initialized yet
+
+	const OSMRect box = [_mapView screenLongitudeLatitude];
 	if ( box.size.height <= 0 || box.size.width <= 0 )
 		return;
 
 	[self updateIconSize];
 
-	[_mapData updateWithBox:box mapView:_mapView completion:^(BOOL partial,NSError * error) {
+	[_mapData updateWithBox:box progressDelegate:_mapView completion:^(BOOL partial,NSError * error) {
 		if ( error ) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				// present error asynchrounously so we don't interrupt the current UI action
@@ -913,8 +920,9 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	}
 
 	CAShapeLayer * layer = [CAShapeLayer new];
-	layer.path = path;
+	layer.path			= path;
 	layer.frame			= self.bounds;
+	layer.bounds		= self.bounds;
 	layer.fillColor		= [UIColor colorWithRed:0 green:0 blue:1 alpha:0.1].CGColor;
 	layer.strokeColor	= [UIColor blueColor].CGColor;
 	layer.lineJoin		= DEFAULT_LINEJOIN;
@@ -922,26 +930,32 @@ static NSInteger ClipLineToRect( OSMPoint p1, OSMPoint p2, OSMRect rect, OSMPoin
 	layer.lineWidth		= 2.0;
 	layer.zPosition		= Z_OCEAN;
 	CGPathRelease(path);
+	
 	return layer;
 }
 
 #pragma mark Common Drawing
 
-UIImage * IconScaledForDisplay(UIImage *icon)
+UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize )
 {
-	if ( icon == nil )
+	if ( image == nil )
 		return nil;
-extern const double MinIconSizeInPixels;
 #if TARGET_OS_IPHONE
-	CGFloat uiScaling = [[UIScreen mainScreen] scale];
-	UIGraphicsBeginImageContext( CGSizeMake(uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels) );
-	[icon drawInRect:CGRectMake(0,0,uiScaling*MinIconSizeInPixels,uiScaling*MinIconSizeInPixels)];
+	CGSize size = { iconSize * UIScreen.mainScreen.scale,
+					iconSize * UIScreen.mainScreen.scale };
+	CGFloat ratio = image.size.height / image.size.width;
+	if ( ratio < 1.0 )
+		size.height *= ratio;
+	else if ( ratio > 1.0 )
+		size.width /= ratio;
+	UIGraphicsBeginImageContext( size );
+	[image drawInRect:CGRectMake(0,0,size.width,size.height)];
 	UIImage * newIcon = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 	return newIcon;
 #else
-	NSSize newSize = { MinIconSizeInPixels, MinIconSizeInPixels };
-	NSImage *smallImage = [[NSImage alloc] initWithSize: newSize];
+	NSSize newSize = { size, size };
+	NSImage * smallImage = [[NSImage alloc] initWithSize: newSize];
 	[smallImage lockFocus];
 	[_icon setSize:newSize];
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
@@ -951,6 +965,10 @@ extern const double MinIconSizeInPixels;
 #endif
 }
 
+UIImage * IconScaledForDisplay( UIImage *icon )
+{
+	return ImageScaledToSize( icon, MinIconSizeInPixels );
+}
 
 -(CGPathRef)pathForWay:(OsmWay *)way CF_RETURNS_RETAINED
 {
@@ -1007,11 +1025,11 @@ extern const double MinIconSizeInPixels;
 	return nil;
 }
 
-static NSString * DrawNodeAsHouseNumber( NSDictionary * tags )
+static NSString * HouseNumberForObjectTags( NSDictionary * tags )
 {
-	NSString * houseNumber = [tags objectForKey:@"addr:housenumber"];
+	NSString * houseNumber = tags[@"addr:housenumber"];
 	if ( houseNumber ) {
-		NSString * unitNumber = [tags objectForKey:@"addr:unit"];
+		NSString * unitNumber = tags[@"addr:unit"];
 		if ( unitNumber )
 			return [NSString stringWithFormat:@"%@/%@",houseNumber,unitNumber];
 	}
@@ -1133,13 +1151,16 @@ const static CGFloat Z_HALO				= Z_BASE + 3 * ZSCALE;
 const static CGFloat Z_CASING			= Z_BASE + 4 * ZSCALE;
 const static CGFloat Z_LINE				= Z_BASE + 5 * ZSCALE;
 const static CGFloat Z_TEXT				= Z_BASE + 6 * ZSCALE;
-const static CGFloat Z_NODE				= Z_BASE + 7 * ZSCALE;
-const static CGFloat Z_TURN             = Z_BASE + 8 * ZSCALE;	// higher than street signals, etc
-const static CGFloat Z_BUILDING_WALL	= Z_BASE + 9 * ZSCALE;
-const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 10 * ZSCALE;
-const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 11 * ZSCALE;
-const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 12 * ZSCALE;
-const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
+const static CGFloat Z_ARROW			= Z_BASE + 7 * ZSCALE;
+const static CGFloat Z_NODE				= Z_BASE + 8 * ZSCALE;
+const static CGFloat Z_TURN             = Z_BASE + 9 * ZSCALE;	// higher than street signals, etc
+const static CGFloat Z_BUILDING_WALL	= Z_BASE + 10 * ZSCALE;
+const static CGFloat Z_BUILDING_ROOF	= Z_BASE + 11 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_WAY	= Z_BASE + 12 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_NODE	= Z_BASE + 13 * ZSCALE;
+const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
+
+
 
 
 -(CALayer *)buildingWallLayerForPoint:(OSMPoint)p1 point:(OSMPoint)p2 height:(double)height hue:(double)hue
@@ -1185,7 +1206,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	return wall;
 }
 
--(NSArray *)getShapeLayersForObject:(OsmBaseObject *)object
+-(NSArray<CALayer<LayerPropertiesProviding> *> *)getShapeLayersForObject:(OsmBaseObject *)object
 {
 	if ( object.shapeLayers )
 		return object.shapeLayers;
@@ -1219,11 +1240,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 					props->position = refPoint;
 					props->lineWidth = layer.lineWidth;
 					NSString * bridge = object.tags[@"bridge"];
-					if ( bridge && !IsOsmBooleanFalse(bridge) ) {
+					if ( bridge && ![OsmTags IsOsmBooleanFalse:bridge] ) {
 						props->lineWidth += 4;
 					}
 					NSString * tunnel = object.tags[@"tunnel"];
-					if ( tunnel && !IsOsmBooleanFalse(tunnel) ) {
+					if ( tunnel && ![OsmTags IsOsmBooleanFalse:tunnel] ) {
 						props->lineWidth += 2;
 						layer.strokeColor = UIColor.brownColor.CGColor;
 					}
@@ -1232,26 +1253,23 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				}
 
 				// provide a halo for streets that don't have a name
-				if ( _mapView.enableUnnamedRoadHalo  &&  object.tags[@"highway"] ) {
-					NSString * name = [object givenName];
-					if ( name == nil && ![object.tags[@"noname"] isEqualToString:@"yes"] ) {
-						// it lacks a name
-						CAShapeLayerWithProperties * haloLayer = [CAShapeLayerWithProperties new];
-						haloLayer.anchorPoint	= CGPointMake(0, 0);
-						haloLayer.position		= CGPointFromOSMPoint( refPoint );
-						haloLayer.path			= path;
-						haloLayer.strokeColor	= UIColor.redColor.CGColor;
-						haloLayer.fillColor		= nil;
-						haloLayer.lineWidth		= (2+renderInfo.lineWidth)*_highwayScale;
-						haloLayer.lineCap		= DEFAULT_LINECAP;
-						haloLayer.lineJoin		= DEFAULT_LINEJOIN;
-						haloLayer.zPosition		= Z_HALO;
-						LayerProperties * haloProps = haloLayer.properties;
-						haloProps->position = refPoint;
-						haloProps->lineWidth = haloLayer.lineWidth;
+				if ( _mapView.enableUnnamedRoadHalo && object.isWay.needsNoNameHighlight ) {
+					// it lacks a name
+					CAShapeLayerWithProperties * haloLayer = [CAShapeLayerWithProperties new];
+					haloLayer.anchorPoint	= CGPointMake(0, 0);
+					haloLayer.position		= CGPointFromOSMPoint( refPoint );
+					haloLayer.path			= path;
+					haloLayer.strokeColor	= UIColor.redColor.CGColor;
+					haloLayer.fillColor		= nil;
+					haloLayer.lineWidth		= (2+renderInfo.lineWidth)*_highwayScale;
+					haloLayer.lineCap		= DEFAULT_LINECAP;
+					haloLayer.lineJoin		= DEFAULT_LINEJOIN;
+					haloLayer.zPosition		= Z_HALO;
+					LayerProperties * haloProps = haloLayer.properties;
+					haloProps->position = refPoint;
+					haloProps->lineWidth = haloLayer.lineWidth;
 
-						[layers addObject:haloLayer];
-					}
+					[layers addObject:haloLayer];
 				}
 
 				CGPathRelease(path);
@@ -1359,10 +1377,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						height *= 3;
 					}
 
-#if USE_SCENEKIT
-					UIBezierPath * wallPath = [UIBezierPath bezierPathWithCGPath:path];
-					[_mapView.buildings3D addShapeWithPath:wallPath height:height position:refPoint];
-#else
 					// get walls
 					double hue = object.ident.longLongValue % 20 - 10;
 					__block BOOL hasPrev = NO;
@@ -1406,7 +1420,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						roof.transform = t;
 						[layers addObject:roof];
 					}
-#endif // USE_SCENEKIT
 				}
 #endif	// SHOW_3D
 
@@ -1419,9 +1432,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	if ( object.isWay || object.isRelation.isMultipolygon ) {
 
 		// get object name, or address if no name
-		NSString * name = object.tags[@"name"];
+		NSString * name = object.givenName;
 		if ( name == nil )
-			name = DrawNodeAsHouseNumber( object.tags );
+			name = HouseNumberForObjectTags( object.tags );
 
 		if ( name ) {
 
@@ -1502,19 +1515,21 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
  */
 - (NSArray<CALayer *> *)shapeLayersForNode:(OsmNode *)node
 {
-    NSMutableArray<CALayer *> *layers = [NSMutableArray array];
+    NSMutableArray<CALayer<LayerPropertiesProviding> *> *layers = [NSMutableArray array];
     
-    NSArray<CALayer *> *directionLayers = [self directionShapeLayersWithNode:node];
+    NSArray<CALayer<LayerPropertiesProviding> *> *directionLayers = [self directionShapeLayersWithNode:node];
     if (directionLayers) {
 		[layers addObjectsFromArray:directionLayers];
     }
 
     OSMPoint pt = MapPointForLatitudeLongitude( node.lat, node.lon );
-    
+	BOOL drawRef = YES;
+
     // fetch icon
-    NSString * featureName = [CommonPresetList featureNameForObjectDict:node.tags geometry:node.geometryName];
-    CommonPresetFeature * feature = [CommonPresetFeature commonPresetFeatureWithName:featureName];
-	UIImage * icon = feature.icon;
+    PresetFeature * feature = [PresetsDatabase.shared matchObjectTagsToFeature:node.tags
+																	  geometry:node.geometryName
+																	includeNSI:NO];
+	UIImage * icon = feature.iconScaled24;
 	if ( icon == nil ) {
 		if ( node.tags[@"amenity"] || node.tags[@"name"] )
 			icon = [self genericIcon];
@@ -1558,22 +1573,11 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		props->position = pt;
 		[layers addObject:layer];
 
-		NSString * ref = node.tags[@"ref"];
-		if ( ref ) {
-			CATextLayerWithProperties * label = [CurvedGlyphLayer layerWithString:ref];
-			label.anchorPoint	= CGPointMake(0.0, 0.5);
-			label.position      = CGPointMake(pt.x, pt.y);
-			label.zPosition     = Z_TEXT;
-			label.properties->position = pt;
-			label.properties->offset = CGPointMake(12,0);
-			[layers addObject:label];
-		}
-
 	} else {
 
 		// draw generic box
 		UIColor * color = [self defaultColorForObject:node];
-		NSString * houseNumber = color ? nil : DrawNodeAsHouseNumber( node.tags );
+		NSString * houseNumber = color ? nil : HouseNumberForObjectTags( node.tags );
 		if ( houseNumber ) {
 
 			CATextLayerWithProperties * layer = [CurvedGlyphLayer layerWithString:houseNumber];
@@ -1582,6 +1586,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			layer.zPosition     = Z_TEXT;
 			LayerProperties * props = layer.properties;
 			props->position = pt;
+
+			drawRef = NO;
 
 			[layers addObject:layer];
 
@@ -1613,11 +1619,24 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		}
 	}
 
+	if ( drawRef ) {
+		NSString * ref = node.tags[@"ref"];
+		if ( ref ) {
+			CATextLayerWithProperties * label = [CurvedGlyphLayer layerWithString:ref];
+			label.anchorPoint	= CGPointMake(0.0, 0.5);
+			label.position      = CGPointMake(pt.x, pt.y);
+			label.zPosition     = Z_TEXT;
+			label.properties->position = pt;
+			label.properties->offset = CGPointMake(12,0);
+			[layers addObject:label];
+		}
+	}
+
     return layers;
 }
 
 
-- (CALayer *)directionShapeLayerForNode:(OsmNode *)node withDirection:(NSRange)direction
+- (CALayer<LayerPropertiesProviding> *)directionShapeLayerForNode:(OsmNode *)node withDirection:(NSRange)direction
 {
 	CGFloat heading = direction.location - 90.0;
 	if ( direction.length )
@@ -1669,6 +1688,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	OSMPoint p2 = MapPointForLatitudeLongitude(nextNode.lat, nextNode.lon);
 	double angle = atan2(p2.y-p1.y,p2.x-p1.x);
 	NSInteger direction = 90 + (int)round(angle * 180/M_PI);	// convert to north-facing clockwise direction
+	if ( direction < 0 )
+		direction += 360;
 	return [self directionShapeLayerForNode:node withDirection:NSMakeRange(direction,0)];
 }
 
@@ -1678,20 +1699,28 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
  @param node The node to get the layer for.
  @return A `CALayer` instance for rendering the given node's direction.
  */
-- (NSArray<CALayer *> *)directionShapeLayersWithNode:(OsmNode *)node
+- (NSArray<CALayer<LayerPropertiesProviding> *> *)directionShapeLayersWithNode:(OsmNode *)node
 {
     NSRange direction = node.direction;
 	if (direction.location != NSNotFound) {
 		return @[ [self directionShapeLayerForNode:node withDirection:direction] ];
 	}
 
-	NSString * value = node.tags[@"traffic_signals:direction"];
-	if ( value && [node.tags[@"highway"] isEqualToString:@"traffic_signals"] ) {
+	NSString * highway = node.tags[@"highway"];
+	if ( highway == nil )
+		return nil;
+	NSString * directionValue = nil;
+	if ( [highway isEqualToString:@"traffic_signals"] ) {
+		directionValue = node.tags[@"traffic_signals:direction"];
+	} else if ( [highway isEqualToString:@"stop"] ) {
+		directionValue = node.tags[@"direction"];
+	}
+	if ( directionValue ) {
 		enum { IS_NONE, IS_FORWARD, IS_BACKWARD, IS_BOTH, IS_ALL } isDirection =
-			[value isEqualToString:@"forward"] ? IS_FORWARD :
-			[value isEqualToString:@"backward"] ? IS_BACKWARD :
-			[value isEqualToString:@"both"] ? IS_BOTH :
-			[value isEqualToString:@"all"] ? IS_ALL :
+			[directionValue isEqualToString:@"forward"] ? IS_FORWARD :
+			[directionValue isEqualToString:@"backward"] ? IS_BACKWARD :
+			[directionValue isEqualToString:@"both"] ? IS_BOTH :
+			[directionValue isEqualToString:@"all"] ? IS_ALL :
 			IS_NONE;
 		if ( isDirection != IS_NONE ) {
 			NSArray<OsmWay *> * wayList = [self.mapData waysContainingNode:node];	// this is expensive, only do if necessary
@@ -1704,12 +1733,12 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				NSMutableArray * list = [NSMutableArray arrayWithCapacity:2*wayList.count];	// sized for worst case
 				for ( OsmWay * way in wayList ) {
 					NSInteger pos = [way.nodes indexOfObject:node];
-					if ( isDirection != IS_BACKWARD ) {
+					if ( isDirection != IS_FORWARD ) {
 						CALayer * layer = [self directionLayerForNodeInWay:way node:node facing:pos+1];
 						if ( layer )
 							[list addObject:layer];
 					}
-					if ( isDirection != IS_FORWARD ) {
+					if ( isDirection != IS_BACKWARD ) {
 						CALayer * layer = [self directionLayerForNodeInWay:way node:node facing:pos-1];
 						if ( layer )
 							[list addObject:layer];
@@ -1816,15 +1845,21 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			// draw nodes of way
 			NSSet * nodes = object == _selectedWay ? object.nodeSet : nil;
 			for ( OsmNode * node in nodes ) {
-				CAShapeLayer * layer2 = [CAShapeLayer new];
-				CGRect		rect	= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
-				layer2.position		= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
-				layer2.strokeColor	= node == _selectedNode ? UIColor.yellowColor.CGColor : UIColor.greenColor.CGColor;
+				CAShapeLayer * layer2 	= [CAShapeLayer new];
+				CGRect		rect		= CGRectMake(-NodeHighlightRadius, -NodeHighlightRadius, 2*NodeHighlightRadius, 2*NodeHighlightRadius);
+				layer2.position			= [_mapView screenPointForLatitude:node.lat longitude:node.lon birdsEye:NO];
+				layer2.strokeColor		= node == _selectedNode ? UIColor.yellowColor.CGColor : UIColor.greenColor.CGColor;
 				layer2.fillColor		= UIColor.clearColor.CGColor;
-				layer2.lineWidth		= 2.0;
+				layer2.lineWidth		= 3.0;
+				layer2.shadowColor		= UIColor.blackColor.CGColor;
+				layer2.shadowRadius		= 2.0;
+				layer2.shadowOpacity	= 0.5;
+				layer2.shadowOffset		= CGSizeMake(0,0);
+				layer2.masksToBounds	= NO;
+
 				path = [node hasInterestingTags] ? CGPathCreateWithRect(rect, NULL) : CGPathCreateWithEllipseInRect(rect, NULL);
 				layer2.path			= path;
-				layer2.zPosition		= Z_HIGHLIGHT_NODE + (node == _selectedNode ? 0.1*ZSCALE : 0);
+				layer2.zPosition	= Z_HIGHLIGHT_NODE + (node == _selectedNode ? 0.1*ZSCALE : 0);
 				[layers addObject:layer2];
 				CGPathRelease(path);
 			}
@@ -1855,7 +1890,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
 	// Arrow heads and street names
 	for ( OsmBaseObject * object in _shownObjects ) {
-		if ( object.isOneWay || [highlights containsObject:object] ) {
+		BOOL isHighlight = [highlights containsObject:object];
+		if ( object.isOneWay || isHighlight ) {
 
 			// arrow heads
 			[self invokeAlongScreenClippedWay:object.isWay offset:50 interval:100 block:^(OSMPoint loc, OSMPoint dir){
@@ -1878,7 +1914,10 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 				arrow.path = arrowPath;
 				arrow.lineWidth = 1;
 				arrow.fillColor = UIColor.blackColor.CGColor;
-				arrow.zPosition	= Z_ARROWS;
+				arrow.strokeColor = UIColor.whiteColor.CGColor;
+				arrow.lineWidth = 0.5;
+				arrow.zPosition	= isHighlight ? Z_HIGHLIGHT_ARROW : Z_ARROW;
+
 				[layers addObject:arrow];
 				CGPathRelease(arrowPath);
 			}];
@@ -1904,20 +1943,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 						double length = 0.0;
 						CGPathRef path = [self pathClippedToViewRect:object.isWay length:&length];
 						if ( length >= name.length * Pixels_Per_Character ) {
-#if 0
-							// uses CATextLayers with caching (14.5)
-							NSArray * a = [CurvedTextLayer.shared layersWithString:name alongPath:path whiteOnBlock:self.whiteText];
-#else
-#if 0
-							// Uses a single curving CurvedGlyphLayer (no caching) (13.6)
-							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
-							NSArray * a = layer ? @[ layer ] : nil;
-#else
-							// Uses multiple GlyphLayers with caching (14.7)
 							CurvedGlyphLayer * layer = [CurvedGlyphLayer layerWithString:name alongPath:path];
 							NSArray * a = [layer glyphLayers];
-#endif
-#endif
 							if ( a.count ) {
 								[layers addObjectsFromArray:a];
 								--nameLimit;
@@ -2108,7 +2135,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			  };
 	}
 	static BOOL (^predPoints)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
-		return object.isNode != nil;
+		return object.isNode && object.isNode.wayCount == 0;
 	};
 	static BOOL (^predTrafficRoads)(OsmBaseObject *) = ^BOOL(OsmBaseObject * object) {
 		return object.isWay && traffic_roads[ object.tags[@"highway"] ];
@@ -2219,7 +2246,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 		if ( obj.isWay && obj.parentRelations.count > 0 && !obj.hasInterestingTags ) {
 			BOOL hidden = YES;
 			for ( OsmRelation * parent in obj.parentRelations ) {
-				if ( !parent.isMultipolygon || [objects containsObject:parent] ) {
+				if ( !(parent.isMultipolygon || parent.isBoundary) || [objects containsObject:parent] ) {
 					hidden = NO;
 					break;
 				}
@@ -2257,6 +2284,8 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	// get objects in visible rect
 	NSMutableArray * objects = [self getVisibleObjects];
 
+	_atVisibleObjectLimit = objects.count >= objectLimit;	// we want this to reflect the unfiltered count
+
 	if ( self.enableObjectFilters ) {
 		[self filterObjects:objects];
 	}
@@ -2264,7 +2293,7 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 	// get renderInfo for objects
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.renderInfo == nil ) {
-			object.renderInfo = [[RenderInfoDatabase sharedRenderInfoDatabase] renderInfoForObject:object];
+			object.renderInfo = [RenderInfoDatabase.sharedRenderInfoDatabase renderInfoForObject:object];
 		}
 		if ( object->renderPriorityCached == 0 ) {
 			object->renderPriorityCached = [object.renderInfo renderPriorityForObject:object];
@@ -2357,9 +2386,9 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 
 	for ( OsmBaseObject * object in _shownObjects ) {
 
-		NSArray * layers = [self getShapeLayersForObject:object];
+		NSArray<CALayer<LayerPropertiesProviding> *> * layers = [self getShapeLayersForObject:object];
 
-		for ( CALayerWithProperties * layer in layers ) {
+		for ( CALayer<LayerPropertiesProviding> * layer in layers ) {
 
 			// configure the layer for presentation
 			BOOL isShapeLayer = [layer isKindOfClass:[CAShapeLayer class]];
@@ -2445,14 +2474,6 @@ const static CGFloat Z_ARROWS			= Z_BASE + 13 * ZSCALE;
 			}
 		}
 	}
-
-#if USE_SCENEKIT
-	{
-		CGPoint center = CGRectCenter(_mapView.bounds);
-		OSMPoint mapCenter = [_mapView mapPointFromScreenPoint:OSMPointFromCGPoint(center) birdsEye:NO];
-		[_mapView.buildings3D setCameraDirection:tRotation birdsEye:_mapView.birdsEyeRotation distance:_mapView.birdsEyeDistance fromPoint:mapCenter];
-	}
-#endif
 
 #if FADE_INOUT
 	[CATransaction commit];
@@ -2748,7 +2769,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
 	return copyPasteTags.count > 0;
 }
-- (void)mergeTags:(OsmBaseObject *)object
+- (void)pasteTagsMerge:(OsmBaseObject *)object
 {
     // Merge tags
 	NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];
@@ -2756,7 +2777,7 @@ inline static CGFloat HitTestLineSegment(CLLocationCoordinate2D point, OSMSize m
 	[self.mapData setTags:newTags forObject:object];
 	[self setNeedsLayout];
 }
-- (void)replaceTags:(OsmBaseObject *)object
+- (void)pasteTagsReplace:(OsmBaseObject *)object
 {
     // Replace all tags
     NSDictionary * copyPasteTags = [[NSUserDefaults standardUserDefaults] objectForKey:@"copyPasteTags"];

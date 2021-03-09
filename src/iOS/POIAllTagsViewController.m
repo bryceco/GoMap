@@ -10,8 +10,8 @@
 
 #import "AppDelegate.h"
 #import "AutocompleteTextField.h"
-#import "CommonPresetList.h"
 #import "EditorMapLayer.h"
+#import "HeightViewController.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMember.h"
@@ -49,55 +49,73 @@
 
 	UIBarButtonItem * editButton = self.editButtonItem;
 	[editButton setTarget:self];
-	[editButton setAction:@selector(toggleEditing:)];
+	[editButton setAction:@selector(toggleTableRowEditing:)];
 	self.navigationItem.rightBarButtonItems = @[ self.navigationItem.rightBarButtonItem, editButton ];
+
+	POITabBarController * tabController = (id)self.tabBarController;
+
+	if ( tabController.selection.isNode ) {
+		self.title = NSLocalizedString(@"Node Tags",nil);
+	} else if ( tabController.selection.isWay ) {
+		self.title = NSLocalizedString(@"Way Tags",nil);
+	} else if ( tabController.selection.isRelation ) {
+		NSString * type = tabController.keyValueDict[ @"type" ];
+		if ( type.length ) {
+			type = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
+			type = [type capitalizedString];
+			self.title = [NSString stringWithFormat:@"%@ Tags",type];
+		} else {
+			self.title = NSLocalizedString(@"Relation Tags",nil);
+		}
+	} else {
+		self.title = NSLocalizedString(@"All Tags",nil);
+	}
 }
 
-- (void)loadState
+-(void)dealloc
 {
-	// fetch values from tab controller
+}
+
+// return -1 if unchanged, else row to set focus
+- (NSInteger)updateWithRecomendationsForFeature:(BOOL)forceReload
+{
 	POITabBarController * tabController = (id)self.tabBarController;
-	_tags		= [NSMutableArray arrayWithCapacity:tabController.keyValueDict.count];
-	_relations	= [tabController.relationList mutableCopy];
-	_members	= tabController.selection.isRelation ? [((OsmRelation *)tabController.selection).members mutableCopy] : nil;
+	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
+	NSDictionary * dict = [self keyValueDictionary];
+	PresetFeature * newFeature = [PresetsDatabase.shared matchObjectTagsToFeature:dict
+																		 geometry:geometry
+																	   includeNSI:YES];
 
-	[tabController.keyValueDict enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
-		[_tags addObject:[NSMutableArray arrayWithObjects:tag,value,nil]];
-	}];
+	if ( !forceReload && [newFeature.featureID isEqualToString:_featureID] )
+		return -1;
+	_featureID = newFeature.featureID;
 
-	[_tags sortUsingComparator:^NSComparisonResult( NSArray * obj1, NSArray * obj2 ) {
-		NSString * tag1 = obj1[0];
-		NSString * tag2 = obj2[0];
-		BOOL tiger1 = [tag1 hasPrefix:@"tiger:"] || [tag1 hasPrefix:@"gnis:"];
-		BOOL tiger2 = [tag2 hasPrefix:@"tiger:"] || [tag2 hasPrefix:@"gnis:"];
-		if ( tiger1 == tiger2 ) {
-			return [tag1 compare:tag2];
-		} else {
-			return tiger1 - tiger2;
-		}
-	}];
+	// remove all entries without key & value
+	[_tags filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(NSArray<NSString *> * kv, id bindings) {
+		return kv[0].length && kv[1].length;
+	}]];
+
+	NSInteger nextRow = _tags.count;
 
 	// add new cell ready to be edited
 	[_tags addObject:[NSMutableArray arrayWithObjects:@"", @"", nil]];
 
 	// add placeholder keys
-	NSString * geometry = tabController.selection.geometryName ?: GEOMETRY_NODE;
-	NSString * featureName = [CommonPresetList featureNameForObjectDict:tabController.keyValueDict geometry:geometry];
-	if ( featureName ) {
-		[CommonPresetList.sharedList setPresetsForFeature:featureName tags:tabController.keyValueDict geometry:geometry update:^{}];
+	if ( newFeature ) {
+		PresetsForFeature * presets = [[PresetsForFeature alloc] initWithFeature:newFeature objectTags:dict geometry:geometry update:nil];
 		NSMutableArray * newKeys = [NSMutableArray new];
-		for ( NSInteger section = 0; section < CommonPresetList.sharedList.sectionCount; ++section ) {
-			for ( NSInteger row = 0; row < [CommonPresetList.sharedList tagsInSection:section]; ++row ) {
-				id preset = [CommonPresetList.sharedList tagAtSection:section row:row];
-				if ( [preset isKindOfClass:[CommonPresetGroup class]] ) {
-					CommonPresetGroup * group = preset;
-					for ( CommonPresetKey * presetKey in group.presetKeys ) {
+		for ( NSInteger section = 0; section < presets.sectionCount; ++section ) {
+			for ( NSInteger row = 0; row < [presets tagsInSection:section]; ++row ) {
+				id preset = [presets presetAtSection:section row:row];
+				if ( [preset isKindOfClass:[PresetGroup class]] ) {
+					PresetGroup * group = preset;
+					for ( PresetKey * presetKey in group.presetKeys ) {
 						if ( presetKey.tagKey.length == 0 )
 							continue;
 						[newKeys addObject:presetKey.tagKey];
 					}
 				} else {
-					CommonPresetKey * presetKey = preset;
+					PresetKey * presetKey = preset;
 					if ( presetKey.tagKey.length == 0 )
 						continue;
 					[newKeys addObject:presetKey.tagKey];
@@ -121,39 +139,56 @@
 
 	[self.tableView reloadData];
 
-	if ( tabController.selection.isNode ) {
-		self.title = NSLocalizedString(@"Node tags",nil);
-	} else if ( tabController.selection.isWay ) {
-		self.title = NSLocalizedString(@"Way tags",nil);
-	} else if ( tabController.selection.isRelation ) {
-		NSString * type = tabController.keyValueDict[ @"type" ];
-		if ( type.length ) {
-			type = [type stringByReplacingOccurrencesOfString:@"_" withString:@" "];
-			type = [type capitalizedString];
-			self.title = [NSString stringWithFormat:@"%@ tags",type];
+	return nextRow;
+}
+
+- (void)loadState
+{
+	POITabBarController * tabController = (id)self.tabBarController;
+
+	// fetch values from tab controller
+	_tags		= [NSMutableArray arrayWithCapacity:tabController.keyValueDict.count];
+	_relations	= [tabController.relationList mutableCopy];
+	_members	= tabController.selection.isRelation ? [((OsmRelation *)tabController.selection).members mutableCopy] : nil;
+
+	[tabController.keyValueDict enumerateKeysAndObjectsUsingBlock:^(NSString * tag, NSString * value, BOOL *stop) {
+		[_tags addObject:[NSMutableArray arrayWithObjects:tag,value,nil]];
+	}];
+
+	[_tags sortUsingComparator:^NSComparisonResult( NSArray * obj1, NSArray * obj2 ) {
+		NSString * tag1 = obj1[0];
+		NSString * tag2 = obj2[0];
+		BOOL tiger1 = [tag1 hasPrefix:@"tiger:"] || [tag1 hasPrefix:@"gnis:"];
+		BOOL tiger2 = [tag2 hasPrefix:@"tiger:"] || [tag2 hasPrefix:@"gnis:"];
+		if ( tiger1 == tiger2 ) {
+			return [tag1 compare:tag2];
 		} else {
-			self.title = NSLocalizedString(@"Relation tags",nil);
+			return tiger1 - tiger2;
 		}
-	} else {
-		self.title = NSLocalizedString(@"All Tags",nil);
-	}
+	}];
+
+	[self updateWithRecomendationsForFeature:YES];
 
 	_saveButton.enabled = [tabController isTagDictChanged];
+	if (@available(iOS 13.0, *)) {
+		self.tabBarController.modalInPresentation = _saveButton.enabled;
+	}
 }
 
 - (void)saveState
 {
-	NSMutableDictionary * dict = [self keyValueDictionary];
 	POITabBarController * tabController = (id)self.tabBarController;
-	tabController.keyValueDict = dict;
+	tabController.keyValueDict = [self keyValueDictionary];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	[self loadState];
-
-
+	if ( _childViewPresented ) {
+		_childViewPresented = NO;
+	} else {
+		[self loadState];
+	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -165,9 +200,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	if ( _tags.count == 0 && _members.count == 0 ) {
-		// if there are no tags then start editing the first one
-		[self addTagCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+	POITabBarController * tabController = (id)self.tabBarController;
+	if ( tabController.selection == nil ) {
+		TextPairTableCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+		if ( cell.text1.text.length == 0 && cell.text2.text.length == 0 ) {
+			[cell.text1 becomeFirstResponder];
+		}
 	}
 }
 
@@ -236,6 +274,232 @@
 	}
 }
 
+#pragma mark Accessory buttons
+
+-(UIView *)getAssociatedColorForCell:(TextPairTableCell *)cell
+{
+	if ( [cell.text1.text isEqualToString:@"colour"] ||
+		 [cell.text1.text isEqualToString:@"color"] ||
+		 [cell.text1.text hasSuffix:@":colour"] ||
+		 [cell.text1.text hasSuffix:@":color"] )
+	{
+		UIColor * color = [Colors cssColorForColorName:cell.text2.text];
+		if ( color ) {
+			CGFloat size = cell.text2.bounds.size.height;
+			size = round( size * 0.5 );
+			UIView * square = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size, size)];
+			square.backgroundColor = color;
+			square.layer.borderColor = UIColor.blackColor.CGColor;
+			square.layer.borderWidth = 1.0;
+			UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size+6, size)];
+			view.backgroundColor = UIColor.clearColor;
+			[view addSubview:square];
+			return view;
+		}
+	}
+	return nil;
+}
+
+-(IBAction)openWebsite:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+
+	NSString * string = nil;
+	if ( [pair.text1.text isEqualToString:@"wikipedia"] ||
+		 [pair.text1.text hasSuffix:@":wikipedia"] )
+	{
+		NSArray<NSString *> * a = [pair.text2.text componentsSeparatedByString:@":"];
+		NSString * lang = [a[0] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+		NSString * page = [a[1] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+		string = [NSString stringWithFormat:@"https://%@.wikipedia.org/wiki/%@",lang,page];
+	} else if ( [pair.text1.text isEqualToString:@"wikidata"] ||
+				[pair.text1.text hasSuffix:@":wikidata"] )
+	{
+		NSString * page = [pair.text2.text stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
+		string = [NSString stringWithFormat:@"https://www.wikidata.org/wiki/%@",page];
+	} else if ( [pair.text2.text hasPrefix:@"http://"] ||
+				[pair.text2.text hasPrefix:@"https://"] )
+	{
+		string = pair.text2.text;
+	}
+	if ( string ) {
+		NSURL * url = [NSURL URLWithString:string];
+		if ( url ) {
+			SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+			[self presentViewController:viewController animated:YES completion:nil];
+		} else {
+			UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Invalid URL", nil)
+																			message:nil
+																	 preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+			[self presentViewController:alert animated:YES completion:nil];
+		}
+	}
+}
+
+-(UIView *)getWebsiteButtonForCell:(TextPairTableCell *)cell
+{
+	if ( [cell.text1.text isEqualToString:@"wikipedia"] ||
+		 [cell.text1.text isEqualToString:@"wikidata"] ||
+		 [cell.text1.text hasSuffix:@":wikipedia"] ||
+		 [cell.text1.text hasSuffix:@":wikidata"] ||
+		 [cell.text2.text hasPrefix:@"http://"] ||
+	     [cell.text2.text hasPrefix:@"https://"] )
+	{
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeSystem];
+		button.layer.borderWidth = 2.0;
+		button.layer.borderColor = UIColor.systemBlueColor.CGColor;
+		button.layer.cornerRadius = 15.0;
+		[button setTitle:@"🔗" forState:UIControlStateNormal];
+
+		[button addTarget:self action:@selector(openWebsite:) forControlEvents:UIControlEventTouchUpInside];
+		return button;
+	}
+	return nil;
+}
+
+-(IBAction)setSurveyDate:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+
+	NSDate * now = [NSDate new];
+	NSISO8601DateFormatter * dateFormatter = [NSISO8601DateFormatter new];
+	dateFormatter.formatOptions = NSISO8601DateFormatWithYear | NSISO8601DateFormatWithMonth | NSISO8601DateFormatWithDay | NSISO8601DateFormatWithDashSeparatorInDate;
+	dateFormatter.timeZone = NSTimeZone.localTimeZone;
+	NSString * text = [dateFormatter stringFromDate:now];
+	pair.text2.text = text;
+	[self textFieldChanged:pair.text2];
+	[self textFieldEditingDidEnd:pair.text2];
+}
+
+-(UIView *)getSurveyDateButtonForCell:(TextPairTableCell *)cell
+{
+	NSArray * synonyms = @[
+		@"check_date",
+		@"survey_date",
+		@"survey:date",
+		@"survey",
+		@"lastcheck",
+		@"last_checked",
+		@"updated"
+	];
+	if ( [synonyms containsObject:cell.text1.text] ) {
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		[button addTarget:self action:@selector(setSurveyDate:) forControlEvents:UIControlEventTouchUpInside];
+		return button;
+	}
+	return nil;
+}
+
+-(IBAction)setDirection:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+	DirectionViewController *directionViewController = [[DirectionViewController alloc] initWithKey:pair.text1.text
+																							  value:pair.text2.text
+																						   setValue:^(NSString * newValue) {
+		pair.text2.text = newValue;
+		[self textFieldChanged:pair.text2];
+		[self textFieldEditingDidEnd:pair.text2];
+	}];
+	_childViewPresented = YES;
+
+	[self presentViewController:directionViewController animated:YES completion:nil];
+}
+
+-(UIView *)getDirectionButtonForCell:(TextPairTableCell *)cell
+{
+	NSArray * synonyms = @[
+		@"direction",
+		@"camera:direction"
+	];
+	if ( [synonyms containsObject:cell.text1.text] ) {
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		[button addTarget:self action:@selector(setDirection:) forControlEvents:UIControlEventTouchUpInside];
+		return button;
+	}
+	return nil;
+}
+
+
+-(IBAction)setHeight:(id)sender
+{
+	TextPairTableCell * pair = (id)sender;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+
+	if ( [HeightViewController unableToInstantiateWithUserWarning:self] ) {
+		return;
+	}
+
+	HeightViewController * vc = [HeightViewController instantiate];
+	vc.callback = ^(NSString * newValue) {
+		pair.text2.text = newValue;
+		[self textFieldChanged:pair.text2];
+		[self textFieldEditingDidEnd:pair.text2];
+	};
+	[self presentViewController:vc animated:YES completion:nil];
+	_childViewPresented = YES;
+}
+
+-(UIView *)getHeightButtonForCell:(TextPairTableCell *)cell
+{
+	if ( [cell.text1.text isEqualToString:@"height"] ) {
+		UIButton * button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		[button addTarget:self action:@selector(setHeight:) forControlEvents:UIControlEventTouchUpInside];
+		return button;
+	}
+	return nil;
+}
+
+- (void)updateAssociatedContentForCell:(TextPairTableCell *)cell
+{
+	UIView * associatedView =  [self getAssociatedColorForCell:cell]
+							?: [self getWebsiteButtonForCell:cell]
+							?: [self getSurveyDateButtonForCell:cell]
+							?: [self getDirectionButtonForCell:cell]
+							?: [self getHeightButtonForCell:cell];
+
+	cell.text2.rightView 	 = associatedView;
+	cell.text2.rightViewMode = associatedView ? UITextFieldViewModeAlways : UITextFieldViewModeNever;
+}
+
+- (IBAction)infoButtonPressed:(UIButton *)button
+{
+	TextPairTableCell * cell = (id)button.superview;
+	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
+		cell = (id)cell.superview;
+
+	// show OSM wiki page
+	NSString * key = cell.text1.text;
+	NSString * value = cell.text2.text;
+	if ( key.length == 0 )
+		return;
+	PresetLanguages * presetLanguages = [PresetLanguages new];
+	NSString * languageCode = presetLanguages.preferredLanguageCode;
+
+	UIActivityIndicatorView * progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+	progress.frame = cell.infoButton.bounds;
+	[cell.infoButton addSubview:progress];
+	cell.infoButton.enabled = NO;
+	cell.infoButton.titleLabel.layer.opacity = 0.0;
+	[progress startAnimating];
+	[WikiPage.shared bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
+		[progress removeFromSuperview];
+		cell.infoButton.enabled = YES;
+		cell.infoButton.titleLabel.layer.opacity = 1.0;
+		if ( url && self.view.window ) {
+			SFSafariViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
+			_childViewPresented = YES;
+			[self presentViewController:viewController animated:YES completion:nil];
+		}
+	}];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -250,8 +514,11 @@
 		cell.text1.text = kv[0];
 		cell.text2.text = kv[1];
 
-		cell.text1.didSelect = ^{ [cell.text2 becomeFirstResponder]; };
-		cell.text2.didSelect = ^{};
+		[self updateAssociatedContentForCell:cell];
+
+		__weak TextPairTableCell * weakCell = cell;
+		cell.text1.didSelectAutocomplete = ^{ [weakCell.text2 becomeFirstResponder]; };
+		cell.text2.didSelectAutocomplete = ^{ [weakCell.text2 resignFirstResponder]; };
 
 		return cell;
 
@@ -320,41 +587,48 @@
 	return dict;
 }
 
-#pragma mark Cell editing
+#pragma mark TextField delegate
 
 - (IBAction)textFieldReturn:(id)sender
 {
-	[sender resignFirstResponder];
-}
-
-- (IBAction)textFieldEditingDidBegin:(UITextField *)textField
-{
-	UITableViewCell * cell = (id)textField.superview;
+	TextPairTableCell * cell = (id)sender;
 	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
 		cell = (id)cell.superview;
-	TextPairTableCell * pair = (id)cell;
-	BOOL isValue = textField == pair.text2;
 
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	[sender resignFirstResponder];
+	[self updateWithRecomendationsForFeature:YES];
+}
+
+- (IBAction)textFieldEditingDidBegin:(AutocompleteTextField *)textField
+{
+	_currentTextField = textField;
+
+	TextPairTableCell * pair = (id)textField.superview;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:pair];
 
 	if ( indexPath.section == 0 ) {
 
+		BOOL isValue = textField == pair.text2;
 		NSMutableArray * kv = _tags[ indexPath.row ];
 
 		if ( isValue ) {
 			// get list of values for current key
 			NSString * key = kv[0];
-			NSSet * set = [CommonPresetList allTagValuesForKey:key];
-			AppDelegate * appDelegate = [AppDelegate getAppDelegate];
-			NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
-			[values addObjectsFromArray:[set allObjects]];
-			NSArray * list = [values allObjects];
-			[(AutocompleteTextField *)textField setCompletions:list];
+			if ( [PresetsDatabase.shared eligibleForAutocomplete:key] ) {
+				NSSet * set = [PresetsDatabase.shared allTagValuesForKey:key];
+				AppDelegate * appDelegate = AppDelegate.shared;
+				NSMutableSet<NSString *> * values = [appDelegate.mapView.editorLayer.mapData tagValuesForKey:key];
+				[values addObjectsFromArray:[set allObjects]];
+				NSArray * list = [values allObjects];
+				textField.autocompleteStrings = list;
+			}
 		} else {
 			// get list of keys
-			NSSet * set = [CommonPresetList allTagKeys];
+			NSSet * set = [PresetsDatabase.shared allTagKeys];
 			NSArray * list = [set allObjects];
-			[(AutocompleteTextField *)textField setCompletions:list];
+			textField.autocompleteStrings = list;
 		}
 	}
 }
@@ -395,50 +669,34 @@
 
 -(void)textFieldEditingDidEnd:(UITextField *)textField
 {
-	UITableViewCell * cell = (id)textField.superview;
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]])
-		cell = (id)cell.superview;
-	TextPairTableCell * pair = (id)cell;
+	TextPairTableCell * pair = (id)textField.superview;
+	while ( pair && ![pair isKindOfClass:[UITableViewCell class]])
+		pair = (id)pair.superview;
 
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:pair];
 	if ( indexPath.section == 0 ) {
 		NSMutableArray<NSString *> * kv = _tags[ indexPath.row ];
 
-		// do wikipedia conversion
-		NSString * newValue = [self convertWikiUrlToReferenceWithKey:kv[0] value:kv[1]];
-		if ( newValue ) {
-			kv[1] = newValue;
-			pair.text2.text = newValue;
-		}
+		[self updateAssociatedContentForCell:pair];
 
 		if ( kv[0].length && kv[1].length ) {
-			// move row so there are no blank rows above it
-			NSInteger row;
-			for ( row = indexPath.row - 1; row >= 0; --row ) {
-				NSArray<NSString *> * r = _tags[row];
-				if ( r[0].length && r[1].length )
-					break;
-			}
-			++row;
-			if ( row != indexPath.row ) {
-				[_tags removeObjectAtIndex:indexPath.row];
-				[_tags insertObject:kv atIndex:row];
-				NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
-				[self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+
+			// do wikipedia conversion
+			NSString * newValue = [self convertWikiUrlToReferenceWithKey:kv[0] value:kv[1]];
+			if ( newValue ) {
+				kv[1] = newValue;
+				pair.text2.text = newValue;
 			}
 
-			// ensure there is a blank line to add the next tag
-			NSArray<NSString *> * r = nil;
-			while ( ++row < _tags.count ) {
-				r = _tags[row];
-				if ( r[0].length == 0 || r[1].length == 0 ) {
+			// move the edited row up
+			for ( NSInteger i = 0; i < indexPath.row; ++i ) {
+				NSArray<NSString *> * a = _tags[i];
+				if ( a[0].length == 0 || a[1].length == 0 ) {
+					[_tags removeObjectAtIndex:indexPath.row];
+					[_tags insertObject:kv atIndex:i];
+					[self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
 					break;
 				}
-			}
-			if ( row >= _tags.count || r[0].length || r[1].length ) {
-				[_tags insertObject:[NSMutableArray arrayWithObjects:@"", @"", nil] atIndex:row];
-				NSIndexPath * path = [NSIndexPath indexPathForRow:row inSection:0];
-				[self.tableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 			}
 
 			// if we created a row that defines a key that duplicates a row witht the same key elsewhere then delete the other row
@@ -446,8 +704,35 @@
 				NSArray<NSString *> * a = _tags[i];
 				if ( a != kv && [a[0] isEqualToString:kv[0]] ) {
 					[_tags removeObjectAtIndex:i];
-					[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+					[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 				}
+			}
+
+			// update recommended tags
+			NSInteger nextRow = [self updateWithRecomendationsForFeature:NO];
+			if ( nextRow >= 0 ) {
+				// a new feature was defined
+				NSIndexPath * newPath = [NSIndexPath indexPathForRow:nextRow inSection:0];
+				[self.tableView scrollToRowAtIndexPath:newPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+
+				// move focus to next empty cell
+				TextPairTableCell * nextCell = [self.tableView cellForRowAtIndexPath:newPath];
+				[nextCell.text1 becomeFirstResponder];
+			}
+
+		} else if ( kv[0].length || kv[1].length ) {
+
+			// ensure there's a blank line either elsewhere, or create one below us
+			BOOL haveBlank = NO;
+			for ( NSArray<NSString *> * a in _tags ) {
+				haveBlank = a != kv && a[0].length == 0 && a[1].length == 0;
+				if ( haveBlank )
+					break;
+			}
+			if ( !haveBlank ) {
+				NSIndexPath * newPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
+				[_tags insertObject:[NSMutableArray arrayWithObjects:@"", @"", nil] atIndex:newPath.row];
+				[self.tableView insertRowsAtIndexPaths:@[newPath] withRowAnimation:UITableViewRowAnimationNone];
 			}
 		}
 	}
@@ -478,7 +763,65 @@
 		
 		NSMutableDictionary * dict = [self keyValueDictionary];
 		_saveButton.enabled = [tabController isTagDictChanged:dict];
+		if (@available(iOS 13.0, *)) {
+			self.tabBarController.modalInPresentation = _saveButton.enabled;
+		}
 	}
+}
+
+-(void)tabToNext:(BOOL)forward
+{
+	TextPairTableCell * pair = (id)_currentTextField.superview;
+	while ( pair && ![pair isKindOfClass:[TextPairTableCell class]])
+		pair = (id)pair.superview;
+	if ( pair == nil )
+		return;
+
+	NSIndexPath * indexPath = [self.tableView indexPathForCell:pair];
+	UITextField * field = nil;
+	if ( forward ) {
+		if ( _currentTextField == pair.text1 ) {
+			field = pair.text2;
+		} else {
+			NSInteger max = [self tableView:self.tableView numberOfRowsInSection:indexPath.section];
+			NSInteger row = (indexPath.row+1) % max;
+			indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
+			pair = [self.tableView cellForRowAtIndexPath:indexPath];
+			field = pair.text1;
+		}
+	} else {
+		if ( _currentTextField == pair.text2 ) {
+			field = pair.text1;
+		} else {
+			NSInteger max = [self tableView:self.tableView numberOfRowsInSection:indexPath.section];
+			NSInteger row = (indexPath.row-1+max) % max;
+			indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
+			pair = [self.tableView cellForRowAtIndexPath:indexPath];
+			field = pair.text2;
+		}
+	}
+	[field becomeFirstResponder];
+	_currentTextField = field;
+}
+
+-(void)tabPrevious:(id)sender
+{
+	[self tabToNext:NO];
+}
+-(void)tabNext:(id)sender
+{
+	[self tabToNext:YES];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+	UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+	toolbar.items = @[
+		[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Previous", nil) style:UIBarButtonItemStylePlain target:self action:@selector(tabPrevious:)],
+		[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Next", nil)     style:UIBarButtonItemStylePlain target:self action:@selector(tabNext:)]
+	];
+	textField.inputAccessoryView = toolbar;
+	return YES;
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -492,7 +835,9 @@
     return newLength <= MAX_LENGTH || returnKey;
 }
 
-- (IBAction)toggleEditing:(id)sender
+#pragma mark - Table view delegate
+
+- (IBAction)toggleTableRowEditing:(id)sender
 {
 	POITabBarController * tabController = (id)self.tabBarController;
 
@@ -541,37 +886,13 @@
 		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
 		_saveButton.enabled = [tabController isTagDictChanged];
+		if (@available(iOS 13.0, *)) {
+			self.tabBarController.modalInPresentation = _saveButton.enabled;
+		}
 
 	} else if ( editingStyle == UITableViewCellEditingStyleInsert ) {
 		// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 	}
-}
-
-#pragma mark - Table view delegate
-
-- (void)addTagCellAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.section == 0 ) {
-		[_tags addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
-	} else if ( indexPath.section == 2 ) {
-		[_members addObject:[NSMutableArray arrayWithObjects:@"",@"",nil]];
-	} else {
-		return;
-	}
-	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-
-	// set new cell to show keyboard
-	TextPairTableCell * newCell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
-	[newCell.text1 becomeFirstResponder];
-}
-
-- (void)addTagCell:(id)sender
-{
-	UITableViewCell * cell = sender;	// starts out as UIButton
-	while ( cell && ![cell isKindOfClass:[UITableViewCell class]] )
-		cell = (id)[cell superview];
-	NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-	[self addTagCellAtIndexPath:indexPath];
 }
 
 -(IBAction)cancel:(id)sender
@@ -588,33 +909,6 @@
 
 	POITabBarController * tabController = (id)self.tabBarController;
 	[tabController commitChanges];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	if ( indexPath.section == 0 ) {
-		// show OSM wiki page
-		TextPairTableCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-		NSString * key = cell.text1.text;
-		NSString * value = cell.text2.text;
-		if ( key.length == 0 )
-			return;
-		PresetLanguages * presetLanguages = [PresetLanguages new];
-		NSString * languageCode = presetLanguages.preferredLanguageCode;
-
-		UIActivityIndicatorView * progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-		progress.bounds = CGRectMake(0, 0, 24, 24);
-		cell.accessoryView = progress;
-		[progress startAnimating];
-		WikiPage * wiki = [WikiPage shared];
-		[wiki bestWikiPageForKey:key value:value language:languageCode completion:^(NSURL * url) {
-			cell.accessoryView = nil;
-			if ( url && self.view.window ) {
-				UIViewController * viewController = [[SFSafariViewController alloc] initWithURL:url];
-				[self presentViewController:viewController animated:YES completion:nil];
-			}
-		}];
-	}
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
@@ -647,7 +941,7 @@
 	} else {
 		return NO;
 	}
-	MapView * mapView = [AppDelegate getAppDelegate].mapView;
+	MapView * mapView = AppDelegate.shared.mapView;
 	[mapView.editorLayer setSelectedNode:object.isNode];
 	[mapView.editorLayer setSelectedWay:object.isWay];
 	[mapView.editorLayer setSelectedRelation:object.isRelation];
@@ -665,7 +959,7 @@
 	}
 
 	// dismiss ourself and switch to the relation
-	UIViewController * topController = (id)mapView.viewController;
+	UIViewController * topController = (id)mapView.mainViewController;
 	[mapView refreshPushpinText];	// update pushpin description to the relation
 	[self dismissViewControllerAnimated:YES completion:^{
 		[topController performSegueWithIdentifier:@"poiSegue" sender:nil];

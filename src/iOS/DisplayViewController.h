@@ -21,7 +21,10 @@
 	IBOutlet UISwitch *	_gpxLoggingSwitch;
 	IBOutlet UISwitch * _turnRestrictionSwitch;
 	IBOutlet UISwitch * _objectFiltersSwitch;
+	IBOutlet UIButton *	_addButtonPosition;
 }
+
+-(IBAction)chooseAddButtonPosition:(id)sender;
 
 -(void)applyChanges;
 

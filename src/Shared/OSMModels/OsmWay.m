@@ -86,7 +86,7 @@
 
 -(BOOL)isArea
 {
-    return [CommonPresetList isArea:self];
+    return [PresetsDatabase.shared isArea:self];
 }
 
 -(BOOL)isClosed
@@ -211,6 +211,36 @@
         }
     }
     return YES;
+}
+
+-(BOOL)isSelfIntersection:(OsmNode *)node
+{
+	if ( _nodes.count < 3 )
+		return NO;
+	NSInteger first = [self.nodes indexOfObject:node];
+	if ( first == NSNotFound )
+		return NO;
+	NSInteger next = first+1;
+	if ( next >= self.nodes.count )
+		return NO;
+	NSInteger second = [self.nodes indexOfObject:node inRange:NSMakeRange(next, _nodes.count-next)];
+	if ( second == NSNotFound )
+		return NO;
+	return YES;
+}
+
+-(BOOL)needsNoNameHighlight
+{
+	NSString * highway = _tags[@"highway"];
+	if ( highway == nil )
+		return NO;
+	if ( [highway isEqualToString:@"service"] )
+		return NO;
+	if ( self.givenName )
+		return NO;
+	if ( [_tags[@"noname"] isEqualToString:@"yes"] )
+		return NO;
+	return YES;
 }
 
 -(double)wayArea
