@@ -1,837 +1,559 @@
 /* No comment provided by engineer. */
-"\tRelation " = "";
 
 /* No comment provided by engineer. */
-"\tWay " = "";
 
 /* No comment provided by engineer. */
-" (%d members)\n" = "";
 
 /* No comment provided by engineer. */
-" (%d nodes)\n" = "";
 
 /* No comment provided by engineer. */
-" (node)" = "";
 
 /* No comment provided by engineer. */
-" (way)" = "";
 
 /* a newly created node/object */
-"(new object)" = "";
 
 /* No comment provided by engineer. */
-"(node in way)" = "";
 
 /* No comment provided by engineer. */
-"(node)" = "";
 
 /* No comment provided by engineer. */
-"(relation %@)" = "";
 
 /* No comment provided by engineer. */
-"(way)" = "";
 
 /* way length if > 10m */
-"%.0f meters, %ld nodes" = "";
 
 /* way length if < 10m */
-"%.1f meters, %ld nodes" = "";
 
 /* These values will always be large (plural) */
-"%.2f MB, %ld files" = "";
 
 /* No comment provided by engineer. */
-"%@ (relation)" = "";
 
 /* No comment provided by engineer. */
-"%@ changeset" = "";
 
 /* Always plural */
-"%@ meters" = "";
 
 /* One or more days
    Plural number of days */
-"%ld Days" = "";
 
 /* Brief synopsis of a mapper's activity (count,last active date) */
-"%ld edits, last active %@" = "";
 
 /* length of a gpx track */
-"%ld meters, %ld points" = "";
 
 /* Number of tiles/objects in cache */
-"%ld objects" = "";
 
 /* Always plural */
-"%lu tiles needed" = "";
 
 /* Location of Add Node button on the screen */
-"+ Button Position" = "";
 
 /* unknown user name */
-"<unknown>" = "";
 
 /* 1 day singular */
-"1 Day" = "";
 
 /* No comment provided by engineer. */
-"A GPX Track records your path as you travel along a road or trail" = "";
 
 /* No comment provided by engineer. */
-"A relation the node belongs to is not fully downloaded" = "";
 
 /* Add to relation */
-"Add inner member" = "";
 
 /* No comment provided by engineer. */
-"add node to way" = "";
 
 /* Edit action */
-"Add Note" = "";
 
 /* No comment provided by engineer. */
-"add object to relation" = "";
 
 /* Add to relation */
-"Add outer member" = "";
 
 /* No comment provided by engineer. */
-"Add way to multipolygon?" = "";
 
 /* No comment provided by engineer. */
-"added to multipolygon relation" = "";
 
 /* No comment provided by engineer. */
-"Adding members:" = "";
 
 /* No comment provided by engineer. */
-"Additional imagery" = "";
 
 /* No comment provided by engineer. */
-"Aerial only" = "";
 
 /* No comment provided by engineer. */
-"All choices" = "";
 
 /* No comment provided by engineer. */
-"All Tags" = "";
 
 /* No comment provided by engineer. */
-"An unknown error occurred fetching metadata" = "";
 
 /* No comment provided by engineer. */
-"Attention" = "";
 
 /* node/way/relation attributes */
-"Attributes" = "";
 
 /* Automatic selection of presets languages */
-"Automatic" = "";
 
 /* identifies current aerial imagery */
-"Background imagery %@" = "";
 
 /* No comment provided by engineer. */
-"Bad login" = "";
 
 /* No comment provided by engineer. */
-"Cache size warning" = "";
 
 /* No comment provided by engineer. */
-"Cache trimmed" = "";
 
 /* No comment provided by engineer. */
-"Can only add ways to multipolygons" = "";
 
 /* No comment provided by engineer. */
-"Can't delete node that is part of a relation" = "";
 
 /* No comment provided by engineer. */
-"Can't delete relation that is not a multipolygon" = "";
 
 /* No comment provided by engineer. */
-"Can't delete way that is part of a Route or similar relation" = "";
 
 /* No comment provided by engineer. */
-"Can't extend way" = "";
 
 /* No comment provided by engineer. */
-"Can't remove component of a Route or similar relation" = "";
 
 /* No comment provided by engineer. */
-"Can't remove node in Turn Restriction 'via' way" = "";
 
 /* No comment provided by engineer. */
-"Can't remove Turn Restriction 'via' node" = "";
 
 /* No comment provided by engineer. */
-"Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" = "";
 
 /* No comment provided by engineer. */
-"Can't remove Turn Restriction to/from way" = "";
 
 /* No comment provided by engineer. */
-"Cancel" = "";
 
 /* e-mail message */
-"Cannot compose message" = "";
 
 /* No comment provided by engineer. */
-"Cannot connect an inner way to an outer way" = "";
 
 /* OSM changeset identifier */
-"Changeset" = "";
 
 /* Delete cached data */
-"Clear Aerial Tiles" = "";
 
 /* Delete cached data */
-"Clear GPS Overlay Tiles" = "";
 
 /* Delete cached data */
-"Clear GPX Tracks" = "";
 
 /* Delete cached data */
-"Clear Locator Overlay Tiles" = "";
 
 /* Delete cached data */
-"Clear Mapnik Tiles" = "";
 
 /* Delete cached data */
-"Clear OSM Data" = "";
 
 /* No comment provided by engineer. */
-"Commit" = "";
 
 /* No comment provided by engineer. */
-"computing size..." = "";
 
 /* No comment provided by engineer. */
-"Configure" = "";
 
 /* No comment provided by engineer. */
-"Confirm move" = "";
 
 /* No comment provided by engineer. */
-"Connecting the nodes would damage a relation" = "";
 
 /* Edit action */
-"Copy Tags" = "";
 
 /* No comment provided by engineer. */
-"Could not duplicate object" = "";
 
 /* No comment provided by engineer. */
-"Create\n" = "";
 
 /* No comment provided by engineer. */
-"create node" = "";
 
 /* No comment provided by engineer. */
-"create relation" = "";
 
 /* Edit action */
-"Create Relation" = "";
 
 /* No comment provided by engineer. */
-"Create Relation Type" = "";
 
 /* No comment provided by engineer. */
-"create turn restriction" = "";
 
 /* No comment provided by engineer. */
-"create way" = "";
 
 /* current GPX track */
-"Current Track" = "";
 
 /* No comment provided by engineer. */
-"Data not available" = "";
 
 /* Edit action */
-"Delete" = "";
 
 /* No comment provided by engineer. */
-"Delete\n" = "";
 
 /* No comment provided by engineer. */
-"Delete completely" = "";
 
 /* No comment provided by engineer. */
-"Delete failed" = "";
 
 /* No comment provided by engineer. */
-"delete multipolygon" = "";
 
 /* No comment provided by engineer. */
-"delete node" = "";
 
 /* No comment provided by engineer. */
-"delete node from way" = "";
 
 /* No comment provided by engineer. */
-"delete object from relation" = "";
 
 /* No comment provided by engineer. */
-"delete relation" = "";
 
 /* No comment provided by engineer. */
-"delete restriction" = "";
 
 /* No comment provided by engineer. */
-"delete route" = "";
 
 /* No comment provided by engineer. */
-"delete way" = "";
 
 /* No comment provided by engineer. */
-"Detach from relation" = "";
 
 /* Edit action */
-"Disconnect" = "";
 
 /* No comment provided by engineer. */
-"Display options" = "";
 
 /* No comment provided by engineer. */
-"Done" = "";
 
 /* create a duplicate */
-"duplicate" = "";
 
 /* Edit action */
-"Duplicate" = "";
 
 /* No comment provided by engineer. */
-"Edit" = "";
 
 /* No comment provided by engineer. */
-"Edit restrictions" = "";
 
 /* No comment provided by engineer. */
-"Edit XML" = "";
 
 /* No comment provided by engineer. */
-"Editing layer not visible" = "";
 
 /* No comment provided by engineer. */
-"Editor only" = "";
 
 /* No comment provided by engineer. */
-"Editor with Aerial" = "";
 
 /* No comment provided by engineer. */
-"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "";
 
 /* No comment provided by engineer. */
-"Ensure the editor view is visible and displays objects in the local area" = "";
 
 /* Error dialog title */
-"Error" = "";
 
 /* No comment provided by engineer. */
-"Error connecting to way" = "";
 
 /* No comment provided by engineer. */
-"Error fetching metadata: %@" = "";
 
 /* No comment provided by engineer. */
-"Extending a 'via' in a Turn Restriction will break the relation" = "";
 
 /* No comment provided by engineer. */
-"Extending a way which belongs to a Route or similar relation may damage the relation" = "";
 
 /* No comment provided by engineer. */
-"GPX Upload Complete" = "";
 
 /* No comment provided by engineer. */
-"GPX Upload Failed" = "";
 
 /* No comment provided by engineer. */
-"Height: %@ ± %@ meters" = "";
 
 /* rate the app now */
-"I'll do it!" = "";
 
 /* OSM node/way/relation identifier */
-"Identifier" = "";
 
 /* No comment provided by engineer. */
-"Ignore" = "";
 
 /* No comment provided by engineer. */
-"In order to measure height, please enable camera access in the app's settings." = "";
 
 /* No comment provided by engineer. */
-"Invalid URL" = "";
 
 /* Edit action */
-"Join" = "";
 
 /* No comment provided by engineer. */
-"Joining would invalidate a Turn Restriction the way belongs to" = "";
 
 /* No comment provided by engineer. */
-"Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." = "";
 
 /* No comment provided by engineer. */
-"Last updated %@" = "";
 
 /* coordinates */
-"Lat/Lon" = "";
 
 /* Left-hand side of screen */
-"Left side" = "";
 
 /* No comment provided by engineer. */
-"Length" = "";
 
 /* No comment provided by engineer. */
-"Location services timed out." = "";
 
 /* No comment provided by engineer. */
-"Location unavailable" = "";
 
 /* No comment provided by engineer. */
-"Login successful" = "";
 
 /* No comment provided by engineer. */
-"Low memory: clearing cache" = "";
 
 /* No comment provided by engineer. */
-"Mail delivery is not available on this device" = "";
 
 /* Edit action */
-"Make Circular" = "";
 
 /* Edit action */
-"Make Rectangular" = "";
 
 /* No comment provided by engineer. */
-"Max nodes after joining is 2000" = "";
 
 /* No comment provided by engineer. */
-"Maximum way length is 2000 nodes" = "";
 
 /* rate the app later */
-"Maybe later..." = "";
 
 /* No comment provided by engineer. */
-"Member of multipolygon relation" = "";
 
 /* No comment provided by engineer. */
-"Members" = "";
 
 /* No comment provided by engineer. */
-"Merge Tags" = "";
 
 /* No comment provided by engineer. */
-"meters" = "";
 
 /* No comment provided by engineer. */
-"Missing way to connect to" = "";
 
 /* last modified date */
-"Modified" = "";
 
 /* No comment provided by engineer. */
-"Modify" = "";
 
 /* No comment provided by engineer. */
-"Modify\n" = "";
 
 /* No comment provided by engineer. */
-"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." = "";
 
 /* Edit action */
-"More..." = "";
 
 /* No comment provided by engineer. */
-"Most recent" = "";
 
 /* No comment provided by engineer. */
-"move" = "";
 
 /* No comment provided by engineer. */
-"Move" = "";
 
 /* No comment provided by engineer. */
-"Move selected object?" = "";
 
 /* No comment provided by engineer. */
-"Multipolygon" = "";
 
 /* No comment provided by engineer. */
-"Network error" = "";
 
 /* Never delete old GPX tracks
    Never delete old tracks */
-"Never" = "";
 
 /* No comment provided by engineer. */
-"Next" = "";
 
 /* GPX track */
-"No active track" = "";
 
 /* Alert title */
-"No Data" = "";
 
 /* No comment provided by engineer. */
-"No image data available" = "";
 
 /* No comment provided by engineer. */
-"No Left Turn restriction" = "";
 
 /* No comment provided by engineer. */
-"No results found" = "";
 
 /* No comment provided by engineer. */
-"No Right Turn restriction" = "";
 
 /* No comment provided by engineer. */
-"No Straight On restriction" = "";
 
 /* No comment provided by engineer. */
-"No tags to paste" = "";
 
 /* No comment provided by engineer. */
-"No U-Turn restriction" = "";
 
 /* No comment provided by engineer. */
-"Node" = "";
 
 /* No comment provided by engineer. */
-"node %@" = "";
 
 /* No comment provided by engineer. */
-"node %@ (in way)" = "";
 
 /* No comment provided by engineer. */
-"Node is not an element of way" = "";
 
 /* No comment provided by engineer. */
-"Node must be the first or last node of the way" = "";
 
 /* User credentials not found */
-"Not found" = "";
 
 /* OSM note */
-"Note History" = "";
 
 /* No comment provided by engineer. */
-"Nothing to upload, no changes have been made." = "";
 
 /* No comment provided by engineer. */
-"Number of recent items to display" = "";
 
 /* No comment provided by engineer. */
-"Object modified" = "";
 
 /* No comment provided by engineer. */
-"OK" = "";
 
 /* No comment provided by engineer. */
-"Only Left Turn restriction" = "";
 
 /* No comment provided by engineer. */
-"Only multipolygon relations are supported" = "";
 
 /* No comment provided by engineer. */
-"Only Right Turn restriction" = "";
 
 /* No comment provided by engineer. */
-"Only Straight On restriction" = "";
 
 /* No comment provided by engineer. */
-"Only ways/multipolygons can be rotated" = "";
 
 /* Open the iOS Settings app */
-"Open Settings" = "";
 
 /* No comment provided by engineer. */
-"Open URL" = "";
 
 /* No comment provided by engineer. */
-"OSM data must be version 0.6 (fetched '%@')" = "";
 
 /* No comment provided by engineer. */
-"other object" = "";
 
 /* Edit action */
-"Paste" = "";
 
 /* No comment provided by engineer. */
-"Pasting %ld tag(s)" = "";
 
 /* No comment provided by engineer. */
-"Perform Action" = "";
 
 /* No comment provided by engineer. */
-"Please wait" = "";
 
 /* No comment provided by engineer. */
-"Previous" = "";
 
 /* previous GPX track */
-"Previous Tracks" = "";
 
 /* Discard editing changes when resetting OSM data cache */
-"Purge" = "";
 
 /* No comment provided by engineer. */
-"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "";
 
 /* Alert title message */
-"Recent Aerial Imagery" = "";
 
 /* No comment provided by engineer. */
-"Redo" = "";
 
 /* No comment provided by engineer. */
-"relation" = "";
 
 /* No comment provided by engineer. */
-"Relation: %@" = "";
 
 /* No comment provided by engineer. */
-"Relations" = "";
 
 /* No comment provided by engineer. */
-"Replace Tags" = "";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 3 nodes" = "";
 
 /* No comment provided by engineer. */
-"Requires a closed way with at least 4 nodes" = "";
 
 /* Edit action */
-"Restrict" = "";
 
 /* No comment provided by engineer. */
-"Restriction: %@" = "";
 
 /* country name,2-character country code */
-"Results for %@ (%@)" = "";
 
 /* Edit action */
-"Reverse" = "";
 
 /* Right-hand side of screen */
-"Right side" = "";
 
 /* Edit action */
-"Rotate" = "";
 
 /* No comment provided by engineer. */
-"Select a highway approaching the intersection" = "";
 
 /* No comment provided by engineer. */
-"Select Object" = "";
 
 /* No comment provided by engineer. */
-"Selected object is off screen" = "";
 
 /* set tag value */
-"Set" = "";
 
 /* The height=* tag */
-"Set Height Tag" = "";
 
 /* No comment provided by engineer. */
-"set tags" = "";
 
 /* No comment provided by engineer. */
-"Settings" = "";
 
 /* Open iOS sharing sheet
    Title for sharing options */
-"Share" = "";
 
 /* No comment provided by engineer. */
-"Show Recent Items" = "";
 
 /* No comment provided by engineer. */
-"Sorry, an error occurred while loading the GPX file" = "";
 
 /* Edit action */
-"Split" = "";
 
 /* No comment provided by engineer. */
-"Standard imagery" = "";
 
 /* Begin downloading tiles */
-"Start" = "";
 
 /* No comment provided by engineer. */
-"Stop" = "";
 
 /* Edit action */
-"Straighten" = "";
 
 /* Edit action */
-"Tags" = "";
 
 /* No comment provided by engineer. */
-"The + button can be positioned on either the left or right side of the screen" = "";
 
 /* No comment provided by engineer. */
-"The current location cannot be determined: " = "";
 
 /* No comment provided by engineer. */
-"The merged nodes contain conflicting tags" = "";
 
 /* No comment provided by engineer. */
-"The nodes have conflicting roles in parent relations" = "";
 
 /* No comment provided by engineer. */
-"The object does not contain any tags" = "";
 
 /* No comment provided by engineer. */
-"The restriction cannot be deleted" = "";
 
 /* No comment provided by engineer. */
-"The selected way must be completely visible" = "";
 
 /* No comment provided by engineer. */
-"The target way is ambiguous" = "";
 
 /* No comment provided by engineer. */
-"The turn contains an unrecognized turn restriction style. Proceeding will destroy it." = "";
 
 /* No comment provided by engineer. */
-"The way belongs to a relation that is not fully downloaded" = "";
 
 /* No comment provided by engineer. */
-"The way is not sufficiently straight" = "";
 
 /* No comment provided by engineer. */
-"The way must have at least 2 nodes" = "";
 
 /* No comment provided by engineer. */
-"The ways contain incompatible tags" = "";
 
 /* No comment provided by engineer. */
-"The XML is improperly formed" = "";
 
 /* No comment provided by engineer. */
-"This action requires GPS to be turned on" = "";
 
 /* No comment provided by engineer. */
-"This app does not yet support editing turn restrictions without a node as the 'via' member" = "";
 
 /* No comment provided by engineer. */
-"To add another member to the relation 'long press' on the way to be added" = "";
 
 /* No comment provided by engineer. */
-"Travel ALLOWED from %@ to %@" = "";
 
 /* No comment provided by engineer. */
-"Travel from %@" = "";
 
 /* No comment provided by engineer. */
-"Travel ONLY from %@ to %@" = "";
 
 /* No comment provided by engineer. */
-"Travel PROHIBITED from %@ to %@" = "";
 
 /* No comment provided by engineer. */
-"Turn On Location Services to Allow %@ to Determine Your Location" = "";
 
 /* Edit action */
-"Turn Restrictions" = "";
 
 /* No comment provided by engineer. */
-"Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.\n\nSelect the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." = "";
 
 /* No comment provided by engineer. */
-"U-Turn from %@ allowed" = "";
 
 /* No comment provided by engineer. */
-"U-Turn from %@ prohibited" = "";
 
 /* OSM numeric user ID */
-"UID" = "";
 
 /* No comment provided by engineer. */
-"Unable to upload changes" = "";
 
 /* No comment provided by engineer. */
-"Undo" = "";
 
 /* relation role=* tag */
-"Unknown role" = "";
 
 /* No comment provided by engineer. */
-"Unsupported turn restriction type" = "";
 
 /* update an osm note */
-"Update" = "";
 
 /* No comment provided by engineer. */
-"update relation members" = "";
 
 /* OSM Note */
-"Updating Note..." = "";
 
 /* No comment provided by engineer. */
-"Upload complete!" = "";
 
 /* No comment provided by engineer. */
-"Upload to OSM" = "";
 
 /* No comment provided by engineer. */
-"Upload your changes" = "";
 
 /* No comment provided by engineer. */
-"Uploading GPX..." = "";
 
 /* OSM user name */
-"User" = "";
 
 /* No comment provided by engineer. */
-"User-defined imagery" = "";
 
 /* OSM object versioh */
-"Version" = "";
 
 /* Year aerial imagery was created */
-"vintage %@" = "";
 
 /* Years aerial imagery was created */
-"vintage %@ - %@" = "";
 
 /* No comment provided by engineer. */
-"Warning" = "";
 
 /* No comment provided by engineer. */
-"way %@" = "";
 
 /* No comment provided by engineer. */
-"You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "";
 
 /* POI editor presets */
-"You can define your own custom presets here" = "";
 
 /* No comment provided by engineer. */
-"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." = "";
 
 /* No comment provided by engineer. */
-"You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." = "";
 
 /* No comment provided by engineer. */
-"You must provide your OSM user name, not an email address." = "";
 
 /* No comment provided by engineer. */
-"You must save or discard changes to the current object before editing its associated relation" = "";
 
 /* No comment provided by engineer. */
-"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "";
 
 /* No comment provided by engineer. */
-"Your OSM data cache is getting large, which may lead to slow startup and shutdown times.\n\nYou may want to clear the cache (under Display settings) to improve performance." = "";
 
 /* No comment provided by engineer. */
-"Zoom to Edit" = "";
 

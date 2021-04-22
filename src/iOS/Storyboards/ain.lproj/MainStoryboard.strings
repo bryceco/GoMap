@@ -1,93 +1,62 @@
 /* Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm"; */
-"1xx-L0-hKm.text" = "";
 
 /* Class = "UIViewController"; title = "First"; ObjectID = "2"; */
-"2.title" = "";
 
 /* Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; */
-"2g1-vb-Cjc.normalTitle" = "";
 
 /* Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC"; */
-"2Ka-IT-DQC.normalTitle" = "";
 
 /* Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI"; */
-"7Ua-cx-BHI.title" = "";
 
 /* Class = "UILabel"; text = "username - action"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - ignore"; */
-"9G2-Gl-CeP.text" = "";
 
 /* Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn"; */
-"9hH-Ja-fKn.text" = "";
 
 /* Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u"; */
-"9t5-wq-j1u.text" = "";
 
 /* Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x"; */
-"ach-1A-88x.text" = "";
 
 /* Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt"; */
-"E22-sL-sNt.accessibilityHint" = "";
 
 /* Class = "UIButton"; accessibilityLabel = "Compass"; ObjectID = "E22-sL-sNt"; */
-"E22-sL-sNt.accessibilityLabel" = "";
 
 /* Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I"; */
-"FaM-WV-S6I.title" = "";
 
 /* Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; */
-"Fo4-Nq-pAz.normalTitle" = "";
 
 /* Class = "UIBarButtonItem"; title = "Commit"; ObjectID = "gdu-Sf-XrE"; */
-"gdu-Sf-XrE.title" = "";
 
 /* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; */
-"HeZ-95-3K1.text" = "";
 
 /* Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK"; */
-"l7S-YL-RKK.text" = "";
 
 /* Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy"; */
-"MBY-TK-Wuy.title" = "";
 
 /* Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG"; */
-"N5Q-nV-TPG.text" = "";
 
 /* Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Don't translate"; */
-"nU5-T2-ADn.text" = "";
 
 /* Class = "UIButton"; normalTitle = "Resolve"; ObjectID = "OJ0-aO-ri1"; */
-"OJ0-aO-ri1.normalTitle" = "";
 
 /* Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - ignore"; */
-"PHk-s9-onx.text" = "";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4"; */
-"qP9-Sc-sc4.text" = "";
 
 /* Class = "UINavigationItem"; title = "Bing Maps"; ObjectID = "Qz0-Ce-YCX"; */
-"Qz0-Ce-YCX.title" = "";
 
 /* Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp"; */
-"siu-I6-IEp.title" = "";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "stf-JU-iga"; */
-"stf-JU-iga.text" = "";
 
 /* Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ"; */
-"tOO-VD-MeJ.text" = "";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; */
-"vRO-Aj-Sdr.text" = "";
 
 /* Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai"; */
-"xw9-Ro-Fai.placeholder" = "";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[0]" = "";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[1]" = "";
 
 /* Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ"; */
-"zrW-uc-hfQ.segmentTitles[2]" = "";
 
