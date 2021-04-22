@@ -218,6 +218,14 @@
 		0225A36919B63F0D008B63BA /* DisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DisplayViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0228442A16D8870C00A1C051 /* GpxLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = GpxLayer.h; path = ../Shared/GpxLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0228442B16D8870C00A1C051 /* GpxLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = GpxLayer.m; path = ../Shared/GpxLayer.m; sourceTree = "<group>"; };
+		0229297C26321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0229297D26321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/Height.strings; sourceTree = "<group>"; };
+		0229297E26321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0229297F26321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		0229298026321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/POI.strings; sourceTree = "<group>"; };
+		0229298126321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/Settings.strings; sourceTree = "<group>"; };
+		0229298226321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/Display.strings; sourceTree = "<group>"; };
+		0229298326321B7E0000CEF0 /* ain */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ain; path = ain.lproj/Changeset.strings; sourceTree = "<group>"; };
 		022A2A52167B8F1C00D7A5AC /* POITabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POITabBarController.h; sourceTree = "<group>"; };
 		022A2A53167B8F1C00D7A5AC /* POITabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POITabBarController.m; sourceTree = "<group>"; };
 		022A2A6C167D969600D7A5AC /* ClearCacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ClearCacheViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -281,6 +289,14 @@
 		027EDC6B206F3EED00D349D6 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
 		027EDC6C206F3EED00D349D6 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		027EDC6F206F3EED00D349D6 /* DDXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXMLNode.h; sourceTree = "<group>"; };
+		027F332226321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		027F332326321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Height.strings; sourceTree = "<group>"; };
+		027F332426321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		027F332526321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		027F332626321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/POI.strings; sourceTree = "<group>"; };
+		027F332726321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Settings.strings; sourceTree = "<group>"; };
+		027F332826321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Display.strings; sourceTree = "<group>"; };
+		027F332926321B8F00872143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Changeset.strings; sourceTree = "<group>"; };
 		0289D0DD16A88BA300F86151 /* DLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DLog.h; path = ../Shared/DLog.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		028C51E525CB7A23004A88F7 /* TristateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TristateButton.swift; sourceTree = "<group>"; };
 		028DADE2247DFB8F000A130A /* WikiPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WikiPage.h; path = ../Shared/WikiPage.h; sourceTree = "<group>"; };
@@ -356,6 +372,8 @@
 		02BF745020793EE20028ED6A /* TurnRestrictHwyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurnRestrictHwyView.m; sourceTree = "<group>"; };
 		02BF745220793F0A0028ED6A /* TurnRestrictController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TurnRestrictController.h; sourceTree = "<group>"; };
 		02BF745320793F0A0028ED6A /* TurnRestrictController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TurnRestrictController.m; sourceTree = "<group>"; };
+		02C0249D26321BBA006AB031 /* si */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = si; path = si.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02C0249E26321BBA006AB031 /* si */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = si; path = si.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02C19B331699E8BF00F75E3C /* BingMetadataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = BingMetadataViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02C19B341699E8C000F75E3C /* BingMetadataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BingMetadataViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02C3194F250EB05900C5D200 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Height.strings; sourceTree = "<group>"; };
@@ -410,6 +428,14 @@
 		02CB5B6416BF1F9C00432914 /* AutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AutocompleteTextField.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
+		02CFEEC626321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02CFEEC726321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Height.strings; sourceTree = "<group>"; };
+		02CFEEC826321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02CFEEC926321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MainStoryboard.strings; sourceTree = "<group>"; };
+		02CFEECA26321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/POI.strings; sourceTree = "<group>"; };
+		02CFEECB26321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Settings.strings; sourceTree = "<group>"; };
+		02CFEECC26321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Display.strings; sourceTree = "<group>"; };
+		02CFEECD26321BBE002BFE83 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Changeset.strings; sourceTree = "<group>"; };
 		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = ../Shared/Colors.swift; sourceTree = "<group>"; };
 		02DBB4431A1C884F00732D53 /* HeightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = HeightViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02DBB4441A1C884F00732D53 /* HeightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HeightViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1098,6 +1124,10 @@
 				pl,
 				"zh-Hans",
 				"zh-Hant",
+				ain,
+				it,
+				si,
+				vi,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
@@ -1324,6 +1354,9 @@
 				02F0D9CF2565FD9800C7A3AD /* pl */,
 				02F0D9D72565FDBE00C7A3AD /* zh-Hans */,
 				025AC50A2598002F00F924DC /* zh-Hant */,
+				0229298126321B7E0000CEF0 /* ain */,
+				027F332726321B8F00872143 /* it */,
+				02CFEECB26321BBE002BFE83 /* vi */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -1343,6 +1376,9 @@
 				02F0D9CE2565FD9800C7A3AD /* pl */,
 				02F0D9D62565FDBE00C7A3AD /* zh-Hans */,
 				02EC2EA325902E8D00B7B4B9 /* zh-Hant */,
+				0229298026321B7E0000CEF0 /* ain */,
+				027F332626321B8F00872143 /* it */,
+				02CFEECA26321BBE002BFE83 /* vi */,
 			);
 			name = POI.storyboard;
 			sourceTree = "<group>";
@@ -1362,6 +1398,9 @@
 				02F0D9D32565FDBE00C7A3AD /* zh-Hans */,
 				02A41837256A2026005BF1AB /* hr */,
 				02128F7B2575D925003D2551 /* zh-Hant */,
+				0229297D26321B7E0000CEF0 /* ain */,
+				027F332326321B8F00872143 /* it */,
+				02CFEEC726321BBE002BFE83 /* vi */,
 			);
 			name = Height.storyboard;
 			sourceTree = "<group>";
@@ -1381,6 +1420,10 @@
 				02F0D9D92565FDBE00C7A3AD /* zh-Hans */,
 				02A41838256A2026005BF1AB /* hr */,
 				02231F8925C4CB38000E7C07 /* zh-Hant */,
+				0229298326321B7E0000CEF0 /* ain */,
+				027F332926321B8F00872143 /* it */,
+				02C0249E26321BBA006AB031 /* si */,
+				02CFEECD26321BBE002BFE83 /* vi */,
 			);
 			name = Changeset.storyboard;
 			sourceTree = "<group>";
@@ -1400,6 +1443,9 @@
 				02F0D9D02565FD9800C7A3AD /* pl */,
 				02F0D9D82565FDBE00C7A3AD /* zh-Hans */,
 				02128F7C2575D925003D2551 /* zh-Hant */,
+				0229298226321B7E0000CEF0 /* ain */,
+				027F332826321B8F00872143 /* it */,
+				02CFEECC26321BBE002BFE83 /* vi */,
 			);
 			name = Display.storyboard;
 			sourceTree = "<group>";
@@ -1418,6 +1464,9 @@
 				02F0D9CA2565FD9800C7A3AD /* pl */,
 				02F0D9D22565FDBE00C7A3AD /* zh-Hans */,
 				02248A032568C3E2004272B2 /* zh-Hant */,
+				0229297C26321B7E0000CEF0 /* ain */,
+				027F332226321B8F00872143 /* it */,
+				02CFEEC626321BBE002BFE83 /* vi */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1437,6 +1486,9 @@
 				02F0D9CD2565FD9800C7A3AD /* pl */,
 				02F0D9D52565FDBE00C7A3AD /* zh-Hans */,
 				02EC2EA225902E8D00B7B4B9 /* zh-Hant */,
+				0229297F26321B7E0000CEF0 /* ain */,
+				027F332526321B8F00872143 /* it */,
+				02CFEEC926321BBE002BFE83 /* vi */,
 			);
 			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
@@ -1455,6 +1507,10 @@
 				02F0D9CC2565FD9800C7A3AD /* pl */,
 				02F0D9D42565FDBE00C7A3AD /* zh-Hans */,
 				02248A042568C3E2004272B2 /* zh-Hant */,
+				0229297E26321B7E0000CEF0 /* ain */,
+				027F332426321B8F00872143 /* it */,
+				02C0249D26321BBA006AB031 /* si */,
+				02CFEEC826321BBE002BFE83 /* vi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

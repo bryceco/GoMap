@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="en.lproj/InfoPlist.strings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
@@ -798,9 +798,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>节点</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Node attributes" xml:space="preserve">
-        <source>Node attributes</source>
-        <target>节点属性</target>
+      <trans-unit id="Node Attributes" xml:space="preserve">
+        <source>Node Attributes</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Node Tags" xml:space="preserve">
+        <source>Node Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
@@ -809,11 +812,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Node tags" xml:space="preserve">
-        <source>Node tags</source>
-        <target>节点标签</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
@@ -932,14 +930,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target>重做</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation attributes" xml:space="preserve">
-        <source>Relation attributes</source>
-        <target>关系属性</target>
+      <trans-unit id="Relation Attributes" xml:space="preserve">
+        <source>Relation Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation tags" xml:space="preserve">
-        <source>Relation tags</source>
-        <target>关系标签</target>
+      <trans-unit id="Relation Tags" xml:space="preserve">
+        <source>Relation Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
@@ -1250,14 +1246,12 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target>警告</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way attributes" xml:space="preserve">
-        <source>Way attributes</source>
-        <target>路径属性</target>
+      <trans-unit id="Way Attributes" xml:space="preserve">
+        <source>Way Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way tags" xml:space="preserve">
-        <source>Way tags</source>
-        <target>路径标签</target>
+      <trans-unit id="Way Tags" xml:space="preserve">
+        <source>Way Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -1625,7 +1619,7 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
         <source>Unnamed Roads</source>
-        <target state="translated">无名道路</target>
+        <target>无名道路</target>
         <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
@@ -2300,9 +2294,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
-        <source>Common Tags</source>
-        <target>常用标签</target>
-        <note>Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb";</note>
+        <source>Common toags</source>
+        <note>Class = "UINavigationItem"; title = "Common toags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
@@ -2352,11 +2345,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>role</source>
         <target>角色</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="tPF-m9-RtO.text" xml:space="preserve">
-        <source>Payment</source>
-        <target>付款方式</target>
-        <note>Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>

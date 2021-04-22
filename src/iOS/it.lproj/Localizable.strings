@@ -1,0 +1,211 @@
+/* No comment provided by engineer. */
+"\tRelation " = "\tRelazione ";
+
+/* No comment provided by engineer. */
+" (%d members)\n" = " (%d membri)\n";
+
+/* No comment provided by engineer. */
+" (%d nodes)\n" = " (%d nodi)\n";
+
+/* No comment provided by engineer. */
+" (node)" = " (nodo)";
+
+/* No comment provided by engineer. */
+" (way)" = " (modo)";
+
+/* a newly created node/object */
+"(new object)" = "(nuovo oggetto)";
+
+/* No comment provided by engineer. */
+"(node)" = "(nodo)";
+
+/* No comment provided by engineer. */
+"(relation %@)" = "(relazione %@)";
+
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f metri, %2$ld nodi";
+
+/* No comment provided by engineer. */
+"%@ changeset" = "%@ changeset";
+
+/* Always plural */
+"%@ meters" = "%@ metri";
+
+/* One or more days
+   Plural number of days */
+"%ld Days" = "%ld Giorni";
+
+/* length of a gpx track */
+"%ld meters, %ld points" = "%1$ld metri, %2$ld punti";
+
+/* Number of tiles/objects in cache */
+"%ld objects" = "%ld oggetti";
+
+/* Always plural */
+"%lu tiles needed" = "%lu tiles necessari";
+
+/* Location of Add Node button on the screen */
+"+ Button Position" = "+ Posizione pulsante";
+
+/* unknown user name */
+"<unknown>" = "<sconosciuto>";
+
+/* 1 day singular */
+"1 Day" = "1 giorno";
+
+/* No comment provided by engineer. */
+"A GPX Track records your path as you travel along a road or trail" = "Una traccia GPX registra il tuo percorso mentre viaggi lungo una strada o un sentiero";
+
+/* No comment provided by engineer. */
+"A relation the node belongs to is not fully downloaded" = "Una relazione a cui appartiene il nodo non è stata scaricata completamente";
+
+/* Add to relation */
+"Add inner member" = "Aggiungi membro interno";
+
+/* Edit action */
+"Add Note" = "Aggiungi nota";
+
+/* Add to relation */
+"Add outer member" = "Aggiungi membro esterno";
+
+/* No comment provided by engineer. */
+"Adding members:" = "Aggiungere membri:";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "Immagini aggiuntive";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Solo aeree";
+
+/* No comment provided by engineer. */
+"All choices" = "Tutte le scelte";
+
+/* No comment provided by engineer. */
+"All Tags" = "Tutti i tag";
+
+/* No comment provided by engineer. */
+"An unknown error occurred fetching metadata" = "Si è verificato un errore sconosciuto nel recupero dei metadati";
+
+/* No comment provided by engineer. */
+"Attention" = "Attenzione";
+
+/* node/way/relation attributes */
+"Attributes" = "Attributi";
+
+/* Automatic selection of presets languages */
+"Automatic" = "Automatico";
+
+/* identifies current aerial imagery */
+"Background imagery %@" = "Immagini di sfondo %@";
+
+/* No comment provided by engineer. */
+"Bad login" = "Login sbagliato";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "Avviso sulle dimensioni della cache";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "Cache tagliata";
+
+/* No comment provided by engineer. */
+"Can't delete node that is part of a relation" = "Non è possibile eliminare un nodo che fa parte di una relazione";
+
+/* No comment provided by engineer. */
+"Can't delete relation that is not a multipolygon" = "Non è possibile eliminare una relazione che non è un multipoligono";
+
+/* No comment provided by engineer. */
+"Can't delete way that is part of a Route or similar relation" = "Non è possibile eliminare una via che fa parte di una rotta o di una relazione simile";
+
+/* No comment provided by engineer. */
+"Can't extend way" = "Non è possibile estendere la via";
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancella";
+
+/* e-mail message */
+"Cannot compose message" = "Impossibile comporre il messaggio";
+
+/* OSM changeset identifier */
+"Changeset" = "Changeset";
+
+/* Delete cached data */
+"Clear GPX Tracks" = "Cancella le tracce GPX";
+
+/* Delete cached data */
+"Clear OSM Data" = "Pulisci Dati OSM";
+
+/* No comment provided by engineer. */
+"Configure" = "Configura";
+
+/* No comment provided by engineer. */
+"Confirm move" = "Conferma spostamento";
+
+/* No comment provided by engineer. */
+"Connecting the nodes would damage a relation" = "Il collegamento dei nodi danneggerebbe una relazione";
+
+/* No comment provided by engineer. */
+"Create\n" = "Crea\n";
+
+/* Edit action */
+"Create Relation" = "Crea Relazione";
+
+/* current GPX track */
+"Current Track" = "Traccia Corrente";
+
+/* No comment provided by engineer. */
+"Data not available" = "Dati non disponibili";
+
+/* Edit action */
+"Delete" = "Cancella";
+
+/* No comment provided by engineer. */
+"Delete\n" = "Cancella\n";
+
+/* No comment provided by engineer. */
+"Delete completely" = "Cancella completamente";
+
+/* No comment provided by engineer. */
+"Delete failed" = "Cancellazione fallita";
+
+/* No comment provided by engineer. */
+"delete node" = "Cancella nodo";
+
+/* No comment provided by engineer. */
+"delete object from relation" = "cancella l'oggetto dalla relazione";
+
+/* No comment provided by engineer. */
+"delete relation" = "elimina relazione";
+
+/* No comment provided by engineer. */
+"delete restriction" = "eliminare restrizione";
+
+/* No comment provided by engineer. */
+"delete route" = "elimina percorso";
+
+/* Edit action */
+"Disconnect" = "Disconnetti";
+
+/* create a duplicate */
+"duplicate" = "duplica";
+
+/* No comment provided by engineer. */
+"meters" = "metri";
+
+/* No comment provided by engineer. */
+"move" = "sposta";
+
+/* No comment provided by engineer. */
+"node %@" = "nodo %@";
+
+/* No comment provided by engineer. */
+"other object" = "altro oggetto";
+
+/* No comment provided by engineer. */
+"relation" = "relazione";
+
+/* No comment provided by engineer. */
+"set tags" = "imposta i tag";
+
+/* Year aerial imagery was created */
+"vintage %@" = "vintage %@";
+

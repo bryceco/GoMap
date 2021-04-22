@@ -1,0 +1,636 @@
+/* No comment provided by engineer. */
+"\tRelation " = "\tQuan hệ ";
+
+/* No comment provided by engineer. */
+"\tWay " = "\tLối ";
+
+/* No comment provided by engineer. */
+" (%d members)\n" = " (%d thành viên)\n";
+
+/* No comment provided by engineer. */
+" (%d nodes)\n" = " (%d nốt)\n";
+
+/* No comment provided by engineer. */
+" (node)" = " (nốt)";
+
+/* No comment provided by engineer. */
+" (way)" = " (lối)";
+
+/* a newly created node/object */
+"(new object)" = "(đối tượng mới)";
+
+/* No comment provided by engineer. */
+"(node in way)" = "(nốt trong lối)";
+
+/* No comment provided by engineer. */
+"(node)" = "(nốt)";
+
+/* No comment provided by engineer. */
+"(relation %@)" = "(quan hệ %@)";
+
+/* No comment provided by engineer. */
+"(way)" = "(lối)";
+
+/* way length if > 10m */
+"%.0f meters, %ld nodes" = "%1$.0f mét, %2$ld nốt";
+
+/* way length if < 10m */
+"%.1f meters, %ld nodes" = "%1$.1f mét, %2$ld nốt";
+
+/* These values will always be large (plural) */
+"%.2f MB, %ld files" = "%1$.2f MB, %2$ld tập tin";
+
+/* No comment provided by engineer. */
+"%@ (relation)" = "%@ (quan hệ)";
+
+/* No comment provided by engineer. */
+"%@ changeset" = "%@ bộ thay đổi";
+
+/* Always plural */
+"%@ meters" = "%@ mét";
+
+/* One or more days
+   Plural number of days */
+"%ld Days" = "%ld Ngày";
+
+/* Brief synopsis of a mapper's activity (count,last active date) */
+"%ld edits, last active %@" = "%1$ld lần sửa đổi, tích cực lần cuối cùng vào %2$@";
+
+/* length of a gpx track */
+"%ld meters, %ld points" = "%1$ld mét, %2$ld điểm";
+
+/* Number of tiles/objects in cache */
+"%ld objects" = "%ld đối tượng";
+
+/* Always plural */
+"%lu tiles needed" = "Cần %lu mảnh";
+
+/* Location of Add Node button on the screen */
+"+ Button Position" = "+ Vị trí Nút";
+
+/* unknown user name */
+"<unknown>" = "<không rõ>";
+
+/* 1 day singular */
+"1 Day" = "1 Ngày";
+
+/* Add to relation */
+"Add inner member" = "Thêm lối bên trong";
+
+/* No comment provided by engineer. */
+"add node to way" = "thêm nốt vào lối";
+
+/* Edit action */
+"Add Note" = "Thêm Ghi chú";
+
+/* No comment provided by engineer. */
+"add object to relation" = "thêm đối tượng vào quan hệ";
+
+/* Add to relation */
+"Add outer member" = "Thêm lối bên ngoài";
+
+/* No comment provided by engineer. */
+"Add way to multipolygon?" = "Thêm lối vào tổ hợp đa giác?";
+
+/* No comment provided by engineer. */
+"added to multipolygon relation" = "đã thêm vào quan hệ tổ hợp đa giác";
+
+/* No comment provided by engineer. */
+"Adding members:" = "Đang thêm thành viên:";
+
+/* No comment provided by engineer. */
+"Additional imagery" = "Hình ảnh bổ sung";
+
+/* No comment provided by engineer. */
+"Aerial only" = "Chỉ không ảnh";
+
+/* No comment provided by engineer. */
+"All choices" = "Tất cả lựa chọn";
+
+/* No comment provided by engineer. */
+"All Tags" = "Tất cả Thẻ";
+
+/* No comment provided by engineer. */
+"Attention" = "Chú ý";
+
+/* node/way/relation attributes */
+"Attributes" = "Thuộc tính";
+
+/* Automatic selection of presets languages */
+"Automatic" = "Tự động";
+
+/* identifies current aerial imagery */
+"Background imagery %@" = "Hình ảnh nền %@";
+
+/* No comment provided by engineer. */
+"Bad login" = "Mật khẩu sai";
+
+/* No comment provided by engineer. */
+"Cache size warning" = "Cảnh báo kích thước vùng nhớ đệm";
+
+/* No comment provided by engineer. */
+"Cache trimmed" = "Đã xóa bớt vùng nhớ đệm";
+
+/* No comment provided by engineer. */
+"Can only add ways to multipolygons" = "Chỉ có thể thêm lối vào tổ hợp đa giác";
+
+/* No comment provided by engineer. */
+"Cancel" = "Hủy bỏ";
+
+/* OSM changeset identifier */
+"Changeset" = "Bộ thay đổi";
+
+/* No comment provided by engineer. */
+"computing size..." = "đang tính kích thước…";
+
+/* No comment provided by engineer. */
+"Configure" = "Thiết lập";
+
+/* Edit action */
+"Copy Tags" = "Sao chép các Thẻ";
+
+/* No comment provided by engineer. */
+"Could not duplicate object" = "Không thể nhân đôi đối tượng";
+
+/* No comment provided by engineer. */
+"Create\n" = "Tạo\n";
+
+/* No comment provided by engineer. */
+"create node" = "tạo nốt";
+
+/* No comment provided by engineer. */
+"create relation" = "tạo quan hệ";
+
+/* Edit action */
+"Create Relation" = "Tạo Quan hệ";
+
+/* No comment provided by engineer. */
+"Create Relation Type" = "Tạo Kiểu Quan hệ";
+
+/* No comment provided by engineer. */
+"create turn restriction" = "tạo hạn chế rẽ";
+
+/* No comment provided by engineer. */
+"create way" = "tạo lối";
+
+/* No comment provided by engineer. */
+"Data not available" = "Dữ liệu không có sẵn";
+
+/* Edit action */
+"Delete" = "Xóa";
+
+/* No comment provided by engineer. */
+"Delete\n" = "Xóa\n";
+
+/* No comment provided by engineer. */
+"Delete completely" = "Xóa hẳn";
+
+/* No comment provided by engineer. */
+"Delete failed" = "Thất bại khi xóa";
+
+/* No comment provided by engineer. */
+"delete multipolygon" = "xóa tổ hợp đa giác";
+
+/* No comment provided by engineer. */
+"delete node" = "xóa nốt";
+
+/* No comment provided by engineer. */
+"delete node from way" = "xóa nốt khỏi lối";
+
+/* No comment provided by engineer. */
+"delete object from relation" = "xóa đối tượng khỏi quan hệ";
+
+/* No comment provided by engineer. */
+"delete relation" = "xóa quan hệ";
+
+/* No comment provided by engineer. */
+"delete restriction" = "xóa hạn chế";
+
+/* No comment provided by engineer. */
+"delete route" = "xóa tuyến đường";
+
+/* No comment provided by engineer. */
+"delete way" = "xóa lối";
+
+/* No comment provided by engineer. */
+"Detach from relation" = "Tháo gỡ khỏi quan hệ";
+
+/* Edit action */
+"Disconnect" = "Tháo gỡ";
+
+/* No comment provided by engineer. */
+"Display options" = "Hiển thị tùy chọn";
+
+/* No comment provided by engineer. */
+"Done" = "Xong";
+
+/* create a duplicate */
+"duplicate" = "nhân đôi";
+
+/* Edit action */
+"Duplicate" = "Nhân đôi";
+
+/* No comment provided by engineer. */
+"Edit" = "Sửa đổi";
+
+/* No comment provided by engineer. */
+"Edit restrictions" = "Sửa đổi hạn chế";
+
+/* No comment provided by engineer. */
+"Edit XML" = "Sửa đổi XML";
+
+/* No comment provided by engineer. */
+"Editor only" = "Chỉ lớp vẽ";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Lớp vẽ cùng không ảnh";
+
+/* No comment provided by engineer. */
+"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Chắc chắn rằng Dịch vụ Định vị được kích hoạt và rằng bạn đã cấp phép truy cập cho ứng dụng này.\n\nLỗi: %@";
+
+/* Error dialog title */
+"Error" = "Lỗi";
+
+/* No comment provided by engineer. */
+"Height: %@ ± %@ meters" = "Chiều cao: %1$@ ± %2$@ mét";
+
+/* OSM node/way/relation identifier */
+"Identifier" = "Định danh";
+
+/* No comment provided by engineer. */
+"Ignore" = "Bỏ qua";
+
+/* No comment provided by engineer. */
+"Invalid URL" = "URL không hợp lệ";
+
+/* Edit action */
+"Join" = "Nối liền";
+
+/* No comment provided by engineer. */
+"Last updated %@" = "Cập nhật lần cuối cùng vào %@";
+
+/* coordinates */
+"Lat/Lon" = "Vĩ độ/Kinh độ";
+
+/* Left-hand side of screen */
+"Left side" = "Bên trái";
+
+/* No comment provided by engineer. */
+"Location services timed out." = "Hết thời gian chờ dịch vụ định vị.";
+
+/* No comment provided by engineer. */
+"Location unavailable" = "Vị trí không có sẵn";
+
+/* No comment provided by engineer. */
+"Login successful" = "Đã đăng nhập thành công";
+
+/* Edit action */
+"Make Circular" = "Làm Tròn";
+
+/* Edit action */
+"Make Rectangular" = "Làm Vuông góc";
+
+/* No comment provided by engineer. */
+"Max nodes after joining is 2000" = "Tối đa 2.000 nốt sau khi nối liền";
+
+/* No comment provided by engineer. */
+"Maximum way length is 2000 nodes" = "Chiều dài lối tối đa là 2.000 nốt";
+
+/* rate the app later */
+"Maybe later..." = "Thôi để sau…";
+
+/* No comment provided by engineer. */
+"Member of multipolygon relation" = "Thành viên quan hệ tổ hợp đa giác";
+
+/* No comment provided by engineer. */
+"Members" = "Thành viên";
+
+/* No comment provided by engineer. */
+"Merge Tags" = "Hợp nhất các Thẻ";
+
+/* No comment provided by engineer. */
+"meters" = "mét";
+
+/* No comment provided by engineer. */
+"Missing way to connect to" = "Thiếu lối để nối liền với";
+
+/* last modified date */
+"Modified" = "Đã thay đổi";
+
+/* No comment provided by engineer. */
+"Modify" = "Thay đổi";
+
+/* No comment provided by engineer. */
+"Modify\n" = "Thay đổi\n";
+
+/* Edit action */
+"More..." = "Thêm…";
+
+/* No comment provided by engineer. */
+"Most recent" = "Gần đây nhất";
+
+/* No comment provided by engineer. */
+"move" = "di chuyển";
+
+/* No comment provided by engineer. */
+"Move" = "Di chuyển";
+
+/* No comment provided by engineer. */
+"Move selected object?" = "Di chuyển đối tượng được chọn?";
+
+/* No comment provided by engineer. */
+"Multipolygon" = "Tổ hợp đa giác";
+
+/* No comment provided by engineer. */
+"Network error" = "Lỗi mạng";
+
+/* Never delete old GPX tracks
+   Never delete old tracks */
+"Never" = "Không bao giờ";
+
+/* No comment provided by engineer. */
+"Next" = "Sau";
+
+/* Alert title */
+"No Data" = "Không có Dữ liệu";
+
+/* No comment provided by engineer. */
+"No image data available" = "Dữ liệu hình ảnh không có sẵn";
+
+/* No comment provided by engineer. */
+"No Left Turn restriction" = "Hạn chế Cấm Rẽ Trái";
+
+/* No comment provided by engineer. */
+"No results found" = "Không tìm thấy kết quả";
+
+/* No comment provided by engineer. */
+"No Right Turn restriction" = "Hạn chế Cấm Rẽ Phải";
+
+/* No comment provided by engineer. */
+"No Straight On restriction" = "Hạn chế Cấm Chạy Thẳng";
+
+/* No comment provided by engineer. */
+"No tags to paste" = "Không có thẻ để dán";
+
+/* No comment provided by engineer. */
+"No U-Turn restriction" = "Hạn chế Cấm Quay Ngược";
+
+/* No comment provided by engineer. */
+"Node" = "Nốt";
+
+/* No comment provided by engineer. */
+"node %@" = "nốt %@";
+
+/* No comment provided by engineer. */
+"node %@ (in way)" = "nốt %@ (thuộc lối)";
+
+/* User credentials not found */
+"Not found" = "Không tìm thấy";
+
+/* OSM note */
+"Note History" = "Lịch sử Nốt";
+
+/* No comment provided by engineer. */
+"Number of recent items to display" = "Số mục gần đây để hiển thị";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Only Left Turn restriction" = "Hạn chế Chỉ Rẽ Trái";
+
+/* No comment provided by engineer. */
+"Only multipolygon relations are supported" = "Chỉ hỗ trợ quan hệ tổ hợp đa giác";
+
+/* No comment provided by engineer. */
+"Only Right Turn restriction" = "Hạn chế Chỉ Rẽ Phải";
+
+/* No comment provided by engineer. */
+"Only Straight On restriction" = "Hạn chế Chỉ Chạy Thẳng";
+
+/* No comment provided by engineer. */
+"Only ways/multipolygons can be rotated" = "Chỉ có thể xoay lối/tổ hợp đa giác";
+
+/* Open the iOS Settings app */
+"Open Settings" = "Mở Cài đặt";
+
+/* No comment provided by engineer. */
+"Open URL" = "Mở URL";
+
+/* No comment provided by engineer. */
+"OSM data must be version 0.6 (fetched '%@')" = "Dữ liệu OSM phải thuộc phiên bản 0.6 (đã lấy “%@”)";
+
+/* No comment provided by engineer. */
+"other object" = "đối tượng khác";
+
+/* Edit action */
+"Paste" = "Dán";
+
+/* No comment provided by engineer. */
+"Pasting %ld tag(s)" = "Đang dán %ld thẻ";
+
+/* No comment provided by engineer. */
+"Perform Action" = "Thực hiện Tác vụ";
+
+/* No comment provided by engineer. */
+"Please wait" = "Xin vui lòng chờ đợi";
+
+/* No comment provided by engineer. */
+"Previous" = "Trước";
+
+/* Discard editing changes when resetting OSM data cache */
+"Purge" = "Xóa sạch";
+
+/* No comment provided by engineer. */
+"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." = "Hãy đánh dấu ứng dụng này để cho người khác có thể khám phá nó và cùng lập bản đồ và để làm cho OpenStreetMap nổi tiếng hơn.";
+
+/* Alert title message */
+"Recent Aerial Imagery" = "Không ảnh Gần đây";
+
+/* No comment provided by engineer. */
+"Redo" = "Làm lại";
+
+/* No comment provided by engineer. */
+"relation" = "quan hệ";
+
+/* No comment provided by engineer. */
+"Relation: %@" = "Quan hệ: %@";
+
+/* No comment provided by engineer. */
+"Relations" = "Quan hệ";
+
+/* No comment provided by engineer. */
+"Replace Tags" = "Thay thế Thẻ";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 3 nodes" = "Cần lối đóng có ít nhất 3 nốt";
+
+/* No comment provided by engineer. */
+"Requires a closed way with at least 4 nodes" = "Cần lối đóng có ít nhất 4 nốt";
+
+/* Edit action */
+"Restrict" = "Hạn chế";
+
+/* No comment provided by engineer. */
+"Restriction: %@" = "Hạn chế: %@";
+
+/* country name,2-character country code */
+"Results for %@ (%@)" = "Kết quả %1$@ (%2$@)";
+
+/* Edit action */
+"Reverse" = "Đảo ngược";
+
+/* Right-hand side of screen */
+"Right side" = "Bên phải";
+
+/* Edit action */
+"Rotate" = "Xoay";
+
+/* No comment provided by engineer. */
+"Select Object" = "Chọn Đối tượng";
+
+/* set tag value */
+"Set" = "Đặt";
+
+/* The height=* tag */
+"Set Height Tag" = "Đặt Thẻ Chiều cao";
+
+/* No comment provided by engineer. */
+"set tags" = "đặt thẻ";
+
+/* No comment provided by engineer. */
+"Settings" = "Thiết lập";
+
+/* Open iOS sharing sheet
+   Title for sharing options */
+"Share" = "Chia sẻ";
+
+/* No comment provided by engineer. */
+"Show Recent Items" = "Hiển thị Mục Gần đây";
+
+/* Edit action */
+"Split" = "Chia cắt";
+
+/* No comment provided by engineer. */
+"Standard imagery" = "Hình ảnh chuẩn";
+
+/* Begin downloading tiles */
+"Start" = "Bắt đầu";
+
+/* No comment provided by engineer. */
+"Stop" = "Ngừng";
+
+/* Edit action */
+"Straighten" = "Làm Thẳng";
+
+/* Edit action */
+"Tags" = "Thẻ";
+
+/* No comment provided by engineer. */
+"The + button can be positioned on either the left or right side of the screen" = "Có thể đặt nút + vào bên trái hoặc bên phải màn hình";
+
+/* No comment provided by engineer. */
+"The merged nodes contain conflicting tags" = "Các nốt được gộp có thẻ mâu thuẫn";
+
+/* No comment provided by engineer. */
+"The nodes have conflicting roles in parent relations" = "Các nốt có vai trò mâu thuẫn trong các quan hệ chứa";
+
+/* No comment provided by engineer. */
+"The object does not contain any tags" = "Đối tượng thiếu thẻ";
+
+/* No comment provided by engineer. */
+"The restriction cannot be deleted" = "Không thể xóa hạn chế";
+
+/* No comment provided by engineer. */
+"The way belongs to a relation that is not fully downloaded" = "Lối thuộc quan hệ chưa được tải về hoàn toàn";
+
+/* No comment provided by engineer. */
+"The way is not sufficiently straight" = "Lối không đủ thẳng";
+
+/* No comment provided by engineer. */
+"The way must have at least 2 nodes" = "Lối phải có ít nhất 2 nốt";
+
+/* No comment provided by engineer. */
+"The ways contain incompatible tags" = "Các lối có thẻ mâu thuẫn";
+
+/* No comment provided by engineer. */
+"The XML is improperly formed" = "XML bị hư hỏng";
+
+/* No comment provided by engineer. */
+"Travel ALLOWED from %@ to %@" = "CHO PHÉP đi từ %1$@ sang %2$@";
+
+/* No comment provided by engineer. */
+"Travel from %@" = "Đi từ %@";
+
+/* No comment provided by engineer. */
+"Travel ONLY from %@ to %@" = "CHỈ cho phép đi từ %1$@ sang %2$@";
+
+/* No comment provided by engineer. */
+"Travel PROHIBITED from %@ to %@" = "CẤM đi từ %1$@ sang %2$@";
+
+/* No comment provided by engineer. */
+"Turn On Location Services to Allow %@ to Determine Your Location" = "Bật Dịch vụ Định vị để Cho phép %@ Xác định Vị trí của Bạn";
+
+/* Edit action */
+"Turn Restrictions" = "Hạn chế Rẽ";
+
+/* No comment provided by engineer. */
+"Unable to upload changes" = "Không thể tải lên các thay đổi";
+
+/* No comment provided by engineer. */
+"Undo" = "Hoàn tác";
+
+/* relation role=* tag */
+"Unknown role" = "Vai trò không rõ";
+
+/* No comment provided by engineer. */
+"Unsupported turn restriction type" = "Kiểu hạn chế rẽ bất ngờ";
+
+/* update an osm note */
+"Update" = "Cập nhật";
+
+/* No comment provided by engineer. */
+"update relation members" = "cập nhật các thành viên quan hệ";
+
+/* OSM Note */
+"Updating Note..." = "Đang Cập nhật Ghi chú…";
+
+/* No comment provided by engineer. */
+"Upload complete!" = "Đã tải lên xong!";
+
+/* No comment provided by engineer. */
+"Upload to OSM" = "Tải lên OSM";
+
+/* No comment provided by engineer. */
+"Upload your changes" = "Tải lên các thay đổi của bạn";
+
+/* No comment provided by engineer. */
+"Uploading GPX..." = "Đang tải lên GPX…";
+
+/* OSM user name */
+"User" = "Người dùng";
+
+/* No comment provided by engineer. */
+"User-defined imagery" = "Hình ảnh tùy biến";
+
+/* OSM object versioh */
+"Version" = "Phiên bản";
+
+/* Year aerial imagery was created */
+"vintage %@" = "chụp năm %@";
+
+/* Years aerial imagery was created */
+"vintage %@ - %@" = "chụp năm %1$@–%2$@";
+
+/* No comment provided by engineer. */
+"Warning" = "Cảnh báo";
+
+/* No comment provided by engineer. */
+"way %@" = "lối %@";
+
+/* No comment provided by engineer. */
+"You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" = "Bạn đã tải lên %ld bộ thay đổi dùng phiên bản Go Map!! này.\n\nBạn có muốn đánh giá ứng dụng này không?";
+
+/* No comment provided by engineer. */
+"Zoom to Edit" = "Phóng to để Sửa đổi";
+

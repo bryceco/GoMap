@@ -118,9 +118,6 @@
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
 "lPv-s6-uEz.title" = "常用標籤";
 
-/* Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb"; */
-"mAb-DX-pqb.title" = "常用標籤";
-
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "名稱";
 
@@ -165,9 +162,6 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
 "TK4-E8-1q7.text" = "標題";
-
-/* Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO"; */
-"tPF-m9-RtO.text" = "付費方式";
 
 /* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
 "Urd-9O-Mte.placeholder" = "關係";

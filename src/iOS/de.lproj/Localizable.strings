@@ -102,6 +102,9 @@
 "Additional imagery" = "Zusätzliche Luftbilder";
 
 /* No comment provided by engineer. */
+"Aerial only" = "Nur Luftbild";
+
+/* No comment provided by engineer. */
 "All choices" = "Alle Auswahlmöglichkeiten";
 
 /* No comment provided by engineer. */
@@ -279,10 +282,19 @@
 "Edit" = "Bearbeiten";
 
 /* No comment provided by engineer. */
+"Edit restrictions" = "Beschränkungen bearbeiten";
+
+/* No comment provided by engineer. */
 "Edit XML" = "XML bearbeiten";
 
 /* No comment provided by engineer. */
 "Editing layer not visible" = "Bearbeitungsebene nicht sichtbar";
+
+/* No comment provided by engineer. */
+"Editor only" = "Nur Editor";
+
+/* No comment provided by engineer. */
+"Editor with Aerial" = "Editor mit Luftbild";
 
 /* No comment provided by engineer. */
 "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" = "Stelle sicher, dass Ortungsdienste aktiviert sind und du dieser Anwendung Zugriff erlaubt hast\n\nError: %@";
@@ -445,16 +457,13 @@
 "node %@ (in way)" = "Knoten %@ (in Weg)";
 
 /* No comment provided by engineer. */
-"Node attributes" = "Knoten-Attribute";
-
-/* No comment provided by engineer. */
 "Node is not an element of way" = "Knoten ist kein Element von Weg";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Der Knoten muss der erste oder letzte Knoten des Wegs sein";
 
-/* No comment provided by engineer. */
-"Node tags" = "Knoten-Attribute";
+/* User credentials not found */
+"Not found" = "Nicht gefunden";
 
 /* OSM note */
 "Note History" = "Hinweis-Verlauf";
@@ -503,12 +512,6 @@
 
 /* No comment provided by engineer. */
 "relation" = "Relation";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "Relations-Attribute";
-
-/* No comment provided by engineer. */
-"Relation tags" = "Relations-Attribute";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relation: %@";
@@ -648,9 +651,6 @@
 
 /* No comment provided by engineer. */
 "way %@" = "Weg %@";
-
-/* No comment provided by engineer. */
-"Way attributes" = "Weg Attribute";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Du bist gerade dabei, Änderungen an der live-geschalteten OpenStreetMap Datenbank zu machen. Die Änderungen werden für jeden auf der Welt sichtbar.\n\nZum Fortfahren drücke noch einmal Hochladen, sonst drücke Abbrechen.";

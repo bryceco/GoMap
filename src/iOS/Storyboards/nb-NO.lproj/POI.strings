@@ -103,9 +103,6 @@
 /* Class = "UITabBarItem"; title = "Common Tags"; ObjectID = "lPv-s6-uEz"; */
 "lPv-s6-uEz.title" = "Vanlige etiketter";
 
-/* Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb"; */
-"mAb-DX-pqb.title" = "Vanlige etiketter";
-
 /* Class = "UILabel"; text = "Name"; ObjectID = "mcN-gM-s7u"; */
 "mcN-gM-s7u.text" = "Navn";
 
@@ -150,9 +147,6 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Do not translate"; */
 "TK4-E8-1q7.text" = "Tittel";
-
-/* Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO"; */
-"tPF-m9-RtO.text" = "Betaling";
 
 /* Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Do not translate"; */
 "Urd-9O-Mte.placeholder" = "relasjon";

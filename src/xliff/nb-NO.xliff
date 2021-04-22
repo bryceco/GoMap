@@ -791,8 +791,12 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
         <target>Node</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Node attributes" xml:space="preserve">
-        <source>Node attributes</source>
+      <trans-unit id="Node Attributes" xml:space="preserve">
+        <source>Node Attributes</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Node Tags" xml:space="preserve">
+        <source>Node Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
@@ -801,11 +805,6 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Node tags" xml:space="preserve">
-        <source>Node tags</source>
-        <target>Node-etiketter</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
@@ -920,14 +919,12 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
         <target>Gjenta</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation attributes" xml:space="preserve">
-        <source>Relation attributes</source>
-        <target>Relasjon</target>
+      <trans-unit id="Relation Attributes" xml:space="preserve">
+        <source>Relation Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation tags" xml:space="preserve">
-        <source>Relation tags</source>
-        <target>Relasjonsetiketter</target>
+      <trans-unit id="Relation Tags" xml:space="preserve">
+        <source>Relation Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
@@ -1251,13 +1248,12 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target>Advarsel</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way attributes" xml:space="preserve">
-        <source>Way attributes</source>
+      <trans-unit id="Way Attributes" xml:space="preserve">
+        <source>Way Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way tags" xml:space="preserve">
-        <source>Way tags</source>
-        <target>Vei-etiketter</target>
+      <trans-unit id="Way Tags" xml:space="preserve">
+        <source>Way Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -2361,9 +2357,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
-        <source>Common Tags</source>
-        <target>Vanlige etiketter</target>
-        <note>Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb";</note>
+        <source>Common toags</source>
+        <note>Class = "UINavigationItem"; title = "Common toags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
@@ -2412,11 +2407,6 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <source>role</source>
         <target>rolle</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="tPF-m9-RtO.text" xml:space="preserve">
-        <source>Payment</source>
-        <target>Betaling</target>
-        <note>Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>

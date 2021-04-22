@@ -820,9 +820,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <target>Čvor</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Node attributes" xml:space="preserve">
-        <source>Node attributes</source>
-        <target>Svojstva čvora</target>
+      <trans-unit id="Node Attributes" xml:space="preserve">
+        <source>Node Attributes</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Node Tags" xml:space="preserve">
+        <source>Node Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
@@ -833,11 +836,6 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
         <target>Čvor mora biti prvi ili zadnji čvor puta</target>
-        <note>No comment provided by engineer.</note>
-      </trans-unit>
-      <trans-unit id="Node tags" xml:space="preserve">
-        <source>Node tags</source>
-        <target>Oznake čvora</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
@@ -960,14 +958,12 @@ To je napredna operacija koju bi trebali koristiti samo korisnici koji imaju dob
         <target>Ponovi</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation attributes" xml:space="preserve">
-        <source>Relation attributes</source>
-        <target>Svojstva veze</target>
+      <trans-unit id="Relation Attributes" xml:space="preserve">
+        <source>Relation Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Relation tags" xml:space="preserve">
-        <source>Relation tags</source>
-        <target>Oznake veza</target>
+      <trans-unit id="Relation Tags" xml:space="preserve">
+        <source>Relation Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
@@ -1310,14 +1306,12 @@ Odaberi autocestu iz koje se približavaš raskrižju, a zatim dodirni strelicu 
         <target>Upozorenje</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way attributes" xml:space="preserve">
-        <source>Way attributes</source>
-        <target>Svojstva puta</target>
+      <trans-unit id="Way Attributes" xml:space="preserve">
+        <source>Way Attributes</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
-      <trans-unit id="Way tags" xml:space="preserve">
-        <source>Way tags</source>
-        <target>Oznake puta</target>
+      <trans-unit id="Way Tags" xml:space="preserve">
+        <source>Way Tags</source>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
@@ -2464,9 +2458,8 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
-        <source>Common Tags</source>
-        <target>Uobičajene oznake</target>
-        <note>Class = "UINavigationItem"; title = "Common Tags"; ObjectID = "mAb-DX-pqb";</note>
+        <source>Common toags</source>
+        <note>Class = "UINavigationItem"; title = "Common toags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
@@ -2517,11 +2510,6 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <source>role</source>
         <target>uloga</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="tPF-m9-RtO.text" xml:space="preserve">
-        <source>Payment</source>
-        <target>Plaćanje</target>
-        <note>Class = "UILabel"; text = "Payment"; ObjectID = "tPF-m9-RtO";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
         <source>Key</source>

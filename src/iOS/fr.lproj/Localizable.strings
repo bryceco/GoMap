@@ -508,16 +508,10 @@
 "node %@ (in way)" = "nœud %@ (partie d'un chemin)";
 
 /* No comment provided by engineer. */
-"Node attributes" = "Attributs du nœud";
-
-/* No comment provided by engineer. */
 "Node is not an element of way" = "Le nœud n'est pas un élément du chemin";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Le nœud doit être le premier ou le dernier du chemin";
-
-/* No comment provided by engineer. */
-"Node tags" = "Étiquettes du nœud";
 
 /* User credentials not found */
 "Not found" = "Introuvable";
@@ -596,12 +590,6 @@
 
 /* No comment provided by engineer. */
 "relation" = "relation";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "Attributs de relation";
-
-/* No comment provided by engineer. */
-"Relation tags" = "Étiquettes de relation";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Relation : %@";
@@ -819,12 +807,6 @@
 
 /* No comment provided by engineer. */
 "way %@" = "chemin %@";
-
-/* No comment provided by engineer. */
-"Way attributes" = "Propriétés du chemin";
-
-/* No comment provided by engineer. */
-"Way tags" = "Attributs du chemin";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Vous vous apprêtez à faire des changements à la base de données OpenStreetMap. Vos changements seront visibles de quiconque dans le monde.\n\nPour continuer, appuyer de nouveau sur Valider, sinon, appuyez sur Annuler.";

@@ -508,16 +508,10 @@
 "node %@ (in way)" = "節點 %@ (在線段中)";
 
 /* No comment provided by engineer. */
-"Node attributes" = "節點屬性";
-
-/* No comment provided by engineer. */
 "Node is not an element of way" = "節點不屬於線段";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "節點必須在線段的首或尾";
-
-/* No comment provided by engineer. */
-"Node tags" = "節點的標籤";
 
 /* User credentials not found */
 "Not found" = "找不到";
@@ -596,12 +590,6 @@
 
 /* No comment provided by engineer. */
 "relation" = "關係";
-
-/* No comment provided by engineer. */
-"Relation attributes" = "關係的屬性";
-
-/* No comment provided by engineer. */
-"Relation tags" = "關係的標籤";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "關係： %@";
@@ -819,12 +807,6 @@
 
 /* No comment provided by engineer. */
 "way %@" = "線段 %@";
-
-/* No comment provided by engineer. */
-"Way attributes" = "線段的屬性";
-
-/* No comment provided by engineer. */
-"Way tags" = "線段的標籤";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "您即將要修改真的 OSM 資料庫，全世界所有人都會看到您的修改。\n\n如要繼續請請再次點擊提交，否則請點擊取消。";
