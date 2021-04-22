@@ -134,7 +134,9 @@
 	[_mapView blinkObject:hit segment:-1];
 }
 
--(UIContextMenuConfiguration *)contextMenuInteraction:(UIContextMenuInteraction *)interaction configurationForMenuAtLocation:(CGPoint)location
+-(UIContextMenuConfiguration *)contextMenuInteraction:(UIContextMenuInteraction *)interaction
+					   configurationForMenuAtLocation:(CGPoint)location
+API_AVAILABLE(ios(13.0))
 {
 	[_mapView rightClickAtLocation:location];
 	return nil;
