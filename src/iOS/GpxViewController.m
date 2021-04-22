@@ -52,6 +52,9 @@
 				}
 			};
 			[self.tableView presentViewController:controller animated:YES completion:nil];
+			UIButton * button = sender;
+			controller.popoverPresentationController.sourceView = button;
+			controller.popoverPresentationController.sourceRect = button.bounds;
 		}
 	}]];
 
