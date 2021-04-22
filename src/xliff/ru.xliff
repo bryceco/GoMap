@@ -2459,8 +2459,8 @@ Clear the Mapnik or Overlay tile caches  to download the latest tiles that refle
         <note>Class = "UILabel"; text = "Value 5"; ObjectID = "li7-oV-pgT";</note>
       </trans-unit>
       <trans-unit id="mAb-DX-pqb.title" xml:space="preserve">
-        <source>Common toags</source>
-        <note>Class = "UINavigationItem"; title = "Common toags"; ObjectID = "mAb-DX-pqb";</note>
+        <source>Common tags</source>
+        <note>Class = "UINavigationItem"; title = "Common tags"; ObjectID = "mAb-DX-pqb";</note>
       </trans-unit>
       <trans-unit id="mcN-gM-s7u.text" xml:space="preserve">
         <source>Name</source>
