@@ -18,12 +18,12 @@ fileprivate extension Button {
 
 @available(iOS 14.0, *)
 public struct OpeningHoursRecognizerView: View {
-	let accepted:((String) -> Void)
-	let cancelled:(() -> Void)
+	public let accepted:((String) -> Void)
+	public let cancelled:(() -> Void)
 
 	@State private var restart: Bool = false
 
-	@StateObject var recognizer = HoursRecognizer()
+	@StateObject public var recognizer = HoursRecognizer()
 
 	public var body: some View {
 		ZStack(alignment: .topLeading) {

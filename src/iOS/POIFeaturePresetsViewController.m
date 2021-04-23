@@ -519,12 +519,16 @@
 
 - (BOOL)canRecognizeOpeningHoursForKey:(PresetKey *)key
 {
+#if TARGET_OS_MACCATALYST
+	return NO;
+#else
 	if (@available(iOS 14.0, *)) {
 		return [key.tagKey isEqualToString:@"opening_hours"] ||
 			   [key.tagKey hasSuffix:@":opening_hours"];
 	} else {
 		return NO;
 	}
+#endif
 }
 
 - (void)recognizeOpeningHoursForKey:(NSString *)key
