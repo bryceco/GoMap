@@ -501,10 +501,17 @@ public class HoursRecognizer: ObservableObject {
 		}
 	}
 
-	static var lastLanguageSelected = Language.de
+	static var lastLanguageSelected = { () -> Language in
+		if let raw = UserDefaults().value(forKey: "HoursRecognizerLanguage") as? Language.RawValue,
+		   let lang = Language(rawValue: raw) {
+			return lang
+		}
+		return Language.en
+	}()
 	@Published public var language: Language = lastLanguageSelected {
 		willSet {
 			HoursRecognizer.lastLanguageSelected = newValue
+			UserDefaults().setValue(newValue.rawValue, forKey: "HoursRecognizerLanguage")
 		}
 	}
 
