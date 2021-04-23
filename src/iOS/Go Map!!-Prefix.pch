@@ -12,5 +12,6 @@
 	#import <UIKit/UIKit.h>
 	#import <Foundation/Foundation.h>
     #import <CoreLocation/CoreLocation.h>
+	#import <AVFoundation/AVFoundation.h>
     #import "Go_Map__-Swift.h"
 #endif

@@ -68,6 +68,10 @@
 		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		029043A31682797A00BE3480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 029043A21682797A00BE3480 /* LoginViewController.m */; };
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
+		029343C22632460800483862 /* LevenshteinDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029343BE2632460800483862 /* LevenshteinDistance.swift */; };
+		029343C32632460800483862 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029343BF2632460800483862 /* OpeningHoursRecognizerView.swift */; };
+		029343C42632460800483862 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029343C02632460800483862 /* CameraView.swift */; };
+		029343C52632460800483862 /* HoursRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029343C12632460800483862 /* HoursRecognizer.swift */; };
 		0296873F167E30C700B8FF2C /* PushPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0296873E167E30C700B8FF2C /* PushPinView.m */; };
 		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A077D2167A77A400686261 /* POIAllTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A077D1167A77A400686261 /* POIAllTagsViewController.m */; };
@@ -306,6 +310,10 @@
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		029043A11682797A00BE3480 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		029043A21682797A00BE3480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		029343BE2632460800483862 /* LevenshteinDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistance.swift; sourceTree = "<group>"; };
+		029343BF2632460800483862 /* OpeningHoursRecognizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpeningHoursRecognizerView.swift; sourceTree = "<group>"; };
+		029343C02632460800483862 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		029343C12632460800483862 /* HoursRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoursRecognizer.swift; sourceTree = "<group>"; };
 		0296873D167E30C700B8FF2C /* PushPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPinView.h; sourceTree = "<group>"; };
 		0296873E167E30C700B8FF2C /* PushPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushPinView.m; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
@@ -634,6 +642,17 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		029343BD263245B800483862 /* OpeningHours */ = {
+			isa = PBXGroup;
+			children = (
+				029343C02632460800483862 /* CameraView.swift */,
+				029343C12632460800483862 /* HoursRecognizer.swift */,
+				029343BE2632460800483862 /* LevenshteinDistance.swift */,
+				029343BF2632460800483862 /* OpeningHoursRecognizerView.swift */,
+			);
+			path = OpeningHours;
+			sourceTree = "<group>";
+		};
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
@@ -734,6 +753,7 @@
 				02695B8C1A08C1DB0028D95E /* NotesTableViewController.m */,
 				02BED99D168D102600357B94 /* OfflineViewController.h */,
 				02BED99E168D102600357B94 /* OfflineViewController.m */,
+				029343BD263245B800483862 /* OpeningHours */,
 				02A077D0167A77A400686261 /* POIAllTagsViewController.h */,
 				02A077D1167A77A400686261 /* POIAllTagsViewController.m */,
 				023D1721168A36B00011FABC /* POIAttributesViewController.h */,
@@ -1209,6 +1229,7 @@
 				027EDC71206F3EED00D349D6 /* DDXMLElementAdditions.m in Sources */,
 				02BF745420793F0A0028ED6A /* TurnRestrictController.m in Sources */,
 				02ACBCF816713F2B00BB4414 /* QuadMap.m in Sources */,
+				029343C32632460800483862 /* OpeningHoursRecognizerView.swift in Sources */,
 				6453776A23D38FA200656A1C /* OsmNode.m in Sources */,
 				02ACBCFA16713F2B00BB4414 /* SpeechBalloonLayer.m in Sources */,
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,
@@ -1236,12 +1257,14 @@
 				022A2A6E167D969700D7A5AC /* ClearCacheViewController.m in Sources */,
 				0296873F167E30C700B8FF2C /* PushPinView.m in Sources */,
 				02F373F916822C2C004614D4 /* UploadViewController.m in Sources */,
+				029343C52632460800483862 /* HoursRecognizer.swift in Sources */,
 				02695B8D1A08C1DB0028D95E /* NotesTableViewController.m in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				029043A31682797A00BE3480 /* LoginViewController.m in Sources */,
 				021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */,
 				02354F782462526A00878A04 /* PersistentWebCache.m in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
+				029343C42632460800483862 /* CameraView.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
 				0230558B19B931B20041B151 /* CustomPresetController.m in Sources */,
 				3E49F4B224DFA64800A347BB /* RulerView.m in Sources */,
@@ -1281,6 +1304,7 @@
 				024ADF3C16B1B38B00875658 /* PathUtil.m in Sources */,
 				02CB5B6516BF1F9C00432914 /* AutocompleteTextField.m in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
+				029343C22632460800483862 /* LevenshteinDistance.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
 				02F04AD21BC4D3B50044FD95 /* GpxConfigureViewController.m in Sources */,
 				0260484219E66C8700415CB1 /* DisplayLink.m in Sources */,

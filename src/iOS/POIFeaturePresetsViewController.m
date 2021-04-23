@@ -335,6 +335,8 @@
 							   value:cell.valueField.text];
 	} else if ([self canMeasureHeightForKey:presetKey]) {
 		[self measureHeightForKey:cell.presetKey.tagKey];
+	} else if ([self canRecognizeOpeningHoursForKey:presetKey]) {
+		[self recognizeOpeningHoursForKey:cell.presetKey.tagKey];
 	} else {
 		[self performSegueWithIdentifier:@"POIPresetSegue" sender:cell];
 	}
@@ -513,6 +515,29 @@
 		[self updateTagWithValue:newValue forKey:key];
 	};
 	[self.navigationController pushViewController:vc animated:YES];
+}
+
+- (BOOL)canRecognizeOpeningHoursForKey:(PresetKey *)key
+{
+	if (@available(iOS 14.0, *)) {
+		return [key.tagKey isEqualToString:@"opening_hours"] ||
+			   [key.tagKey hasSuffix:@":opening_hours"];
+	} else {
+		return NO;
+	}
+}
+
+- (void)recognizeOpeningHoursForKey:(NSString *)key
+{
+	if (@available(iOS 14.0, *)) {
+		UIViewController * vc = [OpeningHoursRecognizerController withAccepted:^(NSString * _Nonnull newValue) {
+			[self updateTagWithValue:newValue forKey:key];
+			[self.navigationController popViewControllerAnimated:YES];
+		} cancelled:^{
+			[self.navigationController popViewControllerAnimated:YES];
+		}];
+		[self.navigationController pushViewController:vc animated:YES];
+	}
 }
 
 @end
