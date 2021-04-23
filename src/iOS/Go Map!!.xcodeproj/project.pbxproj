@@ -679,6 +679,7 @@
 		02ACBA3216713CCB00BB4414 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02492FF22633528300C99DC0 /* SwiftUI.framework */,
 				02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */,
 				02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */,
 				02072AD51BD46B1700F1CAB4 /* StoreKit.framework */,

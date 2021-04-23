@@ -519,20 +519,20 @@
 
 - (BOOL)canRecognizeOpeningHoursForKey:(PresetKey *)key
 {
-#if TARGET_OS_MACCATALYST
-	return NO;
-#else
+#if !TARGET_OS_MACCATALYST
+#if __LP64__	// old architectures don't support SwiftUI
 	if (@available(iOS 14.0, *)) {
 		return [key.tagKey isEqualToString:@"opening_hours"] ||
 			   [key.tagKey hasSuffix:@":opening_hours"];
-	} else {
-		return NO;
 	}
 #endif
+#endif
+	return NO;
 }
 
 - (void)recognizeOpeningHoursForKey:(NSString *)key
 {
+#if __LP64__	// old architectures don't support SwiftUI
 	if (@available(iOS 14.0, *)) {
 		UIViewController * vc = [OpeningHoursRecognizerController withAccepted:^(NSString * _Nonnull newValue) {
 			[self updateTagWithValue:newValue forKey:key];
@@ -542,6 +542,7 @@
 		}];
 		[self.navigationController pushViewController:vc animated:YES];
 	}
+#endif
 }
 
 @end

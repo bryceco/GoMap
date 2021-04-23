@@ -4,6 +4,8 @@
 //  Created by Bryce Cogswell on 4/8/21.
 //
 
+#if (arch(arm64) || arch(x86_64))	// old architectures don't support SwiftUI
+
 import SwiftUI
 
 
@@ -104,3 +106,5 @@ struct CameraViewWrapper: UIViewRepresentable {
 		return UIHostingController(rootView: view)
 	}
 }
+#endif
+

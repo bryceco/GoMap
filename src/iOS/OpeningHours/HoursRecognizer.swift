@@ -4,6 +4,8 @@
 //  Created by Bryce Cogswell on 4/5/21.
 //
 
+#if (arch(arm64) || arch(x86_64))	// old architectures don't support SwiftUI
+
 import VisionKit
 import Vision
 
@@ -952,3 +954,6 @@ class BulkProcess {
 	}
 }
 #endif
+
+#endif // #if (arch(arm64) || arch(x86_64))	// old architectures don't support SwiftUI
+
