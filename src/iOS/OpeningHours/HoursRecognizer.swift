@@ -25,8 +25,8 @@ extension String.StringInterpolation {
 			appendInterpolation(time)
 		case let .dash(dash):
 			appendInterpolation(dash)
-		case .endOfText:
-			appendLiteral("")
+		case let .modifier(modifier):
+			appendInterpolation(modifier)
 		}
 	}
 }
@@ -150,26 +150,38 @@ fileprivate class RectScanner {
 	}
 
 	func scanWord(_ word: String) -> StringRect? {
-		return scanAnyWord([word])
+		return scanAnyWord( [word] )?.1
 	}
 
-	func scanAnyWord(_ words: [String]) -> StringRect? {
-		let index = self.currentIndex
-		if let scan = scanner.scanCharacters(from: RectScanner.allLetters)?.lowercased() {
-			// we match if the scanned word is a 2-3 letter prefix of the first word in the list
-			if (2...3).contains(scan.count) && words.first!.hasPrefix(scan) {
-				return result(scanner.string[index..<scanner.currentIndex])
+	static func distanceFrom<T:StringProtocol>(_ s1:T, _ s2:T) -> Float {
+		if s1.count > 4 {
+			return Float(LevenshteinDistance( s1, s2)) / Float(s1.count)
+		} else {
+			if s1.compare(s2, options: [.diacriticInsensitive,.caseInsensitive]) == .orderedSame {
+				return 0.0
 			}
-			for word in words {
-				let word = word.lowercased()
-				if scan.count > 4 {
-					if LevenshteinDistance( word, scan) <= scan.count/4 {
-						return result(scanner.string[index..<scanner.currentIndex])
+		}
+		return 1.0
+	}
+
+	func scanAnyWord(_ words: [String]) -> (Float,StringRect)? {
+		let index = self.currentIndex
+		if let scan = scanner.scanCharacters(from: RectScanner.allLetters) {
+			// we match if the scanned word is a 2-3 letter prefix of the first word in the list
+			if (2...3).contains(scan.count) {
+				if words.first(where: { RectScanner.distanceFrom($0.prefix(scan.count), Substring(scan)) == 0.0 }) != nil {
+					return (0.0, result(scanner.string[index..<scanner.currentIndex]))
+				}
+			} else {
+				var bestDistance: Float = 1.0
+				for word in words {
+					let dist = RectScanner.distanceFrom( word, scan )
+					if dist < bestDistance {
+						bestDistance = dist
 					}
-				} else {
-					if word == scan {
-						return result(scanner.string[index..<scanner.currentIndex])
-					}
+				}
+				if bestDistance <= 0.2 {
+					return (bestDistance, result(scanner.string[index..<scanner.currentIndex]))
 				}
 			}
 			scanner.currentIndex = index
@@ -250,12 +262,31 @@ fileprivate class MultiScanner {
 		return scanner.scanWord( word )
 	}
 
-	func scanAnyWord(_ words: [String]) -> StringRect? {
+	func scanAnyWord(_ words: [String]) -> (Float,StringRect)? {
 		return scanner.scanAnyWord(words)
 	}
 
 	func remainder() -> String {
 		return scanners[scannerIndex...].map({$0.remainder()}).joined(separator: " ")
+	}
+}
+
+@available(iOS 13.0, *)
+fileprivate enum Modifier {
+	case open, closed
+
+	static func scan(scanner:MultiScanner, language:HoursRecognizer.Language) -> (modifier:Self, rect:CGRect, confidence:Float)? {
+		if let open = scanner.scanWord( language.open ) {
+			return (.open,
+					open.rect,
+					Float(open.string.count))
+		}
+		if let closed = scanner.scanWord( language.closed ) {
+			return (.closed,
+					closed.rect,
+					Float(closed.string.count))
+		}
+		return nil
 	}
 }
 
@@ -271,52 +302,23 @@ fileprivate enum Day: Int, Strideable, CaseIterable {
 		return Day(rawValue: (self.rawValue + n + 7) % 7)!
 	}
 
-	private static let english = [	Day.Mo: ["monday"],
-									Day.Tu: ["tuesday"],
-									Day.We: ["wednesday"],
-									Day.Th: ["thursday", "thur"],
-									Day.Fr: ["friday"],
-									Day.Sa: ["saturday"],
-									Day.Su: ["sunday"]
-	]
-	private static let french = [	Day.Mo: ["lundi"],
-									Day.Tu: ["mardi"],
-									Day.We: ["mercredi",	"mercr"],
-									Day.Th: ["jeudi"],
-									Day.Fr: ["vendredi", 	"vendr"],
-									Day.Sa: ["samedi"],
-									Day.Su: ["dimanche"]
-	]
-	private static let german = [	Day.Mo: ["montag"],
-									Day.Tu: ["dienstag"],
-									Day.We: ["mittwoch"],
-									Day.Th: ["donnerstag"],
-									Day.Fr: ["freitag"],
-									Day.Sa: ["samstag"],
-									Day.Su: ["sonntag"]
-	]
-	private static let italian = [	Day.Mo: ["lunedì"],
-									Day.Tu: ["martedì"],
-									Day.We: ["mercoledì"],
-									Day.Th: ["giovedì"],
-									Day.Fr: ["venerdì"],
-									Day.Sa: ["sabato"],
-									Day.Su: ["domenica"]
-	]
-
 	static func scan(scanner:MultiScanner, language:HoursRecognizer.Language) -> (day:Self, rect:CGRect, confidence:Float)? {
-		let dict = { () -> [Day:[String]] in
-			switch language {
-			case .en: return english
-			case .fr: return french
-			case .de: return german
-			case .it: return italian
+		var bestDistance:Float = 1.0
+		var bestDay: Day? = nil
+		var bestString: StringRect? = nil
+		for (day,strings) in language.days {
+			if let (dist,string) = scanner.scanAnyWord(strings) {
+				if dist < bestDistance {
+					bestDistance = dist
+					bestDay = day
+					bestString = string
+				}
 			}
-		}()
-		for (day,strings) in dict {
-			if let s = scanner.scanAnyWord(strings) {
-				return (day,s.rect,Float(s.string.count))
-			}
+		}
+		if let bestString = bestString,
+		   let bestDay = bestDay
+		{
+			return (bestDay,bestString.rect,Float(bestString.string.count))
 		}
 		return nil
 	}
@@ -341,7 +343,7 @@ fileprivate enum Day: Int, Strideable, CaseIterable {
 		if let range = dayRange {
 			dayList.append( range )
 		}
-		return dayList
+		return dayList.sorted(by: { $0.start < $1.start })
 	}
 }
 
@@ -361,21 +363,14 @@ fileprivate struct Time: Comparable, Hashable {
 	}
 
 	static func scan(scanner: MultiScanner, language:HoursRecognizer.Language) -> (time:Self, rect:CGRect, confidence:Float)? {
-		let seperators: [String] = { () -> [String] in
-		switch language {
-		case .fr:
-			return [":", ".", " ", "h"]
-		case .de, .en, .it:
-			return [":", ".", " "]
-		}}()
-
 		let index = scanner.currentIndex
+
 		guard let hour = scanner.scanInt() else { return nil }
 		if let iHour = Int(hour.string),
 		   iHour >= 0 && iHour <= 24
 		{
 			let index2 = scanner.currentIndex
-			if seperators.first(where: {scanner.scanString($0) != nil}) != nil,
+			if language.minuteSeparators.first(where: {scanner.scanString($0) != nil}) != nil,
 			   let minute = scanner.scanInt(),
 			   minute.string.count == 2,
 			   minute.string >= "00" && minute.string < "60"
@@ -420,15 +415,7 @@ fileprivate struct Time: Comparable, Hashable {
 @available(iOS 13.0, *)
 fileprivate struct Dash {
 	static func scan(scanner: MultiScanner, language: HoursRecognizer.Language) -> (Self,CGRect,Float)? {
-		let through = { () -> String in
-			switch language {
-			case .en: return "to"
-			case .de: return "bis"
-			case .fr: return "à"
-			case .it: return "alle"
-			}}()
-
-		if let s = scanner.scanString("-") ?? scanner.scanWord(through) {
+		if let s = scanner.scanString("-") ?? scanner.scanWord(language.through) {
 			return (Dash(), s.rect, Float(s.string.count))
 		}
 		return nil
@@ -449,7 +436,7 @@ fileprivate enum Token : Equatable {
 	case time(Time)
 	case day(Day)
 	case dash(Dash)
-	case endOfText
+	case modifier(Modifier)
 
 	static func == (lhs: Token, rhs: Token) -> Bool {
 		return "\(lhs)" == "\(rhs)"
@@ -473,9 +460,16 @@ fileprivate enum Token : Equatable {
 		default:				return nil
 		}
 	}
+	func modifier() -> Modifier? {
+		switch self {
+		case let .modifier(mod):return mod
+		default:				return nil
+		}
+	}
 	func isDay() -> Bool {	return day() != nil	}
 	func isTime() -> Bool {	return time() != nil }
 	func isDash() -> Bool {	return dash() != nil }
+	func isModifier() -> Bool {	return modifier() != nil }
 
 	static func scan(scanner: MultiScanner, language: HoursRecognizer.Language) -> TokenRectConfidence? {
 		if let (day,rect,confidence) = Day.scan(scanner: scanner, language: language) {
@@ -486,6 +480,9 @@ fileprivate enum Token : Equatable {
 		}
 		if let (dash,rect,confidence) = Dash.scan(scanner: scanner, language: language) {
 			return (.dash(dash),rect,confidence)
+		}
+		if let (modifier,rect,confidence) = Modifier.scan(scanner: scanner, language: language) {
+			return (.modifier(modifier),rect,confidence)
 		}
 		return nil
 	}
@@ -501,7 +498,7 @@ public class HoursRecognizer: ObservableObject {
 		}
 	}
 
-	static var lastLanguageSelected = { () -> Language in
+	private static var lastLanguageSelected = { () -> Language in
 		if let raw = UserDefaults().value(forKey: "HoursRecognizerLanguage") as? Language.RawValue,
 		   let lang = Language(rawValue: raw) {
 			return lang
@@ -534,29 +531,65 @@ public class HoursRecognizer: ObservableObject {
 		public var id: String { self.rawValue }
 		public var isoCode: String { "\(self)" }
 		public var name: String { Locale(identifier: self.rawValue).localizedString(forIdentifier:self.rawValue) ?? "<??>" }
+
+		fileprivate typealias Weekdays = [Day : [String]]
+		private static let en_days = [	Day.Mo: ["monday"],
+										Day.Tu: ["tuesday"],
+										Day.We: ["wednesday"],
+										Day.Th: ["thursday", "thur"],
+										Day.Fr: ["friday"],
+										Day.Sa: ["saturday"],
+										Day.Su: ["sunday"]
+		]
+		private static let fr_days = [	Day.Mo: ["lundi"],
+										Day.Tu: ["mardi"],
+										Day.We: ["mercredi",	"mercr"],
+										Day.Th: ["jeudi"],
+										Day.Fr: ["vendredi", 	"vendr"],
+										Day.Sa: ["samedi"],
+										Day.Su: ["dimanche"]
+		]
+		private static let de_days = [	Day.Mo: ["montag"],
+										Day.Tu: ["dienstag"],
+										Day.We: ["mittwoch"],
+										Day.Th: ["donnerstag"],
+										Day.Fr: ["freitag"],
+										Day.Sa: ["samstag"],
+										Day.Su: ["sonntag"]
+		]
+		private static let it_days = [	Day.Mo: ["lunedì"],
+										Day.Tu: ["martedì"],
+										Day.We: ["mercoledì"],
+										Day.Th: ["giovedì"],
+										Day.Fr: ["venerdì"],
+										Day.Sa: ["sabato"],
+										Day.Su: ["domenica"]
+		]
+		private typealias Words = (open:String, closed:String, through:String, minuteSeparators:String, days:Weekdays)
+		private static let english	= ("open",		"closed",		"to",	":. ",	en_days)
+		private static let german	= ("geöffnet",	"geschlossen",	"bis",	":. ",	de_days)
+		private static let french	= ("ouvert",	"fermé",		"à",	":. h",	fr_days)
+		private static let italian	= ("aperto",	"chiuso",		"alle",	":. ",	it_days)
+
+		private var words: Words {
+			switch self {
+			case .en:	return HoursRecognizer.Language.english
+			case .de:	return HoursRecognizer.Language.german
+			case .fr:	return HoursRecognizer.Language.french
+			case .it:	return HoursRecognizer.Language.italian
+			}
+		}
+		fileprivate var open: String { self.words.open }
+		fileprivate var closed: String { self.words.closed }
+		fileprivate var through: String { self.words.through }
+		fileprivate var minuteSeparators: [String] { self.words.minuteSeparators.map { String($0) }}
+		fileprivate var days: Weekdays { self.words.days }
 	}
 
 	public func restart() {
 		self.text = ""
 		self.resultHistory.removeAll()
 		self.finished = false
-	}
-
-	private class func tokensForString(_ strings: [SubstringRectConfidence], language: Language) -> [TokenRectConfidence] {
-		var list = [TokenRectConfidence]()
-
-		let scanner = MultiScanner(strings: strings.map { return ($0.substring, $0.rectf)} )
-		_ = scanner.scanWhitespace()
-		while !scanner.isAtEnd {
-			if let token = Token.scan(scanner: scanner, language: language) {
-				list.append( token )
-			} else {
-				// skip to next token
-				_ = scanner.scanUpToWhitespace()
-			}
-			_ = scanner.scanWhitespace()
-		}
-		return list
 	}
 
 	// takes an array of image observations and returns blocks of text along with their locations
@@ -628,10 +661,27 @@ public class HoursRecognizer: ObservableObject {
 		return lines
 	}
 
+	private class func tokensForStrings(_ strings: [SubstringRectConfidence], language: Language) -> [TokenRectConfidence] {
+		var list = [TokenRectConfidence]()
+
+		let scanner = MultiScanner(strings: strings.map { return ($0.substring, $0.rectf)} )
+		_ = scanner.scanWhitespace()
+		while !scanner.isAtEnd {
+			if let token = Token.scan(scanner: scanner, language: language) {
+				list.append( token )
+			} else {
+				// skip to next token
+				_ = scanner.scanUpToWhitespace()
+			}
+			_ = scanner.scanWhitespace()
+		}
+		return list
+	}
+
 	// convert lines of strings to lines of tokens
 	private class func tokenLinesForStringLines( _ stringLines: [[SubstringRectConfidence]], language: Language) -> [[TokenRectConfidence]] {
 		let tokenLines = stringLines.compactMap { line -> [TokenRectConfidence]? in
-			let tokens = HoursRecognizer.tokensForString( line, language: language )
+			let tokens = HoursRecognizer.tokensForStrings( line, language: language )
 			return tokens.isEmpty ? nil : tokens
 		}
 		return tokenLines
@@ -648,17 +698,21 @@ public class HoursRecognizer: ObservableObject {
 			for token in line[(first+1)...] {
 				if token.token.isDash() {
 					prevDash = token
-				} else if token.token.isDay() == tokenSets.last?.first?.token.isDay() ||
-						  token.token.isTime() == tokenSets.last?.first?.token.isTime()
+				} else if let prev = tokenSets.last?.first?.token,
+						  (token.token.isDay() && prev.isDay()) ||
+						  (token.token.isTime() && prev.isTime()) ||
+						  (token.token.isModifier() && prev.isModifier())
 				{
-					if let dash = prevDash {
+					if let dash = prevDash,
+					   !prev.isModifier()
+					{
 						tokenSets[tokenSets.count-1].append(dash)
-						prevDash = nil
 					}
 					tokenSets[tokenSets.count-1].append(token)
-				} else {
 					prevDash = nil
-					tokenSets.append([token])
+				} else {
+					tokenSets.append( [token] )
+					prevDash = nil
 				}
 			}
 			tokenSets.append([])
@@ -667,7 +721,6 @@ public class HoursRecognizer: ObservableObject {
 
 		return tokenSets
 	}
-
 
 	// if a sequence has multiple days then take only the best 2
 	private class func GoodDaysForTokenSequences( _ tokenSet: [TokenRectConfidence]) -> [TokenRectConfidence]? {
@@ -714,49 +767,72 @@ public class HoursRecognizer: ObservableObject {
 	}
 
 	// convert lists of tokens to a list of day/time ranges
-	private class func hoursForTokens(_ tokenLines: [[TokenRectConfidence]]) -> [([DayRange],[TimeRange])] {
+	// an empty time range means closed
+	private class func hoursForTokens(_ tokenLists: [[TokenRectConfidence]]) -> [([DayRange],[TimeRange])] {
 		var days = [Day]()
 		var times = [Time]()
+		var modifiers = [Modifier]()
 		var result = [([DayRange],[TimeRange])]()
 
-		for line in tokenLines + [[(.endOfText,CGRect(),0.0)]] {
-			// each line should be 1 or more days, then 2 or more hours
-			for token in line  {
-				switch token.token {
-				case .day, .endOfText:
-					if times.count >= 2 {
-						// output preceding days/times
-						var dayRange = [DayRange]()
-						if days.count > 0 {
-							if days.count == 2 {
-								// treat as a range of days
-								dayRange = [DayRange(start: days[0], end: days[1])]
-							} else {
-								// treat as a list of days
-								dayRange = days.map({DayRange(start: $0, end: $0)})
-							}
-						}
-
-						let timeRange = stride(from: 0, to: times.count, by: 2).map({ TimeRange(start: times[$0], end: times[$0+1]) })
-
-						result.append( (dayRange, timeRange) )
-					}
-					if times.count > 0 {
-						times = []
-						days = []
-					}
-					if let day = token.token.day() {
-						days.append( day )
-					}
-
-				case .time:
-					times.append(token.token.time()!)
-					break
-				case .dash:
-					break
+		func flush() {
+			// get days
+			var dayRange = [DayRange]()
+			if days.count > 0 {
+				if days.count == 2 {
+					// treat as a range of days
+					dayRange = [DayRange(start: days[0], end: days[1])]
+				} else {
+					// treat as a list of days
+					dayRange = days.map({DayRange(start: $0, end: $0)})
 				}
 			}
+
+			// get times
+			let timeRange = times.count >= 2 ? stride(from: 0, to: times.count, by: 2).map({ TimeRange(start: times[$0], end: times[$0+1]) }) : []
+
+			// update result if interesting
+			if  let mod = modifiers.last,
+				mod == .closed,
+				!dayRange.isEmpty
+			{
+				result.append((dayRange, []))
+			} else if !timeRange.isEmpty {
+				result.append((dayRange,timeRange))
+			} else {
+				return
+			}
+			days = []
+			times = []
+			modifiers = []
 		}
+
+		for line in tokenLists {
+			// each line can have 1 or more days, and/or 2 or more hours
+			// open/closed can be either before or after the days it applies to
+			switch line.first!.token {
+
+			case .modifier:
+				modifiers += line.map({ $0.token.modifier()! })
+				if !days.isEmpty {
+					flush()
+				}
+
+			case .day:
+				days += line.map({ $0.token.day()! })
+				if times.count >= 2 || !modifiers.isEmpty {
+					flush()
+				}
+				times = []
+
+			case .time:
+				times += line.map({ $0.token.time()! })
+				flush()
+
+			case .dash:
+				break
+			}
+		}
+		flush()
 		return result
 	}
 
@@ -783,12 +859,18 @@ public class HoursRecognizer: ObservableObject {
 		return dayTimeRanges.map { (days,times) in
 			var result = ""
 			if !days.isEmpty {
-				result += days.map({ $0.start == $0.end ? "\($0.start)" : "\($0.start)-\($0.end)"})
+				result += days
+					.sorted(by: { $0.start < $1.start})
+					.map({ $0.start == $0.end ? "\($0.start)" : "\($0.start)-\($0.end)"})
 					.joined(separator: ",")
 				result += " "
 			}
-			result += times.map({"\($0.start)-\($0.end)"})
-				.joined(separator: ",")
+			if times.isEmpty {
+				result += "\(Modifier.closed)"
+			} else {
+				result += times.map({"\($0.start)-\($0.end)"})
+					.joined(separator: ",")
+			}
 			return result
 		}.joined(separator: ", ")
 	}
@@ -843,18 +925,50 @@ public class HoursRecognizer: ObservableObject {
 		}
 		#endif
 
+		// get homogeneous day/time sets
 		tokenSets = HoursRecognizer.homogeneousSequencesForTokenLines( tokenSets )
 
-		// get homogeneous day/time sets
+		#if true
+		print("")
+		print("homogeneous:")
+		for line in tokenSets {
+			let s1 = line.map( { "\($0.token)" }).joined(separator: " ")
+			let s2 = line.map( { "\(Float(Int(100.0*$0.confidence))/100.0)" }).joined(separator: " ")
+			print("\(s1): \(s2)")
+		}
+		#endif
+
+		// rationalize sequences of tokens
 		tokenSets = tokenSets.compactMap {
-			if $0.first!.token.isDay() {
-				return HoursRecognizer.GoodDaysForTokenSequences( $0 )
-			} else {
-				return HoursRecognizer.GoodTimesForTokenSequences( $0 )
+			switch $0.first!.token {
+			case .day:		return HoursRecognizer.GoodDaysForTokenSequences( $0 )
+			case .time:		return HoursRecognizer.GoodTimesForTokenSequences( $0 )
+			case .modifier:	return $0
+			case .dash:		return $0
 			}
 		}
 
-		#if false
+		// combine homogeneous tokens in adjacent sets into a single set
+		var index = 1
+		while index < tokenSets.count {
+			let prev = tokenSets[index-1].first!.token
+			let this = tokenSets[index].first!.token
+			let combine: Bool
+			switch prev {
+			case .time:		combine = this.isTime()
+			case .modifier:	combine = this.isModifier()
+			case .day: 		combine = this.isDay()
+			case .dash: 	combine = this.isDash()
+			}
+			if combine {
+				tokenSets[index-1] += tokenSets[index]
+				tokenSets.remove(at: index)
+			} else {
+				index += 1
+			}
+		}
+
+		#if true
 		print("")
 		for line in tokenSets {
 			let s1 = line.map( { "\($0.token)" }).joined(separator: " ")
@@ -865,6 +979,8 @@ public class HoursRecognizer: ObservableObject {
 
 		// convert the final sets of tokens to a single stream
 		var resultArray = HoursRecognizer.hoursForTokens( tokenSets )
+
+		// convert various days with identical hours to ranges of days
 		resultArray = HoursRecognizer.coalesceDays( resultArray )
 
 		let resultString = HoursRecognizer.hoursStringForHours( resultArray )
