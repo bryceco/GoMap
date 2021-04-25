@@ -679,7 +679,6 @@
 		02ACBA3216713CCB00BB4414 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				02492FF22633528300C99DC0 /* SwiftUI.framework */,
 				02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */,
 				02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */,
 				02072AD51BD46B1700F1CAB4 /* StoreKit.framework */,
@@ -1678,6 +1677,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Go Map!!-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1710,6 +1710,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Go Map!!-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

@@ -491,10 +491,15 @@ fileprivate enum Token : Equatable {
 @available(iOS 13.0, *)
 public class HoursRecognizer: ObservableObject {
 
+	public var onRecognize: ((String) -> Void)? = nil
+
 	private var resultHistory = [String:Int]()
 	@Published private(set) var finished = false {
 		willSet {
 			objectWillChange.send()
+			if newValue {
+				self.onRecognize?(self.text)
+			}
 		}
 	}
 

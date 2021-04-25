@@ -534,11 +534,16 @@
 {
 #if __LP64__	// old architectures don't support SwiftUI
 	if (@available(iOS 14.0, *)) {
-		UIViewController * vc = [OpeningHoursRecognizerController withAccepted:^(NSString * _Nonnull newValue) {
+		UINotificationFeedbackGenerator * feedback = [UINotificationFeedbackGenerator new];
+		[feedback prepare];
+		UIViewController * vc = [OpeningHoursRecognizerController withOnAccept:^(NSString * _Nonnull newValue) {
 			[self updateTagWithValue:newValue forKey:key];
 			[self.navigationController popViewControllerAnimated:YES];
-		} cancelled:^{
+		} onCancel:^{
 			[self.navigationController popViewControllerAnimated:YES];
+		} onRecognize:^(NSString * _Nonnull newValue) {
+			[feedback notificationOccurred:UINotificationFeedbackTypeSuccess];
+			[feedback prepare];
 		}];
 		[self.navigationController pushViewController:vc animated:YES];
 	}

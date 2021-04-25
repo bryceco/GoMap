@@ -20,12 +20,20 @@ fileprivate extension Button {
 
 @available(iOS 14.0, *)
 public struct OpeningHoursRecognizerView: View {
-	public let accepted:((String) -> Void)
-	public let cancelled:(() -> Void)
+	public let onAccept:((String) -> Void)
+	public let onCancel:(() -> Void)
 
+	@StateObject public var recognizer: HoursRecognizer
 	@State private var restart: Bool = false
 
-	@StateObject public var recognizer = HoursRecognizer()
+	init( onAccept:@escaping ((String) -> Void), onCancel:@escaping (() -> Void), onRecognize:((String) -> Void)? = nil ) {
+		let recognizer = HoursRecognizer()
+		recognizer.onRecognize = onRecognize
+
+		self.onAccept = onAccept
+		self.onCancel = onCancel
+		self._recognizer = StateObject(wrappedValue: recognizer)
+	}
 
 	public var body: some View {
 		ZStack(alignment: .topLeading) {
@@ -39,7 +47,7 @@ public struct OpeningHoursRecognizerView: View {
 				HStack {
 					Spacer()
 					Button("Cancel") {
-						cancelled()
+						onCancel()
 					}.withMyButtonStyle(enabled: true)
 					Spacer()
 					Button("Retry") {
@@ -47,7 +55,7 @@ public struct OpeningHoursRecognizerView: View {
 					}.withMyButtonStyle(enabled: true)
 					Spacer()
 					Button("Accept") {
-						accepted(recognizer.text)
+						onAccept(recognizer.text)
 					}.withMyButtonStyle( enabled: recognizer.finished )
 					.disabled( !recognizer.finished )
 					Spacer()
@@ -97,12 +105,14 @@ struct CameraViewWrapper: UIViewRepresentable {
 	}
 }
 
-// This allows SwiftUI to be embedded in a UIKit storyboard
+// This allows the SwiftUI view to be embedded by a UIKit app
 @available(iOS 14.0, *)
 @objc public class OpeningHoursRecognizerController: NSObject {
-	@objc static func with(accepted: @escaping (String) -> Void,
-						   cancelled: @escaping ()-> Void) -> UIViewController {
-		let view = OpeningHoursRecognizerView(accepted: accepted, cancelled: cancelled)
+	@objc static func with(onAccept: @escaping (String) -> Void,
+						   onCancel: @escaping ()-> Void,
+						   onRecognize: @escaping (String) -> Void)
+						-> UIViewController {
+		let view = OpeningHoursRecognizerView(onAccept: onAccept, onCancel: onCancel, onRecognize: onRecognize)
 		return UIHostingController(rootView: view)
 	}
 }
