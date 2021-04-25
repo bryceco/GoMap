@@ -425,7 +425,11 @@ fileprivate struct Dash {
 @available(iOS 13.0, *)
 fileprivate struct DayRange : Hashable { let start:Day; let end:Day }
 @available(iOS 13.0, *)
-fileprivate struct TimeRange : Hashable { let start:Time; let end:Time }
+fileprivate struct TimeRange : Hashable {
+	let start:Time
+	let end:Time
+	static let open = TimeRange(start: Time(hour: 0, minute: 0), end: Time(hour: 24, minute: 0))
+}
 
 fileprivate typealias SubstringRectConfidence = (substring:Substring, rect:CGRect, rectf:(Range<String.Index>)->CGRect, confidence:Float)
 @available(iOS 13.0, *)
@@ -797,10 +801,12 @@ public class HoursRecognizer: ObservableObject {
 
 			// update result if interesting
 			if  let mod = modifiers.last,
-				mod == .closed,
 				!dayRange.isEmpty
 			{
-				result.append((dayRange, []))
+				switch mod {
+				case .closed:	result.append((dayRange, []))
+				case .open: 	result.append((dayRange, [TimeRange.open]))
+				}
 			} else if !timeRange.isEmpty {
 				result.append((dayRange,timeRange))
 			} else {
@@ -823,6 +829,18 @@ public class HoursRecognizer: ObservableObject {
 				}
 
 			case .day:
+				// a day line can contain dashes, so expand those to sets of days
+				var line = line
+				while let dashIndex = line.indices.first(where: { line[$0].token.isDash() }) {
+					var prev = line[dashIndex-1].token.day()!
+					let next = line[dashIndex+1].token.day()!
+					line.removeSubrange((dashIndex-1)...(dashIndex+1))
+					days.append(prev)
+					while prev != next {
+						prev = prev.advanced(by: 1)
+						days.append(prev)
+					}
+				}
 				days += line.map({ $0.token.day()! })
 				if times.count >= 2 || !modifiers.isEmpty {
 					flush()
@@ -872,6 +890,8 @@ public class HoursRecognizer: ObservableObject {
 			}
 			if times.isEmpty {
 				result += "\(Modifier.closed)"
+			} else if times.count == 1 && times.first! == TimeRange.open {
+				result += "\(Modifier.open)"
 			} else {
 				result += times.map({"\($0.start)-\($0.end)"})
 					.joined(separator: ",")
@@ -982,7 +1002,7 @@ public class HoursRecognizer: ObservableObject {
 		}
 		#endif
 
-		// convert the final sets of tokens to a single stream
+		// convert the final sets of tokens to structured Day/Time ranges
 		var resultArray = HoursRecognizer.hoursForTokens( tokenSets )
 
 		// convert various days with identical hours to ranges of days
