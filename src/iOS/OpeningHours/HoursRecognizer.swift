@@ -27,6 +27,8 @@ extension String.StringInterpolation {
 			appendInterpolation(dash)
 		case let .modifier(modifier):
 			appendInterpolation(modifier)
+		case .unknown:
+			appendLiteral("?")
 		}
 	}
 }
@@ -348,7 +350,7 @@ fileprivate enum Day: Int, Strideable, CaseIterable {
 }
 
 @available(iOS 13.0, *)
-fileprivate struct Time: Comparable, Hashable {
+fileprivate struct Time: Hashable {
 
 	let minutes: Int
 
@@ -356,10 +358,6 @@ fileprivate struct Time: Comparable, Hashable {
 
 	init(hour: Int, minute:Int) {
 		self.minutes = hour*60 + minute
-	}
-
-	static func < (lhs: Time, rhs: Time) -> Bool {
-		return lhs.minutes < rhs.minutes
 	}
 
 	static func scan(scanner: MultiScanner, language:HoursRecognizer.Language) -> (time:Self, rect:CGRect, confidence:Float)? {
@@ -423,6 +421,18 @@ fileprivate struct Dash {
 }
 
 @available(iOS 13.0, *)
+fileprivate struct Unknown {
+	let string: String
+	static func scan(scanner: MultiScanner) -> (Self,CGRect,Float)? {
+		if let s = scanner.scanUpToWhitespace() {
+			return (Unknown(string:s.string), s.rect, 0.0)
+		}
+		return nil
+	}
+}
+
+
+@available(iOS 13.0, *)
 fileprivate struct DayRange : Hashable { let start:Day; let end:Day }
 @available(iOS 13.0, *)
 fileprivate struct TimeRange : Hashable {
@@ -441,6 +451,7 @@ fileprivate enum Token : Equatable {
 	case day(Day)
 	case dash(Dash)
 	case modifier(Modifier)
+	case unknown(Unknown)
 
 	static func == (lhs: Token, rhs: Token) -> Bool {
 		return "\(lhs)" == "\(rhs)"
@@ -470,10 +481,17 @@ fileprivate enum Token : Equatable {
 		default:				return nil
 		}
 	}
+	func unknown() -> Unknown? {
+		switch self {
+		case let .unknown(unk):	return unk
+		default:				return nil
+		}
+	}
 	func isDay() -> Bool {	return day() != nil	}
 	func isTime() -> Bool {	return time() != nil }
 	func isDash() -> Bool {	return dash() != nil }
 	func isModifier() -> Bool {	return modifier() != nil }
+	func isUnknown() -> Bool { return unknown() != nil }
 
 	static func scan(scanner: MultiScanner, language: HoursRecognizer.Language) -> TokenRectConfidence? {
 		if let (day,rect,confidence) = Day.scan(scanner: scanner, language: language) {
@@ -487,6 +505,10 @@ fileprivate enum Token : Equatable {
 		}
 		if let (modifier,rect,confidence) = Modifier.scan(scanner: scanner, language: language) {
 			return (.modifier(modifier),rect,confidence)
+		}
+		// skip to next token
+		if let (unknown,rect,confidence) = Unknown.scan(scanner: scanner) {
+			return (.unknown(unknown),rect,confidence)
 		}
 		return nil
 	}
@@ -678,9 +700,6 @@ public class HoursRecognizer: ObservableObject {
 		while !scanner.isAtEnd {
 			if let token = Token.scan(scanner: scanner, language: language) {
 				list.append( token )
-			} else {
-				// skip to next token
-				_ = scanner.scanUpToWhitespace()
 			}
 			_ = scanner.scanWhitespace()
 		}
@@ -693,6 +712,31 @@ public class HoursRecognizer: ObservableObject {
 			let tokens = HoursRecognizer.tokensForStrings( line, language: language )
 			return tokens.isEmpty ? nil : tokens
 		}
+		return tokenLines
+	}
+
+	// remove blocks of lines where the ratio of unknown to known tokens is high
+	private class func removeUnknownTokens( _ tokenLines: [[TokenRectConfidence]] ) -> [[TokenRectConfidence]] {
+		var tokenLines = tokenLines
+
+		if tokenLines.count > 10 {
+			print("hit")
+		}
+
+		// find lines that don't have many known tokens
+		let density = tokenLines.map { Float($0.filter({ !$0.token.isUnknown() }).count) / Float($0.count) }
+		var keep = tokenLines.indices.map({ density[$0] > 0.3 })
+		// also drop lines if it's neighbors are both ignored
+		keep = keep.indices.map { $0 == 0 || $0 == keep.count-1 || (keep[$0] && (keep[$0-1] || keep[$0+1])) }
+
+		assert( keep.count == tokenLines.count )
+
+		// filter token lines
+		tokenLines = tokenLines.enumerated().compactMap { index,value in return keep[index] ? value : nil }
+
+		// remove any remaining unknown tokens
+		tokenLines = tokenLines.map { $0.filter({ !$0.token.isUnknown() }) }
+		tokenLines.removeAll(where:{ $0.isEmpty })
 		return tokenLines
 	}
 
@@ -853,6 +897,9 @@ public class HoursRecognizer: ObservableObject {
 
 			case .dash:
 				break
+
+			case .unknown:
+				assert(false)
 			}
 		}
 		flush()
@@ -950,6 +997,9 @@ public class HoursRecognizer: ObservableObject {
 		}
 		#endif
 
+		// remove unknown tokens
+		tokenSets = HoursRecognizer.removeUnknownTokens( tokenSets )
+
 		// get homogeneous day/time sets
 		tokenSets = HoursRecognizer.homogeneousSequencesForTokenLines( tokenSets )
 
@@ -970,6 +1020,7 @@ public class HoursRecognizer: ObservableObject {
 			case .time:		return HoursRecognizer.GoodTimesForTokenSequences( $0 )
 			case .modifier:	return $0
 			case .dash:		return $0
+			case .unknown:	assert(false)
 			}
 		}
 
@@ -984,6 +1035,7 @@ public class HoursRecognizer: ObservableObject {
 			case .modifier:	combine = this.isModifier()
 			case .day: 		combine = this.isDay()
 			case .dash: 	combine = this.isDash()
+			case .unknown:	assert(false); combine = false
 			}
 			if combine {
 				tokenSets[index-1] += tokenSets[index]
