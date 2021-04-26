@@ -353,11 +353,13 @@ fileprivate enum Day: Int, Strideable, CaseIterable {
 fileprivate struct Time: Hashable {
 
 	let minutes: Int
+	let is24: Bool
 
 	var text: String { return String(format: "%02d:%02d", minutes/60, minutes%60) }
 
-	init(hour: Int, minute:Int) {
+	init(hour: Int, minute:Int, is24:Bool) {
 		self.minutes = hour*60 + minute
+		self.is24 = is24
 	}
 
 	static func scan(scanner: MultiScanner, language:HoursRecognizer.Language) -> (time:Self, rect:CGRect, confidence:Float)? {
@@ -375,16 +377,16 @@ fileprivate struct Time: Hashable {
 			{
 				_ = scanner.scanWhitespace()
 				if let am = scanner.scanString("AM") {
-					return (Time(hour: iHour%12, minute: Int(minute.string)!),
+					return (Time(hour: iHour%12, minute: Int(minute.string)!, is24: true),
 							hour.rect.union(am.rect),
 							8.0)
 				}
 				if let pm = scanner.scanString("PM") {
-					return (Time(hour: (iHour%12)+12, minute: Int(minute.string)!),
+					return (Time(hour: (iHour%12)+12, minute: Int(minute.string)!, is24: true),
 							hour.rect.union(pm.rect),
 							8.0)
 				}
-				return (Time(hour: iHour, minute: Int(minute.string)!),
+				return (Time(hour: iHour, minute: Int(minute.string)!, is24: iHour > 12 || hour.string >= "00" && hour.string <= "09"),
 						hour.rect.union(minute.rect),
 						6.0)
 			}
@@ -392,16 +394,16 @@ fileprivate struct Time: Hashable {
 
 			_ = scanner.scanWhitespace()
 			if let am = scanner.scanString("AM") {
-				return (Time(hour: iHour%12, minute: 0),
+				return (Time(hour: iHour%12, minute: 0, is24: true),
 						hour.rect.union(am.rect),
 						4.0)
 			}
 			if let pm = scanner.scanString("PM") {
-				return (Time(hour: (iHour%12)+12, minute: 0),
+				return (Time(hour: (iHour%12)+12, minute: 0, is24: true),
 						hour.rect.union(pm.rect),
 						4.0)
 			}
-			return (Time(hour: iHour, minute: 0),
+			return (Time(hour: iHour, minute: 0, is24: iHour > 12 || hour.string >= "00" && hour.string <= "09"),
 					hour.rect,
 					1.0)
 		}
@@ -438,7 +440,7 @@ fileprivate struct DayRange : Hashable { let start:Day; let end:Day }
 fileprivate struct TimeRange : Hashable {
 	let start:Time
 	let end:Time
-	static let open = TimeRange(start: Time(hour: 0, minute: 0), end: Time(hour: 24, minute: 0))
+	static let open = TimeRange(start: Time(hour: -1, minute: 0, is24: true), end: Time(hour: -1, minute: 0, is24: true))
 }
 
 fileprivate typealias SubstringRectConfidence = (substring:Substring, rect:CGRect, rectf:(Range<String.Index>)->CGRect, confidence:Float)
@@ -815,6 +817,21 @@ public class HoursRecognizer: ObservableObject {
 
 		// look for suspicious pairs
 		pairs.removeAll(where: {"\($0.0.token)" == "00:00" && "\($0.1.token)" == "00:00"})
+
+		// if language is English then convert non-24 hour times that are ambiguous
+		pairs = pairs.map {
+			if let t1 = $0.0.token.time(),
+			   let t2 = $0.1.token.time()
+			{
+				if !t1.is24 && !t2.is24 && t1.minutes >= t2.minutes && t2.minutes <= 12*60 {
+					// both times are ambiguous and suspicious
+					let newT2 = Time(hour: t2.minutes/60+12, minute: t2.minutes%60, is24: true)
+					let newTok = TokenRectConfidence( Token.time(newT2), $0.1.rect, $0.1.confidence )
+					return ($0.0, newTok)
+				}
+			}
+			return $0
+		}
 
 		return pairs.count > 0 ? pairs.flatMap({ [$0.0,$0.1] }) : nil
 	}
