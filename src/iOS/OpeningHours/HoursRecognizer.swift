@@ -1037,7 +1037,7 @@ public class HoursRecognizer: ObservableObject {
 			case .time:		return HoursRecognizer.GoodTimesForTokenSequences( $0 )
 			case .modifier:	return $0
 			case .dash:		return $0
-			case .unknown:	assert(false)
+			case .unknown:	assert(false); return $0
 			}
 		}
 
