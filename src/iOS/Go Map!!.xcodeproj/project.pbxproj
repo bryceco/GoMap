@@ -188,6 +188,10 @@
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		02128F7B2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Height.strings"; sourceTree = "<group>"; };
 		02128F7C2575D925003D2551 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Display.strings"; sourceTree = "<group>"; };
+		02153B072643723000A3ED79 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		02153B082643723000A3ED79 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		02153B092643723000A3ED79 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Settings.strings; sourceTree = "<group>"; };
+		02153B0A2643723000A3ED79 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Changeset.strings; sourceTree = "<group>"; };
 		0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurvedTextLayer.swift; path = ../Shared/CurvedTextLayer.swift; sourceTree = "<group>"; };
 		0216636E24738C9600B0B0F6 /* LayerProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LayerProperties.h; path = ../Shared/LayerProperties.h; sourceTree = "<group>"; };
 		0216636F24738C9600B0B0F6 /* LayerProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LayerProperties.m; path = ../Shared/LayerProperties.m; sourceTree = "<group>"; };
@@ -1148,6 +1152,7 @@
 				it,
 				si,
 				vi,
+				nl,
 			);
 			mainGroup = 02ACBA2416713CCB00BB4414;
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
@@ -1381,6 +1386,7 @@
 				0229298126321B7E0000CEF0 /* ain */,
 				027F332726321B8F00872143 /* it */,
 				02CFEECB26321BBE002BFE83 /* vi */,
+				02153B092643723000A3ED79 /* nl */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -1448,6 +1454,7 @@
 				027F332926321B8F00872143 /* it */,
 				02C0249E26321BBA006AB031 /* si */,
 				02CFEECD26321BBE002BFE83 /* vi */,
+				02153B0A2643723000A3ED79 /* nl */,
 			);
 			name = Changeset.storyboard;
 			sourceTree = "<group>";
@@ -1491,6 +1498,7 @@
 				0229297C26321B7E0000CEF0 /* ain */,
 				027F332226321B8F00872143 /* it */,
 				02CFEEC626321BBE002BFE83 /* vi */,
+				02153B072643723000A3ED79 /* nl */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1535,6 +1543,7 @@
 				027F332426321B8F00872143 /* it */,
 				02C0249D26321BBA006AB031 /* si */,
 				02CFEEC826321BBE002BFE83 /* vi */,
+				02153B082643723000A3ED79 /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1664,7 +1673,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2130;
+				CURRENT_PROJECT_VERSION = 2200;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1673,7 +1682,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
@@ -1697,7 +1706,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2130;
+				CURRENT_PROJECT_VERSION = 2200;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1706,7 +1715,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.1.3;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";

@@ -508,10 +508,16 @@
 "node %@ (in way)" = "точка %@ (на линии)";
 
 /* No comment provided by engineer. */
+"Node Attributes" = "Атрибуты точки";
+
+/* No comment provided by engineer. */
 "Node is not an element of way" = "Точка не является элементом линии";
 
 /* No comment provided by engineer. */
 "Node must be the first or last node of the way" = "Точка должна быть первой или последней точкой линии";
+
+/* No comment provided by engineer. */
+"Node Tags" = "Теги точки";
 
 /* User credentials not found */
 "Not found" = "Не найдено";
@@ -590,6 +596,12 @@
 
 /* No comment provided by engineer. */
 "relation" = "отношение";
+
+/* No comment provided by engineer. */
+"Relation Attributes" = "Атрибуты отношения";
+
+/* No comment provided by engineer. */
+"Relation Tags" = "Теги отношения";
 
 /* No comment provided by engineer. */
 "Relation: %@" = "Отношение: %@";
@@ -807,6 +819,12 @@
 
 /* No comment provided by engineer. */
 "way %@" = "линия %@";
+
+/* No comment provided by engineer. */
+"Way Attributes" = "Атрибуты линии";
+
+/* No comment provided by engineer. */
+"Way Tags" = "Теги линии";
 
 /* No comment provided by engineer. */
 "You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.\n\nTo continue press Commit once again, otherwise press Cancel." = "Вы собираетесь внести изменения в действующую базу данных OpenStreetMap. Ваши правки будут доступны для просмотра абсолютно любому человеку из любой точки планеты.\n\nЧтобы продолжить нажмите Загрузить на сервер ещё раз, в противном случае нажмите Отмена.";
