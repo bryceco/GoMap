@@ -39,6 +39,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#if 0	// This code sets the screen size as mandated for Mac App Store screen shots
+	CGSize size = { 640 * (1440.0/752) * (1440.0/1337) * (1440.0/1431), 640 * (900.0/752) * (900.0/877) * (900.0/898) + 1 };
+	for ( UIWindowScene * scene in UIApplication.sharedApplication.connectedScenes ) {
+		scene.sizeRestrictions.minimumSize = size;
+		scene.sizeRestrictions.maximumSize = size;
+	}
+#endif
+
 	NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
 
 	// save the app version so we can detect upgrades
