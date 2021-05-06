@@ -364,6 +364,7 @@ fileprivate struct Time: Hashable {
 
 	static func scan(scanner: MultiScanner, language:HoursRecognizer.Language) -> (time:Self, rect:CGRect, confidence:Float)? {
 		let index = scanner.currentIndex
+		var minutes: StringRect? = nil
 
 		guard let hour = scanner.scanInt() else { return nil }
 		if let iHour = Int(hour.string),
@@ -375,37 +376,26 @@ fileprivate struct Time: Hashable {
 			   minute.string.count == 2,
 			   minute.string >= "00" && minute.string < "60"
 			{
-				_ = scanner.scanWhitespace()
-				if let am = scanner.scanString("AM") {
-					return (Time(hour: iHour%12, minute: Int(minute.string)!, is24: true),
-							hour.rect.union(am.rect),
-							8.0)
-				}
-				if let pm = scanner.scanString("PM") {
-					return (Time(hour: (iHour%12)+12, minute: Int(minute.string)!, is24: true),
-							hour.rect.union(pm.rect),
-							8.0)
-				}
-				return (Time(hour: iHour, minute: Int(minute.string)!, is24: iHour > 12 || hour.string >= "00" && hour.string <= "09"),
-						hour.rect.union(minute.rect),
-						6.0)
+				minutes = minute
+			} else {
+				scanner.currentIndex = index2
 			}
-			scanner.currentIndex = index2
 
 			_ = scanner.scanWhitespace()
-			if let am = scanner.scanString("AM") {
-				return (Time(hour: iHour%12, minute: 0, is24: true),
+			let iMinutes = Int(minutes?.string ?? "0")!
+			if let am = scanner.scanString("AM") ?? scanner.scanString("A.M.") {
+				return (Time(hour: iHour%12, minute: iMinutes, is24: true),
 						hour.rect.union(am.rect),
-						4.0)
+						(minutes != nil) ? 8.0 : 4.0)
 			}
-			if let pm = scanner.scanString("PM") {
-				return (Time(hour: (iHour%12)+12, minute: 0, is24: true),
+			if let pm = scanner.scanString("PM") ?? scanner.scanString("P.M.") {
+				return (Time(hour: (iHour%12)+12, minute: iMinutes, is24: true),
 						hour.rect.union(pm.rect),
-						4.0)
+						(minutes != nil) ? 8.0 : 4.0)
 			}
 			return (Time(hour: iHour, minute: 0, is24: iHour > 12 || hour.string >= "00" && hour.string <= "09"),
-					hour.rect,
-					1.0)
+					(minutes != nil) ? hour.rect.union(minutes!.rect) : hour.rect,
+					(minutes != nil) ? 6.0 : 1.0)
 		}
 		scanner.currentIndex = index
 		return nil
