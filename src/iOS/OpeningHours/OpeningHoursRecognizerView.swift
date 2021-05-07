@@ -76,7 +76,7 @@ public struct OpeningHoursRecognizerView: View {
 }
 
 // Make the UIKit CameraView accessible to SwiftUI
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 struct CameraViewWrapper: UIViewRepresentable {
 
 	@ObservedObject var recognizer: HoursRecognizer

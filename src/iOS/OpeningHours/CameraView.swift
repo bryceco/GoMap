@@ -8,7 +8,7 @@ import UIKit
 import AVFoundation
 import Vision
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
 
 	private var captureSession: AVCaptureSession? = nil

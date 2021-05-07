@@ -9,7 +9,7 @@
 import VisionKit
 import Vision
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 extension String.StringInterpolation {
 	fileprivate mutating func appendInterpolation(_ time: Time) {
 		appendLiteral(time.text)
@@ -273,7 +273,7 @@ fileprivate class MultiScanner {
 	}
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate enum Modifier {
 	case open, closed
 
@@ -292,7 +292,7 @@ fileprivate enum Modifier {
 	}
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate enum Day: Int, Strideable, CaseIterable {
 	case Mo, Tu, We, Th, Fr, Sa, Su
 
@@ -349,7 +349,7 @@ fileprivate enum Day: Int, Strideable, CaseIterable {
 	}
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate struct Time: Hashable {
 
 	let minutes: Int
@@ -402,7 +402,7 @@ fileprivate struct Time: Hashable {
 	}
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate struct Dash {
 	static func scan(scanner: MultiScanner, language: HoursRecognizer.Language) -> (Self,CGRect,Float)? {
 		if let s = scanner.scanString("-") ?? scanner.scanWord(language.through) {
@@ -412,7 +412,7 @@ fileprivate struct Dash {
 	}
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate struct Unknown {
 	let string: String
 	static func scan(scanner: MultiScanner) -> (Self,CGRect,Float)? {
@@ -424,9 +424,9 @@ fileprivate struct Unknown {
 }
 
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate struct DayRange : Hashable { let start:Day; let end:Day }
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate struct TimeRange : Hashable {
 	let start:Time
 	let end:Time
@@ -434,10 +434,10 @@ fileprivate struct TimeRange : Hashable {
 }
 
 fileprivate typealias SubstringRectConfidence = (substring:Substring, rect:CGRect, rectf:(Range<String.Index>)->CGRect, confidence:Float)
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate typealias TokenRectConfidence = (token:Token, rect:CGRect, confidence:Float)
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 fileprivate enum Token : Equatable {
 	case time(Time)
 	case day(Day)
@@ -506,7 +506,7 @@ fileprivate enum Token : Equatable {
 	}
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macCatalyst 14.0, *)
 public class HoursRecognizer: ObservableObject {
 
 	public var onRecognize: ((String) -> Void)? = nil
@@ -1124,6 +1124,7 @@ public class HoursRecognizer: ObservableObject {
 }
 
 #if targetEnvironment(macCatalyst)
+@available(iOS 13.0, macCatalyst 14.0, *)
 class BulkProcess {
 	init() {
 	}
