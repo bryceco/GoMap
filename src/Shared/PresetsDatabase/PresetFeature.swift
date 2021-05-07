@@ -132,14 +132,14 @@ import Foundation
 		if !self.geometry.contains(geometry) {
 			return false
 		}
-		if self.featureID.range(of: searchText, options: .caseInsensitive) != nil {
+		if self.featureID.range(of: searchText, options: [.caseInsensitive,.diacriticInsensitive] ) != nil {
 			return true
 		}
-		if self.name?.range(of: searchText, options: .caseInsensitive) != nil {
+		if self.name?.range(of: searchText, options: [.caseInsensitive,.diacriticInsensitive] ) != nil {
 			return true
 		}
 		for term in self.terms {
-			if term.range(of: searchText, options: .caseInsensitive) != nil {
+			if term.range(of: searchText, options: [.caseInsensitive,.diacriticInsensitive] ) != nil {
 				return true
 			}
 		}
