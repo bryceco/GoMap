@@ -150,10 +150,6 @@ import Foundation
 	{
 		guard self.geometry.contains(geometry) else { return 0.0 }
 
-		if self.featureID == "landuse/orchard" {
-			print("self")
-		}
-
 		var totalScore = 1.0
 
 		var seen = Set<String>()
