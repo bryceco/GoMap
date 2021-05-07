@@ -70,7 +70,7 @@ import Foundation
 			// decode
 			if #available(iOS 11.0, *) {
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
-				list = try! NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PresetKeyUserDefined.self,PresetValue.self], from: data) as? [PresetKeyUserDefined] ?? []
+				list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PresetKeyUserDefined.self,PresetValue.self], from: data) as? [PresetKeyUserDefined] ?? []
 			} else {
 				let oldList = NSKeyedUnarchiver.unarchiveObject(withFile: path)
 				list = oldList as? [PresetKeyUserDefined] ?? []
