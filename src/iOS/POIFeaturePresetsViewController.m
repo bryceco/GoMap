@@ -266,6 +266,10 @@
 			// special case for yes/no tristate
 			TristateButton * button = [TristateButton new];
 			NSString * value = keyValueDict[ presetKey.tagKey ];
+			if ( [presetKey.tagKey isEqualToString:@"tunnel"] && keyValueDict[@"waterway"] && [value isEqualToString:@"culvert"] ) {
+				// Special hack for tunnel=culvert when used with waterways:
+				value = @"yes";
+			}
 			[button setSelectionForString:value];
 			if ( [button stringForSelection] == nil ) {
 				// display the string iff we don't recognize it (or it's nil)

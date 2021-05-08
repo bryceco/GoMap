@@ -325,10 +325,8 @@ extension PresetsDatabase {
 			let tag = yesNoWith(label:name, key:keys[i], defaultValue:defaultValue, placeholder:nil, keyboard:keyboard, capitalize:capitalize)
 			tags.append(tag)
 		}
-		let group = PresetGroup(name: label, tags: tags)
-		let group2 = PresetGroup(name: nil, tags: [group])
-		group.isDrillDown = true
-		group2.isDrillDown = true
+		let group = PresetGroup(name: label, tags: tags, isDrillDown: true)
+		let group2 = PresetGroup(name: nil, tags: [group], isDrillDown: true)
 		return group2
 	}
 
@@ -419,6 +417,14 @@ extension PresetsDatabase {
 			if isMultiCombo || dict["keys"] != nil {
 				// a list of booleans
 				let keys = (isMultiCombo ? options : dict["keys"] as? [String]) ?? []
+				if keys.count == 1 {
+					let key = keys[0]
+					let option = options![0]
+					let name = strings?[option] ?? OsmTags.PrettyTag(option)
+					let tag = yesNoWith(label: name, key: key, defaultValue:defaultValue, placeholder: placeholder, keyboard: keyboard, capitalize: capitalize)
+					let group = PresetGroup(name:nil, tags:[tag])
+					return group
+				}
 				let group = multiComboWith(label:label, keys:keys, options:options!, strings:strings,
 										   defaultValue:defaultValue, placeholder:placeholder, keyboard:keyboard, capitalize:capitalize)
 				return group
