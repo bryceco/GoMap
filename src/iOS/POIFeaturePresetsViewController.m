@@ -278,6 +278,15 @@
 			cell.valueField.rightViewMode = UITextFieldViewModeAlways;
 			cell.valueField.placeholder = nil;
 			button.onSelect = ^(NSString * newValue) {
+				if ( [presetKey.tagKey isEqualToString:@"tunnel"] && keyValueDict[@"waterway"] ) {
+					// Special hack for tunnel=culvert when used with waterways:
+					// See https://github.com/openstreetmap/iD/blob/1ee45ee1f03f0fe4d452012c65ac6ff7649e229f/modules/ui/fields/radio.js#L307
+					if ( [newValue isEqualToString:@"yes"] ) {
+						newValue = @"culvert";
+					} else {
+						newValue = nil;	// "no" isn't allowed
+					}
+				}
 				[self updateTagWithValue:newValue forKey:cell.presetKey.tagKey];
 				cell.valueField.text = nil;
 				[cell.valueField resignFirstResponder];
