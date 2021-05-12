@@ -8,7 +8,7 @@
 
 #import "TurnRestrictController.h"
 
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 #import "EditorMapLayer.h"
 #import "MapView.h"
 #import "OsmNotesDatabase.h"

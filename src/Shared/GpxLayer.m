@@ -13,7 +13,7 @@
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
 #endif
-#import "GpxLayer.h"
+//#import "GpxLayer.h"
 #import "MapView.h"
 #import "PathUtil.h"
 

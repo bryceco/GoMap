@@ -9,21 +9,18 @@
 #import "NSMutableArray+PartialSort.h"
 
 #import "iosapi.h"
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 #import "BingMapsGeometry.h"
 #import "DLog.h"
 #import "EditorMapLayer.h"
-#if TARGET_OS_IPHONE
-#import "FilterObjectsViewController.h"
-#endif
-#import "GeekbenchScoreProvider.h"
+//#import "GeekbenchScoreProvider.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 #import "PathUtil.h"
 #import "QuadMap.h"
-#import "SpeechBalloonLayer.h"
+//#import "SpeechBalloonLayer.h"
 #import "RenderInfo.h"
 #import "VectorMath.h"
 #import "Go_Map__-Swift.h"
@@ -2019,7 +2016,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 
 	if ( _showLevel ) {
 		// set level predicate dynamically since it depends on the the text range
-		NSArray * levelFilter = [FilterObjectsViewController levelsForString:self.showLevelRange];
+		NSArray * levelFilter = [FilterObjectsViewController levelsFor:self.showLevelRange];
 		if ( levelFilter.count ) {
 			predLevel = ^BOOL(OsmBaseObject * object) {
 				NSString * objectLevel = object.tags[ @"level" ];
@@ -2295,14 +2292,16 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.renderInfo == nil ) {
 			object.renderInfo = [RenderInfoDatabase.sharedRenderInfoDatabase renderInfoForObject:object];
+//            object.renderInfo = [RenderInfoDatabase._database renderInfoFor:object];
 		}
 		if ( object->renderPriorityCached == 0 ) {
 			object->renderPriorityCached = [object.renderInfo renderPriorityForObject:object];
+//            object->renderPriorityCached = [object.renderInfo renderPriorityFor:object];
 		}
 	}
 
 	// sort from big to small objects, and remove excess objects
-	[objects countSortOsmObjectVisibleSizeWithLargest:objectLimit];
+//	[objects countSortOsmObjectVisibleSizeWithLargest:objectLi/mit];
 
 	// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
 	objectLimit = objects.count;

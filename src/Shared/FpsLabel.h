@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Bryce Cogswell. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-@interface FpsLabel : UILabel
-@property (assign,nonatomic)	BOOL	showFPS;
-@end
+//#import <UIKit/UIKit.h>
+//
+//@interface FpsLabel : UILabel
+//@property (assign,nonatomic)	BOOL	showFPS;
+//@end

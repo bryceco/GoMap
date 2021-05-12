@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-#import "SpeechBalloonLayer.h"
+//#import "SpeechBalloonLayer.h"
 #import "SpeechBalloonView.h"
 
 static const CGFloat arrowWidth = 20;

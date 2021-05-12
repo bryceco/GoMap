@@ -15,7 +15,7 @@
 #import "AerialList.h"
 #import "BingMapsGeometry.h"
 #import "DLog.h"
-#import "DownloadThreadPool.h"
+//#import "DownloadThreadPool.h"
 #import "MapView.h"
 #import "MercatorTileLayer.h"
 #import "PersistentWebCache.h"

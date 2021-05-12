@@ -8,18 +8,16 @@
 
 #import <SafariServices/SafariServices.h>
 
-#import "AppDelegate.h"
-#import "AutocompleteTextField.h"
+//#import "AppDelegate.h"
 #import "EditorMapLayer.h"
-#import "HeightViewController.h"
+//#import "HeightViewController.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMember.h"
 #import "POIAllTagsViewController.h"
-#import "POITabBarController.h"
-#import "PushPinView.h"
+//#import "PushPinView.h"
 #import "RenderInfo.h"
-#import "WikiPage.h"
+//#import "WikiPage.h"
 
 
 #define EDIT_RELATIONS 0
@@ -885,7 +883,8 @@
 		if ( indexPath.section == 0 ) {
 			NSArray * kv = _tags[ indexPath.row ];
 			NSString * tag = kv[0];
-			[tabController.keyValueDict removeObjectForKey:tag];
+            [tabController removeValueFromKeyValueDictWithKey:tag];
+//			[tabController.keyValueDict removeObjectForKey:tag];
 			[_tags removeObjectAtIndex:indexPath.row];
 		} else if ( indexPath.section == 1 ) {
 			[_relations removeObjectAtIndex:indexPath.row];

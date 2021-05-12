@@ -8,7 +8,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 #import "ExternalGPS.h"
 #import "DLog.h"
 #import "MapView.h"

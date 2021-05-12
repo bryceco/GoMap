@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18121" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fx1-V2-8uJ">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18091"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,7 @@
         <!--Main Map View Controller-->
         <scene sceneID="11">
             <objects>
-                <viewController title="First" modalTransitionStyle="flipHorizontal" id="2" userLabel="Main Map View Controller" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController title="First" modalTransitionStyle="flipHorizontal" id="2" userLabel="Main Map View Controller" customClass="MainViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j5Z-hB-i8A" userLabel="Main View">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,7 +38,7 @@
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
                                 </connections>
                             </view>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJj-HW-GPO" customClass="RulerView">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJj-HW-GPO" customClass="RulerView" customModule="Go_Map__" customModuleProvider="target">
                                 <rect key="frame" x="12" y="385" width="142" height="30"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -269,7 +269,7 @@
                                     <action selector="centerOnGPS:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="5qr-EW-Due"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="66.6 FPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9t5-wq-j1u" customClass="FpsLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="66.6 FPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9t5-wq-j1u" customClass="FpsLabel" customModule="Go_Map__" customModuleProvider="target">
                                 <rect key="frame" x="109.5" y="328" width="101.5" height="30"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="0.98692119121551514" green="0.18576183915138245" blue="0.14714117348194122" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -421,7 +421,7 @@
         <!--Note-->
         <scene sceneID="12g-at-ojg">
             <objects>
-                <viewController id="S30-cU-QcE" customClass="NotesTableViewController" sceneMemberID="viewController">
+                <viewController id="S30-cU-QcE" customClass="NotesTableViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iDL-ho-g1h">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -495,7 +495,7 @@
                                             <outlet property="user" destination="9G2-Gl-CeP" id="eqq-iy-cOJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="noteResolveCell" rowHeight="176" id="qVy-et-kwg" userLabel="notesResolveCell" customClass="NotesResolveCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="noteResolveCell" rowHeight="176" id="qVy-et-kwg" userLabel="notesResolveCell" customClass="NotesResolveCell" customModule="Go_Map__" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="151.5" width="320" height="176"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qVy-et-kwg" id="Fc0-ki-3cW">
@@ -554,9 +554,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="_text" destination="HeZ-95-3K1" id="vhP-5T-wgc"/>
                                             <outlet property="commentButton" destination="2g1-vb-Cjc" id="I0f-X9-ZIc"/>
                                             <outlet property="resolveButton" destination="OJ0-aO-ri1" id="13F-rD-wwR"/>
-                                            <outlet property="text" destination="HeZ-95-3K1" id="vhP-5T-wgc"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="noteDirectionsCell" textLabel="1xx-L0-hKm" style="IBUITableViewCellStyleDefault" id="YpX-oe-ozj" userLabel="notesDirectionsCell">
@@ -718,7 +718,7 @@
         <!--Bing Maps-->
         <scene sceneID="I12-cf-9pY">
             <objects>
-                <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" sceneMemberID="viewController">
+                <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleAspectFit" id="SRh-fQ-dAA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -782,7 +782,7 @@
         <!--Search for Location-->
         <scene sceneID="nhJ-xs-noU">
             <objects>
-                <viewController title="Search for Location" id="siu-I6-IEp" customClass="NominatimViewController" sceneMemberID="viewController">
+                <viewController title="Search for Location" id="siu-I6-IEp" customClass="NominatimViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SQe-Tw-wQG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -858,10 +858,10 @@
         <!--Rotating Navigation Controller-->
         <scene sceneID="zdf-8K-g4P">
             <objects>
-                <navigationController id="Fx1-V2-8uJ" customClass="RotatingNavigationController" sceneMemberID="viewController">
+                <navigationController id="Fx1-V2-8uJ" customClass="RotatingNavigationController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y5O-uv-8Kt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -881,7 +881,7 @@
         <!--Turn Restrict Controller-->
         <scene sceneID="VIa-pl-iqR">
             <objects>
-                <viewController storyboardIdentifier="TurnRestrictController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fZc-hX-GbL" customClass="TurnRestrictController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TurnRestrictController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fZc-hX-GbL" customClass="TurnRestrictController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m2Y-tI-zmZ"/>
                         <viewControllerLayoutGuide type="bottom" id="Tr4-0w-82f"/>

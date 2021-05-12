@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TurnRestrictHwyView.h"
+//#import "TurnRestrictHwyView.h"
 #import "VectorMath.h"
 #import "EditorMapLayer.h"
 #import "RenderInfo.h"

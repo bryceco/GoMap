@@ -37,7 +37,6 @@
 @class TapAndDragGesture;
 @class VoiceAnnouncement;
 
-
 typedef enum _MapViewState {
 	MAPVIEW_NONE = -1,
 	MAPVIEW_EDITOR,

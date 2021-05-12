@@ -10,13 +10,13 @@
 
 #if TARGET_OS_IPHONE
 #import "DDXML.h"
-#import "../iOS/AppDelegate.h"
+//#import "../iOS/AppDelegate.h"
 #else
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 #endif
 
 #import "DLog.h"
-#import "DownloadThreadPool.h"
+//#import "DownloadThreadPool.h"
 #import "MapView.h"
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"

@@ -7,7 +7,7 @@
 //
 
 #import "iosapi.h"
-#import <QuartzCore/QuartzCore.h> 
+#import <QuartzCore/QuartzCore.h>
 #include <stdatomic.h>
 
 @class AerialService;

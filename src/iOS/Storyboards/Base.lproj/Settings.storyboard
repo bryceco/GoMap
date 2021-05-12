@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18121" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18091"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
             <objects>
                 <navigationController storyboardIdentifier="SettingsViewController" id="gJ9-uY-RwT" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="393-ep-ucc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -28,7 +28,7 @@
         <!--Settings-->
         <scene sceneID="mHT-hb-82h">
             <objects>
-                <tableViewController id="dn9-E8-wB3" customClass="SettingsViewController" sceneMemberID="viewController">
+                <tableViewController id="dn9-E8-wB3" customClass="SettingsViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="GH2-oq-Ngh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -44,14 +44,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="OpenStreetMap Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="34N-Ep-rpf">
-                                                    <rect key="frame" x="16" y="14" width="147" height="17"/>
+                                                    <rect key="frame" x="16" y="12" width="174" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="Mus-SG-1Sz">
-                                                    <rect key="frame" x="249" y="14" width="37.5" height="17"/>
+                                                    <rect key="frame" x="242.5" y="12" width="44" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -75,14 +75,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="osk-Kq-gDX">
-                                                    <rect key="frame" x="16" y="14" width="66.5" height="17"/>
+                                                    <rect key="frame" x="16" y="12" width="78.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" id="6Lj-wh-z9f">
-                                                    <rect key="frame" x="249" y="14" width="37.5" height="17"/>
+                                                    <rect key="frame" x="242.5" y="12" width="44" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -210,7 +210,7 @@
         <!--Login-->
         <scene sceneID="9rC-iQ-Obp">
             <objects>
-                <tableViewController storyboardIdentifier="LoginViewController" id="kl3-Fg-1QU" customClass="LoginViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="LoginViewController" id="kl3-Fg-1QU" customClass="LoginViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fuy-cc-Ft7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -358,7 +358,7 @@
         <!--Nearby Mappers-->
         <scene sceneID="Tnx-bm-RHs">
             <objects>
-                <tableViewController id="99d-jW-FfM" customClass="NearbyMappersViewController" sceneMemberID="viewController">
+                <tableViewController id="99d-jW-FfM" customClass="NearbyMappersViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xj1-Tf-CRd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -409,7 +409,7 @@
         <!--Credits-->
         <scene sceneID="ouR-J9-98f">
             <objects>
-                <viewController id="muY-u7-Sma" customClass="CreditsViewController" sceneMemberID="viewController">
+                <viewController id="muY-u7-Sma" customClass="CreditsViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wou-7z-rxW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -464,7 +464,7 @@ http://glyphish.com
         <!--Prepare for Offline-->
         <scene sceneID="GPb-Zw-mXf">
             <objects>
-                <tableViewController id="F6b-O4-VXY" customClass="OfflineViewController" sceneMemberID="viewController">
+                <tableViewController id="F6b-O4-VXY" customClass="OfflineViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="oXc-rb-qRv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -473,7 +473,7 @@ http://glyphish.com
                             <tableViewSection headerTitle="Download zoomed tiles" id="2TW-mO-uX2">
                                 <string key="footerTitle">If you are mapping somewhere with limited connectivity you can download the aerial and/or Mapnik tiles for the next two higher zoom levels that are in the current view area.</string>
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineTableViewCell" id="dsz-7f-f6L" customClass="OfflineTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineTableViewCell" id="dsz-7f-f6L" customClass="OfflineTableViewCell" customModule="Go_Map__" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="49.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dsz-7f-f6L" id="xtn-fc-DVd">
@@ -525,7 +525,7 @@ http://glyphish.com
                                             <outlet property="titleLabel" destination="AVI-04-hFN" id="fSa-Rl-kfD"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineTableViewCell" id="dq1-Nm-fxO" customClass="OfflineTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineTableViewCell" id="dq1-Nm-fxO" customClass="OfflineTableViewCell" customModule="Go_Map__" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="93.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dq1-Nm-fxO" id="FJz-LI-67M">
@@ -598,7 +598,7 @@ http://glyphish.com
         <!--Language-->
         <scene sceneID="pTc-KX-a6R">
             <objects>
-                <tableViewController id="wOm-SR-nWp" customClass="LanguageTableViewController" sceneMemberID="viewController">
+                <tableViewController id="wOm-SR-nWp" customClass="LanguageTableViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="piu-tI-sZl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -612,14 +612,14 @@ http://glyphish.com
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HNj-kK-OCP">
-                                            <rect key="frame" x="16" y="7" width="30" height="17"/>
+                                            <rect key="frame" x="16" y="4" width="35" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KIO-8j-QsO">
-                                            <rect key="frame" x="16" y="24" width="44" height="14.5"/>
+                                            <rect key="frame" x="16" y="24.5" width="47" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
@@ -643,7 +643,7 @@ http://glyphish.com
         <!--Advanced Settings-->
         <scene sceneID="e3S-XZ-uPh">
             <objects>
-                <tableViewController id="bSZ-Mq-pv6" customClass="AdvancedSettingsViewController" sceneMemberID="viewController">
+                <tableViewController id="bSZ-Mq-pv6" customClass="AdvancedSettingsViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="44" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="fOz-c3-DCE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -788,7 +788,7 @@ http://glyphish.com
         <!--Contact Us-->
         <scene sceneID="n62-E6-mWo">
             <objects>
-                <tableViewController modalTransitionStyle="partialCurl" id="DjF-fm-zJF" customClass="ContactUsViewController" sceneMemberID="viewController">
+                <tableViewController modalTransitionStyle="partialCurl" id="DjF-fm-zJF" customClass="ContactUsViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="cpm-Rn-zEd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

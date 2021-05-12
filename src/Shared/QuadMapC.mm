@@ -16,9 +16,9 @@
 #endif
 
 #if SHOW_DOWNLOAD_QUADS	// Display query regions as GPX lines
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 #import "MapView.h"
-#import "GpxLayer.h"
+//#import "GpxLayer.h"
 #endif
 
 // Don't query the server for regions smaller than this:

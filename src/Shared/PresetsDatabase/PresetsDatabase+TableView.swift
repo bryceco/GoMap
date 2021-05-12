@@ -12,7 +12,7 @@ import Foundation
 // The entire presets database from iD
 extension PresetsDatabase {
 
-	@objc func featuresAndCategoriesForGeometry(_ geometry: String) -> [AnyHashable]? {
+	@objc func featuresAndCategoriesForGeometry(_ geometry: String) -> [AnyHashable] {
 		let list = jsonDefaults[geometry] as! [String]
 		let featureList = self.featuresAndCategoriesForMemberList( memberList: list )
 		return featureList
@@ -27,7 +27,7 @@ extension PresetsDatabase {
 				}
 			}
 		} else {
-			let countryCode = AppDelegate.shared.mapView?.countryCodeForLocation
+			let countryCode = AppDelegate.shared?.mapView?.countryCodeForLocation
 			list = PresetsDatabase.shared.featuresMatchingSearchText(searchText, geometry:geometry, country: countryCode)
 		}
 		let searchText = searchText.lowercased()
@@ -81,7 +81,7 @@ extension PresetsDatabase {
 		return set
 	}
 
-	@objc func allTagValuesForKey(_ key: String) -> Set<AnyHashable>? {
+	@objc func allTagValuesForKey(_ key: String) -> Set<String>? {
 		var set = Set<String>()
 		for (_,dict) in jsonFields {
 			guard let dict = dict as? [String:Any] else { continue }
@@ -470,7 +470,7 @@ extension PresetsDatabase {
 				"unit"
 			]
 
-			let countryCode = AppDelegate.shared.mapView?.countryCodeForLocation ?? "<unknown>"
+			let countryCode = AppDelegate.shared?.mapView?.countryCodeForLocation ?? "<unknown>"
 			var keysForCountry: [[String]]? = nil
 			for localeDict in jsonAddressFormats {
 				guard let localeDict = localeDict as? [String:Any] else { continue }

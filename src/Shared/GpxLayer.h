@@ -34,7 +34,7 @@
 }
 @property (strong,nonatomic)	NSString		*	name;
 @property (strong,nonatomic)	NSDate			*	creationDate;	// when trace was recorded or downloaded
-@property (readonly,nonatomic)	NSArray			*	points;
+@property (nullable, readonly,nonatomic)	NSArray			*	points;
 @property (strong,nonatomic)	CAShapeLayer	*	shapeLayer;
 
 -(NSString *)gpxXmlString;
