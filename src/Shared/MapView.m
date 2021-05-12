@@ -40,8 +40,8 @@
 #import "HtmlErrorWindow.h"
 #endif
 
-#define USER_DEFAULTS_GPX_EXPIRATIION_KEY         @"GpxTrackExpirationDays"
-#define USER_DEFAULTS_GPX_BACKGROUND_TRACKING     @"GpxTrackBackgroundTracking"
+//#define USER_DEFAULTS_GPX_EXPIRATIION_KEY         @"GpxTrackExpirationDays"
+//#define USER_DEFAULTS_GPX_BACKGROUND_TRACKING     @"GpxTrackBackgroundTracking"
 
 static const CGFloat Z_AERIAL			= -100;
 static const CGFloat Z_NONAME           = -99;
@@ -1452,11 +1452,11 @@ static inline ViewOverlayMask OverlaysFor(MapViewState state, ViewOverlayMask ma
 
 -(BOOL)gpsInBackground
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
 }
 -(void)setGpsInBackground:(BOOL)gpsInBackground
 {
-    [[NSUserDefaults standardUserDefaults] setBool:gpsInBackground forKey:USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
+    [[NSUserDefaults standardUserDefaults] setBool:gpsInBackground forKey:GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING];
     
     _locationManager.allowsBackgroundLocationUpdates = gpsInBackground && self.enableGpxLogging;
     

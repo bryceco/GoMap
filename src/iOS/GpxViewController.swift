@@ -241,7 +241,7 @@ class GpxViewController: UITableViewController {
         navigationItem.rightBarButtonItem = editButtonItem
         
         let appDelegate = AppDelegate.shared
-        appDelegate?.mapView?.gpxLayer.loadTracksInBackground(progress: {
+		appDelegate?.mapView?.gpxLayer.loadTracksInBackground(withProgress: {
             self.tableView?.reloadData()
         })
     }
@@ -348,7 +348,7 @@ class GpxViewController: UITableViewController {
             if indexPath.row == 0 {
                 // days before deleting
                 let cell = tableView.dequeueReusableCell(withIdentifier: "GpxTrackExpirationCell", for: indexPath) as? GpxTrackExpirationCell
-                let expirationDays = UserDefaults.standard.object(forKey: USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
+				let expirationDays = UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
                 let expiration = expirationDays?.intValue ?? 0
                 let title = expiration <= 0 ? NSLocalizedString("Never", comment: "Never delete old tracks") : String.localizedStringWithFormat(NSLocalizedString("%ld Days", comment: "One or more days"), expiration)
                 cell?.expirationButton.setTitle(title, for: .normal)
@@ -363,7 +363,7 @@ class GpxViewController: UITableViewController {
         }
         
         // active track or previous tracks
-        let track = (indexPath.section == SECTION_ACTIVE_TRACK ? gpxLayer?.activeTrack : gpxLayer?.previousTracks[indexPath.row]) as? GpxTrack
+		let track = (indexPath.section == SECTION_ACTIVE_TRACK ? gpxLayer?.activeTrack : gpxLayer?.previousTracks[indexPath.row])
         let dur = Int(round(track?.duration() ?? 0.0))
         var startDate: String? = nil
         if let creationDate = track?.creationDate {
@@ -371,7 +371,7 @@ class GpxViewController: UITableViewController {
         }
         let duration = String(format: "%d:%02d:%02d", dur / 3600, dur / 60 % 60, dur % 60)
         let trackDistanceInt = Int(track?.distance() ?? 0.0)
-        let trackPointsInt = track?.points?.count ?? 0
+		let trackPointsInt = track?.points.count ?? 0
         let meters = String.localizedStringWithFormat(NSLocalizedString("%ld meters, %ld points", comment: "length of a gpx track"), trackDistanceInt, trackPointsInt)
         let cell = tableView.dequeueReusableCell(withIdentifier: "GpxTrackTableCell", for: indexPath) as? GpxTrackTableCell
         cell?.startDate.text = startDate
@@ -404,7 +404,7 @@ class GpxViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             let gpxLayer = AppDelegate.shared?.mapView?.gpxLayer
-            if let track = gpxLayer?.previousTracks[indexPath.row] as? GpxTrack {
+			if let track = gpxLayer?.previousTracks[indexPath.row] {
                 gpxLayer?.delete(track)
             }
             
@@ -439,7 +439,7 @@ class GpxViewController: UITableViewController {
             // configuration
         } else if indexPath.section == SECTION_PREVIOUS_TRACKS {
             let gpxLayer = AppDelegate.shared?.mapView?.gpxLayer
-            if let track = gpxLayer?.previousTracks[indexPath.row] as? GpxTrack {
+			if let track = gpxLayer?.previousTracks[indexPath.row] {
                 gpxLayer?.selectedTrack = track
                 gpxLayer?.selectedTrack = track
                 gpxLayer?.center(on: track)
@@ -454,9 +454,9 @@ class GpxViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is GpxConfigureViewController {
             let dest = segue.destination as? GpxConfigureViewController
-            dest?.expirationValue = UserDefaults.standard.object(forKey: USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
+			dest?.expirationValue = UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
             dest?.completion = { pick in
-                UserDefaults.standard.set(pick, forKey: USER_DEFAULTS_GPX_EXPIRATIION_KEY)
+				UserDefaults.standard.set(pick, forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY)
                 
                 if let pickValue = pick?.doubleValue {
                     if pickValue > 0 {

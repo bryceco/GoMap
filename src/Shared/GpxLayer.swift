@@ -9,11 +9,8 @@
 
 import QuartzCore
 
-//let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
-//let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"
-
-let PATH_SCALING = 0.0
-//static const NSTimeInterval	MAX_AGE		= 7.0 * 24 * 60 * 60;
+private let PATH_SCALING = 256*256.0
+//private let MAX_AGE		= 7.0 * 24 * 60 * 60
 
 
 // Distance in meters
@@ -77,7 +74,7 @@ class GpxPoint: NSObject, NSCoding {
 // MARK: Track
 @objcMembers
 class GpxTrack: NSObject, NSCoding {
-    
+
     var recording = false
     var _distance = 0.0
 
@@ -344,6 +341,10 @@ class GpxTrack: NSObject, NSCoding {
 
 @objcMembers
 class GpxLayer: CALayer {
+
+	public static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
+	public static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"
+
     var mapView = MapView()
     var stabilizingCount = 0
 
@@ -368,7 +369,7 @@ class GpxLayer: CALayer {
             }
         }
     } // track picked in view controller
-    var previousTracks: [GpxTrack] = [] // sorted with most recent first
+    private(set) var previousTracks: [GpxTrack] = [] // sorted with most recent first
     private(set) var uploadedTracks: [String : Any] = [:] // track name -> upload date
 
     init(mapView: MapView) {
@@ -377,8 +378,8 @@ class GpxLayer: CALayer {
 
         UserDefaults.standard.register(
             defaults: [
-                USER_DEFAULTS_GPX_EXPIRATIION_KEY: NSNumber(value: 7),
-                USER_DEFAULTS_GPX_BACKGROUND_TRACKING: NSNumber(value: false)
+				GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY: NSNumber(value: 7),
+				GpxLayer.USER_DEFAULTS_GPX_BACKGROUND_TRACKING: NSNumber(value: false)
             ])
 
         actions = [
@@ -457,7 +458,7 @@ class GpxLayer: CALayer {
             try FileManager.default.removeItem(atPath: path)
         } catch {
         }
-        previousTracks.removeAll { $0 as GpxTrack === track as GpxTrack }
+        previousTracks.removeAll { $0 === track }
         track.shapeLayer?.removeFromSuperlayer()
         setNeedsLayout()
 
@@ -475,18 +476,12 @@ class GpxLayer: CALayer {
     func trimTracksOlderThan(_ date: Date) {
         // trim off old tracks
 
-        while true {
-            if previousTracks.count == 0 {
-                break
-            }
-            let track = previousTracks.last
-            let point = track?.points[0]
-            if let timestamp1 = point?.timestamp {
+		while let track = previousTracks.last {
+            let point = track.points[0]
+            if let timestamp1 = point.timestamp {
                 if date.timeIntervalSince(timestamp1) > 0 {
                     // delete oldest
-                    if let track = track {
-                        delete(track)
-                    }
+					delete(track)
                 } else {
                     break
                 }
@@ -511,7 +506,8 @@ class GpxLayer: CALayer {
             activeTrack.shapeLayer = nil
 
             // ignore bad data while starting up
-            if stabilizingCount >= 5 {
+			stabilizingCount += 1
+			if stabilizingCount >= 5 {
                 // take it
             } else if stabilizingCount == 1 {
                 // always skip first point
@@ -520,7 +516,6 @@ class GpxLayer: CALayer {
                 // skip it
                 return
             }
-            stabilizingCount += 1
 
             activeTrack.addPoint(location)
 
@@ -568,12 +563,7 @@ class GpxLayer: CALayer {
 
     func allTracks() -> [GpxTrack] {
         if let activeTrack = activeTrack {
-            if previousTracks.count != 0 {
-                return [activeTrack] + previousTracks.compactMap {$0}
-//                return [activeTrack] + previousTracks.compactMap { $0 }
-            } else {
-                return [activeTrack].compactMap { $0 }
-            }
+			return [activeTrack] + previousTracks
         } else {
             return previousTracks
         }
@@ -609,8 +599,15 @@ class GpxLayer: CALayer {
 
     // MARK: Caching
     // load data if not already loaded
+	var didLoadSavedTracks = false
     func loadTracksInBackground(withProgress progressCallback: (() -> Void)?) {
-        let expiration = UserDefaults.standard.object(forKey: USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
+
+		if didLoadSavedTracks {
+			return
+		}
+		didLoadSavedTracks = true
+
+		let expiration = UserDefaults.standard.object(forKey: GpxLayer.USER_DEFAULTS_GPX_EXPIRATIION_KEY) as? NSNumber
         
         let deleteIfCreatedBefore = expiration?.doubleValue ?? 0.0 == 0 ? Date.distantPast : Date(timeIntervalSinceNow: TimeInterval(-(expiration?.doubleValue ?? 0.0) * 24 * 60 * 60))
         

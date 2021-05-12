@@ -13,7 +13,7 @@
 #import "RenderInfo.h"
 #import "VectorMath.h"
 #import "MercatorTileLayer.h"
-#import "GpxLayer.h"
+//#import "GpxLayer.h"
 #import "MapView.h"
 #import "OsmNotesDatabase.h"
 #import "BingMapsGeometry.h"
