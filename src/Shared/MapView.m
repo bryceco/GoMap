@@ -11,7 +11,6 @@
 
 #import "iosapi.h"
 
-#import "AerialList.h"
 #import "BingMapsGeometry.h"
 #import "DisplayLink.h"
 #import "DLog.h"
@@ -155,7 +154,7 @@ const CGFloat kEditControlCornerRadius = 4;
         [bg addObject:_aerialLayer];
         
         _mapnikLayer = [[MercatorTileLayer alloc] initWithMapView:self];
-        _mapnikLayer.aerialService = [AerialService mapnik];
+        _mapnikLayer.aerialService = [AerialService mapnikAerialService];
         _mapnikLayer.zPosition = Z_MAPNIK;
         _mapnikLayer.hidden = YES;
         [bg addObject:_mapnikLayer];

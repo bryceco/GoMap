@@ -12,7 +12,6 @@
 #import "PathUtil.h"
 #import "RenderInfo.h"
 #import "VectorMath.h"
-#import "AerialList.h"
 #import "MercatorTileLayer.h"
 #import "GpxLayer.h"
 #import "MapView.h"

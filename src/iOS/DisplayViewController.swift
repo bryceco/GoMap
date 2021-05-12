@@ -129,7 +129,7 @@ class DisplayViewController: UITableViewController {
                 let appDelegate = AppDelegate.shared
                 let aerials = appDelegate?.mapView?.customAerials
                 let custom = cell as? CustomBackgroundCell
-                custom?.button.setTitle(aerials?.currentAerial.name, for: .normal)
+				custom?.button.setTitle(aerials?.currentAerial?.name, for: .normal)
                 custom?.button.sizeToFit()
             }
         }

@@ -12,7 +12,6 @@
 
 #import "iosapi.h"
 
-#import "AerialList.h"
 #import "BingMapsGeometry.h"
 #import "DLog.h"
 //#import "DownloadThreadPool.h"
@@ -305,7 +304,7 @@ static OSMPoint TileToWMSCoords(NSInteger tx,NSInteger ty,NSInteger z,NSString *
 	}
 
 	NSString * projection = self.aerialService.wmsProjection;
-	if ( projection ) {
+	if ( projection.length > 0 ) {
 		// WMS
 		OSMPoint minXmaxY = TileToWMSCoords( tileX, tileY, zoom, projection );
 		OSMPoint maxXminY = TileToWMSCoords( tileX+1, tileY+1, zoom, projection );

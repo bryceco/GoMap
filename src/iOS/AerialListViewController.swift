@@ -8,7 +8,7 @@
 
 class AerialListViewController: UITableViewController {
     var aerials: AerialList?
-    var imageryForRegion: [AnyHashable]?
+    var imageryForRegion: [AerialService]?
 
     weak var displayViewController: DisplayViewController?
     
@@ -21,7 +21,7 @@ class AerialListViewController: UITableViewController {
         aerials = appDelegate?.mapView?.customAerials
         
         if let viewport = appDelegate?.mapView?.screenLongitudeLatitude() {
-            imageryForRegion = aerials?.services(forRegion: viewport) as? [AnyHashable]
+			imageryForRegion = aerials?.services(forRegion: viewport)
         }
         
         super.viewDidLoad()
@@ -44,12 +44,12 @@ class AerialListViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    func aerialList(forSection section: Int) -> [AnyHashable]? {
+    func aerialList(forSection section: Int) -> [AerialService]? {
         if section == SECTION_BUILTIN {
-            return aerials?.builtinServices() as? [AnyHashable]
+            return aerials?.builtinServices()
         }
         if section == SECTION_USER {
-            return aerials?.userDefinedServices()  as? [AnyHashable]
+            return aerials?.userDefinedServices()
         }
         if section == SECTION_EXTERNAL {
             return imageryForRegion
@@ -101,7 +101,7 @@ class AerialListViewController: UITableViewController {
     
         let list = aerialList(forSection: indexPath.section)
         let cell = tableView.dequeueReusableCell(withIdentifier: "backgroundCell", for: indexPath)
-        let aerial = list?[indexPath.row] as? AerialService
+        let aerial = list?[indexPath.row]
     
         // set selection
         var title = aerial?.name
@@ -145,7 +145,7 @@ class AerialListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            aerials?.removeUserDefinedService(at: indexPath.row)
+            aerials!.removeUserDefinedService(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -153,13 +153,13 @@ class AerialListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-        let service = aerials?.userDefinedServices()[fromIndexPath.row] as? AerialService
-        aerials?.removeUserDefinedService(at: fromIndexPath.row)
-        aerials?.addUserDefinedService(service, at: toIndexPath.row)
+		let service = aerials!.userDefinedServices()[fromIndexPath.row]
+        aerials!.removeUserDefinedService(at: fromIndexPath.row)
+        aerials!.addUserDefinedService(service, at: toIndexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == SECTION_USER && indexPath.row < (aerials?.userDefinedServices().count ?? 0) {
+        if indexPath.section == SECTION_USER && indexPath.row < aerials!.userDefinedServices().count {
             return true
         }
         return false
@@ -180,7 +180,7 @@ class AerialListViewController: UITableViewController {
         let mapView = appDelegate?.mapView
     
         let list = aerialList(forSection: indexPath.section) ?? []
-        let service = (indexPath.row < list.count ? list[indexPath.row] : nil) as? AerialService
+		let service = (indexPath.row < list.count ? list[indexPath.row] : nil)
         if service == nil {
             return
         }
@@ -209,27 +209,24 @@ class AerialListViewController: UITableViewController {
                 while cell != nil && !(cell is UITableViewCell) {
                     cell = cell?.superview
                 }
-                var indexPath: IndexPath? = nil
-                if let cell = cell as? UITableViewCell {
-                    indexPath = tableView.indexPath(for: cell)
-                }
-                if indexPath == nil {
+                guard let cell = cell as? UITableViewCell,
+					  let indexPath = tableView.indexPath(for: cell)
+                else {
                     return
                 }
-                let a = aerialList(forSection: indexPath?.section ?? 0) ?? []
-                let service = ((indexPath?.row ?? 0) < a.count ? a[indexPath?.row ?? 0] : nil) as? AerialService
-                if service == nil {
+				let a = aerialList(forSection: indexPath.section ) ?? []
+				guard let service = ((indexPath.row ) < a.count ? a[indexPath.row ] : nil) else {
                     return
                 }
-                if indexPath?.section == SECTION_USER {
+				if indexPath.section == SECTION_USER {
                     editRow = indexPath
                 }
-                c?.name = service?.name
-                c?.url = service?.isMaxar != nil ? nil : service?.url
-                if let maxZoom = service?.maxZoom {
-                    c?.zoom = NSNumber(value: maxZoom)
+				c?.name = service.name
+				c?.url = service.isMaxar() ? nil : service.url
+				if service.maxZoom > 0 {
+                    c?.zoom = NSNumber(value: service.maxZoom)
                 }
-                c?.projection = service?.wmsProjection
+				c?.projection = service.wmsProjection
             }
     
             c?.completion = { service in

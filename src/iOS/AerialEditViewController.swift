@@ -20,7 +20,7 @@ class AerialEditViewController: UITableViewController {
     var url: String?
     var zoom: NSNumber?
     var projection: String?
-    var completion: ((_ service: AerialService?) -> Void)?
+    var completion: ((_ service: AerialService) -> Void)?
     
     private let TMS_PROJECTION_NAME = "(TMS)"
     
@@ -64,9 +64,9 @@ class AerialEditViewController: UITableViewController {
     
     @IBAction func done(_ sender: Any) {
         // remove white space from subdomain list
-        var url = urlField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        url = url?.replacingOccurrences(of: "%7B", with: "{")
-        url = url?.replacingOccurrences(of: "%7D", with: "}")
+        var url = urlField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+        url = url.replacingOccurrences(of: "%7B", with: "{")
+        url = url.replacingOccurrences(of: "%7D", with: "}")
         
         if isBannedURL(urlField.text) {
             return
@@ -79,8 +79,8 @@ class AerialEditViewController: UITableViewController {
             projection = ""
         }
         
-        let service = AerialService.aerial(
-            withName: nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+        let service = AerialService(
+			withName: nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "",
             identifier: identifier,
             url: url,
             maxZoom: zoomField.text?.intValue ?? 0,
