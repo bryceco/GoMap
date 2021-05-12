@@ -141,11 +141,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
         #if targetEnvironment(macCatalyst)
         // mouseover support for Mac Catalyst:
         let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
-        mapView.add(hover)
+        mapView.addGestureRecognizer(hover)
         
         // right-click support for Mac Catalyst:
         let rightClick = UIContextMenuInteraction(delegate: self)
-        mapView.add(rightClick)
+        mapView.addInteraction(rightClick)
         #endif
     }
     
