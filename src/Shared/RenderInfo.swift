@@ -18,14 +18,14 @@ var g_DefaultRender: RenderInfo? = nil
 class RenderInfo: NSObject {
     var renderPriority = 0
 
-    var key: String?
+    var key: String = ""
     var value: String?
     var lineColor: UIColor?
     var lineWidth: CGFloat = 0.0
     var areaColor: UIColor?
 
     override var description: String {
-        return "\(super.description) \(key ?? "")=\(value ?? "")"
+		return "\(super.description) \(key)=\(value ?? "")"
     }
 
     func isAddressPoint() -> Bool {
@@ -79,7 +79,7 @@ class RenderInfo: NSObject {
 #endif
     }
     
-    func renderPriority(for object: OsmBaseObject?) -> Int {
+    func renderPriorityForObject(_ object: OsmBaseObject?) -> Int {
         var highwayDict: [String : NSNumber] = [:]
         highwayDict = [
             "motorway": NSNumber(value: 29),
@@ -199,17 +199,17 @@ class RenderInfoDatabase: NSObject {
         allFeatures = RenderInfoDatabase.readConfiguration()
         keyDict = [:]
         for tag in allFeatures {
-            var valDict = keyDict[tag.key ?? ""]
+            var valDict = keyDict[tag.key]
             if valDict == nil {
                 valDict = [tag.value : tag]
-                keyDict[tag.key ?? ""] = valDict
             } else {
-                valDict?[tag.value] = tag
+				valDict![tag.value] = tag
             }
+			keyDict[tag.key] = valDict
         }
     }
 
-    func renderInfo(for object: OsmBaseObject) -> RenderInfo? {
+	func renderInfoForObject(_ object: OsmBaseObject) -> RenderInfo? {
         var tags = object.tags
         // if the object is part of a rendered relation than inherit that relation's tags
         if (object.parentRelations?.count != 0) && (object.isWay() != nil) && !object.hasInterestingTags() {
@@ -231,27 +231,23 @@ class RenderInfoDatabase: NSObject {
         var bestIsDefault = false
         var bestCount = 0
         for (key, value) in tags ?? [:] {
-            let valDict = keyDict[key]
-            if valDict == nil {
-                return nil
-            }
-            var render = valDict?[value] as? RenderInfo
+			guard let valDict = keyDict[key] else { continue }
+			var render = valDict[value]
             var isDefault = false
             if render == nil {
-                render = valDict?[""] as? RenderInfo
+                render = valDict[""]
                 if render != nil {
                     isDefault = true
                 }
             }
-            if render == nil {
-                return nil
-            }
-            let count: Int = ((render?.lineColor != nil) ? 1 : 0) + ((render?.areaColor != nil) ? 1 : 0)
+            guard let render = render else { continue }
+
+			let count: Int = ((render!.lineColor != nil) ? 1 : 0) + ((render!.areaColor != nil) ? 1 : 0)
             if bestRender == nil || (bestIsDefault && !isDefault) || (count > bestCount) {
                 bestRender = render
                 bestCount = count
                 bestIsDefault = isDefault
-                return nil
+                continue
             }
         }
         if let bestRender = bestRender {

@@ -16,7 +16,7 @@
 #import "OsmMember.h"
 #import "POIAllTagsViewController.h"
 //#import "PushPinView.h"
-#import "RenderInfo.h"
+//#import "RenderInfo.h"
 //#import "WikiPage.h"
 
 

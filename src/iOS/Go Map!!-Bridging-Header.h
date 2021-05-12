@@ -10,7 +10,7 @@
 #import "OsmRelation.h"
 #import "OsmWay.h"
 #import "PathUtil.h"
-#import "RenderInfo.h"
+//#import "RenderInfo.h"
 #import "VectorMath.h"
 #import "MercatorTileLayer.h"
 //#import "GpxLayer.h"

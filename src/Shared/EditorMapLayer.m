@@ -21,7 +21,7 @@
 #import "PathUtil.h"
 #import "QuadMap.h"
 //#import "SpeechBalloonLayer.h"
-#import "RenderInfo.h"
+//#import "RenderInfo.h"
 #import "VectorMath.h"
 #import "Go_Map__-Swift.h"
 
@@ -2291,7 +2291,7 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 	// get renderInfo for objects
 	for ( OsmBaseObject * object in objects ) {
 		if ( object.renderInfo == nil ) {
-			object.renderInfo = [RenderInfoDatabase.sharedRenderInfoDatabase renderInfoForObject:object];
+			object.renderInfo = [RenderInfoDatabase.shared renderInfoForObject:object];
 //            object.renderInfo = [RenderInfoDatabase._database renderInfoFor:object];
 		}
 		if ( object->renderPriorityCached == 0 ) {
