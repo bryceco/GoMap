@@ -21,13 +21,13 @@ import Foundation
 class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTaskDelegate {
     
     var _urlSession: URLSession?
-    var _downloadCount: Int = 0
+    var _downloadCount: AtomicInt
     
     override init() {
+		_downloadCount = AtomicInt(0)
         super.init()
         let config = URLSessionConfiguration.default
         _urlSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-        _downloadCount = 0
     }
     
     static var pool = DownloadThreadPool()
@@ -45,12 +45,12 @@ class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTaskDelega
         request?.addValue("8bit", forHTTPHeaderField: "Content-Transfer-Encoding")
         request?.cachePolicy = .reloadIgnoringLocalCacheData
         
-        _downloadCount += 1
+		_downloadCount.increment()
         
         var task: URLSessionDataTask? = nil
         if let request = request {
             task = _urlSession?.dataTask(with: request, completionHandler: { [self] data, response, error in
-                _downloadCount += 1
+				_downloadCount.decrement()
                 var data = data
                 var error = error
                 let httpResponse = response as? HTTPURLResponse
@@ -96,6 +96,6 @@ class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTaskDelega
     }
     
     func downloadsInProgress() -> Int {
-        return _downloadCount
+		return _downloadCount.value()
     }
 }

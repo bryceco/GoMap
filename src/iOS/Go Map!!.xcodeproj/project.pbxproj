@@ -45,6 +45,7 @@
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
 		02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* AerialList.swift */; };
 		02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */; };
+		02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A123EC264CAE6F005638C1 /* Atomic.swift */; };
 		02A194B019C69701002338DA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A194AF19C69701002338DA /* Database.m */; };
 		02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A194B119C6A432002338DA /* libsqlite3.0.dylib */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
@@ -245,6 +246,7 @@
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A077D0167A77A400686261 /* POIAllTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIAllTagsViewController.h; sourceTree = "<group>"; };
 		02A077D1167A77A400686261 /* POIAllTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIAllTagsViewController.m; sourceTree = "<group>"; };
+		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Atomic.swift; path = ../Shared/Atomic.swift; sourceTree = "<group>"; };
 		02A194AE19C69701002338DA /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Database.h; path = ../Shared/Database.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		02A194AF19C69701002338DA /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = Database.m; path = ../Shared/Database.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		02A194B119C6A432002338DA /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -787,6 +789,7 @@
 				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
+				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1183,6 +1186,7 @@
 				C3FA9249263FF95B000A2A99 /* LocationURLParser.swift in Sources */,
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
 				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
+				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				64981F1F22667D7700178476 /* ContactUsViewController+Extension.swift in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
 				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
