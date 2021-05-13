@@ -32,15 +32,13 @@ class FpsLabel: UILabel {
                 if showFPS {
                     isHidden = false
                     let displayLink = DisplayLink.shared()
-                    displayLink?.addName("FpsLabel", block: {
+                    displayLink.addName("FpsLabel", block: {
                         self.frameUpdated()
                     })
 
                     // create a timer to update the text twice a second
-                    let queue = DispatchQueue.main
-                    timer = DispatchSource.makeTimerSource(queue: queue)
-                    let leeway = DispatchTimeInterval.nanoseconds(Int((Double(FRAME_COUNT) * Double(NSEC_PER_SEC) / 60)))
-                    timer?.schedule(deadline: .now(), repeating: Double(NSEC_PER_SEC) / 2, leeway: leeway)
+                    timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+					timer?.schedule(deadline: .now(), repeating: .milliseconds(500))
                     timer?.setEventHandler(handler: { [weak self] in
                         self?.updateText()
                     })
@@ -50,7 +48,7 @@ class FpsLabel: UILabel {
                     text = nil
                     isHidden = true
                     let displayLink = DisplayLink.shared()
-                    displayLink?.removeName("FpsLabel")
+                    displayLink.removeName("FpsLabel")
                     timer?.cancel()
                 }
             }
