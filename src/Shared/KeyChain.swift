@@ -14,99 +14,76 @@ import Security
 private let APP_NAME = "Go Map"
 
 class KeyChain: NSObject {
-    class func searchDictionary(forIdentifier identifier: String) -> [CFString : Any]? {
-        let encodedIdentifier = identifier.data(using: .utf8)
+    class func searchDictionary(forIdentifier identifier: String) -> [String : Any] {
+		guard let encodedIdentifier = identifier.data(using: .utf8) else { return [:] }
         // Setup dictionary to access keychain.
-        if let encodedIdentifier = encodedIdentifier {
-            return [
+        return [
             // Specify we are using a password (rather than a certificate, internet password, etc).
-                kSecClass: kSecClassGenericPassword,
+			kSecClass as String: kSecClassGenericPassword,
             // Uniquely identify this keychain accessor.
-                kSecAttrService: APP_NAME,
+			kSecAttrService as String: APP_NAME,
             // Uniquely identify the account who will be accessing the keychain.
-                kSecAttrGeneric: encodedIdentifier,
-                kSecAttrAccount: encodedIdentifier
-            ]
-        }
-        return nil
+			kSecAttrGeneric as String: encodedIdentifier,
+			kSecAttrAccount as String: encodedIdentifier
+		]
     }
 
     class func getStringForIdentifier(_ identifier: String) -> String {
         // Setup dictionary to access keychain.
-        let searchDictionary = self.searchDictionary(forIdentifier: identifier) as? NSMutableDictionary ?? [:]
-        searchDictionary.addEntries(from: [
-            // Limit search results to one.
-                kSecMatchLimit: kSecMatchLimitOne,
-            // Specify we want NSData/CFData returned.
-                kSecReturnData: kCFBooleanTrue
-            ])
+        var searchDictionary = self.searchDictionary(forIdentifier: identifier)
+		// Limit search results to one.
+        searchDictionary[ kSecMatchLimit as String ] = kSecMatchLimitOne
+		// Specify we want NSData/CFData returned.
+		searchDictionary[ kSecReturnData as String ] = kCFBooleanTrue!
+
         // Search.
-        var foundDict: CFTypeRef? = nil
-        var status: OSStatus? = nil
-        status = SecItemCopyMatching(searchDictionary, &foundDict)
-        if status != noErr {
-            return ""
-        }
-        let data = foundDict as? Data
-        if data == nil {
-            return ""
-        }
-        if let data = data {
-            if let retString = String(data: data, encoding: .utf8) {
-                return retString
-            }
-        }
+        var foundData: AnyObject? = nil
+		let status = SecItemCopyMatching(searchDictionary as CFDictionary, &foundData)
+        if status == noErr,
+		   let data = foundData as? Data,
+		   let string = String(data: data, encoding: .utf8)
+		{
+			return string
+		}
         return ""
     }
 
     class func update(_ value: String, forIdentifier identifier: String) -> Bool {
         // Setup dictionary to access keychain.
         let searchDictionary = self.searchDictionary(forIdentifier: identifier)
-        let valueData = value.data(using: .utf8)
-        var updateDictionary: [CFString : Any] = [:]
-        if let valueData = valueData {
-            updateDictionary = [
-                kSecValueData: valueData
-            ]
-        }
+		guard let valueData = value.data(using: .utf8) else { return false }
+        let updateDictionary = [ kSecValueData as String: valueData ]
 
         // Update.
-        var status: OSStatus? = nil
-        if let dictionary = searchDictionary as CFDictionary?, let dictionary1 = updateDictionary as CFDictionary? {
-            status = SecItemUpdate(
-                dictionary,
-                dictionary1)
-        }
-
+        let status = SecItemUpdate( searchDictionary as CFDictionary,
+									updateDictionary as CFDictionary)
         return status == errSecSuccess
     }
 
     class func setString(_ value: String, forIdentifier identifier: String) -> Bool {
-        let searchDictionary = self.searchDictionary(forIdentifier: identifier) as? NSMutableDictionary ?? [:]
-        let valueData = value.data(using: .utf8)
-        searchDictionary[kSecValueData] = valueData
+		var searchDictionary = self.searchDictionary(forIdentifier: identifier)
+		guard let valueData = value.data(using: .utf8) else { return false }
+        searchDictionary[kSecValueData as String] = valueData
 
         // Protect the keychain entry so it's only valid when the device is unlocked.
-        searchDictionary[kSecAttrAccessible] = kSecAttrAccessibleWhenUnlocked
+        searchDictionary[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlocked
 
-        // Add.
-        var status: OSStatus? = nil
-        status = SecItemAdd(searchDictionary, nil)
+        // Add it
+        let status = SecItemAdd(searchDictionary as CFDictionary, nil)
 
         // If the addition was successful, return. Otherwise, attempt to update existing key or quit (return NO).
         if status == errSecSuccess {
             return true
         } else if status == errSecDuplicateItem {
             return self.update(value, forIdentifier: identifier)
-        } else {
-            return false
         }
+		return false
     }
 
     class func deleteString(forIdentifier identifier: String) {
-        let searchDictionary = self.searchDictionary(forIdentifier: identifier) as? NSMutableDictionary ?? [:]
+        let searchDictionary = self.searchDictionary(forIdentifier: identifier)
 
         // Delete.
-        SecItemDelete(searchDictionary)
+        SecItemDelete(searchDictionary as CFDictionary)
     }
 }
