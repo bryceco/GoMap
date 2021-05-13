@@ -46,6 +46,7 @@
 		02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* AerialList.swift */; };
 		02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */; };
 		02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A123EC264CAE6F005638C1 /* Atomic.swift */; };
+		02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096C1263E567200E3B129 /* DisplayLink.swift */; };
 		02A194B019C69701002338DA /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A194AF19C69701002338DA /* Database.m */; };
 		02A194B219C6A432002338DA /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A194B119C6A432002338DA /* libsqlite3.0.dylib */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
@@ -106,7 +107,6 @@
 		C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */; };
 		C30C22B22644236400D8C932 /* POIAllTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A077D1167A77A400686261 /* POIAllTagsViewController.m */; };
 		C30C22B6264425C000D8C932 /* aes.m in Sources */ = {isa = PBXBuildFile; fileRef = 025B99A2240DEF1D007E0342 /* aes.m */; };
-		C30C22B82644260500D8C932 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D096E8263EB99700E3B129 /* DisplayLink.m */; };
 		C30C22BB264426B700D8C932 /* EditorMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 02ACBA7616713F2A00BB4414 /* EditorMapLayer.m */; };
 		C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */; };
 		C31315242644292C00C0AD86 /* LayerProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 0216636F24738C9600B0B0F6 /* LayerProperties.m */; };
@@ -451,7 +451,6 @@
 		C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationBallLayer.swift; path = ../Shared/LocationBallLayer.swift; sourceTree = "<group>"; };
 		C3D096D7263EAE1E00E3B129 /* MyApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyApplication.swift; sourceTree = "<group>"; };
 		C3D096DA263EB73E00E3B129 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		C3D096E7263EB99700E3B129 /* DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisplayLink.h; path = ../Shared/DisplayLink.h; sourceTree = "<group>"; };
 		C3D096E8263EB99700E3B129 /* DisplayLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DisplayLink.m; path = ../Shared/DisplayLink.m; sourceTree = "<group>"; };
 		C3D096EE263EBE5D00E3B129 /* OsmMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMember.swift; sourceTree = "<group>"; };
 		C3D096EF263EBE5D00E3B129 /* OsmNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmNode.swift; sourceTree = "<group>"; };
@@ -720,7 +719,6 @@
 				0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */,
 				02A194AE19C69701002338DA /* Database.h */,
 				02A194AF19C69701002338DA /* Database.m */,
-				C3D096E7263EB99700E3B129 /* DisplayLink.h */,
 				C3D096E8263EB99700E3B129 /* DisplayLink.m */,
 				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
 				0289D0DD16A88BA300F86151 /* DLog.h */,
@@ -1143,11 +1141,11 @@
 				C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
 				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
-				C30C22B82644260500D8C932 /* DisplayLink.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				C3FA9286264238AF000A2A99 /* PersistentWebCache.m in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
+				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
 				C31315242644292C00C0AD86 /* LayerProperties.m in Sources */,
 				021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */,

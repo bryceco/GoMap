@@ -14,40 +14,39 @@ import CoreVideo
 class DisplayLink: NSObject{
     
 #if os(iOS)
-    var _displayLink: CADisplayLink?
+	var _displayLink: CADisplayLink!
 #else
-    var _displayLink: CVDisplayLink?
+    let _displayLink: CVDisplayLink
 #endif
-    var blockDict: NSMutableDictionary?
+	var blockDict = [String : (()->Void)]()
     
     private static let g_shared = DisplayLink()
     
-    class func shared() -> DisplayLink? {
+    class func shared() -> DisplayLink {
         // `dispatch_once()` call was converted to a static variable initializer
         return g_shared
     }
     
     override init() {
-        super.init()
+		super.init()
+		_displayLink = CADisplayLink(target: self, selector: #selector(step))
+		print("\(self)")
 #if os(iOS)
-        _displayLink = CADisplayLink(target: self, selector: #selector(update(_:)))
-        _displayLink?.isPaused = true
-        _displayLink?.add(to: RunLoop.main, forMode: .default)
+        _displayLink.isPaused = true
+        _displayLink.add(to: RunLoop.main, forMode: .default)
 #else
         let displayID = CGMainDisplayID()
         CVDisplayLinkCreateWithCGDisplay(displayID, &displayLink)
         CVDisplayLinkSetOutputCallback(displayLink, displayLinkCallback, &self)
 #endif
     }
-    
-    @objc func update(_ displayLink: CADisplayLink?) {
-        blockDict?.enumerateKeysAndObjects({ name, block, stop in
-            if let block = block as? (() -> ()) {
-                block()
-            }
-        })
-    }
-    
+
+	@objc func step() {
+		for (_,block) in blockDict {
+			block()
+		}
+	}
+
 #if os(iOS)
 #else
     func displayLinkOutputCallback(displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ displayLinkContext: UnsafeMutablePointer<Void>) -> CVReturn {
@@ -58,7 +57,7 @@ class DisplayLink: NSObject{
     
     func duration() -> Double {
 #if os(iOS)
-        return _displayLink?.duration ?? 0
+        return _displayLink.duration
 #else
         return CVDisplayLinkGetActualOutputVideoRefreshPeriod(displayLink)
 #endif
@@ -66,31 +65,31 @@ class DisplayLink: NSObject{
     
     func timestamp() -> CFTimeInterval {
 #if os(iOS)
-        return _displayLink?.timestamp ?? 0
+        return _displayLink.timestamp
 #else
         return CACurrentMediaTime()
 #endif
     }
     
-    func addName(_ name: NSString, block: @escaping () -> Void) {
-        blockDict?.setObject(block, forKey: name)
+    func addName(_ name: String, block: @escaping () -> Void) {
+        blockDict[name] = block
 #if os(iOS)
-        _displayLink?.isPaused = false
+        _displayLink.isPaused = false
 #else
         CVDisplayLinkStart(displayLink)
 #endif
     }
     
     func hasName(_ name: String) -> Bool {
-        return blockDict?[name] != nil
+		return blockDict[name] != nil
     }
     
     func removeName(_ name: String) {
-        blockDict?.removeObject(forKey: name)
+		blockDict.removeValue(forKey: name)
         
-        if blockDict?.count == 0 {
+        if blockDict.count == 0 {
 #if os(iOS)
-            _displayLink?.isPaused = true
+            _displayLink.isPaused = true
 #else
             CVDisplayLinkStop(displayLink)
 #endif
@@ -99,7 +98,7 @@ class DisplayLink: NSObject{
     
     deinit {
 #if os(iOS)
-        _displayLink?.remove(from: RunLoop.main, forMode: .default)
+        _displayLink.remove(from: RunLoop.main, forMode: .default)
 #else
         CVDisplayLinkRelease(displayLink)
 #endif

@@ -23,7 +23,7 @@
 #import "OsmMapData+Edit.h"
 #import "ExternalGPS.h"
 #import "DDXML.h"
-#import "DisplayLink.h"
+//#import "DisplayLink.h"
 #import "OsmBaseObject.h"
 #import "aes.h"
 
