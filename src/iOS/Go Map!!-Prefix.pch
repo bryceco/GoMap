@@ -18,5 +18,6 @@
 	#import <Foundation/Foundation.h>
     #import <CoreLocation/CoreLocation.h>
     #import <MessageUI/MessageUI.h>
+	#include <CommonCrypto/CommonCryptor.h>
     #import "Go_Map__-Swift.h"
 #endif

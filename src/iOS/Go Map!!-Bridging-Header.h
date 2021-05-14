@@ -25,7 +25,7 @@
 #import "DDXML.h"
 //#import "DisplayLink.h"
 #import "OsmBaseObject.h"
-#import "aes.h"
+//#import "aes.h"
 
 UIImage * IconScaledForDisplay(UIImage *icon);
 UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize);
