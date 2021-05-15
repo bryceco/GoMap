@@ -824,7 +824,7 @@ class GpxLayer: CALayer {
         let tRotation = OSMTransformRotation(mapView.screenFromMapTransform)
         let tScale = OSMTransformScaleX(mapView.screenFromMapTransform)
         let pScale = tScale / PATH_SCALING
-        var scale = Int(-9223372036854775808)
+		var scale = Int(floor(-log(pScale)))
 //        var scale = floor(-log(-Double.greatestFiniteMagnitude))
 //        var scale = floor(-log(Double.infinity))
 //        var scale = floor(-log(pScale))
@@ -837,8 +837,8 @@ class GpxLayer: CALayer {
             let layer = getShapeLayer(for: track)
             
             if track.shapePaths[scale] == nil {
-                let epsilon = pow(10.0, scale) / 256.0
-                track.shapePaths[scale] = PathWithReducePoints(track.shapePaths[0], Double(truncating: epsilon as NSNumber))
+                let epsilon = pow(Double(10.0), Double(scale)) / 256.0
+				track.shapePaths[scale] = PathWithReducePoints(track.shapePaths[0]!, epsilon)
             }
             //		DLog(@"reduce %ld to %ld\n",CGPathPointCount(track->shapePaths[0]),CGPathPointCount(track->shapePaths[scale]));
             layer.path = track.shapePaths[scale]

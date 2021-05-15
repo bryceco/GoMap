@@ -23,15 +23,14 @@ private class PathPoints {
     private var segment: Int = 0
 
     init(WithPath path: CGPath) {
-        let count = CGPathPointCount(path)
-        points = [CGPoint](unsafeUninitializedCapacity: count) { buffer, initializedCount in
-            initializedCount = CGPathGetPoints(path, buffer.baseAddress)
-        }
+        points = CGPathGetPoints( path )
         var len: CGFloat = 0.0
-        for i in 1 ..< points.count {
-            len += hypot(points[i].x - points[i - 1].x,
-                         points[i].y - points[i - 1].y)
-        }
+		if points.count >= 2 {
+			for i in 1 ..< points.count {
+				len += hypot(points[i].x - points[i - 1].x,
+							 points[i].y - points[i - 1].y)
+			}
+		}
         length = len
     }
 

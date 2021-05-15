@@ -18,7 +18,7 @@
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
-#import "PathUtil.h"
+//#import "PathUtil.h"
 //#import "QuadMap.h"
 //#import "SpeechBalloonLayer.h"
 //#import "RenderInfo.h"
@@ -1125,7 +1125,10 @@ static NSString * HouseNumberForObjectTags( NSDictionary * tags )
 		double dx = lastPoint.x - firstPoint.x;
 		if ( dx < 0 ) {
 			// reverse path
-			CGMutablePathRef path2 = PathReversed( path );
+			path = nil;
+			CGMutablePathRef path2 = [PathUtil pathReversed:path];
+			CGPathRetain(path2);	// need this because this came from a swift wrapper that will deallocate it on deinit
+
 			CGPathRelease(path);
 			path = path2;
 		}
@@ -1378,19 +1381,19 @@ const static CGFloat Z_HIGHLIGHT_ARROW	= Z_BASE + 14 * ZSCALE;
 					double hue = object.ident.longLongValue % 20 - 10;
 					__block BOOL hasPrev = NO;
 					__block OSMPoint prevPoint;
-					CGPathApplyBlockEx(path, ^(CGPathElementType type, CGPoint *points) {
+					[PathUtil CGPathApplyBlockEx:path block:^(CGPathElementType type, CGPoint point) {
 						if ( type == kCGPathElementMoveToPoint ) {
-							prevPoint = Add( refPoint, Mult(OSMPointFromCGPoint(points[0]),1/PATH_SCALING));
+							prevPoint = Add( refPoint, Mult(OSMPointFromCGPoint(point),1/PATH_SCALING));
 							hasPrev = YES;
 						} else if ( type == kCGPathElementAddLineToPoint && hasPrev ) {
-							OSMPoint pt = Add( refPoint, Mult(OSMPointFromCGPoint(points[0]),1/PATH_SCALING));
+							OSMPoint pt = Add( refPoint, Mult(OSMPointFromCGPoint(point),1/PATH_SCALING));
 							CALayer * wall = [self buildingWallLayerForPoint:pt point:prevPoint height:height hue:hue];
 							[layers addObject:wall];
 							prevPoint = pt;
 						} else {
 							hasPrev = NO;
 						}
-					});
+					}];
 					if ( YES ) {
 						// get roof
 						UIColor	* color = [UIColor colorWithHue:0 saturation:0.05 brightness:0.75+hue/100 alpha:1.0];

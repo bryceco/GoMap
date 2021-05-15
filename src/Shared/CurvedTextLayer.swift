@@ -194,10 +194,7 @@ import QuartzCore
         //	NSLog(@"\"%@\"",string);
 
         // get line segments
-        var pathPoints = Array(repeating: CGPoint.zero, count: CGPathPointCount(path))
-        pathPoints.withUnsafeMutableBufferPointer { a in
-            _ = CGPathGetPoints(path, a.baseAddress)
-        }
+        var pathPoints = CGPathGetPoints(path)
         EliminatePointsOnStraightSegments(points: &pathPoints)
         if pathPoints.count < 2 {
             return nil
