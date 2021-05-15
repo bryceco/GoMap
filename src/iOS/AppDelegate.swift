@@ -22,6 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var isAppUpgrade = false
     var externalGPS: ExternalGPS?
 
+	override init() {
+		super.init()
+
+		// do translations from old Obj-C names to Swift names
+		NSKeyedUnarchiver.setClass(PresetKeyUserDefined.classForKeyedArchiver(), 	forClassName: "CustomPreset")
+		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), 		 	forClassName: "PresetValue")
+		NSKeyedUnarchiver.setClass(QuadMap.classForKeyedArchiver(), 				forClassName: "QuadMap")
+		NSKeyedUnarchiver.setClass(MyUndoManager.classForKeyedArchiver(), 			forClassName: "UndoManager")
+	}
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         let url = launchOptions?[.url] as? URL
         if let url = url {

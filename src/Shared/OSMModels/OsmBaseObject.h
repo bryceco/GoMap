@@ -10,9 +10,9 @@
 
 #import "VectorMath.h"
 #import "iosapi.h"
+#import "MyUndoManager.h"
 
 @class RenderInfo;
-@class UndoManager;
 @class OsmNode;
 @class OsmWay;
 @class OsmRelation;
@@ -98,14 +98,14 @@ NSDictionary * _Nullable MergeTags(NSDictionary * _Nullable myself, NSDictionary
 -(void)serverUpdateIdent:(OsmIdentifier)ident;
 -(void)serverUpdateInPlace:(OsmBaseObject *_Nonnull)newerVersion;
 
--(void)incrementModifyCount:(UndoManager *_Nullable)undo;
--(void)resetModifyCount:(UndoManager *_Nullable)undo;
--(void)setTags:(NSDictionary<NSString *, NSString *> *_Nullable)tags undo:(UndoManager *_Nullable)undo;
--(void)setTimestamp:(NSDate *_Nonnull)date undo:(UndoManager *_Nullable)undo;
--(void)setDeleted:(BOOL)deleted undo:(UndoManager *_Nullable)undo;
+-(void)incrementModifyCount:(MyUndoManager *_Nullable)undo;
+-(void)resetModifyCount:(MyUndoManager *_Nullable)undo;
+-(void)setTags:(NSDictionary<NSString *, NSString *> *_Nullable)tags undo:(MyUndoManager *_Nullable)undo;
+-(void)setTimestamp:(NSDate *_Nonnull)date undo:(MyUndoManager *_Nullable)undo;
+-(void)setDeleted:(BOOL)deleted undo:(MyUndoManager *_Nullable)undo;
 
--(void)addParentRelation:(OsmRelation *_Nonnull)relation undo:(UndoManager *_Nullable)undo;
--(void)removeParentRelation:(OsmRelation *_Nullable)relation undo:(UndoManager *_Nullable)undo;
+-(void)addParentRelation:(OsmRelation *_Nonnull)relation undo:(MyUndoManager *_Nullable)undo;
+-(void)removeParentRelation:(OsmRelation *_Nullable)relation undo:(MyUndoManager *_Nullable)undo;
 
 -(void)clearCachedProperties;
 

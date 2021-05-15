@@ -16,8 +16,8 @@
 @property (readonly,nonatomic)    NSInteger    wayCount;
 @property (assign,nonatomic)    OsmWay    *    turnRestrictionParentWay;    // temporarily used during turn restriction processing
 
--(void)setLongitude:(double)longitude latitude:(double)latitude undo:(UndoManager *)undo;
--(void)setWayCount:(NSInteger)wayCount undo:(UndoManager *)undo;
+-(void)setLongitude:(double)longitude latitude:(double)latitude undo:(MyUndoManager *)undo;
+-(void)setWayCount:(NSInteger)wayCount undo:(MyUndoManager *)undo;
 
 -(OSMPoint)location;
 -(BOOL)isBetterToKeepThan:(OsmNode *)node;

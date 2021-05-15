@@ -17,7 +17,7 @@ static NSString * UndoManagerDidChangeNotification = @"UndoManagerDidChangeNotif
 
 typedef void(^UndoManagerChangeCallback)(void);
 
-@interface UndoManager : NSObject <NSCoding>
+@interface MyUndoManager : NSObject <NSCoding>
 {
 	CFRunLoopObserverRef _runLoopObserver;
 	

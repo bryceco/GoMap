@@ -128,7 +128,7 @@
 
 
 
--(void)assignMembers:(NSArray *)members undo:(UndoManager *)undo
+-(void)assignMembers:(NSArray *)members undo:(MyUndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);
@@ -176,7 +176,7 @@
     _members = [members mutableCopy];
 }
 
--(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo
+-(void)removeMemberAtIndex:(NSInteger)index undo:(MyUndoManager *)undo
 {
     assert(undo);
     OsmMember * member = _members[index];
@@ -188,7 +188,7 @@
         [obj removeParentRelation:self undo:nil];
     }
 }
--(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo
+-(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(MyUndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);

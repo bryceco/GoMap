@@ -295,7 +295,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     assert(date);
     return date;
 }
--(void)setTimestamp:(NSDate *)date undo:(UndoManager *)undo
+-(void)setTimestamp:(NSDate *)date undo:(MyUndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);
@@ -323,7 +323,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 {
     return _modifyCount > 0;
 }
--(void)incrementModifyCount:(UndoManager *)undo
+-(void)incrementModifyCount:(MyUndoManager *)undo
 {
     assert( _modifyCount >= 0 );
     if ( _constructed ) {
@@ -339,7 +339,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
     // update cached values
     [self clearCachedProperties];
 }
--(void)resetModifyCount:(UndoManager *)undo
+-(void)resetModifyCount:(MyUndoManager *)undo
 {
     assert(undo);
     _modifyCount = 0;
@@ -386,7 +386,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 {
     return _deleted;
 }
--(void)setDeleted:(BOOL)deleted undo:(UndoManager *)undo
+-(void)setDeleted:(BOOL)deleted undo:(MyUndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);
@@ -400,7 +400,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 {
     return _tags;
 }
--(void)setTags:(NSDictionary<NSString *, NSString *> *)tags undo:(UndoManager *)undo
+-(void)setTags:(NSDictionary<NSString *, NSString *> *)tags undo:(MyUndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);
@@ -646,7 +646,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
 }
 
 
--(void)addParentRelation:(OsmRelation *)parentRelation undo:(UndoManager *)undo
+-(void)addParentRelation:(OsmRelation *)parentRelation undo:(MyUndoManager *)undo
 {
     if ( _constructed && undo ) {
         [undo registerUndoWithTarget:self selector:@selector(removeParentRelation:undo:) objects:@[parentRelation,undo]];
@@ -659,7 +659,7 @@ NSDictionary * MergeTags( NSDictionary * ourTags, NSDictionary * otherTags, BOOL
         _parentRelations = @[ parentRelation ];
     }
 }
--(void)removeParentRelation:(OsmRelation *)parentRelation undo:(UndoManager *)undo
+-(void)removeParentRelation:(OsmRelation *)parentRelation undo:(MyUndoManager *)undo
 {
     if ( _constructed && undo ) {
         [undo registerUndoWithTarget:self selector:@selector(addParentRelation:undo:) objects:@[parentRelation,undo]];

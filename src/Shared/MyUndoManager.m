@@ -7,14 +7,14 @@
 //
 
 #import "DLog.h"
-#import "UndoManager.h"
+#import "MyUndoManager.h"
 
 @class OsmBaseObject;
 
 static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActivity activity,void *info)
 {
 	if ( activity & kCFRunLoopAfterWaiting ) {
-		UndoManager * undoManager = (__bridge id)info;
+		MyUndoManager * undoManager = (__bridge id)info;
 		++undoManager.runLoopCounter;
 	}
 }
@@ -48,6 +48,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 - (void)encodeWithCoder:(NSCoder *)coder
 {
 	DbgAssert(_target);
+	DLog(@"encode %@: %@",[_target class],_selector);
 	[coder encodeObject:_target		forKey:@"target"];
 	[coder encodeObject:_selector	forKey:@"selector"];
 	[coder encodeObject:_objects	forKey:@"objects"];
@@ -61,6 +62,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 	_selector	= [coder decodeObjectForKey:@"selector"];
 	_objects	= [coder decodeObjectForKey:@"objects"];
 	_group		= [coder decodeIntegerForKey:@"group"];
+	DLog(@"decode %@: %@",[_target class],_selector);
 	DbgAssert(_target);
     return self;
 }
@@ -140,7 +142,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 #pragma mark UndoManager
 
-@implementation UndoManager
+@implementation MyUndoManager
 
 @synthesize isUndoing = _isUndoing;
 @synthesize isRedoing = _isRedoing;
@@ -301,7 +303,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 	assert(!_isUndoing && !_isRedoing);
 	_isUndoing = YES;
-	[UndoManager doActionGroupFromStack:_undoStack];
+	[MyUndoManager doActionGroupFromStack:_undoStack];
 	_isUndoing = NO;
 
 	[self didChangeValueForKey:@"canUndo"];
@@ -322,7 +324,7 @@ static void RunLoopObserverCallBack(CFRunLoopObserverRef observer,CFRunLoopActiv
 
 	assert(!_isUndoing && !_isRedoing);
 	_isRedoing = YES;
-	[UndoManager doActionGroupFromStack:_redoStack];
+	[MyUndoManager doActionGroupFromStack:_redoStack];
 	_isRedoing = NO;
 
 	[self didChangeValueForKey:@"canUndo"];

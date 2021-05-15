@@ -16,8 +16,8 @@
 
 -(void)constructNode:(NSNumber *)node;
 -(void)constructNodeList:(NSMutableArray *)nodes;
--(void)removeNodeAtIndex:(NSInteger)index undo:(UndoManager *)undo;
--(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo;
+-(void)removeNodeAtIndex:(NSInteger)index undo:(MyUndoManager *)undo;
+-(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(MyUndoManager *)undo;
 
 -(void)resolveToMapData:(OsmMapData *)mapData;
 -(OSMPoint)centerPoint;

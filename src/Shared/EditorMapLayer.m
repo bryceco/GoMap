@@ -19,7 +19,7 @@
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 #import "PathUtil.h"
-#import "QuadMap.h"
+//#import "QuadMap.h"
 //#import "SpeechBalloonLayer.h"
 //#import "RenderInfo.h"
 #import "VectorMath.h"

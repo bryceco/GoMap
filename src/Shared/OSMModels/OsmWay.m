@@ -52,7 +52,7 @@
     }
 }
 
--(void)removeNodeAtIndex:(NSInteger)index undo:(UndoManager *)undo
+-(void)removeNodeAtIndex:(NSInteger)index undo:(MyUndoManager *)undo
 {
     assert(undo);
     OsmNode * node = _nodes[index];
@@ -62,7 +62,7 @@
     [node setWayCount:node.wayCount-1 undo:nil];
     [self computeBoundingBox];
 }
--(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(UndoManager *)undo
+-(void)addNode:(OsmNode *)node atIndex:(NSInteger)index undo:(MyUndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);
@@ -530,7 +530,7 @@
     if ( self ) {
         _nodes    = [coder decodeObjectForKey:@"nodes"];
         _constructed = YES;
-#if DEBUG
+#if DEBUG && NO
         for ( OsmNode * node in _nodes ) {
             assert( node.wayCount > 0 );
         }

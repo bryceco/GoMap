@@ -77,7 +77,7 @@
     return dist;
 }
 
--(void)setLongitude:(double)longitude latitude:(double)latitude undo:(UndoManager *)undo
+-(void)setLongitude:(double)longitude latitude:(double)latitude undo:(MyUndoManager *)undo
 {
     if ( _constructed ) {
         assert(undo);
@@ -132,7 +132,7 @@
 {
     return _wayCount;
 }
--(void)setWayCount:(NSInteger)wayCount undo:(UndoManager *)undo
+-(void)setWayCount:(NSInteger)wayCount undo:(MyUndoManager *)undo
 {
     if ( _constructed && undo ) {
         [undo registerUndoWithTarget:self selector:@selector(setWayCount:undo:) objects:@[@(_wayCount),undo]];

@@ -21,8 +21,8 @@
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
-#import "QuadMap.h"
-#import "UndoManager.h"
+//#import "QuadMap.h"
+#import "MyUndoManager.h"
 #import "VectorMath.h"
 
 #import "Database.h"
@@ -96,7 +96,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
         _relations        = [NSMutableDictionary dictionaryWithCapacity:10];
         _region            = [QuadMap new];
         _spatial        = [QuadMap new];
-        _undoManager    = [UndoManager new];
+        _undoManager    = [MyUndoManager new];
         
         [self initCommon];
     }
@@ -415,7 +415,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 	[object incrementModifyCount:_undoManager];
 }
 
--(void)clearCachedProperties:(OsmBaseObject *)object undo:(UndoManager *)undo
+-(void)clearCachedProperties:(OsmBaseObject *)object undo:(MyUndoManager *)undo
 {
 	[undo registerUndoWithTarget:self selector:@selector(clearCachedProperties:undo:) objects:@[object,undo]];
 	[object clearCachedProperties];
@@ -2129,12 +2129,25 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(id)unarchiver:(NSKeyedUnarchiver *)unarchiver didDecodeObject:(id)object
 {
+	DLog(@"didDecode %@: %@",[object class],object);
 	if ( [object isKindOfClass:[EditorMapLayer class]] ) {
 		DbgAssert( g_EditorMapLayerForArchive );
 		return g_EditorMapLayerForArchive;
 	}
 	return object;
 }
+
+-(id)unarchiver:(NSKeyedArchiver *)unarchiver cannotDecodeObjectOfClassName:(nonnull NSString *)name originalClasses:(nonnull NSArray<NSString *> *)classNames
+{
+	DLog(@"archive error: %@",name);
+	return nil;
+}
+
+- (void)unarchiver:(NSKeyedUnarchiver *)unarchiver willReplaceObject:(id)object withObject:(id)newObject
+{
+	DLog(@"replacing %@ -> %@", object, newObject);
+}
+
 
 -(BOOL)saveArchive
 {
@@ -2443,7 +2456,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		return nil;
 	}
 
-	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+	NSKeyedUnarchiver * unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:data error:nil];
 	unarchiver.delegate = self;
 	self = [unarchiver decodeObjectForKey:@"OsmMapData"];
 	if ( self ) {

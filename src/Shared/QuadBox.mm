@@ -8,8 +8,8 @@
 
 #include <vector>
 
-#import "QuadMap.h"
-#import "UndoManager.h"
+//#import "QuadMap.h"
+#import "MyUndoManager.h"
 
 #if DEBUG
 #define SHOW_DOWNLOAD_QUADS 0
@@ -28,6 +28,14 @@ static const OSMRect MAP_RECT = { -180, -90, 360, 180 };
 
 static const NSInteger MAX_MEMBERS_PER_LEVEL = 16;
 static const NSInteger MAX_DEPTH = 26;	// 2 feet wide
+
+typedef enum {
+	QUAD_SE = 0,
+	QUAD_SW = 1,
+	QUAD_NE = 2,
+	QUAD_NW = 3,
+	QUAD_LAST = 3
+} QUAD_ENUM;
 
 class QuadBoxCC
 {

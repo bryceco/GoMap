@@ -10,7 +10,7 @@
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
-#import "UndoManager.h"
+#import "MyUndoManager.h"
 #import "VectorMath.h"
 
 

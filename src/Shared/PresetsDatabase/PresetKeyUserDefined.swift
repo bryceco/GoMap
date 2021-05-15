@@ -64,9 +64,6 @@ import Foundation
 		do {
 			// some people experience a crash during loading...
 			let path = PresetKeyUserDefinedList.archivePath()
-			// do translations from old Obj-C names to Swift names
-			NSKeyedUnarchiver.setClass(PresetKeyUserDefined.classForKeyedArchiver(), forClassName: "CustomPreset")
-			NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), 		 forClassName: "PresetValue")
 			// decode
 			if #available(iOS 11.0, *) {
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))

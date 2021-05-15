@@ -2,6 +2,7 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
+#import "MyUndoManager.h"
 #import "EditorMapLayer.h"
 #import "LayerProperties.h"
 #import "OsmMapData.h"
@@ -26,6 +27,7 @@
 //#import "DisplayLink.h"
 #import "OsmBaseObject.h"
 //#import "aes.h"
+#import "QuadBox.h"
 
 UIImage * IconScaledForDisplay(UIImage *icon);
 UIImage * ImageScaledToSize( UIImage * image, CGFloat iconSize);

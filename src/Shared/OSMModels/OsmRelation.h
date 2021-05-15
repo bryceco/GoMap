@@ -18,9 +18,9 @@
 -(BOOL)resolveToMapData:(OsmMapData *)mapData;
 -(NSSet *)allMemberObjects;
 
--(void)removeMemberAtIndex:(NSInteger)index undo:(UndoManager *)undo;
--(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(UndoManager *)undo;
--(void)assignMembers:(NSArray *)members undo:(UndoManager *)undo;
+-(void)removeMemberAtIndex:(NSInteger)index undo:(MyUndoManager *)undo;
+-(void)addMember:(OsmMember *)member atIndex:(NSInteger)index undo:(MyUndoManager *)undo;
+-(void)assignMembers:(NSArray *)members undo:(MyUndoManager *)undo;
 
 -(BOOL)isMultipolygon;
 -(BOOL)isBoundary;
