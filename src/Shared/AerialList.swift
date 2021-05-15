@@ -31,7 +31,7 @@ class AerialService: NSObject {
     private(set) var name: String
     private(set) var identifier: String
     private(set) var url: String
-    private(set) var maxZoom: Int32 = 0
+    private(set) var maxZoom: Int = 0
     
     
     private(set) var polygon: CGPath?
@@ -81,7 +81,7 @@ class AerialService: NSObject {
 
 		super.init()
 
-        self.maxZoom = Int32(maxZoom ?? 21)
+        self.maxZoom = maxZoom ?? 21
         roundZoomUp = roundUp
         self.startDate = startDate
         self.endDate = endDate

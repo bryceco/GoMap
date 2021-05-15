@@ -11,7 +11,7 @@ import QuartzCore
 
 //let CUSTOM_TRANSFORM = 1
 
-@inline(__always) func modulus(_ a: Int32, _ n: Int32) -> Int32 {
+@inline(__always) func modulus(_ a: Int, _ n: Int) -> Int {
     var m = a % n
     if m < 0 {
         m += n
@@ -43,7 +43,7 @@ class MercatorTileLayer: CALayer {
     var _layerDict: [String : CALayer] = [:] // map of tiles currently displayed
     
     var mapView = MapView()
-    var isPerformingLayout = 0
+    var isPerformingLayout = AtomicInt(0)
     
     // MARK: Implementation
     
@@ -121,8 +121,8 @@ class MercatorTileLayer: CALayer {
         }
     }
     
-    func zoomLevel() -> Int32 {
-        return (aerialService?.roundZoomUp ?? false) ? Int32(ceil(mapView.zoom())): Int32(floor(mapView.zoom()))
+    func zoomLevel() -> Int {
+        return aerialService!.roundZoomUp ? Int(ceil(mapView.zoom())): Int(floor(mapView.zoom()))
     }
     
     func metadata(_ callback: @escaping (Data?, Error?) -> Void) {
@@ -186,7 +186,7 @@ class MercatorTileLayer: CALayer {
 
     func removeUnneededTiles(for rect: OSMRect, zoomLevel: Int) {
         let MAX_ZOOM = 30
-        
+
         var removeList: [CALayer] = []
         
         // remove any tiles that don't intersect the current view
@@ -198,9 +198,8 @@ class MercatorTileLayer: CALayer {
         for layer in removeList {
             let key = layer.value(forKey: "tileKey") as? String
             if let key = key {
-                // DLog(@"discard %@ - %@",key,layer);
+				DLog("prune \(key): \(layer)")
                 _layerDict.removeValue(forKey: key)
-                //			NSLog(@"prune %@",key);
                 layer.removeFromSuperlayer()
                 layer.contents = nil
             }
@@ -208,21 +207,17 @@ class MercatorTileLayer: CALayer {
         removeList.removeAll()
         
         // next remove objects that are covered by a parent (larger) object
-        var layerList = [[CALayer]?](repeating: nil, count: MAX_ZOOM)
+        var layerList = [[CALayer]](repeating: [CALayer](), count: MAX_ZOOM)
         var transparent = [Bool](repeating: false, count: MAX_ZOOM) // some objects at this level are transparent
         // place each object in a zoom level bucket
         for layer in sublayers ?? [] {
-            let tileKey = layer.value(forKey: "tileKey") as? String
-            let z = Int(tileKey ?? "") ?? 0 // zoom level
+            let tileKey = layer.value(forKey: "tileKey") as! String
+			let z = Int( tileKey[..<tileKey.firstIndex(of: ",")!] )!
             if z < MAX_ZOOM {
                 if layer.contents == nil {
                     transparent[z] = true
                 }
-                if layerList[z] == nil {
-                    layerList[z] = [layer]
-                } else {
-                    layerList[z]?.append(layer)
-                }
+				layerList[z].append(layer)
             }
         }
         
@@ -231,9 +226,7 @@ class MercatorTileLayer: CALayer {
         var z = zoomLevel
         while z >= 0 {
             if remove {
-                if let layerList = layerList[z] {
-                    removeList.append(contentsOf: layerList)
-                }
+				removeList.append(contentsOf: layerList[z])
             }
             if !transparent[z] {
                 remove = true
@@ -245,9 +238,7 @@ class MercatorTileLayer: CALayer {
         remove = false
         for z in zoomLevel..<MAX_ZOOM {
             if remove {
-                if let layerList = layerList[z] {
-                    removeList.append(contentsOf: layerList)
-                }
+				removeList.append(contentsOf: layerList[z])
             }
             if !transparent[z] {
                 remove = true
@@ -257,8 +248,7 @@ class MercatorTileLayer: CALayer {
         for layer in removeList {
             let key = layer.value(forKey: "tileKey") as? String
             if let key = key {
-                // DLog(@"prune %@ - %@",key,layer);
-                //			NSLog(@"prune %@",key);
+                DLog("prune \(key): \(layer)")
                 _layerDict.removeValue(forKey: key)
                 layer.removeFromSuperlayer()
                 layer.contents = nil
@@ -268,95 +258,94 @@ class MercatorTileLayer: CALayer {
 
     func isPlaceholderImage(_ data: Data?) -> Bool {
         if let data = data {
-            return (aerialService?.placeholderImage as NSData?)?.isEqual(to: data) ?? false
+            return (aerialService!.placeholderImage as NSData?)?.isEqual(to: data) ?? false
         }
         return false
     }
     
-    func quadKey(forZoom zoom: Int32, tileX: Int32, tileY: Int32) -> NSString {
-        return TileXYToQuadKey(Int(tileX), Int(tileY), Int(zoom))
+    func quadKey(forZoom zoom: Int, tileX: Int, tileY: Int) -> String {
+        return TileXYToQuadKey(tileX, tileY, zoom)
     }
     
-    func url(forZoom zoom: Int32, tileX: Int32, tileY: Int32) -> URL {
-        var url = NSString(string: aerialService?.url ?? "")
+    func url(forZoom zoom: Int, tileX: Int, tileY: Int) -> URL {
+        var url = aerialService!.url
         
         // handle switch in URL
-        var start = url.range(of: "{switch:")
-        if start.location != NSNotFound {
-            var subs = NSRange(location: start.location + start.length, length: url.length - start.location - start.length)
-            let end = url.range(of: "}", options: [], range: subs)
-            if end.location != NSNotFound {
-                subs.length = end.location - subs.location
-                let subdomains = url.substring(with: subs)
-                let a = subdomains.components(separatedBy: ",")
-                if a.count != 0 {
-                    let t = a[Int((tileX + tileY)) % a.count]
-                    start.length = end.location - start.location + 1
-                    url = url.replacingCharacters(in: start, with: t) as NSString
-                }
-            }
-        }
-        
-        let projection = aerialService?.wmsProjection
-        if let projection = projection {
+		if let begin = url.range(of: "{switch:"),
+		   let end = url[begin.upperBound...].range(of: "}")
+		{
+			let list = url[begin.upperBound..<end.lowerBound].components(separatedBy: ",")
+			if list.count > 0 {
+				let t = list[(tileX+tileY) % list.count]
+				url.replaceSubrange(begin.lowerBound..<end.upperBound, with: t)
+			}
+		}
+
+        if let projection = aerialService?.wmsProjection,
+		   !projection.isEmpty
+		{
             // WMS
             let minXmaxY = TileToWMSCoords(Int(tileX), Int(tileY), Int(zoom), projection)
             let maxXminY = TileToWMSCoords(Int(tileX + 1), Int(tileY + 1), Int(zoom), projection)
             var bbox: String = ""
-            if (projection == "EPSG:4326") && url.lowercased.contains("crs={proj}") {
+			if (projection == "EPSG:4326") && url.lowercased().contains("crs={proj}") {
                 // reverse lat/lon for EPSG:4326 when WMS version is 1.3 (WMS 1.1 uses srs=epsg:4326 instead
                 bbox = "\(maxXminY.y),\(minXmaxY.x),\(minXmaxY.y),\(maxXminY.x)" // lat,lon
             } else {
                 bbox = "\(minXmaxY.x),\(maxXminY.y),\(maxXminY.x),\(minXmaxY.y)" // lon,lat
             }
-            
-            url = url.replacingOccurrences(of: "{width}", with: "256", options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{height}", with: "256", options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{proj}", with: projection, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{bbox}", with: bbox, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{wkid}", with: projection.replacingOccurrences(of: "EPSG:", with: ""), options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{w}", with: NSNumber(value: minXmaxY.x).stringValue, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{s}", with: NSNumber(value: maxXminY.y).stringValue, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{n}", with: NSNumber(value: maxXminY.x).stringValue, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{e}", with: NSNumber(value: minXmaxY.y).stringValue, options: [], range: NSMakeRange(0, url.length)) as NSString
+
+			url = url.replacingOccurrences(of: "{width}", with: "256")
+            url = url.replacingOccurrences(of: "{height}", with: "256")
+            url = url.replacingOccurrences(of: "{proj}", with: projection)
+            url = url.replacingOccurrences(of: "{bbox}", with: bbox)
+            url = url.replacingOccurrences(of: "{wkid}", with: projection.replacingOccurrences(of: "EPSG:", with: ""))
+            url = url.replacingOccurrences(of: "{w}", with: "\(minXmaxY.x)")
+            url = url.replacingOccurrences(of: "{s}", with: "\(maxXminY.y)")
+            url = url.replacingOccurrences(of: "{n}", with: "\(maxXminY.x)")
+            url = url.replacingOccurrences(of: "{e}", with: "\(minXmaxY.y)")
         } else {
             // TMS
-            let u = String(quadKey(forZoom: zoom, tileX: tileX, tileY: tileY))
+            let u = quadKey(forZoom: zoom, tileX: tileX, tileY: tileY)
             let x = "\(tileX)"
             let y = "\(tileY)"
             let negY = "\((1 << zoom) - tileY - 1)"
             let z = "\(zoom)"
             
-            url = url.replacingOccurrences(of: "{u}", with: u, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{x}", with: x, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{y}", with: y, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{-y}", with: negY, options: [], range: NSMakeRange(0, url.length)) as NSString
-            url = url.replacingOccurrences(of: "{z}", with: z, options: [], range: NSMakeRange(0, url.length)) as NSString
+            url = url.replacingOccurrences(of: "{u}", with: u)
+            url = url.replacingOccurrences(of: "{x}", with: x)
+            url = url.replacingOccurrences(of: "{y}", with: y)
+            url = url.replacingOccurrences(of: "{-y}", with: negY)
+            url = url.replacingOccurrences(of: "{z}", with: z)
         }
         // retina screen
         let retina = UIScreen.main.scale > 1 ? "@2x" : ""
-        url = url.replacingOccurrences(of: "{@2x}", with: retina, options: [], range: NSMakeRange(0, url.length)) as NSString
+        url = url.replacingOccurrences(of: "{@2x}", with: retina)
 
-        let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
-//https://ecn.t1.tiles.virtualearth.net/tiles/a12313302102001233031.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
-//https://ecn.%7Bswitch:t0,t1,t2,t3%7D.tiles.virtualearth.net/tiles/a%7Bu%7D.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
-//https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
+        let urlString = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? url
+		//https://ecn.t1.tiles.virtualearth.net/tiles/a12313302102001233031.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
+		//https://ecn.%7Bswitch:t0,t1,t2,t3%7D.tiles.virtualearth.net/tiles/a%7Bu%7D.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
+		//https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=587&key=ApunJH62__wQs1qE32KVrf6Fmncn7OZj6gWg_wtr27DQLDCkwkxGl4RsItKW4Fkk
 
         return URL(string: urlString)!
     }
 
     func fetchTile(
-        forTileX tileX: Int32,
-        tileY: Int32,
-        minZoom: Int32,
-        zoomLevel: Int32,
-        completion: @escaping (_ error: Error?) -> Void
-    ) -> Bool {
+        forTileX tileX: Int,
+        tileY: Int,
+        minZoom: Int,
+        zoomLevel: Int,
+        completion: @escaping (_ error: Error?) -> Void ) -> Bool
+	{
         let tileModX = modulus(tileX, 1 << zoomLevel)
         let tileModY = modulus(tileY, 1 << zoomLevel)
-        
         let tileKey = "\(zoomLevel),\(tileX),\(tileY)"
-        guard _layerDict[tileKey] != nil else {
+
+		if _layerDict[tileKey] != nil {
+			// already have it
+			completion(nil)
+			return true
+		} else {
             // create layer
             let layer = CALayer()
             layer.actions = actions
@@ -372,9 +361,9 @@ class MercatorTileLayer: CALayer {
             //#endif
             _layerDict[tileKey] = layer
             
-            isPerformingLayout += 1
+			isPerformingLayout.increment()
             addSublayer(layer)
-            isPerformingLayout -= 1
+			isPerformingLayout.decrement()
             
             // check memory cache
             let cacheKey = String(quadKey(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY))
@@ -383,89 +372,82 @@ class MercatorTileLayer: CALayer {
                 fallbackURL: { [self] in
                     return url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
                 },
-                objectForData: { [self] data in
-                    if let data = data {
-                        if data.count == 0 || isPlaceholderImage(data) {
-                            return nil
-                        }
-                        return UIImage(data: data)
+                objectForData: { data in
+                    if let data = data,
+					   data.count > 0,
+					   !self.isPlaceholderImage(data),
+					   let image = UIImage(data: data)
+					{
+						return image
                     }
                     return nil
-                }) { [self] image in
-                if let image = image as? UIImage {
-                    if layer.superlayer != nil {
-#if os(iOS)
-                        layer.contents = image.cgImage
-#else
-                        layer.contents = image
-#endif
-                        layer.isHidden = false
-                        //#if CUSTOM_TRANSFORM
-                        setSublayerPositions([tileKey: layer])
-                        //#else
-                        //                    let rc = mapView.boundingMapRectForScreen()
-                        //                    removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
-                        //#endif
-                    } else {
-                        // no longer needed
-                    }
-                    completion(nil)
-                } else if zoomLevel > minZoom {
-                    // try to show tile at one zoom level higher
-                    DispatchQueue.main.async(execute: { [self] in
-                        fetchTile(
-                            forTileX: tileX >> 1,
-                            tileY: tileY >> 1,
-                            minZoom: minZoom,
-                            zoomLevel: zoomLevel - 1,
-                            completion: completion)
-                    })
-                } else {
-                    // report error
-#if false
-                    if let data = data {
-                        var json: JSONSerialization?
-                        do {
-                            json = try JSONSerialization.jsonObject(with: data, options: [])
-                            text = json.description()
-                        } catch error {
-                            text = String(bytes: data.bytes, encoding: .utf8)
-                        }
-                    }
-#endif
-                    let error = NSError(domain: "Image", code: 100, userInfo: [
-                        NSLocalizedDescriptionKey: NSLocalizedString("No image data available", comment: "")
-                    ])
-                    DispatchQueue.main.async(execute: {
-                        completion(error)
-                    })
-                }
-            } as? UIImage
-            if cachedImage != nil {
-                #if os(iOS)
-                                layer.contents = cachedImage!.cgImage
-                #else
-                                layer?.contents = cachedImage
-                #endif
-                                layer.isHidden = false
-                                completion(nil)
-                                //            if completion != nil {
-                                //                completion(nil)
-                                //            }
-                                return true
-            }
-//            print(cachedImage)
-//            if let cachedImage = cachedImage as? UIImage {
-//
-//            }
-            return false // not immediately satisfied
+                },
+				completion: { [self] image in
+					if let image = image as? UIImage {
+						if layer.superlayer != nil {
+	#if os(iOS)
+							layer.contents = image.cgImage
+	#else
+							layer.contents = image
+	#endif
+							layer.isHidden = false
+							//#if CUSTOM_TRANSFORM
+							setSublayerPositions([tileKey: layer])
+							//#else
+							//                    let rc = mapView.boundingMapRectForScreen()
+							//                    removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
+							//#endif
+						} else {
+							// no longer needed
+						}
+						completion(nil)
+					} else if zoomLevel > minZoom {
+						// try to show tile at one zoom level higher
+						DispatchQueue.main.async(execute: { [self] in
+							fetchTile(
+								forTileX: tileX >> 1,
+								tileY: tileY >> 1,
+								minZoom: minZoom,
+								zoomLevel: zoomLevel - 1,
+								completion: completion)
+						})
+					} else {
+						// report error
+	#if false
+						if let data = data {
+							var json: JSONSerialization?
+							do {
+								json = try JSONSerialization.jsonObject(with: data, options: [])
+								text = json.description()
+							} catch error {
+								text = String(bytes: data.bytes, encoding: .utf8)
+							}
+						}
+	#endif
+						let error = NSError(domain: "Image", code: 100, userInfo: [
+							NSLocalizedDescriptionKey: NSLocalizedString("No image data available", comment: "")
+						])
+						DispatchQueue.main.async(execute: {
+							completion(error)
+						})
+					}
+				}) as? UIImage
+			if cachedImage != nil {
+				#if os(iOS)
+				layer.contents = cachedImage!.cgImage
+				#else
+				layer?.contents = cachedImage
+				#endif
+				layer.isHidden = false
+				completion(nil)
+				return true
+			}
+			return false // not immediately satisfied
         }
-        completion(nil)
-        return true
     }
 
     override func setNeedsLayout() {
-        if isPerformingLayout != 0 {
+		if isPerformingLayout.value() != 0 {
             return
         }
         super.setNeedsLayout()
@@ -499,20 +481,21 @@ class MercatorTileLayer: CALayer {
 //#endif
 
     func layoutSublayersSafe() {
+		guard let aerialService = aerialService else { return }
         let rect = mapView.boundingMapRectForScreen()
         var zoomLevel = self.zoomLevel()
         
         if zoomLevel < 1 {
             zoomLevel = 1
-        } else if zoomLevel > (aerialService?.maxZoom ?? 0) {
-            zoomLevel = aerialService?.maxZoom ?? 0
+        } else if zoomLevel > aerialService.maxZoom {
+            zoomLevel = aerialService.maxZoom
         }
         
         let zoom = Double((1 << zoomLevel)) / 256.0
-        let tileNorth: __int32_t = __int32_t(floor((rect.origin.y) * zoom))
-        let tileWest: __int32_t = __int32_t(floor((rect.origin.x) * zoom))
-        let tileSouth: __int32_t = __int32_t(ceil((rect.origin.y + rect.size.height) * zoom))
-        let tileEast: __int32_t = __int32_t(ceil((rect.origin.x + rect.size.width) * zoom))
+        let tileNorth = Int(floor((rect.origin.y) * zoom))
+        let tileWest = Int(floor((rect.origin.x) * zoom))
+        let tileSouth = Int(ceil((rect.origin.y + rect.size.height) * zoom))
+        let tileEast = Int(ceil((rect.origin.x + rect.size.width) * zoom))
         
         if (tileEast - tileWest) * (tileSouth - tileNorth) > 4000 {
             DLog("Bad tile transform: \((tileEast - tileWest) * (tileSouth - tileNorth))")
@@ -527,20 +510,21 @@ class MercatorTileLayer: CALayer {
                 fetchTile(
                     forTileX: tileX,
                     tileY: tileY,
-                    minZoom: Int32(max(zoomLevel - 8, 1)),
-                    zoomLevel: zoomLevel) { [self] error in
-                    if let error = error {
-                        mapView.presentError(error, flash: true)
-                    }
-                    mapView.progressDecrement()
-                }
+                    minZoom: max(zoomLevel - 8, 1),
+                    zoomLevel: zoomLevel,
+					completion: { [self] error in
+						if let error = error {
+							mapView.presentError(error, flash: true)
+						}
+						mapView.progressDecrement()
+                })
             }
         }
         
 //#if CUSTOM_TRANSFORM
         // update locations of tiles
         setSublayerPositions(_layerDict)
-        removeUnneededTiles(for: OSMRectFromCGRect(bounds), zoomLevel: Int(zoomLevel))
+        removeUnneededTiles(for: OSMRectFromCGRect(bounds), zoomLevel: zoomLevel)
 //#else
 //        let rc = mapView.boundingMapRectForScreen()
 //        removeUnneededTiles(for: rc, zoomLevel: Int(zoomLevel))
@@ -553,18 +537,18 @@ class MercatorTileLayer: CALayer {
         if isHidden {
             return
         }
-        isPerformingLayout += 1
+		isPerformingLayout.increment()
         layoutSublayersSafe()
-        isPerformingLayout -= 1
+		isPerformingLayout.decrement()
     }
     
-    func downloadTile(forKey cacheKey: NSString, completion: @escaping () -> Void) {
+    func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {
         var tileX = Int()
         var tileY = Int()
         var zoomLevel = Int()
         QuadKeyToTileXY(cacheKey, &tileX, &tileY, &zoomLevel)
         let url: (() -> URL) = { [self] in
-            return self.url(forZoom: Int32(zoomLevel), tileX: Int32(tileX), tileY: Int32(tileY))
+            return self.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
         }
         let data2 = _webCache.object(withKey: String(cacheKey), fallbackURL: url, objectForData: { [self] data in
             if !((data?.count ?? 0) == 0 || isPlaceholderImage(data)) {
@@ -607,10 +591,10 @@ class MercatorTileLayer: CALayer {
         var neededTiles: [String] = []
         for zoomLevel in minZoomLevel...maxZoomLevel {
             let zoom = Double((1 << zoomLevel)) / 256.0
-            let tileNorth: __int32_t = __int32_t(floor((rect.origin.y) * zoom))
-            let tileWest: __int32_t = __int32_t(floor((rect.origin.x) * zoom))
-            let tileSouth: __int32_t = __int32_t(ceil((rect.origin.y + rect.size.height) * zoom))
-            let tileEast: __int32_t = __int32_t(ceil((rect.origin.x + rect.size.width) * zoom))
+            let tileNorth = Int(floor((rect.origin.y) * zoom))
+            let tileWest = Int(floor((rect.origin.x) * zoom))
+            let tileSouth = Int(ceil((rect.origin.y + rect.size.height) * zoom))
+            let tileEast = Int(ceil((rect.origin.x + rect.size.width) * zoom))
             
             for tileX in tileWest..<tileEast {
                 for tileY in tileNorth..<tileSouth {

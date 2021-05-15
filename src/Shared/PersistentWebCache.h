@@ -21,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(id _Nullable)objectWithKey:(NSString * _Nonnull)cacheKey
 				 fallbackURL:(NSURL *(^_Nonnull)(void))url
-			   objectForData:(id(^)(NSData *_Nullable))objectForData
-				  completion:(void(^_Nonnull)(id))completion;
+			   objectForData:(id _Nullable(^)(NSData *_Nullable))objectForData
+				  completion:(void(^_Nonnull)(id _Nullable))completion;
 
 -(void)removeAllObjects;
 -(void)removeObjectsAsyncOlderThan:(NSDate *_Nonnull)expiration;

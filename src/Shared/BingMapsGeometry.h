@@ -226,13 +226,13 @@ inline static NSString * TileXYToQuadKey2(long tileX, long tileY, int levelOfDet
 /// <param name="tileX">Output parameter receiving the tile X coordinate.</param>
 /// <param name="tileY">Output parameter receiving the tile Y coordinate.</param>
 /// <param name="levelOfDetail">Output parameter receiving the level of detail.</param>
-inline static void QuadKeyToTileXY(NSString * quadKey, int * tileX, int * tileY, int * levelOfDetail)
+inline static void QuadKeyToTileXY(NSString * quadKey, long * tileX, long * tileY, long * levelOfDetail)
 {
 	*tileX = *tileY = 0;
-	*levelOfDetail = (int)quadKey.length;
+	*levelOfDetail = quadKey.length;
 	
-	for (int i = *levelOfDetail; i > 0; i--) {
-		int mask = 1 << (i - 1);
+	for (long i = *levelOfDetail; i > 0; i--) {
+		long mask = 1 << (i - 1);
 		switch ( [quadKey characterAtIndex:*levelOfDetail - i] )  {
 			case '0':
 				break;

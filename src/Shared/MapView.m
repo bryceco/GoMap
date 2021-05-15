@@ -18,7 +18,7 @@
 //#import "FpsLabel.h"
 //#import "GpxLayer.h"
 #import "MapView.h"
-#import "MercatorTileLayer.h"
+//#import "MercatorTileLayer.h"
 //#import "MyApplication.h"
 #import "OsmNotesDatabase.h"
 #import "OsmMapData.h"
