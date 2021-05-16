@@ -27,7 +27,7 @@
 //#import "RulerView.h"
 //#import "SpeechBalloonView.h"
 //#import "TapAndDragGesture.h"
-#import "TurnRestrictController.h"
+//#import "TurnRestrictController.h"
 //#import "VoiceAnnouncement.h"
 #import "Go_Map__-Swift.h"
 
@@ -2435,7 +2435,6 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
     void (^showRestrictionEditor)(void) = ^{
         TurnRestrictController * myVc = [_mainViewController.storyboard instantiateViewControllerWithIdentifier:@"TurnRestrictController"];
         myVc.centralNode 			= self.editorLayer.selectedNode;
-        myVc.parentViewCenter		= CGRectCenter(self.layer.bounds);
         myVc.screenFromMapTransform = _screenFromMapTransform;
         myVc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         [_mainViewController presentViewController:myVc animated:YES completion:nil];
@@ -2445,9 +2444,8 @@ NSString * ActionTitle( EDIT_ACTION action, BOOL abbrev )
         
         // scroll view so intersection stays visible
         CGRect rc = myVc.viewWithTitle.frame;
-        int mid = rc.origin.y/2;
         CGPoint pt = self.pushpinView.arrowPoint;
-        CGPoint delta = { self.bounds.size.width/2 - pt.x, mid - pt.y };
+        CGPoint delta = { CGRectGetMidX(self.bounds) - pt.x, CGRectGetMidY(self.bounds) - rc.size.height/2 - pt.y };
         [self adjustOriginBy:delta];
     };
     

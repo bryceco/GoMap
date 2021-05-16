@@ -8,12 +8,12 @@
 //
 
 enum TURN_RESTRICT : Int {
-    case _NONE = 0
-    case _NO = 1
-    case _ONLY = 2
+    case NONE = 0
+    case NO = 1
+    case ONLY = 2
 }
 
-typealias BlockTurnRestrictHwyView = (TurnRestrictHwyView?) -> Void
+typealias BlockTurnRestrictHwyView = (TurnRestrictHwyView) -> Void
 
 class TurnRestrictHwyView: UIView {
     var objRel: OsmRelation? // associated relation
@@ -27,7 +27,7 @@ class TurnRestrictHwyView: UIView {
     var highwaySelectedCallback: BlockTurnRestrictHwyView?
     var restrictionChangedCallback: BlockTurnRestrictHwyView?
     var arrowButton: UIButton?
-    var parentWaysArray: [AnyHashable]?
+    var parentWaysArray = [OsmWay]()
     var restriction: TURN_RESTRICT!
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -42,7 +42,7 @@ class TurnRestrictHwyView: UIView {
     }
 
     func rotateButtonForDirection() {
-        if restriction == ._NONE {
+        if restriction == .NONE {
             let angle = CGFloat(TurnRestrictHwyView.heading(from: centerPoint, to: endPoint))
             arrowButton?.transform = CGAffineTransform(rotationAngle: .pi + angle)
         } else {

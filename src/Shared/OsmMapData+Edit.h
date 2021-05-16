@@ -46,6 +46,6 @@
 										toWay:(OsmWay *)toWay
 									toWayNode:(OsmNode *)toWayNode
 										 turn:(NSString *)strTurn
-									  newWays:(NSArray **)resultWays
-									willSplit:(BOOL(^)(NSArray * splitWays))requiresSplitting;
+									  newWays:(NSArray<OsmWay *> **)resultWays
+									willSplit:(BOOL(^)(NSArray<OsmWay *> * splitWays))requiresSplitting;
 @end
