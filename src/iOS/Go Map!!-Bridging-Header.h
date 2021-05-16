@@ -2,7 +2,10 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import "MyUndoManager.h"
+@class MyUndoManager;
+
+//#import "MyUndoManager.h"
+#import "UndoAction.h"
 #import "EditorMapLayer.h"
 #import "LayerProperties.h"
 #import "OsmMapData.h"

@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 
 #import "DDXML.h"
-#import "MyUndoManager.h"
+//#import "MyUndoManager.h"
 #import "VectorMath.h"
 
 @class EditorMapLayer;
@@ -57,7 +57,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 	NSMutableDictionary<NSNumber *, OsmRelation *>	*	_relations;
 	QuadMap											*	_region;	// currently downloaded region
 	QuadMap											*	_spatial;	// spatial index of osm data
-	MyUndoManager										*	_undoManager;
+	MyUndoManager									*	_undoManager;
 	NSTimer											*	_periodicSaveTimer;
 }
 

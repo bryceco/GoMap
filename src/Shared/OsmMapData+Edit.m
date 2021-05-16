@@ -10,7 +10,7 @@
 #import "OsmMapData.h"
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
-#import "MyUndoManager.h"
+//#import "MyUndoManager.h"
 #import "VectorMath.h"
 
 
@@ -1007,8 +1007,8 @@ static NSInteger splitArea(NSArray * nodes, NSInteger idxA)
 										toWay:(OsmWay *)toWay
 									toWayNode:(OsmNode *)toWayNode
 										 turn:(NSString *)strTurn
-									  newWays:(NSArray **)resultWays
-									willSplit:(BOOL(^)(NSArray * splitWays))requiresSplitting
+									  newWays:(NSArray<OsmWay *> **)resultWays
+									willSplit:(BOOL(^)(NSArray<OsmWay *> * splitWays))requiresSplitting
 {
 	if ( ![fromWay.nodes containsObject:viaNode] ||
 		 ![fromWay.nodes containsObject:fromWayNode] ||

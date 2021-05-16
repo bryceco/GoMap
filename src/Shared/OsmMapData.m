@@ -22,7 +22,7 @@
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 //#import "QuadMap.h"
-#import "MyUndoManager.h"
+//#import "MyUndoManager.h"
 #import "VectorMath.h"
 
 #import "Database.h"
@@ -110,7 +110,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 
 -(void)dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UndoManagerDidChangeNotification object:_undoManager];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:MyUndoManager.UndoManagerDidChangeNotification object:_undoManager];
 	[_periodicSaveTimer invalidate];
 }
 
@@ -160,7 +160,7 @@ static EditorMapLayer * g_EditorMapLayerForArchive = nil;
 {
 	__weak OsmMapData * weakSelf = self;
 
-	[[NSNotificationCenter defaultCenter] addObserverForName:UndoManagerDidChangeNotification object:_undoManager queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+	[[NSNotificationCenter defaultCenter] addObserverForName:MyUndoManager.UndoManagerDidChangeNotification object:_undoManager queue:nil usingBlock:^(NSNotification * _Nonnull note) {
 		OsmMapData * myself = weakSelf;
 		if ( myself == nil )
 			return;
@@ -665,7 +665,7 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 }
 -(void)addChangeCallback:(void(^)(void))callback
 {
-	[[NSNotificationCenter defaultCenter] addObserverForName:UndoManagerDidChangeNotification object:_undoManager queue:nil usingBlock:^(NSNotification * _Nonnull fnote) {
+	[[NSNotificationCenter defaultCenter] addObserverForName:MyUndoManager.UndoManagerDidChangeNotification object:_undoManager queue:nil usingBlock:^(NSNotification * _Nonnull fnote) {
 		callback();
 	}];
 }

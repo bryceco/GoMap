@@ -10,7 +10,7 @@
 
 #import "VectorMath.h"
 #import "iosapi.h"
-#import "MyUndoManager.h"
+//#import "MyUndoManager.h"
 
 @class RenderInfo;
 @class OsmNode;
