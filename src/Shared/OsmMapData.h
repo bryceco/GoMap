@@ -117,7 +117,7 @@ typedef OsmNode   * (^EditActionReturnNode)(void);
 -(OsmRelation *)relationForRef:(NSNumber *)ref;
 
 - (void)enumerateObjectsUsingBlock:(void (^)(OsmBaseObject * obj))block;
-- (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * obj))block;
+- (void)enumerateObjectsInRegion:(OSMRect)bbox block:(void (^)(OsmBaseObject * _Nonnull obj))block;
 - (OsmBaseObject *)objectWithExtendedIdentifier:(NSNumber *)extendedIdentifier;
 
 - (void)clearCachedProperties;

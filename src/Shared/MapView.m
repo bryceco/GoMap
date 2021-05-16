@@ -28,7 +28,7 @@
 //#import "SpeechBalloonView.h"
 //#import "TapAndDragGesture.h"
 #import "TurnRestrictController.h"
-#import "VoiceAnnouncement.h"
+//#import "VoiceAnnouncement.h"
 #import "Go_Map__-Swift.h"
 
 #if TARGET_OS_IPHONE

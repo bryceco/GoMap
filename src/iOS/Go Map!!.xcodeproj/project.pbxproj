@@ -12,7 +12,6 @@
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
 		0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */; };
 		021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */; };
-		021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */ = {isa = PBXBuildFile; fileRef = 021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */; };
 		021C6AA81686145C00FB17B0 /* MyUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C6AA71686145C00FB17B0 /* MyUndoManager.m */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetKey.swift */; };
@@ -31,6 +30,7 @@
 		02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02401F381DE1369E00F32AF5 /* ExternalGPS.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
+		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
 		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
 		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
 		027AB500250E9C9B00C404CD /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB502250E9C9B00C404CD /* Height.storyboard */; };
@@ -185,8 +185,6 @@
 		0216636F24738C9600B0B0F6 /* LayerProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LayerProperties.m; path = ../Shared/LayerProperties.m; sourceTree = "<group>"; };
 		021B30C51973AA4400B36EFF /* OsmMapData+Edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "OsmMapData+Edit.h"; path = "../Shared/OsmMapData+Edit.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = "OsmMapData+Edit.m"; path = "../Shared/OsmMapData+Edit.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VoiceAnnouncement.h; path = ../Shared/VoiceAnnouncement.h; sourceTree = "<group>"; };
-		021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = VoiceAnnouncement.m; path = ../Shared/VoiceAnnouncement.m; sourceTree = "<group>"; };
 		021C6AA61686145C00FB17B0 /* MyUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyUndoManager.h; path = ../Shared/MyUndoManager.h; sourceTree = "<group>"; };
 		021C6AA71686145C00FB17B0 /* MyUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyUndoManager.m; path = ../Shared/MyUndoManager.m; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -758,8 +756,6 @@
 				02ACBBBD16713F2A00BB4414 /* VectorMath.h */,
 				0242330F1674FDB4008A3B6A /* VectorMath.m */,
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
-				021BFCE81BDF3F9E00CE255A /* VoiceAnnouncement.h */,
-				021BFCE91BDF3F9E00CE255A /* VoiceAnnouncement.m */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
 			);
@@ -1087,6 +1083,7 @@
 				021FADD225873CC000F6E1C0 /* PresetKeyUserDefined.swift in Sources */,
 				ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */,
 				C30C22BB264426B700D8C932 /* EditorMapLayer.m in Sources */,
+				026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */,
 				ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */,
 				02A194B019C69701002338DA /* Database.m in Sources */,
 				02ACBBCA16713F2B00BB4414 /* MapView.m in Sources */,
@@ -1113,7 +1110,6 @@
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,
 				C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
-				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
