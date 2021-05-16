@@ -30,6 +30,7 @@
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
 		02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */ = {isa = PBXBuildFile; fileRef = 02401F381DE1369E00F32AF5 /* ExternalGPS.m */; };
 		024233101674FDB4008A3B6A /* VectorMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0242330F1674FDB4008A3B6A /* VectorMath.m */; };
+		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
 		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
 		027AB500250E9C9B00C404CD /* Height.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB502250E9C9B00C404CD /* Height.storyboard */; };
@@ -69,7 +70,6 @@
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C3194E250EAED500C5D200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02C3194C250EAED500C5D200 /* Localizable.strings */; };
-		02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C4255216796B5800761C54 /* SpeechBalloonView.m */; };
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
 		02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D5B5F2248F154D00FEE448 /* Colors.swift */; };
@@ -316,8 +316,6 @@
 		02C3199B250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Changeset.strings"; sourceTree = "<group>"; };
 		02C3199C250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		02C3199D250EBCAC00C5D200 /* nb-NO */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nb-NO"; path = "nb-NO.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		02C4255116796B5800761C54 /* SpeechBalloonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpeechBalloonView.h; path = ../Shared/SpeechBalloonView.h; sourceTree = "<group>"; };
-		02C4255216796B5800761C54 /* SpeechBalloonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBalloonView.m; path = ../Shared/SpeechBalloonView.m; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
 		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = ../Shared/Colors.swift; sourceTree = "<group>"; };
@@ -751,8 +749,6 @@
 				C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A564263FC943007DEC94 /* SpeechBalloonLayer.swift */,
-				02C4255116796B5800761C54 /* SpeechBalloonView.h */,
-				02C4255216796B5800761C54 /* SpeechBalloonView.m */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
@@ -1134,7 +1130,6 @@
 				021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */,
 				02A123EA264C8BA3005638C1 /* AerialList.swift in Sources */,
 				C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */,
-				02C4255316796B5800761C54 /* SpeechBalloonView.m in Sources */,
 				02F2449A264F635800C42E41 /* PathUtil.swift in Sources */,
 				C341E1532639DECC0022E983 /* WikiPage.swift in Sources */,
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
@@ -1166,6 +1161,7 @@
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				64981F1F22667D7700178476 /* ContactUsViewController+Extension.swift in Sources */,
 				02401F391DE1369E00F32AF5 /* ExternalGPS.m in Sources */,
+				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
 				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
 				C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */,
 				6453776D23D3904E00656A1C /* OsmWay.m in Sources */,

@@ -19,7 +19,7 @@
 #import "OsmNotesDatabase.h"
 #import "BingMapsGeometry.h"
 #import "DLog.h"
-#import "SpeechBalloonView.h"
+//#import "SpeechBalloonView.h"
 //#import "PersistentWebCache.h"
 #import "OsmMapData+Edit.h"
 #import "ExternalGPS.h"

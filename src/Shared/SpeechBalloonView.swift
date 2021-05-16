@@ -14,29 +14,20 @@
 #endif
 
 
-class SpeechBalloonView: NSView {
-    var path: CGMutablePath?
+class SpeechBalloonView: UIView {
+    let path: CGPath
     let arrowWidth: CGFloat = 20
     let arrowHeight: CGFloat = 48
-    var _displayLink: CADisplayLink?
-
 
     class func layerClass() -> AnyClass {
         return CAShapeLayer.self
     }
 
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
     init(text: String?) {
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        #if os(iOS)
-        wantsLayer = true
-        #endif
-        let shapeLayer = layer as? CAShapeLayer
-
-        // shape layer
-        shapeLayer?.fillColor = NSColor.white.cgColor
-        shapeLayer?.strokeColor = NSColor.black.cgColor
-        shapeLayer?.lineWidth = 6
-
         // text layer
         let textLayer = CATextLayer()
         textLayer.contentsScale = UIScreen.main.scale
@@ -45,12 +36,11 @@ class SpeechBalloonView: NSView {
         #else
         let font = NSFont.labelFont(ofSize: 12)
         #endif
-        textLayer.font = font as? CGFont
+        textLayer.font = font
         textLayer.fontSize = 18
         textLayer.alignmentMode = .center
         textLayer.string = text
-        textLayer.foregroundColor = NSColor.black.cgColor
-        shapeLayer?.addSublayer(textLayer)
+        textLayer.foregroundColor = UIColor.black.cgColor
 
         let textSize = textLayer.preferredFrameSize()
 
@@ -60,30 +50,41 @@ class SpeechBalloonView: NSView {
 
         // creat path with arrow
         let cornerRadius: CGFloat = 14
-        path = CGMutablePath()
         let center = 0.35
-        path?.move(to: CGPoint(x: boxSize.width / 2, y: boxSize.height + arrowHeight), transform: .identity) // arrow bottom
-        path?.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center - Double(arrowWidth / 2)), y: boxSize.height), transform: .identity) // arrow top-left
-        path?.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height), tangent2End: CGPoint(x: 0, y: 0), radius: cornerRadius, transform: .identity) // bottom right corner
-        path?.addArc(tangent1End: CGPoint(x: 0, y: 0), tangent2End: CGPoint(x: boxSize.width, y: 0), radius: cornerRadius, transform: .identity) // top left corner
-        path?.addArc(tangent1End: CGPoint(x: boxSize.width, y: 0), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height), radius: cornerRadius, transform: .identity) // top right corner
-        path?.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height), tangent2End: CGPoint(x: 0, y: boxSize.height), radius: cornerRadius, transform: .identity) // bottom right corner
-        path?.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center + Double(arrowWidth / 2)), y: boxSize.height), transform: .identity) // arrow top-right
-        path?.closeSubpath()
-        let viewRect = path?.boundingBoxOfPath
-        shapeLayer?.path = path
+		let path = CGMutablePath()
+        path.move(to: CGPoint(x: boxSize.width / 2, y: boxSize.height + arrowHeight), transform: .identity) // arrow bottom
+        path.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center - Double(arrowWidth / 2)), y: boxSize.height), transform: .identity) // arrow top-left
+        path.addArc(tangent1End: CGPoint(x: 0, y: boxSize.height), tangent2End: CGPoint(x: 0, y: 0), radius: cornerRadius, transform: .identity) // bottom right corner
+        path.addArc(tangent1End: CGPoint(x: 0, y: 0), tangent2End: CGPoint(x: boxSize.width, y: 0), radius: cornerRadius, transform: .identity) // top left corner
+        path.addArc(tangent1End: CGPoint(x: boxSize.width, y: 0), tangent2End: CGPoint(x: boxSize.width, y: boxSize.height), radius: cornerRadius, transform: .identity) // top right corner
+        path.addArc(tangent1End: CGPoint(x: boxSize.width, y: boxSize.height), tangent2End: CGPoint(x: 0, y: boxSize.height), radius: cornerRadius, transform: .identity) // bottom right corner
+        path.addLine(to: CGPoint(x: CGFloat(Double(boxSize.width) * center + Double(arrowWidth / 2)), y: boxSize.height), transform: .identity) // arrow top-right
+        path.closeSubpath()
+		self.path = path
 
         textLayer.frame = CGRect(x: (boxSize.width - textSize.width) / 2, y: (boxSize.height - textSize.height) / 2, width: textSize.width, height: textSize.height)
 
-        frame = CGRect(x: 0, y: 0, width: viewRect?.size.width ?? 0.0, height: viewRect?.size.height ?? 0.0)
+		let viewRect = path.boundingBoxOfPath
+		super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        frame = CGRect(x: 0, y: 0, width: viewRect.size.width, height: viewRect.size.height)
+
+		let shapeLayer = layer as! CAShapeLayer
+		shapeLayer.path = path
+
+		// shape layer
+		shapeLayer.fillColor = UIColor.white.cgColor
+		shapeLayer.strokeColor = UIColor.black.cgColor
+		shapeLayer.lineWidth = 6
+
+		shapeLayer.addSublayer(textLayer)
     }
 
     func setPoint(_ point: CGPoint) {
         // set bottom center at point
-        let rect = frame
+        var rect = frame
         rect.origin.x = point.x - rect.size.width / 2
         rect.origin.y = point.y - rect.size.height
-        frame = rect as? NSRect ?? NSRect.zero
+        frame = rect
     }
 
     func setTarget(_ view: UIView?) {
@@ -92,22 +93,16 @@ class SpeechBalloonView: NSView {
         setPoint(pt)
     }
 
-    func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+	override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         #if os(iOS)
         if !super.point(inside: point, with: event) {
             return false
         }
         #endif
-        if !path?.containsPoint(point, using: .winding, transform: .identity) {
-            return false
-        }
-        return true
+		return path.contains(point)
     }
 
     deinit {
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 }

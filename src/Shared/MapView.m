@@ -25,7 +25,7 @@
 #import "OsmMapData+Edit.h"
 #import "OsmMember.h"
 //#import "RulerView.h"
-#import "SpeechBalloonView.h"
+//#import "SpeechBalloonView.h"
 //#import "TapAndDragGesture.h"
 #import "TurnRestrictController.h"
 #import "VoiceAnnouncement.h"
