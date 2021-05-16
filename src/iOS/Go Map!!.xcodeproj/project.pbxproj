@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
+		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
 		0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216636C2470AFAB00B0B0F6 /* CurvedTextLayer.swift */; };
 		021B30C81973AA4400B36EFF /* OsmMapData+Edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 021B30C61973AA4400B36EFF /* OsmMapData+Edit.m */; };
@@ -133,7 +134,6 @@
 		C3D096F8263ECE3200E3B129 /* OsmBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 6453776523D38D4600656A1C /* OsmBaseObject.m */; };
 		C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1552639DEFC0022E983 /* FpsLabel.swift */; };
 		C3FA9249263FF95B000A2A99 /* LocationURLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationURLParser.swift */; };
-		C3FA9286264238AF000A2A99 /* PersistentWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A8263D488300E3B129 /* PersistentWebCache.m */; };
 		ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */; };
 		ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B226026541000B368C /* BingMetadataViewController.swift */; };
 		ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B326026541000B368C /* ClearCacheViewController.swift */; };
@@ -427,8 +427,6 @@
 		C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIFeaturePickerViewController.swift; sourceTree = "<group>"; };
 		C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentWebCache.swift; path = ../Shared/PersistentWebCache.swift; sourceTree = "<group>"; };
 		C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorMapLayer.swift; path = ../Shared/EditorMapLayer.swift; sourceTree = "<group>"; };
-		C3D096A8263D488300E3B129 /* PersistentWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistentWebCache.m; path = ../Shared/PersistentWebCache.m; sourceTree = "<group>"; };
-		C3D096A9263D488300E3B129 /* PersistentWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistentWebCache.h; path = ../Shared/PersistentWebCache.h; sourceTree = "<group>"; };
 		C3D096AB263D48F700E3B129 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3D096AD263D4BFB00E3B129 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictController.swift; sourceTree = "<group>"; };
@@ -743,8 +741,6 @@
 				02E8436319B39FAD0044AC1D /* OsmNotesDatabase.h */,
 				02E8436419B39FAD0044AC1D /* OsmNotesDatabase.m */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
-				C3D096A9263D488300E3B129 /* PersistentWebCache.h */,
-				C3D096A8263D488300E3B129 /* PersistentWebCache.m */,
 				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
@@ -1123,7 +1119,6 @@
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
 				021BFCEA1BDF3F9E00CE255A /* VoiceAnnouncement.m in Sources */,
 				027EDC72206F3EED00D349D6 /* DDXMLNode.m in Sources */,
-				C3FA9286264238AF000A2A99 /* PersistentWebCache.m in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
@@ -1191,6 +1186,7 @@
 				0216636D2470AFAB00B0B0F6 /* CurvedTextLayer.swift in Sources */,
 				64F59A50240915840093DCDB /* MainViewController+Extension.swift in Sources */,
 				C3D096D0263EA76500E3B129 /* GeekbenchScoreProvider.swift in Sources */,
+				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				022012BB24A015E800C1728F /* EditorMapLayer+Ocean.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,
 				C365A565263FC943007DEC94 /* SpeechBalloonLayer.swift in Sources */,

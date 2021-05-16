@@ -16,6 +16,11 @@ enum Row : Int {
     case gps = 5
 }
 
+protocol GetDiskCacheSize {
+	func getDiskCacheSize(_ pSize: inout Int, count pCount: inout Int)
+}
+
+
 class ClearCacheViewController: UITableViewController {
     @IBOutlet var _automaticCacheManagement: UISwitch!
     
@@ -50,14 +55,14 @@ class ClearCacheViewController: UITableViewController {
         let mapData = mapView?.editorLayer.mapData
         
         var title: String? = nil
-        var object: Any? = nil
+		var object: GetDiskCacheSize? = nil
         switch indexPath.row {
         case Row.osmData.rawValue:
             title = NSLocalizedString("Clear OSM Data", comment: "Delete cached data")
             object = nil
         case Row.mapnik.rawValue:
             title = NSLocalizedString("Clear Mapnik Tiles", comment: "Delete cached data")
-            object = mapView?.mapnikLayer
+			object = mapView?.mapnikLayer
         case Row.breadcrumb.rawValue:
             title = NSLocalizedString("Clear GPX Tracks", comment: "Delete cached data")
             object = mapView?.gpxLayer
@@ -84,7 +89,7 @@ class ClearCacheViewController: UITableViewController {
             DispatchQueue.global(qos: .default).async(execute: {
                 var size = Int()
                 var count = Int()
-                (object as AnyObject).getDiskCacheSize(&size, count: &count)
+                object?.getDiskCacheSize(&size, count: &count)
                 DispatchQueue.main.async(execute: {
                     cell.detailLabel.text = String.localizedStringWithFormat(NSLocalizedString("%.2f MB, %ld files", comment: "These values will always be large (plural)"), Double(size) / (1024 * 1024), count)
                 })

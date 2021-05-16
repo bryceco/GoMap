@@ -35,7 +35,7 @@ class FeaturePickerCell: UITableViewCell {
 
 var mostRecentArray: NSMutableArray = []
 var mostRecentMaximum: Int = 0
-var logoCache: PersistentWebCache? // static so memory cache persists each time we appear
+var logoCache: PersistentWebCache<UIImage>? // static so memory cache persists each time we appear
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
     
@@ -80,7 +80,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
         super.viewDidLoad()
         
         if logoCache == nil {
-            logoCache = PersistentWebCache(name: "presetLogoCache", memorySize: 5 * 1000000)
+            logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache", memorySize: 5 * 1000000)
         }
         
         tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
@@ -214,15 +214,14 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 #endif
                 return returnUrl as URL
             }, objectForData: { data in
-                if let data = data {
-                    let image = UIImage(data: data)
-                    return ImageScaledToSize(image, 60.0)
+				if let image = UIImage(data: data) {
+					return ImageScaledToSize(image, 60.0)
                 } else {
-                    return UIImage()
+					return UIImage()
                 }
             }, completion: { image in
                 if let image = image as? UIImage {
-                    DispatchQueue.main.async(execute: { [self] in
+                    DispatchQueue.main.async(execute: {
                         feature?.nsiLogo = image
                         for cell in tableView.visibleCells {
                             guard let cell = cell as? FeaturePickerCell else {

@@ -36,9 +36,9 @@ private func TileToWMSCoords(_ tx: Int, _ ty: Int, _ z: Int, _ projection: Strin
 }
 
 @objcMembers
-class MercatorTileLayer: CALayer {
+class MercatorTileLayer: CALayer, GetDiskCacheSize {
     
-    var _webCache = PersistentWebCache()
+    var _webCache = PersistentWebCache<UIImage>()
     var _logoUrl: String = ""
     var _layerDict: [String : CALayer] = [:] // map of tiles currently displayed
     
@@ -198,7 +198,7 @@ class MercatorTileLayer: CALayer {
         for layer in removeList {
             let key = layer.value(forKey: "tileKey") as? String
             if let key = key {
-				DLog("prune \(key): \(layer)")
+				// DLog("prune \(key): \(layer)")
                 _layerDict.removeValue(forKey: key)
                 layer.removeFromSuperlayer()
                 layer.contents = nil
@@ -248,7 +248,7 @@ class MercatorTileLayer: CALayer {
         for layer in removeList {
             let key = layer.value(forKey: "tileKey") as? String
             if let key = key {
-                DLog("prune \(key): \(layer)")
+                // DLog("prune \(key): \(layer)")
                 _layerDict.removeValue(forKey: key)
                 layer.removeFromSuperlayer()
                 layer.contents = nil
@@ -373,17 +373,13 @@ class MercatorTileLayer: CALayer {
                     return url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
                 },
                 objectForData: { data in
-                    if let data = data,
-					   data.count > 0,
-					   !self.isPlaceholderImage(data),
-					   let image = UIImage(data: data)
-					{
-						return image
-                    }
-                    return nil
+					if data.count == 0 || self.isPlaceholderImage(data) {
+						return nil
+					}
+					return UIImage(data: data)
                 },
 				completion: { [self] image in
-					if let image = image as? UIImage {
+					if let image = image {
 						if layer.superlayer != nil {
 	#if os(iOS)
 							layer.contents = image.cgImage
@@ -547,19 +543,18 @@ class MercatorTileLayer: CALayer {
         var tileY = Int()
         var zoomLevel = Int()
         QuadKeyToTileXY(cacheKey, &tileX, &tileY, &zoomLevel)
-        let url: (() -> URL) = { [self] in
-            return self.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
-        }
-        let data2 = _webCache.object(withKey: String(cacheKey), fallbackURL: url, objectForData: { [self] data in
-            if !((data?.count ?? 0) == 0 || isPlaceholderImage(data)) {
-                if let data = data {
-                    return data
-                }
-            }
-            return data ?? Data()
-        }) { data in
-            completion()
-        }
+        let data2 = _webCache.object(withKey: cacheKey,
+			fallbackURL: {
+				return self.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
+			},
+			objectForData: { data in
+				if data.count == 0 || self.isPlaceholderImage(data) {
+					return nil
+				}
+				return UIImage(data: data)
+			}, completion: { data in
+				completion()
+			})
         if data2 != nil {
             completion()
         }

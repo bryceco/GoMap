@@ -340,7 +340,7 @@ class GpxTrack: NSObject, NSCoding {
 }
 
 @objcMembers
-class GpxLayer: CALayer {
+class GpxLayer: CALayer, GetDiskCacheSize {
 
 	public static let USER_DEFAULTS_GPX_EXPIRATIION_KEY = "GpxTrackExpirationDays"
 	public static let USER_DEFAULTS_GPX_BACKGROUND_TRACKING = "GpxTrackBackgroundTracking"

@@ -20,7 +20,7 @@
 #import "BingMapsGeometry.h"
 #import "DLog.h"
 #import "SpeechBalloonView.h"
-#import "PersistentWebCache.h"
+//#import "PersistentWebCache.h"
 #import "OsmMapData+Edit.h"
 #import "ExternalGPS.h"
 #import "DDXML.h"
