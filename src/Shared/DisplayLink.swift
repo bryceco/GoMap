@@ -30,7 +30,6 @@ class DisplayLink: NSObject{
     override init() {
 		super.init()
 		_displayLink = CADisplayLink(target: self, selector: #selector(step))
-		print("\(self)")
 #if os(iOS)
         _displayLink.isPaused = true
         _displayLink.add(to: RunLoop.main, forMode: .default)

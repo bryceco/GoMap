@@ -497,7 +497,7 @@ class AerialList: NSObject {
 				 continue
 			}
 			guard let type = properties["type"] as? String else {
-				print("Aerial: missing properties: \(name)\n")
+				print("Aerial: missing properties: \(name)")
 				continue
 			}
 			 let projections = properties["available_projections"] as? [String]
@@ -520,7 +520,7 @@ class AerialList: NSObject {
 			{
 				// great
 			} else {
-				print("Aerial: unsupported type \(type): \(name)\n")
+				print("Aerial: unsupported type \(type): \(name)")
 				continue
 			 }
 			 if overlay != 0 {
@@ -529,7 +529,7 @@ class AerialList: NSObject {
 			 }
 			 if !(url.hasPrefix("http:") || url.hasPrefix("https:") ) {
 				 // invalid url
-				 print("Aerial: bad url \(url): \(name)\n")
+				 print("Aerial: bad url \(url): \(name)")
 				 continue
 			 }
 
@@ -596,7 +596,7 @@ class AerialList: NSObject {
 							 attribIcon = UIImage(data: decodedData)
 						 }
 						 if attribIcon == nil {
-							 print("bad icon decode: \(attribIconString ?? "")\n")
+							 print("bad icon decode: \(attribIconString ?? "")")
 						 }
 						 break
 					 }
@@ -605,7 +605,7 @@ class AerialList: NSObject {
 					 if attribIconString?.hasPrefix("http") ?? false {
 						 httpIcon = true
 					 } else {
-						print("Aerial: unsupported icon format in \(name ): \(attribIconString ?? "")\n")
+						print("Aerial: unsupported icon format in \(name ): \(attribIconString ?? "")")
 					 }
 				 }
 			 }
