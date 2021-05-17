@@ -10,6 +10,8 @@
 import SafariServices
 import UIKit
 
+private let EDIT_RELATIONS = false
+
 class TextPairTableCell: UITableViewCell {
     @IBOutlet var text1: AutocompleteTextField!
     @IBOutlet var text2: AutocompleteTextField!
@@ -26,10 +28,11 @@ class TextPairTableCell: UITableViewCell {
     }
 }
 
+@objcMembers
 class POIAllTagsViewController: UITableViewController {
-    var tags: [AnyHashable]?
-    var relations: [AnyHashable]?
-    var members: [AnyHashable]?
+	var tags: [(k:String,v:String)] = []
+    var relations: [OsmRelation] = []
+    var members: [OsmMember] = []
     @IBOutlet var _saveButton: UIBarButtonItem!
     var childViewPresented = false
     var featureID: String?
@@ -43,20 +46,21 @@ class POIAllTagsViewController: UITableViewController {
         editButton.action = #selector(toggleTableRowEditing(_:))
         navigationItem.rightBarButtonItems = [navigationItem.rightBarButtonItem, editButton].compactMap { $0 }
         
-        let tabController = tabBarController as? POITabBarController
+        let tabController = tabBarController as! POITabBarController
         
-        if tabController?.selection?.isNode() != nil {
+        if tabController.selection?.isNode() != nil {
             title = NSLocalizedString("Node Tags", comment: "")
-        } else if tabController?.selection?.isWay() != nil {
+        } else if tabController.selection?.isWay() != nil {
             title = NSLocalizedString("Way Tags", comment: "")
-        } else if tabController?.selection?.isRelation() != nil {
-            var type = tabController?.keyValueDict["type"]
-            if (type?.count ?? 0) != 0 {
-                type = type?.replacingOccurrences(of: "_", with: " ")
-                type = type?.capitalized
-                title = "\(type ?? "") Tags"
+        } else if tabController.selection?.isRelation() != nil {
+            if let type = tabController.keyValueDict["type"],
+			   !type.isEmpty
+			{
+				var type = type.replacingOccurrences(of: "_", with: " ")
+                type = type.capitalized
+                title = "\(type) Tags"
             } else {
-                title = NSLocalizedString("Relation Tags", comment: "")
+				title = NSLocalizedString("Relation Tags", comment: "")
             }
         } else {
             title = NSLocalizedString("All Tags", comment: "")
@@ -65,7 +69,18 @@ class POIAllTagsViewController: UITableViewController {
     
     deinit {
     }
-    
+
+	func cellForView(_ view: Any? ) -> TextPairTableCell? {
+		var view = view as? UIView
+		while view != nil {
+			if let pair = view as? TextPairTableCell {
+				return pair
+			}
+			view = view?.superview
+		}
+		return nil
+	}
+
     // return -1 if unchanged, else row to set focus
     func updateWithRecomendations(forFeature forceReload: Bool) -> Int {
         let tabController = tabBarController as? POITabBarController
@@ -82,19 +97,17 @@ class POIAllTagsViewController: UITableViewController {
         featureID = newFeature?.featureID
         
         // remove all entries without key & value
-        tags?.filter { NSPredicate(block: { kv, bindings in
-            return (kv?[0].count ?? 0) != 0 && (kv?[1].count ?? 0) != 0
-        }).evaluate(with: $0) }
+        tags = tags.filter { $0.k != "" && $0.v != "" }
         
-        let nextRow = tags?.count ?? 0
+        let nextRow = tags.count
         
         // add new cell ready to be edited
-        tags?.append(["", ""])
+        tags.append(("", ""))
         
         // add placeholder keys
         if let newFeature = newFeature {
             let presets = PresetsForFeature(withFeature: newFeature, objectTags: dict, geometry: geometry, update: nil)
-            var newKeys: [AnyHashable] = []
+            var newKeys: [String] = []
             for section in 0..<presets.sectionCount() {
                 for row in 0..<presets.tagsInSection(section) {
                     let preset = presets.presetAtSection(section, row: row)
@@ -122,25 +135,12 @@ class POIAllTagsViewController: UITableViewController {
                     }
                 }
             }
-            newKeys.filter { NSPredicate(block: { [self] key, bindings in
-                for kv in tags ?? [] {
-                    guard let kv = kv as? [String] else {
-                        continue
-                    }
-                    if kv[0] == key {
-                        return false
-                    }
-                }
-                return true
-            }).evaluate(with: $0) }
-            newKeys = (newKeys as NSArray).sortedArray(options: [], usingComparator: { p1, p2 in
-                return p1.compare(p2 ?? "") ?? ComparisonResult.orderedSame
-            }) as? [AnyHashable] ?? newKeys
+            newKeys = newKeys.filter { key in
+				return tags.first(where: {$0.k == key}) == nil
+            }
+			newKeys.sort()
             for key in newKeys {
-                guard let key = key as? String else {
-                    continue
-                }
-                tags?.append([key, ""])
+                tags.append((key, ""))
             }
         }
         
@@ -150,33 +150,33 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     func loadState() {
-        let tabController = tabBarController as? POITabBarController
+        let tabController = tabBarController as! POITabBarController
         
         // fetch values from tab controller
-        tags = [AnyHashable](repeating: 0, count: tabController?.keyValueDict.count ?? 0)
-        relations = tabController?.relationList
-        members = tabController?.selection?.isRelation() ? (tabController?.selection as? OsmRelation)?.members : nil
+        relations = tabController.relationList as? [OsmRelation] ?? []
+        members = (tabController.selection as? OsmRelation)?.members ?? []
         
-        tabController?.keyValueDict.enumerateKeysAndObjects({ [self] tag, value, stop in
-            tags?.append([tag, value])
-        })
+		tags = []
+		for (key,value) in tabController.keyValueDict {
+            tags.append((key, value))
+		}
         
-        tags = (tags as NSArray?)?.sortedArray(comparator: { obj1, obj2 in
-            let tag1 = obj1?[0] as? String
-            let tag2 = obj2?[0] as? String
-            let tiger1 = tag1?.hasPrefix("tiger:") ?? false || tag1?.hasPrefix("gnis:") ?? false
-            let tiger2 = tag2?.hasPrefix("tiger:") ?? false || tag2?.hasPrefix("gnis:") ?? false
+		tags.sort(by: { obj1, obj2 in
+			let tag1 = obj1.k
+			let tag2 = obj2.k
+            let tiger1 = tag1.hasPrefix("tiger:") || tag1.hasPrefix("gnis:")
+            let tiger2 = tag2.hasPrefix("tiger:") || tag2.hasPrefix("gnis:")
             if tiger1 == tiger2 {
-                return tag1?.compare(tag2 ?? "") ?? ComparisonResult.orderedSame
-            } else {
-                return tiger1 - tiger2
-            }
-        }) as? [AnyHashable] ?? tags
+                return tag1 < tag2
+			} else {
+				return (tiger1 ? 1 : 0) < (tiger2 ? 1 : 0)
+			}
+		})
         
-        updateWithRecomendations(forFeature: true)
+		_ = updateWithRecomendations(forFeature: true)
         
-        _saveButton.isEnabled = tabController?.isTagDictChanged() ?? false
-        if #available(iOS 13.0, *) {
+        _saveButton.isEnabled = tabController.isTagDictChanged()
+		if #available(iOS 13.0, *) {
             tabBarController?.isModalInPresentation = _saveButton.isEnabled
         }
     }
@@ -202,11 +202,11 @@ class POIAllTagsViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let tabController = tabBarController as? POITabBarController
-        if tabController?.selection == nil {
-            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextPairTableCell
-            if cell?.text1.text.length == 0 && cell?.text2.text?.count == 0 {
-                cell?.text1.becomeFirstResponder()
+        let tabController = tabBarController as! POITabBarController
+        if tabController.selection == nil {
+            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! TextPairTableCell
+			if cell.text1.text?.count == 0 && cell.text2.text?.count == 0 {
+                cell.text1.becomeFirstResponder()
             }
         }
     }
@@ -215,13 +215,6 @@ class POIAllTagsViewController: UITableViewController {
         if #available(macCatalyst 13,*) {
             // On Mac Catalyst set the focus to something other than a text field (which brings up the keyboard)
             // The Cancel button would be ideal but it isn't clear how to implement that, so select the Add button instead
-            if false {
-                let indexPath = IndexPath(row: tags?.count ?? 0, section: 0)
-                let cell = tableView.cellForRow(at: indexPath) as? AddNewCell
-                if cell?.button {
-                    return [cell?.button].compactMap { $0 }
-                }
-            }
         }
         return []
     }
@@ -229,10 +222,10 @@ class POIAllTagsViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        let tabController = tabBarController as? POITabBarController
-        if ((tabController?.selection?.isRelation()) != nil) {
+        let tabController = tabBarController as! POITabBarController
+        if ((tabController.selection?.isRelation()) != nil) {
             return 3
-        } else if (relations?.count ?? 0) > 0 {
+        } else if relations.count > 0 {
             return 2
         } else {
             return 1
@@ -259,26 +252,29 @@ class POIAllTagsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             // tags
-            return tags?.count ?? 0
+            return tags.count
         } else if section == 1 {
             // relations
-            return relations?.count ?? 0
+            return relations.count
         } else {
             if EDIT_RELATIONS {
-                return (members?.count ?? 0) + 1
+                return members.count + 1
             } else {
-                return members?.count ?? 0
+                return members.count
             }
         }
     }
     
     // MARK: Accessory buttons
     
-    func getAssociatedColor(for cell: TextPairTableCell?) -> UIView? {
-        if (cell?.text1.text == "colour") || (cell?.text1.text == "color") || cell?.text1.text?.hasSuffix(":colour") ?? false || cell?.text1.text?.hasSuffix(":color") ?? false {
-            let color = Colors.cssColorForColorName(cell?.text2.text)
-            if let color = color {
-                var size = cell?.text2.bounds.size.height ?? 0.0
+    func getAssociatedColor(for cell: TextPairTableCell) -> UIView? {
+        if let key = cell.text1.text,
+		   let value = cell.text2.text,
+		   key == "colour" || key == "color" || key.hasSuffix(":colour") || key.hasSuffix(":color")
+		{
+            let color = Colors.cssColorForColorName(value)
+			if let color = color {
+                var size = cell.text2.bounds.size.height
                 size = CGFloat(round(Double(size * 0.5)))
                 let square = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
                 square.backgroundColor = color
@@ -293,42 +289,53 @@ class POIAllTagsViewController: UITableViewController {
         return nil
     }
     
-    @IBAction func openWebsite(_ sender: Any) {
-        var pair = sender as? TextPairTableCell
-        while pair != nil && !(pair is UITableViewCell) {
-            pair = pair?.superview as? TextPairTableCell
-        }
-        
-        var string: String? = nil
-        if (pair?.text1.text == "wikipedia") || pair?.text1.text?.hasSuffix(":wikipedia") ?? false {
-            let a = pair?.text2.text?.components(separatedBy: ":")
-            let lang = a?[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
-            let page = a?[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
-            string = "https://\(lang ?? "").wikipedia.org/wiki/\(page ?? "")"
-        } else if (pair?.text1.text == "wikidata") || pair?.text1.text?.hasSuffix(":wikidata") ?? false {
-            let page = pair?.text2.text?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
-            string = "https://www.wikidata.org/wiki/\(page ?? "")"
-        } else if pair?.text2.text?.hasPrefix("http://") ?? false || pair?.text2.text?.hasPrefix("https://") ?? false {
-            string = pair?.text2.text
-        }
-        if let string = string {
-            let url = URL(string: string)
-            if let url = url {
-                let viewController = SFSafariViewController(url: url)
-                present(viewController, animated: true)
-            } else {
-                let alert = UIAlertController(
-                    title: NSLocalizedString("Invalid URL", comment: ""),
-                    message: nil,
-                    preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-                present(alert, animated: true)
-            }
-        }
+    @IBAction func openWebsite(_ sender: UIView?) {
+		guard let pair = cellForView(sender),
+			  let key = pair.text1.text,
+			  let value = pair.text2.text
+			else { return }
+		let string: String
+		if key == "wikipedia" || key.hasSuffix(":wikipedia") {
+			let a = value.components(separatedBy: ":")
+			guard a.count >= 2,
+				  let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
+				  let page = a[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
+			else { return }
+            string = "https://\(lang).wikipedia.org/wiki/\(page)"
+        } else if key == "wikidata" || key.hasSuffix(":wikidata") {
+            guard let page = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
+			else { return }
+            string = "https://www.wikidata.org/wiki/\(page)"
+        } else if value.hasPrefix("http://") || value.hasPrefix("https://") {
+            string = value
+		} else {
+			return
+		}
+
+		let url = URL(string: string)
+		if let url = url {
+			let viewController = SFSafariViewController(url: url)
+			present(viewController, animated: true)
+		} else {
+			let alert = UIAlertController(
+				title: NSLocalizedString("Invalid URL", comment: ""),
+				message: nil,
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+			present(alert, animated: true)
+		}
     }
     
-    func getWebsiteButton(for cell: TextPairTableCell?) -> UIView? {
-        if (cell?.text1.text == "wikipedia") || (cell?.text1.text == "wikidata") || cell?.text1.text.hasSuffix(":wikipedia") ?? false || cell?.text1.text.hasSuffix(":wikidata") ?? false || cell?.text2.text?.hasPrefix("http://") ?? false || cell?.text2.text.hasPrefix("https://") ?? false {
+    func getWebsiteButton(for cell: TextPairTableCell) -> UIView? {
+        if let key = cell.text1.text,
+		   let value = cell.text2.text,
+		   key == "wikipedia"
+			|| key == "wikidata"
+			|| key.hasSuffix(":wikipedia")
+			|| key.hasSuffix(":wikidata")
+			|| value.hasPrefix("http://")
+			|| value.hasPrefix("https://")
+		{
             let button = UIButton(type: .system)
             button.layer.borderWidth = 2.0
             button.layer.borderColor = UIColor.systemBlue.cgColor
@@ -341,20 +348,17 @@ class POIAllTagsViewController: UITableViewController {
         return nil
     }
     
-    @IBAction func setSurveyDate(_ sender: Any) {
-        var pair = sender as? TextPairTableCell
-        while pair != nil && !(pair is UITableViewCell) {
-            pair = pair?.superview as? TextPairTableCell
-        }
-        
+    @IBAction func setSurveyDate(_ sender: UIView?) {
+		guard let pair = cellForView(sender) else { return }
+
         let now = Date()
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withYear, .withMonth, .withDay, .withDashSeparatorInDate]
         dateFormatter.timeZone = NSTimeZone.local
         let text = dateFormatter.string(from: now)
-        pair?.text2.text = text
-        textFieldChanged(pair?.text2)
-        textFieldEditingDidEnd(pair?.text2)
+        pair.text2.text = text
+        textFieldChanged(pair.text2)
+        textFieldEditingDidEnd(pair.text2)
     }
     
     func getSurveyDateButton(for cell: TextPairTableCell?) -> UIView? {
@@ -376,17 +380,15 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     @IBAction func setDirection(_ sender: Any) {
-        var pair = sender as? TextPairTableCell
-        while pair != nil && !(pair is UITableViewCell) {
-            pair = pair?.superview as? TextPairTableCell
-        }
-        let directionViewController = DirectionViewController(
-            key: pair?.text1.text ?? "",
-            value: pair?.text2.text,
+		guard let pair = cellForView(sender) else { return }
+
+		let directionViewController = DirectionViewController(
+            key: pair.text1.text ?? "",
+            value: pair.text2.text,
             setValue: { [self] newValue in
-                pair?.text2.text = newValue
-                textFieldChanged(pair?.text2)
-                textFieldEditingDidEnd(pair?.text2)
+                pair.text2.text = newValue
+                textFieldChanged(pair.text2)
+                textFieldEditingDidEnd(pair.text2)
             })
         childViewPresented = true
         
@@ -406,25 +408,20 @@ class POIAllTagsViewController: UITableViewController {
         return nil
     }
     
-    @IBAction func setHeight(_ sender: Any) {
-        var pair = sender as? TextPairTableCell
-        while pair != nil && !(pair is UITableViewCell) {
-            pair = pair?.superview as? TextPairTableCell
-        }
-        
+    @IBAction func setHeight(_ sender: UIView?) {
+		guard let pair = cellForView( sender ) else { return }
+
         if HeightViewController.unableToInstantiate(withUserWarning: self) {
             return
         }
         
         let vc = HeightViewController.instantiate()
-        vc?.callback = { [self] newValue in
-            pair?.text2.text = newValue
-            textFieldChanged(pair?.text2)
-            textFieldEditingDidEnd(pair?.text2)
+        vc.callback = { newValue in
+            pair.text2.text = newValue
+			self.textFieldChanged(pair.text2)
+			self.textFieldEditingDidEnd(pair.text2)
         }
-        if let vc = vc {
-            present(vc, animated: true)
-        }
+		present(vc, animated: true)
         childViewPresented = true
     }
     
@@ -437,38 +434,38 @@ class POIAllTagsViewController: UITableViewController {
         return nil
     }
     
-    func updateAssociatedContent(for cell: TextPairTableCell?) {
-        let associatedView = getAssociatedColor(for: cell) ?? getWebsiteButton(for: cell) ?? getSurveyDateButton(for: cell) ?? getDirectionButton(for: cell) ?? getHeightButton(for: cell)
+    func updateAssociatedContent(for cell: TextPairTableCell) {
+        let associatedView = getAssociatedColor(for: cell)
+			?? getWebsiteButton(for: cell)
+			?? getSurveyDateButton(for: cell)
+			?? getDirectionButton(for: cell)
+			?? getHeightButton(for: cell)
         
-        cell?.text2.rightView = associatedView
-        cell?.text2.rightViewMode = associatedView != nil ? .always : .never
+		cell.text2.rightView = associatedView
+        cell.text2.rightViewMode = associatedView != nil ? .always : .never
     }
     
-    @IBAction func infoButtonPressed(_ button: UIButton?) {
-        var cell = button?.superview as? TextPairTableCell
-        while cell != nil && !(cell is UITableViewCell) {
-            cell = cell?.superview as? TextPairTableCell
-        }
-        
+    @IBAction func infoButtonPressed(_ sender: Any?) {
+		guard let pair = cellForView( sender ) else { return }
+
         // show OSM wiki page
-        let key = cell?.text1.text
-        let value = cell?.text2.text
-        if (key?.count ?? 0) == 0 {
-            return
-        }
+		guard let key = pair.text1.text,
+			  let value = pair.text2.text,
+			  !key.isEmpty
+		else { return }
         let presetLanguages = PresetLanguages()
         let languageCode = presetLanguages.preferredLanguageCode
         
         let progress = UIActivityIndicatorView(style: .gray)
-        progress.frame = cell?.infoButton.bounds ?? CGRect.zero
-        cell?.infoButton.addSubview(progress)
-        cell?.infoButton.isEnabled = false
-        cell?.infoButton.titleLabel?.layer.opacity = 0.0
+        progress.frame = pair.infoButton.bounds
+		pair.infoButton.addSubview(progress)
+		pair.infoButton.isEnabled = false
+		pair.infoButton.titleLabel?.layer.opacity = 0.0
         progress.startAnimating()
         WikiPage.shared().bestWikiPage(forKey: key, value: value, language: languageCode()) { [self] url in
             progress.removeFromSuperview()
-            cell?.infoButton.isEnabled = true
-            cell?.infoButton.titleLabel?.layer.opacity = 1.0
+			pair.infoButton.isEnabled = true
+			pair.infoButton.titleLabel?.layer.opacity = 1.0
             if url != nil && view.window != nil {
                 var viewController: SFSafariViewController? = nil
                 if let url = url {
@@ -486,94 +483,81 @@ class POIAllTagsViewController: UITableViewController {
         if indexPath.section == 0 {
             
             // Tags
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TagCell", for: indexPath) as? TextPairTableCell
-            let kv = tags?[indexPath.row] as? [AnyHashable]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TagCell", for: indexPath) as! TextPairTableCell
+			let kv = tags[indexPath.row]
             // assign text contents of fields
-            cell?.text1.isEnabled = true
-            cell?.text2.isEnabled = true
-            cell?.text1.text = kv?[0]
-            cell?.text2.text = kv?[1]
+            cell.text1.isEnabled = true
+            cell.text2.isEnabled = true
+			cell.text1.text = kv.k
+			cell.text2.text = kv.v
             
             updateAssociatedContent(for: cell)
             
             weak var weakCell = cell
-            cell?.text1.didSelectAutocomplete = {
+            cell.text1.didSelectAutocomplete = {
                 weakCell?.text2.becomeFirstResponder()
             }
-            cell?.text2.didSelectAutocomplete = {
+            cell.text2.didSelectAutocomplete = {
                 weakCell?.text2.resignFirstResponder()
             }
             
-            return cell!
+            return cell
         } else if indexPath.section == 1 {
             
             // Relations
-            if indexPath.row == (relations?.count ?? 0) {
+            if indexPath.row == relations.count {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "AddCell", for: indexPath)
                 return cell
             }
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RelationCell", for: indexPath) as? TextPairTableCell
-            cell?.text1.isEnabled = false
-            cell?.text2.isEnabled = false
-            let relation = relations?[indexPath.row] as? OsmRelation
-            if let ident = relation?.ident {
-                cell?.text1.text = "\(ident)"
-            }
-            cell?.text2.text = relation?.friendlyDescription()
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RelationCell", for: indexPath) as! TextPairTableCell
+            cell.text1.isEnabled = false
+            cell.text2.isEnabled = false
+            let relation = relations[indexPath.row]
+			cell.text1.text = "\(relation.ident)"
+            cell.text2.text = relation.friendlyDescription()
             
-            return cell!
+            return cell
         } else {
             
             // Members
-            let member = members?[indexPath.row] as? OsmMember
-            let isResolved = member?.ref is OsmBaseObject
+            let member = members[indexPath.row]
+            let isResolved = member.ref is OsmBaseObject
             let cell = (isResolved
-                            ? tableView.dequeueReusableCell(withIdentifier: "RelationCell", for: indexPath)
-                            : tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)) as? TextPairTableCell
-            if EDIT_RELATIONS {
-                cell?.text1.isEnabled = true
-                cell?.text2.isEnabled = true
+							? tableView.dequeueReusableCell(withIdentifier: "RelationCell", for: indexPath)
+                            : tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)) as! TextPairTableCell
+			if EDIT_RELATIONS {
+                cell.text1.isEnabled = true
+                cell.text2.isEnabled = true
             } else {
-                cell?.text1.isEnabled = false
-                cell?.text2.isEnabled = false
+                cell.text1.isEnabled = false
+                cell.text2.isEnabled = false
             }
-            if member is OsmMember {
-                let ref = member?.ref
-                var memberName: String? = nil
-                if let type = member?.type, let ref1 = member?.ref {
-                    memberName = (ref is OsmBaseObject) ? ref?.friendlyDescriptionWithDetails : "\(type) \(ref1)"
-                }
-                cell?.text1.text = member?.role
-                cell?.text2.text = memberName
-            } else {
-                let values = member as? [AnyHashable]
-                cell?.text1.text = values?[0]
-                cell?.text2.text = values?[1]
-            }
-            
+			var memberName: String = ""
+			if let ref = member.ref as? OsmBaseObject {
+				memberName = ref.friendlyDescriptionWithDetails()
+			} else {
+				let type = member.type ?? ""
+				let num = (member.ref as? NSNumber)?.stringValue ?? ""
+				memberName = "\(type) \(num)"
+			}
+			cell.text1.text = member.role
+			cell.text2.text = memberName
+
             return cell
         }
     }
     
     func keyValueDictionary() -> [String : String] {
-        var dict = [String : String](minimumCapacity: (tags?.count ?? 0))
-        for kv in tags ?? [] {
-            guard let kv = kv as? [AnyHashable] else {
-                continue
-            }
-            
-            // strip whitespace around text
-            var key = kv[0] as? String
-            var val = kv[1] as? String
-            
-            key = key?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            val = val?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            
-            if (key?.count ?? 0) != 0 && (val?.count ?? 0) != 0 {
-                dict[key] = val
-            }
-        }
-        return dict
+        var dict = [String : String]()
+        for (k,v) in tags {
+			// strip whitespace around text
+            let key = k.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            let val = v.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            if key.count != 0 && val.count != 0 {
+				dict[key] = val
+			}
+		}
+		return dict
     }
     
     // MARK: Tab key
@@ -586,42 +570,32 @@ class POIAllTagsViewController: UITableViewController {
     
     // MARK: TextField delegate
     
-    @IBAction func textFieldReturn(_ sender: Any) {
-        var cell = sender as? TextPairTableCell
-        while cell != nil && !(cell is UITableViewCell) {
-            cell = cell?.superview as? TextPairTableCell
-        }
-        
+    @IBAction func textFieldReturn(_ sender: UIView) {
         sender.resignFirstResponder()
-        updateWithRecomendations(forFeature: true)
+        _ = updateWithRecomendations(forFeature: true)
     }
     
     @IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
         currentTextField = textField
         
-        var pair = textField?.superview as? TextPairTableCell
-        while pair != nil && !(pair is UITableViewCell) {
-            pair = pair?.superview as? TextPairTableCell
-        }
-        var indexPath: IndexPath? = nil
-        if let pair = pair {
-            indexPath = tableView.indexPath(for: pair)
-        }
-        
-        if indexPath?.section == 0 {
+		guard let pair = cellForView( textField ) else { return }
+		guard let indexPath = tableView.indexPath(for: pair) else { return }
+
+        if indexPath.section == 0 {
             
-            let isValue = textField == pair?.text2
-            var kv = tags?[indexPath?.row ?? 0] as? [AnyHashable]
-            
+            let isValue = textField == pair.text2
+
             if isValue {
                 // get list of values for current key
-                let key = kv?[0] as? String
-                if PresetsDatabase.shared.eligible(forAutocomplete: key) {
-                    let set = PresetsDatabase.shared.allTagValues(forKey: key)
-                    let appDelegate = AppDelegate.shared
-                    var values = appDelegate?.mapView?.editorLayer.mapData.tagValues(forKey: key)
-                    values?.formUnion(Set(Array(set)))
-                    let list = Array(values)
+				let kv = tags[indexPath.row]
+				let key = kv.k
+				if PresetsDatabase.shared.eligibleForAutocomplete(key) {
+					var set: Set<String> = PresetsDatabase.shared.allTagValuesForKey(key)
+                    let appDelegate = AppDelegate.shared!
+					let values = appDelegate.mapView!.editorLayer.mapData.tagValues(forKey: key)
+					let values2 = values as! Set<String>
+					set = set.union(values2)
+					let list: [String] = Array(set)
                     textField?.autocompleteStrings = list
                 }
             } else {
@@ -633,21 +607,36 @@ class POIAllTagsViewController: UITableViewController {
         }
     }
     
-    func convertWikiUrlToReference(withKey key: String?, value url: String?) -> String? {
-        if key?.hasPrefix("wikipedia") ?? false {
-            // if the value is for wikipedia then convert the URL to the correct format
+    func convertWikiUrlToReference(withKey key: String, value url: String) -> String? {
+		if key.hasPrefix("wikipedia") || key.hasSuffix(":wikipedia") {
+			// if the value is for wikipedia then convert the URL to the correct format
             // format is https://en.wikipedia.org/wiki/Nova_Scotia
-            let scanner = Scanner(string: url ?? "")
-            var languageCode: String?
-            var pageName: String?
-            if (scanner.scanString("https://", into: nil) || scanner.scanString("http://", into: nil)) && scanner.scanUpTo(".", into: AutoreleasingUnsafeMutablePointer<NSString?>(mutating: &languageCode)) && (scanner.scanString(".m", into: nil) || true) && scanner.scanString(".wikipedia.org/wiki/", into: nil) && scanner.scanUpTo("/", into: AutoreleasingUnsafeMutablePointer<NSString?>(mutating: &pageName)) && scanner.isAtEnd && (languageCode?.count ?? 0) == 2 && (pageName?.count ?? 0) > 0 {
-                return "\(languageCode ?? ""):\(pageName ?? "")"
+            let scanner = Scanner(string: url)
+			var languageCode: NSString? = nil
+			var pageName: NSString? = nil
+			if scanner.scanString("https://", into: nil) || scanner.scanString("http://", into:nil),
+			   scanner.scanUpTo(".", into: &languageCode),
+				(scanner.scanString(".m", into:nil) || true),
+				scanner.scanString(".wikipedia.org/wiki/", into: nil),
+				scanner.scanUpTo("/", into: &pageName),
+				scanner.isAtEnd,
+				let languageCode = languageCode as String?,
+				let pageName = pageName as String?,
+				languageCode.count == 2 && pageName.count > 0
+			{
+                return "\(languageCode):\(pageName)"
             }
-        } else if key?.hasPrefix("wikidata") ?? false {
+		} else if key.hasPrefix("wikidata") || key.hasSuffix(":wikidata") {
             // https://www.wikidata.org/wiki/Q90000000
-            let scanner = Scanner(string: url ?? "")
-            var pageName: String?
-            if (scanner.scanString("https://", into: nil) || scanner.scanString("http://", into: nil)) && (scanner.scanString("www.wikidata.org/wiki/", into: nil) || scanner.scanString("m.wikidata.org/wiki/", into: nil)) && scanner.scanUpTo("/", into: AutoreleasingUnsafeMutablePointer<NSString?>(mutating: &pageName)) && scanner.isAtEnd && (pageName?.count ?? 0) > 0 {
+            let scanner = Scanner(string: url)
+			var pageName: NSString? = nil
+			if scanner.scanString("https://", into: nil) || scanner.scanString("http://", into:nil),
+			   scanner.scanString("www.wikidata.org/wiki/", into:nil) || scanner.scanString("m.wikidata.org/wiki/", into:nil),
+			   scanner.scanUpTo("/", into: &pageName),
+			   scanner.isAtEnd,
+			   let pageName = pageName as String?,
+			   pageName.count > 0
+			{
                 return pageName
             }
         }
@@ -655,53 +644,39 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     func textFieldEditingDidEnd(_ textField: UITextField?) {
-        var pair = textField?.superview as? TextPairTableCell
-        while pair != nil && !(pair is UITableViewCell) {
-            pair = pair?.superview as? TextPairTableCell
-        }
-        
-        var indexPath: IndexPath? = nil
-        if let pair = pair {
-            indexPath = tableView.indexPath(for: pair)
-        }
-        if indexPath?.section == 0 {
-            var kv = tags?[indexPath?.row ?? 0] as? [String]
-            
+		guard let pair = cellForView( textField ) else { return }
+		guard let indexPath = tableView.indexPath(for: pair) else { return }
+
+		if indexPath.section == 0 {
+            var kv = tags[indexPath.row]
+
             updateAssociatedContent(for: pair)
             
-            if (kv?[0].count ?? 0) != 0 && (kv?[1].count ?? 0) != 0 {
+			if kv.k.count != 0 && kv.v.count != 0 {
                 
                 // do wikipedia conversion
-                let newValue = convertWikiUrlToReference(withKey: kv?[0], value: kv?[1])
-                if let newValue = newValue {
-                    kv?[1] = newValue
-                    pair?.text2.text = newValue
-                }
-                
+				if let newValue = convertWikiUrlToReference(withKey: kv.k, value: kv.v) {
+					kv.v = newValue
+                    pair.text2.text = newValue
+					tags[indexPath.row] = kv
+				}
+
                 // move the edited row up
-                for i in 0..<(indexPath?.row ?? 0) {
-                    let a = tags?[i] as? [String]
-                    if (a?[0].count ?? 0) == 0 || (a?[1].count ?? 0) == 0 {
-                        tags?.remove(at: indexPath?.row ?? 0)
-                        if let kv = kv {
-                            tags?.insert(kv, at: i)
-                        }
-                        if let indexPath = indexPath {
-                            tableView.moveRow(at: indexPath, to: IndexPath(row: i, section: 0))
-                        }
-                        break
-                    }
-                }
-                
-                // if we created a row that defines a key that duplicates a row witht the same key elsewhere then delete the other row
-                for i in 0..<(tags?.count ?? 0) {
-                    let a = tags?[i] as? [String]
-                    if a != kv && (a?[0] == kv?[0]) {
-                        tags?.remove(at: i)
-                        tableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .none)
-                    }
-                }
-                
+				var index = (0..<indexPath.row).first(where: { tags[$0].k.count == 0 || tags[$0].v.count == 0 }) ?? indexPath.row
+				if index < indexPath.row {
+					tags.remove(at: indexPath.row)
+					tags.insert(kv, at: index)
+					tableView.moveRow(at: indexPath, to: IndexPath(row: index, section: 0))
+				}
+
+                // if we created a row that defines a key that duplicates a row with
+				// the same key elsewhere then delete the other row
+				while let i = tags.indices.first(where: { $0 != index && tags[$0].k == kv.k }) {
+					tags.remove(at: i)
+					tableView.deleteRows(at: [IndexPath(row: i, section: 0)], with: .none)
+					if i < index { index -= 1 }
+				}
+
                 // update recommended tags
                 let nextRow = updateWithRecomendations(forFeature: false)
                 if nextRow >= 0 {
@@ -710,59 +685,49 @@ class POIAllTagsViewController: UITableViewController {
                     tableView.scrollToRow(at: newPath, at: .middle, animated: false)
                     
                     // move focus to next empty cell
-                    let nextCell = tableView.cellForRow(at: newPath) as? TextPairTableCell
-                    nextCell?.text1.becomeFirstResponder()
+                    let nextCell = tableView.cellForRow(at: newPath) as! TextPairTableCell
+                    nextCell.text1.becomeFirstResponder()
                 }
-            } else if (kv?[0].count ?? 0) != 0 || (kv?[1].count ?? 0) != 0 {
+
+				self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .middle, animated: true)
+
+			} else if kv.k.count != 0 || kv.v.count != 0 {
                 
                 // ensure there's a blank line either elsewhere, or create one below us
-                var haveBlank = false
-                for a in tags ?? [] {
-                    guard let a = a as? [String] else {
-                        continue
-                    }
-                    haveBlank = a != kv && a[0].count == 0 && a[1].count == 0
-                    if haveBlank {
-                        break
-                    }
-                }
-                if !haveBlank {
-                    let newPath = IndexPath(row: (indexPath?.row ?? 0) + 1, section: indexPath?.section ?? 0)
-                    tags?.insert(["", ""], at: newPath.row)
-                    tableView.insertRows(at: [newPath], with: .none)
+				let haveBlank = tags.first(where: { $0.k.count == 0 && $0.v.count == 0 }) != nil
+				if !haveBlank {
+					let newPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+					tags.insert(("", ""), at: newPath.row)
+					tableView.insertRows(at: [newPath], with: .none)
                 }
             }
         }
     }
     
     @IBAction func textFieldChanged(_ textField: UITextField?) {
-        var cell = textField?.superview as? UITableViewCell
-        while cell != nil && !(cell is UITableViewCell) {
-            cell = cell?.superview as? UITableViewCell
-        }
-        var indexPath: IndexPath? = nil
-        if let cell = cell {
-            indexPath = tableView.indexPath(for: cell)
-        }
+		guard let textField = textField,
+			  let pair = cellForView( textField ),
+			  let indexPath = tableView.indexPath(for: pair)
+		else { return }
+
+        let tabController = tabBarController as! POITabBarController
         
-        let tabController = tabBarController as? POITabBarController
-        
-        if indexPath?.section == 0 {
+        if indexPath.section == 0 {
             // edited tags
-            let pair = cell as? TextPairTableCell
-            var kv = tags?[indexPath?.row ?? 0] as? [AnyHashable]
-            let isValue = textField == pair?.text2
+            var kv = tags[indexPath.row]
+            let isValue = textField == pair.text2
             
             if isValue {
                 // new value
-                kv?[1] = textField?.text
+				kv.v = textField.text ?? ""
             } else {
                 // new key name
-                kv?[0] = textField?.text
+				kv.k = textField.text ?? ""
             }
-            
-            var dict = keyValueDictionary()
-            _saveButton.isEnabled = tabController?.isTagDictChanged(dict) ?? false
+			tags[indexPath.row] = kv
+
+            let dict = keyValueDictionary()
+			_saveButton.isEnabled = tabController.isTagDictChanged(dict)
             if #available(iOS 13.0, *) {
                 tabBarController?.isModalInPresentation = _saveButton.isEnabled
             }
@@ -770,46 +735,38 @@ class POIAllTagsViewController: UITableViewController {
     }
     
     func tab(toNext forward: Bool) {
-        var pair = currentTextField?.superview as? TextPairTableCell
-        while pair != nil && !(pair is TextPairTableCell) {
-            pair = pair?.superview as? TextPairTableCell
-        }
-        if pair == nil {
-            return
-        }
-        
-        var indexPath: IndexPath? = nil
-        if let pair = pair {
-            indexPath = tableView.indexPath(for: pair)
-        }
+		guard let pair = cellForView( currentTextField ),
+			  var indexPath = tableView.indexPath(for: pair)
+		else { return }
+
         var field: UITextField? = nil
-        if forward {
-            if currentTextField == pair?.text1 {
-                field = pair?.text2
+		if forward {
+            if currentTextField == pair.text1 {
+                field = pair.text2
             } else {
-                let max = tableView(tableView, numberOfRowsInSection: indexPath?.section ?? 0)
-                let row = ((indexPath?.row ?? 0) + 1) % max
-                indexPath = IndexPath(row: row, section: indexPath?.section ?? 0)
-                if let indexPath = indexPath {
-                    pair = tableView.cellForRow(at: indexPath) as? TextPairTableCell
-                }
-                field = pair?.text1
-            }
-        } else {
-            if currentTextField == pair?.text2 {
-                field = pair?.text1
-            } else {
-                let max = tableView(tableView, numberOfRowsInSection: indexPath?.section ?? 0)
-                let row = ((indexPath?.row ?? 0) - 1 + max) % max
-                indexPath = IndexPath(row: row, section: indexPath?.section ?? 0)
-                if let indexPath = indexPath {
-                    pair = tableView.cellForRow(at: indexPath) as? TextPairTableCell
-                }
-                field = pair?.text2
+				let max = tableView(tableView, numberOfRowsInSection: indexPath.section)
+				let row = (indexPath.row + 1) % max
+				indexPath = IndexPath(row: row, section: indexPath.section)
+				if let pair = tableView.cellForRow(at: indexPath) as? TextPairTableCell {
+					field = pair.text1
+				}
+			}
+		} else {
+			if currentTextField == pair.text2 {
+				field = pair.text1
+			} else {
+				let max = tableView(tableView, numberOfRowsInSection: indexPath.section)
+				let row = (indexPath.row - 1 + max) % max
+				indexPath = IndexPath(row: row, section: indexPath.section)
+				if let pair = tableView.cellForRow(at: indexPath) as? TextPairTableCell {
+					field = pair.text2
+				}
             }
         }
-        field?.becomeFirstResponder()
-        currentTextField = field
+		if let field = field {
+			field.becomeFirstResponder()
+			currentTextField = field
+		}
     }
     
     @objc func tabPrevious(_ sender: Any?) {
@@ -843,11 +800,11 @@ class POIAllTagsViewController: UITableViewController {
     // MARK: - Table view delegate
     
     @IBAction func toggleTableRowEditing(_ sender: Any) {
-        let tabController = tabBarController as? POITabBarController
+        let tabController = tabBarController as! POITabBarController
         
         let editing = !tableView.isEditing
         navigationItem.leftBarButtonItem?.isEnabled = !editing
-        navigationItem.rightBarButtonItem?.isEnabled = !editing && tabController?.isTagDictChanged()
+        navigationItem.rightBarButtonItem?.isEnabled = !editing && tabController.isTagDictChanged()
         tableView.setEditing(editing, animated: true)
         let button = sender as? UIBarButtonItem
         button?.title = editing ? NSLocalizedString("Done", comment: "") : NSLocalizedString("Edit", comment: "")
@@ -857,13 +814,13 @@ class POIAllTagsViewController: UITableViewController {
     // Don't allow deleting the "Add Tag" row
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 0 {
-            return indexPath.row < (tags?.count ?? 0)
+            return indexPath.row < tags.count
         } else if indexPath.section == 1 {
             // don't allow editing relations here
             return false
         } else {
             if EDIT_RELATIONS {
-                return indexPath.row < (members?.count ?? 0)
+                return indexPath.row < members.count
             } else {
                 return false
             }
@@ -873,21 +830,20 @@ class POIAllTagsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            let tabController = tabBarController as? POITabBarController
+            let tabController = tabBarController as! POITabBarController
             if indexPath.section == 0 {
-                let kv = tags?[indexPath.row] as? [AnyHashable]
-                let tag = kv?[0] as? String
-                tabController?.removeValueFromKeyValueDict(withKey: tag)
+                let kv = tags[indexPath.row]
+				tabController.removeValueFromKeyValueDict(key: kv.k)
                 //			[tabController.keyValueDict removeObjectForKey:tag];
-                tags?.remove(at: indexPath.row)
+                tags.remove(at: indexPath.row)
             } else if indexPath.section == 1 {
-                relations?.remove(at: indexPath.row)
+                relations.remove(at: indexPath.row)
             } else {
-                members?.remove(at: indexPath.row)
+                members.remove(at: indexPath.row)
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
             
-            _saveButton.isEnabled = tabController?.isTagDictChanged() ?? false
+            _saveButton.isEnabled = tabController.isTagDictChanged()
             if #available(iOS 13.0, *) {
                 tabBarController?.isModalInPresentation = _saveButton.isEnabled
             }
@@ -912,9 +868,9 @@ class POIAllTagsViewController: UITableViewController {
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // don't allow switching to relation if current selection is modified
-        let tabController = tabBarController as? POITabBarController
-        var dict = keyValueDictionary()
-        if tabController?.isTagDictChanged(dict) {
+        let tabController = tabBarController as! POITabBarController
+        let dict = keyValueDictionary()
+        if tabController.isTagDictChanged(dict) {
             let alert = UIAlertController(
                 title: NSLocalizedString("Object modified", comment: ""),
                 message: NSLocalizedString("You must save or discard changes to the current object before editing its associated relation", comment: ""),
@@ -925,20 +881,18 @@ class POIAllTagsViewController: UITableViewController {
         }
         
         // switch to relation or relation member
-        let cell = sender as? UITableViewCell
-        var indexPath: IndexPath? = nil
-        if let cell = cell {
-            indexPath = tableView.indexPath(for: cell)
-        }
+		guard let cell = sender as? UITableViewCell else { return false }
+		guard let indexPath = tableView.indexPath(for: cell) else { return false }
+
         var object: OsmBaseObject? = nil
-        if indexPath?.section == 1 {
+        if indexPath.section == 1 {
             // change the selected object in the editor to the relation
-            object = relations?[indexPath?.row ?? 0] as? OsmBaseObject
-        } else if indexPath?.section == 2 {
-            let member = members?[indexPath?.row ?? 0] as? OsmMember
-            object = member?.ref
-            if !(object is OsmBaseObject) {
-                return false
+            object = relations[indexPath.row]
+        } else if indexPath.section == 2 {
+            let member = members[indexPath.row]
+            object = member.ref as? OsmBaseObject
+            if object == nil {
+				return false
             }
         } else {
             return false
@@ -971,5 +925,3 @@ class POIAllTagsViewController: UITableViewController {
         return false
     }
 }
-
-let EDIT_RELATIONS = 0

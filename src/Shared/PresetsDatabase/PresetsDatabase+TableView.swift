@@ -81,7 +81,7 @@ extension PresetsDatabase {
 		return set
 	}
 
-	@objc func allTagValuesForKey(_ key: String) -> Set<String>? {
+	@objc func allTagValuesForKey(_ key: String) -> Set<String> {
 		var set = Set<String>()
 		for (_,dict) in jsonFields {
 			guard let dict = dict as? [String:Any] else { continue }
