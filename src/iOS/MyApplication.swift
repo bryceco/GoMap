@@ -12,8 +12,8 @@ import UIKit
 let TOUCH_RADIUS: CGFloat = 22
 
 class MyApplication: UIApplication {
-    var _touches: [UITouch : [String : Any]] = [:]
-    var _touchImage: UIImage?
+    var _touches: [UITouch : (UIWindow,TimeInterval)] = [:]
+	var _touchImage: UIImage?
 
     var showTouchCircles = false
 
@@ -55,11 +55,8 @@ class MyApplication: UIApplication {
             if touch.phase == .began {
                 let win = UIWindow(frame: rect(forTouchPosition: pos))
                 
-                _touches[touch] = [
-                    "win": win,
-                    "start": touch.timestamp
-                ]
-                win.windowLevel = .statusBar
+                _touches[touch] = (win,touch.timestamp)
+				win.windowLevel = .statusBar
                 win.isHidden = false
                 if _touchImage != nil {
                     win.layer.contents = _touchImage?.cgImage
@@ -70,24 +67,23 @@ class MyApplication: UIApplication {
                     win.layer.opacity = 0.85
                 }
             } else if touch.phase == .moved {
-                let dict = _touches[touch]
-                let win = dict?["win"] as? UIWindow
-                win?.layer.affineTransform()
-                win?.frame = rect(forTouchPosition: pos)
-                win?.layer.setAffineTransform(CGAffineTransform(rotationAngle: -.pi / 4))
-            } else if touch.phase == .stationary {
+				let (win,_) = _touches[touch]!
+				win.layer.setAffineTransform( CGAffineTransform.identity )
+                win.frame = rect(forTouchPosition: pos)
+                win.layer.setAffineTransform( CGAffineTransform(rotationAngle: -.pi / 4) )
+			} else if touch.phase == .stationary {
                 // ignore
             } else {
                 // ended/cancelled
                 // remove window after a slight delay so quick taps are still visible
                 let MIN_DISPLAY_INTERVAL = 0.5
-                let dict = _touches[touch]
-                var delta = TimeInterval(touch.timestamp - (dict?["start"].unsafelyUnwrapped as? Double ?? 0))
-                if delta < MIN_DISPLAY_INTERVAL {
+                let (win,start) = _touches[touch]!
+				var delta = TimeInterval(touch.timestamp - start)
+				if delta < MIN_DISPLAY_INTERVAL {
                     delta = TimeInterval(MIN_DISPLAY_INTERVAL - delta)
-                    var win = dict?["win"] as? UIWindow
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delta * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
-                        win = nil
+					DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delta * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
+						// force window to be retained until now
+						withExtendedLifetime( win ) {}
                     })
                 }
                 _touches.removeValue(forKey: touch)
