@@ -106,11 +106,11 @@ import Foundation
 		return _iconScaled24
 	}
 
-	@objc func addTags() -> [String : String]? {
+	@objc func addTags() -> [String : String] {
 		return self._addTags ?? self.tags
 	}
 
-	@objc func removeTags() -> [String : String]? {
+	@objc func removeTags() -> [String : String] {
 		return self._removeTags ?? self.addTags()
 	}
 

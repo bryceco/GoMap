@@ -32,7 +32,7 @@ class HeightViewController: UIViewController {
     var _currentHeight: String = ""
     var _alertHeight: String?
     
-    var callback: ((_ newValue: String?) -> Void)?
+    var callback: ((_ newValue: String) -> Void)?
     
     class func unableToInstantiate(withUserWarning vc: UIViewController?) -> Bool {
         if AppDelegate.shared.mapView.gpsState == GPS_STATE_NONE {
@@ -557,15 +557,15 @@ class HeightViewController: UIViewController {
             })
             alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: NSLocalizedString("Set", comment: "set tag value"), style: .default, handler: { [self] action in
-                let textField = alert.textFields?[0]
-                let text = textField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-                setHeight(text)
+				let textField = alert.textFields![0]
+				let text = textField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+				setHeight(text)
             }))
             present(alert, animated: true)
         }
     }
     
-    func setHeight(_ height: String?) {
+    func setHeight(_ height: String) {
         if let callback = callback {
             callback(height)
         }

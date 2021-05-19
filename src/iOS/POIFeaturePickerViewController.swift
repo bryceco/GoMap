@@ -20,7 +20,7 @@
 import UIKit
 
 protocol POITypeViewControllerDelegate: NSObjectProtocol {
-    func typeViewController(_ typeViewController: POIFeaturePickerViewController?, didChangeFeatureTo feature: PresetFeature?)
+    func typeViewController(_ typeViewController: POIFeaturePickerViewController, didChangeFeatureTo feature: PresetFeature)
 }
 
 private let MOST_RECENT_DEFAULT_COUNT = 5

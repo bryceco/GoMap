@@ -9,16 +9,17 @@
 class FeaturePresetCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var valueField: AutocompleteTextField!
-    var presetKey: AnyObject?
+    var presetKey: AnyObject?	// either PresetKey or PresetGroup
 }
 
 class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegate, POITypeViewControllerDelegate {
+	@IBOutlet var _saveButton: UIBarButtonItem!
+
     var allPresets: PresetsForFeature?
-    @IBOutlet var _saveButton: UIBarButtonItem!
     var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
     var childPushed = false
-
     var drillDownGroup: PresetGroup?
+	var textFieldIsEditing = false
     
     override func viewDidLoad() {
         // have to update presets before call super because super asks for the number of sections
@@ -37,32 +38,34 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
     }
     
     func updatePresets() {
-        let tabController = tabBarController as? POITabBarController
+        let tabController = tabBarController as! POITabBarController
     
-        _saveButton.isEnabled = ((tabController?.isTagDictChanged()) != nil)
-        if #available(iOS 13.0, *) {
-            tabBarController?.isModalInPresentation = _saveButton.isEnabled
-        }
+        _saveButton.isEnabled = tabController.isTagDictChanged()
+		if #available(iOS 13.0, *) {
+			tabController.isModalInPresentation = _saveButton.isEnabled
+		}
     
         if drillDownGroup == nil {
     
-            let dict = tabController?.keyValueDict ?? [:]
-            let object = tabController?.selection
-            let geometry: String = object?.geometryName() ?? GEOMETRY_NODE
-//            let geometry: String = (object != nil) ? object?.geometryName() : GEOMETRY_NODE
-    
+            let dict = tabController.keyValueDict
+            let object = tabController.selection
+			let geometry: String = object?.geometryName() ?? GEOMETRY_NODE
+
             // update most recent feature
             let feature = selectedFeature ?? PresetsDatabase.shared.matchObjectTagsToFeature(dict, geometry: geometry, includeNSI: true)
             if let feature = feature {
                 POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
                 POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
             }
-        
-            allPresets = PresetsForFeature(withFeature: feature, objectTags: dict, geometry: geometry, update: { [weak self] in
-                // this may complete much later, even after we've been dismissed
-                if self != nil && self?.isEditing == nil {
-                    self?.allPresets = PresetsForFeature(withFeature: feature, objectTags: dict, geometry: geometry, update: nil)
-                    self?.tableView.reloadData()
+
+			weak var weakself = self
+			allPresets = PresetsForFeature(withFeature: feature, objectTags: dict, geometry: geometry, update: {
+				// this may complete much later, even after we've been dismissed
+				if let weakself = weakself,
+					!weakself.isEditing
+				{
+					weakself.allPresets = PresetsForFeature(withFeature: feature, objectTags: dict, geometry: geometry, update: nil)
+					weakself.tableView.reloadData()
                 }
             })
         }
@@ -113,7 +116,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         }
     }
     
-    @objc func typeViewController(_ typeViewController: POIFeaturePickerViewController?, didChangeFeatureTo newFeature: PresetFeature?) {
+    @objc func typeViewController(_ typeViewController: POIFeaturePickerViewController, didChangeFeatureTo newFeature: PresetFeature) {
         selectedFeature = newFeature
         let tabController = tabBarController as! POITabBarController
         let geometry = tabController.selection != nil ? tabController.selection?.geometryName() : GEOMETRY_NODE
@@ -121,18 +124,17 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         let oldFeature = PresetsDatabase.shared.matchObjectTagsToFeature(tabController.keyValueDict, geometry: geometry!, includeNSI: true)
     
         // remove previous feature tags
-        var removeTags = oldFeature?.removeTags()
-        if let addTags = newFeature?.addTags() {
-            for key in addTags.keys {
-                removeTags?.removeValue(forKey: key)
-            }
+		var removeTags = oldFeature?.removeTags() ?? [:]
+		let addTags = newFeature.addTags()
+		for key in addTags.keys {
+			removeTags.removeValue(forKey: key)
         }
-        for (key, value) in removeTags ?? [:] {
-            tabController.setFeatureKey(key, value: value)
+        for (key, value) in removeTags {
+			tabController.setFeatureKey(key, value: value)
         }
         
         // add new feature tags
-        for (key, value) in newFeature?.addTags() ?? [:] {
+        for (key, value) in newFeature.addTags() {
             if value == "*" {
                 if !tabController.keyValueDict.keys.contains(key) {
                     tabController.setFeatureKey(key, value: "yes")
@@ -146,7 +148,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         
     
         // add default values of new feature fields
-        let defaults = newFeature?.defaultValuesForGeometry(geometry!) ?? [:]
+        let defaults = newFeature.defaultValuesForGeometry(geometry!)
         for (key, value) in defaults {
             if !tabController.keyValueDict.keys.contains(key) {
                 tabController.setFeatureKey(key, value: value)
@@ -196,139 +198,123 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
             }
         }
     
-        let tabController = tabBarController as? POITabBarController
-        let keyValueDict = tabController?.keyValueDict
+        let tabController = tabBarController as! POITabBarController
+        let keyValueDict = tabController.keyValueDict
         
-        let rowObject = (self.drillDownGroup != nil) ? self.drillDownGroup?.presetKeys[indexPath.row] : allPresets?.presetAtIndexPath(indexPath)
-        
-        if rowObject is PresetKey {
-            let presetKey = rowObject as? PresetKey
-            let key = presetKey?.tagKey ?? ""
-            let cellName = key.count == 0
-                ? "CommonTagType"
-                : (key == "name")
-                    ? "CommonTagName"
-                    : "CommonTagSingle"
+		let rowObject = (self.drillDownGroup != nil) ? self.drillDownGroup!.presetKeys[indexPath.row] : allPresets!.presetAtIndexPath(indexPath)
+
+		if let presetKey = rowObject as? PresetKey {
+			let key = presetKey.tagKey
+            let cellName = key == "" ? "CommonTagType"
+						: key == "name" ? "CommonTagName"
+						: "CommonTagSingle"
     
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath) as? FeaturePresetCell
-            cell?.nameLabel.text = presetKey?.name
-            cell?.valueField.placeholder = presetKey?.placeholder
-            cell?.valueField.delegate = self
-            cell?.presetKey = presetKey
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath) as! FeaturePresetCell
+			cell.nameLabel.text = presetKey.name
+            cell.valueField.placeholder = presetKey.placeholder
+            cell.valueField.delegate = self
+            cell.presetKey = presetKey
+
+			cell.valueField.keyboardType = presetKey.keyboardType
+			cell.valueField.autocapitalizationType = presetKey.autocapitalizationType
+
+			cell.valueField.removeTarget(self, action: nil, for: .allEvents)
+			cell.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
+			cell.valueField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
+			cell.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
+			cell.valueField.addTarget(self, action: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:)), for: .editingDidEnd)
     
-            if let keyboardType = presetKey?.keyboardType {
-                cell?.valueField.keyboardType = keyboardType
-            }
-            if let autocapitalizationType = presetKey?.autocapitalizationType {
-                cell?.valueField.autocapitalizationType = autocapitalizationType
-            }
+            cell.valueField.rightView = nil
     
-            cell?.valueField.removeTarget(self, action: nil, for: .allEvents)
-            cell?.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)
-            cell?.valueField.addTarget(self, action: #selector(textFieldChanged(_:)), for: .editingChanged)
-            cell?.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
-            cell?.valueField.addTarget(self, action: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:)), for: .editingDidEnd)
-    
-            cell?.valueField.rightView = nil
-    
-            if presetKey?.isYesNo != nil {
-                cell?.accessoryType = UITableViewCell.AccessoryType.none
-            } else if (presetKey?.presetList?.count ?? 0) > 0 || key.count == 0 {
+            if presetKey.isYesNo() {
+                cell.accessoryType = UITableViewCell.AccessoryType.none
+            } else if (presetKey.presetList?.count ?? 0) > 0 || key.count == 0 {
                 // The user can select from a list of presets.
-                cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
             } else if canMeasureDirection(for: presetKey) {
-                cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
             } else if canMeasureHeight(for: presetKey) {
-                cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
             } else {
-                cell?.accessoryType = UITableViewCell.AccessoryType.none
+                cell.accessoryType = UITableViewCell.AccessoryType.none
             }
     
             if self.drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 {
                 // Type cell
                 let text = allPresets?.featureName() ?? ""
-                cell?.valueField.text = text
-                cell?.valueField.isEnabled = false
-            } else if presetKey?.isYesNo != nil {
+                cell.valueField.text = text
+                cell.valueField.isEnabled = false
+            } else if presetKey.isYesNo() {
                 // special case for yes/no tristate
                 let button = TristateButton()
-                var value: String? = nil
-                if let tagKey = presetKey?.tagKey {
-                    value = keyValueDict?[tagKey]
-                }
-                button.setSelection(forString: value ?? "")
+                let value = keyValueDict[ presetKey.tagKey ] ?? ""
+                button.setSelection(forString: value )
                 if button.stringForSelection() == nil {
                     // display the string iff we don't recognize it (or it's nil)
-                    cell?.valueField.text = presetKey?.prettyNameForTagValue(value ?? "")
+                    cell.valueField.text = presetKey.prettyNameForTagValue( value )
                 } else {
-                    cell?.valueField.text = nil
+                    cell.valueField.text = nil
                 }
-                cell?.valueField.isEnabled = true
-                cell?.valueField.rightView = button
-                cell?.valueField.rightViewMode = .always
-                cell?.valueField.placeholder = nil
+                cell.valueField.isEnabled = true
+                cell.valueField.rightView = button
+                cell.valueField.rightViewMode = .always
+                cell.valueField.placeholder = nil
                 button.onSelect = { newValue in
-                    self.updateTag(withValue: newValue ?? "", forKey: cell?.presetKey?.tagKey ?? "")
-                    cell?.valueField.text = nil
-                    cell?.valueField.resignFirstResponder()
+                    self.updateTag(withValue: newValue ?? "", forKey: presetKey.tagKey)
+					cell.valueField.text = nil
+					cell.valueField.resignFirstResponder()
                 }
             } else {
                 // Regular cell
-                var value: String? = nil
-                if let tagKey = presetKey?.tagKey {
-                    value = keyValueDict?[tagKey]
-                }
-                value = presetKey?.prettyNameForTagValue(value ?? "")
-                cell?.valueField.text = value
-                cell?.valueField.isEnabled = true
+				var value = keyValueDict[ presetKey.tagKey ]
+				value = presetKey.prettyNameForTagValue(value ?? "")
+				cell.valueField.text = value
+				cell.valueField.isEnabled = true
             }
-    
-            return cell!
+            return cell
+
         } else {
     
             // drill down cell
-            let drillDownGroup = rowObject as? PresetGroup
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagSingle", for: indexPath) as? FeaturePresetCell
-            cell?.nameLabel.text = drillDownGroup?.name
-            cell?.valueField.text = drillDownGroup?.multiComboSummary(ofDict: keyValueDict, isPlaceholder: false)
-            cell?.valueField.placeholder = drillDownGroup?.multiComboSummary(ofDict: nil, isPlaceholder: true)
-            cell?.valueField.isEnabled = false
-            cell?.valueField.rightView = nil
-            cell?.presetKey = drillDownGroup
-            cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+            let drillDownGroup = rowObject as! PresetGroup
+			let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagSingle", for: indexPath) as! FeaturePresetCell
+			cell.nameLabel.text = drillDownGroup.name
+            cell.valueField.text = drillDownGroup.multiComboSummary(ofDict: keyValueDict, isPlaceholder: false)
+            cell.valueField.placeholder = drillDownGroup.multiComboSummary(ofDict: nil, isPlaceholder: true)
+            cell.valueField.isEnabled = false
+            cell.valueField.rightView = nil
+            cell.presetKey = drillDownGroup
+            cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
     
-            return cell!
+            return cell
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? FeaturePresetCell
-        if cell?.accessoryType == UITableViewCell.AccessoryType.none {
-            return
-        }
+		guard let cell = tableView.cellForRow(at: indexPath) as? FeaturePresetCell,
+			  cell.accessoryType != .none
+		else { return }
     
         // This workaround is necessary because `tableView:cellForRowAtIndexPath:`
         // currently sets `cell.commonPreset` to an instance of `CommonPresetGroup` by casting it to `id`.
-        var presetKey: PresetKey? = nil
-        if let cell_presetKey = cell?.presetKey as? PresetKey {
-            presetKey = cell_presetKey
-        }
-    
-        if drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 {
-            performSegue(withIdentifier: "POITypeSegue", sender: cell)
-        } else if cell?.presetKey is PresetGroup {
+//		var presetKey: PresetKey? = cell.presetKey as? PresetKey
+
+		if drillDownGroup == nil && indexPath.section == 0 && indexPath.row == 0 {
+			performSegue(withIdentifier: "POITypeSegue", sender: cell)
+        } else if let group = cell.presetKey as? PresetGroup {
             // special case for drill down
-            let group = cell?.presetKey as? PresetGroup
-            let sub = storyboard?.instantiateViewController(withIdentifier: "PoiCommonTagsViewController") as? POIFeaturePresetsViewController
-            sub?.drillDownGroup = group
-            if let sub = sub {
-                navigationController?.pushViewController(sub, animated: true)
-            }
-        } else if canMeasureDirection(for: presetKey) {
-            self.measureDirection(forKey: cell?.presetKey?.tagKey ?? "",
-                                  value: cell?.valueField.text ?? "")
-        } else if canMeasureHeight(for: presetKey) {
-            measureHeight(forKey: cell?.presetKey?.tagKey)
+			let sub = storyboard?.instantiateViewController(withIdentifier: "PoiCommonTagsViewController") as! POIFeaturePresetsViewController
+			sub.drillDownGroup = group
+			navigationController?.pushViewController(sub, animated: true)
+		} else if let presetKey = cell.presetKey as? PresetKey,
+				  canMeasureDirection(for: presetKey)
+		{
+			self.measureDirection(forKey: presetKey.tagKey,
+								  value: cell.valueField.text ?? "")
+		} else if let presetKey = cell.presetKey as? PresetKey,
+				  canMeasureHeight(for: presetKey)
+		{
+			measureHeight(forKey: presetKey.tagKey)
         } else {
             performSegue(withIdentifier: "POIPresetSegue", sender: cell)
         }
@@ -360,8 +346,8 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
     }
     
     // MARK: - Table view delegate
-    
-    func resignAll() {
+
+	func resignAll() {
         if self.tableView.window == nil {
             return
         }
@@ -377,19 +363,11 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         sender.resignFirstResponder()
     }
     
-    func cell(for textField: UITextField) -> FeaturePresetCell? {
-        var cell: UIView? = textField
-        while (cell != nil) && !(cell is FeaturePresetCell) {
-            cell = cell?.superview
-        }
-        return cell as? FeaturePresetCell
-    }
-    
     @IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
         if let textField = textField {
             // get list of values for current key
-            let cell = self.cell(for: textField)
-            if let key = cell?.presetKey?.tagKey {
+			let cell: FeaturePresetCell = textField.superviewOfType()!
+			if let key = cell.presetKey?.tagKey {
                 if PresetsDatabase.shared.eligibleForAutocomplete(key) {
 					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key) as! Set<String>
 					let set = PresetsDatabase.shared.allTagValuesForKey(key)
@@ -397,12 +375,12 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
 					let list = Array<String>( values )
                     textField.autocompleteStrings = list
                 }
-                isEditing = true
+				textFieldIsEditing = true
             }
         }
     }
     
-    @IBAction func textFieldChanged(_ textField: UITextField?) {
+    @IBAction func textFieldChanged(_ textField: UITextField) {
         _saveButton.isEnabled = true
         if #available(iOS 13.0, *) {
             tabBarController?.isModalInPresentation = _saveButton.isEnabled
@@ -410,41 +388,37 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
     }
     
     @IBAction func textFieldDidEndEditing(_ textField: UITextField) {
-        let cell = self.cell(for: textField)
-        let key = cell?.presetKey?.tagKey ?? ""
-        if key == "" {
-            return // should never happen
-        }
+		let cell: FeaturePresetCell = textField.superviewOfType()!
+		guard let presetKey = cell.presetKey else { return }
     
-        var prettyValue = textField.text
-        prettyValue = prettyValue?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        textField.text = prettyValue
+        let prettyValue = textField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		textField.text = prettyValue
     
         // convert to raw value if necessary
-        let tagValue = cell?.presetKey?.tagValueForPrettyName(prettyValue ?? "") ?? ""
-        isEditing = false
-        updateTag(withValue: tagValue, forKey: key)
+		let tagValue = presetKey.tagValueForPrettyName(prettyValue)
+		textFieldIsEditing = false
+		updateTag(withValue: tagValue, forKey: presetKey.tagKey)
         
-        if (cell?.presetKey?.isYesNo() ?? false) {
-            let tri = cell?.valueField.rightView as? TristateButton
-            tri?.setSelection(forString: textField.text ?? "")
+        if presetKey.isYesNo() {
+            let tri = cell.valueField.rightView as! TristateButton
+            tri.setSelection(forString: textField.text ?? "")
         }
     }
     
     func updateTag(withValue value: String, forKey key: String) {
-        let tabController = tabBarController as? POITabBarController
+		let tabController = tabBarController as! POITabBarController
     
-        if (value.count) != 0 {
-            tabController?.keyValueDict[key] = value
-        } else {
-            tabController?.keyValueDict.removeValue(forKey: key)
-        }
+		if value.count != 0 {
+			tabController.keyValueDict[key] = value
+		} else {
+			tabController.keyValueDict.removeValue(forKey: key)
+		}
     
-        _saveButton.isEnabled = (tabController?.isTagDictChanged() ?? false)
-        if #available(iOS 13.0, *) {
-            tabBarController?.isModalInPresentation = _saveButton.isEnabled
-        }
-    }
+		_saveButton.isEnabled = tabController.isTagDictChanged()
+		if #available(iOS 13.0, *) {
+			tabController.isModalInPresentation = _saveButton.isEnabled
+		}
+	}
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let MAX_LENGTH = 255
@@ -462,12 +436,12 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
      @param key The key of the tag that should be measured.
      @return YES if the key can be measured using the `DirectionViewController`, NO if not.
      */
-    func canMeasureDirection(for key: PresetKey?) -> Bool {
-        if (key?.presetList?.count ?? 0) > 0 {
+    func canMeasureDirection(for key: PresetKey) -> Bool {
+        if (key.presetList?.count ?? 0) > 0 {
             return false
         }
         let keys = ["direction", "camera:direction"]
-        if keys.contains(key?.tagKey ?? "") {
+        if keys.contains( key.tagKey ) {
             return true
         }
         return false
@@ -483,17 +457,17 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
         navigationController?.pushViewController(directionViewController, animated: true)
     }
     
-    func canMeasureHeight(for key: PresetKey?) -> Bool {
-        return key?.presetList?.count == 0 && (key?.tagKey == "height")
+    func canMeasureHeight(for key: PresetKey) -> Bool {
+        return key.presetList?.count == 0 && (key.tagKey == "height")
     }
     
-    func measureHeight(forKey key: String?) {
+    func measureHeight(forKey key: String) {
         if HeightViewController.unableToInstantiate(withUserWarning: self) {
             return
         }
         let vc = HeightViewController.instantiate()
         vc.callback = { newValue in
-            self.updateTag(withValue: newValue ?? "", forKey: key ?? "")
+            self.updateTag(withValue: newValue, forKey: key)
         }
         navigationController?.pushViewController(vc, animated: true)
     }
