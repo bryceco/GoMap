@@ -1039,10 +1039,6 @@ static NSDictionary * DictWithTagsTruncatedTo255( NSDictionary * tags )
 		NSMutableArray<OsmWay *> * newWays = [NSMutableArray new];
 		NSMutableArray<OsmRelation *> * newRelations = [NSMutableArray new];
 
-		[newData->_ways enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmWay * way,BOOL * stop){
-			DLog(@"%ld",[way nodeRefCount]);
-		}];
-
 		[newData->_nodes enumerateKeysAndObjectsUsingBlock:^(NSNumber * key,OsmNode * node,BOOL * stop){
 			OsmNode * current = [_nodes objectForKey:key];
 			if ( current == nil ) {

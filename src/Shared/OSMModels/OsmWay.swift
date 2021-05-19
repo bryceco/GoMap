@@ -28,7 +28,6 @@ class OsmWay: OsmBaseObject {
 		} else {
 			self.nodeRefs!.append(ref)
 		}
-		print("way \(self.ident) = \(self.nodeRefs?.count ?? 0)")
     }
 
     func constructNodeList(_ nodes: [NSNumber]) {

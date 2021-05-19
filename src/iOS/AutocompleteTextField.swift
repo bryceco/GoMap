@@ -9,40 +9,17 @@
 import QuartzCore
 import UIKit
 
-// this needs to be shared, because sometimes we'll create a new autocomplete text field when the keyboard is already showing,
-// so it never gets a chance to retrieve the size:
-private var s_keyboardFrame = CGRect.zero
-
-let GradientHeight: CGFloat = 20.0
-
-@objcMembers
 class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
-    
-    func updateAutocomplete(for text: String?) {
-        var text = text
-        if text == " " {
-            text = ""
-        }
-        // filter completion list by current text
-        if (text?.count ?? 0) != 0 {
-            filteredCompletions =
-                (allStrings as NSArray).filtered(using: NSPredicate(block: { object, bindings in
-                return ((object as? NSString) ?? "").range(of: text ?? "", options: .caseInsensitive).location == 0
-            }))
-        } else {
-            filteredCompletions = allStrings as [Any]
-        }
-        // sort alphabetically
-        filteredCompletions = (filteredCompletions as NSArray?)?.sortedArray(comparator: { s1, s2 in
-            return ((s1 as? NSString) ?? "").compare((((s2 as? NSString) ?? "") as String), options: .caseInsensitive)
-        })
-        updateCompletionTableView()
-    }
-    
+
+	// this needs to be shared, because sometimes we'll create a new autocomplete text field when the keyboard is already showing,
+	// so it never gets a chance to retrieve the size:
+	static private var s_keyboardFrame = CGRect.zero
+	static private let GradientHeight: CGFloat = 20.0
+
     weak var realDelegate: UITextFieldDelegate?
     var completionTableView: UITableView?
     var origCellOffset: CGFloat = 0.0
-    var filteredCompletions: [Any]?
+    var filteredCompletions: [String] = []
     var gradientLayer: CAGradientLayer?
     var didSelectAutocomplete: (() -> Void)?
     
@@ -66,113 +43,106 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
     }
     
     override weak var delegate: UITextFieldDelegate? {
-        get {
-            realDelegate
-        } set(_delegate) {
-            realDelegate = _delegate
-        }
+        get { realDelegate }
+		set { realDelegate = newValue }
     }
 
     func clearFilteredCompletionsInternal() {
-        filteredCompletions = nil
+        filteredCompletions = []
         updateCompletionTableView()
     }
     
     private var allStrings: [String] = []
     
-    var autocompleteStrings: [String]? {
+    var autocompleteStrings: [String] {
         get {
             return allStrings
         }
         set(strings) {
-            allStrings = strings ?? []
+            allStrings = strings
         }
     }
-    
-    func keyboardFrame(from notification: Notification?) -> CGRect {
-        let userInfo = notification?.userInfo
+
+	func updateAutocomplete(for text: String) {
+		let text = text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+		// filter completion list by current text
+		if text.count != 0 {
+			filteredCompletions = allStrings.filter({ $0.range(of: text, options: .caseInsensitive) != nil })
+		} else {
+			filteredCompletions = allStrings
+		}
+		// sort alphabetically
+		filteredCompletions = filteredCompletions.sorted(by: { s1, s2 in
+			return s1.caseInsensitiveCompare(s2) == .orderedAscending
+		})
+		updateCompletionTableView()
+	}
+
+    func keyboardFrame(from notification: Notification) -> CGRect {
+        let userInfo = notification.userInfo
         let rect = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue ?? .zero
         return rect
     }
 
-    @objc func keyboardWillShow(_ nsNotification: Notification?) {
-        s_keyboardFrame = keyboardFrame(from: nsNotification)
+	@objc func keyboardWillShow(_ nsNotification: Notification) {
+		AutocompleteTextField.s_keyboardFrame = keyboardFrame(from: nsNotification)
 
-        if isEditing && filteredCompletions?.count != nil {
+        if isEditing && filteredCompletions.count != 0 {
             updateAutocomplete()
         }
     }
 
     // keyboard size can change if switching languages inside keyboard, etc.
-    @objc func keyboardWillChange(_ nsNotification: Notification?) {
-        s_keyboardFrame = keyboardFrame(from: nsNotification)
+	@objc func keyboardWillChange(_ nsNotification: Notification) {
+		AutocompleteTextField.s_keyboardFrame = keyboardFrame(from: nsNotification)
 
         if completionTableView != nil {
             let rect = frameForCompletionTableView()
             completionTableView?.frame = rect
 
             var rcGradient = rect
-            rcGradient.size.height = GradientHeight
+			rcGradient.size.height = AutocompleteTextField.GradientHeight
 
             CATransaction.begin()
             CATransaction.setAnimationDuration(0.0)
             gradientLayer?.frame = rcGradient
             CATransaction.commit()
         }
-        if isEditing && filteredCompletions?.count != nil {
-            updateAutocomplete()
+        if isEditing && filteredCompletions.count != 0 {
+			updateAutocomplete()
         }
     }
 
     func frameForCompletionTableView() -> CGRect {
-        var cell: UIView? = superview
-        while cell != nil && !(cell is UITableViewCell) {
-            cell = cell?.superview
-        }
-        var tableView: UIView? = cell?.superview
-        while tableView != nil && !(tableView is UITableView) {
-            tableView = tableView?.superview
-        }
+		let cell: UITableViewCell = self.superviewOfType()!
+		let tableView: UITableView = cell.superviewOfType()!
 
-        let cellRC = cell?.convert(cell?.bounds ?? CGRect.zero, to: tableView)
+        let cellRC = cell.convert(cell.bounds, to: tableView)
         var rect = CGRect.zero
         rect.origin.x = 0
-        rect.origin.y = (cellRC?.origin.y ?? 0.0) + (cellRC?.size.height ?? 0.0)
-        rect.size.width = tableView?.frame.size.width ?? 0.0
-        if s_keyboardFrame.size.height > 0 {
-            let keyboardPos = tableView?.convert(s_keyboardFrame, from: nil) // keyboard is in screen coordinates
-            rect.size.height = (keyboardPos?.origin.y ?? 0.0) - rect.origin.y
+        rect.origin.y = cellRC.origin.y + cellRC.size.height
+        rect.size.width = tableView.frame.size.width
+		if AutocompleteTextField.s_keyboardFrame.size.height > 0 {
+			let keyboardPos = tableView.convert(AutocompleteTextField.s_keyboardFrame, from: nil) // keyboard is in screen coordinates
+            rect.size.height = keyboardPos.origin.y - rect.origin.y
         } else {
             // no on-screen keyboard (external keyboard or Mac Catalyst)
-            rect.size.height = (tableView?.frame.size.height ?? 0.0) - (cellRC?.size.height ?? 0.0)
-        }
+            rect.size.height = tableView.frame.size.height - cellRC.size.height
+		}
         return rect
     }
 
     func updateCompletionTableView() {
-        if filteredCompletions?.count != nil {
+        if filteredCompletions.count != 0 {
             if completionTableView == nil {
 
-                var cell: UIView? = superview
-                while cell != nil && !(cell is UITableViewCell) {
-                    cell = cell?.superview
-                }
-                
-                var tableView: UIView? = cell?.superview
-                while tableView != nil && !(tableView is UITableView) {
-                    tableView = tableView?.superview
-                }
+				let cell: UITableViewCell = self.superviewOfType()!
+				let tableView: UITableView = cell.superviewOfType()!
 
-                guard let _tableView = tableView as? UITableView else { return }
-                // scroll cell to top
-                var p: IndexPath? = nil
-                if let cell = cell as? UITableViewCell {
-                    p = _tableView.indexPath(for: cell)
-                }
-                if let p = p {
-                    _tableView.scrollToRow(at: p, at: .top, animated: false)
-                }
-                _tableView.isScrollEnabled = false
+				// scroll cell to top
+				let p = tableView.indexPath(for: cell)!
+				tableView.scrollToRow(at: p, at: .top, animated: false)
+                tableView.isScrollEnabled = false
 
                 // cell doesn't always scroll to the same place, so give it a moment before we add the completion table
                 DispatchQueue.main.async(execute: {
@@ -189,7 +159,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
                     self.completionTableView?.dataSource = self
                     self.completionTableView?.delegate = self
                     if let view = self.completionTableView {
-                        tableView?.addSubview(view)
+                        tableView.addSubview(view)
                     }
 
                     self.gradientLayer = CAGradientLayer()
@@ -198,10 +168,10 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
                         UIColor(white: 0.0, alpha: 0.0).cgColor
                     ].compactMap { $0 }
                     var rcGradient = rect
-                    rcGradient.size.height = GradientHeight
+					rcGradient.size.height = AutocompleteTextField.GradientHeight
                     self.gradientLayer?.frame = rcGradient
                     if let layer = self.gradientLayer {
-                        tableView?.layer.addSublayer(layer)
+                        tableView.layer.addSublayer(layer)
                     }
                 })
             }
@@ -213,115 +183,85 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
             gradientLayer?.removeFromSuperlayer()
             gradientLayer = nil
 
-            var cell: UIView? = superview
-            while cell != nil && !(cell is UITableViewCell) {
-                cell = cell?.superview as? UITableViewCell
-            }
-            var tableView: UIView? = cell?.superview
-            while tableView != nil && !(tableView is UITableView) {
-                tableView = tableView?.superview as? UITableView
-            }
-            if let tableView = tableView {
-                var cellIndexPath: IndexPath? = nil
-                if let cell = cell as? UITableViewCell {
-                    cellIndexPath = (tableView as? UITableView)?.indexPath(for: cell)
-                }
-                if let cellIndexPath = cellIndexPath {
-                    (tableView as? UITableView)?.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
-                }
-            }
-            (tableView as? UITableView)?.isScrollEnabled = true
+			let cell: UITableViewCell = self.superviewOfType()!
+			let tableView: UITableView = cell.superviewOfType()!
+
+			if let cellIndexPath = tableView.indexPath(for: cell) {
+				tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
+			}
+            tableView.isScrollEnabled = true
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        text = filteredCompletions?[indexPath.row] as? String
+        text = filteredCompletions[indexPath.row]
 
         sendActions(for: .editingChanged)
-        // [[NSNotificationCenter defaultCenter] postNotificationName:UITextFieldTextDidChangeNotification object:self userInfo:nil];
 
-        if let didSelectAutocomplete = didSelectAutocomplete {
-            didSelectAutocomplete()
-        }
+		didSelectAutocomplete?()
 
         // hide completion table view
-        filteredCompletions = nil
+        filteredCompletions = []
         updateCompletionTableView()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredCompletions?.count ?? 0
+        return filteredCompletions.count
     }
 
-    static let tableViewCellIdentifier = "Cell"
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteTextField.tableViewCellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: AutocompleteTextField.tableViewCellIdentifier)
-            cell?.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-        }
-        cell?.textLabel?.text = filteredCompletions?[indexPath.row] as? String
-        return cell!
+		let cellIdentifier = "Cell"
+		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
+			?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+
+		cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+		cell.textLabel?.text = filteredCompletions[indexPath.row]
+        return cell
     }
 
     func updateAutocomplete() {
-        updateAutocomplete(for: text)
-    }
+		updateAutocomplete(for: self.text! )
+     }
 
 // MARK: delegate
 
     // Forward any delegate messages to the real delegate
-    @objc func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldShouldBeginEditing(_:))) ?? false {
-            return realDelegate?.textFieldShouldBeginEditing?(textField) ?? false
-        }
-        return true
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+		return realDelegate?.textFieldShouldBeginEditing?(textField) ?? true
     }
 
-    @objc func textFieldDidBeginEditing(_ textField: UITextField) {
-        if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldDidBeginEditing(_:))) ?? false {
-            realDelegate?.textFieldDidBeginEditing?(textField)
-        }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+		realDelegate?.textFieldDidBeginEditing?(textField)
     }
 
-    @objc func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldShouldEndEditing(_:))) ?? false {
-            return realDelegate?.textFieldShouldEndEditing?(textField) ?? false
-        }
-        return true
-    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+		return realDelegate?.textFieldShouldEndEditing?(textField) ?? true
+	}
 
-    @objc func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         clearFilteredCompletionsInternal()
 
-        if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:))) ?? false {
-            realDelegate?.textFieldDidEndEditing?(textField)
-        }
+		realDelegate?.textFieldDidEndEditing?(textField)
     }
 
-    @objc func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         clearFilteredCompletionsInternal()
 
-        if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:reason:))) ?? false {
-            realDelegate?.textFieldDidEndEditing?(textField, reason: reason)
-        } else if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldDidEndEditing(_:))) ?? false {
-            realDelegate?.textFieldDidEndEditing?(textField)
+		if realDelegate?.textFieldDidEndEditing?(textField, reason: reason) == nil {
+			realDelegate?.textFieldDidEndEditing?(textField)
         }
     }
 
-    @objc func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let result = Bool((realDelegate?.responds(to: #selector(UITextFieldDelegate.textField(_:shouldChangeCharactersIn:replacementString:))) ?? false
-            ? realDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string)
-            : true) ?? false)
-        if result {
-            let newString = (text as NSString?)?.replacingCharacters(in: range, with: string)
-            updateAutocomplete(for: newString)
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+		let shouldChange = realDelegate?.textField?(textField, shouldChangeCharactersIn: range, replacementString: string) ?? true
+		if shouldChange {
+			let newString = (self.text! as NSString).replacingCharacters(in: range, with: string) as String
+			updateAutocomplete(for: newString)
         }
-        return result
+        return shouldChange
     }
 
-    @objc func textFieldDidChangeSelection(_ textField: UITextField) {
+	func textFieldDidChangeSelection(_ textField: UITextField) {
         if #available(iOS 13.0, *) {
             if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldDidChangeSelection(_:))) ?? false {
                 realDelegate?.textFieldDidChangeSelection?(textField)
@@ -329,7 +269,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
         }
     }
 
-    @objc func textFieldShouldClear(_ textField: UITextField) -> Bool {
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
         let result = Bool((realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldShouldClear(_:))) ?? false
             ? realDelegate?.textFieldShouldClear?(textField)
             : true) ?? false)
@@ -339,7 +279,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
         return result
     }
 
-    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldShouldReturn(_:))) ?? false {
             return realDelegate?.textFieldShouldReturn?(textField) ?? false
         }

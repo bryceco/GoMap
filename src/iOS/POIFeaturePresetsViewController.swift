@@ -396,7 +396,7 @@ class POIFeaturePresetsViewController: UITableViewController, UITextFieldDelegat
                     let values = appDelegate?.mapView?.editorLayer.mapData.tagValues(forKey: key)
                     values?.addObjects(from: Array.init(arrayLiteral: set))
                     let list = values?.allObjects as? [String]
-                    textField.autocompleteStrings = list
+                    textField.autocompleteStrings = list ?? []
                 }
                 isEditing = true
             }
